@@ -5,7 +5,9 @@
     
     <!--  menus -->
 	<string name="menu_settings">Settings</string>
-    <string name="menu_add_media">Add</string>
+    <string name="menu_add_media">Import</string>
+    <string name="menu_capture_media">Record</string>
+    
     <string name="menu_share_media">Share</string>
 	<string name="menu_save_media">Save</string>
     <string name="menu_play_media">Play</string>
