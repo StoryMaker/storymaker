@@ -10,8 +10,7 @@ import android.preference.PreferenceActivity;
 public class MediaOutputPreferences 
 		extends PreferenceActivity  {
 
-	
-	
+	@SuppressWarnings("deprecation")
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);

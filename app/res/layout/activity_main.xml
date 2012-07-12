@@ -4,7 +4,9 @@
     >
     <LinearLayout android:id="@+id/layout_media_list"
         android:orientation="vertical" android:layout_width="fill_parent"
-        android:layout_height="wrap_content"></LinearLayout>
+        android:layout_height="wrap_content"
+        android:padding="20sp"
+        ></LinearLayout>
 
 </ScrollView>
 

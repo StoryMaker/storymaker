@@ -10,7 +10,9 @@ import java.util.Date;
 
 import org.ffmpeg.android.FfmpegController;
 import org.ffmpeg.android.MediaDesc;
+import org.ffmpeg.android.MediaUtils;
 import org.ffmpeg.android.ShellUtils.ShellCallback;
+import org.ffmpeg.android.filters.*;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -21,8 +23,8 @@ import android.content.res.Configuration;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.PixelFormat;
-import android.media.MediaMetadataRetriever;
 import android.media.MediaScannerConnection;
 import android.media.MediaScannerConnection.MediaScannerConnectionClient;
 import android.net.Uri;
@@ -42,6 +44,7 @@ import android.webkit.MimeTypeMap;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.MediaController;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.VideoView;
 
@@ -150,10 +153,11 @@ public class MainActivity extends Activity  implements MediaScannerConnectionCli
 	     				new String[] {MIME_TYPE_MP4},
 	     				null);
 	    		
+	    		
 	    		msg = mHandler.obtainMessage(4);
 	            msg.getData().putString("path",outFile.getAbsolutePath());
-
-		         mHandler.sendMessage(msg);
+	            
+	            mHandler.sendMessage(msg);
 	    	}
 	    	catch (Exception e)
 	    	{
@@ -181,11 +185,20 @@ public class MainActivity extends Activity  implements MediaScannerConnectionCli
     	MediaDesc mdout = new MediaDesc ();
     	mdout.path = outpath;
     	
-    	mdout.kbitrate = 500;
-    	mdout.width = 480;
-    	mdout.height = 240;
-    	//mdout.vcodec = "libx264";
-    	//mdout.acodec = "copy";
+    	mdout.width = 720;
+    	mdout.height = 480;
+    	mdout.format = "mp4";
+    	
+    	mdout.vcodec = "libx264";
+    	mdout.vbitrate = 1500;
+    	
+    	mdout.acodec = "aac";
+    	mdout.achannels = 2;
+    	mdout.abitrate = 96;
+    	
+    	DrawBoxVideoFilter vf = new DrawBoxVideoFilter(0,400,720,80,"red");
+    	
+    	mdout.videoFilter = vf.toString();
     	
     	FfmpegController ffmpegc = new FfmpegController (this);
     	
@@ -195,7 +208,8 @@ public class MainActivity extends Activity  implements MediaScannerConnectionCli
 			public void shellOut(String line) {
 				
 				
-				Log.d(TAG, line);
+				if (!line.startsWith("frame"))
+					Log.d(TAG, line);
 				
 				//progressDialog.setMessage(new String(msg));
 				//Duration: 00:00:00.99,
@@ -238,14 +252,15 @@ public class MainActivity extends Activity  implements MediaScannerConnectionCli
 				{
 				 Message msg = mHandler.obtainMessage(1);
 		         msg.getData().putInt("progress", progress);
-		         msg.getData().putString("status", newStatus);
-		         
+		         msg.getData().putString("status", newStatus);		         
 		         mHandler.sendMessage(msg);
 				}
 			}
     	});
     
-    }
+    
+   }
+    
     
     private void addMediaFile (String path, String mimeType)
     {
@@ -264,20 +279,18 @@ public class MainActivity extends Activity  implements MediaScannerConnectionCli
     {
     	File file = new File(mdesc.path);
 
-    	 final ImageView child = new ImageView(this);
-    	 child.setLayoutParams(new ViewGroup.LayoutParams(
-                 ViewGroup.LayoutParams.MATCH_PARENT,
-                 ViewGroup.LayoutParams.WRAP_CONTENT));
-
-    	 child.setPadding(30,30,30,30);
+    	 View child = null;
     	 
+    	     	 
      	if (mdesc.mimeType.startsWith("image"))
      	{
      		mdesc.duration = DEFAULT_IMAGE_DURATION;
-     		
+     		child = new ImageView(this);
+     		((ImageView)child).setScaleType(ImageView.ScaleType.CENTER_CROP);
+
      		try
      		{
-     			child.setImageBitmap(getBitmapThumb(file));
+     			((ImageView)child).setImageBitmap(getBitmapThumb(file));
      		}
      		catch (IOException ioe)
      		{
@@ -286,8 +299,26 @@ public class MainActivity extends Activity  implements MediaScannerConnectionCli
      	}
      	else if (mdesc.mimeType.startsWith("video"))
      	{
-     		child.setImageBitmap(getVideoFrame(mdesc.path, 5));
+     		child = new ImageView(this);
+     		((ImageView)child).setScaleType(ImageView.ScaleType.CENTER_CROP);
+         	
+     		((ImageView)child).setImageBitmap(MediaUtils.getVideoFrame(mdesc.path, 5));
      	}
+     	else 
+     	{
+     		child = new TextView(this);
+     		((TextView)child).setText(mdesc.mimeType + ": " + mdesc.path);
+     	}
+
+     	ViewGroup.LayoutParams lp = new ViewGroup.LayoutParams(
+                ViewGroup.LayoutParams.WRAP_CONTENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT);
+     	
+     	child.setLayoutParams(lp);
+
+     	child.setBackgroundColor(Color.WHITE);
+     	child.setPadding(5, 5, 5, 5);
+     	
 
      	child.setId(mediaId);
      	
@@ -320,7 +351,6 @@ public class MainActivity extends Activity  implements MediaScannerConnectionCli
      		
      	});
      	
-     	child.setScaleType(ImageView.ScaleType.CENTER_CROP);
      	
     	layoutMain.addView(child);
     	
@@ -328,6 +358,7 @@ public class MainActivity extends Activity  implements MediaScannerConnectionCli
     	updateStatus( file.getName() + " added to queue");
     }
     
+    /*
     public void playVideo(String path, boolean autoplay){
         //get current window information, and set format, set it up differently, if you need some special effects
         getWindow().setFormat(PixelFormat.TRANSLUCENT);
@@ -343,7 +374,16 @@ public class MainActivity extends Activity  implements MediaScannerConnectionCli
             videoHolder.start();
         }
      
-     }
+     }*/
+    
+	 private void playVideo() {
+			
+	    	Intent intent = new Intent(android.content.Intent.ACTION_VIEW);
+	    	intent.setDataAndType(Uri.fromFile(outFile), "video/*");   
+	    	intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+	   	 	startActivity(intent);
+	   	 	
+	 }
     
     private Bitmap getBitmapThumb (File file) throws IOException
     {
@@ -397,12 +437,7 @@ public class MainActivity extends Activity  implements MediaScannerConnectionCli
 								
 								
 								addMediaFile (path, mimeType);
-								/*
-								Intent passingIntent = new Intent(this,VideoEditor.class);
-								passingIntent.setData(uriGalleryFile);
-								startActivityForResult(passingIntent,VIDEO_EDITOR);
-								*/
-							
+								
 							}
 							else
 							{
@@ -424,11 +459,11 @@ public class MainActivity extends Activity  implements MediaScannerConnectionCli
 				}
 					
 			}
-			else if(requestCode == ObscuraConstants.CAMERA_RESULT) {
+			else if(requestCode == MediaAppConstants.CAMERA_RESULT) {
 				
 				Uri uriCameraImage = intent.getData();
 			
-				Log.d(InformaConstants.TAG, "RETURNED URI FROM CAMERA RESULT: " + uriCameraImage.toString());
+				Log.d(MediaAppConstants.TAG, "RETURNED URI FROM CAMERA RESULT: " + uriCameraImage.toString());
 				
 				String fileExtension = MimeTypeMap.getFileExtensionFromUrl(uriCameraImage.toString());
 				mimeType = MimeTypeMap.getSingleton().getMimeTypeFromExtension(fileExtension);
@@ -436,16 +471,16 @@ public class MainActivity extends Activity  implements MediaScannerConnectionCli
 				if (mimeType == null)
 				{
 					if(uriCameraImage.getPathSegments().contains("video")) {
-						mimeType = ObscuraConstants.MIME_TYPE_MP4;
+						mimeType = MediaAppConstants.MIME_TYPE_MP4;
 					} else if(mimeType == null && uriCameraImage.getPathSegments().contains("images")) {
-						mimeType = ObscuraConstants.MIME_TYPE_JPEG;
+						mimeType = MediaAppConstants.MIME_TYPE_JPEG;
 					}
 				}
 				// TODO: IMPORTANTE!  Right here, we are forcing the media object to go through
 				// the media scanner.  THIS MUST BE UNDONE at the end of the editing process
 				// in order to maintain security/anonymity
 				
-				if(mimeType.equals(ObscuraConstants.MIME_TYPE_MP4)) {
+				if(mimeType.equals(MediaAppConstants.MIME_TYPE_MP4)) {
 					// write input stream to file
 					FileOutputStream fos;
 					try {
@@ -459,9 +494,9 @@ public class MainActivity extends Activity  implements MediaScannerConnectionCli
 						fos.close();
 						media.close();
 					} catch (FileNotFoundException e) {
-						Log.e(InformaConstants.TAG, e.toString());
+						Log.e(MediaAppConstants.TAG, e.toString());
 					} catch (IOException e) {
-						Log.e(InformaConstants.TAG, e.toString());
+						Log.e(MediaAppConstants.TAG, e.toString());
 					}
 					
 				}
@@ -469,21 +504,7 @@ public class MainActivity extends Activity  implements MediaScannerConnectionCli
 				msc = new MediaScannerConnection(this, this);
 				msc.connect();
 				
-				new InformaMediaScanner(this, cameraImage);
-				
 			}
-			/*
-			else if (requestCode == CAMERA_RESULT)
-			{
-				//Uri uriCameraImage = intent.getData();
-				
-				if (uriCameraImage != null)
-				{
-					Intent passingIntent = new Intent(this,ImageEditor.class);
-					passingIntent.setData(uriCameraImage);
-					startActivityForResult(passingIntent,IMAGE_EDITOR);
-				}
-			}*/
 		}
 		
 		
@@ -496,64 +517,7 @@ public class MainActivity extends Activity  implements MediaScannerConnectionCli
 		startActivityForResult(intent,0);
 		
 	}
-	
-	private void addVideoToGallery (File videoToAdd, String mimeType)
-	{
-		/*
-		   // Save the name and description of a video in a ContentValues map.  
-        ContentValues values = new ContentValues(2);
-        values.put(MediaStore.Video.Media.MIME_TYPE, MIME_TYPE_MP4);
-        // values.put(MediaStore.Video.Media.DATA, f.getAbsolutePath()); 
 
-        // Add a new record (identified by uri) without the video, but with the values just set.
-        Uri uri = getContentResolver().insert(MediaStore.Video.Media.EXTERNAL_CONTENT_URI, values);
-
-        // Now get a handle to the file for that record, and save the data into it.
-        try {
-            InputStream is = new FileInputStream(videoToAdd);
-            OutputStream os = getContentResolver().openOutputStream(uri);
-            byte[] buffer = new byte[4096]; // tweaking this number may increase performance
-            int len;
-            while ((len = is.read(buffer)) != -1){
-                os.write(buffer, 0, len);
-            }
-            os.flush();
-            is.close();
-            os.close();
-        } catch (Exception e) {
-            Log.e(LOGTAG, "exception while writing video: ", e);
-        } 
-        */
-		
-	
-     // force mediascanner to update file
-     		MediaScannerConnection.scanFile(
-     				this,
-     				new String[] {videoToAdd.getAbsolutePath()},
-     				new String[] {mimeType},
-     				null);
-
-//        sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, uri));
-	}
-
-	public static Bitmap getVideoFrame(String videoPath,long frameTime) {
-        MediaMetadataRetriever retriever = new MediaMetadataRetriever();
-        try {
-            retriever.setDataSource(videoPath);                   
-            return retriever.getFrameAtTime(frameTime, MediaMetadataRetriever.OPTION_CLOSEST);
-        } catch (IllegalArgumentException ex) {
-            Log.e(TAG, "error getting video frame", ex);
-            
-        } catch (RuntimeException ex) {
-        	Log.e(TAG, "error getting video frame", ex);
-                                } finally {
-            try {
-                retriever.release();
-            } catch (RuntimeException ex) {
-            }
-        }
-        return null;
-    }
 	
 
 	@Override
@@ -602,14 +566,14 @@ public class MainActivity extends Activity  implements MediaScannerConnectionCli
 	private void captureVideo ()
 	{
 		 ContentValues values = new ContentValues();
-         values.put(MediaStore.Images.Media.TITLE, ObscuraConstants.CAMCORDER_TMP_FILE);
+         values.put(MediaStore.Images.Media.TITLE, MediaAppConstants.CAMCORDER_TMP_FILE);
          values.put(MediaStore.Images.Media.DESCRIPTION,"ssctmp");
          
-     	sendBroadcast(new Intent().setAction(InformaConstants.Keys.Service.LOCK_LOGS));
-        cameraImage = new File(InformaConstants.DUMP_FOLDER, "cam" + new Date().getTime() + ".mp4");
+     	sendBroadcast(new Intent().setAction(MediaAppConstants.Keys.Service.LOCK_LOGS));
+        cameraImage = new File(fileExternDir, "cam" + new Date().getTime() + ".mp4");
 
      	Intent intent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
-         startActivityForResult(intent, ObscuraConstants.CAMERA_RESULT);
+         startActivityForResult(intent, MediaAppConstants.CAMERA_RESULT);
 	}
 
 	private Handler mHandler = new Handler()
@@ -635,7 +599,7 @@ public class MainActivity extends Activity  implements MediaScannerConnectionCli
 	               
 	                case 4: //play video
 	                	
-	                		playVideo(msg.getData().getString("path"),true);
+	                		playVideo();
 	                	break;
 	                	
 	                case 5:
@@ -651,12 +615,6 @@ public class MainActivity extends Activity  implements MediaScannerConnectionCli
 	        }
 	};
 	
-	private void playVideo() {
-		
-	//	Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(outFile.getPath()));
-   	 //	startActivityForResult(intent,0);
-   	 	playVideo(outFile.getAbsolutePath(),true);
-	}
 	
 	private void shareVideo() {
 		
@@ -682,7 +640,7 @@ public class MainActivity extends Activity  implements MediaScannerConnectionCli
 	public void onScanCompleted(String path, Uri uri) {
 		
 		msc.disconnect();
-		Log.d(InformaConstants.TAG, "new path: " + path + "\nnew uri for path: " + uri.toString());
+		Log.d(MediaAppConstants.TAG, "new path: " + path + "\nnew uri for path: " + uri.toString());
 		
 		 Message msg = mHandler.obtainMessage(5);
          msg.getData().putString("path", path);
