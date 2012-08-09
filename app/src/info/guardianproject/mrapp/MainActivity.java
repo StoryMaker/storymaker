@@ -189,16 +189,15 @@ public class MainActivity extends Activity  implements MediaScannerConnectionCli
     	mdout.height = 480;
     	mdout.format = "mp4";
     	
-    	mdout.vcodec = "libx264";
-    	mdout.vbitrate = 1500;
+    	mdout.videoCodec = "libx264";
+    	mdout.videoBitrate = 1500;
     	
-    	mdout.acodec = "aac";
-    	mdout.achannels = 2;
-    	mdout.abitrate = 96;
+    	mdout.audioCodec = "aac";
+    	mdout.audioChannels = 2;
+    	mdout.audioBitrate = 96;
     	
-    	DrawBoxVideoFilter vf = new DrawBoxVideoFilter(0,400,720,80,"red");
-    	
-    	mdout.videoFilter = vf.toString();
+    //	DrawBoxVideoFilter vf = new DrawBoxVideoFilter(0,400,720,80,"red");
+    //	mdout.videoFilter = vf.toString();
     	
     	FfmpegController ffmpegc = new FfmpegController (this);
     	
@@ -211,9 +210,6 @@ public class MainActivity extends Activity  implements MediaScannerConnectionCli
 				if (!line.startsWith("frame"))
 					Log.d(TAG, line);
 				
-				//progressDialog.setMessage(new String(msg));
-				//Duration: 00:00:00.99,
-				//time=00:00:00.00
 				
 				int idx1;
 				String newStatus = null;

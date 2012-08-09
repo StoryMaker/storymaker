@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="info.guardianproject.mrapp"
-    android:versionCode="1"
-    android:versionName="0.0.1" 
+    android:versionCode="2"
+    android:versionName="0.0.1-alpha-1" 
        android:installLocation="auto"
     >
 
