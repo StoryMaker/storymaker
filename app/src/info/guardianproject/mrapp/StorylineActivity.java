@@ -48,7 +48,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.VideoView;
 
-public class MainActivity extends Activity  implements MediaScannerConnectionClient {
+public class StorylineActivity extends Activity implements MediaScannerConnectionClient {
 
 	private final static int GALLERY_RESULT = 1;
 	private final static int CAMERA_RESULT = 2;
@@ -148,7 +148,7 @@ public class MainActivity extends Activity  implements MediaScannerConnectionCli
 		         mHandler.sendMessage(msg);
 	    		
 	    		MediaScannerConnection.scanFile(
-	     				MainActivity.this,
+	     				StorylineActivity.this,
 	     				new String[] {outFile.getAbsolutePath()},
 	     				new String[] {MIME_TYPE_MP4},
 	     				null);
@@ -325,8 +325,8 @@ public class MainActivity extends Activity  implements MediaScannerConnectionCli
 			public void onClick(View v) {
 				
 				int mediaId = ((ImageView)v).getId();
-				MediaDesc mdesc = MainActivity.this.mediaList.get(mediaId);
-				Toast.makeText(MainActivity.this, mdesc.path, Toast.LENGTH_LONG).show();
+				MediaDesc mdesc = StorylineActivity.this.mediaList.get(mediaId);
+				Toast.makeText(StorylineActivity.this, mdesc.path, Toast.LENGTH_LONG).show();
 			}
      		
      	});
@@ -584,7 +584,7 @@ public class MainActivity extends Activity  implements MediaScannerConnectionCli
 	                    progressDialog.dismiss();
 	                    
 	                    if (status != null)
-	                    	Toast.makeText(MainActivity.this, status, Toast.LENGTH_SHORT).show();
+	                    	Toast.makeText(StorylineActivity.this, status, Toast.LENGTH_SHORT).show();
 	                    
 	                 break;
 	                case 1: //status
