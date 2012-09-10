@@ -1,4 +1,4 @@
-package info.guardianproject.mrapp;
+package info.guardianproject.mrapp.ui;
 
 import java.io.File;
 import java.io.IOException;
