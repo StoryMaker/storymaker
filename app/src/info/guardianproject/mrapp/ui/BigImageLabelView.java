@@ -34,12 +34,12 @@ public class BigImageLabelView extends View {
 	private void initViewGfx() {
         mTextPaint = new Paint();
         mTextPaint.setAntiAlias(true);
+  
         mTextPaint.setTextSize(mFontSize);
         mTextPaint.setColor(mFontColor);
-        setPadding(3, 3, 3, 3);
+        setPadding(3, 12, 3, 3);
         mAscent = (int) mTextPaint.ascent();
-        setBackgroundColor(mBgColor);
-		
+      
      }
 
 	@Override
@@ -59,7 +59,7 @@ public class BigImageLabelView extends View {
 			canvas.drawBitmap(mImage, null, bounds, mTextPaint);
 		}
 		
-        canvas.drawText(mText, getPaddingLeft(), boundsHeight - mAscent, mTextPaint);		
+        canvas.drawText(mText, getPaddingLeft(), boundsHeight - (mAscent*2), mTextPaint);		
 	}
 	
 	
