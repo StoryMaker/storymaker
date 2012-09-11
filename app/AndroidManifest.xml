@@ -1,8 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="info.guardianproject.mrapp"
     android:installLocation="auto"
-    android:versionCode="2"
-    android:versionName="0.0.1-alpha-1" >
+    android:versionCode="3"
+    android:versionName="0.0.1-alpha-2" >
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -32,7 +32,9 @@
             android:name=".LessonListActivity"
             android:label="@string/app_name"            
              >
-        </activity>        
+        </activity>   
+          <activity android:name=".LessonViewActivity" />
+        
            <activity
             android:name=".ProjectViewActivity"
             android:configChanges="orientation|keyboardHidden|screenSize" >           

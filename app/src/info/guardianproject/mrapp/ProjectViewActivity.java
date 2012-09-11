@@ -73,9 +73,10 @@ public class ProjectViewActivity extends SherlockActivity implements MediaScanne
         setContentView(R.layout.activity_main);        
         layoutMain = (LinearLayout) findViewById(R.id.layout_media_list);
                  
-        if (savedInstanceState != null)
+        Intent intent = getIntent();
+        if (intent != null)
         {
-        	String title = savedInstanceState.getString("title");
+        	String title = intent.getStringExtra("title");
         	if (title != null)
         		setTitle(title);
         }

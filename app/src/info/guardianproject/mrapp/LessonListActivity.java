@@ -1,16 +1,20 @@
 package info.guardianproject.mrapp;
 
+import info.guardianproject.mrapp.model.Lesson;
 import info.guardianproject.mrapp.ui.BigImageLabelView;
 
 import java.util.ArrayList;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.TextView;
 
 import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.Menu;
@@ -20,6 +24,8 @@ public class LessonListActivity extends SherlockActivity {
 
 	private ViewPager pager;
 	private AwesomePagerAdapter adapter;
+	
+	private ArrayList<Lesson> alLessons;
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -32,6 +38,32 @@ public class LessonListActivity extends SherlockActivity {
         pager = (ViewPager) findViewById(R.id.awesomepager);
         pager.setAdapter(adapter);
         
+        
+        initTestLessons();
+        
+    }
+    
+    private void initTestLessons ()
+    {
+    	alLessons = new ArrayList<Lesson>();
+    	
+    	Lesson lesson = new Lesson();
+    	lesson.mTitle = "Journalism Introduction";
+    	lesson.mResourceUrl = "https://dev.guardianproject.info/projects/wrapp/wiki/Journalism_Introduction.html";
+    	alLessons.add(lesson);    	
+    	addNewLesson (lesson);
+    	
+    	lesson = new Lesson();
+    	lesson.mTitle = "Selecting and verifying sources";
+    	lesson.mResourceUrl = "https://dev.guardianproject.info/projects/wrapp/wiki/Selecting_and_verifying_sources.html";
+    	alLessons.add(lesson);    	
+    	addNewLesson (lesson);
+    	
+    	lesson = new Lesson();
+    	lesson.mTitle = "Security Introduction";
+    	lesson.mResourceUrl = "https://dev.guardianproject.info/projects/wrapp/wiki/Security_Introduction.html";
+    	alLessons.add(lesson);    	
+    	addNewLesson (lesson);
     }
 
     @Override
@@ -55,6 +87,7 @@ public class LessonListActivity extends SherlockActivity {
 		
 		
 		
+		
 	}
 	
 	private void accessLesson ()
@@ -62,12 +95,25 @@ public class LessonListActivity extends SherlockActivity {
 		//is lesson downloaded? if no, then download
 		
 		//if yes, then display here!
+		Lesson lesson = alLessons.get(pager.getCurrentItem());
+
+		Intent intent = new Intent(this,LessonViewActivity.class);
+		intent.putExtra("title", lesson.mTitle);
+		intent.putExtra("url", lesson.mResourceUrl);
+		
+		startActivity(intent);
+		
 	}
 	
-	private void addNewLesson (String title, String url, Bitmap image, int color)
+	private void addNewLesson (Lesson lesson)
 	{
 	
-		BigImageLabelView view = new BigImageLabelView(this,title, image, color);
+		TextView view = new TextView(this);
+		view.setTextSize(36);
+		view.setText(lesson.mTitle);
+		view.setTextColor(Color.WHITE);
+		view.setBackgroundColor(Color.DKGRAY);
+		view.setPadding(6,6,6,6);
 		
 		view.setOnClickListener(new OnClickListener(){
 
@@ -79,9 +125,7 @@ public class LessonListActivity extends SherlockActivity {
 			
 			
 		});
-		
 	
-		
 		adapter.addProjectView(view);
 		adapter.notifyDataSetChanged();
 		
@@ -89,19 +133,19 @@ public class LessonListActivity extends SherlockActivity {
 
     private class AwesomePagerAdapter extends PagerAdapter{
 
-    	private ArrayList<BigImageLabelView> listViews;
+    	private ArrayList<View> listViews;
 	 	
     	public AwesomePagerAdapter ()
 		{
-    		listViews = new ArrayList<BigImageLabelView>();
+    		listViews = new ArrayList<View>();
 		}
 		
-    	public void addProjectView (BigImageLabelView view)
+    	public void addProjectView (View view)
     	{
     		listViews.add(view);
     	}
     	
-    	public void removeProjectView (BigImageLabelView view)
+    	public void removeProjectView (View view)
     	{
     		listViews.remove(view);
     	}
@@ -149,14 +193,14 @@ public class LessonListActivity extends SherlockActivity {
 	     */
 		@Override
 		public void destroyItem(View collection, int position, Object view) {
-			((ViewPager) collection).removeView((BigImageLabelView) view);
+			((ViewPager) collection).removeView((View) view);
 		}
 
 		
 		
 		@Override
 		public boolean isViewFromObject(View view, Object object) {
-			return view==((BigImageLabelView)object);
+			return view==((View)object);
 		}
 
 		
