@@ -12,9 +12,7 @@ import org.ffmpeg.android.FfmpegController;
 import org.ffmpeg.android.MediaDesc;
 import org.ffmpeg.android.MediaUtils;
 import org.ffmpeg.android.ShellUtils.ShellCallback;
-import org.ffmpeg.android.filters.*;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.ContentResolver;
 import android.content.ContentValues;
@@ -24,7 +22,6 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.graphics.PixelFormat;
 import android.media.MediaScannerConnection;
 import android.media.MediaScannerConnection.MediaScannerConnectionClient;
 import android.net.Uri;
@@ -34,8 +31,6 @@ import android.os.Handler;
 import android.os.Message;
 import android.provider.MediaStore;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnLongClickListener;
@@ -43,12 +38,14 @@ import android.view.ViewGroup;
 import android.webkit.MimeTypeMap;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.MediaController;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.VideoView;
 
-public class StorylineActivity extends Activity implements MediaScannerConnectionClient {
+import com.actionbarsherlock.app.SherlockActivity;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuItem;
+
+public class ProjectViewActivity extends SherlockActivity implements MediaScannerConnectionClient {
 
 	private final static int GALLERY_RESULT = 1;
 	private final static int CAMERA_RESULT = 2;
@@ -56,8 +53,6 @@ public class StorylineActivity extends Activity implements MediaScannerConnectio
     private final static String MIME_TYPE_MP4 = "video/mp4";
 
 	private final static String DEFAULT_IMAGE_DURATION = "00:00:05";
-	
-	private final static String TAG = "MRAPP";
 	
 	private ArrayList<MediaDesc> mediaList = new ArrayList<MediaDesc>();
 	
@@ -75,9 +70,15 @@ public class StorylineActivity extends Activity implements MediaScannerConnectio
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        
+        setContentView(R.layout.activity_main);        
         layoutMain = (LinearLayout) findViewById(R.id.layout_media_list);
+                 
+        if (savedInstanceState != null)
+        {
+        	String title = savedInstanceState.getString("title");
+        	if (title != null)
+        		setTitle(title);
+        }
         
         initExternalStorage();
     }
@@ -91,7 +92,7 @@ public class StorylineActivity extends Activity implements MediaScannerConnectio
 
 	@Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.activity_main, menu);
+        getSupportMenuInflater().inflate(R.menu.activity_main, menu);
         return true;
     }
     
@@ -148,7 +149,7 @@ public class StorylineActivity extends Activity implements MediaScannerConnectio
 		         mHandler.sendMessage(msg);
 	    		
 	    		MediaScannerConnection.scanFile(
-	     				StorylineActivity.this,
+	     				ProjectViewActivity.this,
 	     				new String[] {outFile.getAbsolutePath()},
 	     				new String[] {MIME_TYPE_MP4},
 	     				null);
@@ -165,7 +166,7 @@ public class StorylineActivity extends Activity implements MediaScannerConnectio
 	            msg.getData().putString("status","error: " + e.getMessage());
 
 		         mHandler.sendMessage(msg);
-	    		Log.e(TAG, "error exporting",e);
+	    		Log.e(AppConstants.TAG, "error exporting",e);
 	    	}
 		}
 	};
@@ -208,7 +209,7 @@ public class StorylineActivity extends Activity implements MediaScannerConnectio
 				
 				
 				if (!line.startsWith("frame"))
-					Log.d(TAG, line);
+					Log.d(AppConstants.TAG, line);
 				
 				
 				int idx1;
@@ -290,7 +291,7 @@ public class StorylineActivity extends Activity implements MediaScannerConnectio
      		}
      		catch (IOException ioe)
      		{
-     			Log.e(TAG,"unable to load image thumb",ioe);
+     			Log.e(AppConstants.TAG,"unable to load image thumb",ioe);
      		}
      	}
      	else if (mdesc.mimeType.startsWith("video"))
@@ -325,8 +326,8 @@ public class StorylineActivity extends Activity implements MediaScannerConnectio
 			public void onClick(View v) {
 				
 				int mediaId = ((ImageView)v).getId();
-				MediaDesc mdesc = StorylineActivity.this.mediaList.get(mediaId);
-				Toast.makeText(StorylineActivity.this, mdesc.path, Toast.LENGTH_LONG).show();
+				MediaDesc mdesc = ProjectViewActivity.this.mediaList.get(mediaId);
+				Toast.makeText(ProjectViewActivity.this, mdesc.path, Toast.LENGTH_LONG).show();
 			}
      		
      	});
@@ -444,7 +445,7 @@ public class StorylineActivity extends Activity implements MediaScannerConnectio
 					catch (Exception e)
 					{
 						Toast.makeText(this, "Unable to load media.", Toast.LENGTH_LONG).show();
-						Log.e(TAG, "error loading media: " + e.getMessage(), e);
+						Log.e(AppConstants.TAG, "error loading media: " + e.getMessage(), e);
 
 					}
 				}
@@ -584,7 +585,7 @@ public class StorylineActivity extends Activity implements MediaScannerConnectio
 	                    progressDialog.dismiss();
 	                    
 	                    if (status != null)
-	                    	Toast.makeText(StorylineActivity.this, status, Toast.LENGTH_SHORT).show();
+	                    	Toast.makeText(ProjectViewActivity.this, status, Toast.LENGTH_SHORT).show();
 	                    
 	                 break;
 	                case 1: //status
