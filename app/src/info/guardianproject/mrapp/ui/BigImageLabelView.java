@@ -1,43 +1,65 @@
 package info.guardianproject.mrapp.ui;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Rect;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.TextView;
 
-public class ProjectSummaryView extends View {
+public class BigImageLabelView extends View {
 
 	private String mText;
 	private Paint mTextPaint;
 	private int mAscent;
+	private Bitmap mImage;
+	private int mFontSize = 42;
+	private int mFontColor = Color.WHITE;
+	private int mBgColor = Color.DKGRAY;
 	
-	public ProjectSummaryView(Context context, String title) {
+	public BigImageLabelView(Context context, String title, Bitmap image, int fontColor) {
 		super(context);
 		
-		setBackgroundColor(Color.BLACK);
 		mText = title;
+		mImage = image;
+		mFontColor = fontColor;
+		
 		
 		initViewGfx();
 	}
 	
-	private final void initViewGfx() {
+	private void initViewGfx() {
         mTextPaint = new Paint();
         mTextPaint.setAntiAlias(true);
-        mTextPaint.setTextSize(64);
-        mTextPaint.setColor(Color.WHITE);
+        mTextPaint.setTextSize(mFontSize);
+        mTextPaint.setColor(mFontColor);
         setPadding(3, 3, 3, 3);
         mAscent = (int) mTextPaint.ascent();
-       }
+        setBackgroundColor(mBgColor);
+		
+     }
 
 	@Override
 	protected void onDraw(Canvas canvas) {
 		super.onDraw(canvas);
 		
-        canvas.drawText(mText, getPaddingLeft(), getPaddingTop() - mAscent, mTextPaint);
+		int boundsHeight = getPaddingTop();
 		
+		if (mImage != null)
+		{
+			int boundsWidth = getWidth() - this.getPaddingLeft() - this.getPaddingRight();
+			
+			float imageRatio = ((float)mImage.getHeight())/((float)mImage.getWidth());
+			boundsHeight = (int)(((float)boundsWidth) * imageRatio) - this.getPaddingTop() - this.getPaddingBottom();
+			
+			Rect bounds = new Rect(getPaddingLeft(),getPaddingTop(),boundsWidth, boundsHeight);
+			canvas.drawBitmap(mImage, null, bounds, mTextPaint);
+		}
+		
+        canvas.drawText(mText, getPaddingLeft(), boundsHeight - mAscent, mTextPaint);		
 	}
 	
 	
@@ -49,6 +71,7 @@ public class ProjectSummaryView extends View {
         mText = text;
         requestLayout();
         invalidate();
+        initViewGfx();
     }
 
     /**
@@ -56,9 +79,10 @@ public class ProjectSummaryView extends View {
      * @param size Font size
      */
     public void setTextSize(int size) {
-        mTextPaint.setTextSize(size);
+    	mFontSize = size;
         requestLayout();
         invalidate();
+        initViewGfx();
     }
 
     /**
@@ -66,8 +90,9 @@ public class ProjectSummaryView extends View {
      * @param color ARGB value for the text
      */
     public void setTextColor(int color) {
-        mTextPaint.setColor(color);
+        mFontColor = color;
         invalidate();
+        initViewGfx();
     }
 
     /**

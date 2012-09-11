@@ -11,7 +11,7 @@
     </uses-permission>
 
     <uses-sdk
-        android:minSdkVersion="10"
+        android:minSdkVersion="8"
         android:targetSdkVersion="15" />
 
     <application
@@ -27,9 +27,14 @@
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>     
+        <activity
+            android:name=".LessonListActivity"
+            android:label="@string/app_name"            
+             >
         </activity>        
            <activity
-            android:name=".StorylineActivity"
+            android:name=".ProjectViewActivity"
             android:configChanges="orientation|keyboardHidden|screenSize" >           
         </activity>
         <activity android:name=".MediaOutputPreferences" />
