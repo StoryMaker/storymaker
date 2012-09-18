@@ -41,8 +41,10 @@ public class VideoCamera extends Activity implements OnClickListener, SurfaceHol
          WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
+        String videoPath = "";
+        
         recorder = new MediaRecorder();// Instantiate our media recording object
-        initRecorder();
+        initRecorder(videoPath);
         //setContentView(R.layout.view);
 
         SurfaceView cameraView = null;// (SurfaceView) findViewById(R.id.surface_view);
@@ -55,9 +57,9 @@ public class VideoCamera extends Activity implements OnClickListener, SurfaceHol
     }
 
 
-    private void initRecorder ()
+    private void initRecorder (String path)
     {
-    	initRecorder(-1, "/sdcard/foo.mp4", CamcorderProfile.QUALITY_HIGH);
+    	initRecorder(-1, path, CamcorderProfile.QUALITY_HIGH);
     }
     
     private void initRecorder(int maxDuration, String outputFile, int camProfile) {
@@ -70,7 +72,7 @@ public class VideoCamera extends Activity implements OnClickListener, SurfaceHol
         recorder.setOutputFile(outputFile);
         
         if (maxDuration != -1)
-        recorder.setMaxDuration(maxDuration); // 50 seconds
+        recorder.setMaxDuration(maxDuration);
     }
 
     private void prepareRecorder() {
@@ -92,13 +94,6 @@ public class VideoCamera extends Activity implements OnClickListener, SurfaceHol
             recorder.stop();
             recording = false;
 
-            // Let's initRecorder so we can record again
-            initRecorder();
-            prepareRecorder();
-            Toast display = Toast.makeText(this, "Stopped Recording", Toast.LENGTH_SHORT);// toast shows a display of little sorts
-            display.show();
-
-
         } else {
 
             recorder.start();
@@ -109,7 +104,7 @@ public class VideoCamera extends Activity implements OnClickListener, SurfaceHol
     }
 
     public void surfaceCreated(SurfaceHolder holder) {
-        initRecorder();
+     
         Log.v(TAG,"surfaceCreated");
         prepareRecorder();
     }
