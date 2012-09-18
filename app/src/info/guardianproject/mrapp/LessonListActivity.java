@@ -3,9 +3,12 @@ package info.guardianproject.mrapp;
 import info.guardianproject.mrapp.model.Lesson;
 import info.guardianproject.mrapp.ui.BigImageLabelView;
 
+import java.io.FileDescriptor;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import android.content.Intent;
+import android.content.res.AssetFileDescriptor;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -47,23 +50,21 @@ public class LessonListActivity extends SherlockActivity {
     {
     	alLessons = new ArrayList<Lesson>();
     	
-    	Lesson lesson = new Lesson();
-    	lesson.mTitle = "Journalism Introduction";
-    	lesson.mResourceUrl = "https://dev.guardianproject.info/projects/wrapp/wiki/Journalism_Introduction.html";
-    	alLessons.add(lesson);    	
-    	addNewLesson (lesson);
+    	try {
+			AssetFileDescriptor fd = getAssets().openFd("lessons");
+		
+	    	Lesson lesson = new Lesson();
+	    	lesson.mTitle = "Journalism Introduction";
+	    	lesson.mResourceUrl = "https://dev.guardianproject.info/projects/wrapp/wiki/Journalism_Introduction.html";
+	    	alLessons.add(lesson);    	
+	    	addNewLesson (lesson);
+	    	
+    	} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     	
-    	lesson = new Lesson();
-    	lesson.mTitle = "Selecting and verifying sources";
-    	lesson.mResourceUrl = "https://dev.guardianproject.info/projects/wrapp/wiki/Selecting_and_verifying_sources.html";
-    	alLessons.add(lesson);    	
-    	addNewLesson (lesson);
     	
-    	lesson = new Lesson();
-    	lesson.mTitle = "Security Introduction";
-    	lesson.mResourceUrl = "https://dev.guardianproject.info/projects/wrapp/wiki/Security_Introduction.html";
-    	alLessons.add(lesson);    	
-    	addNewLesson (lesson);
     }
 
     @Override
