@@ -2,6 +2,7 @@
 
     <string name="app_name">StoryMaker</string>
     
+    
     <string name="title_projects">Projects</string>
     <string name="title_lessons">Lessons</string>
     
@@ -19,8 +20,9 @@
     <string name="menu_save_media">Save</string>
     <string name="menu_play_media">Play</string>
 
+    <string name="welcome_message">Hey there!\nWelcome to StoryMaker</string>
     <!--  project list -->
-    <string name="default_project_list_view">Welcome to StoryMaker.\n\nTap to create a new project or use the menu to access the Lessons.</string>
+    <string name="default_project_list_view">Tap to create a new project</string>
     
     <!-- video processing -->
     <string name="pref_out_fps_title">Output Framerate (fps)</string>
