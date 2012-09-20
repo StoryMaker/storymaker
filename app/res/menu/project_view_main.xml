@@ -3,20 +3,15 @@
     <item android:id="@+id/menu_add_media"
         android:title="@string/menu_add_media"
         android:orderInCategory="1"
-        android:showAsAction="ifRoom"
+        android:showAsAction="always"
         
          />
     
-      <item android:id="@+id/menu_capture_media"
-        android:title="@string/menu_capture_media"
-        android:orderInCategory="1"
-        android:showAsAction="ifRoom"        
-         />
     
      <item android:id="@+id/menu_save_media"
         android:title="@string/menu_save_media"
         android:orderInCategory="1"
-        android:showAsAction="ifRoom"
+        android:showAsAction="never"
         
          />
     
@@ -24,14 +19,14 @@
      <item android:id="@+id/menu_share_media"
         android:title="@string/menu_share_media"
         android:orderInCategory="1"
-        android:showAsAction="ifRoom"
+        android:showAsAction="never"
         
          />
     
      <item android:id="@+id/menu_play_media"
         android:title="@string/menu_play_media"
         android:orderInCategory="1"
-        android:showAsAction="ifRoom"
+        android:showAsAction="never"
         
          />
     

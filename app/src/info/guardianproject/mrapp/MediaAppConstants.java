@@ -15,8 +15,6 @@ public class MediaAppConstants {
 	
 public final static String TAG = "************ MRAPP ***********";
 	
-	public final static int CAMERA_RESULT = 0;
-	public final static int GALLERY_RESULT = 1;
 	public final static int IMAGE_EDITOR = 2;
 	public final static int VIDEO_EDITOR = 3;
 	public final static int REVIEW_MEDIA = 4;

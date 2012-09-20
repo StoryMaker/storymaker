@@ -1,44 +1,33 @@
 package info.guardianproject.mrapp;
 
-import info.guardianproject.mrapp.media.MediaHelper;
 import info.guardianproject.mrapp.media.MediaConstants;
+import info.guardianproject.mrapp.media.MediaHelper;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.Date;
 
 import org.ffmpeg.android.FfmpegController;
 import org.ffmpeg.android.MediaDesc;
 import org.ffmpeg.android.MediaUtils;
 import org.ffmpeg.android.ShellUtils.ShellCallback;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
-import android.content.ContentResolver;
-import android.content.ContentValues;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.media.MediaScannerConnection;
-import android.media.MediaScannerConnection.MediaScannerConnectionClient;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
-import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnLongClickListener;
 import android.view.ViewGroup;
-import android.webkit.MimeTypeMap;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -58,8 +47,8 @@ public class ProjectViewActivity extends SherlockActivity {
 	
 	private File fileExternDir;
 	
-	private File outFile = null;	
-	private File cameraImage;
+	private File mRenderPath;	
+	private File mMediaTmp;
 	
 	private MediaHelper mMediaHelper;
 	private MediaHelper.MediaResult mMediaResult;
@@ -144,22 +133,22 @@ public class ProjectViewActivity extends SherlockActivity {
 		{
 	    	try
 	    	{
-	    		outFile = createOutputFile("mp4");
+	    		mRenderPath = createOutputFile("mp4");
 			 
-	    		concatMediaFiles(outFile.getAbsolutePath());
+	    		concatMediaFiles(mRenderPath.getAbsolutePath());
 	    		
 	    		Message msg = mHandler.obtainMessage(0);
 		         mHandler.sendMessage(msg);
 	    		
 	    		MediaScannerConnection.scanFile(
 	     				ProjectViewActivity.this,
-	     				new String[] {outFile.getAbsolutePath()},
+	     				new String[] {mRenderPath.getAbsolutePath()},
 	     				new String[] {MediaConstants.MIME_TYPE_MP4},
 	     				null);
 	    		
 	    		
 	    		msg = mHandler.obtainMessage(4);
-	            msg.getData().putString("path",outFile.getAbsolutePath());
+	            msg.getData().putString("path",mRenderPath.getAbsolutePath());
 	            
 	            mHandler.sendMessage(msg);
 	    	}
@@ -304,6 +293,11 @@ public class ProjectViewActivity extends SherlockActivity {
          	
      		((ImageView)child).setImageBitmap(MediaUtils.getVideoFrame(mdesc.path, 5));
      	}
+     	else if (mdesc.mimeType.startsWith("audio")) 
+     	{
+     		child = new TextView(this);
+     		((TextView)child).setText(mdesc.mimeType + ": " + mdesc.path);
+     	}
      	else 
      	{
      		child = new TextView(this);
@@ -392,7 +386,7 @@ public class ProjectViewActivity extends SherlockActivity {
 		if (resultCode == RESULT_OK)
 		{
 			
-			mMediaResult = mMediaHelper.handleResult(requestCode, resultCode, intent, cameraImage);
+			mMediaResult = mMediaHelper.handleResult(requestCode, resultCode, intent, mMediaTmp);
 			
 			if (mMediaResult != null)
 				if (mMediaResult.path != null)
@@ -419,14 +413,9 @@ public class ProjectViewActivity extends SherlockActivity {
 		
 		 if (item.getItemId() == R.id.menu_add_media)
          {
-			 mMediaHelper.openGalleryChooser("*/*");
 			 
-         }
-		 else if (item.getItemId() == R.id.menu_capture_media)
-         {
-			 
-			 showCaptureDialog();
-         }
+			 showAddMediaDialog();
+         }		 
 		 else if (item.getItemId() == R.id.menu_settings)
 		 {
 			 showMediaPrefs();
@@ -441,15 +430,15 @@ public class ProjectViewActivity extends SherlockActivity {
 		 else if (item.getItemId() == R.id.menu_share_media)
          {
 			
-			 mMediaHelper.shareMedia(outFile);
+			 mMediaHelper.shareMedia(mRenderPath);
 			 
          }
 
 		 else if (item.getItemId() == R.id.menu_play_media)
          {
 			
-			 if (outFile != null)
-				 mMediaHelper.playMedia(outFile, MediaConstants.MIME_TYPE_VIDEO);
+			 if (mRenderPath != null)
+				 mMediaHelper.playMedia(mRenderPath, MediaConstants.MIME_TYPE_VIDEO);
 			 
 			 
          }
@@ -457,12 +446,44 @@ public class ProjectViewActivity extends SherlockActivity {
 		return super.onMenuItemSelected(featureId, item);
 	}
 	
-	private void showCaptureDialog ()
+	private void showAddMediaDialog ()
 	{
 		
+		final CharSequence[] items = {"Open Gallery","Open File","Record Video", "Record Audio", "Take Photo"};
+
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		builder.setTitle("Choose medium");
+		builder.setItems(items, new DialogInterface.OnClickListener() {
+		    public void onClick(DialogInterface dialog, int item) {
+		        
+		    	switch (item) {
+		    		case 0:
+		    			mMediaHelper.openGalleryChooser("*/*");
+		    			break;
+		    		case 1:
+		    			mMediaHelper.openFileChooser();
+		    			break;
+		    		case 2:
+		    			mMediaTmp = mMediaHelper.captureVideo(fileExternDir);
+
+		    			break;
+		    		case 3:
+		    			mMediaTmp = mMediaHelper.captureAudio(fileExternDir);
+
+		    			break;
+		    		case 4:
+		    			mMediaTmp = mMediaHelper.capturePhoto(fileExternDir);
+		    			break;
+		    		default:
+		    			//do nothing!
+		    	}
+		    	
+		    	
+		    }
+		});
 		
-		//cameraImage = mMediaHelper.captureVideo(fileExternDir);
-		
+		AlertDialog alert = builder.create();
+		alert.show();
 	}
 
 	private Handler mHandler = new Handler()
@@ -488,7 +509,7 @@ public class ProjectViewActivity extends SherlockActivity {
 	               
 	                case 4: //play video
 	                	
-	                	mMediaHelper.playMedia(outFile, MediaConstants.MIME_TYPE_VIDEO);
+	                	mMediaHelper.playMedia(mRenderPath, MediaConstants.MIME_TYPE_VIDEO);
 	                	break;
 	                	
 	                case 5:
