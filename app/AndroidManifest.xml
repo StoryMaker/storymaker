@@ -15,9 +15,14 @@
         android:targetSdkVersion="15" />
 
     <application
+        android:name=".StoryMakerApp"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/AppTheme"
+        android:uiOptions="splitActionBarWhenNarrow"
+        android:hardwareAccelerated="true"
+        android:largeHeap="true"
+         >
      
         <activity
             android:name=".ProjectListActivity"
@@ -29,17 +34,23 @@
             </intent-filter>
         </activity>     
         <activity
-            android:name=".LessonListActivity"
+            android:name=".lessons.LessonPagerActivity"
             android:label="@string/app_name"            
              >
         </activity>   
-          <activity android:name=".LessonViewActivity" />
+          <activity android:name=".lessons.LessonViewActivity" />
         
            <activity
             android:name=".ProjectViewActivity"
             android:configChanges="orientation|keyboardHidden|screenSize" >           
         </activity>
         <activity android:name=".MediaOutputPreferences" />
+        
+        <provider
+		    android:authorities="info.guardianproject.mrapp.db.LessonsProvider"
+		    android:multiprocess="true"
+		    android:name="info.guardianproject.mrapp.db.LessonsProvider"></provider>
+		        
     </application>
 
 </manifest>
