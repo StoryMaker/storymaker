@@ -37,7 +37,8 @@ public class MediaHelper implements MediaScannerConnectionClient {
 	private Handler mHandler;
 	private MediaScannerConnection mScanner;
 	
-	private File mFileTmp;
+	private File mMediaFileTmp;
+	private Uri mMediaUriTmp;
 	
 	public MediaHelper (Activity activity, Handler handler)
 	{
@@ -52,12 +53,15 @@ public class MediaHelper implements MediaScannerConnectionClient {
          values.put(MediaStore.Images.Media.DESCRIPTION,MediaConstants.CAMCORDER_TMP_FILE);
          
          mActivity.sendBroadcast(new Intent().setAction(MediaAppConstants.Keys.Service.LOCK_LOGS));
-         mFileTmp = new File(fileExternDir, new Date().getTime() + '-' + MediaConstants.CAMCORDER_TMP_FILE);
-
+         mMediaFileTmp = new File(fileExternDir, new Date().getTime() + '-' + MediaConstants.CAMCORDER_TMP_FILE);
+         mMediaUriTmp = Uri.fromFile(mMediaFileTmp);
+         
      	Intent intent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
+        intent.putExtra( MediaStore.EXTRA_OUTPUT, mMediaUriTmp);
+
      	mActivity.startActivityForResult(intent, MediaConstants.CAMERA_RESULT);
          
-         return mFileTmp;
+         return mMediaFileTmp;
 	}
 	
 	public File capturePhoto (File fileExternDir)
@@ -69,18 +73,17 @@ public class MediaHelper implements MediaScannerConnectionClient {
         values.put(MediaStore.Images.Media.TITLE, MediaConstants.CAMERA_TMP_FILE);      
         values.put(MediaStore.Images.Media.DESCRIPTION,MediaConstants.CAMERA_TMP_FILE);
 
-        mFileTmp = new File(fileExternDir, new Date().getTime() + '-' + MediaConstants.CAMERA_TMP_FILE);
+        mMediaFileTmp = new File(fileExternDir, new Date().getTime() + '-' + MediaConstants.CAMERA_TMP_FILE);
     	
-    	Uri uriCameraImage = Uri.fromFile(mFileTmp);
+        mMediaUriTmp = Uri.fromFile(mMediaFileTmp);
         //uriCameraImage = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
 
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE );
-        intent.putExtra( MediaStore.EXTRA_OUTPUT, uriCameraImage);
+        intent.putExtra( MediaStore.EXTRA_OUTPUT, mMediaUriTmp);
         
         mActivity.startActivityForResult(intent, MediaConstants.CAMERA_RESULT);
         
-     	
-         return mFileTmp;
+         return mMediaFileTmp;
 	}
 	
 	public File captureAudio (File fileExternDir)
@@ -197,32 +200,33 @@ public class MediaHelper implements MediaScannerConnectionClient {
 				
 				//Uri uriCameraImage = intent.getData();			
 				//Log.d(MediaAppConstants.TAG, "RETURNED URI FROM CAMERA RESULT: " + uriCameraImage.toString());
-				Uri uriCameraImage = Uri.fromFile(mFileTmp);
-				
-				String fileExtension = MimeTypeMap.getFileExtensionFromUrl(uriCameraImage.toString());
+				//Uri uriCameraImage = Uri.fromFile(mFileTmp);
+								
+				String fileExtension = MimeTypeMap.getFileExtensionFromUrl(mMediaFileTmp.getAbsolutePath());
 				
 				result = new MediaResult();
 				result.mimeType = MimeTypeMap.getSingleton().getMimeTypeFromExtension(fileExtension);
 				
 				if (result.mimeType  == null)
 				{
-					if(uriCameraImage.getPathSegments().contains("video")) {
+					if(mMediaUriTmp.getPathSegments().contains("video")) {
 						result.mimeType  = MediaConstants.MIME_TYPE_MP4;
-					} else if(uriCameraImage.getPathSegments().contains("images")) {
+					} else if(mMediaUriTmp.getPathSegments().contains("images")) {
 						result.mimeType  = MediaConstants.MIME_TYPE_JPEG;
 					}
 				}
+				
 				// TODO: IMPORTANTE!  Right here, we are forcing the media object to go through
 				// the media scanner.  THIS MUST BE UNDONE at the end of the editing process
 				// in order to maintain security/anonymity
 				
-				if(result.mimeType.equals(MediaConstants.MIME_TYPE_MP4)) {
+				if((!mMediaFileTmp.exists()) && result.mimeType.equals(MediaConstants.MIME_TYPE_MP4)) {
 					// write input stream to file
 					FileOutputStream fos;
 					try {
 						
-						fos = new FileOutputStream(fileTmp);
-						InputStream media = mActivity.getContentResolver().openInputStream(uriCameraImage);
+						fos = new FileOutputStream(mMediaFileTmp);
+						InputStream media = mActivity.getContentResolver().openInputStream(mMediaUriTmp);
 						byte buf[] = new byte[1024];
 						int len;
 						while((len = media.read(buf)) > 0)
@@ -237,7 +241,6 @@ public class MediaHelper implements MediaScannerConnectionClient {
 					
 				}
 				
-				mFileTmp = fileTmp;
 				mScanner = new MediaScannerConnection(mActivity, this);
 				mScanner.connect();
 				
@@ -320,8 +323,9 @@ public class MediaHelper implements MediaScannerConnectionClient {
 	 @Override
 	public void onMediaScannerConnected() {
 		
-		 mScanner.scanFile(mFileTmp.getAbsolutePath(), null);
-
+		 
+		 mScanner.scanFile(mMediaFileTmp.getAbsolutePath(), null);
+		 
 	}
 
 	@Override

@@ -1,0 +1,20 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    
+     <item android:id="@+id/menu_projects"
+        android:title="@string/menu_projects"
+        android:showAsAction="always|withText"         
+       android:enabled="true" android:visible="true"/>
+      
+      <item android:id="@+id/menu_lessons"
+        android:title="@string/menu_lessons"
+        android:showAsAction="always|withText"         
+       android:enabled="true" android:visible="true"/>
+      
+       
+    <item android:id="@+id/menu_settings"
+        android:title="@string/menu_settings"
+                android:showAsAction="never|withText"         
+        
+       android:enabled="true" android:visible="true"/>
+    
+</menu>
