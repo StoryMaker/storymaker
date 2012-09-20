@@ -41,8 +41,6 @@ public class ProjectViewActivity extends SherlockActivity {
 
 	private LinearLayout layoutMain;
 	
-	private final static String DEFAULT_IMAGE_DURATION = "00:00:05";
-	
 	private ArrayList<MediaDesc> mediaList = new ArrayList<MediaDesc>();
 	
 	private File fileExternDir;
@@ -64,16 +62,25 @@ public class ProjectViewActivity extends SherlockActivity {
         layoutMain = (LinearLayout) findViewById(R.id.layout_media_list);
                  
         Intent intent = getIntent();
+        
+        initExternalStorage();
+        
+        mMediaHelper = new MediaHelper (this, mHandler);
+        
         if (intent != null)
         {
         	String title = intent.getStringExtra("title");
         	if (title != null)
         		setTitle(title);
+        	
+        	MediaDesc result = mMediaHelper.handleIntentLaunch(intent);
+        	
+        	if (result != null && result.path != null && result.mimeType != null)
+        	{
+        		addMediaFile(result.path, result.mimeType);
+        	}
         }
         
-        initExternalStorage();
-        
-        mMediaHelper = new MediaHelper (this, mHandler);
     }
 
     @Override
@@ -428,9 +435,12 @@ public class ProjectViewActivity extends SherlockActivity {
     	     	 
      	if (mdesc.mimeType.startsWith("image"))
      	{
-     		mdesc.duration = DEFAULT_IMAGE_DURATION;
+     		//mdesc.duration = DEFAULT_IMAGE_DURATION;
+     		
      		child = new ImageView(this);
-     		((ImageView)child).setScaleType(ImageView.ScaleType.CENTER_CROP);
+     		child.setBackgroundColor(Color.BLACK);
+     		
+     		((ImageView)child).setScaleType(ImageView.ScaleType.CENTER_INSIDE);
 
      		try
      		{
@@ -444,6 +454,7 @@ public class ProjectViewActivity extends SherlockActivity {
      	else if (mdesc.mimeType.startsWith("video"))
      	{
      		child = new ImageView(this);
+     		child.setBackgroundColor(Color.BLACK);
      		((ImageView)child).setScaleType(ImageView.ScaleType.CENTER_CROP);
          	
      		((ImageView)child).setImageBitmap(MediaUtils.getVideoFrame(mdesc.path, 5));
@@ -459,15 +470,17 @@ public class ProjectViewActivity extends SherlockActivity {
      		((TextView)child).setText(mdesc.mimeType + ": " + mdesc.path);
      	}
 
-     	ViewGroup.LayoutParams lp = new ViewGroup.LayoutParams(
-                ViewGroup.LayoutParams.WRAP_CONTENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT);
-     	
-     	child.setLayoutParams(lp);
+     
+     	LinearLayout ll = new LinearLayout(this);
+     	ll.setOrientation(LinearLayout.VERTICAL);
 
-     	child.setBackgroundColor(Color.WHITE);
-     	child.setPadding(5, 5, 5, 5);
+     	LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
+     	     LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.MATCH_PARENT);
+
+     	layoutParams.setMargins(10, 10, 10, 10);
      	
+     	child.setBackgroundColor(Color.WHITE);
+     	child.setPadding(10, 10, 10, 10);
 
      	child.setId(mediaId);
      	
@@ -500,8 +513,8 @@ public class ProjectViewActivity extends SherlockActivity {
      		
      	});
      	
-     	
-    	layoutMain.addView(child);
+     	ll.addView(child);
+    	layoutMain.addView(ll);
     	
 
     	updateStatus( file.getName() + " added to queue");

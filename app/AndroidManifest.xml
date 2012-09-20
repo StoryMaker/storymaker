@@ -35,8 +35,10 @@
             </intent-filter>
         </activity>  
          <activity
-            android:name=".ProjectListActivity"       
-             >
+            android:name=".ProjectListActivity">
+            
+           
+             
         </activity>   
         <activity
             android:name=".lessons.LessonPagerActivity"
@@ -47,7 +49,21 @@
         
            <activity
             android:name=".ProjectViewActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize" >           
+            android:configChanges="orientation|keyboardHidden|screenSize" >   
+            	  <intent-filter>
+            
+			    <action android:name="android.intent.action.EDIT" />
+                 <action android:name="android.intent.action.SEND" />
+                 
+                <action android:name="android.intent.action.MAIN" />
+                 <category android:name="android.intent.category.DEFAULT" />
+                 <category android:name="android.intent.category.ALTERNATIVE" /> 
+                 <category android:name="android.intent.category.SELECTED_ALTERNATIVE" /> 
+                 
+                 <data android:mimeType="image/*" />
+                 <data android:mimeType="video/*" />
+                 <data android:mimeType="audio/*" />
+             </intent-filter>          
         </activity>
         <activity android:name=".MediaOutputPreferences" />
         
