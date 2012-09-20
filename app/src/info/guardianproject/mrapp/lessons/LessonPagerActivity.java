@@ -1,17 +1,30 @@
-package info.guardianproject.mrapp;
+package info.guardianproject.mrapp.lessons;
 
+import info.guardianproject.mrapp.MediaAppConstants;
+import info.guardianproject.mrapp.R;
+import info.guardianproject.mrapp.R.id;
+import info.guardianproject.mrapp.R.layout;
+import info.guardianproject.mrapp.R.menu;
+import info.guardianproject.mrapp.R.string;
 import info.guardianproject.mrapp.model.Lesson;
 import info.guardianproject.mrapp.ui.BigImageLabelView;
 
+import java.io.FileDescriptor;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 
+import org.apache.commons.io.IOUtils;
+
 import android.content.Intent;
+import android.content.res.AssetFileDescriptor;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.TextView;
@@ -20,7 +33,7 @@ import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 
-public class LessonListActivity extends SherlockActivity {
+public class LessonPagerActivity extends SherlockActivity {
 
 	private ViewPager pager;
 	private AwesomePagerAdapter adapter;
@@ -47,23 +60,20 @@ public class LessonListActivity extends SherlockActivity {
     {
     	alLessons = new ArrayList<Lesson>();
     	
-    	Lesson lesson = new Lesson();
-    	lesson.mTitle = "Journalism Introduction";
-    	lesson.mResourceUrl = "https://dev.guardianproject.info/projects/wrapp/wiki/Journalism_Introduction.html";
-    	alLessons.add(lesson);    	
-    	addNewLesson (lesson);
+    	try {
+
+    		for (int i = 1; i < 100; i++)
+    		{
+    			InputStream is = getAssets().open("lessons/" + i + "/lesson.json");
+    			Lesson lesson = Lesson.parse(IOUtils.toString(is));
+    			addNewLesson (lesson);
+    		}
+	    	
+    	} catch (Exception e) {
+			Log.e(MediaAppConstants.TAG,"error parsing Lesson",e);
+		}
     	
-    	lesson = new Lesson();
-    	lesson.mTitle = "Selecting and verifying sources";
-    	lesson.mResourceUrl = "https://dev.guardianproject.info/projects/wrapp/wiki/Selecting_and_verifying_sources.html";
-    	alLessons.add(lesson);    	
-    	addNewLesson (lesson);
     	
-    	lesson = new Lesson();
-    	lesson.mTitle = "Security Introduction";
-    	lesson.mResourceUrl = "https://dev.guardianproject.info/projects/wrapp/wiki/Security_Introduction.html";
-    	alLessons.add(lesson);    	
-    	addNewLesson (lesson);
     }
 
     @Override
@@ -99,7 +109,7 @@ public class LessonListActivity extends SherlockActivity {
 
 		Intent intent = new Intent(this,LessonViewActivity.class);
 		intent.putExtra("title", lesson.mTitle);
-		intent.putExtra("url", lesson.mResourceUrl);
+		intent.putExtra("url", lesson.mResourcePath);
 		
 		startActivity(intent);
 		
@@ -107,7 +117,7 @@ public class LessonListActivity extends SherlockActivity {
 	
 	private void addNewLesson (Lesson lesson)
 	{
-	
+		alLessons.add(lesson);
 		TextView view = new TextView(this);
 		view.setTextSize(36);
 		view.setText(lesson.mTitle);

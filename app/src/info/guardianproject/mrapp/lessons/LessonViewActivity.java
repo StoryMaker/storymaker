@@ -1,5 +1,8 @@
-package info.guardianproject.mrapp;
+package info.guardianproject.mrapp.lessons;
 
+import info.guardianproject.mrapp.R;
+import info.guardianproject.mrapp.R.id;
+import info.guardianproject.mrapp.R.layout;
 import info.guardianproject.mrapp.model.Lesson;
 import info.guardianproject.mrapp.ui.BigImageLabelView;
 
