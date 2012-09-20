@@ -164,9 +164,11 @@ public class ProjectListActivity extends SherlockActivity {
 	private void showProjectView ()
 	{
 		Project projectCurrent = alProjects.get(pager.getCurrentItem());
+		
 		Intent intent = new Intent(getBaseContext(), ProjectViewActivity.class);
 		intent.putExtra("pid", projectCurrent.mId);
 		intent.putExtra("title", projectCurrent.mTitle);
+		
 		startActivity(intent);
 	}
 

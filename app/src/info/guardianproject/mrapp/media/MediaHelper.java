@@ -11,8 +11,11 @@ import java.io.InputStream;
 import java.net.URI;
 import java.util.Date;
 
+import org.ffmpeg.android.MediaDesc;
+
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
@@ -145,11 +148,69 @@ public class MediaHelper implements MediaScannerConnectionClient {
 	      return thumb;
 	 }
 	 
+	 public MediaDesc handleIntentLaunch(Intent intent)
+	 {
+		 MediaDesc result = null;
+		 
+		// Passed in from CameraObscuraMainMenu
+			Uri uriLaunch = mActivity.getIntent().getData();
+			
+			// If originalImageUri is null, we are likely coming from another app via "share"
+			if (uriLaunch == null)
+			{
+				if (mActivity.getIntent().hasExtra(Intent.EXTRA_STREAM)) 
+				{
+					uriLaunch = (Uri) mActivity.getIntent().getExtras().get(Intent.EXTRA_STREAM);
+					
+				}
+				
+			}
+			
+			if (uriLaunch != null)
+			{
+				result = pullMediaDescFromUri (uriLaunch);
+				
+				if (result == null)
+				{
+					File fileMedia = new File(uriLaunch.getPath());
+					if (fileMedia.exists())
+					{
+						result = new MediaDesc();
+						result.path = fileMedia.getAbsolutePath();
+						result.mimeType = getMimeType(fileMedia);
+						
+					}
+					
+				}
+			}
+			
+			return result;
+	 }
+	 
+	 public MediaDesc pullMediaDescFromUri(Uri originalUri) {
+		 
+		 	MediaDesc result = null;
+		 	
+	    	String[] columnsToSelect = { MediaStore.Video.Media.DATA, MediaStore.Images.Media.MIME_TYPE };
+	    	Cursor videoCursor = mActivity.getContentResolver().query(originalUri, columnsToSelect, null, null, null );
+	    	if ( videoCursor != null && videoCursor.getCount() == 1 ) {
+		        if (videoCursor.moveToFirst())
+		        {
+		        	result = new MediaDesc();
+		        	result.path = videoCursor.getString(videoCursor.getColumnIndex(MediaStore.Images.Media.DATA));
+		        	result.mimeType = videoCursor.getString(videoCursor.getColumnIndex(MediaStore.Images.Media.MIME_TYPE));
+		        }
+	    	}
+
+	    	return result;
+	    }
+	 
 	 public class MediaResult 
 	 {
 		 public String path;
 		 public String mimeType;
 	 }
+	 
 	 
 	 public MediaHelper.MediaResult handleResult (int requestCode, int resultCode, Intent intent, File fileTmp)
 	 {
@@ -201,11 +262,9 @@ public class MediaHelper implements MediaScannerConnectionClient {
 				//Uri uriCameraImage = intent.getData();			
 				//Log.d(MediaAppConstants.TAG, "RETURNED URI FROM CAMERA RESULT: " + uriCameraImage.toString());
 				//Uri uriCameraImage = Uri.fromFile(mFileTmp);
-								
-				String fileExtension = MimeTypeMap.getFileExtensionFromUrl(mMediaFileTmp.getAbsolutePath());
 				
 				result = new MediaResult();
-				result.mimeType = MimeTypeMap.getSingleton().getMimeTypeFromExtension(fileExtension);
+				result.mimeType = getMimeType(mMediaFileTmp);
 				
 				if (result.mimeType  == null)
 				{
@@ -338,5 +397,28 @@ public class MediaHelper implements MediaScannerConnectionClient {
 	     msg.getData().putString("path", path);    
 	     mHandler.sendMessage(msg);
 
+	}
+	
+	public String getMimeType (File fileMedia)
+	{
+		String result = null;
+		String path = fileMedia.getAbsolutePath();
+		String fileExtension = MimeTypeMap.getFileExtensionFromUrl(path);		
+		result = MimeTypeMap.getSingleton().getMimeTypeFromExtension(fileExtension);
+		
+		if (result == null)
+		{
+			if (path.endsWith("wav"))
+			{
+				result = "audio/wav";
+			}
+			else if (path.endsWith("mp4"))
+			{
+				result = "video/mp4";
+			}
+			//need to add more here, or build from map
+		}
+		
+		return result;
 	}
 }
