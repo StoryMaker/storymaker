@@ -25,12 +25,6 @@ public final static String TAG = "************ MRAPP ***********";
 	public final static int PREFS = 1;
 	public final static int LOGOUT = 2;
 	
-	public final static String CAMERA_TMP_FILE = "ssctmp.jpg";
-	public final static String MIME_TYPE_JPEG = "image/jpeg";
-	
-	public final static String CAMCORDER_TMP_FILE = "ssctmp.mp4";
-	public final static String MIME_TYPE_MP4 = "video/mp4";
-	public final static String MIME_TYPE_MKV = "video/mkv";
 	
 	public final static class MimeTypes {
 		public final static String MP4 = "mp4";
