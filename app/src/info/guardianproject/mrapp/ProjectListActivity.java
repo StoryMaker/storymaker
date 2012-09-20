@@ -14,6 +14,7 @@ import android.os.Parcelable;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnLongClickListener;
@@ -93,7 +94,7 @@ public class ProjectListActivity extends SherlockActivity {
 			Log.e(AppConstants.TAG,"error loading image",e);
 		}
 		
-		BigImageLabelView view = new BigImageLabelView(this,project.mTitle, image, Color.WHITE);
+		BigImageLabelView view = new BigImageLabelView(this,project.mTitle, image, Color.DKGRAY, Color.LTGRAY);
 		
 		view.setOnClickListener(new OnClickListener(){
 
@@ -107,41 +108,22 @@ public class ProjectListActivity extends SherlockActivity {
 			
 		});
 		
-		view.setOnLongClickListener(new OnLongClickListener ()
-		{
-
-			@Override
-			public boolean onLongClick(View v) {
-				
-				adapter.removeProjectView(pager.getCurrentItem());
-
-				adapter.notifyDataSetChanged();
-				
-				return false;
-			}
-			
-		});
-		
 		adapter.addProjectView(view);
 		adapter.notifyDataSetChanged();
 		
-		pager.setCurrentItem(adapter.getCount(), true);
+		pager.setCurrentItem(adapter.getCount()-1, true);
 		
 	}
 	
 	private void addDefaultView ()
 	{
-		Project project = new Project ();
-		project.mId =-1;
-		project.mTitle = "dummy project";
-		alProjects.add(project);
-		
 		TextView view = new TextView(this);
 		view.setTextSize(36);
 		view.setText(R.string.default_project_list_view);
-		view.setTextColor(Color.WHITE);
-		view.setBackgroundColor(Color.DKGRAY);
+		view.setTextColor(Color.DKGRAY);
+		view.setBackgroundColor(Color.LTGRAY);
 		view.setPadding(6,6,6,6);
+		view.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.CENTER_VERTICAL);
 		
 		view.setOnClickListener(new OnClickListener(){
 
@@ -149,21 +131,18 @@ public class ProjectListActivity extends SherlockActivity {
 			public void onClick(View v) {
 				
 				addNewProject();
-				
 			}
-			
 			
 		});
 		
 		adapter.addProjectView(view);
-		adapter.notifyDataSetChanged();
-		
-		pager.setCurrentItem(adapter.getCount()-1, true);
+		adapter.notifyDataSetChanged();		
+		pager.setCurrentItem(0, true);
 	}
 	
 	private void showProjectView ()
 	{
-		Project projectCurrent = alProjects.get(pager.getCurrentItem());
+		Project projectCurrent = alProjects.get(pager.getCurrentItem()-1);
 		
 		Intent intent = new Intent(getBaseContext(), ProjectViewActivity.class);
 		intent.putExtra("pid", projectCurrent.mId);
