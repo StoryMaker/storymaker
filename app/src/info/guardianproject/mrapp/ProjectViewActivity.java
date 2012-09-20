@@ -1,5 +1,8 @@
 package info.guardianproject.mrapp;
 
+import info.guardianproject.mrapp.media.MediaHelper;
+import info.guardianproject.mrapp.media.MediaConstants;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -45,27 +48,22 @@ import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 
-public class ProjectViewActivity extends SherlockActivity implements MediaScannerConnectionClient {
+public class ProjectViewActivity extends SherlockActivity {
 
-	private final static int GALLERY_RESULT = 1;
-	private final static int CAMERA_RESULT = 2;
+	private LinearLayout layoutMain;
 	
-    private final static String MIME_TYPE_MP4 = "video/mp4";
-
 	private final static String DEFAULT_IMAGE_DURATION = "00:00:05";
 	
 	private ArrayList<MediaDesc> mediaList = new ArrayList<MediaDesc>();
 	
 	private File fileExternDir;
 	
-	private LinearLayout layoutMain;
-	
-	private File outFile = null;
-	
+	private File outFile = null;	
 	private File cameraImage;
-	private String mimeType;
 	
-	private MediaScannerConnection msc;
+	private MediaHelper mMediaHelper;
+	private MediaHelper.MediaResult mMediaResult;
+	
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -82,6 +80,8 @@ public class ProjectViewActivity extends SherlockActivity implements MediaScanne
         }
         
         initExternalStorage();
+        
+        mMediaHelper = new MediaHelper (this, mHandler);
     }
 
     @Override
@@ -93,7 +93,7 @@ public class ProjectViewActivity extends SherlockActivity implements MediaScanne
 
 	@Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getSupportMenuInflater().inflate(R.menu.activity_main, menu);
+        getSupportMenuInflater().inflate(R.menu.project_view_main, menu);
         return true;
     }
     
@@ -152,7 +152,7 @@ public class ProjectViewActivity extends SherlockActivity implements MediaScanne
 	    		MediaScannerConnection.scanFile(
 	     				ProjectViewActivity.this,
 	     				new String[] {outFile.getAbsolutePath()},
-	     				new String[] {MIME_TYPE_MP4},
+	     				new String[] {MediaConstants.MIME_TYPE_MP4},
 	     				null);
 	    		
 	    		
@@ -288,7 +288,7 @@ public class ProjectViewActivity extends SherlockActivity implements MediaScanne
 
      		try
      		{
-     			((ImageView)child).setImageBitmap(getBitmapThumb(file));
+     			((ImageView)child).setImageBitmap(mMediaHelper.getBitmapThumb(file));
      		}
      		catch (IOException ioe)
      		{
@@ -374,38 +374,14 @@ public class ProjectViewActivity extends SherlockActivity implements MediaScanne
      
      }*/
     
-	 private void playVideo() {
-			
-	    	Intent intent = new Intent(android.content.Intent.ACTION_VIEW);
-	    	intent.setDataAndType(Uri.fromFile(outFile), "video/*");   
-	    	intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-	   	 	startActivity(intent);
-	   	 	
-	 }
-    
-    private Bitmap getBitmapThumb (File file) throws IOException
-    {
-    	 Uri contentURI = Uri.fromFile(file);        
-         ContentResolver cr = getContentResolver();
-         InputStream in = cr.openInputStream(contentURI);
-         BitmapFactory.Options options = new BitmapFactory.Options();
-         options.inSampleSize=8;
-         Bitmap thumb = BitmapFactory.decodeStream(in,null,options);
-         return thumb;
-    }
+	
     
     private void updateStatus (String msg)
     {
     	Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
     }
     
-    public void openGalleryChooser (String mimeType)
-    {
-    	Intent intent = new Intent(Intent.ACTION_PICK);
-		intent.setType(mimeType); //limit to specific mimetype
-		startActivityForResult(intent, GALLERY_RESULT);
-		
-    }
+    
     
     
 	protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
@@ -414,95 +390,13 @@ public class ProjectViewActivity extends SherlockActivity implements MediaScanne
 		if (resultCode == RESULT_OK)
 		{
 			
-			if (requestCode == GALLERY_RESULT) 
-			{
-				if (intent != null)
-				{
-					Uri uriGalleryFile = intent.getData();
-					
-					try
-						{
-							if (uriGalleryFile != null)
-							{
-								Cursor cursor = managedQuery(uriGalleryFile, null, 
-		                                null, null, null); 
-								cursor.moveToNext(); 
-								// Retrieve the path and the mime type 
-								String path = cursor.getString(cursor 
-								                .getColumnIndex(MediaStore.MediaColumns.DATA)); 
-								String mimeType = cursor.getString(cursor 
-								                .getColumnIndex(MediaStore.MediaColumns.MIME_TYPE));
-								
-								
-								addMediaFile (path, mimeType);
-								
-							}
-							else
-							{
-								Toast.makeText(this, "Unable to load media.", Toast.LENGTH_LONG).show();
+			mMediaResult = mMediaHelper.handleResult(requestCode, resultCode, intent, cameraImage);
 			
-							}
-						}
-					catch (Exception e)
-					{
-						Toast.makeText(this, "Unable to load media.", Toast.LENGTH_LONG).show();
-						Log.e(AppConstants.TAG, "error loading media: " + e.getMessage(), e);
-
-					}
-				}
-				else
-				{
-					Toast.makeText(this, "Unable to load media.", Toast.LENGTH_LONG).show();
-	
-				}
-					
-			}
-			else if(requestCode == MediaAppConstants.CAMERA_RESULT) {
-				
-				Uri uriCameraImage = intent.getData();
+			if (mMediaResult != null)
+				if (mMediaResult.path != null)
+					addMediaFile(mMediaResult.path, mMediaResult.mimeType);
 			
-				Log.d(MediaAppConstants.TAG, "RETURNED URI FROM CAMERA RESULT: " + uriCameraImage.toString());
-				
-				String fileExtension = MimeTypeMap.getFileExtensionFromUrl(uriCameraImage.toString());
-				mimeType = MimeTypeMap.getSingleton().getMimeTypeFromExtension(fileExtension);
-				
-				if (mimeType == null)
-				{
-					if(uriCameraImage.getPathSegments().contains("video")) {
-						mimeType = MediaAppConstants.MIME_TYPE_MP4;
-					} else if(mimeType == null && uriCameraImage.getPathSegments().contains("images")) {
-						mimeType = MediaAppConstants.MIME_TYPE_JPEG;
-					}
-				}
-				// TODO: IMPORTANTE!  Right here, we are forcing the media object to go through
-				// the media scanner.  THIS MUST BE UNDONE at the end of the editing process
-				// in order to maintain security/anonymity
-				
-				if(mimeType.equals(MediaAppConstants.MIME_TYPE_MP4)) {
-					// write input stream to file
-					FileOutputStream fos;
-					try {
-						
-						fos = new FileOutputStream(cameraImage);
-						InputStream media = getContentResolver().openInputStream(uriCameraImage);
-						byte buf[] = new byte[1024];
-						int len;
-						while((len = media.read(buf)) > 0)
-							fos.write(buf, 0, len);
-						fos.close();
-						media.close();
-					} catch (FileNotFoundException e) {
-						Log.e(MediaAppConstants.TAG, e.toString());
-					} catch (IOException e) {
-						Log.e(MediaAppConstants.TAG, e.toString());
-					}
-					
-				}
-				
-				msc = new MediaScannerConnection(this, this);
-				msc.connect();
-				
-			}
+			//if path is null, wait for the scanner callback in the mHandler
 		}
 		
 		
@@ -523,13 +417,13 @@ public class ProjectViewActivity extends SherlockActivity implements MediaScanne
 		
 		 if (item.getItemId() == R.id.menu_add_media)
          {
-			 openGalleryChooser("*/*");
+			 mMediaHelper.openGalleryChooser("*/*");
 			 
          }
 		 else if (item.getItemId() == R.id.menu_capture_media)
          {
-			 captureVideo();
 			 
+			 showCaptureDialog();
          }
 		 else if (item.getItemId() == R.id.menu_settings)
 		 {
@@ -545,7 +439,7 @@ public class ProjectViewActivity extends SherlockActivity implements MediaScanne
 		 else if (item.getItemId() == R.id.menu_share_media)
          {
 			
-			 shareVideo();
+			 mMediaHelper.shareMedia(outFile);
 			 
          }
 
@@ -553,7 +447,7 @@ public class ProjectViewActivity extends SherlockActivity implements MediaScanne
          {
 			
 			 if (outFile != null)
-				 playVideo();
+				 mMediaHelper.playMedia(outFile, MediaConstants.MIME_TYPE_VIDEO);
 			 
 			 
          }
@@ -561,17 +455,12 @@ public class ProjectViewActivity extends SherlockActivity implements MediaScanne
 		return super.onMenuItemSelected(featureId, item);
 	}
 	
-	private void captureVideo ()
+	private void showCaptureDialog ()
 	{
-		 ContentValues values = new ContentValues();
-         values.put(MediaStore.Images.Media.TITLE, MediaAppConstants.CAMCORDER_TMP_FILE);
-         values.put(MediaStore.Images.Media.DESCRIPTION,"ssctmp");
-         
-     	sendBroadcast(new Intent().setAction(MediaAppConstants.Keys.Service.LOCK_LOGS));
-        cameraImage = new File(fileExternDir, "cam" + new Date().getTime() + ".mp4");
-
-     	Intent intent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
-         startActivityForResult(intent, MediaAppConstants.CAMERA_RESULT);
+		
+		
+		//cameraImage = mMediaHelper.captureVideo(fileExternDir);
+		
 	}
 
 	private Handler mHandler = new Handler()
@@ -597,54 +486,21 @@ public class ProjectViewActivity extends SherlockActivity implements MediaScanne
 	               
 	                case 4: //play video
 	                	
-	                		playVideo();
+	                	mMediaHelper.playMedia(outFile, MediaConstants.MIME_TYPE_VIDEO);
 	                	break;
 	                	
 	                case 5:
-	                	
-	                		String path = msg.getData().getString("path");
-	                		String mimeType = msg.getData().getString("mime");
 	                		
-	                		addMediaFile(path, mimeType);
+	                		if (mMediaResult != null)
+	                		{
+	                			String path = msg.getData().getString("path");	                		
+	                			addMediaFile(path, mMediaResult.mimeType);
+	                		}
 	                	break;
 	                default:
 	                    super.handleMessage(msg);
 	            }
 	        }
 	};
-	
-	
-	private void shareVideo() {
-		
-		Intent intent = new Intent(Intent.ACTION_SEND, Uri.parse(outFile.getPath()));
-   	 	startActivityForResult(intent,0);
-   	 	
-   	 	/*
-    	Intent intent = new Intent(Intent.ACTION_SEND);
-    	intent.setType(MIME_TYPE_MP4);
-    	intent.putExtra(Intent.EXTRA_STREAM, Uri.parse(outFile.getPath()));
-    	startActivityForResult(Intent.createChooser(intent, "Share Video"),0); 
-    	*/    
-	}
-
-	@Override
-	public void onMediaScannerConnected() {
-		
-		msc.scanFile(cameraImage.getAbsolutePath(), null);
-
-	}
-
-	@Override
-	public void onScanCompleted(String path, Uri uri) {
-		
-		msc.disconnect();
-		Log.d(MediaAppConstants.TAG, "new path: " + path + "\nnew uri for path: " + uri.toString());
-		
-		 Message msg = mHandler.obtainMessage(5);
-         msg.getData().putString("path", path);
-         msg.getData().putString("mime", mimeType);         
-         mHandler.sendMessage(msg);
-
-	}
     
 }

@@ -10,8 +10,7 @@
       <item android:id="@+id/menu_capture_media"
         android:title="@string/menu_capture_media"
         android:orderInCategory="1"
-        android:showAsAction="ifRoom"
-        
+        android:showAsAction="ifRoom"        
          />
     
      <item android:id="@+id/menu_save_media"
