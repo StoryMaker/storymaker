@@ -19,10 +19,14 @@
     <string name="menu_share_media">Share</string>
     <string name="menu_save_media">Save</string>
     <string name="menu_play_media">Play</string>
+    <string name="menu_save_render">render</string>
+    
 
     <string name="welcome_message">Hey there!\nWelcome to StoryMaker</string>
+    
     <!--  project list -->
-    <string name="default_project_list_view">Tap to create a new project</string>
+    <string name="default_project_list_view">This is your first time creating a project!\n\n- tap to start -</string>
+    <string name="default_project_view_message">You have choices.\nTell your story with video, audio or photos.\n\n- tap to add -</string>
     
     <!-- video processing -->
     <string name="pref_out_fps_title">Output Framerate (fps)</string>

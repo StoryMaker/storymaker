@@ -2,6 +2,7 @@ package info.guardianproject.mrapp;
 
 import info.guardianproject.mrapp.media.MediaConstants;
 import info.guardianproject.mrapp.media.MediaHelper;
+import info.guardianproject.mrapp.model.Project;
 
 import java.io.File;
 import java.io.IOException;
@@ -11,6 +12,7 @@ import org.ffmpeg.android.FfmpegController;
 import org.ffmpeg.android.MediaDesc;
 import org.ffmpeg.android.MediaUtils;
 import org.ffmpeg.android.ShellUtils.ShellCallback;
+import org.ffmpeg.android.filters.DrawBoxVideoFilter;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -23,7 +25,11 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
+import android.os.Parcelable;
+import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnLongClickListener;
@@ -39,7 +45,8 @@ import com.actionbarsherlock.view.MenuItem;
 
 public class ProjectViewActivity extends SherlockActivity {
 
-	private LinearLayout layoutMain;
+	private ViewPager pager;
+	private AwesomePagerAdapter adapter;
 	
 	private ArrayList<MediaDesc> mediaList = new ArrayList<MediaDesc>();
 	
@@ -56,11 +63,18 @@ public class ProjectViewActivity extends SherlockActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);        
+        setContentView(R.layout.activity_project_view);        
         
+        adapter = new AwesomePagerAdapter();
         
-        layoutMain = (LinearLayout) findViewById(R.id.layout_media_list);
-                 
+        pager = (ViewPager) findViewById(R.id.awesomepager);
+        pager.setAdapter(adapter);
+        
+        if (mediaList.size() == 0)
+        {
+        	addDefaultView ();
+        }
+        
         Intent intent = getIntent();
         
         initExternalStorage();
@@ -81,8 +95,34 @@ public class ProjectViewActivity extends SherlockActivity {
         	}
         }
         
+        
     }
 
+    private void addDefaultView ()
+	{
+		TextView view = new TextView(this);
+		view.setTextSize(32);
+		view.setText(R.string.default_project_view_message);
+		view.setTextColor(Color.DKGRAY);
+		view.setBackgroundColor(Color.LTGRAY);
+		view.setPadding(6,6,6,6);
+		view.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.CENTER_VERTICAL);
+		
+		view.setOnClickListener(new OnClickListener(){
+
+			@Override
+			public void onClick(View v) {
+				
+				showAddMediaDialog();
+			}
+			
+		});
+		
+		adapter.addProjectView(view);
+		adapter.notifyDataSetChanged();		
+		pager.setCurrentItem(0, true);
+	}
+    
     @Override
 	public void onConfigurationChanged(Configuration newConfig) {
 		
@@ -117,7 +157,7 @@ public class ProjectViewActivity extends SherlockActivity {
     private void doExportMedia ()
     {
     	progressDialog = new ProgressDialog(this);
-    	progressDialog.setMessage("Processing. Please wait...");
+    	progressDialog.setTitle("Rendering. Please wait...");
     	progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
     	progressDialog.setMax(100);
         progressDialog.setCancelable(true);
@@ -141,7 +181,10 @@ public class ProjectViewActivity extends SherlockActivity {
 		{
 	    	try
 	    	{
-	    		mRenderPath = createOutputFile("mp4");
+	    		String outputExt = "mp4";//or mpg
+	    		String outputType = MediaConstants.MIME_TYPE_MP4;
+	    		
+	    		mRenderPath = createOutputFile(outputExt); 
 			 
 	    		concatMediaFiles(mRenderPath.getAbsolutePath());
 	    		
@@ -153,7 +196,7 @@ public class ProjectViewActivity extends SherlockActivity {
 		    		MediaScannerConnection.scanFile(
 		     				ProjectViewActivity.this,
 		     				new String[] {mRenderPath.getAbsolutePath()},
-		     				new String[] {MediaConstants.MIME_TYPE_MP4},
+		     				new String[] {outputType},
 		     				null);
 		    
 		    		msg = mHandler.obtainMessage(4);
@@ -185,8 +228,8 @@ public class ProjectViewActivity extends SherlockActivity {
     {
 		mMediaDescTmp = mediaIn;
 		
-    	progressDialog = new ProgressDialog(this);
-    	progressDialog.setMessage("Importing Media. Please wait...");
+    	progressDialog = new ProgressDialog(this);    	
+    	progressDialog.setTitle("Importing Media. Please wait...");
     	progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
     	progressDialog.setMax(100);
         progressDialog.setCancelable(true);
@@ -210,8 +253,10 @@ public class ProjectViewActivity extends SherlockActivity {
 		{
 	    	try
 	    	{
-	    	
-	    		MediaDesc mediaOut = convertMediaToMPEG(mMediaDescTmp);
+	    		//mMediaDescTmp.startTime = "00:00:01";
+	    		//mMediaDescTmp.duration = "00:00:01";
+	    		
+	    		MediaDesc mediaOut = prerenderMedia(mMediaDescTmp);
 	    		File fileMediaOut = new File(mediaOut.path);
 	    		
 	    		Message msg = mHandler.obtainMessage(0);
@@ -219,14 +264,15 @@ public class ProjectViewActivity extends SherlockActivity {
 	    		
 		         if (fileMediaOut.exists() && fileMediaOut.length() > 0)
 		         {
+		        	 /*
 		    		MediaScannerConnection.scanFile(
 		     				ProjectViewActivity.this,
 		     				new String[] {fileMediaOut.getAbsolutePath()},
 		     				new String[] {MediaConstants.MIME_TYPE_MPEG},
 		     				null);
-		    		
+		    		*/
 		    		mMediaDescTmp.path = fileMediaOut.getAbsolutePath();
-		    		mMediaDescTmp.mimeType = MediaConstants.MIME_TYPE_MPEG;
+		    		mMediaDescTmp.mimeType = MediaConstants.MIME_TYPE_MP4;
 		    
 		         }
 		         else
@@ -263,6 +309,8 @@ public class ProjectViewActivity extends SherlockActivity {
     	MediaDesc mdout = new MediaDesc ();
     	mdout.path = outpath;
     	
+    	
+    	/*
     	mdout.width = 720;
     	mdout.height = 480;
     	mdout.format = "mp4";
@@ -273,15 +321,16 @@ public class ProjectViewActivity extends SherlockActivity {
     	mdout.audioCodec = "aac";
     	mdout.audioChannels = 2;
     	mdout.audioBitrate = 96;
+    	*/
     	
-    //	DrawBoxVideoFilter vf = new DrawBoxVideoFilter(0,400,720,80,"red");
-    //	mdout.videoFilter = vf.toString();
+    	//DrawBoxVideoFilter vf = new DrawBoxVideoFilter(0,400,720,80,"red");
+    	//mdout.videoFilter = vf.toString();
     	
     	boolean mediaNeedConvert = false;
     	
     	FfmpegController ffmpegc = new FfmpegController (this);
     	
-    	ffmpegc.concatAndTrimFiles(mediaList, mdout, mediaNeedConvert, new ShellCallback() {
+    	ffmpegc.concatAndTrimFilesMP4Stream(mediaList, mdout, mediaNeedConvert, new ShellCallback() {
 
 			@Override
 			public void shellOut(String line) {
@@ -337,7 +386,7 @@ public class ProjectViewActivity extends SherlockActivity {
     
    }
     
-    private MediaDesc convertMediaToMPEG (MediaDesc mediaIn) throws Exception
+    private MediaDesc prerenderMedia (MediaDesc mediaIn) throws Exception
     {
     	
     //	DrawBoxVideoFilter vf = new DrawBoxVideoFilter(0,400,720,80,"red");
@@ -345,7 +394,7 @@ public class ProjectViewActivity extends SherlockActivity {
     	
     	FfmpegController ffmpegc = new FfmpegController (this);
     	
-    	MediaDesc mediaOut = ffmpegc.convertToMPEG(mediaIn, new ShellCallback() {
+    	MediaDesc mediaOut = ffmpegc.convertToMP4Stream(mediaIn, new ShellCallback() {
 
 			@Override
 			public void shellOut(String line) {
@@ -415,6 +464,11 @@ public class ProjectViewActivity extends SherlockActivity {
     	
     	addMediaView(mdesc, mediaId);
     	
+    	if (mRenderPath != null && mRenderPath.exists())
+    	{
+    		mRenderPath.delete();    	
+    		mRenderPath = null;
+    	}
     	
     	try {
     		doPreconvertMedia(mdesc);
@@ -440,7 +494,7 @@ public class ProjectViewActivity extends SherlockActivity {
      		child = new ImageView(this);
      		child.setBackgroundColor(Color.BLACK);
      		
-     		((ImageView)child).setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+     		((ImageView)child).setScaleType(ImageView.ScaleType.CENTER_CROP);
 
      		try
      		{
@@ -462,23 +516,14 @@ public class ProjectViewActivity extends SherlockActivity {
      	else if (mdesc.mimeType.startsWith("audio")) 
      	{
      		child = new TextView(this);
-     		((TextView)child).setText(mdesc.mimeType + ": " + mdesc.path);
+     		((TextView)child).setText(new File(mdesc.path).getName());
      	}
      	else 
      	{
      		child = new TextView(this);
      		((TextView)child).setText(mdesc.mimeType + ": " + mdesc.path);
      	}
-
-     
-     	LinearLayout ll = new LinearLayout(this);
-     	ll.setOrientation(LinearLayout.VERTICAL);
-
-     	LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
-     	     LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.MATCH_PARENT);
-
-     	layoutParams.setMargins(10, 10, 10, 10);
-     	
+	
      	child.setBackgroundColor(Color.WHITE);
      	child.setPadding(10, 10, 10, 10);
 
@@ -490,34 +535,14 @@ public class ProjectViewActivity extends SherlockActivity {
 			@Override
 			public void onClick(View v) {
 				
-				int mediaId = ((ImageView)v).getId();
-				MediaDesc mdesc = ProjectViewActivity.this.mediaList.get(mediaId);
-				Toast.makeText(ProjectViewActivity.this, mdesc.path, Toast.LENGTH_LONG).show();
+				
 			}
      		
      	});
      	
-     	
-     	child.setOnLongClickListener(new OnLongClickListener () {
-
-			@Override
-			public boolean onLongClick(View v) {
-				
-				int mediaId = ((ImageView)v).getId();
-				MediaDesc mdesc = mediaList.get(mediaId);
-				mdesc.path = null;
-				layoutMain.removeView(v);
-				
-				return true;
-			}
-     		
-     	});
-     	
-     	ll.addView(child);
-    	layoutMain.addView(ll);
-    	
-
-    	updateStatus( file.getName() + " added to queue");
+     	adapter.addProjectView(child);
+		adapter.notifyDataSetChanged();
+		pager.setCurrentItem(adapter.getCount()-1, true);
     }
     
     /*
@@ -588,10 +613,13 @@ public class ProjectViewActivity extends SherlockActivity {
 		 {
 			 showMediaPrefs();
 		 }
-		 else if (item.getItemId() == R.id.menu_save_media)
+		 else if (item.getItemId() == R.id.menu_play_media)
          {
 			
-			 doExportMedia ();
+			 if (mRenderPath != null)
+				 mMediaHelper.playMedia(mRenderPath, MediaConstants.MIME_TYPE_VIDEO);
+			 else
+				 doExportMedia ();
 			 
 			 
          }
@@ -605,9 +633,7 @@ public class ProjectViewActivity extends SherlockActivity {
 		 else if (item.getItemId() == R.id.menu_play_media)
          {
 			
-			 if (mRenderPath != null)
-				 mMediaHelper.playMedia(mRenderPath, MediaConstants.MIME_TYPE_VIDEO);
-			 
+			
 			 
          }
 		
@@ -693,5 +719,102 @@ public class ProjectViewActivity extends SherlockActivity {
 	            }
 	        }
 	};
+	
+	private class AwesomePagerAdapter extends PagerAdapter{
+
+    	private ArrayList<View> listProjectViews;
+	 	
+    	public AwesomePagerAdapter ()
+		{
+			listProjectViews = new ArrayList<View>();
+		}
+		
+    	public void addProjectView (View view)
+    	{
+    		listProjectViews.add(view);
+    	}
+    	
+    	public void removeProjectView (View view)
+    	{
+    		listProjectViews.remove(view);
+    	}
+    	
+    	public void removeProjectView (int viewIdx)
+    	{
+    		listProjectViews.remove(viewIdx);
+    	}
+	 	
+		@Override
+		public int getCount() {
+			
+			return listProjectViews.size();
+			
+		}
+
+	    /**
+	     * Create the page for the given position.  The adapter is responsible
+	     * for adding the view to the container given here, although it only
+	     * must ensure this is done by the time it returns from
+	     * {@link #finishUpdate()}.
+	     *
+	     * @param container The containing View in which the page will be shown.
+	     * @param position The page position to be instantiated.
+	     * @return Returns an Object representing the new page.  This does not
+	     * need to be a View, but can be some other container of the page.
+	     */
+		@Override
+		public Object instantiateItem(View collection, int position) {
+			
+			((ViewPager) collection).addView(listProjectViews.get(position));
+			
+			return listProjectViews.get(position);
+		}
+
+	    /**
+	     * Remove a page for the given position.  The adapter is responsible
+	     * for removing the view from its container, although it only must ensure
+	     * this is done by the time it returns from {@link #finishUpdate()}.
+	     *
+	     * @param container The containing View from which the page will be removed.
+	     * @param position The page position to be removed.
+	     * @param object The same object that was returned by
+	     * {@link #instantiateItem(View, int)}.
+	     */
+		@Override
+		public void destroyItem(View collection, int position, Object view) {
+			((ViewPager) collection).removeView((View) view);
+		}
+
+		
+		
+		@Override
+		public boolean isViewFromObject(View view, Object object) {
+			return view==((View)object);
+		}
+
+		
+	    /**
+	     * Called when the a change in the shown pages has been completed.  At this
+	     * point you must ensure that all of the pages have actually been added or
+	     * removed from the container as appropriate.
+	     * @param container The containing View which is displaying this adapter's
+	     * page views.
+	     */
+		@Override
+		public void finishUpdate(View arg0) {}
+		
+
+		@Override
+		public void restoreState(Parcelable arg0, ClassLoader arg1) {}
+
+		@Override
+		public Parcelable saveState() {
+			return null;
+		}
+
+		@Override
+		public void startUpdate(View arg0) {}
+    	
+    }
     
 }

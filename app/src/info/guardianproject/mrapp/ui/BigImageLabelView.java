@@ -20,13 +20,14 @@ public class BigImageLabelView extends View {
 	private int mFontColor = Color.WHITE;
 	private int mBgColor = Color.DKGRAY;
 	
-	public BigImageLabelView(Context context, String title, Bitmap image, int fontColor) {
+	public BigImageLabelView(Context context, String title, Bitmap image, int fontColor, int bgColor) {
 		super(context);
 		
 		mText = title;
 		mImage = image;
 		mFontColor = fontColor;
 		
+		setBackgroundColor(bgColor);
 		
 		initViewGfx();
 	}

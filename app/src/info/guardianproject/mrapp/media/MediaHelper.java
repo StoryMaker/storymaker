@@ -143,7 +143,7 @@ public class MediaHelper implements MediaScannerConnectionClient {
 	      ContentResolver cr = mActivity.getContentResolver();
 	      InputStream in = cr.openInputStream(contentURI);
 	      BitmapFactory.Options options = new BitmapFactory.Options();
-	      options.inSampleSize=8;
+	      options.inSampleSize=3;
 	      Bitmap thumb = BitmapFactory.decodeStream(in,null,options);
 	      return thumb;
 	 }
