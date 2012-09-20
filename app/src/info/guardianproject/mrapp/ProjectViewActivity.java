@@ -71,6 +71,8 @@ public class ProjectViewActivity extends SherlockActivity implements MediaScanne
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);        
+        
+        
         layoutMain = (LinearLayout) findViewById(R.id.layout_media_list);
                  
         Intent intent = getIntent();

@@ -5,6 +5,7 @@
     "published": "2012/09/01",
     "author": "Joe Someone",
     "resource": {
-        "file": "index.html"        
-    }       
-}}    
+        "url": "index.html"        
+     }       
+  }
+}
