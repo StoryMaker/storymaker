@@ -535,6 +535,7 @@ public class ProjectViewActivity extends SherlockActivity {
     
     
     
+    
     private void addMediaFile (String path, String mimeType)
     {
     	MediaDesc mdesc = new MediaDesc ();
@@ -888,6 +889,8 @@ public class ProjectViewActivity extends SherlockActivity {
 		@Override
 		public void finishUpdate(View arg0) {}
 		
+
+
 
 		@Override
 		public void restoreState(Parcelable arg0, ClassLoader arg1) {}
