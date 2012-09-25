@@ -256,7 +256,15 @@ public class ProjectViewActivity extends SherlockActivity {
 	    		//mMediaDescTmp.startTime = "00:00:01";
 	    		//mMediaDescTmp.duration = "00:00:01";
 	    		
-	    		MediaDesc mediaOut = prerenderMedia(mMediaDescTmp);
+	    		MediaDesc mediaOut = null;
+	    		
+	    		if (mMediaDescTmp.mimeType.startsWith("image"))
+	    			mediaOut = prerenderImage(mMediaDescTmp);
+		    	else if (mMediaDescTmp.mimeType.startsWith("video"))
+	    			mediaOut = prerenderVideo(mMediaDescTmp, false);
+		    	else
+	    			mediaOut = prerenderVideo(mMediaDescTmp, true);
+	    		
 	    		File fileMediaOut = new File(mediaOut.path);
 	    		
 	    		Message msg = mHandler.obtainMessage(0);
@@ -386,7 +394,7 @@ public class ProjectViewActivity extends SherlockActivity {
     
    }
     
-    private MediaDesc prerenderMedia (MediaDesc mediaIn) throws Exception
+    private MediaDesc prerenderVideo (MediaDesc mediaIn, boolean preconvertMP4) throws Exception
     {
     	
     //	DrawBoxVideoFilter vf = new DrawBoxVideoFilter(0,400,720,80,"red");
@@ -394,7 +402,9 @@ public class ProjectViewActivity extends SherlockActivity {
     	
     	FfmpegController ffmpegc = new FfmpegController (this);
     	
-    	MediaDesc mediaOut = ffmpegc.convertToMP4Stream(mediaIn, new ShellCallback() {
+		File fileOutPath = createOutputFile("mp4"); 
+		
+    	MediaDesc mediaOut = ffmpegc.convertToMP4Stream(mediaIn, fileOutPath.getAbsolutePath(), preconvertMP4, new ShellCallback() {
 
 			@Override
 			public void shellOut(String line) {
@@ -448,6 +458,78 @@ public class ProjectViewActivity extends SherlockActivity {
     	});
     
     	return mediaOut;
+    
+   }
+
+    
+    
+    private MediaDesc prerenderImage (MediaDesc mediaIn) throws Exception
+    {
+    	
+    	FfmpegController ffmpegc = new FfmpegController (this);
+    	
+    	mediaIn.videoFps = "29.97";
+    	mediaIn.width = 1280;
+    	mediaIn.height = 720;
+    	
+    	int durationSecs = 5;
+    	
+    	File outPath = createOutputFile("mp4");
+    	
+    	MediaDesc mediaOut = ffmpegc.convertImageToMP4(mediaIn, durationSecs, outPath.getAbsolutePath(), new ShellCallback() {
+
+			@Override
+			public void shellOut(String line) {
+				
+				
+				if (!line.startsWith("frame"))
+					Log.d(AppConstants.TAG, line);
+				
+				
+				int idx1;
+				String newStatus = null;
+				int progress = 0;
+				
+				if ((idx1 = line.indexOf("Duration:"))!=-1)
+				{
+					int idx2 = line.indexOf(",", idx1);
+					String time = line.substring(idx1+10,idx2);
+					
+					int hour = Integer.parseInt(time.substring(0,2));
+					int min = Integer.parseInt(time.substring(3,5));
+					int sec = Integer.parseInt(time.substring(6,8));
+					
+					total = (hour * 60 * 60) + (min * 60) + sec;
+					
+					newStatus = line;
+					progress = 0;
+				}
+				else if ((idx1 = line.indexOf("time="))!=-1)
+				{
+					int idx2 = line.indexOf(" ", idx1);
+					String time = line.substring(idx1+5,idx2);
+					newStatus = line;
+					
+					int hour = Integer.parseInt(time.substring(0,2));
+					int min = Integer.parseInt(time.substring(3,5));
+					int sec = Integer.parseInt(time.substring(6,8));
+					
+					current = (hour * 60 * 60) + (min * 60) + sec;
+					
+					progress = (int)( ((float)current) / ((float)total) *100f );
+				}
+				
+				if (newStatus != null)
+				{
+				 Message msg = mHandler.obtainMessage(1);
+		         msg.getData().putInt("progress", progress);
+		         msg.getData().putString("status", newStatus);		         
+		         mHandler.sendMessage(msg);
+				}
+			}
+    	});
+    
+    	return prerenderVideo(mediaOut, false);
     
    }
     
@@ -534,8 +616,11 @@ public class ProjectViewActivity extends SherlockActivity {
 
 			@Override
 			public void onClick(View v) {
+
+				MediaDesc md = mediaList.get(pager.getCurrentItem()-1);
 				
-				
+            	mMediaHelper.playMedia(new File(md.path), md.mimeType);
+	
 			}
      		
      	});
