@@ -1,10 +1,10 @@
 package info.guardianproject.mrapp.model;
 
-public class Project {
+public class Media {
 
 	protected int id;
 	protected String title;
-	protected String thumbnailPath;
+	protected String path;
 	
 	/**
 	 * @return the id
@@ -31,16 +31,15 @@ public class Project {
 		this.title = title;
 	}
 	/**
-	 * @return the thumbnailPath
+	 * @return the path
 	 */
-	public String getThumbnailPath() {
-		return thumbnailPath;
+	public String getPath() {
+		return path;
 	}
 	/**
-	 * @param thumbnailPath the thumbnailPath to set
+	 * @param path the path to set
 	 */
-	public void setThumbnailPath(String thumbnailPath) {
-		this.thumbnailPath = thumbnailPath;
+	public void setPath(String path) {
+		this.path = path;
 	}
-	
 }
