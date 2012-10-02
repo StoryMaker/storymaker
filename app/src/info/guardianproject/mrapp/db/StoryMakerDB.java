@@ -34,12 +34,48 @@ public class StoryMakerDB extends SQLiteOpenHelper {
 	    	public static final String ID = "_id";
 	    	public static final String COL_TITLE = "title";
 	    	public static final String COL_URL = "url";
-	    	private static final String CREATE_TABLE_TUTORIALS = "create table " + NAME
-	    	+ " (" + ID + " integer primary key autoincrement, " + COL_TITLE
-	    	+ " text not null, " + COL_URL + " text not null);";
+	    	
+	    	private static final String CREATE_TABLE_LESSONS = "create table " + NAME + " (" 
+	    			+ ID + " integer primary key autoincrement, " 
+	    			+ COL_TITLE + " text not null, " 
+	    			+ COL_URL + " text not null"
+	    			+ ");";
     	}
     	
-    	private static final String DB_SCHEMA = Lessons.CREATE_TABLE_TUTORIALS;
+    	public class Projects
+    	{
+    		public static final String NAME = "projects";
+        	
+	    	public static final String ID = "_id";
+	    	public static final String COL_TITLE = "title";
+	    	public static final String COL_THUMBNAIL_PATH = "thumbnail_path";
+	    	
+	    	private static final String CREATE_TABLE_PROJECTS = "create table " + NAME + " (" 
+	    			+ ID + " integer primary key autoincrement, " 
+	    			+ COL_TITLE + " text not null, " 
+	    			+ COL_THUMBNAIL_PATH + " text"
+					+ ");";
+    	}
+    	
+    	public class Medias
+    	{
+    		public static final String NAME = "medias";
+        	
+	    	public static final String ID = "_id";
+	    	public static final String COL_PROJECT_ID = "project_id"; // foreign key
+	    	public static final String COL_PATH = "path";
+	    	public static final String COL_MIME_TYPE = "mimeType";
+	    	
+	    	private static final String CREATE_TABLE_PROJECTS = "create table " + NAME + " ("
+	    			+ ID + " integer primary key autoincrement, "
+	    			+ COL_PROJECT_ID + " text not null, "
+	    			+ COL_PATH + " text not null,"
+	    			+ COL_MIME_TYPE + " text not null" 
+	    			+ ");";
+    	}
+    	
+    	private static final String DB_SCHEMA = Lessons.CREATE_TABLE_LESSONS 
+    			+ Projects.CREATE_TABLE_PROJECTS;
     }
     
 }
