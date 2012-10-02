@@ -20,6 +20,8 @@ public class BigImageLabelView extends View {
 	private int mFontColor = Color.WHITE;
 	private int mBgColor = Color.DKGRAY;
 	private Rect bounds;
+	private int mTextWidth;
+	private int mTextHeight;
 	
 	public BigImageLabelView(Context context, String title, Bitmap image, int fontColor, int bgColor) {
 		super(context);
@@ -28,6 +30,7 @@ public class BigImageLabelView extends View {
 		mImage = image;
 		mFontColor = fontColor;
 		
+		mBgColor = bgColor;
 		setBackgroundColor(bgColor);
 		
 		initViewGfx();
@@ -41,8 +44,11 @@ public class BigImageLabelView extends View {
         mTextPaint.setColor(mFontColor);
         setPadding(3, 12, 3, 3);
         mAscent = (int) mTextPaint.ascent();
-        
+        mTextPaint.setAlpha(150);
         computeBounds ();
+        mTextWidth = (int)mTextPaint.measureText(mText, 0, mText.length());
+        
+         
 	}
 	
 	private void computeBounds ()
@@ -69,7 +75,15 @@ public class BigImageLabelView extends View {
 			canvas.drawBitmap(mImage, null, bounds, mTextPaint);
 		}
 		
-        canvas.drawText(mText, getPaddingLeft(), getHeight()/2-mAscent, mTextPaint);		
+		mTextPaint.setStyle(Paint.Style.FILL);
+        mTextPaint.setColor(mBgColor);
+        mTextPaint.setAlpha(150);
+        
+		canvas.drawRect(getWidth()/2-mTextWidth/2, getHeight()/2-mAscent*3, getWidth()/2+mTextWidth/2, getHeight()/2+mAscent*2, mTextPaint);
+
+		mTextPaint.setColor(mFontColor);
+		mTextPaint.setStyle(Paint.Style.STROKE);
+        canvas.drawText(mText, getWidth()/2-mTextWidth/2, getHeight()/2-mAscent, mTextPaint);		
 	}
 	
 	

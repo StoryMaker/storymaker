@@ -4,7 +4,8 @@ import info.guardianproject.mrapp.media.MediaClip;
 import info.guardianproject.mrapp.media.MediaConstants;
 import info.guardianproject.mrapp.media.MediaExporter;
 import info.guardianproject.mrapp.media.MediaHelper;
-import info.guardianproject.mrapp.media.MediaPrerenderer;
+import info.guardianproject.mrapp.media.MediaManager;
+import info.guardianproject.mrapp.media.MediaRenderer;
 import info.guardianproject.mrapp.model.Project;
 import info.guardianproject.mrapp.ui.MediaView;
 
@@ -52,7 +53,7 @@ import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 
-public class ProjectViewActivity extends SherlockActivity {
+public class ProjectViewActivity extends SherlockActivity implements MediaManager {
 
 	private ViewPager pager;
 	private AwesomePagerAdapter adapter;
@@ -248,21 +249,20 @@ public class ProjectViewActivity extends SherlockActivity {
     	
     	int mediaId = mediaList.size()-1;
     	
-    	addMediaView(mClip, mediaId);
+    	MediaView mView = addMediaView(mClip, mediaId);
     	
-    	
-    	prerenderMedia (mClip);
+    	prerenderMedia (mClip, mView);
     	
     }
     
-    private void prerenderMedia (MediaClip mClip)
+    public void prerenderMedia (MediaClip mClip, ShellCallback shellCallback)
     {
     	
     	try {
-    		MediaPrerenderer mRenderer = new MediaPrerenderer(this, mHandler, mClip, fileExternDir);
+    		MediaRenderer mRenderer = new MediaRenderer(this, mHandler, mClip, fileExternDir, shellCallback);
     		// Convert to video
     		Thread thread = new Thread (mRenderer);
-    		thread.setPriority(Thread.MAX_PRIORITY);
+    		thread.setPriority(Thread.NORM_PRIORITY);
     		thread.start();
 		} catch (Exception e) {
 			Toast.makeText(this,"error converting video to mpeg",Toast.LENGTH_SHORT).show();
@@ -272,7 +272,7 @@ public class ProjectViewActivity extends SherlockActivity {
     	
     }
     
-    private void addMediaView (MediaClip mediaClip, int mediaId) throws IOException
+    private MediaView addMediaView (MediaClip mediaClip, int mediaId) throws IOException
     {
     	File fileMediaClip = new File(mediaClip.mMediaDescOriginal.path);
 
@@ -282,22 +282,22 @@ public class ProjectViewActivity extends SherlockActivity {
      	if (mdesc.mimeType.startsWith("image"))
      	{
      		
-     		mediaView = new MediaView(this, mediaClip,fileMediaClip.getName(), mMediaHelper.getBitmapThumb(fileMediaClip), Color.WHITE, Color.BLACK);
+     		mediaView = new MediaView(this,(MediaManager)this, mediaClip,fileMediaClip.getName(), mMediaHelper.getBitmapThumb(fileMediaClip), Color.WHITE, Color.BLACK);
 
      	}
      	else if (mdesc.mimeType.startsWith("video"))
      	{
-     		mediaView = new MediaView(this, mediaClip,fileMediaClip.getName(), MediaUtils.getVideoFrame(mdesc.path, 5), Color.WHITE, Color.BLACK);
+     		mediaView = new MediaView(this,(MediaManager)this,  mediaClip,fileMediaClip.getName(), MediaUtils.getVideoFrame(mdesc.path, 5), Color.WHITE, Color.BLACK);
      		
      	}
      	else if (mdesc.mimeType.startsWith("audio")) 
      	{
-     		mediaView = new MediaView(this, mediaClip, fileMediaClip.getName(), null, Color.WHITE, Color.BLACK);
+     		mediaView = new MediaView(this,(MediaManager)this,  mediaClip, fileMediaClip.getName(), null, Color.WHITE, Color.BLACK);
 
      	}
      	else 
      	{
-     		mediaView = new MediaView(this, mediaClip, fileMediaClip.getName(),null, Color.WHITE, Color.BLACK);
+     		mediaView = new MediaView(this,(MediaManager)this,  mediaClip, fileMediaClip.getName(),null, Color.WHITE, Color.BLACK);
 
      	}
     
@@ -306,6 +306,8 @@ public class ProjectViewActivity extends SherlockActivity {
      	adapter.addProjectView(mediaView);
 		adapter.notifyDataSetChanged();
 		pager.setCurrentItem(adapter.getCount()-1, true);
+		
+		return mediaView;
     }
     
     
@@ -362,21 +364,25 @@ public class ProjectViewActivity extends SherlockActivity {
 		 {
 			 showMediaPrefs();
 		 }
+		 else if (item.getItemId() == R.id.menu_render_media)
+		 {
+			 doExportMedia ();
+		 }
 		 else if (item.getItemId() == R.id.menu_play_media)
          {
 			
 			 if (mOut != null && mOut.path != null)
 				 mMediaHelper.playMedia(new File(mOut.path), MediaConstants.MIME_TYPE_VIDEO);
 			 else
-				 doExportMedia ();
-			 
+				 updateStatus("You must render your story first!");
 			 
          }
 		 else if (item.getItemId() == R.id.menu_share_media)
          {
 			 if (mOut != null && mOut.path != null)
-				 mMediaHelper.shareMedia(new File(mOut.path));
-			 
+				 mMediaHelper.shareMedia(new File(mOut.path),mOut.mimeType);
+			 else
+				 updateStatus("You must render your story first!");
          }
 
 		 else if (item.getItemId() == R.id.menu_play_media)
