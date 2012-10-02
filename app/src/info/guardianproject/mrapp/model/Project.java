@@ -1,10 +1,27 @@
 package info.guardianproject.mrapp.model;
 
+import info.guardianproject.mrapp.db.StoryMakerDB;
+import android.database.Cursor;
+
 public class Project {
 
 	protected int id;
 	protected String title;
 	protected String thumbnailPath;
+	
+	public Project() {
+		
+	}
+	
+	public Project(Cursor cursor) {
+		id = cursor.getInt(cursor.getColumnIndex(StoryMakerDB.Schema.Projects.ID)); // FIXME use indexes directly to opt
+		thumbnailPath = cursor.getString(cursor.getColumnIndex(StoryMakerDB.Schema.Projects.COL_THUMBNAIL_PATH)); // FIXME use indexes directly to opt
+		title = cursor.getString(cursor.getColumnIndex(StoryMakerDB.Schema.Projects.COL_TITLE)); // FIXME use indexes directly to opt
+	}
+	
+	public void save() {
+		
+	}
 	
 	/**
 	 * @return the id
