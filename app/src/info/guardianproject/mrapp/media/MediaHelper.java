@@ -123,18 +123,16 @@ public class MediaHelper implements MediaScannerConnectionClient {
 	   	 	
 	 }
 	 
-	 public void shareMedia (File mediaFile)
+	 public void shareMedia (File mediaFile, String mimeType)
 	 {
-			Intent intent = new Intent(Intent.ACTION_SEND, Uri.parse(mediaFile.getPath()));
-	   	 	mActivity.startActivityForResult(intent,0);
-	   	 	
-	   	 	/*
-	    	Intent intent = new Intent(Intent.ACTION_SEND);
-	    	intent.setType(MIME_TYPE_MP4);
-	    	intent.putExtra(Intent.EXTRA_STREAM, Uri.parse(outFile.getPath()));
-	    	startActivityForResult(Intent.createChooser(intent, "Share Video"),0); 
-	    	*/    
 			
+		 
+	    	Intent intent = new Intent(Intent.ACTION_SEND);
+	    	intent.setType(mimeType);
+	    	intent.putExtra(Intent.EXTRA_STREAM, Uri.parse(mediaFile.getAbsolutePath()));
+	    	mActivity.startActivityForResult(Intent.createChooser(intent, "Share Media"),0); 
+	    	    
+		 
 	 }
  
 	 public Bitmap getBitmapThumb (File file) throws IOException

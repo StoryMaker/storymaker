@@ -136,6 +136,12 @@ public class MediaExporter implements Runnable {
 			         mHandler.sendMessage(msg);
 					}
 				}
+
+				@Override
+				public void processComplete(int exitValue) {
+					// TODO Auto-generated method stub
+					
+				}
 	    	});
 	    
 	    
