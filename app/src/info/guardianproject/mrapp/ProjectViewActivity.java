@@ -380,7 +380,7 @@ public class ProjectViewActivity extends SherlockActivity implements MediaManage
 		 else if (item.getItemId() == R.id.menu_share_media)
          {
 			 if (mOut != null && mOut.path != null)
-				 mMediaHelper.shareMedia(new File(mOut.path),mOut.mimeType);
+				 mMediaHelper.shareMedia(new File(mOut.path), MediaConstants.MIME_TYPE_VIDEO);
 			 else
 				 updateStatus("You must render your story first!");
          }
