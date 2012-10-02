@@ -114,6 +114,7 @@ public class ProjectListActivity extends SherlockActivity {
 		
 		pager.setCurrentItem(adapter.getCount()-1, true);
 		
+		showProjectView ();
 	}
 	
 	private void addDefaultView ()

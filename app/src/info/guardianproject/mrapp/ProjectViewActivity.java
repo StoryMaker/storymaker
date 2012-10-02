@@ -1,8 +1,12 @@
 package info.guardianproject.mrapp;
 
+import info.guardianproject.mrapp.media.MediaClip;
 import info.guardianproject.mrapp.media.MediaConstants;
+import info.guardianproject.mrapp.media.MediaExporter;
 import info.guardianproject.mrapp.media.MediaHelper;
+import info.guardianproject.mrapp.media.MediaPrerenderer;
 import info.guardianproject.mrapp.model.Project;
+import info.guardianproject.mrapp.ui.MediaView;
 
 import java.io.File;
 import java.io.IOException;
@@ -13,6 +17,9 @@ import org.ffmpeg.android.MediaDesc;
 import org.ffmpeg.android.MediaUtils;
 import org.ffmpeg.android.ShellUtils.ShellCallback;
 import org.ffmpeg.android.filters.DrawBoxVideoFilter;
+import org.ffmpeg.android.filters.DrawTextVideoFilter;
+import org.ffmpeg.android.filters.FadeVideoFilter;
+import org.ffmpeg.android.filters.VideoFilter;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -36,8 +43,10 @@ import android.view.View.OnLongClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.MediaController;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.VideoView;
 
 import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.Menu;
@@ -48,17 +57,15 @@ public class ProjectViewActivity extends SherlockActivity {
 	private ViewPager pager;
 	private AwesomePagerAdapter adapter;
 	
-	private ArrayList<MediaDesc> mediaList = new ArrayList<MediaDesc>();
+	private ArrayList<MediaClip> mediaList = new ArrayList<MediaClip>();
 	
 	private File fileExternDir;
 	
-	private File mRenderPath;	
 	private File mMediaTmp;
-	private MediaDesc mMediaDescTmp;
+	private MediaDesc mOut;
 	
 	private MediaHelper mMediaHelper;
 	private MediaHelper.MediaResult mMediaResult;
-	
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -91,7 +98,14 @@ public class ProjectViewActivity extends SherlockActivity {
         	
         	if (result != null && result.path != null && result.mimeType != null)
         	{
-        		addMediaFile(result.path, result.mimeType);
+        		try
+        		{
+        			addMediaFile(result.path, result.mimeType);
+        		}
+    			catch (IOException ioe)
+    			{
+    				Log.e(MediaAppConstants.TAG,"error adding media result",ioe);
+    			}
         	}
         }
         
@@ -167,140 +181,36 @@ public class ProjectViewActivity extends SherlockActivity {
          progressDialog.setCancelMessage(msg);
     	
          progressDialog.show();
-     	
-		// Convert to video
-		Thread thread = new Thread (runExportVideo);
-		thread.setPriority(Thread.MAX_PRIORITY);
-		thread.start();
+
+    	ArrayList<MediaDesc> listMediaDesc = new ArrayList<MediaDesc>();
+    	for (MediaClip mClip : mediaList)
+    		if (mClip.mMediaDescRendered != null)
+    			listMediaDesc.add(mClip.mMediaDescRendered);
+    		else
+    			listMediaDesc.add(mClip.mMediaDescOriginal);
+
+	    try
+	    {
+		    mOut = new MediaDesc ();
+		    mOut = applyOutputSettings(mOut);
+		    mOut.path = createOutputFile("mp4").getAbsolutePath();
+		    
+		   MediaExporter mEx = new MediaExporter(this, mHandler, listMediaDesc, mOut);
+		   
+			// Convert to video
+			Thread thread = new Thread (mEx);
+			thread.setPriority(Thread.MAX_PRIORITY);
+			thread.start();
+	    }
+	    catch (IOException ioe)
+	    {
+	    	updateStatus("error creating file: " + ioe.getMessage());
+	    	Log.e(MediaAppConstants.TAG,"error creating file",ioe);
+	        progressDialog.cancel();
+	    }
     
     }
     
-	Runnable runExportVideo = new Runnable () {
-		
-		public void run ()
-		{
-	    	try
-	    	{
-	    		String outputExt = "mp4";//or mpg
-	    		String outputType = MediaConstants.MIME_TYPE_MP4;
-	    		
-	    		mRenderPath = createOutputFile(outputExt); 
-			 
-	    		concatMediaFiles(mRenderPath.getAbsolutePath());
-	    		
-	    		Message msg = mHandler.obtainMessage(0);
-		         mHandler.sendMessage(msg);
-	    		
-		         if (mRenderPath.exists() && mRenderPath.length() > 0)
-		         {
-		    		MediaScannerConnection.scanFile(
-		     				ProjectViewActivity.this,
-		     				new String[] {mRenderPath.getAbsolutePath()},
-		     				new String[] {outputType},
-		     				null);
-		    
-		    		msg = mHandler.obtainMessage(4);
-		            msg.getData().putString("path",mRenderPath.getAbsolutePath());
-		            
-		            mHandler.sendMessage(msg);
-		         }
-		         else
-		         {
-		        		msg = mHandler.obtainMessage(0);
-			            msg.getData().putString("status","Something went wrong with media export");
-
-				        mHandler.sendMessage(msg);
-				         
-		         }
-	    	}
-	    	catch (Exception e)
-	    	{
-	    		Message msg = mHandler.obtainMessage(0);
-	            msg.getData().putString("status","error: " + e.getMessage());
-
-		         mHandler.sendMessage(msg);
-	    		Log.e(AppConstants.TAG, "error exporting",e);
-	    	}
-		}
-	};
-	
-	 private void doPreconvertMedia (MediaDesc mediaIn)
-    {
-		mMediaDescTmp = mediaIn;
-		
-    	progressDialog = new ProgressDialog(this);    	
-    	progressDialog.setTitle("Importing Media. Please wait...");
-    	progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-    	progressDialog.setMax(100);
-        progressDialog.setCancelable(true);
-       
-    	 Message msg = mHandler.obtainMessage(0);
-         msg.getData().putString("status","cancelled");
-         progressDialog.setCancelMessage(msg);
-    	
-         progressDialog.show();
-     	
-		// Convert to video
-		Thread thread = new Thread (runConvertVideo);
-		thread.setPriority(Thread.MAX_PRIORITY);
-		thread.start();
-    
-    }
-	
-	Runnable runConvertVideo = new Runnable () {
-		
-		public void run ()
-		{
-	    	try
-	    	{
-	    		//mMediaDescTmp.startTime = "00:00:01";
-	    		//mMediaDescTmp.duration = "00:00:01";
-	    		
-	    		MediaDesc mediaOut = null;
-	    		
-	    		if (mMediaDescTmp.mimeType.startsWith("image"))
-	    			mediaOut = prerenderImage(mMediaDescTmp);
-		    	else if (mMediaDescTmp.mimeType.startsWith("video"))
-	    			mediaOut = prerenderVideo(mMediaDescTmp, false);
-		    	else
-	    			mediaOut = prerenderVideo(mMediaDescTmp, true);
-	    		
-	    		File fileMediaOut = new File(mediaOut.path);
-	    		
-	    		Message msg = mHandler.obtainMessage(0);
-		         mHandler.sendMessage(msg);
-	    		
-		         if (fileMediaOut.exists() && fileMediaOut.length() > 0)
-		         {
-		        	 /*
-		    		MediaScannerConnection.scanFile(
-		     				ProjectViewActivity.this,
-		     				new String[] {fileMediaOut.getAbsolutePath()},
-		     				new String[] {MediaConstants.MIME_TYPE_MPEG},
-		     				null);
-		    		*/
-		    		mMediaDescTmp.path = fileMediaOut.getAbsolutePath();
-		    		mMediaDescTmp.mimeType = MediaConstants.MIME_TYPE_MP4;
-		    
-		         }
-		         else
-		         {
-		        	 msg = mHandler.obtainMessage(0);
-			            msg.getData().putString("status","Something went wrong with media import");
-
-				        mHandler.sendMessage(msg);
-				 }
-	    	}
-	    	catch (Exception e)
-	    	{
-	    		Message msg = mHandler.obtainMessage(0);
-	            msg.getData().putString("status","error: " + e.getMessage());
-
-		         mHandler.sendMessage(msg);
-	    		Log.e(AppConstants.TAG, "error exporting",e);
-	    	}
-		}
-	};
 
     private File createOutputFile (String fileext) throws IOException
     {
@@ -308,253 +218,52 @@ public class ProjectViewActivity extends SherlockActivity {
 		return saveFile;
     }
     
-    private int current, total;
     
-    
-    private void concatMediaFiles (String outpath) throws Exception
+    private MediaDesc applyOutputSettings (MediaDesc mdout)
     {
-    	
-    	MediaDesc mdout = new MediaDesc ();
-    	mdout.path = outpath;
-    	
-    	
-    	/*
-    	mdout.width = 720;
-    	mdout.height = 480;
-    	mdout.format = "mp4";
-    	
+    	//look this up from prefs?
     	mdout.videoCodec = "libx264";
     	mdout.videoBitrate = 1500;
+    	mdout.audioBitrate = 128;
+    	mdout.videoFps = "29.97";
+    	mdout.width = 720;
+    	mdout.height = 480;
     	
-    	mdout.audioCodec = "aac";
-    	mdout.audioChannels = 2;
-    	mdout.audioBitrate = 96;
-    	*/
-    	
-    	//DrawBoxVideoFilter vf = new DrawBoxVideoFilter(0,400,720,80,"red");
-    	//mdout.videoFilter = vf.toString();
-    	
-    	boolean mediaNeedConvert = false;
-    	
-    	FfmpegController ffmpegc = new FfmpegController (this);
-    	
-    	ffmpegc.concatAndTrimFilesMP4Stream(mediaList, mdout, mediaNeedConvert, new ShellCallback() {
-
-			@Override
-			public void shellOut(String line) {
-				
-				
-				if (!line.startsWith("frame"))
-					Log.d(AppConstants.TAG, line);
-				
-				
-				int idx1;
-				String newStatus = null;
-				int progress = 0;
-				
-				if ((idx1 = line.indexOf("Duration:"))!=-1)
-				{
-					int idx2 = line.indexOf(",", idx1);
-					String time = line.substring(idx1+10,idx2);
-					
-					int hour = Integer.parseInt(time.substring(0,2));
-					int min = Integer.parseInt(time.substring(3,5));
-					int sec = Integer.parseInt(time.substring(6,8));
-					
-					total = (hour * 60 * 60) + (min * 60) + sec;
-					
-					newStatus = line;
-					progress = 0;
-				}
-				else if ((idx1 = line.indexOf("time="))!=-1)
-				{
-					int idx2 = line.indexOf(" ", idx1);
-					String time = line.substring(idx1+5,idx2);
-					newStatus = line;
-					
-					int hour = Integer.parseInt(time.substring(0,2));
-					int min = Integer.parseInt(time.substring(3,5));
-					int sec = Integer.parseInt(time.substring(6,8));
-					
-					current = (hour * 60 * 60) + (min * 60) + sec;
-					
-					progress = (int)( ((float)current) / ((float)total) *100f );
-				}
-				
-				if (newStatus != null)
-				{
-				 Message msg = mHandler.obtainMessage(1);
-		         msg.getData().putInt("progress", progress);
-		         msg.getData().putString("status", newStatus);		         
-		         mHandler.sendMessage(msg);
-				}
-			}
-    	});
+    	return mdout;
+    }
     
-    
-   }
-    
-    private MediaDesc prerenderVideo (MediaDesc mediaIn, boolean preconvertMP4) throws Exception
-    {
-    	
-    //	DrawBoxVideoFilter vf = new DrawBoxVideoFilter(0,400,720,80,"red");
-    //	mdout.videoFilter = vf.toString();
-    	
-    	FfmpegController ffmpegc = new FfmpegController (this);
-    	
-		File fileOutPath = createOutputFile("mp4"); 
-		
-    	MediaDesc mediaOut = ffmpegc.convertToMP4Stream(mediaIn, fileOutPath.getAbsolutePath(), preconvertMP4, new ShellCallback() {
-
-			@Override
-			public void shellOut(String line) {
-				
-				
-				if (!line.startsWith("frame"))
-					Log.d(AppConstants.TAG, line);
-				
-				
-				int idx1;
-				String newStatus = null;
-				int progress = 0;
-				
-				if ((idx1 = line.indexOf("Duration:"))!=-1)
-				{
-					int idx2 = line.indexOf(",", idx1);
-					String time = line.substring(idx1+10,idx2);
-					
-					int hour = Integer.parseInt(time.substring(0,2));
-					int min = Integer.parseInt(time.substring(3,5));
-					int sec = Integer.parseInt(time.substring(6,8));
-					
-					total = (hour * 60 * 60) + (min * 60) + sec;
-					
-					newStatus = line;
-					progress = 0;
-				}
-				else if ((idx1 = line.indexOf("time="))!=-1)
-				{
-					int idx2 = line.indexOf(" ", idx1);
-					String time = line.substring(idx1+5,idx2);
-					newStatus = line;
-					
-					int hour = Integer.parseInt(time.substring(0,2));
-					int min = Integer.parseInt(time.substring(3,5));
-					int sec = Integer.parseInt(time.substring(6,8));
-					
-					current = (hour * 60 * 60) + (min * 60) + sec;
-					
-					progress = (int)( ((float)current) / ((float)total) *100f );
-				}
-				
-				if (newStatus != null)
-				{
-				 Message msg = mHandler.obtainMessage(1);
-		         msg.getData().putInt("progress", progress);
-		         msg.getData().putString("status", newStatus);		         
-		         mHandler.sendMessage(msg);
-				}
-			}
-    	});
-    
-    	return mediaOut;
-    
-   }
-
-    
-    
-    private MediaDesc prerenderImage (MediaDesc mediaIn) throws Exception
-    {
-    	
-    	FfmpegController ffmpegc = new FfmpegController (this);
-    	
-    	mediaIn.videoFps = "29.97";
-    	mediaIn.width = 1280;
-    	mediaIn.height = 720;
-    	
-    	int durationSecs = 5;
-    	
-    	File outPath = createOutputFile("mp4");
-    	
-    	MediaDesc mediaOut = ffmpegc.convertImageToMP4(mediaIn, durationSecs, outPath.getAbsolutePath(), new ShellCallback() {
-
-			@Override
-			public void shellOut(String line) {
-				
-				
-				if (!line.startsWith("frame"))
-					Log.d(AppConstants.TAG, line);
-				
-				
-				int idx1;
-				String newStatus = null;
-				int progress = 0;
-				
-				if ((idx1 = line.indexOf("Duration:"))!=-1)
-				{
-					int idx2 = line.indexOf(",", idx1);
-					String time = line.substring(idx1+10,idx2);
-					
-					int hour = Integer.parseInt(time.substring(0,2));
-					int min = Integer.parseInt(time.substring(3,5));
-					int sec = Integer.parseInt(time.substring(6,8));
-					
-					total = (hour * 60 * 60) + (min * 60) + sec;
-					
-					newStatus = line;
-					progress = 0;
-				}
-				else if ((idx1 = line.indexOf("time="))!=-1)
-				{
-					int idx2 = line.indexOf(" ", idx1);
-					String time = line.substring(idx1+5,idx2);
-					newStatus = line;
-					
-					int hour = Integer.parseInt(time.substring(0,2));
-					int min = Integer.parseInt(time.substring(3,5));
-					int sec = Integer.parseInt(time.substring(6,8));
-					
-					current = (hour * 60 * 60) + (min * 60) + sec;
-					
-					progress = (int)( ((float)current) / ((float)total) *100f );
-				}
-				
-				if (newStatus != null)
-				{
-				 Message msg = mHandler.obtainMessage(1);
-		         msg.getData().putInt("progress", progress);
-		         msg.getData().putString("status", newStatus);		         
-		         mHandler.sendMessage(msg);
-				}
-			}
-    	});
-    
-    	return prerenderVideo(mediaOut, false);
-    
-   }
+   
     
     
     
-    
-    private void addMediaFile (String path, String mimeType)
+    private void addMediaFile (String path, String mimeType) throws IOException
     {
     	MediaDesc mdesc = new MediaDesc ();
     	mdesc.path = path;
     	mdesc.mimeType = mimeType;
     	
-    	mediaList.add(mdesc);
+    	MediaClip mClip = new MediaClip();
+    	mClip.mMediaDescOriginal = mdesc;
+    	mediaList.add(mClip);
+    	
     	int mediaId = mediaList.size()-1;
     	
-    	addMediaView(mdesc, mediaId);
+    	addMediaView(mClip, mediaId);
     	
-    	if (mRenderPath != null && mRenderPath.exists())
-    	{
-    		mRenderPath.delete();    	
-    		mRenderPath = null;
-    	}
+    	
+    	prerenderMedia (mClip);
+    	
+    }
+    
+    private void prerenderMedia (MediaClip mClip)
+    {
     	
     	try {
-    		doPreconvertMedia(mdesc);
+    		MediaPrerenderer mRenderer = new MediaPrerenderer(this, mHandler, mClip, fileExternDir);
+    		// Convert to video
+    		Thread thread = new Thread (mRenderer);
+    		thread.setPriority(Thread.MAX_PRIORITY);
+    		thread.start();
 		} catch (Exception e) {
 			Toast.makeText(this,"error converting video to mpeg",Toast.LENGTH_SHORT).show();
 			Log.e(AppConstants.TAG,"error converting video to mpeg",e);
@@ -563,101 +272,47 @@ public class ProjectViewActivity extends SherlockActivity {
     	
     }
     
-    private void addMediaView (MediaDesc mdesc, int mediaId)
+    private void addMediaView (MediaClip mediaClip, int mediaId) throws IOException
     {
-    	File file = new File(mdesc.path);
+    	File fileMediaClip = new File(mediaClip.mMediaDescOriginal.path);
 
-    	 View child = null;
-    	 
+    	 MediaView mediaView = null;
+    	 MediaDesc mdesc = mediaClip.mMediaDescOriginal;
     	     	 
      	if (mdesc.mimeType.startsWith("image"))
      	{
-     		//mdesc.duration = DEFAULT_IMAGE_DURATION;
      		
-     		child = new ImageView(this);
-     		child.setBackgroundColor(Color.BLACK);
-     		
-     		((ImageView)child).setScaleType(ImageView.ScaleType.CENTER_CROP);
+     		mediaView = new MediaView(this, mediaClip,fileMediaClip.getName(), mMediaHelper.getBitmapThumb(fileMediaClip), Color.WHITE, Color.BLACK);
 
-     		try
-     		{
-     			((ImageView)child).setImageBitmap(mMediaHelper.getBitmapThumb(file));
-     		}
-     		catch (IOException ioe)
-     		{
-     			Log.e(AppConstants.TAG,"unable to load image thumb",ioe);
-     		}
      	}
      	else if (mdesc.mimeType.startsWith("video"))
      	{
-     		child = new ImageView(this);
-     		child.setBackgroundColor(Color.BLACK);
-     		((ImageView)child).setScaleType(ImageView.ScaleType.CENTER_CROP);
-         	
-     		((ImageView)child).setImageBitmap(MediaUtils.getVideoFrame(mdesc.path, 5));
+     		mediaView = new MediaView(this, mediaClip,fileMediaClip.getName(), MediaUtils.getVideoFrame(mdesc.path, 5), Color.WHITE, Color.BLACK);
+     		
      	}
      	else if (mdesc.mimeType.startsWith("audio")) 
      	{
-     		child = new TextView(this);
-     		((TextView)child).setText(new File(mdesc.path).getName());
+     		mediaView = new MediaView(this, mediaClip, fileMediaClip.getName(), null, Color.WHITE, Color.BLACK);
+
      	}
      	else 
      	{
-     		child = new TextView(this);
-     		((TextView)child).setText(mdesc.mimeType + ": " + mdesc.path);
+     		mediaView = new MediaView(this, mediaClip, fileMediaClip.getName(),null, Color.WHITE, Color.BLACK);
+
      	}
-	
-     	child.setBackgroundColor(Color.WHITE);
-     	child.setPadding(10, 10, 10, 10);
-
-     	child.setId(mediaId);
+    
+     	mediaView.setId(mediaId);
      	
-     	child.setClickable(true);
-     	child.setOnClickListener(new OnClickListener () {
-
-			@Override
-			public void onClick(View v) {
-
-				MediaDesc md = mediaList.get(pager.getCurrentItem()-1);
-				
-            	mMediaHelper.playMedia(new File(md.path), md.mimeType);
-	
-			}
-     		
-     	});
-     	
-     	adapter.addProjectView(child);
+     	adapter.addProjectView(mediaView);
 		adapter.notifyDataSetChanged();
 		pager.setCurrentItem(adapter.getCount()-1, true);
     }
     
-    /*
-    public void playVideo(String path, boolean autoplay){
-        //get current window information, and set format, set it up differently, if you need some special effects
-        getWindow().setFormat(PixelFormat.TRANSLUCENT);
-        //the VideoView will hold the video
-        VideoView videoHolder = new VideoView(this);
-        //MediaController is the ui control howering above the video (just like in the default youtube player).
-        videoHolder.setMediaController(new MediaController(this));
-        //assing a video file to the video holder
-        videoHolder.setVideoURI(Uri.parse(path));
-        //get focus, before playing the video.
-        videoHolder.requestFocus();
-        if(autoplay){
-            videoHolder.start();
-        }
-     
-     }*/
-    
-	
     
     private void updateStatus (String msg)
     {
     	Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
     }
-    
-    
-    
     
 	protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
 		
@@ -667,10 +322,18 @@ public class ProjectViewActivity extends SherlockActivity {
 			
 			mMediaResult = mMediaHelper.handleResult(requestCode, resultCode, intent, mMediaTmp);
 			
-			if (mMediaResult != null)
-				if (mMediaResult.path != null)
-					addMediaFile(mMediaResult.path, mMediaResult.mimeType);
+			try
+			{
+				if (mMediaResult != null)
+					if (mMediaResult.path != null)
+						addMediaFile(mMediaResult.path, mMediaResult.mimeType);
+			}
+			catch (IOException ioe)
+			{
+				Log.e(MediaAppConstants.TAG,"error adding media result",ioe);
+			}
 			
+		
 			//if path is null, wait for the scanner callback in the mHandler
 		}
 		
@@ -702,8 +365,8 @@ public class ProjectViewActivity extends SherlockActivity {
 		 else if (item.getItemId() == R.id.menu_play_media)
          {
 			
-			 if (mRenderPath != null)
-				 mMediaHelper.playMedia(mRenderPath, MediaConstants.MIME_TYPE_VIDEO);
+			 if (mOut != null && mOut.path != null)
+				 mMediaHelper.playMedia(new File(mOut.path), MediaConstants.MIME_TYPE_VIDEO);
 			 else
 				 doExportMedia ();
 			 
@@ -711,8 +374,8 @@ public class ProjectViewActivity extends SherlockActivity {
          }
 		 else if (item.getItemId() == R.id.menu_share_media)
          {
-			
-			 mMediaHelper.shareMedia(mRenderPath);
+			 if (mOut != null && mOut.path != null)
+				 mMediaHelper.shareMedia(new File(mOut.path));
 			 
          }
 
@@ -775,29 +438,39 @@ public class ProjectViewActivity extends SherlockActivity {
 	            switch (msg.what) {
 		            case 0: //status
 	
+		            	if (progressDialog != null)
 	                    progressDialog.dismiss();
 	                    
 	                    if (status != null)
-	                    	Toast.makeText(ProjectViewActivity.this, status, Toast.LENGTH_SHORT).show();
+	                    	Toast.makeText(ProjectViewActivity.this, status, Toast.LENGTH_LONG).show();
 	                    
 	                 break;
 	                case 1: //status
-
+	                	if (progressDialog != null)
+	                	{
 	                       progressDialog.setMessage(status);
 	                       progressDialog.setProgress(msg.getData().getInt("progress"));
+	                	}
 	                    break;
 	               
 	                case 4: //play video
 	                	
-	                	mMediaHelper.playMedia(mRenderPath, MediaConstants.MIME_TYPE_VIDEO);
+	                	mMediaHelper.playMedia(new File(mOut.path), MediaConstants.MIME_TYPE_VIDEO);
 	                	break;
 	                	
 	                case 5:
 	                		
 	                		if (mMediaResult != null)
 	                		{
-	                			String path = msg.getData().getString("path");	                		
-	                			addMediaFile(path, mMediaResult.mimeType);
+	                			String path = msg.getData().getString("path");
+	                			try
+	                			{
+	                				addMediaFile(path, mMediaResult.mimeType);
+	                			}
+	                			catch (IOException ioe)
+	                			{
+	                				Log.e(MediaAppConstants.TAG,"error adding media result",ioe);
+	                			}
 	                		}
 	                	break;
 	                default:
