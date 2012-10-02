@@ -19,7 +19,7 @@
     <string name="menu_share_media">Share</string>
     <string name="menu_save_media">Save</string>
     <string name="menu_play_media">Play</string>
-    <string name="menu_save_render">render</string>
+    <string name="menu_render_media">Render</string>
     
 
     <string name="welcome_message">Hey there!\nWelcome to StoryMaker</string>
