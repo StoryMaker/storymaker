@@ -43,6 +43,11 @@
     <string name="pref_out_vwidth_summary">custom video width for outputed video</string>
     <string name="pref_out_vheight_title">Custom Video Height (px)</string>
     <string name="pref_out_vheight_summary">custom video height for outputed video</string>
+    <string name="hintTitle">title</string>
+    <string name="hintStartTime">start (00:00:00)</string>
+    <string name="hintEndTime">duratio (00:00:00)</string>
+    <string name="hintFadeIn">fade in (frames)</string>
+    <string name="hintFadeOut">fade out (frames)</string>
     
     
 </resources>
