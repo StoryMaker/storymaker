@@ -80,8 +80,8 @@ public class ProjectListActivity extends SherlockActivity {
 	{
 		
 		Project project = new Project ();
-		project.mId =(adapter.getCount());
-		project.mTitle = "Project " + project.mId;
+		project.setId(adapter.getCount());
+		project.setTitle("Project " + project.getId());
 		alProjects.add(project);
 		
 		Bitmap image = null;
@@ -95,7 +95,7 @@ public class ProjectListActivity extends SherlockActivity {
 			Log.e(AppConstants.TAG,"error loading image",e);
 		}
 		
-		BigImageLabelView view = new BigImageLabelView(this,project.mTitle, image, Color.DKGRAY, Color.LTGRAY);
+		BigImageLabelView view = new BigImageLabelView(this,project.getTitle(), image, Color.DKGRAY, Color.LTGRAY);
 		
 		view.setOnClickListener(new OnClickListener(){
 
@@ -147,8 +147,8 @@ public class ProjectListActivity extends SherlockActivity {
 		Project projectCurrent = alProjects.get(pager.getCurrentItem()-1);
 		
 		Intent intent = new Intent(getBaseContext(), ProjectViewActivity.class);
-		intent.putExtra("pid", projectCurrent.mId);
-		intent.putExtra("title", projectCurrent.mTitle);
+		intent.putExtra("pid", projectCurrent.getId());
+		intent.putExtra("title", projectCurrent.getTitle());
 		
 		startActivity(intent);
 	}
