@@ -8,6 +8,7 @@ import info.guardianproject.mrapp.media.MediaManager;
 import info.guardianproject.mrapp.media.MediaRenderer;
 import info.guardianproject.mrapp.model.Project;
 import info.guardianproject.mrapp.ui.MediaView;
+import info.guardianproject.mrapp.ui.OverlayCamera;
 
 import java.io.File;
 import java.io.IOException;
@@ -435,6 +436,13 @@ public class ProjectViewActivity extends SherlockActivity implements MediaManage
 		alert.show();
 	}
 
+	private void showOverlayCamera ()
+	{
+//		mMediaTmp = mMediaHelper.captureVideo(fileExternDir);
+		Intent intent = new Intent(this, OverlayCamera.class);
+		startActivity(intent);
+	}
+	
 	private Handler mHandler = new Handler()
 	{
 		 public void handleMessage(Message msg) {

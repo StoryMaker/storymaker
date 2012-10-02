@@ -1,6 +1,7 @@
 package info.guardianproject.mrapp.lessons;
 
 import info.guardianproject.mrapp.MediaAppConstants;
+import info.guardianproject.mrapp.ProjectListActivity;
 import info.guardianproject.mrapp.R;
 import info.guardianproject.mrapp.R.id;
 import info.guardianproject.mrapp.R.layout;
@@ -8,6 +9,7 @@ import info.guardianproject.mrapp.R.menu;
 import info.guardianproject.mrapp.R.string;
 import info.guardianproject.mrapp.model.Lesson;
 import info.guardianproject.mrapp.ui.BigImageLabelView;
+import info.guardianproject.mrapp.ui.OverlayCamera;
 
 import java.io.FileDescriptor;
 import java.io.IOException;
@@ -56,6 +58,13 @@ public class LessonPagerActivity extends SherlockActivity {
         
     }
     
+    private void showOverlayCamera ()
+	{
+
+		Intent intent = new Intent(this, OverlayCamera.class);
+		startActivity(intent);
+	}
+    
     private void initTestLessons ()
     {
     	alLessons = new ArrayList<Lesson>();
@@ -86,6 +95,17 @@ public class LessonPagerActivity extends SherlockActivity {
 	@Override
 	public boolean onMenuItemSelected(int featureId, MenuItem item) {
 
+		 if (item.getItemId() == R.id.menu_overlay_camera)
+         {
+			 
+			 showOverlayCamera();
+         }	
+		 else if (item.getItemId() == R.id.menu_projects)
+         {
+			 Intent intent = new Intent (this, ProjectListActivity.class);
+				startActivity(intent);
+         }	
+		  
 		return super.onMenuItemSelected(featureId, item);
 	}
 	

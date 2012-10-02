@@ -1,8 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="info.guardianproject.mrapp"
     android:installLocation="auto"
-    android:versionCode="3"
-    android:versionName="0.0.1-alpha-2" >
+    android:versionCode="4"
+    android:versionName="0.0.1-alpha-3" >
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -66,6 +66,8 @@
              </intent-filter>          
         </activity>
         <activity android:name=".MediaOutputPreferences" />
+         
+        <activity android:name=".ui.OverlayCamera" />
         
         <provider
 		    android:authorities="info.guardianproject.mrapp.db.LessonsProvider"
