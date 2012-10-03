@@ -194,7 +194,7 @@ public class ProjectViewActivity extends SherlockActivity implements MediaManage
 	    try
 	    {
 		    mOut = new MediaDesc ();
-		    mOut = applyOutputSettings(mOut);
+		    applyExportSettings(mOut);
 		    mOut.path = createOutputFile("mp4").getAbsolutePath();
 		    
 		   MediaExporter mEx = new MediaExporter(this, mHandler, listMediaDesc, mOut);
@@ -220,8 +220,7 @@ public class ProjectViewActivity extends SherlockActivity implements MediaManage
 		return saveFile;
     }
     
-    
-    private MediaDesc applyOutputSettings (MediaDesc mdout)
+    public void applyExportSettings (MediaDesc mdout)
     {
     	//look this up from prefs?
     	mdout.videoCodec = "libx264";
@@ -231,12 +230,7 @@ public class ProjectViewActivity extends SherlockActivity implements MediaManage
     	mdout.width = 720;
     	mdout.height = 480;
     	
-    	return mdout;
     }
-    
-   
-    
-    
     
     private void addMediaFile (String path, String mimeType) throws IOException
     {
@@ -260,7 +254,7 @@ public class ProjectViewActivity extends SherlockActivity implements MediaManage
     {
     	
     	try {
-    		MediaRenderer mRenderer = new MediaRenderer(this, mHandler, mClip, fileExternDir, shellCallback);
+    		MediaRenderer mRenderer = new MediaRenderer(this, (MediaManager)this, mHandler, mClip, fileExternDir, shellCallback);
     		// Convert to video
     		Thread thread = new Thread (mRenderer);
     		thread.setPriority(Thread.NORM_PRIORITY);

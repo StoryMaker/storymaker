@@ -91,9 +91,13 @@ public class MediaHelper implements MediaScannerConnectionClient {
 	
 	public File captureAudio (File fileExternDir)
 	{
-		 Intent intent = new Intent(MediaStore.Audio.Media.RECORD_SOUND_ACTION);
+        File fileAudio = new File(fileExternDir, new Date().getTime() + '-' + MediaConstants.AUDIO_TMP_FILE);
+
+		 //Intent intent = new Intent(MediaStore.Audio.Media.RECORD_SOUND_ACTION);
+        Intent intent = new Intent(mActivity,AudioRecorderActivity.class);
+		 intent.putExtra("path", fileAudio.getAbsolutePath());
+		 
 		 mActivity.startActivityForResult(intent, MediaConstants.AUDIO_RESULT);
-         File fileAudio = new File(fileExternDir, new Date().getTime() + '-' + MediaConstants.AUDIO_TMP_FILE);
 
          return fileAudio;
 	}
@@ -323,6 +327,15 @@ public class MediaHelper implements MediaScannerConnectionClient {
 							result.mimeType = cursor.getString(cursor 
 							                .getColumnIndex(MediaStore.MediaColumns.MIME_TYPE));
 						}
+					}
+					else
+					{
+						String uriPath = uriMediaResult.toString();
+						// Retrieve the path and the mime type
+						result = new MediaResult();
+						result.path = uriPath.substring(7); //get rid of file://
+						result.mimeType = intent.getStringExtra("mimeType");
+					
 					}
 					
 				}

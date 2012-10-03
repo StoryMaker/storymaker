@@ -22,16 +22,18 @@ public class MediaRenderer implements Runnable
 	private Context mContext;
 	private File mFileExternDir;
 	private ShellCallback mShellCallback;
+	private MediaManager mMediaManager;
 	
     private int current, total;
 
-	public MediaRenderer (Context context, Handler handler, MediaClip mediaClip, File fileExternDir, ShellCallback shellCallback)
+	public MediaRenderer (Context context, MediaManager mediaManager, Handler handler, MediaClip mediaClip, File fileExternDir, ShellCallback shellCallback)
 	{
 		mHandler = handler;
 		mMediaClip = mediaClip;
 		mContext = context;
 		mFileExternDir = fileExternDir;
 		mShellCallback = shellCallback;
+		mMediaManager = mediaManager;
 	}
 	
 	public void run ()
@@ -47,6 +49,8 @@ public class MediaRenderer implements Runnable
     			mMediaClip.mMediaDescRendered = prerenderImage(mMediaClip.mMediaDescOriginal);
 	    	else if (mMediaClip.mMediaDescOriginal.mimeType.startsWith("video"))
 	    		mMediaClip.mMediaDescRendered = prerenderVideo(mMediaClip.mMediaDescOriginal, false);
+	    	else if (mMediaClip.mMediaDescOriginal.mimeType.startsWith("audio"))
+	    		mMediaClip.mMediaDescRendered = prerenderAudio(mMediaClip.mMediaDescOriginal);
 	    	else //wave? audio?	    	
 	    		mMediaClip.mMediaDescRendered = prerenderVideo(mMediaClip.mMediaDescOriginal, true);
 	    	
@@ -76,12 +80,26 @@ public class MediaRenderer implements Runnable
     	}
 	}
 	
-
+	private MediaDesc prerenderAudio (MediaDesc mediaIn) throws Exception
+    {
+    	FfmpegController ffmpegc = new FfmpegController (mContext);
+    	
+		File fileOutPath = createOutputFile("mp4"); 
+    	mMediaManager.applyExportSettings(mediaIn);
+    	mediaIn.videoCodec = null;
+    	mediaIn.mimeType = "audio/wav";
+    	
+    	MediaDesc mediaOut = ffmpegc.convertToMP4Stream(mediaIn, fileOutPath.getAbsolutePath(), true, mShellCallback);
+    
+    	return mediaOut;
+    
+   }
     private MediaDesc prerenderVideo (MediaDesc mediaIn, boolean preconvertMP4) throws Exception
     {
     	FfmpegController ffmpegc = new FfmpegController (mContext);
     	
 		File fileOutPath = createOutputFile("mp4"); 
+    	mMediaManager.applyExportSettings(mediaIn);
 
     	MediaDesc mediaOut = ffmpegc.convertToMP4Stream(mediaIn, fileOutPath.getAbsolutePath(), preconvertMP4, mShellCallback);
     
@@ -89,20 +107,15 @@ public class MediaRenderer implements Runnable
     
    }
 
-    
     private MediaDesc prerenderImage (MediaDesc mediaIn) throws Exception
     {
     	
     	FfmpegController ffmpegc = new FfmpegController (mContext);
     	
-    	mediaIn.videoFps = "29.97";
-    	mediaIn.width = 1280;
-    	mediaIn.height = 720;
-    	
     	int durationSecs = 5;
     	
     	File outPath = createOutputFile("mp4");
-    	
+    	mMediaManager.applyExportSettings(mediaIn);
     	MediaDesc mediaOut = ffmpegc.convertImageToMP4(mediaIn, durationSecs, outPath.getAbsolutePath(), mShellCallback);
     
     	return prerenderVideo(mediaOut, false);

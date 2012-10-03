@@ -57,10 +57,17 @@ public class BigImageLabelView extends View {
 
         int boundsWidth = getWidth() - this.getPaddingLeft() - this.getPaddingRight();
 		
-		float imageRatio = ((float)mImage.getHeight())/((float)mImage.getWidth());
-		boundsHeight = (int)(((float)boundsWidth) * imageRatio) - this.getPaddingTop() - this.getPaddingBottom();
+        if (mImage != null)
+        {
+        	float imageRatio = ((float)mImage.getHeight())/((float)mImage.getWidth());
+        	boundsHeight = (int)(((float)boundsWidth) * imageRatio) - this.getPaddingTop() - this.getPaddingBottom();
 		
-        bounds = new Rect(getPaddingLeft(),getPaddingTop(),boundsWidth, boundsHeight);
+        	bounds = new Rect(getPaddingLeft(),getPaddingTop(),boundsWidth, boundsHeight);
+        }
+        else
+        {
+        	bounds = new Rect(getPaddingLeft(),getPaddingTop(),getWidth()-getPaddingLeft()*2, getHeight()-getPaddingTop()*2);
+        }
      }
 
 	@Override
