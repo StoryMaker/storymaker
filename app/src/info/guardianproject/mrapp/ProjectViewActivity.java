@@ -5,6 +5,7 @@ import info.guardianproject.mrapp.media.MediaConstants;
 import info.guardianproject.mrapp.media.MediaExporter;
 import info.guardianproject.mrapp.media.MediaHelper;
 import info.guardianproject.mrapp.media.MediaManager;
+import info.guardianproject.mrapp.media.MediaMerger;
 import info.guardianproject.mrapp.media.MediaRenderer;
 import info.guardianproject.mrapp.model.Project;
 import info.guardianproject.mrapp.ui.MediaView;
@@ -60,6 +61,7 @@ public class ProjectViewActivity extends SherlockActivity implements MediaManage
 	private AwesomePagerAdapter adapter;
 	
 	private ArrayList<MediaClip> mediaList = new ArrayList<MediaClip>();
+	private ArrayList<MediaView> mediaViewList = new ArrayList<MediaView>();
 	
 	private File fileExternDir;
 	
@@ -238,15 +240,41 @@ public class ProjectViewActivity extends SherlockActivity implements MediaManage
     	mdesc.path = path;
     	mdesc.mimeType = mimeType;
     	
-    	MediaClip mClip = new MediaClip();
-    	mClip.mMediaDescOriginal = mdesc;
-    	mediaList.add(mClip);
-    	
-    	int mediaId = mediaList.size()-1;
-    	
-    	MediaView mView = addMediaView(mClip, mediaId);
-    	
-    	prerenderMedia (mClip, mView);
+		if (mimeType.startsWith("audio") && mediaList.size() > 0 && (!mediaList.get(mediaList.size()-1).mMediaDescOriginal.mimeType.equals(mimeType)))
+		{
+			MediaClip mClipVideo =  mediaList.get(mediaList.size()-1);
+			MediaView mView = (MediaView)pager.getChildAt(mediaList.size());
+			
+			MediaClip mClipAudio = new MediaClip();
+			mClipAudio.mMediaDescOriginal = mdesc;
+		
+			try {
+	    		MediaMerger mm = new MediaMerger(this, (MediaManager)this, mHandler, mClipVideo, mClipAudio, fileExternDir, mView);
+	    		// Convert to video
+	    		Thread thread = new Thread (mm);
+	    		thread.setPriority(Thread.NORM_PRIORITY);
+	    		thread.start();
+			} catch (Exception e) {
+				updateStatus("error merging video and audio");
+				Log.e(AppConstants.TAG,"error merging video and audio",e);
+			}
+		
+			
+		}
+		else
+		{
+			//its the first clip and/or the previous item is the same type as this
+    		
+			MediaClip mClip = new MediaClip();
+			mClip.mMediaDescOriginal = mdesc;
+			mediaList.add(mClip);
+			
+			int mediaId = mediaList.size()-1;
+			
+			MediaView mView = addMediaView(mClip, mediaId);
+			
+			prerenderMedia (mClip, mView);
+		}
     	
     }
     
@@ -298,6 +326,7 @@ public class ProjectViewActivity extends SherlockActivity implements MediaManage
     
      	mediaView.setId(mediaId);
      	
+     	//mediaViewList.add(mediaView);
      	adapter.addProjectView(mediaView);
 		adapter.notifyDataSetChanged();
 		pager.setCurrentItem(adapter.getCount()-1, true);
