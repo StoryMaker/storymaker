@@ -1,5 +1,7 @@
 package info.guardianproject.mrapp.model;
 
+import java.util.ArrayList;
+
 import info.guardianproject.mrapp.db.ProjectsProvider;
 import info.guardianproject.mrapp.db.StoryMakerDB;
 import android.content.ContentValues;
@@ -30,6 +32,22 @@ public class Project {
 		values.put(StoryMakerDB.Schema.Projects.COL_TITLE, title);
 		values.put(StoryMakerDB.Schema.Projects.COL_THUMBNAIL_PATH, thumbnailPath);
 		context.getContentResolver().insert(ProjectsProvider.CONTENT_URI, values);
+	}
+	
+	public static Cursor getAllAsCursor(Context context) {
+		return context.getContentResolver().query(ProjectsProvider.CONTENT_URI, null, null, null, null);
+		
+	}
+	
+	public static ArrayList<Project> getAllAsList(Context context) {
+		ArrayList<Project> projects = new ArrayList<Project>();
+		Cursor cursor = getAllAsCursor(context);
+		if (cursor.moveToFirst()) {
+			do {
+				projects.add(new Project(context, cursor));
+			} while(cursor.moveToNext());
+		}
+		return projects;
 	}
 	
 	/**
