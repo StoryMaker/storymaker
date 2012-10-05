@@ -16,8 +16,9 @@ public class StoryMakerDB extends SQLiteOpenHelper {
     
     @Override
     public void onCreate(SQLiteDatabase db) {
-    	
-    	 db.execSQL(Schema.DB_SCHEMA);
+		db.execSQL(StoryMakerDB.Schema.Projects.CREATE_TABLE_PROJECTS);
+		db.execSQL(StoryMakerDB.Schema.Lessons.CREATE_TABLE_LESSONS);
+		db.execSQL(StoryMakerDB.Schema.Medias.CREATE_TABLE_MEDIAS);
     }
     
     @Override
@@ -29,7 +30,7 @@ public class StoryMakerDB extends SQLiteOpenHelper {
     	
     	public class Lessons
     	{
-    		public static final String NAME = "tutorials";
+    		public static final String NAME = "lessons";
         	
 	    	public static final String ID = "_id";
 	    	public static final String COL_TITLE = "title";
@@ -39,7 +40,7 @@ public class StoryMakerDB extends SQLiteOpenHelper {
 	    			+ ID + " integer primary key autoincrement, " 
 	    			+ COL_TITLE + " text not null, " 
 	    			+ COL_URL + " text not null"
-	    			+ ");";
+	    			+ "); ";
     	}
     	
     	public class Projects
@@ -54,7 +55,7 @@ public class StoryMakerDB extends SQLiteOpenHelper {
 	    			+ ID + " integer primary key autoincrement, " 
 	    			+ COL_TITLE + " text not null, " 
 	    			+ COL_THUMBNAIL_PATH + " text"
-					+ ");";
+					+ "); ";
     	}
     	
     	public class Medias
@@ -66,16 +67,18 @@ public class StoryMakerDB extends SQLiteOpenHelper {
 	    	public static final String COL_PATH = "path";
 	    	public static final String COL_MIME_TYPE = "mimeType";
 	    	
-	    	private static final String CREATE_TABLE_PROJECTS = "create table " + NAME + " ("
+	    	private static final String CREATE_TABLE_MEDIAS = "create table " + NAME + " ("
 	    			+ ID + " integer primary key autoincrement, "
 	    			+ COL_PROJECT_ID + " text not null, "
 	    			+ COL_PATH + " text not null,"
 	    			+ COL_MIME_TYPE + " text not null" 
-	    			+ ");";
+	    			+ "); ";
     	}
     	
-    	private static final String DB_SCHEMA = Lessons.CREATE_TABLE_LESSONS 
-    			+ Projects.CREATE_TABLE_PROJECTS;
+//    	public static final String DB_SCHEMA = Lessons.CREATE_TABLE_LESSONS 
+//    			+ Projects.CREATE_TABLE_PROJECTS 
+//    			+ Medias.CREATE_TABLE_MEDIAS;
+    	
     }
     
 }
