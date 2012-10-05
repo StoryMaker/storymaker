@@ -1,148 +1,90 @@
-package info.guardianproject.mrapp.lessons;
+package info.guardianproject.mrapp;
 
-import info.guardianproject.mrapp.MediaAppConstants;
-import info.guardianproject.mrapp.ProjectListActivity;
-import info.guardianproject.mrapp.R;
-import info.guardianproject.mrapp.R.id;
-import info.guardianproject.mrapp.R.layout;
-import info.guardianproject.mrapp.R.menu;
-import info.guardianproject.mrapp.R.string;
-import info.guardianproject.mrapp.model.Lesson;
+import info.guardianproject.mrapp.lessons.LessonPagerActivity;
+import info.guardianproject.mrapp.model.Project;
 import info.guardianproject.mrapp.ui.BigImageLabelView;
-import info.guardianproject.mrapp.ui.OverlayCamera;
 
-import java.io.FileDescriptor;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 
-import org.apache.commons.io.IOUtils;
-
 import android.content.Intent;
-import android.content.res.AssetFileDescriptor;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnLongClickListener;
 import android.widget.TextView;
 
 import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 
-public class LessonPagerActivity extends SherlockActivity {
+
+public class WelcomeActivity extends SherlockActivity {
 
 	private ViewPager pager;
 	private AwesomePagerAdapter adapter;
 	
-	private ArrayList<Lesson> alLessons;
-	
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_lesson_list);
-        setTitle(getString(R.string.title_lessons));
+        setContentView(R.layout.activity_project_list);
+        setTitle(getString(R.string.app_name));
         
         adapter = new AwesomePagerAdapter();
         
         pager = (ViewPager) findViewById(R.id.awesomepager);
         pager.setAdapter(adapter);
         
+        addDefaultView ();
         
-        initTestLessons();
-        
-    }
-    
-    private void showOverlayCamera ()
-	{
-
-		Intent intent = new Intent(this, OverlayCamera.class);
-		startActivity(intent);
-	}
-    
-    private void initTestLessons ()
-    {
-    	alLessons = new ArrayList<Lesson>();
-    	
-    	try {
-
-    		for (int i = 1; i < 100; i++)
-    		{
-    			InputStream is = getAssets().open("lessons/" + i + "/lesson.json");
-    			Lesson lesson = Lesson.parse(IOUtils.toString(is));
-    			addNewLesson (lesson);
-    		}
-	    	
-    	} catch (Exception e) {
-			Log.e(MediaAppConstants.TAG,"error parsing Lesson",e);
-		}
-    	
-    	
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getSupportMenuInflater().inflate(R.menu.activity_lesson_list, menu);
+        getSupportMenuInflater().inflate(R.menu.activity_welcome, menu);
         return true;
     }
     
-
 	@Override
 	public boolean onMenuItemSelected(int featureId, MenuItem item) {
 
-		 if (item.getItemId() == R.id.menu_overlay_camera)
-         {
-			 
-			 showOverlayCamera();
-         }	
-		 else if (item.getItemId() == R.id.menu_projects)
-         {
-			 Intent intent = new Intent (this, ProjectListActivity.class);
-				startActivity(intent);
-         }	
-		  
-		return super.onMenuItemSelected(featureId, item);
+		if (item.getItemId() == R.id.menu_projects)
+		{
+			Intent intent = new Intent (this, ProjectListActivity.class);
+			startActivity(intent);
+			
+			return true;
+		}
+		else if (item.getItemId() == R.id.menu_lessons)
+		{
+			Intent intent = new Intent (this, LessonPagerActivity.class);
+			startActivity(intent);
+			
+			return true;
+		}
+		else
+			return super.onMenuItemSelected(featureId, item);
 	}
 	
-	private void loadLessons ()
-	{
-		//access remote XML/RSS for lessons
-		
-		//add list of available lessons
-		
-		
-		
-		
-	}
-	
-	private void accessLesson ()
-	{
-		//is lesson downloaded? if no, then download
-		
-		//if yes, then display here!
-		Lesson lesson = alLessons.get(pager.getCurrentItem());
 
-		Intent intent = new Intent(this,LessonViewActivity.class);
-		intent.putExtra("title", lesson.mTitle);
-		intent.putExtra("url", lesson.mResourcePath);
-		
-		startActivity(intent);
-		
-	}
 	
-	private void addNewLesson (Lesson lesson)
+	private void addDefaultView ()
 	{
-		alLessons.add(lesson);
+		
 		TextView view = new TextView(this);
-		view.setTextSize(36);
-		view.setText(lesson.mTitle);
-		view.setTextColor(Color.WHITE);
-		view.setBackgroundColor(Color.DKGRAY);
+		view.setGravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL);
+		view.setTextSize(30);
+		view.setSingleLine(false);
+		view.setText(R.string.welcome_message);
+		view.setTextColor(Color.DKGRAY);
+		view.setBackgroundColor(Color.LTGRAY);
 		view.setPadding(6,6,6,6);
 		
 		view.setOnClickListener(new OnClickListener(){
@@ -150,45 +92,50 @@ public class LessonPagerActivity extends SherlockActivity {
 			@Override
 			public void onClick(View v) {
 				
-				accessLesson();
+				Intent intent = new Intent (WelcomeActivity.this, ProjectListActivity.class);
+				startActivity(intent);
+				
 			}
 			
 			
 		});
-	
+		
 		adapter.addProjectView(view);
 		adapter.notifyDataSetChanged();
 		
+		pager.setCurrentItem(adapter.getCount()-1, true);
 	}
+	
+	
 
     private class AwesomePagerAdapter extends PagerAdapter{
 
-    	private ArrayList<View> listViews;
+    	private ArrayList<View> listProjectViews;
 	 	
     	public AwesomePagerAdapter ()
 		{
-    		listViews = new ArrayList<View>();
+			listProjectViews = new ArrayList<View>();
 		}
 		
     	public void addProjectView (View view)
     	{
-    		listViews.add(view);
+    		listProjectViews.add(view);
     	}
     	
     	public void removeProjectView (View view)
     	{
-    		listViews.remove(view);
+    		listProjectViews.remove(view);
     	}
     	
     	public void removeProjectView (int viewIdx)
     	{
-    		listViews.remove(viewIdx);
+    		listProjectViews.remove(viewIdx);
     	}
 	 	
 		@Override
 		public int getCount() {
 			
-			return listViews.size();
+			return listProjectViews.size();
 			
 		}
 
@@ -206,9 +153,9 @@ public class LessonPagerActivity extends SherlockActivity {
 		@Override
 		public Object instantiateItem(View collection, int position) {
 			
-			((ViewPager) collection).addView(listViews.get(position));
+			((ViewPager) collection).addView(listProjectViews.get(position));
 			
-			return listViews.get(position);
+			return listProjectViews.get(position);
 		}
 
 	    /**

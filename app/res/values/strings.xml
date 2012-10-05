@@ -2,6 +2,7 @@
 
     <string name="app_name">StoryMaker</string>
     
+    
     <string name="title_projects">Projects</string>
     <string name="title_lessons">Lessons</string>
     
@@ -13,14 +14,20 @@
     <string name="menu_contacts">Contacts</string>    
     <string name="menu_settings">Settings</string>    
     <string name="menu_archive">Archive</string>    
-    <string name="menu_add_media">Import</string>
+    <string name="menu_add_media">Add</string>
     <string name="menu_capture_media">Record</string>
     <string name="menu_share_media">Share</string>
     <string name="menu_save_media">Save</string>
     <string name="menu_play_media">Play</string>
+    <string name="menu_render_media">Render</string>
+    
+    <string name="menu_overlay_camera">Camera</string>
 
+    <string name="welcome_message">Hey there!\nWelcome to StoryMaker</string>
+    
     <!--  project list -->
-    <string name="default_project_list_view">Welcome to StoryMaker.\n\nTap to create a new project or use the menu to access the Lessons.</string>
+    <string name="default_project_list_view">This is your first time creating a project!\n\n- tap to start -</string>
+    <string name="default_project_view_message">You have choices.\nTell your story with video, audio or photos.\n\n- tap to add -</string>
     
     <!-- video processing -->
     <string name="pref_out_fps_title">Output Framerate (fps)</string>
@@ -37,6 +44,15 @@
     <string name="pref_out_vwidth_summary">custom video width for outputed video</string>
     <string name="pref_out_vheight_title">Custom Video Height (px)</string>
     <string name="pref_out_vheight_summary">custom video height for outputed video</string>
+    <string name="hintTitle">title</string>
+    <string name="hintStartTime">start (00:00:00)</string>
+    <string name="hintEndTime">duratio (00:00:00)</string>
+    <string name="hintFadeIn">fade in (frames)</string>
+    <string name="hintFadeOut">fade out (frames)</string>
     
+    <string name="start_recording">Record</string>
+    <string name="stop_recording">Stop</string>
+    <string name="play_recording">Play</string>
+    <string name="save_recording">Save</string>
     
 </resources>

@@ -19,14 +19,19 @@ public class BigImageLabelView extends View {
 	private int mFontSize = 42;
 	private int mFontColor = Color.WHITE;
 	private int mBgColor = Color.DKGRAY;
+	private Rect bounds;
+	private int mTextWidth;
+	private int mTextHeight;
 	
-	public BigImageLabelView(Context context, String title, Bitmap image, int fontColor) {
+	public BigImageLabelView(Context context, String title, Bitmap image, int fontColor, int bgColor) {
 		super(context);
 		
 		mText = title;
 		mImage = image;
 		mFontColor = fontColor;
 		
+		mBgColor = bgColor;
+		setBackgroundColor(bgColor);
 		
 		initViewGfx();
 	}
@@ -39,27 +44,53 @@ public class BigImageLabelView extends View {
         mTextPaint.setColor(mFontColor);
         setPadding(3, 12, 3, 3);
         mAscent = (int) mTextPaint.ascent();
-      
+        mTextPaint.setAlpha(150);
+        computeBounds ();
+        mTextWidth = (int)mTextPaint.measureText(mText, 0, mText.length());
+        
+         
+	}
+	
+	private void computeBounds ()
+	{
+		int boundsHeight = getPaddingTop();
+
+        int boundsWidth = getWidth() - this.getPaddingLeft() - this.getPaddingRight();
+		
+        if (mImage != null)
+        {
+        	float imageRatio = ((float)mImage.getHeight())/((float)mImage.getWidth());
+        	boundsHeight = (int)(((float)boundsWidth) * imageRatio) - this.getPaddingTop() - this.getPaddingBottom();
+		
+        	bounds = new Rect(getPaddingLeft(),getPaddingTop(),boundsWidth, boundsHeight);
+        }
+        else
+        {
+        	bounds = new Rect(getPaddingLeft(),getPaddingTop(),getWidth()-getPaddingLeft()*2, getHeight()-getPaddingTop()*2);
+        }
      }
 
 	@Override
 	protected void onDraw(Canvas canvas) {
 		super.onDraw(canvas);
 		
-		int boundsHeight = getPaddingTop();
 		
 		if (mImage != null)
 		{
-			int boundsWidth = getWidth() - this.getPaddingLeft() - this.getPaddingRight();
 			
-			float imageRatio = ((float)mImage.getHeight())/((float)mImage.getWidth());
-			boundsHeight = (int)(((float)boundsWidth) * imageRatio) - this.getPaddingTop() - this.getPaddingBottom();
-			
-			Rect bounds = new Rect(getPaddingLeft(),getPaddingTop(),boundsWidth, boundsHeight);
+			 computeBounds ();
 			canvas.drawBitmap(mImage, null, bounds, mTextPaint);
 		}
 		
-        canvas.drawText(mText, getPaddingLeft(), boundsHeight - (mAscent*2), mTextPaint);		
+		mTextPaint.setStyle(Paint.Style.FILL);
+        mTextPaint.setColor(mBgColor);
+        mTextPaint.setAlpha(150);
+        
+		canvas.drawRect(getWidth()/2-mTextWidth/2, getHeight()/2-mAscent*3, getWidth()/2+mTextWidth/2, getHeight()/2+mAscent*2, mTextPaint);
+
+		mTextPaint.setColor(mFontColor);
+		mTextPaint.setStyle(Paint.Style.STROKE);
+        canvas.drawText(mText, getWidth()/2-mTextWidth/2, getHeight()/2-mAscent, mTextPaint);		
 	}
 	
 	
@@ -155,6 +186,13 @@ public class BigImageLabelView extends View {
         }
         return result;
     }
+
+	@Override
+	public void invalidate() {
+
+		super.invalidate();
+		 computeBounds ();
+	}
 
 
 }
