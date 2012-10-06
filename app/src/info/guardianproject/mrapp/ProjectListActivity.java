@@ -44,13 +44,10 @@ public class ProjectListActivity extends SherlockActivity {
         pager = (ViewPager) findViewById(R.id.awesomepager);
         pager.setAdapter(adapter);
         
-		if (alProjects.size() == 0) {
-			addDefaultView();
-		} else {
-			// TODO replace all this with a CursorPagerAdapter and a Loader
-			for (Project p : alProjects) {
-				addProjectView(p);
-			}
+		addDefaultView();
+
+		for (Project p : alProjects) {
+			addProjectView(p);
 		}
     }
 
@@ -65,7 +62,7 @@ public class ProjectListActivity extends SherlockActivity {
 
 		if (item.getItemId() == R.id.menu_new_project) {
 			addNewProject();
-
+			showProjectView();
 			return true;
 		} else if (item.getItemId() == R.id.menu_lessons) {
 			Intent intent = new Intent(this, LessonPagerActivity.class);
@@ -113,8 +110,6 @@ public class ProjectListActivity extends SherlockActivity {
 		adapter.notifyDataSetChanged();
 		
 		pager.setCurrentItem(adapter.getCount()-1, true);
-		
-		showProjectView ();
 	}
 	
 	private void addDefaultView ()
@@ -132,6 +127,7 @@ public class ProjectListActivity extends SherlockActivity {
 			@Override
 			public void onClick(View v) {
 				addNewProject();
+				showProjectView();
 			}
 			
 		});
