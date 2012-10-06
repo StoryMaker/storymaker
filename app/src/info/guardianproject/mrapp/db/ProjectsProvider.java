@@ -8,6 +8,7 @@ import android.content.UriMatcher;
 import android.database.Cursor;
 import android.net.Uri;
 
+// FIXME rename this to SMProvier and get rid of LessonsProvider
 public class ProjectsProvider extends ContentProvider {  
 	private StoryMakerDB mDB;
     private String mPassphrase = "foo"; //how and when do we set this??
@@ -15,14 +16,29 @@ public class ProjectsProvider extends ContentProvider {
     private static final String AUTHORITY = "info.guardianproject.mrapp.db.ProjectsProvider";
     public static final int PROJECTS = 101;
     public static final int PROJECT_ID = 111;
+    public static final int LESSONS = 102;
+    public static final int LESSON_ID = 112;
+    public static final int MEDIA = 103;
+    public static final int MEDIA_ID = 113;
     public static final String PROJECTS_BASE_PATH = "projects";
-    public static final Uri CONTENT_URI = Uri.parse("content://" + AUTHORITY
-            + "/" + PROJECTS_BASE_PATH);
-    
-    public static final String CONTENT_ITEM_TYPE = ContentResolver.CURSOR_ITEM_BASE_TYPE
+    public static final String LESSONS_BASE_PATH = "lessons";
+    public static final String MEDIA_BASE_PATH = "media";
+    public static final Uri PROJECTS_CONTENT_URI = Uri.parse("content://" + AUTHORITY + "/" + PROJECTS_BASE_PATH);
+    public static final Uri LESSONS_CONTENT_URI = Uri.parse("content://" + AUTHORITY + "/" + LESSONS_BASE_PATH);
+    public static final Uri MEDIA_CONTENT_URI = Uri.parse("content://" + AUTHORITY + "/" + MEDIA_BASE_PATH);
+
+    public static final String PROJECTS_CONTENT_ITEM_TYPE = ContentResolver.CURSOR_ITEM_BASE_TYPE
             + "/projects";
-    public static final String CONTENT_TYPE = ContentResolver.CURSOR_DIR_BASE_TYPE
+    public static final String PROJECTS_CONTENT_TYPE = ContentResolver.CURSOR_DIR_BASE_TYPE
             + "/projects";
+    public static final String LESSONS_CONTENT_ITEM_TYPE = ContentResolver.CURSOR_ITEM_BASE_TYPE
+            + "/lessons";
+    public static final String LESSONS_CONTENT_TYPE = ContentResolver.CURSOR_DIR_BASE_TYPE
+            + "/lessons";
+    public static final String MEDIA_CONTENT_ITEM_TYPE = ContentResolver.CURSOR_ITEM_BASE_TYPE
+            + "/media";
+    public static final String MEDIA_CONTENT_TYPE = ContentResolver.CURSOR_DIR_BASE_TYPE
+            + "/media";
     
     private static final UriMatcher sURIMatcher = new UriMatcher(
             UriMatcher.NO_MATCH);
@@ -52,11 +68,27 @@ public class ProjectsProvider extends ContentProvider {
         switch (uriType) {
         case PROJECT_ID:
             queryBuilder.setTables(StoryMakerDB.Schema.Projects.NAME);
-            queryBuilder.appendWhere(StoryMakerDB.Schema.Lessons.ID + "="
+            queryBuilder.appendWhere(StoryMakerDB.Schema.Projects.ID + "="
                     + uri.getLastPathSegment());
             break;
         case PROJECTS:
         	queryBuilder.setTables(StoryMakerDB.Schema.Projects.NAME);
+            break;
+        case LESSON_ID:
+            queryBuilder.setTables(StoryMakerDB.Schema.Lessons.NAME);
+            queryBuilder.appendWhere(StoryMakerDB.Schema.Lessons.ID + "="
+                    + uri.getLastPathSegment());
+            break;
+        case LESSONS:
+        	queryBuilder.setTables(StoryMakerDB.Schema.Lessons.NAME);
+            break;
+        case MEDIA_ID:
+            queryBuilder.setTables(StoryMakerDB.Schema.Media.NAME);
+            queryBuilder.appendWhere(StoryMakerDB.Schema.Media.ID + "="
+                    + uri.getLastPathSegment());
+            break;
+        case MEDIA:
+        	queryBuilder.setTables(StoryMakerDB.Schema.Media.NAME);
             break;
         default:
             throw new IllegalArgumentException("Unknown URI");
@@ -70,13 +102,24 @@ public class ProjectsProvider extends ContentProvider {
 
 	@Override
 	public Uri insert(Uri uri, ContentValues values) {
+		long newId;
 		int uriType = sURIMatcher.match(uri);
 		switch (uriType) {
 		case PROJECTS:
-            long newProjectId = mDB.getWritableDatabase(mPassphrase)
+            newId = mDB.getWritableDatabase(mPassphrase)
             	.insertOrThrow(StoryMakerDB.Schema.Projects.NAME, null, values);
             getContext().getContentResolver().notifyChange(uri, null);
-            return CONTENT_URI.buildUpon().appendPath(PROJECTS_BASE_PATH).appendPath("" + newProjectId).build();
+            return PROJECTS_CONTENT_URI.buildUpon().appendPath(PROJECTS_BASE_PATH).appendPath("" + newId).build();
+		case LESSONS:
+            newId = mDB.getWritableDatabase(mPassphrase)
+            	.insertOrThrow(StoryMakerDB.Schema.Lessons.NAME, null, values);
+            getContext().getContentResolver().notifyChange(uri, null);
+            return LESSONS_CONTENT_URI.buildUpon().appendPath(LESSONS_BASE_PATH).appendPath("" + newId).build();
+		case MEDIA:
+            newId = mDB.getWritableDatabase(mPassphrase)
+            	.insertOrThrow(StoryMakerDB.Schema.Media.NAME, null, values);
+            getContext().getContentResolver().notifyChange(uri, null);
+            return MEDIA_CONTENT_URI.buildUpon().appendPath(MEDIA_BASE_PATH).appendPath("" + newId).build();
 		default:
 			throw new IllegalArgumentException("Unknown URI");
 		}

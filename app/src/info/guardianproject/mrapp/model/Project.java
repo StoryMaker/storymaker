@@ -10,11 +10,10 @@ import android.database.Cursor;
 import android.net.Uri;
 
 public class Project {
-
+	protected Context context;
 	protected int id;
 	protected String title;
 	protected String thumbnailPath;
-	Context context;
 	
 	public Project(Context context) {
 		this.context = context; 
@@ -31,12 +30,12 @@ public class Project {
 		ContentValues values = new ContentValues();
 		values.put(StoryMakerDB.Schema.Projects.COL_TITLE, title);
 		values.put(StoryMakerDB.Schema.Projects.COL_THUMBNAIL_PATH, thumbnailPath);
-		context.getContentResolver().insert(ProjectsProvider.CONTENT_URI, values);
+		Uri uri = context.getContentResolver().insert(ProjectsProvider.PROJECTS_CONTENT_URI, values);
+		// FIXME grab out the id and set it on ourself
 	}
 	
 	public static Cursor getAllAsCursor(Context context) {
-		return context.getContentResolver().query(ProjectsProvider.CONTENT_URI, null, null, null, null);
-		
+		return context.getContentResolver().query(ProjectsProvider.PROJECTS_CONTENT_URI, null, null, null, null);
 	}
 	
 	public static ArrayList<Project> getAllAsList(Context context) {

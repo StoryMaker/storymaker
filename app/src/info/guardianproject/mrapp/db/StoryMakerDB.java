@@ -18,7 +18,7 @@ public class StoryMakerDB extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
 		db.execSQL(StoryMakerDB.Schema.Projects.CREATE_TABLE_PROJECTS);
 		db.execSQL(StoryMakerDB.Schema.Lessons.CREATE_TABLE_LESSONS);
-		db.execSQL(StoryMakerDB.Schema.Medias.CREATE_TABLE_MEDIAS);
+		db.execSQL(StoryMakerDB.Schema.Media.CREATE_TABLE_MEDIA);
     }
     
     @Override
@@ -58,16 +58,16 @@ public class StoryMakerDB extends SQLiteOpenHelper {
 					+ "); ";
     	}
     	
-    	public class Medias
+    	public class Media
     	{
-    		public static final String NAME = "medias";
+    		public static final String NAME = "media";
         	
 	    	public static final String ID = "_id";
 	    	public static final String COL_PROJECT_ID = "project_id"; // foreign key
 	    	public static final String COL_PATH = "path";
 	    	public static final String COL_MIME_TYPE = "mimeType";
 	    	
-	    	private static final String CREATE_TABLE_MEDIAS = "create table " + NAME + " ("
+	    	private static final String CREATE_TABLE_MEDIA = "create table " + NAME + " ("
 	    			+ ID + " integer primary key autoincrement, "
 	    			+ COL_PROJECT_ID + " text not null, "
 	    			+ COL_PATH + " text not null,"
