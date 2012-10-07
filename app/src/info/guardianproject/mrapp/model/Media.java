@@ -34,6 +34,16 @@ public class Media {
 		Uri uri = context.getContentResolver().insert(ProjectsProvider.MEDIA_CONTENT_URI, values);
 		// FIXME grab out the id and set it on ourself
 	}
+    
+    public static Cursor getAsCursor(Context context, int id) {
+        String selection = StoryMakerDB.Schema.Media.ID + "=?";
+        String[] selectionArgs = new String[] { "" + id};
+        return context.getContentResolver().query(ProjectsProvider.MEDIA_CONTENT_URI, null, selection, selectionArgs, null);
+    }
+    
+    public static Media get(Context context, int id) {
+        return new Media(context, Media.getAsCursor(context, id));
+    }
 	
 	public static Cursor getAllAsCursor(Context context) {
 		return context.getContentResolver().query(ProjectsProvider.MEDIA_CONTENT_URI, null, null, null, null);

@@ -33,6 +33,16 @@ public class Project {
 		Uri uri = context.getContentResolver().insert(ProjectsProvider.PROJECTS_CONTENT_URI, values);
 		// FIXME grab out the id and set it on ourself
 	}
+    
+    public static Cursor getAsCursor(Context context, int id) {
+        String selection = StoryMakerDB.Schema.Projects.ID + "=?";
+        String[] selectionArgs = new String[] { "" + id};
+        return context.getContentResolver().query(ProjectsProvider.PROJECTS_CONTENT_URI, null, selection, selectionArgs, null);
+    }
+	
+	public static Project get(Context context, int id) {
+	    return new Project(context, Project.getAsCursor(context, id));
+	}
 	
 	public static Cursor getAllAsCursor(Context context) {
 		return context.getContentResolver().query(ProjectsProvider.PROJECTS_CONTENT_URI, null, null, null, null);
