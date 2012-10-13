@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_gravity="center"
+     >
+    
+     <EditText 
+    android:id="@+id/editTitle" 
+    android:hint="@string/hintTitle" 
+    android:layout_width="match_parent" 
+    android:layout_height="wrap_content" 
+    android:background="@android:drawable/editbox_background"/> 
+    
+    <EditText 
+    android:id="@+id/editStartTime" 
+    android:hint="@string/hintStartTime" 
+    android:layout_width="match_parent" 
+    android:layout_height="wrap_content" 
+    android:background="@android:drawable/editbox_background"/> 
+
+     <EditText 
+    android:id="@+id/editEndTime" 
+    android:hint="@string/hintEndTime" 
+    android:layout_width="match_parent" 
+    android:layout_height="wrap_content" 
+    android:background="@android:drawable/editbox_background"/> 
+    
+     <EditText 
+    android:id="@+id/editFadeIn" 
+    android:hint="@string/hintFadeIn"
+    android:layout_width="match_parent" 
+    android:layout_height="wrap_content" 
+    android:background="@android:drawable/editbox_background"/> 
+    
+    <EditText 
+    android:id="@+id/editFadeOut" 
+    android:hint="@string/hintFadeOut"
+    android:layout_width="match_parent" 
+    android:layout_height="wrap_content" 
+    android:background="@android:drawable/editbox_background"/> 
+    
+      <Button 
+    android:id="@+id/btnApply" 
+    
+    android:layout_width="match_parent" 
+    android:layout_height="wrap_content" 
+    android:text="Apply"
+    /> 
+    
+</LinearLayout>

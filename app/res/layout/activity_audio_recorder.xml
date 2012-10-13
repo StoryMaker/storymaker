@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:padding="20dip">
+    
+    	
+    <LinearLayout
+    	android:orientation="horizontal"
+    	android:layout_width="fill_parent"
+    	android:layout_height="wrap_content">
+    	
+        <Button
+    		android:layout_width="wrap_content"
+    		android:layout_height="wrap_content"
+    		android:id="@+id/btnPlay"
+    		android:text="@string/play_recording"
+    		android:layout_weight="1.0"/>
+        
+    	<Button
+    		android:layout_width="wrap_content"
+    		android:layout_height="wrap_content"
+    		android:id="@+id/btnStart"
+    		android:text="@string/start_recording"
+    		android:layout_weight="1.0"/>
+    		
+		<Button
+    		android:layout_width="wrap_content"
+    		android:layout_height="wrap_content"
+    		android:id="@+id/btnStop"
+    		android:text="@string/stop_recording"
+    		android:layout_weight="1.0"/>
+    </LinearLayout>
+    
+     <LinearLayout
+    	android:orientation="horizontal"
+    	android:layout_width="fill_parent"
+    	android:layout_height="wrap_content">
+    	
+        <Button
+    		android:layout_width="wrap_content"
+    		android:layout_height="wrap_content"
+    		android:id="@+id/btnFinish"
+    		android:text="@string/save_recording"
+    		android:layout_weight="1.0"/>
+        
+    </LinearLayout>
+</LinearLayout>
