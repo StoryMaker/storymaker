@@ -75,7 +75,7 @@ public class ProjectListActivity extends SherlockActivity {
 	}
 
 	private void addNewProject() {
-		Project project = new Project(getBaseContext());
+		Project project = new Project(getApplicationContext());
 		project.setId(adapter.getCount());
 		project.setTitle("Project " + project.getId());
 		project.save();

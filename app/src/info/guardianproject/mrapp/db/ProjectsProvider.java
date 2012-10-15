@@ -46,6 +46,10 @@ public class ProjectsProvider extends ContentProvider {
     static {
         sURIMatcher.addURI(AUTHORITY, PROJECTS_BASE_PATH, PROJECTS);
         sURIMatcher.addURI(AUTHORITY, PROJECTS_BASE_PATH + "/#", PROJECT_ID);
+        sURIMatcher.addURI(AUTHORITY, LESSONS_BASE_PATH, LESSONS);
+        sURIMatcher.addURI(AUTHORITY, LESSONS_BASE_PATH + "/#", LESSON_ID);
+        sURIMatcher.addURI(AUTHORITY, MEDIA_BASE_PATH, MEDIA);
+        sURIMatcher.addURI(AUTHORITY, MEDIA_BASE_PATH + "/#", MEDIA_ID);
     }
     
     @Override
