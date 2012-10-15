@@ -78,7 +78,6 @@ public class StoryMakerDB extends SQLiteOpenHelper {
 //    	public static final String DB_SCHEMA = Lessons.CREATE_TABLE_LESSONS 
 //    			+ Projects.CREATE_TABLE_PROJECTS 
 //    			+ Medias.CREATE_TABLE_MEDIAS;
-    	
     }
     
 }

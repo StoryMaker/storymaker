@@ -171,5 +171,4 @@ public class Project {
     public void setThumbnailPath(String thumbnailPath) {
         this.thumbnailPath = thumbnailPath;
     }
-
 }
