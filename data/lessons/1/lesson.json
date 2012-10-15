@@ -1,0 +1,11 @@
+{"lesson": {
+    "title": "Journalism Introduction",
+    "description": "what you need to know in order to know what you need",
+    "image": "journalism.jpg",
+    "published": "2012/09/01",
+    "author": "Joe Someone",
+    "resource": {
+        "url": "index.html"        
+     }       
+  }
+}
