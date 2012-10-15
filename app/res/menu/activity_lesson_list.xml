@@ -1,10 +1,11 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     
-    	  <item android:id="@+id/menu_overlay_camera"
-        android:title="@string/menu_overlay_camera"
+    	  
+         <item android:id="@+id/menu_update"
+        android:title="@string/menu_update"
         android:showAsAction="always" 
        android:enabled="true" android:visible="true"/>
-    	  
+    	 
         <item android:id="@+id/menu_projects"
         android:title="@string/menu_projects"
         android:showAsAction="always" 

@@ -1,32 +1,20 @@
 package info.guardianproject.mrapp.lessons;
 
-import info.guardianproject.mrapp.MediaAppConstants;
 import info.guardianproject.mrapp.ProjectListActivity;
 import info.guardianproject.mrapp.R;
-import info.guardianproject.mrapp.R.id;
-import info.guardianproject.mrapp.R.layout;
-import info.guardianproject.mrapp.R.menu;
-import info.guardianproject.mrapp.R.string;
+import info.guardianproject.mrapp.StoryMakerApp;
 import info.guardianproject.mrapp.model.Lesson;
-import info.guardianproject.mrapp.ui.BigImageLabelView;
-import info.guardianproject.mrapp.ui.OverlayCamera;
 
-import java.io.FileDescriptor;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 
-import org.apache.commons.io.IOUtils;
-
 import android.content.Intent;
-import android.content.res.AssetFileDescriptor;
-import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.os.Parcelable;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.TextView;
@@ -35,12 +23,13 @@ import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 
-public class LessonPagerActivity extends SherlockActivity {
+public class LessonPagerActivity extends SherlockActivity implements Runnable, LessonManagerListener {
 
 	private ViewPager pager;
 	private AwesomePagerAdapter adapter;
 	
-	private ArrayList<Lesson> alLessons;
+	private LessonManager mLessonManager;
+	private ArrayList<Lesson> mListLessons;
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -53,38 +42,25 @@ public class LessonPagerActivity extends SherlockActivity {
         pager = (ViewPager) findViewById(R.id.awesomepager);
         pager.setAdapter(adapter);
         
+        mLessonManager = ((StoryMakerApp)getApplication()).getLessonManager();
+        mLessonManager.setListener(this);
         
-        initTestLessons();
+        new Thread(this).start();
         
     }
     
-    private void showOverlayCamera ()
-	{
-
-		Intent intent = new Intent(this, OverlayCamera.class);
-		startActivity(intent);
-	}
-    
-    private void initTestLessons ()
+    public void run ()
     {
-    	alLessons = new ArrayList<Lesson>();
-    	
-    	try {
-
-    		for (int i = 1; i < 100; i++)
-    		{
-    			InputStream is = getAssets().open("lessons/" + i + "/lesson.json");
-    			Lesson lesson = Lesson.parse(IOUtils.toString(is));
-    			addNewLesson (lesson);
-    		}
-	    	
-    	} catch (Exception e) {
-			Log.e(MediaAppConstants.TAG,"error parsing Lesson",e);
-		}
-    	
+    	mListLessons = mLessonManager.loadLessonList(true);
+    	mHandler.sendEmptyMessage(1);
     	
     }
-
+    
+    private void updateLessonsFromServer ()
+    {
+    	mLessonManager.updateLessonsFromRemote();
+    }
+    
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getSupportMenuInflater().inflate(R.menu.activity_lesson_list, menu);
@@ -95,37 +71,25 @@ public class LessonPagerActivity extends SherlockActivity {
 	@Override
 	public boolean onMenuItemSelected(int featureId, MenuItem item) {
 
-		 if (item.getItemId() == R.id.menu_overlay_camera)
-         {
-			 
-			 showOverlayCamera();
-         }	
-		 else if (item.getItemId() == R.id.menu_projects)
+		 if (item.getItemId() == R.id.menu_projects)
          {
 			 Intent intent = new Intent (this, ProjectListActivity.class);
 				startActivity(intent);
          }	
+		 if (item.getItemId() == R.id.menu_update)
+         {
+			 updateLessonsFromServer();
+         }	
+		  
 		  
 		return super.onMenuItemSelected(featureId, item);
 	}
 	
-	private void loadLessons ()
-	{
-		//access remote XML/RSS for lessons
-		
-		//add list of available lessons
-		
-		
-		
-		
-	}
-	
 	private void accessLesson ()
 	{
-		//is lesson downloaded? if no, then download
 		
 		//if yes, then display here!
-		Lesson lesson = alLessons.get(pager.getCurrentItem());
+		Lesson lesson = mListLessons.get(pager.getCurrentItem());
 
 		Intent intent = new Intent(this,LessonViewActivity.class);
 		intent.putExtra("title", lesson.mTitle);
@@ -135,9 +99,8 @@ public class LessonPagerActivity extends SherlockActivity {
 		
 	}
 	
-	private void addNewLesson (Lesson lesson)
+	private void addNewLessonView (Lesson lesson)
 	{
-		alLessons.add(lesson);
 		TextView view = new TextView(this);
 		view.setTextSize(36);
 		view.setText(lesson.mTitle);
@@ -257,5 +220,44 @@ public class LessonPagerActivity extends SherlockActivity {
 		public void startUpdate(View arg0) {}
     	
     }
+
+    Handler mHandler = new Handler ()
+    {
+
+		@Override
+		public void handleMessage(Message msg) {
+			
+			super.handleMessage(msg);
+			
+			switch (msg.what)
+			{
+				case 1:
+				
+					//reload lessons in list
+			    	for (Lesson lesson : mListLessons)
+			    		addNewLessonView(lesson);
+			    		
+					
+				break;
+				
+				default:
+				
+			}
+			
+			
+		}
+    
+    	
+    	
+    };
+    
+	@Override
+	public void lessonsLoadedFromServer() {
+		
+    	mListLessons = mLessonManager.loadLessonList(true);
+
+		mHandler.sendEmptyMessage(1);
+		
+	}
 
 }
