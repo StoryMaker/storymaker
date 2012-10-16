@@ -9,6 +9,7 @@ import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.DrawFilter;
 import android.graphics.LightingColorFilter;
 import android.graphics.Picture;
 import android.graphics.PixelFormat;
@@ -140,17 +141,16 @@ public class OverlayCamera extends Activity implements Callback, SwipeInterface 
         	
         	bitmap = Bitmap.createBitmap(mOverlayView.getWidth(),mOverlayView.getHeight(), Bitmap.Config.ARGB_8888);
             canvas = new Canvas(bitmap);
-          //  SVG svg = SVGParser.getSVGFromAsset(getAssets(), "images/overlays/svg/" + overlays[idx],0xFF000000,0xFFFFFFFF);
-            SVG svg = SVGParser.getSVGFromAsset(getAssets(), "images/overlays/svg/" + overlays[idx]);
+            SVG svg = SVGParser.getSVGFromAsset(getAssets(), "images/overlays/svg/" + overlays[idx],0xFF000000,0xFFFFFFFF);
             
             float sx = svg.getLimits().width() / ((float)mOverlayView.getWidth());
             float sy = svg.getLimits().height() / ((float)mOverlayView.getHeight());
             
             canvas.scale(1/sx, 1/sy);
             
-            PictureDrawable d = svg.createPictureDrawable();
-            //d.setColorFilter(new LightingColorFilter( Color.BLACK, Color.WHITE ));
+           // canvas.setDrawFilter(new DrawFilter (){});
             
+            PictureDrawable d = svg.createPictureDrawable();
             d.setBounds(new Rect(0,0,mOverlayView.getWidth(),mOverlayView.getHeight()));
             d.draw(canvas);
             
