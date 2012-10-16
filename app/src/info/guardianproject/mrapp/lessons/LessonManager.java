@@ -35,7 +35,9 @@ public class LessonManager implements Runnable {
 	
 	public LessonManager (String remoteRepoUrl, File localStorageRoot)
 	{
-		mLocalStorageRoot = localStorageRoot;
+		mUrlRemoteRepo = remoteRepoUrl;
+		mLocalStorageRoot = new File(localStorageRoot,"lessons");
+		mLocalStorageRoot.mkdir();
 	}
 	
 	public void setListener (LessonManagerListener listener)
@@ -68,6 +70,7 @@ public class LessonManager implements Runnable {
 						if (fileLessonJson.exists())
 						{
 							Lesson lesson = Lesson.parse(IOUtils.toString(new FileInputStream(fileLessonJson)));
+							lesson.mResourcePath = "file://" + new File(fileLesson,lesson.mResourcePath).getAbsolutePath();
 							mListLessons.add(lesson);
 						}
 					}
@@ -107,7 +110,9 @@ public class LessonManager implements Runnable {
 			
 			IOUtils.readFully(urlRemoteIndex.openStream(),buffer);
 			
-			JSONArray jarray = new JSONArray(new String(buffer));
+			JSONObject jObjMain = new JSONObject(new String(buffer));
+			
+			JSONArray jarray = jObjMain.getJSONArray("lessons");
 			
 			for (int i = 0; i < jarray.length(); i++)
 			{
@@ -119,15 +124,18 @@ public class LessonManager implements Runnable {
 				//this should be a zip file
 				URL urlLesson = new URL(mUrlRemoteRepo + lessonUrl);
 				
-				File fileZip = new File(mLocalStorageRoot,urlLesson.getFile());
+				String fileName = urlLesson.getFile();
+				fileName = fileName.substring(fileName.lastIndexOf('/')+1);
+				File fileZip = new File(mLocalStorageRoot,fileName);
 				
-				FileOutputStream fos = new FileOutputStream(fileZip);
-				IOUtils.copyLarge(new URL(lessonUrl).openStream(),fos);
+				if (fileZip.exists())
+					fileZip.delete();
 				
-				File fileZipUnpack = new File(mLocalStorageRoot,urlLesson.getFile()+"-dir");
-				fileZipUnpack.mkdirs();
+				IOUtils.copyLarge(urlLesson.openStream(),new FileOutputStream(fileZip));
 				
-				unpack(fileZip,fileZipUnpack);
+				unpack(fileZip,mLocalStorageRoot);
+				
+				fileZip.delete();
 				
 			}
 			
@@ -145,10 +153,14 @@ public class LessonManager implements Runnable {
 	@SuppressWarnings("unchecked")
 	public final static void unpack(File zipFile, File rootDir) throws IOException
 	{
+		
 	  ZipFile zip = new ZipFile(zipFile);
 	  Enumeration<ZipEntry> entries = (Enumeration<ZipEntry>) zip.entries();
+	  ZipEntry entry = null;
+	  
 	  while(entries.hasMoreElements()) {
-	    ZipEntry entry = entries.nextElement();
+	    entry = entries.nextElement();
+	    
 	    java.io.File f = new java.io.File(rootDir, entry.getName());
 	    if (entry.isDirectory()) { // if its a directory, create it
 	      continue;

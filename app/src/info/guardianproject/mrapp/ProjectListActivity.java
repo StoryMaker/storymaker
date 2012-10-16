@@ -120,7 +120,7 @@ public class ProjectListActivity extends SherlockActivity {
 	private void addDefaultView ()
 	{
 		TextView view = new TextView(this);
-		view.setTextSize(36);
+		view.setTextSize(30);
 		view.setText(R.string.default_project_list_view);
 		view.setTextColor(Color.DKGRAY);
 		view.setBackgroundColor(Color.LTGRAY);

@@ -14,7 +14,8 @@ public class StoryMakerApp extends Application {
 	
 	private LessonManager mLessonManager;
 	
-	private String bootstrapUrlString = "https://guardianproject.info/download/storymaker/";
+	//just throwing some test files up here for now 
+	private String bootstrapUrlString = "https://guardianproject.info/downloads/storymaker/";
 	
 	 public void InitializeSQLCipher(String dbName, String passphrase) {
 	        	      

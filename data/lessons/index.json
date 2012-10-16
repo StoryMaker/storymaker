@@ -1,15 +1,14 @@
-{
-  "lesson": {
+{"lessons":[
+   {
     "title": "Journalism Introduction",
     "resource": {
         "url": "1.zip"        
      }       
   },
-  "lesson": {
+  {
     "title": "something else",
     "resource": {
         "url": "2.zip"        
      }       
   }
-
-}
+]}

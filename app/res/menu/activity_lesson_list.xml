@@ -8,7 +8,7 @@
     	 
         <item android:id="@+id/menu_projects"
         android:title="@string/menu_projects"
-        android:showAsAction="always" 
+        android:showAsAction="withText" 
        android:enabled="true" android:visible="true"/>
       
       <item android:id="@+id/menu_glossary"

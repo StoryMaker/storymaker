@@ -119,7 +119,7 @@ public class ProjectViewActivity extends SherlockActivity implements MediaManage
     private void addDefaultView ()
 	{
 		TextView view = new TextView(this);
-		view.setTextSize(32);
+		view.setTextSize(30);
 		view.setText(R.string.default_project_view_message);
 		view.setTextColor(Color.DKGRAY);
 		view.setBackgroundColor(Color.LTGRAY);
@@ -345,22 +345,30 @@ public class ProjectViewActivity extends SherlockActivity implements MediaManage
 		
 		if (resultCode == RESULT_OK)
 		{
-			
-			mMediaResult = mMediaHelper.handleResult(requestCode, resultCode, intent, mMediaTmp);
-			
-			try
+			if (requestCode == 777) //overlay camerae
 			{
-				if (mMediaResult != null)
-					if (mMediaResult.path != null)
-						addMediaFile(mMediaResult.path, mMediaResult.mimeType);
+				//now launch real camera
+				mMediaTmp = mMediaHelper.captureVideo(fileExternDir);
+				
 			}
-			catch (IOException ioe)
+			else
 			{
-				Log.e(MediaAppConstants.TAG,"error adding media result",ioe);
-			}
+				mMediaResult = mMediaHelper.handleResult(requestCode, resultCode, intent, mMediaTmp);
+				
+				try
+				{
+					if (mMediaResult != null)
+						if (mMediaResult.path != null)
+							addMediaFile(mMediaResult.path, mMediaResult.mimeType);
+				}
+				catch (IOException ioe)
+				{
+					Log.e(MediaAppConstants.TAG,"error adding media result",ioe);
+				}
+				
 			
-		
-			//if path is null, wait for the scanner callback in the mHandler
+				//if path is null, wait for the scanner callback in the mHandler
+			}
 		}
 		
 		
@@ -422,7 +430,7 @@ public class ProjectViewActivity extends SherlockActivity implements MediaManage
 	private void showAddMediaDialog ()
 	{
 		
-		final CharSequence[] items = {"Open Gallery","Open File","Record Video", "Record Audio", "Take Photo"};
+		final CharSequence[] items = {"Open Gallery","Open File","Choose Shot","Record Video", "Record Audio", "Take Photo"};
 
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
 		builder.setTitle("Choose medium");
@@ -437,14 +445,17 @@ public class ProjectViewActivity extends SherlockActivity implements MediaManage
 		    			mMediaHelper.openFileChooser();
 		    			break;
 		    		case 2:
+		    			showOverlayCamera();
+		    			break;
+		    		case 3:
 		    			mMediaTmp = mMediaHelper.captureVideo(fileExternDir);
 
 		    			break;
-		    		case 3:
+		    		case 4:
 		    			mMediaTmp = mMediaHelper.captureAudio(fileExternDir);
 
 		    			break;
-		    		case 4:
+		    		case 5:
 		    			mMediaTmp = mMediaHelper.capturePhoto(fileExternDir);
 		    			break;
 		    		default:
@@ -461,9 +472,9 @@ public class ProjectViewActivity extends SherlockActivity implements MediaManage
 
 	private void showOverlayCamera ()
 	{
-//		mMediaTmp = mMediaHelper.captureVideo(fileExternDir);
 		Intent intent = new Intent(this, OverlayCamera.class);
-		startActivity(intent);
+		startActivityForResult(intent,777);
+		
 	}
 	
 	private Handler mHandler = new Handler()

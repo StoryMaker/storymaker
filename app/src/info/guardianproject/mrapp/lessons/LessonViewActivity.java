@@ -1,35 +1,27 @@
 package info.guardianproject.mrapp.lessons;
 
 import info.guardianproject.mrapp.R;
-import info.guardianproject.mrapp.R.id;
-import info.guardianproject.mrapp.R.layout;
-import info.guardianproject.mrapp.model.Lesson;
-import info.guardianproject.mrapp.ui.BigImageLabelView;
-
-import java.util.ArrayList;
-
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.os.Parcelable;
-import android.support.v4.view.PagerAdapter;
-import android.support.v4.view.ViewPager;
-import android.view.View;
-import android.view.View.OnClickListener;
+import android.view.WindowManager;
 import android.webkit.WebView;
-import android.widget.TextView;
 
 import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
+import com.actionbarsherlock.view.Window;
 
 public class LessonViewActivity extends SherlockActivity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
         setContentView(R.layout.activity_web_view);
+        
+        //getSherlock().getActionBar().hide();
         
         Intent intent = getIntent();
         if (intent != null)

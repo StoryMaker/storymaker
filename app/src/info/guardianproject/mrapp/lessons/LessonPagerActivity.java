@@ -18,6 +18,7 @@ import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.Menu;
@@ -56,10 +57,6 @@ public class LessonPagerActivity extends SherlockActivity implements Runnable, L
     	
     }
     
-    private void updateLessonsFromServer ()
-    {
-    	mLessonManager.updateLessonsFromRemote();
-    }
     
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -76,9 +73,12 @@ public class LessonPagerActivity extends SherlockActivity implements Runnable, L
 			 Intent intent = new Intent (this, ProjectListActivity.class);
 				startActivity(intent);
          }	
-		 if (item.getItemId() == R.id.menu_update)
+		 else if (item.getItemId() == R.id.menu_update)
          {
-			 updateLessonsFromServer();
+			 
+			 adapter.clearViews();
+			 showMessage("Updating lessons from server...");
+			 mLessonManager.updateLessonsFromRemote();
          }	
 		  
 		  
@@ -147,6 +147,11 @@ public class LessonPagerActivity extends SherlockActivity implements Runnable, L
     	{
     		listViews.remove(viewIdx);
     	}
+    	
+    	public void clearViews ()
+    	{
+    		listViews.clear();
+    	}
 	 	
 		@Override
 		public int getCount() {
@@ -154,6 +159,8 @@ public class LessonPagerActivity extends SherlockActivity implements Runnable, L
 			return listViews.size();
 			
 		}
+		
+		
 
 	    /**
 	     * Create the page for the given position.  The adapter is responsible
@@ -233,6 +240,8 @@ public class LessonPagerActivity extends SherlockActivity implements Runnable, L
 			{
 				case 1:
 				
+
+					showMessage("Displaying available lessons...");
 					//reload lessons in list
 			    	for (Lesson lesson : mListLessons)
 			    		addNewLessonView(lesson);
@@ -260,4 +269,9 @@ public class LessonPagerActivity extends SherlockActivity implements Runnable, L
 		
 	}
 
+	private void showMessage (String msg)
+	{
+		 Toast.makeText(this, msg,Toast.LENGTH_LONG).show();
+
+	}
 }
