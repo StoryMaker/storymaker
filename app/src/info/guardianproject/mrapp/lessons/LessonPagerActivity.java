@@ -46,8 +46,17 @@ public class LessonPagerActivity extends SherlockActivity implements Runnable, L
         mLessonManager = ((StoryMakerApp)getApplication()).getLessonManager();
         mLessonManager.setListener(this);
         
-        new Thread(this).start();
-        
+    	mListLessons = mLessonManager.loadLessonList(true);
+    	if (mListLessons.size() == 0)
+    	{
+
+			 showMessage("Downloading lessons from server...");
+			 mLessonManager.updateLessonsFromRemote();
+    	}
+    	else
+    	{
+    		new Thread(this).start();
+    	}
     }
     
     public void run ()
@@ -238,10 +247,12 @@ public class LessonPagerActivity extends SherlockActivity implements Runnable, L
 			
 			switch (msg.what)
 			{
+				case 0:
+				 Toast.makeText(LessonPagerActivity.this, msg.getData().getString("status"),Toast.LENGTH_SHORT).show();
+				 break;
 				case 1:
 				
-
-					showMessage("Displaying available lessons...");
+					adapter.clearViews();
 					//reload lessons in list
 			    	for (Lesson lesson : mListLessons)
 			    		addNewLessonView(lesson);
@@ -269,9 +280,24 @@ public class LessonPagerActivity extends SherlockActivity implements Runnable, L
 		
 	}
 
-	private void showMessage (String msg)
+	private void showMessage (String msgText)
 	{
-		 Toast.makeText(this, msg,Toast.LENGTH_LONG).show();
+		Message msg = new Message();
+		msg.what = 0;
+		msg.getData().putString("status", msgText);
+		mHandler.sendMessage(msg);
 
+	}
+
+	@Override
+	public void loadingLessonFromServer(String lessonTitle) {
+		showMessage("Loading lesson: " +  lessonTitle);
+		
+	}
+
+	@Override
+	public void errorLoadingLessons(String msg) {
+		
+		showMessage("There was a problem loading the lessons: " + msg);
 	}
 }

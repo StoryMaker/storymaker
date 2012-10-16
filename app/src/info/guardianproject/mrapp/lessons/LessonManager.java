@@ -121,6 +121,10 @@ public class LessonManager implements Runnable {
 				String title = jobj.getString("title");
 				String lessonUrl = jobj.getJSONObject("resource").getString("url");
 				
+
+				if (mListener != null)
+					mListener.loadingLessonFromServer(title);
+				
 				//this should be a zip file
 				URL urlLesson = new URL(mUrlRemoteRepo + lessonUrl);
 				
@@ -146,6 +150,9 @@ public class LessonManager implements Runnable {
 		catch (Exception ioe)
 		{
 			Log.e(MediaAppConstants.TAG,"error loading lessons from server",ioe);
+			if (mListener != null)
+				mListener.errorLoadingLessons(ioe.getLocalizedMessage());
+			
 		}
 	}
 	
