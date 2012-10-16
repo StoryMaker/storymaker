@@ -133,7 +133,7 @@ public class MediaHelper implements MediaScannerConnectionClient {
 		 
 	    	Intent intent = new Intent(Intent.ACTION_SEND);
 	    	intent.setType(mimeType);
-	    	intent.putExtra(Intent.EXTRA_STREAM, Uri.parse(mediaFile.getAbsolutePath()));
+	    	intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(mediaFile));
 	    	mActivity.startActivityForResult(Intent.createChooser(intent, "Share Media"),0); 
 	    	    
 		 
