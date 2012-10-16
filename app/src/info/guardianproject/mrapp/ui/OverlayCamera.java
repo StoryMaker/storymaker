@@ -8,8 +8,11 @@ import java.io.InputStream;
 import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.LightingColorFilter;
 import android.graphics.Picture;
 import android.graphics.PixelFormat;
+import android.graphics.PorterDuff;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.PictureDrawable;
@@ -42,6 +45,8 @@ public class OverlayCamera extends Activity implements Callback, SwipeInterface 
     
     String[] overlays = null;
     int overlayIdx = 0;
+    
+    boolean cameraOn = false;
     
     
     ShutterCallback shutter = new ShutterCallback(){
@@ -118,7 +123,7 @@ public class OverlayCamera extends Activity implements Callback, SwipeInterface 
 
     private void closeOverlay ()
     {
-    	
+    	cameraOn = false;
     	camera.stopPreview();
         camera.release();
     	setResult(RESULT_OK);
@@ -144,6 +149,8 @@ public class OverlayCamera extends Activity implements Callback, SwipeInterface 
             canvas.scale(1/sx, 1/sy);
             
             PictureDrawable d = svg.createPictureDrawable();
+            //d.setColorFilter(new LightingColorFilter( Color.BLACK, Color.WHITE ));
+            
             d.setBounds(new Rect(0,0,mOverlayView.getWidth(),mOverlayView.getHeight()));
             d.draw(canvas);
             
@@ -182,13 +189,17 @@ public class OverlayCamera extends Activity implements Callback, SwipeInterface 
     public void surfaceCreated(SurfaceHolder holder) {
         // TODO Auto-generated method stub
     camera = Camera.open();
+    cameraOn = true;
     }
 
     @Override
     public void surfaceDestroyed(SurfaceHolder holder) {
-        // TODO Auto-generated method stub
-        camera.stopPreview();
-        camera.release();
+        
+    	if (cameraOn)
+    	{
+    		camera.stopPreview();
+    		camera.release();
+    	}
     }
 
 
