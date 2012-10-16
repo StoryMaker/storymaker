@@ -75,6 +75,16 @@
             />
        
          <activity android:name=".media.AudioRecorderActivity" />
+
+        <activity android:name="com.xtralogic.android.logcollector.SendLogActivity"
+                  android:label="@string/app_name_lc"
+                  android:theme="@style/CustomDialogTheme">
+            <intent-filter>
+                <action android:name="com.xtralogic.logcollector.intent.action.SEND_LOG" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
        
         <provider
 		    android:authorities="info.guardianproject.mrapp.db.LessonsProvider"
