@@ -117,11 +117,14 @@ public class MediaHelper implements MediaScannerConnectionClient {
 		mActivity.startActivityForResult(intent, MediaConstants.FILE_RESULT);
 		
     }
-	
 	 public void playMedia (File mediaFile, String mimeType) {
+		 playMedia(Uri.fromFile(mediaFile), mimeType);
+	 }
+	
+	 public void playMedia (Uri uri, String mimeType) {
 			
 	    	Intent intent = new Intent(android.content.Intent.ACTION_VIEW);
-	    	intent.setDataAndType(Uri.fromFile(mediaFile), mimeType);   
+	    	intent.setDataAndType(uri, mimeType);   
 	    	intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
 	   	 	mActivity.startActivity(intent);
 	   	 	
@@ -179,7 +182,7 @@ public class MediaHelper implements MediaScannerConnectionClient {
 					{
 						result = new MediaDesc();
 						result.path = fileMedia.getAbsolutePath();
-						result.mimeType = getMimeType(fileMedia);
+						result.mimeType = getMimeType(result.path);
 						
 					}
 					
@@ -266,7 +269,7 @@ public class MediaHelper implements MediaScannerConnectionClient {
 				//Uri uriCameraImage = Uri.fromFile(mFileTmp);
 				
 				result = new MediaResult();
-				result.mimeType = getMimeType(mMediaFileTmp);
+				result.mimeType = getMimeType(mMediaFileTmp.getAbsolutePath());
 				
 				if (result.mimeType  == null)
 				{
@@ -404,16 +407,18 @@ public class MediaHelper implements MediaScannerConnectionClient {
 		mScanner.disconnect();
 		//Log.d(MediaAppConstants.TAG, "new path: " + path + "\nnew uri for path: " + uri.toString());
 		
+		if (mHandler != null)
+		{
 		 Message msg = mHandler.obtainMessage(5);
 	     msg.getData().putString("path", path);    
 	     mHandler.sendMessage(msg);
+		}
 
 	}
 	
-	public String getMimeType (File fileMedia)
+	public String getMimeType (String path)
 	{
 		String result = null;
-		String path = fileMedia.getAbsolutePath();
 		String fileExtension = MimeTypeMap.getFileExtensionFromUrl(path);		
 		result = MimeTypeMap.getSingleton().getMimeTypeFromExtension(fileExtension);
 		
@@ -422,6 +427,10 @@ public class MediaHelper implements MediaScannerConnectionClient {
 			if (path.endsWith("wav"))
 			{
 				result = "audio/wav";
+			}
+			else if (path.endsWith("mp3"))
+			{
+				result = "audio/mpeg";
 			}
 			else if (path.endsWith("mp4"))
 			{

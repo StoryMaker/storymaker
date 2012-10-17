@@ -1,10 +1,18 @@
 package info.guardianproject.mrapp.lessons;
 
+import java.io.File;
+import java.net.URL;
+
 import info.guardianproject.mrapp.R;
+import info.guardianproject.mrapp.media.MediaHelper;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.WindowManager;
+import android.webkit.WebResourceResponse;
+import android.webkit.WebSettings.PluginState;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 
 import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.Menu;
@@ -13,6 +21,9 @@ import com.actionbarsherlock.view.Window;
 
 public class LessonViewActivity extends SherlockActivity {
 
+	WebView mWebView;
+	MediaHelper mMediaHelper;
+	
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,10 +42,42 @@ public class LessonViewActivity extends SherlockActivity {
         		setTitle(title);
         
         	String url = intent.getStringExtra("url");
-        	WebView engine = (WebView) findViewById(R.id.web_engine);  
-        	engine.loadUrl(url); 
+        	mWebView = (WebView) findViewById(R.id.web_engine);  
+        	
+        	mWebView.getSettings().setPluginsEnabled(true);
+        	mWebView.getSettings().setPluginState(PluginState.ON);
+
+        	
+        	mWebView.setWebViewClient(new WebViewClient ()
+        	{
+
+        		
+				@Override
+				public boolean shouldOverrideUrlLoading(WebView view, String url) {
+
+					boolean isMedia = false;
+					
+					String mimeType = mMediaHelper.getMimeType(url);
+					
+					if (mimeType != null && (!mimeType.startsWith("text")))
+							isMedia = true;
+					
+					if (isMedia)
+					{
+						//launch video player
+						mMediaHelper.playMedia(Uri.parse(url), mimeType);
+					}
+					
+					return isMedia;// super.shouldOverrideUrlLoading(view, url);
+				}
+        		
+        	});
+        	
+        	mWebView.loadUrl(url); 
         
         }
+        
+        mMediaHelper = new MediaHelper(this, null);
     }
     
    
