@@ -3,19 +3,16 @@ package info.guardianproject.mrapp.ui;
 import info.guardianproject.mrapp.MediaAppConstants;
 
 import java.io.IOException;
-import java.io.InputStream;
 
 import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.DrawFilter;
-import android.graphics.LightingColorFilter;
+import android.graphics.ColorFilter;
+import android.graphics.ColorMatrixColorFilter;
 import android.graphics.Picture;
-import android.graphics.PixelFormat;
-import android.graphics.PorterDuff;
+import android.graphics.PorterDuff.Mode;
 import android.graphics.Rect;
-import android.graphics.drawable.Drawable;
 import android.graphics.drawable.PictureDrawable;
 import android.hardware.Camera;
 import android.hardware.Camera.PictureCallback;
@@ -49,37 +46,10 @@ public class OverlayCamera extends Activity implements Callback, SwipeInterface 
     
     boolean cameraOn = false;
     
+    private int mColorRed = 0;
+    private int mColorGreen = 0;
+    private int mColorBlue = 0;
     
-    ShutterCallback shutter = new ShutterCallback(){
-
-        @Override
-        public void onShutter() {
-            // TODO Auto-generated method stub
-            // No action to be perfomed on the Shutter callback.
-
-        }
-
-       };
-       
-    PictureCallback raw = new PictureCallback(){
-        @Override
-        public void onPictureTaken(byte[] data, Camera camera) {
-            // TODO Auto-generated method stub
-            // No action taken on the raw data. Only action taken on jpeg data.
-      }
-
-       };
-
-    PictureCallback jpeg = new PictureCallback(){
-
-        @Override
-        public void onPictureTaken(byte[] data, Camera camera) {
-           
-
-        }
-
-       };
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -141,20 +111,14 @@ public class OverlayCamera extends Activity implements Callback, SwipeInterface 
         	
         	bitmap = Bitmap.createBitmap(mOverlayView.getWidth(),mOverlayView.getHeight(), Bitmap.Config.ARGB_8888);
             canvas = new Canvas(bitmap);
-            SVG svg = SVGParser.getSVGFromAsset(getAssets(), "images/overlays/svg/" + overlays[idx],0xFF000000,0xFFFFFFFF);
+          //  SVG svg = SVGParser.getSVGFromAsset(getAssets(), "images/overlays/svg/" + overlays[idx],0x000000,0xCC0000);
+            SVG svg = SVGParser.getSVGFromAsset(getAssets(), "images/overlays/svg/" + overlays[idx]);
+
+            Rect rBounds = new Rect(0,0,mOverlayView.getWidth(),mOverlayView.getHeight());
+            Picture p = svg.getPicture();                       
+            canvas.drawPicture(p, rBounds);            
             
-            float sx = svg.getLimits().width() / ((float)mOverlayView.getWidth());
-            float sy = svg.getLimits().height() / ((float)mOverlayView.getHeight());
-            
-            canvas.scale(1/sx, 1/sy);
-            
-           // canvas.setDrawFilter(new DrawFilter (){});
-            
-            PictureDrawable d = svg.createPictureDrawable();
-            d.setBounds(new Rect(0,0,mOverlayView.getWidth(),mOverlayView.getHeight()));
-            d.draw(canvas);
-            
-            mOverlayView.setImageBitmap(bitmap);
+            mOverlayView.setImageBitmap( changeColor(bitmap,mColorRed,mColorGreen,mColorBlue));
         }
         catch(IOException ex) 
         {
@@ -163,6 +127,29 @@ public class OverlayCamera extends Activity implements Callback, SwipeInterface 
         }
         
     }
+    
+    private Bitmap changeColor(Bitmap src,int pixelRed, int pixelGreen, int pixelBlue){
+    	
+    	int width = src.getWidth();
+    	int height = src.getHeight();
+    	
+        Bitmap dest = Bitmap.createBitmap(
+          width, height, src.getConfig());
+             
+        for(int x = 0; x < width; x++){
+         for(int y = 0; y < height; y++){
+          int pixelColor = src.getPixel(x, y);
+          int pixelAlpha = Color.alpha(pixelColor);
+           
+	          int newPixel = Color.argb(
+	            pixelAlpha, pixelRed, pixelGreen, pixelBlue);
+	           
+	          dest.setPixel(x, y, newPixel);          
+         } 
+        }
+        return dest; 
+       }
+    
     
     private void takePicture() {
         // TODO Auto-generated method stub
@@ -205,8 +192,10 @@ public class OverlayCamera extends Activity implements Callback, SwipeInterface 
 
 	@Override
 	public void bottom2top(View v) {
-		// TODO Auto-generated method stub
-		
+		mColorRed = 255;
+		mColorGreen = 255;
+		mColorBlue = 255;
+		setOverlayImage(overlayIdx);
 		
 	}
 
@@ -236,7 +225,65 @@ public class OverlayCamera extends Activity implements Callback, SwipeInterface 
 
 	@Override
 	public void top2bottom(View v) {
-		// TODO Auto-generated method stub
+		mColorRed = 0;
+		mColorGreen = 0;
+		mColorBlue = 0;
 		
+		setOverlayImage(overlayIdx);
 	}
+	
+
+    
+    ShutterCallback shutter = new ShutterCallback(){
+
+        @Override
+        public void onShutter() {
+            //no action for the shutter
+
+        }
+
+       };
+       
+    PictureCallback raw = new PictureCallback(){
+        @Override
+        public void onPictureTaken(byte[] data, Camera camera) {
+           //we aren't taking a picture here
+      }
+
+       };
+
+    PictureCallback jpeg = new PictureCallback(){
+
+        @Override
+        public void onPictureTaken(byte[] data, Camera camera) {
+        	   //we aren't taking a picture here
+
+        }
+
+       };
   }
+
+
+/*
+float sx = svg.getLimits().width() / ((float)mOverlayView.getWidth());
+float sy = svg.getLimits().height() / ((float)mOverlayView.getHeight());
+canvas.scale(1/sx, 1/sy);                      
+PictureDrawable d = svg.createPictureDrawable();              
+d.setBounds(new Rect(0,0,mOverlayView.getWidth(),mOverlayView.getHeight()));
+
+//d.setColorFilter(0xffff0000, Mode.MULTIPLY);
+int iColor = Color.parseColor("#FFFFFF");
+
+int red = (iColor & 0xFF0000) / 0xFFFF;
+int green = (iColor & 0xFF00) / 0xFF;
+int blue = iColor & 0xFF;
+
+float[] matrix = { 0, 0, 0, 0, red
+                 , 0, 0, 0, 0, green
+                 , 0, 0, 0, 0, blue
+                 , 0, 0, 0, 1, 0 };
+
+ColorFilter colorFilter = new ColorMatrixColorFilter(matrix);            
+d.setColorFilter(colorFilter);            
+d.draw(canvas);
+*/
