@@ -1,0 +1,11 @@
+{"lesson": {
+    "title": "Multimedia test lesson",
+    "description": "showing graphics, video and audio in a lesson",
+    "image": "social.jpg",
+    "published": "2012/09/01",
+    "author": "Joe Someone",
+    "resource": {
+        "url": "index.html"        
+     }       
+  }
+}

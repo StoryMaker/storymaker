@@ -6,9 +6,15 @@
      }       
   },
   {
-    "title": "something else",
+    "title": "Citizen journalism social media and crowd-sourced material",
     "resource": {
         "url": "2.zip"        
+     }       
+  },
+  {
+    "title": "Multimedia test lesson",
+    "resource": {
+        "url": "3.zip"        
      }       
   }
 ]}

@@ -1,0 +1,17 @@
+<?xml version='1.0' standalone='no'?>
+<!DOCTYPE svg PUBLIC '-//W3C//DTD SVG 1.1//EN'
+  'http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd'>
+<svg width='100%' height='100%' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'>
+
+   <title>The Domino Effect</title>
+
+   <desc>
+      A chain of declarative animations on a set of letters.
+      Written by Doug Schepers, November 2004.
+   </desc>
+
+
+   <text x='10' y='80' font-size='80px' fill='white' stroke='crimson' stroke-width='2' xml:space='preserve' text-rendering='geometricPrecision'><tspan>T<animate id='t1' attributeName='rotate' begin='0.5s' dur='0.4s' from='0' to='20' fill='freeze'/></tspan><tspan>h<animate id='t2' attributeName='rotate' begin='t1.end' dur='0.4s' from='0' to='20' fill='freeze'/></tspan><tspan>e<animate id='t3' attributeName='rotate' begin='t2.end' dur='1s' from='0' to='70' fill='freeze'/><animate attributeType='XML' attributeName='dx' begin='prev.begin' to='22' dur='1s' fill='freeze' /><animate attributeType='XML' attributeName='dy' begin='prev.begin' to='-35' dur='1s' fill='freeze' /></tspan> <tspan x='170' y='80'>D<animate id='t4' attributeName='rotate' begin='t3.end' dur='0.4s' from='0' to='20' fill='freeze'/></tspan><tspan>o<animate id='t5' attributeName='rotate' begin='t4.end' dur='0.4s' from='0' to='20' fill='freeze'/></tspan><tspan>m<animate id='t6' attributeName='rotate' begin='t5.end' dur='0.4s' from='0' to='20' fill='freeze'/></tspan><tspan>i<animate id='t7' attributeName='rotate' begin='t6.end' dur='0.4s' from='0' to='20' fill='freeze'/></tspan><tspan>n<animate id='t8' attributeName='rotate' begin='t7.end' dur='0.4s' from='0' to='20' fill='freeze'/></tspan><tspan>o<animate id='t9' attributeName='rotate' begin='t8.end' dur='1s' from='0' to='70' fill='freeze'/><animate attributeType='XML' attributeName='dx' begin='prev.begin' to='22' dur='1s' fill='freeze' /><animate attributeType='XML' attributeName='dy' begin='prev.begin' to='-35' dur='1s' fill='freeze' /></tspan> <tspan x='468' y='80'>E<animate id='t10' attributeName='rotate' begin='t9.end' dur='0.4s' from='0' to='20' fill='freeze'/></tspan><tspan>f<animate id='t11' attributeName='rotate' begin='t10.end' dur='0.4s' from='0' to='20' fill='freeze'/></tspan><tspan>f<animate id='t12' attributeName='rotate' begin='t11.end' dur='0.4s' from='0' to='20' fill='freeze'/></tspan><tspan>e<animate id='t13' attributeName='rotate' begin='t12.end' dur='0.4s' from='0' to='20' fill='freeze'/></tspan><tspan>c<animate id='t14' attributeName='rotate' begin='t13.end' dur='0.4s' from='0' to='20' fill='freeze'/></tspan><tspan>t<animate id='t15' attributeName='rotate' begin='t14.end' dur='2s' values='0; 10; -15; 200; 150; 185; 175; 180' fill='freeze'/><animate id='t16' attributeName='y' begin='t15.end + 0.3s' dur='1s' from='80' to='1000' fill='freeze'/></tspan>
+   </text>
+
+</svg>
