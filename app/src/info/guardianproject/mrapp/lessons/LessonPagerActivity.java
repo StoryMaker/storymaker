@@ -7,6 +7,7 @@ import info.guardianproject.mrapp.model.Lesson;
 
 import java.util.ArrayList;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -50,13 +51,27 @@ public class LessonPagerActivity extends SherlockActivity implements Runnable, L
     	if (mListLessons.size() == 0)
     	{
 
-			 showMessage("Downloading lessons from server...");
-			 mLessonManager.updateLessonsFromRemote();
+    		loadLessonsFromServer();
     	}
     	else
     	{
     		new Thread(this).start();
     	}
+    }
+    
+    ProgressDialog progressDialog;
+    
+    private void loadLessonsFromServer ()
+    {
+    	adapter.clearViews();
+    	
+    	progressDialog = new ProgressDialog(this);
+    	progressDialog.setTitle("Downloading lessons from server...");
+    	progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progressDialog.setCancelable(true);
+        progressDialog.show();
+
+		mLessonManager.updateLessonsFromRemote();
     }
     
     public void run ()
@@ -85,9 +100,8 @@ public class LessonPagerActivity extends SherlockActivity implements Runnable, L
 		 else if (item.getItemId() == R.id.menu_update)
          {
 			 
-			 adapter.clearViews();
-			 showMessage("Updating lessons from server...");
-			 mLessonManager.updateLessonsFromRemote();
+			 
+			 loadLessonsFromServer();
          }	
 		  
 		  
@@ -248,10 +262,21 @@ public class LessonPagerActivity extends SherlockActivity implements Runnable, L
 			switch (msg.what)
 			{
 				case 0:
-				 Toast.makeText(LessonPagerActivity.this, msg.getData().getString("status"),Toast.LENGTH_SHORT).show();
+					
+					if (progressDialog != null)
+					{
+						progressDialog.setMessage( msg.getData().getString("status"));
+					}
+					else
+					{
+						Toast.makeText(LessonPagerActivity.this, msg.getData().getString("status"),Toast.LENGTH_SHORT).show();
+					}
 				 break;
 				case 1:
-				
+					
+					if (progressDialog != null)						
+						progressDialog.dismiss();
+					
 					adapter.clearViews();
 					//reload lessons in list
 			    	for (Lesson lesson : mListLessons)
@@ -273,6 +298,7 @@ public class LessonPagerActivity extends SherlockActivity implements Runnable, L
     
 	@Override
 	public void lessonsLoadedFromServer() {
+		
 		
     	mListLessons = mLessonManager.loadLessonList(true);
 
