@@ -4,6 +4,7 @@ import info.guardianproject.mrapp.lessons.LessonPagerActivity;
 import info.guardianproject.mrapp.model.Project;
 import info.guardianproject.mrapp.ui.BigImageLabelView;
 
+import java.io.FileInputStream;
 import java.util.ArrayList;
 
 import android.content.Intent;
@@ -86,13 +87,17 @@ public class ProjectListActivity extends SherlockActivity {
 		
 		Bitmap image = null;
 		
-		try
-		{			
-			image = BitmapFactory.decodeStream(getAssets().open("images/MediumShot.jpg"));
-		}
-		catch (Exception e){
+		if (project.mThumbnailPath != null)
+		{
+			try
+			{			
+				image = BitmapFactory.decodeStream(new FileInputStream(project.mThumbnailPath));
+			}
+			catch (Exception e){
+				
+				Log.e(AppConstants.TAG,"error loading image",e);
+			}
 			
-			Log.e(AppConstants.TAG,"error loading image",e);
 		}
 		
 		BigImageLabelView view = new BigImageLabelView(this,project.mTitle, image, Color.DKGRAY, Color.LTGRAY);
