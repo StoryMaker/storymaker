@@ -16,5 +16,11 @@
     "resource": {
         "url": "3.zip"        
      }       
+  },
+  {
+    "title": "Best Demo Lesson",
+    "resource": {
+        "url": "bestdemo.zip"        
+     }       
   }
 ]}
