@@ -14,7 +14,10 @@ import com.actionbarsherlock.app.SherlockActivity;
 import android.app.Activity;
 import android.content.Intent;
 import android.media.AudioFormat;
+import android.media.AudioManager;
 import android.media.AudioRecord;
+import android.media.AudioTrack;
+
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
 import android.net.Uri;
@@ -35,6 +38,7 @@ public class AudioRecorderActivity extends SherlockActivity {
 	private static final int RECORDER_AUDIO_ENCODING = AudioFormat.ENCODING_PCM_16BIT;
 	
 	private AudioRecord recorder = null;
+	private AudioTrack livePlayer = null;
 	private int bufferSize = 0;
 	private Thread recordingThread = null;
 	private boolean isRecording = false;
@@ -94,6 +98,11 @@ public class AudioRecorderActivity extends SherlockActivity {
 		recorder = new AudioRecord(MediaRecorder.AudioSource.MIC,
 						RECORDER_SAMPLERATE, RECORDER_CHANNELS,RECORDER_AUDIO_ENCODING, bufferSize);
 		
+		livePlayer =  new AudioTrack( AudioManager.STREAM_MUSIC, RECORDER_SAMPLERATE, 
+				RECORDER_CHANNELS, RECORDER_AUDIO_ENCODING, 
+				bufferSize, AudioTrack.MODE_STREAM);
+		livePlayer.play();
+		
 		recorder.startRecording();
 		
 		isRecording = true;
@@ -126,14 +135,17 @@ public class AudioRecorderActivity extends SherlockActivity {
 		if(null != os){
 			while(isRecording){
 				read = recorder.read(data, 0, bufferSize);
-				
+					
 				if(AudioRecord.ERROR_INVALID_OPERATION != read){
+					livePlayer.write(data, 0, bufferSize);
+					
 					try {
 						os.write(data);
 					} catch (IOException e) {
 						e.printStackTrace();
 					}
 				}
+				
 			}
 			
 			try {
@@ -150,6 +162,9 @@ public class AudioRecorderActivity extends SherlockActivity {
 			
 			recorder.stop();
 			recorder.release();
+			
+			livePlayer.stop();
+			livePlayer.release();
 			
 			recorder = null;
 			recordingThread = null;
