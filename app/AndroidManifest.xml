@@ -81,6 +81,11 @@
 		    android:authorities="info.guardianproject.mrapp.db.LessonsProvider"
 		    android:multiprocess="true"
 		    android:name="info.guardianproject.mrapp.db.LessonsProvider"></provider>
+        
+        <provider
+		    android:authorities="info.guardianproject.mrapp.db.ProjectsProvider"
+		    android:multiprocess="true"
+		    android:name="info.guardianproject.mrapp.db.ProjectsProvider"></provider>
 		        
     </application>
 

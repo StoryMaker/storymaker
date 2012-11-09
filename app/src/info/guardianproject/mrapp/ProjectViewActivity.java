@@ -7,6 +7,7 @@ import info.guardianproject.mrapp.media.MediaHelper;
 import info.guardianproject.mrapp.media.MediaManager;
 import info.guardianproject.mrapp.media.MediaMerger;
 import info.guardianproject.mrapp.media.MediaRenderer;
+import info.guardianproject.mrapp.model.Media;
 import info.guardianproject.mrapp.model.Project;
 import info.guardianproject.mrapp.ui.MediaView;
 import info.guardianproject.mrapp.ui.OverlayCamera;
@@ -71,6 +72,8 @@ public class ProjectViewActivity extends SherlockActivity implements MediaManage
 	private MediaHelper mMediaHelper;
 	private MediaHelper.MediaResult mMediaResult;
 	
+	private Project mProject = null;
+	
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -100,20 +103,35 @@ public class ProjectViewActivity extends SherlockActivity implements MediaManage
         	
         	MediaDesc result = mMediaHelper.handleIntentLaunch(intent);
         	
+        	int pid = intent.getIntExtra("pid", -1);
+            if (pid != -1) {
+                mProject = Project.get(getApplicationContext(), pid);
+                Media[] _medias = mProject.getMediaAsArray();
+                for (Media media: _medias) {
+                    try
+                    {
+                        addMediaFile(media.getPath(), media.getMimeType());
+                    }
+                    catch (IOException ioe)
+                    {
+                        Log.e(MediaAppConstants.TAG,"error adding media from saved project", ioe);
+                    }
+                }
+            } // FIXME else what?
+        	
         	if (result != null && result.path != null && result.mimeType != null)
         	{
         		try
         		{
         			addMediaFile(result.path, result.mimeType);
+        			mProject.appendMedia(result.path, result.mimeType);
         		}
     			catch (IOException ioe)
     			{
     				Log.e(MediaAppConstants.TAG,"error adding media result",ioe);
     			}
-        	}
+            }
         }
-        
-        
     }
 
     private void addDefaultView ()
@@ -350,6 +368,7 @@ public class ProjectViewActivity extends SherlockActivity implements MediaManage
 				//now launch real camera
 				mMediaTmp = mMediaHelper.captureVideo(fileExternDir);
 				
+
 			}
 			else
 			{
@@ -514,6 +533,7 @@ public class ProjectViewActivity extends SherlockActivity implements MediaManage
 	                			try
 	                			{
 	                				addMediaFile(path, mMediaResult.mimeType);
+	                                mProject.appendMedia(path, mMediaResult.mimeType);
 	                			}
 	                			catch (IOException ioe)
 	                			{

@@ -40,15 +40,16 @@ public class ProjectListActivity extends SherlockActivity {
         setTitle(getString(R.string.title_projects));
         
         adapter = new AwesomePagerAdapter();
-        alProjects = new ArrayList<Project>();
+        alProjects = Project.getAllAsList(getBaseContext());
         
         pager = (ViewPager) findViewById(R.id.awesomepager);
         pager.setAdapter(adapter);
         
-        if (alProjects.size() == 0)
-        {
-        	addDefaultView ();
-        }
+		addDefaultView();
+
+		for (Project p : alProjects) {
+			addProjectView(p);
+		}
     }
 
     @Override
@@ -60,31 +61,31 @@ public class ProjectListActivity extends SherlockActivity {
 	@Override
 	public boolean onMenuItemSelected(int featureId, MenuItem item) {
 
-		if (item.getItemId() == R.id.menu_new_project)
-		{
-			addNewProject ();
-			
+		if (item.getItemId() == R.id.menu_new_project) {
+			addNewProject();
+			showProjectView();
 			return true;
-		}
-		else if (item.getItemId() == R.id.menu_lessons)
-		{
-			Intent intent = new Intent (this, LessonPagerActivity.class);
+		} else if (item.getItemId() == R.id.menu_lessons) {
+			Intent intent = new Intent(this, LessonPagerActivity.class);
 			startActivity(intent);
-			
+
 			return true;
-		}
-		else
+		} else {
 			return super.onMenuItemSelected(featureId, item);
+		}
+	}
+
+	private void addNewProject() {
+		Project project = new Project(getApplicationContext());
+		project.setId(adapter.getCount());
+		project.setTitle("Project " + project.getId());
+		project.save();
+		alProjects.add(project);
+
+		addProjectView(project);
 	}
 	
-	private void addNewProject ()
-	{
-		
-		Project project = new Project ();
-		project.mId =(adapter.getCount());
-		project.mTitle = "Project " + project.mId;
-		alProjects.add(project);
-		
+	private void addProjectView(Project project) {
 		Bitmap image = null;
 		
 		if (project.mThumbnailPath != null)
@@ -99,27 +100,23 @@ public class ProjectListActivity extends SherlockActivity {
 			}
 			
 		}
-		
-		BigImageLabelView view = new BigImageLabelView(this,project.mTitle, image, Color.DKGRAY, Color.LTGRAY);
-		
-		view.setOnClickListener(new OnClickListener(){
+
+		BigImageLabelView view = new BigImageLabelView(this,
+				project.getTitle(), image, Color.DKGRAY, Color.LTGRAY);
+
+		view.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
-				
-				showProjectView ();
-				
+				showProjectView();
 			}
-			
-			
+
 		});
-		
+
 		adapter.addProjectView(view);
 		adapter.notifyDataSetChanged();
 		
 		pager.setCurrentItem(adapter.getCount()-1, true);
-		
-		showProjectView ();
 	}
 	
 	private void addDefaultView ()
@@ -136,8 +133,8 @@ public class ProjectListActivity extends SherlockActivity {
 
 			@Override
 			public void onClick(View v) {
-				
 				addNewProject();
+				showProjectView();
 			}
 			
 		});
@@ -152,41 +149,35 @@ public class ProjectListActivity extends SherlockActivity {
 		Project projectCurrent = alProjects.get(pager.getCurrentItem()-1);
 		
 		Intent intent = new Intent(getBaseContext(), ProjectViewActivity.class);
-		intent.putExtra("pid", projectCurrent.mId);
-		intent.putExtra("title", projectCurrent.mTitle);
+		intent.putExtra("pid", projectCurrent.getId());
+		intent.putExtra("title", projectCurrent.getTitle());
 		
 		startActivity(intent);
 	}
 
     private class AwesomePagerAdapter extends PagerAdapter{
 
-    	private ArrayList<View> listProjectViews;
-	 	
-    	public AwesomePagerAdapter ()
-		{
+		private ArrayList<View> listProjectViews;
+
+		public AwesomePagerAdapter() {
 			listProjectViews = new ArrayList<View>();
 		}
-		
-    	public void addProjectView (View view)
-    	{
-    		listProjectViews.add(view);
-    	}
-    	
-    	public void removeProjectView (View view)
-    	{
-    		listProjectViews.remove(view);
-    	}
-    	
-    	public void removeProjectView (int viewIdx)
-    	{
-    		listProjectViews.remove(viewIdx);
-    	}
-	 	
+
+		public void addProjectView(View view) {
+			listProjectViews.add(view);
+		}
+
+		public void removeProjectView(View view) {
+			listProjectViews.remove(view);
+		}
+
+		public void removeProjectView(int viewIdx) {
+			listProjectViews.remove(viewIdx);
+		}
+
 		@Override
 		public int getCount() {
-			
 			return listProjectViews.size();
-			
 		}
 
 	    /**

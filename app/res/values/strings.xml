@@ -20,8 +20,10 @@
     <string name="menu_save_media">Save</string>
     <string name="menu_play_media">Play</string>
     <string name="menu_render_media">Render</string>
+
     <string name="menu_update">Update</string>
     
+    <string name="menu_save_project">Save</string>
     
     <string name="menu_overlay_camera">Camera</string>
 
