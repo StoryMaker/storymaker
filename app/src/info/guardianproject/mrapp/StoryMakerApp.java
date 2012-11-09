@@ -56,7 +56,7 @@ public class StoryMakerApp extends Application {
 		try
 		{
 			File fileExt = getExternalFilesDir(null);
-			mLessonManager = new LessonManager (bootstrapUrlString, fileExt);
+			mLessonManager = new LessonManager (this, bootstrapUrlString, fileExt);
 			
 		}
 		catch (Exception e)

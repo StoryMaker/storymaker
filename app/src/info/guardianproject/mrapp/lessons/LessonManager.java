@@ -2,6 +2,7 @@ package info.guardianproject.mrapp.lessons;
 
 import info.guardianproject.mrapp.MediaAppConstants;
 import info.guardianproject.mrapp.model.Lesson;
+import info.guardianproject.onionkit.trust.StrongHttpsClient;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -10,6 +11,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.URI;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
@@ -19,9 +21,13 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
 import org.apache.commons.io.IOUtils;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import android.content.Context;
 import android.util.Log;
 
 public class LessonManager implements Runnable {
@@ -33,8 +39,11 @@ public class LessonManager implements Runnable {
 	
 	private LessonManagerListener mListener;
 	
-	public LessonManager (String remoteRepoUrl, File localStorageRoot)
+	private Context mContext;
+	
+	public LessonManager (Context context, String remoteRepoUrl, File localStorageRoot)
 	{
+		mContext = context;
 		mUrlRemoteRepo = remoteRepoUrl;
 		mLocalStorageRoot = new File(localStorageRoot,"lessons");
 		mLocalStorageRoot.mkdir();
@@ -104,11 +113,13 @@ public class LessonManager implements Runnable {
 		try
 		{
 			// open URL and download file listing
-			URL urlRemoteIndex = new URL(mUrlRemoteRepo + "index.json");
-			URLConnection uConn = urlRemoteIndex.openConnection();
-			byte[] buffer = new byte[uConn.getContentLength()];
+			HttpClient httpClient = new StrongHttpsClient(mContext);
+			HttpGet request = new HttpGet(mUrlRemoteRepo + "index.json");
+			HttpResponse response = httpClient.execute(request);
+
+			byte[] buffer = new byte[(int)response.getEntity().getContentLength()];
 			
-			IOUtils.readFully(urlRemoteIndex.openStream(),buffer);
+			IOUtils.readFully(response.getEntity().getContent(),buffer);
 			
 			JSONObject jObjMain = new JSONObject(new String(buffer));
 			
@@ -126,16 +137,18 @@ public class LessonManager implements Runnable {
 					mListener.loadingLessonFromServer(title);
 				
 				//this should be a zip file
-				URL urlLesson = new URL(mUrlRemoteRepo + lessonUrl);
+				URI urlLesson = new URI(mUrlRemoteRepo + lessonUrl);
+				request = new HttpGet(urlLesson);
+				response = httpClient.execute(request);
 				
-				String fileName = urlLesson.getFile();
+				String fileName = urlLesson.getPath();
 				fileName = fileName.substring(fileName.lastIndexOf('/')+1);
 				File fileZip = new File(mLocalStorageRoot,fileName);
 				
 				if (fileZip.exists())
 					fileZip.delete();
 				
-				IOUtils.copyLarge(urlLesson.openStream(),new FileOutputStream(fileZip));
+				IOUtils.copyLarge(response.getEntity().getContent(),new FileOutputStream(fileZip));
 				
 				unpack(fileZip,mLocalStorageRoot);
 				
