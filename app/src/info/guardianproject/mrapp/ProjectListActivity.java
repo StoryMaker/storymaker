@@ -88,11 +88,11 @@ public class ProjectListActivity extends SherlockActivity {
 	private void addProjectView(Project project) {
 		Bitmap image = null;
 		
-		if (project.mThumbnailPath != null)
+		if (project.getThumbnailPath() != null)
 		{
 			try
 			{			
-				image = BitmapFactory.decodeStream(new FileInputStream(project.mThumbnailPath));
+				image = BitmapFactory.decodeStream(new FileInputStream(project.getThumbnailPath()));
 			}
 			catch (Exception e){
 				
