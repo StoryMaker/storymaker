@@ -48,7 +48,7 @@
              >
         </activity>   
           <activity android:name=".lessons.LessonViewActivity"
-              android:theme="@style/AppThemeMinimal"
+              android:theme="@style/AppTheme"
                />
         
            <activity
