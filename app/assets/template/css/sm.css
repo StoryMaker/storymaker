@@ -1,0 +1,10 @@
+
+img {
+    /* Set the width dynamically depending on the width of the browser window */
+    width:90%;
+    /* dont enlarge the image more, than its initial resolution */
+    max-width:1000px;
+    max-height:765px;
+    /* Set the height dynamically depending on the image's current width, keeping the aspect ratio */
+    height:auto;
+}
