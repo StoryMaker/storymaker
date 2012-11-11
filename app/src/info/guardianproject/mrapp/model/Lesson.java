@@ -19,12 +19,17 @@ public class Lesson {
 		
 		result.mTitle = jobj.getString("title");
 		result.mDescription = jobj.getString("description");
-		result.mImage = jobj.getString("image");
+		//result.mImage = jobj.getString("image");
 		
 		result.mResourcePath = jobj.getJSONObject("resource").getString("url");
 		
 	    return result;
 
+	}
+	
+	public String toString()
+	{
+		return mTitle;
 	}
 }
 /**
