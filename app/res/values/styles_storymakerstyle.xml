@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- File created by the Android Action Bar Style Generator
+
+     Copyright (C) 2012 readyState Software Ltd
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+  
+          http://www.apache.org/licenses/LICENSE-2.0
+  
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+-->
+
+<resources>
+
+    <style name="Theme.storymakerstyle" parent="@style/Theme.Sherlock.Light.DarkActionBar">
+        <item name="actionBarItemBackground">@drawable/selectable_background_storymakerstyle</item>
+        <item name="popupMenuStyle">@style/storymakerstyle_PopupMenu</item>
+        <item name="dropDownListViewStyle">@style/storymakerstyle_DropDownListView</item>
+        <item name="actionBarTabStyle">@style/storymakerstyle_ActionBarTabStyle</item>
+        <item name="actionDropDownStyle">@style/storymakerstyle_DropDownNav</item>
+        <item name="actionBarStyle">@style/storymakerstyle_solid_ActionBar</item>
+
+        <item name="android:actionBarItemBackground">@drawable/selectable_background_storymakerstyle</item>
+        <item name="android:popupMenuStyle">@style/storymakerstyle_PopupMenu</item>
+        <item name="android:dropDownListViewStyle">@style/storymakerstyle_DropDownListView</item>
+        <item name="android:actionBarTabStyle">@style/storymakerstyle_ActionBarTabStyle</item>
+        <item name="android:actionDropDownStyle">@style/storymakerstyle_DropDownNav</item>
+        <item name="android:actionBarStyle">@style/storymakerstyle_solid_ActionBar</item>
+        <item name="android:panelBackground">@drawable/menu_hardkey_panel_storymakerstyle</item>
+        
+                <!-- Light.DarkActionBar specific -->
+        <item name="actionBarWidgetTheme">@style/Theme.storymakerstyle.widget</item>
+        <item name="android:actionBarWidgetTheme">@style/Theme.storymakerstyle.widget</item>
+
+    </style>
+
+    <style name="storymakerstyle_solid_ActionBar" parent="@style/Widget.Sherlock.Light.ActionBar.Solid.Inverse">
+        <item name="background">@drawable/ab_solid_storymakerstyle</item>
+        <item name="backgroundStacked">@drawable/ab_stacked_solid_storymakerstyle</item>
+        <item name="backgroundSplit">@drawable/ab_bottom_solid_storymakerstyle</item>
+        <item name="progressBarStyle">@style/storymakerstyle_ProgressBar</item>
+
+        <item name="android:background">@drawable/ab_solid_storymakerstyle</item>
+        <item name="android:backgroundStacked">@drawable/ab_stacked_solid_storymakerstyle</item>
+        <item name="android:backgroundSplit">@drawable/ab_bottom_solid_storymakerstyle</item>
+        <item name="android:progressBarStyle">@style/storymakerstyle_ProgressBar</item>
+    </style>
+
+    <style name="storymakerstyle_transparent_ActionBar" parent="@style/Widget.Sherlock.ActionBar">
+        <item name="background">@drawable/ab_transparent_storymakerstyle</item>
+        <item name="progressBarStyle">@style/storymakerstyle_ProgressBar</item>
+        
+        <item name="android:background">@drawable/ab_transparent_storymakerstyle</item>
+        <item name="android:progressBarStyle">@style/storymakerstyle_ProgressBar</item>
+    </style>
+	
+    <style name="storymakerstyle_PopupMenu" parent="@style/Widget.Sherlock.ListPopupWindow">	
+        <item name="android:popupBackground">@drawable/menu_dropdown_panel_storymakerstyle</item>	
+    </style>
+	
+    <style name="storymakerstyle_DropDownListView" parent="@style/Widget.Sherlock.ListView.DropDown">
+        <item name="android:listSelector">@drawable/selectable_background_storymakerstyle</item>
+    </style>
+
+    <style name="storymakerstyle_ActionBarTabStyle" parent="@style/Widget.Sherlock.ActionBar.TabView">
+        <item name="background">@drawable/tab_indicator_ab_storymakerstyle</item>
+
+        <item name="android:background">@drawable/tab_indicator_ab_storymakerstyle</item>
+    </style>
+	
+    <style name="storymakerstyle_DropDownNav" parent="@style/Widget.Sherlock.Spinner.DropDown.ActionBar">
+        <item name="background">@drawable/spinner_background_ab_storymakerstyle</item>
+
+        <item name="android:background">@drawable/spinner_background_ab_storymakerstyle</item>
+        <item name="android:popupBackground">@drawable/menu_dropdown_panel_storymakerstyle</item>
+        <item name="android:dropDownSelector">@drawable/selectable_background_storymakerstyle</item>
+    </style>
+    
+    <style name="storymakerstyle_ProgressBar" parent="@style/Widget.Sherlock.ProgressBar.Horizontal">
+        <item name="android:progressDrawable">@drawable/progress_horizontal_storymakerstyle</item>
+    </style>
+    
+    <!-- this style is only referenced in a Light.DarkActionBar based theme -->
+    <style name="Theme.storymakerstyle.widget" parent="@style/Theme.Sherlock">
+        <item name="popupMenuStyle">@style/storymakerstyle_PopupMenu</item>
+        <item name="dropDownListViewStyle">@style/storymakerstyle_DropDownListView</item>
+        
+        <item name="android:popupMenuStyle">@style/storymakerstyle_PopupMenu</item>
+        <item name="android:dropDownListViewStyle">@style/storymakerstyle_DropDownListView</item>
+    </style>
+
+</resources>
