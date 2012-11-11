@@ -127,33 +127,42 @@ public class LessonManager implements Runnable {
 			
 			for (int i = 0; i < jarray.length(); i++)
 			{
-				JSONObject jobj = jarray.getJSONObject(i);
-				
-				String title = jobj.getString("title");
-				String lessonUrl = jobj.getJSONObject("resource").getString("url");
-				
-
-				if (mListener != null)
-					mListener.loadingLessonFromServer(title);
-				
-				//this should be a zip file
-				URI urlLesson = new URI(mUrlRemoteRepo + lessonUrl);
-				request = new HttpGet(urlLesson);
-				response = httpClient.execute(request);
-				
-				String fileName = urlLesson.getPath();
-				fileName = fileName.substring(fileName.lastIndexOf('/')+1);
-				File fileZip = new File(mLocalStorageRoot,fileName);
-				
-				if (fileZip.exists())
+				try
+				{
+					JSONObject jobj = jarray.getJSONObject(i);
+					
+					String title = jobj.getString("title");
+					String lessonUrl = jobj.getJSONObject("resource").getString("url");
+					
+	
+					if (mListener != null)
+						mListener.loadingLessonFromServer(title);
+					
+					//this should be a zip file
+					URI urlLesson = new URI(mUrlRemoteRepo + lessonUrl);
+					request = new HttpGet(urlLesson);
+					response = httpClient.execute(request);
+					
+					String fileName = urlLesson.getPath();
+					fileName = fileName.substring(fileName.lastIndexOf('/')+1);
+					File fileZip = new File(mLocalStorageRoot,fileName);
+					
+					if (fileZip.exists())
+						fileZip.delete();
+					
+					IOUtils.copyLarge(response.getEntity().getContent(),new FileOutputStream(fileZip));
+					
+					unpack(fileZip,mLocalStorageRoot);
+					
 					fileZip.delete();
-				
-				IOUtils.copyLarge(response.getEntity().getContent(),new FileOutputStream(fileZip));
-				
-				unpack(fileZip,mLocalStorageRoot);
-				
-				fileZip.delete();
-				
+				}
+				catch (Exception ioe)
+				{
+					Log.e(MediaAppConstants.TAG,"error loading lesson from server: " + i,ioe);
+					if (mListener != null)
+						mListener.errorLoadingLessons(ioe.getLocalizedMessage());
+					
+				}
 			}
 			
 			if (mListener != null)

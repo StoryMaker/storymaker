@@ -36,7 +36,7 @@ public class LessonPagerActivity extends SherlockActivity implements Runnable, L
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_lesson_list);
+        setContentView(R.layout.activity_lesson_pager);
         setTitle(getString(R.string.title_lessons));
         
         adapter = new AwesomePagerAdapter();

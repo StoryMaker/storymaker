@@ -5,9 +5,12 @@ import java.net.URL;
 
 import info.guardianproject.mrapp.R;
 import info.guardianproject.mrapp.media.MediaHelper;
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.WindowManager;
 import android.webkit.WebResourceResponse;
 import android.webkit.WebSettings.PluginState;
@@ -24,15 +27,17 @@ public class LessonViewActivity extends SherlockActivity {
 	WebView mWebView;
 	MediaHelper mMediaHelper;
 	
-    @Override
+    @SuppressLint("NewApi")
+	@Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
-
-        setContentView(R.layout.activity_web_view);
         
-        //getSherlock().getActionBar().hide();
+        //requestWindowFeature(Window.FEATURE_NO_TITLE);
+        //getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
+        getSherlock().getActionBar().setDisplayHomeAsUpEnabled(true);
+        
+        setContentView(R.layout.activity_web_view);
         
         Intent intent = getIntent();
         if (intent != null)
@@ -44,10 +49,19 @@ public class LessonViewActivity extends SherlockActivity {
         	String url = intent.getStringExtra("url");
         	mWebView = (WebView) findViewById(R.id.web_engine);  
         	
+        	mWebView.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
+        	mWebView.getSettings().setJavaScriptEnabled(true);
         	mWebView.getSettings().setPluginsEnabled(true);
         	mWebView.getSettings().setPluginState(PluginState.ON);
-
+        	mWebView.getSettings().setAllowFileAccess(true);
+        	mWebView.getSettings().setSupportZoom(false);
+        	mWebView.getSettings().setEnableSmoothTransition(true);
         	
+    		if (Build.VERSION.SDK_INT > Build.VERSION_CODES.ICE_CREAM_SANDWICH_MR1)
+    		{
+    			mWebView.getSettings().setAllowUniversalAccessFromFileURLs(true);
+    		}
+    		
         	mWebView.setWebViewClient(new WebViewClient ()
         	{
 
@@ -78,7 +92,9 @@ public class LessonViewActivity extends SherlockActivity {
         }
         
         mMediaHelper = new MediaHelper(this, null);
+        
     }
+    
     
    
     @Override
@@ -92,6 +108,46 @@ public class LessonViewActivity extends SherlockActivity {
 	public boolean onMenuItemSelected(int featureId, MenuItem item) {
 
 		return super.onMenuItemSelected(featureId, item);
+	}
+
+	@Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+        
+        case android.R.id.home:
+       
+            finish();
+            return true;
+
+       
+        }
+        
+        return super.onOptionsItemSelected(item);
+    }
+
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+
+		if (keyCode == KeyEvent.KEYCODE_BACK)
+		{
+			if (mWebView.canGoBack())
+			{
+				mWebView.goBack();
+				return true;
+			}
+			
+				
+		}
+		
+		return super.onKeyDown(keyCode, event);
+	}
+
+
+
+	@Override
+	public boolean onKeyUp(int keyCode, KeyEvent event) {
+		// TODO Auto-generated method stub
+		return super.onKeyUp(keyCode, event);
 	}
 	
 	
