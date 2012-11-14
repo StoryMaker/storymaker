@@ -1,7 +1,5 @@
 <resources>
 
-    <style name="AppTheme" parent="Theme.Sherlock.Light" />
-
 	<style name="CustomDialogTheme" parent="@android:style/Theme.Dialog">
 	<item name="android:windowBackground">@color/transparent_black</item>
 	<item name="android:windowIsFloating">false</item>
