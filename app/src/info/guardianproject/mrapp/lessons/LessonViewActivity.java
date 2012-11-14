@@ -1,8 +1,5 @@
 package info.guardianproject.mrapp.lessons;
 
-import java.io.File;
-import java.net.URL;
-
 import info.guardianproject.mrapp.R;
 import info.guardianproject.mrapp.media.MediaHelper;
 import android.annotation.SuppressLint;
@@ -26,18 +23,14 @@ public class LessonViewActivity extends SherlockActivity {
 
 	WebView mWebView;
 	MediaHelper mMediaHelper;
-	
-    @SuppressLint("NewApi")
+
 	@Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        
-        //requestWindowFeature(Window.FEATURE_NO_TITLE);
-        //getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
+        setContentView(R.layout.activity_web_view);
 
         getSherlock().getActionBar().setDisplayHomeAsUpEnabled(true);
-        
-        setContentView(R.layout.activity_web_view);
         
         Intent intent = getIntent();
         if (intent != null)
@@ -55,13 +48,7 @@ public class LessonViewActivity extends SherlockActivity {
         	mWebView.getSettings().setPluginState(PluginState.ON);
         	mWebView.getSettings().setAllowFileAccess(true);
         	mWebView.getSettings().setSupportZoom(false);
-        	mWebView.getSettings().setEnableSmoothTransition(true);
-        	
-    		if (Build.VERSION.SDK_INT > Build.VERSION_CODES.ICE_CREAM_SANDWICH_MR1)
-    		{
-    			mWebView.getSettings().setAllowUniversalAccessFromFileURLs(true);
-    		}
-    		
+        
         	mWebView.setWebViewClient(new WebViewClient ()
         	{
 
