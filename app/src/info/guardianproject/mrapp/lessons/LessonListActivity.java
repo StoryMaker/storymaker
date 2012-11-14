@@ -76,11 +76,13 @@ public class LessonListActivity extends SherlockListActivity implements Runnable
     {
     		
     	progressDialog = new ProgressDialog(this);
-    	progressDialog.setTitle("Downloading lessons from server...");
+    	progressDialog.setTitle(getString(R.string.downloading_lessons_from_server_));
+    	progressDialog.setMessage(getString(R.string.checking_for_updates_));
     	progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         progressDialog.setCancelable(true);
         progressDialog.show();
 
+        
 		mLessonManager.updateLessonsFromRemote();
     }
     

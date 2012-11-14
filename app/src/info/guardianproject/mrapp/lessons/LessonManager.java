@@ -125,7 +125,7 @@ public class LessonManager implements Runnable {
 			
 			JSONArray jarray = jObjMain.getJSONArray("lessons");
 			
-			for (int i = 0; i < jarray.length(); i++)
+			for (int i = 0; i < jarray.length() && (!jarray.isNull(i)); i++)
 			{
 				try
 				{
@@ -134,9 +134,6 @@ public class LessonManager implements Runnable {
 					String title = jobj.getString("title");
 					String lessonUrl = jobj.getJSONObject("resource").getString("url");
 					
-	
-					if (mListener != null)
-						mListener.loadingLessonFromServer(title);
 					
 					//this should be a zip file
 					URI urlLesson = new URI(mUrlRemoteRepo + lessonUrl);
@@ -148,13 +145,30 @@ public class LessonManager implements Runnable {
 					File fileZip = new File(mLocalStorageRoot,fileName);
 					
 					if (fileZip.exists())
-						fileZip.delete();
+					{
+						long remoteLen = response.getEntity().getContentLength();
+						long localLen = fileZip.length();
+						
+						if (localLen == remoteLen)
+						{
+							//same file, leave it be
+							continue;							
+						}
+						else
+						{
+							//otherwise, delete and download
+							fileZip.delete();
+						}
 					
+					}
+
+					if (mListener != null)
+						mListener.loadingLessonFromServer(title);
 					IOUtils.copyLarge(response.getEntity().getContent(),new FileOutputStream(fileZip));
 					
 					unpack(fileZip,mLocalStorageRoot);
 					
-					fileZip.delete();
+				//	fileZip.delete();
 				}
 				catch (Exception ioe)
 				{
