@@ -101,9 +101,10 @@ public class AudioRecorderActivity extends SherlockActivity {
 		livePlayer =  new AudioTrack( AudioManager.STREAM_MUSIC, RECORDER_SAMPLERATE, 
 				RECORDER_CHANNELS, RECORDER_AUDIO_ENCODING, 
 				bufferSize, AudioTrack.MODE_STREAM);
-		livePlayer.play();
 		
-		recorder.startRecording();
+		//livePlayer.play(); //not working quite yet
+		
+		recorder.startRecording();		
 		
 		isRecording = true;
 		
