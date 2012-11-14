@@ -111,14 +111,14 @@ public class OverlayCamera extends Activity implements Callback, SwipeInterface 
         	
         	bitmap = Bitmap.createBitmap(mOverlayView.getWidth(),mOverlayView.getHeight(), Bitmap.Config.ARGB_8888);
             canvas = new Canvas(bitmap);
-          //  SVG svg = SVGParser.getSVGFromAsset(getAssets(), "images/overlays/svg/" + overlays[idx],0x000000,0xCC0000);
+        //    SVG svg = SVGParser.getSVGFromAsset(getAssets(), "images/overlays/svg/" + overlays[idx],0xFFFFFF,0xCC0000);
             SVG svg = SVGParser.getSVGFromAsset(getAssets(), "images/overlays/svg/" + overlays[idx]);
 
             Rect rBounds = new Rect(0,0,mOverlayView.getWidth(),mOverlayView.getHeight());
             Picture p = svg.getPicture();                       
             canvas.drawPicture(p, rBounds);            
             
-            mOverlayView.setImageBitmap( changeColor(bitmap,mColorRed,mColorGreen,mColorBlue));
+            mOverlayView.setImageBitmap( bitmap);
         }
         catch(IOException ex) 
         {
@@ -128,6 +128,7 @@ public class OverlayCamera extends Activity implements Callback, SwipeInterface 
         
     }
     
+    /*
     private Bitmap changeColor(Bitmap src,int pixelRed, int pixelGreen, int pixelBlue){
     	
     	int width = src.getWidth();
@@ -149,7 +150,7 @@ public class OverlayCamera extends Activity implements Callback, SwipeInterface 
         }
         return dest; 
        }
-    
+    */
     
     private void takePicture() {
         // TODO Auto-generated method stub
