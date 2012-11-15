@@ -1,0 +1,340 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content" >
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:src="@drawable/cliptype_close" />
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="false"
+        android:layout_alignTop="@+id/imageView1"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_toRightOf="@+id/imageView1"
+        android:text="@string/story_publish_story_title"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textView1"
+        android:layout_below="@+id/textView1"
+        android:layout_marginTop="5dp"
+        android:text="@string/story_publish_story_date"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <View
+        android:id="@+id/divider0"
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/imageView1"
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="10dp"
+        android:background="@android:color/darker_gray" />
+
+    <EditText
+        android:id="@+id/editTextDescribe"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/divider0"
+        android:ems="10"
+        android:hint="@string/story_publish_describe_hint"
+        android:inputType="textMultiLine"
+        android:lines="3" >
+
+        <requestFocus />
+    </EditText>
+
+    <View
+        android:id="@+id/divider1"
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/editTextDescribe"
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="5dp"
+        android:background="@android:color/darker_gray" />
+
+    <TextView
+        android:id="@+id/textViewSection"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/divider1"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="5dp"
+        android:gravity="center_vertical"
+        android:text="@string/story_publish_section"
+        android:textAllCaps="true"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <Spinner
+        android:id="@+id/spinnerSections"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/divider1"
+        android:layout_toRightOf="@+id/textViewSection"
+        android:paddingRight="10dp" />
+
+    <View
+        android:id="@+id/divider2"
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/spinnerSections"
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="5dp"
+        android:background="@android:color/darker_gray" />
+
+    <Spinner
+        android:id="@+id/spinnerTopics"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/divider2"
+        android:paddingRight="10dp" />
+
+    <TextView
+        android:id="@+id/textViewTopics"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/spinnerTopics"
+        android:layout_alignParentLeft="true"
+        android:layout_alignTop="@id/spinnerTopics"
+        android:layout_below="@+id/divider2"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="5dp"
+        android:layout_toLeftOf="@+id/spinnerTopics"
+        android:gravity="center_vertical"
+        android:text="@string/story_publish_topics"
+        android:textAllCaps="true"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <View
+        android:id="@+id/divider3"
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/spinnerTopics"
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="5dp"
+        android:background="@android:color/darker_gray" />
+
+    <TextView
+        android:id="@+id/textViewLocation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/editTextLocation"
+        android:layout_alignTop="@+id/editTextLocation"
+        android:layout_below="@+id/divider3"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="5dp"
+        android:gravity="center_vertical"
+        android:text="@string/story_publish_location"
+        android:textAllCaps="true"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <EditText
+        android:id="@+id/editTextLocation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/divider3"
+        android:layout_toRightOf="@+id/textViewLocation"
+        android:layout_weight="1"
+        android:ems="10"
+        android:hint="@string/story_publish_location_hint" />
+
+    <View
+        android:id="@+id/divider4"
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/editTextLocation"
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="5dp"
+        android:background="@android:color/darker_gray" />
+
+    <TextView
+        android:id="@+id/editTextShare"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/toggleButtonStoryMaker"
+        android:layout_alignTop="@+id/toggleButtonStoryMaker"
+        android:layout_below="@+id/divider4"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="5dp"
+        android:gravity="center_vertical"
+        android:text="@string/story_publish_share"
+        android:textAllCaps="true"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <ToggleButton
+        android:id="@+id/toggleButtonStoryMaker"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:layout_below="@+id/divider4"
+        android:layout_toLeftOf="@+id/toggleButtonYoutube"
+        android:background="@drawable/btn_toggle_bg_storymaker"
+        android:textAllCaps="false"
+        android:textOff=""
+        android:textOn="" />
+
+    <ToggleButton
+        android:id="@+id/toggleButtonYoutube"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:layout_below="@+id/divider4"
+        android:layout_toLeftOf="@+id/toggleButtonVimeo"
+        android:background="@drawable/btn_toggle_bg_youtube"
+        android:textAllCaps="false"
+        android:textOff=""
+        android:textOn="" />
+
+    <ToggleButton
+        android:id="@+id/toggleButtonVimeo"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:layout_below="@+id/divider4"
+        android:layout_toLeftOf="@+id/toggleButtonFacebook"
+        android:background="@drawable/btn_toggle_bg_vimeo"
+        android:textAllCaps="false"
+        android:textOff=""
+        android:textOn="" />
+
+    <ToggleButton
+        android:id="@+id/toggleButtonFacebook"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:layout_below="@+id/divider4"
+        android:layout_toLeftOf="@+id/toggleButtonTwitter"
+        android:background="@drawable/btn_toggle_bg_facebook"
+        android:textAllCaps="false"
+        android:textOff=""
+        android:textOn="" />
+
+    <ToggleButton
+        android:id="@+id/toggleButtonTwitter"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/divider4"
+        android:background="@drawable/btn_toggle_bg_twitter"
+        android:textAllCaps="false"
+        android:textOff=""
+        android:textOn="" />
+
+    <View
+        android:id="@+id/divider5"
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/toggleButtonTwitter"
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="5dp"
+        android:background="@android:color/darker_gray" />
+
+    <TextView
+        android:id="@+id/textViewSendVia"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/toggleButtonEmail"
+        android:layout_alignTop="@+id/toggleButtonEmail"
+        android:layout_below="@+id/divider5"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="5dp"
+        android:gravity="center_vertical"
+        android:text="@string/story_publish_send_via"
+        android:textAllCaps="true"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <ToggleButton
+        android:id="@+id/toggleButtonEmail"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:layout_below="@+id/divider5"
+        android:layout_toLeftOf="@+id/toggleButtonBluetooth"
+        android:background="@drawable/btn_toggle_bg_email"
+        android:textAllCaps="false" 
+        android:textOff=""
+        android:textOn=""/>
+
+    <ToggleButton
+        android:id="@+id/toggleButtonBluetooth"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:layout_below="@+id/divider5"
+        android:layout_toLeftOf="@+id/toggleButtonUSB"
+        android:background="@drawable/btn_toggle_bg_bluetooth"
+        android:textAllCaps="false" 
+        android:textOff=""
+        android:textOn=""/>
+
+    <ToggleButton
+        android:id="@+id/toggleButtonUSB"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/divider5"
+        android:background="@drawable/btn_toggle_bg_usb"
+        android:textAllCaps="false" 
+        android:textOff=""
+        android:textOn=""/>
+
+    <View
+        android:id="@+id/divider6"
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/toggleButtonBluetooth"
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="5dp"
+        android:background="@android:color/darker_gray" />
+
+    <TextView
+        android:id="@+id/textViewStatus"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_below="@+id/divider6"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="5dp"
+        android:text="@string/story_publish_status"
+        android:textAllCaps="true"
+        android:gravity="center_vertical"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:layout_alignBottom="@+id/textViewStatus"
+        android:layout_alignTop="@+id/textViewStatus"
+        android:layout_below="@+id/divider6"
+        android:layout_marginLeft="10dp"
+        android:layout_toRightOf="@+id/textViewStatus"
+        android:gravity="center_vertical"
+        android:text="@string/story_publish_status_processing" />
+
+    <View
+        android:id="@+id/divider7"
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/textViewStatus"
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="5dp"
+        android:background="@android:color/darker_gray" />
+
+</RelativeLayout>
+</ScrollView>
