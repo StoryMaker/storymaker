@@ -50,6 +50,9 @@
           <activity android:name=".lessons.LessonViewActivity"
                />
         
+           <activity android:name=".server.WebViewActivity"
+               />
+           
            <activity
             android:name=".ProjectViewActivity"
             android:configChanges="orientation|keyboardHidden|screenSize" >   
