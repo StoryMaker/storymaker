@@ -293,6 +293,8 @@ public class ProjectViewActivity extends SherlockActivity implements MediaManage
 			
 			prerenderMedia (mClip, mView);
 		}
+		
+		mOut = null;
     	
     }
     
@@ -401,6 +403,11 @@ public class ProjectViewActivity extends SherlockActivity implements MediaManage
 		
 	}
 
+	private void playMedia ()
+	{
+		 mMediaHelper.playMedia(new File(mOut.path), MediaConstants.MIME_TYPE_VIDEO);
+
+	}
 	
 
 	@Override
@@ -415,17 +422,15 @@ public class ProjectViewActivity extends SherlockActivity implements MediaManage
 		 {
 			 showMediaPrefs();
 		 }
-		 else if (item.getItemId() == R.id.menu_render_media)
-		 {
-			 doExportMedia ();
-		 }
 		 else if (item.getItemId() == R.id.menu_play_media)
          {
 			
 			 if (mOut != null && mOut.path != null)
-				 mMediaHelper.playMedia(new File(mOut.path), MediaConstants.MIME_TYPE_VIDEO);
+				 playMedia();
 			 else
-				 updateStatus("You must render your story first!");
+			 {
+				 doExportMedia ();
+			 }				 
 			 
          }
 		 else if (item.getItemId() == R.id.menu_share_media)
@@ -522,7 +527,7 @@ public class ProjectViewActivity extends SherlockActivity implements MediaManage
 	               
 	                case 4: //play video
 	                	
-	                	mMediaHelper.playMedia(new File(mOut.path), MediaConstants.MIME_TYPE_VIDEO);
+	                	playMedia();
 	                	break;
 	                	
 	                case 5:
