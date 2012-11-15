@@ -138,8 +138,13 @@ public class AudioRecorderActivity extends SherlockActivity {
 				read = recorder.read(data, 0, bufferSize);
 					
 				if(AudioRecord.ERROR_INVALID_OPERATION != read){
-					livePlayer.write(data, 0, bufferSize);
 					
+					try {
+						livePlayer.write(data, 0, bufferSize);
+					} catch (IllegalStateException e) {
+						e.printStackTrace();
+					}
+
 					try {
 						os.write(data);
 					} catch (IOException e) {
