@@ -13,7 +13,11 @@ import info.guardianproject.mrapp.ui.MediaView;
 import info.guardianproject.mrapp.ui.OverlayCamera;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.channels.FileChannel;
 import java.util.ArrayList;
 
 import org.ffmpeg.android.FfmpegController;
@@ -435,14 +439,35 @@ public class ProjectViewActivity extends SherlockActivity implements MediaManage
 			 else
 				 updateStatus("You must render your story first!");
          }
-
 		 else if (item.getItemId() == R.id.menu_play_media)
          {
 			
 			
 			 
          }
-		
+		 else if (item.getItemId() == R.id.menu_save_project)
+		 {
+			 // TODO prompt user for storage location?
+			 if (mOut != null && mOut.path != null) {
+				 File inFile = new File(mOut.path);
+				 FileChannel in;
+				 try {
+					 in = new FileInputStream(inFile).getChannel();
+					 FileChannel out = new FileOutputStream(new File("/sdcard/"
+							 + inFile.getName())).getChannel();
+					 in.transferTo(0, in.size(), out);
+				 } catch (FileNotFoundException e) {
+					 // TODO Auto-generated catch block
+					 e.printStackTrace();
+				 } catch (IOException e) {
+					 // TODO Auto-generated catch block
+					 e.printStackTrace();
+				 }
+			 } else
+				 updateStatus("You must render your story first!");
+
+		 }
+
 		return super.onMenuItemSelected(featureId, item);
 	}
 	
