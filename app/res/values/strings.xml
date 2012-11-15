@@ -79,4 +79,51 @@ Kernel version: <xliff:g id="kernel_version">%s</xliff:g>\n
 Build number: <xliff:g id="build_number">%s</xliff:g>\n
 </string>
 
+    <string name="title_home_projects">Projects</string>
+    <string name="title_home_activity">Activity</string>
+    <string name="title_lessons_lessons">Lessons</string>
+    <string name="title_lessons_glossary">Glossary</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="menu_settings">Settings</string>
+    <string name="title_activity_home">Home</string>
+    <string name="new_story_name_it">Name it.</string>
+    <string name="new_story_working_title">Working title…</string>
+    <string name="new_story_choose_something">Choose something brief that defines the topic and intrigues your audience.</string>
+    <string name="new_story_choose_a_medium">Choose a medium.</string>
+    <string name="new_story_video_is_good">Video is good for telling stories because, the main benefit for video would be here.</string>
+    <string name="new_story_simple_story">Simple Story</string>
+    <string name="new_story_choose_template">Choose Template</string>
+    <string name="home_new_story">New Story</string>
+    <string name="home_start_a_lesson">Start A Lesson</string>
+    <string name="title_activity_new_story">New Story</string>
+    <string name="title_activity_lessons">Lessons</string>
+    <string name="title_activity_scene_editor">Scene Editor</string>
+    <string name="title_activity_choose_template">Choose Template</string>
+    <string name="title_activity_story_template">Template Story</string>
+    <string name="tab_make">Make</string>
+    <string name="tab_review">Review</string>
+    <string name="tab_publish">Publish</string>
+    <string name="tab_add_clips">Add Clips</string>
+    <string name="tab_order">Order</string>
+    <string name="story_publish_section">Section</string>
+    <string name="story_publish_section_hint">Sports</string>
+    <string name="story_publish_topics">Topics</string>
+    <string name="story_publish_topics_hint">Gender</string>
+    <string name="story_publish_location">Location</string>
+    <string name="story_publish_location_hint">Libya</string>
+    <string name="story_publish_share">Share</string>
+    <string name="story_publish_send_via">Send Via</string>
+    <string name="story_publish_status">Status</string>
+    <string name="story_publish_status_processing">Processing, 30 minutes remaining</string>
+    <string name="story_publish_describe_hint">Describe your story…</string>
+    <string name="story_publish_story_title">Celebrating the Arrest of Gaddafi\'s Son</string>
+    <string name="story_publish_story_date">August 18, 2012</string>
+
+    <!-- delete these below -->
+
+    <string name="title_section3">Section 3</string>
+    <string name="title_section2">Section 2</string>
+    <string name="title_section1">Section 1</string>
+    <string name="title_activity_test_drag">TestDrag</string>
+    
 </resources>

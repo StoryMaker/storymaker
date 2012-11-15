@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="cliptype_thumbnails">
+        <item>@drawable/cliptype_close</item>
+        <item>@drawable/cliptype_detail</item>
+        <item>@drawable/cliptype_long</item>
+        <item>@drawable/cliptype_medium</item>
+        <item>@drawable/cliptype_wide</item>
+    </string-array>
+    <string-array name="eg_scene_titles">
+        <item>Scene 1: Introduction</item>
+        <item>Scene 2: When</item>
+        <item>Scene 3: Where</item>
+    </string-array>
+    <string-array name="eg_scene_descriptions">
+        <item>Other test about the goal of this scene is written here.</item>
+        <item>Scene 2\'s description.</item>
+        <item>Description for Scene 3.</item>
+    </string-array>
+    <string-array name="eg_scene_statuses">
+        <item>Finished</item>
+        <item>1 clip left</item>
+        <item>5 clips left</item>
+    </string-array>
+    <string-array name="story_sections">
+        <item>Politics</item>
+        <item>Business</item>
+        <item>Sports</item>
+        <item>Arts</item>
+        <item>Science</item>
+        <item>Health</item>
+        <item>Education</item>
+        <item>Environment</item>
+        <item>Feature Stories</item>
+        <item>Special Reports</item>
+    </string-array>
+    <string-array name="story_topics">
+        <item>Gender</item>
+        <item>Placeholder 1</item>
+        <item>Placeholder 2</item>
+        <item>Placeholder 3</item>
+        <item>Placeholder 4</item>
+        <item>Placeholder 5</item>
+        <item>Placeholder 6</item>
+        <item>Placeholder 7</item>
+    </string-array>
+</resources>
