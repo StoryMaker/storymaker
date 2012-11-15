@@ -29,11 +29,12 @@ import android.view.WindowManager;
 import android.view.WindowManager.LayoutParams;
 import android.widget.ImageView;
 
+import com.actionbarsherlock.app.SherlockActivity;
 import com.larvalabs.svgandroid.SVG;
 import com.larvalabs.svgandroid.SVGParser;
 
 
-public class OverlayCamera extends Activity implements Callback, SwipeInterface {
+public class OverlayCamera extends SherlockActivity implements Callback, SwipeInterface {
     private Camera camera;
     private SurfaceView mSurfaceView;
     SurfaceHolder mSurfaceHolder;
@@ -60,8 +61,6 @@ public class OverlayCamera extends Activity implements Callback, SwipeInterface 
 
         mOverlayView = new ImageView(this);
         
-
-        
         ActivitySwipeDetector swipe = new ActivitySwipeDetector(this);
         mOverlayView.setOnTouchListener(swipe);
       
@@ -80,16 +79,8 @@ public class OverlayCamera extends Activity implements Callback, SwipeInterface 
        mSurfaceHolder = mSurfaceView.getHolder();
        mSurfaceHolder.addCallback(this);
        mSurfaceHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
-     //  mSurfaceHolder.setFormat(PixelFormat.TRANSLUCENT|LayoutParams.FLAG_BLUR_BEHIND);
        addContentView(mOverlayView, new LayoutParams(LayoutParams.FILL_PARENT,LayoutParams.FILL_PARENT));
 
-    //   bitmap = Bitmap.createBitmap(mOverlayView.getWidth(),mOverlayView.getHeight(), Bitmap.Config.ARGB_8888);
-     //  canvas = new Canvas(bitmap);
-       
-
-      // setOverlayImage (overlayIdx);
-
-       
        }
 
     private void closeOverlay ()
