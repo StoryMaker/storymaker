@@ -3,18 +3,29 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="20dp" >
+    android:padding="20dp" 
+    android:background="#EEEEEE"
+    >
 
     <Button
         android:id="@+id/buttonNewStory"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/home_new_story" />
+        android:text="@string/home_new_story"
+        android:drawableLeft="@drawable/ic_list_projects"
+        android:background="#FFFFFF"
+        android:gravity="left|center"
+         />
 
     <Button
         android:id="@+id/buttonStartALesson"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/home_start_a_lesson" />
+        android:text="@string/home_start_a_lesson"
+        android:drawableLeft="@drawable/ic_list_lessons"
+        android:background="#FFFFFF"
+          android:gravity="left|center"
+         android:layout_marginTop="20sp"
+         />
 
 </LinearLayout>

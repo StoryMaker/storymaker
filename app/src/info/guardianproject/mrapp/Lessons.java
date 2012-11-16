@@ -87,8 +87,17 @@ public class Lessons extends com.WazaBe.HoloEverywhere.sherlock.SActivity implem
             case android.R.id.home:
                 NavUtils.navigateUpFromSameTask(this);
                 return true;
+            case R.id.menu_update:
+                updateLessons();
+                return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+    
+    private void updateLessons ()
+    {
+    	StoryMakerApp.getLessonManager().updateLessonsFromRemote();
+    	
     }
 
 

@@ -142,7 +142,7 @@ public class LessonListView extends ListView implements Runnable, LessonManagerL
     private void loadListAdapter ()
     {
     	   setAdapter(new ArrayAdapter(getContext(), 
-    	   android.R.layout.simple_list_item_1, mListLessons));
+    	   R.layout.list_lesson_row, mListLessons));
     }
     
 	@Override
