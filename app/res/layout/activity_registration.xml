@@ -49,7 +49,16 @@
                 android:password="true"
                 android:hint="Confirm Password"
                 android:singleLine="true"
-                android:layout_marginTop="5dip"/>          
+                android:layout_marginTop="5dip"/>   
+          
+          <CheckBox android:id="@+id/reg_checkbox"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"                
+                android:text="Confirm you are okay with this"
+                android:singleLine="true"
+                android:layout_marginTop="5dip"/>   
+           
+          
           <!-- Register Button -->
           <Button android:id="@+id/btnRegister"
                 android:layout_width="fill_parent"
@@ -62,7 +71,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="40dip"
                 android:layout_marginBottom="40dip"
-                android:text="Already has account! Login here"
+                android:text="Return to Login"
                 android:gravity="center"
                 android:textSize="20dip"
                 android:textColor="#025f7c"/>
