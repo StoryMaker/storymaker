@@ -1,6 +1,5 @@
 package info.guardianproject.mrapp;
 
-import info.guardianproject.mrapp.lessons.LessonListActivity;
 import info.guardianproject.mrapp.model.Project;
 import info.guardianproject.mrapp.ui.BigImageLabelView;
 
@@ -58,13 +57,6 @@ public class WelcomeActivity extends SherlockActivity {
 		if (item.getItemId() == R.id.menu_projects)
 		{
 			Intent intent = new Intent (this, ProjectListActivity.class);
-			startActivity(intent);
-			
-			return true;
-		}
-		else if (item.getItemId() == R.id.menu_lessons)
-		{
-			Intent intent = new Intent (this, LessonListActivity.class);
 			startActivity(intent);
 			
 			return true;

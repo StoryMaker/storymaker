@@ -1,6 +1,7 @@
 package info.guardianproject.mrapp;
 
 import info.guardianproject.mrapp.R;
+import info.guardianproject.mrapp.lessons.LessonListView;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -10,6 +11,7 @@ import android.support.v4.view.ViewPager;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.WazaBe.HoloEverywhere.LayoutInflater;
@@ -116,10 +118,20 @@ public class Lessons extends com.WazaBe.HoloEverywhere.sherlock.SActivity implem
 
         @Override
         public SFragment getItem(int i) {
-            SFragment fragment = new DummySectionFragment();
-            Bundle args = new Bundle();
-            args.putInt(DummySectionFragment.ARG_SECTION_NUMBER, i + 1);
-            fragment.setArguments(args);
+        	SFragment fragment = null;
+        	
+        	if (i == 0)
+        	{
+        		fragment = new LessonSectionFragment();
+ 	            
+        	}
+        	else
+        	{
+	            fragment = new DummySectionFragment();
+	            Bundle args = new Bundle();
+	            args.putInt(DummySectionFragment.ARG_SECTION_NUMBER, i + 1);
+	            fragment.setArguments(args);
+        	}
             return fragment;
         }
 
@@ -155,6 +167,26 @@ public class Lessons extends com.WazaBe.HoloEverywhere.sherlock.SActivity implem
             Bundle args = getArguments();
             textView.setText(Integer.toString(args.getInt(ARG_SECTION_NUMBER)));
             return textView;
+        }
+    }
+    
+
+    /**
+     * A dummy fragment representing a section of the app, but that simply displays dummy text.
+     */
+    public static class LessonSectionFragment extends SFragment {
+        public LessonSectionFragment() {
+        }
+
+        public static final String ARG_SECTION_NUMBER = "section_number";
+
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                Bundle savedInstanceState) {
+            
+        	LessonListView listView = new LessonListView(getActivity());
+            listView.loadLessonsFromServer();
+            return listView;
         }
     }
 }

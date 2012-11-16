@@ -20,7 +20,7 @@
         android:name=".StoryMakerApp"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/Theme.storymakerstyle"
+        android:theme="@style/AppTheme"
         android:uiOptions="splitActionBarWhenNarrow"
         android:hardwareAccelerated="true"
         android:largeHeap="true"
@@ -89,11 +89,6 @@
             
            
              
-        </activity>   
-        <activity
-            android:name=".lessons.LessonListActivity"
-            android:label="@string/app_name"            
-             >
         </activity>   
           <activity android:name=".lessons.LessonViewActivity"
                />
