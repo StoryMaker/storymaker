@@ -1,9 +1,16 @@
 package info.guardianproject.mrapp;
 
-import info.guardianproject.mrapp.R;
+import java.io.IOException;
+import java.io.InputStream;
+
+import org.json.JSONException;
+
+import info.guardianproject.mrapp.model.Template;
+import info.guardianproject.mrapp.ui.OverlayCamera;
+import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.content.res.TypedArray;
-import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -15,11 +22,12 @@ import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.view.Menu;
@@ -32,12 +40,18 @@ public class SceneEditorNoSwipe extends com.WazaBe.HoloEverywhere.sherlock.SActi
     private static final String STATE_SELECTED_NAVIGATION_ITEM = "selected_navigation_item";
 
     protected boolean templateStory = false; 
+    
     protected Menu mMenu = null;
+    
+    private Context mContext = null;
+    
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scene_editor_no_swipe);
 
+        mContext = getBaseContext();
+        
         // Set up the action bar.
         final ActionBar actionBar = getSupportActionBar();
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
@@ -111,6 +125,8 @@ public class SceneEditorNoSwipe extends com.WazaBe.HoloEverywhere.sherlock.SActi
         	if (mMenu != null) {
         		mMenu.findItem(R.id.itemForward).setEnabled(true);
         	}
+        	layout = R.layout.fragment_add_clips;
+        	
         } else if (tab.getPosition() == 1) {
             layout = R.layout.fragment_order_clips;
 
@@ -125,11 +141,13 @@ public class SceneEditorNoSwipe extends com.WazaBe.HoloEverywhere.sherlock.SActi
         }
         String tag = "" + layout;
         FragmentManager fm = getSupportFragmentManager();
-        Fragment fragment = fm.findFragmentByTag(tag);
-        if (fragment == null) {
-            fragment = new DummySectionFragment(layout, fm);
+        Fragment fragment = fm.findFragmentByTag(tag+"");
+        
+        if (fragment == null) 
+        {        	
+            fragment = new SceneChooserFragment(layout, fm);
             Bundle args = new Bundle();
-            args.putInt(DummySectionFragment.ARG_SECTION_NUMBER, tab.getPosition() + 1);
+            args.putInt(SceneChooserFragment.ARG_SECTION_NUMBER, tab.getPosition() + 1);
             fragment.setArguments(args);
             fm.beginTransaction()
                     .replace(R.id.container, fragment, tag)
@@ -145,7 +163,7 @@ public class SceneEditorNoSwipe extends com.WazaBe.HoloEverywhere.sherlock.SActi
     /**
      * A dummy fragment representing a section of the app, but that simply displays dummy text.
      */
-    public static class DummySectionFragment extends Fragment {
+    public class SceneChooserFragment extends Fragment {
     	private final static String TAG = "DummySectionFragment";
         int layout;
         ViewPager mClipViewPager;
@@ -157,7 +175,7 @@ public class SceneEditorNoSwipe extends com.WazaBe.HoloEverywhere.sherlock.SActi
          */
         protected DraggableGridView mDGV;
         
-        public DummySectionFragment(int layout, FragmentManager fm) {
+        public SceneChooserFragment(int layout, FragmentManager fm) {
             this.layout = layout;
             mClipPagerAdapter = new ClipPagerAdapter(fm);
         }
@@ -171,30 +189,31 @@ public class SceneEditorNoSwipe extends com.WazaBe.HoloEverywhere.sherlock.SActi
             if (this.layout == R.layout.fragment_add_clips) {
               // Set up the clip ViewPager with the clip adapter.
               mClipViewPager = (ViewPager) view.findViewById(R.id.viewPager);
-              mClipViewPager.setPageMargin(-200);
+              mClipViewPager.setPageMargin(-75);
+              mClipViewPager.setPageMarginDrawable(R.drawable.ic_action_forward_gray);
               mClipViewPager.setOffscreenPageLimit(5);
               
             } else if (this.layout == R.layout.fragment_order_clips) {
             	mDGV = (DraggableGridView) view.findViewById(R.id.DraggableGridView01);
             	
             	ImageView iv = new ImageView(getActivity());
-            	iv.setImageDrawable(getActivity().getResources().getDrawable(R.drawable.cliptypesm_close));
+            	iv.setImageDrawable(getActivity().getResources().getDrawable(R.drawable.cliptype_close));
             	mDGV.addView(iv);
             	
             	iv = new ImageView(getActivity());
-            	iv.setImageDrawable(getActivity().getResources().getDrawable(R.drawable.cliptypesm_detail));
+            	iv.setImageDrawable(getActivity().getResources().getDrawable(R.drawable.cliptype_detail));
             	mDGV.addView(iv);
             	
             	iv = new ImageView(getActivity());
-            	iv.setImageDrawable(getActivity().getResources().getDrawable(R.drawable.cliptypesm_long));
+            	iv.setImageDrawable(getActivity().getResources().getDrawable(R.drawable.cliptype_long));
             	mDGV.addView(iv);
             	
             	iv = new ImageView(getActivity());
-            	iv.setImageDrawable(getActivity().getResources().getDrawable(R.drawable.cliptypesm_medium));
+            	iv.setImageDrawable(getActivity().getResources().getDrawable(R.drawable.cliptype_medium));
             	mDGV.addView(iv);
             	
             	iv = new ImageView(getActivity());
-            	iv.setImageDrawable(getActivity().getResources().getDrawable(R.drawable.cliptypesm_wide));
+            	iv.setImageDrawable(getActivity().getResources().getDrawable(R.drawable.cliptype_wide));
             	mDGV.addView(iv);
             	
             	mDGV.setOnRearrangeListener(new OnRearrangeListener() {
@@ -265,35 +284,83 @@ public class SceneEditorNoSwipe extends com.WazaBe.HoloEverywhere.sherlock.SActi
         }
     }
     
+    
+    
     /**
      * A dummy fragment representing a section of the app, but that simply displays dummy text.
      */
-    public static class ClipThumbnailFragment extends Fragment {
+    public class ClipThumbnailFragment extends Fragment {
         public ClipThumbnailFragment() {
         }
 
         public static final String ARG_CLIP_TYPE_ID = "clip_type_id";
 
+        private Template sTemplate;
+        
+        private void loadStoryTemplate (String path) throws IOException, JSONException
+        {
+        	sTemplate = new Template();
+        	sTemplate.parseAsset(mContext, path);
+        }
+        
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-            int i = getArguments().getInt(ARG_CLIP_TYPE_ID, 0);
             
-            LinearLayout ll = new LinearLayout(getActivity());
-            ImageView iv = new ImageView(getActivity());
-//            LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams) ll.getLayoutParams();
-//            LinearLayout.LayoutParams param = new LinearLayout.LayoutParams(
-//                    LinearLayout.LayoutParams.MATCH_PARENT,
-//                    LinearLayout.LayoutParams.MATCH_PARENT, 1.0f);
-//            iv.setLayoutParams(param);
-//            iv.setPadding(30, 30, 30, 30);
-            TypedArray drawableIds = getActivity().getResources().obtainTypedArray(R.array.cliptype_thumbnails);
-            int drawableId = drawableIds.getResourceId(i, -1); // FIXME handle -1
-            Drawable d = getActivity().getResources().getDrawable(drawableId);
+        	View view = inflater.inflate(R.layout.fragment_add_clips_page, null);
+
+        	final int clipIdx = getArguments().getInt(ARG_CLIP_TYPE_ID, 0);
+
+        	try {
+        		
+	        	if (sTemplate == null)				
+						loadStoryTemplate(("story/templates/video_simple.json"));
+	
+	        	final Template.Clip clip = sTemplate.getClips().get(clipIdx);
+	        	
+	            TypedArray drawableIds = getActivity().getResources().obtainTypedArray(R.array.cliptype_thumbnails);
+	            int drawableId = drawableIds.getResourceId(clip.mShotType, 0); 
+	            
+	            ImageView iv = (ImageView)view.findViewById(R.id.clipTypeImage);
+	            iv.setImageResource(drawableId);
+	            
+	            ((TextView)view.findViewById(R.id.clipTypeShotSize)).setText(clip.mShotSize);
+	            ((TextView)view.findViewById(R.id.clipTypeGoal)).setText(clip.mGoal);
+	            ((TextView)view.findViewById(R.id.clipTypeDescription)).setText(clip.mDescription);
+	            ((TextView)view.findViewById(R.id.clipTypeGoalLength)).setText(clip.mLength);
+	            ((TextView)view.findViewById(R.id.clipTypeTip)).setText(clip.mTip);
+	            ((TextView)view.findViewById(R.id.clipTypeSecurity)).setText(clip.mSecurity);
+	            
+	            iv.setOnClickListener(new OnClickListener()
+	            {
+	
+					@Override
+					public void onClick(View v) {
+					//	int cIdx = mClipViewPager.getCurrentItem();
+						
+						Intent i = new Intent(mContext, OverlayCamera.class);
+						i.putExtra("group", clip.mShotType);
+						startActivity(i);
+						
+					}
+	          	  
+	            });
             
-            iv.setImageDrawable(d);
-            ll.addView(iv);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
             
-            return (View) ll;
+            return view;
         }
     }
+
+
+
+	@Override
+	public void onConfigurationChanged(Configuration newConfig) {
+		super.onConfigurationChanged(newConfig);
+	}
+
+
 }

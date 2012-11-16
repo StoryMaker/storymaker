@@ -7,6 +7,7 @@
         <item>@drawable/cliptype_medium</item>
         <item>@drawable/cliptype_wide</item>
     </string-array>
+    
     <string-array name="eg_scene_titles">
         <item>Scene 1: Introduction</item>
         <item>Scene 2: When</item>
@@ -44,4 +45,6 @@
         <item>Placeholder 6</item>
         <item>Placeholder 7</item>
     </string-array>
+    
+    
 </resources>

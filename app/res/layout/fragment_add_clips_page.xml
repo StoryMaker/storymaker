@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="10sp"    
+    android:background="#eeeeee"
+     >
+    
+ <ImageView
+         android:id="@+id/clipTypeImage"
+         android:layout_width="fill_parent"
+         android:layout_height="160dip"    
+    />
+
+     <TextView
+         android:id="@+id/clipTypeShotSize"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:paddingTop="5dp"
+         />
+
+     <TextView
+         android:id="@+id/clipTypeGoal"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:textAppearance="?android:attr/textAppearanceLarge" />
+
+     <TextView
+         android:id="@+id/clipTypeGoalLength"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:textAppearance="?android:attr/textAppearanceSmall" />
+
+     <TextView
+         android:id="@+id/clipTypeDescription"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:paddingTop="15dp"
+         android:textAppearance="?android:attr/textAppearanceSmall" />
+
+     <LinearLayout
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         android:layout_gravity="center_vertical"
+         android:layout_marginTop="10sp"
+          >
+
+         <ImageView
+             android:id="@+id/imageView1"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:padding="5dp"
+             android:src="@drawable/ic_context_tip" />
+
+         <TextView
+             android:id="@+id/clipTypeTip"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:textAppearance="?android:attr/textAppearanceSmall" />
+
+     </LinearLayout>
+
+     <LinearLayout
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         android:layout_marginTop="10sp"
+        >
+
+         <ImageView
+             android:id="@+id/imageView2"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:padding="5dp"
+             android:src="@drawable/ic_context_warning" />
+
+         <TextView
+             android:id="@+id/clipTypeSecurity"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:textAppearance="?android:attr/textAppearanceSmall" />
+
+     </LinearLayout>
+ </LinearLayout>
