@@ -14,7 +14,7 @@ import android.util.Log;
 public class StoryMakerApp extends Application {
 
 	
-	private LessonManager mLessonManager;
+	private static LessonManager mLessonManager;
 	
 	//just throwing some test files up here for now 
 	private String bootstrapUrlString = "https://guardianproject.info/downloads/storymaker/";
@@ -65,9 +65,8 @@ public class StoryMakerApp extends Application {
 		}
 	}
 	
-	public LessonManager getLessonManager ()
+	public static LessonManager getLessonManager ()
 	{
 		return mLessonManager;
-
 	}
 }

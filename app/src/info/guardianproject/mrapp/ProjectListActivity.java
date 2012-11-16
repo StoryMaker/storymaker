@@ -1,7 +1,5 @@
 package info.guardianproject.mrapp;
 
-import info.guardianproject.mrapp.lessons.LessonListActivity;
-import info.guardianproject.mrapp.lessons.LessonPagerActivity;
 import info.guardianproject.mrapp.model.Project;
 import info.guardianproject.mrapp.ui.BigImageLabelView;
 
@@ -20,7 +18,6 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.View.OnLongClickListener;
 import android.widget.TextView;
 
 import com.actionbarsherlock.app.SherlockActivity;
@@ -65,11 +62,6 @@ public class ProjectListActivity extends SherlockActivity {
 		if (item.getItemId() == R.id.menu_new_project) {
 			addNewProject();
 			showProjectView();
-			return true;
-		} else if (item.getItemId() == R.id.menu_lessons) {
-			Intent intent = new Intent(this, LessonListActivity.class);
-			startActivity(intent);
-
 			return true;
 		} else {
 			return super.onMenuItemSelected(featureId, item);
