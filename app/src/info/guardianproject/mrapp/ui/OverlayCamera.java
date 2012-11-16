@@ -44,6 +44,7 @@ public class OverlayCamera extends SherlockActivity implements Callback, SwipeIn
     
     String[] overlays = null;
     int overlayIdx = 0;
+    int overlayGroup = 0;
     
     boolean cameraOn = false;
     
@@ -54,6 +55,9 @@ public class OverlayCamera extends SherlockActivity implements Callback, SwipeIn
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+    
+        overlayGroup = getIntent().getIntExtra("group", 0);
+        overlayIdx = getIntent().getIntExtra("overlay", 0);
 
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
@@ -96,14 +100,18 @@ public class OverlayCamera extends SherlockActivity implements Callback, SwipeIn
     {
         try 
         {
+        	String groupPath = "images/overlays/svg/" + overlayGroup;
         	
         	if (overlays == null)
-        		overlays = getAssets().list("images/overlays/svg");
+        		overlays = getAssets().list(groupPath);
         	
         	bitmap = Bitmap.createBitmap(mOverlayView.getWidth(),mOverlayView.getHeight(), Bitmap.Config.ARGB_8888);
             canvas = new Canvas(bitmap);
+            
+            String imgPath = groupPath + '/' + overlays[idx];
         //    SVG svg = SVGParser.getSVGFromAsset(getAssets(), "images/overlays/svg/" + overlays[idx],0xFFFFFF,0xCC0000);
-            SVG svg = SVGParser.getSVGFromAsset(getAssets(), "images/overlays/svg/" + overlays[idx]);
+            
+            SVG svg = SVGParser.getSVGFromAsset(getAssets(), imgPath);
 
             Rect rBounds = new Rect(0,0,mOverlayView.getWidth(),mOverlayView.getHeight());
             Picture p = svg.getPicture();                       
