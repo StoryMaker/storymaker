@@ -1,0 +1,52 @@
+{"clips":[
+{
+"Title": "Signature",
+"Artwork": "???.svg",
+"Shot Size": "",
+"Goal": "Signature audio clips give the audience an immediate understanding of some element of the story.",
+"Length": "X seconds",
+"Description": "A good signature audio clip grabs the audience and intrigues them to listen further.",
+"Tip": "You may need to keep your mic very close to record a signature clip. Check that your source audio is not too loud.",
+"Security Concern": "-"
+},
+{
+"Title": "Ambient",
+"Artwork": "???.svg",
+"Shot Size": "",
+"Goal": "Help the audience understand the space the subject inhabits.",
+"Length": "X seconds",
+"Description": "Ambient audio clips help the audience understand how your subject interacts with the surrounding environment.",
+"Tip": "You want the ambient clip to contribute to telling the story. If there are irrelevant sounds to the story this may distract the audience.",
+"Security Concern": "-"
+},
+{
+"Title": "Narrative",
+"Artwork": "???.svg",
+"Shot Size": "",
+"Goal": "Record the character making an introduction, or record yourself introducing the character.",
+"Length": "X seconds",
+"Description": "Tell the audience who is the important character in the story.",
+"Tip": "Keep this clip brief. Simply introduce the audience to the character, or allow the character to introduce herself. Save additional information for the interview.",
+"Security Concern": "-"
+},
+{
+"Title": "Interview",
+"Artwork": "???.svg",
+"Shot Size": "",
+"Goal": "Ask the character to tell you a story.",
+"Length": "X seconds",
+"Description": "Remember the fundamentals of a good interview. Ask open-ended questions. Decide your questions based on the type of source you are interviewing.",
+"Tip": "If you want the audience to hear your questions and the subject’s answers, be sure that you are both close enough to the mic to be heard clearly.",
+"Security Concern": "-"
+},
+{
+"Title": "Environmental",
+"Artwork": "???.svg",
+"Shot Size": "",
+"Goal": "Environmental audio clips help the audience understand where your story takes place.",
+"Length": "X seconds",
+"Description": "Environmental audio may indicate the country or add a cultural or religious element to your story.",
+"Tip": "Record the overall sound for the environment. Be sure not to make any noise yourself, this will distract the audience from the natural sound.",
+"Security Concern": "-"
+}
+]}
