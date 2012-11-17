@@ -41,7 +41,7 @@ public class Template {
 			Clip clip = new Clip();
 			
 			JSONObject jobj = jarray.getJSONObject(i);
-			clip.mTitle = jobj.getString("Clip");
+			clip.mTitle = jobj.getString("Title");
 			clip.mArtwork = jobj.getString("Artwork");
 			clip.mShotSize = jobj.getString("Shot Size");
 			

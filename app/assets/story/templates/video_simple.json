@@ -1,6 +1,6 @@
 {"clips":[
 {
-"Clip": "Signature",
+"Title": "Signature",
 "Artwork": "???.svg",
 "Shot Size": "Detail",
 "Goal": "Depict something noteworthy about the character.",
@@ -10,7 +10,7 @@
 "Security Concern": "-"
 },
 {
-"Clip": "Action",
+"Title": "Action",
 "Artwork": "???.svg",
 "Shot Size": "Long",
 "Goal": "Show the character engaged in her environment.",
@@ -20,7 +20,7 @@
 "Security Concern": "-"
 },
 {
-"Clip": "Character",
+"Title": "Character",
 "Artwork": "???.svg",
 "Shot Size": "Close",
 "Goal": "Depict the character’s emotion.",
@@ -30,7 +30,7 @@
 "Security Concern": "-"
 },
 {
-"Clip": "Interview",
+"Title": "Interview",
 "Artwork": "???.svg",
 "Shot Size": "Medium",
 "Goal": "Ask the character to tell you a story.",
@@ -40,7 +40,7 @@
 "Security Concern": "-"
 },
 {
-"Clip": "Environmental",
+"Title": "Environmental",
 "Artwork": "???.svg",
 "Shot Size": "Wide",
 "Goal": "Environmental clips help the audience understand where your story takes place.", 
