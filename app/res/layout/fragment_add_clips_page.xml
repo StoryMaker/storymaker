@@ -3,14 +3,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="10sp"    
-    android:background="#eeeeee"
+    android:paddingTop="10dip"
+    android:paddingLeft="30dip"
+    android:paddingRight="30dip"
      >
     
  <ImageView
          android:id="@+id/clipTypeImage"
          android:layout_width="fill_parent"
-         android:layout_height="160dip"    
+         android:layout_height="170dip"    
     />
 
      <TextView
@@ -40,7 +41,7 @@
          android:textAppearance="?android:attr/textAppearanceSmall" />
 
      <LinearLayout
-         android:layout_width="match_parent"
+         android:layout_width="wrap_content"
          android:layout_height="wrap_content"
          android:layout_gravity="center_vertical"
          android:layout_marginTop="10sp"

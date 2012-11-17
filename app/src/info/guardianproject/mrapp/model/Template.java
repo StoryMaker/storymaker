@@ -42,10 +42,29 @@ public class Template {
 			
 			JSONObject jobj = jarray.getJSONObject(i);
 			clip.mTitle = jobj.getString("Title");
-			clip.mArtwork = jobj.getString("Artwork");
-			clip.mShotSize = jobj.getString("Shot Size");
 			
-			if (clip.mShotSize != null)
+			if (!jobj.isNull("Artwork"))
+				clip.mArtwork = jobj.getString("Artwork");
+			
+			if (!jobj.isNull("Shot Size"))
+				clip.mShotSize = jobj.getString("Shot Size");
+			
+			if (clip.mArtwork != null)
+			{
+
+				if (clip.mArtwork.equals("cliptype_close"))
+					clip.mShotType = 0;
+				else if (clip.mArtwork.equals("cliptype_detail"))
+					clip.mShotType = 1;
+				else if (clip.mArtwork.equals("cliptype_long"))
+					clip.mShotType = 2;
+				else if (clip.mArtwork.equals("cliptype_medium"))
+					clip.mShotType = 3;
+				if (clip.mArtwork.equals("cliptype_wide"))
+					clip.mShotType = 4;
+				
+			}
+			else if (clip.mShotSize != null)
 			{
 				if (clip.mShotSize.equals("Close"))
 					clip.mShotType = 0;
@@ -74,7 +93,7 @@ public class Template {
 		public String mTitle;
 		public String mArtwork;
 		public String mShotSize;
-		public int mShotType;
+		public int mShotType = -1;
 		public String mGoal;
 		public String mLength;
 		public String mDescription;

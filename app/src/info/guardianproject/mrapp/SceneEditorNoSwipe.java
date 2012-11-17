@@ -11,6 +11,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -44,28 +45,35 @@ public class SceneEditorNoSwipe extends com.WazaBe.HoloEverywhere.sherlock.SActi
     protected Menu mMenu = null;
     
     private Context mContext = null;
+     
+    private String templateJsonPath = null;
     
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_scene_editor_no_swipe);
 
+        if (getIntent().hasExtra("template_story")) {
+        	templateStory = true;
+        }
+        
+        if (getIntent().hasExtra("template_path")) {
+        	templateJsonPath = getIntent().getStringExtra("template_path");
+        }
+        
         mContext = getBaseContext();
+
+        setContentView(R.layout.activity_scene_editor_no_swipe);
         
         // Set up the action bar.
         final ActionBar actionBar = getSupportActionBar();
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
         actionBar.setDisplayHomeAsUpEnabled(true);
 
-
         // For each of the sections in the app, add a tab to the action bar.
         actionBar.addTab(actionBar.newTab().setText(R.string.tab_add_clips).setTabListener(this));
         actionBar.addTab(actionBar.newTab().setText(R.string.tab_order).setTabListener(this));
         actionBar.addTab(actionBar.newTab().setText(R.string.tab_publish).setTabListener(this));
         
-        if (getIntent().hasExtra("template_story")) {
-        	templateStory = true;
-        }
     }
 
     @Override
@@ -145,14 +153,23 @@ public class SceneEditorNoSwipe extends com.WazaBe.HoloEverywhere.sherlock.SActi
         
         if (fragment == null) 
         {        	
-            fragment = new SceneChooserFragment(layout, fm);
-            Bundle args = new Bundle();
-            args.putInt(SceneChooserFragment.ARG_SECTION_NUMBER, tab.getPosition() + 1);
-            fragment.setArguments(args);
-            fm.beginTransaction()
-                    .replace(R.id.container, fragment, tag)
-//                    .addToBackStack(null)
-                    .commit();
+            try {
+				fragment = new SceneChooserFragment(layout, fm, templateJsonPath);
+
+	            Bundle args = new Bundle(); 
+	            args.putInt(SceneChooserFragment.ARG_SECTION_NUMBER, tab.getPosition() + 1);
+	            fragment.setArguments(args);
+	            fm.beginTransaction()
+	                    .replace(R.id.container, fragment, tag)
+//	                    .addToBackStack(null)
+	                    .commit();
+			} catch (IOException e) {
+				Log.e("SceneEditr","IO erorr", e);
+				
+			} catch (JSONException e) {
+				Log.e("SceneEditr","json error", e);
+				
+			}
         }
     }
 
@@ -175,9 +192,10 @@ public class SceneEditorNoSwipe extends com.WazaBe.HoloEverywhere.sherlock.SActi
          */
         protected DraggableGridView mDGV;
         
-        public SceneChooserFragment(int layout, FragmentManager fm) {
+        public SceneChooserFragment(int layout, FragmentManager fm, String templatePath) throws IOException, JSONException {
             this.layout = layout;
-            mClipPagerAdapter = new ClipPagerAdapter(fm);
+            
+            mClipPagerAdapter = new ClipPagerAdapter(fm, templatePath);
         }
 
         public static final String ARG_SECTION_NUMBER = "section_number";
@@ -264,16 +282,29 @@ public class SceneEditorNoSwipe extends com.WazaBe.HoloEverywhere.sherlock.SActi
          */
         public class ClipPagerAdapter extends FragmentPagerAdapter {
 
-            public ClipPagerAdapter(FragmentManager fm) {
+
+            private Template sTemplate;
+            
+            public ClipPagerAdapter(FragmentManager fm, String path) throws IOException, JSONException {
                 super(fm);
+              
+                loadStoryTemplate(path);
             }
 
+
+            private void loadStoryTemplate (String path) throws IOException, JSONException
+            {
+            	sTemplate = new Template();
+            	sTemplate.parseAsset(mContext, path);
+            	
+            	
+            	
+            }
+            
             @Override
             public Fragment getItem(int i) {
-                Fragment fragment = new ClipThumbnailFragment();
-                Bundle args = new Bundle();
-                args.putInt(ClipThumbnailFragment.ARG_CLIP_TYPE_ID, i);
-                fragment.setArguments(args);
+            	Template.Clip clip = sTemplate.getClips().get(i);
+                Fragment fragment = new ClipThumbnailFragment(clip);
                 return fragment;
             }
 
@@ -290,40 +321,41 @@ public class SceneEditorNoSwipe extends com.WazaBe.HoloEverywhere.sherlock.SActi
      * A dummy fragment representing a section of the app, but that simply displays dummy text.
      */
     public class ClipThumbnailFragment extends Fragment {
-        public ClipThumbnailFragment() {
+    	
+    	private Template.Clip clip;
+    	
+        public ClipThumbnailFragment(Template.Clip clip) {
+        	this.clip = clip;
         }
 
         public static final String ARG_CLIP_TYPE_ID = "clip_type_id";
 
-        private Template sTemplate;
-        
-        private void loadStoryTemplate (String path) throws IOException, JSONException
-        {
-        	sTemplate = new Template();
-        	sTemplate.parseAsset(mContext, path);
-        }
         
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
             
         	View view = inflater.inflate(R.layout.fragment_add_clips_page, null);
 
-        	final int clipIdx = getArguments().getInt(ARG_CLIP_TYPE_ID, 0);
-
         	try {
         		
-	        	if (sTemplate == null)				
-						loadStoryTemplate(("story/templates/video_simple.json"));
-	
-	        	final Template.Clip clip = sTemplate.getClips().get(clipIdx);
-	        	
-	            TypedArray drawableIds = getActivity().getResources().obtainTypedArray(R.array.cliptype_thumbnails);
-	            int drawableId = drawableIds.getResourceId(clip.mShotType, 0); 
+        		ImageView iv = (ImageView)view.findViewById(R.id.clipTypeImage);
 	            
-	            ImageView iv = (ImageView)view.findViewById(R.id.clipTypeImage);
-	            iv.setImageResource(drawableId);
+        		if (clip.mShotType != -1)
+        		{
+        			TypedArray drawableIds = getActivity().getResources().obtainTypedArray(R.array.cliptype_thumbnails);
 	            
-	            ((TextView)view.findViewById(R.id.clipTypeShotSize)).setText(clip.mShotSize);
+        			int drawableId = drawableIds.getResourceId(clip.mShotType, 0); 
+	            
+        			iv.setImageResource(drawableId);
+        		}
+        		else if (clip.mArtwork != null)
+        		{
+        			iv.setImageBitmap(BitmapFactory.decodeStream(getActivity().getAssets().open(clip.mArtwork)));
+        		}
+        		
+	            if (clip.mShotSize != null)
+	            	((TextView)view.findViewById(R.id.clipTypeShotSize)).setText(clip.mShotSize);
+	            
 	            ((TextView)view.findViewById(R.id.clipTypeGoal)).setText(clip.mGoal);
 	            ((TextView)view.findViewById(R.id.clipTypeDescription)).setText(clip.mDescription);
 	            ((TextView)view.findViewById(R.id.clipTypeGoalLength)).setText(clip.mLength);

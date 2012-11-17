@@ -90,7 +90,14 @@ Build number: <xliff:g id="build_number">%s</xliff:g>\n
     <string name="new_story_working_title">Working title…</string>
     <string name="new_story_choose_something">Choose something brief that defines the topic and intrigues your audience.</string>
     <string name="new_story_choose_a_medium">Choose a medium.</string>
-    <string name="new_story_video_is_good">Video is good for telling stories because, the main benefit for video would be here.</string>
+    
+    <string name="new_story_video">Video: Something here about why simple, short video is good!</string>
+   	<string name="new_story_essay">Photo Essay: Tell a story about one character. Follow this template to produce a simple photo essay story about one character.</string>
+    <string name="new_story_photo">Single Photo: Telling a strong story with one image is a skill. To simplify, these templates explain some primary photo types.</string>
+    
+    <string name="new_story_audio">Audio: Something here about using audio to tell a story.</string>
+    
+    
     <string name="new_story_simple_story">Simple Story</string>
     <string name="new_story_choose_template">Choose Template</string>
     <string name="home_new_story">New Story</string>
