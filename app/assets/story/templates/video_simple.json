@@ -1,7 +1,7 @@
 {"clips":[
 {
 "Title": "Signature",
-"Artwork": "???.svg",
+"Artwork": "cliptype_detail",
 "Shot Size": "Detail",
 "Goal": "Depict something noteworthy about the character.",
 "Length": "X seconds",
@@ -11,7 +11,7 @@
 },
 {
 "Title": "Action",
-"Artwork": "???.svg",
+"Artwork": "cliptype_long",
 "Shot Size": "Long",
 "Goal": "Show the character engaged in her environment.",
 "Length": "X seconds",
@@ -21,7 +21,7 @@
 },
 {
 "Title": "Character",
-"Artwork": "???.svg",
+"Artwork": "cliptype_close",
 "Shot Size": "Close",
 "Goal": "Depict the character’s emotion.",
 "Length": "X seconds",
@@ -31,7 +31,7 @@
 },
 {
 "Title": "Interview",
-"Artwork": "???.svg",
+"Artwork": "cliptype_medium",
 "Shot Size": "Medium",
 "Goal": "Ask the character to tell you a story.",
 "Length": "X seconds",
@@ -41,7 +41,7 @@
 },
 {
 "Title": "Environmental",
-"Artwork": "???.svg",
+"Artwork": "cliptype_wide",
 "Shot Size": "Wide",
 "Goal": "Environmental clips help the audience understand where your story takes place.", 
 "Length": "X seconds",
