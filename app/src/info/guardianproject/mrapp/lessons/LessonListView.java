@@ -26,6 +26,8 @@ public class LessonListView extends ListView implements Runnable, LessonManagerL
 	private LessonManager mLessonManager;
 	private ArrayList<Lesson> mListLessons;
 	
+	private String mSubFolder = null; 
+	
     public LessonListView (Context context) {
         
     	super (context);
@@ -46,7 +48,7 @@ public class LessonListView extends ListView implements Runnable, LessonManagerL
         mLessonManager = StoryMakerApp.getLessonManager();
         mLessonManager.setListener(this);
         
-    	mListLessons = mLessonManager.loadLessonList(true);
+    	mListLessons = mLessonManager.loadLessonList();
     	if (mListLessons.size() == 0)
     	{
 
@@ -58,7 +60,6 @@ public class LessonListView extends ListView implements Runnable, LessonManagerL
     	}
     }
     
-    //ProgressDialog progressDialog;
     
     public void loadLessonsFromServer ()
     {
@@ -76,7 +77,7 @@ public class LessonListView extends ListView implements Runnable, LessonManagerL
     
     public void run ()
     {
-    	mListLessons = mLessonManager.loadLessonList(true);
+    	mListLessons = mLessonManager.loadLessonList();
     	mHandler.sendEmptyMessage(1);
     	
     }
@@ -152,7 +153,7 @@ public class LessonListView extends ListView implements Runnable, LessonManagerL
 	public void lessonsLoadedFromServer() {
 		
 		
-    	mListLessons = mLessonManager.loadLessonList(true);
+    	mListLessons = mLessonManager.loadLessonList();
 
 		mHandler.sendEmptyMessage(1);
 		

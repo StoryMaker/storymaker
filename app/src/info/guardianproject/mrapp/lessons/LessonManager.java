@@ -35,18 +35,23 @@ public class LessonManager implements Runnable {
 	private String mUrlRemoteRepo;
 	private File mLocalStorageRoot;
 	
-	private ArrayList<Lesson> mListLessons;
-	
 	private LessonManagerListener mListener;
 	
 	private Context mContext;
 	
-	public LessonManager (Context context, String remoteRepoUrl, File localStorageRoot)
+	private String mSubFolder;
+	
+	public LessonManager (Context context, String remoteRepoUrl, File localStorageRoot, String lessonFolder)
 	{
 		mContext = context;
 		mUrlRemoteRepo = remoteRepoUrl;
-		mLocalStorageRoot = new File(localStorageRoot,"lessons");
+		mLocalStorageRoot = new File(localStorageRoot,lessonFolder);
 		mLocalStorageRoot.mkdir();
+	}
+	
+	public void setSubFolder (String subFolder)
+	{
+		mSubFolder = subFolder;
 	}
 	
 	public void setListener (LessonManagerListener listener)
@@ -59,53 +64,51 @@ public class LessonManager implements Runnable {
 		new Thread(this).start();
 	}
 	
-	public ArrayList<Lesson> loadLessonList (boolean refresh)
+	public ArrayList<Lesson> loadLessonList ()
 	{
-		if (mListLessons == null || refresh)
-		{
-			mListLessons = new ArrayList<Lesson>();
+		ArrayList<Lesson> lessons = new ArrayList<Lesson>();
 			
-			if (mLocalStorageRoot.exists())
+		File lessonFolder = mLocalStorageRoot;
+		if (mSubFolder != null)
+			lessonFolder = new File(mLocalStorageRoot, mSubFolder);
+		
+		if (mLocalStorageRoot.exists())
+		{
+			
+			File[] fileLessons = lessonFolder.listFiles();
+			
+			for (File fileLesson : fileLessons)
 			{
-				
-				File[] fileLessons = mLocalStorageRoot.listFiles();
-				
-				for (File fileLesson : fileLessons)
+				try
 				{
-					try
+					File fileLessonJson = new File(fileLesson,"lesson.json");
+					
+					if (fileLessonJson.exists())
 					{
-						File fileLessonJson = new File(fileLesson,"lesson.json");
-						
-						if (fileLessonJson.exists())
-						{
-							Lesson lesson = Lesson.parse(IOUtils.toString(new FileInputStream(fileLessonJson)));
-							lesson.mResourcePath = "file://" + new File(fileLesson,lesson.mResourcePath).getAbsolutePath();
-							mListLessons.add(lesson);
-						}
-					}
-					catch (FileNotFoundException fnfe)
-					{
-						Log.w(MediaAppConstants.TAG,"lesson json not found: " + fileLesson.getAbsolutePath(),fnfe);
-					}
-					catch (IOException fnfe)
-					{
-						Log.w(MediaAppConstants.TAG,"lesson json i/o error on loading: " + fileLesson.getAbsolutePath(),fnfe);
-					}
-					catch (Exception fnfe)
-					{
-						Log.w(MediaAppConstants.TAG,"lesson json general exception: " + fileLesson.getAbsolutePath(),fnfe);
+						Lesson lesson = Lesson.parse(IOUtils.toString(new FileInputStream(fileLessonJson)));
+						lesson.mResourcePath = "file://" + new File(fileLesson,lesson.mResourcePath).getAbsolutePath();
+						lessons.add(lesson);
 					}
 				}
-				
-				
+				catch (FileNotFoundException fnfe)
+				{
+					Log.w(MediaAppConstants.TAG,"lesson json not found: " + fileLesson.getAbsolutePath(),fnfe);
+				}
+				catch (IOException fnfe)
+				{
+					Log.w(MediaAppConstants.TAG,"lesson json i/o error on loading: " + fileLesson.getAbsolutePath(),fnfe);
+				}
+				catch (Exception fnfe)
+				{
+					Log.w(MediaAppConstants.TAG,"lesson json general exception: " + fileLesson.getAbsolutePath(),fnfe);
+				}
 			}
-			
-			
 			
 			
 		}
 		
-		return mListLessons;
+		
+		return lessons;
 	}
 	
 	public void run ()
@@ -114,7 +117,13 @@ public class LessonManager implements Runnable {
 		{
 			// open URL and download file listing
 			HttpClient httpClient = new StrongHttpsClient(mContext);
-			HttpGet request = new HttpGet(mUrlRemoteRepo + "index.json");
+			
+			String urlString = mUrlRemoteRepo + "index.json";
+			
+			if (mSubFolder != null)
+				urlString = mUrlRemoteRepo + mSubFolder + "/" + "index.json";
+			
+			HttpGet request = new HttpGet(urlString);
 			HttpResponse response = httpClient.execute(request);
 
 			byte[] buffer = new byte[(int)response.getEntity().getContentLength()];
