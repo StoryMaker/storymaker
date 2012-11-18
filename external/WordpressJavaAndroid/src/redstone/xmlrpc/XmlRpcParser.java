@@ -120,7 +120,7 @@ public abstract class XmlRpcParser extends DefaultHandler
             {
                 try
                 {
-                    reader = XMLReaderFactory.createXMLReader();
+                    reader = XMLReaderFactory.createXMLReader("org.xmlpull.v1.sax2.Driver");
                 }
                 catch ( SAXException e )
                 {

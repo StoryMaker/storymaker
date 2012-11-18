@@ -327,6 +327,8 @@ public class Wordpress {
   @SuppressWarnings("unused")
   private Wordpress() {
     // no default constructor - class needs username, password and url
+	  System.setProperty("org.xml.sax.driver","org.xmlpull.v1.sax2.Driver");
+
   }
 
   /**
