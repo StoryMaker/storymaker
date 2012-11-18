@@ -94,35 +94,39 @@ public class StoryNew extends SherlockActivity {
     	int checkedId = rGroup.getCheckedRadioButtonId();
     	
     	String templateJsonPath = null;
+    	int storyMode = -1;
+    	
     	
     	if (checkedId == R.id.radioStoryType0)
     	{
     		//video
     		templateJsonPath = "story/templates/video_simple.json";
+    		storyMode = SceneEditorNoSwipe.STORY_MODE_VIDEO;
     		
     	}
     	else if (checkedId == R.id.radioStoryType1)
     	{
 
     		//photo
-
+    		storyMode = SceneEditorNoSwipe.STORY_MODE_PHOTO;
     		templateJsonPath = "story/templates/photo_simple.json";
     	}
     	else if (checkedId == R.id.radioStoryType2)
     	{
 
     		//audio
-
+    		storyMode = SceneEditorNoSwipe.STORY_MODE_AUDIO;
     		templateJsonPath = "story/templates/audio_simple.json";
     	}
     	else if (checkedId == R.id.radioStoryType3)
     	{
     		//essay
-
+    		storyMode = SceneEditorNoSwipe.STORY_MODE_ESSAY;
     		templateJsonPath = "story/templates/essay_simple.json";
     		
     	}
     	
+    	intent.putExtra("story_mode", storyMode);
     	intent.putExtra("template_path", templateJsonPath);
     	
         startActivity(intent);
