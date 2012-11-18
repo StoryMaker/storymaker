@@ -2,16 +2,28 @@ package info.guardianproject.mrapp.server;
 
 
 import info.guardianproject.mrapp.Home;
+import info.guardianproject.mrapp.MediaAppConstants;
 import info.guardianproject.mrapp.R;
-import android.app.Activity;
+import info.guardianproject.mrapp.StoryMakerApp;
+
+import java.net.MalformedURLException;
+
+import com.WazaBe.HoloEverywhere.widget.Toast;
+
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
  
-public class LoginActivity extends com.WazaBe.HoloEverywhere.sherlock.SActivity {
+public class LoginActivity extends com.WazaBe.HoloEverywhere.sherlock.SActivity implements Runnable 
+{
+	
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,8 +39,8 @@ public class LoginActivity extends com.WazaBe.HoloEverywhere.sherlock.SActivity 
 			@Override
 			public void onClick(View v) {
 				
-				 Intent i = new Intent(getApplicationContext(), Home.class);
-	                startActivity(i);
+				handleLogin ();
+				
 			}
         	
         });
@@ -44,5 +56,59 @@ public class LoginActivity extends com.WazaBe.HoloEverywhere.sherlock.SActivity 
                 startActivity(i);
             }
         });
+    }
+    
+    private void handleLogin ()
+    {
+    	new Thread(this).start();
+    }
+    
+    public void run ()
+    {
+    	String username = ((EditText)findViewById(R.id.login_username)).getText().toString();
+    	String password = ((EditText)findViewById(R.id.login_password)).getText().toString();
+    	
+    	try {
+			StoryMakerApp.getServerManager().connect(username, password);
+
+			mHandler.sendEmptyMessage(0);
+	         
+		} catch (MalformedURLException e) {
+			
+			Message msgErr= mHandler.obtainMessage(1);
+			msgErr.getData().putString("err",e.getLocalizedMessage());
+			mHandler.sendMessage(msgErr);
+			Log.e(MediaAppConstants.TAG,"login err",e);
+		}
+    }
+    
+    private Handler mHandler = new Handler ()
+    {
+
+		@Override
+		public void handleMessage(Message msg) {
+			
+			switch (msg.what)
+			{
+				case 0:
+					loginSuccess();
+					break;
+				case 1:
+					loginFailed(msg.getData().getString("err"));
+				default:
+			}
+		}
+    	
+    };
+    
+    private void loginFailed (String err)
+    {
+    	Toast.makeText(this, "Login failed: " + err, Toast.LENGTH_LONG).show();
+    }
+    
+    private void loginSuccess ()
+    {
+   	 Intent i = new Intent(getApplicationContext(), Home.class);
+     startActivity(i);
     }
 }
