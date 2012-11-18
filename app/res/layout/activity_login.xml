@@ -72,17 +72,35 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dip"
                 android:text="Login"/>
-          <!-- Link to Registration Screen -->
-          <TextView android:id="@+id/link_to_register"
+          
+             <LinearLayout 
                 android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+              android:gravity="center"
+                     android:orientation="horizontal"
+                >
+                  <!-- Link to Registration Screen -->
+          <TextView android:id="@+id/link_to_skip"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="40dip"
                 android:layout_marginBottom="40dip"
+                android:text="Skip Login"
+                android:gravity="center"
+                android:textSize="20dip"
+                android:textColor="#0b84aa"/>
+          <!-- Link to Registration Screen -->
+          <TextView android:id="@+id/link_to_register"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dip"
+                android:layout_marginBottom="40dip"
+                android:layout_marginLeft="10dip"
                 android:text="Create Account"
                 android:gravity="center"
                 android:textSize="20dip"
                 android:textColor="#0b84aa"/>
- 
+ </LinearLayout>
         </LinearLayout>
         <!-- Login Form Ends -->
   </RelativeLayout>

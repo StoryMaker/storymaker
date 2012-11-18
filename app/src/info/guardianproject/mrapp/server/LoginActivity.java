@@ -52,8 +52,20 @@ public class LoginActivity extends com.WazaBe.HoloEverywhere.sherlock.SActivity 
  
             public void onClick(View v) {
                 // Switching to Register screen
-                Intent i = new Intent(getApplicationContext(), RegisterActivity.class);
-                startActivity(i);
+               // Intent i = new Intent(getApplicationContext(), RegisterActivity.class);
+                //startActivity(i);
+            	StoryMakerApp.getServerManager().createAccount(LoginActivity.this);
+            }
+        });
+        
+        TextView skipScreen = (TextView) findViewById(R.id.link_to_skip);
+        
+        // Listening to skip link
+        skipScreen.setOnClickListener(new View.OnClickListener() {
+ 
+            public void onClick(View v) {
+              
+            	 loginSuccess ();
             }
         });
     }
@@ -73,7 +85,7 @@ public class LoginActivity extends com.WazaBe.HoloEverywhere.sherlock.SActivity 
 
 			mHandler.sendEmptyMessage(0);
 	         
-		} catch (MalformedURLException e) {
+		} catch (Exception e) {
 			
 			Message msgErr= mHandler.obtainMessage(1);
 			msgErr.getData().putString("err",e.getLocalizedMessage());
