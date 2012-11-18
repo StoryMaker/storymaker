@@ -33,6 +33,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.WazaBe.HoloEverywhere.widget.Toast;
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
@@ -91,6 +92,12 @@ public class SceneEditorNoSwipe extends com.WazaBe.HoloEverywhere.sherlock.SActi
         actionBar.addTab(actionBar.newTab().setText(R.string.tab_order).setTabListener(this));
         actionBar.addTab(actionBar.newTab().setText(R.string.tab_publish).setTabListener(this));
         
+        showHelp();
+    }
+    
+    private void showHelp (){
+    	
+    	Toast.makeText(this, getString(R.string.help_clip_select),Toast.LENGTH_LONG).show();
     }
 
     @Override
