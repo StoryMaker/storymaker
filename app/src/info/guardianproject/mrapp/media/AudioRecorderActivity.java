@@ -27,6 +27,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
+//http://stackoverflow.com/questions/5734332/vu-audio-meter-when-recording-audio-in-android
+
 public class AudioRecorderActivity extends SherlockActivity {
 	
 	private static final int RECORDER_BPP = 16;
@@ -107,6 +109,7 @@ public class AudioRecorderActivity extends SherlockActivity {
 		recorder.startRecording();		
 		
 		isRecording = true;
+		
 		
 		recordingThread = new Thread(new Runnable() {
 			

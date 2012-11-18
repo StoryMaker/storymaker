@@ -3,9 +3,12 @@ package info.guardianproject.mrapp;
 import java.io.IOException;
 import java.io.InputStream;
 
+import net.micode.soundrecorder.SoundRecorder;
+
 import org.json.JSONException;
 
 import info.guardianproject.mrapp.model.Template;
+import info.guardianproject.mrapp.model.Template.Clip;
 import info.guardianproject.mrapp.ui.OverlayCamera;
 import android.content.Context;
 import android.content.Intent;
@@ -47,6 +50,15 @@ public class SceneEditorNoSwipe extends com.WazaBe.HoloEverywhere.sherlock.SActi
     private Context mContext = null;
      
     private String templateJsonPath = null;
+    
+    private int storyMode = STORY_MODE_VIDEO;
+    
+    public final static int STORY_MODE_VIDEO = 0;
+    public final static int STORY_MODE_AUDIO = 1;
+    public final static int STORY_MODE_PHOTO = 2;
+    public final static int STORY_MODE_ESSAY = 3;
+    
+    private final static int RESULT_AUDIO = 777;
     
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -369,9 +381,7 @@ public class SceneEditorNoSwipe extends com.WazaBe.HoloEverywhere.sherlock.SActi
 					public void onClick(View v) {
 					//	int cIdx = mClipViewPager.getCurrentItem();
 						
-						Intent i = new Intent(mContext, OverlayCamera.class);
-						i.putExtra("group", clip.mShotType);
-						startActivity(i);
+						openCaptureMode (clip);
 						
 					}
 	          	  
@@ -394,5 +404,22 @@ public class SceneEditorNoSwipe extends com.WazaBe.HoloEverywhere.sherlock.SActi
 		super.onConfigurationChanged(newConfig);
 	}
 
+	private void openCaptureMode (Clip clip)
+	{
+
+		if (storyMode == STORY_MODE_AUDIO)
+		{
+			Intent i = new Intent(mContext, SoundRecorder.class);
+			i.setType("audio/3gpp");
+			startActivityForResult(i,RESULT_AUDIO);
+
+		}
+		else
+		{
+			Intent i = new Intent(mContext, OverlayCamera.class);
+			i.putExtra("group", clip.mShotType);
+			startActivity(i);
+		}
+	}
 
 }
