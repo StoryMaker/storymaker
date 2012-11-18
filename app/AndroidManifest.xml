@@ -1,8 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="info.guardianproject.mrapp"
     android:installLocation="auto"
-    android:versionCode="8"
-    android:versionName="0.0.2-a1" >
+    android:versionCode="9"
+    android:versionName="0.0.2.a2" >
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -12,6 +12,9 @@
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
    
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    
     <uses-sdk
         android:minSdkVersion="8"
         android:targetSdkVersion="15" />
@@ -147,7 +150,32 @@
 		    android:authorities="info.guardianproject.mrapp.db.ProjectsProvider"
 		    android:multiprocess="true"
 		    android:name="info.guardianproject.mrapp.db.ProjectsProvider"></provider>
-		        
+		      
+        <activity
+            android:configChanges="keyboardHidden"
+           android:name="net.micode.soundrecorder.SoundRecorder"
+            android:screenOrientation="portrait">
+              <intent-filter>
+                <action android:name="android.intent.action.GET_CONTENT" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.OPENABLE" />
+
+                <data android:mimeType="audio/amr" />
+                <data android:mimeType="audio/3gpp" />
+            </intent-filter>
+            <intent-filter >
+                <action android:name="android.provider.MediaStore.RECORD_SOUND" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+
+        <service
+            android:exported="false"
+            android:name="net.micode.soundrecorder.RecorderService" >
+        </service>
     </application>
 
 </manifest>
