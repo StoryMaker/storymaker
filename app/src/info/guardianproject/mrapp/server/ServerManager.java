@@ -13,9 +13,16 @@ public class ServerManager {
 	private String mServerUrl;
 	private Context mContext;
 	
+	public final static String DEFAULT_STORYMAKER_SERVER = "http://storymaker.smallworldnews.tv";
+	
 	private final static String PATH_XMLRPC = "/xmlrpc.php";
 	private final static String PATH_REGISTER = "/wp-login.php?action=register";
 	private final static String PATH_LOGIN = "/wp-admin";
+	
+	public ServerManager (Context context)
+	{
+		this(context, DEFAULT_STORYMAKER_SERVER);
+	}
 	
 	public ServerManager (Context context, String serverUrl)
 	{

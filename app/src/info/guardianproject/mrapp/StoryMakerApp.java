@@ -1,6 +1,7 @@
 package info.guardianproject.mrapp;
 
 import info.guardianproject.mrapp.lessons.LessonManager;
+import info.guardianproject.mrapp.server.ServerManager;
 import info.guardianproject.mrapp.db.StoryMakerDB;
 import info.guardianproject.mrapp.db.StoryMakerDB.Schema;
 
@@ -14,6 +15,7 @@ import android.util.Log;
 public class StoryMakerApp extends Application {
 
 	
+	private static ServerManager mServerManager;
 	private static LessonManager mLessonManager;
 	
 	//just throwing some test files up here for now 
@@ -57,12 +59,17 @@ public class StoryMakerApp extends Application {
 		{
 			File fileExt = getExternalFilesDir(null);
 			mLessonManager = new LessonManager (this, bootstrapUrlString, fileExt);
-			
+			mServerManager = new ServerManager (this);
 		}
 		catch (Exception e)
 		{
 			Log.e(MediaAppConstants.TAG,"error init app",e);
 		}
+	}
+	
+	public static ServerManager getServerManager ()
+	{
+		return mServerManager;
 	}
 	
 	public static LessonManager getLessonManager ()
