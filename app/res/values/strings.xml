@@ -77,7 +77,7 @@
    	<string name="new_story_essay">Photo Essay: Tell a story about one character. Follow this template to produce a simple photo essay story about one character.</string>
     <string name="new_story_photo">Single Photo: Telling a strong story with one image is a skill. To simplify, these templates explain some primary photo types.</string>
     
-    <string name="new_story_audio">Audio: Something here about using audio to tell a story. Personally, I really like to listen to the radio and podcasts!</string>
+    <string name="new_story_audio">Audio: Something here about using audio to tell a story. Personally, I really like to listen to the radio and podcasts while I do housework!</string>
     
     
     <string name="new_story_simple_story">Simple Story</string>
@@ -185,4 +185,5 @@
         <item>audio/3gpp</item>
     </string-array>
     <!-- add for libra end -->
+        <string name="help_clip_select">Swipe to select a clip type, then tap the clip image to start video, photo or audio capture</string>
 </resources>
