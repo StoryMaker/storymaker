@@ -42,22 +42,18 @@ public class ServerManager {
 		mWordpress = new Wordpress(username, password, mServerUrl + PATH_XMLRPC);	
 		mWordpress.sayHello();
 		
-		for (String method : mWordpress.supportedMethods())
-		{
-			Log.d(MediaAppConstants.TAG,"method supported: " + method);
-		}
-		
 	}
 	
-	public void post (String title, String body)
+	public String post (String title, String body) throws XmlRpcFault
 	{
 		
 		Page page = new Page ();
 		page.setTitle(title);
 		page.setDescription(body);
 		boolean publish = true;
-		//mWordpress.newPost(page, publish);
+		String postId = mWordpress.newPost(page, publish);
 		
+		return postId;
 	}
 	
 	public void createAccount (Activity activity)
