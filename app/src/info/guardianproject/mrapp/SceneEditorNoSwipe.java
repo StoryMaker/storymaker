@@ -72,6 +72,11 @@ public class SceneEditorNoSwipe extends com.WazaBe.HoloEverywhere.sherlock.SActi
         	templateJsonPath = getIntent().getStringExtra("template_path");
         }
         
+        if (getIntent().hasExtra("story_mode"))
+        {
+        	storyMode = getIntent().getIntExtra("story_mode", STORY_MODE_VIDEO);
+        }
+        
         mContext = getBaseContext();
 
         setContentView(R.layout.activity_scene_editor_no_swipe);
