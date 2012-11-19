@@ -1,11 +1,11 @@
 package info.guardianproject.mrapp.server;
 
-import info.guardianproject.mrapp.MediaAppConstants;
-
 import java.net.MalformedURLException;
+import java.util.List;
 
 import redstone.xmlrpc.XmlRpcFault;
 
+import net.bican.wordpress.Comment;
 import net.bican.wordpress.Page;
 import net.bican.wordpress.Wordpress;
 import android.app.Activity;
@@ -19,8 +19,8 @@ public class ServerManager {
 	private String mServerUrl;
 	private Context mContext;
 	
-	//public final static String DEFAULT_STORYMAKER_SERVER = "http://storymaker.smallworldnews.tv";
-	public final static String DEFAULT_STORYMAKER_SERVER = "https://guardianproject.info";
+	//TODO switch this to HTTPS!
+	public final static String DEFAULT_STORYMAKER_SERVER = "http://mrapp.alive.in/";
 	
 	private final static String PATH_XMLRPC = "/xmlrpc.php";
 	private final static String PATH_REGISTER = "/wp-login.php?action=register";
@@ -44,12 +44,24 @@ public class ServerManager {
 		
 	}
 	
+	public List<Page> getRecentPosts (int num) throws XmlRpcFault
+	{
+		List<Page> rPosts = mWordpress.getRecentPosts(num);
+		return rPosts;
+	}
+	
+	public List<Comment> getComments (Page page) throws XmlRpcFault
+	{
+		return mWordpress.getComments(null, page.getPostid(), null, null);
+	}
+	
 	public String post (String title, String body) throws XmlRpcFault
 	{
 		
 		Page page = new Page ();
 		page.setTitle(title);
 		page.setDescription(body);
+		
 		boolean publish = true;
 		String postId = mWordpress.newPost(page, publish);
 		
