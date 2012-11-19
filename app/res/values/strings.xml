@@ -7,6 +7,7 @@
     <string name="title_projects">Projects</string>
     <string name="title_lessons">Lessons</string>
 
+    <string name="action_publish">Publish</string>
     <!-- menus -->
     <string name="menu_new_project">New</string>
     <string name="menu_projects">Projects</string>
@@ -122,10 +123,12 @@ Build number: <xliff:g id="build_number">%s</xliff:g>\n
     <string name="story_publish_share">Share</string>
     <string name="story_publish_send_via">Send Via</string>
     <string name="story_publish_status">Status</string>
-    <string name="story_publish_status_processing">Processing, 30 minutes remaining</string>
+    <string name="story_publish_status_processing">Processing</string>
+    <string name="story_publish_status_not">Not Published</string>
+    
     <string name="story_publish_describe_hint">Describe your story…</string>
-    <string name="story_publish_story_title">Celebrating the Arrest of Gaddafi\'s Son</string>
-    <string name="story_publish_story_date">August 18, 2012</string>
+    <string name="story_publish_story_title">Story Title here</string>
+    <string name="story_publish_story_date">Story Date Here</string>
 
     <!-- delete these below -->
 

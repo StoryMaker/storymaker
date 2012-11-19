@@ -9,7 +9,6 @@
   <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content" android:background="#ffffff">
- 
 
     <ImageView
         android:id="@+id/imageView1"
@@ -99,42 +98,42 @@
         android:id="@+id/divider2"
         android:layout_width="fill_parent"
         android:layout_height="1dp"
-        android:layout_below="@+id/spinnerSections"
+        android:layout_below="@+id/textViewSection"
         android:layout_marginBottom="5dp"
         android:layout_marginTop="5dp"
         android:background="@android:color/darker_gray" />
 
+    
+    <TextView
+        android:id="@+id/textViewTopics"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/divider2"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="5dp"
+        android:gravity="center_vertical"
+        android:text="@string/story_publish_topics"
+        android:textAllCaps="true"
+        
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+    
     <Spinner
         android:id="@+id/spinnerTopics"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_below="@id/divider2"
-        android:paddingRight="10dp" />
+        android:paddingRight="10dp" 
+       android:layout_toRightOf="@+id/textViewTopics"
+        
+        />
 
-    <TextView
-        android:id="@+id/textViewTopics"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@id/spinnerTopics"
-        android:layout_alignParentLeft="true"
-        android:layout_alignTop="@id/spinnerTopics"
-        android:layout_below="@+id/divider2"
-        android:layout_marginBottom="5dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginTop="5dp"
-        android:layout_toLeftOf="@+id/spinnerTopics"
-        android:gravity="center_vertical"
-        android:text="@string/story_publish_topics"
-        android:textAllCaps="true"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
-
+    
     <View
         android:id="@+id/divider3"
         android:layout_width="fill_parent"
         android:layout_height="1dp"
-        android:layout_below="@+id/spinnerTopics"
+        android:layout_below="@+id/textViewTopics"
         android:layout_marginBottom="5dp"
         android:layout_marginTop="5dp"
         android:background="@android:color/darker_gray" />
@@ -195,6 +194,7 @@
         android:layout_toLeftOf="@+id/toggleButtonYoutube"
         android:background="@drawable/btn_toggle_bg_storymaker"
         android:textAllCaps="false"
+        android:checked="true"
         android:textOff=""
         android:textOn="" />
 
@@ -203,12 +203,12 @@
         android:layout_width="36dp"
         android:layout_height="36dp"
         android:layout_below="@+id/divider4"
-        android:layout_toLeftOf="@+id/toggleButtonVimeo"
+        android:layout_toLeftOf="@+id/toggleButtonTwitter"
         android:background="@drawable/btn_toggle_bg_youtube"
         android:textAllCaps="false"
         android:textOff=""
         android:textOn="" />
-
+<!-- 
     <ToggleButton
         android:id="@+id/toggleButtonVimeo"
         android:layout_width="36dp"
@@ -230,6 +230,7 @@
         android:textAllCaps="false"
         android:textOff=""
         android:textOn="" />
+ -->
 
     <ToggleButton
         android:id="@+id/toggleButtonTwitter"
@@ -308,7 +309,7 @@
         android:background="@android:color/darker_gray" />
 
     <TextView
-        android:id="@+id/textViewStatus"
+        android:id="@+id/lblViewStatus"
         android:layout_width="wrap_content"
         android:layout_height="40dp"
         android:layout_below="@+id/divider6"
@@ -320,7 +321,19 @@
         android:textAppearance="?android:attr/textAppearanceSmall" />
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/textViewStatus"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:layout_alignBottom="@+id/lblViewStatus"
+        android:layout_alignTop="@+id/lblViewStatus"
+        android:layout_below="@+id/divider6"
+        android:layout_marginLeft="10dp"
+        android:layout_toRightOf="@+id/lblViewStatus"
+        android:gravity="center_vertical"
+        android:text="@string/story_publish_status_not" />
+
+    <Button
+        android:id="@+id/btnPublish"
         android:layout_width="wrap_content"
         android:layout_height="fill_parent"
         android:layout_alignBottom="@+id/textViewStatus"
@@ -329,8 +342,8 @@
         android:layout_marginLeft="10dp"
         android:layout_toRightOf="@+id/textViewStatus"
         android:gravity="center_vertical"
-        android:text="@string/story_publish_status_processing" />
-
+        android:text="@string/action_publish" />
+        
     <View
         android:id="@+id/divider7"
         android:layout_width="fill_parent"

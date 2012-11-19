@@ -7,8 +7,11 @@ import net.micode.soundrecorder.SoundRecorder;
 
 import org.json.JSONException;
 
+import redstone.xmlrpc.XmlRpcFault;
+
 import info.guardianproject.mrapp.model.Template;
 import info.guardianproject.mrapp.model.Template.Clip;
+import info.guardianproject.mrapp.server.ServerManager;
 import info.guardianproject.mrapp.ui.OverlayCamera;
 import android.content.Context;
 import android.content.Intent;
@@ -17,6 +20,8 @@ import android.content.res.TypedArray;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -30,6 +35,8 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -171,6 +178,7 @@ public class SceneEditorNoSwipe extends com.WazaBe.HoloEverywhere.sherlock.SActi
             layout = R.layout.fragment_story_publish;
             mMenu.findItem(R.id.itemForward).setEnabled(false);
         }
+        
         String tag = "" + layout;
         FragmentManager fm = getSupportFragmentManager();
         Fragment fragment = fm.findFragmentByTag(tag+"");
@@ -183,10 +191,7 @@ public class SceneEditorNoSwipe extends com.WazaBe.HoloEverywhere.sherlock.SActi
 	            Bundle args = new Bundle(); 
 	            args.putInt(SceneChooserFragment.ARG_SECTION_NUMBER, tab.getPosition() + 1);
 	            fragment.setArguments(args);
-	            fm.beginTransaction()
-	                    .replace(R.id.container, fragment, tag)
-//	                    .addToBackStack(null)
-	                    .commit();
+	            
 			} catch (IOException e) {
 				Log.e("SceneEditr","IO erorr", e);
 				
@@ -195,6 +200,11 @@ public class SceneEditorNoSwipe extends com.WazaBe.HoloEverywhere.sherlock.SActi
 				
 			}
         }
+        
+        fm.beginTransaction()
+        .replace(R.id.container, fragment, tag)
+//        .addToBackStack(null)
+        .commit();
     }
 
     @Override
@@ -275,9 +285,72 @@ public class SceneEditorNoSwipe extends com.WazaBe.HoloEverywhere.sherlock.SActi
             		}
 				});
             } else if (this.layout == R.layout.fragment_story_publish) {
+            	
+            	Button btn = (Button)view.findViewById(R.id.btnPublish);
+            	btn.setOnClickListener(new OnClickListener(){
+
+					@Override
+					public void onClick(View v) {
+						
+						handlePublish ();
+					}
+            		
+            	});
             }
             return view;
         }
+        
+        private void handlePublish ()
+    	{
+    		Thread thread = new Thread ()
+    		{
+    			public void run ()
+    			{
+    				EditText et = (EditText)findViewById(R.id.editTextDescribe);
+    				ServerManager sm = StoryMakerApp.getServerManager();
+    				try {
+						sm.post("test post", et.getText().toString());
+						
+						mHandlerPub.sendEmptyMessage(0);
+						
+					} catch (XmlRpcFault e) {
+						
+						Message msgErr = new Message();
+						msgErr.what = e.getErrorCode();
+						msgErr.getData().putString("err", e.getLocalizedMessage());
+						
+						
+					}
+    				
+    			}
+    		};
+    		
+    		thread.start();
+    	}
+        
+        private Handler mHandlerPub = new Handler ()
+        {
+
+			@Override
+			public void handleMessage(Message msg) {
+				
+				switch (msg.what)
+				{
+					case 0:
+						
+						((TextView)findViewById(R.id.textViewStatus)).setText("PUBLISHED!");
+						((Button)findViewById(R.id.btnPublish)).setEnabled(false);
+						
+					break;
+					
+					default:
+						
+						//err
+						Toast.makeText(SceneEditorNoSwipe.this, msg.getData().getString("err"), Toast.LENGTH_LONG).show();
+				}
+			}
+        	
+        };
         
         @Override
         public void onResume() {
@@ -434,4 +507,5 @@ public class SceneEditorNoSwipe extends com.WazaBe.HoloEverywhere.sherlock.SActi
 		}
 	}
 
+	
 }

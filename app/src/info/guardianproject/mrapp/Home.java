@@ -38,6 +38,7 @@ public class Home extends com.WazaBe.HoloEverywhere.sherlock.SActivity implement
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+      
         setContentView(R.layout.activity_home);
         // Create the adapter that will return a fragment for each of the three primary sections
         // of the app.
@@ -107,14 +108,14 @@ public class Home extends com.WazaBe.HoloEverywhere.sherlock.SActivity implement
 
         @Override
         public Fragment getItem(int i) {
-            int layout = R.layout.fragment_home_activity;
+
+            Fragment fragment = new HomeSectionFragment();
+            
             if (i == 1) {
-                layout = R.layout.fragment_home_projects;
+            	 fragment = new ProjectsSectionFragment();
             }
-            Fragment fragment = new DummySectionFragment(layout);
-            Bundle args = new Bundle();
-            args.putInt(DummySectionFragment.ARG_SECTION_NUMBER, i + 1);
-            fragment.setArguments(args);
+            
+            
             return fragment;
         }
 
@@ -136,20 +137,16 @@ public class Home extends com.WazaBe.HoloEverywhere.sherlock.SActivity implement
     /**
      * A dummy fragment representing a section of the app, but that simply displays dummy text.
      */
-    public static class DummySectionFragment extends Fragment {
-        int layout;
-        public DummySectionFragment(int layout) {
-            this.layout = layout;
-        }
-
+    
+    public static class HomeSectionFragment extends Fragment {
+       
         public static final String ARG_SECTION_NUMBER = "section_number";
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                 Bundle savedInstanceState) {
-            View view = inflater.inflate(layout, null);
+            View view = inflater.inflate(R.layout.fragment_home_activity, null);
             
-            if (this.layout == R.layout.fragment_home_activity) {
                 ((Button) view.findViewById(R.id.buttonNewStory)).setOnClickListener(new OnClickListener() {
                     
                     @Override
@@ -165,9 +162,21 @@ public class Home extends com.WazaBe.HoloEverywhere.sherlock.SActivity implement
                         startActivity(new Intent(getActivity(), Lessons.class));
                     }
                 });
-            }
-            
+           
             return view;
+        }
+    }
+    
+    public static class ProjectsSectionFragment extends Fragment {
+       
+
+        public static final String ARG_SECTION_NUMBER = "section_number";
+
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                Bundle savedInstanceState) {
+            View view = inflater.inflate(R.layout.fragment_home_projects, null);
+                       return view;
         }
     }
 }

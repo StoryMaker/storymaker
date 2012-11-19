@@ -31,14 +31,15 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme"
-        android:uiOptions="splitActionBarWhenNarrow"
         android:hardwareAccelerated="true"
         android:largeHeap="true"
         android:configChanges="orientation|keyboardHidden|screenSize"
         android:screenOrientation="portrait"
          >
      
-        <activity android:name=".server.LoginActivity">
+        <activity android:name=".server.LoginActivity"
+            android:windowSoftInputMode="stateHidden"
+            >
             <intent-filter  android:label="@string/app_name">
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
