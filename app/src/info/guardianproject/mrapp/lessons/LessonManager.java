@@ -44,7 +44,11 @@ public class LessonManager implements Runnable {
 	public LessonManager (Context context, String remoteRepoUrl, File localStorageRoot, String lessonFolder)
 	{
 		mContext = context;
+		
 		mUrlRemoteRepo = remoteRepoUrl;
+		if (!mUrlRemoteRepo.endsWith("/"))
+			mUrlRemoteRepo = mUrlRemoteRepo + "/";
+		
 		mLocalStorageRoot = new File(localStorageRoot,lessonFolder);
 		mLocalStorageRoot.mkdir();
 	}
@@ -72,7 +76,7 @@ public class LessonManager implements Runnable {
 		if (mSubFolder != null)
 			lessonFolder = new File(mLocalStorageRoot, mSubFolder);
 		
-		if (mLocalStorageRoot.exists())
+		if (lessonFolder.exists())
 		{
 			
 			File[] fileLessons = lessonFolder.listFiles();
@@ -115,8 +119,12 @@ public class LessonManager implements Runnable {
 	{
 		try
 		{
+			File lessonFolder = mLocalStorageRoot;
+			if (mSubFolder != null)
+				lessonFolder = new File(mLocalStorageRoot, mSubFolder);
+		
 			// open URL and download file listing
-			HttpClient httpClient = new StrongHttpsClient(mContext);
+			StrongHttpsClient httpClient = new StrongHttpsClient(mContext);
 			
 			String urlString = mUrlRemoteRepo + "index.json";
 			
@@ -151,7 +159,7 @@ public class LessonManager implements Runnable {
 					
 					String fileName = urlLesson.getPath();
 					fileName = fileName.substring(fileName.lastIndexOf('/')+1);
-					File fileZip = new File(mLocalStorageRoot,fileName);
+					File fileZip = new File(lessonFolder,fileName);
 					
 					if (fileZip.exists())
 					{
