@@ -204,5 +204,12 @@ Build number: <xliff:g id="build_number">%s</xliff:g>\n
         <item>audio/3gpp</item>
     </string-array>
     <!-- add for libra end -->
-        <string name="help_clip_select">Swipe to select a clip type, then tap the clip image to start video, photo or audio capture</string>
+   <string name="help_clip_select">Swipe to select a clip type, then tap the clip image to start video, photo or audio capture</string>
+
+	<!--  youtube upload -->
+	 <string name="yt_account_prompt">Choose your Google/YouTube account</string>
+    <string name="dev_key">"TODO-dev-key"</string>
+    <string name="client_id">TODO-client-ID</string>
+    <string name="default_ytd_domain">TODO-appname.appspot.com</string>
+    <string name="default_ytd_domain_name">TODO-name - e.g. San Francisco Bay Area</string>
 </resources>
