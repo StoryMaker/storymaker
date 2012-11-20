@@ -1,7 +1,7 @@
 package info.guardianproject.mrapp.media;
 
 import info.guardianproject.mrapp.AppConstants;
-import info.guardianproject.mrapp.MediaAppConstants;
+import info.guardianproject.mrapp.AppConstants;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -55,7 +55,7 @@ public class MediaHelper implements MediaScannerConnectionClient {
          values.put(MediaStore.Images.Media.TITLE, MediaConstants.CAMCORDER_TMP_FILE);
          values.put(MediaStore.Images.Media.DESCRIPTION,MediaConstants.CAMCORDER_TMP_FILE);
          
-         mActivity.sendBroadcast(new Intent().setAction(MediaAppConstants.Keys.Service.LOCK_LOGS));
+         mActivity.sendBroadcast(new Intent().setAction(AppConstants.Keys.Service.LOCK_LOGS));
          mMediaFileTmp = new File(fileExternDir, new Date().getTime() + '-' + MediaConstants.CAMCORDER_TMP_FILE);
          mMediaUriTmp = Uri.fromFile(mMediaFileTmp);
          
@@ -298,9 +298,9 @@ public class MediaHelper implements MediaScannerConnectionClient {
 						fos.close();
 						media.close();
 					} catch (FileNotFoundException e) {
-						Log.e(MediaAppConstants.TAG, e.toString());
+						Log.e(AppConstants.TAG, e.toString());
 					} catch (IOException e) {
-						Log.e(MediaAppConstants.TAG, e.toString());
+						Log.e(AppConstants.TAG, e.toString());
 					}
 					
 				}

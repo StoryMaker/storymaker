@@ -16,7 +16,7 @@ import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 
-public class StoryTemplateChooser extends SherlockActivity {
+public class StoryTemplateChooserActivity extends SherlockActivity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -61,7 +61,7 @@ public class StoryTemplateChooser extends SherlockActivity {
                 NavUtils.navigateUpFromSameTask(this);
                 return true;
             case R.id.itemForward:
-                startActivity(new Intent(getBaseContext(), StoryTemplate.class));
+                startActivity(new Intent(getBaseContext(), StoryTemplateActivity.class));
                 return true;
         }
         return super.onOptionsItemSelected(item);

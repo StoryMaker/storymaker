@@ -14,6 +14,7 @@ import android.webkit.WebSettings.PluginState;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
+import com.WazaBe.HoloEverywhere.widget.Toast;
 import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
@@ -57,6 +58,7 @@ public class LessonViewActivity extends SherlockActivity {
 				public boolean shouldOverrideUrlLoading(WebView view, String url) {
 
 					boolean isMedia = false;
+					boolean handled = false;
 					
 					String mimeType = mMediaHelper.getMimeType(url);
 					
@@ -67,9 +69,22 @@ public class LessonViewActivity extends SherlockActivity {
 					{
 						//launch video player
 						mMediaHelper.playMedia(Uri.parse(url), mimeType);
+						handled = true;
+					}
+					else
+					{
+						//now check for *special* URLs for lesson complete
+						
+						if (url.startsWith("stmk://lesson/complete/"))
+						{
+							int sIdx = url.lastIndexOf('/');
+							String lessonId = url.substring(sIdx+1);
+							lessonCompleted(lessonId);
+							handled = true;
+						}
 					}
 					
-					return isMedia;// super.shouldOverrideUrlLoading(view, url);
+					return handled;// super.shouldOverrideUrlLoading(view, url);
 				}
         		
         	});
@@ -82,7 +97,12 @@ public class LessonViewActivity extends SherlockActivity {
         
     }
     
-    
+    private void lessonCompleted(String lessonId)
+    {
+    	//TODO do something here to mark lesson as completed; need to update database
+    	Toast.makeText(this, "Congratulations. You have completed lesson " + lessonId, Toast.LENGTH_LONG).show();
+    	finish();
+    }
    
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

@@ -15,7 +15,7 @@ import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 
-public class StoryNew extends SherlockActivity {
+public class StoryNewActivity extends SherlockActivity {
 
 	private RadioGroup rGroup;
 	private TextView txtNewStoryDesc;
@@ -83,14 +83,14 @@ public class StoryNew extends SherlockActivity {
             
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getBaseContext(), StoryTemplateChooser.class));
+                startActivity(new Intent(getBaseContext(), StoryTemplateChooserActivity.class));
             }
         });
     }
     
     private void checkTypeAndLaunchEditor ()
     {
-    	Intent intent = new Intent(getBaseContext(), SceneEditorNoSwipe.class);
+    	Intent intent = new Intent(getBaseContext(), SceneEditorNoSwipeActivity.class);
     	int checkedId = rGroup.getCheckedRadioButtonId();
     	
     	String templateJsonPath = null;
@@ -101,27 +101,27 @@ public class StoryNew extends SherlockActivity {
     	{
     		//video
     		templateJsonPath = "story/templates/video_simple.json";
-    		storyMode = SceneEditorNoSwipe.STORY_MODE_VIDEO;
+    		storyMode = SceneEditorNoSwipeActivity.STORY_MODE_VIDEO;
     		
     	}
     	else if (checkedId == R.id.radioStoryType1)
     	{
 
     		//photo
-    		storyMode = SceneEditorNoSwipe.STORY_MODE_PHOTO;
+    		storyMode = SceneEditorNoSwipeActivity.STORY_MODE_PHOTO;
     		templateJsonPath = "story/templates/photo_simple.json";
     	}
     	else if (checkedId == R.id.radioStoryType2)
     	{
 
     		//audio
-    		storyMode = SceneEditorNoSwipe.STORY_MODE_AUDIO;
+    		storyMode = SceneEditorNoSwipeActivity.STORY_MODE_AUDIO;
     		templateJsonPath = "story/templates/audio_simple.json";
     	}
     	else if (checkedId == R.id.radioStoryType3)
     	{
     		//essay
-    		storyMode = SceneEditorNoSwipe.STORY_MODE_ESSAY;
+    		storyMode = SceneEditorNoSwipeActivity.STORY_MODE_ESSAY;
     		templateJsonPath = "story/templates/essay_simple.json";
     		
     	}

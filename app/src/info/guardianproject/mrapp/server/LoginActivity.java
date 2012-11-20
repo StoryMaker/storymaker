@@ -1,8 +1,8 @@
 package info.guardianproject.mrapp.server;
 
 
-import info.guardianproject.mrapp.Home;
-import info.guardianproject.mrapp.MediaAppConstants;
+import info.guardianproject.mrapp.HomeActivity;
+import info.guardianproject.mrapp.AppConstants;
 import info.guardianproject.mrapp.R;
 import info.guardianproject.mrapp.StoryMakerApp;
 
@@ -90,7 +90,7 @@ public class LoginActivity extends com.WazaBe.HoloEverywhere.sherlock.SActivity 
 			Message msgErr= mHandler.obtainMessage(1);
 			msgErr.getData().putString("err",e.getLocalizedMessage());
 			mHandler.sendMessage(msgErr);
-			Log.e(MediaAppConstants.TAG,"login err",e);
+			Log.e(AppConstants.TAG,"login err",e);
 		}
     }
     
@@ -120,7 +120,7 @@ public class LoginActivity extends com.WazaBe.HoloEverywhere.sherlock.SActivity 
     
     private void loginSuccess ()
     {
-   	 Intent i = new Intent(getApplicationContext(), Home.class);
+   	 Intent i = new Intent(getApplicationContext(), HomeActivity.class);
      startActivity(i);
     }
 }

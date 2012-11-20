@@ -28,7 +28,7 @@ import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 
-public class StoryTemplate extends com.WazaBe.HoloEverywhere.sherlock.SActivity implements ActionBar.TabListener {
+public class StoryTemplateActivity extends com.WazaBe.HoloEverywhere.sherlock.SActivity implements ActionBar.TabListener {
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide fragments for each of the
@@ -196,7 +196,7 @@ public class StoryTemplate extends com.WazaBe.HoloEverywhere.sherlock.SActivity 
                     @Override
                     public void onItemClick(AdapterView<?> arg0, View arg1,
                             int arg2, long arg3) {
-                    	Intent i = new Intent(getActivity(), SceneEditorNoSwipe.class);
+                    	Intent i = new Intent(getActivity(), SceneEditorNoSwipeActivity.class);
                     	i.putExtra("template_story", true);
                         getActivity().startActivity(i);
                         

@@ -5,12 +5,12 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import info.guardianproject.mrapp.AppConstants;
-import info.guardianproject.mrapp.MediaAppConstants;
-import info.guardianproject.mrapp.ProjectViewActivity;
+import info.guardianproject.mrapp.AppConstants;
 import info.guardianproject.mrapp.R;
 import info.guardianproject.mrapp.media.MediaClip;
 import info.guardianproject.mrapp.media.MediaConstants;
 import info.guardianproject.mrapp.media.MediaManager;
+import info.guardianproject.mrapp.media.MediaProjectManager;
 
 import org.ffmpeg.android.MediaDesc;
 import org.ffmpeg.android.ShellUtils.ShellCallback;

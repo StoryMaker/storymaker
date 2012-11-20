@@ -63,7 +63,7 @@ public class StoryMakerApp extends Application {
 		}
 		catch (Exception e)
 		{
-			Log.e(MediaAppConstants.TAG,"error init app",e);
+			Log.e(AppConstants.TAG,"error init app",e);
 		}
 	}
 	

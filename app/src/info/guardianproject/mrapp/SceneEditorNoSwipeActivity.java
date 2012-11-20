@@ -47,7 +47,7 @@ import com.actionbarsherlock.view.MenuItem;
 import com.animoto.android.views.DraggableGridView;
 import com.animoto.android.views.OnRearrangeListener;
 
-public class SceneEditorNoSwipe extends com.WazaBe.HoloEverywhere.sherlock.SActivity implements ActionBar.TabListener {
+public class SceneEditorNoSwipeActivity extends com.WazaBe.HoloEverywhere.sherlock.SActivity implements ActionBar.TabListener {
 
     private static final String STATE_SELECTED_NAVIGATION_ITEM = "selected_navigation_item";
 
@@ -133,7 +133,7 @@ public class SceneEditorNoSwipe extends com.WazaBe.HoloEverywhere.sherlock.SActi
         switch (item.getItemId()) {
             case android.R.id.home:
             	if (templateStory) {
-            		NavUtils.navigateUpTo(this, new Intent(this, StoryTemplate.class));
+            		NavUtils.navigateUpTo(this, new Intent(this, StoryTemplateActivity.class));
             	} else {
             		NavUtils.navigateUpFromSameTask(this);
             	}
@@ -346,7 +346,7 @@ public class SceneEditorNoSwipe extends com.WazaBe.HoloEverywhere.sherlock.SActi
 					default:
 						
 						//err
-						Toast.makeText(SceneEditorNoSwipe.this, msg.getData().getString("err"), Toast.LENGTH_LONG).show();
+						Toast.makeText(SceneEditorNoSwipeActivity.this, msg.getData().getString("err"), Toast.LENGTH_LONG).show();
 				}
 			}
         	

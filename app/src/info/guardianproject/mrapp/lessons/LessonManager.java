@@ -1,6 +1,6 @@
 package info.guardianproject.mrapp.lessons;
 
-import info.guardianproject.mrapp.MediaAppConstants;
+import info.guardianproject.mrapp.AppConstants;
 import info.guardianproject.mrapp.model.Lesson;
 import info.guardianproject.onionkit.trust.StrongHttpsClient;
 
@@ -96,15 +96,15 @@ public class LessonManager implements Runnable {
 				}
 				catch (FileNotFoundException fnfe)
 				{
-					Log.w(MediaAppConstants.TAG,"lesson json not found: " + fileLesson.getAbsolutePath(),fnfe);
+					Log.w(AppConstants.TAG,"lesson json not found: " + fileLesson.getAbsolutePath(),fnfe);
 				}
 				catch (IOException fnfe)
 				{
-					Log.w(MediaAppConstants.TAG,"lesson json i/o error on loading: " + fileLesson.getAbsolutePath(),fnfe);
+					Log.w(AppConstants.TAG,"lesson json i/o error on loading: " + fileLesson.getAbsolutePath(),fnfe);
 				}
 				catch (Exception fnfe)
 				{
-					Log.w(MediaAppConstants.TAG,"lesson json general exception: " + fileLesson.getAbsolutePath(),fnfe);
+					Log.w(AppConstants.TAG,"lesson json general exception: " + fileLesson.getAbsolutePath(),fnfe);
 				}
 			}
 			
@@ -189,7 +189,7 @@ public class LessonManager implements Runnable {
 				}
 				catch (Exception ioe)
 				{
-					Log.e(MediaAppConstants.TAG,"error loading lesson from server: " + i,ioe);
+					Log.e(AppConstants.TAG,"error loading lesson from server: " + i,ioe);
 					if (mListener != null)
 						mListener.errorLoadingLessons(ioe.getLocalizedMessage());
 					
@@ -202,7 +202,7 @@ public class LessonManager implements Runnable {
 		}
 		catch (Exception ioe)
 		{
-			Log.e(MediaAppConstants.TAG,"error loading lessons from server",ioe);
+			Log.e(AppConstants.TAG,"error loading lessons from server",ioe);
 			if (mListener != null)
 				mListener.errorLoadingLessons(ioe.getLocalizedMessage());
 			

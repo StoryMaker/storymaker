@@ -45,7 +45,7 @@ import java.util.regex.Pattern;
 
 
 import info.guardianproject.mrapp.R;
-import info.guardianproject.mrapp.MediaAppConstants;
+import info.guardianproject.mrapp.AppConstants;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -280,7 +280,7 @@ public class SendLogActivity extends Activity
 
                 // XXX:  Possible Failed Binder Transaction-- wouldn't it be better to log this to a file? -harlo
                 try {
-                    File logFile = new File(MediaAppConstants.TMP_FILE_DIRECTORY, "error_log_" + System.currentTimeMillis() + ".txt");
+                    File logFile = new File(AppConstants.TMP_FILE_DIRECTORY, "error_log_" + System.currentTimeMillis() + ".txt");
                     FileWriter fw = new FileWriter(logFile);
                     fw.write(log.toString());
                     fw.close();

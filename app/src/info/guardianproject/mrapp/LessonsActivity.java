@@ -1,23 +1,26 @@
 package info.guardianproject.mrapp;
+
 import info.guardianproject.mrapp.R;
-
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.app.ActionBar;
-
-import android.content.Intent;
+import info.guardianproject.mrapp.lessons.LessonListView;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.app.NavUtils;
 import android.support.v4.view.ViewPager;
-import android.view.LayoutInflater;
+import android.view.Gravity;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.ListView;
+import android.widget.TextView;
 
-public class Home extends com.WazaBe.HoloEverywhere.sherlock.SActivity implements ActionBar.TabListener {
+import com.WazaBe.HoloEverywhere.LayoutInflater;
+import com.WazaBe.HoloEverywhere.sherlock.SFragment;
+import com.actionbarsherlock.app.ActionBar;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuItem;
+
+public class LessonsActivity extends com.WazaBe.HoloEverywhere.sherlock.SActivity implements ActionBar.TabListener {
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide fragments for each of the
@@ -31,15 +34,12 @@ public class Home extends com.WazaBe.HoloEverywhere.sherlock.SActivity implement
      * The {@link ViewPager} that will host the section contents.
      */
     ViewPager mViewPager;
-    
-    Button mButtonNewStory;
-    Button mButtonStartALesson;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-      
-        setContentView(R.layout.activity_home);
+        setContentView(R.layout.activity_lessons);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         // Create the adapter that will return a fragment for each of the three primary sections
         // of the app.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
@@ -76,11 +76,30 @@ public class Home extends com.WazaBe.HoloEverywhere.sherlock.SActivity implement
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getSupportMenuInflater().inflate(R.menu.activity_home, menu);
+        getSupportMenuInflater().inflate(R.menu.activity_lessons, menu);
         return true;
     }
 
     
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                NavUtils.navigateUpFromSameTask(this);
+                return true;
+            case R.id.menu_update:
+                updateLessons();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+    
+    private void updateLessons ()
+    {
+    	StoryMakerApp.getLessonManager().updateLessonsFromRemote();
+    	
+    }
+
 
     @Override
     public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
@@ -107,15 +126,21 @@ public class Home extends com.WazaBe.HoloEverywhere.sherlock.SActivity implement
         }
 
         @Override
-        public Fragment getItem(int i) {
-
-            Fragment fragment = new HomeSectionFragment();
-            
-            if (i == 1) {
-            	 fragment = new ProjectsSectionFragment();
-            }
-            
-            
+        public SFragment getItem(int i) {
+        	SFragment fragment = null;
+        	
+        	if (i == 0)
+        	{
+        		fragment = new LessonSectionFragment();
+ 	            
+        	}
+        	else
+        	{
+	            fragment = new DummySectionFragment();
+	            Bundle args = new Bundle();
+	            args.putInt(DummySectionFragment.ARG_SECTION_NUMBER, i + 1);
+	            fragment.setArguments(args);
+        	}
             return fragment;
         }
 
@@ -127,8 +152,8 @@ public class Home extends com.WazaBe.HoloEverywhere.sherlock.SActivity implement
         @Override
         public CharSequence getPageTitle(int position) {
             switch (position) {
-                case 0: return getString(R.string.title_home_activity).toUpperCase();
-                case 1: return getString(R.string.title_home_projects).toUpperCase();
+                case 0: return getString(R.string.title_lessons_lessons).toUpperCase();
+                case 1: return getString(R.string.title_lessons_glossary).toUpperCase();
             }
             return null;
         }
@@ -137,46 +162,40 @@ public class Home extends com.WazaBe.HoloEverywhere.sherlock.SActivity implement
     /**
      * A dummy fragment representing a section of the app, but that simply displays dummy text.
      */
-    
-    public static class HomeSectionFragment extends Fragment {
-       
+    public static class DummySectionFragment extends SFragment {
+        public DummySectionFragment() {
+        }
+
         public static final String ARG_SECTION_NUMBER = "section_number";
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                 Bundle savedInstanceState) {
-            View view = inflater.inflate(R.layout.fragment_home_activity, null);
-            
-                ((Button) view.findViewById(R.id.buttonNewStory)).setOnClickListener(new OnClickListener() {
-                    
-                    @Override
-                    public void onClick(View v) {
-                        startActivity(new Intent(getActivity(), StoryNew.class));
-                    }
-                });
-                
-                ((Button) view.findViewById(R.id.buttonStartALesson)).setOnClickListener(new OnClickListener() {
-                    
-                    @Override
-                    public void onClick(View v) {
-                        startActivity(new Intent(getActivity(), Lessons.class));
-                    }
-                });
-           
-            return view;
+            TextView textView = new TextView(getActivity());
+            textView.setGravity(Gravity.CENTER);
+            Bundle args = getArguments();
+            textView.setText(Integer.toString(args.getInt(ARG_SECTION_NUMBER)));
+            return textView;
         }
     }
     
-    public static class ProjectsSectionFragment extends Fragment {
-       
+
+    /**
+     * A dummy fragment representing a section of the app, but that simply displays dummy text.
+     */
+    public static class LessonSectionFragment extends SFragment {
+        public LessonSectionFragment() {
+        }
 
         public static final String ARG_SECTION_NUMBER = "section_number";
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                 Bundle savedInstanceState) {
-            View view = inflater.inflate(R.layout.fragment_home_projects, null);
-                       return view;
+            
+        	LessonListView listView = new LessonListView(getActivity());
+            listView.loadLessonsFromServer();
+            return listView;
         }
     }
 }

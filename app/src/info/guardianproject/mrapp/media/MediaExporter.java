@@ -8,7 +8,6 @@ import org.ffmpeg.android.MediaDesc;
 import org.ffmpeg.android.ShellUtils.ShellCallback;
 
 import info.guardianproject.mrapp.AppConstants;
-import info.guardianproject.mrapp.ProjectViewActivity;
 import android.content.Context;
 import android.media.MediaScannerConnection;
 import android.os.Handler;

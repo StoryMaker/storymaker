@@ -1,6 +1,6 @@
 package info.guardianproject.mrapp.ui;
 
-import info.guardianproject.mrapp.MediaAppConstants;
+import info.guardianproject.mrapp.AppConstants;
 
 import java.io.IOException;
 
@@ -121,7 +121,7 @@ public class OverlayCamera extends SherlockActivity implements Callback, SwipeIn
         }
         catch(IOException ex) 
         {
-        	Log.e(MediaAppConstants.TAG,"error rendering overlay",ex);
+        	Log.e(AppConstants.TAG,"error rendering overlay",ex);
             return;
         }
         
