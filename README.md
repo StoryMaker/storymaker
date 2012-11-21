@@ -1,32 +1,43 @@
 Story Maker
 =====
 
-## Setting up Development
+## Setting up Development Environment
 
 **Prerequisites:**
 
 * [Android SDK](https://developer.android.com/sdk/installing/index.html)
-* [Android NDK](https://developer.android.com/tools/sdk/ndk/index.html)
+* Working [Android NDK](https://developer.android.com/tools/sdk/ndk/index.html) toolchain
 
 Follow these steps to setup your dev environment:
 
 1. Checkout mrapp git repo
-2. Checkout [android-ffmpeg-java](https://github.com/guardianproject/android-ffmpeg-java)
-3. Download ActionBarSherlock and extract it.
-4. Your directory layout should look like this:
+2. Init and update git submodules
 
-    ```
-    workspace/
-     |
-     - ActionBarSherlock.
-     |     |
-     |     - library/
-     |     - ..other stuff..
-     - android-ffmpeg-java/
-     - mrapp/
-           |
-           - app/
+    git submodule update --init --recursive
 
-5. Follow the build instructions in `android-ffmpeg-java/README.md`
-7. Import `ActionBarSherlock/library`, `mrapp/app`, and `android-ffmpeg-java` into
-   eclipse as existing projects.
+3. Ensure `NDK_BASE` env variable is set to the location of your NDK, example:
+
+    export NDK_BASE=/path/to/android-ndk
+
+4. Build android-ffmpeg
+
+    cd external/android-ffmpeg-java/external/android-ffmpeg/
+    ./configure_make_everything.sh
+
+7. **Using Eclipse**
+
+    Import into Eclipse (using the "existing projects" option) the projects in this order:
+
+        external/HoloEverywhere/contrib/ActionBarSherlock/library/
+        external/HoloEverywhere/library/
+        external/OnionKit/
+        external/android-ffmpeg-java/
+        external/WordpressJavaAndroid/
+
+
+   **Using command line**
+
+        cd app/
+        ./setup-ant.sh
+        ant clean debug
+

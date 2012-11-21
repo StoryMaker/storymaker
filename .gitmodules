@@ -1,0 +1,9 @@
+[submodule "external/HoloEverywhere"]
+	path = external/HoloEverywhere
+	url = git://github.com/ChristopheVersieux/HoloEverywhere.git
+[submodule "external/OnionKit"]
+	path = external/OnionKit
+	url = git://github.com/guardianproject/OnionKit.git
+[submodule "external/android-ffmpeg-java"]
+	path = external/android-ffmpeg-java
+	url = https://github.com/guardianproject/android-ffmpeg-java
