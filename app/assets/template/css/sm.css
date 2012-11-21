@@ -33,7 +33,7 @@ img {
 }
 
 /* END required styles */
-.subswipe p
+.subswipe p, .subswipe h1, .subswipe form, .subswipe ul
 {
 	margin:10px;
 }
