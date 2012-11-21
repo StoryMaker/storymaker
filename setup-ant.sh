@@ -13,7 +13,7 @@ external/WordpressJavaAndroid
 END
 
 for project in "${MAPFILE[@]}"; do
-        android update project --path $project
+        android update project --path $project -t 10
 done
 
 
