@@ -1,12 +1,14 @@
 package info.guardianproject.mrapp;
 
 import info.guardianproject.mrapp.R;
+import info.guardianproject.mrapp.model.Project;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.TextView;
@@ -19,6 +21,7 @@ public class StoryNewActivity extends SherlockActivity {
 
 	private RadioGroup rGroup;
 	private TextView txtNewStoryDesc;
+	private EditText editTextStoryName;
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -27,6 +30,7 @@ public class StoryNewActivity extends SherlockActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         
         txtNewStoryDesc = (TextView)findViewById(R.id.txtNewStoryDesc);
+        editTextStoryName = (EditText)findViewById(R.id.editTextStoryName);
         
         rGroup = (RadioGroup)findViewById(R.id.radioGroupStoryType);
         
@@ -90,46 +94,63 @@ public class StoryNewActivity extends SherlockActivity {
     
     private void checkTypeAndLaunchEditor ()
     {
-    	Intent intent = new Intent(getBaseContext(), SceneEditorNoSwipeActivity.class);
-    	int checkedId = rGroup.getCheckedRadioButtonId();
     	
-    	String templateJsonPath = null;
-    	int storyMode = -1;
+    	String pName = editTextStoryName.getText().toString();
     	
-    	
-    	if (checkedId == R.id.radioStoryType0)
+    	if (pName == null || pName.length() == 0)
     	{
-    		//video
-    		templateJsonPath = "story/templates/video_simple.json";
-    		storyMode = SceneEditorNoSwipeActivity.STORY_MODE_VIDEO;
     		
     	}
-    	else if (checkedId == R.id.radioStoryType1)
+    	else
     	{
-
-    		//photo
-    		storyMode = SceneEditorNoSwipeActivity.STORY_MODE_PHOTO;
-    		templateJsonPath = "story/templates/photo_simple.json";
-    	}
-    	else if (checkedId == R.id.radioStoryType2)
-    	{
-
-    		//audio
-    		storyMode = SceneEditorNoSwipeActivity.STORY_MODE_AUDIO;
-    		templateJsonPath = "story/templates/audio_simple.json";
-    	}
-    	else if (checkedId == R.id.radioStoryType3)
-    	{
-    		//essay
-    		storyMode = SceneEditorNoSwipeActivity.STORY_MODE_ESSAY;
-    		templateJsonPath = "story/templates/essay_simple.json";
-    		
-    	}
+    		Project project = new Project (this);
+    		project.setTitle(pName);
     	
-    	intent.putExtra("story_mode", storyMode);
-    	intent.putExtra("template_path", templateJsonPath);
-    	
-        startActivity(intent);
+	    	int checkedId = rGroup.getCheckedRadioButtonId();
+	    	
+	    	String templateJsonPath = null;
+	    	int storyMode = -1;
+	    	
+	    	
+	    	if (checkedId == R.id.radioStoryType0)
+	    	{
+	    		//video
+	    		templateJsonPath = "story/templates/video_simple.json";
+	    		storyMode = Project.STORY_TYPE_VIDEO;
+	    		
+	    	}
+	    	else if (checkedId == R.id.radioStoryType1)
+	    	{
+	
+	    		//photo
+	    		storyMode = Project.STORY_TYPE_PHOTO;
+	    		templateJsonPath = "story/templates/photo_simple.json";
+	    	}
+	    	else if (checkedId == R.id.radioStoryType2)
+	    	{
+	
+	    		//audio
+	    		storyMode = Project.STORY_TYPE_AUDIO;
+	    		templateJsonPath = "story/templates/audio_simple.json";
+	    	}
+	    	else if (checkedId == R.id.radioStoryType3)
+	    	{
+	    		//essay
+	    		storyMode = Project.STORY_TYPE_ESSAY;
+	    		templateJsonPath = "story/templates/essay_simple.json";
+	    		
+	    	}
+	    	
+	    	project.setStoryType(storyMode);
+	    	
+	    	project.save();
+	    	
+	    	Intent intent = new Intent(getBaseContext(), SceneEditorNoSwipeActivity.class);
+	    	intent.putExtra("story_mode", storyMode);
+	    	intent.putExtra("template_path", templateJsonPath);
+	    	
+	        startActivity(intent);
+    	}
     }
 
     @Override

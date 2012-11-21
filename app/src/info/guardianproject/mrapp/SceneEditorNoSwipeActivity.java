@@ -9,6 +9,7 @@ import org.json.JSONException;
 
 import redstone.xmlrpc.XmlRpcFault;
 
+import info.guardianproject.mrapp.model.Project;
 import info.guardianproject.mrapp.model.Template;
 import info.guardianproject.mrapp.model.Template.Clip;
 import info.guardianproject.mrapp.server.ServerManager;
@@ -59,12 +60,9 @@ public class SceneEditorNoSwipeActivity extends com.WazaBe.HoloEverywhere.sherlo
      
     private String templateJsonPath = null;
     
-    private int storyMode = STORY_MODE_VIDEO;
+    private int storyMode = Project.STORY_TYPE_VIDEO;;
     
-    public final static int STORY_MODE_VIDEO = 0;
-    public final static int STORY_MODE_AUDIO = 1;
-    public final static int STORY_MODE_PHOTO = 2;
-    public final static int STORY_MODE_ESSAY = 3;
+  
     
     private final static int RESULT_AUDIO = 777;
     
@@ -82,7 +80,7 @@ public class SceneEditorNoSwipeActivity extends com.WazaBe.HoloEverywhere.sherlo
         
         if (getIntent().hasExtra("story_mode"))
         {
-        	storyMode = getIntent().getIntExtra("story_mode", STORY_MODE_VIDEO);
+        	storyMode = getIntent().getIntExtra("story_mode", Project.STORY_TYPE_VIDEO);
         }
         
         mContext = getBaseContext();
@@ -493,7 +491,7 @@ public class SceneEditorNoSwipeActivity extends com.WazaBe.HoloEverywhere.sherlo
 	private void openCaptureMode (Clip clip)
 	{
 
-		if (storyMode == STORY_MODE_AUDIO)
+		if (storyMode == Project.STORY_TYPE_AUDIO)
 		{
 			Intent i = new Intent(mContext, SoundRecorder.class);
 			i.setType("audio/3gpp");

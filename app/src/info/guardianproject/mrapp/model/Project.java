@@ -14,17 +14,24 @@ public class Project {
     protected int id;
     protected String title;
     protected String thumbnailPath;
-
+    protected int storyType;
+    
+    public final static int STORY_TYPE_VIDEO = 0;
+    public final static int STORY_TYPE_AUDIO = 1;
+    public final static int STORY_TYPE_PHOTO = 2;
+    public final static int STORY_TYPE_ESSAY = 3;
+    
     public Project(Context context) {
         this.context = context;
     }
 
-    public Project(Context context, int id, String title, String thumbnailPath) {
+    public Project(Context context, int id, String title, String thumbnailPath, int storyType) {
         super();
         this.context = context;
         this.id = id;
         this.title = title;
         this.thumbnailPath = thumbnailPath;
+        this.storyType = storyType;
     }
 
     public Project(Context context, Cursor cursor) {
@@ -36,7 +43,10 @@ public class Project {
                 cursor.getString(cursor
                         .getColumnIndex(StoryMakerDB.Schema.Projects.COL_TITLE)),
                 cursor.getString(cursor
-                        .getColumnIndex(StoryMakerDB.Schema.Projects.COL_THUMBNAIL_PATH)));
+                        .getColumnIndex(StoryMakerDB.Schema.Projects.COL_THUMBNAIL_PATH)),
+                  cursor.getInt(cursor
+                                .getColumnIndex(StoryMakerDB.Schema.Projects.COL_STORY_TYPE))      
+        		);
     }
 
     /***** Table level static methods *****/
@@ -71,6 +81,8 @@ public class Project {
                 projects.add(new Project(context, cursor));
             } while (cursor.moveToNext());
         }
+        
+        cursor.close();
         return projects;
     }
 
@@ -82,6 +94,8 @@ public class Project {
         values.put(StoryMakerDB.Schema.Projects.COL_TITLE, title);
         values.put(StoryMakerDB.Schema.Projects.COL_THUMBNAIL_PATH,
                 thumbnailPath);
+        values.put(StoryMakerDB.Schema.Projects.COL_STORY_TYPE,
+                storyType);
         Uri uri = context.getContentResolver().insert(
                 ProjectsProvider.PROJECTS_CONTENT_URI, values);
         String lastSegment = uri.getLastPathSegment();
@@ -171,4 +185,14 @@ public class Project {
     public void setThumbnailPath(String thumbnailPath) {
         this.thumbnailPath = thumbnailPath;
     }
+
+	public int getStoryType() {
+		return storyType;
+	}
+
+	public void setStoryType(int storyType) {
+		this.storyType = storyType;
+	}
+    
+    
 }

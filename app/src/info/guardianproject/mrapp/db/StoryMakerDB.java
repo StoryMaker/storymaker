@@ -6,7 +6,7 @@ import android.content.Context;
 
 public class StoryMakerDB extends SQLiteOpenHelper {
 	
-    private static final int DB_VERSION = 1;
+    private static final int DB_VERSION = 2;
     private static final String DB_NAME = "sm.db";
     
     public StoryMakerDB(Context context) {
@@ -23,6 +23,11 @@ public class StoryMakerDB extends SQLiteOpenHelper {
     
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+    	
+    	db.execSQL(StoryMakerDB.Schema.Projects.UPDATE_TABLE_PROJECTS);
+//		db.execSQL(StoryMakerDB.Schema.Lessons.CREATE_TABLE_LESSONS);
+//		db.execSQL(StoryMakerDB.Schema.Media.CREATE_TABLE_MEDIA);
+    	
     }
     
     public class Schema 
@@ -50,12 +55,19 @@ public class StoryMakerDB extends SQLiteOpenHelper {
 	    	public static final String ID = "_id";
 	    	public static final String COL_TITLE = "title";
 	    	public static final String COL_THUMBNAIL_PATH = "thumbnail_path";
+	    	public static final String COL_STORY_TYPE = "story_type";
 	    	
 	    	private static final String CREATE_TABLE_PROJECTS = "create table " + NAME + " (" 
 	    			+ ID + " integer primary key autoincrement, " 
 	    			+ COL_TITLE + " text not null, " 
-	    			+ COL_THUMBNAIL_PATH + " text"
+	    			+ COL_THUMBNAIL_PATH + " text,"
+	    			+ COL_STORY_TYPE + " integer"
 					+ "); ";
+	    	
+	    	private static final String UPDATE_TABLE_PROJECTS = "alter table " + NAME + " " 
+	    			+ "ADD COLUMN "
+	    			+ COL_STORY_TYPE + " integer"
+	    			+ " DEFAULT 0";
     	}
     	
     	public class Media

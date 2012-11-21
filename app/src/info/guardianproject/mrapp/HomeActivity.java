@@ -1,5 +1,6 @@
 package info.guardianproject.mrapp;
 import info.guardianproject.mrapp.R;
+import info.guardianproject.mrapp.lessons.LessonListView;
 
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.app.ActionBar;
@@ -74,6 +75,7 @@ public class HomeActivity extends com.WazaBe.HoloEverywhere.sherlock.SActivity i
         }
     }
 
+    
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getSupportMenuInflater().inflate(R.menu.activity_home, menu);
@@ -165,18 +167,45 @@ public class HomeActivity extends com.WazaBe.HoloEverywhere.sherlock.SActivity i
            
             return view;
         }
+        
+        @Override
+        public void onSaveInstanceState(Bundle outState) {
+            super.onSaveInstanceState(outState);
+            setUserVisibleHint(true);
+        }
     }
     
     public static class ProjectsSectionFragment extends Fragment {
        
-
-        public static final String ARG_SECTION_NUMBER = "section_number";
-
+    	ProjectsListView listView;
+    	
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                 Bundle savedInstanceState) {
-            View view = inflater.inflate(R.layout.fragment_home_projects, null);
-                       return view;
+        	listView = new ProjectsListView(getActivity());
+         
+            return listView;
         }
+
+        
+        
+        @Override
+        public void onSaveInstanceState(Bundle outState) {
+            super.onSaveInstanceState(outState);
+            setUserVisibleHint(true);
+        }
+
+
+
+		@Override
+		public void onResume() {
+			
+			super.onResume();
+			
+			listView.refresh();
+		}
+        
     }
+    
+    
 }
