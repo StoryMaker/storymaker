@@ -8,3 +8,32 @@ img {
     /* Set the height dynamically depending on the image's current width, keeping the aspect ratio */
     height:auto;
 }
+
+#headerdots
+{
+	margin: 0 auto;
+	height: 31px;
+}
+
+/* Swipe 2 required styles */
+
+.swipe {
+  overflow: hidden;
+  visibility: hidden;
+  position: relative;
+}
+.swipe-wrap {
+  overflow: hidden;
+  position: relative;
+}
+.swipe-wrap div {
+  float:left;
+  width:100%;
+  position: relative;
+}
+
+/* END required styles */
+.subswipe p
+{
+	margin:10px;
+}
