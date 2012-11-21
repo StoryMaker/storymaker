@@ -17,19 +17,28 @@ import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
  
 public class LoginActivity extends com.WazaBe.HoloEverywhere.sherlock.SActivity implements Runnable 
 {
+	
+	private ImageView viewLogo;
+	private TextView txtStatus;
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // setting default screen to login.xml
         setContentView(R.layout.activity_login);
- 
+        
+        viewLogo = (ImageView)findViewById(R.id.logo);
+        txtStatus = (TextView)findViewById(R.id.status);
+        
         getSupportActionBar().hide();
         
         Button btnLogin = (Button) findViewById(R.id.btnLogin);
@@ -72,6 +81,8 @@ public class LoginActivity extends com.WazaBe.HoloEverywhere.sherlock.SActivity 
     
     private void handleLogin ()
     {
+    	txtStatus.setText("Connecting to server...");
+    	
     	new Thread(this).start();
     }
     
@@ -107,6 +118,8 @@ public class LoginActivity extends com.WazaBe.HoloEverywhere.sherlock.SActivity 
 					break;
 				case 1:
 					loginFailed(msg.getData().getString("err"));
+					
+					
 				default:
 			}
 		}
@@ -115,7 +128,8 @@ public class LoginActivity extends com.WazaBe.HoloEverywhere.sherlock.SActivity 
     
     private void loginFailed (String err)
     {
-    	Toast.makeText(this, "Login failed: " + err, Toast.LENGTH_LONG).show();
+    	txtStatus.setText(err);
+    	//Toast.makeText(this, "Login failed: " + err, Toast.LENGTH_LONG).show();
     }
     
     private void loginSuccess ()

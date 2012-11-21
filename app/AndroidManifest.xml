@@ -64,28 +64,28 @@
             android:label="@string/title_activity_new_story" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".Home" />
+                android:value=".HomeActivity" />
         </activity>
         <activity
             android:name=".LessonsActivity"
             android:label="@string/title_activity_lessons" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".Home" />
+                android:value=".HomeActivity" />
         </activity>
         <activity
             android:name=".SceneEditorActivity"
             android:label="@string/title_activity_scene_editor" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".Home" />
+                android:value=".HomeActivity" />
         </activity>
         <activity
             android:name=".StoryTemplateChooserActivity"
             android:label="@string/title_activity_choose_template" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".Home" />
+                android:value=".HomeActivity" />
         </activity>
         <activity
             android:name=".StoryTemplateActivity"
@@ -93,7 +93,7 @@
             android:label="@string/title_activity_story_template" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".Home" />
+                android:value=".HomeActivity" />
         </activity>
         <activity
             android:name=".SceneEditorNoSwipeActivity"
@@ -102,7 +102,7 @@
             android:label="@string/title_activity_scene_editor" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".Home" />
+                android:value=".HomeActivity" />
         </activity>
         
         <activity

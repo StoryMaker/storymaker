@@ -90,8 +90,12 @@ public class LessonManager implements Runnable {
 					if (fileLessonJson.exists())
 					{
 						Lesson lesson = Lesson.parse(IOUtils.toString(new FileInputStream(fileLessonJson)));
-						lesson.mResourcePath = "file://" + new File(fileLesson,lesson.mResourcePath).getAbsolutePath();
+						File fileIdx = new File(fileLesson,lesson.mResourcePath);
+						
+						lesson.mResourcePath = "file://" + fileIdx.getAbsolutePath();
 						lessons.add(lesson);
+						
+						updateResource(fileIdx);
 					}
 				}
 				catch (FileNotFoundException fnfe)
@@ -115,6 +119,13 @@ public class LessonManager implements Runnable {
 		return lessons;
 	}
 	
+	private void updateResource (File fIndex) throws IOException
+	{
+			  InputStream is = mContext.getAssets().open("template/index.html");
+			  OutputStream os = new java.io.FileOutputStream(fIndex);
+			  IOUtils.copyLarge(is, os);
+		
+	}
 	public void run ()
 	{
 		try
@@ -211,7 +222,7 @@ public class LessonManager implements Runnable {
 	
 	/** Unpacks the give zip file using the built in Java facilities for unzip. */
 	@SuppressWarnings("unchecked")
-	public final static void unpack(File zipFile, File rootDir) throws IOException
+	public void unpack(File zipFile, File rootDir) throws IOException
 	{
 		
 	  ZipFile zip = new ZipFile(zipFile);
@@ -236,5 +247,6 @@ public class LessonManager implements Runnable {
 	    IOUtils.copyLarge(is, os);
 	    
 	  }
+	  
 	}
 }

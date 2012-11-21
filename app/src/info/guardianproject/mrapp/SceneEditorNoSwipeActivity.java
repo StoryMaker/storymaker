@@ -318,7 +318,8 @@ public class SceneEditorNoSwipeActivity extends com.WazaBe.HoloEverywhere.sherlo
 						Message msgErr = new Message();
 						msgErr.what = e.getErrorCode();
 						msgErr.getData().putString("err", e.getLocalizedMessage());
-						
+						mHandlerPub.sendMessage(msgErr);
+						Log.e(AppConstants.TAG,"error posting",e);
 						
 					}
     				
@@ -496,6 +497,7 @@ public class SceneEditorNoSwipeActivity extends com.WazaBe.HoloEverywhere.sherlo
 		{
 			Intent i = new Intent(mContext, SoundRecorder.class);
 			i.setType("audio/3gpp");
+			i.putExtra("mode", storyMode);
 			startActivityForResult(i,RESULT_AUDIO);
 
 		}
@@ -503,6 +505,7 @@ public class SceneEditorNoSwipeActivity extends com.WazaBe.HoloEverywhere.sherlo
 		{
 			Intent i = new Intent(mContext, OverlayCamera.class);
 			i.putExtra("group", clip.mShotType);
+			i.putExtra("mode", storyMode);
 			startActivity(i);
 		}
 	}

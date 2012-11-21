@@ -40,8 +40,7 @@ public class ServerManager {
 	public void connect (String username, String password) throws MalformedURLException, XmlRpcFault
 	{
 		mWordpress = new Wordpress(username, password, mServerUrl + PATH_XMLRPC);	
-		mWordpress.sayHello();
-		
+		mWordpress.getRecentPosts(1); //need to do a test to force authentication
 	}
 	
 	public List<Page> getRecentPosts (int num) throws XmlRpcFault
@@ -62,8 +61,8 @@ public class ServerManager {
 		page.setTitle(title);
 		page.setDescription(body);
 		
-		boolean publish = true;
-		String postId = mWordpress.newPost(page, publish);
+		boolean publish = false; //submit as draft only for review
+		String postId = mWordpress.newPost(page, false);
 		
 		return postId;
 	}

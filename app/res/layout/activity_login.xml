@@ -22,14 +22,23 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center|center"
+                            android:id="@+id/logo"
                             />
   <TextView 
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"                
-                android:text="STORY MAKER"
+                android:text="@string/app_name"
                 android:gravity="center"
                 android:textSize="24dip"
-                android:textColor="#333333"/>                
+                android:textColor="#333333"/>          
+                 <TextView 
+                android:id="@+id/status"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"                
+                android:text="             "
+                android:gravity="center"
+                android:textSize="18dip"
+                android:textColor="#555555"/>         
                 <!-- Logo Ends -->
         </LinearLayout>
         <!--  Header Ends -->
@@ -95,7 +104,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="40dip"
                 android:layout_marginBottom="40dip"
-                android:layout_marginLeft="10dip"
+                android:layout_marginLeft="20dip"
                 android:text="Create Account"
                 android:gravity="center"
                 android:textSize="20dip"
