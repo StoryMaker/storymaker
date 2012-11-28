@@ -1,8 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="info.guardianproject.mrapp"
     android:installLocation="auto"
-    android:versionCode="11"
-    android:versionName="0.0.2-dev-build11" >
+    android:versionCode="12"
+    android:versionName="0.0.2-dev-build12" >
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -143,7 +143,7 @@
         </activity>
         <activity android:name=".MediaOutputPreferences" />
          
-        <activity android:name=".ui.OverlayCamera" 
+        <activity android:name=".media.OverlayCameraActivity" 
              android:screenOrientation="landscape"
             />
        

@@ -1,10 +1,16 @@
-package info.guardianproject.mrapp.ui;
+package info.guardianproject.mrapp.media;
 
 import info.guardianproject.mrapp.AppConstants;
+import info.guardianproject.mrapp.model.Project;
+import info.guardianproject.mrapp.ui.ActivitySwipeDetector;
+import info.guardianproject.mrapp.ui.SwipeInterface;
 
+import java.io.File;
 import java.io.IOException;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -18,6 +24,8 @@ import android.hardware.Camera;
 import android.hardware.Camera.PictureCallback;
 import android.hardware.Camera.ShutterCallback;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceHolder.Callback;
@@ -34,8 +42,17 @@ import com.larvalabs.svgandroid.SVG;
 import com.larvalabs.svgandroid.SVGParser;
 
 
-public class OverlayCamera extends SherlockActivity implements Callback, SwipeInterface {
-    private Camera camera;
+public class OverlayCameraActivity extends SherlockActivity implements Callback, SwipeInterface 
+{
+    @Override
+	public void startActivityForResult(Intent intent, int requestCode) {
+		
+    	
+	}
+
+
+
+	private Camera camera;
     private SurfaceView mSurfaceView;
     SurfaceHolder mSurfaceHolder;
     private ImageView mOverlayView;
@@ -52,12 +69,27 @@ public class OverlayCamera extends SherlockActivity implements Callback, SwipeIn
     private int mColorGreen = 0;
     private int mColorBlue = 0;
     
+    private int mStoryMode = -1;
+    
+    private Handler mMediaHandler = new Handler ()
+    {
+
+		@Override
+		public void handleMessage(Message msg) {
+			super.handleMessage(msg);
+			
+			// handle response from media capture... send result back to story editor
+		}
+    	
+    };
+    
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     
         overlayGroup = getIntent().getIntExtra("group", 0);
         overlayIdx = getIntent().getIntExtra("overlay", 0);
+        mStoryMode = getIntent().getIntExtra("mode",-1);
 
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
@@ -93,6 +125,28 @@ public class OverlayCamera extends SherlockActivity implements Callback, SwipeIn
     	camera.stopPreview();
         camera.release();
     	setResult(RESULT_OK);
+    	
+    	if (mStoryMode != -1)
+    	{
+    		MediaHelper mh = new MediaHelper(this, mMediaHandler);
+    		
+    		File fileMediaFolder = this.getExternalFilesDir(null);
+    		
+    		if (mStoryMode == Project.STORY_TYPE_VIDEO)
+    		{
+    			mh.captureVideo(fileMediaFolder);
+    			
+    		}
+    		else if (mStoryMode == Project.STORY_TYPE_PHOTO)
+    		{
+    			mh.capturePhoto(fileMediaFolder);
+    		}
+    		else if (mStoryMode == Project.STORY_TYPE_ESSAY)
+    		{
+    			mh.capturePhoto(fileMediaFolder);
+    		}
+    	}
+    	
 		finish();
     }
     

@@ -9,16 +9,17 @@ import org.json.JSONException;
 
 import redstone.xmlrpc.XmlRpcFault;
 
+import info.guardianproject.mrapp.media.OverlayCameraActivity;
 import info.guardianproject.mrapp.model.Project;
 import info.guardianproject.mrapp.model.Template;
 import info.guardianproject.mrapp.model.Template.Clip;
 import info.guardianproject.mrapp.server.ServerManager;
-import info.guardianproject.mrapp.ui.OverlayCamera;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -50,7 +51,8 @@ import com.animoto.android.views.OnRearrangeListener;
 
 public class SceneEditorNoSwipeActivity extends com.WazaBe.HoloEverywhere.sherlock.SActivity implements ActionBar.TabListener {
 
-    private static final String STATE_SELECTED_NAVIGATION_ITEM = "selected_navigation_item";
+
+	private static final String STATE_SELECTED_NAVIGATION_ITEM = "selected_navigation_item";
 
     protected boolean templateStory = false; 
     
@@ -61,10 +63,8 @@ public class SceneEditorNoSwipeActivity extends com.WazaBe.HoloEverywhere.sherlo
     private String templateJsonPath = null;
     
     private int storyMode = Project.STORY_TYPE_VIDEO;;
-    
   
-    
-    private final static int RESULT_AUDIO = 777;
+    private final static String CAPTURE_MIMETYPE_AUDIO = "audio/3gpp";
     
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -494,19 +494,48 @@ public class SceneEditorNoSwipeActivity extends com.WazaBe.HoloEverywhere.sherlo
 		if (storyMode == Project.STORY_TYPE_AUDIO)
 		{
 			Intent i = new Intent(mContext, SoundRecorder.class);
-			i.setType("audio/3gpp");
+			i.setType(CAPTURE_MIMETYPE_AUDIO);
 			i.putExtra("mode", storyMode);
-			startActivityForResult(i,RESULT_AUDIO);
+			startActivityForResult(i,clip.mShotType);
 
 		}
 		else
 		{
-			Intent i = new Intent(mContext, OverlayCamera.class);
+			Intent i = new Intent(mContext, OverlayCameraActivity.class);
 			i.putExtra("group", clip.mShotType);
 			i.putExtra("mode", storyMode);
-			startActivity(i);
+			startActivityForResult(i,clip.mShotType);
 		}
 	}
 
-	
+
+
+	@Override
+	protected void onActivityResult(int reqCode, int resCode, Intent data) {
+		
+		if (resCode == RESULT_OK)
+		{
+			//figure out what kind of media is being returned and add it to the project
+			if (reqCode == Project.STORY_TYPE_AUDIO)
+			{
+				Uri uriAudio = data.getData(); 
+				//CAPTURE_MIMETYPE_AUDIO
+				
+			}
+			else if (reqCode == Project.STORY_TYPE_VIDEO)
+			{
+				
+			}
+			else if (reqCode == Project.STORY_TYPE_PHOTO)
+			{
+				
+			}
+			else if (reqCode == Project.STORY_TYPE_ESSAY)
+			{
+				
+			}
+		}
+		
+		//super.onActivityResult(arg0, arg1, arg2);
+	}
 }

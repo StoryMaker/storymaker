@@ -10,7 +10,6 @@ import info.guardianproject.mrapp.R.string;
 import info.guardianproject.mrapp.model.Media;
 import info.guardianproject.mrapp.model.Project;
 import info.guardianproject.mrapp.ui.MediaView;
-import info.guardianproject.mrapp.ui.OverlayCamera;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -419,7 +418,7 @@ public class MediaProjectManager implements MediaManager {
 
 	private void showOverlayCamera (Activity activity)
 	{
-		Intent intent = new Intent(activity, OverlayCamera.class);
+		Intent intent = new Intent(activity, OverlayCameraActivity.class);
 		activity.startActivityForResult(intent,777);
 		
 	}
