@@ -15,8 +15,14 @@ import java.net.URI;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map.Entry;
+import java.util.Set;
+import java.util.SortedMap;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
@@ -41,7 +47,7 @@ public class LessonManager implements Runnable {
 	
 	private String mSubFolder;
 	
-	public LessonManager (Context context, String remoteRepoUrl, File localStorageRoot, String lessonFolder)
+	public LessonManager (Context context, String remoteRepoUrl, File localStorageRoot)
 	{
 		mContext = context;
 		
@@ -49,7 +55,7 @@ public class LessonManager implements Runnable {
 		if (!mUrlRemoteRepo.endsWith("/"))
 			mUrlRemoteRepo = mUrlRemoteRepo + "/";
 		
-		mLocalStorageRoot = new File(localStorageRoot,lessonFolder);
+		mLocalStorageRoot = localStorageRoot;
 		mLocalStorageRoot.mkdir();
 	}
 	
@@ -68,10 +74,10 @@ public class LessonManager implements Runnable {
 		new Thread(this).start();
 	}
 	
-	public ArrayList<Lesson> loadLessonList ()
+	public ArrayList loadLessonList ()
 	{
 		ArrayList<Lesson> lessons = new ArrayList<Lesson>();
-			
+		
 		File lessonFolder = mLocalStorageRoot;
 		if (mSubFolder != null)
 			lessonFolder = new File(mLocalStorageRoot, mSubFolder);
@@ -86,12 +92,21 @@ public class LessonManager implements Runnable {
 				try
 				{
 					File fileLessonJson = new File(fileLesson,"lesson.json");
+
+					if (!fileLessonJson.exists())
+					{
+						fileLessonJson = new File(fileLesson,"Lesson.json"); //sometimes people are silly and case matters
+
+					}
 					
+				
 					if (fileLessonJson.exists())
 					{
+						
 						Lesson lesson = Lesson.parse(IOUtils.toString(new FileInputStream(fileLessonJson)));
 						File fileIdx = new File(fileLesson,lesson.mResourcePath);
 						
+						lesson.mTitle = fileLesson.getName() + ": " + lesson.mTitle;
 						lesson.mResourcePath = "file://" + fileIdx.getAbsolutePath();
 						lessons.add(lesson);
 						
@@ -115,7 +130,16 @@ public class LessonManager implements Runnable {
 			
 		}
 		
-		
+	  Collections.sort(lessons,new Comparator<Lesson>() {
+            public int compare(Lesson lessonA, Lesson lessonB) {
+            	
+            	Integer aTitle = Integer.parseInt(lessonA.mTitle.substring(2,lessonA.mTitle.indexOf(":")));
+            	Integer bTitle = Integer.parseInt(lessonB.mTitle.substring(2,lessonB.mTitle.indexOf(":")));
+            	
+                return aTitle.compareTo(bTitle);
+            }
+        });
+	  
 		return lessons;
 	}
 	
@@ -145,71 +169,82 @@ public class LessonManager implements Runnable {
 			HttpGet request = new HttpGet(urlString);
 			HttpResponse response = httpClient.execute(request);
 
-			byte[] buffer = new byte[(int)response.getEntity().getContentLength()];
+			long conLen = response.getEntity().getContentLength();
 			
-			IOUtils.readFully(response.getEntity().getContent(),buffer);
-			
-			JSONObject jObjMain = new JSONObject(new String(buffer));
-			
-			JSONArray jarray = jObjMain.getJSONArray("lessons");
-			
-			for (int i = 0; i < jarray.length() && (!jarray.isNull(i)); i++)
+			if (conLen > -1)
 			{
-				try
+				byte[] buffer = new byte[(int)response.getEntity().getContentLength()];
+				
+				IOUtils.readFully(response.getEntity().getContent(),buffer);
+				
+				JSONObject jObjMain = new JSONObject(new String(buffer));
+				
+				JSONArray jarray = jObjMain.getJSONArray("lessons");
+				
+				for (int i = 0; i < jarray.length() && (!jarray.isNull(i)); i++)
 				{
-					JSONObject jobj = jarray.getJSONObject(i);
-					
-					String title = jobj.getString("title");
-					String lessonUrl = jobj.getJSONObject("resource").getString("url");
-					
-					
-					//this should be a zip file
-					URI urlLesson = new URI(mUrlRemoteRepo + lessonUrl);
-					request = new HttpGet(urlLesson);
-					response = httpClient.execute(request);
-					
-					String fileName = urlLesson.getPath();
-					fileName = fileName.substring(fileName.lastIndexOf('/')+1);
-					File fileZip = new File(lessonFolder,fileName);
-					
-					if (fileZip.exists())
+					try
 					{
-						long remoteLen = response.getEntity().getContentLength();
-						long localLen = fileZip.length();
+						JSONObject jobj = jarray.getJSONObject(i);
 						
-						if (localLen == remoteLen)
+						String title = jobj.getString("title");
+						String lessonUrl = jobj.getJSONObject("resource").getString("url");
+						
+						
+						//this should be a zip file
+						URI urlLesson = new URI(mUrlRemoteRepo + lessonUrl);
+						request = new HttpGet(urlLesson);
+						response = httpClient.execute(request);
+						
+						String fileName = urlLesson.getPath();
+						fileName = fileName.substring(fileName.lastIndexOf('/')+1);
+						File fileZip = new File(lessonFolder,fileName);
+						
+						if (fileZip.exists())
 						{
-							//same file, leave it be
-							continue;							
+							long remoteLen = response.getEntity().getContentLength();
+							long localLen = fileZip.length();
+							
+							if (localLen == remoteLen)
+							{
+								//same file, leave it be
+								continue;							
+							}
+							else
+							{
+								//otherwise, delete and download
+								fileZip.delete();
+							}
+						
 						}
-						else
-						{
-							//otherwise, delete and download
-							fileZip.delete();
-						}
-					
+	
+						if (mListener != null)
+							mListener.loadingLessonFromServer(title);
+						IOUtils.copyLarge(response.getEntity().getContent(),new FileOutputStream(fileZip));
+						
+						unpack(fileZip,mLocalStorageRoot);
+						
+					//	fileZip.delete();
 					}
-
-					if (mListener != null)
-						mListener.loadingLessonFromServer(title);
-					IOUtils.copyLarge(response.getEntity().getContent(),new FileOutputStream(fileZip));
-					
-					unpack(fileZip,mLocalStorageRoot);
-					
-				//	fileZip.delete();
+					catch (Exception ioe)
+					{
+						Log.e(AppConstants.TAG,"error loading lesson from server: " + i,ioe);
+						if (mListener != null)
+							mListener.errorLoadingLessons(ioe.getLocalizedMessage());
+						
+					}
 				}
-				catch (Exception ioe)
-				{
-					Log.e(AppConstants.TAG,"error loading lesson from server: " + i,ioe);
-					if (mListener != null)
-						mListener.errorLoadingLessons(ioe.getLocalizedMessage());
-					
-				}
+				
+				if (mListener != null)
+					mListener.lessonsLoadedFromServer();
 			}
-			
-			if (mListener != null)
-				mListener.lessonsLoadedFromServer();
-			
+			else
+			{
+
+				Log.w(AppConstants.TAG,"lesson json not available on server");
+				if (mListener != null)
+					mListener.errorLoadingLessons("Lesson data not yet available on server");	
+			}
 		}
 		catch (Exception ioe)
 		{
