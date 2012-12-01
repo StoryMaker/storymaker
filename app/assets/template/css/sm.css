@@ -33,7 +33,37 @@ img {
 }
 
 /* END required styles */
-.subswipe p, .subswipe h1, .subswipe form, .subswipe ul
+.subswipe p, .subswipe h1, .subswipe h2, .subswipe h3, .subswipe ul, .subswipe form, .subswipe div
 {
-	margin:10px;
+	margin-left:15px;
+	margin-right:30px;
+}
+
+h1, h2, h3
+{
+	color:#555555;
+}
+
+.mediaplay
+{
+	color:#eeeeee;
+	background-color:#333333;
+	padding:15px;
+	font-size:18pt;
+	height:75px;
+}
+
+.mediaplay a
+{
+	color:#eeeeee;
+	font-size:18pt;
+	text-decoration:none;
+}
+
+.mediacaption
+{
+	color:#333333;
+	background-color:#cccccc;
+	padding:15px;
+	font-size:10pt;
 }

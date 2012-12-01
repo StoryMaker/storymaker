@@ -1,5 +1,6 @@
 package info.guardianproject.mrapp.lessons;
 
+import info.guardianproject.mrapp.AppConstants;
 import info.guardianproject.mrapp.R;
 import info.guardianproject.mrapp.media.MediaHelper;
 import android.annotation.SuppressLint;
@@ -7,8 +8,11 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.WindowManager;
+import android.webkit.ConsoleMessage;
+import android.webkit.WebChromeClient;
 import android.webkit.WebResourceResponse;
 import android.webkit.WebSettings.PluginState;
 import android.webkit.WebView;
@@ -50,6 +54,20 @@ public class LessonViewActivity extends SherlockActivity {
         	mWebView.getSettings().setAllowFileAccess(true);
         	mWebView.getSettings().setSupportZoom(false);
         
+        	mWebView.setWebChromeClient(new WebChromeClient ()
+        	{
+
+				@Override
+				public boolean onConsoleMessage(ConsoleMessage consoleMessage) {
+					
+					Log.w(AppConstants.TAG,"web console: " + consoleMessage.lineNumber() + ": " + consoleMessage.message());
+					return super.onConsoleMessage(consoleMessage);
+				}
+
+				
+        		
+        	});
+        	
         	mWebView.setWebViewClient(new WebViewClient ()
         	{
 
@@ -86,6 +104,16 @@ public class LessonViewActivity extends SherlockActivity {
 					
 					return handled;// super.shouldOverrideUrlLoading(view, url);
 				}
+
+				@Override
+				public void onReceivedError(WebView view, int errorCode,
+						String description, String failingUrl) {
+					
+					Log.e(AppConstants.TAG,"web error occured for " + failingUrl + "; " + errorCode + "=" + description);
+					//super.onReceivedError(view, errorCode, description, failingUrl);
+				}
+				
+				
         		
         	});
         	

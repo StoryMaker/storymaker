@@ -13,12 +13,12 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class LessonArrayAdapter extends ArrayAdapter {
+public class LessonSectionArrayAdapter extends ArrayAdapter {
 	
     int layoutResourceId;    
     
-    public LessonArrayAdapter(Context context, int layoutResourceId,ArrayList<Lesson> lessons) {
-        super(context, layoutResourceId, lessons);        
+    public LessonSectionArrayAdapter(Context context, int layoutResourceId,String[] sections) {
+        super(context, layoutResourceId, sections);        
         
         this.layoutResourceId = layoutResourceId;
     }
@@ -27,7 +27,7 @@ public class LessonArrayAdapter extends ArrayAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         
     	View row = convertView;
-        Lesson lesson = ((Lesson)getItem(position));
+        String section = ((String)getItem(position));
         
         TextView tvTitle;
         TextView tvStatus;
@@ -40,7 +40,7 @@ public class LessonArrayAdapter extends ArrayAdapter {
         }
         
         tvTitle = (TextView)row.findViewById(R.id.lessonRowTitle);
-        tvTitle.setText(lesson.mTitle);        
+        tvTitle.setText(section);        
         
         tvStatus = (TextView)row.findViewById(R.id.lessonRowStatus);
         tvStatus.setText(R.string.lesson_status_have_not_started);        

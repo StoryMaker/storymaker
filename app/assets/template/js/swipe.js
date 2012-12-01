@@ -190,12 +190,16 @@ Swipe.prototype = {
 
   next: function(delay) {
 
+
+	
     // cancel slideshow
     this.delay = delay || 0;
     clearTimeout(this.interval);
 
     if (this.index < this.length - 1) this.slide(this.index+1, this.speed); // if not last slide
     else if (this.cont) this.slide(0, this.speed); //if last slide return to start
+ 
+
 
   },
 
@@ -348,6 +352,7 @@ Swipe.prototype = {
 
   slide: function(to, speed) {
     
+    
     var from = this.index;
 
     if (from == to) return; // do nothing if already on requested slide
@@ -418,6 +423,12 @@ Swipe.prototype = {
   _translate: function(elem, xval, speed) {
     
     if (!elem) return;
+    
+    var scrollTop = $(window).scrollTop();
+    if (scrollTop > 0)
+    {
+		window.scrollTo(0,0);
+	}
 
     var style = elem.style;
 

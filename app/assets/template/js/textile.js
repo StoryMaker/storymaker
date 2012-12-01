@@ -99,7 +99,8 @@ function prep(m){
 	m=m.replace(/([A-Z]+)\((.*?)\)/g,'<acronym title="$2">$1<\/acronym>');
 	m=m.replace(/\"([^\"]+)\":((http|https|mailto):\S+)/g,'<a href="$2">$1<\/a>');
 	m = make_image(m,/!([^!\s]+)!:(\S+)/);
-	m = make_image(m,/!([^!\s]+)!/);
+//	m = make_image(m,/!([^"\s]+)\(([^"]+)\)!/);
+	m = make_image(m,/!([^!]+)!/);
 	m=m.replace(/"([^\"]+)":(\S+)/g,function($0,$1,$2){return tag("a",qat('href',aliases[$2]),$1)});
 	m=m.replace(/(=)?"([^\"]+)"/g,function($0,$1,$2){return ($1)?$0:"&#8220;"+$2+"&#8221;"});
 	return m;
@@ -119,13 +120,49 @@ function make_image(m,re) {
 	var ma = re.exec(m);
 	if(ma != null) {
 		var attr="";var st="";
+		
 		var at = /\((.*)\)$/.exec(ma[1]);
-		if(at != null) {attr = qat('alt',at[1])+qat("title",at[1]);ma[1]=ma[1].replace(/\((.*)\)$/,"");}
+		
+		if(at != null) {
+			attr = qat('alt',at[1])+qat("title",at[1]);
+			ma[1]=ma[1].replace(/\((.*)\)$/,"");
+		}
+		
+		/*
 		if(ma[1].match(/^[><]/)) {st = "float:"+((ma[1].indexOf(">")==0)?"right;":"left;");ma[1]=ma[1].replace(/^[><]/,"");}
 		var pdl = /(\(+)/.exec(ma[1]);if(pdl){st+="padding-left:"+pdl[1].length+"em;";}
 		var pdr = /(\)+)/.exec(ma[1]);if(pdr){st+="padding-right:"+pdr[1].length+"em;";}
 		if(st){attr += qat('style',st);}
-		var im = '<img src="'+ma[1]+'"'+attr+" />";
+		*/
+		
+		var im = '';
+		
+		if (ma[1].endsWith('mp4'))
+		{
+			im = '<span class="mediaplay"><a href="'+ma[1]+'">play video</a></span>';
+			//im = '<video src="'+ma[1]+'" width="400" height="300" autobuffer controls></video>';
+			
+			if (at != null)
+				im += '<br/><br/><span class="mediacaption">' + at[1] + '</span>';
+				
+		//	im += '<br/><a href="'+ma[1]+'">(external link)</a>';
+			
+			
+		}
+		else if (ma[1].endsWith('mp3'))
+		{
+
+		//	im = '<audio preload="auto" controls="true"><source src="'+ma[1]+'" /></audio>';
+			im = '<span class="mediaplay"><a href="'+ma[1]+'">play audio</a></span>';
+		
+			if (at != null)
+				im += '<br/><br/><span class="mediacaption">' + at[1] + '</span>';
+			
+					
+		}
+		else
+			im = '<img src="'+ma[1]+'"'+attr+" />";
+		
 		if(ma.length >2) {im=tag('a',qat('href',ma[2]),im);}
 		m = m.replace(re,im);
 	}
