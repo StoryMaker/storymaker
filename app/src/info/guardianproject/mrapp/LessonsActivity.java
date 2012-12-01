@@ -2,6 +2,7 @@ package info.guardianproject.mrapp;
 
 import info.guardianproject.mrapp.R;
 import info.guardianproject.mrapp.lessons.LessonListView;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -9,8 +10,10 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.NavUtils;
 import android.support.v4.view.ViewPager;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -34,15 +37,26 @@ public class LessonsActivity extends com.WazaBe.HoloEverywhere.sherlock.SActivit
      * The {@link ViewPager} that will host the section contents.
      */
     ViewPager mViewPager;
-
+    LessonListView mListView;
+    
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        
+        requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
+        
         setContentView(R.layout.activity_lessons);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        
+        this.setProgressBarIndeterminate(true);
+        
+    	mListView = new LessonListView(this, this);
+        
+        LessonSectionFragment fLessons = new LessonSectionFragment(mListView);
+        
         // Create the adapter that will return a fragment for each of the three primary sections
         // of the app.
-        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
+        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager(),fLessons);
 
         // Set up the action bar.
         final ActionBar actionBar = getSupportActionBar();
@@ -85,7 +99,7 @@ public class LessonsActivity extends com.WazaBe.HoloEverywhere.sherlock.SActivit
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                NavUtils.navigateUpFromSameTask(this);
+            	handleBack();
                 return true;
             case R.id.menu_update:
                 updateLessons();
@@ -94,8 +108,19 @@ public class LessonsActivity extends com.WazaBe.HoloEverywhere.sherlock.SActivit
         return super.onOptionsItemSelected(item);
     }
     
+    private void handleBack ()
+    {
+    	boolean handled = mListView.handleBack();
+    	
+    	if (!handled)
+    		NavUtils.navigateUpFromSameTask(this);
+        
+    }
+    
     private void updateLessons ()
     {
+
+        this.setProgressBarIndeterminateVisibility (true);
     	StoryMakerApp.getLessonManager().updateLessonsFromRemote();
     	
     }
@@ -121,8 +146,12 @@ public class LessonsActivity extends com.WazaBe.HoloEverywhere.sherlock.SActivit
      */
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
-        public SectionsPagerAdapter(FragmentManager fm) {
+    	private LessonSectionFragment fLessons;
+    	
+        public SectionsPagerAdapter(FragmentManager fm,LessonSectionFragment lessonFragment ) {
             super(fm);
+            
+            fLessons = lessonFragment;
         }
 
         @Override
@@ -131,7 +160,7 @@ public class LessonsActivity extends com.WazaBe.HoloEverywhere.sherlock.SActivit
         	
         	if (i == 0)
         	{
-        		fragment = new LessonSectionFragment();
+        		fragment = fLessons;
  	            
         	}
         	else
@@ -184,18 +213,40 @@ public class LessonsActivity extends com.WazaBe.HoloEverywhere.sherlock.SActivit
      * A dummy fragment representing a section of the app, but that simply displays dummy text.
      */
     public static class LessonSectionFragment extends SFragment {
-        public LessonSectionFragment() {
+    	
+    	private LessonListView mListView = null;
+    	public static final String ARG_SECTION_NUMBER = "section_number";
+		
+        public LessonSectionFragment(LessonListView listView) {
+        	
+        	mListView = listView;
         }
 
-        public static final String ARG_SECTION_NUMBER = "section_number";
-
+        public LessonListView getListView ()
+        {
+        	return mListView;
+        	
+        }
+        
+        
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                 Bundle savedInstanceState) {
-            
-        	LessonListView listView = new LessonListView(getActivity());
-            listView.loadLessonsFromServer();
-            return listView;
+           
+            return mListView;
         }
     }
+    
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+
+		if (keyCode == KeyEvent.KEYCODE_BACK)
+		{
+			handleBack();
+			return true;
+				
+		}
+		
+		return super.onKeyDown(keyCode, event);
+	}
 }

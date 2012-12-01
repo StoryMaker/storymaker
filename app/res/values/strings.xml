@@ -215,4 +215,5 @@ Build number: <xliff:g id="build_number">%s</xliff:g>\n
     <string name="client_id">TODO-client-ID</string>
     <string name="default_ytd_domain">TODO-appname.appspot.com</string>
     <string name="default_ytd_domain_name">TODO-name - e.g. San Francisco Bay Area</string>
+    <string name="lesson_status_have_not_started">Have not started</string>
 </resources>

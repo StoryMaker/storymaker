@@ -1,10 +1,13 @@
 package info.guardianproject.mrapp.lessons;
 
+import info.guardianproject.mrapp.LessonsActivity;
 import info.guardianproject.mrapp.R;
 import info.guardianproject.mrapp.StoryMakerApp;
 import info.guardianproject.mrapp.model.Lesson;
 
 import java.util.ArrayList;
+import java.util.Map.Entry;
+import java.util.Set;
 
 import android.content.Context;
 import android.content.Intent;
@@ -20,75 +23,104 @@ import com.WazaBe.HoloEverywhere.widget.Toast;
 import com.WazaBe.HoloEverywhere.widget.View;
 
 
-public class LessonListView extends ListView implements Runnable, LessonManagerListener {
+public class LessonListView extends ListView implements LessonManagerListener {
 
 		
 	private LessonManager mLessonManager;
 	private ArrayList<Lesson> mListLessons;
 	
 	private String mSubFolder = null; 
+	private LessonsActivity mActivity;
 	
-    public LessonListView (Context context) {
+    public LessonListView (Context context, LessonsActivity activity) {
         
     	super (context);
-    
+    	
+    	mActivity = activity;
+    	
+        mLessonManager = StoryMakerApp.getLessonManager();
+        mLessonManager.setListener(this);
+        
+        if (mSubFolder == null)
+        {
+        	//show lesson categories
+        	String[] folders = getResources().getStringArray(R.array.lesson_sections);
+        	
+        	setAdapter(new LessonSectionArrayAdapter(context,R.layout.list_lesson_row, folders));
+        	
+        	
+        }
+        else
+        {
+        	changeLessonFolder(mSubFolder);
+        }
+        
+
         setOnItemClickListener(new OnItemClickListener ()
         {
 
 			
 			@Override
 			public void onItemClick(android.widget.AdapterView<?> arg0,
-					android.view.View arg1, int arg2, long arg3) {
-				accessLesson(arg2);
+					android.view.View arg1, int selIdx, long arg3) {
 				
+				
+				if (mSubFolder == null)
+				{
+					mSubFolder = selIdx+1+"";
+					changeLessonFolder(mSubFolder);
+				}
+				else
+				{
+					Lesson lesson = mListLessons.get(selIdx);
+					accessLesson(lesson);
+				}
 			}
         	
         });
          
-        mLessonManager = StoryMakerApp.getLessonManager();
-        mLessonManager.setListener(this);
+    }
+    
+    public boolean handleBack ()
+    {
+    	if (mSubFolder != null)
+    	{
+    		mSubFolder = null;
+    		String[] folders = getResources().getStringArray(R.array.lesson_sections);
+        	
+        	setAdapter(new LessonSectionArrayAdapter(getContext(),R.layout.list_lesson_row, folders));
         
+    		
+    		return true;
+    	}
+    	else
+    		return false;
+    }
+    
+    public void changeLessonFolder (String subFolder)
+    {
+    	mSubFolder = subFolder;
+    	mLessonManager.setSubFolder(mSubFolder);
+    	
     	mListLessons = mLessonManager.loadLessonList();
+    	
     	if (mListLessons.size() == 0)
     	{
 
-    		loadLessonsFromServer();
+	        mActivity.setProgressBarIndeterminateVisibility (true);
+    		mLessonManager.updateLessonsFromRemote();
     	}
     	else
     	{
-    		new Thread(this).start();
+    		loadLessonListAdapter();
     	}
     }
     
     
-    public void loadLessonsFromServer ()
-    {
-    	/*	
-    	progressDialog = new ProgressDialog(getContext());
-    	progressDialog.setTitle(getContext().getString(R.string.downloading_lessons_from_server_));
-    	progressDialog.setMessage(getContext().getString(R.string.checking_for_updates_));
-    	progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        progressDialog.setCancelable(true);
-        progressDialog.show();
-		*/
-        
-		mLessonManager.updateLessonsFromRemote();
-    }
-    
-    public void run ()
-    {
-    	mListLessons = mLessonManager.loadLessonList();
-    	mHandler.sendEmptyMessage(1);
-    	
-    }
-    
-    
-   
-	private void accessLesson (int lessonIdx)
+	private void accessLesson (Lesson lesson)
 	{
 		
 		//if yes, then display here!
-		Lesson lesson = mListLessons.get(lessonIdx);
 
 		Intent intent = new Intent(getContext(),LessonViewActivity.class);
 		intent.putExtra("title", lesson.mTitle);
@@ -117,18 +149,15 @@ public class LessonListView extends ListView implements Runnable, LessonManagerL
 					
 				 break;
 				case 1:
+					loadLessonListAdapter();
 					
-				//	if (progressDialog != null)						
-					//	progressDialog.dismiss();
-					
-				//	adapter.clearViews();
-					//reload lessons in list
-			    	
-					loadListAdapter();
-					
+
+			        mActivity.setProgressBarIndeterminateVisibility (false);
 					
 				break;
-				
+				case 2:
+
+			        mActivity.setProgressBarIndeterminateVisibility (false);					
 				default:
 				
 			}
@@ -140,7 +169,8 @@ public class LessonListView extends ListView implements Runnable, LessonManagerL
     	
     };
     
-    private void loadListAdapter ()
+    
+    private void loadLessonListAdapter ()
     {
     	   setAdapter(new LessonArrayAdapter(getContext(), 
     	   R.layout.list_lesson_row, mListLessons));
@@ -178,6 +208,7 @@ public class LessonListView extends ListView implements Runnable, LessonManagerL
 	public void errorLoadingLessons(String msg) {
 		
 		showMessage("There was a problem loading the lessons: " + msg);
+		mHandler.sendEmptyMessage(2);
 	}
 
 	

@@ -14,74 +14,97 @@ $(document).bind('pagechange', function() {
 
 $(document).ready(function() {
 	
+                
+	
 $.ajax({
-  url: "lesson.txt",
+  url: "Lesson.txt",
   beforeSend: function ( xhr ) {
-  }
+  	//show some loading graphic here
+  },
+  complete: function ( ) {
+  	//hide some loading graphic here
+  },
+  success: function(data, textStatus) { },
+  error: function(jqXHR, textStatus, errorThrown) {}
+  
 }).done(function ( data ) {
 
 	var pageData = convertTextile(data);
 	
-	var headers = $(pageData).filter('h1,h2,h3,hr');
+	var headers = $(pageData).filter('h1,hr');
 	var headerCount = headers.length;
 	
-   var headerData = '';
-   
-   for (n = 0; n < headerCount; n++)
-   {
-   		if (i < n)
-   			headerData += '<img src="' + BASE_LOCAL_PATH + 'img/circle-off.png" style="width:21px;height:31px;" onClick="page(' + n + ')"/>';
-   		else
-   			headerData += '<img src="' + BASE_LOCAL_PATH + 'img/circle-on.png" style="width:21px;height:31px;" onClick="page(' + n + ')"/>';
-   		
-   }
-   
-   $("#headerdots").append(headerData);
    
    
 	var firstPage = true;
 	
-	headers.each(function(i) {
 	
-	    var current = $(this);
-	    current.attr("id", "title" + i);
-	    
-	       var newPageData = '';
-	     
-	       var nextNode = $(this);
-	     
-	       var notH1 = false;
-	       
-	       while (!notH1)
-	       {
-	       		newPageData += "<" + nextNode[0].tagName + ">";
-	       		
-	       		var nextNodeHtml = parseQuizText(nextNode.html());
-	       		
-	       		newPageData += nextNodeHtml.join('');
-	       		
-	       		newPageData += "</" + nextNode[0].tagName + ">";
-	       		
-	       		nextNode = nextNode.next();
-	       		
-	       		if (nextNode[0] === undefined)
-	       			break;
-	       		else
-	       			notH1 = (nextNode[0].tagName == "H1"
-	       			 || nextNode[0].tagName == "H2" || nextNode[0].tagName == "H3"
-	       			 || nextNode[0].tagName == "HR");
-	       		
-	       }
-	       
-	    
-			$("#swmain").append('<div id="page' + i + '" class="subswipe"><p>' + newPageData + '</p></div>');
+	if (headers.length == 0)
+	{
+		var i = 1;
 		
-		 	$('#page' + i + ' a').attr("rel", "external");
-		 	
-		 	$('#page' + i + ' hr').remove();
-			$('#page' + i).trigger("create");
+		$("#swmain").append('<div id="page' + i + '" class="subswipe"><p>' + pageData + '</p></div>');
+ 		$('#page' + i + ' a').attr("rel", "external");
+		$('#page' + i).trigger("create");
+				
+		i++;
+		$("#swmain").append('<div id="page' + i + '" class="subswipe"><p></p></div>');
+ 		$('#page' + i + ' a').attr("rel", "external");
+		$('#page' + i).trigger("create");
+	}
+	else
+	{
+		headers.each(function(i) {
+		
+		    var current = $(this);
+		    current.attr("id", "title" + i);
+		    
+		       var newPageData = '';
+		     
+		       var nextNode = $(this);
+		     
+		       var notDiv  = false;
+		       var addPage = false;
+		       
+		       while (!notDiv)
+		       {
+		       		newPageData += "<" + nextNode[0].tagName + ">";
+		       		
+		       		var nextNodeHtml = parseQuizText(nextNode.html());
+		       		
+		       		var htmlData = nextNodeHtml.join('');
+		       		
+		       		if (!addPage)
+		       		{
+		       			addPage = (htmlData.length > 0);
+		       		}
+		       	
+		       		newPageData += htmlData;
+		       		
+		       		newPageData += "</" + nextNode[0].tagName + ">";
+		       		
+		       		nextNode = nextNode.next();
+		       		
+		       		if (nextNode[0] === undefined)
+		       			break;
+		       		else
+		       			notDiv = (nextNode[0].tagName == "H1"
+		    				 || nextNode[0].tagName == "HR");
+		       		
+		       }
+		       
+		       if (addPage)
+		       {
+					$("#swmain").append('<div id="page' + i + '" class="subswipe"><p>' + newPageData + '</p></div>');
 			
-		});
+			 		$('#page' + i + ' a').attr("rel", "external");
+			 	
+			 		$('#page' + i + ' hr').remove();
+					$('#page' + i).trigger("create");
+				}
+				
+			});
+		}
 		
 		//make the lists look prettier
 		
@@ -103,10 +126,10 @@ $.ajax({
  		 	if (answer === solution)
  		 	{
  		 		msg = 'Correct!';
- 		 		turnPage();	
+ 		 		
  		 	}
  		 	else
- 		 	 	msg = 'Wroooong!';
+ 		 	 	msg = 'Please try again';
  		 	 	
  		 	alert(msg);
  		 	
@@ -116,7 +139,8 @@ $.ajax({
     	
 		 $('#mySwipe').Swipe();
 		 window.mySwipe = $('#mySwipe').data('Swipe');
-
+		 enableVideoClicks();
+		 enableAudioClicks();
 	});
 
 	
@@ -142,7 +166,7 @@ function parseQuizText(text) {
 		if(question.test(part)) {
 		
 			var questionText = part.split(":")[1].trim();
-			matches.push("<b>" + questionText + "</b>");
+			matches.push("<h3>" + questionText + "</h3>");
 			
 			matches.push('<form>');
 			matches.push('<fieldset data-role="controlgroup">');
@@ -199,3 +223,31 @@ function parseQuizText(text) {
 
 
 }
+
+String.prototype.endsWith = function(suffix) {
+    return this.indexOf(suffix, this.length - suffix.length) !== -1;
+};
+
+ function enableVideoClicks() {
+      var videos = document.getElementsByTagName('video') || [];
+      for (var i = 0; i < videos.length; i++) {
+        // TODO: use attachEvent in IE
+        videos[i].addEventListener('click', function(videoNode) {
+          return function() {
+            videoNode.play();
+          };
+        }(videos[i]));
+      }
+    }
+    
+     function enableAudioClicks() {
+      var videos = document.getElementsByTagName('audio') || [];
+      for (var i = 0; i < videos.length; i++) {
+        // TODO: use attachEvent in IE
+        videos[i].addEventListener('click', function(videoNode) {
+          return function() {
+            videoNode.play();
+          };
+        }(videos[i]));
+      }
+    }

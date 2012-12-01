@@ -191,4 +191,12 @@
     </integer-array>
     
     
+     <string-array name="lesson_sections">
+        <item>Journalism</item>
+        <item>Security</item>
+        <item>Audio</item>
+        <item>Photography</item>
+        <item>Videography</item>
+    </string-array>
+    
 </resources>
