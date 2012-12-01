@@ -7,9 +7,15 @@ import info.guardianproject.mrapp.db.StoryMakerDB.Schema;
 
 import java.io.File;
 import java.net.URL;
+import java.util.Locale;
+import java.util.Properties;
 
 import net.sqlcipher.database.SQLiteDatabase;
 import android.app.Application;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
+import android.content.res.Configuration;
+import android.preference.PreferenceManager;
 import android.util.Log;
 
 public class StoryMakerApp extends Application {
@@ -18,7 +24,13 @@ public class StoryMakerApp extends Application {
 	private static ServerManager mServerManager;
 	private static LessonManager mLessonManager;
 	
-	//just throwing some test files up here for now 
+	private final static String LOCALE_DEFAULT = "en";
+	
+	private static Locale mLocale = new Locale(LOCALE_DEFAULT);
+	
+	private final static String PREF_LOCALE = "plocale";
+	
+	//just throwing some test tfiles up here for now 
 	private String bootstrapUrlString = "https://guardianproject.info/downloads/storymaker/";
 	
 	 public void InitializeSQLCipher(String dbName, String passphrase) {
@@ -57,8 +69,8 @@ public class StoryMakerApp extends Application {
 	{
 		try
 		{
-			File fileExt = getExternalFilesDir(null);
-			mLessonManager = new LessonManager (this, bootstrapUrlString, new File(fileExt, "lessons"));
+			
+			mLessonManager = new LessonManager (this, bootstrapUrlString, new File(getExternalFilesDir(null), "lessons/" + mLocale.getLanguage()));
 			mServerManager = new ServerManager (this);
 		}
 		catch (Exception e)
@@ -66,6 +78,37 @@ public class StoryMakerApp extends Application {
 			Log.e(AppConstants.TAG,"error init app",e);
 		}
 	}
+
+	public void updateLocale (String newLocale)
+	{
+		mLocale = new Locale(newLocale);
+		Locale.setDefault(mLocale);
+		
+		mLessonManager = new LessonManager (this, bootstrapUrlString, new File(getExternalFilesDir(null), "lessons/" + newLocale));
+
+	}
+	
+	 public boolean checkLocale ()
+	    {
+	        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
+
+	        Configuration config = getResources().getConfiguration();
+
+	        String lang = settings.getString(PREF_LOCALE, "");
+	       
+	        
+	        boolean updatedLocale = false;
+	        
+	        if (!"".equals(lang) && !config.locale.getLanguage().equals(lang)) {
+	            mLocale = new Locale(lang);            
+	            config.locale = mLocale;
+	            getResources().updateConfiguration(config, getResources().getDisplayMetrics());
+	            updatedLocale = true;
+	        }
+
+	        
+	        return updatedLocale;
+	    }
 	
 	public static ServerManager getServerManager ()
 	{

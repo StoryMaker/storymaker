@@ -20,6 +20,7 @@ import java.util.Comparator;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map.Entry;
 import java.util.Set;
 import java.util.SortedMap;
@@ -76,6 +77,7 @@ public class LessonManager implements Runnable {
 	
 	public ArrayList loadLessonList ()
 	{
+		String sLocale = Locale.getDefault().getLanguage();
 		ArrayList<Lesson> lessons = new ArrayList<Lesson>();
 		
 		File lessonFolder = mLocalStorageRoot;
@@ -110,7 +112,7 @@ public class LessonManager implements Runnable {
 						lesson.mResourcePath = "file://" + fileIdx.getAbsolutePath();
 						lessons.add(lesson);
 						
-						updateResource(fileIdx);
+						updateResource(fileIdx,sLocale);
 					}
 				}
 				catch (FileNotFoundException fnfe)
@@ -143,9 +145,9 @@ public class LessonManager implements Runnable {
 		return lessons;
 	}
 	
-	private void updateResource (File fIndex) throws IOException
+	private void updateResource (File fIndex, String locale) throws IOException
 	{
-			  InputStream is = mContext.getAssets().open("template/index.html");
+			  InputStream is = mContext.getAssets().open("template/index.html." + locale);
 			  OutputStream os = new java.io.FileOutputStream(fIndex);
 			  IOUtils.copyLarge(is, os);
 		
