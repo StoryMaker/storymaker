@@ -7,6 +7,14 @@
         <item>@drawable/cliptype_medium</item>
         <item>@drawable/cliptype_wide</item>
     </string-array>
+
+    <string-array name="cliptypes">
+        <item>cliptype_close</item>
+        <item>cliptype_detail</item>
+        <item>cliptype_long</item>
+        <item>cliptype_medium</item>
+        <item>cliptype_wide</item>
+    </string-array>
     
     <string-array name="eg_scene_titles">
         <item>Scene 1: Introduction</item>
