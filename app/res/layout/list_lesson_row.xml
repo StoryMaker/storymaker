@@ -15,17 +15,29 @@
 -->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="10dp"
     android:padding="10dp"
     android:background="#eeeeee"
     >
-<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+<TextView
     android:id="@+id/lessonRowTitle"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:textAppearance="?android:attr/textAppearanceLarge"
     android:gravity="center_vertical"    
-    android:minHeight="?android:attr/listPreferredItemHeight"
-    android:background="#FFFFFF"    
+    android:background="#FFFFFF"   
+    android:paddingLeft="10dp"
+ />
+ <TextView
+    android:id="@+id/lessonRowStatus"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:textAppearance="?android:attr/textAppearanceSmall"
+    android:gravity="center_vertical"    
+    android:background="#FFFFFF"  
+        android:paddingLeft="10dp"
+      
+    android:layout_below="@+id/lessonRowTitle"  
 />
 </RelativeLayout>

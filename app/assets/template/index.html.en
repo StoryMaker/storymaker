@@ -1,0 +1,20 @@
+<!DOCTYPE html> 
+<html>
+<head> 
+	<title>StoryMaker</title> 
+	<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0'/> 
+	<link rel="stylesheet" href="file:///android_asset/template/js/jquery.mobile-1.2.0.min.css" />
+	<link rel="stylesheet" href="file:///android_asset/template/css/sm.css"/>
+	<script src="file:///android_asset/template/js/jquery-1.8.2.min.js"></script>
+	<script src="file:///android_asset/template/js/jquery.mobile-1.2.0.min.js"></script>
+	<script src="file:///android_asset/template/js/textile.js"></script>
+	<script src="file:///android_asset/template/js/swipe.js"></script>	
+	<script src="file:///android_asset/template/js/smtemplate.js"></script>
+</head> 
+<body> 
+<div id='mySwipe' class='swipe'>
+  <div id='swmain' class='swipe-wrap'>
+  </div>
+</div>
+</body>
+</html>
