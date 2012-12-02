@@ -15,6 +15,8 @@ public class Media {
     protected int id;
     protected String path;
     protected String mimeType;
+    protected String clipType; // R.arrays.cliptypes
+    protected int clipIndex; // which clip is this in the scene
     protected int projectId; // foreign key to the project which holds this
                              // media
 
@@ -22,13 +24,15 @@ public class Media {
         this.context = context;
     }
 
-    public Media(Context context, int id, String path, String mimeType,
+    public Media(Context context, int id, String path, String mimeType, String clipType, int clipIndex,
             int projectId) {
         super();
         this.context = context;
         this.id = id;
         this.path = path;
         this.mimeType = mimeType;
+        this.clipType = clipType;
+        this.clipIndex = clipIndex;
         this.projectId = projectId;
     }
 
@@ -42,6 +46,10 @@ public class Media {
                         .getColumnIndex(StoryMakerDB.Schema.Media.COL_PATH)),
                 cursor.getString(cursor
                         .getColumnIndex(StoryMakerDB.Schema.Media.COL_MIME_TYPE)),
+                cursor.getString(cursor
+                        .getColumnIndex(StoryMakerDB.Schema.Media.COL_CLIP_TYPE)),
+                cursor.getInt(cursor
+                        .getColumnIndex(StoryMakerDB.Schema.Media.COL_CLIP_INDEX)),
                 cursor.getInt(cursor
                         .getColumnIndex(StoryMakerDB.Schema.Media.COL_PROJECT_ID)));
     }
@@ -158,4 +166,32 @@ public class Media {
     public void setProjectId(int projectId) {
         this.projectId = projectId;
     }
+
+	/**
+	 * @return the clipType
+	 */
+	public String getClipType() {
+		return clipType;
+	}
+
+	/**
+	 * @param clipType the clipType to set
+	 */
+	public void setClipType(String clipType) {
+		this.clipType = clipType;
+	}
+
+	/**
+	 * @return the clipIndex
+	 */
+	public int getClipIndex() {
+		return clipIndex;
+	}
+
+	/**
+	 * @param clipIndex the clipIndex to set
+	 */
+	public void setClipIndex(int clipIndex) {
+		this.clipIndex = clipIndex;
+	}
 }

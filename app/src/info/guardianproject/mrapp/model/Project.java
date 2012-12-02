@@ -105,10 +105,11 @@ public class Project {
 
     public ArrayList<Media> getMediaAsList() {
         Cursor cursor = getMediaAsCursor();
-        ArrayList<Media> medias = new ArrayList<Media>();
+        ArrayList<Media> medias = new ArrayList<Media>(5); // FIXME convert 5 to a constant... is it always 5 long?
         if (cursor.moveToFirst()) {
             do {
-                medias.add(new Media(context, cursor));
+            	Media media = new Media(context, cursor);
+                medias.set(media.clipIndex, media);
             } while (cursor.moveToNext());
         }
         return medias;
@@ -130,10 +131,12 @@ public class Project {
     /**
      * @param media append this media to the back of the projects media list
      */
-    public void appendMedia(String path, String mimeType) {
+    public void setMedia(int clipIndex, String clipType, String path, String mimeType) {
         Media media = new Media(context);
         media.setPath(path);
         media.setMimeType(mimeType);
+        media.setClipType(clipType);
+        media.setClipIndex(clipIndex);
         media.setProjectId(getId());
         media.save();
     }

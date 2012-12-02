@@ -77,13 +77,17 @@ public class StoryMakerDB extends SQLiteOpenHelper {
 	    	public static final String ID = "_id";
 	    	public static final String COL_PROJECT_ID = "project_id"; // foreign key
 	    	public static final String COL_PATH = "path";
-	    	public static final String COL_MIME_TYPE = "mimeType";
+	    	public static final String COL_MIME_TYPE = "mime_type";
+	    	public static final String COL_CLIP_TYPE = "clip_type";
+	    	public static final String COL_CLIP_INDEX = "clip_index";
 	    	
 	    	private static final String CREATE_TABLE_MEDIA = "create table " + NAME + " ("
 	    			+ ID + " integer primary key autoincrement, "
 	    			+ COL_PROJECT_ID + " text not null, "
 	    			+ COL_PATH + " text not null,"
 	    			+ COL_MIME_TYPE + " text not null" 
+	    			+ COL_CLIP_TYPE + " text not null" 
+	    			+ COL_CLIP_INDEX + " integer not null" 
 	    			+ "); ";
     	}
     	
