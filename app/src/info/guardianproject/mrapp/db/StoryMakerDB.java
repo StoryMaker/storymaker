@@ -84,9 +84,9 @@ public class StoryMakerDB extends SQLiteOpenHelper {
 	    	private static final String CREATE_TABLE_MEDIA = "create table " + NAME + " ("
 	    			+ ID + " integer primary key autoincrement, "
 	    			+ COL_PROJECT_ID + " text not null, "
-	    			+ COL_PATH + " text not null,"
-	    			+ COL_MIME_TYPE + " text not null" 
-	    			+ COL_CLIP_TYPE + " text not null" 
+	    			+ COL_PATH + " text not null, "
+	    			+ COL_MIME_TYPE + " text not null, " 
+	    			+ COL_CLIP_TYPE + " text not null, " 
 	    			+ COL_CLIP_INDEX + " integer not null" 
 	    			+ "); ";
     	}
