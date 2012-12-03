@@ -355,7 +355,8 @@ public class MediaProjectManager implements MediaManager {
     
     private void updateStatus (String msg)
     {
-    	Toast.makeText(mContext, msg, Toast.LENGTH_SHORT).show();
+    	//Toast.makeText(mContext, msg, Toast.LENGTH_SHORT).show();
+    	Log.i(AppConstants.TAG,"media status: " + msg);
     }
     
     /*
