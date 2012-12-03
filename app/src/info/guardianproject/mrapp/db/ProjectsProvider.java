@@ -131,8 +131,25 @@ public class ProjectsProvider extends ContentProvider {
     
 	@Override
 	public int delete(Uri uri, String selection, String[] selectionArgs) {
-		// TODO Auto-generated method stub
-		return 0;
+		int uriType = sURIMatcher.match(uri);
+		int count;
+		String table;
+		switch (uriType) {
+		case PROJECTS:
+			table = StoryMakerDB.Schema.Projects.NAME;
+			break;
+		case LESSONS:
+			table = StoryMakerDB.Schema.Lessons.NAME;
+			break;
+		case MEDIA:
+			table = StoryMakerDB.Schema.Media.NAME;
+			break;
+		default:
+			throw new IllegalArgumentException("Unknown URI");
+		}
+		count = mDB.getWritableDatabase(mPassphrase).delete(table, selection, selectionArgs);
+            getContext().getContentResolver().notifyChange(uri, null);
+		return count;
 	}
 
 	@Override
