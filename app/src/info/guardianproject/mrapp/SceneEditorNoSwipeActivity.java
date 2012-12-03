@@ -479,8 +479,6 @@ public class SceneEditorNoSwipeActivity extends com.WazaBe.HoloEverywhere.sherlo
         		ImageView iv = (ImageView)view.findViewById(R.id.clipTypeImage);
 	            
         		if (mMedia != null) {
-//        			File file = new File(mMedia.getPath());
-//        			Bitmap thumb = mMPM.mMediaHelper.getBitmapThumb(file);
         			Bitmap thumb = MediaUtils.getVideoFrame(mMedia.getPath(), -1);
         			iv.setImageBitmap(thumb);
         		} else {
@@ -533,8 +531,11 @@ public class SceneEditorNoSwipeActivity extends com.WazaBe.HoloEverywhere.sherlo
     }
 
 //    public void addMediaViewToClipPager(int clipIndex, MediaView mv) {
-//    	mSceneChooserFragment.mClipPagerAdapter.notifyDataSetChanged();
-//    }
+    public void refreshClipPager() {
+    	if ((mSceneChooserFragment != null) && (mSceneChooserFragment.mClipPagerAdapter != null)) {
+    		mSceneChooserFragment.mClipPagerAdapter.notifyDataSetChanged();
+    	}
+    }
 
 	@Override
 	public void onConfigurationChanged(Configuration newConfig) {

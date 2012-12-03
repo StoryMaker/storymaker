@@ -85,7 +85,7 @@ public class MediaProjectManager implements MediaManager {
 	public int clipIndex;  // FIXME hack to get clip we are adding media too into intent handler
 
     public MediaProjectManager (Activity activity, Context context, Intent intent) {
-    
+    	mActivity = activity;
     	mContext = context;
     	
     	// initialize mediaList
@@ -130,6 +130,8 @@ public class MediaProjectManager implements MediaManager {
     		try
     		{
     			addMediaFile(clipIndex, result.path, result.mimeType);
+    			mProject.setMedia(clipIndex, "FIXME", result.path, result.mimeType);
+    			mProject.save();
     			// FIXME mProject.setMedia(result.path, result.mimeType);
     		}
 			catch (IOException ioe)
@@ -246,14 +248,11 @@ public class MediaProjectManager implements MediaManager {
 			MediaClip mClip = new MediaClip();
 			mClip.mMediaDescOriginal = mdesc;
 			mediaList.set(clipIndex, mClip);
-			mProject.setMedia(clipIndex, "FIXME", mClip.mMediaDescOriginal.path, mClip.mMediaDescOriginal.mimeType);
-			mProject.save();
+//			mProject.setMedia(clipIndex, "FIXME", mClip.mMediaDescOriginal.path, mClip.mMediaDescOriginal.mimeType);
+//			mProject.save();
 			
-//			File file = new File(mdesc.path);
-//			Bitmap thumb = mMediaHelper.getBitmapThumb(file);
-			
-//			int mediaId = mediaList.size()-1;
-			
+			((SceneEditorNoSwipeActivity)mActivity).refreshClipPager(); // FIXME we should handle this by emitting a change event directly
+
 			MediaView mView = addMediaView(mClip, clipIndex);
 			
 			prerenderMedia (mClip, mView);
