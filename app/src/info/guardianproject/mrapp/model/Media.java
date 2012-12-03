@@ -96,6 +96,8 @@ public class Media {
         ContentValues values = new ContentValues();
         values.put(StoryMakerDB.Schema.Media.COL_PATH, path);
         values.put(StoryMakerDB.Schema.Media.COL_MIME_TYPE, mimeType);
+        values.put(StoryMakerDB.Schema.Media.COL_CLIP_TYPE, clipType);
+        values.put(StoryMakerDB.Schema.Media.COL_CLIP_INDEX, clipIndex);
         values.put(StoryMakerDB.Schema.Media.COL_PROJECT_ID, projectId);
         ContentResolver cr = context.getContentResolver();
         Uri uri = cr.insert(
