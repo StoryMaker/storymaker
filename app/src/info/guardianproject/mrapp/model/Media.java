@@ -9,8 +9,11 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
+import android.util.Log;
 
 public class Media {
+	private static final String TAG = "Media";
+	
     protected Context context;
     protected int id;
     protected String path;
@@ -73,6 +76,31 @@ public class Media {
         }
     }
 
+
+    /*
+     * gets media in project at location clipIndex
+     */
+    public static Cursor getAsCursor(Context context, int projectId, int clipIndex) {
+        String selection = StoryMakerDB.Schema.Media.COL_PROJECT_ID + "=? and " +
+        		StoryMakerDB.Schema.Media.COL_CLIP_INDEX + "=?";
+        String[] selectionArgs = new String[] { "" + projectId, "" + clipIndex };
+        return context.getContentResolver().query(
+                ProjectsProvider.MEDIA_CONTENT_URI, null, selection,
+                selectionArgs, null);
+    }
+
+    /*
+     * gets media in project at location clipIndex
+     */
+    public static Media get(Context context, int projectId, int clipIndex) {
+        Cursor cursor = Media.getAsCursor(context, projectId, clipIndex);
+        if (cursor.moveToFirst()) {
+            return new Media(context, cursor);
+        } else {
+            return null;
+        }
+    }
+
     public static Cursor getAllAsCursor(Context context) {
         return context.getContentResolver().query(
                 ProjectsProvider.MEDIA_CONTENT_URI, null, null, null, null);
@@ -128,6 +156,15 @@ public class Media {
     }
     
     private void insert() {
+    	// There can be only one!  check if a media item exists at this location already, if so purge it first.
+    	Cursor cursorDupes = getAsCursor(context, projectId, clipIndex);
+    	if ((cursorDupes.getCount() > 0) && cursorDupes.moveToFirst()) {
+        	// FIXME we should allow audio clips to remain so they can be mixed down with their buddies
+    		do {
+    			(new Media(context, cursorDupes)).delete();
+    		} while (cursorDupes.moveToNext());
+    	}
+    	
         ContentValues values = getValues();
         Uri uri = context.getContentResolver().insert(
                 ProjectsProvider.MEDIA_CONTENT_URI, values);
@@ -142,6 +179,15 @@ public class Media {
     	ContentValues values = getValues();
         int count = context.getContentResolver().update(
                 ProjectsProvider.MEDIA_CONTENT_URI, values, selection, selectionArgs);
+        // FIXME make sure 1 row updated
+    }
+    
+    private void delete() {
+        String selection = StoryMakerDB.Schema.Media.ID + "=?";
+        String[] selectionArgs = new String[] { "" + id };
+        int count = context.getContentResolver().delete(
+                ProjectsProvider.MEDIA_CONTENT_URI, selection, selectionArgs);
+        Log.d(TAG, "deleted media: " + id + ", rows deleted: " + count);
         // FIXME make sure 1 row updated
     }
     
