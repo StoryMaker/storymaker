@@ -48,6 +48,9 @@ public class LessonManager implements Runnable {
 	
 	private String mSubFolder;
 	
+	public final static String LESSON_METADATA_FILE = "lesson.json";
+	public final static String LESSON_STATUS_FILE = "status.txt";
+	
 	public LessonManager (Context context, String remoteRepoUrl, File localStorageRoot)
 	{
 		mContext = context;
@@ -58,6 +61,11 @@ public class LessonManager implements Runnable {
 		
 		mLocalStorageRoot = localStorageRoot;
 		mLocalStorageRoot.mkdir();
+	}
+	
+	public File getLessonRoot ()
+	{
+		return mLocalStorageRoot;
 	}
 	
 	public void setSubFolder (String subFolder)
@@ -75,14 +83,37 @@ public class LessonManager implements Runnable {
 		new Thread(this).start();
 	}
 	
-	public ArrayList loadLessonList ()
+	public void updateLessonStatus (String path, int status) throws IOException
+	{
+		File fileLesson = new File(path);
+		if (!fileLesson.isDirectory())
+		{
+			fileLesson = fileLesson.getParentFile();
+		}
+		
+		String strStatus = status + "";
+		
+		File fileStatus = new File(fileLesson,LESSON_STATUS_FILE);
+		fileStatus.createNewFile();
+		FileOutputStream fos = new FileOutputStream(fileStatus);
+		fos.write(strStatus.getBytes());
+		
+	}
+	
+	public ArrayList<Lesson> loadLessonList (Context context)
+	{
+		return loadLessonList(context, mLocalStorageRoot, mSubFolder);
+	}
+	
+	public static ArrayList<Lesson> loadLessonList (Context context,File targetFolder, String subFolder)
 	{
 		String sLocale = Locale.getDefault().getLanguage();
 		ArrayList<Lesson> lessons = new ArrayList<Lesson>();
 		
-		File lessonFolder = mLocalStorageRoot;
-		if (mSubFolder != null)
-			lessonFolder = new File(mLocalStorageRoot, mSubFolder);
+		File lessonFolder = targetFolder;
+		
+		if (subFolder != null)
+			lessonFolder = new File(targetFolder, subFolder);
 		
 		if (lessonFolder.exists())
 		{
@@ -112,7 +143,19 @@ public class LessonManager implements Runnable {
 						lesson.mResourcePath = "file://" + fileIdx.getAbsolutePath();
 						lessons.add(lesson);
 						
-						updateResource(fileIdx,sLocale);
+						lesson.mLocalPath = fileLesson;
+						
+						updateResource(context,fileIdx,sLocale);
+					
+						File fileStatus = new File(fileLesson,LESSON_STATUS_FILE);
+						if (fileStatus.exists())
+						{
+							byte[] bStatus = new byte[(int)fileStatus.length()];
+							IOUtils.readFully(new FileInputStream(fileStatus),bStatus);
+							lesson.mStatus = Integer.parseInt(new String(bStatus).trim());
+							
+							
+						}
 					}
 				}
 				catch (FileNotFoundException fnfe)
@@ -145,13 +188,14 @@ public class LessonManager implements Runnable {
 		return lessons;
 	}
 	
-	private void updateResource (File fIndex, String locale) throws IOException
+	private static void updateResource (Context context, File fIndex, String locale) throws IOException
 	{
-			  InputStream is = mContext.getAssets().open("template/index.html." + locale);
+			  InputStream is = context.getAssets().open("template/index.html." + locale);
 			  OutputStream os = new java.io.FileOutputStream(fIndex);
 			  IOUtils.copyLarge(is, os);
 		
 	}
+	
 	public void run ()
 	{
 		try
