@@ -120,12 +120,6 @@ public class OverlayCameraActivity extends SherlockActivity implements Callback,
        }
     
 
-    @Override
-    public void onDestroy() {
-    	int i = 0;
-    	if (i==1) i = 2;
-    }
-
     private void closeOverlay ()
     {
     	cameraOn = false;
