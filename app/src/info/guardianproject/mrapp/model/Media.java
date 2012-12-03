@@ -91,20 +91,58 @@ public class Media {
 
     /***** Object level methods *****/
 
+//    public void save() {
+//        // FIXME be smart about insert vs update
+//        ContentValues values = new ContentValues();
+//        values.put(StoryMakerDB.Schema.Media.COL_PATH, path);
+//        values.put(StoryMakerDB.Schema.Media.COL_MIME_TYPE, mimeType);
+//        values.put(StoryMakerDB.Schema.Media.COL_CLIP_TYPE, clipType);
+//        values.put(StoryMakerDB.Schema.Media.COL_CLIP_INDEX, clipIndex);
+//        values.put(StoryMakerDB.Schema.Media.COL_PROJECT_ID, projectId);
+//        ContentResolver cr = context.getContentResolver();
+//        Uri uri = cr.insert(
+//                ProjectsProvider.MEDIA_CONTENT_URI, values);
+//        String lastSegment = uri.getLastPathSegment();
+//        int newId = Integer.parseInt(lastSegment);
+//        this.setId(newId);
+//    }
+    
     public void save() {
-        // FIXME be smart about insert vs update
+    	Cursor cursor = getAsCursor(context, id);
+    	if (cursor.getCount() == 0) {
+    		insert();
+    	} else {
+    		update();
+    	}
+    }
+    
+    private ContentValues getValues() {
         ContentValues values = new ContentValues();
         values.put(StoryMakerDB.Schema.Media.COL_PATH, path);
         values.put(StoryMakerDB.Schema.Media.COL_MIME_TYPE, mimeType);
         values.put(StoryMakerDB.Schema.Media.COL_CLIP_TYPE, clipType);
         values.put(StoryMakerDB.Schema.Media.COL_CLIP_INDEX, clipIndex);
         values.put(StoryMakerDB.Schema.Media.COL_PROJECT_ID, projectId);
-        ContentResolver cr = context.getContentResolver();
-        Uri uri = cr.insert(
+        
+        return values;
+    }
+    
+    private void insert() {
+        ContentValues values = getValues();
+        Uri uri = context.getContentResolver().insert(
                 ProjectsProvider.MEDIA_CONTENT_URI, values);
         String lastSegment = uri.getLastPathSegment();
         int newId = Integer.parseInt(lastSegment);
         this.setId(newId);
+    }
+    
+    private void update() {
+        String selection = StoryMakerDB.Schema.Media.ID + "=?";
+        String[] selectionArgs = new String[] { "" + id };
+    	ContentValues values = getValues();
+        int count = context.getContentResolver().update(
+                ProjectsProvider.MEDIA_CONTENT_URI, values, selection, selectionArgs);
+        // FIXME make sure 1 row updated
     }
     
     /***** getters and setters *****/

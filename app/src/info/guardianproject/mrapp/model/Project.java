@@ -89,18 +89,40 @@ public class Project {
     /***** Object level methods *****/
 
     public void save() {
-        // FIXME be smart about insert vs update
+    	Cursor cursor = getAsCursor(context, id);
+    	if (cursor.getCount() == 0) {
+    		insert();
+    	} else {
+    		update();
+    	}
+    }
+    
+    private ContentValues getValues() {
         ContentValues values = new ContentValues();
         values.put(StoryMakerDB.Schema.Projects.COL_TITLE, title);
         values.put(StoryMakerDB.Schema.Projects.COL_THUMBNAIL_PATH,
                 thumbnailPath);
         values.put(StoryMakerDB.Schema.Projects.COL_STORY_TYPE,
                 storyType);
+        
+        return values;
+    }
+    private void insert() {
+        ContentValues values = getValues();
         Uri uri = context.getContentResolver().insert(
                 ProjectsProvider.PROJECTS_CONTENT_URI, values);
         String lastSegment = uri.getLastPathSegment();
         int newId = Integer.parseInt(lastSegment);
         this.setId(newId);
+    }
+    
+    private void update() {
+        String selection = StoryMakerDB.Schema.Projects.ID + "=?";
+        String[] selectionArgs = new String[] { "" + id };
+    	ContentValues values = getValues();
+        int count = context.getContentResolver().update(
+                ProjectsProvider.PROJECTS_CONTENT_URI, values, selection, selectionArgs);
+        // FIXME make sure 1 row updated
     }
 
     public ArrayList<Media> getMediaAsList() {
