@@ -63,6 +63,8 @@ public class SceneEditorNoSwipeActivity extends com.WazaBe.HoloEverywhere.sherlo
 
 	private static final String STATE_SELECTED_NAVIGATION_ITEM = "selected_navigation_item";
 
+	private final static int REQ_OVERLAY_CAM = 888; //for resp handling from overlay cam launch
+	
     protected boolean templateStory = false; 
     
     protected Menu mMenu = null;
@@ -71,7 +73,7 @@ public class SceneEditorNoSwipeActivity extends com.WazaBe.HoloEverywhere.sherlo
      
     private String templateJsonPath = null;
     
-    private int storyMode = Project.STORY_TYPE_VIDEO;;
+    private int mStoryMode = Project.STORY_TYPE_VIDEO;;
   
     private final static String CAPTURE_MIMETYPE_AUDIO = "audio/3gpp";
     
@@ -92,7 +94,7 @@ public class SceneEditorNoSwipeActivity extends com.WazaBe.HoloEverywhere.sherlo
         
         if (getIntent().hasExtra("story_mode"))
         {
-        	storyMode = getIntent().getIntExtra("story_mode", Project.STORY_TYPE_VIDEO);
+        	mStoryMode = getIntent().getIntExtra("story_mode", Project.STORY_TYPE_VIDEO);
         }
         
         mContext = getBaseContext();
@@ -511,11 +513,12 @@ public class SceneEditorNoSwipeActivity extends com.WazaBe.HoloEverywhere.sherlo
 					@Override
 					public void onClick(View v) {
 					//	int cIdx = mClipViewPager.getCurrentItem();
-						
-//						openCaptureMode(clip, mClipIndex);
+
 						ViewPager vp = (ViewPager) v.getParent().getParent().getParent();
 						mMPM.clipIndex = vp.getCurrentItem();
-						mMPM.mMediaHelper.openGalleryChooser("*/*");
+						
+						openCaptureMode(clip, mClipIndex);
+						
 					}
 	          	  
 	            });
@@ -545,27 +548,30 @@ public class SceneEditorNoSwipeActivity extends com.WazaBe.HoloEverywhere.sherlo
 	private void openCaptureMode (Clip clip, int clipIndex)
 	{
 
-		if (storyMode == Project.STORY_TYPE_AUDIO)
+		
+		
+		if (mStoryMode == Project.STORY_TYPE_AUDIO)
 		{
 			Intent i = new Intent(mContext, SoundRecorder.class);
 			i.setType(CAPTURE_MIMETYPE_AUDIO);
-			i.putExtra("mode", storyMode);
-//			i.putExtra("clip_index", clipIndex);
+			i.putExtra("mode", mStoryMode);
 			mMPM.clipIndex = clipIndex;
-			startActivityForResult(i,clip.mShotType);
+			startActivityForResult(i,mStoryMode);
 
 		}
 		else
 		{
+			
+			//mMPM.mMediaHelper.openGalleryChooser("*/*");
+			//mMPM.mMediaHelper.captureVideo(mContext.getExternalFilesDir(null));
+			
 			Intent i = new Intent(mContext, OverlayCameraActivity.class);
 			i.putExtra("group", clip.mShotType);
-			i.putExtra("mode", storyMode);
-//			i.putExtra("clip_index", clipIndex);
+			i.putExtra("mode", mStoryMode);
 			mMPM.clipIndex = clipIndex;
-			startActivityForResult(i,clip.mShotType);
+			startActivityForResult(i,REQ_OVERLAY_CAM);
 		}
 	}
-
 
 
 	@Override
@@ -574,28 +580,36 @@ public class SceneEditorNoSwipeActivity extends com.WazaBe.HoloEverywhere.sherlo
 		if (resCode == RESULT_OK)
 		{
 			//figure out what kind of media is being returned and add it to the project
-			if (reqCode == Project.STORY_TYPE_AUDIO)
+			if (reqCode == REQ_OVERLAY_CAM)
+			{
+	    		File fileMediaFolder = getExternalFilesDir(null);
+	    		
+	    		if (mStoryMode == Project.STORY_TYPE_VIDEO)
+	    		{
+	    			mMPM.mMediaHelper.captureVideo(fileMediaFolder);
+	    			
+	    		}
+	    		else if (mStoryMode == Project.STORY_TYPE_PHOTO)
+	    		{
+	    			mMPM.mMediaHelper.capturePhoto(fileMediaFolder);
+	    		}
+	    		else if (mStoryMode == Project.STORY_TYPE_ESSAY)
+	    		{
+	    			mMPM.mMediaHelper.capturePhoto(fileMediaFolder);
+	    		}
+		    	
+			}
+			else if (reqCode == Project.STORY_TYPE_AUDIO)
 			{
 				Uri uriAudio = intent.getData(); 
 				//CAPTURE_MIMETYPE_AUDIO
 				
 			}
-			else if (reqCode == Project.STORY_TYPE_VIDEO)
+			else
 			{
-				
-			}
-			else if (reqCode == Project.STORY_TYPE_PHOTO)
-			{
-				
-			}
-			else if (reqCode == Project.STORY_TYPE_ESSAY)
-			{
-				
+				mMPM.handleResponse(intent);
+
 			}
 		}
-		
-		mMPM.handleResponse(intent);
-		
-		//super.onActivityResult(arg0, arg1, arg2);
 	}
 }
