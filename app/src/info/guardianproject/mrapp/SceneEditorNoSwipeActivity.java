@@ -1,24 +1,33 @@
 package info.guardianproject.mrapp;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
 import net.micode.soundrecorder.SoundRecorder;
 
+import org.ffmpeg.android.MediaUtils;
 import org.json.JSONException;
 
 import redstone.xmlrpc.XmlRpcFault;
 
+import info.guardianproject.mrapp.media.MediaClip;
+import info.guardianproject.mrapp.media.MediaHelper;
+import info.guardianproject.mrapp.media.MediaProjectManager;
 import info.guardianproject.mrapp.media.OverlayCameraActivity;
+import info.guardianproject.mrapp.model.Media;
 import info.guardianproject.mrapp.model.Project;
 import info.guardianproject.mrapp.model.Template;
 import info.guardianproject.mrapp.model.Template.Clip;
 import info.guardianproject.mrapp.server.ServerManager;
+import info.guardianproject.mrapp.ui.MediaView;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -66,6 +75,9 @@ public class SceneEditorNoSwipeActivity extends com.WazaBe.HoloEverywhere.sherlo
   
     private final static String CAPTURE_MIMETYPE_AUDIO = "audio/3gpp";
     
+    private MediaProjectManager mMPM;
+    public SceneChooserFragment mSceneChooserFragment;
+	
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -84,6 +96,8 @@ public class SceneEditorNoSwipeActivity extends com.WazaBe.HoloEverywhere.sherlo
         }
         
         mContext = getBaseContext();
+        
+        mMPM = new MediaProjectManager(this, mContext, getIntent());
 
         setContentView(R.layout.activity_scene_editor_no_swipe);
         
@@ -179,16 +193,16 @@ public class SceneEditorNoSwipeActivity extends com.WazaBe.HoloEverywhere.sherlo
         
         String tag = "" + layout;
         FragmentManager fm = getSupportFragmentManager();
-        Fragment fragment = fm.findFragmentByTag(tag+"");
+        mSceneChooserFragment = (SceneChooserFragment) fm.findFragmentByTag(tag+"");
         
-        if (fragment == null) 
+        if (mSceneChooserFragment == null) 
         {        	
             try {
-				fragment = new SceneChooserFragment(layout, fm, templateJsonPath);
+				mSceneChooserFragment = new SceneChooserFragment(layout, fm, templateJsonPath);
 
 	            Bundle args = new Bundle(); 
 	            args.putInt(SceneChooserFragment.ARG_SECTION_NUMBER, tab.getPosition() + 1);
-	            fragment.setArguments(args);
+	            mSceneChooserFragment.setArguments(args);
 	            
 			} catch (IOException e) {
 				Log.e("SceneEditr","IO erorr", e);
@@ -200,7 +214,7 @@ public class SceneEditorNoSwipeActivity extends com.WazaBe.HoloEverywhere.sherlo
         }
         
         fm.beginTransaction()
-        .replace(R.id.container, fragment, tag)
+        .replace(R.id.container, mSceneChooserFragment, tag)
 //        .addToBackStack(null)
         .commit();
     }
@@ -213,11 +227,11 @@ public class SceneEditorNoSwipeActivity extends com.WazaBe.HoloEverywhere.sherlo
      * A dummy fragment representing a section of the app, but that simply displays dummy text.
      */
     public class SceneChooserFragment extends Fragment {
-    	private final static String TAG = "DummySectionFragment";
+    	private final static String TAG = "SceneChooserFragment";
         int layout;
-        ViewPager mClipViewPager;
+        public ViewPager mClipViewPager;
         View mView = null;
-        ClipPagerAdapter mClipPagerAdapter;
+        public ClipPagerAdapter mClipPagerAdapter;
         
         /**
          * The sortable grid view that contains the clips to reorder on the Order tab
@@ -246,30 +260,52 @@ public class SceneEditorNoSwipeActivity extends com.WazaBe.HoloEverywhere.sherlo
             } else if (this.layout == R.layout.fragment_order_clips) {
             	mDGV = (DraggableGridView) view.findViewById(R.id.DraggableGridView01);
             	
+            	Media[] sceneMedias = mMPM.mProject.getMediaAsArray();
+
             	ImageView iv = new ImageView(getActivity());
-            	iv.setImageDrawable(getActivity().getResources().getDrawable(R.drawable.cliptype_close));
+            	if (sceneMedias[0] != null) {
+						iv.setImageBitmap(MediaUtils.getVideoFrame(sceneMedias[0].getPath(), -1));
+            	} else { 
+            		iv.setImageDrawable(getActivity().getResources().getDrawable(R.drawable.cliptype_close));
+            	}
             	mDGV.addView(iv);
             	
             	iv = new ImageView(getActivity());
-            	iv.setImageDrawable(getActivity().getResources().getDrawable(R.drawable.cliptype_detail));
+            	if (sceneMedias[1] != null) {
+            		iv.setImageBitmap(MediaUtils.getVideoFrame(sceneMedias[1].getPath(), -1));
+            	} else { 
+            		iv.setImageDrawable(getActivity().getResources().getDrawable(R.drawable.cliptype_detail));
+            	}
             	mDGV.addView(iv);
             	
             	iv = new ImageView(getActivity());
-            	iv.setImageDrawable(getActivity().getResources().getDrawable(R.drawable.cliptype_long));
+            	if (sceneMedias[2] != null) {
+            		iv.setImageBitmap(MediaUtils.getVideoFrame(sceneMedias[2].getPath(), -1));
+            	} else { 
+            		iv.setImageDrawable(getActivity().getResources().getDrawable(R.drawable.cliptype_long));
+            	}
             	mDGV.addView(iv);
             	
             	iv = new ImageView(getActivity());
-            	iv.setImageDrawable(getActivity().getResources().getDrawable(R.drawable.cliptype_medium));
+            	if (sceneMedias[3] != null) {
+            		iv.setImageBitmap(MediaUtils.getVideoFrame(sceneMedias[3].getPath(), -1));
+            	} else { 
+            		iv.setImageDrawable(getActivity().getResources().getDrawable(R.drawable.cliptype_medium));
+            	} 
             	mDGV.addView(iv);
             	
             	iv = new ImageView(getActivity());
-            	iv.setImageDrawable(getActivity().getResources().getDrawable(R.drawable.cliptype_wide));
+            	if (sceneMedias[4] != null) {
+            		iv.setImageBitmap(MediaUtils.getVideoFrame(sceneMedias[4].getPath(), -1));
+            	} else { 
+            		iv.setImageDrawable(getActivity().getResources().getDrawable(R.drawable.cliptype_wide));
+            	}
             	mDGV.addView(iv);
-            	
+        		
             	mDGV.setOnRearrangeListener(new OnRearrangeListener() {
 					
 					@Override
-					public void onRearrange(int arg0, int arg1) {
+					public void onRearrange(int oldIndex, int newIndex) {
 						// TODO Auto-generated method stub
 						Log.d(TAG, "grid rearranged");
 					}
@@ -278,8 +314,9 @@ public class SceneEditorNoSwipeActivity extends com.WazaBe.HoloEverywhere.sherlo
             	mDGV.setOnItemClickListener(new OnItemClickListener() {
             		
             		@Override
-        			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+        			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             			Log.d(TAG, "item clicked");
+            			
             		}
 				});
             } else if (this.layout == R.layout.fragment_story_publish) {
@@ -296,6 +333,28 @@ public class SceneEditorNoSwipeActivity extends com.WazaBe.HoloEverywhere.sherlo
             	});
             }
             return view;
+        }
+
+        @Override
+        public void onResume() {
+            super.onResume();
+            if (this.layout == R.layout.fragment_add_clips) {
+    
+                (new AsyncTask<Void, Void, Void>() {
+                    @Override
+                    protected void onPostExecute(Void result) {
+                        mClipViewPager.setAdapter(mClipPagerAdapter);
+                    }
+    
+                  @Override
+                  protected Void doInBackground(Void... params) {
+                      // TODO Auto-generated method stub
+                      return null;
+                  }
+                }).execute();
+            } else if (this.layout == R.layout.fragment_order_clips) {
+            } else if (this.layout == R.layout.fragment_story_publish) {
+            }
         }
         
         private void handlePublish ()
@@ -351,28 +410,6 @@ public class SceneEditorNoSwipeActivity extends com.WazaBe.HoloEverywhere.sherlo
         	
         };
         
-        @Override
-        public void onResume() {
-            super.onResume();
-            if (this.layout == R.layout.fragment_add_clips) {
-    
-                (new AsyncTask<Void, Void, Void>() {
-                    @Override
-                    protected void onPostExecute(Void result) {
-                        mClipViewPager.setAdapter(mClipPagerAdapter);
-                    }
-    
-                  @Override
-                  protected Void doInBackground(Void... params) {
-                      // TODO Auto-generated method stub
-                      return null;
-                  }
-                }).execute();
-            } else if (this.layout == R.layout.fragment_order_clips) {
-            } else if (this.layout == R.layout.fragment_story_publish) {
-            }
-        }
-        
         /**
          * A {@link FragmentPagerAdapter} that returns a fragment corresponding to the clips we are editing
          */
@@ -400,7 +437,8 @@ public class SceneEditorNoSwipeActivity extends com.WazaBe.HoloEverywhere.sherlo
             @Override
             public Fragment getItem(int i) {
             	Template.Clip clip = sTemplate.getClips().get(i);
-                Fragment fragment = new ClipThumbnailFragment(clip);
+            	Media media = mMPM.mProject.getMediaAsArray()[i];
+                Fragment fragment = new ClipThumbnailFragment(clip, i, media);
                 return fragment;
             }
 
@@ -414,14 +452,18 @@ public class SceneEditorNoSwipeActivity extends com.WazaBe.HoloEverywhere.sherlo
     
     
     /**
-     * A dummy fragment representing a section of the app, but that simply displays dummy text.
+     * ClipThumbnailFragment 
      */
     public class ClipThumbnailFragment extends Fragment {
     	
     	private Template.Clip clip;
+    	private int mClipIndex;
+    	private Media mMedia;
     	
-        public ClipThumbnailFragment(Template.Clip clip) {
+        public ClipThumbnailFragment(Template.Clip clip, int clipIndex, Media media) {
         	this.clip = clip;
+        	mClipIndex = clipIndex;
+        	mMedia = media;
         }
 
         public static final String ARG_CLIP_TYPE_ID = "clip_type_id";
@@ -436,17 +478,24 @@ public class SceneEditorNoSwipeActivity extends com.WazaBe.HoloEverywhere.sherlo
         		
         		ImageView iv = (ImageView)view.findViewById(R.id.clipTypeImage);
 	            
-        		if (clip.mShotType != -1)
-        		{
-        			TypedArray drawableIds = getActivity().getResources().obtainTypedArray(R.array.cliptype_thumbnails);
-	            
-        			int drawableId = drawableIds.getResourceId(clip.mShotType, 0); 
-	            
-        			iv.setImageResource(drawableId);
-        		}
-        		else if (clip.mArtwork != null)
-        		{
-        			iv.setImageBitmap(BitmapFactory.decodeStream(getActivity().getAssets().open(clip.mArtwork)));
+        		if (mMedia != null) {
+//        			File file = new File(mMedia.getPath());
+//        			Bitmap thumb = mMPM.mMediaHelper.getBitmapThumb(file);
+        			Bitmap thumb = MediaUtils.getVideoFrame(mMedia.getPath(), -1);
+        			iv.setImageBitmap(thumb);
+        		} else {
+	        		if (clip.mShotType != -1)
+	        		{
+	        			TypedArray drawableIds = getActivity().getResources().obtainTypedArray(R.array.cliptype_thumbnails);
+		            
+	        			int drawableId = drawableIds.getResourceId(clip.mShotType, 0); 
+		            
+	        			iv.setImageResource(drawableId);
+	        		}
+	        		else if (clip.mArtwork != null)
+	        		{
+	        			iv.setImageBitmap(BitmapFactory.decodeStream(getActivity().getAssets().open(clip.mArtwork)));
+	        		}
         		}
         		
 	            if (clip.mShotSize != null)
@@ -465,8 +514,10 @@ public class SceneEditorNoSwipeActivity extends com.WazaBe.HoloEverywhere.sherlo
 					public void onClick(View v) {
 					//	int cIdx = mClipViewPager.getCurrentItem();
 						
-						openCaptureMode (clip);
-						
+//						openCaptureMode(clip, mClipIndex);
+						ViewPager vp = (ViewPager) v.getParent().getParent().getParent();
+						mMPM.clipIndex = vp.getCurrentItem();
+						mMPM.mMediaHelper.openGalleryChooser("*/*");
 					}
 	          	  
 	            });
@@ -481,14 +532,16 @@ public class SceneEditorNoSwipeActivity extends com.WazaBe.HoloEverywhere.sherlo
         }
     }
 
-
+//    public void addMediaViewToClipPager(int clipIndex, MediaView mv) {
+//    	mSceneChooserFragment.mClipPagerAdapter.notifyDataSetChanged();
+//    }
 
 	@Override
 	public void onConfigurationChanged(Configuration newConfig) {
 		super.onConfigurationChanged(newConfig);
 	}
 
-	private void openCaptureMode (Clip clip)
+	private void openCaptureMode (Clip clip, int clipIndex)
 	{
 
 		if (storyMode == Project.STORY_TYPE_AUDIO)
@@ -496,6 +549,8 @@ public class SceneEditorNoSwipeActivity extends com.WazaBe.HoloEverywhere.sherlo
 			Intent i = new Intent(mContext, SoundRecorder.class);
 			i.setType(CAPTURE_MIMETYPE_AUDIO);
 			i.putExtra("mode", storyMode);
+//			i.putExtra("clip_index", clipIndex);
+			mMPM.clipIndex = clipIndex;
 			startActivityForResult(i,clip.mShotType);
 
 		}
@@ -504,6 +559,8 @@ public class SceneEditorNoSwipeActivity extends com.WazaBe.HoloEverywhere.sherlo
 			Intent i = new Intent(mContext, OverlayCameraActivity.class);
 			i.putExtra("group", clip.mShotType);
 			i.putExtra("mode", storyMode);
+//			i.putExtra("clip_index", clipIndex);
+			mMPM.clipIndex = clipIndex;
 			startActivityForResult(i,clip.mShotType);
 		}
 	}
@@ -511,14 +568,14 @@ public class SceneEditorNoSwipeActivity extends com.WazaBe.HoloEverywhere.sherlo
 
 
 	@Override
-	protected void onActivityResult(int reqCode, int resCode, Intent data) {
+	protected void onActivityResult(int reqCode, int resCode, Intent intent) {
 		
 		if (resCode == RESULT_OK)
 		{
 			//figure out what kind of media is being returned and add it to the project
 			if (reqCode == Project.STORY_TYPE_AUDIO)
 			{
-				Uri uriAudio = data.getData(); 
+				Uri uriAudio = intent.getData(); 
 				//CAPTURE_MIMETYPE_AUDIO
 				
 			}
@@ -535,6 +592,8 @@ public class SceneEditorNoSwipeActivity extends com.WazaBe.HoloEverywhere.sherlo
 				
 			}
 		}
+		
+		mMPM.handleResponse(intent);
 		
 		//super.onActivityResult(arg0, arg1, arg2);
 	}

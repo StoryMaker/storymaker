@@ -11,6 +11,7 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -30,13 +31,14 @@ public class ProjectsListView extends ListView implements Runnable {
 
 			
 			@Override
-			public void onItemClick(android.widget.AdapterView<?> arg0,
-					android.view.View arg1, int arg2, long arg3) {
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 			
-				Project project = mListProjects.get(arg2);
+				Project project = mListProjects.get(position);
 				
 				Intent intent = new Intent(getContext(), SceneEditorNoSwipeActivity.class);
 		    	intent.putExtra("story_mode", project.getStoryType());
+		    	intent.putExtra("pid", project.getId());
+		    	intent.putExtra("title", project.getTitle());
 		    	
 		    	String templateJsonPath = null;
 		    	

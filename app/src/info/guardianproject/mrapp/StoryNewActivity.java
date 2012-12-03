@@ -148,7 +148,7 @@ public class StoryNewActivity extends SherlockActivity {
 	    	Intent intent = new Intent(getBaseContext(), SceneEditorNoSwipeActivity.class);
 	    	intent.putExtra("story_mode", storyMode);
 	    	intent.putExtra("template_path", templateJsonPath);
-	    	
+	    	intent.putExtra("title", project.getTitle());
 	        startActivity(intent);
     	}
     }

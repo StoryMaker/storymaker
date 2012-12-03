@@ -78,7 +78,7 @@ public class OverlayCameraActivity extends SherlockActivity implements Callback,
 		public void handleMessage(Message msg) {
 			super.handleMessage(msg);
 			
-			// handle response from media capture... send result back to story editor
+			// FIXME handle response from media capture... send result back to story editor
 		}
     	
     };
@@ -118,6 +118,13 @@ public class OverlayCameraActivity extends SherlockActivity implements Callback,
        addContentView(mOverlayView, new LayoutParams(LayoutParams.FILL_PARENT,LayoutParams.FILL_PARENT));
 
        }
+    
+
+    @Override
+    public void onDestroy() {
+    	int i = 0;
+    	if (i==1) i = 2;
+    }
 
     private void closeOverlay ()
     {
