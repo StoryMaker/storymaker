@@ -1,5 +1,7 @@
 package info.guardianproject.mrapp.model;
 
+import java.io.File;
+
 import org.json.JSONObject;
 
 
@@ -9,6 +11,13 @@ public class Lesson {
 	public String mDescription;
 	public String mResourcePath; //file, http, asset
 	public String mImage;
+	public int mStatus;
+	public File mLocalPath;
+
+	public final static int STATUS_NOT_STARTED = 0;
+	public final static int STATUS_IN_PROGRESS = 1;
+	public final static int STATUS_COMPLETE = 2;
+	
 
 	public static Lesson parse (String jsonTxt) throws Exception
 	{

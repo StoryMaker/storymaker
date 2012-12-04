@@ -46,11 +46,10 @@ $.ajax({
 		$("#swmain").append('<div id="page' + i + '" class="subswipe"><p>' + pageData + '</p></div>');
  		$('#page' + i + ' a').attr("rel", "external");
 		$('#page' + i).trigger("create");
-				
-		i++;
-		$("#swmain").append('<div id="page' + i + '" class="subswipe"><p></p></div>');
- 		$('#page' + i + ' a').attr("rel", "external");
-		$('#page' + i).trigger("create");
+		
+		$("#swmain").append('<div id="pagec" class="subswipe"><p><center><h2>Lesson Completed!</h2><h3><a href="stmk://lesson/complete/">TOUCH HERE TO CONTINUE</a></h3></center></p></div>');
+		$('#pagec a').attr("rel", "external");
+		$('#pagec').trigger("create");
 	}
 	else
 	{
@@ -104,6 +103,11 @@ $.ajax({
 				}
 				
 			});
+			
+			$("#swmain").append('<div id="pagec" class="subswipe"><p><center><h2>Lesson Completed!</h2><h3><a href="stmk://lesson/complete/">TOUCH HERE TO CONTINUE</a></h3></center></p></div>');
+		 	$('#pagec a').attr("rel", "external");
+			$('#pagec').trigger("create");
+				
 		}
 		
 		//make the lists look prettier
@@ -143,6 +147,8 @@ $.ajax({
 		 enableAudioClicks();
 	});
 
+
+	
 	
 });
 	
@@ -165,8 +171,11 @@ function parseQuizText(text) {
 		
 		if(question.test(part)) {
 		
-			var questionText = part.split(":")[1].trim();
-			matches.push("<h3>" + questionText + "</h3>");
+			var questionText = "";
+			var qparts = part.split(":");
+			
+			for (n = 1; n < qparts.length; n++)
+				matches.push("<h3>" + qparts[n].trim() + "</h3>");
 			
 			matches.push('<form>');
 			matches.push('<fieldset data-role="controlgroup">');

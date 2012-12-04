@@ -53,11 +53,12 @@ h1, h2, h3
 	height:75px;
 }
 
-.mediaplay a
+.mediaplay a:link, .mediaplay a
 {
 	color:#eeeeee;
 	font-size:18pt;
 	text-decoration:none;
+	margin-top:10px;
 }
 
 .mediacaption
@@ -66,4 +67,5 @@ h1, h2, h3
 	background-color:#cccccc;
 	padding:15px;
 	font-size:10pt;
+	margin-bottom:10px;
 }

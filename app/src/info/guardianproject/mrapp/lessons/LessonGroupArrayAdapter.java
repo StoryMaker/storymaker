@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import info.guardianproject.mrapp.R;
 import info.guardianproject.mrapp.model.Lesson;
+import info.guardianproject.mrapp.model.LessonGroup;
 import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -13,12 +14,12 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class LessonSectionArrayAdapter extends ArrayAdapter {
+public class LessonGroupArrayAdapter extends ArrayAdapter {
 	
     int layoutResourceId;    
     
-    public LessonSectionArrayAdapter(Context context, int layoutResourceId,String[] sections) {
-        super(context, layoutResourceId, sections);        
+    public LessonGroupArrayAdapter(Context context, int layoutResourceId,ArrayList<LessonGroup> groups) {
+        super(context, layoutResourceId, groups);        
         
         this.layoutResourceId = layoutResourceId;
     }
@@ -27,7 +28,7 @@ public class LessonSectionArrayAdapter extends ArrayAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         
     	View row = convertView;
-        String section = ((String)getItem(position));
+    	LessonGroup group = ((LessonGroup)getItem(position));
         
         TextView tvTitle;
         TextView tvStatus;
@@ -40,10 +41,10 @@ public class LessonSectionArrayAdapter extends ArrayAdapter {
         }
         
         tvTitle = (TextView)row.findViewById(R.id.lessonRowTitle);
-        tvTitle.setText(section);        
+        tvTitle.setText(group.mTitle);        
         
         tvStatus = (TextView)row.findViewById(R.id.lessonRowStatus);
-        tvStatus.setText(R.string.lesson_status_have_not_started);        
+        tvStatus.setText(group.mStatus);        
         
         return row;
     }
