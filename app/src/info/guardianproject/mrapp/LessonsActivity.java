@@ -1,8 +1,6 @@
 package info.guardianproject.mrapp;
 
-import info.guardianproject.mrapp.R;
 import info.guardianproject.mrapp.lessons.LessonListView;
-import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -13,8 +11,6 @@ import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.WazaBe.HoloEverywhere.LayoutInflater;
@@ -22,6 +18,7 @@ import com.WazaBe.HoloEverywhere.sherlock.SFragment;
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
+import com.actionbarsherlock.view.Window;
 
 public class LessonsActivity extends com.WazaBe.HoloEverywhere.sherlock.SActivity implements ActionBar.TabListener {
 
@@ -42,9 +39,9 @@ public class LessonsActivity extends com.WazaBe.HoloEverywhere.sherlock.SActivit
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        
-        requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
-        
+     
+       requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
+     
         setContentView(R.layout.activity_lessons);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         

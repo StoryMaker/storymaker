@@ -1,8 +1,12 @@
 package info.guardianproject.mrapp.lessons;
 
+import java.io.IOException;
+
 import info.guardianproject.mrapp.AppConstants;
 import info.guardianproject.mrapp.R;
+import info.guardianproject.mrapp.StoryMakerApp;
 import info.guardianproject.mrapp.media.MediaHelper;
+import info.guardianproject.mrapp.model.Lesson;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.net.Uri;
@@ -28,6 +32,9 @@ public class LessonViewActivity extends SherlockActivity {
 
 	WebView mWebView;
 	MediaHelper mMediaHelper;
+	String mUrl;
+	String mLessonPath;
+	String mTitle;
 
 	@Override
     public void onCreate(Bundle savedInstanceState) {
@@ -40,11 +47,13 @@ public class LessonViewActivity extends SherlockActivity {
         Intent intent = getIntent();
         if (intent != null)
         {
-        	String title = intent.getStringExtra("title");
-        	if (title != null)
-        		setTitle(title);
+        	mTitle = intent.getStringExtra("title");
+        	if (mTitle != null)
+        		setTitle(mTitle);
         
-        	String url = intent.getStringExtra("url");
+        	mUrl = intent.getStringExtra("url");
+        	mLessonPath = intent.getStringExtra("lessonPath");
+        	
         	mWebView = (WebView) findViewById(R.id.web_engine);  
         	
         	mWebView.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
@@ -95,9 +104,8 @@ public class LessonViewActivity extends SherlockActivity {
 						
 						if (url.startsWith("stmk://lesson/complete/"))
 						{
-							int sIdx = url.lastIndexOf('/');
-							String lessonId = url.substring(sIdx+1);
-							lessonCompleted(lessonId);
+							
+							lessonCompleted();
 							handled = true;
 						}
 					}
@@ -117,7 +125,7 @@ public class LessonViewActivity extends SherlockActivity {
         		
         	});
         	
-        	mWebView.loadUrl(url); 
+        	mWebView.loadUrl(mUrl); 
         
         }
         
@@ -125,11 +133,29 @@ public class LessonViewActivity extends SherlockActivity {
         
     }
     
-    private void lessonCompleted(String lessonId)
+	 private void lessonInProgress()
+	    {
+		 	
+	    	try {
+				StoryMakerApp.getLessonManager().updateLessonStatus(mLessonPath, Lesson.STATUS_IN_PROGRESS);
+				
+			} catch (IOException e) {
+				Log.e(AppConstants.TAG,"error updating app status",e);
+			}
+	    
+	    }
+	 
+    private void lessonCompleted()
     {
-    	//TODO do something here to mark lesson as completed; need to update database
-    	Toast.makeText(this, "Congratulations. You have completed lesson " + lessonId, Toast.LENGTH_LONG).show();
-    	finish();
+    	try {
+			StoryMakerApp.getLessonManager().updateLessonStatus(mLessonPath, Lesson.STATUS_COMPLETE);
+			//TODO do something here to mark lesson as completed; need to update database
+	    	Toast.makeText(this, R.string.lessons_congratulations_you_have_completed_the_lesson_, Toast.LENGTH_LONG).show();
+	    	finish();
+		} catch (IOException e) {
+			Log.e(AppConstants.TAG,"error updating app status",e);
+		}
+    
     }
    
     @Override

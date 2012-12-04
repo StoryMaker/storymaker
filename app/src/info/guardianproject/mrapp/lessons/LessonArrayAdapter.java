@@ -45,6 +45,11 @@ public class LessonArrayAdapter extends ArrayAdapter {
         tvStatus = (TextView)row.findViewById(R.id.lessonRowStatus);
         tvStatus.setText(R.string.lesson_status_have_not_started);        
         
+        if (lesson.mStatus == Lesson.STATUS_IN_PROGRESS)
+        	tvStatus.setText(R.string.lesson_status_in_progress);
+        else if (lesson.mStatus == Lesson.STATUS_COMPLETE)
+        	tvStatus.setText(R.string.lesson_status_complete);
+        
         return row;
     }
     
