@@ -387,10 +387,11 @@ Swipe.prototype = {
 
 
     var scrollTop = $(window).scrollTop();
-    if (scrollTop > 0 && Math.abs(l) > 0)
+    if (scrollTop > 0 && Math.abs(dist) > 20)
     {
 		window.scrollTo(0,0);
 	}
+	
 	
     while(l--) {
 

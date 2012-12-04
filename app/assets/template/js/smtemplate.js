@@ -140,6 +140,11 @@ $.ajax({
  		 			//the lesson is complete!
  		 			location.href=URI_LESSON_COMPLETE;
  		 		}
+ 		 		else
+ 		 		{
+ 		 			window.mySwipe.next();
+ 		 		}
+ 		 		
  		 		
  		 	}
  		 	else
