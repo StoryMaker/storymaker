@@ -7,6 +7,7 @@ import info.guardianproject.mrapp.R.id;
 import info.guardianproject.mrapp.R.layout;
 import info.guardianproject.mrapp.R.menu;
 import info.guardianproject.mrapp.R.string;
+import info.guardianproject.mrapp.SceneEditorNoSwipeActivity;
 import info.guardianproject.mrapp.model.Media;
 import info.guardianproject.mrapp.model.Project;
 import info.guardianproject.mrapp.ui.MediaView;
@@ -35,6 +36,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.media.MediaScannerConnection;
 import android.os.Bundle;
@@ -63,7 +65,7 @@ import com.actionbarsherlock.view.MenuItem;
 
 public class MediaProjectManager implements MediaManager {
 	
-	private ArrayList<MediaClip> mediaList = new ArrayList<MediaClip>();
+	private ArrayList<MediaClip> mediaList = new ArrayList<MediaClip>(5);
 	private ArrayList<MediaView> mediaViewList = new ArrayList<MediaView>();
 	
 	private File fileExternDir;
@@ -71,50 +73,66 @@ public class MediaProjectManager implements MediaManager {
 	private File mMediaTmp;
 	private MediaDesc mOut;
 	
-	private MediaHelper mMediaHelper;
 	private MediaHelper.MediaResult mMediaResult;
+	public MediaHelper mMediaHelper;
 	
-	private Project mProject = null;
+	public Project mProject = null;
 	
 	private Context mContext = null;
+
+	private Activity mActivity;
 	
-    public MediaProjectManager (Context context) {
-    
+	public int clipIndex;  // FIXME hack to get clip we are adding media too into intent handler
+
+    public MediaProjectManager (Activity activity, Context context, Intent intent) {
+    	mActivity = activity;
     	mContext = context;
+    	
+    	// initialize mediaList
+    	mediaList.add(null); mediaList.add(null); mediaList.add(null); mediaList.add(null); mediaList.add(null);
+        
+        mMediaHelper = new MediaHelper (activity, mHandler);
         
         initExternalStorage();
-        
-    }
-    
-    public void handleResponse (Activity activity, Intent intent)
-    {
-        
-        mMediaHelper = new MediaHelper (activity, mHandler);                
-        
-        MediaDesc result = mMediaHelper.handleIntentLaunch(intent);
-        	
+
+        String title = intent.getStringExtra("title");
     	int pid = intent.getIntExtra("pid", -1);
         if (pid != -1) {
-            mProject = Project.get(activity.getApplicationContext(), pid);
+            mProject = Project.get(context, pid);
             Media[] _medias = mProject.getMediaAsArray();
             for (Media media: _medias) {
-                try
-                {
-                    addMediaFile(media.getPath(), media.getMimeType());
-                }
-                catch (IOException ioe)
-                {
-                    Log.e(AppConstants.TAG,"error adding media from saved project", ioe);
-                }
+            	if (media != null) {
+	                try
+	                {
+	                    addMediaFile(media.getClipIndex(), media.getPath(), media.getMimeType());
+	                }
+	                catch (IOException ioe)
+	                {
+	                    Log.e(AppConstants.TAG,"error adding media from saved project", ioe);
+	                }
+            	}
             }
-        } // FIXME else what?
+        } else {
+        	mProject = new Project(context);
+        	mProject.setTitle(title);
+        	mProject.save();
+        }
+    }
+    
+    public void handleResponse (Intent intent)
+    {                
+        MediaDesc result = mMediaHelper.handleIntentLaunch(intent);
+        
+//        int clipIndex = intent.getExtras().getInt("clip_index");
     	
     	if (result != null && result.path != null && result.mimeType != null)
     	{
     		try
     		{
-    			addMediaFile(result.path, result.mimeType);
-    			mProject.appendMedia(result.path, result.mimeType);
+    			addMediaFile(clipIndex, result.path, result.mimeType);
+    			mProject.setMedia(clipIndex, "FIXME", result.path, result.mimeType);
+    			mProject.save();
+    			// FIXME mProject.setMedia(result.path, result.mimeType);
     		}
 			catch (IOException ioe)
 			{
@@ -144,7 +162,7 @@ public class MediaProjectManager implements MediaManager {
     }
     
     
-    private void doExportMedia ()
+    public void doExportMedia ()
     {
     	 Message msg = mHandler.obtainMessage(0);
          msg.getData().putString("status","cancelled");
@@ -197,15 +215,15 @@ public class MediaProjectManager implements MediaManager {
     	
     }
     
-    private void addMediaFile (String path, String mimeType) throws IOException
+    private void addMediaFile (int clipIndex, String path, String mimeType) throws IOException
     {
     	MediaDesc mdesc = new MediaDesc ();
     	mdesc.path = path;
     	mdesc.mimeType = mimeType;
-    	
-		if (mimeType.startsWith("audio") && mediaList.size() > 0 && (!mediaList.get(mediaList.size()-1).mMediaDescOriginal.mimeType.equals(mimeType)))
+
+		if (mimeType.startsWith("audio") && mediaList.get(clipIndex) != null && (!mediaList.get(mediaList.size()-1).mMediaDescOriginal.mimeType.equals(mimeType)))
 		{
-			MediaClip mClipVideo =  mediaList.get(mediaList.size()-1);
+			MediaClip mClipVideo =  mediaList.get(clipIndex);
 			
 			MediaClip mClipAudio = new MediaClip();
 			mClipAudio.mMediaDescOriginal = mdesc;
@@ -221,25 +239,64 @@ public class MediaProjectManager implements MediaManager {
 				updateStatus("error merging video and audio");
 				Log.e(AppConstants.TAG,"error merging video and audio",e);
 			}
-		
 			
 		}
 		else
 		{
-			//its the first clip and/or the previous item is the same type as this
+			//its the first clip and/or the previous item is the same type as this, or this is not an audio clip
     		
 			MediaClip mClip = new MediaClip();
 			mClip.mMediaDescOriginal = mdesc;
-			mediaList.add(mClip);
+			mediaList.set(clipIndex, mClip);
+//			mProject.setMedia(clipIndex, "FIXME", mClip.mMediaDescOriginal.path, mClip.mMediaDescOriginal.mimeType);
+//			mProject.save();
 			
-			int mediaId = mediaList.size()-1;
-			
-			MediaView mView = addMediaView(mClip, mediaId);
+			((SceneEditorNoSwipeActivity)mActivity).refreshClipPager(); // FIXME we should handle this by emitting a change event directly
+
+			MediaView mView = addMediaView(mClip, clipIndex);
 			
 			prerenderMedia (mClip, mView);
 		}
 		
 		mOut = null;
+    	
+//		if (mimeType.startsWith("audio") && mediaList.size() > 0 && (!mediaList.get(mediaList.size()-1).mMediaDescOriginal.mimeType.equals(mimeType)))
+//		{
+//			MediaClip mClipVideo =  mediaList.get(mediaList.size()-1);
+//			
+//			MediaClip mClipAudio = new MediaClip();
+//			mClipAudio.mMediaDescOriginal = mdesc;
+//		
+//			try {
+//				ShellCallback sc = null;
+//	    		MediaMerger mm = new MediaMerger(mContext, (MediaManager)this, mHandler, mClipVideo, mClipAudio, fileExternDir, sc);
+//	    		// Convert to video
+//	    		Thread thread = new Thread (mm);
+//	    		thread.setPriority(Thread.NORM_PRIORITY);
+//	    		thread.start();
+//			} catch (Exception e) {
+//				updateStatus("error merging video and audio");
+//				Log.e(AppConstants.TAG,"error merging video and audio",e);
+//			}
+//			
+//			
+//		}
+//		else
+//		{
+//			//its the first clip and/or the previous item is the same type as this, or this is not an audio clip
+//    		
+//			MediaClip mClip = new MediaClip();
+//			mClip.mMediaDescOriginal = mdesc;
+//			mediaList.add(clipIndex, mClip);
+//			
+//			int mediaId = mediaList.size()-1;
+//			
+//			MediaView mView = addMediaView(mClip, mediaId);
+//			
+//			prerenderMedia (mClip, mView); 
+//		}
+//		
+//		mOut = null;
     	
     }
     
@@ -298,45 +355,10 @@ public class MediaProjectManager implements MediaManager {
     
     private void updateStatus (String msg)
     {
-    	Toast.makeText(mContext, msg, Toast.LENGTH_SHORT).show();
+    	//Toast.makeText(mContext, msg, Toast.LENGTH_SHORT).show();
+    	Log.i(AppConstants.TAG,"media status: " + msg);
     }
     
-    /*
-	protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
-		
-		
-		if (resultCode == RESULT_OK)
-		{
-			if (requestCode == 777) //overlay camerae
-			{
-				//now launch real camera
-				mMediaTmp = mMediaHelper.captureVideo(fileExternDir);
-				
-
-			}
-			else
-			{
-				mMediaResult = mMediaHelper.handleResult(requestCode, resultCode, intent, mMediaTmp);
-				
-				try
-				{
-					if (mMediaResult != null)
-						if (mMediaResult.path != null)
-							addMediaFile(mMediaResult.path, mMediaResult.mimeType);
-				}
-				catch (IOException ioe)
-				{
-					Log.e(AppConstants.TAG,"error adding media result",ioe);
-				}
-				
-			
-				//if path is null, wait for the scanner callback in the mHandler
-			}
-		}
-		
-		
-	}	*/
-	
 	
 	public void showMediaPrefs (Activity activity)
 	{
@@ -373,55 +395,49 @@ public class MediaProjectManager implements MediaManager {
 		 }
 	}
 	
-	private void showAddMediaDialog (final Activity activity)
-	{
-		
-		final CharSequence[] items = {"Open Gallery","Open File","Choose Shot","Record Video", "Record Audio", "Take Photo"};
+//	private void showAddMediaDialog (final Activity activity)
+//	{
+//		
+//		final CharSequence[] items = {"Open Gallery","Open File","Choose Shot","Record Video", "Record Audio", "Take Photo"};
+//
+//		AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+//		builder.setTitle("Choose medium");
+//		builder.setItems(items, new DialogInterface.OnClickListener() {
+//		    public void onClick(DialogInterface dialog, int item) {
+//		        
+//		    	switch (item) {
+//		    		case 0:
+//		    			mMediaHelper.openGalleryChooser("*/*");
+//		    			break;
+//		    		case 1:
+//		    			mMediaHelper.openFileChooser();
+//		    			break;
+//		    		case 2:
+//		    			showOverlayCamera(activity);
+//		    			break;
+//		    		case 3:
+//		    			mMediaTmp = mMediaHelper.captureVideo(fileExternDir);
+//
+//		    			break;
+//		    		case 4:
+//		    			mMediaTmp = mMediaHelper.captureAudio(fileExternDir);
+//
+//		    			break;
+//		    		case 5:
+//		    			mMediaTmp = mMediaHelper.capturePhoto(fileExternDir);
+//		    			break;
+//		    		default:
+//		    			//do nothing!
+//		    	}
+//		    	
+//		    	
+//		    }
+//		});
+//		
+//		AlertDialog alert = builder.create();
+//		alert.show();
+//	}
 
-		AlertDialog.Builder builder = new AlertDialog.Builder(activity);
-		builder.setTitle("Choose medium");
-		builder.setItems(items, new DialogInterface.OnClickListener() {
-		    public void onClick(DialogInterface dialog, int item) {
-		        
-		    	switch (item) {
-		    		case 0:
-		    			mMediaHelper.openGalleryChooser("*/*");
-		    			break;
-		    		case 1:
-		    			mMediaHelper.openFileChooser();
-		    			break;
-		    		case 2:
-		    			showOverlayCamera(activity);
-		    			break;
-		    		case 3:
-		    			mMediaTmp = mMediaHelper.captureVideo(fileExternDir);
-
-		    			break;
-		    		case 4:
-		    			mMediaTmp = mMediaHelper.captureAudio(fileExternDir);
-
-		    			break;
-		    		case 5:
-		    			mMediaTmp = mMediaHelper.capturePhoto(fileExternDir);
-		    			break;
-		    		default:
-		    			//do nothing!
-		    	}
-		    	
-		    	
-		    }
-		});
-		
-		AlertDialog alert = builder.create();
-		alert.show();
-	}
-
-	private void showOverlayCamera (Activity activity)
-	{
-		Intent intent = new Intent(activity, OverlayCameraActivity.class);
-		activity.startActivityForResult(intent,777);
-		
-	}
 	
 	private Handler mHandler = new Handler()
 	{
@@ -447,18 +463,19 @@ public class MediaProjectManager implements MediaManager {
 	                	
 	                case 5:
 	                		
-	                		if (mMediaResult != null)
+	                		if (mMediaResult != null) // FIXME always null because onActivityResult is commented out!
 	                		{
-	                			String path = msg.getData().getString("path");
-	                			try
-	                			{
-	                				addMediaFile(path, mMediaResult.mimeType);
-	                                mProject.appendMedia(path, mMediaResult.mimeType);
-	                			}
-	                			catch (IOException ioe)
-	                			{
-	                				Log.e(AppConstants.TAG,"error adding media result",ioe);
-	                			}
+//	                			String path = msg.getData().getString("path");
+//	                			try
+//	                			{
+//	                				// FIXME I need to get the clipIndex in here somehow?!?!
+//	                				//addMediaFile(path, mMediaResult.mimeType);
+//	                                // FIXME mProject.appendMedia(path, mMediaResult.mimeType);
+//	                			}
+//	                			catch (IOException ioe)
+//	                			{
+//	                				Log.e(AppConstants.TAG,"error adding media result",ioe);
+//	                			}
 	                		}
 	                	break;
 	                default:

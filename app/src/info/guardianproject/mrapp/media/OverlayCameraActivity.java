@@ -44,13 +44,7 @@ import com.larvalabs.svgandroid.SVGParser;
 
 public class OverlayCameraActivity extends SherlockActivity implements Callback, SwipeInterface 
 {
-    @Override
-	public void startActivityForResult(Intent intent, int requestCode) {
-		
-    	
-	}
-
-
+   
 
 	private Camera camera;
     private SurfaceView mSurfaceView;
@@ -78,7 +72,7 @@ public class OverlayCameraActivity extends SherlockActivity implements Callback,
 		public void handleMessage(Message msg) {
 			super.handleMessage(msg);
 			
-			// handle response from media capture... send result back to story editor
+			// FIXME handle response from media capture... send result back to story editor
 		}
     	
     };
@@ -118,6 +112,7 @@ public class OverlayCameraActivity extends SherlockActivity implements Callback,
        addContentView(mOverlayView, new LayoutParams(LayoutParams.FILL_PARENT,LayoutParams.FILL_PARENT));
 
        }
+    
 
     private void closeOverlay ()
     {
@@ -126,26 +121,7 @@ public class OverlayCameraActivity extends SherlockActivity implements Callback,
         camera.release();
     	setResult(RESULT_OK);
     	
-    	if (mStoryMode != -1)
-    	{
-    		MediaHelper mh = new MediaHelper(this, mMediaHandler);
-    		
-    		File fileMediaFolder = this.getExternalFilesDir(null);
-    		
-    		if (mStoryMode == Project.STORY_TYPE_VIDEO)
-    		{
-    			mh.captureVideo(fileMediaFolder);
-    			
-    		}
-    		else if (mStoryMode == Project.STORY_TYPE_PHOTO)
-    		{
-    			mh.capturePhoto(fileMediaFolder);
-    		}
-    		else if (mStoryMode == Project.STORY_TYPE_ESSAY)
-    		{
-    			mh.capturePhoto(fileMediaFolder);
-    		}
-    	}
+    	
     	
 		finish();
     }

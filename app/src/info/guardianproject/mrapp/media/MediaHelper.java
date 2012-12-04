@@ -60,7 +60,7 @@ public class MediaHelper implements MediaScannerConnectionClient {
          mMediaUriTmp = Uri.fromFile(mMediaFileTmp);
          
      	Intent intent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
-        intent.putExtra( MediaStore.EXTRA_OUTPUT, mMediaUriTmp);
+//        intent.putExtra( MediaStore.EXTRA_OUTPUT, mMediaUriTmp);
 
      	mActivity.startActivityForResult(intent, MediaConstants.CAMERA_RESULT);
          
@@ -158,7 +158,8 @@ public class MediaHelper implements MediaScannerConnectionClient {
 		 MediaDesc result = null;
 		 
 		// Passed in from CameraObscuraMainMenu
-			Uri uriLaunch = mActivity.getIntent().getData();
+//			Uri uriLaunch = mActivity.getIntent().getData();
+		 Uri uriLaunch = intent.getData();
 			
 			// If originalImageUri is null, we are likely coming from another app via "share"
 			if (uriLaunch == null)

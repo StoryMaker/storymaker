@@ -8,11 +8,20 @@
     android:paddingRight="30dip"
      >
     
+    <FrameLayout  android:layout_width="fill_parent"
+         android:layout_height="170dip"   >
  <ImageView
          android:id="@+id/clipTypeImage"
          android:layout_width="fill_parent"
-         android:layout_height="170dip"    
+         android:layout_height="fill_parent"    
     />
+ <TextView
+         android:layout_width="fill_parent"
+         android:layout_height="fill_parent"
+         android:text="tap to start capture"
+         android:gravity="center_vertical|center_horizontal"
+         />
+ </FrameLayout>
 
      <TextView
          android:id="@+id/clipTypeShotSize"
