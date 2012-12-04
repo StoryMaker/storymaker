@@ -1,6 +1,7 @@
 package info.guardianproject.mrapp;
 
 import info.guardianproject.mrapp.lessons.LessonListView;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -112,6 +113,19 @@ public class LessonsActivity extends com.WazaBe.HoloEverywhere.sherlock.SActivit
     	if (!handled)
     		NavUtils.navigateUpFromSameTask(this);
         
+    }
+    
+    @Override
+	protected void onActivityResult(int reqCode, int resCode, Intent intent) {
+		
+		if (resCode == RESULT_OK)
+		{
+				if (reqCode == 1)
+				{
+					//time to update the lesson list
+					mListView.refreshList();
+				}
+		}
     }
     
     private void updateLessons ()

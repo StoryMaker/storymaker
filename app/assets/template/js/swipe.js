@@ -385,6 +385,14 @@ Swipe.prototype = {
     var _slides = this.slides,
         l = nums.length;
 
+
+    var scrollTop = $(window).scrollTop();
+    if (scrollTop > 0 && Math.abs(dist) > 20)
+    {
+		window.scrollTo(0,0);
+	}
+	
+	
     while(l--) {
 
       this._translate(_slides[nums[l]], dist + this.cache[nums[l]], speed ? speed : 0);
@@ -424,11 +432,6 @@ Swipe.prototype = {
     
     if (!elem) return;
     
-    var scrollTop = $(window).scrollTop();
-    if (scrollTop > 0)
-    {
-		window.scrollTo(0,0);
-	}
 
     var style = elem.style;
 
