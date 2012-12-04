@@ -135,6 +135,7 @@ public class Project {
                 medias.set(media.clipIndex, media);
             } while (cursor.moveToNext());
         }
+        cursor.close();
         return medias;
     }
 
