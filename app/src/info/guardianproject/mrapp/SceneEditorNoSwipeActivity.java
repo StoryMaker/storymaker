@@ -80,7 +80,7 @@ public class SceneEditorNoSwipeActivity extends com.WazaBe.HoloEverywhere.sherlo
     private final static String CAPTURE_MIMETYPE_AUDIO = "audio/3gpp";
     
     private MediaProjectManager mMPM;
-    public SceneChooserFragment mSceneChooserFragment;
+    public SceneChooserFragment mFragmentTab0, mFragmentTab1, mFragmentTab2, mLastTabFrag;
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -164,23 +164,62 @@ public class SceneEditorNoSwipeActivity extends com.WazaBe.HoloEverywhere.sherlo
 
     @Override
     public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
+
+        FragmentManager fm = getSupportFragmentManager();
+        fm.beginTransaction().hide(mLastTabFrag).commit();
     }
 
     @Override
     public void onTabSelected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
         // When the given tab is selected, show the tab contents in the container
         int layout = R.layout.fragment_add_clips;
-
+        FragmentManager fm = getSupportFragmentManager();
+        
         if (mMenu != null) {
 	        mMenu.findItem(R.id.itemInfo).setVisible(false);
 	        mMenu.findItem(R.id.itemTrim).setVisible(false);
         }
 
+
+        
         if (tab.getPosition() == 0) {
         	if (mMenu != null) {
         		mMenu.findItem(R.id.itemForward).setEnabled(true);
         	}
         	layout = R.layout.fragment_add_clips;
+        	
+        	if (mFragmentTab0 == null)
+        	{
+        		 try {
+        			 mFragmentTab0 = new SceneChooserFragment(layout, fm, templateJsonPath);
+        			 
+     	            Bundle args = new Bundle(); 
+     	            args.putInt(SceneChooserFragment.ARG_SECTION_NUMBER, tab.getPosition() + 1);
+     	            mFragmentTab0.setArguments(args);
+     	            
+     			} catch (IOException e) {
+     				Log.e("SceneEditr","IO erorr", e);
+     				
+     			} catch (JSONException e) {
+     				Log.e("SceneEditr","json error", e);
+     				
+     			}
+        		 
+        		 
+
+        	        fm.beginTransaction()
+        	        .add(R.id.container, mFragmentTab0, layout+"")
+        	        .commit();
+
+        	}
+        	else
+        	{
+
+                fm.beginTransaction()
+                .show(mFragmentTab0)
+                .commit();
+        	}
+        	mLastTabFrag = mFragmentTab0;
         	
         } else if (tab.getPosition() == 1) {
             layout = R.layout.fragment_order_clips;
@@ -190,37 +229,83 @@ public class SceneEditorNoSwipeActivity extends com.WazaBe.HoloEverywhere.sherlo
 	            mMenu.findItem(R.id.itemTrim).setVisible(true);
 		        mMenu.findItem(R.id.itemForward).setEnabled(true);
         	}
+        	
+        	if (mFragmentTab1 == null)
+        	{
+        		 try {
+        			 mFragmentTab1 = new SceneChooserFragment(layout, fm, templateJsonPath);
+
+     	            Bundle args = new Bundle(); 
+     	            args.putInt(SceneChooserFragment.ARG_SECTION_NUMBER, tab.getPosition() + 1);
+     	            mFragmentTab1.setArguments(args);
+     	            
+     			} catch (IOException e) {
+     				Log.e("SceneEditr","IO erorr", e);
+     				
+     			} catch (JSONException e) {
+     				Log.e("SceneEditr","json error", e);
+     				
+     			}
+        		 
+
+        	        fm.beginTransaction()
+        	        .add(R.id.container, mFragmentTab1, layout+"")
+        	        .commit();
+        		 
+        	}
+        	else
+        	{
+
+                fm.beginTransaction()
+                .show(mFragmentTab1)
+                .commit();
+        	}
+        	
+        	mLastTabFrag = mFragmentTab1;
+
         } else if (tab.getPosition() == 2) {
             layout = R.layout.fragment_story_publish;
             mMenu.findItem(R.id.itemForward).setEnabled(false);
-        }
-        
-        String tag = "" + layout;
-        FragmentManager fm = getSupportFragmentManager();
-        mSceneChooserFragment = (SceneChooserFragment) fm.findFragmentByTag(tag+"");
-        
-        if (mSceneChooserFragment == null) 
-        {        	
-            try {
-				mSceneChooserFragment = new SceneChooserFragment(layout, fm, templateJsonPath);
+            
+            if (mFragmentTab2 == null)
+        	{
+        		 try {
+        			 mFragmentTab2 = new SceneChooserFragment(layout, fm, templateJsonPath);
 
-	            Bundle args = new Bundle(); 
-	            args.putInt(SceneChooserFragment.ARG_SECTION_NUMBER, tab.getPosition() + 1);
-	            mSceneChooserFragment.setArguments(args);
-	            
-			} catch (IOException e) {
-				Log.e("SceneEditr","IO erorr", e);
-				
-			} catch (JSONException e) {
-				Log.e("SceneEditr","json error", e);
-				
-			}
+     	            Bundle args = new Bundle(); 
+     	            args.putInt(SceneChooserFragment.ARG_SECTION_NUMBER, tab.getPosition() + 1);
+     	            mFragmentTab2.setArguments(args);
+     	            
+     			} catch (IOException e) {
+     				Log.e("SceneEditr","IO erorr", e);
+     				
+     			} catch (JSONException e) {
+     				Log.e("SceneEditr","json error", e);
+     				
+     			}
+        		 
+
+        	        fm.beginTransaction()
+        	        .add(R.id.container, mFragmentTab2, layout+"")
+        	        .commit();
+
+        	}
+            else
+            {
+
+                fm.beginTransaction()
+                .show(mFragmentTab2)
+                .commit();
+            }
+            
+        	mLastTabFrag = mFragmentTab2;
+
+            
         }
         
-        fm.beginTransaction()
-        .replace(R.id.container, mSceneChooserFragment, tag)
-//        .addToBackStack(null)
-        .commit();
+
+
+        
     }
 
     @Override
@@ -253,6 +338,7 @@ public class SceneEditorNoSwipeActivity extends com.WazaBe.HoloEverywhere.sherlo
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                 Bundle savedInstanceState) {
+        	
             View view = inflater.inflate(layout, null);
             if (this.layout == R.layout.fragment_add_clips) {
             	
@@ -342,6 +428,7 @@ public class SceneEditorNoSwipeActivity extends com.WazaBe.HoloEverywhere.sherlo
             return view;
         }
 
+        /*
         @Override
         public void onResume() {
             super.onResume();
@@ -350,7 +437,7 @@ public class SceneEditorNoSwipeActivity extends com.WazaBe.HoloEverywhere.sherlo
             } else if (this.layout == R.layout.fragment_order_clips) {
             } else if (this.layout == R.layout.fragment_story_publish) {
             }
-        }
+        }*/
         
         private void handlePublish ()
     	{
@@ -530,9 +617,9 @@ public class SceneEditorNoSwipeActivity extends com.WazaBe.HoloEverywhere.sherlo
 
 //    public void addMediaViewToClipPager(int clipIndex, MediaView mv) {
     public void refreshClipPager() {
-    	if ((mSceneChooserFragment != null) && (mSceneChooserFragment.mClipPagerAdapter != null)) {
-    		mSceneChooserFragment.mClipPagerAdapter.notifyDataSetChanged();
-    	}
+    	//if ((mSceneChooserFragment != null) && (mSceneChooserFragment.mClipPagerAdapter != null)) {
+    	//	mSceneChooserFragment.mClipPagerAdapter.notifyDataSetChanged();
+    	//}
     }
 
 	@Override
