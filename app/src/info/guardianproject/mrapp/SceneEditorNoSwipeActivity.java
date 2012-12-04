@@ -321,6 +321,8 @@ public class SceneEditorNoSwipeActivity extends com.WazaBe.HoloEverywhere.sherlo
         public ViewPager mClipViewPager;
         View mView = null;
         public ClipPagerAdapter mClipPagerAdapter;
+        private FragmentManager mFm;
+        private String mTemplatePath;
         
         /**
          * The sortable grid view that contains the clips to reorder on the Order tab
@@ -329,12 +331,21 @@ public class SceneEditorNoSwipeActivity extends com.WazaBe.HoloEverywhere.sherlo
         
         public SceneChooserFragment(int layout, FragmentManager fm, String templatePath) throws IOException, JSONException {
             this.layout = layout;
+            mFm = fm;
+            mTemplatePath = templatePath;
             
             mClipPagerAdapter = new ClipPagerAdapter(fm, templatePath);
         }
 
         public static final String ARG_SECTION_NUMBER = "section_number";
 
+        public void reloadClips ()  throws IOException, JSONException
+        {
+            mClipPagerAdapter = new ClipPagerAdapter(mFm, mTemplatePath);
+            mClipViewPager.setAdapter(mClipPagerAdapter);
+            
+        }
+        
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                 Bundle savedInstanceState) {
@@ -357,7 +368,7 @@ public class SceneEditorNoSwipeActivity extends com.WazaBe.HoloEverywhere.sherlo
 
             	ImageView iv = new ImageView(getActivity());
             	if (sceneMedias[0] != null) {
-						iv.setImageBitmap(getVideoThumbnail(sceneMedias[0].getPath()));
+						iv.setImageBitmap(getThumbnail(sceneMedias[0]));
             	} else { 
             		iv.setImageDrawable(getActivity().getResources().getDrawable(R.drawable.cliptype_close));
             	}
@@ -365,7 +376,7 @@ public class SceneEditorNoSwipeActivity extends com.WazaBe.HoloEverywhere.sherlo
             	
             	iv = new ImageView(getActivity());
             	if (sceneMedias[1] != null) {
-            		iv.setImageBitmap(getVideoThumbnail(sceneMedias[1].getPath()));
+            		iv.setImageBitmap(getThumbnail(sceneMedias[1]));
             	} else { 
             		iv.setImageDrawable(getActivity().getResources().getDrawable(R.drawable.cliptype_detail));
             	}
@@ -373,7 +384,7 @@ public class SceneEditorNoSwipeActivity extends com.WazaBe.HoloEverywhere.sherlo
             	
             	iv = new ImageView(getActivity());
             	if (sceneMedias[2] != null) {
-            		iv.setImageBitmap(getVideoThumbnail(sceneMedias[2].getPath()));
+            		iv.setImageBitmap(getThumbnail(sceneMedias[2]));
             	} else { 
             		iv.setImageDrawable(getActivity().getResources().getDrawable(R.drawable.cliptype_long));
             	}
@@ -381,7 +392,7 @@ public class SceneEditorNoSwipeActivity extends com.WazaBe.HoloEverywhere.sherlo
             	
             	iv = new ImageView(getActivity());
             	if (sceneMedias[3] != null) {
-            		iv.setImageBitmap(getVideoThumbnail(sceneMedias[3].getPath()));
+            		iv.setImageBitmap(getThumbnail(sceneMedias[3]));
             	} else { 
             		iv.setImageDrawable(getActivity().getResources().getDrawable(R.drawable.cliptype_medium));
             	} 
@@ -389,7 +400,7 @@ public class SceneEditorNoSwipeActivity extends com.WazaBe.HoloEverywhere.sherlo
             	
             	iv = new ImageView(getActivity());
             	if (sceneMedias[4] != null) {
-            		iv.setImageBitmap(getVideoThumbnail(sceneMedias[4].getPath()));
+            		iv.setImageBitmap(getThumbnail(sceneMedias[4]));
             	} else { 
             		iv.setImageDrawable(getActivity().getResources().getDrawable(R.drawable.cliptype_wide));
             	}
@@ -562,7 +573,7 @@ public class SceneEditorNoSwipeActivity extends com.WazaBe.HoloEverywhere.sherlo
 	            
         		if (mMedia != null) {
         			
-        			Bitmap thumb = getVideoThumbnail(mMedia.getPath());
+        			Bitmap thumb = getThumbnail(mMedia);
         			iv.setImageBitmap(thumb);
         			
         		} else {
@@ -596,7 +607,7 @@ public class SceneEditorNoSwipeActivity extends com.WazaBe.HoloEverywhere.sherlo
 					public void onClick(View v) {
 					//	int cIdx = mClipViewPager.getCurrentItem();
 
-						ViewPager vp = (ViewPager) v.getParent().getParent().getParent();
+						ViewPager vp = (ViewPager) v.getParent().getParent().getParent().getParent();
 						mMPM.clipIndex = vp.getCurrentItem();
 						
 						openCaptureMode(clip, mClipIndex);
@@ -617,9 +628,16 @@ public class SceneEditorNoSwipeActivity extends com.WazaBe.HoloEverywhere.sherlo
 
 //    public void addMediaViewToClipPager(int clipIndex, MediaView mv) {
     public void refreshClipPager() {
-    	//if ((mSceneChooserFragment != null) && (mSceneChooserFragment.mClipPagerAdapter != null)) {
-    	//	mSceneChooserFragment.mClipPagerAdapter.notifyDataSetChanged();
-    	//}
+    	if (mFragmentTab0 != null) {
+    		try
+    		{
+    			mFragmentTab0.reloadClips();
+    		}
+    		catch (Exception e)
+    		{
+    			Log.e(AppConstants.TAG,"error reloading clips",e);
+    		}
+    	}
     }
 
 	@Override
@@ -684,34 +702,55 @@ public class SceneEditorNoSwipeActivity extends com.WazaBe.HoloEverywhere.sherlo
 			else if (reqCode == Project.STORY_TYPE_AUDIO)
 			{
 				Uri uriAudio = intent.getData(); 
-				//CAPTURE_MIMETYPE_AUDIO
-				
+				mMPM.handleResponse(intent);
 			}
 			else
 			{
 				mMPM.handleResponse(intent);
 
 			}
+			
+			this.refreshClipPager();
 		}
 	}
 	
-	public Bitmap getVideoThumbnail (String path)
+	public Bitmap getThumbnail (Media media)
 	{
-		File fileThumb = new File(path + ".jpg");
-		if (fileThumb.exists())
+		String path = media.getPath();
+		
+		if (media.getMimeType() == null)
 		{
-			return BitmapFactory.decodeFile(fileThumb.getAbsolutePath());
+			return null;
+		}
+		else if (media.getMimeType().startsWith("video"))
+		{
+			File fileThumb = new File(path + ".jpg");
+			if (fileThumb.exists())
+			{
+				return BitmapFactory.decodeFile(fileThumb.getAbsolutePath());
+			}
+			else
+			{
+				Bitmap bmp = MediaUtils.getVideoFrame(path, -1);
+			    try {
+					bmp.compress(Bitmap.CompressFormat.JPEG, 70, new FileOutputStream(fileThumb));
+				} catch (FileNotFoundException e) {
+					Log.e(AppConstants.TAG,"could not cache video thumb",e);
+				}
+	
+				return bmp;
+			}
+		}
+		else if (media.getMimeType().startsWith("image"))
+		{
+			 final BitmapFactory.Options options = new BitmapFactory.Options();
+			options.inSampleSize = 4;
+			  
+			return BitmapFactory.decodeFile(path, options);
 		}
 		else
 		{
-			Bitmap bmp = MediaUtils.getVideoFrame(path, -1);
-		    try {
-				bmp.compress(Bitmap.CompressFormat.JPEG, 70, new FileOutputStream(fileThumb));
-			} catch (FileNotFoundException e) {
-				Log.e(AppConstants.TAG,"could not cache video thumb",e);
-			}
-
-			return bmp;
+			return BitmapFactory.decodeResource(getResources(), R.drawable.thumb_complete);
 		}
 	}
 }
