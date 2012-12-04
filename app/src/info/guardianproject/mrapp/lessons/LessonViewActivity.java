@@ -151,7 +151,10 @@ public class LessonViewActivity extends SherlockActivity {
 			StoryMakerApp.getLessonManager().updateLessonStatus(mLessonPath, Lesson.STATUS_COMPLETE);
 			//TODO do something here to mark lesson as completed; need to update database
 	    	Toast.makeText(this, R.string.lessons_congratulations_you_have_completed_the_lesson_, Toast.LENGTH_LONG).show();
+	    	
+	    	setResult(RESULT_OK);
 	    	finish();
+	    	
 		} catch (IOException e) {
 			Log.e(AppConstants.TAG,"error updating app status",e);
 		}

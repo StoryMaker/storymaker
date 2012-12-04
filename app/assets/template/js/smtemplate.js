@@ -1,5 +1,8 @@
 
 var BASE_LOCAL_PATH = 'file:///android_asset/template/';
+var numQuestions = 0;
+var numCorrectAnswers = 0;
+var URI_LESSON_COMPLETE = 'stmk://lesson/complete/';
 
 function displayTextile(textileSrc,elementId) {
 		var html = convert(textileSrc);
@@ -47,7 +50,7 @@ $.ajax({
  		$('#page' + i + ' a').attr("rel", "external");
 		$('#page' + i).trigger("create");
 		
-		$("#swmain").append('<div id="pagec" class="subswipe"><p><center><h2>Lesson Completed!</h2><h3><a href="stmk://lesson/complete/">TOUCH HERE TO CONTINUE</a></h3></center></p></div>');
+		$("#swmain").append('<div id="pagec" class="subswipe"><p></p></div>');
 		$('#pagec a').attr("rel", "external");
 		$('#pagec').trigger("create");
 	}
@@ -104,10 +107,6 @@ $.ajax({
 				
 			});
 			
-			$("#swmain").append('<div id="pagec" class="subswipe"><p><center><h2>Lesson Completed!</h2><h3><a href="stmk://lesson/complete/">TOUCH HERE TO CONTINUE</a></h3></center></p></div>');
-		 	$('#pagec a').attr("rel", "external");
-			$('#pagec').trigger("create");
-				
 		}
 		
 		//make the lists look prettier
@@ -119,8 +118,12 @@ $.ajax({
  		 	var solution = '';
  		 	
  		 	$(this).find(':checked').each (function(){
- 		 	
- 		 		solution = $(this).attr('value');
+ 		 		
+ 		 		if (solution.length > 0)
+ 		 			solution += ',';
+ 		 			
+ 		 		solution += $(this).attr('value');
+ 		 		
  		 	});
  		 	
  		 	var answer = $(this).children('.correct').attr('value');
@@ -130,6 +133,13 @@ $.ajax({
  		 	if (answer === solution)
  		 	{
  		 		msg = 'Correct!';
+ 		 		numCorrectAnswers++;
+ 		 		
+ 		 		if (numCorrectAnswers >= numQuestions)
+ 		 		{
+ 		 			//the lesson is complete!
+ 		 			location.href=URI_LESSON_COMPLETE;
+ 		 		}
  		 		
  		 	}
  		 	else
@@ -162,7 +172,6 @@ function parseQuizText(text) {
 	
 	var matches = [], i, len = parts.length;
 	
-	
 	var qIdx = 1;
 	
 	for(i = 0; i < len; i += 1) {
@@ -171,6 +180,8 @@ function parseQuizText(text) {
 		
 		if(question.test(part)) {
 		
+			numQuestions++;
+			
 			var questionText = "";
 			var qparts = part.split(":");
 			
