@@ -168,7 +168,7 @@ public class LessonListView extends ListView implements LessonManagerListener {
 		intent.putExtra("title", lesson.mTitle);
 		intent.putExtra("url", lesson.mResourcePath);
 		intent.putExtra("lessonPath", lesson.mLocalPath.getAbsolutePath());
-		getContext().startActivity(intent);
+		mActivity.startActivityForResult(intent, 1);
 		
 	}
 	
@@ -211,6 +211,11 @@ public class LessonListView extends ListView implements LessonManagerListener {
     	
     };
     
+    public void refreshList ()
+    {
+    	changeLessonFolder(mSubFolder);
+    	loadLessonListAdapter ();
+    }
     
     private void loadLessonListAdapter ()
     {
