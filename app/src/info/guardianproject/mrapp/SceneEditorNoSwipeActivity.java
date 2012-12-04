@@ -458,8 +458,18 @@ public class SceneEditorNoSwipeActivity extends com.WazaBe.HoloEverywhere.sherlo
     			{
     				EditText et = (EditText)findViewById(R.id.editTextDescribe);
     				ServerManager sm = StoryMakerApp.getServerManager();
+    				
+    				String title = mMPM.mProject.getTitle();
+    				String desc = et.getText().toString();
+    				
+    				mMPM.doExportMedia();
+    				
+    			
+    				
     				try {
-						sm.post("test post", et.getText().toString());
+    					
+						sm.post(title, desc);
+						
 						
 						mHandlerPub.sendEmptyMessage(0);
 						
