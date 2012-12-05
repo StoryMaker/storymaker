@@ -1,8 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="info.guardianproject.mrapp"
     android:installLocation="auto"
-    android:versionCode="16"
-    android:versionName="0.0.2-dev-build16" >
+    android:versionCode="17"
+    android:versionName="0.0.2-dev-build17" >
 
     <uses-sdk
         android:minSdkVersion="8"
