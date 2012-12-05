@@ -58,6 +58,7 @@ public class StoryMakerApp extends Application {
 	public void onCreate() {
 		super.onCreate();
 
+		updateLocale(LOCALE_DEFAULT);
 		
 		SQLiteDatabase.loadLibs(this);
 
@@ -81,9 +82,16 @@ public class StoryMakerApp extends Application {
 
 	public void updateLocale (String newLocale)
 	{
+        Configuration config = getResources().getConfiguration();
 		mLocale = new Locale(newLocale);
-		Locale.setDefault(mLocale);
 		
+		Locale.setDefault(mLocale);
+		config.locale = mLocale;
+        getResources().updateConfiguration(config, getResources().getDisplayMetrics());
+        
+        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
+        settings.edit().putString(PREF_LOCALE,newLocale);
+        
 		mLessonManager = new LessonManager (this, bootstrapUrlString, new File(getExternalFilesDir(null), "lessons/" + newLocale));
 
 	}
