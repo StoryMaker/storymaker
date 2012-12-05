@@ -331,11 +331,8 @@ public class SceneEditorNoSwipeActivity extends com.WazaBe.HoloEverywhere.sherlo
         public ViewPager mAddClipsViewPager;
         View mView = null;
         public AddClipsPagerAdapter mAddClipsPagerAdapter;
-<<<<<<< HEAD
         private FragmentManager mFm;
         private String mTemplatePath;
-=======
->>>>>>> reordering clips works; clarified some variable names
         
         /**
          * The sortable grid view that contains the clips to reorder on the Order tab
@@ -672,9 +669,6 @@ public class SceneEditorNoSwipeActivity extends com.WazaBe.HoloEverywhere.sherlo
 	
 					@Override
 					public void onClick(View v) {
-					//	int cIdx = mClipViewPager.getCurrentItem();
-
-//						ViewPager vp = (ViewPager) v.getParent().getParent().getParent();
 						ViewPager vp = (ViewPager) v.getParent().getParent().getParent().getParent();
 						mMPM.mClipIndex = vp.getCurrentItem();
 						
