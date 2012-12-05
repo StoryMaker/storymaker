@@ -223,4 +223,7 @@ Build number: <xliff:g id="build_number">%s</xliff:g>\n
     <string name="lesson_status_in_progress">In progress</string>
     <string name="lesson_status_complete">COMPLETE!</string>
     <string name="tap_to_start_capture">tap to start capture</string>
+    <string name="no_lessons_available_tap_to_load_">No lessons available (tap to load)</string>
+    <string name="_lesson_complete">" lesson complete"</string>
+    <string name="_of_">" of "</string>
 </resources>

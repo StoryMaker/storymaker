@@ -374,7 +374,8 @@ public class SceneEditorNoSwipeActivity extends com.WazaBe.HoloEverywhere.sherlo
             } else if (this.layout == R.layout.fragment_order_clips) {
             	mOrderClipsDGV = (DraggableGridView) view.findViewById(R.id.DraggableGridView01);
             	mImageViewMedia = (ImageView) view.findViewById(R.id.imageView1);
-            	//mPreviewVideoView = (PreviewVideoView) view.findViewById(R.id.previewVideoView);
+            	
+            	mPreviewVideoView = (PreviewVideoView) view.findViewById(R.id.previewVideoView);
             	final ImageView imageViewMedia = (ImageView) view.findViewById(R.id.imageView1);
             	
             	Media[] sceneMedias = mMPM.mProject.getMediaAsArray();
@@ -788,7 +789,10 @@ public class SceneEditorNoSwipeActivity extends com.WazaBe.HoloEverywhere.sherlo
 			File fileThumb = new File(path + ".jpg");
 			if (fileThumb.exists())
 			{
-				return BitmapFactory.decodeFile(fileThumb.getAbsolutePath());
+
+				 final BitmapFactory.Options options = new BitmapFactory.Options();
+				options.inSampleSize = 4;
+				return BitmapFactory.decodeFile(fileThumb.getAbsolutePath(),options);
 			}
 			else
 			{

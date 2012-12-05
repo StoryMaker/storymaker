@@ -32,7 +32,7 @@ public class StoryMakerApp extends Application {
 	private final static String PREF_LOCALE = "plocale";
 	
 	//just throwing some test tfiles up here for now 
-	private String bootstrapUrlString = "https://guardianproject.info/downloads/storymaker/";
+	private String bootstrapUrlString = "https://guardianproject.info/private/storymaker/content/lessons/";
 	
 	 public void InitializeSQLCipher(String dbName, String passphrase) {
 	        	      
@@ -72,7 +72,7 @@ public class StoryMakerApp extends Application {
 		try
 		{
 			
-			mLessonManager = new LessonManager (this, bootstrapUrlString, new File(getExternalFilesDir(null), "lessons/" + mLocale.getLanguage()));
+			mLessonManager = new LessonManager (this, bootstrapUrlString + mLocale.getLanguage() + "/", new File(getExternalFilesDir(null), "lessons/" + mLocale.getLanguage()));
 			mServerManager = new ServerManager (this);
 		}
 		catch (Exception e)
@@ -94,7 +94,7 @@ public class StoryMakerApp extends Application {
         settings.edit().putString(PREF_LOCALE,newLocale);
         settings.edit().commit();
         //need to reload lesson manager for new locale
-		mLessonManager = new LessonManager (this, bootstrapUrlString, new File(getExternalFilesDir(null), "lessons/" + newLocale));
+		mLessonManager = new LessonManager (this, bootstrapUrlString+ mLocale.getLanguage() + "/", new File(getExternalFilesDir(null), "lessons/" + newLocale));
 
 	}
 	
@@ -136,7 +136,7 @@ public class StoryMakerApp extends Application {
 	        if (updatedLocale)
 	        {
 	            //need to reload lesson manager for new locale
-				mLessonManager = new LessonManager (this, bootstrapUrlString, new File(getExternalFilesDir(null), "lessons/" + mLocale.getLanguage()));
+				mLessonManager = new LessonManager (this, bootstrapUrlString+ mLocale.getLanguage() + "/", new File(getExternalFilesDir(null), "lessons/" + mLocale.getLanguage()));
 
 	        }
 	        

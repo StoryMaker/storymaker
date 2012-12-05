@@ -47,10 +47,10 @@ public class LessonManager implements Runnable {
 	private Context mContext;
 	
 	private String mSubFolder;
-	private Locale mLocale;
 	
 	public final static String LESSON_METADATA_FILE = "lesson.json";
 	public final static String LESSON_STATUS_FILE = "status.txt";
+	public final static String LESSON_INDEX_FILE = "index.json";
 	
 	public LessonManager (Context context, String remoteRepoUrl, File localStorageRoot)
 	{
@@ -208,12 +208,16 @@ public class LessonManager implements Runnable {
 			// open URL and download file listing
 			StrongHttpsClient httpClient = new StrongHttpsClient(mContext);
 			
-			String urlString = mUrlRemoteRepo + "index.json";
-			
+			String urlBase = mUrlRemoteRepo;
 			if (mSubFolder != null)
-				urlString = mUrlRemoteRepo + mSubFolder + "/" + "index.json";
+				urlBase += mSubFolder + '/';
 			
-			HttpGet request = new HttpGet(urlString);
+			String urlIndex = urlBase + LESSON_INDEX_FILE;
+			
+			Log.d(AppConstants.TAG,"Loading lesson index: " + urlIndex);
+			
+			
+			HttpGet request = new HttpGet(urlIndex);
 			HttpResponse response = httpClient.execute(request);
 
 			long conLen = response.getEntity().getContentLength();
@@ -237,9 +241,12 @@ public class LessonManager implements Runnable {
 						String title = jobj.getString("title");
 						String lessonUrl = jobj.getJSONObject("resource").getString("url");
 						
-						
 						//this should be a zip file
-						URI urlLesson = new URI(mUrlRemoteRepo + lessonUrl);
+						String sUrlLesson = urlBase + lessonUrl;
+						
+						Log.d(AppConstants.TAG,"Loading lesson zip: " + sUrlLesson);
+						
+						URI urlLesson = new URI(sUrlLesson);
 						request = new HttpGet(urlLesson);
 						response = httpClient.execute(request);
 						
@@ -267,9 +274,12 @@ public class LessonManager implements Runnable {
 	
 						if (mListener != null)
 							mListener.loadingLessonFromServer(title);
+						
+						fileZip.getParentFile().mkdirs();
+						
 						IOUtils.copyLarge(response.getEntity().getContent(),new FileOutputStream(fileZip));
 						
-						unpack(fileZip,mLocalStorageRoot);
+						unpack(fileZip,lessonFolder);
 						
 					//	fileZip.delete();
 					}

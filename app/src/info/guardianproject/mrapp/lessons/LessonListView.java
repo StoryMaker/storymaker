@@ -109,8 +109,15 @@ public class LessonListView extends ListView implements LessonManagerListener {
     			if (lesson.mStatus == Lesson.STATUS_COMPLETE)
     				lessonsComplete++;
     		
-    		lg.mStatus = lessonsComplete + " of " + lessons.size() + " lesson complete";
-    		
+    		if (lessons.size() == 0)
+    		{
+    			lg.mStatus = getContext().getString(
+						R.string.no_lessons_available_tap_to_load_);
+    		}
+    		else
+    		{
+    			lg.mStatus = lessonsComplete + getContext().getString(R.string._of_) + lessons.size() + getContext().getString(R.string._lesson_complete);
+    		}
     		alGroups.add(lg);
     	}
     	
@@ -232,7 +239,6 @@ public class LessonListView extends ListView implements LessonManagerListener {
     
 	@Override
 	public void lessonsLoadedFromServer() {
-		
 		
     	mListLessons = mLessonManager.loadLessonList(getContext(), mLocale.getLanguage());
 
