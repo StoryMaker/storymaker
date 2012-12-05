@@ -358,7 +358,6 @@ public class MediaProjectManager implements MediaManager {
     	Log.i(AppConstants.TAG,"media status: " + msg);
     }
     
-	
 	public void showMediaPrefs (Activity activity)
 	{
 		Intent intent = new Intent(activity, MediaOutputPreferences.class);

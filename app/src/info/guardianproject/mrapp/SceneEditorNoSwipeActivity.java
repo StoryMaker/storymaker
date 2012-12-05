@@ -331,8 +331,11 @@ public class SceneEditorNoSwipeActivity extends com.WazaBe.HoloEverywhere.sherlo
         public ViewPager mAddClipsViewPager;
         View mView = null;
         public AddClipsPagerAdapter mAddClipsPagerAdapter;
+<<<<<<< HEAD
         private FragmentManager mFm;
         private String mTemplatePath;
+=======
+>>>>>>> reordering clips works; clarified some variable names
         
         /**
          * The sortable grid view that contains the clips to reorder on the Order tab
@@ -374,7 +377,8 @@ public class SceneEditorNoSwipeActivity extends com.WazaBe.HoloEverywhere.sherlo
             } else if (this.layout == R.layout.fragment_order_clips) {
             	mOrderClipsDGV = (DraggableGridView) view.findViewById(R.id.DraggableGridView01);
             	mImageViewMedia = (ImageView) view.findViewById(R.id.imageView1);
-            	mPreviewVideoView = (PreviewVideoView) view.findViewById(R.id.previewVideoView);
+            	//mPreviewVideoView = (PreviewVideoView) view.findViewById(R.id.previewVideoView);
+            	final ImageView imageViewMedia = (ImageView) view.findViewById(R.id.imageView1);
             	
             	Media[] sceneMedias = mMPM.mProject.getMediaAsArray();
 
@@ -423,7 +427,7 @@ public class SceneEditorNoSwipeActivity extends com.WazaBe.HoloEverywhere.sherlo
 					@Override
 					public void onRearrange(int oldIndex, int newIndex) {
 						mMPM.mProject.swapMediaIndex(oldIndex, newIndex);
-						((SceneEditorNoSwipeActivity)mActivity).refreshClipPager();
+						//((SceneEditorNoSwipeActivity)mActivity).refreshClipPager();
 						Log.d(TAG, "grid rearranged");
 					}
 				});
@@ -436,10 +440,10 @@ public class SceneEditorNoSwipeActivity extends com.WazaBe.HoloEverywhere.sherlo
             			Media[] medias = mMPM.mProject.getMediaAsArray();
             			if (medias[position] != null) {
             				Bitmap bm = MediaUtils.getVideoFrame(medias[position].getPath(), -1);
-            				mImageViewMedia.setImageBitmap(bm);
+            				imageViewMedia.setImageBitmap(bm);
             			} else {
             				TypedArray drawableIds = getActivity().getResources().obtainTypedArray(R.array.cliptype_thumbnails);
-            				mImageViewMedia.setImageResource(drawableIds.getResourceId(position, 0));
+            				imageViewMedia.setImageResource(drawableIds.getResourceId(position, 0));
             			}
             			
             		}
@@ -598,7 +602,6 @@ public class SceneEditorNoSwipeActivity extends com.WazaBe.HoloEverywhere.sherlo
                 return 5;
             }
             
-            // see comment #10 in http://code.google.com/p/android/issues/detail?id=19001
             @Override 
             public int getItemPosition(Object object) {
             	return POSITION_NONE;
