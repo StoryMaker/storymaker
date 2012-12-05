@@ -169,7 +169,7 @@ public class Project {
         if (cursor.moveToFirst()) {
             do {
             	Media media = new Media(context, cursor);
-                paths.add(media.getPath());
+                paths.set(media.clipIndex, media.getPath());
             } while (cursor.moveToNext());
         }
         cursor.close();
@@ -184,9 +184,10 @@ public class Project {
     public Cursor getMediaAsCursor() {
         String selection = "project_id=?";
         String[] selectionArgs = new String[] { "" + getId() };
+        String orderBy = "clip_index";
         return context.getContentResolver().query(
                 ProjectsProvider.MEDIA_CONTENT_URI, null, selection,
-                selectionArgs, null);
+                selectionArgs, orderBy);
     }
 
     /**

@@ -462,6 +462,15 @@ public class SceneEditorNoSwipeActivity extends com.WazaBe.HoloEverywhere.sherlo
 						// FIXME need to know when mPreviewVideoView is done playing so we can return the thumbnail
 					}
 				} );
+            	
+            	mPreviewVideoView.setCompletionCallback(new Runnable() {
+					@Override
+					public void run() {
+						mImageViewMedia.setVisibility(View.VISIBLE);
+						mPreviewVideoView.setVisibility(View.GONE);
+					}
+				});
+            	
             } else if (this.layout == R.layout.fragment_story_publish) {
             	
             	Button btn = (Button)view.findViewById(R.id.btnPublish);

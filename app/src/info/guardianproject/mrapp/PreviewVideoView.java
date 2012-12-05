@@ -21,6 +21,7 @@ public class PreviewVideoView extends VideoView implements MediaPlayer.OnComplet
 	protected int mCurrentMedia = 0;
 	protected String[] mPathArray;
 	MediaPlayer mp;
+	protected Runnable mCompletionCallback = null;
 	
 	public PreviewVideoView(Context context) {
 		super(context);
@@ -47,15 +48,27 @@ public class PreviewVideoView extends VideoView implements MediaPlayer.OnComplet
 		mPathArray = pathArray;
 	}
 	
+	public void setCompletionCallback(Runnable runnable) {
+		mCompletionCallback = runnable;
+	}
+	
 	public void play() {
-		for (; mCurrentMedia < mPathArray.length ; mCurrentMedia++) {
-			String path = mPathArray[mCurrentMedia];
-			if (path != null) {
-				File file = new File(path);
-				if (file.exists()) {
-					this.setVideoPath(path);
-					this.start();
-					break;
+		for (; mCurrentMedia <= mPathArray.length ; mCurrentMedia++) {
+			if (mCurrentMedia == mPathArray.length) {
+				mCurrentMedia = 0;
+				if (mCompletionCallback != null) {
+					mCompletionCallback.run();
+				}
+				break;
+			} else {
+				String path = mPathArray[mCurrentMedia];
+				if (path != null) {
+					File file = new File(path);
+					if (file.exists()) {
+						this.setVideoPath(path);
+						this.start();
+						break;
+					}
 				}
 			}
 		}
@@ -76,6 +89,9 @@ public class PreviewVideoView extends VideoView implements MediaPlayer.OnComplet
 			play();
 		} else {
 			mCurrentMedia = 0;
+			if (mCompletionCallback != null) {
+				mCompletionCallback.run();
+			}
 		}
 	}
 }
