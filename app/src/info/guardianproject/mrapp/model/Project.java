@@ -1,6 +1,7 @@
 package info.guardianproject.mrapp.model;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import info.guardianproject.mrapp.db.ProjectsProvider;
 import info.guardianproject.mrapp.db.StoryMakerDB;
@@ -8,8 +9,10 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
+import android.util.Log;
 
 public class Project {
+	final private String TAG = "Project";
     protected Context context;
     protected int id;
     protected String title;
@@ -117,11 +120,22 @@ public class Project {
     }
     
     private void update() {
+    	Uri uri = ProjectsProvider.PROJECTS_CONTENT_URI.buildUpon().appendPath("" + id).build();
         String selection = StoryMakerDB.Schema.Projects.ID + "=?";
         String[] selectionArgs = new String[] { "" + id };
     	ContentValues values = getValues();
         int count = context.getContentResolver().update(
-                ProjectsProvider.PROJECTS_CONTENT_URI, values, selection, selectionArgs);
+                uri, values, selection, selectionArgs);
+        // FIXME make sure 1 row updated
+    }
+    
+    private void delete() {
+    	Uri uri = ProjectsProvider.PROJECTS_CONTENT_URI.buildUpon().appendPath("" + id).build();
+        String selection = StoryMakerDB.Schema.Projects.ID + "=?";
+        String[] selectionArgs = new String[] { "" + id };
+        int count = context.getContentResolver().delete(
+                uri, selection, selectionArgs);
+        Log.d(TAG, "deleted project: " + id + ", rows deleted: " + count);
         // FIXME make sure 1 row updated
     }
 
@@ -165,6 +179,21 @@ public class Project {
         media.save();
     }
 
+    public void swapMediaIndex(int oldIndex, int newIndex) {
+    	Media media[] = getMediaAsArray();
+		Media oldMedia = media[oldIndex];
+		Media newMedia = media[newIndex];
+		
+		// FIXME we need objects to represent the empty template dummy's, otherwise the template won't be rearranged on next load
+    	if (oldMedia != null) {
+    		oldMedia.setClipIndex(newIndex);
+    		oldMedia.save();
+    	}
+    	if (newMedia != null) {
+    		newMedia.setClipIndex(oldIndex);
+    		newMedia.save();
+    	}
+    }
     
     /***** getters and setters *****/
 

@@ -13,6 +13,7 @@ import org.json.JSONException;
 
 import redstone.xmlrpc.XmlRpcFault;
 
+import info.guardianproject.bouncycastle.bcpg.MPInteger;
 import info.guardianproject.mrapp.media.MediaClip;
 import info.guardianproject.mrapp.media.MediaHelper;
 import info.guardianproject.mrapp.media.MediaProjectManager;
@@ -38,6 +39,7 @@ import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.NavUtils;
 import android.support.v4.view.ViewPager;
@@ -168,6 +170,20 @@ public class SceneEditorNoSwipeActivity extends com.WazaBe.HoloEverywhere.sherlo
         FragmentManager fm = getSupportFragmentManager();
         fm.beginTransaction().hide(mLastTabFrag).commit();
     }
+    
+//    protected void setupAddClipsFragment() {
+//    	FragmentManager fm = getSupportFragmentManager();
+//    
+//		 try {
+//			mFragmentTab0 = new SceneChooserFragment(R.layout.fragment_add_clips, fm, templateJsonPath);
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		} catch (JSONException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//    }
 
     @Override
     public void onTabSelected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
@@ -318,19 +334,19 @@ public class SceneEditorNoSwipeActivity extends com.WazaBe.HoloEverywhere.sherlo
     public class SceneChooserFragment extends Fragment {
     	private final static String TAG = "SceneChooserFragment";
         int layout;
-        public ViewPager mClipViewPager;
+        public ViewPager mAddClipsViewPager;
         View mView = null;
-        public ClipPagerAdapter mClipPagerAdapter;
+        public AddClipsPagerAdapter mAddClipsPagerAdapter;
         
         /**
          * The sortable grid view that contains the clips to reorder on the Order tab
          */
-        protected DraggableGridView mDGV;
+        protected DraggableGridView mOrderClipsDGV;
         
         public SceneChooserFragment(int layout, FragmentManager fm, String templatePath) throws IOException, JSONException {
             this.layout = layout;
             
-            mClipPagerAdapter = new ClipPagerAdapter(fm, templatePath);
+            mAddClipsPagerAdapter = new AddClipsPagerAdapter(fm, templatePath);
         }
 
         public static final String ARG_SECTION_NUMBER = "section_number";
@@ -342,16 +358,17 @@ public class SceneEditorNoSwipeActivity extends com.WazaBe.HoloEverywhere.sherlo
             View view = inflater.inflate(layout, null);
             if (this.layout == R.layout.fragment_add_clips) {
             	
-              // Set up the clip ViewPager with the clip adapter.
-              mClipViewPager = (ViewPager) view.findViewById(R.id.viewPager);
-              mClipViewPager.setPageMargin(-75);
-              mClipViewPager.setPageMarginDrawable(R.drawable.ic_action_forward_gray);
-              mClipViewPager.setOffscreenPageLimit(5);
-              mClipViewPager.setAdapter(mClipPagerAdapter);
+              // Set up the AddClips ViewPager with the AddClips adapter.
+              mAddClipsViewPager = (ViewPager) view.findViewById(R.id.viewPager);
+              mAddClipsViewPager.setPageMargin(-75);
+              mAddClipsViewPager.setPageMarginDrawable(R.drawable.ic_action_forward_gray);
+              mAddClipsViewPager.setOffscreenPageLimit(5);
+              mAddClipsViewPager.setAdapter(mAddClipsPagerAdapter);
 
               
             } else if (this.layout == R.layout.fragment_order_clips) {
-            	mDGV = (DraggableGridView) view.findViewById(R.id.DraggableGridView01);
+            	mOrderClipsDGV = (DraggableGridView) view.findViewById(R.id.DraggableGridView01);
+            	final ImageView imageViewMedia = (ImageView) view.findViewById(R.id.imageView1);
             	
             	Media[] sceneMedias = mMPM.mProject.getMediaAsArray();
 
@@ -361,7 +378,7 @@ public class SceneEditorNoSwipeActivity extends com.WazaBe.HoloEverywhere.sherlo
             	} else { 
             		iv.setImageDrawable(getActivity().getResources().getDrawable(R.drawable.cliptype_close));
             	}
-            	mDGV.addView(iv);
+            	mOrderClipsDGV.addView(iv);
             	
             	iv = new ImageView(getActivity());
             	if (sceneMedias[1] != null) {
@@ -369,7 +386,7 @@ public class SceneEditorNoSwipeActivity extends com.WazaBe.HoloEverywhere.sherlo
             	} else { 
             		iv.setImageDrawable(getActivity().getResources().getDrawable(R.drawable.cliptype_detail));
             	}
-            	mDGV.addView(iv);
+            	mOrderClipsDGV.addView(iv);
             	
             	iv = new ImageView(getActivity());
             	if (sceneMedias[2] != null) {
@@ -377,7 +394,7 @@ public class SceneEditorNoSwipeActivity extends com.WazaBe.HoloEverywhere.sherlo
             	} else { 
             		iv.setImageDrawable(getActivity().getResources().getDrawable(R.drawable.cliptype_long));
             	}
-            	mDGV.addView(iv);
+            	mOrderClipsDGV.addView(iv);
             	
             	iv = new ImageView(getActivity());
             	if (sceneMedias[3] != null) {
@@ -385,7 +402,7 @@ public class SceneEditorNoSwipeActivity extends com.WazaBe.HoloEverywhere.sherlo
             	} else { 
             		iv.setImageDrawable(getActivity().getResources().getDrawable(R.drawable.cliptype_medium));
             	} 
-            	mDGV.addView(iv);
+            	mOrderClipsDGV.addView(iv);
             	
             	iv = new ImageView(getActivity());
             	if (sceneMedias[4] != null) {
@@ -393,22 +410,30 @@ public class SceneEditorNoSwipeActivity extends com.WazaBe.HoloEverywhere.sherlo
             	} else { 
             		iv.setImageDrawable(getActivity().getResources().getDrawable(R.drawable.cliptype_wide));
             	}
-            	mDGV.addView(iv);
+            	mOrderClipsDGV.addView(iv);
         		
-            	mDGV.setOnRearrangeListener(new OnRearrangeListener() {
+            	mOrderClipsDGV.setOnRearrangeListener(new OnRearrangeListener() {
 					
 					@Override
 					public void onRearrange(int oldIndex, int newIndex) {
-						// TODO Auto-generated method stub
+						mMPM.mProject.swapMediaIndex(oldIndex, newIndex);
 						Log.d(TAG, "grid rearranged");
 					}
 				});
             	
-            	mDGV.setOnItemClickListener(new OnItemClickListener() {
+            	mOrderClipsDGV.setOnItemClickListener(new OnItemClickListener() {
             		
             		@Override
         			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             			Log.d(TAG, "item clicked");
+            			Media[] medias = mMPM.mProject.getMediaAsArray();
+            			if (medias[position] != null) {
+            				Bitmap bm = MediaUtils.getVideoFrame(medias[position].getPath(), -1);
+            				imageViewMedia.setImageBitmap(bm);
+            			} else {
+            				TypedArray drawableIds = getActivity().getResources().obtainTypedArray(R.array.cliptype_thumbnails);
+            				imageViewMedia.setImageResource(drawableIds.getResourceId(position, 0));
+            			}
             			
             		}
 				});
@@ -495,12 +520,12 @@ public class SceneEditorNoSwipeActivity extends com.WazaBe.HoloEverywhere.sherlo
         /**
          * A {@link FragmentPagerAdapter} that returns a fragment corresponding to the clips we are editing
          */
-        public class ClipPagerAdapter extends FragmentPagerAdapter {
+        public class AddClipsPagerAdapter extends FragmentStatePagerAdapter {
 
 
             private Template sTemplate;
             
-            public ClipPagerAdapter(FragmentManager fm, String path) throws IOException, JSONException {
+            public AddClipsPagerAdapter(FragmentManager fm, String path) throws IOException, JSONException {
                 super(fm);
               
                 loadStoryTemplate(path);
@@ -527,6 +552,11 @@ public class SceneEditorNoSwipeActivity extends com.WazaBe.HoloEverywhere.sherlo
             @Override
             public int getCount() {
                 return 5;
+            }
+            
+            @Override 
+            public int getItemPosition(Object object) {
+            	return POSITION_NONE;
             }
         }
     }
@@ -597,7 +627,7 @@ public class SceneEditorNoSwipeActivity extends com.WazaBe.HoloEverywhere.sherlo
 					//	int cIdx = mClipViewPager.getCurrentItem();
 
 						ViewPager vp = (ViewPager) v.getParent().getParent().getParent();
-						mMPM.clipIndex = vp.getCurrentItem();
+						mMPM.mClipIndex = vp.getCurrentItem();
 						
 						openCaptureMode(clip, mClipIndex);
 						
@@ -615,11 +645,11 @@ public class SceneEditorNoSwipeActivity extends com.WazaBe.HoloEverywhere.sherlo
         }
     }
 
-//    public void addMediaViewToClipPager(int clipIndex, MediaView mv) {
     public void refreshClipPager() {
-    	//if ((mSceneChooserFragment != null) && (mSceneChooserFragment.mClipPagerAdapter != null)) {
-    	//	mSceneChooserFragment.mClipPagerAdapter.notifyDataSetChanged();
-    	//}
+    	if ((mFragmentTab0 != null) && (mFragmentTab0.mAddClipsPagerAdapter != null)) {
+    		mFragmentTab0.mAddClipsPagerAdapter.notifyDataSetChanged(); // FIXME this isn't refreshing the fragments for some reason
+//    		setupAddClipsFragment();
+    	}
     }
 
 	@Override
@@ -637,7 +667,7 @@ public class SceneEditorNoSwipeActivity extends com.WazaBe.HoloEverywhere.sherlo
 			Intent i = new Intent(mContext, SoundRecorder.class);
 			i.setType(CAPTURE_MIMETYPE_AUDIO);
 			i.putExtra("mode", mStoryMode);
-			mMPM.clipIndex = clipIndex;
+			mMPM.mClipIndex = clipIndex;
 			startActivityForResult(i,mStoryMode);
 
 		}
@@ -650,7 +680,7 @@ public class SceneEditorNoSwipeActivity extends com.WazaBe.HoloEverywhere.sherlo
 			Intent i = new Intent(mContext, OverlayCameraActivity.class);
 			i.putExtra("group", clip.mShotType);
 			i.putExtra("mode", mStoryMode);
-			mMPM.clipIndex = clipIndex;
+			mMPM.mClipIndex = clipIndex;
 			startActivityForResult(i,REQ_OVERLAY_CAM);
 		}
 	}
