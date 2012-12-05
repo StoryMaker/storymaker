@@ -86,7 +86,7 @@ Swipe.prototype = {
     this.cache = new Array(this.length);
 
     // return immediately if their are less than two slides
-    //if (this.length < 2) return;
+//    if (this.length < 2) return;
 
     // determine width of each slide
     this.width = this.container.getBoundingClientRect().width || this.container.offsetWidth;
@@ -100,7 +100,8 @@ Swipe.prototype = {
     this.element.style.width = (this.slides.length * this.width) + 'px';
 
     // stack elements
-    for (var index = this.length - 1; index > -1; index--) {
+   for (var index = this.length - 1; index > -1; index--) {
+  //for (var index = 0; index <this.length; index++) {
 
       var elem = this.slides[index];
 
@@ -109,6 +110,9 @@ Swipe.prototype = {
 
       if (this.browser.transitions) {
         elem.style.left = (index * -this.width) + 'px';
+     //   elem.style.left = (index * this.width) + 'px';
+        
+        //elem.style.right = (index * this.width) + 'px';
       }
 
       // add this index to the reference array    0:before 1:equal 2:after
@@ -122,6 +126,7 @@ Swipe.prototype = {
       this._stack(refArray[0],-1);
       this._stack(refArray[1],0);
       this._stack(refArray[2],1);
+	
 
     }
 
@@ -310,9 +315,10 @@ Swipe.prototype = {
           || Math.abs(_this.deltaX) > _this.width/2,        // or if slide amt is greater than half the width
 
     // determine if slide attempt is past start and end
-        isPastBounds = 
-          !_this.index && _this.deltaX > 0                          // if first slide and slide amt is greater than 0
-          || _this.index == _this.length - 1 && _this.deltaX < 0,    // or if last slide and slide amt is less than 0
+      //  isPastBounds = 
+      //    !_this.index && _this.deltaX > 0                          // if first slide and slide amt is greater than 0
+       //   || _this.index == _this.length - 1 && _this.deltaX < 0,    // or if last slide and slide amt is less than 0
+        isPastBounds = false;
         
         direction = _this.deltaX < 0; // true:right false:left
 
@@ -432,7 +438,6 @@ Swipe.prototype = {
     
     if (!elem) return;
     
-
     var style = elem.style;
 
     // set duration speed to 0
