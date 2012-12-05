@@ -50,9 +50,9 @@ $.ajax({
  		$('#page' + i + ' a').attr("rel", "external");
 		$('#page' + i).trigger("create");
 		
-		$("#swmain").append('<div id="pagec" class="subswipe"><p></p></div>');
-		$('#pagec a').attr("rel", "external");
-		$('#pagec').trigger("create");
+		//$("#swmain").append('<div id="pagec" class="subswipe"><p></p></div>');
+		//$('#pagec a').attr("rel", "external");
+		//$('#pagec').trigger("create");
 	}
 	else
 	{

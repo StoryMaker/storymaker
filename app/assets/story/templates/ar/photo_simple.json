@@ -1,0 +1,52 @@
+{"clips":[
+{
+"Title": "Environmental",
+"Artwork": "cliptype_wide",
+"Shot Size": "Wide",
+"Goal": "Show where your story takes place.",
+"Length": "X seconds",
+"Description": "Indicate the country or an ethnic or religious element. Include landmarks or other location specific information.",
+"Tip": "Landmarks help the audience understand their location.",
+"Security Concern": "-"
+},
+{
+"Title": "Reaction/Interaction",
+"Artwork": "cliptype_medium",
+"Shot Size": "Medium",
+"Goal": "Depict how people are responding to the event or its aftermath.",
+"Length": "X seconds",
+"Description": "Show the character interacting with others. Build a connection between the viewer and subject. Your character should fill 20% of your frame. Good for Breaking News.",
+"Tip": "Keep your character on one of the vertical lines to frame your shot properly.",
+"Security Concern": "-"
+},
+{
+"Title": "Candid",
+"Artwork": "cliptype_long",
+"Shot Size": "Long",
+"Goal": "Show the character engaged in her environment.",
+"Length": "X seconds",
+"Description": "Depict the character behaving naturally. Why is the character noteworthy? Show the audience. Good for Features and Events.",
+"Tip": "Place your character on one side of the frame, frame your shot to show something else important to the story on the other side.",
+"Security Concern": "-"
+},
+{
+"Title": "Portrait",
+"Artwork": "cliptype_close",
+"Shot Size": "Close",
+"Goal": "Introduce the character. Get close.",
+"Length": "X seconds",
+"Description": "Your primary focus is the main character in your story. Highlight the characters emotions or state of mind. Good for Events and Profiles.",
+"Tip": "Use the eye-line to frame your shot properly.",
+"Security Concern": "-"
+},
+{
+"Title": "Signature",
+"Artwork": "cliptype_detail",
+"Shot Size": "Detail",
+"Goal": "Summarize the entire issue by illustrating an essential element of the story.",
+"Length": "X seconds",
+"Description": "A strong signature photo will intrigue the audience and encourage them to look further. This element should fill at least 50% of the frame.", 
+"Tip": "Set your camera to Macro if you are shooting less than arm’s length from your subject.",
+"Security Concern": "-"
+}
+]}
