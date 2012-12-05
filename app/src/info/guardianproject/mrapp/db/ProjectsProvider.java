@@ -136,26 +136,49 @@ public class ProjectsProvider extends ContentProvider {
 		String table;
 		switch (uriType) {
 		case PROJECTS:
+		case PROJECT_ID:
 			table = StoryMakerDB.Schema.Projects.NAME;
 			break;
 		case LESSONS:
+		case LESSON_ID:
 			table = StoryMakerDB.Schema.Lessons.NAME;
 			break;
 		case MEDIA:
+		case MEDIA_ID:
 			table = StoryMakerDB.Schema.Media.NAME;
 			break;
 		default:
 			throw new IllegalArgumentException("Unknown URI");
 		}
 		count = mDB.getWritableDatabase(mPassphrase).delete(table, selection, selectionArgs);
-            getContext().getContentResolver().notifyChange(uri, null);
+        getContext().getContentResolver().notifyChange(uri, null);
 		return count;
 	}
 
 	@Override
 	public int update(Uri uri, ContentValues values, String selection,
 			String[] selectionArgs) {
-		// TODO Auto-generated method stub
-		return 0;
+		int uriType = sURIMatcher.match(uri);
+		int count;
+		String table;
+		switch (uriType) {
+		case PROJECTS:
+		case PROJECT_ID:
+			table = StoryMakerDB.Schema.Projects.NAME;
+			break;
+		case LESSONS:
+		case LESSON_ID:
+			table = StoryMakerDB.Schema.Lessons.NAME;
+			break;
+		case MEDIA:
+		case MEDIA_ID:
+			table = StoryMakerDB.Schema.Media.NAME;
+			break;
+		default:
+			throw new IllegalArgumentException("Unknown URI");
+		}
+		count = mDB.getWritableDatabase(mPassphrase).update(table, values, selection, selectionArgs);
+        getContext().getContentResolver().notifyChange(uri, null);
+		return count;
 	}
 }
