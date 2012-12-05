@@ -9,6 +9,7 @@ import info.guardianproject.mrapp.model.LessonGroup;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.Map.Entry;
 import java.util.Set;
 
@@ -36,11 +37,14 @@ public class LessonListView extends ListView implements LessonManagerListener {
 	private String mSubFolder = null; 
 	private LessonsActivity mActivity;
 	
+	private Locale mLocale = null;
+	
     public LessonListView (Context context, LessonsActivity activity) {
         
     	super (context);
     	
     	mActivity = activity;
+    	mLocale = ((StoryMakerApp)mActivity.getApplication()).getCurrentLocale();
     	
         mLessonManager = StoryMakerApp.getLessonManager();
         mLessonManager.setListener(this);
@@ -97,7 +101,7 @@ public class LessonListView extends ListView implements LessonManagerListener {
     		
     		String subFolder = lessonSectionsFolder[idx++];
     	
-    		ArrayList<Lesson> lessons = mLessonManager.loadLessonList(getContext(), mLessonManager.getLessonRoot(), subFolder);
+    		ArrayList<Lesson> lessons = LessonManager.loadLessonList(getContext(), mLessonManager.getLessonRoot(), subFolder, mLocale.getLanguage());
     		
     		int lessonsComplete = 0;
     		
@@ -135,7 +139,7 @@ public class LessonListView extends ListView implements LessonManagerListener {
     	mSubFolder = subFolder;
     	mLessonManager.setSubFolder(mSubFolder);
     	
-    	mListLessons = mLessonManager.loadLessonList(getContext());
+    	mListLessons = mLessonManager.loadLessonList(getContext(), mLocale.getLanguage());
     	
     	if (mListLessons.size() == 0)
     	{
@@ -230,7 +234,7 @@ public class LessonListView extends ListView implements LessonManagerListener {
 	public void lessonsLoadedFromServer() {
 		
 		
-    	mListLessons = mLessonManager.loadLessonList(getContext());
+    	mListLessons = mLessonManager.loadLessonList(getContext(), mLocale.getLanguage());
 
 		mHandler.sendEmptyMessage(1);
 		

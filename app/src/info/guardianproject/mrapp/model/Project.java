@@ -1,6 +1,7 @@
 package info.guardianproject.mrapp.model;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import info.guardianproject.mrapp.db.ProjectsProvider;
 import info.guardianproject.mrapp.db.StoryMakerDB;
@@ -8,8 +9,10 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
+import android.util.Log;
 
 public class Project {
+	final private String TAG = "Project";
     protected Context context;
     protected int id;
     protected String title;
@@ -121,11 +124,22 @@ public class Project {
     }
     
     private void update() {
+    	Uri uri = ProjectsProvider.PROJECTS_CONTENT_URI.buildUpon().appendPath("" + id).build();
         String selection = StoryMakerDB.Schema.Projects.ID + "=?";
         String[] selectionArgs = new String[] { "" + id };
     	ContentValues values = getValues();
         int count = context.getContentResolver().update(
-                ProjectsProvider.PROJECTS_CONTENT_URI, values, selection, selectionArgs);
+                uri, values, selection, selectionArgs);
+        // FIXME make sure 1 row updated
+    }
+    
+    private void delete() {
+    	Uri uri = ProjectsProvider.PROJECTS_CONTENT_URI.buildUpon().appendPath("" + id).build();
+        String selection = StoryMakerDB.Schema.Projects.ID + "=?";
+        String[] selectionArgs = new String[] { "" + id };
+        int count = context.getContentResolver().delete(
+                uri, selection, selectionArgs);
+        Log.d(TAG, "deleted project: " + id + ", rows deleted: " + count);
         // FIXME make sure 1 row updated
     }
 
@@ -148,12 +162,32 @@ public class Project {
         return medias.toArray(new Media[] {});
     }
 
+    public ArrayList<String> getMediaAsPathList() {
+        Cursor cursor = getMediaAsCursor();
+        ArrayList<String> paths = new ArrayList<String>(5); // FIXME convert 5 to a constant... is it always 5 long?
+        paths.add(null); paths.add(null); paths.add(null); paths.add(null); paths.add(null); // FIXME oh java, you ugly dog
+        if (cursor.moveToFirst()) {
+            do {
+            	Media media = new Media(context, cursor);
+                paths.set(media.clipIndex, media.getPath());
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        return paths;
+    }
+
+    public String[] getMediaAsPathArray() {
+        ArrayList<String> paths = getMediaAsPathList();
+        return paths.toArray(new String[] {});
+    }
+
     public Cursor getMediaAsCursor() {
         String selection = "project_id=?";
         String[] selectionArgs = new String[] { "" + getId() };
+        String orderBy = "clip_index";
         return context.getContentResolver().query(
                 ProjectsProvider.MEDIA_CONTENT_URI, null, selection,
-                selectionArgs, null);
+                selectionArgs, orderBy);
     }
 
     /**
@@ -169,6 +203,21 @@ public class Project {
         media.save();
     }
 
+    public void swapMediaIndex(int oldIndex, int newIndex) {
+    	Media media[] = getMediaAsArray();
+		Media oldMedia = media[oldIndex];
+		Media newMedia = media[newIndex];
+		
+		// FIXME we need objects to represent the empty template dummy's, otherwise the template won't be rearranged on next load
+    	if (oldMedia != null) {
+    		oldMedia.setClipIndex(newIndex);
+    		oldMedia.save();
+    	}
+    	if (newMedia != null) {
+    		newMedia.setClipIndex(oldIndex);
+    		newMedia.save();
+    	}
+    }
     
     /***** getters and setters *****/
 

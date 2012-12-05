@@ -65,10 +65,9 @@ import com.actionbarsherlock.view.MenuItem;
 
 public class MediaProjectManager implements MediaManager {
 	
-	private ArrayList<MediaClip> mediaList = new ArrayList<MediaClip>(5);
-	private ArrayList<MediaView> mediaViewList = new ArrayList<MediaView>();
+	private ArrayList<MediaClip> mMediaList = new ArrayList<MediaClip>(5); // FIXME refactor this to use it as a prop on project object
 	
-	private File fileExternDir;
+	private File mFileExternDir;
 	
 	private File mMediaTmp;
 	private MediaDesc mOut;
@@ -82,14 +81,14 @@ public class MediaProjectManager implements MediaManager {
 
 	private Activity mActivity;
 	
-	public int clipIndex;  // FIXME hack to get clip we are adding media too into intent handler
+	public int mClipIndex;  // FIXME hack to get clip we are adding media too into intent handler
 
     public MediaProjectManager (Activity activity, Context context, Intent intent) {
     	mActivity = activity;
     	mContext = context;
     	
     	// initialize mediaList
-    	mediaList.add(null); mediaList.add(null); mediaList.add(null); mediaList.add(null); mediaList.add(null);
+    	mMediaList.add(null); mMediaList.add(null); mMediaList.add(null); mMediaList.add(null); mMediaList.add(null);
         
         mMediaHelper = new MediaHelper (activity, mHandler);
         
@@ -129,10 +128,10 @@ public class MediaProjectManager implements MediaManager {
     	{
     		try
     		{
-    			addMediaFile(clipIndex, result.path, result.mimeType);
-    			mProject.setMedia(clipIndex, "FIXME", result.path, result.mimeType);
+    			addMediaFile(mClipIndex, result.path, result.mimeType);
+    			mProject.setMedia(mClipIndex, "FIXME", result.path, result.mimeType);
     			mProject.save();
-    			// FIXME mProject.setMedia(result.path, result.mimeType);
+    			((SceneEditorNoSwipeActivity)mActivity).refreshClipPager();
     		}
 			catch (IOException ioe)
 			{
@@ -152,12 +151,12 @@ public class MediaProjectManager implements MediaManager {
     	if (extState.equals(Environment.MEDIA_MOUNTED) || extState.equals(Environment.MEDIA_SHARED))
     	{
 			//fileExternDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MOVIES);
-    		fileExternDir = mContext.getExternalFilesDir(null);
+    		mFileExternDir = mContext.getExternalFilesDir(null);
     		
     	}
     	else
     	{
-    		fileExternDir = Environment.getDataDirectory();
+    		mFileExternDir = Environment.getDataDirectory();
     	}
     }
     
@@ -168,7 +167,7 @@ public class MediaProjectManager implements MediaManager {
          msg.getData().putString("status","cancelled");
 
     	ArrayList<MediaDesc> listMediaDesc = new ArrayList<MediaDesc>();
-    	for (MediaClip mClip : mediaList)
+    	for (MediaClip mClip : mMediaList)
     		if (mClip.mMediaDescRendered != null)
     			listMediaDesc.add(mClip.mMediaDescRendered);
     		else
@@ -199,7 +198,7 @@ public class MediaProjectManager implements MediaManager {
 
     private File createOutputFile (String fileext) throws IOException
     {
-		File saveFile = File.createTempFile("output", '.' + fileext, fileExternDir);	
+		File saveFile = File.createTempFile("output", '.' + fileext, mFileExternDir);	
 		return saveFile;
     }
     
@@ -221,16 +220,16 @@ public class MediaProjectManager implements MediaManager {
     	mdesc.path = path;
     	mdesc.mimeType = mimeType;
 
-		if (mimeType.startsWith("audio") && mediaList.get(clipIndex) != null && (!mediaList.get(mediaList.size()-1).mMediaDescOriginal.mimeType.equals(mimeType)))
+		if (mimeType.startsWith("audio") && mMediaList.get(clipIndex) != null && (!mMediaList.get(mMediaList.size()-1).mMediaDescOriginal.mimeType.equals(mimeType)))
 		{
-			MediaClip mClipVideo =  mediaList.get(clipIndex);
+			MediaClip mClipVideo =  mMediaList.get(clipIndex);
 			
 			MediaClip mClipAudio = new MediaClip();
 			mClipAudio.mMediaDescOriginal = mdesc;
 		
 			try {
 				ShellCallback sc = null;
-	    		MediaMerger mm = new MediaMerger(mContext, (MediaManager)this, mHandler, mClipVideo, mClipAudio, fileExternDir, sc);
+	    		MediaMerger mm = new MediaMerger(mContext, (MediaManager)this, mHandler, mClipVideo, mClipAudio, mFileExternDir, sc);
 	    		// Convert to video
 	    		Thread thread = new Thread (mm);
 	    		thread.setPriority(Thread.NORM_PRIORITY);
@@ -247,7 +246,7 @@ public class MediaProjectManager implements MediaManager {
     		
 			MediaClip mClip = new MediaClip();
 			mClip.mMediaDescOriginal = mdesc;
-			mediaList.set(clipIndex, mClip);
+			mMediaList.set(clipIndex, mClip);
 //			mProject.setMedia(clipIndex, "FIXME", mClip.mMediaDescOriginal.path, mClip.mMediaDescOriginal.mimeType);
 //			mProject.save();
 			
@@ -304,7 +303,7 @@ public class MediaProjectManager implements MediaManager {
     {
     	
     	try {
-    		MediaRenderer mRenderer = new MediaRenderer(mContext, (MediaManager)this, mHandler, mClip, fileExternDir, shellCallback);
+    		MediaRenderer mRenderer = new MediaRenderer(mContext, (MediaManager)this, mHandler, mClip, mFileExternDir, shellCallback);
     		// Convert to video
     		Thread thread = new Thread (mRenderer);
     		thread.setPriority(Thread.NORM_PRIORITY);
@@ -359,7 +358,6 @@ public class MediaProjectManager implements MediaManager {
     	Log.i(AppConstants.TAG,"media status: " + msg);
     }
     
-	
 	public void showMediaPrefs (Activity activity)
 	{
 		Intent intent = new Intent(activity, MediaOutputPreferences.class);

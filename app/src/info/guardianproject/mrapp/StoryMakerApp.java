@@ -24,7 +24,8 @@ public class StoryMakerApp extends Application {
 	private static ServerManager mServerManager;
 	private static LessonManager mLessonManager;
 	
-	private final static String LOCALE_DEFAULT = "en";
+	private final static String LOCALE_DEFAULT = "en";//need to force english for now as default
+	private final static String LANG_ARABIC = "ar";
 	
 	private static Locale mLocale = new Locale(LOCALE_DEFAULT);
 	
@@ -58,6 +59,7 @@ public class StoryMakerApp extends Application {
 	public void onCreate() {
 		super.onCreate();
 
+		checkLocale ();
 		
 		SQLiteDatabase.loadLibs(this);
 
@@ -81,11 +83,24 @@ public class StoryMakerApp extends Application {
 
 	public void updateLocale (String newLocale)
 	{
+        Configuration config = getResources().getConfiguration();
 		mLocale = new Locale(newLocale);
-		Locale.setDefault(mLocale);
 		
+		Locale.setDefault(mLocale);
+		config.locale = mLocale;
+        getResources().updateConfiguration(config, getResources().getDisplayMetrics());
+        
+        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
+        settings.edit().putString(PREF_LOCALE,newLocale);
+        settings.edit().commit();
+        //need to reload lesson manager for new locale
 		mLessonManager = new LessonManager (this, bootstrapUrlString, new File(getExternalFilesDir(null), "lessons/" + newLocale));
 
+	}
+	
+	public Locale getCurrentLocale ()
+	{
+		return mLocale;
 	}
 	
 	 public boolean checkLocale ()
@@ -94,18 +109,36 @@ public class StoryMakerApp extends Application {
 
 	        Configuration config = getResources().getConfiguration();
 
+	        boolean useLangAr = settings.getBoolean("plocalear", false);
 	        String lang = settings.getString(PREF_LOCALE, "");
-	       
+	        
+	        if (useLangAr)
+	        	lang = LANG_ARABIC;
 	        
 	        boolean updatedLocale = false;
 	        
+	        //if we have an arabic preference stored, then use it
 	        if (!"".equals(lang) && !config.locale.getLanguage().equals(lang)) {
 	            mLocale = new Locale(lang);            
 	            config.locale = mLocale;
 	            getResources().updateConfiguration(config, getResources().getDisplayMetrics());
 	            updatedLocale = true;
 	        }
+	        else if (Locale.getDefault().getLanguage().equalsIgnoreCase(LANG_ARABIC))
+	        {
+	        	//if device is default arabic, then switch the app to it
+	        	  mLocale = Locale.getDefault();         
+		            config.locale = mLocale;
+		            getResources().updateConfiguration(config, getResources().getDisplayMetrics());
+		            updatedLocale = true;
+	        }
+	        
+	        if (updatedLocale)
+	        {
+	            //need to reload lesson manager for new locale
+				mLessonManager = new LessonManager (this, bootstrapUrlString, new File(getExternalFilesDir(null), "lessons/" + mLocale.getLanguage()));
 
+	        }
 	        
 	        return updatedLocale;
 	    }

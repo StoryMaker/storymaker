@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_gravity="center_vertical"
     android:orientation="vertical" >
     
      <ImageView
@@ -10,8 +10,32 @@
         android:layout_width="fill_parent"
          android:layout_height="170dip"   
         android:adjustViewBounds="true"
-        android:src="@drawable/cliptype_long" /> 
-        
+        android:src="@drawable/cliptype_long" />
+
+     <info.guardianproject.mrapp.PreviewVideoView
+         android:id="@+id/previewVideoView"
+         android:layout_width="match_parent"
+         android:layout_height="170dp"
+         android:visibility="gone" />
+
+     <LinearLayout
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content" >
+
+         <Button
+             android:id="@+id/buttonPlay"
+             style="?android:attr/buttonStyleSmall"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:text="Play" />
+
+         <SeekBar
+             android:id="@+id/seekBar1"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:layout_weight="1" />
+
+     </LinearLayout>
 	<com.animoto.android.views.DraggableGridView
         android:id="@+id/DraggableGridView01"
         android:layout_width="fill_parent"

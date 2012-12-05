@@ -174,19 +174,21 @@ public class Media {
     }
     
     private void update() {
+    	Uri uri = ProjectsProvider.MEDIA_CONTENT_URI.buildUpon().appendPath("" + id).build();
         String selection = StoryMakerDB.Schema.Media.ID + "=?";
         String[] selectionArgs = new String[] { "" + id };
     	ContentValues values = getValues();
         int count = context.getContentResolver().update(
-                ProjectsProvider.MEDIA_CONTENT_URI, values, selection, selectionArgs);
+                uri, values, selection, selectionArgs);
         // FIXME make sure 1 row updated
     }
     
     private void delete() {
+    	Uri uri = ProjectsProvider.MEDIA_CONTENT_URI.buildUpon().appendPath("" + id).build();
         String selection = StoryMakerDB.Schema.Media.ID + "=?";
         String[] selectionArgs = new String[] { "" + id };
         int count = context.getContentResolver().delete(
-                ProjectsProvider.MEDIA_CONTENT_URI, selection, selectionArgs);
+                uri, selection, selectionArgs);
         Log.d(TAG, "deleted media: " + id + ", rows deleted: " + count);
         // FIXME make sure 1 row updated
     }
