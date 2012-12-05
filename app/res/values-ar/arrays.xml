@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    
+     <string-array name="lesson_sections">
+        <item>الصحافة</item>
+        <item>الأمن</item>
+        <item>الصوت</item>
+        <item>الصورة</item>
+        <item>الفيديو</item>
+    </string-array>
+    
+    
+</resources>

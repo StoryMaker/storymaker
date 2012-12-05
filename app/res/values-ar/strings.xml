@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <!--menus-->
+  <!--project list-->
+  <!--video processing-->
+  <!--LOG COLLECTOR-->
+  <!--delete these below-->
+  <!--Screen title before and during recording-->
+  <!--Screen title after recording-->
+  <!--Screen title while playing back a recording-->
+  <!--Label shown during recording-->
+  <!--Label shown when the recording is stopped for a reason other than the user stopping it (e.g. the sd card was removed)-->
+  <!--label shown when there is not enough space to record something-->
+  <!--label shown when the recording has reached maximum allowed file size-->
+  <!--label shown when there is no sd card available to record to-->
+  <!--label shown when there is more than 1 minute but less than 9 minutes of space left to record-->
+  <!--label shown when there is less than 1 minute of space left to record-->
+  <!--button to accept the current recording and return it to the caller-->
+  <!--button to discard the current recording and return to the caller-->
+  <!--acknowlegement button in a number of dialogs-->
+  <!--Do not translate. Format of the timer that shows how much has been recorded so far-->
+  <!--label shown before the user has recorded anything-->
+  <!--the name under which recordings will be visible in the media database is formatted like this-->
+  <!--all recordings will show up in the media database with this 'artist' name-->
+  <!--all recordings will show up in the media database with this 'album' name-->
+  <!--all recordings will show up in the media database in a playlist with this name-->
+  <!--shown as the message in a dialog when an error occured because of an error accessing the sd card-->
+  <!--shown as the message in a dialog when the app encountered an unspecified internal error-->
+  <!--shown as the message in a dialog when the recording could not be added to the media database-->
+  <!--add for libra begin-->
+  <!--add for libra end-->
+  <!--youtube upload-->
+</resources>
