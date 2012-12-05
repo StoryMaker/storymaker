@@ -24,6 +24,7 @@ import info.guardianproject.mrapp.model.Template;
 import info.guardianproject.mrapp.model.Template.Clip;
 import info.guardianproject.mrapp.server.ServerManager;
 import info.guardianproject.mrapp.ui.MediaView;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -63,31 +64,24 @@ import com.animoto.android.views.DraggableGridView;
 import com.animoto.android.views.OnRearrangeListener;
 
 public class SceneEditorNoSwipeActivity extends com.WazaBe.HoloEverywhere.sherlock.SActivity implements ActionBar.TabListener {
-
-
 	private static final String STATE_SELECTED_NAVIGATION_ITEM = "selected_navigation_item";
-
 	private final static int REQ_OVERLAY_CAM = 888; //for resp handling from overlay cam launch
-	
     protected boolean templateStory = false; 
-    
     protected Menu mMenu = null;
-    
     private Context mContext = null;
-     
     private String templateJsonPath = null;
-    
     private int mStoryMode = Project.STORY_TYPE_VIDEO;;
-  
     private final static String CAPTURE_MIMETYPE_AUDIO = "audio/3gpp";
-    
     private MediaProjectManager mMPM;
     public SceneChooserFragment mFragmentTab0, mFragmentTab1, mFragmentTab2, mLastTabFrag;
+	private Activity mActivity;
+	private PreviewVideoView mPreviewVideoView = null;
+	private ImageView mImageViewMedia;
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        mActivity = this;
         if (getIntent().hasExtra("template_story")) {
         	templateStory = true;
         }
@@ -368,7 +362,8 @@ public class SceneEditorNoSwipeActivity extends com.WazaBe.HoloEverywhere.sherlo
               
             } else if (this.layout == R.layout.fragment_order_clips) {
             	mOrderClipsDGV = (DraggableGridView) view.findViewById(R.id.DraggableGridView01);
-            	final ImageView imageViewMedia = (ImageView) view.findViewById(R.id.imageView1);
+            	mImageViewMedia = (ImageView) view.findViewById(R.id.imageView1);
+            	mPreviewVideoView = (PreviewVideoView) view.findViewById(R.id.previewVideoView);
             	
             	Media[] sceneMedias = mMPM.mProject.getMediaAsArray();
 
@@ -417,6 +412,7 @@ public class SceneEditorNoSwipeActivity extends com.WazaBe.HoloEverywhere.sherlo
 					@Override
 					public void onRearrange(int oldIndex, int newIndex) {
 						mMPM.mProject.swapMediaIndex(oldIndex, newIndex);
+						((SceneEditorNoSwipeActivity)mActivity).refreshClipPager();
 						Log.d(TAG, "grid rearranged");
 					}
 				});
@@ -429,14 +425,32 @@ public class SceneEditorNoSwipeActivity extends com.WazaBe.HoloEverywhere.sherlo
             			Media[] medias = mMPM.mProject.getMediaAsArray();
             			if (medias[position] != null) {
             				Bitmap bm = MediaUtils.getVideoFrame(medias[position].getPath(), -1);
-            				imageViewMedia.setImageBitmap(bm);
+            				mImageViewMedia.setImageBitmap(bm);
             			} else {
             				TypedArray drawableIds = getActivity().getResources().obtainTypedArray(R.array.cliptype_thumbnails);
-            				imageViewMedia.setImageResource(drawableIds.getResourceId(position, 0));
+            				mImageViewMedia.setImageResource(drawableIds.getResourceId(position, 0));
             			}
             			
             		}
 				});
+            	
+            	Button playButton = (Button) view.findViewById(R.id.buttonPlay);
+            	playButton.setOnClickListener(new OnClickListener() {
+					
+					@Override
+					public void onClick(View v) {
+						// TODO hide thumbnail
+						mImageViewMedia.setVisibility(View.GONE);
+						mPreviewVideoView.setVisibility(View.VISIBLE);
+						// play
+						String[] pathArray = mMPM.mProject.getMediaAsPathArray();
+						mPreviewVideoView.setMedia(pathArray);
+						mPreviewVideoView.play();
+						
+						// FIXME need to detect which clip user last clicked on and start from there
+						// FIXME need to know when mPreviewVideoView is done playing so we can return the thumbnail
+					}
+				} );
             } else if (this.layout == R.layout.fragment_story_publish) {
             	
             	Button btn = (Button)view.findViewById(R.id.btnPublish);
@@ -554,6 +568,7 @@ public class SceneEditorNoSwipeActivity extends com.WazaBe.HoloEverywhere.sherlo
                 return 5;
             }
             
+            // see comment #10 in http://code.google.com/p/android/issues/detail?id=19001
             @Override 
             public int getItemPosition(Object object) {
             	return POSITION_NONE;

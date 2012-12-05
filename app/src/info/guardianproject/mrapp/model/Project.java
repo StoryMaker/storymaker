@@ -158,6 +158,25 @@ public class Project {
         return medias.toArray(new Media[] {});
     }
 
+    public ArrayList<String> getMediaAsPathList() {
+        Cursor cursor = getMediaAsCursor();
+        ArrayList<String> paths = new ArrayList<String>(5); // FIXME convert 5 to a constant... is it always 5 long?
+        paths.add(null); paths.add(null); paths.add(null); paths.add(null); paths.add(null); // FIXME oh java, you ugly dog
+        if (cursor.moveToFirst()) {
+            do {
+            	Media media = new Media(context, cursor);
+                paths.add(media.getPath());
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        return paths;
+    }
+
+    public String[] getMediaAsPathArray() {
+        ArrayList<String> paths = getMediaAsPathList();
+        return paths.toArray(new String[] {});
+    }
+
     public Cursor getMediaAsCursor() {
         String selection = "project_id=?";
         String[] selectionArgs = new String[] { "" + getId() };
