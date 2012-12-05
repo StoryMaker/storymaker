@@ -11,9 +11,12 @@ import java.net.MalformedURLException;
 import com.WazaBe.HoloEverywhere.widget.Toast;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -29,6 +32,8 @@ public class LoginActivity extends com.WazaBe.HoloEverywhere.sherlock.SActivity 
 	
 	private ImageView viewLogo;
 	private TextView txtStatus;
+	private TextView txtUser;
+	private TextView txtPass;
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -38,6 +43,10 @@ public class LoginActivity extends com.WazaBe.HoloEverywhere.sherlock.SActivity 
         
         viewLogo = (ImageView)findViewById(R.id.logo);
         txtStatus = (TextView)findViewById(R.id.status);
+        txtUser = (TextView)findViewById(R.id.login_username);
+        txtPass = (TextView)findViewById(R.id.login_password);
+        
+        getCreds();
         
         getSupportActionBar().hide();
         
@@ -74,6 +83,7 @@ public class LoginActivity extends com.WazaBe.HoloEverywhere.sherlock.SActivity 
  
             public void onClick(View v) {
               
+            	 saveCreds("","");//skip login
             	 loginSuccess ();
             }
         });
@@ -86,10 +96,41 @@ public class LoginActivity extends com.WazaBe.HoloEverywhere.sherlock.SActivity 
     	new Thread(this).start();
     }
     
+    private void saveCreds (String user, String pass)
+    { 
+        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
+        Editor edit = settings.edit(); 
+        
+        edit.putString("user", user);
+        edit.putString("pass", pass);
+        
+        edit.commit();
+        
+    }
+    
+    private void getCreds ()
+    { 
+        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
+       
+        
+        String user = settings.getString("user",null);
+        String pass = settings.getString("pass",null);
+        
+        if (user != null)
+        	txtUser.setText(user);
+        
+        if (pass != null)
+        	txtPass.setText(pass);
+        
+    }
+    
     public void run ()
     {
-    	String username = ((EditText)findViewById(R.id.login_username)).getText().toString();
-    	String password = ((EditText)findViewById(R.id.login_password)).getText().toString();
+    	String username = txtUser.getText().toString();
+    	String password = txtPass.getText().toString();
+    	
+    	//for now just save to keep it simple
+    	saveCreds(username, password);
     	
     	try {
 			StoryMakerApp.getServerManager().connect(username, password);
