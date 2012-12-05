@@ -47,6 +47,7 @@ public class LessonManager implements Runnable {
 	private Context mContext;
 	
 	private String mSubFolder;
+	private Locale mLocale;
 	
 	public final static String LESSON_METADATA_FILE = "lesson.json";
 	public final static String LESSON_STATUS_FILE = "status.txt";
@@ -100,14 +101,14 @@ public class LessonManager implements Runnable {
 		
 	}
 	
-	public ArrayList<Lesson> loadLessonList (Context context)
+	public ArrayList<Lesson> loadLessonList (Context context, String lang)
 	{
-		return loadLessonList(context, mLocalStorageRoot, mSubFolder);
+		return loadLessonList(context, mLocalStorageRoot, mSubFolder, lang);
 	}
 	
-	public static ArrayList<Lesson> loadLessonList (Context context,File targetFolder, String subFolder)
+	public static ArrayList<Lesson> loadLessonList (Context context,File targetFolder, String subFolder, String lang)
 	{
-		String sLocale = Locale.getDefault().getLanguage();
+		
 		ArrayList<Lesson> lessons = new ArrayList<Lesson>();
 		
 		File lessonFolder = targetFolder;
@@ -145,7 +146,7 @@ public class LessonManager implements Runnable {
 						
 						lesson.mLocalPath = fileLesson;
 						
-						updateResource(context,fileIdx,sLocale);
+						updateResource(context,fileIdx,lang);
 					
 						File fileStatus = new File(fileLesson,LESSON_STATUS_FILE);
 						if (fileStatus.exists())
