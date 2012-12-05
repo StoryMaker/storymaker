@@ -1,12 +1,16 @@
 package info.guardianproject.mrapp;
 import info.guardianproject.mrapp.R;
 import info.guardianproject.mrapp.lessons.LessonListView;
+import info.guardianproject.mrapp.server.LoginActivity;
 
 import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuItem;
 import com.actionbarsherlock.app.ActionBar;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -73,8 +77,24 @@ public class HomeActivity extends com.WazaBe.HoloEverywhere.sherlock.SActivity i
                             .setText(mSectionsPagerAdapter.getPageTitle(i))
                             .setTabListener(this));
         }
+        
+        checkCreds ();
     }
 
+    //if the user hasn't registered with the user, show the login screen
+    private void checkCreds ()
+    {
+    	
+        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
+       
+        String user = settings.getString("user",null);
+        
+        if (user == null)
+        {
+        	Intent intent = new Intent(this,LoginActivity.class);
+        	startActivity(intent);
+        }
+    }
     
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -82,7 +102,33 @@ public class HomeActivity extends com.WazaBe.HoloEverywhere.sherlock.SActivity i
         return true;
     }
 
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+	
+		if (item.getItemId() == R.id.menu_settings)
+		{
+			showPreferences();
+		}
+		else if (item.getItemId() == R.id.menu_login)
+		{
+			showLogin();
+		}
+		
+		return super.onOptionsItemSelected(item);
+	}
     
+	private void showPreferences ()
+	{
+		Intent intent = new Intent(this,SimplePreferences.class);
+		startActivity(intent);
+	}
+	
+	private void showLogin ()
+	{
+		Intent intent = new Intent(this,LoginActivity.class);
+		startActivity(intent);
+	}
 
     @Override
     public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
@@ -206,6 +252,6 @@ public class HomeActivity extends com.WazaBe.HoloEverywhere.sherlock.SActivity i
 		}
         
     }
-    
+
     
 }
