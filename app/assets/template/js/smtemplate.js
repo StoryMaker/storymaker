@@ -1,5 +1,8 @@
 
 var BASE_LOCAL_PATH = 'file:///android_asset/template/';
+var numQuestions = 0;
+var numCorrectAnswers = 0;
+var URI_LESSON_COMPLETE = 'stmk://lesson/complete/';
 
 function displayTextile(textileSrc,elementId) {
 		var html = convert(textileSrc);
@@ -46,11 +49,10 @@ $.ajax({
 		$("#swmain").append('<div id="page' + i + '" class="subswipe"><p>' + pageData + '</p></div>');
  		$('#page' + i + ' a').attr("rel", "external");
 		$('#page' + i).trigger("create");
-				
-		i++;
-		$("#swmain").append('<div id="page' + i + '" class="subswipe"><p></p></div>');
- 		$('#page' + i + ' a').attr("rel", "external");
-		$('#page' + i).trigger("create");
+		
+		$("#swmain").append('<div id="pagec" class="subswipe"><p></p></div>');
+		$('#pagec a').attr("rel", "external");
+		$('#pagec').trigger("create");
 	}
 	else
 	{
@@ -104,6 +106,7 @@ $.ajax({
 				}
 				
 			});
+			
 		}
 		
 		//make the lists look prettier
@@ -115,8 +118,12 @@ $.ajax({
  		 	var solution = '';
  		 	
  		 	$(this).find(':checked').each (function(){
- 		 	
- 		 		solution = $(this).attr('value');
+ 		 		
+ 		 		if (solution.length > 0)
+ 		 			solution += ',';
+ 		 			
+ 		 		solution += $(this).attr('value');
+ 		 		
  		 	});
  		 	
  		 	var answer = $(this).children('.correct').attr('value');
@@ -126,6 +133,18 @@ $.ajax({
  		 	if (answer === solution)
  		 	{
  		 		msg = 'Correct!';
+ 		 		numCorrectAnswers++;
+ 		 		
+ 		 		if (numCorrectAnswers >= numQuestions)
+ 		 		{
+ 		 			//the lesson is complete!
+ 		 			location.href=URI_LESSON_COMPLETE;
+ 		 		}
+ 		 		else
+ 		 		{
+ 		 			window.mySwipe.next();
+ 		 		}
+ 		 		
  		 		
  		 	}
  		 	else
@@ -143,6 +162,8 @@ $.ajax({
 		 enableAudioClicks();
 	});
 
+
+	
 	
 });
 	
@@ -156,7 +177,6 @@ function parseQuizText(text) {
 	
 	var matches = [], i, len = parts.length;
 	
-	
 	var qIdx = 1;
 	
 	for(i = 0; i < len; i += 1) {
@@ -165,8 +185,13 @@ function parseQuizText(text) {
 		
 		if(question.test(part)) {
 		
-			var questionText = part.split(":")[1].trim();
-			matches.push("<h3>" + questionText + "</h3>");
+			numQuestions++;
+			
+			var questionText = "";
+			var qparts = part.split(":");
+			
+			for (n = 1; n < qparts.length; n++)
+				matches.push("<h3>" + qparts[n].trim() + "</h3>");
 			
 			matches.push('<form>');
 			matches.push('<fieldset data-role="controlgroup">');

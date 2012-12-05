@@ -161,7 +161,7 @@ public class MediaProjectManager implements MediaManager {
     }
     
     
-    private void doExportMedia ()
+    public void doExportMedia ()
     {
     	 Message msg = mHandler.obtainMessage(0);
          msg.getData().putString("status","cancelled");
@@ -358,42 +358,6 @@ public class MediaProjectManager implements MediaManager {
     	Log.i(AppConstants.TAG,"media status: " + msg);
     }
     
-    /*
-	protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
-		
-		
-		if (resultCode == RESULT_OK)
-		{
-			if (requestCode == 777) //overlay camera
-			{
-				//now launch real camera
-				mMediaTmp = mMediaHelper.captureVideo(fileExternDir);
-				
-
-			}
-			else
-			{
-				mMediaResult = mMediaHelper.handleResult(requestCode, resultCode, intent, mMediaTmp);
-				
-				try
-				{
-					if (mMediaResult != null)
-						if (mMediaResult.path != null)
-							addMediaFile(mMediaResult.path, mMediaResult.mimeType);
-				}
-				catch (IOException ioe)
-				{
-					Log.e(AppConstants.TAG,"error adding media result",ioe);
-				}
-				
-			
-				//if path is null, wait for the scanner callback in the mHandler
-			}
-		}
-		
-		
-	}	*/
-	
 	
 	public void showMediaPrefs (Activity activity)
 	{
@@ -473,12 +437,6 @@ public class MediaProjectManager implements MediaManager {
 //		alert.show();
 //	}
 
-	private void showOverlayCamera (Activity activity)
-	{
-		Intent intent = new Intent(activity, OverlayCameraActivity.class);
-		activity.startActivityForResult(intent,777);
-		
-	}
 	
 	private Handler mHandler = new Handler()
 	{

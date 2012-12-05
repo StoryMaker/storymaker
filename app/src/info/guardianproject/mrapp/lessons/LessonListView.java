@@ -1,10 +1,13 @@
 package info.guardianproject.mrapp.lessons;
 
+import info.guardianproject.mrapp.AppConstants;
 import info.guardianproject.mrapp.LessonsActivity;
 import info.guardianproject.mrapp.R;
 import info.guardianproject.mrapp.StoryMakerApp;
 import info.guardianproject.mrapp.model.Lesson;
+import info.guardianproject.mrapp.model.LessonGroup;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Map.Entry;
 import java.util.Set;
@@ -13,6 +16,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.widget.ListAdapter;
 
 import com.WazaBe.HoloEverywhere.ArrayAdapter;
@@ -43,11 +47,7 @@ public class LessonListView extends ListView implements LessonManagerListener {
         
         if (mSubFolder == null)
         {
-        	//show lesson categories
-        	String[] folders = getResources().getStringArray(R.array.lesson_sections);
-        	
-        	setAdapter(new LessonSectionArrayAdapter(context,R.layout.list_lesson_row, folders));
-        	
+        	showLessonGroups();
         	
         }
         else
@@ -81,14 +81,47 @@ public class LessonListView extends ListView implements LessonManagerListener {
          
     }
     
+    private void showLessonGroups ()
+    {
+    	//show lesson categories
+    	String[] lessonSections = getResources().getStringArray(R.array.lesson_sections);
+    	String[] lessonSectionsFolder = getResources().getStringArray(R.array.lesson_sections_folder);
+
+    	ArrayList<LessonGroup> alGroups = new ArrayList<LessonGroup>();
+    	int idx = 0;
+    	
+    	for (String folder : lessonSections)
+    	{
+    		LessonGroup lg = new LessonGroup();
+    		lg.mTitle = folder;
+    		
+    		String subFolder = lessonSectionsFolder[idx++];
+    	
+    		ArrayList<Lesson> lessons = mLessonManager.loadLessonList(getContext(), mLessonManager.getLessonRoot(), subFolder);
+    		
+    		int lessonsComplete = 0;
+    		
+    		for (Lesson lesson : lessons)
+    			if (lesson.mStatus == Lesson.STATUS_COMPLETE)
+    				lessonsComplete++;
+    		
+    		lg.mStatus = lessonsComplete + " of " + lessons.size() + " lesson complete";
+    		
+    		alGroups.add(lg);
+    	}
+    	
+    	setAdapter(new LessonGroupArrayAdapter(getContext(),R.layout.list_lesson_row, alGroups));
+    	
+    }
+    
     public boolean handleBack ()
     {
     	if (mSubFolder != null)
     	{
     		mSubFolder = null;
-    		String[] folders = getResources().getStringArray(R.array.lesson_sections);
-        	
-        	setAdapter(new LessonSectionArrayAdapter(getContext(),R.layout.list_lesson_row, folders));
+    		
+    		showLessonGroups();
+    		
         
     		
     		return true;
@@ -102,7 +135,7 @@ public class LessonListView extends ListView implements LessonManagerListener {
     	mSubFolder = subFolder;
     	mLessonManager.setSubFolder(mSubFolder);
     	
-    	mListLessons = mLessonManager.loadLessonList();
+    	mListLessons = mLessonManager.loadLessonList(getContext());
     	
     	if (mListLessons.size() == 0)
     	{
@@ -122,11 +155,20 @@ public class LessonListView extends ListView implements LessonManagerListener {
 		
 		//if yes, then display here!
 
+		if (lesson.mStatus != Lesson.STATUS_COMPLETE)
+		{
+			try {
+				mLessonManager.updateLessonStatus(lesson.mLocalPath.getAbsolutePath(), Lesson.STATUS_IN_PROGRESS);
+			} catch (Exception e) {
+				Log.e(AppConstants.TAG,"erorr updating lesson status",e);
+			}
+		}
+		
 		Intent intent = new Intent(getContext(),LessonViewActivity.class);
 		intent.putExtra("title", lesson.mTitle);
 		intent.putExtra("url", lesson.mResourcePath);
-		
-		getContext().startActivity(intent);
+		intent.putExtra("lessonPath", lesson.mLocalPath.getAbsolutePath());
+		mActivity.startActivityForResult(intent, 1);
 		
 	}
 	
@@ -169,6 +211,11 @@ public class LessonListView extends ListView implements LessonManagerListener {
     	
     };
     
+    public void refreshList ()
+    {
+    	changeLessonFolder(mSubFolder);
+    	loadLessonListAdapter ();
+    }
     
     private void loadLessonListAdapter ()
     {
@@ -183,7 +230,7 @@ public class LessonListView extends ListView implements LessonManagerListener {
 	public void lessonsLoadedFromServer() {
 		
 		
-    	mListLessons = mLessonManager.loadLessonList();
+    	mListLessons = mLessonManager.loadLessonList(getContext());
 
 		mHandler.sendEmptyMessage(1);
 		

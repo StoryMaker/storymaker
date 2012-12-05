@@ -64,11 +64,15 @@ public class Project {
 
     public static Project get(Context context, int id) {
         Cursor cursor = Project.getAsCursor(context, id);
+        Project project = null;
+        
         if (cursor.moveToFirst()) {
-            return new Project(context, cursor);
-        } else {
-            return null;
-        }
+            project = new Project(context, cursor);
+           
+        } 
+        
+        cursor.close();
+        return project;
     }
 
     public static Cursor getAllAsCursor(Context context) {
