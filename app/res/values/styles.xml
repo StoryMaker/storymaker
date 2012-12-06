@@ -8,7 +8,7 @@
 
 <color name="light_grey">#e9ebe7</color>
     
-    <style name="AppTheme" parent="@style/Holo.Theme.Sherlock.Light.DarkActionBar" >
+    <style name="AppTheme" parent="@style/Holo.Theme.Light.DarkActionBar" >
         <item name="android:windowBackground">@color/light_grey</item>
         <item name="android:colorBackground">@color/light_grey</item>
     </style>

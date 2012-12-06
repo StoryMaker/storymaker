@@ -1,5 +1,7 @@
 package info.guardianproject.mrapp;
-import info.guardianproject.mrapp.R;
+
+import org.holoeverywhere.app.Activity;
+
 import info.guardianproject.mrapp.lessons.LessonListView;
 import info.guardianproject.mrapp.server.LoginActivity;
 
@@ -22,7 +24,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-public class HomeActivity extends com.WazaBe.HoloEverywhere.sherlock.SActivity implements ActionBar.TabListener {
+public class HomeActivity extends Activity implements ActionBar.TabListener {
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide fragments for each of the

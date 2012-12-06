@@ -24,8 +24,6 @@ public class MediaRenderer implements Runnable
 	private ShellCallback mShellCallback;
 	private MediaManager mMediaManager;
 	
-    private int current, total;
-
 	public MediaRenderer (Context context, MediaManager mediaManager, Handler handler, MediaClip mediaClip, File fileExternDir, ShellCallback shellCallback)
 	{
 		mHandler = handler;
@@ -40,11 +38,7 @@ public class MediaRenderer implements Runnable
 	{
     	try
     	{
-    		 Message msg = mHandler.obtainMessage(0);
-	            msg.getData().putString("status","Rendering media in the background");
-
-		        mHandler.sendMessage(msg);
-		        
+    		 
     		if (mMediaClip.mMediaDescOriginal.mimeType.startsWith("image"))
     			mMediaClip.mMediaDescRendered = prerenderImage(mMediaClip.mMediaDescOriginal);
 	    	else if (mMediaClip.mMediaDescOriginal.mimeType.startsWith("video"))
@@ -55,24 +49,10 @@ public class MediaRenderer implements Runnable
 	    		mMediaClip.mMediaDescRendered = prerenderVideo(mMediaClip.mMediaDescOriginal, true);
 	    	
     		
-    		File fileMediaOut = new File(mMediaClip.mMediaDescRendered.path);
-    		
-	         if (!fileMediaOut.exists() || (fileMediaOut.length() == 0))
-	         {
-	        	msg = mHandler.obtainMessage(0);
-		        msg.getData().putString("status","Error occured with media pre-render");
-		        mHandler.sendMessage(msg);
-			 }
-	         else
-	         {
-	        	 msg = mHandler.obtainMessage(0);
-			        msg.getData().putString("status","Success - media rendered!");
-			        mHandler.sendMessage(msg);
-	         }
     	}
     	catch (Exception e)
     	{
-    		Message msg = mHandler.obtainMessage(0);
+    		Message msg = mHandler.obtainMessage(-1);
             msg.getData().putString("status","error: " + e.getMessage());
 
 	         mHandler.sendMessage(msg);
@@ -84,12 +64,12 @@ public class MediaRenderer implements Runnable
     {
     	FfmpegController ffmpegc = new FfmpegController (mContext);
     	
-		File fileOutPath = createOutputFile("mp4"); 
+    	File outPath = createOutputFile(mediaIn.path,"mp4");
     	mMediaManager.applyExportSettings(mediaIn);
     	mediaIn.videoCodec = null;
     	mediaIn.mimeType = "audio/wav";
     	
-    	MediaDesc mediaOut = ffmpegc.convertToMP4Stream(mediaIn, fileOutPath.getAbsolutePath(), true, mShellCallback);
+    	MediaDesc mediaOut = ffmpegc.convertToMP4Stream(mediaIn, outPath.getAbsolutePath(), true, mShellCallback);
     
     	return mediaOut;
     
@@ -98,10 +78,10 @@ public class MediaRenderer implements Runnable
     {
     	FfmpegController ffmpegc = new FfmpegController (mContext);
     	
-		File fileOutPath = createOutputFile("mp4"); 
+    	File outPath = createOutputFile(mediaIn.path,"mp4");
     	mMediaManager.applyExportSettings(mediaIn);
 
-    	MediaDesc mediaOut = ffmpegc.convertToMP4Stream(mediaIn, fileOutPath.getAbsolutePath(), preconvertMP4, mShellCallback);
+    	MediaDesc mediaOut = ffmpegc.convertToMP4Stream(mediaIn, outPath.getAbsolutePath(), preconvertMP4, mShellCallback);
     
     	return mediaOut;
     
@@ -114,7 +94,7 @@ public class MediaRenderer implements Runnable
     	
     	int durationSecs = 5;
     	
-    	File outPath = createOutputFile("mp4");
+    	File outPath = createOutputFile(mediaIn.path,"mp4");
     	mMediaManager.applyExportSettings(mediaIn);
     	MediaDesc mediaOut = ffmpegc.convertImageToMP4(mediaIn, durationSecs, outPath.getAbsolutePath(), mShellCallback);
     
@@ -123,9 +103,11 @@ public class MediaRenderer implements Runnable
    }
 
 
-    private File createOutputFile (String fileext) throws IOException
+    private File createOutputFile (String inpath, String fileext) throws IOException
     {
-		File saveFile = File.createTempFile("output", '.' + fileext, mFileExternDir);	
+    	
+		File saveFile = new File(inpath + ".pre" + fileext);
+		saveFile.createNewFile();
 		return saveFile;
     }
 }

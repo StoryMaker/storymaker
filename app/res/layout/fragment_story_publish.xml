@@ -18,8 +18,8 @@
         android:layout_marginTop="10dp"
         android:src="@drawable/cliptype_close" />
 
-    <TextView
-        android:id="@+id/textView1"
+    <EditText
+        android:id="@+id/etStoryTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="false"
@@ -28,20 +28,20 @@
         android:layout_marginRight="10dp"
         android:layout_marginTop="10dp"
         android:layout_toRightOf="@+id/imageView1"
-        android:text="@string/story_publish_story_title"
+        android:hint="@string/story_publish_story_title"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:textStyle="bold" />
+        />
 
     <TextView
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/textView1"
-        android:layout_below="@+id/textView1"
+        android:layout_alignLeft="@+id/etStoryTitle"
+        android:layout_below="@+id/etStoryTitle"
         android:layout_marginTop="5dp"
         android:text="@string/story_publish_story_date"
         android:textAppearance="?android:attr/textAppearanceSmall" />
-
+ 
     <View
         android:id="@+id/divider0"
         android:layout_width="fill_parent"
@@ -194,7 +194,7 @@
         android:layout_toLeftOf="@+id/toggleButtonYoutube"
         android:background="@drawable/btn_toggle_bg_storymaker"
         android:textAllCaps="false"
-        android:checked="true"
+        android:checked="false"
         android:textOff=""
         android:textOn="" />
 

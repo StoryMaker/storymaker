@@ -80,7 +80,7 @@ public class MediaExporter implements Runnable {
 	 private void concatMediaFiles (ArrayList<MediaDesc> listMediaDesc, MediaDesc mdout) throws Exception
 	    {
 	    	  	
-	    	boolean mediaNeedConvert = false;
+	    	boolean mediaNeedConvert = true;
 	    	
 	    	FfmpegController ffmpegc = new FfmpegController (mContext);
 	    	

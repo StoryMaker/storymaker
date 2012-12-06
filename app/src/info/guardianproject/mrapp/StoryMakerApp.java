@@ -73,7 +73,7 @@ public class StoryMakerApp extends Application {
 		{
 			
 			mLessonManager = new LessonManager (this, bootstrapUrlString + mLocale.getLanguage() + "/", new File(getExternalFilesDir(null), "lessons/" + mLocale.getLanguage()));
-			mServerManager = new ServerManager (this);
+			mServerManager = new ServerManager (getBaseContext());
 		}
 		catch (Exception e)
 		{
