@@ -14,6 +14,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
 
 import net.micode.soundrecorder.SoundRecorder;
@@ -752,15 +753,26 @@ public class SceneEditorNoSwipeActivity extends org.holoeverywhere.app.Activity 
             
             @Override
             public Fragment getItem(int i) {
+            	
             	Template.Clip clip = sTemplate.getClips().get(i);
-            	Media media = mMPM.mProject.getMediaAsArray()[i];
-                Fragment fragment = new ClipThumbnailFragment(clip, i, media);
-                return fragment;
+            	
+            	ArrayList<Media> lMedia = mMPM.mProject.getMediaAsList();
+            	Media media = null;
+            	
+            	if (lMedia.size()>i)
+            	{
+            		media = lMedia.get(i);
+            		
+            	}
+            	
+            	Fragment fragment = new ClipThumbnailFragment(clip, i, media);
+        		return fragment;
             }
 
             @Override
             public int getCount() {
-                return 5;
+
+                return sTemplate.getClips().size();
             }
             
             @Override 

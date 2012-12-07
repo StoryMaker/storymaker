@@ -102,6 +102,8 @@ public class Project {
     	} else {
     		update();
     	}
+    	
+    	cursor.close();
     }
     
     private ContentValues getValues() {
@@ -146,11 +148,8 @@ public class Project {
     public ArrayList<Media> getMediaAsList() {
         Cursor cursor = getMediaAsCursor();
         
-        int mediaCount = cursor.getCount();
-        ArrayList<Media> medias = new ArrayList<Media>(cursor.getCount()); 
-        
-        for (int i = 0; i < mediaCount; i++)
-        	medias.add(null);
+        ArrayList<Media> medias = new ArrayList<Media>(5); 
+        medias.add(null);medias.add(null);medias.add(null);medias.add(null);medias.add(null);
         
         if (cursor.moveToFirst()) {
             do {
