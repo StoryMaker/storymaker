@@ -1,5 +1,7 @@
 package info.guardianproject.mrapp;
 
+import java.util.Locale;
+
 import info.guardianproject.mrapp.R;
 import info.guardianproject.mrapp.model.Project;
 import android.content.Intent;
@@ -110,12 +112,13 @@ public class StoryNewActivity extends SherlockActivity {
 	    	
 	    	String templateJsonPath = null;
 	    	int storyMode = -1;
+	    	String lang = StoryMakerApp.getCurrentLocale().getLanguage();
 	    	
 	    	
 	    	if (checkedId == R.id.radioStoryType0)
 	    	{
 	    		//video
-	    		templateJsonPath = "story/templates/video_simple.json";
+	    		templateJsonPath = "story/templates/" + lang + "/video_simple.json";
 	    		storyMode = Project.STORY_TYPE_VIDEO;
 	    		
 	    	}
@@ -124,20 +127,20 @@ public class StoryNewActivity extends SherlockActivity {
 	
 	    		//photo
 	    		storyMode = Project.STORY_TYPE_PHOTO;
-	    		templateJsonPath = "story/templates/photo_simple.json";
+	    		templateJsonPath = "story/templates/" + lang + "/photo_simple.json";
 	    	}
 	    	else if (checkedId == R.id.radioStoryType2)
 	    	{
 	
 	    		//audio
 	    		storyMode = Project.STORY_TYPE_AUDIO;
-	    		templateJsonPath = "story/templates/audio_simple.json";
+	    		templateJsonPath = "story/templates/" + lang + "/audio_simple.json";
 	    	}
 	    	else if (checkedId == R.id.radioStoryType3)
 	    	{
 	    		//essay
 	    		storyMode = Project.STORY_TYPE_ESSAY;
-	    		templateJsonPath = "story/templates/essay_simple.json";
+	    		templateJsonPath = "story/templates/" + lang + "/essay_simple.json";
 	    		
 	    	}
 	    	

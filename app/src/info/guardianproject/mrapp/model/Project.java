@@ -102,6 +102,8 @@ public class Project {
     	} else {
     		update();
     	}
+    	
+    	cursor.close();
     }
     
     private ContentValues getValues() {
@@ -145,8 +147,10 @@ public class Project {
 
     public ArrayList<Media> getMediaAsList() {
         Cursor cursor = getMediaAsCursor();
-        ArrayList<Media> medias = new ArrayList<Media>(5); // FIXME convert 5 to a constant... is it always 5 long?
-        medias.add(null); medias.add(null); medias.add(null); medias.add(null); medias.add(null); // FIXME oh java, you ugly dog
+        
+        ArrayList<Media> medias = new ArrayList<Media>(5); 
+        medias.add(null);medias.add(null);medias.add(null);medias.add(null);medias.add(null);
+        
         if (cursor.moveToFirst()) {
             do {
             	Media media = new Media(context, cursor);

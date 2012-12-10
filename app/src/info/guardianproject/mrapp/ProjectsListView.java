@@ -4,6 +4,7 @@ package info.guardianproject.mrapp;
 import info.guardianproject.mrapp.model.Project;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 import android.app.Activity;
 import android.content.Context;
@@ -41,11 +42,12 @@ public class ProjectsListView extends ListView implements Runnable {
 		    	intent.putExtra("title", project.getTitle());
 		    	
 		    	String templateJsonPath = null;
+		    	String lang = StoryMakerApp.getCurrentLocale().getLanguage();
 		    	
 		    	if (project.getStoryType() == Project.STORY_TYPE_VIDEO)
 		    	{
 		    		//video
-		    		templateJsonPath = "story/templates/video_simple.json";
+		    		templateJsonPath = "story/templates/" + lang + "/video_simple.json";
 		    	
 		    		
 		    	}
@@ -54,19 +56,19 @@ public class ProjectsListView extends ListView implements Runnable {
 		
 		    		//photo
 		    	
-		    		templateJsonPath = "story/templates/photo_simple.json";
+		    		templateJsonPath = "story/templates/" + lang + "photo_simple.json";
 		    	}
 		    	else if (project.getStoryType() == Project.STORY_TYPE_AUDIO)
 		    	{
 		
 		    		//audio
 		    	
-		    		templateJsonPath = "story/templates/audio_simple.json";
+		    		templateJsonPath = "story/templates/" + lang + "audio_simple.json";
 		    	}
 		    	else if (project.getStoryType() == Project.STORY_TYPE_ESSAY)
 		    	{
 		    		//essay
-		    		templateJsonPath = "story/templates/essay_simple.json";
+		    		templateJsonPath = "story/templates/" + lang + "essay_simple.json";
 		    		
 		    	}
 		    	

@@ -71,6 +71,9 @@ public class GlsAuthorizer implements Authorizer {
   public String getAuthToken(String accountName) {
     Log.d(Config.APP_NAME, "Getting " + authTokenType + " authToken for " + accountName);
     Account account = getAccount(accountName);
+    if (accountName == null)
+    	accountName = account.name;
+    
     if (account != null) {
       try {
         return accountManager.blockingGetAuthToken(account, authTokenType, true);
@@ -148,8 +151,12 @@ public class GlsAuthorizer implements Authorizer {
         null); // handler
   }
 
-  private Account getAccount(String name) {
+  public Account getAccount(String name) {
     Account[] accounts = accountManager.getAccounts();
+    
+    if (name == null)
+    	return accounts[0];
+    
     for (Account account : accounts) {
       if (account.name.equals(name)) {
         return account;

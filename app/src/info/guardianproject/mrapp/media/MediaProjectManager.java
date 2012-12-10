@@ -80,13 +80,14 @@ public class MediaProjectManager implements MediaManager {
 	private Context mContext = null;
 
 	private Activity mActivity;
+	private Handler mHandler;
 	
 	public int mClipIndex;  // FIXME hack to get clip we are adding media too into intent handler
 
-    public MediaProjectManager (Activity activity, Context context, Intent intent) {
+    public MediaProjectManager (Activity activity, Context context, Intent intent, Handler handler) {
     	mActivity = activity;
     	mContext = context;
-    	
+    	mHandler = handler;
     	// initialize mediaList
     	mMediaList.add(null); mMediaList.add(null); mMediaList.add(null); mMediaList.add(null); mMediaList.add(null);
         
@@ -116,6 +117,11 @@ public class MediaProjectManager implements MediaManager {
         	mProject.setTitle(title);
         	mProject.save();
         }
+    }
+    
+    public MediaDesc getExportMedia ()
+    {
+    	return mOut;
     }
     
     public void handleResponse (Intent intent)
@@ -161,52 +167,50 @@ public class MediaProjectManager implements MediaManager {
     }
     
     
-    public void doExportMedia ()
+    public void doExportMedia () throws IOException
     {
     	 Message msg = mHandler.obtainMessage(0);
          msg.getData().putString("status","cancelled");
 
-    	ArrayList<MediaDesc> listMediaDesc = new ArrayList<MediaDesc>();
-    	for (MediaClip mClip : mMediaList)
-    		if (mClip.mMediaDescRendered != null)
-    			listMediaDesc.add(mClip.mMediaDescRendered);
-    		else
-    			listMediaDesc.add(mClip.mMediaDescOriginal);
+         ArrayList<Media> mList = mProject.getMediaAsList();
+         ArrayList<MediaDesc> alMediaIn = new ArrayList<MediaDesc>();
+         
+    	for (Media media : mList)
+    	{
+    		MediaDesc mDesc = new MediaDesc();
+    		mDesc.mimeType = media.getMimeType();
+    		mDesc.path = media.getPath();
+        	applyExportSettings(mDesc);
+    		alMediaIn.add(mDesc);
+    	}
 
-	    try
-	    {
-		    mOut = new MediaDesc ();
-		    applyExportSettings(mOut);
-		    mOut.path = createOutputFile("mp4").getAbsolutePath();
-		    
-		   MediaExporter mEx = new MediaExporter(mContext, mHandler, listMediaDesc, mOut);
-		   
-			// Convert to video
-			Thread thread = new Thread (mEx);
-			thread.setPriority(Thread.MAX_PRIORITY);
-			thread.start();
-	    }
-	    catch (IOException ioe)
-	    {
-	    	updateStatus("error creating file: " + ioe.getMessage());
-	    	Log.e(AppConstants.TAG,"error creating file",ioe);
-	       
-	    }
+	    mOut = new MediaDesc ();
+	    applyExportSettings(mOut);
+	    
+	    File outFile = new File(mFileExternDir,mProject.getId() + "-export.mp4");
+	    outFile.delete();
+	    outFile.createNewFile();
+	    mOut.path = outFile.getAbsolutePath();
+	    
+	   MediaExporter mEx = new MediaExporter(mContext, mHandler, alMediaIn, mOut);
+	   mEx.run();
+	   
     
     }
     
-
+/*
     private File createOutputFile (String fileext) throws IOException
     {
 		File saveFile = File.createTempFile("output", '.' + fileext, mFileExternDir);	
 		return saveFile;
     }
+    */
     
     public void applyExportSettings (MediaDesc mdout)
     {
     	//look this up from prefs?
     	mdout.videoCodec = "libx264";
-    	mdout.videoBitrate = 1500;
+    	mdout.videoBitrate = 700;
     	mdout.audioBitrate = 128;
     	mdout.videoFps = "29.97";
     	mdout.width = 720;
@@ -227,17 +231,13 @@ public class MediaProjectManager implements MediaManager {
 			MediaClip mClipAudio = new MediaClip();
 			mClipAudio.mMediaDescOriginal = mdesc;
 		
-			try {
 				ShellCallback sc = null;
 	    		MediaMerger mm = new MediaMerger(mContext, (MediaManager)this, mHandler, mClipVideo, mClipAudio, mFileExternDir, sc);
 	    		// Convert to video
 	    		Thread thread = new Thread (mm);
 	    		thread.setPriority(Thread.NORM_PRIORITY);
 	    		thread.start();
-			} catch (Exception e) {
-				updateStatus("error merging video and audio");
-				Log.e(AppConstants.TAG,"error merging video and audio",e);
-			}
+		
 			
 		}
 		else
@@ -252,9 +252,25 @@ public class MediaProjectManager implements MediaManager {
 			
 			((SceneEditorNoSwipeActivity)mActivity).refreshClipPager(); // FIXME we should handle this by emitting a change event directly
 
-			MediaView mView = addMediaView(mClip, clipIndex);
+//			MediaView mView = addMediaView(mClip, clipIndex);
 			
-			prerenderMedia (mClip, mView);
+			/*
+			prerenderMedia (mClip, new ShellCallback ()
+			{
+
+				@Override
+				public void shellOut(String shellLine) {
+					// TODO Auto-generated method stub
+					
+				}
+
+				@Override
+				public void processComplete(int exitValue) {
+					// TODO Auto-generated method stub
+					
+				}
+				
+			});*/
 		}
 		
 		mOut = null;
@@ -302,75 +318,17 @@ public class MediaProjectManager implements MediaManager {
     public void prerenderMedia (MediaClip mClip, ShellCallback shellCallback)
     {
     	
-    	try {
     		MediaRenderer mRenderer = new MediaRenderer(mContext, (MediaManager)this, mHandler, mClip, mFileExternDir, shellCallback);
     		// Convert to video
     		Thread thread = new Thread (mRenderer);
     		thread.setPriority(Thread.NORM_PRIORITY);
     		thread.start();
-		} catch (Exception e) {
-			Toast.makeText(mContext,"error converting video to mpeg",Toast.LENGTH_SHORT).show();
-			Log.e(AppConstants.TAG,"error converting video to mpeg",e);
-		}
+		
 	
     	
     }
     
-    private MediaView addMediaView (MediaClip mediaClip, int mediaId) throws IOException
-    {
-    	File fileMediaClip = new File(mediaClip.mMediaDescOriginal.path);
-
-    	 MediaView mediaView = null;
-    	 MediaDesc mdesc = mediaClip.mMediaDescOriginal;
-    	     	 
-     	if (mdesc.mimeType.startsWith("image"))
-     	{
-     		
-     		mediaView = new MediaView(mContext,(MediaManager)this, mediaClip,fileMediaClip.getName(), mMediaHelper.getBitmapThumb(fileMediaClip), Color.WHITE, Color.BLACK);
-
-     	}
-     	else if (mdesc.mimeType.startsWith("video"))
-     	{
-     		mediaView = new MediaView(mContext,(MediaManager)this,  mediaClip,fileMediaClip.getName(), MediaUtils.getVideoFrame(mdesc.path, 5), Color.WHITE, Color.BLACK);
-     		
-     	}
-     	else if (mdesc.mimeType.startsWith("audio")) 
-     	{
-     		mediaView = new MediaView(mContext,(MediaManager)this,  mediaClip, fileMediaClip.getName(), null, Color.WHITE, Color.BLACK);
-
-     	}
-     	else 
-     	{
-     		mediaView = new MediaView(mContext,(MediaManager)this,  mediaClip, fileMediaClip.getName(),null, Color.WHITE, Color.BLACK);
-
-     	}
-    
-     	mediaView.setId(mediaId);
-     	
-     
-		return mediaView;
-    }
-    
-    
-    private void updateStatus (String msg)
-    {
-    	//Toast.makeText(mContext, msg, Toast.LENGTH_SHORT).show();
-    	Log.i(AppConstants.TAG,"media status: " + msg);
-    }
-    
-	public void showMediaPrefs (Activity activity)
-	{
-		Intent intent = new Intent(activity, MediaOutputPreferences.class);
-		activity.startActivityForResult(intent,0);
-		
-	}
-
-	private void playMedia ()
-	{
-		 mMediaHelper.playMedia(new File(mOut.path), MediaConstants.MIME_TYPE_VIDEO);
-
-	}
-	
+    	
 	
 	private void copyFile ()
 	{
@@ -436,51 +394,9 @@ public class MediaProjectManager implements MediaManager {
 //		alert.show();
 //	}
 
+
 	
-	private Handler mHandler = new Handler()
-	{
-		 public void handleMessage(Message msg) {
-			 
-			 String status = msg.getData().getString("status");
-			 
-	            switch (msg.what) {
-		            case 0: //status
 	
-		            	updateStatus(status);
-		                   
-	                    
-	                 break;
-	                case 1: //status
-	                	updateStatus(status);
-	                    break;
-	               
-	                case 4: //play video
-	                	
-	                	playMedia();
-	                	break;
-	                	
-	                case 5:
-	                		
-	                		if (mMediaResult != null) // FIXME always null because onActivityResult is commented out!
-	                		{
-//	                			String path = msg.getData().getString("path");
-//	                			try
-//	                			{
-//	                				// FIXME I need to get the clipIndex in here somehow?!?!
-//	                				//addMediaFile(path, mMediaResult.mimeType);
-//	                                // FIXME mProject.appendMedia(path, mMediaResult.mimeType);
-//	                			}
-//	                			catch (IOException ioe)
-//	                			{
-//	                				Log.e(AppConstants.TAG,"error adding media result",ioe);
-//	                			}
-	                		}
-	                	break;
-	                default:
-	                    super.handleMessage(msg);
-	            }
-	        }
-	};
 	
 	
 }

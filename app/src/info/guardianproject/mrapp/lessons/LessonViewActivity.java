@@ -1,34 +1,31 @@
 package info.guardianproject.mrapp.lessons;
 
-import java.io.IOException;
-
 import info.guardianproject.mrapp.AppConstants;
 import info.guardianproject.mrapp.R;
 import info.guardianproject.mrapp.StoryMakerApp;
 import info.guardianproject.mrapp.media.MediaHelper;
 import info.guardianproject.mrapp.model.Lesson;
-import android.annotation.SuppressLint;
+
+import java.io.IOException;
+
+import org.holoeverywhere.app.Activity;
+import org.holoeverywhere.widget.Toast;
+
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
-import android.view.WindowManager;
 import android.webkit.ConsoleMessage;
 import android.webkit.WebChromeClient;
-import android.webkit.WebResourceResponse;
 import android.webkit.WebSettings.PluginState;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
-import com.WazaBe.HoloEverywhere.widget.Toast;
-import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
-import com.actionbarsherlock.view.Window;
 
-public class LessonViewActivity extends SherlockActivity {
+public class LessonViewActivity extends Activity {
 
 	WebView mWebView;
 	MediaHelper mMediaHelper;
@@ -42,7 +39,7 @@ public class LessonViewActivity extends SherlockActivity {
 
         setContentView(R.layout.activity_web_view);
 
-        getSherlock().getActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         
         Intent intent = getIntent();
         if (intent != null)

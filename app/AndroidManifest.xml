@@ -1,8 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="info.guardianproject.mrapp"
     android:installLocation="auto"
-    android:versionCode="17"
-    android:versionName="0.0.2-dev-build17" >
+    android:versionCode="19"
+    android:versionName="0.0.2-dev-build19" >
     <uses-sdk
         android:minSdkVersion="8"
         android:targetSdkVersion="15" />
@@ -30,7 +30,7 @@
         android:name=".StoryMakerApp"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme"
+        android:theme="@style/Holo.Theme.Light.DarkActionBar"
         android:hardwareAccelerated="true"
         android:largeHeap="true"
         android:configChanges="orientation|keyboardHidden|screenSize|locale"
@@ -56,6 +56,8 @@
             android:name=".HomeActivity"
             android:label="@string/app_name"
              android:configChanges="locale"
+                     android:theme="@style/Holo.Theme.Light.DarkActionBar"
+             
  	>
              <intent-filter  android:label="@string/app_name">
                 <action android:name="android.intent.action.MAIN" />

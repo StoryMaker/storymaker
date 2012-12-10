@@ -1,10 +1,10 @@
 package info.guardianproject.mrapp;
 
-import info.guardianproject.mrapp.R;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
+import org.holoeverywhere.widget.Spinner;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -23,12 +23,11 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
-import com.WazaBe.HoloEverywhere.widget.Spinner;
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 
-public class StoryTemplateActivity extends com.WazaBe.HoloEverywhere.sherlock.SActivity implements ActionBar.TabListener {
+public class StoryTemplateActivity extends org.holoeverywhere.app.Activity implements ActionBar.TabListener {
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide fragments for each of the

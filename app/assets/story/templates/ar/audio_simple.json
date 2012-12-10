@@ -1,47 +1,47 @@
 {"clips":[
 {
-"Title": "Signature",
+"Title": "التوقيع",
 "Artwork": "cliptype_detail",
-"Goal": "Signature audio clips give the audience an immediate understanding of some element of the story.",
-"Length": "X seconds",
-"Description": "A good signature audio clip grabs the audience and intrigues them to listen further.",
-"Tip": "You may need to keep your mic very close to record a signature clip. Check that your source audio is not too loud.",
+"Goal": "تؤدي لقطات الصوت الموقعة إلى منح الجمهور فهماً مباشراً لبعض عناصر القصة ",
+"Length": "× ثوان",
+"Description": "تؤدي لقطة الصوت الموقعة الجيدة إلى جذب انتباه الجمهور وتشجعهم على الإمعان في الاستماع",
+"Tip": "قد تحتاج إلى الاحتفاظ بميكروفونك مقرباً للغاية لتسجيل لقطة موقعة. تأكد من أن صوت مصدرك غير مرتفع بشكل زائد",
 "Security Concern": "-"
 },
 {
-"Title": "Ambient",
+"Title": "البيئة المحيطة",
 "Artwork": "cliptype_wide",
-"Goal": "Help the audience understand the space the subject inhabits.",
-"Length": "X seconds",
-"Description": "Ambient audio clips help the audience understand how your subject interacts with the surrounding environment.",
-"Tip": "You want the ambient clip to contribute to telling the story. If there are irrelevant sounds to the story this may distract the audience.",
+"Goal": "ساعد الجمهور على فهم المساحة التي يشغلها موضوع القصة",
+"Length": "× ثوان",
+"Description": "تساعد لقطات أصوات البيئة المحيطة الجمهور على فهم طريقة تفاعل موضوعك مع البيئة المحيطة",
+"Tip": "تريد لقطة البيئة المحيطة المساهمة في رواية القصة. إذا كانت هناك أصوات غير ذات صلة بالقصة يمكن أن يؤدي هذا إلى تشتيت الجمهور",
 "Security Concern": "-"
 },
 {
-"Title": "Narrative",
+"Title": "الرواية",
 "Artwork": "cliptype_close",
-"Goal": "Record the character making an introduction, or record yourself introducing the character.",
-"Length": "X seconds",
-"Description": "Tell the audience who is the important character in the story.",
-"Tip": "Keep this clip brief. Simply introduce the audience to the character, or allow the character to introduce herself. Save additional information for the interview.",
+"Goal": "سجل الشخصية وهي تقوم بعمل تقديم أو سجل نفسك وأنت تقدم الشخصية",
+"Length": "× ثوان",
+"Description": "أخبر الجمهور عن الشخصية الهامة في القصة",
+"Tip": "حافظ على اللقطة مختصرة. ببساطة قدم الجمهور للشخصية، أو اسمح للشخصية بتقديم نفسها. احتفظ بمعلومات إضافية للمقابلة الشخصية",
 "Security Concern": "-"
 },
 {
-"Title": "Interview",
+"Title": "مقابلة شخصية",
 "Artwork": "cliptype_medium",
-"Goal": "Ask the character to tell you a story.",
-"Length": "X seconds",
-"Description": "Remember the fundamentals of a good interview. Ask open-ended questions. Decide your questions based on the type of source you are interviewing.",
-"Tip": "If you want the audience to hear your questions and the subject’s answers, be sure that you are both close enough to the mic to be heard clearly.",
+"Goal": "اطلب من الشخصية أن يقص قصة",
+"Length": "× ثوان",
+"Description": "تذكر أساسيات المقابلة الشخصية الجيدة. اطرح أسئلة مفتوحة النهايات. حدد أسئلتك على أساس نوع المصدر الذي تجري معه المقابلة الشخصية",
+"Tip": "إذا أردت أن يسمع الجمهور أسئلتك وإجابات الموضوع، تأكد من أن كلاً منكما قريب بما يكفي للميكروفون للتمكن من الاستماع إليكما بصورة واضحة",
 "Security Concern": "-"
 },
 {
-"Title": "Environmental",
+"Title": "للبيئة",
 "Artwork": "cliptype_wide",
-"Goal": "Environmental audio clips help the audience understand where your story takes place.",
-"Length": "X seconds",
-"Description": "Environmental audio may indicate the country or add a cultural or religious element to your story.",
-"Tip": "Record the overall sound for the environment. Be sure not to make any noise yourself, this will distract the audience from the natural sound.",
+"Goal": " تساعد لقطات أصوات البيئة المحيطة الجمهور على فهم مكان وقوع قصتك",
+"Length": "× ثوان",
+"Description": "قد تشير أصوات تساعد أصوات البيئة المحيطة إلى الدولة أو أحد العناصر الثقافية أو الدينية بقصتك",
+"Tip": "سجل الصوت العام للبيئة. تأكد من عدم إصدار أية ضوضاء من جانبك، حيث أن ذلك يؤدي إلى تشتيت الجمهور عن الصوت الطبيعي",
 "Security Concern": "-"
 }
 ]}
