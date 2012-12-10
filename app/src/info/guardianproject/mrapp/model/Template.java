@@ -31,6 +31,7 @@ public class Template {
 		while (it.hasNext())
 			jsonsb.append(it.next());
 		
+		
 		JSONObject jObjMain = new JSONObject(jsonsb.toString());
 		JSONArray jarray = jObjMain.getJSONArray("clips");
 		

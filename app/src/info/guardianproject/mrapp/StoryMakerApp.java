@@ -93,7 +93,7 @@ public class StoryMakerApp extends Application {
 
 	}
 	
-	public Locale getCurrentLocale ()
+	public static Locale getCurrentLocale ()
 	{
 		return mLocale;
 	}

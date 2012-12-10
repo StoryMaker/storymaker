@@ -112,7 +112,8 @@ public class StoryNewActivity extends SherlockActivity {
 	    	
 	    	String templateJsonPath = null;
 	    	int storyMode = -1;
-	    	String lang = Locale.getDefault().getLanguage();
+	    	String lang = StoryMakerApp.getCurrentLocale().getLanguage();
+	    	
 	    	
 	    	if (checkedId == R.id.radioStoryType0)
 	    	{

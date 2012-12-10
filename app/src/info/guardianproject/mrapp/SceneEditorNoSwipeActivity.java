@@ -83,6 +83,7 @@ public class SceneEditorNoSwipeActivity extends org.holoeverywhere.app.Activity 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        
         if (getIntent().hasExtra("template_story")) {
         	templateStory = true;
         }
@@ -590,8 +591,8 @@ public class SceneEditorNoSwipeActivity extends org.holoeverywhere.app.Activity 
             	
             } else if (this.layout == R.layout.fragment_story_publish) {
             	
-            	EditText etTitle = (EditText)findViewById(R.id.etStoryTitle);
-    			EditText etDesc = (EditText)findViewById(R.id.editTextDescribe);
+            	EditText etTitle = (EditText)view.findViewById(R.id.etStoryTitle);
+    			EditText etDesc = (EditText)view.findViewById(R.id.editTextDescribe);
 
     			etTitle.setText(mMPM.mProject.getTitle());
     			

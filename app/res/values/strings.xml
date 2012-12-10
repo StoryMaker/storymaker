@@ -25,7 +25,7 @@
     
 	<string name="menu_settings">Settings</string>
     <string name="menu_login">Login</string>
-    
+    <string name="menu_logs">Send Log</string>
     <string name="menu_update">Update</string>
 
     <string name="menu_save_project">Save</string>
