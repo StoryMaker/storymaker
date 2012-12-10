@@ -1,13 +1,68 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <resources>
-    
-     <string-array name="lesson_sections">
-        <item>الصحافة</item>
-        <item>الأمن</item>
-        <item>الصوت</item>
-        <item>الصورة</item>
-        <item>الفيديو</item>
-    </string-array>
-    
-    
+  <string-array name="cliptype_thumbnails">
+    <item>@drawable/cliptype_close</item>
+    <item>@drawable/cliptype_detail</item>
+    <item>@drawable/cliptype_long</item>
+    <item>@drawable/cliptype_medium</item>
+    <item>@drawable/cliptype_wide</item>
+  </string-array>
+  <string-array name="cliptypes">
+    <item>cliptype_close</item>
+    <item>cliptype_detail</item>
+    <item>cliptype_long</item>
+    <item>cliptype_medium</item>
+    <item>cliptype_wide</item>
+  </string-array>
+  <string-array name="eg_scene_titles">
+    <item>المشهد 1: مقدمة</item>
+    <item>المشهد 2: متى</item>
+    <item>المشهد 3: أين</item>
+  </string-array>
+  <string-array name="eg_scene_descriptions">
+    <item>مكتوب هنا اختبار آخر عن الهدف من هذا المشهد.</item>
+    <item>وصف المشهد 2. </item>
+    <item>وصف للمشهد 3</item>
+  </string-array>
+  <string-array name="eg_scene_statuses">
+    <item>انتهى</item>
+    <item>لقطة واحدة متبقية</item>
+    <item>5 لقطات متبقية</item>
+  </string-array>
+  <string-array name="story_sections">
+    <item>السياسة</item>
+    <item>الأعمال</item>
+    <item>الرياضة</item>
+    <item>الفنون</item>
+    <item>العلوم</item>
+    <item>الصحة</item>
+    <item>التعليم</item>
+    <item>البيئة</item>
+    <item>المقالات الرئيسية</item>
+    <item>تقارير خاصة</item>
+  </string-array>
+  <string-array name="story_topics">
+    <item>النوع</item>
+    <item>الحرف النائب 1</item>
+    <item> الحرف النائب 2</item>
+    <item> الحرف النائب 3</item>
+    <item> الحرف النائب 4</item>
+    <item> الحرف النائب 5</item>
+    <item> الحرف النائب 6</item>
+    <item> الحرف النائب 7</item>
+  </string-array>
+  <string-array name="lesson_sections">
+    <item>الصحافة</item>
+    <item>الأمن</item>
+    <item>الصوت</item>
+    <item>التصوير الفوتوغرافي</item>
+    <item>تصوير الفيديو</item>
+  </string-array>
+  <string-array name="lesson_sections_folder">
+    <item>1</item>
+    <item>2</item>
+    <item>3</item>
+    <item>4</item>
+    <item>5</item>
+  </string-array>
 </resources>

@@ -1,52 +1,52 @@
 {"clips":[
 {
-"Title": "Signature",
+"Title": "التوقيع"،
 "Artwork": "cliptype_detail",
-"Shot Size": "Detail",
-"Goal": "Depict something noteworthy about the character.",
-"Length": "X seconds",
-"Description": "What does the character do for a living? Show the audience the most important element of the character. This element should fill at least 50% of the frame.",
-"Tip": "If you are too close to the action, your phone’s camera may not be able to focus. Keep the camera at arm’s length from your subject.",
+"Shot Size": "مفصلة"،
+"Goal": "صور شيئاً جديراً بالاهتمام عن الشخصية".،
+"Length": "× ثوان"،
+"Description": "ماذا تعمل الشخصية لكسب قوت يومها؟ اعرض على الجمهور أهم عنصر للشخصية. يجب أن يشغل هذا العنصر 50% على الأقل من الإطار".،
+"Tip": "إذا كنت قريباً للغاية من الحدث، قد لا تستطيع كاميرا هاتفك التركيز. احتفظ بالكاميرا على مسافة ذراع من موضوعك".،
 "Security Concern": "-"
 },
 {
-"Title": "Action",
+"Title": "الحدث"،
 "Artwork": "cliptype_long",
-"Shot Size": "Long",
-"Goal": "Show the character engaged in her environment.",
-"Length": "X seconds",
-"Description": "This shot should be wide enough to depict the character’s complete action. The character should fill 20% of your frame.",
-"Tip": "Keep your character on one of the vertical lines to frame your shot properly.",
+"Shot Size": "طويلة"،
+"Goal": "وضح مشاركة الشخصية في بيئتها".،
+"Length": "× ثوان"،
+"Description": "يجب أن تكون اللقطة عريضة بما يكفي لتصوير الحدث الكامل من الشخصية. يجب أن تشغل الشخصية 20% من الإطار".،
+"Tip": "حافظ على شخصيتك في أحد الخطوط العرضية لإعداد لقطتك بصورة ملائمة".،
 "Security Concern": "-"
 },
 {
-"Title": "Character",
+"Title": "الشخصية"،
 "Artwork": "cliptype_close",
-"Shot Size": "Close",
-"Goal": "Depict the character’s emotion.",
-"Length": "X seconds",
-"Description": "Show the audience who your character is, build a connection between the viewer and subject. The character should fill at least 50% of the frame.",
-"Tip": "Use the eye-line to frame your shot properly.",
+"Shot Size": "مقربة"،
+"Goal": "صور عواطف الشخصية".،
+"Length": "× ثوان"،
+"Description": " اعرض شخصيتك على الجمهور، أقم رابطاً بين المشاهد والموضوع. يجب أن تشغل الشخصية 50% من الإطار".،
+"Tip": "استخدم خط العين لإعداد لقطتك بصورة ملائمة".،
 "Security Concern": "-"
 },
 {
-"Title": "Interview",
+"Title": "مقابلة شخصية"،
 "Artwork": "cliptype_medium",
-"Shot Size": "Medium",
-"Goal": "Ask the character to tell you a story.",
-"Length": "X seconds",
-"Description": "Ask open-ended questions. Decide your questions based on the type of source you are interviewing. The character should fill at least 30% of the frame.",
-"Tip": "Place your character on one side of the frame, frame your shot to show something else important to the story on the other side.",
+"Shot Size": "متوسطة"،
+"Goal": "اطلب من الشخصية رواية قصة".،
+"Length": "× ثوان"،
+"Description": "اطرح أسئلة مفتوحة النهايات. حدد أسئلتك على أساس نوع المصدر الذي تجري معه المقابلة الشخصية. يجب أن تشغل الشخصية 30% على الأقل من الإطار".،
+"Tip": "حافظ على شخصيتك في أحد جوانب الإطار، واجعل لقطتك تظهر شيئاً آخر هاماً للقصة على الجانب الآخر".،
 "Security Concern": "-"
 },
 {
-"Title": "Environmental",
+"Title": "للبيئة"،
 "Artwork": "cliptype_wide",
-"Shot Size": "Wide",
-"Goal": "Environmental clips help the audience understand where your story takes place.", 
-"Length": "X seconds",
-"Description": "Environmental video may indicate the country or an ethnic or religious element. Include landmarks or other location specific information. The character will fill no more than 10% of the frame.",
-"Tip": "Place your camera directly in front of the primary location you are filming. Landmarks help the audience understand their location.",
+"Shot Size": "عريضة"،
+"Goal": "تساعد لقطات البيئية الجمهور على فهم مكان وقوع القصة".، 
+"Length": "× ثوان"،
+"Description": "يمكن أن يشير فيديو البيئة إلى البلد أو إلى أحد العناصر العرقية أو الدينية. اذكر معلومات عن المعالم الرئيسية أو مواقع محددة أخرى. لا تشغل الشخصية أكثر من 10% من الإطار".،
+"Tip": "ضع الكاميرا بشكل مباشر أمام الموقع الرئيسي الذي تقوم بتصويره. تساعد المعالم الرئيسية الجمهور على فهم موقعها".،
 "Security Concern": "-"
 }]
 }

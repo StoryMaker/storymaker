@@ -1,52 +1,52 @@
 {"clips":[
 {
-"Title": "Environmental",
+"Title": "للبيئة"،
 "Artwork": "cliptype_wide",
-"Shot Size": "Wide",
-"Goal": "Show where your story takes place.",
-"Length": "X seconds",
-"Description": "Indicate the country or an ethnic or religious element. Include landmarks or other location specific information.",
-"Tip": "Landmarks help the audience understand their location.",
+"Shot Size": "عريضة"،
+"Goal": "وضح مكان وقوع قصتك".،
+"Length": "× ثوان"،
+"Description": "اذكر البلد أو العنصر العرقي أو الديني. اذكر معلومات عن المعالم الرئيسية أو مواقع محددة أخرى".،
+"Tip": "المعالم الرئيسية تساعد الجمهور على فهم موقعه".،
 "Security Concern": "-"
 },
 {
-"Title": "Reaction/Interaction",
+"Title": "رد الفعل/التفاعل"،
 "Artwork": "cliptype_medium",
-"Shot Size": "Medium",
-"Goal": "Depict how people are responding to the event or its aftermath.",
-"Length": "X seconds",
-"Description": "Show the character interacting with others. Build a connection between the viewer and subject. Your character should fill 20% of your frame. Good for Breaking News.",
-"Tip": "Keep your character on one of the vertical lines to frame your shot properly.",
+"Shot Size": "متوسطة"،
+"Goal": "صور طريقة استجابة الناس للحدث أو عقب الحدث".،
+"Length": "× ثوان"،
+"Description": "وضح تفاعل الشخصية مع الآخرين. أقم رابطاً بين المشاهد والموضوع. تشغل الشخصية 20% من الإطار. جيدة للأخبار العاجلة".،
+"Tip": "حافظ على شخصيتك في أحد الخطوط العرضية لإعداد لقطتك بصورة ملائمة".،
 "Security Concern": "-"
 },
 {
-"Title": "Candid",
+"Title": "عفوية"،
 "Artwork": "cliptype_long",
-"Shot Size": "Long",
-"Goal": "Show the character engaged in her environment.",
-"Length": "X seconds",
-"Description": "Depict the character behaving naturally. Why is the character noteworthy? Show the audience. Good for Features and Events.",
-"Tip": "Place your character on one side of the frame, frame your shot to show something else important to the story on the other side.",
+"Shot Size": "طويلة"،
+"Goal": "وضح مشاركة الشخصية في بيئتها".،
+"Length": "× ثوان"،
+"Description": "صور الشخصية تتصرف بصورة طبيعية. لماذا تستحق الشخصية الاهتمام؟ أظهر الجمهور. جيدة للمقالات الرئيسية وللأحداث".،
+"Tip": "حافظ على شخصيتك في أحد جوانب الإطار، واجعل لقطتك تظهر شيئاً آخر هاماً للقصة على الجانب الآخر".،
 "Security Concern": "-"
 },
 {
-"Title": "Portrait",
+"Title": "بورتريه"،
 "Artwork": "cliptype_close",
-"Shot Size": "Close",
-"Goal": "Introduce the character. Get close.",
-"Length": "X seconds",
-"Description": "Your primary focus is the main character in your story. Highlight the characters emotions or state of mind. Good for Events and Profiles.",
-"Tip": "Use the eye-line to frame your shot properly.",
+"Shot Size": "مقربة"،
+"Goal": "قدم الشخصية. كن مقرباً".،
+"Length": "× ثوان"،
+"Description": "تركيزك الأساسي هو الشخصية الرئيسية في قصتك. ركز على عواطف الشخصية أو حالتها الذهنية. جيدة للأحداث والموضوعات الشخصية".،
+"Tip": "استخدم خط العين لإعداد لقطتك بصورة ملائمة".،
 "Security Concern": "-"
 },
 {
-"Title": "Signature",
+"Title": "التوقيع"،
 "Artwork": "cliptype_detail",
-"Shot Size": "Detail",
-"Goal": "Summarize the entire issue by illustrating an essential element of the story.",
-"Length": "X seconds",
-"Description": "A strong signature photo will intrigue the audience and encourage them to look further. This element should fill at least 50% of the frame.", 
-"Tip": "Set your camera to Macro if you are shooting less than arm’s length from your subject.",
+"Shot Size": "مفصلة"،
+"Goal": "لخص الموضوع برمته عن طريق توضيح أحد العناصر الجوهرية بالقصة".،
+"Length": "× ثوان"،
+"Description": "تؤدي الصورة الموقعة القوية إلى جذب انتباه الجمهور وتشجعهم على الإمعان في النظر. يجب أن يشغل هذا العنصر 50% على الأقل من الإطار".، 
+"Tip": "اضبط الكاميرا الخاصة بك على وضع ماكرو إذا كنت تصور أقل من طول الذراع من موضوعك".،
 "Security Concern": "-"
 }
 ]}
