@@ -1,33 +1,183 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
+  <string name="app_name">StoryMaker</string>
+  <string name="title_projects">المشاريع</string>
+  <string name="title_lessons">الدروس</string>
+  <string name="action_publish">نشر</string>
   <!--menus-->
+  <string name="menu_new_project">جديد</string>
+  <string name="menu_projects">المشاريع</string>
+  <string name="menu_lessons">الدروس</string>
+  <string name="menu_glossary">مسرد المصطلحات</string>
+  <string name="menu_contacts">المعارف</string>
+  <string name="menu_settings">إعدادات</string>
+  <string name="menu_archive">الأرشيف</string>
+  <string name="menu_add_media">إضافة</string>
+  <string name="menu_capture_media">تسجيل</string>
+  <string name="menu_share_media">المشاركة</string>
+  <string name="menu_save_media">حفظ</string>
+  <string name="menu_play_media">تشغيل</string>
+  <string name="menu_render_media">إظهار</string>
+  <string name="menu_settings">إعدادات</string>
+  <string name="menu_update">تحديث</string>
+  <string name="menu_save_project">حفظ</string>
+  <string name="menu_overlay_camera">كاميرا</string>
+  <string name="welcome_message">أعزائي المشاهدين!\nمرحباً بكم في StoryMaker</string>
   <!--project list-->
+  <string name="default_project_list_view">هذه أول مرة تقيمون فيها مشروعاً!\n- انقر للبدأ - </string>
+  <string name="default_project_view_message">لديك اختيارات.\nقص قصتك باستخدام الفيديو أو الصوت أو الصور الفوتوغرافية.\n- انقر للإضافة -</string>
   <!--video processing-->
+  <string name="pref_out_fps_title">معدل إطار المخرج (إطار في الثانية)</string>
+  <string name="pref_out_fps_summary">الإطارات في الثانية لحفظ فيديو مخرج بمعدل (15-30)</string>
+  <string name="pref_out_rate_title">معدل شارة المخرج (كيلوبايت في الثانية)</string>
+  <string name="pref_out_rate_summary">معدل شارة مخرج الفيديو (300-1500)</string>
+  <string name="pref_out_format_title">تنسيق المخرج</string>
+  <string name="pref_out_format_summary">تنسيق محتوى الملف (mp4، 3gp، ogg)</string>
+  <string name="pref_out_vcodec_title">كوديك فيديو المخرج</string>
+  <string name="pref_out_vcodec_summary">كوديك فيديو (copy، libx264، الخ)</string>
+  <string name="pref_out_acodec_title">كوديك صوت المخرج</string>
+  <string name="pref_out_acodec_summary">كوديك صوت (copy، aac، mp3، الخ)</string>
+  <string name="pref_out_vwidth_title">عرض الفيديو الطبيعي (بكسل)</string>
+  <string name="pref_out_vwidth_summary">عرض الفيديو الطبيعي للفيديو المخرج</string>
+  <string name="pref_out_vheight_title">طول الفيديو الطبيعي (بكسل)</string>
+  <string name="pref_out_vheight_summary">طول الفيديو الطبيعي للفيديو المخرج</string>
+  <string name="hintTitle">العنوان</string>
+  <string name="hintStartTime">البداية (00:00:00)</string>
+  <string name="hintEndTime">المدة (00:00:00)</string>
+  <string name="hintFadeIn">الإظهار التدريجي (الإطارات)</string>
+  <string name="hintFadeOut">الإخفاء التدريجي (الإطارات)</string>
+  <string name="start_recording">تسجيل</string>
+  <string name="stop_recording">إيقاف</string>
+  <string name="play_recording">تشغيل</string>
+  <string name="save_recording">حفظ</string>
+  <string name="downloading_lessons_from_server_">جاري تنزيل الدروس من الخادم...</string>
+  <string name="checking_for_updates_">جاري البحث عن تحديثات...</string>
   <!--LOG COLLECTOR-->
+  <string name="app_name_lc">جامع السجلات</string>
+  <string name="message_subject">سجل جهاز أندرويد</string>
+  <string name="acquiring_log_progress_dialog_message">الحصول على السجل من النظام \u2026</string>
+  <string name="chooser_title">اختر تطبيق لإرسال السجل</string>
+  <string name="failed_to_get_log_message">فشل الحصول على السجل من النظام.</string>
+  <string name="main_dialog_text">\"سيحاول هذا التطبيق الحصول على سجل الجهاز.\nسيتم إرسال السجل باستخدام تطبيق من اختيارك.\nكما ستتاح لك الفرصة لمشاهدة وتعديل البيانات المرسلة\".\n»</string>
+  <string name="title_home_projects">المشاريع</string>
+  <string name="title_home_activity">النشاط</string>
+  <string name="title_lessons_lessons">الدروس</string>
+  <string name="title_lessons_glossary">مسرد المصطلحات</string>
+  <string name="hello_world">هالو وورلد!</string>
+  <string name="title_activity_home">الرئيسية</string>
+  <string name="new_story_name_it">ضع اسماً له.</string>
+  <string name="new_story_working_title">جاري تشغيل العنوان...</string>
+  <string name="new_story_choose_something">اختر شيئاً موجزاً يحدد الموضوع ويشد انتباه جمهورك.</string>
+  <string name="new_story_choose_a_medium">اختر أحد الوسائط.</string>
+  <string name="new_story_video">الفيديو: شيء ما هنا عن سبب جودة الفيديو البسيط القصير. بشكل عام، يجب أن تكون المدة مقاربة لمدة السلاسل الأخرى.</string>
+  <string name="new_story_essay">المقالة المصورة: قص قصة عن شخصية واحدة. اتبع هذا القالب لتحرير قصة مقالة مصورة بسيطة عن شخصية واحدة.</string>
+  <string name="new_story_photo">صورة واحدة: من المهارة إخبار قصة قوية بصورة واحدة فق. لتبسيط الأمر، توضح هذه القوالب بعض أنواع الصور الأساسية.</string>
+  <string name="new_story_audio">الصوت: شيء ما هنا عن استخدام الصوت لإخبار قصة. بشكل شخصي، أحب فعلاً الاستماع إلى المذياع أو البودكاست أثناء القيام بأعمال المنزل!</string>
+  <string name="new_story_simple_story">قصة بسيطة</string>
+  <string name="new_story_choose_template">اختر قالباً</string>
+  <string name="home_new_story">قصة جديدة</string>
+  <string name="home_start_a_lesson">ابدأ أحد الدروس</string>
+  <string name="title_activity_new_story">قصة جديدة</string>
+  <string name="title_activity_lessons">الدروس</string>
+  <string name="title_activity_scene_editor">محرر المشاهد</string>
+  <string name="title_activity_choose_template">اختر قالباً</string>
+  <string name="title_activity_story_template">قالب القصة</string>
+  <string name="tab_make">تحرير</string>
+  <string name="tab_review">استعراض</string>
+  <string name="tab_publish">نشر</string>
+  <string name="tab_add_clips">إضافة لقطات</string>
+  <string name="tab_order">ترتيب</string>
+  <string name="story_publish_section">القسم</string>
+  <string name="story_publish_section_hint">الرياضة</string>
+  <string name="story_publish_topics">الموضوعات</string>
+  <string name="story_publish_topics_hint">النوع</string>
+  <string name="story_publish_location">الموقع</string>
+  <string name="story_publish_location_hint">ليبيا</string>
+  <string name="story_publish_share">المشاركة</string>
+  <string name="story_publish_send_via">إرسال عبر</string>
+  <string name="story_publish_status">الحالة</string>
+  <string name="story_publish_status_processing">المعالجة</string>
+  <string name="story_publish_status_not">غير منشور</string>
+  <string name="story_publish_describe_hint">صف قصتك...</string>
+  <string name="story_publish_story_title">عنوان القصة هنا</string>
+  <string name="story_publish_story_date">تاريخ القصة هنا</string>
   <!--delete these below-->
+  <string name="title_section3">القسم 3</string>
+  <string name="title_section2">القسم 2</string>
+  <string name="title_section1">القسم 1</string>
+  <string name="title_activity_test_drag">TestDrag</string>
   <!--Screen title before and during recording-->
   <!--Screen title after recording-->
   <!--Screen title while playing back a recording-->
   <!--Label shown during recording-->
+  <string name="recording">جاري التسجيل</string>
   <!--Label shown when the recording is stopped for a reason other than the user stopping it (e.g. the sd card was removed)-->
+  <string name="recording_stopped">تم إيقاف التسجيل</string>
   <!--label shown when there is not enough space to record something-->
+  <string name="storage_is_full">التخزين ممتلئ</string>
   <!--label shown when the recording has reached maximum allowed file size-->
+  <string name="max_length_reached">تجاوزت أقصى مدة</string>
   <!--label shown when there is no sd card available to record to-->
+  <string name="insert_sd_card">أدخل بطاقة الذاكرة</string>
   <!--label shown when there is more than 1 minute but less than 9 minutes of space left to record-->
   <!--label shown when there is less than 1 minute of space left to record-->
   <!--button to accept the current recording and return it to the caller-->
   <!--button to discard the current recording and return to the caller-->
   <!--acknowlegement button in a number of dialogs-->
+  <string name="button_ok">موافق</string>
   <!--Do not translate. Format of the timer that shows how much has been recorded so far-->
   <!--label shown before the user has recorded anything-->
   <!--the name under which recordings will be visible in the media database is formatted like this-->
   <!--all recordings will show up in the media database with this 'artist' name-->
+  <string name="audio_db_artist_name">تسجيلاتك</string>
   <!--all recordings will show up in the media database with this 'album' name-->
+  <string name="audio_db_album_name">تسجيلات صوتية</string>
   <!--all recordings will show up in the media database in a playlist with this name-->
+  <string name="audio_db_playlist_name">تسجيلاتي</string>
   <!--shown as the message in a dialog when an error occured because of an error accessing the sd card-->
+  <string name="error_sdcard_access">لم يتم التمكن من استخدام مساحة التخزين الخارجية أو الداخلية</string>
   <!--shown as the message in a dialog when the app encountered an unspecified internal error-->
+  <string name="error_app_internal">خطأ داخلي بالتطبيق </string>
   <!--shown as the message in a dialog when the recording could not be added to the media database-->
+  <string name="error_mediadb_new_record">لم يتم التمكن من حفظ الصوت المسجل</string>
   <!--add for libra begin-->
+  <string name="default_record_name">سجل بدون عنوان</string>
+  <string name="menu_view_record_list">عرض قائمة السجلات</string>
+  <string name="menu_setting">إعدادات</string>
+  <string name="delete_dialog_title">هل تريد حذف السجل الحالي؟</string>
+  <string name="overwrite_dialog_title">%s موجودة بالفعل. هل تريد الكتابة فوقها؟</string>
+  <string name="preferences_title">إعدادات</string>
+  <string name="pref_title_record_type">نوع ملف السجل</string>
+  <string name="prefDialogTitle_recordType">الرجاء اختيار نوع الملف</string>
+  <string name="prefDefault_recordType">audio/3gpp</string>
+  <string name="pref_title_enable_high_quality">تمكين الجودة العالية</string>
+  <string name="pref_summary_enable_high_quality">يمكن للملف الصوتي بجودة أعلى أن يشغل مساحة أكبر</string>
+  <string name="pref_title_enable_sound_effect">تمكين المؤثرات الصوتية</string>
+  <string name="pref_summary_enable_sound_effect">تشغيل المؤثر الصوتي عند تغيير الحالة</string>
+  <string name="notification_recording">جاري التسجيل...</string>
+  <string name="notification_stopped">تم إيقاف التسجيل</string>
+  <string name="notification_warning">سعة تخزين منخفضة (أقل من %d دقائق)...</string>
+  <string name="sd_card_not_available">بطاقة الذاكرة غير متاحة</string>
+  <string name="open_file_explorer">افتح متصفح الملفات</string>
+  <string name="alert_message_delete_record">هل تريد حذف هذا السجل؟</string>
+  <string-array name="prefEntries_recordType">
+    <item>amr</item>
+    <item>3gpp</item>
+  </string-array>
+  <string-array name="prefValues_recordType">
+    <item>audio/amr</item>
+    <item>audio/3gpp</item>
+  </string-array>
   <!--add for libra end-->
+  <string name="help_clip_select">انتقل إلى اختيار نوع اللقطة، ثم انقر صورة اللقطة لبدء الفيديو أو الصورة أو اللقطة الصوتية</string>
   <!--youtube upload-->
+  <string name="yt_account_prompt">اختر حسابك على جوجل/يوتيوب</string>
+  <string name="dev_key">TODO-dev-key</string>
+  <string name="client_id">TODO-client-ID</string>
+  <string name="default_ytd_domain">TODO-appname.appspot.com</string>
+  <string name="default_ytd_domain_name">TODO-name – مثلاً منطقة خليج سان فرانسيسكو</string>
+  <string name="lesson_status_have_not_started">لم تبدأ</string>
+  <string name="lessons_congratulations_you_have_completed_the_lesson_">تهانينا. لقد أتممت الدرس!</string>
+  <string name="lesson_status_in_progress">جاري التنفيذ</string>
+  <string name="lesson_status_complete">تم!</string>
 </resources>

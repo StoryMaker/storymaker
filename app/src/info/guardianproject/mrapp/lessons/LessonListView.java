@@ -7,25 +7,19 @@ import info.guardianproject.mrapp.StoryMakerApp;
 import info.guardianproject.mrapp.model.Lesson;
 import info.guardianproject.mrapp.model.LessonGroup;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Locale;
-import java.util.Map.Entry;
-import java.util.Set;
+
+import org.holoeverywhere.widget.AdapterView.OnItemClickListener;
+import org.holoeverywhere.widget.ListView;
+import org.holoeverywhere.widget.Toast;
 
 import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
-import android.widget.ListAdapter;
 
-import com.WazaBe.HoloEverywhere.ArrayAdapter;
-import com.WazaBe.HoloEverywhere.app.ProgressDialog;
-import com.WazaBe.HoloEverywhere.widget.AdapterView;
-import com.WazaBe.HoloEverywhere.widget.ListView;
-import com.WazaBe.HoloEverywhere.widget.Toast;
-import com.WazaBe.HoloEverywhere.widget.View;
 
 
 public class LessonListView extends ListView implements LessonManagerListener {

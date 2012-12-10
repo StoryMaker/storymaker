@@ -1,39 +1,40 @@
 package info.guardianproject.mrapp;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-
-import net.micode.soundrecorder.SoundRecorder;
-
-import org.ffmpeg.android.MediaUtils;
-import org.json.JSONException;
-
-import redstone.xmlrpc.XmlRpcFault;
-
-import info.guardianproject.bouncycastle.bcpg.MPInteger;
-import info.guardianproject.mrapp.media.MediaClip;
-import info.guardianproject.mrapp.media.MediaHelper;
 import info.guardianproject.mrapp.media.MediaProjectManager;
 import info.guardianproject.mrapp.media.OverlayCameraActivity;
 import info.guardianproject.mrapp.model.Media;
 import info.guardianproject.mrapp.model.Project;
 import info.guardianproject.mrapp.model.Template;
 import info.guardianproject.mrapp.model.Template.Clip;
+import info.guardianproject.mrapp.server.LoginActivity;
 import info.guardianproject.mrapp.server.ServerManager;
-import info.guardianproject.mrapp.ui.MediaView;
-import android.app.Activity;
+import info.guardianproject.mrapp.server.YouTubeSubmit;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Date;
+
+import net.micode.soundrecorder.SoundRecorder;
+
+import org.ffmpeg.android.MediaDesc;
+import org.ffmpeg.android.MediaUtils;
+import org.holoeverywhere.app.AlertDialog;
+import org.holoeverywhere.app.ProgressDialog;
+import org.holoeverywhere.widget.ToggleButton;
+import org.json.JSONException;
+
+import redstone.xmlrpc.XmlRpcFault;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -55,15 +56,15 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.WazaBe.HoloEverywhere.widget.Toast;
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.animoto.android.views.DraggableGridView;
 import com.animoto.android.views.OnRearrangeListener;
 
-public class SceneEditorNoSwipeActivity extends com.WazaBe.HoloEverywhere.sherlock.SActivity implements ActionBar.TabListener {
+public class SceneEditorNoSwipeActivity extends org.holoeverywhere.app.Activity implements ActionBar.TabListener {
 	private static final String STATE_SELECTED_NAVIGATION_ITEM = "selected_navigation_item";
 	private final static int REQ_OVERLAY_CAM = 888; //for resp handling from overlay cam launch
     protected boolean templateStory = false; 
@@ -74,14 +75,15 @@ public class SceneEditorNoSwipeActivity extends com.WazaBe.HoloEverywhere.sherlo
     private final static String CAPTURE_MIMETYPE_AUDIO = "audio/3gpp";
     private MediaProjectManager mMPM;
     public SceneChooserFragment mFragmentTab0, mFragmentTab1, mFragmentTab2, mLastTabFrag;
-	private Activity mActivity;
 	private PreviewVideoView mPreviewVideoView = null;
 	private ImageView mImageViewMedia;
+	
+	private String mYouTubeUsername = null;
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mActivity = this;
+        
         if (getIntent().hasExtra("template_story")) {
         	templateStory = true;
         }
@@ -97,7 +99,7 @@ public class SceneEditorNoSwipeActivity extends com.WazaBe.HoloEverywhere.sherlo
         
         mContext = getBaseContext();
         
-        mMPM = new MediaProjectManager(this, mContext, getIntent());
+        mMPM = new MediaProjectManager(this, mContext, getIntent(), mHandlerPub);
 
         setContentView(R.layout.activity_scene_editor_no_swipe);
         
@@ -112,6 +114,120 @@ public class SceneEditorNoSwipeActivity extends com.WazaBe.HoloEverywhere.sherlo
         actionBar.addTab(actionBar.newTab().setText(R.string.tab_publish).setTabListener(this));
         
         showHelp();
+    }
+    
+    private ProgressDialog dialog = null;
+    
+    private Handler mHandlerPub = new Handler ()
+    {
+
+		@Override
+		public void handleMessage(Message msg) {
+			
+			String status = msg.getData().getString("status");
+
+  	        String error = msg.getData().getString("error");
+  	        if (error == null)
+  	        	error = msg.getData().getString("err");
+  	        
+  	        int progress = msg.getData().getInt("progress");
+  	        
+  	        if (dialog != null && progress > 0)
+  	        	dialog.setProgress(progress);
+			
+			switch (msg.what)
+			{
+				case 0:
+				case 1:
+					
+					if (status != null)
+					{
+						if (dialog != null)
+							dialog.setMessage(status);
+						else
+						{
+							Toast.makeText(mContext, status, Toast.LENGTH_SHORT).show();
+							
+						}
+					}
+				break;
+				
+				case 999:
+					
+						dialog = new ProgressDialog(SceneEditorNoSwipeActivity.this);
+	          		    dialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+	          		    dialog.setTitle("Publishing");
+	          		    dialog.setMessage("Rendering project...");
+	          		    dialog.setCancelable(true);
+	          		    dialog.show();
+					
+				break;
+				
+				case 888:
+	          		  dialog.setMessage(status);
+	            break;
+				case 777:
+					
+		  	        String videoId = msg.getData().getString("youtubeid");
+		  	        String url = msg.getData().getString("urlPost");
+		  	        String localPath = msg.getData().getString("fileVideo");
+		
+					dialog.dismiss();
+					dialog = null;
+					
+					showPublished(url,new File(localPath),videoId);
+					
+					
+				break;
+				case -1:
+					 dialog.setMessage(error);
+				break;
+				default:
+				
+					
+			}
+			
+			
+		}
+    	
+    };
+
+    public void showPublished (final String postUrl, final File localVideo, final String youTubeId)
+    {
+    	if (youTubeId != null)
+    	{
+	    	DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+	    	    @Override
+	    	    public void onClick(DialogInterface dialog, int which) {
+	    	    	
+	    	        switch (which){
+	    	        case DialogInterface.BUTTON_POSITIVE:
+	    	        	String youTubeUrl = "https://www.youtube.com/watch?v=" + youTubeId;
+	    	        	
+	    	        	Intent i = new Intent(Intent.ACTION_VIEW);
+	    	        	i.setData(Uri.parse(youTubeUrl));
+	    	        	startActivity(i);
+	    	            break;
+	
+	    	        case DialogInterface.BUTTON_NEGATIVE:
+	    	        	
+	    	        	mMPM.mMediaHelper.playMedia(localVideo, "video/mp4");
+	    	        	
+	    	            break;
+	    	        }
+	    	    }
+	    	};
+	
+	    	AlertDialog.Builder builder = new AlertDialog.Builder(this);
+	    	builder.setMessage("Watch video on YouTube or local copy?").setPositiveButton("YouTube", dialogClickListener)
+	    	    .setNegativeButton("Local", dialogClickListener).show();
+    	}
+    	else
+    	{
+        	mMPM.mMediaHelper.playMedia(localVideo, "video/mp4");
+
+    	}
+    	
     }
     
     private void showHelp (){
@@ -475,18 +591,36 @@ public class SceneEditorNoSwipeActivity extends com.WazaBe.HoloEverywhere.sherlo
             	
             } else if (this.layout == R.layout.fragment_story_publish) {
             	
+            	EditText etTitle = (EditText)view.findViewById(R.id.etStoryTitle);
+    			EditText etDesc = (EditText)view.findViewById(R.id.editTextDescribe);
+
+    			etTitle.setText(mMPM.mProject.getTitle());
+    			
             	Button btn = (Button)view.findViewById(R.id.btnPublish);
             	btn.setOnClickListener(new OnClickListener(){
 
 					@Override
 					public void onClick(View v) {
 						
-						handlePublish ();
+	    				ServerManager sm = StoryMakerApp.getServerManager();
+	    				sm.setContext(SceneEditorNoSwipeActivity.this);
+	    				
+	    				if (sm.hasCreds())
+	    					handlePublish ();
+	    				else
+	    				{
+	    					showLogin();
+	    				}
 					}
             		
             	});
             }
             return view;
+        }
+        
+        private void showLogin ()
+        {
+        	startActivity(new Intent(mContext,LoginActivity.class));
         }
 
         /*
@@ -500,33 +634,97 @@ public class SceneEditorNoSwipeActivity extends com.WazaBe.HoloEverywhere.sherlo
             }
         }*/
         
+        
         private void handlePublish ()
     	{
+			EditText etTitle = (EditText)findViewById(R.id.etStoryTitle);
+			EditText etDesc = (EditText)findViewById(R.id.editTextDescribe);
+
+			ToggleButton tbYouTube = (ToggleButton)findViewById(R.id.toggleButtonYoutube);
+			ToggleButton tbStoryMaker = (ToggleButton)findViewById(R.id.toggleButtonStoryMaker);
+			
+			
+			
+			final boolean doYouTube = tbYouTube.isChecked();
+			final boolean doStoryMaker = tbStoryMaker.isChecked();
+			
+			mHandlerPub.sendEmptyMessage(999);
+			
+			final String title = etTitle.getText().toString();
+			final String desc = etDesc.getText().toString();
+			String ytdesc = desc;
+			if (ytdesc.length() == 0)
+			{
+				ytdesc = getActivity().getString(R.string.default_youtube_desc); //can't leave the description blank for YouTube
+			}
+			
+			
+			final YouTubeSubmit yts = new YouTubeSubmit(null, title, ytdesc, new Date(),SceneEditorNoSwipeActivity.this, mHandlerPub);
+			
     		Thread thread = new Thread ()
     		{
     			public void run ()
     			{
-    				EditText et = (EditText)findViewById(R.id.editTextDescribe);
+    				
     				ServerManager sm = StoryMakerApp.getServerManager();
+    				sm.setContext(SceneEditorNoSwipeActivity.this);
     				
-    				String title = mMPM.mProject.getTitle();
-    				String desc = et.getText().toString();
-    				
-    				mMPM.doExportMedia();
-    				
-    			
+    				Message msg = mHandlerPub.obtainMessage(888);
+    				msg.getData().putString("status", "prerendering clips...");
+    				mHandlerPub.sendMessage(msg);
     				
     				try {
+    				
+	    				mMPM.doExportMedia();
+	    				
+	    				MediaDesc mdExported = mMPM.getExportMedia();
+	    				File videoFile = new File(mdExported.path);
+	    				
+	    				Message message = mHandlerPub.obtainMessage(777);
+						message.getData().putString("fileVideo",mdExported.path);
+						
+	    				if (doYouTube)
+	    				{
+	    					yts.setVideoFile(videoFile,mdExported.mimeType);
+	    					yts.getAuthTokenWithPermission(mYouTubeUsername);
+	    					//yts.upload(mYouTubeUsername,new File(mdExported.path));
+	    					
+	    					while (yts.videoId == null)
+	    					{
+	    						try { Thread.sleep(1000); } catch (Exception e){}
+	    					}
+	    					
+	    					if (doStoryMaker)
+	    					{
+	    						String descWithVideo = desc + "\n\n [youtube]" + yts.videoId + "[/youtube]";
+	    					
+	    						String postId = sm.post(title, descWithVideo);
+							
+	    						String urlPost = sm.getPostUrl(postId);
+	    				
+	    						message.getData().putString("urlPost", urlPost);
+	    					}
+	    					
+							message.getData().putString("youtubeid", yts.videoId);
+							
+	    				}
     					
-						sm.post(title, desc);
+						mHandlerPub.sendMessage(message);
 						
-						
-						mHandlerPub.sendEmptyMessage(0);
 						
 					} catch (XmlRpcFault e) {
 						
 						Message msgErr = new Message();
 						msgErr.what = e.getErrorCode();
+						msgErr.getData().putString("err", e.getLocalizedMessage());
+						mHandlerPub.sendMessage(msgErr);
+						Log.e(AppConstants.TAG,"error posting",e);
+						
+					}
+    				catch (Exception e) {
+						
+						Message msgErr = new Message();
+						msgErr.what = -1;
 						msgErr.getData().putString("err", e.getLocalizedMessage());
 						mHandlerPub.sendMessage(msgErr);
 						Log.e(AppConstants.TAG,"error posting",e);
@@ -539,30 +737,9 @@ public class SceneEditorNoSwipeActivity extends com.WazaBe.HoloEverywhere.sherlo
     		thread.start();
     	}
         
-        private Handler mHandlerPub = new Handler ()
-        {
-
-			@Override
-			public void handleMessage(Message msg) {
-				
-				switch (msg.what)
-				{
-					case 0:
-						
-						((TextView)findViewById(R.id.textViewStatus)).setText("PUBLISHED!");
-						((Button)findViewById(R.id.btnPublish)).setEnabled(false);
-						
-					break;
-					
-					default:
-						
-						//err
-						Toast.makeText(SceneEditorNoSwipeActivity.this, msg.getData().getString("err"), Toast.LENGTH_LONG).show();
-				}
-			}
-        	
-        };
+       
         
+
         /**
          * A {@link FragmentPagerAdapter} that returns a fragment corresponding to the clips we are editing
          */
@@ -589,15 +766,26 @@ public class SceneEditorNoSwipeActivity extends com.WazaBe.HoloEverywhere.sherlo
             
             @Override
             public Fragment getItem(int i) {
+            	
             	Template.Clip clip = sTemplate.getClips().get(i);
-            	Media media = mMPM.mProject.getMediaAsArray()[i];
-                Fragment fragment = new ClipThumbnailFragment(clip, i, media);
-                return fragment;
+            	
+            	ArrayList<Media> lMedia = mMPM.mProject.getMediaAsList();
+            	Media media = null;
+            	
+            	if (lMedia.size()>i)
+            	{
+            		media = lMedia.get(i);
+            		
+            	}
+            	
+            	Fragment fragment = new ClipThumbnailFragment(clip, i, media);
+        		return fragment;
             }
 
             @Override
             public int getCount() {
-                return 5;
+
+                return sTemplate.getClips().size();
             }
             
             @Override 

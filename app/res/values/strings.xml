@@ -25,7 +25,7 @@
     
 	<string name="menu_settings">Settings</string>
     <string name="menu_login">Login</string>
-    
+    <string name="menu_logs">Send Log</string>
     <string name="menu_update">Update</string>
 
     <string name="menu_save_project">Save</string>
@@ -122,7 +122,7 @@ Build number: <xliff:g id="build_number">%s</xliff:g>\n
     <string name="story_publish_topics">Topics</string>
     <string name="story_publish_topics_hint">Gender</string>
     <string name="story_publish_location">Location</string>
-    <string name="story_publish_location_hint">Libya</string>
+    <string name="story_publish_location_hint">Enter relevant location</string>
     <string name="story_publish_share">Share</string>
     <string name="story_publish_send_via">Send Via</string>
     <string name="story_publish_status">Status</string>
@@ -213,11 +213,7 @@ Build number: <xliff:g id="build_number">%s</xliff:g>\n
    <string name="help_clip_select">Swipe to select a clip type, then tap the clip image to start video, photo or audio capture</string>
 
 	<!--  youtube upload -->
-	 <string name="yt_account_prompt">Choose your Google/YouTube account</string>
-    <string name="dev_key">"TODO-dev-key"</string>
-    <string name="client_id">TODO-client-ID</string>
-    <string name="default_ytd_domain">TODO-appname.appspot.com</string>
-    <string name="default_ytd_domain_name">TODO-name - e.g. San Francisco Bay Area</string>
+	
     <string name="lesson_status_have_not_started">Have not started</string>
     <string name="lessons_congratulations_you_have_completed_the_lesson_">Congratulations. You have completed the lesson!</string>
     <string name="lesson_status_in_progress">In progress</string>
@@ -226,4 +222,5 @@ Build number: <xliff:g id="build_number">%s</xliff:g>\n
     <string name="no_lessons_available_tap_to_load_">No lessons available (tap to load)</string>
     <string name="_lesson_complete">" lesson complete"</string>
     <string name="_of_">" of "</string>
+    <string name="default_youtube_desc">A StoryMaker project</string>
 </resources>

@@ -1,6 +1,10 @@
 package info.guardianproject.mrapp;
 
 import info.guardianproject.mrapp.lessons.LessonListView;
+
+import org.holoeverywhere.LayoutInflater;
+import org.holoeverywhere.app.Fragment;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
@@ -14,14 +18,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.WazaBe.HoloEverywhere.LayoutInflater;
-import com.WazaBe.HoloEverywhere.sherlock.SFragment;
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.actionbarsherlock.view.Window;
 
-public class LessonsActivity extends com.WazaBe.HoloEverywhere.sherlock.SActivity implements ActionBar.TabListener {
+public class LessonsActivity extends org.holoeverywhere.app.Activity implements ActionBar.TabListener {
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide fragments for each of the
@@ -166,8 +168,8 @@ public class LessonsActivity extends com.WazaBe.HoloEverywhere.sherlock.SActivit
         }
 
         @Override
-        public SFragment getItem(int i) {
-        	SFragment fragment = null;
+        public Fragment getItem(int i) {
+        	Fragment fragment = null;
         	
         	if (i == 0)
         	{
@@ -202,7 +204,7 @@ public class LessonsActivity extends com.WazaBe.HoloEverywhere.sherlock.SActivit
     /**
      * A dummy fragment representing a section of the app, but that simply displays dummy text.
      */
-    public static class DummySectionFragment extends SFragment {
+    public static class DummySectionFragment extends Fragment {
         public DummySectionFragment() {
         }
 
@@ -223,7 +225,7 @@ public class LessonsActivity extends com.WazaBe.HoloEverywhere.sherlock.SActivit
     /**
      * A dummy fragment representing a section of the app, but that simply displays dummy text.
      */
-    public static class LessonSectionFragment extends SFragment {
+    public static class LessonSectionFragment extends Fragment {
     	
     	private LessonListView mListView = null;
     	public static final String ARG_SECTION_NUMBER = "section_number";

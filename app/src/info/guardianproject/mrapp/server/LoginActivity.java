@@ -1,16 +1,14 @@
 package info.guardianproject.mrapp.server;
 
 
-import info.guardianproject.mrapp.HomeActivity;
 import info.guardianproject.mrapp.AppConstants;
 import info.guardianproject.mrapp.R;
 import info.guardianproject.mrapp.StoryMakerApp;
 
-import java.net.MalformedURLException;
+import org.holoeverywhere.widget.Button;
+import org.holoeverywhere.widget.EditText;
+import org.holoeverywhere.widget.TextView;
 
-import com.WazaBe.HoloEverywhere.widget.Toast;
-
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
@@ -20,20 +18,15 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
  
-public class LoginActivity extends com.WazaBe.HoloEverywhere.sherlock.SActivity implements Runnable 
+public class LoginActivity extends org.holoeverywhere.app.Activity implements Runnable 
 {
 	
 	private ImageView viewLogo;
 	private TextView txtStatus;
-	private TextView txtUser;
-	private TextView txtPass;
+	private EditText txtUser;
+	private EditText txtPass;
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -43,8 +36,8 @@ public class LoginActivity extends com.WazaBe.HoloEverywhere.sherlock.SActivity 
         
         viewLogo = (ImageView)findViewById(R.id.logo);
         txtStatus = (TextView)findViewById(R.id.status);
-        txtUser = (TextView)findViewById(R.id.login_username);
-        txtPass = (TextView)findViewById(R.id.login_password);
+        txtUser = (EditText)findViewById(R.id.login_username);
+        txtPass = (EditText)findViewById(R.id.login_password);
         
         getCreds();
         
@@ -112,7 +105,6 @@ public class LoginActivity extends com.WazaBe.HoloEverywhere.sherlock.SActivity 
     { 
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
        
-        
         String user = settings.getString("user",null);
         String pass = settings.getString("pass",null);
         
@@ -175,7 +167,6 @@ public class LoginActivity extends com.WazaBe.HoloEverywhere.sherlock.SActivity 
     
     private void loginSuccess ()
     {
-   	 Intent i = new Intent(getApplicationContext(), HomeActivity.class);
-     startActivity(i);
+    	finish();
     }
 }
