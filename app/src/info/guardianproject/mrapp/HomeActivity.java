@@ -127,7 +127,7 @@ public class HomeActivity extends Activity implements ActionBar.TabListener {
 			collectAndSendLog();
 		}
 		
-		return super.onOptionsItemSelected(item);
+		return true;
 	}
     
 	void collectAndSendLog(){
@@ -184,8 +184,12 @@ public class HomeActivity extends Activity implements ActionBar.TabListener {
 	private void showPreferences ()
 	{
 		Intent intent = new Intent(this,SimplePreferences.class);
-		startActivity(intent);
+		this.startActivityForResult(intent, 9999);
 	}
+	
+	
+	
+	
 	
 	private void showLogin ()
 	{
@@ -326,6 +330,23 @@ public class HomeActivity extends Activity implements ActionBar.TabListener {
     public static final String EXTRA_FILTER_SPECS = "com.xtralogic.logcollector.intent.extra.FILTER_SPECS";//$NON-NLS-1$
     public static final String EXTRA_FORMAT = "com.xtralogic.logcollector.intent.extra.FORMAT";//$NON-NLS-1$
     public static final String EXTRA_BUFFER = "com.xtralogic.logcollector.intent.extra.BUFFER";//$NON-NLS-1$
+
+
+	@Override
+	protected void onActivityResult(int arg0, int arg1, Intent arg2) {
+		
+		super.onActivityResult(arg0, arg1, arg2);
+		
+
+		boolean changed = ((StoryMakerApp)getApplication()).checkLocale();
+		if (changed)
+		{
+			startActivity(new Intent(this,HomeActivity.class));
+			
+			finish();
+			
+		}
+	}
     
     
     

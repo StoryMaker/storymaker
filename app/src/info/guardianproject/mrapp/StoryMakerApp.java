@@ -105,7 +105,7 @@ public class StoryMakerApp extends Application {
 	        Configuration config = getResources().getConfiguration();
 
 	        boolean useLangAr = settings.getBoolean("plocalear", false);
-	        String lang = settings.getString(PREF_LOCALE, "");
+	        String lang = settings.getString(PREF_LOCALE, LOCALE_DEFAULT);
 	        
 	        if (useLangAr)
 	        	lang = LANG_ARABIC;

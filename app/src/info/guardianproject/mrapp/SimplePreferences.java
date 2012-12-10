@@ -3,53 +3,26 @@
 
 package info.guardianproject.mrapp;
 
+import org.holoeverywhere.preference.PreferenceActivity;
+
+import com.actionbarsherlock.app.SherlockPreferenceActivity;
+
 import android.os.Bundle;
-import android.preference.PreferenceActivity;
 
 
 public class SimplePreferences 
-		extends PreferenceActivity  {
+		extends SherlockPreferenceActivity  {
 
 	@SuppressWarnings("deprecation")
 	protected void onCreate(Bundle savedInstanceState)
 	{
-		super.onCreate(savedInstanceState);
+        super.onCreate(savedInstanceState);
+
 		addPreferencesFromResource(R.xml.simpleprefs);
 		
+		setResult(RESULT_OK);
 	}
 	
 	
-	
-	
-	@Override
-	protected void onResume() {
-	
-		super.onResume();
-	
-		
-		
-	};
-	
-	
-	
-	
-	/* (non-Javadoc)
-	 * @see android.app.Activity#onStop()
-	 */
-	@Override
-	protected void onStop() {
-		super.onStop();
-		
-		((StoryMakerApp)getApplication()).checkLocale();
-	}
-
-
-
-
-	@Override
-	public void finish() {
-		super.finish();
-	}
-
 	
 }
