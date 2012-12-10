@@ -27,25 +27,25 @@ type = ANDROID
 
 [storymaker.audio_simple_template]
 file_filter = app/assets/story/templates/<lang>/audio_simple.json
-source_file = app/assets/story/templates/audio_simple.json
+source_file = app/assets/story/templates/en/audio_simple.json
 source_lang = en
 type = TXT
 
 [storymaker.video_simple_template]
 file_filter = app/assets/story/templates/<lang>/video_simple.json
-source_file = app/assets/story/templates/video_simple.json
+source_file = app/assets/story/templates/en/video_simple.json
 source_lang = en
 type = TXT
 
 [storymaker.photo_simple_template]
 file_filter = app/assets/story/templates/<lang>/photo_simple.json
-source_file = app/assets/story/templates/photo_simple.json
+source_file = app/assets/story/templates/en/photo_simple.json
 source_lang = en
 type = TXT
 
 [storymaker.essay_simple_template]
 file_filter = app/assets/story/templates/<lang>/essay_simple.json
-source_file = app/assets/story/templates/essay_simple.json
+source_file = app/assets/story/templates/en/essay_simple.json
 source_lang = en
 type = TXT
 
