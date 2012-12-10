@@ -590,6 +590,11 @@ public class SceneEditorNoSwipeActivity extends org.holoeverywhere.app.Activity 
             	
             } else if (this.layout == R.layout.fragment_story_publish) {
             	
+            	EditText etTitle = (EditText)findViewById(R.id.etStoryTitle);
+    			EditText etDesc = (EditText)findViewById(R.id.editTextDescribe);
+
+    			etTitle.setText(mMPM.mProject.getTitle());
+    			
             	Button btn = (Button)view.findViewById(R.id.btnPublish);
             	btn.setOnClickListener(new OnClickListener(){
 
@@ -646,7 +651,14 @@ public class SceneEditorNoSwipeActivity extends org.holoeverywhere.app.Activity 
 			
 			final String title = etTitle.getText().toString();
 			final String desc = etDesc.getText().toString();
-			final YouTubeSubmit yts = new YouTubeSubmit(null, title, desc, new Date(),SceneEditorNoSwipeActivity.this, mHandlerPub);
+			String ytdesc = desc;
+			if (ytdesc.length() == 0)
+			{
+				ytdesc = getActivity().getString(R.string.default_youtube_desc); //can't leave the description blank for YouTube
+			}
+			
+			
+			final YouTubeSubmit yts = new YouTubeSubmit(null, title, ytdesc, new Date(),SceneEditorNoSwipeActivity.this, mHandlerPub);
 			
     		Thread thread = new Thread ()
     		{

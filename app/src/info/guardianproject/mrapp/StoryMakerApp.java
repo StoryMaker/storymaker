@@ -83,16 +83,11 @@ public class StoryMakerApp extends Application {
 
 	public void updateLocale (String newLocale)
 	{
-        Configuration config = getResources().getConfiguration();
-		mLocale = new Locale(newLocale);
-		
-		Locale.setDefault(mLocale);
-		config.locale = mLocale;
-        getResources().updateConfiguration(config, getResources().getDisplayMetrics());
-        
+        mLocale = new Locale(newLocale);
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
         settings.edit().putString(PREF_LOCALE,newLocale);
         settings.edit().commit();
+        checkLocale();
         //need to reload lesson manager for new locale
 		mLessonManager = new LessonManager (this, bootstrapUrlString+ mLocale.getLanguage() + "/", new File(getExternalFilesDir(null), "lessons/" + newLocale));
 
@@ -119,7 +114,8 @@ public class StoryMakerApp extends Application {
 	        
 	        //if we have an arabic preference stored, then use it
 	        if (!"".equals(lang) && !config.locale.getLanguage().equals(lang)) {
-	            mLocale = new Locale(lang);            
+	            mLocale = new Locale(lang);
+	    		Locale.setDefault(mLocale);
 	            config.locale = mLocale;
 	            getResources().updateConfiguration(config, getResources().getDisplayMetrics());
 	            updatedLocale = true;
