@@ -621,5 +621,8 @@ public final static String TAG = "StoryMaker";
 			ts = ts.replace("-","0.");
 		return ts;
 	}
+
+    public final static String LINE_SEPARATOR = System.getProperty("line.separator");//$NON-NLS-1$
+    
 }
 

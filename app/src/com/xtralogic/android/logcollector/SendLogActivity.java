@@ -98,7 +98,7 @@ public class SendLogActivity extends Activity
             if (ACTION_SEND_LOG.equals(action)){
                 String extraSendAction = intent.getStringExtra(EXTRA_SEND_INTENT_ACTION);
                 if (extraSendAction == null){
-                    Log.e(App.TAG, "Quiting, EXTRA_SEND_INTENT_ACTION is not supplied");//$NON-NLS-1$
+                    Log.e(AppConstants.TAG, "Quiting, EXTRA_SEND_INTENT_ACTION is not supplied");//$NON-NLS-1$
                     finish();
                     return;
                 }
@@ -254,11 +254,11 @@ public class SendLogActivity extends Activity
                 String line;
                 while ((line = bufferedReader.readLine()) != null){
                     log.append(line);
-                    log.append(App.LINE_SEPARATOR);
+                    log.append(AppConstants.LINE_SEPARATOR);
                 }
             }
             catch (IOException e){
-                Log.e(App.TAG, "CollectLogTask.doInBackground failed", e);//$NON-NLS-1$
+                Log.e(AppConstants.TAG, "CollectLogTask.doInBackground failed", e);//$NON-NLS-1$
             }
 
             return log;
@@ -274,7 +274,7 @@ public class SendLogActivity extends Activity
                 }
 
                 if (mAdditonalInfo != null){
-                    log.insert(0, App.LINE_SEPARATOR);
+                    log.insert(0, AppConstants.LINE_SEPARATOR);
                     log.insert(0, mAdditonalInfo);
                 }
 
@@ -290,7 +290,7 @@ public class SendLogActivity extends Activity
                         .putExtra(Intent.EXTRA_STREAM, Uri.fromFile(logFile));
                     startActivity(Intent.createChooser(mSendIntent, getString(R.string.chooser_title)));
                 } catch (IOException e) {
-                    Log.e(App.TAG, e.toString());
+                    Log.e(AppConstants.TAG, e.toString());
                     e.printStackTrace();
                 }
 
