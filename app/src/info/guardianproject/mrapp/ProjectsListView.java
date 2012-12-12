@@ -56,19 +56,19 @@ public class ProjectsListView extends ListView implements Runnable {
 		
 		    		//photo
 		    	
-		    		templateJsonPath = "story/templates/" + lang + "photo_simple.json";
+		    		templateJsonPath = "story/templates/" + lang + "/photo_simple.json";
 		    	}
 		    	else if (project.getStoryType() == Project.STORY_TYPE_AUDIO)
 		    	{
 		
 		    		//audio
 		    	
-		    		templateJsonPath = "story/templates/" + lang + "audio_simple.json";
+		    		templateJsonPath = "story/templates/" + lang + "/audio_simple.json";
 		    	}
 		    	else if (project.getStoryType() == Project.STORY_TYPE_ESSAY)
 		    	{
 		    		//essay
-		    		templateJsonPath = "story/templates/" + lang + "essay_simple.json";
+		    		templateJsonPath = "story/templates/" + lang + "/essay_simple.json";
 		    		
 		    	}
 		    	

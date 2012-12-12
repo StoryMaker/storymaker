@@ -67,7 +67,7 @@ public class MediaRenderer implements Runnable
     	File outPath = createOutputFile(mediaIn.path,"mp4");
     	mMediaManager.applyExportSettings(mediaIn);
     	mediaIn.videoCodec = null;
-    	mediaIn.mimeType = "audio/wav";
+    	mediaIn.mimeType = "audio/3gp";
     	
     	MediaDesc mediaOut = ffmpegc.convertToMP4Stream(mediaIn, outPath.getAbsolutePath(), true, mShellCallback);
     

@@ -116,11 +116,16 @@ public class OverlayCameraActivity extends SherlockActivity implements Callback,
 
     private void closeOverlay ()
     {
-    	cameraOn = false;
-    	camera.stopPreview();
-        camera.release();
-    	setResult(RESULT_OK);
     	
+    	if (cameraOn)
+    	{
+    		cameraOn = false;        	
+	    	camera.stopPreview();
+	        camera.release();
+    	}
+	    
+    	setResult(RESULT_OK);
+	    	
     	
     	
 		finish();
