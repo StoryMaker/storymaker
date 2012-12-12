@@ -52,7 +52,8 @@ public class LessonsActivity extends org.holoeverywhere.app.Activity implements 
         
     	mListView = new LessonListView(this, this);
         
-        LessonSectionFragment fLessons = new LessonSectionFragment(mListView);
+        LessonSectionFragment fLessons = new LessonSectionFragment();
+        fLessons.setListView(mListView);
         
         // Create the adapter that will return a fragment for each of the three primary sections
         // of the app.
@@ -230,11 +231,12 @@ public class LessonsActivity extends org.holoeverywhere.app.Activity implements 
     	private LessonListView mListView = null;
     	public static final String ARG_SECTION_NUMBER = "section_number";
 		
-        public LessonSectionFragment(LessonListView listView) {
+
+        public void setListView(LessonListView listView) {
         	
         	mListView = listView;
         }
-
+        
         public LessonListView getListView ()
         {
         	return mListView;

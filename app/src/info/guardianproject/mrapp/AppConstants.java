@@ -25,9 +25,11 @@ public final static String TAG = "StoryMaker";
 	
 	
 	public final static class MimeTypes {
-		public final static String MP4 = "mp4";
-		public final static String JPEG = "jpg";
-		public static final String MKV = "mkv";
+		public final static String THREEGPP_AUDIO = "audio/3gpp";
+		public final static String MP3 = "audio/mpeg";
+		public final static String MP4 = "video/mp4";
+		public final static String JPEG = "image/jpeg";
+		//public static final String MKV = "mkv";
 	}
 	
 	public static final int NONE = 0;
@@ -35,7 +37,7 @@ public final static String TAG = "StoryMaker";
 	public static final int ZOOM = 2;
 	public static final int TAP = 3;
 	
-	
+	public static final String FILE_MEDIAFOLDER_NAME = "StoryMaker";
 	
 	// Maximum zoom scale
 	public static final float MAX_SCALE = 10f;

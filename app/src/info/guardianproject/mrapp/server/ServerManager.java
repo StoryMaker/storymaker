@@ -112,6 +112,18 @@ public class ServerManager {
 		return post (title, body, null, null);
 	}
 	
+	public String addMedia (String mimeType, File file) throws XmlRpcFault, MalformedURLException
+	{
+		connect();
+		
+		MediaObject mObj = null;
+		
+		if (file != null)
+			mObj = mWordpress.newMediaObject(mimeType, file, false);
+		
+		return mObj.getUrl();
+	}
+	
 	public String post (String title, String body, String mimeType, File file) throws XmlRpcFault, MalformedURLException
 	{
 		connect();

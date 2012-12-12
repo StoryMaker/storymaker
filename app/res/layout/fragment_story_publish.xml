@@ -282,12 +282,12 @@
         android:layout_width="36dp"
         android:layout_height="36dp"
         android:layout_below="@+id/divider5"
-        android:layout_toLeftOf="@+id/toggleButtonUSB"
+        android:layout_alignParentRight="true"
         android:background="@drawable/btn_toggle_bg_bluetooth"
         android:textAllCaps="false" 
         android:textOff=""
         android:textOn=""/>
-
+<!-- 
     <ToggleButton
         android:id="@+id/toggleButtonUSB"
         android:layout_width="36dp"
@@ -298,7 +298,7 @@
         android:textAllCaps="false" 
         android:textOff=""
         android:textOn=""/>
-
+ -->
     <View
         android:id="@+id/divider6"
         android:layout_width="fill_parent"

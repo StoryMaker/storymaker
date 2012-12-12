@@ -138,10 +138,14 @@ public class Media {
     public void save() {
     	Cursor cursor = getAsCursor(context, id);
     	if (cursor.getCount() == 0) {
+    		cursor.close();
     		insert();
     	} else {
-    		update();
+    		cursor.close();
+    		update();    		
     	}
+    	
+    	
     }
     
     private ContentValues getValues() {
