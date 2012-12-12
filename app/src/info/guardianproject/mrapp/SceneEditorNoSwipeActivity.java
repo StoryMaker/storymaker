@@ -199,8 +199,11 @@ public class SceneEditorNoSwipeActivity extends org.holoeverywhere.app.Activity 
 				break;
 				case -1:
 					Toast.makeText(mContext, error, Toast.LENGTH_SHORT).show();
-					dialog.dismiss();
-					dialog = null;
+					if (dialog != null)
+					{
+						dialog.dismiss();
+						dialog = null;
+					}
 					 
 				break;
 				default:
