@@ -20,6 +20,7 @@ import java.io.IOException;
 import java.nio.channels.FileChannel;
 import java.util.ArrayList;
 
+import org.apache.commons.io.IOUtils;
 import org.ffmpeg.android.FfmpegController;
 import org.ffmpeg.android.MediaDesc;
 import org.ffmpeg.android.MediaUtils;
@@ -124,12 +125,17 @@ public class MediaProjectManager implements MediaManager {
     	return mOut;
     }
     
-    public void handleResponse (Intent intent)
+    public void handleResponse (Intent intent, File fileCapturePath)
     {                
         MediaDesc result = mMediaHelper.handleIntentLaunch(intent);
         
-//        int clipIndex = intent.getExtras().getInt("clip_index");
-    	
+        if (result == null && fileCapturePath != null)
+        {
+        	result = new MediaDesc();
+        	result.path = fileCapturePath.getAbsolutePath();
+        	result.mimeType = mMediaHelper.getMimeType(result.path);
+        }
+        
     	if (result != null && result.path != null && result.mimeType != null)
     	{
     		try
@@ -148,8 +154,6 @@ public class MediaProjectManager implements MediaManager {
     }
 
    
-   
-    
     private void initExternalStorage ()
     {
     	String extState = Environment.getExternalStorageState();
@@ -157,45 +161,143 @@ public class MediaProjectManager implements MediaManager {
     	if (extState.equals(Environment.MEDIA_MOUNTED) || extState.equals(Environment.MEDIA_SHARED))
     	{
 			//fileExternDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MOVIES);
-    		mFileExternDir = mContext.getExternalFilesDir(null);
-    		
+    		mFileExternDir = new File(mContext.getExternalFilesDir(null),AppConstants.FILE_MEDIAFOLDER_NAME);    		
     	}
     	else
     	{
-    		mFileExternDir = Environment.getDataDirectory();
+    		mFileExternDir = new File(Environment.getDataDirectory(),AppConstants.FILE_MEDIAFOLDER_NAME);    		
     	}
+    	
+    	mFileExternDir.mkdirs();
     }
     
+    private final static String EXPORT_VIDEO_FILE_EXT = ".mp4";
+    private final static String EXPORT_AUDIO_FILE_EXT = ".3gp";
+    private final static String EXPORT_PHOTO_FILE_EXT = ".jpg";
+    private final static String EXPORT_ESSAY_FILE_EXT = ".mp4";
     
-    public void doExportMedia () throws IOException
+    public void doExportMedia (String fileName, boolean doCompress) throws IOException
     {
     	 Message msg = mHandler.obtainMessage(0);
          msg.getData().putString("status","cancelled");
 
          ArrayList<Media> mList = mProject.getMediaAsList();
-         ArrayList<MediaDesc> alMediaIn = new ArrayList<MediaDesc>();
+         ArrayList<MediaDesc> alMediaIn = new ArrayList<MediaDesc>(mList.size());
          
-    	for (Media media : mList)
-    	{
-    		MediaDesc mDesc = new MediaDesc();
-    		mDesc.mimeType = media.getMimeType();
-    		mDesc.path = media.getPath();
-        	applyExportSettings(mDesc);
-    		alMediaIn.add(mDesc);
-    	}
+         //for video, render the sequence together
+         if (mProject.getStoryType() == Project.STORY_TYPE_VIDEO)
+         {
+        	int mIdx = 0;
+	    	for (Media media : mList)
+	    	{
+	    		MediaDesc mDesc = new MediaDesc();
+	    		mDesc.mimeType = media.getMimeType();
+	    		mDesc.path = media.getPath();
+	        	applyExportSettings(mDesc);
+	    		alMediaIn.add(mIdx, mDesc);
+	    		mIdx++;
+	    	}
+	
+		    mOut = new MediaDesc ();
+	    	mOut.mimeType = AppConstants.MimeTypes.MP4;
 
-	    mOut = new MediaDesc ();
-	    applyExportSettings(mOut);
-	    
-	    File outFile = new File(mFileExternDir,mProject.getId() + "-export.mp4");
-	    outFile.delete();
-	    outFile.createNewFile();
-	    mOut.path = outFile.getAbsolutePath();
-	    
-	   MediaExporter mEx = new MediaExporter(mContext, mHandler, alMediaIn, mOut);
-	   mEx.run();
+		    if (doCompress)
+		    	applyExportSettings(mOut);
+		    
+		    File fileExport = new File(mFileExternDir, fileName + EXPORT_VIDEO_FILE_EXT);
+		    fileExport.delete();
+		    fileExport.createNewFile();
+		    mOut.path = fileExport.getAbsolutePath();
+		    
+		   MediaExporter mEx = new MediaExporter(mContext, mHandler, alMediaIn, mOut);
+		   mEx.run();
 	   
-    
+         }    
+         else if (mProject.getStoryType() == Project.STORY_TYPE_AUDIO)
+         {
+        	int mIdx = 0; 
+        	for (Media media : mList)
+ 	    	{
+ 	    		MediaDesc mDesc = new MediaDesc();
+ 	    		mDesc.mimeType = media.getMimeType();
+ 	    		mDesc.path = media.getPath();
+ 	        	applyExportSettings(mDesc);
+ 	    		alMediaIn.add(mIdx++,mDesc);
+ 	    	}
+ 	
+ 		    mOut = new MediaDesc ();
+ 		    mOut.mimeType = AppConstants.MimeTypes.THREEGPP_AUDIO;
+
+ 		    applyExportSettingsAudio(mOut);
+ 		    
+ 		    File fileExport = new File(mFileExternDir, fileName + EXPORT_AUDIO_FILE_EXT);
+ 		    fileExport.delete();
+ 		    fileExport.createNewFile();
+ 		    mOut.path = fileExport.getAbsolutePath();
+ 		    
+ 		   MediaExporter mEx = new MediaExporter(mContext, mHandler, alMediaIn, mOut);
+ 		   mEx.run();
+         }
+         else if (mProject.getStoryType() == Project.STORY_TYPE_PHOTO)
+         {
+        	 for (Media media : mList)
+  	    	{
+        		 if (media == null)
+        			 continue;
+        		 
+  	    		MediaDesc mDesc = new MediaDesc();
+  	    		mDesc.mimeType = media.getMimeType();
+  	    		mDesc.path = media.getPath();
+  	        	
+  	    		if (mDesc.path != null)
+  	    		{
+  	    			File fileSrc = new File (mDesc.path);
+  	    			
+  	    			if (fileSrc.exists())
+  	    			{
+  	    				//	there should be only one
+  	    				File fileExport = new File(mFileExternDir, fileName + EXPORT_PHOTO_FILE_EXT);
+  	    				fileExport.createNewFile();
+  	    				IOUtils.copy(new FileInputStream(fileSrc),new FileOutputStream(fileExport));
+  	    				 mOut = new MediaDesc ();
+  	    				mOut.path = fileExport.getAbsolutePath();
+  	    				mOut.mimeType = AppConstants.MimeTypes.JPEG;
+  	    				
+  	    				break;
+  	    			}
+  	    			
+  	    		}
+
+  	 		    
+  	    	}
+         }
+         else if (mProject.getStoryType() == Project.STORY_TYPE_ESSAY)
+         {
+        	
+	    	for (Media media : mList)
+	    	{
+	    		 if (media == null)
+        			 continue;
+	    		 
+	    		MediaDesc mDesc = new MediaDesc();
+	    		mDesc.mimeType = media.getMimeType();
+	    		mDesc.path = media.getPath();
+	        	applyExportSettings(mDesc);
+	    		alMediaIn.add(mDesc);
+	    	}
+	
+		    mOut = new MediaDesc ();
+		    applyExportSettings(mOut);
+		    
+		    File fileExport = new File(mFileExternDir, fileName + EXPORT_ESSAY_FILE_EXT);
+		    fileExport.delete();
+		    fileExport.createNewFile();
+		    mOut.path = fileExport.getAbsolutePath();
+		    
+		    int slideDuration = 5; //where to set this?
+		   MediaSlideshowExporter mEx = new MediaSlideshowExporter(mContext, mHandler, alMediaIn, slideDuration, mOut);
+		   mEx.run();
+         }
     }
     
 /*
@@ -215,8 +317,18 @@ public class MediaProjectManager implements MediaManager {
     	mdout.videoFps = "29.97";
     	mdout.width = 720;
     	mdout.height = 480;
-    	
     }
+
+    public void applyExportSettingsAudio (MediaDesc mdout)
+    {
+    	//look this up from prefs?
+    	mdout.videoCodec = null; 
+    	mdout.audioCodec = "aac";
+    	mdout.audioBitrate = 128;
+    	mdout.format = "3gp";
+    }
+    
+    
     
     private void addMediaFile (int clipIndex, String path, String mimeType) throws IOException
     {
@@ -317,6 +429,7 @@ public class MediaProjectManager implements MediaManager {
     
     public void prerenderMedia (MediaClip mClip, ShellCallback shellCallback)
     {
+    	
     	
     		MediaRenderer mRenderer = new MediaRenderer(mContext, (MediaManager)this, mHandler, mClip, mFileExternDir, shellCallback);
     		// Convert to video

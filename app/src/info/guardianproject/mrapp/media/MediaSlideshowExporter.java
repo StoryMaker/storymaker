@@ -14,7 +14,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 
-public class MediaExporter implements Runnable {
+public class MediaSlideshowExporter implements Runnable {
 
 	private Handler mHandler;
 	private Context mContext;
@@ -23,13 +23,15 @@ public class MediaExporter implements Runnable {
 	private MediaDesc mOut;
 	
     private int current, total;
-
-	public MediaExporter (Context context, Handler handler, ArrayList<MediaDesc> mediaList, MediaDesc out)
+    private int mSlideDuration = 5;
+    
+	public MediaSlideshowExporter (Context context, Handler handler, ArrayList<MediaDesc> mediaList, int slideDuration, MediaDesc out)
 	{
 		mHandler = handler;
 		mContext = context;
 		mOut = out;
 		mMediaList = mediaList;
+		mSlideDuration = slideDuration;
 	}
 	
 	
@@ -37,9 +39,10 @@ public class MediaExporter implements Runnable {
 	{
     	try
     	{
-    		String outputType = mOut.mimeType;
+    		String outputExt = "mp4";//or mpg
+    		String outputType = MediaConstants.MIME_TYPE_MP4;
     		
-    		concatMediaFiles(mMediaList, mOut);
+    		concatMediaFiles(mMediaList, mSlideDuration, mOut);
     		
     		Message msg = mHandler.obtainMessage(0);
 	         mHandler.sendMessage(msg);
@@ -76,14 +79,42 @@ public class MediaExporter implements Runnable {
     	}
 	}
 	
-	 private void concatMediaFiles (ArrayList<MediaDesc> listMediaDesc, MediaDesc mdout) throws Exception
+	 private void concatMediaFiles (ArrayList<MediaDesc> listMediaDesc, int slideDuration, MediaDesc mdout) throws Exception
 	    {
 	    	  	
 	    	boolean mediaNeedConvert = true;
+	    	ArrayList<MediaDesc> listMediaDescVids = new ArrayList<MediaDesc>(listMediaDesc.size());
 	    	
 	    	FfmpegController ffmpegc = new FfmpegController (mContext);
+
+	    	int idx = 0;
 	    	
-	    	ffmpegc.concatAndTrimFilesMP4Stream(listMediaDesc, mdout, mediaNeedConvert, new ShellCallback() {
+	    	for (MediaDesc mediaIn : listMediaDesc)
+	    	{
+	    		MediaDesc mediaInVid = new MediaDesc();
+	    		mediaInVid.path = mediaIn.path + ".mp4";
+	    		mediaInVid.mimeType = AppConstants.MimeTypes.MP4;
+	    				
+	    		ffmpegc.convertImageToMP4(mediaIn, slideDuration, mediaIn.path + ".mp4", new ShellCallback ()
+	    		{
+
+					@Override
+					public void shellOut(String shellLine) {
+						// TODO Auto-generated method stub
+						
+					}
+
+					@Override
+					public void processComplete(int exitValue) {
+						// TODO Auto-generated method stub
+						
+					}});
+	    		
+	    		listMediaDescVids.add(idx++, mediaInVid);
+	    		
+	    	}
+	    	
+	    	ffmpegc.concatAndTrimFilesMP4Stream(listMediaDescVids, mdout, mediaNeedConvert, new ShellCallback() {
 
 				@Override
 				public void shellOut(String line) {

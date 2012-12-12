@@ -123,9 +123,12 @@ public class MediaHelper implements MediaScannerConnectionClient {
 	
 	 public void playMedia (Uri uri, String mimeType) {
 			
-	    	Intent intent = new Intent(android.content.Intent.ACTION_VIEW);
-	    	intent.setDataAndType(uri, mimeType);   
-	    	intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+	    	Intent intent = new Intent(Intent.ACTION_VIEW);
+
+	    	//String metaMime = mimeType.substring(0,mimeType.indexOf("/")) + "/*";
+	    	intent.setDataAndType(uri, mimeType);
+
+	   // 	intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
 	   	 	mActivity.startActivity(intent);
 	   	 	
 	 }
@@ -156,42 +159,44 @@ public class MediaHelper implements MediaScannerConnectionClient {
 	 public MediaDesc handleIntentLaunch(Intent intent)
 	 {
 		 MediaDesc result = null;
+		 Uri uriLaunch = null;
 		 
-		// Passed in from CameraObscuraMainMenu
-//			Uri uriLaunch = mActivity.getIntent().getData();
-		 Uri uriLaunch = intent.getData();
+		 if (intent != null)
+		 {
+			 uriLaunch = intent.getData();
 			
 			// If originalImageUri is null, we are likely coming from another app via "share"
 			if (uriLaunch == null)
 			{
-				if (mActivity.getIntent().hasExtra(Intent.EXTRA_STREAM)) 
+				if (intent.hasExtra(Intent.EXTRA_STREAM)) 
 				{
 					uriLaunch = (Uri) mActivity.getIntent().getExtras().get(Intent.EXTRA_STREAM);
 					
 				}
 				
 			}
+		 }
 			
-			if (uriLaunch != null)
+		if (uriLaunch != null)
+		{
+			result = pullMediaDescFromUri (uriLaunch);
+			
+			if (result == null)
 			{
-				result = pullMediaDescFromUri (uriLaunch);
-				
-				if (result == null)
+				File fileMedia = new File(uriLaunch.getPath());
+				if (fileMedia.exists())
 				{
-					File fileMedia = new File(uriLaunch.getPath());
-					if (fileMedia.exists())
-					{
-						result = new MediaDesc();
-						result.path = fileMedia.getAbsolutePath();
-						result.mimeType = getMimeType(result.path);
-						
-					}
+					result = new MediaDesc();
+					result.path = fileMedia.getAbsolutePath();
+					result.mimeType = getMimeType(result.path);
 					
 				}
+				
 			}
-			
-			return result;
-	 }
+		}
+		
+		return result;
+ }
 	 
 	 public MediaDesc pullMediaDescFromUri(Uri originalUri) {
 		 
@@ -202,9 +207,14 @@ public class MediaHelper implements MediaScannerConnectionClient {
 	    	if ( videoCursor != null && videoCursor.getCount() == 1 ) {
 		        if (videoCursor.moveToFirst())
 		        {
-		        	result = new MediaDesc();
-		        	result.path = videoCursor.getString(videoCursor.getColumnIndex(MediaStore.Images.Media.DATA));
-		        	result.mimeType = videoCursor.getString(videoCursor.getColumnIndex(MediaStore.Images.Media.MIME_TYPE));
+		        	
+		        	int colIdx = videoCursor.getColumnIndex(MediaStore.Images.Media.DATA);
+		        	if (colIdx != -1)
+		        	{
+		        		result = new MediaDesc();
+		        		result.path = videoCursor.getString(colIdx);
+		        		result.mimeType = videoCursor.getString(videoCursor.getColumnIndex(MediaStore.Images.Media.MIME_TYPE));
+		        	}
 		        }
 	    	}
 
@@ -433,9 +443,21 @@ public class MediaHelper implements MediaScannerConnectionClient {
 			{
 				result = "audio/mpeg";
 			}
+			else if (path.endsWith("3gp"))
+			{
+				result = "audio/3gpp";
+			}
 			else if (path.endsWith("mp4"))
 			{
 				result = "video/mp4";
+			}
+			else if (path.endsWith("jpg"))
+			{
+				result = "image/jpeg";
+			}
+			else if (path.endsWith("png"))
+			{
+				result = "image/png";
 			}
 			//need to add more here, or build from map
 		}

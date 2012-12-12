@@ -96,7 +96,8 @@ public class GlsAuthorizer implements Authorizer {
 
   public void fetchAuthToken(final String accountName, Activity activity,
       final AuthorizationListener<String> listener) {
-    Account account = getAccount(accountName);
+    final Account account = getAccount(accountName);
+    
     if (account != null) {
       accountManager.getAuthToken(
           account,
@@ -106,7 +107,7 @@ public class GlsAuthorizer implements Authorizer {
           new AccountManagerCallback<Bundle>() {
             public void run(AccountManagerFuture<Bundle> future) {
               try {
-                Log.d(Config.APP_NAME, "Got authToken for " + accountName);
+                Log.d(Config.APP_NAME, "Got authToken for " + account.name);
                 Bundle extras = future.getResult();
                 String authToken = extras.getString(AccountManager.KEY_AUTHTOKEN);
                 listener.onSuccess(authToken);
