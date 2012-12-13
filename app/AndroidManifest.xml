@@ -83,13 +83,6 @@
                 android:value=".HomeActivity" />
         </activity>
         <activity
-            android:name=".SceneEditorActivity"
-            android:label="@string/title_activity_scene_editor" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".HomeActivity" />
-        </activity>
-        <activity
             android:name=".StoryTemplateChooserActivity"
             android:label="@string/title_activity_choose_template" >
             <meta-data
