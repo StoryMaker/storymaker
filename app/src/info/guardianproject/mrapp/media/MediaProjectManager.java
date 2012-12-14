@@ -7,7 +7,7 @@ import info.guardianproject.mrapp.R.id;
 import info.guardianproject.mrapp.R.layout;
 import info.guardianproject.mrapp.R.menu;
 import info.guardianproject.mrapp.R.string;
-import info.guardianproject.mrapp.SceneEditorNoSwipeActivity;
+import info.guardianproject.mrapp.SceneEditorActivity;
 import info.guardianproject.mrapp.model.Media;
 import info.guardianproject.mrapp.model.Project;
 import info.guardianproject.mrapp.ui.MediaView;
@@ -143,7 +143,7 @@ public class MediaProjectManager implements MediaManager {
     			addMediaFile(mClipIndex, result.path, result.mimeType);
     			mProject.setMedia(mClipIndex, "FIXME", result.path, result.mimeType);
     			mProject.save();
-    			((SceneEditorNoSwipeActivity)mActivity).refreshClipPager();
+    			((SceneEditorActivity)mActivity).refreshClipPager();
     		}
 			catch (IOException ioe)
 			{
@@ -362,7 +362,7 @@ public class MediaProjectManager implements MediaManager {
 //			mProject.setMedia(clipIndex, "FIXME", mClip.mMediaDescOriginal.path, mClip.mMediaDescOriginal.mimeType);
 //			mProject.save();
 			
-			((SceneEditorNoSwipeActivity)mActivity).refreshClipPager(); // FIXME we should handle this by emitting a change event directly
+			((SceneEditorActivity)mActivity).refreshClipPager(); // FIXME we should handle this by emitting a change event directly
 
 //			MediaView mView = addMediaView(mClip, clipIndex);
 			

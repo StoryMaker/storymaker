@@ -195,7 +195,7 @@ public class StoryTemplateActivity extends org.holoeverywhere.app.Activity imple
                     @Override
                     public void onItemClick(AdapterView<?> arg0, View arg1,
                             int arg2, long arg3) {
-                    	Intent i = new Intent(getActivity(), SceneEditorNoSwipeActivity.class);
+                    	Intent i = new Intent(getActivity(), SceneEditorActivity.class);
                     	i.putExtra("template_story", true);
                         getActivity().startActivity(i);
                         

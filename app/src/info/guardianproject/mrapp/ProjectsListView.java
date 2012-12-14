@@ -36,7 +36,7 @@ public class ProjectsListView extends ListView implements Runnable {
 			
 				Project project = mListProjects.get(position);
 				
-				Intent intent = new Intent(getContext(), SceneEditorNoSwipeActivity.class);
+				Intent intent = new Intent(getContext(), SceneEditorActivity.class);
 		    	intent.putExtra("story_mode", project.getStoryType());
 		    	intent.putExtra("pid", project.getId());
 		    	intent.putExtra("title", project.getTitle());

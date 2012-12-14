@@ -73,15 +73,13 @@ import com.actionbarsherlock.view.MenuItem;
 import com.animoto.android.views.DraggableGridView;
 import com.animoto.android.views.OnRearrangeListener;
 
-public class SceneEditorNoSwipeActivity extends org.holoeverywhere.app.Activity implements
-        ActionBar.TabListener {
-    private static final String STATE_SELECTED_NAVIGATION_ITEM = "selected_navigation_item";
-
-    private final static int REQ_OVERLAY_CAM = 888; // for resp handling from
-                                                    // overlay cam launch
-    private final static int REQ_SOUNDCLOUD = 999;
-
-    protected boolean templateStory = false;
+public class SceneEditorActivity extends org.holoeverywhere.app.Activity implements ActionBar.TabListener {
+	private static final String STATE_SELECTED_NAVIGATION_ITEM = "selected_navigation_item";
+	
+	private final static int REQ_OVERLAY_CAM = 888; //for resp handling from overlay cam launch
+	private final static int REQ_SOUNDCLOUD = 999;
+	
+    protected boolean templateStory = false; 
     protected Menu mMenu = null;
     private Context mContext = null;
     private String templateJsonPath = null;
@@ -135,85 +133,88 @@ public class SceneEditorNoSwipeActivity extends org.holoeverywhere.app.Activity 
     private Handler mHandlerPub = new Handler()
     {
 
-        @Override
-        public void handleMessage(Message msg) {
+		@Override
+		public void handleMessage(Message msg) {
+			
+			String statusTitle = msg.getData().getString("statusTitle");
+			String status = msg.getData().getString("status");
 
-            String statusTitle = msg.getData().getString("statusTitle");
-            String status = msg.getData().getString("status");
-
-            String error = msg.getData().getString("error");
-            if (error == null)
-                error = msg.getData().getString("err");
-
-            int progress = msg.getData().getInt("progress");
-
-            if (dialog != null && progress > 0)
-                dialog.setProgress(progress);
-
-            switch (msg.what)
-            {
-                case 0:
-                case 1:
-
-                    if (status != null)
-                    {
-                        if (dialog != null)
-                        {
-                            if (statusTitle != null)
-                                dialog.setTitle(statusTitle);
-
-                            dialog.setMessage(status);
-                        }
-                        else
-                        {
-                            Toast.makeText(mContext, status, Toast.LENGTH_SHORT).show();
-
-                        }
-                    }
-                    break;
-
-                case 999:
-
-                    dialog = new ProgressDialog(SceneEditorNoSwipeActivity.this);
-                    dialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-                    dialog.setTitle(getString(R.string.rendering));
-                    dialog.setMessage(getString(R.string.rendering_project_));
-                    dialog.setCancelable(true);
-                    dialog.show();
-
-                    break;
-
-                case 888:
-                    dialog.setMessage(status);
-                    break;
-                case 777:
-
-                    String videoId = msg.getData().getString("youtubeid");
-                    String url = msg.getData().getString("urlPost");
-                    String localPath = msg.getData().getString("fileMedia");
-                    String mimeType = msg.getData().getString("mime");
-
-                    dialog.dismiss();
-                    dialog = null;
-
-                    showPublished(url, new File(localPath), videoId, mimeType);
-
-                    break;
-                case -1:
-                    Toast.makeText(mContext, error, Toast.LENGTH_SHORT).show();
-                    if (dialog != null)
-                    {
-                        dialog.dismiss();
-                        dialog = null;
-                    }
-
-                    break;
-                default:
-
-            }
-
-        }
-
+  	        String error = msg.getData().getString("error");
+  	        if (error == null)
+  	        	error = msg.getData().getString("err");
+  	        
+  	        int progress = msg.getData().getInt("progress");
+  	        
+  	        if (dialog != null && progress > 0)
+  	        	dialog.setProgress(progress);
+			
+			switch (msg.what)
+			{
+				case 0:
+				case 1:
+					
+					if (status != null)
+					{
+						if (dialog != null)
+						{
+							if (statusTitle != null)
+								dialog.setTitle(statusTitle);
+							
+							dialog.setMessage(status);
+						}
+						else
+						{
+							Toast.makeText(mContext, status, Toast.LENGTH_SHORT).show();
+							
+						}
+					}
+				break;
+				
+				case 999:
+					
+						dialog = new ProgressDialog(SceneEditorActivity.this);
+	          		    dialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+	          		    dialog.setTitle(getString(R.string.rendering));
+	          		    dialog.setMessage(getString(R.string.rendering_project_));
+	          		    dialog.setCancelable(true);
+	          		    dialog.show();
+					
+				break;
+				
+				case 888:
+	          		  dialog.setMessage(status);
+	            break;
+				case 777:
+					
+		  	        String videoId = msg.getData().getString("youtubeid");
+		  	        String url = msg.getData().getString("urlPost");
+		  	        String localPath = msg.getData().getString("fileMedia");
+		  	        String mimeType = msg.getData().getString("mime");
+		  	        
+					dialog.dismiss();
+					dialog = null;
+					
+					showPublished(url,new File(localPath),videoId,mimeType);
+					
+					
+				break;
+				case -1:
+					Toast.makeText(mContext, error, Toast.LENGTH_SHORT).show();
+					if (dialog != null)
+					{
+						dialog.dismiss();
+						dialog = null;
+					}
+					 
+				break;
+				default:
+				
+					
+			}
+			
+			
+		}
+    	
     };
 
     public void showPublished(final String postUrl, final File localMedia, final String youTubeId,
@@ -653,71 +654,71 @@ public class SceneEditorNoSwipeActivity extends org.holoeverywhere.app.Activity 
                 });
 
             } else if (this.layout == R.layout.fragment_story_publish) {
+            	
+            	EditText etTitle = (EditText)view.findViewById(R.id.etStoryTitle);
+    			EditText etDesc = (EditText)view.findViewById(R.id.editTextDescribe);
 
-                EditText etTitle = (EditText) view.findViewById(R.id.etStoryTitle);
-                EditText etDesc = (EditText) view.findViewById(R.id.editTextDescribe);
+    			etTitle.setText(mMPM.mProject.getTitle());
+    			
+    			ToggleButton tbYouTube = (ToggleButton)view.findViewById(R.id.toggleButtonYoutube);
+    			
+    			tbYouTube.setOnCheckedChangeListener(new OnCheckedChangeListener ()
+    			{
 
-                etTitle.setText(mMPM.mProject.getTitle());
+    				@Override
+    				public void onCheckedChanged(CompoundButton buttonView,
+    						boolean isChecked) {
 
-                ToggleButton tbYouTube = (ToggleButton) view.findViewById(R.id.toggleButtonYoutube);
+    					if (isChecked)
+    					{
+    						checkYouTubeAccount();
+    					}
+    					
+    				}
+    				
+    			});
+    			
+    			ToggleButton tbStoryMaker = (ToggleButton)view.findViewById(R.id.toggleButtonStoryMaker);
+    			
+    			tbStoryMaker.setOnCheckedChangeListener(new OnCheckedChangeListener ()
+    			{
 
-                tbYouTube.setOnCheckedChangeListener(new OnCheckedChangeListener()
-                {
+    				@Override
+    				public void onCheckedChanged(CompoundButton buttonView,
+    						boolean isChecked) {
 
-                    @Override
-                    public void onCheckedChanged(CompoundButton buttonView,
-                            boolean isChecked) {
+    					if (isChecked)
+    					{
+    						ServerManager sm = StoryMakerApp.getServerManager();
+    	    				sm.setContext(SceneEditorActivity.this);
+    	    				
+    	    				if (!sm.hasCreds())    	    				
+    	    					showLogin();    	    				
+    					}
+    					
+    				}
+    				
+    			});
+    			
+    			
+            	Button btn = (Button)view.findViewById(R.id.btnPublish);
+            	btn.setOnClickListener(new OnClickListener(){
 
-                        if (isChecked)
-                        {
-                            checkYouTubeAccount();
-                        }
-
-                    }
-
-                });
-
-                ToggleButton tbStoryMaker = (ToggleButton) view
-                        .findViewById(R.id.toggleButtonStoryMaker);
-
-                tbStoryMaker.setOnCheckedChangeListener(new OnCheckedChangeListener()
-                {
-
-                    @Override
-                    public void onCheckedChanged(CompoundButton buttonView,
-                            boolean isChecked) {
-
-                        if (isChecked)
-                        {
-                            ServerManager sm = StoryMakerApp.getServerManager();
-                            sm.setContext(SceneEditorNoSwipeActivity.this);
-
-                            if (!sm.hasCreds())
-                                showLogin();
-                        }
-
-                    }
-
-                });
-
-                Button btn = (Button) view.findViewById(R.id.btnPublish);
-                btn.setOnClickListener(new OnClickListener() {
-
-                    @Override
-                    public void onClick(View v) {
-
-                        ServerManager sm = StoryMakerApp.getServerManager();
-                        sm.setContext(SceneEditorNoSwipeActivity.this);
-
-                        if (sm.hasCreds())
-                            handlePublish();
-                        else
-                        {
-                            showLogin();
-                        }
-                    }
-
-                });
+					@Override
+					public void onClick(View v) {
+						
+	    				ServerManager sm = StoryMakerApp.getServerManager();
+	    				sm.setContext(SceneEditorActivity.this);
+	    				
+	    				if (sm.hasCreds())
+	    					handlePublish ();
+	    				else
+	    				{
+	    					showLogin();
+	    				}
+					}
+            		
+            	});
             }
             return view;
         }
@@ -729,36 +730,32 @@ public class SceneEditorNoSwipeActivity extends org.holoeverywhere.app.Activity 
 
         private void checkYouTubeAccount()
         {
-            SharedPreferences settings = PreferenceManager
-                    .getDefaultSharedPreferences(SceneEditorNoSwipeActivity.this);
-            mMediaUploadAccount = settings.getString("youTubeUserName", null);
-
+            SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(SceneEditorActivity.this);
+            mMediaUploadAccount = settings.getString("youTubeUserName",null);
+            
             if (mMediaUploadAccount == null)
             {
-                AccountManager accountManager = AccountManager.get(mContext);
-                final Account[] accounts = accountManager.getAccounts();
-
-                if (accounts.length > 0)
-                {
-                    String[] accountNames = new String[accounts.length];
-                    for (int i = 0; i < accounts.length; i++)
-                        accountNames[i] = accounts[i].name;
-
-                    AlertDialog.Builder builder = new AlertDialog.Builder(
-                            SceneEditorNoSwipeActivity.this);
-                    builder.setTitle(R.string.choose_account_for_youtube_upload);
-                    builder.setItems(accountNames, new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int item) {
-                            mMediaUploadAccount = accounts[item].name;
-                            // SharedPreferences settings =
-                            // PreferenceManager.getDefaultSharedPreferences(SceneEditorNoSwipeActivity.this);
-                            // settings.edit().putString("youTubeUserName",
-                            // mYouTubeUsername);
-                            // settings.edit().commit();
-                        }
-                    }).show();
-
-                }
+	        	AccountManager accountManager = AccountManager.get(mContext);
+	            final Account[] accounts = accountManager.getAccounts();
+	            
+	            if (accounts.length > 0)
+	            {
+	            	String[] accountNames = new String[accounts.length];
+		            for (int i = 0; i < accounts.length; i++)
+		            	accountNames[i] = accounts[i].name;
+	
+	                AlertDialog.Builder builder = new AlertDialog.Builder(SceneEditorActivity.this);
+	                builder.setTitle(R.string.choose_account_for_youtube_upload);
+	                builder.setItems(accountNames, new DialogInterface.OnClickListener() {
+	                    public void onClick(DialogInterface dialog, int item) {
+	                    	mMediaUploadAccount = accounts[item].name;
+	                    	 //  SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(SceneEditorNoSwipeActivity.this);
+	                          // settings.edit().putString("youTubeUserName", mYouTubeUsername);
+	                          // settings.edit().commit();
+	                    }
+	                }).show();
+	
+	            }
             }
         }
 
@@ -942,6 +939,159 @@ public class SceneEditorNoSwipeActivity extends org.holoeverywhere.app.Activity 
 
             thread.start();
         }
+        private void handlePublish ()
+    	{
+			EditText etTitle = (EditText)findViewById(R.id.etStoryTitle);
+			EditText etDesc = (EditText)findViewById(R.id.editTextDescribe);
+
+			ToggleButton tbYouTube = (ToggleButton)findViewById(R.id.toggleButtonYoutube);
+			
+			ToggleButton tbStoryMaker = (ToggleButton)findViewById(R.id.toggleButtonStoryMaker);
+						
+		   // final String exportFileName = processTitle(mMPM.mProject.getTitle()) + "-export-" + new Date().getTime();
+			 final String exportFileName = mMPM.mProject.getId() + "-export-" + new Date().getTime();
+			
+			final boolean doYouTube = tbYouTube.isChecked();
+			final boolean doStoryMaker = tbStoryMaker.isChecked();
+			
+			mHandlerPub.sendEmptyMessage(999);
+			
+			final String title = etTitle.getText().toString();
+			final String desc = etDesc.getText().toString();
+			String ytdesc = desc;
+			if (ytdesc.length() == 0)
+			{
+				ytdesc = getActivity().getString(R.string.default_youtube_desc); //can't leave the description blank for YouTube
+			}
+			
+			final YouTubeSubmit yts = new YouTubeSubmit(null, title, ytdesc, new Date(),SceneEditorActivity.this, mHandlerPub);
+			
+    		Thread thread = new Thread ()
+    		{
+    			public void run ()
+    			{
+    				
+    				ServerManager sm = StoryMakerApp.getServerManager();
+    				sm.setContext(SceneEditorActivity.this);
+    				
+    				Message msg = mHandlerPub.obtainMessage(888);
+    				msg.getData().putString("status", getActivity().getString(R.string.rendering_clips_));
+    				mHandlerPub.sendMessage(msg);
+    				
+    				try {
+    				    				
+	    				mMPM.doExportMedia(exportFileName, doYouTube);
+	    				
+	    				MediaDesc mdExported = mMPM.getExportMedia();	    				
+	    				File mediaFile = new File(mdExported.path);
+	    				
+	    				if (mediaFile.exists())
+	    				{
+	    				
+		    				Message message = mHandlerPub.obtainMessage(777);
+							message.getData().putString("fileMedia",mdExported.path);
+							message.getData().putString("mime",mdExported.mimeType);
+
+		    				if (doYouTube)
+		    				{
+		    					
+		    					String mediaEmbed = "";
+		    						
+		    					if (mMPM.mProject.getStoryType() == Project.STORY_TYPE_VIDEO)
+		    					{
+		    						msg = mHandlerPub.obtainMessage(888);
+		    						msg.getData().putString("statusTitle", getActivity().getString(R.string.uploading));
+		    	    				msg.getData().putString("status", getActivity().getString(
+											R.string.connecting_to_youtube_));
+		    	    				mHandlerPub.sendMessage(msg);
+		    	    				
+			    					yts.setVideoFile(mediaFile,mdExported.mimeType);
+			    					yts.getAuthTokenWithPermission(mMediaUploadAccount);
+			    					//yts.upload(mYouTubeUsername,new File(mdExported.path));
+			    					
+			    					while (yts.videoId == null)
+			    					{
+			    						try { Thread.sleep(1000); } catch (Exception e){}
+			    					}
+			    					
+			    					mediaEmbed = "[youtube]" + yts.videoId + "[/youtube]";
+
+									message.getData().putString("youtubeid", yts.videoId);
+		    					}
+		    					else if (mMPM.mProject.getStoryType() == Project.STORY_TYPE_AUDIO)
+		    					{
+		    						boolean installed = SoundCloudUploader.isCompatibleSoundCloudInstalled(mContext);
+		    						
+		    						if (installed)
+		    						{
+		    							String scurl = SoundCloudUploader.buildSoundCloudURL(mMediaUploadAccount, mediaFile, title);
+				    					mediaEmbed = "[soundcloud]" + scurl + "[/soundcloud]";
+				    					
+				    					SoundCloudUploader.uploadSound(mediaFile, title, desc, REQ_SOUNDCLOUD, SceneEditorActivity.this);
+	 
+		    						}
+		    						else
+		    						{
+		    							SoundCloudUploader.installSoundCloud(mContext);
+		    						}
+		    					}
+		    					else
+		    					{
+		    						String murl = sm.addMedia(mdExported.mimeType, mediaFile);
+		    						mediaEmbed = murl;
+		    					}
+		    					
+		    					if (doStoryMaker)
+		    					{
+		    						String descWithMedia = desc + "\n\n" + mediaEmbed;
+		    						
+		    						String postId = sm.post(title, descWithMedia);
+								
+		    						String urlPost = sm.getPostUrl(postId);
+		    				
+		    						message.getData().putString("urlPost", urlPost);
+		    					}
+		    					
+								
+		    				}
+	    					
+							mHandlerPub.sendMessage(message);
+	    				}
+	    				else
+	    				{
+	    					Message msgErr = new Message();
+							msgErr.what = -1;
+							msgErr.getData().putString("err", "Media export failed");
+							mHandlerPub.sendMessage(msgErr);
+	    				}
+						
+						
+					} catch (XmlRpcFault e) {
+						
+						Message msgErr = new Message();
+						msgErr.what = -1;
+						msgErr.getData().putString("err", e.getLocalizedMessage());
+						mHandlerPub.sendMessage(msgErr);
+						Log.e(AppConstants.TAG,"error posting",e);
+						
+					}
+    				catch (Exception e) {
+						
+						Message msgErr = new Message();
+						msgErr.what = -1;
+						msgErr.getData().putString("err", e.getLocalizedMessage());
+						mHandlerPub.sendMessage(msgErr);
+						Log.e(AppConstants.TAG,"error posting",e);
+						
+					}
+    				
+    			}
+    		};
+    		
+    		thread.start();
+    	}
+        
+       
 
         /**
          * A {@link FragmentPagerAdapter} that returns a fragment corresponding
