@@ -86,12 +86,12 @@ public class SceneEditorActivity extends org.holoeverywhere.app.Activity impleme
     private int mStoryMode = Project.STORY_TYPE_VIDEO;;
     private final static String CAPTURE_MIMETYPE_AUDIO = "audio/3gpp";
     private MediaProjectManager mMPM;
-    public SceneChooserFragment mFragmentTab0, mFragmentTab1, mFragmentTab2, mLastTabFrag;
-    private PreviewVideoView mPreviewVideoView = null;
-    private ImageView mImageViewMedia;
-
-    private String mMediaUploadAccount = null;
-
+    public Fragment mFragmentTab0, mFragmentTab1, mFragmentTab2, mLastTabFrag;
+	private PreviewVideoView mPreviewVideoView = null;
+	private ImageView mImageViewMedia;
+	
+	private String mMediaUploadAccount = null;
+	
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -357,28 +357,23 @@ public class SceneEditorActivity extends org.holoeverywhere.app.Activity impleme
             if (mFragmentTab0 == null)
             {
                 try {
-                    mFragmentTab0 = new SceneChooserFragment(layout, fm, templateJsonPath);
+                    mFragmentTab0 = new AddClipsFragment(layout, fm, templateJsonPath);
 
                     Bundle args = new Bundle();
-                    args.putInt(SceneChooserFragment.ARG_SECTION_NUMBER, tab.getPosition() + 1);
+                    args.putInt(AddClipsFragment.ARG_SECTION_NUMBER, tab.getPosition() + 1);
                     mFragmentTab0.setArguments(args);
 
                 } catch (IOException e) {
                     Log.e("SceneEditr", "IO erorr", e);
-
                 } catch (JSONException e) {
                     Log.e("SceneEditr", "json error", e);
-
                 }
 
                 fm.beginTransaction()
                         .add(R.id.container, mFragmentTab0, layout + "")
                         .commit();
 
-            }
-            else
-            {
-
+            } else {
                 fm.beginTransaction()
                         .show(mFragmentTab0)
                         .commit();
@@ -397,10 +392,10 @@ public class SceneEditorActivity extends org.holoeverywhere.app.Activity impleme
             if (mFragmentTab1 == null)
             {
                 try {
-                    mFragmentTab1 = new SceneChooserFragment(layout, fm, templateJsonPath);
+                    mFragmentTab1 = new OrderClipsFragment(layout);
 
                     Bundle args = new Bundle();
-                    args.putInt(SceneChooserFragment.ARG_SECTION_NUMBER, tab.getPosition() + 1);
+                    args.putInt(OrderClipsFragment.ARG_SECTION_NUMBER, tab.getPosition() + 1);
                     mFragmentTab1.setArguments(args);
 
                 } catch (IOException e) {
@@ -415,9 +410,7 @@ public class SceneEditorActivity extends org.holoeverywhere.app.Activity impleme
                         .add(R.id.container, mFragmentTab1, layout + "")
                         .commit();
 
-            }
-            else
-            {
+            } else {
 
                 fm.beginTransaction()
                         .show(mFragmentTab1)
@@ -433,27 +426,22 @@ public class SceneEditorActivity extends org.holoeverywhere.app.Activity impleme
             if (mFragmentTab2 == null)
             {
                 try {
-                    mFragmentTab2 = new SceneChooserFragment(layout, fm, templateJsonPath);
+                    mFragmentTab2 = new PublishFragment(layout);
 
                     Bundle args = new Bundle();
-                    args.putInt(SceneChooserFragment.ARG_SECTION_NUMBER, tab.getPosition() + 1);
+                    args.putInt(PublishFragment.ARG_SECTION_NUMBER, tab.getPosition() + 1);
                     mFragmentTab2.setArguments(args);
 
                 } catch (IOException e) {
                     Log.e("SceneEditr", "IO erorr", e);
-
                 } catch (JSONException e) {
                     Log.e("SceneEditr", "json error", e);
-
                 }
-
                 fm.beginTransaction()
                         .add(R.id.container, mFragmentTab2, layout + "")
                         .commit();
 
-            }
-            else
-            {
+            } else {
 
                 fm.beginTransaction()
                         .show(mFragmentTab2)
@@ -461,9 +449,7 @@ public class SceneEditorActivity extends org.holoeverywhere.app.Activity impleme
             }
 
             mLastTabFrag = mFragmentTab2;
-
         }
-
     }
 
     @Override
@@ -474,8 +460,8 @@ public class SceneEditorActivity extends org.holoeverywhere.app.Activity impleme
      * A dummy fragment representing a section of the app, but that simply
      * displays dummy text.
      */
-    public class SceneChooserFragment extends Fragment {
-        private final static String TAG = "SceneChooserFragment";
+    public class AddClipsFragment extends Fragment {
+        private final static String TAG = "AddClipsFragment";
         int layout;
         public ViewPager mAddClipsViewPager;
         View mView = null;
@@ -483,13 +469,7 @@ public class SceneEditorActivity extends org.holoeverywhere.app.Activity impleme
         private FragmentManager mFm;
         private String mTemplatePath;
 
-        /**
-         * The sortable grid view that contains the clips to reorder on the
-         * Order tab
-         */
-        protected DraggableGridView mOrderClipsDGV;
-
-        public SceneChooserFragment(int layout, FragmentManager fm, String templatePath)
+        public AddClipsFragment(int layout, FragmentManager fm, String templatePath)
                 throws IOException, JSONException {
             this.layout = layout;
             mFm = fm;
@@ -500,8 +480,7 @@ public class SceneEditorActivity extends org.holoeverywhere.app.Activity impleme
 
         public static final String ARG_SECTION_NUMBER = "section_number";
 
-        public void reloadClips() throws IOException, JSONException
-        {
+        public void reloadClips() throws IOException, JSONException {
             mAddClipsPagerAdapter = new AddClipsPagerAdapter(mFm, mTemplatePath);
             mAddClipsViewPager.setAdapter(mAddClipsPagerAdapter);
 
@@ -522,28 +501,102 @@ public class SceneEditorActivity extends org.holoeverywhere.app.Activity impleme
                 mAddClipsViewPager.setAdapter(mAddClipsPagerAdapter);
                 mAddClipsViewPager.setOnPageChangeListener(new OnPageChangeListener()
                 {
-
                     @Override
-                    public void onPageScrollStateChanged(int arg0) {
+                    public void onPageScrollStateChanged(int state) {
                         // TODO Auto-generated method stub
-
                     }
 
                     @Override
-                    public void onPageScrolled(int arg0, float arg1, int arg2) {
+                    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
                         // TODO Auto-generated method stub
-
                     }
 
                     @Override
-                    public void onPageSelected(int arg0) {
-                        mMPM.mClipIndex = arg0;
-
+                    public void onPageSelected(int position) {
+                        mMPM.mClipIndex = position;
                     }
-
                 });
+            }
+            return view;
+        }
 
-            } else if (this.layout == R.layout.fragment_order_clips) {
+        /**
+         * A {@link FragmentPagerAdapter} that returns a fragment corresponding
+         * to the clips we are editing
+         */
+        public class AddClipsPagerAdapter extends FragmentStatePagerAdapter {
+            private Template sTemplate;
+
+            public AddClipsPagerAdapter(FragmentManager fm, String path) throws IOException,
+                    JSONException {
+                super(fm);
+                loadStoryTemplate(path);
+            }
+
+            private void loadStoryTemplate(String path) throws IOException, JSONException
+            {
+                sTemplate = new Template();
+                sTemplate.parseAsset(mContext, path);
+            }
+
+            @Override
+            public Fragment getItem(int i) {
+                Template.Clip clip = sTemplate.getClips().get(i);
+
+                ArrayList<Media> lMedia = mMPM.mProject.getMediaAsList();
+                Media media = null;
+
+                if (lMedia.size() > i)
+                {
+                    media = lMedia.get(i);
+
+                }
+
+                Fragment fragment = new ClipThumbnailFragment(clip, i, media);
+                return fragment;
+            }
+
+            @Override
+            public int getCount() {
+                return sTemplate.getClips().size();
+            }
+
+            @Override
+            public int getItemPosition(Object object) {
+                return POSITION_NONE;
+            }
+        }
+    }
+
+    /**
+     * A dummy fragment representing a section of the app, but that simply
+     * displays dummy text.
+     */
+    public class OrderClipsFragment extends Fragment {
+        private final static String TAG = "OrderClipsFragment";
+        int layout;
+        public ViewPager mAddClipsViewPager;
+        View mView = null;
+
+        /**
+         * The sortable grid view that contains the clips to reorder on the
+         * Order tab
+         */
+        protected DraggableGridView mOrderClipsDGV;
+
+        public OrderClipsFragment(int layout)
+                throws IOException, JSONException {
+            this.layout = layout;
+        }
+
+        public static final String ARG_SECTION_NUMBER = "section_number";
+
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                Bundle savedInstanceState) {
+
+            View view = inflater.inflate(layout, null);
+            if (this.layout == R.layout.fragment_order_clips) {
                 mOrderClipsDGV = (DraggableGridView) view.findViewById(R.id.DraggableGridView01);
                 mImageViewMedia = (ImageView) view.findViewById(R.id.imageView1);
 
@@ -653,114 +706,140 @@ public class SceneEditorActivity extends org.holoeverywhere.app.Activity impleme
                     }
                 });
 
-            } else if (this.layout == R.layout.fragment_story_publish) {
-            	
-            	EditText etTitle = (EditText)view.findViewById(R.id.etStoryTitle);
-    			EditText etDesc = (EditText)view.findViewById(R.id.editTextDescribe);
+            }
+            return view;
+        }
+    }
 
-    			etTitle.setText(mMPM.mProject.getTitle());
-    			
-    			ToggleButton tbYouTube = (ToggleButton)view.findViewById(R.id.toggleButtonYoutube);
-    			
-    			tbYouTube.setOnCheckedChangeListener(new OnCheckedChangeListener ()
-    			{
+    /**
+     * A dummy fragment representing a section of the app, but that simply
+     * displays dummy text.
+     */
+    public class PublishFragment extends Fragment {
+        private final static String TAG = "PublishFragment";
+        int layout;
+        public ViewPager mAddClipsViewPager;
+        View mView = null;
 
-    				@Override
-    				public void onCheckedChanged(CompoundButton buttonView,
-    						boolean isChecked) {
+        /**
+         * The sortable grid view that contains the clips to reorder on the
+         * Order tab
+         */
+        protected DraggableGridView mOrderClipsDGV;
 
-    					if (isChecked)
-    					{
-    						checkYouTubeAccount();
-    					}
-    					
-    				}
-    				
-    			});
-    			
-    			ToggleButton tbStoryMaker = (ToggleButton)view.findViewById(R.id.toggleButtonStoryMaker);
-    			
-    			tbStoryMaker.setOnCheckedChangeListener(new OnCheckedChangeListener ()
-    			{
+        public PublishFragment(int layout)
+                throws IOException, JSONException {
+            this.layout = layout;
+        }
 
-    				@Override
-    				public void onCheckedChanged(CompoundButton buttonView,
-    						boolean isChecked) {
+        public static final String ARG_SECTION_NUMBER = "section_number";
 
-    					if (isChecked)
-    					{
-    						ServerManager sm = StoryMakerApp.getServerManager();
-    	    				sm.setContext(SceneEditorActivity.this);
-    	    				
-    	    				if (!sm.hasCreds())    	    				
-    	    					showLogin();    	    				
-    					}
-    					
-    				}
-    				
-    			});
-    			
-    			
-            	Button btn = (Button)view.findViewById(R.id.btnPublish);
-            	btn.setOnClickListener(new OnClickListener(){
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                Bundle savedInstanceState) {
 
-					@Override
-					public void onClick(View v) {
-						
-	    				ServerManager sm = StoryMakerApp.getServerManager();
-	    				sm.setContext(SceneEditorActivity.this);
-	    				
-	    				if (sm.hasCreds())
-	    					handlePublish ();
-	    				else
-	    				{
-	    					showLogin();
-	    				}
-					}
-            		
-            	});
+            View view = inflater.inflate(layout, null);
+            if (this.layout == R.layout.fragment_story_publish) {
+                EditText etTitle = (EditText) view.findViewById(R.id.etStoryTitle);
+                EditText etDesc = (EditText) view.findViewById(R.id.editTextDescribe);
+
+                etTitle.setText(mMPM.mProject.getTitle());
+
+                ToggleButton tbYouTube = (ToggleButton) view.findViewById(R.id.toggleButtonYoutube);
+
+                tbYouTube.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+
+                    @Override
+                    public void onCheckedChanged(CompoundButton buttonView,
+                            boolean isChecked) {
+
+                        if (isChecked) {
+                            checkYouTubeAccount();
+                        }
+
+                    }
+
+                });
+
+                ToggleButton tbStoryMaker = (ToggleButton) view
+                        .findViewById(R.id.toggleButtonStoryMaker);
+
+                tbStoryMaker.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+
+                    @Override
+                    public void onCheckedChanged(CompoundButton buttonView,
+                            boolean isChecked) {
+
+                        if (isChecked)
+                        {
+                            ServerManager sm = StoryMakerApp.getServerManager();
+                            sm.setContext(SceneEditorActivity.this);
+
+                            if (!sm.hasCreds())
+                                showLogin();
+                        }
+
+                    }
+
+                });
+
+                Button btn = (Button) view.findViewById(R.id.btnPublish);
+                btn.setOnClickListener(new OnClickListener() {
+
+                    @Override
+                    public void onClick(View v) {
+
+                        ServerManager sm = StoryMakerApp.getServerManager();
+                        sm.setContext(SceneEditorActivity.this);
+
+                        if (sm.hasCreds()) {
+                            handlePublish();
+                        }
+                        else {
+                            showLogin();
+                        }
+                    }
+                });
             }
             return view;
         }
 
-        private void showLogin()
-        {
+        private void showLogin() {
             startActivity(new Intent(mContext, LoginActivity.class));
         }
 
-        private void checkYouTubeAccount()
-        {
-            SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(SceneEditorActivity.this);
-            mMediaUploadAccount = settings.getString("youTubeUserName",null);
-            
-            if (mMediaUploadAccount == null)
-            {
-	        	AccountManager accountManager = AccountManager.get(mContext);
-	            final Account[] accounts = accountManager.getAccounts();
-	            
-	            if (accounts.length > 0)
-	            {
-	            	String[] accountNames = new String[accounts.length];
-		            for (int i = 0; i < accounts.length; i++)
-		            	accountNames[i] = accounts[i].name;
-	
-	                AlertDialog.Builder builder = new AlertDialog.Builder(SceneEditorActivity.this);
-	                builder.setTitle(R.string.choose_account_for_youtube_upload);
-	                builder.setItems(accountNames, new DialogInterface.OnClickListener() {
-	                    public void onClick(DialogInterface dialog, int item) {
-	                    	mMediaUploadAccount = accounts[item].name;
-	                    	 //  SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(SceneEditorNoSwipeActivity.this);
-	                          // settings.edit().putString("youTubeUserName", mYouTubeUsername);
-	                          // settings.edit().commit();
-	                    }
-	                }).show();
-	
-	            }
+        private void checkYouTubeAccount() {
+            SharedPreferences settings = PreferenceManager
+                    .getDefaultSharedPreferences(SceneEditorActivity.this);
+            mMediaUploadAccount = settings.getString("youTubeUserName", null);
+
+            if (mMediaUploadAccount == null) {
+                AccountManager accountManager = AccountManager.get(mContext);
+                final Account[] accounts = accountManager.getAccounts();
+
+                if (accounts.length > 0) {
+                    String[] accountNames = new String[accounts.length];
+                    for (int i = 0; i < accounts.length; i++) {
+                        accountNames[i] = accounts[i].name;
+                    }
+
+                    AlertDialog.Builder builder = new AlertDialog.Builder(SceneEditorActivity.this);
+                    builder.setTitle(R.string.choose_account_for_youtube_upload);
+                    builder.setItems(accountNames, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int item) {
+                            mMediaUploadAccount = accounts[item].name;
+                            // SharedPreferences settings =
+                            // PreferenceManager.getDefaultSharedPreferences(SceneEditorNoSwipeActivity.this);
+                            // settings.edit().putString("youTubeUserName",
+                            // mYouTubeUsername);
+                            // settings.edit().commit();
+                        }
+                    }).show();
+                }
             }
         }
 
-        private String processTitle(String title)
-        {
+        private String processTitle(String title) {
             String result = title;
             result = result.replace(' ', '_');
             result = result.replace('!', '_');
@@ -772,8 +851,7 @@ public class SceneEditorActivity extends org.holoeverywhere.app.Activity impleme
             return result;
         }
 
-        private void handlePublish()
-        {
+        private void handlePublish() {
             EditText etTitle = (EditText) findViewById(R.id.etStoryTitle);
             EditText etDesc = (EditText) findViewById(R.id.editTextDescribe);
 
@@ -794,8 +872,7 @@ public class SceneEditorActivity extends org.holoeverywhere.app.Activity impleme
             final String title = etTitle.getText().toString();
             final String desc = etDesc.getText().toString();
             String ytdesc = desc;
-            if (ytdesc.length() == 0)
-            {
+            if (ytdesc.length() == 0) {
                 ytdesc = getActivity().getString(R.string.default_youtube_desc); // can't
                                                                                  // leave
                                                                                  // the
@@ -806,15 +883,12 @@ public class SceneEditorActivity extends org.holoeverywhere.app.Activity impleme
             }
 
             final YouTubeSubmit yts = new YouTubeSubmit(null, title, ytdesc, new Date(),
-                    SceneEditorNoSwipeActivity.this, mHandlerPub);
+                    SceneEditorActivity.this, mHandlerPub);
 
-            Thread thread = new Thread()
-            {
-                public void run()
-                {
-
+            Thread thread = new Thread() {
+                public void run() {
                     ServerManager sm = StoryMakerApp.getServerManager();
-                    sm.setContext(SceneEditorNoSwipeActivity.this);
+                    sm.setContext(SceneEditorActivity.this);
 
                     Message msg = mHandlerPub.obtainMessage(888);
                     msg.getData().putString("status",
@@ -822,26 +896,21 @@ public class SceneEditorActivity extends org.holoeverywhere.app.Activity impleme
                     mHandlerPub.sendMessage(msg);
 
                     try {
-
                         mMPM.doExportMedia(exportFileName, doYouTube);
-
                         MediaDesc mdExported = mMPM.getExportMedia();
                         File mediaFile = new File(mdExported.path);
 
-                        if (mediaFile.exists())
-                        {
+                        if (mediaFile.exists()) {
 
                             Message message = mHandlerPub.obtainMessage(777);
                             message.getData().putString("fileMedia", mdExported.path);
                             message.getData().putString("mime", mdExported.mimeType);
 
-                            if (doYouTube)
-                            {
+                            if (doYouTube) {
 
                                 String mediaEmbed = "";
 
-                                if (mMPM.mProject.getStoryType() == Project.STORY_TYPE_VIDEO)
-                                {
+                                if (mMPM.mProject.getStoryType() == Project.STORY_TYPE_VIDEO) {
                                     msg = mHandlerPub.obtainMessage(888);
                                     msg.getData().putString("statusTitle",
                                             getActivity().getString(R.string.uploading));
@@ -854,8 +923,7 @@ public class SceneEditorActivity extends org.holoeverywhere.app.Activity impleme
                                     // yts.upload(mYouTubeUsername,new
                                     // File(mdExported.path));
 
-                                    while (yts.videoId == null)
-                                    {
+                                    while (yts.videoId == null) {
                                         try {
                                             Thread.sleep(1000);
                                         } catch (Exception e) {
@@ -866,283 +934,61 @@ public class SceneEditorActivity extends org.holoeverywhere.app.Activity impleme
 
                                     message.getData().putString("youtubeid", yts.videoId);
                                 }
-                                else if (mMPM.mProject.getStoryType() == Project.STORY_TYPE_AUDIO)
-                                {
+                                else if (mMPM.mProject.getStoryType() == Project.STORY_TYPE_AUDIO) {
                                     boolean installed = SoundCloudUploader
                                             .isCompatibleSoundCloudInstalled(mContext);
 
-                                    if (installed)
-                                    {
+                                    if (installed) {
                                         String scurl = SoundCloudUploader.buildSoundCloudURL(
                                                 mMediaUploadAccount, mediaFile, title);
                                         mediaEmbed = "[soundcloud]" + scurl + "[/soundcloud]";
 
                                         SoundCloudUploader.uploadSound(mediaFile, title, desc,
-                                                REQ_SOUNDCLOUD, SceneEditorNoSwipeActivity.this);
+                                                REQ_SOUNDCLOUD, SceneEditorActivity.this);
 
                                     }
-                                    else
-                                    {
+                                    else {
                                         SoundCloudUploader.installSoundCloud(mContext);
                                     }
                                 }
-                                else
-                                {
+                                else {
                                     String murl = sm.addMedia(mdExported.mimeType, mediaFile);
                                     mediaEmbed = murl;
                                 }
 
-                                if (doStoryMaker)
-                                {
+                                if (doStoryMaker) {
                                     String descWithMedia = desc + "\n\n" + mediaEmbed;
-
                                     String postId = sm.post(title, descWithMedia);
-
                                     String urlPost = sm.getPostUrl(postId);
-
                                     message.getData().putString("urlPost", urlPost);
                                 }
-
                             }
-
                             mHandlerPub.sendMessage(message);
                         }
-                        else
-                        {
+                        else {
                             Message msgErr = new Message();
                             msgErr.what = -1;
                             msgErr.getData().putString("err", "Media export failed");
                             mHandlerPub.sendMessage(msgErr);
                         }
-
                     } catch (XmlRpcFault e) {
-
                         Message msgErr = new Message();
                         msgErr.what = -1;
                         msgErr.getData().putString("err", e.getLocalizedMessage());
                         mHandlerPub.sendMessage(msgErr);
                         Log.e(AppConstants.TAG, "error posting", e);
-
                     }
                     catch (Exception e) {
-
                         Message msgErr = new Message();
                         msgErr.what = -1;
                         msgErr.getData().putString("err", e.getLocalizedMessage());
                         mHandlerPub.sendMessage(msgErr);
                         Log.e(AppConstants.TAG, "error posting", e);
-
                     }
-
                 }
             };
 
             thread.start();
-        }
-        private void handlePublish ()
-    	{
-			EditText etTitle = (EditText)findViewById(R.id.etStoryTitle);
-			EditText etDesc = (EditText)findViewById(R.id.editTextDescribe);
-
-			ToggleButton tbYouTube = (ToggleButton)findViewById(R.id.toggleButtonYoutube);
-			
-			ToggleButton tbStoryMaker = (ToggleButton)findViewById(R.id.toggleButtonStoryMaker);
-						
-		   // final String exportFileName = processTitle(mMPM.mProject.getTitle()) + "-export-" + new Date().getTime();
-			 final String exportFileName = mMPM.mProject.getId() + "-export-" + new Date().getTime();
-			
-			final boolean doYouTube = tbYouTube.isChecked();
-			final boolean doStoryMaker = tbStoryMaker.isChecked();
-			
-			mHandlerPub.sendEmptyMessage(999);
-			
-			final String title = etTitle.getText().toString();
-			final String desc = etDesc.getText().toString();
-			String ytdesc = desc;
-			if (ytdesc.length() == 0)
-			{
-				ytdesc = getActivity().getString(R.string.default_youtube_desc); //can't leave the description blank for YouTube
-			}
-			
-			final YouTubeSubmit yts = new YouTubeSubmit(null, title, ytdesc, new Date(),SceneEditorActivity.this, mHandlerPub);
-			
-    		Thread thread = new Thread ()
-    		{
-    			public void run ()
-    			{
-    				
-    				ServerManager sm = StoryMakerApp.getServerManager();
-    				sm.setContext(SceneEditorActivity.this);
-    				
-    				Message msg = mHandlerPub.obtainMessage(888);
-    				msg.getData().putString("status", getActivity().getString(R.string.rendering_clips_));
-    				mHandlerPub.sendMessage(msg);
-    				
-    				try {
-    				    				
-	    				mMPM.doExportMedia(exportFileName, doYouTube);
-	    				
-	    				MediaDesc mdExported = mMPM.getExportMedia();	    				
-	    				File mediaFile = new File(mdExported.path);
-	    				
-	    				if (mediaFile.exists())
-	    				{
-	    				
-		    				Message message = mHandlerPub.obtainMessage(777);
-							message.getData().putString("fileMedia",mdExported.path);
-							message.getData().putString("mime",mdExported.mimeType);
-
-		    				if (doYouTube)
-		    				{
-		    					
-		    					String mediaEmbed = "";
-		    						
-		    					if (mMPM.mProject.getStoryType() == Project.STORY_TYPE_VIDEO)
-		    					{
-		    						msg = mHandlerPub.obtainMessage(888);
-		    						msg.getData().putString("statusTitle", getActivity().getString(R.string.uploading));
-		    	    				msg.getData().putString("status", getActivity().getString(
-											R.string.connecting_to_youtube_));
-		    	    				mHandlerPub.sendMessage(msg);
-		    	    				
-			    					yts.setVideoFile(mediaFile,mdExported.mimeType);
-			    					yts.getAuthTokenWithPermission(mMediaUploadAccount);
-			    					//yts.upload(mYouTubeUsername,new File(mdExported.path));
-			    					
-			    					while (yts.videoId == null)
-			    					{
-			    						try { Thread.sleep(1000); } catch (Exception e){}
-			    					}
-			    					
-			    					mediaEmbed = "[youtube]" + yts.videoId + "[/youtube]";
-
-									message.getData().putString("youtubeid", yts.videoId);
-		    					}
-		    					else if (mMPM.mProject.getStoryType() == Project.STORY_TYPE_AUDIO)
-		    					{
-		    						boolean installed = SoundCloudUploader.isCompatibleSoundCloudInstalled(mContext);
-		    						
-		    						if (installed)
-		    						{
-		    							String scurl = SoundCloudUploader.buildSoundCloudURL(mMediaUploadAccount, mediaFile, title);
-				    					mediaEmbed = "[soundcloud]" + scurl + "[/soundcloud]";
-				    					
-				    					SoundCloudUploader.uploadSound(mediaFile, title, desc, REQ_SOUNDCLOUD, SceneEditorActivity.this);
-	 
-		    						}
-		    						else
-		    						{
-		    							SoundCloudUploader.installSoundCloud(mContext);
-		    						}
-		    					}
-		    					else
-		    					{
-		    						String murl = sm.addMedia(mdExported.mimeType, mediaFile);
-		    						mediaEmbed = murl;
-		    					}
-		    					
-		    					if (doStoryMaker)
-		    					{
-		    						String descWithMedia = desc + "\n\n" + mediaEmbed;
-		    						
-		    						String postId = sm.post(title, descWithMedia);
-								
-		    						String urlPost = sm.getPostUrl(postId);
-		    				
-		    						message.getData().putString("urlPost", urlPost);
-		    					}
-		    					
-								
-		    				}
-	    					
-							mHandlerPub.sendMessage(message);
-	    				}
-	    				else
-	    				{
-	    					Message msgErr = new Message();
-							msgErr.what = -1;
-							msgErr.getData().putString("err", "Media export failed");
-							mHandlerPub.sendMessage(msgErr);
-	    				}
-						
-						
-					} catch (XmlRpcFault e) {
-						
-						Message msgErr = new Message();
-						msgErr.what = -1;
-						msgErr.getData().putString("err", e.getLocalizedMessage());
-						mHandlerPub.sendMessage(msgErr);
-						Log.e(AppConstants.TAG,"error posting",e);
-						
-					}
-    				catch (Exception e) {
-						
-						Message msgErr = new Message();
-						msgErr.what = -1;
-						msgErr.getData().putString("err", e.getLocalizedMessage());
-						mHandlerPub.sendMessage(msgErr);
-						Log.e(AppConstants.TAG,"error posting",e);
-						
-					}
-    				
-    			}
-    		};
-    		
-    		thread.start();
-    	}
-        
-       
-
-        /**
-         * A {@link FragmentPagerAdapter} that returns a fragment corresponding
-         * to the clips we are editing
-         */
-        public class AddClipsPagerAdapter extends FragmentStatePagerAdapter {
-
-            private Template sTemplate;
-
-            public AddClipsPagerAdapter(FragmentManager fm, String path) throws IOException,
-                    JSONException {
-                super(fm);
-
-                loadStoryTemplate(path);
-            }
-
-            private void loadStoryTemplate(String path) throws IOException, JSONException
-            {
-                sTemplate = new Template();
-                sTemplate.parseAsset(mContext, path);
-
-            }
-
-            @Override
-            public Fragment getItem(int i) {
-
-                Template.Clip clip = sTemplate.getClips().get(i);
-
-                ArrayList<Media> lMedia = mMPM.mProject.getMediaAsList();
-                Media media = null;
-
-                if (lMedia.size() > i)
-                {
-                    media = lMedia.get(i);
-
-                }
-
-                Fragment fragment = new ClipThumbnailFragment(clip, i, media);
-                return fragment;
-            }
-
-            @Override
-            public int getCount() {
-
-                return sTemplate.getClips().size();
-            }
-
-            @Override
-            public int getItemPosition(Object object) {
-                return POSITION_NONE;
-            }
         }
     }
 
@@ -1230,11 +1076,10 @@ public class SceneEditorActivity extends org.holoeverywhere.app.Activity impleme
 
     public void refreshClipPager() {
         if (mFragmentTab0 != null) {
-            try
-            {
-                mFragmentTab0.reloadClips();
-            } catch (Exception e)
-            {
+            try {
+                ((AddClipsFragment) mFragmentTab0).reloadClips();
+            } 
+            catch (Exception e) {
                 Log.e(AppConstants.TAG, "error reloading clips", e);
             }
         }
@@ -1245,16 +1090,15 @@ public class SceneEditorActivity extends org.holoeverywhere.app.Activity impleme
         super.onConfigurationChanged(newConfig);
     }
 
-    private void openCaptureMode(Clip clip, int clipIndex)
-    {
-
-        if (mStoryMode == Project.STORY_TYPE_AUDIO)
-        {
-            Intent i = new Intent(mContext, SoundRecorder.class);
-            i.setType(CAPTURE_MIMETYPE_AUDIO);
-            i.putExtra("mode", mStoryMode);
-            mMPM.mClipIndex = clipIndex;
-            startActivityForResult(i, mStoryMode);
+	private void openCaptureMode (Clip clip, int clipIndex)
+	{
+		if (mStoryMode == Project.STORY_TYPE_AUDIO)
+		{
+			Intent i = new Intent(mContext, SoundRecorder.class);
+			i.setType(CAPTURE_MIMETYPE_AUDIO);
+			i.putExtra("mode", mStoryMode);
+			mMPM.mClipIndex = clipIndex;
+			startActivityForResult(i,mStoryMode);
 
         }
         else

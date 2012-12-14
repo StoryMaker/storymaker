@@ -98,7 +98,7 @@
                 android:value=".HomeActivity" />
         </activity>
         <activity
-            android:name=".SceneEditorNoSwipeActivity"
+            android:name="info.guardianproject.mrapp.SceneEditorActivity"
             android:screenOrientation="portrait"    
              android:configChanges="orientation|screenSize"        
             android:label="@string/title_activity_scene_editor" >
