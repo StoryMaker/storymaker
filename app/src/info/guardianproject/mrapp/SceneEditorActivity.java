@@ -552,7 +552,7 @@ public class SceneEditorActivity extends org.holoeverywhere.app.Activity impleme
 
                 }
 
-                Fragment fragment = new ClipThumbnailFragment(clip, i, media);
+                Fragment fragment = new AddClipsThumbnailFragment(clip, i, media);
                 return fragment;
             }
 
@@ -995,16 +995,16 @@ public class SceneEditorActivity extends org.holoeverywhere.app.Activity impleme
     /**
      * ClipThumbnailFragment
      */
-    public class ClipThumbnailFragment extends Fragment {
-
-        private Template.Clip clip;
-        private int mClipIndex;
-        private Media mMedia;
-
-        public ClipThumbnailFragment(Template.Clip clip, int clipIndex, Media media) {
-            this.clip = clip;
-            mClipIndex = clipIndex;
-            mMedia = media;
+    public class AddClipsThumbnailFragment extends Fragment {
+    	
+    	private Template.Clip clip;
+    	private int mClipIndex;
+    	private Media mMedia;
+    	
+        public AddClipsThumbnailFragment(Template.Clip clip, int clipIndex, Media media) {
+        	this.clip = clip;
+        	mClipIndex = clipIndex;
+        	mMedia = media;
         }
 
         public static final String ARG_CLIP_TYPE_ID = "clip_type_id";
