@@ -143,7 +143,7 @@ function make_image(m,re) {
 			//im = '<video src="'+ma[1]+'" width="400" height="300" autobuffer controls></video>';
 			
 			if (at != null)
-				im += '<br/><br/><span class="mediacaption">' + at[1] + '</span>';
+				im += '<span class="mediacaption">' + at[1] + '</span>';
 				
 		//	im += '<br/><a href="'+ma[1]+'">(external link)</a>';
 			
@@ -156,7 +156,7 @@ function make_image(m,re) {
 			im = '<span class="mediaplay"><a href="'+ma[1]+'">play audio</a></span>';
 		
 			if (at != null)
-				im += '<br/><br/><span class="mediacaption">' + at[1] + '</span>';
+				im += '<span class="mediacaption">' + at[1] + '</span>';
 			
 					
 		}

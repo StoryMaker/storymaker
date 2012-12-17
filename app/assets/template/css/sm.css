@@ -1,5 +1,5 @@
 body{
-	font-size: 20pt;	
+	font-size: 14pt;	
 }
 
 img {
@@ -49,15 +49,16 @@ h1, h2, h3
 
 h1 {
 	text-transform:uppercase;
-	font-size: 18pt;
+	font-size: 20pt;
 }
 
 h2 {
-	font-size: 28pt;
+	font-size: 16pt;
+	font-weight: bold;
 }
 
 h3 {
-	font-size: 28pt;
+	font-size: 16pt;
 }
 
 .mediaplay
@@ -67,7 +68,6 @@ h3 {
 	padding:15px;
 	font-size:18pt;
 	height:75px;
-	float: left;
 	clear: both;
 }
 
@@ -86,6 +86,5 @@ h3 {
 	padding:15px;
 	font-size:10pt;
 	margin-bottom:20px;
-	float: left;
 	clear: both;
 }
