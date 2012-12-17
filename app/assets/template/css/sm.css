@@ -66,8 +66,8 @@ h3 {
 	color:#eeeeee;
 	background-color:#333333;
 	padding:15px;
-	font-size:18pt;
-	height:75px;
+	font-size:20pt;
+	float:left;
 	clear: both;
 }
 
@@ -86,5 +86,6 @@ h3 {
 	padding:15px;
 	font-size:10pt;
 	margin-bottom:20px;
+	float:left;
 	clear: both;
 }

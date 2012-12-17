@@ -145,6 +145,8 @@ function make_image(m,re) {
 			if (at != null)
 				im += '<span class="mediacaption">' + at[1] + '</span>';
 				
+			im += '<br style="clear:both;"/>';
+				
 		//	im += '<br/><a href="'+ma[1]+'">(external link)</a>';
 			
 			
@@ -158,7 +160,8 @@ function make_image(m,re) {
 			if (at != null)
 				im += '<span class="mediacaption">' + at[1] + '</span>';
 			
-					
+			
+			im += '<br style="clear:both;"/>';		
 		}
 		else
 			im = '<img src="'+ma[1]+'"'+attr+" />";
