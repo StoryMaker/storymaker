@@ -68,7 +68,7 @@ public class LessonListView extends ListView implements LessonManagerListener {
 					mSubFolder = selIdx+1+"";
 					changeLessonFolder(mSubFolder);
 				}
-				else
+				else if (selIdx < mListLessons.size())
 				{
 					Lesson lesson = mListLessons.get(selIdx);
 					accessLesson(lesson);
