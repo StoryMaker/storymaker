@@ -583,6 +583,8 @@ public class SceneEditorActivity extends org.holoeverywhere.app.Activity impleme
                 
                 mAddClipsViewPager.setOnPageChangeListener(new OnPageChangeListener()
                 {
+                    int mDragAtEnd = 0;
+                    
                     @Override
                     public void onPageScrollStateChanged(int state) {
                         // TODO Auto-generated method stub
@@ -590,7 +592,33 @@ public class SceneEditorActivity extends org.holoeverywhere.app.Activity impleme
 
                     @Override
                     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-                        // TODO Auto-generated method stub
+                        
+                        if (((position+1) == mTemplate.getClips().size()) && positionOffset == 0 & positionOffsetPixels == 0)
+                        {
+                            mDragAtEnd++;
+                            
+                            if (mDragAtEnd > 5)
+                            {
+                                AlertDialog.Builder builder = new AlertDialog.Builder(SceneEditorActivity.this);
+                                builder.setMessage(R.string.add_new_clip_to_the_scene_)
+                                        .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                                            
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                addShotToScene();
+                                                
+                                            }
+                                        })
+                                        .setNegativeButton(R.string.no, null).show();
+                                
+                               
+                                mDragAtEnd = 0;
+                            }
+                        }
+                        else
+                        {
+                            mDragAtEnd = 0;
+                        }
                     }
 
                     @Override
@@ -889,7 +917,7 @@ public class SceneEditorActivity extends org.holoeverywhere.app.Activity impleme
                 if (accounts.length > 0) {
                     String[] accountNames = new String[accounts.length];
                     for (int i = 0; i < accounts.length; i++) {
-                        accountNames[i] = accounts[i].name;
+                        accountNames[i] = accounts[i].name + " (" + accounts[i].type + ")";
                     }
 
                     AlertDialog.Builder builder = new AlertDialog.Builder(SceneEditorActivity.this);

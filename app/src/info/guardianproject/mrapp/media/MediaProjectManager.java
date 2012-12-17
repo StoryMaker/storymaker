@@ -191,7 +191,7 @@ public class MediaProjectManager implements MediaManager {
          msg.getData().putString("status","cancelled");
 
          ArrayList<Media> mList = mProject.getMediaAsList();
-         ArrayList<MediaDesc> alMediaIn = new ArrayList<MediaDesc>(mList.size());
+         ArrayList<MediaDesc> alMediaIn = new ArrayList<MediaDesc>();
          
          //for video, render the sequence together
          if (mProject.getStoryType() == Project.STORY_TYPE_VIDEO)
@@ -199,13 +199,16 @@ public class MediaProjectManager implements MediaManager {
         	int mIdx = 0;
 	    	for (Media media : mList)
 	    	{
-	    		MediaDesc mDesc = new MediaDesc();
-	    		mDesc.mimeType = media.getMimeType();
-	    		mDesc.path = media.getPath();
-	    		
-	        	applyExportSettings(mDesc);
-	    		alMediaIn.add(mIdx, mDesc);
-	    		mIdx++;
+	    	    if (media != null)
+	    	    {
+    	    		MediaDesc mDesc = new MediaDesc();
+    	    		mDesc.mimeType = media.getMimeType();
+    	    		mDesc.path = media.getPath();
+    	    		
+    	        	applyExportSettings(mDesc);
+    	    		alMediaIn.add(mIdx, mDesc);
+    	    		mIdx++;
+	    	    }
 	    	}
 	
 		    mOut = new MediaDesc ();
@@ -228,11 +231,14 @@ public class MediaProjectManager implements MediaManager {
         	int mIdx = 0; 
         	for (Media media : mList)
  	    	{
- 	    		MediaDesc mDesc = new MediaDesc();
- 	    		mDesc.mimeType = media.getMimeType();
- 	    		mDesc.path = media.getPath();
- 	        	applyExportSettings(mDesc);
- 	    		alMediaIn.add(mIdx++,mDesc);
+        	    if (media != null)
+        	    {
+     	    		MediaDesc mDesc = new MediaDesc();
+     	    		mDesc.mimeType = media.getMimeType();
+     	    		mDesc.path = media.getPath();
+     	        	applyExportSettings(mDesc);
+     	    		alMediaIn.add(mIdx++,mDesc);
+        	    }
  	    	}
  	
  		    mOut = new MediaDesc ();
@@ -286,14 +292,14 @@ public class MediaProjectManager implements MediaManager {
         	
 	    	for (Media media : mList)
 	    	{
-	    		 if (media == null)
-        			 continue;
-	    		 
-	    		MediaDesc mDesc = new MediaDesc();
-	    		mDesc.mimeType = media.getMimeType();
-	    		mDesc.path = media.getPath();
-	        	applyExportSettings(mDesc);
-	    		alMediaIn.add(mDesc);
+	    	    if (media != null)
+	    	    {
+    	    		MediaDesc mDesc = new MediaDesc();
+    	    		mDesc.mimeType = media.getMimeType();
+    	    		mDesc.path = media.getPath();
+    	        	applyExportSettings(mDesc);
+    	    		alMediaIn.add(mDesc);
+	    	    }
 	    	}
 	
 		    mOut = new MediaDesc ();
@@ -325,8 +331,8 @@ public class MediaProjectManager implements MediaManager {
     	mdout.videoBitrate = 1500;
     	mdout.audioBitrate = 128;
     	mdout.videoFps = "29.97";
-    	//mdout.width = 720;
-    	//mdout.height = 480;
+    	mdout.width = 720;
+    	mdout.height = 480;
     	
     }
 

@@ -73,6 +73,7 @@
         android:layout_marginTop="5dp"
         android:background="@android:color/darker_gray" />
 
+    <!-- 
     <TextView
         android:id="@+id/textViewSection"
         android:layout_width="wrap_content"
@@ -127,7 +128,7 @@
        android:layout_toRightOf="@+id/textViewTopics"
         
         />
-
+ 
     
     <View
         android:id="@+id/divider3"
@@ -137,14 +138,15 @@
         android:layout_marginBottom="5dp"
         android:layout_marginTop="5dp"
         android:background="@android:color/darker_gray" />
-
+ -->
+ <!-- 
     <TextView
         android:id="@+id/textViewLocation"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/editTextLocation"
         android:layout_alignTop="@+id/editTextLocation"
-        android:layout_below="@+id/divider3"
+        android:layout_below="@+id/divider1"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="5dp"
         android:gravity="center_vertical"
@@ -162,7 +164,7 @@
         android:layout_weight="1"
         android:ems="10"
         android:hint="@string/story_publish_location_hint" />
-
+ 
     <View
         android:id="@+id/divider4"
         android:layout_width="fill_parent"
@@ -171,14 +173,14 @@
         android:layout_marginBottom="5dp"
         android:layout_marginTop="5dp"
         android:background="@android:color/darker_gray" />
-
+-->
     <TextView
         android:id="@+id/editTextShare"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/toggleButtonStoryMaker"
         android:layout_alignTop="@+id/toggleButtonStoryMaker"
-        android:layout_below="@+id/divider4"
+        android:layout_below="@+id/divider1"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="5dp"
         android:gravity="center_vertical"
@@ -190,7 +192,7 @@
         android:id="@+id/toggleButtonStoryMaker"
         android:layout_width="36dp"
         android:layout_height="36dp"
-        android:layout_below="@+id/divider4"
+        android:layout_below="@+id/divider1"
         android:layout_toLeftOf="@+id/toggleButtonYoutube"
         android:background="@drawable/btn_toggle_bg_storymaker"
         android:textAllCaps="false"
@@ -202,8 +204,8 @@
         android:id="@+id/toggleButtonYoutube"
         android:layout_width="36dp"
         android:layout_height="36dp"
-        android:layout_below="@+id/divider4"
-        android:layout_toLeftOf="@+id/toggleButtonTwitter"
+        android:layout_below="@+id/divider1"
+        android:layout_alignParentRight="true"
         android:background="@drawable/btn_toggle_bg_youtube"
         android:textAllCaps="false"
         android:textOff=""
@@ -230,7 +232,6 @@
         android:textAllCaps="false"
         android:textOff=""
         android:textOn="" />
- -->
 
     <ToggleButton
         android:id="@+id/toggleButtonTwitter"
@@ -242,16 +243,19 @@
         android:textAllCaps="false"
         android:textOff=""
         android:textOn="" />
+ -->
+
 
     <View
         android:id="@+id/divider5"
         android:layout_width="fill_parent"
         android:layout_height="1dp"
-        android:layout_below="@+id/toggleButtonTwitter"
+        android:layout_below="@+id/toggleButtonYoutube"
         android:layout_marginBottom="5dp"
         android:layout_marginTop="5dp"
         android:background="@android:color/darker_gray" />
 
+    <!-- 
     <TextView
         android:id="@+id/textViewSendVia"
         android:layout_width="wrap_content"
@@ -287,6 +291,7 @@
         android:textAllCaps="false" 
         android:textOff=""
         android:textOn=""/>
+         -->
 <!-- 
     <ToggleButton
         android:id="@+id/toggleButtonUSB"
@@ -298,7 +303,7 @@
         android:textAllCaps="false" 
         android:textOff=""
         android:textOn=""/>
- -->
+
     <View
         android:id="@+id/divider6"
         android:layout_width="fill_parent"
@@ -307,12 +312,12 @@
         android:layout_marginBottom="5dp"
         android:layout_marginTop="5dp"
         android:background="@android:color/darker_gray" />
-
+ -->
     <TextView
         android:id="@+id/lblViewStatus"
         android:layout_width="wrap_content"
         android:layout_height="40dp"
-        android:layout_below="@+id/divider6"
+        android:layout_below="@+id/divider5"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="5dp"
         android:text="@string/story_publish_status"
@@ -326,7 +331,7 @@
         android:layout_height="fill_parent"
         android:layout_alignBottom="@+id/lblViewStatus"
         android:layout_alignTop="@+id/lblViewStatus"
-        android:layout_below="@+id/divider6"
+        android:layout_below="@+id/divider5"
         android:layout_marginLeft="10dp"
         android:layout_toRightOf="@+id/lblViewStatus"
         android:gravity="center_vertical"
@@ -338,7 +343,7 @@
         android:layout_height="fill_parent"
         android:layout_alignBottom="@+id/textViewStatus"
         android:layout_alignTop="@+id/textViewStatus"
-        android:layout_below="@+id/divider6"
+        android:layout_below="@+id/divider5"
         android:layout_marginLeft="10dp"
         android:layout_toRightOf="@+id/textViewStatus"
         android:gravity="center_vertical"

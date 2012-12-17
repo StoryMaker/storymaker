@@ -79,7 +79,7 @@ public class MediaExporter implements Runnable {
 	 private void concatMediaFiles (ArrayList<MediaDesc> listMediaDesc, MediaDesc mdout) throws Exception
 	    {
 	    	  	
-	    	boolean mediaNeedConvert = false;
+	    	boolean mediaNeedConvert = true;
 	    	
 	    	FfmpegController ffmpegc = new FfmpegController (mContext);
 	    	
@@ -95,7 +95,7 @@ public class MediaExporter implements Runnable {
 					
 					int idx1;
 					String newStatus = null;
-					int progress = 0;
+					int progress = -1;
 					
 					if ((idx1 = line.indexOf("Duration:"))!=-1)
 					{
@@ -138,14 +138,18 @@ public class MediaExporter implements Runnable {
 					    newStatus = "Rendering clip: " + line.substring(idx1, idx2);
 					}
 					    
-					
+
+                    Message msg = mHandler.obtainMessage(1);
+                    
 					if (newStatus != null)
-					{
-					 Message msg = mHandler.obtainMessage(1);
-			         msg.getData().putInt("progress", progress);
-			         msg.getData().putString("status", newStatus);		         
-			         mHandler.sendMessage(msg);
-					}
+					    msg.getData().putString("status", newStatus);                 
+                    
+					if (progress != -1)
+					    msg.getData().putInt("progress", progress);
+			       
+					
+				    mHandler.sendMessage(msg);
+	                
 				}
 
 				@Override
