@@ -1,3 +1,4 @@
+#!/bin/bash
 
 if ! type -P android &> /dev/null; then
     echo "Error: 'android' utility is not in your path."
