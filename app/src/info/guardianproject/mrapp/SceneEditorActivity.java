@@ -91,7 +91,10 @@ public class SceneEditorActivity extends org.holoeverywhere.app.Activity impleme
 	private ImageView mImageViewMedia;
 	
 	private String mMediaUploadAccount = null;
-	
+
+    
+    private ProgressDialog mProgressDialog = null;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -128,8 +131,6 @@ public class SceneEditorActivity extends org.holoeverywhere.app.Activity impleme
         showHelp();
     }
 
-    private ProgressDialog dialog = null;
-
     private Handler mHandlerPub = new Handler()
     {
 
@@ -145,8 +146,8 @@ public class SceneEditorActivity extends org.holoeverywhere.app.Activity impleme
   	        
   	        int progress = msg.getData().getInt("progress");
   	        
-  	        if (dialog != null && progress > 0)
-  	        	dialog.setProgress(progress);
+  	        if (mProgressDialog != null && progress > 0)
+  	        	mProgressDialog.setProgress(progress);
 			
 			switch (msg.what)
 			{
@@ -155,12 +156,12 @@ public class SceneEditorActivity extends org.holoeverywhere.app.Activity impleme
 					
 					if (status != null)
 					{
-						if (dialog != null)
+						if (mProgressDialog != null)
 						{
 							if (statusTitle != null)
-								dialog.setTitle(statusTitle);
+								mProgressDialog.setTitle(statusTitle);
 							
-							dialog.setMessage(status);
+							mProgressDialog.setMessage(status);
 						}
 						else
 						{
@@ -172,17 +173,17 @@ public class SceneEditorActivity extends org.holoeverywhere.app.Activity impleme
 				
 				case 999:
 					
-						dialog = new ProgressDialog(SceneEditorActivity.this);
-	          		    dialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-	          		    dialog.setTitle(getString(R.string.rendering));
-	          		    dialog.setMessage(getString(R.string.rendering_project_));
-	          		    dialog.setCancelable(true);
-	          		    dialog.show();
+						mProgressDialog = new ProgressDialog(SceneEditorActivity.this);
+	          		    mProgressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+	          		    mProgressDialog.setTitle(getString(R.string.rendering));
+	          		    mProgressDialog.setMessage(getString(R.string.rendering_project_));
+	          		    mProgressDialog.setCancelable(true);
+	          		    mProgressDialog.show();
 					
 				break;
 				
 				case 888:
-	          		  dialog.setMessage(status);
+	          		  mProgressDialog.setMessage(status);
 	            break;
 				case 777:
 					
@@ -191,8 +192,8 @@ public class SceneEditorActivity extends org.holoeverywhere.app.Activity impleme
 		  	        String localPath = msg.getData().getString("fileMedia");
 		  	        String mimeType = msg.getData().getString("mime");
 		  	        
-					dialog.dismiss();
-					dialog = null;
+					mProgressDialog.dismiss();
+					mProgressDialog = null;
 					
 					showPublished(url,new File(localPath),videoId,mimeType);
 					
@@ -200,10 +201,10 @@ public class SceneEditorActivity extends org.holoeverywhere.app.Activity impleme
 				break;
 				case -1:
 					Toast.makeText(mContext, error, Toast.LENGTH_SHORT).show();
-					if (dialog != null)
+					if (mProgressDialog != null)
 					{
-						dialog.dismiss();
-						dialog = null;
+						mProgressDialog.dismiss();
+						mProgressDialog = null;
 					}
 					 
 				break;
@@ -283,8 +284,11 @@ public class SceneEditorActivity extends org.holoeverywhere.app.Activity impleme
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        mMenu = menu;
+        super.onCreateOptionsMenu(menu);
+
         getSupportMenuInflater().inflate(R.menu.activity_scene_editor, menu);
+        mMenu = menu;
+        
         return true;
     }
 
@@ -421,6 +425,8 @@ public class SceneEditorActivity extends org.holoeverywhere.app.Activity impleme
 
         } else if (tab.getPosition() == 2) {
             layout = R.layout.fragment_story_publish;
+            
+            if (mMenu != null)
             mMenu.findItem(R.id.itemForward).setEnabled(false);
 
             if (mFragmentTab2 == null)
@@ -1194,5 +1200,12 @@ public class SceneEditorActivity extends org.holoeverywhere.app.Activity impleme
         {
             return BitmapFactory.decodeResource(getResources(), R.drawable.thumb_complete);
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        
+        
     }
 }
