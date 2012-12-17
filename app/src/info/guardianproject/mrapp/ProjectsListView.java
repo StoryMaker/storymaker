@@ -6,8 +6,11 @@ import info.guardianproject.mrapp.model.Project;
 import java.util.ArrayList;
 import java.util.Locale;
 
+import org.holoeverywhere.app.AlertDialog;
+
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,6 +30,34 @@ public class ProjectsListView extends ListView implements Runnable {
         
     	super (context);
     
+    	this.setOnItemLongClickListener(new OnItemLongClickListener(){
+
+            @Override
+            public boolean onItemLongClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+                
+                
+                final Project project = mListProjects.get(arg2);
+
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+            builder.setMessage(R.string.delete_project_)
+                    .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener(){
+
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            deleteProject (project);
+                        }
+                        
+                    })
+                    .setNegativeButton(R.string.no, null).show();
+            
+            
+                
+                return false;
+            }
+    	    
+    	});
+    	
         setOnItemClickListener(new OnItemClickListener ()
         {
 
@@ -86,6 +117,17 @@ public class ProjectsListView extends ListView implements Runnable {
         
          
         
+    }
+    
+    private void deleteProject (Project project)
+    {
+        project.delete();
+        
+
+        mListProjects = Project.getAllAsList(getContext());
+        
+        setAdapter(new ProjectArrayAdapter(getContext(), 
+               R.layout.list_lesson_row, mListProjects));
     }
     
     public void refresh ()

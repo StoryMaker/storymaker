@@ -1,5 +1,6 @@
 package info.guardianproject.mrapp.model;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -160,7 +161,7 @@ public class Project {
         // FIXME make sure 1 row updated
     }
     
-    private void delete() {
+    public void delete() {
     	Uri uri = ProjectsProvider.PROJECTS_CONTENT_URI.buildUpon().appendPath("" + id).build();
         String selection = StoryMakerDB.Schema.Projects.ID + "=?";
         String[] selectionArgs = new String[] { "" + id };

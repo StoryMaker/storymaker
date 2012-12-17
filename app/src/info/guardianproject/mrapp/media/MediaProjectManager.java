@@ -202,6 +202,7 @@ public class MediaProjectManager implements MediaManager {
 	    		MediaDesc mDesc = new MediaDesc();
 	    		mDesc.mimeType = media.getMimeType();
 	    		mDesc.path = media.getPath();
+	    		
 	        	applyExportSettings(mDesc);
 	    		alMediaIn.add(mIdx, mDesc);
 	    		mIdx++;
@@ -321,11 +322,12 @@ public class MediaProjectManager implements MediaManager {
     {
     	//look this up from prefs?
     	mdout.videoCodec = "libx264";
-    	mdout.videoBitrate = 700;
+    	mdout.videoBitrate = 1500;
     	mdout.audioBitrate = 128;
     	mdout.videoFps = "29.97";
-    	mdout.width = 720;
-    	mdout.height = 480;
+    	//mdout.width = 720;
+    	//mdout.height = 480;
+    	
     }
 
     public void applyExportSettingsAudio (MediaDesc mdout)
@@ -376,30 +378,8 @@ public class MediaProjectManager implements MediaManager {
 			
 			mMediaList.set(clipIndex, mClip);
 			
-//			mProject.setMedia(clipIndex, "FIXME", mClip.mMediaDescOriginal.path, mClip.mMediaDescOriginal.mimeType);
-//			mProject.save();
-			
 			((SceneEditorActivity)mActivity).refreshClipPager(); // FIXME we should handle this by emitting a change event directly
 
-//			MediaView mView = addMediaView(mClip, clipIndex);
-			
-			/*
-			prerenderMedia (mClip, new ShellCallback ()
-			{
-
-				@Override
-				public void shellOut(String shellLine) {
-					// TODO Auto-generated method stub
-					
-				}
-
-				@Override
-				public void processComplete(int exitValue) {
-					// TODO Auto-generated method stub
-					
-				}
-				
-			});*/
 		}
 		
 		mOut = null;
@@ -445,6 +425,7 @@ public class MediaProjectManager implements MediaManager {
     }
     
     
+    /*
     public void prerenderMedia (MediaClip mClip, ShellCallback shellCallback)
     {
     	
@@ -454,10 +435,8 @@ public class MediaProjectManager implements MediaManager {
     		Thread thread = new Thread (mRenderer);
     		thread.setPriority(Thread.NORM_PRIORITY);
     		thread.start();
-		
 	
-    	
-    }
+    }*/
     
     	
 	

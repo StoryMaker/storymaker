@@ -690,7 +690,9 @@ public class SceneEditorActivity extends org.holoeverywhere.app.Activity impleme
                     
                     if (mPreviewVideoView.isPlaying())
                     {
-                        mPreviewVideoView.pause();
+                 //       mPreviewVideoView.pause();
+
+                        mPreviewVideoView.stopPlayback();
                     }
                     else
                     {
@@ -718,35 +720,7 @@ public class SceneEditorActivity extends org.holoeverywhere.app.Activity impleme
                 }
             });
             
-            mOrderClipsDGV.setOnRearrangeListener(new OnRearrangeListener() {
-
-                @Override
-                public void onRearrange(int oldIndex, int newIndex) {
-                    mMPM.mProject.swapMediaIndex(oldIndex, newIndex);
-                 
-                }
-            });
-
-            mOrderClipsDGV.setOnItemClickListener(new OnItemClickListener() {
-
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    Log.d(TAG, "item clicked");
-                    Media[] medias = mMPM.mProject.getMediaAsArray();
-                    if (medias[position] != null) {
-                        
-                        mImageViewMedia.setVisibility(View.GONE);
-                        mPreviewVideoView.setVisibility(View.VISIBLE);
-                        // play
-                        String[] pathArray = {medias[position].getPath()};
-                        mPreviewVideoView.setMedia(pathArray);
-                        mPreviewVideoView.play();
-
-                    }
-
-                }
-            });
-            
+           
             loadMedia();
             
             return view;
@@ -771,6 +745,37 @@ public class SceneEditorActivity extends org.holoeverywhere.app.Activity impleme
                 
                 mOrderClipsDGV.addView(iv);
             }
+            
+            mOrderClipsDGV.setOnRearrangeListener(new OnRearrangeListener() {
+
+                @Override
+                public void onRearrange(int oldIndex, int newIndex) {
+                    mMPM.mProject.swapMediaIndex(oldIndex, newIndex);
+                 
+                }
+            });
+
+            mOrderClipsDGV.setOnItemClickListener(new OnItemClickListener() {
+
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    Log.d(TAG, "item clicked");
+                    Media[] medias = mMPM.mProject.getMediaAsArray();
+                    if (medias[position] != null) {
+                        
+                        mImageViewMedia.setVisibility(View.GONE);
+                        mPreviewVideoView.setVisibility(View.VISIBLE);
+                        // play
+                        mPreviewVideoView.stopPlayback();
+                        String[] pathArray = {medias[position].getPath()};
+                        mPreviewVideoView.setMedia(pathArray);
+                        mPreviewVideoView.play();
+
+                    }
+
+                }
+            });
+            
           
         }
     }
@@ -1253,7 +1258,13 @@ public class SceneEditorActivity extends org.holoeverywhere.app.Activity impleme
 
             return BitmapFactory.decodeFile(path, options);
         }
-        else
+        else if (media.getMimeType().startsWith("audio"))
+        {
+            
+            
+            return null;
+        }
+        else 
         {
             return BitmapFactory.decodeResource(getResources(), R.drawable.thumb_complete);
         }
