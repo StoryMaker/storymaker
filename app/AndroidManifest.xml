@@ -1,8 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="info.guardianproject.mrapp"
     android:installLocation="auto"
-    android:versionCode="22"
-    android:versionName="0.0.2-dev-build22" >
+    android:versionCode="23"
+    android:versionName="0.0.2-dev-build23" >
     <uses-sdk
         android:minSdkVersion="8"
         android:targetSdkVersion="15" />
@@ -83,13 +83,6 @@
                 android:value=".HomeActivity" />
         </activity>
         <activity
-            android:name=".SceneEditorActivity"
-            android:label="@string/title_activity_scene_editor" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".HomeActivity" />
-        </activity>
-        <activity
             android:name=".StoryTemplateChooserActivity"
             android:label="@string/title_activity_choose_template" >
             <meta-data
@@ -105,7 +98,7 @@
                 android:value=".HomeActivity" />
         </activity>
         <activity
-            android:name=".SceneEditorNoSwipeActivity"
+            android:name="info.guardianproject.mrapp.SceneEditorActivity"
             android:screenOrientation="portrait"    
              android:configChanges="orientation|screenSize"        
             android:label="@string/title_activity_scene_editor" >
