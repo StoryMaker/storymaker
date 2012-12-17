@@ -24,8 +24,11 @@ public class Project {
     public final static int STORY_TYPE_PHOTO = 2;
     public final static int STORY_TYPE_ESSAY = 3;
     
-    public Project(Context context) {
+    public int mClipCount = -1;
+    
+    public Project(Context context, int clipCount) {
         this.context = context;
+        mClipCount = clipCount;
     }
 
     public Project(Context context, int id, String title, String thumbnailPath, int storyType) {
@@ -50,6 +53,28 @@ public class Project {
                   cursor.getInt(cursor
                                 .getColumnIndex(StoryMakerDB.Schema.Projects.COL_STORY_TYPE))      
         		);
+        
+        getMaxClipCount();
+        
+    }
+    
+    private void getMaxClipCount ()
+    {
+        Cursor cursor = getMediaAsCursor();
+        
+        int clipIndex = 0;
+        
+        if (cursor.moveToFirst()) {
+            do {
+                Media media = new Media(context, cursor);
+                clipIndex = Math.max(clipIndex, media.clipIndex);
+            } while (cursor.moveToNext());
+        }
+        
+        mClipCount = clipIndex + 1; //size is one higher than max index
+        
+        cursor.close();
+        
     }
 
     /***** Table level static methods *****/
@@ -148,8 +173,10 @@ public class Project {
     public ArrayList<Media> getMediaAsList() {
         Cursor cursor = getMediaAsCursor();
         
-        ArrayList<Media> medias = new ArrayList<Media>(5); 
-        medias.add(null);medias.add(null);medias.add(null);medias.add(null);medias.add(null);
+        ArrayList<Media> medias = new ArrayList<Media>(mClipCount);
+        
+        for (int i = 0; i < mClipCount; i++)
+            medias.add(null);
         
         if (cursor.moveToFirst()) {
             do {
@@ -165,11 +192,19 @@ public class Project {
         ArrayList<Media> medias = getMediaAsList();
         return medias.toArray(new Media[] {});
     }
+    
+    public int getClipCount ()
+    {
+        return mClipCount;
+    }
 
     public ArrayList<String> getMediaAsPathList() {
         Cursor cursor = getMediaAsCursor();
-        ArrayList<String> paths = new ArrayList<String>(5); // FIXME convert 5 to a constant... is it always 5 long?
-        paths.add(null); paths.add(null); paths.add(null); paths.add(null); paths.add(null); // FIXME oh java, you ugly dog
+        ArrayList<String> paths = new ArrayList<String>(mClipCount);
+        
+        for (int i = 0; i < mClipCount; i++)
+            paths.add(null);
+       
         if (cursor.moveToFirst()) {
             do {
             	Media media = new Media(context, cursor);
@@ -205,6 +240,9 @@ public class Project {
         media.setClipIndex(clipIndex);
         media.setProjectId(getId());
         media.save();
+        
+        mClipCount = Math.max((clipIndex+1), mClipCount);
+                
     }
 
     public void swapMediaIndex(int oldIndex, int newIndex) {

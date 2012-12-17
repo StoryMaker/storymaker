@@ -3,10 +3,10 @@ package info.guardianproject.mrapp;
 
 import info.guardianproject.mrapp.media.MediaProjectManager;
 import info.guardianproject.mrapp.media.OverlayCameraActivity;
+import info.guardianproject.mrapp.model.Clip;
 import info.guardianproject.mrapp.model.Media;
 import info.guardianproject.mrapp.model.Project;
 import info.guardianproject.mrapp.model.Template;
-import info.guardianproject.mrapp.model.Template.Clip;
 import info.guardianproject.mrapp.server.LoginActivity;
 import info.guardianproject.mrapp.server.ServerManager;
 import info.guardianproject.mrapp.server.SoundCloudUploader;
@@ -99,23 +99,34 @@ public class SceneEditorActivity extends org.holoeverywhere.app.Activity impleme
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if (getIntent().hasExtra("template_story")) {
-            templateStory = true;
-        }
+        Intent intent = getIntent();
+        
+        templateStory = intent.hasExtra("template_story");
+        templateJsonPath = getIntent().getStringExtra("template_path");
+        mStoryMode = getIntent().getIntExtra("story_mode", Project.STORY_TYPE_VIDEO);
 
-        if (getIntent().hasExtra("template_path")) {
-            templateJsonPath = getIntent().getStringExtra("template_path");
-        }
-
-        if (getIntent().hasExtra("story_mode"))
-        {
-            mStoryMode = getIntent().getIntExtra("story_mode", Project.STORY_TYPE_VIDEO);
-        }
+        int pid = intent.getIntExtra("pid", -1); //project id
 
         mContext = getBaseContext();
 
-        mMPM = new MediaProjectManager(this, mContext, getIntent(), mHandlerPub);
+        if (pid != -1)
+        {
+            mMPM = new MediaProjectManager(this, mContext, getIntent(), mHandlerPub, pid);
+        }
+        else
+        {
+            int clipCount = 5;
 
+            String title = intent.getStringExtra("title");
+        
+            Project project = new Project(mContext, clipCount);
+            project.setTitle(title);
+            project.save();
+            
+            mMPM = new MediaProjectManager(this, mContext, getIntent(), mHandlerPub, project);
+
+        }
+        
         setContentView(R.layout.activity_scene_editor_no_swipe);
 
         // Set up the action bar.
@@ -306,14 +317,36 @@ public class SceneEditorActivity extends org.holoeverywhere.app.Activity impleme
                 int idx = getSupportActionBar().getSelectedNavigationIndex();
                 getSupportActionBar().setSelectedNavigationItem(Math.min(2, idx + 1));
                 return true;
-            case R.id.addClip:
-                addMediaClip();
+            case R.id.addFromGallery:
+                addMediaFromGallery();
+            
                 return true;
+            case R.id.addNewShot:
+             
+                addShotToScene();
+                
+                return true;
+                
         }
         return super.onOptionsItemSelected(item);
     }
+    
+    private void addShotToScene ()
+    {
+        try
+        {
+            Clip tClip = new Clip();
+            tClip.setDefaults();
+            AddClipsFragment acf = ((AddClipsFragment)mFragmentTab0);
+            acf.addTemplateClip(tClip);
+        }
+        catch (Exception e)
+        {
+            Log.e(AppConstants.TAG,"error adding new clip",e);
+        }
+    }
 
-    private void addMediaClip()
+    private void addMediaFromGallery()
     {
         mMPM.mMediaHelper.openGalleryChooser("*/*");
     }
@@ -416,6 +449,8 @@ public class SceneEditorActivity extends org.holoeverywhere.app.Activity impleme
 
             } else {
 
+                ((OrderClipsFragment)mFragmentTab1).loadMedia();
+                
                 fm.beginTransaction()
                         .show(mFragmentTab1)
                         .commit();
@@ -474,22 +509,61 @@ public class SceneEditorActivity extends org.holoeverywhere.app.Activity impleme
         public AddClipsPagerAdapter mAddClipsPagerAdapter;
         private FragmentManager mFm;
         private String mTemplatePath;
+        private Template mTemplate;
 
         public AddClipsFragment(int layout, FragmentManager fm, String templatePath)
                 throws IOException, JSONException {
             this.layout = layout;
             mFm = fm;
             mTemplatePath = templatePath;
+            
+            initTemplate();
 
-            mAddClipsPagerAdapter = new AddClipsPagerAdapter(fm, templatePath);
+            mAddClipsPagerAdapter = new AddClipsPagerAdapter(fm, mTemplate);
+        }
+        
+        public void initTemplate ()  throws IOException, JSONException 
+        {
+            int count = mMPM.mProject.getClipCount();
+            
+            mTemplate = new Template();
+            mTemplate.parseAsset(mContext, mTemplatePath);
+            
+            while (mTemplate.getClips().size() < count)
+            {
+                Clip clip = new Clip();
+                clip.setDefaults();
+                mTemplate.addClip(clip);
+            }
+        }
+        
+        public Template getTemplate ()
+        {
+            return mTemplate;
         }
 
         public static final String ARG_SECTION_NUMBER = "section_number";
 
         public void reloadClips() throws IOException, JSONException {
-            mAddClipsPagerAdapter = new AddClipsPagerAdapter(mFm, mTemplatePath);
-            mAddClipsViewPager.setAdapter(mAddClipsPagerAdapter);
+            
+            int cItemIdx = mAddClipsViewPager.getCurrentItem();
+            
+//            initTemplate();
 
+            mAddClipsPagerAdapter = new AddClipsPagerAdapter(mFm, mTemplate);
+            mAddClipsViewPager.setAdapter(mAddClipsPagerAdapter);
+            
+            mAddClipsViewPager.setCurrentItem(cItemIdx);
+        }
+        
+        public void addTemplateClip (Clip clip) throws IOException, JSONException
+        {
+            mTemplate.addClip(clip);
+            mAddClipsPagerAdapter = new AddClipsPagerAdapter(mFm, mTemplate);
+            mAddClipsViewPager.setAdapter(mAddClipsPagerAdapter);
+            
+            mAddClipsViewPager.setCurrentItem(mTemplate.getClips().size()-1);
+            mMPM.mClipIndex = mTemplate.getClips().size()-1;
         }
 
         @Override
@@ -503,8 +577,10 @@ public class SceneEditorActivity extends org.holoeverywhere.app.Activity impleme
                 mAddClipsViewPager = (ViewPager) view.findViewById(R.id.viewPager);
                 mAddClipsViewPager.setPageMargin(-75);
                 mAddClipsViewPager.setPageMarginDrawable(R.drawable.ic_action_forward_gray);
-                mAddClipsViewPager.setOffscreenPageLimit(5);
+                //mAddClipsViewPager.setOffscreenPageLimit(5);
+                
                 mAddClipsViewPager.setAdapter(mAddClipsPagerAdapter);
+                
                 mAddClipsViewPager.setOnPageChangeListener(new OnPageChangeListener()
                 {
                     @Override
@@ -533,21 +609,20 @@ public class SceneEditorActivity extends org.holoeverywhere.app.Activity impleme
         public class AddClipsPagerAdapter extends FragmentStatePagerAdapter {
             private Template sTemplate;
 
-            public AddClipsPagerAdapter(FragmentManager fm, String path) throws IOException,
+            public AddClipsPagerAdapter(FragmentManager fm, Template template) throws IOException,
                     JSONException {
                 super(fm);
-                loadStoryTemplate(path);
+                sTemplate = template;
+                        
+              
             }
 
-            private void loadStoryTemplate(String path) throws IOException, JSONException
-            {
-                sTemplate = new Template();
-                sTemplate.parseAsset(mContext, path);
-            }
-
+        
             @Override
             public Fragment getItem(int i) {
-                Template.Clip clip = sTemplate.getClips().get(i);
+                
+                
+                Clip clip = sTemplate.getClips().get(i);
 
                 ArrayList<Media> lMedia = mMPM.mProject.getMediaAsList();
                 Media media = null;
@@ -555,13 +630,12 @@ public class SceneEditorActivity extends org.holoeverywhere.app.Activity impleme
                 if (lMedia.size() > i)
                 {
                     media = lMedia.get(i);
-
                 }
-
+                
                 Fragment fragment = new AddClipsThumbnailFragment(clip, i, media);
                 return fragment;
             }
-
+            
             @Override
             public int getCount() {
                 return sTemplate.getClips().size();
@@ -602,118 +676,102 @@ public class SceneEditorActivity extends org.holoeverywhere.app.Activity impleme
                 Bundle savedInstanceState) {
 
             View view = inflater.inflate(layout, null);
-            if (this.layout == R.layout.fragment_order_clips) {
-                mOrderClipsDGV = (DraggableGridView) view.findViewById(R.id.DraggableGridView01);
-                mImageViewMedia = (ImageView) view.findViewById(R.id.imageView1);
+            
+            mOrderClipsDGV = (DraggableGridView) view.findViewById(R.id.DraggableGridView01);
+            mImageViewMedia = (ImageView) view.findViewById(R.id.imageView1);
 
-                mPreviewVideoView = (PreviewVideoView) view.findViewById(R.id.previewVideoView);
-                final ImageView imageViewMedia = (ImageView) view.findViewById(R.id.imageView1);
+            mPreviewVideoView = (PreviewVideoView) view.findViewById(R.id.previewVideoView);
+            
+            Button playButton = (Button) view.findViewById(R.id.buttonPlay);
+            playButton.setOnClickListener(new OnClickListener() {
 
-                Media[] sceneMedias = mMPM.mProject.getMediaAsArray();
-
-                ImageView iv = new ImageView(getActivity());
-                if (sceneMedias[0] != null) {
-                    iv.setImageBitmap(getThumbnail(sceneMedias[0]));
-                } else {
-                    iv.setImageDrawable(getActivity().getResources().getDrawable(
-                            R.drawable.cliptype_close));
-                }
-                mOrderClipsDGV.addView(iv);
-
-                iv = new ImageView(getActivity());
-                if (sceneMedias[1] != null) {
-                    iv.setImageBitmap(getThumbnail(sceneMedias[1]));
-                } else {
-                    iv.setImageDrawable(getActivity().getResources().getDrawable(
-                            R.drawable.cliptype_detail));
-                }
-                mOrderClipsDGV.addView(iv);
-
-                iv = new ImageView(getActivity());
-                if (sceneMedias[2] != null) {
-                    iv.setImageBitmap(getThumbnail(sceneMedias[2]));
-                } else {
-                    iv.setImageDrawable(getActivity().getResources().getDrawable(
-                            R.drawable.cliptype_long));
-                }
-                mOrderClipsDGV.addView(iv);
-
-                iv = new ImageView(getActivity());
-                if (sceneMedias[3] != null) {
-                    iv.setImageBitmap(getThumbnail(sceneMedias[3]));
-                } else {
-                    iv.setImageDrawable(getActivity().getResources().getDrawable(
-                            R.drawable.cliptype_medium));
-                }
-                mOrderClipsDGV.addView(iv);
-
-                iv = new ImageView(getActivity());
-                if (sceneMedias[4] != null) {
-                    iv.setImageBitmap(getThumbnail(sceneMedias[4]));
-                } else {
-                    iv.setImageDrawable(getActivity().getResources().getDrawable(
-                            R.drawable.cliptype_wide));
-                }
-                mOrderClipsDGV.addView(iv);
-
-                mOrderClipsDGV.setOnRearrangeListener(new OnRearrangeListener() {
-
-                    @Override
-                    public void onRearrange(int oldIndex, int newIndex) {
-                        mMPM.mProject.swapMediaIndex(oldIndex, newIndex);
-                        // ((SceneEditorNoSwipeActivity)mActivity).refreshClipPager();
-                        Log.d(TAG, "grid rearranged");
+                @Override
+                public void onClick(View v) {
+                    
+                    if (mPreviewVideoView.isPlaying())
+                    {
+                        mPreviewVideoView.pause();
                     }
-                });
-
-                mOrderClipsDGV.setOnItemClickListener(new OnItemClickListener() {
-
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        Log.d(TAG, "item clicked");
-                        Media[] medias = mMPM.mProject.getMediaAsArray();
-                        if (medias[position] != null) {
-                            Bitmap bm = MediaUtils.getVideoFrame(medias[position].getPath(), -1);
-                            imageViewMedia.setImageBitmap(bm);
-                        } else {
-                            TypedArray drawableIds = getActivity().getResources().obtainTypedArray(
-                                    R.array.cliptype_thumbnails);
-                            imageViewMedia.setImageResource(drawableIds.getResourceId(position, 0));
-                        }
-
-                    }
-                });
-
-                Button playButton = (Button) view.findViewById(R.id.buttonPlay);
-                playButton.setOnClickListener(new OnClickListener() {
-
-                    @Override
-                    public void onClick(View v) {
-                        // TODO hide thumbnail
+                    else
+                    {
+                     // TODO hide thumbnail
                         mImageViewMedia.setVisibility(View.GONE);
                         mPreviewVideoView.setVisibility(View.VISIBLE);
                         // play
                         String[] pathArray = mMPM.mProject.getMediaAsPathArray();
                         mPreviewVideoView.setMedia(pathArray);
                         mPreviewVideoView.play();
-
-                        // FIXME need to detect which clip user last clicked on
-                        // and start from there
-                        // FIXME need to know when mPreviewVideoView is done
-                        // playing so we can return the thumbnail
                     }
-                });
+                    
+                    // FIXME need to detect which clip user last clicked on
+                    // and start from there
+                    // FIXME need to know when mPreviewVideoView is done
+                    // playing so we can return the thumbnail
+                }
+            });
 
-                mPreviewVideoView.setCompletionCallback(new Runnable() {
-                    @Override
-                    public void run() {
-                        mImageViewMedia.setVisibility(View.VISIBLE);
-                        mPreviewVideoView.setVisibility(View.GONE);
+            mPreviewVideoView.setCompletionCallback(new Runnable() {
+                @Override
+                public void run() {
+                    mImageViewMedia.setVisibility(View.VISIBLE);
+                    mPreviewVideoView.setVisibility(View.GONE);
+                }
+            });
+            
+            mOrderClipsDGV.setOnRearrangeListener(new OnRearrangeListener() {
+
+                @Override
+                public void onRearrange(int oldIndex, int newIndex) {
+                    mMPM.mProject.swapMediaIndex(oldIndex, newIndex);
+                 
+                }
+            });
+
+            mOrderClipsDGV.setOnItemClickListener(new OnItemClickListener() {
+
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    Log.d(TAG, "item clicked");
+                    Media[] medias = mMPM.mProject.getMediaAsArray();
+                    if (medias[position] != null) {
+                        
+                        mImageViewMedia.setVisibility(View.GONE);
+                        mPreviewVideoView.setVisibility(View.VISIBLE);
+                        // play
+                        String[] pathArray = {medias[position].getPath()};
+                        mPreviewVideoView.setMedia(pathArray);
+                        mPreviewVideoView.play();
+
                     }
-                });
 
-            }
+                }
+            });
+            
+            loadMedia();
+            
             return view;
+        }
+        
+        public void loadMedia ()
+        {
+            mOrderClipsDGV.removeAllViews();
+            
+            Media[] sceneMedias = mMPM.mProject.getMediaAsArray();
+
+            for (int i = 0; i < sceneMedias.length; i++)
+            {
+                ImageView iv = new ImageView(getActivity());
+                if (sceneMedias[i] != null) {
+                    iv.setImageBitmap(getThumbnail(sceneMedias[i]));
+                } 
+                else
+                {
+                    iv.setImageDrawable(getResources().getDrawable(R.drawable.thumb_incomplete));
+                }
+                
+                mOrderClipsDGV.addView(iv);
+            }
+          
         }
     }
 
@@ -1003,11 +1061,11 @@ public class SceneEditorActivity extends org.holoeverywhere.app.Activity impleme
      */
     public class AddClipsThumbnailFragment extends Fragment {
     	
-    	private Template.Clip clip;
+    	private Clip clip;
     	private int mClipIndex;
     	private Media mMedia;
     	
-        public AddClipsThumbnailFragment(Template.Clip clip, int clipIndex, Media media) {
+        public AddClipsThumbnailFragment(Clip clip, int clipIndex, Media media) {
         	this.clip = clip;
         	mClipIndex = clipIndex;
         	mMedia = media;
@@ -1128,8 +1186,6 @@ public class SceneEditorActivity extends org.holoeverywhere.app.Activity impleme
 
         if (resCode == RESULT_OK)
         {
-            // figure out what kind of media is being returned and add it to the
-            // project
             if (reqCode == REQ_OVERLAY_CAM)
             {
                 File fileMediaFolder = getExternalFilesDir(null);
@@ -1153,9 +1209,10 @@ public class SceneEditorActivity extends org.holoeverywhere.app.Activity impleme
             {
                 mMPM.handleResponse(intent, mCapturePath);
 
+                refreshClipPager();
+                
             }
 
-            this.refreshClipPager();
         }
     }
 

@@ -32,6 +32,9 @@
 
     <string name="menu_overlay_camera">Camera</string>
 
+    <string name="menu_add_from_gallery">Import from Gallery</string>
+        <string name="menu_add_new_shot">Add Shot to Scene</string>
+    
     <string name="welcome_message">Hey there!\nWelcome to StoryMaker</string>
 
     <!--  project list -->
@@ -232,4 +235,5 @@ Build number: <xliff:g id="build_number">%s</xliff:g>\n
     <string name="uploading">Uploading</string>
     <string name="connecting_to_youtube_">connecting to YouTube...</string>
     <string name="rendering_clips_">rendering clips...</string>
+    <string name="you_must_enter_a_project_name">You must enter a project name</string>
 </resources>
