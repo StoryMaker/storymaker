@@ -17,4 +17,7 @@ for project in "${MAPFILE[@]}"; do
         android update project --path $project -t 10
 done
 
+cd app
+android update project --path .
+
 
