@@ -1286,12 +1286,6 @@ public class SceneEditorActivity extends org.holoeverywhere.app.Activity impleme
 
             return BitmapFactory.decodeFile(path, options);
         }
-        else if (media.getMimeType().startsWith("audio"))
-        {
-            
-            
-            return null;
-        }
         else 
         {
             return BitmapFactory.decodeResource(getResources(), R.drawable.thumb_complete);
