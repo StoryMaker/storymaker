@@ -1,8 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="info.guardianproject.mrapp"
     android:installLocation="auto"
-    android:versionCode="23"
-    android:versionName="0.0.2-dev-build23" >
+    android:versionCode="24"
+    android:versionName="0.0.2-dev-build24" >
     <uses-sdk
         android:minSdkVersion="8"
         android:targetSdkVersion="15" />
@@ -99,8 +99,8 @@
         </activity>
         <activity
             android:name="info.guardianproject.mrapp.SceneEditorActivity"
-            android:screenOrientation="portrait"    
-             android:configChanges="orientation|screenSize"        
+             android:configChanges="orientation|screenSize"    
+                 
             android:label="@string/title_activity_scene_editor" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
