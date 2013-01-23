@@ -203,6 +203,7 @@ public class StoryTemplateActivity extends org.holoeverywhere.app.Activity imple
                 });
             } else if (this.layout == R.layout.fragment_story_review) {
             } else if (this.layout == R.layout.fragment_story_publish) {
+                /*
                 Spinner spinnerSections = (Spinner) getActivity().findViewById(R.id.spinnerSections);
                 Spinner spinnerTopics = (Spinner) view.findViewById(R.id.spinnerTopics);
                 
@@ -214,7 +215,7 @@ public class StoryTemplateActivity extends org.holoeverywhere.app.Activity imple
                 ArrayAdapter<CharSequence> adapterSections = ArrayAdapter.createFromResource(getActivity(),
                         R.array.story_sections, android.R.layout.simple_spinner_item);
                 adapterSections.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                spinnerTopics.setAdapter(adapterSections);
+                spinnerTopics.setAdapter(adapterSections);*/
             }
             return view;
         }

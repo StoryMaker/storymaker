@@ -95,6 +95,7 @@ public class MediaRenderer implements Runnable
     	int durationSecs = 5;
     	
     	File outPath = createOutputFile(mediaIn.path,"mp4");
+    	
     	mMediaManager.applyExportSettings(mediaIn);
     	MediaDesc mediaOut = ffmpegc.convertImageToMP4(mediaIn, durationSecs, outPath.getAbsolutePath(), mShellCallback);
     
@@ -106,7 +107,7 @@ public class MediaRenderer implements Runnable
     private File createOutputFile (String inpath, String fileext) throws IOException
     {
     	
-		File saveFile = new File(inpath + ".pre" + fileext);
+		File saveFile = new File(inpath + "-stream." + fileext);
 		saveFile.createNewFile();
 		return saveFile;
     }

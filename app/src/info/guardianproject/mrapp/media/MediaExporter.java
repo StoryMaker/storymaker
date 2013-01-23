@@ -95,7 +95,7 @@ public class MediaExporter implements Runnable {
 					
 					int idx1;
 					String newStatus = null;
-					int progress = 0;
+					int progress = -1;
 					
 					if ((idx1 = line.indexOf("Duration:"))!=-1)
 					{
@@ -108,14 +108,15 @@ public class MediaExporter implements Runnable {
 						
 						total = (hour * 60 * 60) + (min * 60) + sec;
 						
-						newStatus = line;
+						//newStatus = line;
+						
 						progress = 0;
 					}
 					else if ((idx1 = line.indexOf("time="))!=-1)
 					{
 						int idx2 = line.indexOf(" ", idx1);
 						String time = line.substring(idx1+5,idx2);
-						newStatus = line;
+						//newStatus = line;
 						
 						int hour = Integer.parseInt(time.substring(0,2));
 						int min = Integer.parseInt(time.substring(3,5));
@@ -125,14 +126,30 @@ public class MediaExporter implements Runnable {
 						
 						progress = (int)( ((float)current) / ((float)total) *100f );
 					}
-					
-					if (newStatus != null)
+					else if (line.startsWith("cat"))
 					{
-					 Message msg = mHandler.obtainMessage(1);
-			         msg.getData().putInt("progress", progress);
-			         msg.getData().putString("status", newStatus);		         
-			         mHandler.sendMessage(msg);
+					    newStatus = "Combining clips...";
 					}
+					else if (line.startsWith("Input"))
+					{
+					    //12-18 02:48:07.187: D/StoryMaker(10508): Input #0, mov,mp4,m4a,3gp,3g2,mj2, from '/storage/sdcard0/DCIM/Camera/VID_20121211_140815.mp4':
+					    idx1 = line.indexOf("'");
+					    int idx2 = line.indexOf('\'', idx1+1);
+					    newStatus = "Rendering clip: " + line.substring(idx1, idx2);
+					}
+					    
+
+                    Message msg = mHandler.obtainMessage(1);
+                    
+					if (newStatus != null)
+					    msg.getData().putString("status", newStatus);                 
+                    
+					if (progress != -1)
+					    msg.getData().putInt("progress", progress);
+			       
+					
+				    mHandler.sendMessage(msg);
+	                
 				}
 
 				@Override
