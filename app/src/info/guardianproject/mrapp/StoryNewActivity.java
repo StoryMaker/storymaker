@@ -2,6 +2,8 @@ package info.guardianproject.mrapp;
 
 import java.util.Locale;
 
+import org.holoeverywhere.widget.Toast;
+
 import info.guardianproject.mrapp.R;
 import info.guardianproject.mrapp.model.Project;
 import android.content.Intent;
@@ -24,6 +26,8 @@ public class StoryNewActivity extends SherlockActivity {
 	private RadioGroup rGroup;
 	private TextView txtNewStoryDesc;
 	private EditText editTextStoryName;
+	
+	private final static int DEFAULT_CLIP_COUNT = 5;
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -99,13 +103,15 @@ public class StoryNewActivity extends SherlockActivity {
     	
     	String pName = editTextStoryName.getText().toString();
     	
+    	int clipCount = DEFAULT_CLIP_COUNT;
+    	    
     	if (pName == null || pName.length() == 0)
     	{
-    		
+    		Toast.makeText(this, R.string.you_must_enter_a_project_name, Toast.LENGTH_SHORT).show();
     	}
     	else
     	{
-    		Project project = new Project (this);
+    		Project project = new Project (this, clipCount);
     		project.setTitle(pName);
     	
 	    	int checkedId = rGroup.getCheckedRadioButtonId();

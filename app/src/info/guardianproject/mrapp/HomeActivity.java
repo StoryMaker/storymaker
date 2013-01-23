@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.holoeverywhere.app.Activity;
 import org.holoeverywhere.app.AlertDialog;
+import org.holoeverywhere.widget.AdapterView;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -20,6 +21,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
+import android.view.ContextMenu.ContextMenuInfo;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -27,6 +29,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.actionbarsherlock.app.ActionBar;
+import com.actionbarsherlock.view.ContextMenu;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 
@@ -301,7 +304,6 @@ public class HomeActivity extends Activity implements ActionBar.TabListener {
         }
 
         
-        
         @Override
         public void onSaveInstanceState(Bundle outState) {
             super.onSaveInstanceState(outState);
@@ -347,6 +349,12 @@ public class HomeActivity extends Activity implements ActionBar.TabListener {
 			
 		}
 	}
+
+    @Override
+    public boolean onCreatePanelMenu(int featureId, android.view.Menu menu) {
+        // TODO Auto-generated method stub
+        return super.onCreatePanelMenu(featureId, menu);
+    }
     
     
     

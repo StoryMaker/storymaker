@@ -66,14 +66,14 @@ import com.actionbarsherlock.view.MenuItem;
 
 public class MediaProjectManager implements MediaManager {
 	
-	private ArrayList<MediaClip> mMediaList = new ArrayList<MediaClip>(5); // FIXME refactor this to use it as a prop on project object
+	private ArrayList<MediaClip> mMediaList = null;// FIXME refactor this to use it as a prop on project object
 	
 	private File mFileExternDir;
 	
-	private File mMediaTmp;
+	//private File mMediaTmp;
 	private MediaDesc mOut;
 	
-	private MediaHelper.MediaResult mMediaResult;
+	//private MediaHelper.MediaResult mMediaResult;
 	public MediaHelper mMediaHelper;
 	
 	public Project mProject = null;
@@ -85,41 +85,50 @@ public class MediaProjectManager implements MediaManager {
 	
 	public int mClipIndex;  // FIXME hack to get clip we are adding media too into intent handler
 
-    public MediaProjectManager (Activity activity, Context context, Intent intent, Handler handler) {
-    	mActivity = activity;
-    	mContext = context;
-    	mHandler = handler;
-    	// initialize mediaList
-    	mMediaList.add(null); mMediaList.add(null); mMediaList.add(null); mMediaList.add(null); mMediaList.add(null);
+    public MediaProjectManager (Activity activity, Context context, Intent intent, Handler handler, int pid) {
+    
+        this(activity, context, intent, handler, Project.get(context, pid));
+    }
+    
+    public MediaProjectManager (Activity activity, Context context, Intent intent, Handler handler, Project project) {
+        mActivity = activity;
+        mContext = context;
+        mHandler = handler;
         
-        mMediaHelper = new MediaHelper (activity, mHandler);
+        mProject = project;
+        
+        initProject();
+    }
+    
+    private void initProject()
+    {
+        mMediaList = new ArrayList<MediaClip>(mProject.getClipCount());
+        
+        for (int i = 0; i < mProject.getClipCount(); i++)
+            mMediaList.add(null); 
+        
+        mMediaHelper = new MediaHelper (mActivity, mHandler);
         
         initExternalStorage();
 
-        String title = intent.getStringExtra("title");
-    	int pid = intent.getIntExtra("pid", -1);
-        if (pid != -1) {
-            mProject = Project.get(context, pid);
-            Media[] _medias = mProject.getMediaAsArray();
-            for (Media media: _medias) {
-            	if (media != null) {
-	                try
-	                {
-	                    addMediaFile(media.getClipIndex(), media.getPath(), media.getMimeType());
-	                }
-	                catch (IOException ioe)
-	                {
-	                    Log.e(AppConstants.TAG,"error adding media from saved project", ioe);
-	                }
-            	}
-            }
-        } else {
-        	mProject = new Project(context);
-        	mProject.setTitle(title);
-        	mProject.save();
+        Media[] _medias = mProject.getMediaAsArray();
+        for (Media media: _medias) {
+        	if (media != null) {
+                try
+                {
+                    addMediaFile(media.getClipIndex(), media.getPath(), media.getMimeType());
+                }
+                catch (IOException ioe)
+                {
+                    Log.e(AppConstants.TAG,"error adding media from saved project", ioe);
+                }
+        	}
         }
+    
+        
     }
     
+
     public MediaDesc getExportMedia ()
     {
     	return mOut;
@@ -182,7 +191,7 @@ public class MediaProjectManager implements MediaManager {
          msg.getData().putString("status","cancelled");
 
          ArrayList<Media> mList = mProject.getMediaAsList();
-         ArrayList<MediaDesc> alMediaIn = new ArrayList<MediaDesc>(mList.size());
+         ArrayList<MediaDesc> alMediaIn = new ArrayList<MediaDesc>();
          
          //for video, render the sequence together
          if (mProject.getStoryType() == Project.STORY_TYPE_VIDEO)
@@ -190,12 +199,16 @@ public class MediaProjectManager implements MediaManager {
         	int mIdx = 0;
 	    	for (Media media : mList)
 	    	{
-	    		MediaDesc mDesc = new MediaDesc();
-	    		mDesc.mimeType = media.getMimeType();
-	    		mDesc.path = media.getPath();
-	        	applyExportSettings(mDesc);
-	    		alMediaIn.add(mIdx, mDesc);
-	    		mIdx++;
+	    	    if (media != null)
+	    	    {
+    	    		MediaDesc mDesc = new MediaDesc();
+    	    		mDesc.mimeType = media.getMimeType();
+    	    		mDesc.path = media.getPath();
+    	    		
+    	        	applyExportSettings(mDesc);
+    	    		alMediaIn.add(mIdx, mDesc);
+    	    		mIdx++;
+	    	    }
 	    	}
 	
 		    mOut = new MediaDesc ();
@@ -218,11 +231,14 @@ public class MediaProjectManager implements MediaManager {
         	int mIdx = 0; 
         	for (Media media : mList)
  	    	{
- 	    		MediaDesc mDesc = new MediaDesc();
- 	    		mDesc.mimeType = media.getMimeType();
- 	    		mDesc.path = media.getPath();
- 	        	applyExportSettings(mDesc);
- 	    		alMediaIn.add(mIdx++,mDesc);
+        	    if (media != null)
+        	    {
+     	    		MediaDesc mDesc = new MediaDesc();
+     	    		mDesc.mimeType = media.getMimeType();
+     	    		mDesc.path = media.getPath();
+     	        	applyExportSettings(mDesc);
+     	    		alMediaIn.add(mIdx++,mDesc);
+        	    }
  	    	}
  	
  		    mOut = new MediaDesc ();
@@ -276,14 +292,14 @@ public class MediaProjectManager implements MediaManager {
         	
 	    	for (Media media : mList)
 	    	{
-	    		 if (media == null)
-        			 continue;
-	    		 
-	    		MediaDesc mDesc = new MediaDesc();
-	    		mDesc.mimeType = media.getMimeType();
-	    		mDesc.path = media.getPath();
-	        	applyExportSettings(mDesc);
-	    		alMediaIn.add(mDesc);
+	    	    if (media != null)
+	    	    {
+    	    		MediaDesc mDesc = new MediaDesc();
+    	    		mDesc.mimeType = media.getMimeType();
+    	    		mDesc.path = media.getPath();
+    	        	applyExportSettings(mDesc);
+    	    		alMediaIn.add(mDesc);
+	    	    }
 	    	}
 	
 		    mOut = new MediaDesc ();
@@ -312,11 +328,12 @@ public class MediaProjectManager implements MediaManager {
     {
     	//look this up from prefs?
     	mdout.videoCodec = "libx264";
-    	mdout.videoBitrate = 700;
+    	mdout.videoBitrate = 1500;
     	mdout.audioBitrate = 128;
     	mdout.videoFps = "29.97";
     	mdout.width = 720;
     	mdout.height = 480;
+    	
     }
 
     public void applyExportSettingsAudio (MediaDesc mdout)
@@ -335,8 +352,14 @@ public class MediaProjectManager implements MediaManager {
     	MediaDesc mdesc = new MediaDesc ();
     	mdesc.path = path;
     	mdesc.mimeType = mimeType;
+    	
+    	while ((clipIndex+1) > mMediaList.size())
+    	{
+    	    mMediaList.add(null);
+    	}
 
-		if (mimeType.startsWith("audio") && mMediaList.get(clipIndex) != null && (!mMediaList.get(mMediaList.size()-1).mMediaDescOriginal.mimeType.equals(mimeType)))
+		if (mimeType.startsWith("audio") && mMediaList.get(clipIndex) != null 
+		        && (!mMediaList.get(mMediaList.size()-1).mMediaDescOriginal.mimeType.equals(mimeType)))
 		{
 			MediaClip mClipVideo =  mMediaList.get(clipIndex);
 			
@@ -358,31 +381,11 @@ public class MediaProjectManager implements MediaManager {
     		
 			MediaClip mClip = new MediaClip();
 			mClip.mMediaDescOriginal = mdesc;
+			
 			mMediaList.set(clipIndex, mClip);
-//			mProject.setMedia(clipIndex, "FIXME", mClip.mMediaDescOriginal.path, mClip.mMediaDescOriginal.mimeType);
-//			mProject.save();
 			
 			((SceneEditorActivity)mActivity).refreshClipPager(); // FIXME we should handle this by emitting a change event directly
 
-//			MediaView mView = addMediaView(mClip, clipIndex);
-			
-			/*
-			prerenderMedia (mClip, new ShellCallback ()
-			{
-
-				@Override
-				public void shellOut(String shellLine) {
-					// TODO Auto-generated method stub
-					
-				}
-
-				@Override
-				public void processComplete(int exitValue) {
-					// TODO Auto-generated method stub
-					
-				}
-				
-			});*/
 		}
 		
 		mOut = null;
@@ -427,6 +430,8 @@ public class MediaProjectManager implements MediaManager {
     	
     }
     
+    
+    /*
     public void prerenderMedia (MediaClip mClip, ShellCallback shellCallback)
     {
     	
@@ -436,10 +441,8 @@ public class MediaProjectManager implements MediaManager {
     		Thread thread = new Thread (mRenderer);
     		thread.setPriority(Thread.NORM_PRIORITY);
     		thread.start();
-		
 	
-    	
-    }
+    }*/
     
     	
 	
