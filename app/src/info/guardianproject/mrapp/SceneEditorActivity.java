@@ -1138,9 +1138,14 @@ public class SceneEditorActivity extends org.holoeverywhere.app.Activity impleme
                     }
                 }
 
+
+                ((TextView) view.findViewById(R.id.clipTypeTitle)).setText(clip.mTitle);
+                
                 if (clip.mShotSize != null)
                     ((TextView) view.findViewById(R.id.clipTypeShotSize)).setText(clip.mShotSize);
-
+                else
+                    ((TextView) view.findViewById(R.id.clipTypeShotSize)).setVisibility(View.GONE);
+                
                 ((TextView) view.findViewById(R.id.clipTypeGoal)).setText(clip.mGoal);
                 ((TextView) view.findViewById(R.id.clipTypeDescription)).setText(clip.mDescription);
                 ((TextView) view.findViewById(R.id.clipTypeGoalLength)).setText(clip.mLength);

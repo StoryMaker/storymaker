@@ -20,15 +20,18 @@
          android:layout_height="fill_parent"
          android:text="@string/tap_to_start_capture"
          android:gravity="center_vertical|center_horizontal"
+         android:textAppearance="?android:attr/textAppearanceMedium"
          />
  </FrameLayout>
 
      <TextView
-         android:id="@+id/clipTypeShotSize"
+         android:id="@+id/clipTypeTitle"
          android:layout_width="wrap_content"
          android:layout_height="wrap_content"
          android:paddingTop="5dp"
+         android:textAppearance="?android:attr/textAppearanceMedium"
          />
+     
 
      <TextView
          android:id="@+id/clipTypeGoal"
@@ -36,6 +39,15 @@
          android:layout_height="wrap_content"
          android:textAppearance="?android:attr/textAppearanceLarge" />
 
+     
+     <TextView
+         android:id="@+id/clipTypeShotSize"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:paddingTop="5dp"
+         android:textAppearance="?android:attr/textAppearanceSmall"
+         />
+     
      <TextView
          android:id="@+id/clipTypeGoalLength"
          android:layout_width="wrap_content"
