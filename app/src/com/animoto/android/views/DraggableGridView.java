@@ -397,7 +397,8 @@ public class DraggableGridView extends ViewGroup implements View.OnTouchListener
     }
     protected void clampScroll()
     {
-    	int stretch = 3, overreach = getHeight() / 2;
+    	int stretch = 3;
+    	int overreach = 0;
     	int max = getMaxScroll();
     	max = Math.max(max, 0);
     	
