@@ -43,29 +43,22 @@
              android:configChanges="locale"
 
             >
-           
-        
         </activity>
- 
-        <!--  Entry for RegisterActivity.class -->
-        <activity android:name=".server.RegisterActivity"
-                  android:label="Register New Account"></activity>
- 
-        
-         <activity
+        <!-- Entry for RegisterActivity.class -->
+        <activity
+            android:name=".server.RegisterActivity"
+            android:label="Register New Account" >
+        </activity>
+        <activity
             android:name=".HomeActivity"
+            android:configChanges="locale"
             android:label="@string/app_name"
-             android:configChanges="locale"
-                     android:theme="@style/Holo.Theme.Light.DarkActionBar"
-             
- 	>
-             <intent-filter  android:label="@string/app_name">
+            android:theme="@style/Holo.Theme.Light.DarkActionBar" >
+            <intent-filter android:label="@string/app_name" >
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        
-         
         <activity
             android:name=".StoryNewActivity"
             android:label="@string/title_activity_new_story" >
@@ -75,16 +68,18 @@
         </activity>
         <activity
             android:name=".LessonsActivity"
-                        android:screenOrientation="portrait"    
-                    android:configChanges="locale"
-            android:label="@string/title_activity_lessons" >
+            android:configChanges="locale"
+            android:label="@string/title_activity_lessons"
+            android:screenOrientation="portrait" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".HomeActivity" />
         </activity>
+
         <activity
             android:name=".StoryTemplateChooserActivity"
-            android:label="@string/title_activity_choose_template" >
+            android:label="@string/title_activity_choose_template"
+            android:screenOrientation="portrait" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".HomeActivity" />
@@ -99,14 +94,13 @@
         </activity>
         <activity
             android:name="info.guardianproject.mrapp.SceneEditorActivity"
-             android:configChanges="orientation|screenSize"    
-                 
+            android:screenOrientation="portrait"
+            android:configChanges="orientation|screenSize"
             android:label="@string/title_activity_scene_editor" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".HomeActivity" />
         </activity>
-        
         <activity
             android:name=".WelcomeActivity"
             android:label="@string/app_name"            
@@ -114,18 +108,11 @@
         </activity>  
          <activity
             android:name=".ProjectListActivity">
-            
-           
-             
-        </activity>   
-          <activity android:name=".lessons.LessonViewActivity"
-                          android:screenOrientation="portrait"    
-              
-               />
-        
-           <activity android:name=".server.WebViewActivity"
-               />
-           
+        </activity>
+        <activity
+            android:name=".lessons.LessonViewActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".server.WebViewActivity" />
            <activity
             android:name=".media.MediaProjectManager"
             android:screenOrientation="landscape"
