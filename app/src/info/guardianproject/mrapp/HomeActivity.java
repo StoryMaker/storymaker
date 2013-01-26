@@ -386,8 +386,8 @@ public class HomeActivity extends BaseActivity implements ActionBar.TabListener 
                 			
                 			if (img != null)
                 			{
-                			img.setBounds( 0, 0, 60, 60 );
-                    		button.setCompoundDrawables( img, null, null, null );
+                				img.setBounds( 0, 0, 60, 60 );
+                				button.setCompoundDrawables( img, null, null, null );
                 			
                 				break;
                 			}
