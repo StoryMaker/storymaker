@@ -1,24 +1,13 @@
 package info.guardianproject.mrapp;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-
 import org.holoeverywhere.app.Activity;
-//import org.holoeverywhere.widget.Button;
 import org.holoeverywhere.widget.Toast;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.slidingmenu.lib.SlidingMenu;
 import com.slidingmenu.lib.app.SlidingActivity;
