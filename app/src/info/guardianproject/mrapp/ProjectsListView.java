@@ -181,20 +181,24 @@ public class ProjectsListView extends ListView implements Runnable {
             
             Project project = projects.get(position);
             
-            
-            
             tv.setText(project.getTitle());       
             
             tv = (TextView)row.findViewById(R.id.projectSummary);
-            
             
             ImageView ivType = (ImageView)row.findViewById(R.id.projectIconType);
             ImageView ivIcon = (ImageView)row.findViewById(R.id.projectIcon);
             
             Media[] mediaList = project.getMediaAsArray();
             
-            if (mediaList != null && mediaList.length > 0)            
-            	ivIcon.setImageBitmap(getThumbnail(project.getMediaAsArray()[0]));
+            if (mediaList != null && mediaList.length > 0)    
+            {
+            	for (Media media: mediaList)
+            		if (media != null)
+            		{
+            			ivIcon.setImageBitmap(getThumbnail(media));
+            			break;
+            		}
+            }
             
             String projectType = "";
             
@@ -237,6 +241,9 @@ public class ProjectsListView extends ListView implements Runnable {
 
     public Bitmap getThumbnail(Media media)
     {
+    	if (media == null)
+    		return null;
+    	
         String path = media.getPath();
 
         if (media.getMimeType() == null)
