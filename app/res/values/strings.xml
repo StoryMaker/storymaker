@@ -246,4 +246,8 @@ Build number: <xliff:g id="build_number">%s</xliff:g>\n
     <string name="drawer_projects">Projects</string>
     <string name="drawer_lessons">Lessons</string>
     <string name="drawer_profile">Profile</string>
+    <string name="video_project_project_type">Video Project</string>
+    <string name="photo_project_project_type">Photo Project</string>
+    <string name="audio_project_project_type">Audio Project</string>
+    <string name="photo_essay_project_project_type">Photo Essay Project</string>
 </resources>
