@@ -23,7 +23,6 @@
     <string name="menu_play_media">Play</string>
     <string name="menu_render_media">Render</string>
     
-	<string name="menu_settings">Settings</string>
     <string name="menu_login">Login</string>
     <string name="menu_logs">Send Log</string>
     <string name="menu_update">Update</string>
@@ -242,4 +241,9 @@ Build number: <xliff:g id="build_number">%s</xliff:g>\n
     <string name="photo_project_project_type">Photo Project</string>
     <string name="audio_project_project_type">Audio Project</string>
     <string name="photo_essay_project_project_type">Photo Essay Project</string>
+    
+    <string name="drawer_home">Home</string>
+    <string name="drawer_projects">Projects</string>
+    <string name="drawer_lessons">Lessons</string>
+    <string name="drawer_profile">Profile</string>
 </resources>

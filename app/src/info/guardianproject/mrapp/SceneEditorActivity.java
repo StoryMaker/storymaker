@@ -73,7 +73,7 @@ import com.actionbarsherlock.view.MenuItem;
 import com.animoto.android.views.DraggableGridView;
 import com.animoto.android.views.OnRearrangeListener;
 
-public class SceneEditorActivity extends org.holoeverywhere.app.Activity implements ActionBar.TabListener {
+public class SceneEditorActivity extends BaseActivity implements ActionBar.TabListener {
 	private static final String STATE_SELECTED_NAVIGATION_ITEM = "selected_navigation_item";
 	
 	private final static int REQ_OVERLAY_CAM = 888; //for resp handling from overlay cam launch

@@ -49,11 +49,11 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 
 import com.actionbarsherlock.app.ActionBar;
-import com.actionbarsherlock.view.ContextMenu;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
+import com.slidingmenu.lib.SlidingMenu;
 
-public class HomeActivity extends Activity implements ActionBar.TabListener {
+public class HomeActivity extends BaseActivity implements ActionBar.TabListener {
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide fragments for each of the
@@ -80,9 +80,19 @@ public class HomeActivity extends Activity implements ActionBar.TabListener {
         // of the app.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
+        // action bar stuff
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        
         // Set up the action bar.
         final ActionBar actionBar = getSupportActionBar();
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+        
+//        // setup drawer
+        SlidingMenu sm = getSlidingMenu();
+        sm.setShadowWidthRes(R.dimen.shadow_width);
+        sm.setShadowDrawable(R.drawable.shadow);
+//        sm.setBehindOffsetRes(R.dimen.slidingmenu_offset);
+        sm.setBehindWidthRes(R.dimen.slidingmenu_offset);
 
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.pager);
@@ -136,9 +146,13 @@ public class HomeActivity extends Activity implements ActionBar.TabListener {
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-	
-		if (item.getItemId() == R.id.menu_settings)
-		{
+
+        if (item.getItemId() == android.R.id.home)
+        {
+            toggle();
+        }
+        else if (item.getItemId() == R.id.menu_settings)
+        {
 			showPreferences();
 		}
 		else if (item.getItemId() == R.id.menu_login)
