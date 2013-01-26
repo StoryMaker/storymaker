@@ -1,4 +1,7 @@
 package info.guardianproject.mrapp;
+import java.io.IOException;
+import java.io.InputStream;
+
 import org.holoeverywhere.app.Activity;
 import org.holoeverywhere.widget.Toast;
 
@@ -8,6 +11,17 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.content.res.AssetManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.PixelFormat;
+import android.os.Bundle;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 
 import com.slidingmenu.lib.SlidingMenu;
 import com.slidingmenu.lib.app.SlidingActivity;
@@ -83,5 +97,50 @@ public class BaseActivity extends SlidingActivity {
                 activity.startActivity(i);
             }
         });
+        
+        try {
+        	
+        	if (this.getClass().getName().contains("SceneEditorActivity"))
+        	{
+        		showCoachOverlay();
+        	}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    }
+    
+    private void showCoachOverlay () throws IOException
+    {
+    	ImageView overlayView = new ImageView(this);
+    	
+    	overlayView.setOnClickListener(new OnClickListener () 
+    	{
+
+			@Override
+			public void onClick(View v) {
+				getWindowManager().removeView(v);
+				
+			}
+    		
+    	});
+    	
+    	AssetManager mngr = getAssets();
+        // Create an input stream to read from the asset folder
+           InputStream ins = mngr.open("images/coach/coach_add_img.png");
+
+           // Convert the input stream into a bitmap
+           Bitmap bmpCoach = BitmapFactory.decodeStream(ins);
+           overlayView.setImageBitmap(bmpCoach);
+           
+    	WindowManager.LayoutParams params = new WindowManager.LayoutParams(
+    	        WindowManager.LayoutParams.MATCH_PARENT,
+    	        WindowManager.LayoutParams.MATCH_PARENT,
+    	        WindowManager.LayoutParams.TYPE_APPLICATION,
+    	        WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE |
+    	        WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN,
+    	        PixelFormat.TRANSLUCENT);
+
+    	getWindowManager().addView(overlayView, params);
     }
 }

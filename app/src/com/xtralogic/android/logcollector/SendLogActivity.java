@@ -59,6 +59,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.util.Log;
 
 public class SendLogActivity extends Activity
@@ -280,7 +281,7 @@ public class SendLogActivity extends Activity
 
                 // XXX:  Possible Failed Binder Transaction-- wouldn't it be better to log this to a file? -harlo
                 try {
-                    File logFile = new File(AppConstants.TMP_FILE_DIRECTORY, "error_log_" + System.currentTimeMillis() + ".txt");
+                    File logFile = new File(Environment.getExternalStorageDirectory(), "error_log_" + System.currentTimeMillis() + ".txt");
                     FileWriter fw = new FileWriter(logFile);
                     fw.write(log.toString());
                     fw.close();

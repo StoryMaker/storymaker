@@ -193,25 +193,28 @@ public class OverlayCameraActivity extends SherlockActivity implements Callback,
 
     @Override
     public void surfaceChanged(SurfaceHolder arg0, int arg1, int arg2, int arg3) {
-        // TODO Auto-generated method stub
-        Camera.Parameters p = camera.getParameters();
-        p.setPreviewSize(arg2, arg3);
-        bitmap = Bitmap.createBitmap(arg2, arg3, Bitmap.Config.ARGB_8888);
-        canvas = new Canvas(bitmap);
-        setOverlayImage (overlayIdx);
-        try {
-        camera.setPreviewDisplay(arg0);
-        } catch (IOException e) {
-        e.printStackTrace();
-        }
-        camera.startPreview();
+    
+    	if (camera != null)
+    	{
+	    	Camera.Parameters p = camera.getParameters();
+	        p.setPreviewSize(arg2, arg3);
+	        bitmap = Bitmap.createBitmap(arg2, arg3, Bitmap.Config.ARGB_8888);
+	        canvas = new Canvas(bitmap);
+	        setOverlayImage (overlayIdx);
+	        try {
+	        camera.setPreviewDisplay(arg0);
+	        } catch (IOException e) {
+	        e.printStackTrace();
+	        }
+	        camera.startPreview();
+    	}
     }
 
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
-        // TODO Auto-generated method stub
-    camera = Camera.open();
-    cameraOn = true;
+        
+    	camera = Camera.open();
+    	cameraOn = true;
     }
 
     @Override

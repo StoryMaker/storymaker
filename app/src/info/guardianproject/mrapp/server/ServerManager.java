@@ -1,5 +1,7 @@
 package info.guardianproject.mrapp.server;
 
+import info.guardianproject.mrapp.AppConstants;
+
 import java.io.File;
 import java.net.MalformedURLException;
 import java.util.List;
@@ -23,16 +25,13 @@ public class ServerManager {
 	private String mServerUrl;
 	private Context mContext;
 	
-	//TODO switch this to HTTPS!
-	public final static String DEFAULT_STORYMAKER_SERVER = "https://mrapp.alive.in/";
-	
 	private final static String PATH_XMLRPC = "/xmlrpc.php";
 	private final static String PATH_REGISTER = "/wp-login.php?action=register";
 	private final static String PATH_LOGIN = "/wp-admin";
 	
 	public ServerManager (Context context)
 	{
-		this(context, DEFAULT_STORYMAKER_SERVER);
+		this(context, AppConstants.DEFAULT_STORYMAKER_SERVER);
 		
 	}
 	

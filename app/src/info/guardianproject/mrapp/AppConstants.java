@@ -61,7 +61,7 @@ public final static String TAG = "StoryMaker";
 	public final static String TMP_FILE_NAME_IMAGE = "tmp.jpg";
 	public static final String TMP_FILE_NAME_VIDEO = "tmp.mp4";
 	
-	public final static String TMP_FILE_DIRECTORY = Environment.getExternalStorageDirectory().getPath() + "/Android/data/org.witness.ssc/files/";
+	//public final static String TMP_FILE_DIRECTORY = Environment.getExternalStorageDirectory().getPath() + "/Android/data/org.witness.ssc/files/";
 	
 	public final static class MediaScanner {
 		public final static String SCANNED = "mediaScanned";
@@ -625,6 +625,10 @@ public final static String TAG = "StoryMaker";
 	}
 
     public final static String LINE_SEPARATOR = System.getProperty("line.separator");//$NON-NLS-1$
-    
+
+	//TODO switch this to HTTPS!
+	public final static String DEFAULT_STORYMAKER_SERVER = "https://mrapp.alive.in/";
+
+	public final static String DEFAULT_STORYMAKER_SERVER_RSS = DEFAULT_STORYMAKER_SERVER + "feed/";
 }
 
