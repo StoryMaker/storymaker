@@ -59,7 +59,7 @@ public class HomeActivity extends BaseActivity implements ActionBar.TabListener 
         // Create the adapter that will return a fragment for each of the three primary sections
         // of the app.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
-
+        
         // action bar stuff
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         
@@ -364,12 +364,6 @@ public class HomeActivity extends BaseActivity implements ActionBar.TabListener 
 		}
 	}
 
-    @Override
-    public boolean onCreatePanelMenu(int featureId, android.view.Menu menu) {
-        // TODO Auto-generated method stub
-        return super.onCreatePanelMenu(featureId, menu);
-    }
-    
     
     
 }
