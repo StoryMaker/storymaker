@@ -9,4 +9,4 @@
 	url = https://github.com/guardianproject/android-ffmpeg-java
 [submodule "external/SlidingMenu"]
 	path = external/SlidingMenu
-	url = git://github.com/jfeinstein10/SlidingMenu.git
+	url = git@github.com:vitriolix/SlidingMenu.git
