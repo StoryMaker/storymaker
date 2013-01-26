@@ -21,7 +21,7 @@ import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 
-public class StoryNewActivity extends SherlockActivity {
+public class StoryNewActivity extends BaseActivity {
 
 	private RadioGroup rGroup;
 	private TextView txtNewStoryDesc;
