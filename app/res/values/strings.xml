@@ -247,4 +247,10 @@ Build number: <xliff:g id="build_number">%s</xliff:g>\n
     <string name="photo_project_project_type">Photo Project</string>
     <string name="audio_project_project_type">Audio Project</string>
     <string name="photo_essay_project_project_type">Photo Essay Project</string>
+    
+    
+	
+    <string name="eula_title">You agree to:</string>
+    <string name="eula_accept">Accept</string>
+    <string name="eula_refuse">Refuse</string>
 </resources>

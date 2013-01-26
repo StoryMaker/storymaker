@@ -119,7 +119,11 @@ public class HomeActivity extends BaseActivity implements ActionBar.TabListener 
                             .setTabListener(this));
         }
         
+        Eula.show(this);
+        
         checkCreds ();
+        
+        
     }
 
     //if the user hasn't registered with the user, show the login screen
