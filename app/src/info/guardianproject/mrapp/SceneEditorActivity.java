@@ -25,6 +25,7 @@ import org.ffmpeg.android.MediaDesc;
 import org.ffmpeg.android.MediaUtils;
 import org.holoeverywhere.app.AlertDialog;
 import org.holoeverywhere.app.ProgressDialog;
+import org.holoeverywhere.widget.SeekBar;
 import org.holoeverywhere.widget.ToggleButton;
 import org.json.JSONException;
 
@@ -64,6 +65,7 @@ import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.MediaController;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -88,6 +90,7 @@ public class SceneEditorActivity extends BaseActivity implements ActionBar.TabLi
     private MediaProjectManager mMPM;
     public Fragment mFragmentTab0, mFragmentTab1, mFragmentTab2, mLastTabFrag;
 	private PreviewVideoView mPreviewVideoView = null;
+	private SeekBar mSeekBar = null;
 	private ImageView mImageViewMedia;
 	
 	private String mMediaUploadAccount = null;
@@ -685,6 +688,8 @@ public class SceneEditorActivity extends BaseActivity implements ActionBar.TabLi
         int layout;
         public ViewPager mAddClipsViewPager;
         View mView = null;
+        
+        int mPhotoEssaySlideLength = 5000;//5 seconds
 
         /**
          * The sortable grid view that contains the clips to reorder on the
@@ -710,28 +715,27 @@ public class SceneEditorActivity extends BaseActivity implements ActionBar.TabLi
 
             mPreviewVideoView = (PreviewVideoView) view.findViewById(R.id.previewVideoView);
             
+            
+            mSeekBar = (SeekBar) view.findViewById(R.id.seekBar1);
+            
             Button playButton = (Button) view.findViewById(R.id.buttonPlay);
             playButton.setOnClickListener(new OnClickListener() {
 
                 @Override
                 public void onClick(View v) {
                     
-                    if (mPreviewVideoView.isPlaying())
-                    {
-                 //       mPreviewVideoView.pause();
-
-                        mPreviewVideoView.stopPlayback();
-                    }
-                    else
-                    {
-                     // TODO hide thumbnail
-                        mImageViewMedia.setVisibility(View.GONE);
-                        mPreviewVideoView.setVisibility(View.VISIBLE);
-                        // play
-                        String[] pathArray = mMPM.mProject.getMediaAsPathArray();
-                        mPreviewVideoView.setMedia(pathArray);
-                        mPreviewVideoView.play();
-                    }
+                	if (mMPM.mProject.getStoryType() == Project.STORY_TYPE_VIDEO
+                			|| mMPM.mProject.getStoryType() == Project.STORY_TYPE_AUDIO)
+                	{
+	                   handleVideoAudioPlayToggle();
+                	}
+                	else if (mMPM.mProject.getStoryType() == Project.STORY_TYPE_ESSAY
+                		|| mMPM.mProject.getStoryType() == Project.STORY_TYPE_PHOTO)
+                	{
+                		
+                		handlePhotoPlayToggle();
+                		
+                	}
                     
                     // FIXME need to detect which clip user last clicked on
                     // and start from there
@@ -752,6 +756,76 @@ public class SceneEditorActivity extends BaseActivity implements ActionBar.TabLi
             loadMedia();
             
             return view;
+        }
+        
+        private void handlePhotoPlayToggle ()
+        {
+        	
+        	Thread thread = new Thread ()
+        	{
+        	
+        		public void run ()
+        		{
+        			String[] pathArray = mMPM.mProject.getMediaAsPathArray();
+        			
+        			for (String path : pathArray)
+        			{
+        				Message msg = new Message();
+        				msg.what = 1;
+        				msg.getData().putString("path", path);
+        				hImageUpdater.sendMessage(msg);
+        				
+        				try {Thread.sleep(mPhotoEssaySlideLength);}catch(Exception e){}
+        			}
+        		}
+        		
+        	};
+        	
+        	thread.start();
+
+        }
+        
+        Handler hImageUpdater = new Handler ()
+        {
+
+			@Override
+			public void handleMessage(Message msg) {				
+				super.handleMessage(msg);
+				
+				switch (msg.what)
+				{
+					case 1: //update image view from path
+					
+						String path = msg.getData().getString("path");
+						final BitmapFactory.Options options = new BitmapFactory.Options();
+			            options.inSampleSize = 4;
+			            Bitmap bmp = BitmapFactory.decodeFile(path, options);
+        				mImageViewMedia.setImageBitmap(bmp);
+
+					break;
+					
+					default:
+				}
+			}
+        	
+        };
+        
+        private void handleVideoAudioPlayToggle ()
+        {
+        	 if (mPreviewVideoView.isPlaying())
+             {
+                 mPreviewVideoView.stopPlayback();
+             }
+             else
+             {
+              // TODO hide thumbnail
+                 mImageViewMedia.setVisibility(View.GONE);
+                 mPreviewVideoView.setVisibility(View.VISIBLE);
+                 // play
+                 String[] pathArray = mMPM.mProject.getMediaAsPathArray();
+                 mPreviewVideoView.setMedia(pathArray);
+                 mPreviewVideoView.play();
+             }
         }
         
         public void loadMedia ()
@@ -791,13 +865,22 @@ public class SceneEditorActivity extends BaseActivity implements ActionBar.TabLi
                     Media[] medias = mMPM.mProject.getMediaAsArray();
                     if (medias[position] != null) {
                         
-                        mImageViewMedia.setVisibility(View.GONE);
-                        mPreviewVideoView.setVisibility(View.VISIBLE);
-                        // play
-                        mPreviewVideoView.stopPlayback();
-                        String[] pathArray = {medias[position].getPath()};
-                        mPreviewVideoView.setMedia(pathArray);
-                        mPreviewVideoView.play();
+                    	if (medias[position].getMimeType().startsWith("video"))
+                    	{
+	                        mImageViewMedia.setVisibility(View.GONE);
+	                        mPreviewVideoView.setVisibility(View.VISIBLE);
+	                        // play
+	                        mPreviewVideoView.stopPlayback();
+	                        String[] pathArray = {medias[position].getPath()};
+	                        mPreviewVideoView.setMedia(pathArray);
+	                        mPreviewVideoView.play();
+                    	}
+                    	else
+                    	{
+                    		mImageViewMedia.setImageBitmap(getThumbnail(medias[position]));
+                    	}
+                    
+                    
 
                     }
 
