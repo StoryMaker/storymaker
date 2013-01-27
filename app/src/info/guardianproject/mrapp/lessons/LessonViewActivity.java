@@ -1,6 +1,7 @@
 package info.guardianproject.mrapp.lessons;
 
 import info.guardianproject.mrapp.AppConstants;
+import info.guardianproject.mrapp.BaseActivity;
 import info.guardianproject.mrapp.R;
 import info.guardianproject.mrapp.StoryMakerApp;
 import info.guardianproject.mrapp.media.MediaHelper;
@@ -11,8 +12,11 @@ import java.io.IOException;
 import org.holoeverywhere.app.Activity;
 import org.holoeverywhere.widget.Toast;
 
+import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -25,7 +29,8 @@ import android.webkit.WebViewClient;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 
-public class LessonViewActivity extends Activity {
+@SuppressLint("NewApi")
+public class LessonViewActivity extends BaseActivity {
 
 	WebView mWebView;
 	MediaHelper mMediaHelper;
@@ -57,7 +62,14 @@ public class LessonViewActivity extends Activity {
         	mWebView.getSettings().setJavaScriptEnabled(true);
         	mWebView.getSettings().setPluginsEnabled(true);
         	mWebView.getSettings().setPluginState(PluginState.ON);
+        	
         	mWebView.getSettings().setAllowFileAccess(true);
+   
+        	if (Build.VERSION.SDK_INT >= 16)
+        	{
+        		new WebViewSetupJB(mWebView);
+        	}
+        	
         	mWebView.getSettings().setSupportZoom(false);
         
         	mWebView.setWebChromeClient(new WebChromeClient ()
