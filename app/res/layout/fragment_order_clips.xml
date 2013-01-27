@@ -39,7 +39,18 @@
 	<com.animoto.android.views.DraggableGridView
         android:id="@+id/DraggableGridView01"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent">
+        android:layout_height="wrap_content">
     </com.animoto.android.views.DraggableGridView>
+     <LinearLayout
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"  android:layout_weight="1">
 
+         <Button
+             android:id="@+id/buttonAddNarration"
+             style="?android:attr/buttonStyleSmall"
+             android:layout_width="fill_parent"
+             android:layout_height="wrap_content"
+             android:text="Add Narration" />
+
+     </LinearLayout>
 </LinearLayout>
