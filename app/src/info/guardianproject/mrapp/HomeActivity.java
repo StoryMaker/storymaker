@@ -351,7 +351,7 @@ public class HomeActivity extends BaseActivity implements ActionBar.TabListener 
                 public void onClick(View v) {
 
 
-                    startActivity(new Intent(getActivity(), LessonsActivity.class));
+                    startActivity(new Intent(getActivity(), StoryNewActivity.class));
 
 
                 }
@@ -371,7 +371,9 @@ public class HomeActivity extends BaseActivity implements ActionBar.TabListener 
                     
                     @Override
                     public void onClick(View v) {
-                    	startActivity(new Intent(getActivity(), StoryNewActivity.class));
+                    	//startActivity(new Intent(getActivity(), StoryNewActivity.class));
+                    	
+                    	showProject(((Button)v).getText().toString());
                     }
                 });
         		
@@ -386,7 +388,7 @@ public class HomeActivity extends BaseActivity implements ActionBar.TabListener 
                 			
                 			if (img != null)
                 			{
-                				img.setBounds( 0, 0, 60, 60 );
+                				img.setBounds( 0, 0, 30,30 );
                 				button.setCompoundDrawables( img, null, null, null );
                 			
                 				break;
@@ -443,6 +445,65 @@ public class HomeActivity extends BaseActivity implements ActionBar.TabListener 
         	}
         	
         	
+        }
+        
+        private void showProject (String title)
+        {
+
+        	ArrayList<Project> listProjects = Project.getAllAsList(getActivity());
+        	Project project = null;
+        	
+        	for (Project projectMatch: listProjects)
+        	{
+        		if (projectMatch.getTitle().equals(title))
+        		{
+        			project = projectMatch;
+        			break;
+        		}
+        	}
+        	
+        	if (project == null)
+        		return;
+
+        	Intent intent = new Intent(getActivity(), SceneEditorActivity.class);
+	    	intent.putExtra("story_mode", project.getStoryType());
+	    	intent.putExtra("pid", project.getId());
+	    	intent.putExtra("title", project.getTitle());
+	    	
+	    	String templateJsonPath = null;
+	    	String lang = StoryMakerApp.getCurrentLocale().getLanguage();
+	    	
+	    	if (project.getStoryType() == Project.STORY_TYPE_VIDEO)
+	    	{
+	    		//video
+	    		templateJsonPath = "story/templates/" + lang + "/video_simple.json";
+	    	
+	    		
+	    	}
+	    	else if (project.getStoryType() == Project.STORY_TYPE_PHOTO)
+	    	{
+	
+	    		//photo
+	    	
+	    		templateJsonPath = "story/templates/" + lang + "/photo_simple.json";
+	    	}
+	    	else if (project.getStoryType() == Project.STORY_TYPE_AUDIO)
+	    	{
+	
+	    		//audio
+	    	
+	    		templateJsonPath = "story/templates/" + lang + "/audio_simple.json";
+	    	}
+	    	else if (project.getStoryType() == Project.STORY_TYPE_ESSAY)
+	    	{
+	    		//essay
+	    		templateJsonPath = "story/templates/" + lang + "/essay_simple.json";
+	    		
+	    	}
+	    	
+	    	intent.putExtra("template_path", templateJsonPath);
+	    	
+	        startActivity(intent);
         }
         
         public Bitmap getThumbnail(Media media)
