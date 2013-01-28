@@ -1,4 +1,6 @@
 package info.guardianproject.mrapp;
+import info.guardianproject.mrapp.server.LoginActivity;
+
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -48,7 +50,9 @@ public class BaseActivity extends SlidingActivity {
         Button btnDrawerHome = (Button) findViewById(R.id.btnDrawerHome);
         Button btnDrawerProjects = (Button) findViewById(R.id.btnDrawerProjects);
         Button btnDrawerLessons = (Button) findViewById(R.id.btnDrawerLessons);
-        Button btnDrawerProfile = (Button) findViewById(R.id.btnDrawerProfile);
+        Button btnDrawerAccount = (Button) findViewById(R.id.btnDrawerAccount);
+        Button btnDrawerSettings = (Button) findViewById(R.id.btnDrawerSettings);
+        
 
         btnDrawerNewProject.setOnClickListener(new OnClickListener() {
             @Override
@@ -80,6 +84,7 @@ public class BaseActivity extends SlidingActivity {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(activity, HomeActivity.class);
+                i.putExtra("showtab",1);
                 activity.startActivity(i);
             }
         });
@@ -90,7 +95,16 @@ public class BaseActivity extends SlidingActivity {
                 activity.startActivity(i);
             }
         });
-        btnDrawerProfile.setOnClickListener(new OnClickListener() {
+        
+        btnDrawerAccount.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(activity, LoginActivity.class);
+                activity.startActivity(i);
+            }
+        });
+        
+        btnDrawerSettings.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(activity, SimplePreferences.class);

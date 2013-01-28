@@ -27,6 +27,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.pm.ResolveInfo;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
@@ -81,6 +82,17 @@ public class HomeActivity extends BaseActivity implements ActionBar.TabListener 
       
         checkForTor ();
         
+        try {
+            String pkg = getPackageName();
+            String vers= getPackageManager().getPackageInfo(pkg, 0).versionName;
+            setTitle(getTitle() + " v" + vers);
+                    
+        } catch (NameNotFoundException e) {
+           
+        }
+        
+        
+        
         setContentView(R.layout.activity_home);
         // Create the adapter that will return a fragment for each of the three primary sections
         // of the app.
@@ -129,6 +141,11 @@ public class HomeActivity extends BaseActivity implements ActionBar.TabListener 
         
         checkCreds ();
         
+        if (getIntent().hasExtra("showtab"))
+        {
+        	int tab = getIntent().getExtras().getInt("showtab");
+        	mViewPager.setCurrentItem(tab);
+        }
         
     }
     
@@ -186,10 +203,6 @@ public class HomeActivity extends BaseActivity implements ActionBar.TabListener 
         else if (item.getItemId() == R.id.menu_settings)
         {
 			showPreferences();
-		}
-		else if (item.getItemId() == R.id.menu_login)
-		{
-			showLogin();
 		}
 		else if (item.getItemId() == R.id.menu_logs)
 		{
