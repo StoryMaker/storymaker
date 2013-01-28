@@ -2,6 +2,7 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 	<PreferenceCategory android:title="General">
 		<CheckBoxPreference android:title="Enable Arabic mode" android:key="plocalear"/>
+		<CheckBoxPreference android:title="Use Orbot (Tor) for Network Traffic" android:key="pusetor"/>
 	</PreferenceCategory>
 </PreferenceScreen>
 

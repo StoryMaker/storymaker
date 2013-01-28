@@ -3,6 +3,7 @@ package info.guardianproject.mrapp.lessons;
 import info.guardianproject.mrapp.AppConstants;
 import info.guardianproject.mrapp.model.Lesson;
 import info.guardianproject.onionkit.trust.StrongHttpsClient;
+import info.guardianproject.onionkit.ui.OrbotHelper;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -28,6 +29,7 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
 import org.apache.commons.io.IOUtils;
+import org.apache.http.HttpHost;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
@@ -35,6 +37,8 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.util.Log;
 
 public class LessonManager implements Runnable {
@@ -207,6 +211,16 @@ public class LessonManager implements Runnable {
 		
 			// open URL and download file listing
 			StrongHttpsClient httpClient = new StrongHttpsClient(mContext);
+			
+			 SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(mContext);
+
+		     boolean useTor = settings.getBoolean("pusetor", false);
+		     
+			if (useTor)
+			{
+				httpClient.getParams().setParameter("SOCKS",  new HttpHost(AppConstants.TOR_PROXY_HOST, AppConstants.TOR_PROXY_PORT));
+				
+			}
 			
 			String urlBase = mUrlRemoteRepo;
 			if (mSubFolder != null)

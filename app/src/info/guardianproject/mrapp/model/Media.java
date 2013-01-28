@@ -175,6 +175,8 @@ public class Media {
         String lastSegment = uri.getLastPathSegment();
         int newId = Integer.parseInt(lastSegment);
         this.setId(newId);
+        
+        cursorDupes.close();
     }
     
     private void update() {

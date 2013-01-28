@@ -109,7 +109,7 @@ public class DraggableGridView extends ViewGroup implements View.OnTouchListener
         float w = (r - l) / (dpi / 160f);
         
         //determine number of columns, at least 2
-        colCount = 5;
+        colCount = 4;
         int sub = 240;
         w -= 280;
         while (w > 0)

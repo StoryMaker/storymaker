@@ -1,6 +1,7 @@
 
 package info.guardianproject.mrapp;
 
+import info.guardianproject.mrapp.media.AudioRecorderView;
 import info.guardianproject.mrapp.media.MediaProjectManager;
 import info.guardianproject.mrapp.media.OverlayCameraActivity;
 import info.guardianproject.mrapp.model.Clip;
@@ -26,6 +27,7 @@ import org.ffmpeg.android.MediaUtils;
 import org.holoeverywhere.app.AlertDialog;
 import org.holoeverywhere.app.ProgressDialog;
 import org.holoeverywhere.widget.SeekBar;
+import org.holoeverywhere.widget.SeekBar.OnSeekBarChangeListener;
 import org.holoeverywhere.widget.ToggleButton;
 import org.json.JSONException;
 
@@ -40,8 +42,11 @@ import android.content.res.Configuration;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.media.MediaPlayer;
+import android.media.MediaPlayer.OnCompletionListener;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.preference.PreferenceManager;
@@ -54,9 +59,13 @@ import android.support.v4.app.NavUtils;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.util.Log;
+import android.view.DragEvent;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnDragListener;
+import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -65,6 +74,7 @@ import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.MediaController;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -688,8 +698,11 @@ public class SceneEditorActivity extends BaseActivity implements ActionBar.TabLi
         int layout;
         public ViewPager mAddClipsViewPager;
         View mView = null;
+        Button mPlayButton, mButtonAddNarration, mButtonPlayNarration;
         
-        int mPhotoEssaySlideLength = 5000;//5 seconds
+    	AudioRecorderView mAudioNarrator = null;
+    	
+        int mPhotoEssaySlideLength = 5;//5 seconds
 
         /**
          * The sortable grid view that contains the clips to reorder on the
@@ -711,15 +724,66 @@ public class SceneEditorActivity extends BaseActivity implements ActionBar.TabLi
             View view = inflater.inflate(layout, null);
             
             mOrderClipsDGV = (DraggableGridView) view.findViewById(R.id.DraggableGridView01);
+
             mImageViewMedia = (ImageView) view.findViewById(R.id.imageView1);
 
             mPreviewVideoView = (PreviewVideoView) view.findViewById(R.id.previewVideoView);
             
-            
             mSeekBar = (SeekBar) view.findViewById(R.id.seekBar1);
+           
+            mSeekBar.setOnSeekBarChangeListener(new OnSeekBarChangeListener(){
+
+				@Override
+				public void onProgressChanged(SeekBar seekBar, int progress,
+						boolean fromUser) {
+
+					if (fromUser)
+						mPreviewVideoView.seekTo(progress);
+					
+				}
+
+				@Override
+				public void onStartTrackingTouch(SeekBar seekBar) {
+					
+					
+				}
+
+				@Override
+				public void onStopTrackingTouch(SeekBar seekBar) {
+					// TODO Auto-generated method stub
+					
+				}
+            	
+            });
             
-            Button playButton = (Button) view.findViewById(R.id.buttonPlay);
-            playButton.setOnClickListener(new OnClickListener() {
+            mButtonAddNarration = (Button)view.findViewById(R.id.buttonAddNarration);
+            mButtonAddNarration.setOnClickListener(new OnClickListener ()
+            {
+
+				@Override
+				public void onClick(View v) {
+
+					addNarration();
+					
+				}
+            	
+            });
+            
+            mButtonPlayNarration= (Button)view.findViewById(R.id.buttonPlayNarration);
+            mButtonPlayNarration.setOnClickListener(new OnClickListener ()
+            {
+
+				@Override
+				public void onClick(View v) {
+
+					playNarration();
+					
+				}
+            	
+            });
+            
+            mPlayButton = (Button) view.findViewById(R.id.buttonPlay);
+            mPlayButton.setOnClickListener(new OnClickListener() {
 
                 @Override
                 public void onClick(View v) {
@@ -749,41 +813,121 @@ public class SceneEditorActivity extends BaseActivity implements ActionBar.TabLi
                 public void run() {
                     mImageViewMedia.setVisibility(View.VISIBLE);
                     mPreviewVideoView.setVisibility(View.GONE);
+                    mKeepRunningPreview = false;;
                 }
             });
-            
            
             loadMedia();
+            
+            if (mMPM.mProject.getStoryType() == Project.STORY_TYPE_VIDEO 
+            		|| mMPM.mProject.getStoryType() == Project.STORY_TYPE_ESSAY)
+            {
+            	mButtonAddNarration.setVisibility(View.VISIBLE);
+            	
+	            if (mAudioNarrator == null)
+	        	{
+	        		String audioFile = "narration" + mMPM.mProject.getId() + ".wav";
+	        		File fileAudio = new File(Environment.getExternalStorageDirectory(),audioFile);
+	        		mAudioNarrator = new AudioRecorderView(fileAudio.getAbsolutePath());
+	        	}
+            }
+            
             
             return view;
         }
         
-        private void handlePhotoPlayToggle ()
+        private void addNarration ()
         {
+        	//start the playback
+        	if (mMPM.mProject.getStoryType() == Project.STORY_TYPE_ESSAY)
+        		handlePhotoPlayToggle ();
+        	else
+        		handleVideoAudioPlayToggle();
         	
-        	Thread thread = new Thread ()
-        	{
-        	
-        		public void run ()
-        		{
-        			String[] pathArray = mMPM.mProject.getMediaAsPathArray();
-        			
-        			for (String path : pathArray)
-        			{
-        				Message msg = new Message();
-        				msg.what = 1;
-        				msg.getData().putString("path", path);
-        				hImageUpdater.sendMessage(msg);
-        				
-        				try {Thread.sleep(mPhotoEssaySlideLength);}catch(Exception e){}
-        			}
-        		}
-        		
-        	};
-        	
-        	thread.start();
+        	//start the audio recorder
+        	mAudioNarrator.startRecording();
+        }
+        
+        private void stopNarration ()
+        {
+        	//stop the audio recorder
+        	mAudioNarrator.stopRecording();
 
         }
+        
+        private void playNarration ()
+        {
+        	
+        	//start narrator playback
+        	mAudioNarrator.startPlaying();
+        	
+        	//start the playback
+        	if (mMPM.mProject.getStoryType() == Project.STORY_TYPE_ESSAY)
+        		handlePhotoPlayToggle ();
+        	else
+        		handleVideoAudioPlayToggle();
+        }
+        
+        private void stopPlayNarration ()
+        {
+        	
+        	//start narrator playback
+        	mAudioNarrator.stopPlaying();
+        }
+        
+        
+        private void handlePhotoPlayToggle ()
+        {
+        	if (mSeekBar.getProgress() > 0)
+        	{
+				mPlayButton.setText(R.string.play_recording);
+            	mSeekBar.setProgress(0);
+            	mKeepRunningPreview = false;
+            	stopPlayNarration();
+        	}
+        	else
+        	{
+        		mSeekBar.setMax(mMPM.mProject.getMediaAsList().size()*mPhotoEssaySlideLength);
+            	mSeekBar.setProgress(0);
+            
+				mPlayButton.setText(R.string.stop_recording);
+				mKeepRunningPreview = true;
+				
+	        	Thread thread = new Thread ()
+	        	{
+	        	
+	        		public void run ()
+	        		{
+	        			
+	        			String[] pathArray = mMPM.mProject.getMediaAsPathArray();
+	        			
+	        			for (int i = 0; i < pathArray.length && mKeepRunningPreview; i++)
+	        			{
+	        				Message msg = new Message();
+	        				msg.what = 1;
+	        				msg.getData().putString("path", pathArray[i]);
+	        				msg.getData().putInt("idx", i);
+	        				hImageUpdater.sendMessage(msg);
+	        				
+	        				try {Thread.sleep(mPhotoEssaySlideLength * 1000);}catch(Exception e){}
+	        			}
+	        			
+	        			mKeepRunningPreview = false;
+	        			hImageUpdater.sendEmptyMessage(-1);
+	        			
+	        		}
+	        		
+	        	};
+	        	
+	        	thread.start();
+	        	
+	        	
+	             
+        	}
+
+        }
+        
+        private boolean mKeepRunningPreview = false;
         
         Handler hImageUpdater = new Handler ()
         {
@@ -794,14 +938,25 @@ public class SceneEditorActivity extends BaseActivity implements ActionBar.TabLi
 				
 				switch (msg.what)
 				{
+					case -1: //stop playback
+					mPlayButton.setText(R.string.play_recording);
+					if (mAudioNarrator != null)
+						if (mAudioNarrator.isRecording())
+							stopNarration ();
+						else if (mAudioNarrator.isPlaying())
+							mAudioNarrator.stopPlaying();
+					
+					break;
+					
 					case 1: //update image view from path
 					
 						String path = msg.getData().getString("path");
+						int idx = msg.getData().getInt("idx");
 						final BitmapFactory.Options options = new BitmapFactory.Options();
 			            options.inSampleSize = 4;
 			            Bitmap bmp = BitmapFactory.decodeFile(path, options);
         				mImageViewMedia.setImageBitmap(bmp);
-
+        				mSeekBar.setProgress(idx*mPhotoEssaySlideLength);
 					break;
 					
 					default:
@@ -814,17 +969,36 @@ public class SceneEditorActivity extends BaseActivity implements ActionBar.TabLi
         {
         	 if (mPreviewVideoView.isPlaying())
              {
+     			mPlayButton.setText(R.string.play_recording);
+     			mKeepRunningPreview = false;
                  mPreviewVideoView.stopPlayback();
+                
              }
              else
              {
-              // TODO hide thumbnail
+     			mPlayButton.setText(R.string.stop_recording);
+     			mKeepRunningPreview = true;
                  mImageViewMedia.setVisibility(View.GONE);
                  mPreviewVideoView.setVisibility(View.VISIBLE);
+                 
                  // play
                  String[] pathArray = mMPM.mProject.getMediaAsPathArray();
                  mPreviewVideoView.setMedia(pathArray);
                  mPreviewVideoView.play();
+                 
+                 new Thread ()
+	             {
+	             	public void run() {
+	             		
+	             		mSeekBar.setMax(mPreviewVideoView.getDuration());
+	 	            	 mSeekBar.setProgress(mPreviewVideoView.getCurrentPosition());
+	 	            	 
+	 	            	 if (mKeepRunningPreview)
+	 	            		 mSeekBar.postDelayed(this, 1000);
+	 	            	    
+
+	             	}
+	             }.start();
              }
         }
         
@@ -837,6 +1011,7 @@ public class SceneEditorActivity extends BaseActivity implements ActionBar.TabLi
             for (int i = 0; i < sceneMedias.length; i++)
             {
                 ImageView iv = new ImageView(getActivity());
+        		
                 if (sceneMedias[i] != null) {
                     iv.setImageBitmap(getThumbnail(sceneMedias[i]));
                 } 
@@ -874,6 +1049,9 @@ public class SceneEditorActivity extends BaseActivity implements ActionBar.TabLi
 	                        String[] pathArray = {medias[position].getPath()};
 	                        mPreviewVideoView.setMedia(pathArray);
 	                        mPreviewVideoView.play();
+	                        
+	                        //mSeekBar.setMax(mPreviewVideoView.getDuration());
+	                        
                     	}
                     	else
                     	{
@@ -888,6 +1066,45 @@ public class SceneEditorActivity extends BaseActivity implements ActionBar.TabLi
             });
             
           
+        }
+        
+        private void renderPreview ()
+        {
+
+        	String exportFileName = "preview-" + mMPM.mProject.getId();
+            Message msg = mHandlerPub.obtainMessage(888);
+            msg.getData().putString("status",
+                    getActivity().getString(R.string.rendering_clips_));
+            mHandlerPub.sendMessage(msg);
+
+            try {
+                mMPM.doExportMedia(exportFileName, false);
+                MediaDesc mdExported = mMPM.getExportMedia();
+                File mediaFile = new File(mdExported.path);
+
+                if (mediaFile.exists()) {
+
+                    Message message = mHandlerPub.obtainMessage(777);
+                    message.getData().putString("fileMedia", mdExported.path);
+                    message.getData().putString("mime", mdExported.mimeType);
+
+                    mHandlerPub.sendMessage(message);
+                }
+                else {
+                    Message msgErr = new Message();
+                    msgErr.what = -1;
+                    msgErr.getData().putString("err", "Media export failed");
+                    mHandlerPub.sendMessage(msgErr);
+                }
+            } 
+            catch (Exception e) {
+                Message msgErr = new Message();
+                msgErr.what = -1;
+                msgErr.getData().putString("err", e.getLocalizedMessage());
+                mHandlerPub.sendMessage(msgErr);
+                Log.e(AppConstants.TAG, "error posting", e);
+            }
+        
         }
     }
 

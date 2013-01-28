@@ -86,7 +86,7 @@ public class BaseActivity extends SlidingActivity {
         btnDrawerLessons.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(activity, HomeActivity.class);
+                Intent i = new Intent(activity, LessonsActivity.class);
                 activity.startActivity(i);
             }
         });
@@ -102,15 +102,20 @@ public class BaseActivity extends SlidingActivity {
         	
         	if (this.getClass().getName().contains("SceneEditorActivity"))
         	{
-        		showCoachOverlay();
+        		showCoachOverlay("images/coach/coach_add.png");
         	}
+        	else if (this.getClass().getName().contains("OverlayCameraActivity"))
+        	{
+        		showCoachOverlay("images/coach/coach_camera_prep.png");
+        	}
+        		
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
     }
     
-    private void showCoachOverlay () throws IOException
+    private void showCoachOverlay (String path) throws IOException
     {
     	ImageView overlayView = new ImageView(this);
     	
@@ -127,7 +132,7 @@ public class BaseActivity extends SlidingActivity {
     	
     	AssetManager mngr = getAssets();
         // Create an input stream to read from the asset folder
-           InputStream ins = mngr.open("images/coach/coach_add_img.png");
+           InputStream ins = mngr.open(path);
 
            // Convert the input stream into a bitmap
            Bitmap bmpCoach = BitmapFactory.decodeStream(ins);

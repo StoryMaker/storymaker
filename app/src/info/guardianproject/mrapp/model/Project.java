@@ -140,6 +140,7 @@ public class Project {
         values.put(StoryMakerDB.Schema.Projects.COL_STORY_TYPE,
                 storyType);
         
+        
         return values;
     }
     private void insert() {

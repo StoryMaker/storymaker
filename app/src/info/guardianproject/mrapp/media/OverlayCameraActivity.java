@@ -1,6 +1,7 @@
 package info.guardianproject.mrapp.media;
 
 import info.guardianproject.mrapp.AppConstants;
+import info.guardianproject.mrapp.BaseActivity;
 import info.guardianproject.mrapp.model.Project;
 import info.guardianproject.mrapp.ui.ActivitySwipeDetector;
 import info.guardianproject.mrapp.ui.SwipeInterface;
@@ -79,16 +80,21 @@ public class OverlayCameraActivity extends SherlockActivity implements Callback,
     
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+        
+    	super.onCreate(savedInstanceState);
+    	
+
+    	requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+        WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
+        
     
         overlayGroup = getIntent().getIntExtra("group", 0);
         overlayIdx = getIntent().getIntExtra("overlay", 0);
         mStoryMode = getIntent().getIntExtra("mode",-1);
 
-        this.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-        WindowManager.LayoutParams.FLAG_FULLSCREEN);
-
+        
         mOverlayView = new ImageView(this);
         
         ActivitySwipeDetector swipe = new ActivitySwipeDetector(this);
