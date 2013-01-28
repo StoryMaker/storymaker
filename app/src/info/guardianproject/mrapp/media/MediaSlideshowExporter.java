@@ -24,14 +24,16 @@ public class MediaSlideshowExporter implements Runnable {
 	
     private int current, total;
     private int mSlideDuration = 5;
+    private String mAudioPath;
     
-	public MediaSlideshowExporter (Context context, Handler handler, ArrayList<MediaDesc> mediaList, int slideDuration, MediaDesc out)
+	public MediaSlideshowExporter (Context context, Handler handler, ArrayList<MediaDesc> mediaList, String audioPath, int slideDuration, MediaDesc out)
 	{
 		mHandler = handler;
 		mContext = context;
 		mOut = out;
 		mMediaList = mediaList;
 		mSlideDuration = slideDuration;
+		mAudioPath = audioPath;
 	}
 	
 	
@@ -42,7 +44,7 @@ public class MediaSlideshowExporter implements Runnable {
     		String outputExt = "mp4";//or mpg
     		String outputType = MediaConstants.MIME_TYPE_MP4;
     		
-    		concatMediaFiles(mMediaList, mSlideDuration, mOut);
+    		makeSlideShow(mMediaList, mSlideDuration, mAudioPath, mOut);
     		
     		Message msg = mHandler.obtainMessage(0);
 	         mHandler.sendMessage(msg);
@@ -79,7 +81,27 @@ public class MediaSlideshowExporter implements Runnable {
     	}
 	}
 	
-	 private void concatMediaFiles (ArrayList<MediaDesc> listMediaDesc, int slideDuration, MediaDesc mdout) throws Exception
+	private void makeSlideShow (ArrayList<MediaDesc> listMediaDesc, int slideDuration, String audioPath, MediaDesc mdout) throws Exception
+    {
+    	  	
+    	boolean mediaNeedConvert = true;
+    	ArrayList<MediaDesc> listMediaDescVids = new ArrayList<MediaDesc>(listMediaDesc.size());
+    	
+    	FfmpegController ffmpegc = new FfmpegController (mContext);
+
+    	int idx = 0;
+    	
+    	for (MediaDesc mediaIn : listMediaDesc)
+    	{
+    		//normalize the filenames for all the imported images
+    	}
+    	
+    	
+    	
+		
+   }
+	/*
+	 private void makeSlideShow (ArrayList<MediaDesc> listMediaDesc, int slideDuration, String audioPath, MediaDesc mdout) throws Exception
 	    {
 	    	  	
 	    	boolean mediaNeedConvert = true;
@@ -175,6 +197,6 @@ public class MediaSlideshowExporter implements Runnable {
 	    
 	    
 	   }
-	    
+	    */
 	    
 }

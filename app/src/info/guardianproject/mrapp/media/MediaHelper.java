@@ -89,6 +89,7 @@ public class MediaHelper implements MediaScannerConnectionClient {
          return mMediaFileTmp;
 	}
 	
+	/*
 	public File captureAudio (File fileExternDir)
 	{
         File fileAudio = new File(fileExternDir, new Date().getTime() + '-' + MediaConstants.AUDIO_TMP_FILE);
@@ -100,7 +101,7 @@ public class MediaHelper implements MediaScannerConnectionClient {
 		 mActivity.startActivityForResult(intent, MediaConstants.AUDIO_RESULT);
 
          return fileAudio;
-	}
+	}*/
 	
 	public void openGalleryChooser (String mimeType)
     {

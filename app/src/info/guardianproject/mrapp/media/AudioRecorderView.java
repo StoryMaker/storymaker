@@ -29,7 +29,7 @@ import android.widget.Button;
 
 //http://stackoverflow.com/questions/5734332/vu-audio-meter-when-recording-audio-in-android
 
-public class AudioRecorderActivity extends SherlockActivity {
+public class AudioRecorderView {
 	
 	private static final int RECORDER_BPP = 16;
 	private static final String AUDIO_RECORDER_FILE_EXT_WAV = ".wav";
@@ -43,44 +43,23 @@ public class AudioRecorderActivity extends SherlockActivity {
 	private AudioTrack livePlayer = null;
 	private int bufferSize = 0;
 	private Thread recordingThread = null;
-	private boolean isRecording = false;
 	
 	private String mFilePath;
 	
 	private MediaPlayer mPlayer = null;
 	
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_audio_recorder);
-        
-        setButtonHandlers();
-        enableButtons(false);
-        
+	private boolean isRecording = false;
+	
+    public AudioRecorderView (String path)
+    {
+     
+    	mFilePath = path;
+    	
         bufferSize = AudioRecord.getMinBufferSize(RECORDER_SAMPLERATE,RECORDER_CHANNELS,RECORDER_AUDIO_ENCODING);
         
-        mFilePath = getIntent().getExtras().getString("path");
     }
-
-	private void setButtonHandlers() {
-		((Button)findViewById(R.id.btnStart)).setOnClickListener(btnClick);
-        ((Button)findViewById(R.id.btnStop)).setOnClickListener(btnClick);
-        ((Button)findViewById(R.id.btnPlay)).setOnClickListener(btnClick);
-        ((Button)findViewById(R.id.btnFinish)).setOnClickListener(btnClick);
-        
-	}
-	
-	private void enableButton(int id,boolean isEnable){
-		((Button)findViewById(id)).setEnabled(isEnable);
-	}
-	
-	private void enableButtons(boolean isRecording) {
-		enableButton(R.id.btnStart,!isRecording);
-		enableButton(R.id.btnStop,isRecording);
-	}
-	
-	
-	private String getTempFilename(){
+    
+	public String getTempFilename(){
 		String filepath = Environment.getExternalStorageDirectory().getPath();
 		File file = new File(filepath,AUDIO_RECORDER_FOLDER);
 		
@@ -96,7 +75,9 @@ public class AudioRecorderActivity extends SherlockActivity {
 		return (file.getAbsolutePath() + "/" + AUDIO_RECORDER_TEMP_FILE);
 	}
 	
-	private void startRecording(){
+	public void startRecording(){
+		
+		
 		recorder = new AudioRecord(MediaRecorder.AudioSource.MIC,
 						RECORDER_SAMPLERATE, RECORDER_CHANNELS,RECORDER_AUDIO_ENCODING, bufferSize);
 		
@@ -104,7 +85,6 @@ public class AudioRecorderActivity extends SherlockActivity {
 				RECORDER_CHANNELS, RECORDER_AUDIO_ENCODING, 
 				bufferSize, AudioTrack.MODE_STREAM);
 		
-		//livePlayer.play(); //not working quite yet
 		
 		recorder.startRecording();		
 		
@@ -165,7 +145,7 @@ public class AudioRecorderActivity extends SherlockActivity {
 		}
 	}
 	
-	private void stopRecording(){
+	public void stopRecording(){
 		if(null != recorder){
 			isRecording = false;
 			
@@ -183,32 +163,30 @@ public class AudioRecorderActivity extends SherlockActivity {
 		deleteTempFile();
 	}
 	
-	private void startPlaying() {
+	public void startPlaying() {
         mPlayer = new MediaPlayer();
-        try {
-            mPlayer.setDataSource(mFilePath);
-            mPlayer.prepare();
-            mPlayer.start();
-        } catch (IOException e) {
-            Log.e(AppConstants.TAG, "prepare() failed",e);
+        
+        if (mFilePath != null && new File(mFilePath).exists())
+        {
+	        try {
+	        	
+	            mPlayer.setDataSource(mFilePath);
+	            mPlayer.prepare();
+	            mPlayer.start();
+	        } catch (IOException e) {
+	            Log.e(AppConstants.TAG, "prepare() failed",e);
+	        }
         }
     }
+	
+	
 
-    private void stopPlaying() {
+	public void stopPlaying() {
         mPlayer.release();
         mPlayer = null;
     }
 
 	
-	private void finishRecord ()
-	{
-		
-		Intent outData=new Intent();
-		outData.setData(Uri.fromFile(new File(mFilePath)));
-		outData.putExtra("mimeType", "audio/wav");
-		setResult(Activity.RESULT_OK,outData);
-		finish();
-	}
 
 	private void deleteTempFile() {
 		File file = new File(getTempFilename());
@@ -304,41 +282,17 @@ public class AudioRecorderActivity extends SherlockActivity {
 		out.write(header, 0, 44);
 	}
 	
-	private View.OnClickListener btnClick = new View.OnClickListener() {
-		@Override
-		public void onClick(View v) {
-			switch(v.getId()){
-				case R.id.btnStart:{
-				
-					enableButtons(true);
-					startRecording();
-							
-					break;
-				}
-				case R.id.btnStop:{
-					
-					enableButtons(false); 
-					
-					if (mPlayer!=null&&mPlayer.isPlaying())
-						stopPlaying();
-					else
-						stopRecording();
-					
-					break;
-				}
-				case R.id.btnFinish:{
-					
-					finishRecord();
-					
-					break;
-				}
-				case R.id.btnPlay:{
-					
-					startPlaying();
-					
-					break;
-				}
-			}
-		}
-	}; 
+	public boolean isPlaying ()
+	{
+		if (mPlayer != null)
+			return mPlayer.isPlaying();
+		else
+			return false;
+	}
+	
+	public boolean isRecording ()
+	{
+		return isRecording;
+	}
+	
 }

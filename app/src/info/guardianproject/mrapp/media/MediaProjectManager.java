@@ -222,7 +222,7 @@ public class MediaProjectManager implements MediaManager {
 		    fileExport.createNewFile();
 		    mOut.path = fileExport.getAbsolutePath();
 		    
-		   MediaExporter mEx = new MediaExporter(mContext, mHandler, alMediaIn, mOut);
+		   MediaVideoAudioExporter mEx = new MediaVideoAudioExporter(mContext, mHandler, alMediaIn, mOut);
 		   mEx.run();
 	   
          }    
@@ -251,7 +251,7 @@ public class MediaProjectManager implements MediaManager {
  		    fileExport.createNewFile();
  		    mOut.path = fileExport.getAbsolutePath();
  		    
- 		   MediaExporter mEx = new MediaExporter(mContext, mHandler, alMediaIn, mOut);
+ 		   MediaVideoAudioExporter mEx = new MediaVideoAudioExporter(mContext, mHandler, alMediaIn, mOut);
  		   mEx.run();
          }
          else if (mProject.getStoryType() == Project.STORY_TYPE_PHOTO)
@@ -311,7 +311,9 @@ public class MediaProjectManager implements MediaManager {
 		    mOut.path = fileExport.getAbsolutePath();
 		    
 		    int slideDuration = 5; //where to set this?
-		   MediaSlideshowExporter mEx = new MediaSlideshowExporter(mContext, mHandler, alMediaIn, slideDuration, mOut);
+    		File fileAudio = new File(Environment.getExternalStorageDirectory(),"narration" + mProject.getId() + ".wav");
+    		
+		   MediaSlideshowExporter mEx = new MediaSlideshowExporter(mContext, mHandler, alMediaIn,fileAudio.getAbsolutePath(), slideDuration, mOut);
 		   mEx.run();
          }
     }

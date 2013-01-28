@@ -17,35 +17,33 @@ import android.widget.VideoView;
  */
 public class PreviewVideoView extends VideoView implements MediaPlayer.OnCompletionListener {
 	private final static String TAG = "PreviewVideoView";
-	private Context mContext;
 	protected int mCurrentMedia = 0;
 	protected String[] mPathArray;
-	MediaPlayer mp;
+	//MediaPlayer mp;
 	protected Runnable mCompletionCallback = null;
 	
 	public PreviewVideoView(Context context) {
 		super(context);
-		mContext = context;
 		setOnCompletionListener(this);
+		
 	}
 	
 	public PreviewVideoView(Context context, AttributeSet attrs) {
 		 
 		super( context, attrs );
-		mContext = context;
 		setOnCompletionListener(this);
 	}
 		 
 	public PreviewVideoView(Context context, AttributeSet attrs, int defStyle) {
 		 
 		super( context, attrs, defStyle );
-		mContext = context;
 		setOnCompletionListener(this);
 	}
 		 
 	
 	public void setMedia(String[] pathArray) {
 		mPathArray = pathArray;
+		mCurrentMedia = 0;
 	}
 	
 	public void setCompletionCallback(Runnable runnable) {
@@ -79,6 +77,7 @@ public class PreviewVideoView extends VideoView implements MediaPlayer.OnComplet
 		if (startFrom >= 0 && startFrom < mPathArray.length) {
 			mCurrentMedia = startFrom;
 			this.play();
+			
 		}
 	}
 
