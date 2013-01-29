@@ -317,10 +317,12 @@ public class MediaProjectManager implements MediaManager {
 
 		    int slideDuration = Integer.parseInt(settings.getString("pslideduration", AppConstants.DEFAULT_SLIDE_DURATION+""));
 
-    		String audioFile = "narration" + mProject.getId() + ".wav";
-    		File fileAudio = new File(mContext.getExternalFilesDir(null),audioFile);
+    		File fileAudio = new File(mContext.getExternalFilesDir(null),"narration" + mProject.getId() + ".wav");
+    		String audioPath = null;
+    		if (fileAudio.exists())
+    			audioPath = fileAudio.getAbsolutePath();
     		
-		   MediaSlideshowExporter mEx = new MediaSlideshowExporter(mContext, mHandler, alMediaIn,fileAudio.getAbsolutePath(), slideDuration, mOut);
+		   MediaSlideshowExporter mEx = new MediaSlideshowExporter(mContext, mHandler, alMediaIn,audioPath, slideDuration, mOut);
 		   mEx.run();
          }
     }
