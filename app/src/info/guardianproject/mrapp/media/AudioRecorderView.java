@@ -41,7 +41,7 @@ public class AudioRecorderView {
 	private static final int RECORDER_AUDIO_ENCODING = AudioFormat.ENCODING_PCM_16BIT;
 	
 	private AudioRecord recorder = null;
-	private AudioTrack livePlayer = null;
+//	private AudioTrack livePlayer = null;
 	private int bufferSize = 0;
 	private Thread recordingThread = null;
 	
@@ -51,6 +51,8 @@ public class AudioRecorderView {
 	
 	private boolean isRecording = false;
 	private Context mContext;
+	
+	private File mTempFile;
 	
     public AudioRecorderView (File path, Context context)
     {
@@ -63,26 +65,21 @@ public class AudioRecorderView {
         
     }
     
-	public File getTempFile(){
-		
-		File tempFile = new File(mContext.getExternalFilesDir(null),AUDIO_RECORDER_TEMP_FILE);
-		
-		if(tempFile.exists())
-			tempFile.delete();
-		
-		return tempFile;
-	}
-	
 	public void startRecording(){
 		
+
+        mTempFile = new File(mContext.getExternalFilesDir(null),AUDIO_RECORDER_TEMP_FILE);
+        if (mTempFile.exists())
+        	mTempFile.delete();
 		
-		recorder = new AudioRecord(MediaRecorder.AudioSource.MIC,
+		recorder = new AudioRecord(MediaRecorder.AudioSource.DEFAULT,
 						RECORDER_SAMPLERATE, RECORDER_CHANNELS,RECORDER_AUDIO_ENCODING, bufferSize);
 		
+		/*
 		livePlayer =  new AudioTrack( AudioManager.STREAM_MUSIC, RECORDER_SAMPLERATE, 
 				RECORDER_CHANNELS, RECORDER_AUDIO_ENCODING, 
 				bufferSize, AudioTrack.MODE_STREAM);
-		
+		*/
 		
 		recorder.startRecording();		
 		
@@ -105,10 +102,10 @@ public class AudioRecorderView {
 		FileOutputStream os = null;
 		
 		try {
-			os = new FileOutputStream(getTempFile());
+			os = new FileOutputStream(mTempFile);
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			Log.e("AudioRecorder","could  not open audio narration file: " + mTempFile.getAbsolutePath(),e);
+			return;
 		}
 		
 		int read = 0;
@@ -118,13 +115,14 @@ public class AudioRecorderView {
 				read = recorder.read(data, 0, bufferSize);
 					
 				if(AudioRecord.ERROR_INVALID_OPERATION != read){
-					
+					/*
 					try {
 						livePlayer.write(data, 0, bufferSize);
 					} catch (IllegalStateException e) {
 						e.printStackTrace();
 					}
-
+					*/
+					
 					try {
 						os.write(data);
 					} catch (IOException e) {
@@ -149,15 +147,15 @@ public class AudioRecorderView {
 			recorder.stop();
 			recorder.release();
 			
-			livePlayer.stop();
-			livePlayer.release();
+			//livePlayer.stop();
+			//livePlayer.release();
 			
 			recorder = null;
 			recordingThread = null;
 		}
 		
-		copyWaveFile(getTempFile(),mFilePath);
-		getTempFile().delete();
+		copyWaveFile(mTempFile,mFilePath);
+		mTempFile.delete();
 	}
 	
 	public void startPlaying() {
