@@ -2,7 +2,13 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 	<PreferenceCategory android:title="General">
 		<CheckBoxPreference android:title="Enable Arabic mode" android:key="plocalear"/>
-		<CheckBoxPreference android:title="Use Orbot (Tor) for Network Traffic" android:key="pusetor"/>
+		
+	</PreferenceCategory>
+	<PreferenceCategory android:title="Networking &amp; Security">
+	    		<CheckBoxPreference android:title="Use Orbot (Tor) for Network Traffic" android:key="pusetor"/>
+	</PreferenceCategory>
+	<PreferenceCategory android:title="Media">
+		<EditTextPreference android:title="Photo Essay Slide Duration" android:key="pslideduration" android:defaultValue="5" android:enabled="true"/>
 	</PreferenceCategory>
 </PreferenceScreen>
 
