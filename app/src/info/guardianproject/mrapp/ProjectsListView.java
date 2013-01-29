@@ -34,6 +34,7 @@ public class ProjectsListView extends ListView implements Runnable {
 
 	
 	private ArrayList<Project> mListProjects;
+	private ProjectArrayAdapter aaProjects;
 	
     public ProjectsListView (Context context) {
         
@@ -120,9 +121,11 @@ public class ProjectsListView extends ListView implements Runnable {
         });
         
         mListProjects = Project.getAllAsList(getContext());
+        aaProjects = new ProjectArrayAdapter(getContext(), 
+          	   R.layout.list_project_row, mListProjects);
         
-        setAdapter(new ProjectArrayAdapter(getContext(), 
-         	   R.layout.list_project_row, mListProjects));
+        setAdapter(aaProjects);
+        
         
          
         
@@ -130,24 +133,13 @@ public class ProjectsListView extends ListView implements Runnable {
     
     private void deleteProject (Project project)
     {
-        project.delete();
+    	mListProjects.remove(project);
+        aaProjects.notifyDataSetChanged();
         
-
-        mListProjects = Project.getAllAsList(getContext());
+    	project.delete();
         
-        setAdapter(new ProjectArrayAdapter(getContext(), 
-               R.layout.list_lesson_row, mListProjects));
+        
     }
-    
-    public void refresh ()
-    {
-    	mListProjects = Project.getAllAsList(getContext());
-         
-         setAdapter(new ProjectArrayAdapter(getContext(), 
-          	   R.layout.list_project_row, mListProjects));	
-    }
-    
-     
     
     class ProjectArrayAdapter extends ArrayAdapter {
     	
