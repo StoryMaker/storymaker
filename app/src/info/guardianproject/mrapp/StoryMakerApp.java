@@ -31,8 +31,7 @@ public class StoryMakerApp extends Application {
 	
 	private final static String PREF_LOCALE = "plocale";
 	
-	//just throwing some test tfiles up here for now 
-	private String bootstrapUrlString = "https://guardianproject.info/private/storymaker/content/lessons/";
+	private String bootstrapUrlString = AppConstants.DEFAULT_STORYMAKER_CONTENT_SERVER + "private/storymaker/content/lessons/";
 	
 	 public void InitializeSQLCipher(String dbName, String passphrase) {
 	        	      

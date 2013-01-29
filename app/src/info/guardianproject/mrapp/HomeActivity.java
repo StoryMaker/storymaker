@@ -7,6 +7,8 @@ import info.guardianproject.mrapp.model.LessonGroup;
 import info.guardianproject.mrapp.model.Media;
 import info.guardianproject.mrapp.model.Project;
 import info.guardianproject.mrapp.server.LoginActivity;
+import info.guardianproject.onionkit.OnionKitHelper;
+import info.guardianproject.onionkit.ui.OrbotHelper;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -25,10 +27,13 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.pm.ResolveInfo;
+import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -75,6 +80,19 @@ public class HomeActivity extends BaseActivity implements ActionBar.TabListener 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
       
+        checkForTor ();
+        
+        try {
+            String pkg = getPackageName();
+            String vers= getPackageManager().getPackageInfo(pkg, 0).versionName;
+            setTitle(getTitle() + " v" + vers);
+                    
+        } catch (NameNotFoundException e) {
+           
+        }
+        
+        
+        
         setContentView(R.layout.activity_home);
         // Create the adapter that will return a fragment for each of the three primary sections
         // of the app.
@@ -123,7 +141,34 @@ public class HomeActivity extends BaseActivity implements ActionBar.TabListener 
         
         checkCreds ();
         
+        if (getIntent().hasExtra("showtab"))
+        {
+        	int tab = getIntent().getExtras().getInt("showtab");
+        	mViewPager.setCurrentItem(tab);
+        }
         
+    }
+    
+    private void checkForTor ()
+    {
+    	 SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
+
+	     boolean useTor = settings.getBoolean("pusetor", false);
+	     
+	     if (useTor)
+	     {
+	    	 OrbotHelper oh = new OrbotHelper(this);
+	    	 
+	    	 if (!oh.isOrbotInstalled())
+	    	 {
+	    		 oh.promptToInstall(this);
+	    	 }
+	    	 else if (!oh.isOrbotRunning())
+	    	 {
+	    		 oh.requestOrbotStart(this);
+	    	 }
+	    	 
+	     }
     }
 
     //if the user hasn't registered with the user, show the login screen
@@ -158,10 +203,6 @@ public class HomeActivity extends BaseActivity implements ActionBar.TabListener 
         else if (item.getItemId() == R.id.menu_settings)
         {
 			showPreferences();
-		}
-		else if (item.getItemId() == R.id.menu_login)
-		{
-			showLogin();
 		}
 		else if (item.getItemId() == R.id.menu_logs)
 		{
@@ -317,7 +358,7 @@ public class HomeActivity extends BaseActivity implements ActionBar.TabListener 
         	LinearLayout lView = (LinearLayout)view;
     		LinearLayout.LayoutParams lp1 = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT); // Verbose!
     		//lp.weight = 1.0f; // This is critical. Doesn't work without it.
-            lp1.setMargins(0, 30, 0, 5);
+            lp1.setMargins(0, 20, 0, 5);
             
             LinearLayout.LayoutParams lp2 = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT); // Verbose!
     		//lp.weight = 1.0f; // This is critical. Doesn't work without it.
@@ -328,19 +369,55 @@ public class HomeActivity extends BaseActivity implements ActionBar.TabListener 
         	Button button;
         	Drawable img;
         	
+        	
+        	
+        	//setup new lessons
+        	button = new Button(context);
+    		button.setText(R.string.home_start_a_lesson);
+    		button.setBackgroundColor(Color.WHITE);
+    		img = context.getResources().getDrawable( R.drawable.ic_list_lessons );
+    		img.setBounds( 0, 0, 60, 60 );
+    		button.setCompoundDrawables( img, null, null, null );
+    		button.setGravity(Gravity.LEFT|Gravity.CENTER);
+    		button.setOnClickListener(new OnClickListener() {
+                
+                @Override
+                public void onClick(View v) {
 
-        	/*
-            <Button
-            android:id="@+id/buttonNewStory"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/home_new_story"
-            android:drawableLeft="@drawable/ic_list_projects"
-            android:background="#FFFFFF"
-            android:gravity="left|center"
-            android:layout_marginBottom="20sp"
-             />
-            */
+
+                    startActivity(new Intent(getActivity(), LessonsActivity.class));
+
+
+                }
+            });
+    		lView.addView(button, lp1);        		
+        	
+        	ArrayList<Lesson> lessonsCompleted = getLessonsCompleted(context);
+        	
+        	for (int i = lessonsCompleted.size()-1; i > lessonsCompleted.size()-4 && i > -1; i--)
+            {
+        		Lesson lesson = lessonsCompleted.get(i);
+        		button = new Button(context);
+        		button.setText(lesson.mTitle + " completed!");
+        		button.setBackgroundColor(Color.WHITE);
+        		button.setGravity(Gravity.LEFT|Gravity.CENTER);
+        		button.setOnClickListener(new OnClickListener() {
+                    
+                    @Override
+                    public void onClick(View v) {
+
+
+                        startActivity(new Intent(getActivity(), LessonsActivity.class));
+
+
+                    }
+                });
+        		lView.addView(button, lp2);        		
+        		
+        	}
+        	
+
+        	//setup projects section
         	button = new Button(context);
     		button.setText(R.string.home_new_story);
     		button.setBackgroundColor(Color.WHITE);
@@ -364,11 +441,11 @@ public class HomeActivity extends BaseActivity implements ActionBar.TabListener 
     		
         	ArrayList<Project> listProjects = Project.getAllAsList(context);
         	
-        	for (int i = listProjects.size()-1; i > listProjects.size()-3 && i > -1; i--)
+        	for (int i = listProjects.size()-1; i > listProjects.size()-4 && i > -1; i--)
         	{
         		Project project = listProjects.get(i);
         		button = new Button(context);
-        		button.setText(project.getTitle());
+        		button.setText("  " + project.getTitle());
         		button.setBackgroundColor(Color.WHITE);
         		button.setGravity(Gravity.LEFT|Gravity.CENTER);
         		button.setOnClickListener(new OnClickListener() {
@@ -388,11 +465,12 @@ public class HomeActivity extends BaseActivity implements ActionBar.TabListener 
                 	for (Media media: mediaList)
                 		if (media != null)
                 		{
-                			img = getThumbnailDrawable (media);
-                			
-                			if (img != null)
+                			Bitmap bmp = getThumbnail(media);
+                			 
+                			if (bmp != null)
                 			{
-                				img.setBounds( 0, 0, 30,30 );
+                				img = new BitmapDrawable(getResources(),bmp);
+                				img.setBounds( 0, 0, 100,80 );
                 				button.setCompoundDrawables( img, null, null, null );
                 			
                 				break;
@@ -400,50 +478,6 @@ public class HomeActivity extends BaseActivity implements ActionBar.TabListener 
                 		}
                 }
                 
-        		lView.addView(button, lp2);        		
-        		
-        	}
-        	
-        	button = new Button(context);
-    		button.setText(R.string.home_start_a_lesson);
-    		button.setBackgroundColor(Color.WHITE);
-    		img = context.getResources().getDrawable( R.drawable.ic_list_lessons );
-    		img.setBounds( 0, 0, 60, 60 );
-    		button.setCompoundDrawables( img, null, null, null );
-    		button.setGravity(Gravity.LEFT|Gravity.CENTER);
-    		button.setOnClickListener(new OnClickListener() {
-                
-                @Override
-                public void onClick(View v) {
-
-
-                    startActivity(new Intent(getActivity(), LessonsActivity.class));
-
-
-                }
-            });
-    		lView.addView(button, lp1);        		
-        	
-        	ArrayList<Lesson> lessonsCompleted = getLessonsCompleted(context);
-        	
-        	for (int i = lessonsCompleted.size()-1; i > lessonsCompleted.size()-3 && i > -1; i--)
-            {
-        		Lesson lesson = lessonsCompleted.get(i);
-        		button = new Button(context);
-        		button.setText(lesson.mTitle + " completed!");
-        		button.setBackgroundColor(Color.WHITE);
-        		button.setGravity(Gravity.LEFT|Gravity.CENTER);
-        		button.setOnClickListener(new OnClickListener() {
-                    
-                    @Override
-                    public void onClick(View v) {
-
-
-                        startActivity(new Intent(getActivity(), LessonsActivity.class));
-
-
-                    }
-                });
         		lView.addView(button, lp2);        		
         		
         	}
@@ -528,7 +562,7 @@ public class HomeActivity extends BaseActivity implements ActionBar.TabListener 
                 {
 
                     final BitmapFactory.Options options = new BitmapFactory.Options();
-                    options.inSampleSize = 4;
+                    options.inSampleSize = 8;
                     return BitmapFactory.decodeFile(fileThumb.getAbsolutePath(), options);
                 }
                 else
@@ -556,34 +590,6 @@ public class HomeActivity extends BaseActivity implements ActionBar.TabListener 
             }
         }
         
-        public Drawable getThumbnailDrawable(Media media)
-        {
-        	if (media == null)
-        		return null;
-        	
-            String path = media.getPath();
-
-            if (media.getMimeType() == null)
-            {
-                return null;
-            }
-            else if (media.getMimeType().startsWith("video"))
-            {
-                File fileThumb = new File(path + ".jpg");
-                if (fileThumb.exists())
-                {
-
-                    return Drawable.createFromPath(fileThumb.getAbsolutePath());
-                }
-                
-            }
-            else if (media.getMimeType().startsWith("image"))
-            {
-                return Drawable.createFromPath(path);
-            }
-            
-            return null;
-        }
         
         private ArrayList<Lesson> getLessonsCompleted (Context context)
         {
@@ -650,7 +656,6 @@ public class HomeActivity extends BaseActivity implements ActionBar.TabListener 
 			
 			super.onResume();
 			
-			listView.refresh();
 		}
         
     }

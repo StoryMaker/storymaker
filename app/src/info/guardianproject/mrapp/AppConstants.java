@@ -23,6 +23,18 @@ public final static String TAG = "StoryMaker";
 	public final static int PREFS = 1;
 	public final static int LOGOUT = 2;
 	
+
+	public final static int DEFAULT_SLIDE_DURATION = 5;
+	
+	//TODO switch this to HTTPS!
+	public static String DEFAULT_STORYMAKER_CONTENT_SERVER = "https://guardianproject.info/";//"https://storymaker.cc/";
+	public static String DEFAULT_STORYMAKER_WORDPRESS_SERVER = "https://storymaker.cc/";
+	
+	public final static String DEFAULT_STORYMAKER_SERVER_RSS = DEFAULT_STORYMAKER_WORDPRESS_SERVER + "feed/";
+	
+	public final static String TOR_PROXY_HOST = "localhost";
+	public final static int TOR_PROXY_PORT = 9050;
+	
 	
 	public final static class MimeTypes {
 		public final static String THREEGPP_AUDIO = "audio/3gpp";
@@ -626,9 +638,5 @@ public final static String TAG = "StoryMaker";
 
     public final static String LINE_SEPARATOR = System.getProperty("line.separator");//$NON-NLS-1$
 
-	//TODO switch this to HTTPS!
-	public final static String DEFAULT_STORYMAKER_SERVER = "https://mrapp.alive.in/";
-
-	public final static String DEFAULT_STORYMAKER_SERVER_RSS = DEFAULT_STORYMAKER_SERVER + "feed/";
 }
 

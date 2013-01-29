@@ -36,6 +36,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -45,6 +46,7 @@ import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.os.Parcelable;
+import android.preference.PreferenceManager;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
@@ -222,7 +224,7 @@ public class MediaProjectManager implements MediaManager {
 		    fileExport.createNewFile();
 		    mOut.path = fileExport.getAbsolutePath();
 		    
-		   MediaExporter mEx = new MediaExporter(mContext, mHandler, alMediaIn, mOut);
+		   MediaVideoAudioExporter mEx = new MediaVideoAudioExporter(mContext, mHandler, alMediaIn, mOut);
 		   mEx.run();
 	   
          }    
@@ -251,7 +253,7 @@ public class MediaProjectManager implements MediaManager {
  		    fileExport.createNewFile();
  		    mOut.path = fileExport.getAbsolutePath();
  		    
- 		   MediaExporter mEx = new MediaExporter(mContext, mHandler, alMediaIn, mOut);
+ 		   MediaVideoAudioExporter mEx = new MediaVideoAudioExporter(mContext, mHandler, alMediaIn, mOut);
  		   mEx.run();
          }
          else if (mProject.getStoryType() == Project.STORY_TYPE_PHOTO)
@@ -309,9 +311,18 @@ public class MediaProjectManager implements MediaManager {
 		    fileExport.delete();
 		    fileExport.createNewFile();
 		    mOut.path = fileExport.getAbsolutePath();
+		    mOut.mimeType = AppConstants.MimeTypes.MP4;
 		    
-		    int slideDuration = 5; //where to set this?
-		   MediaSlideshowExporter mEx = new MediaSlideshowExporter(mContext, mHandler, alMediaIn, slideDuration, mOut);
+			 SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(mContext);
+
+		    int slideDuration = Integer.parseInt(settings.getString("pslideduration", AppConstants.DEFAULT_SLIDE_DURATION+""));
+
+    		File fileAudio = new File(mContext.getExternalFilesDir(null),"narration" + mProject.getId() + ".wav");
+    		String audioPath = null;
+    		if (fileAudio.exists())
+    			audioPath = fileAudio.getAbsolutePath();
+    		
+		   MediaSlideshowExporter mEx = new MediaSlideshowExporter(mContext, mHandler, alMediaIn,audioPath, slideDuration, mOut);
 		   mEx.run();
          }
     }

@@ -1,4 +1,6 @@
 package info.guardianproject.mrapp;
+import info.guardianproject.mrapp.server.LoginActivity;
+
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -40,6 +42,7 @@ public class BaseActivity extends SlidingActivity {
 //        sm.setBehindOffsetRes(R.dimen.slidingmenu_offset);
         sm.setBehindWidthRes(R.dimen.slidingmenu_offset);
         
+        
         final Activity activity = this;
         
         ImageButton btnDrawerNewProject = (ImageButton) findViewById(R.id.btnDrawerNewProject);
@@ -48,7 +51,9 @@ public class BaseActivity extends SlidingActivity {
         Button btnDrawerHome = (Button) findViewById(R.id.btnDrawerHome);
         Button btnDrawerProjects = (Button) findViewById(R.id.btnDrawerProjects);
         Button btnDrawerLessons = (Button) findViewById(R.id.btnDrawerLessons);
-        Button btnDrawerProfile = (Button) findViewById(R.id.btnDrawerProfile);
+        Button btnDrawerAccount = (Button) findViewById(R.id.btnDrawerAccount);
+        Button btnDrawerSettings = (Button) findViewById(R.id.btnDrawerSettings);
+        
 
         btnDrawerNewProject.setOnClickListener(new OnClickListener() {
             @Override
@@ -80,17 +85,27 @@ public class BaseActivity extends SlidingActivity {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(activity, HomeActivity.class);
+                i.putExtra("showtab",1);
                 activity.startActivity(i);
             }
         });
         btnDrawerLessons.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(activity, HomeActivity.class);
+                Intent i = new Intent(activity, LessonsActivity.class);
                 activity.startActivity(i);
             }
         });
-        btnDrawerProfile.setOnClickListener(new OnClickListener() {
+        
+        btnDrawerAccount.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(activity, LoginActivity.class);
+                activity.startActivity(i);
+            }
+        });
+        
+        btnDrawerSettings.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(activity, SimplePreferences.class);
@@ -102,15 +117,20 @@ public class BaseActivity extends SlidingActivity {
         	
         	if (this.getClass().getName().contains("SceneEditorActivity"))
         	{
-        		showCoachOverlay();
+        		showCoachOverlay("images/coach/coach_add.png");
         	}
+        	else if (this.getClass().getName().contains("OverlayCameraActivity"))
+        	{
+        		showCoachOverlay("images/coach/coach_camera_prep.png");
+        	}
+        		
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
     }
     
-    private void showCoachOverlay () throws IOException
+    private void showCoachOverlay (String path) throws IOException
     {
     	ImageView overlayView = new ImageView(this);
     	
@@ -127,7 +147,7 @@ public class BaseActivity extends SlidingActivity {
     	
     	AssetManager mngr = getAssets();
         // Create an input stream to read from the asset folder
-           InputStream ins = mngr.open("images/coach/coach_add_img.png");
+           InputStream ins = mngr.open(path);
 
            // Convert the input stream into a bitmap
            Bitmap bmpCoach = BitmapFactory.decodeStream(ins);

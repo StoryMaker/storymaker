@@ -14,7 +14,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 
-public class MediaExporter implements Runnable {
+public class MediaVideoAudioExporter implements Runnable {
 
 	private Handler mHandler;
 	private Context mContext;
@@ -24,7 +24,7 @@ public class MediaExporter implements Runnable {
 	
     private int current, total;
 
-	public MediaExporter (Context context, Handler handler, ArrayList<MediaDesc> mediaList, MediaDesc out)
+	public MediaVideoAudioExporter (Context context, Handler handler, ArrayList<MediaDesc> mediaList, MediaDesc out)
 	{
 		mHandler = handler;
 		mContext = context;

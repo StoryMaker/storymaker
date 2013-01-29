@@ -31,7 +31,7 @@ public class ServerManager {
 	
 	public ServerManager (Context context)
 	{
-		this(context, AppConstants.DEFAULT_STORYMAKER_SERVER);
+		this(context, AppConstants.DEFAULT_STORYMAKER_WORDPRESS_SERVER);
 		
 	}
 	
