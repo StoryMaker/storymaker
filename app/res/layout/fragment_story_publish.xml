@@ -190,26 +190,26 @@
 
     <ToggleButton
         android:id="@+id/toggleButtonStoryMaker"
-        android:layout_width="36dp"
+        android:layout_width="wrap_content"
         android:layout_height="36dp"
         android:layout_below="@+id/divider1"
         android:layout_toLeftOf="@+id/toggleButtonYoutube"
         android:background="@drawable/btn_toggle_bg_storymaker"
         android:textAllCaps="false"
         android:checked="false"
-        android:textOff=""
-        android:textOn="" />
+        android:textOff="@string/publish_sm"
+        android:textOn="@string/publish_sm" />
 
     <ToggleButton
         android:id="@+id/toggleButtonYoutube"
-        android:layout_width="36dp"
+        android:layout_width="wrap_content"
         android:layout_height="36dp"
         android:layout_below="@+id/divider1"
         android:layout_alignParentRight="true"
         android:background="@drawable/btn_toggle_bg_youtube"
         android:textAllCaps="false"
-        android:textOff=""
-        android:textOn="" />
+        android:textOff="@string/publish_youtube"
+        android:textOn="@string/publish_youtube" />
 <!-- 
     <ToggleButton
         android:id="@+id/toggleButtonVimeo"
@@ -337,6 +337,18 @@
         android:gravity="center_vertical"
         android:text="@string/story_publish_status_not" />
 
+     <Button
+        android:id="@+id/btnRender"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:layout_alignBottom="@+id/textViewStatus"
+        android:layout_alignTop="@+id/textViewStatus"
+        android:layout_below="@+id/divider5"
+        android:layout_marginLeft="10dp"
+        android:layout_toRightOf="@+id/textViewStatus"
+        android:gravity="center_vertical"
+        android:text="@string/action_render" />
+     
     <Button
         android:id="@+id/btnPublish"
         android:layout_width="wrap_content"
@@ -345,7 +357,7 @@
         android:layout_alignTop="@+id/textViewStatus"
         android:layout_below="@+id/divider5"
         android:layout_marginLeft="10dp"
-        android:layout_toRightOf="@+id/textViewStatus"
+        android:layout_toRightOf="@+id/btnRender"
         android:gravity="center_vertical"
         android:text="@string/action_publish" />
         
