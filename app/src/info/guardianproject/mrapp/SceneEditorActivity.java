@@ -152,7 +152,6 @@ public class SceneEditorActivity extends BaseActivity implements ActionBar.TabLi
         actionBar.addTab(actionBar.newTab().setText(R.string.tab_order).setTabListener(this));
         actionBar.addTab(actionBar.newTab().setText(R.string.tab_publish).setTabListener(this));
 
-        showHelp();
     }
 
     private Handler mHandlerPub = new Handler()
@@ -287,10 +286,6 @@ public class SceneEditorActivity extends BaseActivity implements ActionBar.TabLi
 
     }
 
-    private void showHelp() {
-
-        Toast.makeText(this, getString(R.string.help_clip_select), Toast.LENGTH_LONG).show();
-    }
 
     @Override
     public void onRestoreInstanceState(Bundle savedInstanceState) {
@@ -702,7 +697,7 @@ public class SceneEditorActivity extends BaseActivity implements ActionBar.TabLi
         
     	AudioRecorderView mAudioNarrator = null;
     	
-        int mPhotoEssaySlideLength = 5;//5 seconds
+        int mPhotoEssaySlideLength = -1;//5 seconds
 
         /**
          * The sortable grid view that contains the clips to reorder on the
@@ -713,6 +708,8 @@ public class SceneEditorActivity extends BaseActivity implements ActionBar.TabLi
         public OrderClipsFragment(int layout)
                 throws IOException, JSONException {
             this.layout = layout;
+            
+   	     
         }
 
         public static final String ARG_SECTION_NUMBER = "section_number";
@@ -722,6 +719,10 @@ public class SceneEditorActivity extends BaseActivity implements ActionBar.TabLi
                 Bundle savedInstanceState) {
 
             View view = inflater.inflate(layout, null);
+            
+          	 SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(view.getContext());
+          	 mPhotoEssaySlideLength = Integer.parseInt(settings.getString("pslideduration", AppConstants.DEFAULT_SLIDE_DURATION+""));
+          	
             
             mOrderClipsDGV = (DraggableGridView) view.findViewById(R.id.DraggableGridView01);
 
@@ -827,8 +828,8 @@ public class SceneEditorActivity extends BaseActivity implements ActionBar.TabLi
 	            if (mAudioNarrator == null)
 	        	{
 	        		String audioFile = "narration" + mMPM.mProject.getId() + ".wav";
-	        		File fileAudio = new File(Environment.getExternalStorageDirectory(),audioFile);
-	        		mAudioNarrator = new AudioRecorderView(fileAudio.getAbsolutePath());
+	        		File fileAudio = new File(getExternalFilesDir(null),audioFile);
+	        		mAudioNarrator = new AudioRecorderView(fileAudio,getActivity());
 	        	}
             }
             
@@ -872,7 +873,8 @@ public class SceneEditorActivity extends BaseActivity implements ActionBar.TabLi
         {
         	
         	//start narrator playback
-        	mAudioNarrator.stopPlaying();
+        	if (mAudioNarrator.isPlaying())
+        		mAudioNarrator.stopPlaying();
         }
         
         
@@ -1189,12 +1191,16 @@ public class SceneEditorActivity extends BaseActivity implements ActionBar.TabLi
                         ServerManager sm = StoryMakerApp.getServerManager();
                         sm.setContext(SceneEditorActivity.this);
 
-                        if (sm.hasCreds()) {
-                            handlePublish();
-                        }
-                        else {
-                            showLogin();
-                        }
+                        ToggleButton tbYouTube = (ToggleButton) findViewById(R.id.toggleButtonYoutube);
+                        ToggleButton tbStoryMaker = (ToggleButton) findViewById(R.id.toggleButtonStoryMaker);
+                        final boolean doYouTube = tbYouTube.isChecked();
+                        final boolean doStoryMaker = tbStoryMaker.isChecked();
+                        
+                        if (!sm.hasCreds() && doStoryMaker)
+                        	showLogin();
+                        else
+                           handlePublish(doYouTube, doStoryMaker);
+                        
                     }
                 });
             }
@@ -1248,21 +1254,17 @@ public class SceneEditorActivity extends BaseActivity implements ActionBar.TabLi
             return result;
         }
 
-        private void handlePublish() {
+        private void handlePublish(final boolean doYouTube, final boolean doStoryMaker) {
+        	
             EditText etTitle = (EditText) findViewById(R.id.etStoryTitle);
             EditText etDesc = (EditText) findViewById(R.id.editTextDescribe);
 
-            ToggleButton tbYouTube = (ToggleButton) findViewById(R.id.toggleButtonYoutube);
-
-            ToggleButton tbStoryMaker = (ToggleButton) findViewById(R.id.toggleButtonStoryMaker);
-
+            
             // final String exportFileName =
             // processTitle(mMPM.mProject.getTitle()) + "-export-" + new
             // Date().getTime();
             final String exportFileName = mMPM.mProject.getId() + "-export-" + new Date().getTime();
 
-            final boolean doYouTube = tbYouTube.isChecked();
-            final boolean doStoryMaker = tbStoryMaker.isChecked();
 
             mHandlerPub.sendEmptyMessage(999);
 

@@ -24,6 +24,8 @@ public final static String TAG = "StoryMaker";
 	public final static int LOGOUT = 2;
 	
 
+	public final static int DEFAULT_SLIDE_DURATION = 5;
+	
 	//TODO switch this to HTTPS!
 	public static String DEFAULT_STORYMAKER_CONTENT_SERVER = "https://guardianproject.info/";//"https://storymaker.cc/";
 	public static String DEFAULT_STORYMAKER_WORDPRESS_SERVER = "https://storymaker.cc/";
