@@ -170,6 +170,8 @@ public class Project {
                 uri, selection, selectionArgs);
         Log.d(TAG, "deleted project: " + id + ", rows deleted: " + count);
         // FIXME make sure 1 row updated
+        
+        //TODO should we also delete all media files associated with this project?
     }
 
     public ArrayList<Media> getMediaAsList() {

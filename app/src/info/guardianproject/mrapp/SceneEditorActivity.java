@@ -104,6 +104,11 @@ public class SceneEditorActivity extends BaseActivity implements ActionBar.TabLi
 	private ImageView mImageViewMedia;
 	
 	private String mMediaUploadAccount = null;
+	
+
+    private MediaDesc mdExported = null;
+
+    private boolean mKeepRunningPreview = false;
 
     
     private ProgressDialog mProgressDialog = null;
@@ -572,6 +577,10 @@ public class SceneEditorActivity extends BaseActivity implements ActionBar.TabLi
             
             mAddClipsViewPager.setCurrentItem(mTemplate.getClips().size()-1);
             mMPM.mClipIndex = mTemplate.getClips().size()-1;
+            
+            mdExported = null;
+            
+            
         }
 
         @Override
@@ -696,6 +705,8 @@ public class SceneEditorActivity extends BaseActivity implements ActionBar.TabLi
         Button mPlayButton, mButtonAddNarration, mButtonPlayNarration;
         
     	AudioRecorderView mAudioNarrator = null;
+
+    	private File mFileAudioNarration = null;
     	
         int mPhotoEssaySlideLength = -1;//5 seconds
 
@@ -757,27 +768,47 @@ public class SceneEditorActivity extends BaseActivity implements ActionBar.TabLi
             	
             });
             
+            if (mMPM.mProject.getStoryType() == Project.STORY_TYPE_ESSAY)
+            {
+            	
+	            if (mAudioNarrator == null)
+	        	{
+	        		String audioFile = "narration" + mMPM.mProject.getId() + ".wav";
+	        		mFileAudioNarration = new File(getExternalFilesDir(null),audioFile);
+	        		mAudioNarrator = new AudioRecorderView(mFileAudioNarration,getActivity());
+	        	}
+            }
+            
             mButtonAddNarration = (Button)view.findViewById(R.id.buttonAddNarration);
+            if (mMPM.mProject.getStoryType() == Project.STORY_TYPE_ESSAY)
+            	mButtonAddNarration.setEnabled(true);
+            
             mButtonAddNarration.setOnClickListener(new OnClickListener ()
             {
 
 				@Override
 				public void onClick(View v) {
 
-					addNarration();
-					
+					if (!mAudioNarrator.isRecording())
+						recordNarration();
+					else
+						stopRecordNarration();
 				}
             	
             });
             
             mButtonPlayNarration= (Button)view.findViewById(R.id.buttonPlayNarration);
+            if (mFileAudioNarration != null && mFileAudioNarration.exists())
+            	mButtonPlayNarration.setEnabled(true);
+            
             mButtonPlayNarration.setOnClickListener(new OnClickListener ()
             {
 
 				@Override
 				public void onClick(View v) {
 
-					playNarration();
+					playNarration(!mAudioNarrator.isPlaying());
+						
 					
 				}
             	
@@ -820,72 +851,66 @@ public class SceneEditorActivity extends BaseActivity implements ActionBar.TabLi
            
             loadMedia();
             
-            if (mMPM.mProject.getStoryType() == Project.STORY_TYPE_VIDEO 
-            		|| mMPM.mProject.getStoryType() == Project.STORY_TYPE_ESSAY)
-            {
-            	mButtonAddNarration.setVisibility(View.VISIBLE);
-            	
-	            if (mAudioNarrator == null)
-	        	{
-	        		String audioFile = "narration" + mMPM.mProject.getId() + ".wav";
-	        		File fileAudio = new File(getExternalFilesDir(null),audioFile);
-	        		mAudioNarrator = new AudioRecorderView(fileAudio,getActivity());
-	        	}
-            }
+          
             
             
             return view;
         }
         
-        private void addNarration ()
+        private void recordNarration ()
         {
+        	mdExported = null;
+        	
         	//start the playback
         	if (mMPM.mProject.getStoryType() == Project.STORY_TYPE_ESSAY)
         		handlePhotoPlayToggle ();
-        	else
+        	else if (mMPM.mProject.getStoryType() == Project.STORY_TYPE_VIDEO)
         		handleVideoAudioPlayToggle();
         	
         	//start the audio recorder
         	mAudioNarrator.startRecording();
+        	
+        	mButtonPlayNarration.setEnabled(true);
+        	mButtonAddNarration.setText("Recording now... (speak!)");
         }
         
-        private void stopNarration ()
+        private void stopRecordNarration ()
         {
         	//stop the audio recorder
         	mAudioNarrator.stopRecording();
+        	mButtonAddNarration.setText("Re-record narration?");
+        	
+        	//start the playback
+        	if (mMPM.mProject.getStoryType() == Project.STORY_TYPE_ESSAY)
+        		handlePhotoPlayToggle ();
+        	else if (mMPM.mProject.getStoryType() == Project.STORY_TYPE_VIDEO)
+        		handleVideoAudioPlayToggle();
 
         }
         
-        private void playNarration ()
+        private void playNarration (boolean start)
         {
         	
-        	//start narrator playback
-        	mAudioNarrator.startPlaying();
+        	if (start)
+        		mAudioNarrator.startPlaying();
+        	else
+        		mAudioNarrator.stopPlaying();
         	
         	//start the playback
         	if (mMPM.mProject.getStoryType() == Project.STORY_TYPE_ESSAY)
         		handlePhotoPlayToggle ();
         	else
         		handleVideoAudioPlayToggle();
-        }
-        
-        private void stopPlayNarration ()
-        {
-        	
-        	//start narrator playback
-        	if (mAudioNarrator.isPlaying())
-        		mAudioNarrator.stopPlaying();
         }
         
         
         private void handlePhotoPlayToggle ()
         {
-        	if (mSeekBar.getProgress() > 0)
+        	if (mKeepRunningPreview)
         	{
 				mPlayButton.setText(R.string.play_recording);
             	mSeekBar.setProgress(0);
             	mKeepRunningPreview = false;
-            	stopPlayNarration();
         	}
         	else
         	{
@@ -929,7 +954,6 @@ public class SceneEditorActivity extends BaseActivity implements ActionBar.TabLi
 
         }
         
-        private boolean mKeepRunningPreview = false;
         
         Handler hImageUpdater = new Handler ()
         {
@@ -944,9 +968,11 @@ public class SceneEditorActivity extends BaseActivity implements ActionBar.TabLi
 					mPlayButton.setText(R.string.play_recording);
 					if (mAudioNarrator != null)
 						if (mAudioNarrator.isRecording())
-							stopNarration ();
+							stopRecordNarration ();
 						else if (mAudioNarrator.isPlaying())
 							mAudioNarrator.stopPlaying();
+					
+						mSeekBar.setProgress(mSeekBar.getMax());
 					
 					break;
 					
@@ -1030,7 +1056,7 @@ public class SceneEditorActivity extends BaseActivity implements ActionBar.TabLi
                 @Override
                 public void onRearrange(int oldIndex, int newIndex) {
                     mMPM.mProject.swapMediaIndex(oldIndex, newIndex);
-                 
+                    mdExported= null;
                 }
             });
 
@@ -1066,7 +1092,6 @@ public class SceneEditorActivity extends BaseActivity implements ActionBar.TabLi
 
                 }
             });
-            
           
         }
         
@@ -1119,6 +1144,7 @@ public class SceneEditorActivity extends BaseActivity implements ActionBar.TabLi
         int layout;
         public ViewPager mAddClipsViewPager;
         View mView = null;
+        
 
         /**
          * The sortable grid view that contains the clips to reorder on the
@@ -1181,7 +1207,19 @@ public class SceneEditorActivity extends BaseActivity implements ActionBar.TabLi
                     }
 
                 });
+                
+                Button btnRender = (Button) view.findViewById(R.id.btnRender);
+                btnRender.setOnClickListener(new OnClickListener()
+                {
 
+					@Override
+					public void onClick(View arg0) {
+						
+						handlePublish(false, false);
+					}
+                	
+                });
+                
                 Button btn = (Button) view.findViewById(R.id.btnPublish);
                 btn.setOnClickListener(new OnClickListener() {
 
@@ -1259,7 +1297,6 @@ public class SceneEditorActivity extends BaseActivity implements ActionBar.TabLi
             EditText etTitle = (EditText) findViewById(R.id.etStoryTitle);
             EditText etDesc = (EditText) findViewById(R.id.editTextDescribe);
 
-            
             // final String exportFileName =
             // processTitle(mMPM.mProject.getTitle()) + "-export-" + new
             // Date().getTime();
@@ -1295,8 +1332,11 @@ public class SceneEditorActivity extends BaseActivity implements ActionBar.TabLi
                     mHandlerPub.sendMessage(msg);
 
                     try {
-                        mMPM.doExportMedia(exportFileName, doYouTube);
-                        MediaDesc mdExported = mMPM.getExportMedia();
+                    	
+                    	if (mdExported == null)
+                    		mMPM.doExportMedia(exportFileName, doYouTube);
+                    	
+                        mdExported = mMPM.getExportMedia();
                         File mediaFile = new File(mdExported.path);
 
                         if (mediaFile.exists()) {
@@ -1309,7 +1349,10 @@ public class SceneEditorActivity extends BaseActivity implements ActionBar.TabLi
 
                                 String mediaEmbed = "";
 
-                                if (mMPM.mProject.getStoryType() == Project.STORY_TYPE_VIDEO) {
+                                if (mMPM.mProject.getStoryType() == Project.STORY_TYPE_VIDEO
+                                		|| mMPM.mProject.getStoryType() == Project.STORY_TYPE_ESSAY
+                                		
+                                		) {
                                     msg = mHandlerPub.obtainMessage(888);
                                     msg.getData().putString("statusTitle",
                                             getActivity().getString(R.string.uploading));
@@ -1350,7 +1393,8 @@ public class SceneEditorActivity extends BaseActivity implements ActionBar.TabLi
                                         SoundCloudUploader.installSoundCloud(mContext);
                                     }
                                 }
-                                else {
+                                else if (sm.hasCreds())
+                                {
                                     String murl = sm.addMedia(mdExported.mimeType, mediaFile);
                                     mediaEmbed = murl;
                                 }

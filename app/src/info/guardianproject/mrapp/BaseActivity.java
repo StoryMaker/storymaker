@@ -42,6 +42,7 @@ public class BaseActivity extends SlidingActivity {
 //        sm.setBehindOffsetRes(R.dimen.slidingmenu_offset);
         sm.setBehindWidthRes(R.dimen.slidingmenu_offset);
         
+        
         final Activity activity = this;
         
         ImageButton btnDrawerNewProject = (ImageButton) findViewById(R.id.btnDrawerNewProject);

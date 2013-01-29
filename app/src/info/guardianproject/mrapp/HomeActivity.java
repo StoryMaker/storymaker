@@ -358,7 +358,7 @@ public class HomeActivity extends BaseActivity implements ActionBar.TabListener 
         	LinearLayout lView = (LinearLayout)view;
     		LinearLayout.LayoutParams lp1 = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT); // Verbose!
     		//lp.weight = 1.0f; // This is critical. Doesn't work without it.
-            lp1.setMargins(0, 30, 0, 5);
+            lp1.setMargins(0, 20, 0, 5);
             
             LinearLayout.LayoutParams lp2 = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT); // Verbose!
     		//lp.weight = 1.0f; // This is critical. Doesn't work without it.
@@ -369,6 +369,55 @@ public class HomeActivity extends BaseActivity implements ActionBar.TabListener 
         	Button button;
         	Drawable img;
         	
+        	
+        	
+        	//setup new lessons
+        	button = new Button(context);
+    		button.setText(R.string.home_start_a_lesson);
+    		button.setBackgroundColor(Color.WHITE);
+    		img = context.getResources().getDrawable( R.drawable.ic_list_lessons );
+    		img.setBounds( 0, 0, 60, 60 );
+    		button.setCompoundDrawables( img, null, null, null );
+    		button.setGravity(Gravity.LEFT|Gravity.CENTER);
+    		button.setOnClickListener(new OnClickListener() {
+                
+                @Override
+                public void onClick(View v) {
+
+
+                    startActivity(new Intent(getActivity(), LessonsActivity.class));
+
+
+                }
+            });
+    		lView.addView(button, lp1);        		
+        	
+        	ArrayList<Lesson> lessonsCompleted = getLessonsCompleted(context);
+        	
+        	for (int i = lessonsCompleted.size()-1; i > lessonsCompleted.size()-4 && i > -1; i--)
+            {
+        		Lesson lesson = lessonsCompleted.get(i);
+        		button = new Button(context);
+        		button.setText(lesson.mTitle + " completed!");
+        		button.setBackgroundColor(Color.WHITE);
+        		button.setGravity(Gravity.LEFT|Gravity.CENTER);
+        		button.setOnClickListener(new OnClickListener() {
+                    
+                    @Override
+                    public void onClick(View v) {
+
+
+                        startActivity(new Intent(getActivity(), LessonsActivity.class));
+
+
+                    }
+                });
+        		lView.addView(button, lp2);        		
+        		
+        	}
+        	
+
+        	//setup projects section
         	button = new Button(context);
     		button.setText(R.string.home_new_story);
     		button.setBackgroundColor(Color.WHITE);
@@ -429,50 +478,6 @@ public class HomeActivity extends BaseActivity implements ActionBar.TabListener 
                 		}
                 }
                 
-        		lView.addView(button, lp2);        		
-        		
-        	}
-        	
-        	button = new Button(context);
-    		button.setText(R.string.home_start_a_lesson);
-    		button.setBackgroundColor(Color.WHITE);
-    		img = context.getResources().getDrawable( R.drawable.ic_list_lessons );
-    		img.setBounds( 0, 0, 60, 60 );
-    		button.setCompoundDrawables( img, null, null, null );
-    		button.setGravity(Gravity.LEFT|Gravity.CENTER);
-    		button.setOnClickListener(new OnClickListener() {
-                
-                @Override
-                public void onClick(View v) {
-
-
-                    startActivity(new Intent(getActivity(), LessonsActivity.class));
-
-
-                }
-            });
-    		lView.addView(button, lp1);        		
-        	
-        	ArrayList<Lesson> lessonsCompleted = getLessonsCompleted(context);
-        	
-        	for (int i = lessonsCompleted.size()-1; i > lessonsCompleted.size()-4 && i > -1; i--)
-            {
-        		Lesson lesson = lessonsCompleted.get(i);
-        		button = new Button(context);
-        		button.setText(lesson.mTitle + " completed!");
-        		button.setBackgroundColor(Color.WHITE);
-        		button.setGravity(Gravity.LEFT|Gravity.CENTER);
-        		button.setOnClickListener(new OnClickListener() {
-                    
-                    @Override
-                    public void onClick(View v) {
-
-
-                        startActivity(new Intent(getActivity(), LessonsActivity.class));
-
-
-                    }
-                });
         		lView.addView(button, lp2);        		
         		
         	}
