@@ -396,7 +396,7 @@ public class HomeActivity extends BaseActivity implements ActionBar.TabListener 
         	{
         		Project project = listProjects.get(i);
         		button = new Button(context);
-        		button.setText(project.getTitle());
+        		button.setText("  " + project.getTitle());
         		button.setBackgroundColor(Color.WHITE);
         		button.setGravity(Gravity.LEFT|Gravity.CENTER);
         		button.setOnClickListener(new OnClickListener() {
@@ -421,7 +421,7 @@ public class HomeActivity extends BaseActivity implements ActionBar.TabListener 
                 			if (bmp != null)
                 			{
                 				img = new BitmapDrawable(getResources(),bmp);
-                				img.setBounds( 0, 0, 60,60 );
+                				img.setBounds( 0, 0, 100,80 );
                 				button.setCompoundDrawables( img, null, null, null );
                 			
                 				break;
@@ -651,7 +651,6 @@ public class HomeActivity extends BaseActivity implements ActionBar.TabListener 
 			
 			super.onResume();
 			
-			listView.refresh();
 		}
         
     }
