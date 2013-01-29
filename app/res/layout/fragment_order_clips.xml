@@ -67,6 +67,7 @@
              android:text="@string/button_add_narration"
              			 android:layout_weight="1"
               
+			 android:enabled="false"
              />
 
           <Button
@@ -76,14 +77,8 @@
              android:layout_height="wrap_content"
              android:text="@string/button_play_narration"
 			 android:layout_weight="1"
+			 android:enabled="false"
              />
      </LinearLayout>
      
-      <Button
-             android:id="@+id/buttonRender"
-             style="?android:attr/buttonStyleSmall"
-             android:layout_width="match_parent"
-             android:layout_height="wrap_content"
-             android:text="@string/button_render_preview"
-             />
 </LinearLayout>

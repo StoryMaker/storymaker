@@ -258,4 +258,8 @@ Build number: <xliff:g id="build_number">%s</xliff:g>\n
     
     <string name="button_render_preview">Render Preview</string>
     
+    <string name="publish_sm">StoryMaker.cc</string>
+    <string name="publish_youtube">YouTube</string>
+    
+    <string name="action_render">Export</string>
 </resources>
