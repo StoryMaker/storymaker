@@ -12,6 +12,7 @@ import java.io.IOException;
 import com.actionbarsherlock.app.SherlockActivity;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.media.AudioFormat;
 import android.media.AudioManager;
@@ -44,35 +45,32 @@ public class AudioRecorderView {
 	private int bufferSize = 0;
 	private Thread recordingThread = null;
 	
-	private String mFilePath;
+	private File mFilePath;
 	
 	private MediaPlayer mPlayer = null;
 	
 	private boolean isRecording = false;
+	private Context mContext;
 	
-    public AudioRecorderView (String path)
+    public AudioRecorderView (File path, Context context)
     {
      
+    	mContext = context;
+    	
     	mFilePath = path;
     	
         bufferSize = AudioRecord.getMinBufferSize(RECORDER_SAMPLERATE,RECORDER_CHANNELS,RECORDER_AUDIO_ENCODING);
         
     }
     
-	public String getTempFilename(){
-		String filepath = Environment.getExternalStorageDirectory().getPath();
-		File file = new File(filepath,AUDIO_RECORDER_FOLDER);
+	public File getTempFile(){
 		
-		if(!file.exists()){
-			file.mkdirs();
-		}
-		
-		File tempFile = new File(filepath,AUDIO_RECORDER_TEMP_FILE);
+		File tempFile = new File(mContext.getExternalFilesDir(null),AUDIO_RECORDER_TEMP_FILE);
 		
 		if(tempFile.exists())
 			tempFile.delete();
 		
-		return (file.getAbsolutePath() + "/" + AUDIO_RECORDER_TEMP_FILE);
+		return tempFile;
 	}
 	
 	public void startRecording(){
@@ -104,11 +102,10 @@ public class AudioRecorderView {
 	
 	private void writeAudioDataToFile(){
 		byte data[] = new byte[bufferSize];
-		String filename = getTempFilename();
 		FileOutputStream os = null;
 		
 		try {
-			os = new FileOutputStream(filename);
+			os = new FileOutputStream(getTempFile());
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -159,18 +156,18 @@ public class AudioRecorderView {
 			recordingThread = null;
 		}
 		
-		copyWaveFile(getTempFilename(),mFilePath);
-		deleteTempFile();
+		copyWaveFile(getTempFile(),mFilePath);
+		getTempFile().delete();
 	}
 	
 	public void startPlaying() {
         mPlayer = new MediaPlayer();
         
-        if (mFilePath != null && new File(mFilePath).exists())
+        if (mFilePath != null && mFilePath.exists())
         {
 	        try {
 	        	
-	            mPlayer.setDataSource(mFilePath);
+	            mPlayer.setDataSource(mFilePath.getAbsolutePath());
 	            mPlayer.prepare();
 	            mPlayer.start();
 	        } catch (IOException e) {
@@ -182,19 +179,17 @@ public class AudioRecorderView {
 	
 
 	public void stopPlaying() {
-        mPlayer.release();
-        mPlayer = null;
-    }
-
-	
-
-	private void deleteTempFile() {
-		File file = new File(getTempFilename());
-		
-		file.delete();
+		if (mPlayer != null)
+		{
+			mPlayer.release();
+			mPlayer = null;
+		}
 	}
+
 	
-	private void copyWaveFile(String inFilename,String outFilename){
+
+	
+	private void copyWaveFile(File inFilename,File outFilename){
 		FileInputStream in = null;
 		FileOutputStream out = null;
 		long totalAudioLen = 0;

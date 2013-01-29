@@ -36,6 +36,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -45,6 +46,7 @@ import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.os.Parcelable;
+import android.preference.PreferenceManager;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
@@ -309,9 +311,14 @@ public class MediaProjectManager implements MediaManager {
 		    fileExport.delete();
 		    fileExport.createNewFile();
 		    mOut.path = fileExport.getAbsolutePath();
+		    mOut.mimeType = AppConstants.MimeTypes.MP4;
 		    
-		    int slideDuration = 5; //where to set this?
-    		File fileAudio = new File(Environment.getExternalStorageDirectory(),"narration" + mProject.getId() + ".wav");
+			 SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(mContext);
+
+		    int slideDuration = Integer.parseInt(settings.getString("pslideduration", AppConstants.DEFAULT_SLIDE_DURATION+""));
+
+    		String audioFile = "narration" + mProject.getId() + ".wav";
+    		File fileAudio = new File(mContext.getExternalFilesDir(null),audioFile);
     		
 		   MediaSlideshowExporter mEx = new MediaSlideshowExporter(mContext, mHandler, alMediaIn,fileAudio.getAbsolutePath(), slideDuration, mOut);
 		   mEx.run();

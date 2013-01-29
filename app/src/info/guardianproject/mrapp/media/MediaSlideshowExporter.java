@@ -83,20 +83,17 @@ public class MediaSlideshowExporter implements Runnable {
 	
 	private void makeSlideShow (ArrayList<MediaDesc> listMediaDesc, int slideDuration, String audioPath, MediaDesc mdout) throws Exception
     {
-    	  	
-    	boolean mediaNeedConvert = true;
-    	ArrayList<MediaDesc> listMediaDescVids = new ArrayList<MediaDesc>(listMediaDesc.size());
     	
     	FfmpegController ffmpegc = new FfmpegController (mContext);
 
-    	int idx = 0;
+    	int width = 720;
+    	int height = 480;
+    	String bitrate = "1000k";
     	
-    	for (MediaDesc mediaIn : listMediaDesc)
-    	{
-    		//normalize the filenames for all the imported images
-    	}
+    	MediaDesc mdAudio = new MediaDesc();
+    	mdAudio.path = audioPath;
     	
-    	
+    	ffmpegc.createSlideshowFromImagesAndAudio(listMediaDesc, mdAudio, width, height, slideDuration, bitrate, mdout.path, scDefault);
     	
 		
    }
@@ -199,4 +196,62 @@ public class MediaSlideshowExporter implements Runnable {
 	   }
 	    */
 	    
+	final ShellCallback scDefault = new ShellCallback() {
+
+		@Override
+		public void shellOut(String line) {
+			
+			
+			if (!line.startsWith("frame"))
+				Log.d(AppConstants.TAG, line);
+			
+			
+			int idx1;
+			String newStatus = null;
+			int progress = 0;
+			
+			if ((idx1 = line.indexOf("Duration:"))!=-1)
+			{
+				int idx2 = line.indexOf(",", idx1);
+				String time = line.substring(idx1+10,idx2);
+				
+				int hour = Integer.parseInt(time.substring(0,2));
+				int min = Integer.parseInt(time.substring(3,5));
+				int sec = Integer.parseInt(time.substring(6,8));
+				
+				total = (hour * 60 * 60) + (min * 60) + sec;
+				
+				newStatus = line;
+				progress = 0;
+			}
+			else if ((idx1 = line.indexOf("time="))!=-1)
+			{
+				int idx2 = line.indexOf(" ", idx1);
+				String time = line.substring(idx1+5,idx2);
+				newStatus = line;
+				
+				int hour = Integer.parseInt(time.substring(0,2));
+				int min = Integer.parseInt(time.substring(3,5));
+				int sec = Integer.parseInt(time.substring(6,8));
+				
+				current = (hour * 60 * 60) + (min * 60) + sec;
+				
+				progress = (int)( ((float)current) / ((float)total) *100f );
+			}
+			
+			if (newStatus != null)
+			{
+			 Message msg = mHandler.obtainMessage(1);
+	         msg.getData().putInt("progress", progress);
+	         msg.getData().putString("status", newStatus);		         
+	         mHandler.sendMessage(msg);
+			}
+		}
+
+		@Override
+		public void processComplete(int exitValue) {
+			// TODO Auto-generated method stub
+			
+		}
+	};
 }
