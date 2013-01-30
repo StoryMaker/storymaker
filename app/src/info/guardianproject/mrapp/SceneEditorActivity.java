@@ -86,7 +86,8 @@ public class SceneEditorActivity extends BaseActivity implements ActionBar.TabLi
     private int mStoryMode = Project.STORY_TYPE_VIDEO;;
     private final static String CAPTURE_MIMETYPE_AUDIO = "audio/3gpp";
     private MediaProjectManager mMPM;
-    public Fragment mFragmentTab0, mFragmentTab1, mFragmentTab2, mLastTabFrag;
+    public Fragment mFragmentTab0, mFragmentTab1, mLastTabFrag;
+    public PublishFragment mPublishFragment;
 	private PreviewVideoView mPreviewVideoView = null;
 	private ImageView mImageViewMedia;
 	
@@ -315,7 +316,11 @@ public class SceneEditorActivity extends BaseActivity implements ActionBar.TabLi
                 return true;
             case R.id.itemForward:
                 int idx = getSupportActionBar().getSelectedNavigationIndex();
-                getSupportActionBar().setSelectedNavigationItem(Math.min(2, idx + 1));
+                if (idx < 2) {
+                    getSupportActionBar().setSelectedNavigationItem(Math.min(2, idx + 1));
+                } else {
+                    mPublishFragment.doPublish();
+                }
                 return true;
             case R.id.addFromGallery:
                 addMediaFromGallery();
@@ -461,17 +466,14 @@ public class SceneEditorActivity extends BaseActivity implements ActionBar.TabLi
         } else if (tab.getPosition() == 2) {
             layout = R.layout.fragment_story_publish;
             
-            if (mMenu != null)
-            mMenu.findItem(R.id.itemForward).setEnabled(false);
-
-            if (mFragmentTab2 == null)
+            if (mPublishFragment == null)
             {
                 try {
-                    mFragmentTab2 = new PublishFragment(layout);
+                    mPublishFragment = new PublishFragment(layout);
 
                     Bundle args = new Bundle();
                     args.putInt(PublishFragment.ARG_SECTION_NUMBER, tab.getPosition() + 1);
-                    mFragmentTab2.setArguments(args);
+                    mPublishFragment.setArguments(args);
 
                 } catch (IOException e) {
                     Log.e("SceneEditr", "IO erorr", e);
@@ -479,17 +481,17 @@ public class SceneEditorActivity extends BaseActivity implements ActionBar.TabLi
                     Log.e("SceneEditr", "json error", e);
                 }
                 fm.beginTransaction()
-                        .add(R.id.container, mFragmentTab2, layout + "")
+                        .add(R.id.container, mPublishFragment, layout + "")
                         .commit();
 
             } else {
 
                 fm.beginTransaction()
-                        .show(mFragmentTab2)
+                        .show(mPublishFragment)
                         .commit();
             }
 
-            mLastTabFrag = mFragmentTab2;
+            mLastTabFrag = mPublishFragment;
         }
     }
 
@@ -880,25 +882,29 @@ public class SceneEditorActivity extends BaseActivity implements ActionBar.TabLi
 
                 });
 
+                final PublishFragment that = this;
                 Button btn = (Button) view.findViewById(R.id.btnPublish);
                 btn.setOnClickListener(new OnClickListener() {
 
                     @Override
                     public void onClick(View v) {
-
-                        ServerManager sm = StoryMakerApp.getServerManager();
-                        sm.setContext(SceneEditorActivity.this);
-
-                        if (sm.hasCreds()) {
-                            handlePublish();
-                        }
-                        else {
-                            showLogin();
-                        }
+                        that.doPublish();
                     }
                 });
             }
             return view;
+        }
+        
+        public void doPublish() {
+            ServerManager sm = StoryMakerApp.getServerManager();
+            sm.setContext(SceneEditorActivity.this);
+
+            if (sm.hasCreds()) {
+                handlePublish();
+            }
+            else {
+                showLogin();
+            }
         }
 
         private void showLogin() {
