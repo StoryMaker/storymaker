@@ -37,8 +37,6 @@ $.ajax({
 
 	var pageData = convertTextile(data);
 	
-	console.log(pageData);
-	
 	var headers = $(pageData).filter('h1,hr');
 	var headerCount = headers.length;
 	
@@ -180,13 +178,16 @@ $.ajax({
 		 enableVideoClicks();
 		 enableAudioClicks();
 
+		$(".imageslides").find("p").remove();
+			
 		  $(".imageslides").slides({
 		  			container: 'imageslides_container',
 					generateNextPrev: true,
 					pagination: false,
 					generatePagination: false,
-					 autoHeight: true
-					
+					autoHeight: true,
+					preload:false
+				
 				});
          
 	});

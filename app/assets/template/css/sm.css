@@ -92,22 +92,40 @@ h3 {
 	
 }
 
+.imageslides
+{
+     margin:0px;
+     padding:0px;
+	 width:320px;
+	 min-height:250px;
+}
+
 .imageslides_container {
      margin:0px;
      padding:0px;
+
+    width:320px;
      
-    width:300px;
-    height:250px;
-     
+	 min-height:250px;
      display:none;
 }
 
 .imageslides_container div {
     margin:0px;
     padding:0px;
-    
-    width:300px;
-    height:300px;
-     
+    width:320px;
+    min-height:250px;
     display:block;
+}
+
+.next,.prev 
+{
+margin:10px;
+width:160px;
+text-align:center;
+}
+
+.next a, .prev a
+{
+color:#999999;
 }
