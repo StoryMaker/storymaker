@@ -57,7 +57,7 @@ function convertTextile(t) {
         	}
         	else
         	{
-        	 	html += '</div></div>';
+        	 	html += '</div></div><br/';
         	 	slidesOn = false;
         	}
         	
