@@ -1228,6 +1228,14 @@ public class SceneEditorActivity extends BaseActivity implements ActionBar.TabLi
                     @Override
                     public void onClick(View v) {
 
+                       	doPublish(); 
+                    }
+                });
+            }
+            return view;
+        }
+        
+        public void doPublish() {
                         ServerManager sm = StoryMakerApp.getServerManager();
                         sm.setContext(SceneEditorActivity.this);
 
@@ -1240,23 +1248,6 @@ public class SceneEditorActivity extends BaseActivity implements ActionBar.TabLi
                         	showLogin();
                         else
                            handlePublish(doYouTube, doStoryMaker);
-                        
-                    }
-                });
-            }
-            return view;
-        }
-        
-        public void doPublish() {
-            ServerManager sm = StoryMakerApp.getServerManager();
-            sm.setContext(SceneEditorActivity.this);
-
-            if (sm.hasCreds()) {
-                handlePublish();
-            }
-            else {
-                showLogin();
-            }
         }
 
         private void showLogin() {
