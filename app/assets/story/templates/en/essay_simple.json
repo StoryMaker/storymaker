@@ -48,15 +48,5 @@
 "Description": "Indicate the country or an ethnic or religious element. Include landmarks or other location specific information.", 
 "Tip": "Landmarks help the audience understand their location.",
 "Security Concern": "-"
-},
-{
-"Title": "NARRATION",
-"Artwork": "cliptype_medium",
-"Shot Size": "Medium",
-"Goal": "Add a voice over",
-"Length": "X seconds",
-"Description": "Talk about the photo essay",
-"Tip": "Speak loud and clear!",
-"Security Concern": "-"
 }
 ]}
