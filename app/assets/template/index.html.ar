@@ -8,7 +8,8 @@
 	<script src="file:///android_asset/template/js/jquery-1.8.2.min.js"></script>
 	<script src="file:///android_asset/template/js/jquery.mobile-1.2.0.min.js"></script>
 	<script src="file:///android_asset/template/js/textile.js"></script>
-	<script src="file:///android_asset/template/js/swipe.js"></script>	
+	<script src="file:///android_asset/template/js/swipe.js"></script>
+	<script src="file:///android_asset/template/js/slides.min.jquery.js"></script>	
 	<script src="file:///android_asset/template/js/smtemplate.js"></script>
 	<style>
 		html,body{text-align:right;}

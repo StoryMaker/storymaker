@@ -2,6 +2,7 @@ body{
 	font-size: 14pt;	
 }
 
+
 img {
     /* Set the width dynamically depending on the width of the browser window */
     width:90%;
@@ -65,10 +66,10 @@ h3 {
 {
 	color:#eeeeee;
 	background-color:#333333;
-	padding:15px;
+	padding:10px;
 	font-size:20pt;
-	float:none;
-	clear: both;
+	margin-top:10px;
+	display: inline-block;
 }
 
 .mediaplay a:link, .mediaplay a
@@ -82,10 +83,31 @@ h3 {
 .mediacaption
 {
 	color:#333333;
-	background-color:#cccccc;
-	padding:15px;
+	background-color:#dddddd;
+	padding:10px;
 	font-size:10pt;
 	margin-bottom:20px;
-	float:none;
-	clear: both;
+	width:300px;
+	display: inline-block;
+	
+}
+
+.imageslides_container {
+     margin:0px;
+     padding:0px;
+     
+    width:300px;
+    height:250px;
+     
+     display:none;
+}
+
+.imageslides_container div {
+    margin:0px;
+    padding:0px;
+    
+    width:300px;
+    height:300px;
+     
+    display:block;
 }
