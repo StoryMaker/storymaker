@@ -26,11 +26,8 @@ public final static String TAG = "StoryMaker";
 
 	public final static int DEFAULT_SLIDE_DURATION = 5;
 	
-	//TODO switch this to HTTPS!
-	public static String DEFAULT_STORYMAKER_CONTENT_SERVER = "https://guardianproject.info/";//"https://storymaker.cc/";
-	public static String DEFAULT_STORYMAKER_WORDPRESS_SERVER = "https://storymaker.cc/";
 	
-	public final static String DEFAULT_STORYMAKER_SERVER_RSS = DEFAULT_STORYMAKER_WORDPRESS_SERVER + "feed/";
+	
 	
 	public final static String TOR_PROXY_HOST = "localhost";
 	public final static int TOR_PROXY_PORT = 9050;

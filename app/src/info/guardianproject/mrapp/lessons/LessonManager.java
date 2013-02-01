@@ -136,7 +136,6 @@ public class LessonManager implements Runnable {
 						fileLessonJson = new File(fileLesson,"Lesson.json"); //sometimes people are silly and case matters
 
 					}
-					
 				
 					if (fileLessonJson.exists())
 					{
@@ -218,8 +217,12 @@ public class LessonManager implements Runnable {
 		     
 			if (useTor)
 			{
-				httpClient.getParams().setParameter("SOCKS",  new HttpHost(AppConstants.TOR_PROXY_HOST, AppConstants.TOR_PROXY_PORT));
-				
+				//
+				httpClient.useProxy(true, "SOCKS", AppConstants.TOR_PROXY_HOST, AppConstants.TOR_PROXY_PORT);
+			}
+			else
+			{
+				httpClient.useProxy(false, "SOCKS", null, -1);
 			}
 			
 			String urlBase = mUrlRemoteRepo;

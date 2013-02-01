@@ -1,23 +1,21 @@
 package info.guardianproject.mrapp.server;
 
-import info.guardianproject.mrapp.AppConstants;
+import info.guardianproject.mrapp.StoryMakerApp;
 
 import java.io.File;
 import java.net.MalformedURLException;
 import java.util.List;
 
-import redstone.xmlrpc.XmlRpcFault;
-
 import net.bican.wordpress.Comment;
 import net.bican.wordpress.MediaObject;
 import net.bican.wordpress.Page;
 import net.bican.wordpress.Wordpress;
+import redstone.xmlrpc.XmlRpcFault;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
-import android.util.Log;
 
 public class ServerManager {
 
@@ -31,7 +29,7 @@ public class ServerManager {
 	
 	public ServerManager (Context context)
 	{
-		this(context, AppConstants.DEFAULT_STORYMAKER_WORDPRESS_SERVER);
+		this(context, StoryMakerApp.initServerUrls(context));
 		
 	}
 	

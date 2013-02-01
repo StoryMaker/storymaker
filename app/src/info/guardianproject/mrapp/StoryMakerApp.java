@@ -12,6 +12,7 @@ import java.util.Properties;
 
 import net.sqlcipher.database.SQLiteDatabase;
 import android.app.Application;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.content.res.Configuration;
@@ -31,7 +32,10 @@ public class StoryMakerApp extends Application {
 	
 	private final static String PREF_LOCALE = "plocale";
 	
-	private String bootstrapUrlString = AppConstants.DEFAULT_STORYMAKER_CONTENT_SERVER + "private/storymaker/content/lessons/";
+	private static String mBaseUrl = null;
+	
+	private final static String URL_PATH_LESSONS = "/appdata/lessons/";
+	private final static String STORYMAKER_DEFAULT_SERVER_URL = "https://storymaker.cc";
 	
 	 public void InitializeSQLCipher(String dbName, String passphrase) {
 	        	      
@@ -40,6 +44,13 @@ public class StoryMakerApp extends Application {
 	     SQLiteDatabase database = SQLiteDatabase.openOrCreateDatabase(databaseFile, passphrase, null);
 
 	  }
+	 
+	 public static String initServerUrls (Context context)
+	 {
+		 SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context);
+		 mBaseUrl = settings.getString("pserver", STORYMAKER_DEFAULT_SERVER_URL) ;
+		 return mBaseUrl;
+	 }
 	 
 //	public void InitializeSQLCipher(String dbName, String passphrase) {
 //
@@ -70,8 +81,9 @@ public class StoryMakerApp extends Application {
 	{
 		try
 		{
+			initServerUrls(this);
 			
-			mLessonManager = new LessonManager (this, bootstrapUrlString + mLocale.getLanguage() + "/", new File(getExternalFilesDir(null), "lessons/" + mLocale.getLanguage()));
+			mLessonManager = new LessonManager (this, mBaseUrl + URL_PATH_LESSONS + mLocale.getLanguage() + "/", new File(getExternalFilesDir(null), "lessons/" + mLocale.getLanguage()));
 			mServerManager = new ServerManager (getBaseContext());
 		}
 		catch (Exception e)
@@ -87,8 +99,9 @@ public class StoryMakerApp extends Application {
         settings.edit().putString(PREF_LOCALE,newLocale);
         settings.edit().commit();
         checkLocale();
+        
         //need to reload lesson manager for new locale
-		mLessonManager = new LessonManager (this, bootstrapUrlString+ mLocale.getLanguage() + "/", new File(getExternalFilesDir(null), "lessons/" + newLocale));
+        initServerUrls(this);
 
 	}
 	
@@ -131,7 +144,7 @@ public class StoryMakerApp extends Application {
 	        if (updatedLocale)
 	        {
 	            //need to reload lesson manager for new locale
-				mLessonManager = new LessonManager (this, bootstrapUrlString+ mLocale.getLanguage() + "/", new File(getExternalFilesDir(null), "lessons/" + mLocale.getLanguage()));
+				mLessonManager = new LessonManager (this, mBaseUrl + URL_PATH_LESSONS+ mLocale.getLanguage() + "/", new File(getExternalFilesDir(null), "lessons/" + mLocale.getLanguage()));
 
 	        }
 	        
