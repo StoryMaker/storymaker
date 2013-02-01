@@ -26,6 +26,9 @@ $.ajax({
   },
   complete: function ( ) {
   	//hide some loading graphic here
+  	 //enable slides
+  	 
+				
   },
   success: function(data, textStatus) { },
   error: function(jqXHR, textStatus, errorThrown) {}
@@ -34,11 +37,11 @@ $.ajax({
 
 	var pageData = convertTextile(data);
 	
+	console.log(pageData);
+	
 	var headers = $(pageData).filter('h1,hr');
 	var headerCount = headers.length;
 	
-   
-   
 	var firstPage = true;
 	
 	
@@ -46,7 +49,7 @@ $.ajax({
 	{
 		var i = 1;
 		
-		$("#swmain").append('<div id="page' + i + '" class="subswipe"><p>' + pageData + '</p></div>');
+		$("#swmain").append('<div id="page' + i + '" class="subswipe" onclick="location.href=stmk://lesson/complete/"><p>' + pageData + '</p></div>');
  		$('#page' + i + ' a').attr("rel", "external");
 		$('#page' + i).trigger("create");
 		
@@ -70,8 +73,20 @@ $.ajax({
 		       
 		       while (!notDiv)
 		       {
-		       		newPageData += "<" + nextNode[0].tagName + ">";
 		       		
+		       		newPageData += '<' + nextNode[0].tagName;
+		       		
+		       		var nodeId = nextNode[0].getAttribute("id");
+		       		var nodeClass = nextNode[0].getAttribute("class");
+		       		
+		       		if (nodeId)
+		       			newPageData += ' id="' + nodeId + '"';
+		       			
+		       		if (nodeClass)
+		       			newPageData += ' class="' + nodeClass + '"';
+		       
+	       			newPageData += '>';
+	       		
 		       		var nextNodeHtml = parseQuizText(nextNode.html());
 		       		
 		       		var htmlData = nextNodeHtml.join('');
@@ -84,6 +99,8 @@ $.ajax({
 		       		newPageData += htmlData;
 		       		
 		       		newPageData += "</" + nextNode[0].tagName + ">";
+			       		
+		       		
 		       		
 		       		nextNode = nextNode.next();
 		       		
@@ -92,6 +109,8 @@ $.ajax({
 		       		else
 		       			notDiv = (nextNode[0].tagName == "H1"
 		    				 || nextNode[0].tagName == "HR");
+		    				 
+		    	   
 		       		
 		       }
 		       
@@ -160,6 +179,16 @@ $.ajax({
 		 window.mySwipe = $('#mySwipe').data('Swipe');
 		 enableVideoClicks();
 		 enableAudioClicks();
+
+		  $(".imageslides").slides({
+		  			container: 'imageslides_container',
+					generateNextPrev: true,
+					pagination: false,
+					generatePagination: false,
+					 autoHeight: true
+					
+				});
+         
 	});
 
 

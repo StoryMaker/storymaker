@@ -21,6 +21,8 @@ var trstyle = /^\{(\S+)\}\.\s*\|/;
 
 function convertTextile(t) {
 	var lines = t.split(/\r?\n/);
+	var slidesOn = false;
+	
 	html="";
 	inpr=inbq=inbqq=0;
 	for(var i=0;i<lines.length;i++) {
@@ -46,6 +48,29 @@ function convertTextile(t) {
 			html += tag("li","",prep(m[2]))+"\n";
 			continue;
 		}
+		if (lines[i] == "(")
+		{
+			if (!slidesOn)
+			{
+        	    html += '<div class="imageslides"><div class="imageslides_container">';
+        	    slidesOn = true;
+        	}
+        	else
+        	{
+        	 	html += '</div></div>';
+        	 	slidesOn = false;
+        	}
+        	
+            continue;
+		}
+		if (lines[i] == ")")
+		{
+			
+            html += '</div></div>';
+            slidesOn = false;
+            continue;
+		}
+		
 		if (lines[i].match(table)){stp(1);intable=1;html += lines[i].replace(table,'<table style="$1;">\n');continue;}
 		if ((lines[i].indexOf("|") == 0)  || (lines[i].match(trstyle)) ) {
 			stp(1);
@@ -80,6 +105,7 @@ function convertTextile(t) {
 		else if (!inpr) {
 			if(mm=bq.exec(lines[i])){lines[i]=lines[i].replace(bq,"");html +="<blockquote>";inbq=1;if(mm[1]) {inbqq=1;}}
 			html += "<p>"+prep(lines[i]);inpr=1;
+		
 		}
 		else {html += prep(lines[i]);}
 		
@@ -139,7 +165,7 @@ function make_image(m,re) {
 		
 		if (ma[1].endsWith('mp4'))
 		{
-			im = '<span class="mediaplay"><a href="'+ma[1]+'">play video</a></span>';
+			im = '<span class="mediaplay"><a href="'+ma[1]+'">play video &gt;</a></span>';
 			//im = '<video src="'+ma[1]+'" width="400" height="300" autobuffer controls></video>';
 			
 			if (at != null)
@@ -155,7 +181,7 @@ function make_image(m,re) {
 		{
 
 		//	im = '<audio preload="auto" controls="true"><source src="'+ma[1]+'" /></audio>';
-			im = '<span class="mediaplay"><a href="'+ma[1]+'">play audio</a></span>';
+			im = '<span class="mediaplay"><a href="'+ma[1]+'">play audio  &gt;</a></span>';
 		
 			if (at != null)
 				im += '<span class="mediacaption">' + at[1] + '</span>';
@@ -163,8 +189,16 @@ function make_image(m,re) {
 			
 			im += '<br style="clear:both;"/>';		
 		}
-		else
-			im = '<img src="'+ma[1]+'"'+attr+" />";
+		else 
+		{
+			im = '<div>';
+			im += '<img src="'+ ma[1] + '" ' + attr + ' />';
+			
+			if (at != null)
+				im += '<span class="mediacaption">' + at[1] + '</span>';
+				
+			im += '</div>';
+		}
 		
 		if(ma.length >2) {im=tag('a',qat('href',ma[2]),im);}
 		m = m.replace(re,im);
