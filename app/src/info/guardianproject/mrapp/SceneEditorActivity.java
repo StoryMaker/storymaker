@@ -1227,24 +1227,9 @@ public class SceneEditorActivity extends BaseActivity implements ActionBar.TabLi
 
                     @Override
                     public void onClick(View v) {
-
-<<<<<<< HEAD
+                    	
                        	doPublish(); 
-=======
-                        ServerManager sm = StoryMakerApp.getServerManager();
-                        sm.setContext(SceneEditorActivity.this);
 
-                        ToggleButton tbYouTube = (ToggleButton) findViewById(R.id.toggleButtonYoutube);
-                        ToggleButton tbStoryMaker = (ToggleButton) findViewById(R.id.toggleButtonStoryMaker);
-                        final boolean doYouTube = tbYouTube.isChecked();
-                        final boolean doStoryMaker = tbStoryMaker.isChecked();
-                        
-                        if (!sm.hasCreds() && doStoryMaker)
-                        	showLogin();
-                        else
-                           handlePublish(doYouTube, doStoryMaker);
-                        
->>>>>>> n8fr8-feature-302-templates
                     }
                 });
             }
