@@ -141,8 +141,14 @@ $.ajax({
  		 			
  		 		solution += $(this).attr('value');
  		 		
+ 		 		
  		 	});
  		 	
+ 		 	if (solution === "True")
+ 		 		solution = 1;
+ 		 	else if (solution === "False")
+ 		 		solution = 2;
+ 		 		
  		 	var answer = $(this).children('.correct').attr('value');
 
  		 	var msg = '';
@@ -244,6 +250,7 @@ function parseQuizText(text) {
 				
 	   			matches.push('<input type="checkbox" name="answer-' + qIdx + '" value="' + qIdx + '" id="checkbox-' + qIdx + '" class="custom" />');
 	   			matches.push('<label for="checkbox-' + qIdx + '">' + answerText + '</label>');
+	   			
 			}
 	
 			qIdx++;
