@@ -5,6 +5,7 @@ import info.guardianproject.mrapp.model.Lesson;
 import info.guardianproject.onionkit.trust.StrongHttpsClient;
 import info.guardianproject.onionkit.ui.OrbotHelper;
 
+import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -35,6 +36,7 @@ import org.apache.http.HttpHost;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -252,15 +254,8 @@ public class LessonManager implements Runnable {
 			//if (conLen > -1)
 			if (statusCode == 200)
 			{
+				String jsonData = EntityUtils.toString(entity);
 				
-				ByteArrayOutputStream baos = new ByteArrayOutputStream();
-				
-				int b = -1;
-				
-				while ((b = isContent.read())!=-1)
-					baos.write(b);
-				
-				String jsonData = new String(baos.toByteArray());
 				if (!jsonData.contains("]"))
 					jsonData += "]}";
 				
@@ -320,7 +315,8 @@ public class LessonManager implements Runnable {
 						
 						fileZip.getParentFile().mkdirs();
 						
-						IOUtils.copyLarge(response.getEntity().getContent(),new FileOutputStream(fileZip));
+						BufferedInputStream bis = new BufferedInputStream(response.getEntity().getContent());
+						IOUtils.copyLarge(bis,new FileOutputStream(fileZip));
 						
 						unpack(fileZip,lessonFolder);
 						
