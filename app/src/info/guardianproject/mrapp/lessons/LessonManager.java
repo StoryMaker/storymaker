@@ -247,6 +247,8 @@ public class LessonManager implements Runnable {
 			
 			long conLen = entity.getContentLength();
 								
+			boolean isChunked = entity.isChunked();
+			
 			//if (conLen > -1)
 			if (statusCode == 200)
 			{
@@ -258,7 +260,13 @@ public class LessonManager implements Runnable {
 				while ((b = isContent.read())!=-1)
 					baos.write(b);
 				
-				JSONObject jObjMain = new JSONObject(new String(baos.toByteArray()));
+				String jsonData = new String(baos.toByteArray());
+				if (!jsonData.contains("]"))
+					jsonData += "]}";
+				
+			//	Log.d(AppConstants.TAG,"got json data: " + jsonData);
+				
+				JSONObject jObjMain = new JSONObject(jsonData);
 				
 				JSONArray jarray = jObjMain.getJSONArray("lessons");
 				
@@ -293,10 +301,14 @@ public class LessonManager implements Runnable {
 							if (localLen == remoteLen)
 							{
 								//same file, leave it be
+								Log.d(AppConstants.TAG,"file already exists locally; skipping!");
+								response.getEntity().consumeContent();
 								continue;							
 							}
 							else
 							{
+								Log.d(AppConstants.TAG,"local file is out of date; updating...");
+
 								//otherwise, delete and download
 								fileZip.delete();
 							}
@@ -304,7 +316,7 @@ public class LessonManager implements Runnable {
 						}
 	
 						if (mListener != null)
-							mListener.loadingLessonFromServer(title);
+							mListener.loadingLessonFromServer(mSubFolder, title);
 						
 						fileZip.getParentFile().mkdirs();
 						
@@ -318,6 +330,9 @@ public class LessonManager implements Runnable {
 					{
 						Log.e(AppConstants.TAG,"error loading lesson from server: " + sUrlLesson,ioe);
 						
+						if (response != null)
+							response.getEntity().consumeContent();
+
 						if (mListener != null)
 							mListener.errorLoadingLessons(ioe.getLocalizedMessage());
 						

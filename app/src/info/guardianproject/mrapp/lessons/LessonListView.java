@@ -19,6 +19,9 @@ import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.TextView;
 
 
 
@@ -32,6 +35,8 @@ public class LessonListView extends ListView implements LessonManagerListener {
 	private LessonsActivity mActivity;
 	
 	private Locale mLocale = null;
+	
+	private int mLastIdx = -1;
 	
     public LessonListView (Context context, LessonsActivity activity) {
         
@@ -62,6 +67,7 @@ public class LessonListView extends ListView implements LessonManagerListener {
 			public void onItemClick(android.widget.AdapterView<?> arg0,
 					android.view.View arg1, int selIdx, long arg3) {
 				
+				mLastIdx = selIdx;
 				
 				if (mSubFolder == null)
 				{
@@ -117,6 +123,7 @@ public class LessonListView extends ListView implements LessonManagerListener {
     	
     	setAdapter(new LessonGroupArrayAdapter(getContext(),R.layout.list_lesson_row, alGroups));
     	
+    	
     }
     
     public boolean handleBack ()
@@ -145,8 +152,12 @@ public class LessonListView extends ListView implements LessonManagerListener {
     	if (mListLessons.size() == 0)
     	{
 
+    		mActivity.setProgressBarIndeterminate(true);
 	        mActivity.setProgressBarIndeterminateVisibility (true);
+	        
+	        
     		mLessonManager.updateLessonsFromRemote();
+    		
     	}
     	else
     	{
@@ -192,14 +203,18 @@ public class LessonListView extends ListView implements LessonManagerListener {
 			{
 				case 0:
 					
-						Toast.makeText(getContext(), msg.getData().getString("status"),Toast.LENGTH_SHORT).show();
-					
+						if (msg.getData().containsKey("status"))
+							Toast.makeText(getContext(), msg.getData().getString("status"),Toast.LENGTH_SHORT).show();
+
+						((ArrayAdapter)getAdapter()).notifyDataSetChanged();
+
 				 break;
 				case 1:
-					loadLessonListAdapter();
-					
 
 			        mActivity.setProgressBarIndeterminateVisibility (false);
+			        ((ArrayAdapter)getAdapter()).notifyDataSetChanged();
+					loadLessonListAdapter();
+					
 					
 				break;
 				case 2:
@@ -228,37 +243,39 @@ public class LessonListView extends ListView implements LessonManagerListener {
     	   R.layout.list_lesson_row, mListLessons));
     }
     
-     
-    
     
 	@Override
 	public void lessonsLoadedFromServer() {
 		
     	mListLessons = mLessonManager.loadLessonList(getContext(), mLocale.getLanguage());
-
-		mHandler.sendEmptyMessage(1);
+    	mHandler.sendEmptyMessage(1);
+		
 		
 	}
 
-	private void showMessage (String msgText)
-	{
-		Message msg = new Message();
-		msg.what = 0;
-		msg.getData().putString("status", msgText);
-		mHandler.sendMessage(msg);
-
-	}
+	
 
 	@Override
-	public void loadingLessonFromServer(String lessonTitle) {
-		showMessage("Loading lesson: " +  lessonTitle);
+	public void loadingLessonFromServer(String subFolder, String lessonTitle) {
+		
+		int rowIdx = Integer.parseInt(subFolder)-1;
+		
+		Object item = this.getItemAtPosition(rowIdx);
+		
+		if (item instanceof LessonGroup)
+		{
+			((LessonGroup)item).mStatus = "loading lesson: " + lessonTitle;
+		}
+		
+		mHandler.sendEmptyMessage(0);
+		
 		
 	}
 
 	@Override
 	public void errorLoadingLessons(String msg) {
 		
-		showMessage("There was a problem loading the lessons: " + msg);
+		
 		mHandler.sendEmptyMessage(2);
 	}
 
