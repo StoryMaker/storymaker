@@ -25,6 +25,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 
+import com.actionbarsherlock.view.Window;
 import com.slidingmenu.lib.SlidingMenu;
 import com.slidingmenu.lib.app.SlidingActivity;
 
@@ -34,6 +35,11 @@ public class BaseActivity extends SlidingActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+
+        requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
+        setProgressBarIndeterminate(true);
+        setProgressBarIndeterminateVisibility(false);
+        
         // setup drawer
         setBehindContentView(R.layout.fragment_drawer);
         SlidingMenu sm = getSlidingMenu();
