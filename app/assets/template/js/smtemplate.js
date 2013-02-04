@@ -144,14 +144,11 @@ $.ajax({
  		 		
  		 	});
  		 	
- 		 	if (solution === "True")
- 		 		solution = 1;
- 		 	else if (solution === "False")
- 		 		solution = 2;
- 		 		
  		 	var answer = $(this).children('.correct').attr('value');
 
  		 	var msg = '';
+ 		 	
+ 		 	console.log("answer=" + answer + " solution=" + solution);
  		 	
  		 	if (answer === solution)
  		 	{
@@ -245,10 +242,9 @@ function parseQuizText(text) {
 			var answerVal = answerParts[0].split(" ")[1];
 			var answerText = answerParts[1].trim();
 			
-			
 			if (answerText === "True" || answerText === "False" || answerText === "TRUE" || answerText === "FALSE")
 			{
-     			matches.push('<input type="radio" name="response" value="' + answerText + '" id="radio-' + qIdx + '"/>');
+     			matches.push('<input type="radio" name="response" value="' + qIdx + '" id="radio-' + qIdx + '"/>');
 	   			matches.push('<label for="radio-' + qIdx + '">' + answerText + '</label>');
 		
 			}
