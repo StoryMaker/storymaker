@@ -113,7 +113,9 @@ h3 {
 .imageslides_container div img
 {
 width:100%;
-min-height:240px;
+min-height:200px;
+margin:0px;
+padding:0px;
 }
 
 .slideshow_info
