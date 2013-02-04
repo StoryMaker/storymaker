@@ -52,12 +52,12 @@ function convertTextile(t) {
 		{
 			if (!slidesOn)
 			{
-        	    html += '<div class="imageslides"><div class="imageslides_container">';
+        	    html += '<div class="slideshow_info">slideshow: tap to go to next</div><div class="imageslides"><div class="imageslides_container">';
         	    slidesOn = true;
         	}
         	else
         	{
-        	 	html += '</div></div><br/';
+        	 	html += '</div></div>';
         	 	slidesOn = false;
         	}
         	
