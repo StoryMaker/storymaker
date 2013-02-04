@@ -141,11 +141,14 @@ $.ajax({
  		 			
  		 		solution += $(this).attr('value');
  		 		
+ 		 		
  		 	});
  		 	
  		 	var answer = $(this).children('.correct').attr('value');
 
  		 	var msg = '';
+ 		 	
+ 		 	console.log("answer=" + answer + " solution=" + solution);
  		 	
  		 	if (answer === solution)
  		 	{
@@ -182,13 +185,19 @@ $.ajax({
 			
 		  $(".imageslides").slides({
 		  			container: 'imageslides_container',
-					generateNextPrev: true,
+					generateNextPrev: false,
 					pagination: false,
 					generatePagination: false,
-					autoHeight: true,
-					preload:false
-				
+					preload:true,
+					effect:'fade',
+					fadeSpeed:100,
+					bigTarget:true,
+					autoHeight:true
 				});
+				
+		$(".imageslides").animate('next', 'fade');
+		$(".imageslides").animate('prev', 'fade');
+		
          
 	});
 
@@ -233,9 +242,9 @@ function parseQuizText(text) {
 			var answerVal = answerParts[0].split(" ")[1];
 			var answerText = answerParts[1].trim();
 			
-			if (answerText === "True" || answerText == "False")
+			if (answerText === "True" || answerText === "False" || answerText === "TRUE" || answerText === "FALSE")
 			{
-     			matches.push('<input type="radio" name="response" value="' + answerText + '" id="radio-' + qIdx + '"/>');
+     			matches.push('<input type="radio" name="response" value="' + qIdx + '" id="radio-' + qIdx + '"/>');
 	   			matches.push('<label for="radio-' + qIdx + '">' + answerText + '</label>');
 		
 			}
@@ -244,6 +253,7 @@ function parseQuizText(text) {
 				
 	   			matches.push('<input type="checkbox" name="answer-' + qIdx + '" value="' + qIdx + '" id="checkbox-' + qIdx + '" class="custom" />');
 	   			matches.push('<label for="checkbox-' + qIdx + '">' + answerText + '</label>');
+	   			
 			}
 	
 			qIdx++;

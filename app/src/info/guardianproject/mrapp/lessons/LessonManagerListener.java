@@ -4,7 +4,7 @@ import info.guardianproject.mrapp.model.Lesson;
 
 public interface LessonManagerListener {
 
-	public void loadingLessonFromServer(String lessonTitle);
+	public void loadingLessonFromServer(String subFolder, String lessonTitle);
 	
 	public void lessonsLoadedFromServer();
 	
