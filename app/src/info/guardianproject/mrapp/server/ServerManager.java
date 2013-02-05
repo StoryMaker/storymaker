@@ -1,5 +1,6 @@
 package info.guardianproject.mrapp.server;
 
+import info.guardianproject.mrapp.AppConstants;
 import info.guardianproject.mrapp.StoryMakerApp;
 
 import java.io.File;
@@ -10,12 +11,14 @@ import net.bican.wordpress.Comment;
 import net.bican.wordpress.MediaObject;
 import net.bican.wordpress.Page;
 import net.bican.wordpress.Wordpress;
+import redstone.xmlrpc.XmlRpcClient;
 import redstone.xmlrpc.XmlRpcFault;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.util.Log;
 
 public class ServerManager {
 
@@ -71,6 +74,22 @@ public class ServerManager {
 	
 	public void connect (String username, String password) throws MalformedURLException, XmlRpcFault
 	{
+		XmlRpcClient.setContext(mContext);
+		SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(mContext);
+
+	    boolean useTor = settings.getBoolean("pusetor", false);
+	    
+		if (useTor)
+		{
+			XmlRpcClient.setProxy(true, "SOCKS", AppConstants.TOR_PROXY_HOST, AppConstants.TOR_PROXY_PORT);
+		}
+		else
+		{
+			XmlRpcClient.setProxy(false, null, null, -1);
+
+		}
+		
+		Log.d(AppConstants.TAG,"Logging into Wordpress: " + username + '@' + mServerUrl + PATH_XMLRPC);
 		mWordpress = new Wordpress(username, password, mServerUrl + PATH_XMLRPC);	
 		mWordpress.getRecentPosts(1); //need to do a test to force authentication
 	}

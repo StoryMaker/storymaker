@@ -18,7 +18,9 @@ package info.guardianproject.mrapp.server;
 import info.guardianproject.mrapp.AppConstants;
 import info.guardianproject.mrapp.R;
 import info.guardianproject.mrapp.server.Authorizer.AuthorizationListener;
+import info.guardianproject.onionkit.trust.StrongHttpsClient;
 
+import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -28,7 +30,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
-import java.net.URL;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -39,12 +41,23 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
+import org.apache.http.Header;
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.AbstractHttpEntity;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.message.BasicHeader;
+import org.apache.http.message.BasicNameValuePair;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.Entity;
 import android.content.SharedPreferences;
 import android.location.Location;
 import android.location.LocationListener;
@@ -52,6 +65,7 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.TextView;
 
@@ -70,7 +84,7 @@ public class YouTubeSubmit {
   private static final int MAX_RETRIES = 5;
   private static final int BACKOFF = 4; // base of exponential backoff
 
-  
+  private boolean mUseTor = false;
 
   public String videoId = null;
   
@@ -100,6 +114,7 @@ public class YouTubeSubmit {
   private String videoContentType = "video/mp4";
   
   private Handler handler;
+  private Context mContext;
   
   static class YouTubeAccountException extends Exception {
     public YouTubeAccountException(String msg) {
@@ -108,7 +123,7 @@ public class YouTubeSubmit {
   }
   
   
-  public YouTubeSubmit(File videoFile, String title, String description, Date dateTaken, Activity activity, Handler handler) {
+  public YouTubeSubmit(File videoFile, String title, String description, Date dateTaken, Activity activity, Handler handler, Context context) {
       this.authorizer = new GlsAuthorizer.GlsAuthorizerFactory().getAuthorizer(activity,
         GlsAuthorizer.YOUTUBE_AUTH_TOKEN_TYPE);
 
@@ -118,6 +133,7 @@ public class YouTubeSubmit {
     this.description = description;
     this.dateTaken = dateTaken;
     this.handler = handler;
+    this.mContext = context;
   }
   
   public void setVideoFile (File videoFile, String contentType)
@@ -221,22 +237,19 @@ public class YouTubeSubmit {
     String videoId = null;
     double fileSize = this.currentFileSize;
     while (fileSize > 0) {
+    	
       if (fileSize - uploadChunk > 0) {
         end = start + uploadChunk - 1;
       } else {
         end = start + (int) fileSize - 1;
       }
-      String status = String.format("start=%s end=%s total=%s", start, end, file.length());
-      Message msg = handler.obtainMessage(888);
-      msg.getData().putString("status", status);
-      handler.sendMessage(msg);
       
-      Log.d(LOG_TAG, status);
       try {
         videoId = gdataUpload(file, uploadUrl, start, end);
         fileSize -= uploadChunk;
         start = end + 1;
         this.numberOfRetries = 0; // clear this counter as we had a succesfull upload
+        
       } catch (IOException e) {
         Log.d(LOG_TAG,"Error during upload : " + e.getMessage());
         ResumeInfo resumeInfo = null;
@@ -252,6 +265,7 @@ public class YouTubeSubmit {
             Log.d(LOG_TAG, String.format("Failed retry attempt of : %s due to: '%s'.", uploadUrl, re.getMessage()));
           }
         } while (resumeInfo == null);
+        
         Log.d(LOG_TAG, String.format("Resuming stalled upload to: %s.", uploadUrl));
         if (resumeInfo.videoId != null) { // upload actually complted despite the exception
           videoId = resumeInfo.videoId;
@@ -277,23 +291,36 @@ public class YouTubeSubmit {
   private String uploadMetaData(String slug, String contentType, long contentLength, boolean retry) throws IOException {
     String uploadUrl = INITIAL_UPLOAD_URL;
 
-    HttpURLConnection urlConnection = getGDataUrlConnection(uploadUrl, slug);
-    urlConnection.setRequestMethod("POST");
-    urlConnection.setDoOutput(true);
+    // open URL and download file listing
+    StrongHttpsClient httpClient = new StrongHttpsClient(mContext);
+    SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(mContext);
+
+    mUseTor = settings.getBoolean("pusetor", false);
     
-    urlConnection.setRequestProperty("X-Upload-Content-Type",contentType);
-    urlConnection.setRequestProperty("X-Upload-Content-Length",contentLength+"");
+	if (mUseTor)
+	{
+		//
+		httpClient.useProxy(true, "SOCKS", AppConstants.TOR_PROXY_HOST, AppConstants.TOR_PROXY_PORT);
+	}
+	
+ 			
+    HttpPost hPost = this.getGDataHttpPost(uploadUrl, slug);
+    
+  //  HttpURLConnection urlConnection = getGDataUrlConnection(uploadUrl, slug);
+    //urlConnection.setRequestMethod("POST");
+    //urlConnection.setDoOutput(true);
+    
+    hPost.setHeader("X-Upload-Content-Type",contentType);
+    hPost.setHeader("X-Upload-Content-Length",contentLength+"");
     
     
     String atomData;
 
-    
     String category = DEFAULT_VIDEO_CATEGORY;
     this.tags = DEFAULT_VIDEO_TAGS;
 
-	
-  String template = Util.readFile(activity, R.raw.gdata).toString();
-  atomData = String.format(template, title, description, category, this.tags);
+    String template = Util.readFile(activity, R.raw.gdata).toString();
+    atomData = String.format(template, title, description, category, this.tags);
   
       /*
   } else {
@@ -302,17 +329,20 @@ public class YouTubeSubmit {
           videoLocation.getLatitude(), videoLocation.getLongitude());
     }*/
     
-    urlConnection.setRequestProperty("Content-Length", atomData.length()+"");
+   // hPost.setHeader("Content-Length", atomData.length()+"");
 
-    OutputStreamWriter outStreamWriter = new OutputStreamWriter(urlConnection.getOutputStream());
-    outStreamWriter.write(atomData);
-    outStreamWriter.close();
-
-    int responseCode = urlConnection.getResponseCode();
+    StringEntity entity = new StringEntity(atomData);
+    entity.setContentType(new BasicHeader("Content-Type",
+        "application/atom+xml"));
+    hPost.setEntity(entity);
     
+    HttpResponse hResp = httpClient.execute(hPost);
+    
+    int responseCode = hResp.getStatusLine().getStatusCode();
 
 	// ERROR LOGGING
-	InputStream is = urlConnection.getErrorStream();
+    /*
+	InputStream is = httpClient.get
 	if (is != null) {
 		Log.e(LOG_TAG, " Error stream from Youtube available!");
 		BufferedReader in = new BufferedReader(
@@ -332,7 +362,7 @@ public class YouTubeSubmit {
 				Log.d(LOG_TAG, "vals:" + s);
 			}
 		}
-	}
+	}*/
     
     
     if (responseCode < 200 || responseCode >= 300) {
@@ -344,41 +374,71 @@ public class YouTubeSubmit {
         return uploadMetaData(slug, contentType, contentLength, false);
       } else {
         throw new IOException(String.format("response code='%s' (code %d)" + " for %s",
-            urlConnection.getResponseMessage(), responseCode, urlConnection.getURL()));
+            hResp.getStatusLine().getReasonPhrase(), responseCode, hPost.getRequestLine().getUri()));
       }
     }
 
-    return urlConnection.getHeaderField("Location");
+   // return urlConnection.getHeaderField("Location");
+    return hResp.getFirstHeader("Location").getValue();
   }
 
   private String gdataUpload(File file, String uploadUrl, int start, int end) throws IOException {
-    int chunk = end - start + 1;
-    int bufferSize = 1024;
-    byte[] buffer = new byte[bufferSize];
+   
+	//int chunk = end - start + 1;
+    //int bufferSize = 1024;
+    //byte[] buffer = new byte[bufferSize];
     FileInputStream fileStream = new FileInputStream(file);
 
-    HttpURLConnection urlConnection = getGDataUrlConnection(uploadUrl, null);
+    StrongHttpsClient httpClient = new StrongHttpsClient(mContext);
+    SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(mContext);
+
+    mUseTor = settings.getBoolean("pusetor", false);
+    
+	if (mUseTor)
+	{
+		//
+		httpClient.useProxy(true, "SOCKS", AppConstants.TOR_PROXY_HOST, AppConstants.TOR_PROXY_PORT);
+	}
+	
+		
+    HttpPost hPost = this.getGDataHttpPost(uploadUrl, null);
+  
+  //  HttpURLConnection urlConnection = getGDataUrlConnection(uploadUrl, null);
+    
     // some mobile proxies do not support PUT, using X-HTTP-Method-Override to get around this problem
     if (isFirstRequest()) {
       Log.d(LOG_TAG, String.format("Uploaded %d bytes so far, using POST method.", (int)totalBytesUploaded));
-      urlConnection.setRequestMethod("POST");
+      
     } else {
-      urlConnection.setRequestMethod("POST");
-      urlConnection.setRequestProperty("X-HTTP-Method-Override", "PUT");
-      Log.d(LOG_TAG, String.format("Uploaded %d bytes so far, using POST with X-HTTP-Method-Override PUT method.",
+      
+    	hPost.setHeader("X-HTTP-Method-Override", "PUT");
+     
+    	Log.d(LOG_TAG, String.format("Uploaded %d bytes so far, using POST with X-HTTP-Method-Override PUT method.",
         (int)totalBytesUploaded));
     }
-    urlConnection.setDoOutput(true);
-    urlConnection.setFixedLengthStreamingMode(chunk);
-    urlConnection.setRequestProperty("Content-Type", "video/mp4");
-    urlConnection.setRequestProperty("Content-Range", String.format("bytes %d-%d/%d", start, end,
-        file.length()));
-    Log.d(LOG_TAG, urlConnection.getRequestProperty("Content-Range"));
+    
+    //urlConnection.setDoOutput(true);
+    //urlConnection.setFixedLengthStreamingMode(chunk);
+    String mimeType = "video/mp4";
+    
+    hPost.setHeader("Content-Type", mimeType);
+    String cRange = String.format("bytes %d-%d/%d", start, end,
+            file.length());
+    hPost.setHeader("Content-Range", cRange);
+    
+    Log.d(LOG_TAG, "upload content-range: " + cRange);
 
-    OutputStream outStreamWriter = urlConnection.getOutputStream();
+    InputStreamEntityWithProgress fileEntity = new InputStreamEntityWithProgress(fileStream, start, end, file.length(), mimeType);//"binary/octet-stream");
+    hPost.setEntity(fileEntity);
 
-    fileStream.skip(start);
+    HttpResponse hResp = httpClient.execute(hPost);
+    
+    int responseCode = hResp.getStatusLine().getStatusCode();
 
+    Log.d(LOG_TAG, "responseCode=" + responseCode);
+    Log.d(LOG_TAG, "responseMessage=" + hResp.getStatusLine().getReasonPhrase());
+
+    /*
     int bytesRead;
     int totalRead = 0;
     while ((bytesRead = fileStream.read(buffer, 0, bufferSize)) != -1) {
@@ -404,26 +464,20 @@ public class YouTubeSubmit {
     }
 
     outStreamWriter.close();
+	*/
 
-    int responseCode = urlConnection.getResponseCode();
-
-    Log.d(LOG_TAG, "responseCode=" + responseCode);
-    Log.d(LOG_TAG, "responseMessage=" + urlConnection.getResponseMessage());
-
+    InputStream isResp = hResp.getEntity().getContent();
+    
     try {
       if (responseCode == 201) {
-        String videoId = parseVideoId(urlConnection.getInputStream());
+        String videoId = parseVideoId(isResp);
 
+        /*
         String latLng = null;
         if (this.videoLocation != null) {
           latLng = String.format("lat=%f lng=%f", this.videoLocation.getLatitude(),
               this.videoLocation.getLongitude());
         }
-
-        /*
-        submitToYtdDomain(this.ytdDomain, this.assignmentId, videoId,
-            this.youTubeName, YouTubeSubmit.this.clientLoginToken, this.title,
-            this.description, this.dateTaken, latLng, this.tags);
         */
         
         Message msg = handler.obtainMessage(888);
@@ -432,33 +486,35 @@ public class YouTubeSubmit {
 
         return videoId;
       } else if (responseCode == 200) {
-        Set<String> keySet = urlConnection.getHeaderFields().keySet();
-        String keys = urlConnection.getHeaderFields().keySet().toString();
-        Log.d(LOG_TAG, String.format("Headers keys %s.", keys));
-        for (String key : keySet) {
-          Log.d(LOG_TAG, String.format("Header key %s value %s.", key, urlConnection.getHeaderField(key)));          
+        Header[] headers = hResp.getAllHeaders();
+        
+        Log.d(LOG_TAG, String.format("Headers keys %s.", headers.length));
+        for (Header header : headers) {
+          Log.d(LOG_TAG, String.format("Header key %s value %s.", header.getName(), header.getValue()));          
         }
         Log.w(LOG_TAG, "Received 200 response during resumable uploading");
         throw new IOException(String.format("Unexpected response code : responseCode=%d responseMessage=%s", responseCode,
-              urlConnection.getResponseMessage()));
+              hResp.getStatusLine().getReasonPhrase()));
       } else {
+    	  
         if ((responseCode + "").startsWith("5")) {
           String error = String.format("responseCode=%d responseMessage=%s", responseCode,
-              urlConnection.getResponseMessage());
+        		  hResp.getStatusLine().getReasonPhrase());
           Log.w(LOG_TAG, error);
           // TODO - this exception will trigger retry mechanism to kick in
           // TODO - even though it should not, consider introducing a new type so
           // TODO - resume does not kick in upon 5xx
           throw new IOException(error);
-        } else if (responseCode == 308) {
+        } else if (responseCode == 308) { // these actually means "resume incomplete"
           // OK, the chunk completed succesfully 
           Log.d(LOG_TAG, String.format("responseCode=%d responseMessage=%s", responseCode,
-              urlConnection.getResponseMessage()));
+        		  hResp.getStatusLine().getReasonPhrase()));
         } else {
           // TODO - this case is not handled properly yet
           Log.w(LOG_TAG, String.format("Unexpected return code : %d %s while uploading :%s", responseCode,
-            urlConnection.getResponseMessage(), uploadUrl));
+        		  hResp.getStatusLine().getReasonPhrase(), uploadUrl));
         }
+        
       }
     } catch (ParserConfigurationException e) {
       e.printStackTrace();
@@ -468,26 +524,158 @@ public class YouTubeSubmit {
 
     return null;
   }
+  
+ /**
+  * File entity which supports a progress bar.<br/>
+  * Based on "org.apache.http.entity.FileEntity".
+  * @author Benny Neugebauer (www.bennyn.de)
+  */
+ class InputStreamEntityWithProgress extends AbstractHttpEntity implements Cloneable
+ {
+
+   protected final InputStream is;
+  // private final ProgressBarListener listener;
+  // private long transferredBytes;
+   private long mContentLength;
+   private long mStart;
+   private long mEnd;
+   
+   public InputStreamEntityWithProgress(final InputStream is, long start, long end, long contentLength, final String contentType)
+   {
+     super();
+     
+     this.is = is;
+     mStart = start;
+     mEnd = end;
+     mContentLength = contentLength;
+     setContentType(contentType);
+   }
+
+   public boolean isRepeatable()
+   {
+     return true;
+   }
+
+   public long getContentLength()
+   {
+     return mContentLength;
+   }
+
+   public InputStream getContent() throws IOException
+   {
+     return is;
+   }
+
+   public void writeTo(final OutputStream outstream) throws IOException
+   {
+     try
+     {
+     
+       is.skip(mStart);
+    	 
+       byte[] tmp = new byte[4096];
+       int bytesRead;
+       int bytesReadThisChunk = 0;
+       
+       BufferedOutputStream bos = new BufferedOutputStream(outstream);
+       
+       is.skip(mStart);
+       
+       while ((bytesRead = is.read(tmp)) != -1)
+       {
+         bos.write(tmp, 0, bytesRead);
+         
+         bytesReadThisChunk += bytesRead; //total just for this single resume
+         totalBytesUploaded += bytesRead; //total over all resumes
+
+         double percent = (totalBytesUploaded / currentFileSize) * 99;
+
+         Log.d(AppConstants.TAG, "total bytes uploaded: " + totalBytesUploaded + " = " + percent + "%");
+         
+         String status = String.format( "%,d/%,d bytes transfered",  Math.round(totalBytesUploaded),  Math.round(currentFileSize));
+         
+         Message msg = handler.obtainMessage(888);
+         
+         String title = "Uploading to YouTube...";
+         if (mUseTor)
+        	 title = "Uploading to YouTube (through Tor)...";
+         
+         msg.getData().putString("statusTitle", title);
+         msg.getData().putString("status", status);
+         msg.getData().putInt("progress", (int)percent);
+         handler.sendMessage(msg);
+         
+         if (bytesReadThisChunk == (mEnd - mStart + 1)) {
+             break;
+           }
+        
+       }
+       
+       bos.close();
+     }
+     finally
+     {
+       is.close();
+     }
+   }
+
+   public boolean isStreaming()
+   {
+     return false;
+   }
+
+   @Override
+   public Object clone() throws CloneNotSupportedException
+   {
+     return super.clone();
+   }
+ }
+ 
 
   public boolean isFirstRequest() {
     return totalBytesUploaded==0;
   }
 
   private ResumeInfo resumeFileUpload(String uploadUrl, File file) throws IOException, ParserConfigurationException, SAXException, Internal500ResumeException {
-    HttpURLConnection urlConnection = getGDataUrlConnection(uploadUrl, file.getName());
-    urlConnection.setRequestProperty("Content-Range", "bytes */*");
-    urlConnection.setRequestMethod("POST");
-    urlConnection.setRequestProperty("X-HTTP-Method-Override", "PUT");
-    urlConnection.setFixedLengthStreamingMode(0);
+	  
+	  
+	  StrongHttpsClient httpClient = new StrongHttpsClient(mContext);
+	  SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(mContext);
 
-    HttpURLConnection.setFollowRedirects(false);
+	  mUseTor = settings.getBoolean("pusetor", false);
+	     
+		if (mUseTor)
+		{
+			//
+			httpClient.useProxy(true, "SOCKS", AppConstants.TOR_PROXY_HOST, AppConstants.TOR_PROXY_PORT);
+		}
+		
+		
+	  HttpPost hPost = this.getGDataHttpPost(uploadUrl, file.getName());
+	  
+	//HttpURLConnection urlConnection = getGDataUrlConnection(uploadUrl, file.getName());
+	 
+	  hPost.setHeader("Content-Range", "bytes */*");
+   // urlConnection.setRequestMethod("POST");
+	  hPost.setHeader("X-HTTP-Method-Override", "PUT");
+   // urlConnection.setFixedLengthStreamingMode(0);
 
-    urlConnection.connect();
-    int responseCode = urlConnection.getResponseCode();
+	  //HttpURLConnection.setFollowRedirects(false);
+	  
+	  HttpResponse hResp = httpClient.execute(hPost);
+	    
+	  int respCode = hResp.getStatusLine().getStatusCode();
+	  String respMessage = hResp.getStatusLine().getReasonPhrase();
+	  
+	  Log.d(LOG_TAG, "responseCode=" + respCode);
+	  Log.d(LOG_TAG, "responseMessage=" + hResp.getStatusLine().getReasonPhrase());
 
-    if (responseCode >= 300 && responseCode < 400) {
+	    InputStream isResp = hResp.getEntity().getContent();
+
+
+    if (respCode >= 300 && respCode < 400) {
       int nextByteToUpload;
-      String range = urlConnection.getHeaderField("Range");
+      String range = hResp.getFirstHeader("Range").getValue();
       if (range == null) {
         Log.d(LOG_TAG, String.format("PUT to %s did not return 'Range' header.", uploadUrl));
         nextByteToUpload = 0;
@@ -501,15 +689,15 @@ public class YouTubeSubmit {
         }
       }
       return new ResumeInfo(nextByteToUpload);
-    } else if (responseCode >= 200 && responseCode < 300) {
-      return new ResumeInfo(parseVideoId(urlConnection.getInputStream()));
-    } else if (responseCode == 500) {
+    } else if (respCode >= 200 && respCode < 300) {
+      return new ResumeInfo(parseVideoId(isResp));
+    } else if (respCode == 500) {
       // TODO this is a workaround for current problems with resuming uploads while switching transport (Wifi->EDGE)
       throw new Internal500ResumeException(String.format("Unexpected response for PUT to %s: %s " +
-      		"(code %d)", uploadUrl, urlConnection.getResponseMessage(), responseCode));
+      		"(code %d)", uploadUrl, respMessage, respCode));
     } else {
       throw new IOException(String.format("Unexpected response for PUT to %s: %s " +
-      		"(code %d)", uploadUrl, urlConnection.getResponseMessage(), responseCode));
+      		"(code %d)", uploadUrl, respMessage, respCode));
     }
   }
 
@@ -548,6 +736,34 @@ public class YouTubeSubmit {
     return null;
   }
 
+  private HttpPost getGDataHttpPost (String urlString, String slug) throws IOException
+  {
+	    
+	    HttpPost request = new HttpPost(urlString);
+	    
+	    request.setHeader("Host", "uploads.gdata.youtube.com");
+	    request.setHeader("Content-Type", CONTENT_TYPE);
+	    
+
+	    String devKey = activity.getString(R.string.dev_key);
+	    request.setHeader("X-GData-Key", String.format("key=%s", devKey));
+	    
+	    if (clientLoginToken != null)
+			request.setHeader("Authorization", String.format(
+					"GoogleLogin auth=\"%s\"", clientLoginToken));
+	    
+	    
+	    request.setHeader("GData-Version", "2");
+	    
+
+	    if (slug != null)
+	    	request.setHeader("Slug", slug);
+	    
+	    return request;
+
+  }
+  
+  /*
   private HttpURLConnection getGDataUrlConnection(String urlString, String slug) throws IOException {
     URL url = new URL(urlString);
     HttpURLConnection connection = (HttpURLConnection) url.openConnection();
@@ -569,7 +785,7 @@ public class YouTubeSubmit {
     	connection.setRequestProperty("Slug", slug);
         
     return connection;
-  }
+  }*/
 
   public void getAuthTokenWithPermission(String accountName) {
 	
