@@ -55,10 +55,9 @@ public class XmlRpcProxy implements InvocationHandler
 
     public static Object createProxy(
         URL url,
-        Class[] interfaces,
-        boolean streamMessages )
+        Class[] interfaces)
     {
-        return createProxy( url, null, interfaces, streamMessages );
+        return createProxy( url, null, interfaces );
     }
 
 
@@ -85,13 +84,12 @@ public class XmlRpcProxy implements InvocationHandler
     public static Object createProxy(
         URL url,
         String objectName,
-        Class[] interfaces,
-        boolean streamMessages )
+        Class[] interfaces )
     {
         return Proxy.newProxyInstance(
             interfaces[ 0 ].getClassLoader(),
             interfaces,
-            new XmlRpcProxy( url, objectName, streamMessages ) );
+            new XmlRpcProxy( url, objectName ) );
     }
 
 
@@ -206,10 +204,9 @@ public class XmlRpcProxy implements InvocationHandler
 
     protected XmlRpcProxy(
         URL url,
-        String objectName,
-        boolean streamMessages )
+        String objectName )
     {
-        client = new XmlRpcClient( url, streamMessages );
+        client = new XmlRpcClient( url );
         this.objectName = objectName;
     }
 
