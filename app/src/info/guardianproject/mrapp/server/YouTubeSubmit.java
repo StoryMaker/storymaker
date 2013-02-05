@@ -84,7 +84,7 @@ public class YouTubeSubmit {
   private static final int MAX_RETRIES = 5;
   private static final int BACKOFF = 4; // base of exponential backoff
 
-  
+  private boolean mUseTor = false;
 
   public String videoId = null;
   
@@ -295,9 +295,9 @@ public class YouTubeSubmit {
     StrongHttpsClient httpClient = new StrongHttpsClient(mContext);
     SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(mContext);
 
-    boolean useTor = settings.getBoolean("pusetor", false);
+    mUseTor = settings.getBoolean("pusetor", false);
     
-	if (useTor)
+	if (mUseTor)
 	{
 		//
 		httpClient.useProxy(true, "SOCKS", AppConstants.TOR_PROXY_HOST, AppConstants.TOR_PROXY_PORT);
@@ -392,9 +392,9 @@ public class YouTubeSubmit {
     StrongHttpsClient httpClient = new StrongHttpsClient(mContext);
     SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(mContext);
 
-    boolean useTor = settings.getBoolean("pusetor", false);
+    mUseTor = settings.getBoolean("pusetor", false);
     
-	if (useTor)
+	if (mUseTor)
 	{
 		//
 		httpClient.useProxy(true, "SOCKS", AppConstants.TOR_PROXY_HOST, AppConstants.TOR_PROXY_PORT);
@@ -595,7 +595,12 @@ public class YouTubeSubmit {
          String status = String.format( "%,d/%,d bytes transfered",  Math.round(totalBytesUploaded),  Math.round(currentFileSize));
          
          Message msg = handler.obtainMessage(888);
-         msg.getData().putString("statusTitle", "Uploading to YouTube...");
+         
+         String title = "Uploading to YouTube...";
+         if (mUseTor)
+        	 title = "Uploading to YouTube (through Tor)...";
+         
+         msg.getData().putString("statusTitle", title);
          msg.getData().putString("status", status);
          msg.getData().putInt("progress", (int)percent);
          handler.sendMessage(msg);
@@ -637,9 +642,9 @@ public class YouTubeSubmit {
 	  StrongHttpsClient httpClient = new StrongHttpsClient(mContext);
 	  SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(mContext);
 
-	     boolean useTor = settings.getBoolean("pusetor", false);
+	  mUseTor = settings.getBoolean("pusetor", false);
 	     
-		if (useTor)
+		if (mUseTor)
 		{
 			//
 			httpClient.useProxy(true, "SOCKS", AppConstants.TOR_PROXY_HOST, AppConstants.TOR_PROXY_PORT);
