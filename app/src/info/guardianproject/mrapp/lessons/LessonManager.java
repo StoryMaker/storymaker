@@ -204,6 +204,16 @@ public class LessonManager implements Runnable {
 		
 	}
 	
+	private static StrongHttpsClient mHttpClient;
+	
+	private synchronized StrongHttpsClient getHttpClientInstance ()
+	{
+		if (mHttpClient == null)
+			mHttpClient = new StrongHttpsClient(mContext);
+		
+		return mHttpClient;
+	}
+	
 	public void run ()
 	{
 
@@ -215,8 +225,9 @@ public class LessonManager implements Runnable {
 			if (mSubFolder != null)
 				lessonFolder = new File(mLocalStorageRoot, mSubFolder);
 		
+				
 			// open URL and download file listing
-			StrongHttpsClient httpClient = new StrongHttpsClient(mContext);
+			StrongHttpsClient httpClient = getHttpClientInstance();
 			
 			 SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(mContext);
 
