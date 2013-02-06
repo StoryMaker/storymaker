@@ -16,23 +16,38 @@
 
 package redstone.xmlrpc;
 
+import info.guardianproject.onionkit.trust.StrongHttpsClient;
+
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.BufferedWriter;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.StringWriter;
 import java.io.Writer;
-import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+
+import org.apache.http.Header;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.AbstractHttpEntity;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.message.BasicHeader;
+import org.apache.http.util.EntityUtils;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
+
+import android.content.Context;
+import android.os.Message;
+import android.util.Log;
 
 /**
  *  An XmlRpcClient represents a connection to an XML-RPC enabled server. It
@@ -50,35 +65,20 @@ public class XmlRpcClient extends XmlRpcParser implements XmlRpcInvocationHandle
      *
      *  @param url the URL at which the XML-RPC service is locaed
      * 
-     *  @param streamMessages Indicates whether or not to stream messages directly
-     *                        or if the messages should be completed locally
-     *                        before being sent all at once. Streaming is not
-     *                        directly supported by XML-RPC, since the
-     *                        Content-Length header is not included in the HTTP post. 
-     *                        If the other end is not relying on Content-Length,
-     *                        streaming the message directly is much more efficient.
+     *
      * @throws MalformedURLException 
      */
 
-    public XmlRpcClient( String url, boolean streamMessages ) throws MalformedURLException
-    {
-        this( new URL( url ), streamMessages );
-    }
-    
     
     /**
      *  @see #XmlRpcClient(String,boolean)
      */
 
-    public XmlRpcClient( URL url, boolean streamMessages )
+    public XmlRpcClient( URL url)
     {
         this.url = url;
-        this.streamMessages = streamMessages;
+        writer = new StringWriter( 2048 );
         
-        if ( !streamMessages )
-        {
-            writer = new StringWriter( 2048 );
-        }
     }
 
 
@@ -311,18 +311,7 @@ public class XmlRpcClient extends XmlRpcParser implements XmlRpcInvocationHandle
     {
         try
         {
-            if ( streamMessages )
-            {
-                openConnection();
-                writer = new BufferedWriter(
-                    new OutputStreamWriter(
-                        connection.getOutputStream(),
-                        XmlRpcMessages.getString( "XmlRpcClient.Encoding" ) ) );
-            }
-            else
-            {
-                ( ( StringWriter ) writer ).getBuffer().setLength( 0 );
-            }
+            ( ( StringWriter ) writer ).getBuffer().setLength( 0 );
             
             writer.write( "<?xml version=\"1.0\" encoding=\"" );
             writer.write( XmlRpcMessages.getString( "XmlRpcClient.Encoding" ) );
@@ -330,6 +319,8 @@ public class XmlRpcClient extends XmlRpcParser implements XmlRpcInvocationHandle
             writer.write( "<methodCall><methodName>" );
             writer.write( methodName );
             writer.write( "</methodName><params>" );
+            
+            
         }
         catch( IOException ioe )
         {
@@ -356,23 +347,15 @@ public class XmlRpcClient extends XmlRpcParser implements XmlRpcInvocationHandle
             writer.write( "</params>" );
             writer.write( "</methodCall>" );
 
-            if ( streamMessages )
-            {
-                writer.flush();
-            }
-            else
-            {
-                StringBuffer buffer = ( ( StringWriter ) writer ).getBuffer();
+            String xmlOut = ( ( StringWriter ) writer ).getBuffer().toString();
+            StringEntity entity = new StringEntity(xmlOut);
+            entity.setContentType(
+            		new BasicHeader("Content-Type", "text/xml; charset=" + XmlRpcMessages.getString( "XmlRpcClient.Encoding" ))
+            );
 
-                openConnection();
-                connection.setRequestProperty( "Content-Length", String.valueOf( buffer.length() ) );
-
-                OutputStream output = new BufferedOutputStream( connection.getOutputStream() );
-                output.write( buffer.toString().getBytes( XmlRpcMessages.getString( "XmlRpcClient.Encoding" ) ) );
-                output.flush();
-                output.close();
-            }
-            
+            Log.d("XmlRpc",xmlOut);
+            hResp = openConnection(entity);
+       
             handleResponse();
         }
         catch ( IOException ioe )
@@ -389,8 +372,6 @@ public class XmlRpcClient extends XmlRpcParser implements XmlRpcInvocationHandle
             }
             catch( IOException ignore ) { /* Closed or not, we don't care at this point. */ }
             
-            connection.disconnect();
-            connection = null;
         }
         
         return returnValue;
@@ -417,16 +398,16 @@ public class XmlRpcClient extends XmlRpcParser implements XmlRpcInvocationHandle
     {
         try
         {
-            parse( new BufferedInputStream( connection.getInputStream() ) );
+            parse( new BufferedInputStream( hResp.getEntity().getContent()) );
 
-            int fieldNumber = 1;
-            String headerFieldKey = null;
             headerFields.clear();
 
-            while ( ( headerFieldKey = connection.getHeaderFieldKey( fieldNumber ) ) != null )
+            Header[] headers = hResp.getAllHeaders();
+            
+            for (Header header : headers)
             {
-                headerFields.put( headerFieldKey, connection.getHeaderField( fieldNumber ) );
-                ++fieldNumber;
+                headerFields.put( header.getName(), header.getValue() );
+	
             }
         }
         catch ( Exception e )
@@ -496,17 +477,21 @@ public class XmlRpcClient extends XmlRpcParser implements XmlRpcInvocationHandle
      *                      the internal java.net.HttpURLConnection.
      */
 
-    private void openConnection() throws IOException
+    private HttpResponse openConnection(AbstractHttpEntity entity) throws IOException
     {
-        connection = ( HttpURLConnection ) url.openConnection();
-        connection.setDoInput( true );
-        connection.setDoOutput( true );
-        connection.setRequestMethod( "POST" );
-        
-        connection.setRequestProperty(
-            "Content-Type", "text/xml; charset=" +
-            XmlRpcMessages.getString( "XmlRpcClient.Encoding" ) );
-        
+    	StrongHttpsClient httpClient = new StrongHttpsClient(mContext);
+
+		if (mUseProxy)
+		{
+			httpClient.useProxy(true, mProxyType, mProxyHost, mProxyPort);
+		}
+		
+		HttpPost request = new HttpPost(url.toExternalForm());
+		
+		request.setHeader("Content-Type", "text/xml; charset=" +
+	            XmlRpcMessages.getString( "XmlRpcClient.Encoding" ));
+		    
+
         if ( requestProperties != null )
         {
             for ( Iterator propertyNames = requestProperties.keySet().iterator();
@@ -514,19 +499,47 @@ public class XmlRpcClient extends XmlRpcParser implements XmlRpcInvocationHandle
             {
                 String propertyName = ( String ) propertyNames.next();
                 
-                connection.setRequestProperty(
+               request.setHeader(
                     propertyName,
                     ( String ) requestProperties.get( propertyName ) );
             }
         }
+        
+        
+	if (entity != null)
+		request.setEntity(entity);
+	
+        
+        return httpClient.execute(request);
     }
-
-
+    
+    public static void setContext (Context context)
+    {
+    	mContext = context;
+    }
+    
+    public static void setProxy (boolean useProxy, String proxyType, String proxyHost, int proxyPort)
+    {
+    	mUseProxy = useProxy;
+    	mProxyType = proxyType;
+    	mProxyHost = proxyHost;
+    	mProxyPort = proxyPort;
+    }
+    
     /** The server URL. */
     private URL url;
 
-    /** Connection to the server. */
-    private HttpURLConnection connection;
+    /** HTTP Resposne **/
+    private HttpResponse hResp = null; //latest response
+    
+    /** The Android App Context **/
+    private static Context mContext;
+    
+    /** Proxy Settings **/
+    private static boolean mUseProxy = false;
+    private static String mProxyType = null;
+    private static String mProxyHost = null;
+    private static int mProxyPort = -1;
     
     /** HTTP request properties, or null if none have been set by the application. */
     private Map requestProperties;
@@ -539,9 +552,6 @@ public class XmlRpcClient extends XmlRpcParser implements XmlRpcInvocationHandle
 
     /** Writer to which XML-RPC messages are serialized. */
     private Writer writer;
-
-    /** Indicates wheter or not we shall stream the message directly or build them locally? */
-    private boolean streamMessages;
     
     /** Indicates whether or not the incoming response is a fault response. */
     private boolean isFaultResponse;

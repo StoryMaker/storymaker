@@ -346,7 +346,11 @@ public class Wordpress {
     this.username = username;
     this.password = password;
     this.xmlRpcUrl = xmlRpcUrl;
+    
+    
     initMetaWebLog();
+    
+    
   }
 
   /**
@@ -624,20 +628,19 @@ public class Wordpress {
   private void initMetaWebLog() throws MalformedURLException {
     final URL url = new URL(this.xmlRpcUrl);
     this.wp = (WordpressBridge) XmlRpcProxy.createProxy(url, "wp",
-        new Class[] { WordpressBridge.class }, true);
+        new Class[] { WordpressBridge.class });
     this.mw = (MetaWebLogBridge) XmlRpcProxy.createProxy(url, "metaWeblog",
-        new Class[] { MetaWebLogBridge.class }, true);
+        new Class[] { MetaWebLogBridge.class });
     this.mt = (MovableTypeBridge) XmlRpcProxy.createProxy(url, "mt",
-        new Class[] { MovableTypeBridge.class }, true);
+        new Class[] { MovableTypeBridge.class });
     this.demo = (DemoBridge) XmlRpcProxy.createProxy(url, "demo",
-        new Class[] { DemoBridge.class }, true);
+        new Class[] { DemoBridge.class });
     this.pingback = (PingbackBridge) XmlRpcProxy.createProxy(url, "pingback",
-        new Class[] { PingbackBridge.class }, true);
+        new Class[] { PingbackBridge.class });
     this.blogger = (BloggerBridge) XmlRpcProxy.createProxy(url, "blogger",
-        new Class[] { BloggerBridge.class }, true);
+        new Class[] { BloggerBridge.class });
     this.pingbackExt = (PingbackExtensionsBridge) XmlRpcProxy.createProxy(url,
-        "pingback.extensions", new Class[] { PingbackExtensionsBridge.class },
-        true);
+        "pingback.extensions", new Class[] { PingbackExtensionsBridge.class });
   }
 
   /**
@@ -1181,4 +1184,5 @@ interface WordpressBridge {
   Integer newComment(Integer blogid, String username, String password,
       Integer post_id, XmlRpcStruct comment) throws XmlRpcFault;
 
+  
 }

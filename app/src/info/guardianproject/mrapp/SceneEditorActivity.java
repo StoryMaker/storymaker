@@ -175,8 +175,16 @@ public class SceneEditorActivity extends BaseActivity implements ActionBar.TabLi
   	        
   	        int progress = msg.getData().getInt("progress");
   	        
-  	        if (mProgressDialog != null && progress > 0)
+  	        if (mProgressDialog != null)
+  	        {
+  	        	if (progress >= 0)
   	        	mProgressDialog.setProgress(progress);
+  	        
+  	        	if (statusTitle != null)
+  					mProgressDialog.setTitle(statusTitle);
+  				
+  	        }
+
 			
 			switch (msg.what)
 			{
@@ -187,9 +195,6 @@ public class SceneEditorActivity extends BaseActivity implements ActionBar.TabLi
 					{
 						if (mProgressDialog != null)
 						{
-							if (statusTitle != null)
-								mProgressDialog.setTitle(statusTitle);
-							
 							mProgressDialog.setMessage(status);
 						}
 						else
@@ -1325,7 +1330,7 @@ public class SceneEditorActivity extends BaseActivity implements ActionBar.TabLi
             }
 
             final YouTubeSubmit yts = new YouTubeSubmit(null, title, ytdesc, new Date(),
-                    SceneEditorActivity.this, mHandlerPub);
+                    SceneEditorActivity.this, mHandlerPub, mContext);
 
             Thread thread = new Thread() {
                 public void run() {
