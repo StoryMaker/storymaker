@@ -236,7 +236,7 @@ public class LessonManager implements Runnable {
 			if (useTor)
 			{
 				//
-				httpClient.useProxy(true, "SOCKS", AppConstants.TOR_PROXY_HOST, AppConstants.TOR_PROXY_PORT);
+//				httpClient.useProxy(true, "SOCKS", AppConstants.TOR_PROXY_HOST, AppConstants.TOR_PROXY_PORT);
 			}
 			
 			String urlBase = mUrlRemoteRepo;

@@ -300,7 +300,7 @@ public class YouTubeSubmit {
 	if (mUseTor)
 	{
 		//
-		httpClient.useProxy(true, "SOCKS", AppConstants.TOR_PROXY_HOST, AppConstants.TOR_PROXY_PORT);
+//		httpClient.useProxy(true, "SOCKS", AppConstants.TOR_PROXY_HOST, AppConstants.TOR_PROXY_PORT);
 	}
 	
  			
@@ -397,7 +397,7 @@ public class YouTubeSubmit {
 	if (mUseTor)
 	{
 		//
-		httpClient.useProxy(true, "SOCKS", AppConstants.TOR_PROXY_HOST, AppConstants.TOR_PROXY_PORT);
+//		httpClient.useProxy(true, "SOCKS", AppConstants.TOR_PROXY_HOST, AppConstants.TOR_PROXY_PORT);
 	}
 	
 		
@@ -647,7 +647,7 @@ public class YouTubeSubmit {
 		if (mUseTor)
 		{
 			//
-			httpClient.useProxy(true, "SOCKS", AppConstants.TOR_PROXY_HOST, AppConstants.TOR_PROXY_PORT);
+//			httpClient.useProxy(true, "SOCKS", AppConstants.TOR_PROXY_HOST, AppConstants.TOR_PROXY_PORT);
 		}
 		
 		
