@@ -8,7 +8,6 @@ import java.util.Locale;
 
 import android.content.Context;
 import android.media.ExifInterface;
-import android.os.Environment;
 import android.widget.Toast;
 
 public class AppConstants {

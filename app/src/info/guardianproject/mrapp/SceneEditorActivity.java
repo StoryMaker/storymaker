@@ -1,89 +1,44 @@
 
 package info.guardianproject.mrapp;
 
-import info.guardianproject.mrapp.media.AudioRecorderView;
 import info.guardianproject.mrapp.media.MediaProjectManager;
 import info.guardianproject.mrapp.media.OverlayCameraActivity;
 import info.guardianproject.mrapp.model.Clip;
 import info.guardianproject.mrapp.model.Media;
 import info.guardianproject.mrapp.model.Project;
-import info.guardianproject.mrapp.model.Template;
-import info.guardianproject.mrapp.server.LoginActivity;
-import info.guardianproject.mrapp.server.ServerManager;
-import info.guardianproject.mrapp.server.SoundCloudUploader;
-import info.guardianproject.mrapp.server.YouTubeSubmit;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Date;
 
 import net.micode.soundrecorder.SoundRecorder;
 
-import org.ffmpeg.android.MediaDesc;
 import org.ffmpeg.android.MediaUtils;
 import org.holoeverywhere.app.AlertDialog;
 import org.holoeverywhere.app.ProgressDialog;
-import org.holoeverywhere.widget.SeekBar;
-import org.holoeverywhere.widget.SeekBar.OnSeekBarChangeListener;
-import org.holoeverywhere.widget.ToggleButton;
 import org.json.JSONException;
 
-import redstone.xmlrpc.XmlRpcFault;
-import android.accounts.Account;
-import android.accounts.AccountManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.res.Configuration;
-import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.media.MediaPlayer;
-import android.media.MediaPlayer.OnCompletionListener;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
-import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.NavUtils;
-import android.support.v4.view.ViewPager;
-import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.util.Log;
-import android.view.DragEvent;
-import android.view.LayoutInflater;
-import android.view.MotionEvent;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.view.View.OnDragListener;
-import android.view.View.OnTouchListener;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.Button;
-import android.widget.CompoundButton;
-import android.widget.CompoundButton.OnCheckedChangeListener;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.MediaController;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
-import com.animoto.android.views.DraggableGridView;
-import com.animoto.android.views.OnRearrangeListener;
 
 public class SceneEditorActivity extends EditorBaseActivity implements ActionBar.TabListener {
 	private static final String STATE_SELECTED_NAVIGATION_ITEM = "selected_navigation_item";

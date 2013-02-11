@@ -12,7 +12,6 @@ import android.support.v4.app.NavUtils;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
-import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 

@@ -1,7 +1,5 @@
 package info.guardianproject.mrapp;
 
-import java.util.Locale;
-
 import org.holoeverywhere.widget.Toast;
 
 import info.guardianproject.mrapp.R;
@@ -17,7 +15,6 @@ import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.TextView;
 
-import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 
