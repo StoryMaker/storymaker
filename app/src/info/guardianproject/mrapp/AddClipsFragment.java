@@ -50,7 +50,7 @@ public class AddClipsFragment extends Fragment {
     
     public void initTemplate ()  throws IOException, JSONException 
     {
-        int count = mActivity.mMPM.mProject.getClipCount();
+        int count = mActivity.mMPM.mScene.getClipCount();
         
         mTemplate = new Template();
         mTemplate.parseAsset(mActivity.getBaseContext(), mTemplatePath);
@@ -180,7 +180,7 @@ public class AddClipsFragment extends Fragment {
             
             Clip clip = sTemplate.getClips().get(i);
 
-            ArrayList<Media> lMedia = mActivity.mMPM.mProject.getMediaAsList();
+            ArrayList<Media> lMedia = mActivity.mMPM.mScene.getMediaAsList();
             Media media = null;
 
             if (lMedia.size() > i)

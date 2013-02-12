@@ -144,18 +144,19 @@ public class PublishFragment extends Fragment {
     }
     
     public void doPublish() {
-                    ServerManager sm = StoryMakerApp.getServerManager();
-                    sm.setContext(mActivity.getBaseContext());
+        ServerManager sm = StoryMakerApp.getServerManager();
+        sm.setContext(mActivity.getBaseContext());
 
-                    ToggleButton tbYouTube = (ToggleButton) mActivity.findViewById(R.id.toggleButtonYoutube);
-                    ToggleButton tbStoryMaker = (ToggleButton) mActivity.findViewById(R.id.toggleButtonStoryMaker);
-                    final boolean doYouTube = tbYouTube.isChecked();
-                    final boolean doStoryMaker = tbStoryMaker.isChecked();
-                    
-                    if (!sm.hasCreds() && doStoryMaker)
-                        showLogin();
-                    else
-                       handlePublish(doYouTube, doStoryMaker);
+        ToggleButton tbYouTube = (ToggleButton) mActivity.findViewById(R.id.toggleButtonYoutube);
+        ToggleButton tbStoryMaker = (ToggleButton) mActivity
+                .findViewById(R.id.toggleButtonStoryMaker);
+        final boolean doYouTube = tbYouTube.isChecked();
+        final boolean doStoryMaker = tbStoryMaker.isChecked();
+
+        if (!sm.hasCreds() && doStoryMaker)
+            showLogin();
+        else
+            handlePublish(doYouTube, doStoryMaker);
     }
 
     private void showLogin() {

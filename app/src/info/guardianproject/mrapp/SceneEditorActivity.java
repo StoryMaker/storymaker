@@ -76,7 +76,7 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
         }
         else
         {
-            int clipCount = 5;
+            int clipCount = 5; // FIXME get rid of hardcode
 
             String title = intent.getStringExtra("title");
         

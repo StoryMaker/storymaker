@@ -178,7 +178,8 @@ public class ProjectsListView extends ListView implements Runnable {
             ImageView ivType = (ImageView)row.findViewById(R.id.projectIconType);
             ImageView ivIcon = (ImageView)row.findViewById(R.id.projectIcon);
             
-            Media[] mediaList = project.getMediaAsArray();
+            // FIXME default to use first scene
+            Media[] mediaList = project.getScenesAsArray()[0].getMediaAsArray();
             
             if (mediaList != null && mediaList.length > 0)    
             {

@@ -4,6 +4,7 @@ import org.holoeverywhere.widget.Toast;
 
 import info.guardianproject.mrapp.R;
 import info.guardianproject.mrapp.model.Project;
+import info.guardianproject.mrapp.model.Scene;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
@@ -109,7 +110,13 @@ public class StoryNewActivity extends BaseActivity {
     	else
     	{
     		Project project = new Project (this, clipCount);
-    		project.setTitle(pName);
+            project.setTitle(pName);
+            project.save();
+            
+    		Scene scene = new Scene(this, clipCount);
+    		scene.setProjectIndex(0);
+    		scene.setProjectId(project.getId());
+    		scene.save();
     	
 	    	int checkedId = rGroup.getCheckedRadioButtonId();
 	    	

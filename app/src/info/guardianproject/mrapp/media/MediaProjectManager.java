@@ -1,16 +1,10 @@
 package info.guardianproject.mrapp.media;
 
 import info.guardianproject.mrapp.AppConstants;
-import info.guardianproject.mrapp.MediaOutputPreferences;
-import info.guardianproject.mrapp.R;
-import info.guardianproject.mrapp.R.id;
-import info.guardianproject.mrapp.R.layout;
-import info.guardianproject.mrapp.R.menu;
-import info.guardianproject.mrapp.R.string;
 import info.guardianproject.mrapp.SceneEditorActivity;
 import info.guardianproject.mrapp.model.Media;
 import info.guardianproject.mrapp.model.Project;
-import info.guardianproject.mrapp.ui.MediaView;
+import info.guardianproject.mrapp.model.Scene;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -21,50 +15,18 @@ import java.nio.channels.FileChannel;
 import java.util.ArrayList;
 
 import org.apache.commons.io.IOUtils;
-import org.ffmpeg.android.FfmpegController;
 import org.ffmpeg.android.MediaDesc;
-import org.ffmpeg.android.MediaUtils;
 import org.ffmpeg.android.ShellUtils.ShellCallback;
-import org.ffmpeg.android.filters.DrawBoxVideoFilter;
-import org.ffmpeg.android.filters.DrawTextVideoFilter;
-import org.ffmpeg.android.filters.FadeVideoFilter;
-import org.ffmpeg.android.filters.VideoFilter;
 
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.Configuration;
-import android.graphics.Bitmap;
-import android.graphics.Color;
-import android.media.MediaScannerConnection;
-import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
-import android.os.Parcelable;
 import android.preference.PreferenceManager;
-import android.support.v4.view.PagerAdapter;
-import android.support.v4.view.ViewPager;
 import android.util.Log;
-import android.view.Gravity;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.view.View.OnLongClickListener;
-import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.MediaController;
-import android.widget.TextView;
-import android.widget.Toast;
-import android.widget.VideoView;
-
-import com.actionbarsherlock.app.SherlockActivity;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuItem;
 
 public class MediaProjectManager implements MediaManager {
 	
@@ -79,6 +41,7 @@ public class MediaProjectManager implements MediaManager {
 	public MediaHelper mMediaHelper;
 	
 	public Project mProject = null;
+	public Scene mScene = null;
 	
 	private Context mContext = null;
 
@@ -98,22 +61,23 @@ public class MediaProjectManager implements MediaManager {
         mHandler = handler;
         
         mProject = project;
+        mScene = project.getScenesAsArray()[0]; // FIXME defaulting to first scene for now
         
         initProject();
     }
     
     private void initProject()
     {
-        mMediaList = new ArrayList<MediaClip>(mProject.getClipCount());
+        mMediaList = new ArrayList<MediaClip>(mScene.getClipCount());
         
-        for (int i = 0; i < mProject.getClipCount(); i++)
+        for (int i = 0; i < mScene.getClipCount(); i++)
             mMediaList.add(null); 
         
         mMediaHelper = new MediaHelper (mActivity, mHandler);
         
         initExternalStorage();
 
-        Media[] _medias = mProject.getMediaAsArray();
+        Media[] _medias = mScene.getMediaAsArray();
         for (Media media: _medias) {
         	if (media != null) {
                 try
@@ -152,8 +116,9 @@ public class MediaProjectManager implements MediaManager {
     		try
     		{
     			addMediaFile(mClipIndex, result.path, result.mimeType);
-    			mProject.setMedia(mClipIndex, "FIXME", result.path, result.mimeType);
-    			mProject.save();
+    			// FIXME use media type as definied in json
+    			mScene.setMedia(mClipIndex, "FIXME", result.path, result.mimeType);
+    			mScene.save();
     			((SceneEditorActivity)mActivity).refreshClipPager();
     		}
 			catch (IOException ioe)
@@ -192,7 +157,7 @@ public class MediaProjectManager implements MediaManager {
     	 Message msg = mHandler.obtainMessage(0);
          msg.getData().putString("status","cancelled");
 
-         ArrayList<Media> mList = mProject.getMediaAsList();
+         ArrayList<Media> mList = mScene.getMediaAsList();
          ArrayList<MediaDesc> alMediaIn = new ArrayList<MediaDesc>();
          
          //for video, render the sequence together
@@ -317,7 +282,7 @@ public class MediaProjectManager implements MediaManager {
 
 		    int slideDuration = Integer.parseInt(settings.getString("pslideduration", AppConstants.DEFAULT_SLIDE_DURATION+""));
 
-    		File fileAudio = new File(mContext.getExternalFilesDir(null),"narration" + mProject.getId() + ".wav");
+    		File fileAudio = new File(mContext.getExternalFilesDir(null),"narration" + mScene.getId() + ".wav");
     		String audioPath = null;
     		if (fileAudio.exists())
     			audioPath = fileAudio.getAbsolutePath();

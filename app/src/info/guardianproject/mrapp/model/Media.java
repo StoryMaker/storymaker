@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import info.guardianproject.mrapp.db.ProjectsProvider;
 import info.guardianproject.mrapp.db.StoryMakerDB;
-import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -20,15 +19,14 @@ public class Media {
     protected String mimeType;
     protected String clipType; // R.arrays.cliptypes
     protected int clipIndex; // which clip is this in the scene
-    protected int projectId; // foreign key to the project which holds this
-                             // media
+    protected int sceneId; // foreign key to the Scene which holds this media
 
     public Media(Context context) {
         this.context = context;
     }
 
     public Media(Context context, int id, String path, String mimeType, String clipType, int clipIndex,
-            int projectId) {
+            int sceneId) {
         super();
         this.context = context;
         this.id = id;
@@ -36,7 +34,7 @@ public class Media {
         this.mimeType = mimeType;
         this.clipType = clipType;
         this.clipIndex = clipIndex;
-        this.projectId = projectId;
+        this.sceneId = sceneId;
     }
 
     public Media(Context context, Cursor cursor) {
@@ -54,7 +52,7 @@ public class Media {
                 cursor.getInt(cursor
                         .getColumnIndex(StoryMakerDB.Schema.Media.COL_CLIP_INDEX)),
                 cursor.getInt(cursor
-                        .getColumnIndex(StoryMakerDB.Schema.Media.COL_PROJECT_ID)));
+                        .getColumnIndex(StoryMakerDB.Schema.Media.COL_SCENE_ID)));
     }
 
     /***** Table level static methods *****/
@@ -78,22 +76,22 @@ public class Media {
 
 
     /*
-     * gets media in project at location clipIndex
+     * gets media in scene at location clipIndex
      */
-    public static Cursor getAsCursor(Context context, int projectId, int clipIndex) {
-        String selection = StoryMakerDB.Schema.Media.COL_PROJECT_ID + "=? and " +
+    public static Cursor getAsCursor(Context context, int sceneId, int clipIndex) {
+        String selection = StoryMakerDB.Schema.Media.COL_SCENE_ID + "=? and " +
         		StoryMakerDB.Schema.Media.COL_CLIP_INDEX + "=?";
-        String[] selectionArgs = new String[] { "" + projectId, "" + clipIndex };
+        String[] selectionArgs = new String[] { "" + sceneId, "" + clipIndex };
         return context.getContentResolver().query(
                 ProjectsProvider.MEDIA_CONTENT_URI, null, selection,
                 selectionArgs, null);
     }
 
     /*
-     * gets media in project at location clipIndex
+     * gets media in scene at location clipIndex
      */
-    public static Media get(Context context, int projectId, int clipIndex) {
-        Cursor cursor = Media.getAsCursor(context, projectId, clipIndex);
+    public static Media get(Context context, int sceneId, int clipIndex) {
+        Cursor cursor = Media.getAsCursor(context, sceneId, clipIndex);
         if (cursor.moveToFirst()) {
             return new Media(context, cursor);
         } else {
@@ -106,15 +104,15 @@ public class Media {
                 ProjectsProvider.MEDIA_CONTENT_URI, null, null, null, null);
     }
 
-    public static ArrayList<Project> getAllAsList(Context context) {
-        ArrayList<Project> projects = new ArrayList<Project>();
+    public static ArrayList<Media> getAllAsList(Context context) {
+        ArrayList<Media> medias = new ArrayList<Media>();
         Cursor cursor = getAllAsCursor(context);
         if (cursor.moveToFirst()) {
             do {
-                projects.add(new Project(context, cursor));
+                medias.add(new Media(context, cursor));
             } while (cursor.moveToNext());
         }
-        return projects;
+        return medias;
     }
 
     /***** Object level methods *****/
@@ -126,7 +124,7 @@ public class Media {
 //        values.put(StoryMakerDB.Schema.Media.COL_MIME_TYPE, mimeType);
 //        values.put(StoryMakerDB.Schema.Media.COL_CLIP_TYPE, clipType);
 //        values.put(StoryMakerDB.Schema.Media.COL_CLIP_INDEX, clipIndex);
-//        values.put(StoryMakerDB.Schema.Media.COL_PROJECT_ID, projectId);
+//        values.put(StoryMakerDB.Schema.Media.COL_SCENE_ID, sceneId);
 //        ContentResolver cr = context.getContentResolver();
 //        Uri uri = cr.insert(
 //                ProjectsProvider.MEDIA_CONTENT_URI, values);
@@ -154,14 +152,14 @@ public class Media {
         values.put(StoryMakerDB.Schema.Media.COL_MIME_TYPE, mimeType);
         values.put(StoryMakerDB.Schema.Media.COL_CLIP_TYPE, clipType);
         values.put(StoryMakerDB.Schema.Media.COL_CLIP_INDEX, clipIndex);
-        values.put(StoryMakerDB.Schema.Media.COL_PROJECT_ID, projectId);
+        values.put(StoryMakerDB.Schema.Media.COL_SCENE_ID, sceneId);
         
         return values;
     }
     
     private void insert() {
     	// There can be only one!  check if a media item exists at this location already, if so purge it first.
-    	Cursor cursorDupes = getAsCursor(context, projectId, clipIndex);
+    	Cursor cursorDupes = getAsCursor(context, sceneId, clipIndex);
     	if ((cursorDupes.getCount() > 0) && cursorDupes.moveToFirst()) {
         	// FIXME we should allow audio clips to remain so they can be mixed down with their buddies
     		do {
@@ -247,18 +245,18 @@ public class Media {
     }
 
     /**
-     * @return the projectId
+     * @return the sceneId
      */
-    public int getProjectId() {
-        return projectId;
+    public int getSceneId() {
+        return sceneId;
     }
 
     /**
-     * @param projectId
-     *            the projectId to set
+     * @param sceneId
+     *            the sceneId to set
      */
-    public void setProjectId(int projectId) {
-        this.projectId = projectId;
+    public void setSceneId(int sceneId) {
+        this.sceneId = sceneId;
     }
 
 	/**

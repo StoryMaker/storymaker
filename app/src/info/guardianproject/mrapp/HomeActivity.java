@@ -452,7 +452,8 @@ public class HomeActivity extends BaseActivity implements ActionBar.TabListener 
                     }
                 });
         		
-        	    Media[] mediaList = project.getMediaAsArray();
+        		// FIXME default to use first scene
+        	    Media[] mediaList = project.getScenesAsArray()[0].getMediaAsArray();
                 
                 if (mediaList != null && mediaList.length > 0)    
                 {

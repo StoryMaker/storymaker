@@ -122,7 +122,7 @@ public class OrderClipsFragment extends Fragment {
             
             if (mAudioNarrator == null)
             {
-                String audioFile = "narration" + mMPM.mProject.getId() + ".wav";
+                String audioFile = "narration" + mMPM.mScene.getId() + ".wav";
                 mFileAudioNarration = new File(mActivity.getExternalFilesDir(null),audioFile);
                 mAudioNarrator = new AudioRecorderView(mFileAudioNarration,getActivity());
             }
@@ -263,7 +263,7 @@ public class OrderClipsFragment extends Fragment {
         }
         else
         {
-            mSeekBar.setMax(mMPM.mProject.getMediaAsList().size()*mPhotoEssaySlideLength);
+            mSeekBar.setMax(mMPM.mScene.getMediaAsList().size()*mPhotoEssaySlideLength);
             mSeekBar.setProgress(0);
         
             mPlayButton.setText(R.string.stop_recording);
@@ -275,7 +275,7 @@ public class OrderClipsFragment extends Fragment {
                 public void run ()
                 {
                     
-                    String[] pathArray = mMPM.mProject.getMediaAsPathArray();
+                    String[] pathArray = mMPM.mScene.getMediaAsPathArray();
                     
                     for (int i = 0; i < pathArray.length && mKeepRunningPreview; i++)
                     {
@@ -359,7 +359,7 @@ public class OrderClipsFragment extends Fragment {
              mPreviewVideoView.setVisibility(View.VISIBLE);
              
              // play
-             String[] pathArray = mMPM.mProject.getMediaAsPathArray();
+             String[] pathArray = mMPM.mScene.getMediaAsPathArray();
              mPreviewVideoView.setMedia(pathArray);
              mPreviewVideoView.play();
              
@@ -383,7 +383,7 @@ public class OrderClipsFragment extends Fragment {
     {
         mOrderClipsDGV.removeAllViews();
         
-        Media[] sceneMedias = mMPM.mProject.getMediaAsArray();
+        Media[] sceneMedias = mMPM.mScene.getMediaAsArray();
 
         for (int i = 0; i < sceneMedias.length; i++)
         {
@@ -404,7 +404,7 @@ public class OrderClipsFragment extends Fragment {
 
             @Override
             public void onRearrange(int oldIndex, int newIndex) {
-                mMPM.mProject.swapMediaIndex(oldIndex, newIndex);
+                mMPM.mScene.swapMediaIndex(oldIndex, newIndex);
                 mActivity.mdExported= null;
             }
         });
@@ -414,7 +414,7 @@ public class OrderClipsFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Log.d(TAG, "item clicked");
-                Media[] medias = mMPM.mProject.getMediaAsArray();
+                Media[] medias = mMPM.mScene.getMediaAsArray();
                 if (medias[position] != null) {
                     
                     if (medias[position].getMimeType().startsWith("video"))
@@ -434,11 +434,7 @@ public class OrderClipsFragment extends Fragment {
                     {
                         mImageViewMedia.setImageBitmap(mActivity.getThumbnail(medias[position]));
                     }
-                
-                
-
                 }
-
             }
         });
       
@@ -447,7 +443,7 @@ public class OrderClipsFragment extends Fragment {
     private void renderPreview ()
     {
 
-        String exportFileName = "preview-" + mMPM.mProject.getId();
+        String exportFileName = "preview-" + mMPM.mScene.getId();
         Message msg = mHandlerPub.obtainMessage(888);
         msg.getData().putString("status",
                 getActivity().getString(R.string.rendering_clips_));

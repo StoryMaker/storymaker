@@ -10,8 +10,8 @@ public class ProjectCleaner {
 	
 	public static void clean (Project project)
 	{
-		
-		ArrayList<Media> alMedia = project.getMediaAsList();
+		// FIXME default to use first scene
+		ArrayList<Media> alMedia = project.getScenesAsArray()[0].getMediaAsList();
 		
 	}
 
