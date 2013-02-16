@@ -1,8 +1,8 @@
 package info.guardianproject.mrapp;
 
-import info.guardianproject.mrapp.model.Clip;
+import info.guardianproject.mrapp.model.template.Clip;
 import info.guardianproject.mrapp.model.Media;
-import info.guardianproject.mrapp.model.Template;
+import info.guardianproject.mrapp.model.template.Template;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -54,13 +54,14 @@ public class AddClipsFragment extends Fragment {
         
         mTemplate = new Template();
         mTemplate.parseAsset(mActivity.getBaseContext(), mTemplatePath);
-        
-        while (mTemplate.getClips().size() < count)
-        {
-            Clip clip = new Clip();
-            clip.setDefaults();
-            mTemplate.addClip(clip);
-        }
+
+        // FIXME not sure the point of this yet, needs update to multi scene templates
+//        while (mTemplate.getScenes().size() < count)
+//        {
+//            Clip clip = new Clip();
+//            clip.setDefaults();
+//            mTemplate.addScene(clip);
+//        }
     }
     
     public Template getTemplate ()
@@ -84,12 +85,12 @@ public class AddClipsFragment extends Fragment {
     
     public void addTemplateClip (Clip clip) throws IOException, JSONException
     {
-        mTemplate.addClip(clip);
+        mTemplate.getScene(0).addClip(clip); // FIXME get rid of hard code 0, should have a scene object directly
         mAddClipsPagerAdapter = new AddClipsPagerAdapter(mFm, mTemplate);
         mAddClipsViewPager.setAdapter(mAddClipsPagerAdapter);
         
-        mAddClipsViewPager.setCurrentItem(mTemplate.getClips().size()-1);
-        mActivity.mMPM.mClipIndex = mTemplate.getClips().size()-1;
+        mAddClipsViewPager.setCurrentItem(mTemplate.getScenes().size()-1);
+        mActivity.mMPM.mClipIndex = mTemplate.getScenes().size()-1;
         
         mActivity.mdExported = null;
         
@@ -123,7 +124,7 @@ public class AddClipsFragment extends Fragment {
                 @Override
                 public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
                     
-                    if (((position+1) == mTemplate.getClips().size()) && positionOffset == 0 & positionOffsetPixels == 0)
+                    if (((position+1) == mTemplate.getScenes().size()) && positionOffset == 0 & positionOffsetPixels == 0)
                     {
                         mDragAtEnd++;
                         
@@ -178,7 +179,7 @@ public class AddClipsFragment extends Fragment {
         public Fragment getItem(int i) {
             
             
-            Clip clip = sTemplate.getClips().get(i);
+            Clip clip = sTemplate.getScene(0).getClip(i);
 
             ArrayList<Media> lMedia = mActivity.mMPM.mScene.getMediaAsList();
             Media media = null;
@@ -194,7 +195,7 @@ public class AddClipsFragment extends Fragment {
         
         @Override
         public int getCount() {
-            return sTemplate.getClips().size();
+            return sTemplate.getScenes().size();
         }
 
         @Override

@@ -1,6 +1,6 @@
 package info.guardianproject.mrapp;
 
-import info.guardianproject.mrapp.model.Clip;
+import info.guardianproject.mrapp.model.template.Clip;
 import info.guardianproject.mrapp.model.Media;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;

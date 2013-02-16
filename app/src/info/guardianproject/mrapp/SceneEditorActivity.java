@@ -3,7 +3,7 @@ package info.guardianproject.mrapp;
 
 import info.guardianproject.mrapp.media.MediaProjectManager;
 import info.guardianproject.mrapp.media.OverlayCameraActivity;
-import info.guardianproject.mrapp.model.Clip;
+import info.guardianproject.mrapp.model.template.Clip;
 import info.guardianproject.mrapp.model.Media;
 import info.guardianproject.mrapp.model.Project;
 
@@ -48,7 +48,7 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
     protected boolean templateStory = false; 
     protected Menu mMenu = null;
     private Context mContext = null;
-    private String templateJsonPath = null;
+    private String mTemplateJsonPath = null;
     private int mStoryMode = Project.STORY_TYPE_VIDEO;;
     private final static String CAPTURE_MIMETYPE_AUDIO = "audio/3gpp";
     public Fragment mFragmentTab0, mFragmentTab1, mLastTabFrag;
@@ -63,7 +63,7 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
         Intent intent = getIntent();
         
         templateStory = intent.hasExtra("template_story");
-        templateJsonPath = getIntent().getStringExtra("template_path");
+        mTemplateJsonPath = getIntent().getStringExtra("template_path");
         mStoryMode = getIntent().getIntExtra("story_mode", Project.STORY_TYPE_VIDEO);
 
         int pid = intent.getIntExtra("pid", -1); //project id
@@ -295,6 +295,7 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
         return super.onOptionsItemSelected(item);
     }
     
+    // FIXME move this into AddClipsFragment?
     public void addShotToScene ()
     {
         try
@@ -327,7 +328,7 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
     //
     // try {
     // mFragmentTab0 = new SceneChooserFragment(R.layout.fragment_add_clips, fm,
-    // templateJsonPath);
+    // mTemplateJsonPath);
     // } catch (IOException e) {
     // // TODO Auto-generated catch block
     // e.printStackTrace();
@@ -358,7 +359,7 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
             if (mFragmentTab0 == null)
             {
                 try {
-                    mFragmentTab0 = new AddClipsFragment(layout, fm, templateJsonPath, this);
+                    mFragmentTab0 = new AddClipsFragment(layout, fm, mTemplateJsonPath, this);
 
                     Bundle args = new Bundle();
                     args.putInt(AddClipsFragment.ARG_SECTION_NUMBER, tab.getPosition() + 1);
