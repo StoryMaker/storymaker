@@ -200,7 +200,7 @@ public class AddClipsFragment extends Fragment {
         
         @Override
         public int getCount() {
-            return sTemplate.getScene(mScene).getClips().size();
+            return sTemplate.getScene(0).getClips().size(); // FIXME get rid of hard coded 0
         }
 
         @Override
