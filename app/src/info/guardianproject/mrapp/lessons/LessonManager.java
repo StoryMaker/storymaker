@@ -256,7 +256,7 @@ public class LessonManager implements Runnable {
 
 			int statusCode = response.getStatusLine().getStatusCode();
 
-			InputStream isContent = entity.getContent();
+			//InputStream isContent = entity.getContent();
 			
 			long conLen = entity.getContentLength();
 								
