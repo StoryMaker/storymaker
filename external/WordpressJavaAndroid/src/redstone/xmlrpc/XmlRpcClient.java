@@ -483,7 +483,7 @@ public class XmlRpcClient extends XmlRpcParser implements XmlRpcInvocationHandle
 
 		if (mUseProxy)
 		{
-			httpClient.useProxy(true, mProxyType, mProxyHost, mProxyPort);
+//			httpClient.useProxy(true, mProxyType, mProxyHost, mProxyPort);
 		}
 		
 		HttpPost request = new HttpPost(url.toExternalForm());

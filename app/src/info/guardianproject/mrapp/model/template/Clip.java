@@ -1,7 +1,8 @@
-package info.guardianproject.mrapp.model;
+package info.guardianproject.mrapp.model.template;
 
 public class Clip {
 
+    // TODO use getter/setters
     public String mTitle;
     public String mArtwork;
     public String mShotSize;
@@ -17,15 +18,12 @@ public class Clip {
         
     }
     
-    public void setDefaults ()
+    public void setDefaults()
     {
-
-        
         mDescription="Your clip";
         mShotType = 3;
         mArtwork = "cliptype_medium";
         mTip = "Add your own shot";
-        
     }
     /*
     "Clip": "Signature",

@@ -1,11 +1,10 @@
 package info.guardianproject.mrapp;
 
-import java.util.Locale;
-
 import org.holoeverywhere.widget.Toast;
 
 import info.guardianproject.mrapp.R;
 import info.guardianproject.mrapp.model.Project;
+import info.guardianproject.mrapp.model.Scene;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
@@ -17,7 +16,6 @@ import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.TextView;
 
-import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 
@@ -112,7 +110,13 @@ public class StoryNewActivity extends BaseActivity {
     	else
     	{
     		Project project = new Project (this, clipCount);
-    		project.setTitle(pName);
+            project.setTitle(pName);
+            project.save();
+            
+    		Scene scene = new Scene(this, clipCount);
+    		scene.setProjectIndex(0);
+    		scene.setProjectId(project.getId());
+    		scene.save();
     	
 	    	int checkedId = rGroup.getCheckedRadioButtonId();
 	    	
@@ -124,7 +128,8 @@ public class StoryNewActivity extends BaseActivity {
 	    	if (checkedId == R.id.radioStoryType0)
 	    	{
 	    		//video
-	    		templateJsonPath = "story/templates/" + lang + "/video_simple.json";
+//	    		templateJsonPath = "story/templates/" + lang + "/video_simple.json";
+	    	    templateJsonPath = "story/templates/" + lang + "/video_3_scene.json"; // FIXME testing new template loader
 	    		storyMode = Project.STORY_TYPE_VIDEO;
 	    		
 	    	}
@@ -158,7 +163,11 @@ public class StoryNewActivity extends BaseActivity {
 	    	intent.putExtra("template_path", templateJsonPath);
 	    	intent.putExtra("title", project.getTitle());
 	    	intent.putExtra("pid", project.getId());
+	    	intent.putExtra("scene", 0);
+	    	
 	        startActivity(intent);
+	        
+	        finish();
     	}
     }
 

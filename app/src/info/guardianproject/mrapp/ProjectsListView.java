@@ -8,7 +8,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
-import java.util.Locale;
 
 import org.ffmpeg.android.MediaUtils;
 import org.holoeverywhere.app.AlertDialog;
@@ -24,7 +23,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -88,7 +86,8 @@ public class ProjectsListView extends ListView implements Runnable {
 		    	if (project.getStoryType() == Project.STORY_TYPE_VIDEO)
 		    	{
 		    		//video
-		    		templateJsonPath = "story/templates/" + lang + "/video_simple.json";
+//		    		templateJsonPath = "story/templates/" + lang + "/video_simple.json";
+		    	    templateJsonPath = "story/templates/" + lang + "/video_3_scene.json"; // FIXME testing new template loader
 		    	
 		    		
 		    	}
@@ -180,7 +179,8 @@ public class ProjectsListView extends ListView implements Runnable {
             ImageView ivType = (ImageView)row.findViewById(R.id.projectIconType);
             ImageView ivIcon = (ImageView)row.findViewById(R.id.projectIcon);
             
-            Media[] mediaList = project.getMediaAsArray();
+            // FIXME default to use first scene
+            Media[] mediaList = project.getScenesAsArray()[0].getMediaAsArray();
             
             if (mediaList != null && mediaList.length > 0)    
             {

@@ -17,12 +17,7 @@ import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.PixelFormat;
-import android.os.Bundle;
-import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.WindowManager;
-import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 
 import com.actionbarsherlock.view.Window;

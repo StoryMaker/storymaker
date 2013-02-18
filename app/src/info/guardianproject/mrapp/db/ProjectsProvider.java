@@ -20,10 +20,14 @@ public class ProjectsProvider extends ContentProvider {
     public static final int LESSON_ID = 112;
     public static final int MEDIA = 103;
     public static final int MEDIA_ID = 113;
+    public static final int SCENES = 104;
+    public static final int SCENE_ID = 114;
     public static final String PROJECTS_BASE_PATH = "projects";
+    public static final String SCENES_BASE_PATH = "scenes";
     public static final String LESSONS_BASE_PATH = "lessons";
     public static final String MEDIA_BASE_PATH = "media";
     public static final Uri PROJECTS_CONTENT_URI = Uri.parse("content://" + AUTHORITY + "/" + PROJECTS_BASE_PATH);
+    public static final Uri SCENES_CONTENT_URI = Uri.parse("content://" + AUTHORITY + "/" + SCENES_BASE_PATH);
     public static final Uri LESSONS_CONTENT_URI = Uri.parse("content://" + AUTHORITY + "/" + LESSONS_BASE_PATH);
     public static final Uri MEDIA_CONTENT_URI = Uri.parse("content://" + AUTHORITY + "/" + MEDIA_BASE_PATH);
 
@@ -31,6 +35,10 @@ public class ProjectsProvider extends ContentProvider {
             + "/projects";
     public static final String PROJECTS_CONTENT_TYPE = ContentResolver.CURSOR_DIR_BASE_TYPE
             + "/projects";
+    public static final String SCENES_CONTENT_ITEM_TYPE = ContentResolver.CURSOR_ITEM_BASE_TYPE
+            + "/scenes";
+    public static final String SCENES_CONTENT_TYPE = ContentResolver.CURSOR_DIR_BASE_TYPE
+            + "/scenes";
     public static final String LESSONS_CONTENT_ITEM_TYPE = ContentResolver.CURSOR_ITEM_BASE_TYPE
             + "/lessons";
     public static final String LESSONS_CONTENT_TYPE = ContentResolver.CURSOR_DIR_BASE_TYPE
@@ -46,6 +54,8 @@ public class ProjectsProvider extends ContentProvider {
     static {
         sURIMatcher.addURI(AUTHORITY, PROJECTS_BASE_PATH, PROJECTS);
         sURIMatcher.addURI(AUTHORITY, PROJECTS_BASE_PATH + "/#", PROJECT_ID);
+        sURIMatcher.addURI(AUTHORITY, SCENES_BASE_PATH, SCENES);
+        sURIMatcher.addURI(AUTHORITY, SCENES_BASE_PATH + "/#", SCENE_ID);
         sURIMatcher.addURI(AUTHORITY, LESSONS_BASE_PATH, LESSONS);
         sURIMatcher.addURI(AUTHORITY, LESSONS_BASE_PATH + "/#", LESSON_ID);
         sURIMatcher.addURI(AUTHORITY, MEDIA_BASE_PATH, MEDIA);
@@ -76,7 +86,15 @@ public class ProjectsProvider extends ContentProvider {
                     + uri.getLastPathSegment());
             break;
         case PROJECTS:
-        	queryBuilder.setTables(StoryMakerDB.Schema.Projects.NAME);
+            queryBuilder.setTables(StoryMakerDB.Schema.Projects.NAME);
+            break;
+        case SCENE_ID:
+            queryBuilder.setTables(StoryMakerDB.Schema.Scenes.NAME);
+            queryBuilder.appendWhere(StoryMakerDB.Schema.Scenes.ID + "="
+                    + uri.getLastPathSegment());
+            break;
+        case SCENES:
+            queryBuilder.setTables(StoryMakerDB.Schema.Scenes.NAME);
             break;
         case LESSON_ID:
             queryBuilder.setTables(StoryMakerDB.Schema.Lessons.NAME);
@@ -109,11 +127,16 @@ public class ProjectsProvider extends ContentProvider {
 		long newId;
 		int uriType = sURIMatcher.match(uri);
 		switch (uriType) {
-		case PROJECTS:
+        case PROJECTS:
             newId = mDB.getWritableDatabase(mPassphrase)
-            	.insertOrThrow(StoryMakerDB.Schema.Projects.NAME, null, values);
+                .insertOrThrow(StoryMakerDB.Schema.Projects.NAME, null, values);
             getContext().getContentResolver().notifyChange(uri, null);
             return PROJECTS_CONTENT_URI.buildUpon().appendPath(PROJECTS_BASE_PATH).appendPath("" + newId).build();
+        case SCENES:
+            newId = mDB.getWritableDatabase(mPassphrase)
+                .insertOrThrow(StoryMakerDB.Schema.Scenes.NAME, null, values);
+            getContext().getContentResolver().notifyChange(uri, null);
+            return SCENES_CONTENT_URI.buildUpon().appendPath(SCENES_BASE_PATH).appendPath("" + newId).build();
 		case LESSONS:
             newId = mDB.getWritableDatabase(mPassphrase)
             	.insertOrThrow(StoryMakerDB.Schema.Lessons.NAME, null, values);
@@ -135,10 +158,14 @@ public class ProjectsProvider extends ContentProvider {
 		int count;
 		String table;
 		switch (uriType) {
-		case PROJECTS:
-		case PROJECT_ID:
-			table = StoryMakerDB.Schema.Projects.NAME;
-			break;
+        case PROJECTS:
+        case PROJECT_ID:
+            table = StoryMakerDB.Schema.Projects.NAME;
+            break;
+        case SCENES:
+        case SCENE_ID:
+            table = StoryMakerDB.Schema.Scenes.NAME;
+            break;
 		case LESSONS:
 		case LESSON_ID:
 			table = StoryMakerDB.Schema.Lessons.NAME;
@@ -162,10 +189,14 @@ public class ProjectsProvider extends ContentProvider {
 		int count;
 		String table;
 		switch (uriType) {
-		case PROJECTS:
-		case PROJECT_ID:
-			table = StoryMakerDB.Schema.Projects.NAME;
-			break;
+        case PROJECTS:
+        case PROJECT_ID:
+            table = StoryMakerDB.Schema.Projects.NAME;
+            break;
+        case SCENES:
+        case SCENE_ID:
+            table = StoryMakerDB.Schema.Scenes.NAME;
+            break;
 		case LESSONS:
 		case LESSON_ID:
 			table = StoryMakerDB.Schema.Lessons.NAME;

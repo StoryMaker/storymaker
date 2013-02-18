@@ -1,7 +1,7 @@
 package info.guardianproject.mrapp.media;
 
 import org.ffmpeg.android.MediaDesc;
-import org.ffmpeg.android.ShellUtils.ShellCallback;
+//import org.ffmpeg.android.ShellUtils.ShellCallback;
 
 public interface MediaManager {
 

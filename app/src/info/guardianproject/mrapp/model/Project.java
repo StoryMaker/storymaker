@@ -25,11 +25,11 @@ public class Project {
     public final static int STORY_TYPE_PHOTO = 2;
     public final static int STORY_TYPE_ESSAY = 3;
     
-    public int mClipCount = -1;
+    public int mSceneCount = -1;
     
     public Project(Context context, int clipCount) {
         this.context = context;
-        mClipCount = clipCount;
+        mSceneCount = clipCount;
     }
 
     public Project(Context context, int id, String title, String thumbnailPath, int storyType) {
@@ -55,24 +55,24 @@ public class Project {
                                 .getColumnIndex(StoryMakerDB.Schema.Projects.COL_STORY_TYPE))      
         		);
         
-        getMaxClipCount();
+        getMaxSceneCount();
         
     }
     
-    private void getMaxClipCount ()
+    private void getMaxSceneCount ()
     {
-        Cursor cursor = getMediaAsCursor();
+        Cursor cursor = getScenesAsCursor();
         
-        int clipIndex = 0;
+        int projectIndex = 0;
         
         if (cursor.moveToFirst()) {
             do {
-                Media media = new Media(context, cursor);
-                clipIndex = Math.max(clipIndex, media.clipIndex);
+                Scene scene = new Scene(context, cursor);
+                projectIndex = Math.max(projectIndex, scene.getProjectIndex());
             } while (cursor.moveToNext());
         }
         
-        mClipCount = clipIndex + 1; //size is one higher than max index
+        mSceneCount = projectIndex + 1; //size is one higher than max index
         
         cursor.close();
         
@@ -174,95 +174,47 @@ public class Project {
         //TODO should we also delete all media files associated with this project?
     }
 
-    public ArrayList<Media> getMediaAsList() {
-        Cursor cursor = getMediaAsCursor();
+    public ArrayList<Scene> getScenesAsList() {
+        Cursor cursor = getScenesAsCursor();
         
-        ArrayList<Media> medias = new ArrayList<Media>(mClipCount);
+        ArrayList<Scene> scenes = new ArrayList<Scene>(mSceneCount);
         
-        for (int i = 0; i < mClipCount; i++)
-            medias.add(null);
+        for (int i = 0; i < mSceneCount; i++)
+            scenes.add(null);
         
         if (cursor.moveToFirst()) {
             do {
-            	Media media = new Media(context, cursor);
-                medias.set(media.clipIndex, media);
+                Scene scene = new Scene(context, cursor);
+                scenes.set(scene.getProjectIndex(), scene);
             } while (cursor.moveToNext());
         }
         cursor.close();
-        return medias;
+        return scenes;
     }
 
-    public Media[] getMediaAsArray() {
-        ArrayList<Media> medias = getMediaAsList();
-        return medias.toArray(new Media[] {});
-    }
-    
-    public int getClipCount ()
-    {
-        return mClipCount;
+    public Scene[] getScenesAsArray() {
+        ArrayList<Scene> scenes = getScenesAsList();
+        return scenes.toArray(new Scene[] {});
     }
 
-    public ArrayList<String> getMediaAsPathList() {
-        Cursor cursor = getMediaAsCursor();
-        ArrayList<String> paths = new ArrayList<String>(mClipCount);
-        
-        for (int i = 0; i < mClipCount; i++)
-            paths.add(null);
-       
-        if (cursor.moveToFirst()) {
-            do {
-            	Media media = new Media(context, cursor);
-                paths.set(media.clipIndex, media.getPath());
-            } while (cursor.moveToNext());
-        }
-        cursor.close();
-        return paths;
-    }
-
-    public String[] getMediaAsPathArray() {
-        ArrayList<String> paths = getMediaAsPathList();
-        return paths.toArray(new String[] {});
-    }
-
-    public Cursor getMediaAsCursor() {
+    public Cursor getScenesAsCursor() {
         String selection = "project_id=?";
         String[] selectionArgs = new String[] { "" + getId() };
-        String orderBy = "clip_index";
+        String orderBy = "project_index";
         return context.getContentResolver().query(
-                ProjectsProvider.MEDIA_CONTENT_URI, null, selection,
+                ProjectsProvider.SCENES_CONTENT_URI, null, selection,
                 selectionArgs, orderBy);
     }
 
     /**
-     * @param media append this media to the back of the projects media list
+     * @param media insert this scene into the projects scene list at index 
      */
-    public void setMedia(int clipIndex, String clipType, String path, String mimeType) {
-        Media media = new Media(context);
-        media.setPath(path);
-        media.setMimeType(mimeType);
-        media.setClipType(clipType);
-        media.setClipIndex(clipIndex);
-        media.setProjectId(getId());
-        media.save();
+    public void setScene(int projectIndex, Scene scene) {
+        scene.setProjectIndex(projectIndex);
+        scene.setProjectId(getId());
+        scene.save();
         
-        mClipCount = Math.max((clipIndex+1), mClipCount);
-                
-    }
-
-    public void swapMediaIndex(int oldIndex, int newIndex) {
-    	Media media[] = getMediaAsArray();
-		Media oldMedia = media[oldIndex];
-		Media newMedia = media[newIndex];
-		
-		// FIXME we need objects to represent the empty template dummy's, otherwise the template won't be rearranged on next load
-    	if (oldMedia != null) {
-    		oldMedia.setClipIndex(newIndex);
-    		oldMedia.save();
-    	}
-    	if (newMedia != null) {
-    		newMedia.setClipIndex(oldIndex);
-    		newMedia.save();
-    	}
+        mSceneCount = Math.max((projectIndex+1), mSceneCount);
     }
     
     /***** getters and setters *****/

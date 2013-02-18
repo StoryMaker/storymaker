@@ -2,19 +2,14 @@ package info.guardianproject.mrapp;
 
 import info.guardianproject.mrapp.lessons.LessonManager;
 import info.guardianproject.mrapp.server.ServerManager;
-import info.guardianproject.mrapp.db.StoryMakerDB;
-import info.guardianproject.mrapp.db.StoryMakerDB.Schema;
 
 import java.io.File;
-import java.net.URL;
 import java.util.Locale;
-import java.util.Properties;
 
 import net.sqlcipher.database.SQLiteDatabase;
 import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
 import android.content.res.Configuration;
 import android.preference.PreferenceManager;
 import android.util.Log;

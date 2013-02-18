@@ -1,13 +1,11 @@
 package info.guardianproject.mrapp;
 
-import info.guardianproject.mrapp.lessons.LessonGroupArrayAdapter;
 import info.guardianproject.mrapp.lessons.LessonManager;
 import info.guardianproject.mrapp.model.Lesson;
 import info.guardianproject.mrapp.model.LessonGroup;
 import info.guardianproject.mrapp.model.Media;
 import info.guardianproject.mrapp.model.Project;
 import info.guardianproject.mrapp.server.LoginActivity;
-import info.guardianproject.onionkit.OnionKitHelper;
 import info.guardianproject.onionkit.ui.OrbotHelper;
 
 import java.io.File;
@@ -18,9 +16,7 @@ import java.util.List;
 import java.util.Locale;
 
 import org.ffmpeg.android.MediaUtils;
-import org.holoeverywhere.app.Activity;
 import org.holoeverywhere.app.AlertDialog;
-import org.holoeverywhere.widget.AdapterView;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -29,7 +25,6 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.pm.ResolveInfo;
-import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -44,7 +39,6 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
-import android.view.ContextMenu.ContextMenuInfo;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -458,7 +452,8 @@ public class HomeActivity extends BaseActivity implements ActionBar.TabListener 
                     }
                 });
         		
-        	    Media[] mediaList = project.getMediaAsArray();
+        		// FIXME default to use first scene
+        	    Media[] mediaList = project.getScenesAsArray()[0].getMediaAsArray();
                 
                 if (mediaList != null && mediaList.length > 0)    
                 {
@@ -514,7 +509,8 @@ public class HomeActivity extends BaseActivity implements ActionBar.TabListener 
 	    	if (project.getStoryType() == Project.STORY_TYPE_VIDEO)
 	    	{
 	    		//video
-	    		templateJsonPath = "story/templates/" + lang + "/video_simple.json";
+//	    		templateJsonPath = "story/templates/" + lang + "/video_simple.json";
+	    	    templateJsonPath = "story/templates/" + lang + "/video_3_scene.json"; // FIXME testing new template loader
 	    	
 	    		
 	    	}
