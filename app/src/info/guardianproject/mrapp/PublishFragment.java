@@ -247,8 +247,9 @@ public class PublishFragment extends Fragment {
 
                 try {
                     
-                    if (mActivity.mdExported == null)
-                        mActivity.mMPM.doExportMedia(exportFileName, doYouTube);
+                    //if (mActivity.mdExported == null)
+                       
+                	mActivity.mMPM.doExportMedia(exportFileName, doYouTube);
                     
                     mActivity.mdExported = mActivity.mMPM.getExportMedia();
                     File mediaFile = new File(mActivity.mdExported.path);
