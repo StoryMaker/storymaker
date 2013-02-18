@@ -88,12 +88,12 @@ public class AddClipsFragment extends Fragment {
     // only gets called from addShotToScene
     public void addTemplateClip (Clip clip) throws IOException, JSONException
     {
-        mTemplate.getScene(0).addClip(clip); // FIXME get rid of hard code 0, should have a scene object directly
+        mTemplate.getScene(mScene).addClip(clip); 
         mAddClipsPagerAdapter = new AddClipsPagerAdapter(mFm, mTemplate, mScene);
         mAddClipsViewPager.setAdapter(mAddClipsPagerAdapter);
         
-        mAddClipsViewPager.setCurrentItem(mTemplate.getScene(0).getClips().size()-1); // FIXME get rid of hard coded 0
-        mActivity.mMPM.mClipIndex = mTemplate.getScene(0).getClips().size()-1; // FIXME get rid of hard coded 0
+        mAddClipsViewPager.setCurrentItem(mTemplate.getScene(mScene).getClips().size()-1); 
+        mActivity.mMPM.mClipIndex = mTemplate.getScene(mScene).getClips().size()-1; 
         
         mActivity.mdExported = null;
         
@@ -127,7 +127,7 @@ public class AddClipsFragment extends Fragment {
                 @Override
                 public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
                     
-                    if (((position+1) == mTemplate.getScene(0).getClips().size()) && positionOffset == 0 & positionOffsetPixels == 0) // FIXME get rid of hard coded 0
+                    if (((position+1) == mTemplate.getScene(mScene).getClips().size()) && positionOffset == 0 & positionOffsetPixels == 0)
                     {
                         mDragAtEnd++;
                         
@@ -200,7 +200,7 @@ public class AddClipsFragment extends Fragment {
         
         @Override
         public int getCount() {
-            return sTemplate.getScene(0).getClips().size(); // FIXME get rid of hard coded 0
+            return sTemplate.getScene(mScene).getClips().size(); 
         }
 
         @Override
