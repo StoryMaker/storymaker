@@ -163,7 +163,11 @@ public class StoryNewActivity extends BaseActivity {
 	    	intent.putExtra("template_path", templateJsonPath);
 	    	intent.putExtra("title", project.getTitle());
 	    	intent.putExtra("pid", project.getId());
+	    	intent.putExtra("scene", 0);
+	    	
 	        startActivity(intent);
+	        
+	        finish();
     	}
     }
 

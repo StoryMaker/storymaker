@@ -34,6 +34,7 @@
         android:largeHeap="true"
         android:configChanges="orientation|keyboardHidden|screenSize|locale"
         android:screenOrientation="portrait"
+	android:supportsRtl="true"
          >
      
         <activity android:name=".server.LoginActivity"

@@ -48,7 +48,10 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
     protected boolean templateStory = false; 
     protected Menu mMenu = null;
     private Context mContext = null;
+    
     private String mTemplateJsonPath = null;
+    private int mScene = 0;
+    
     private int mStoryMode = Project.STORY_TYPE_VIDEO;;
     private final static String CAPTURE_MIMETYPE_AUDIO = "audio/3gpp";
     public Fragment mFragmentTab0, mFragmentTab1, mLastTabFrag;
@@ -68,6 +71,8 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
 
         int pid = intent.getIntExtra("pid", -1); //project id
 
+        mScene = getIntent().getIntExtra("scene", 0);
+        
         mContext = getBaseContext();
 
         if (pid != -1)
@@ -359,7 +364,7 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
             if (mFragmentTab0 == null)
             {
                 try {
-                    mFragmentTab0 = new AddClipsFragment(layout, fm, mTemplateJsonPath, this);
+                    mFragmentTab0 = new AddClipsFragment(layout, fm, mTemplateJsonPath, mScene, this);
 
                     Bundle args = new Bundle();
                     args.putInt(AddClipsFragment.ARG_SECTION_NUMBER, tab.getPosition() + 1);
