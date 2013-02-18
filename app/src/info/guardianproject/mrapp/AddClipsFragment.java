@@ -35,22 +35,24 @@ public class AddClipsFragment extends Fragment {
     private String mTemplatePath;
     private Template mTemplate;
     private EditorBaseActivity mActivity;
+    private int mScene;
 
-    public AddClipsFragment(int layout, FragmentManager fm, String templatePath, EditorBaseActivity activity)
+    public AddClipsFragment(int layout, FragmentManager fm, String templatePath, int scene, EditorBaseActivity activity)
             throws IOException, JSONException {
         this.layout = layout;
         mFm = fm;
         mTemplatePath = templatePath;
         mActivity = activity;
+        mScene = scene;
         
         initTemplate();
 
-        mAddClipsPagerAdapter = new AddClipsPagerAdapter(fm, mTemplate);
+        mAddClipsPagerAdapter = new AddClipsPagerAdapter(fm, mTemplate, scene);
     }
     
     public void initTemplate ()  throws IOException, JSONException 
     {
-        int count = mActivity.mMPM.mScene.getClipCount();
+     //   int count = mActivity.mMPM.mScene.getClipCount();
         
         mTemplate = new Template();
         mTemplate.parseAsset(mActivity.getBaseContext(), mTemplatePath);
@@ -77,7 +79,7 @@ public class AddClipsFragment extends Fragment {
         
 //        initTemplate();
 
-        mAddClipsPagerAdapter = new AddClipsPagerAdapter(mFm, mTemplate);
+        mAddClipsPagerAdapter = new AddClipsPagerAdapter(mFm, mTemplate, mScene);
         mAddClipsViewPager.setAdapter(mAddClipsPagerAdapter);
         
         mAddClipsViewPager.setCurrentItem(cItemIdx);
@@ -86,7 +88,7 @@ public class AddClipsFragment extends Fragment {
     public void addTemplateClip (Clip clip) throws IOException, JSONException
     {
         mTemplate.getScene(0).addClip(clip); // FIXME get rid of hard code 0, should have a scene object directly
-        mAddClipsPagerAdapter = new AddClipsPagerAdapter(mFm, mTemplate);
+        mAddClipsPagerAdapter = new AddClipsPagerAdapter(mFm, mTemplate, mScene);
         mAddClipsViewPager.setAdapter(mAddClipsPagerAdapter);
         
         mAddClipsViewPager.setCurrentItem(mTemplate.getScenes().size()-1);
@@ -166,11 +168,13 @@ public class AddClipsFragment extends Fragment {
     public class AddClipsPagerAdapter extends FragmentStatePagerAdapter {
         private Template sTemplate;
 
-        public AddClipsPagerAdapter(FragmentManager fm, Template template) throws IOException,
+        private int mScene;
+        
+        public AddClipsPagerAdapter(FragmentManager fm, Template template, int scene) throws IOException,
                 JSONException {
             super(fm);
             sTemplate = template;
-                    
+            mScene = scene;
           
         }
 
@@ -179,7 +183,7 @@ public class AddClipsFragment extends Fragment {
         public Fragment getItem(int i) {
             
             
-            Clip clip = sTemplate.getScene(0).getClip(i);
+            Clip clip = sTemplate.getScene(mScene).getClip(i);
 
             ArrayList<Media> lMedia = mActivity.mMPM.mScene.getMediaAsList();
             Media media = null;
@@ -195,7 +199,7 @@ public class AddClipsFragment extends Fragment {
         
         @Override
         public int getCount() {
-            return sTemplate.getScenes().size();
+            return sTemplate.getScene(mScene).getClips().size();
         }
 
         @Override
