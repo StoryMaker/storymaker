@@ -235,7 +235,7 @@ Build number: <xliff:g id="build_number">%s</xliff:g>\n
     <string name="uploading">Uploading</string>
     <string name="connecting_to_youtube_">connecting to YouTube...</string>
     <string name="rendering_clips_">rendering clips...</string>
-    <string name="you_must_enter_a_project_name">You must enter a project name</string>
+    <string name="you_must_enter_a_project_name">Please enter a working draft title. You can change this later.</string>
     <string name="delete_project_">Delete project?</string>
     <string name="add_new_clip_to_the_scene_">Add new clip to the scene?</string>
     

@@ -111,10 +111,15 @@ public class LessonManager implements Runnable {
 	
 	public ArrayList<Lesson> loadLessonList (Context context, String lang)
 	{
-		return loadLessonList(context, mLocalStorageRoot, mSubFolder, lang);
+		return loadLessonList(context, mLocalStorageRoot, mSubFolder, lang, -1);
 	}
 	
-	public static ArrayList<Lesson> loadLessonList (Context context,File targetFolder, String subFolder, String lang)
+	public ArrayList<Lesson> loadLessonList (Context context, String lang, int matchStatus)
+	{
+		return loadLessonList(context, mLocalStorageRoot, mSubFolder, lang, matchStatus);
+	}
+	
+	public static ArrayList<Lesson> loadLessonList (Context context,File targetFolder, String subFolder, String lang, int matchStatus)
 	{
 		
 		ArrayList<Lesson> lessons = new ArrayList<Lesson>();
@@ -141,6 +146,22 @@ public class LessonManager implements Runnable {
 
 					}
 				
+
+					File fileStatus = new File(fileLesson,LESSON_STATUS_FILE);
+					int status = -1;
+					
+					if (fileStatus.exists())
+					{
+						byte[] bStatus = new byte[(int)fileStatus.length()];
+						IOUtils.readFully(new FileInputStream(fileStatus),bStatus);
+						status = Integer.parseInt(new String(bStatus).trim());
+						
+						
+					}
+					
+					if (matchStatus != -1 && matchStatus != status)
+						continue; //didn't match so don't add it
+					
 					if (fileLessonJson.exists())
 					{
 						
@@ -148,22 +169,14 @@ public class LessonManager implements Runnable {
 						File fileIdx = new File(fileLesson,lesson.mResourcePath);
 						
 						lesson.mTitle = fileLesson.getName() + ": " + lesson.mTitle;
-						lesson.mResourcePath = "file://" + fileIdx.getAbsolutePath();
+						lesson.mResourcePath = fileIdx.getAbsolutePath();
+						lesson.mStatus = status;
+						
 						lessons.add(lesson);
 						
 						lesson.mLocalPath = fileLesson;
 						
-						updateResource(context,fileIdx,lang);
-					
-						File fileStatus = new File(fileLesson,LESSON_STATUS_FILE);
-						if (fileStatus.exists())
-						{
-							byte[] bStatus = new byte[(int)fileStatus.length()];
-							IOUtils.readFully(new FileInputStream(fileStatus),bStatus);
-							lesson.mStatus = Integer.parseInt(new String(bStatus).trim());
-							
-							
-						}
+						lesson.mSortIdx = Integer.parseInt(lesson.mTitle.substring(2,lesson.mTitle.indexOf(":")));
 					}
 				}
 				catch (FileNotFoundException fnfe)
@@ -186,21 +199,20 @@ public class LessonManager implements Runnable {
 	  Collections.sort(lessons,new Comparator<Lesson>() {
             public int compare(Lesson lessonA, Lesson lessonB) {
             	
-            	Integer aTitle = Integer.parseInt(lessonA.mTitle.substring(2,lessonA.mTitle.indexOf(":")));
-            	Integer bTitle = Integer.parseInt(lessonB.mTitle.substring(2,lessonB.mTitle.indexOf(":")));
-            	
-                return aTitle.compareTo(bTitle);
+                return lessonA.mSortIdx.compareTo(lessonB.mSortIdx);
             }
         });
 	  
 		return lessons;
 	}
 	
-	private static void updateResource (Context context, File fIndex, String locale) throws IOException
+	public static void updateLessonResource (Context context, Lesson lesson, String locale) throws IOException
 	{
-			  InputStream is = context.getAssets().open("template/index.html." + locale);
-			  OutputStream os = new java.io.FileOutputStream(fIndex);
-			  IOUtils.copyLarge(is, os);
+		  File fileIdx = new File(lesson.mResourcePath);
+	
+		  InputStream is = context.getAssets().open("template/index.html." + locale);
+		  OutputStream os = new java.io.FileOutputStream(fileIdx);
+		  IOUtils.copyLarge(is, os);
 		
 	}
 	
