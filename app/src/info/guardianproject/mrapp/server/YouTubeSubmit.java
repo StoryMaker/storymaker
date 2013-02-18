@@ -590,7 +590,7 @@ public class YouTubeSubmit {
 
          double percent = (totalBytesUploaded / currentFileSize) * 99;
 
-         Log.d(AppConstants.TAG, "total bytes uploaded: " + totalBytesUploaded + " = " + percent + "%");
+        // Log.d(AppConstants.TAG, "total bytes uploaded: " + totalBytesUploaded + " = " + percent + "%");
          
          String status = String.format( "%,d/%,d bytes transfered",  Math.round(totalBytesUploaded),  Math.round(currentFileSize));
          

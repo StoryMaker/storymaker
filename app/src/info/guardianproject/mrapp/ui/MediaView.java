@@ -128,8 +128,6 @@ public class MediaView extends BigImageLabelView implements OnClickListener, OnD
 			mMediaClip.mMediaDescOriginal.videoFilter = VideoFilter.format(list);
 		}
 		
-//		mMediaManager.prerenderMedia(mMediaClip, this);
-		
 		current = 0;
 		total = 0; 
 	}

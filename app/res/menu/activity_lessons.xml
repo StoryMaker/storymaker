@@ -6,5 +6,5 @@
     <item android:id="@+id/menu_update"
         android:title="@string/menu_update"
         android:orderInCategory="1"
-        android:showAsAction="never" />    
+        android:showAsAction="always" />    
 </menu>
