@@ -128,8 +128,8 @@ public class StoryNewActivity extends BaseActivity {
 	    	if (checkedId == R.id.radioStoryType0)
 	    	{
 	    		//video
-//	    		templateJsonPath = "story/templates/" + lang + "/video_simple.json";
-	    	    templateJsonPath = "story/templates/" + lang + "/video_3_scene.json"; // FIXME testing new template loader
+	    		templateJsonPath = "story/templates/" + lang + "/video_simple.json";
+//	    	    templateJsonPath = "story/templates/" + lang + "/video_3_scene.json"; // FIXME testing new template loader
 	    		storyMode = Project.STORY_TYPE_VIDEO;
 	    		
 	    	}
