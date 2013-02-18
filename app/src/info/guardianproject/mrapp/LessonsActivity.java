@@ -43,11 +43,12 @@ public class LessonsActivity extends BaseActivity implements ActionBar.TabListen
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
      
-     
+        requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
+        
         setContentView(R.layout.activity_lessons);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         
-        this.setProgressBarIndeterminate(true);
+        setSupportProgressBarIndeterminateVisibility(false);
         
     	mListView = new LessonListView(this, this);
         
@@ -99,7 +100,12 @@ public class LessonsActivity extends BaseActivity implements ActionBar.TabListen
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-            	handleBack();
+
+	        	boolean handled = mListView.handleBack();
+	        	
+	        	if (!handled)
+	        		NavUtils.navigateUpFromSameTask(this);
+	        	
                 return true;
             case R.id.menu_update:
                 updateLessons();
@@ -108,15 +114,7 @@ public class LessonsActivity extends BaseActivity implements ActionBar.TabListen
         return super.onOptionsItemSelected(item);
     }
     
-    private void handleBack ()
-    {
-    	boolean handled = mListView.handleBack();
-    	
-    	if (!handled)
-    		NavUtils.navigateUpFromSameTask(this);
-        
-    }
-    
+   
     @Override
 	protected void onActivityResult(int reqCode, int resCode, Intent intent) {
 		
@@ -132,10 +130,10 @@ public class LessonsActivity extends BaseActivity implements ActionBar.TabListen
     
     private void updateLessons ()
     {
-
-        this.setProgressBarIndeterminateVisibility (true);
+    	setSupportProgressBarIndeterminateVisibility(true);
     	StoryMakerApp.getLessonManager().updateLessonsFromRemote();
     	
+
     }
 
 
@@ -251,16 +249,32 @@ public class LessonsActivity extends BaseActivity implements ActionBar.TabListen
         }
     }
     
-	@Override
-	public boolean onKeyDown(int keyCode, KeyEvent event) {
+	
+    @Override
+    public void onBackPressed() {
+    	
+    	boolean handled = mListView.handleBack();
+    	
+    	if (!handled)
+    		NavUtils.navigateUpFromSameTask(this);
+    }
+    
+	 @Override
+	    public boolean onKeyDown(int keyCode, KeyEvent event)  {
+	        if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.ECLAIR
+	                && keyCode == KeyEvent.KEYCODE_BACK
+	                && event.getRepeatCount() == 0) {
+	           
+	        	boolean handled = mListView.handleBack();
+	        	
+	        	if (!handled)
+	        		NavUtils.navigateUpFromSameTask(this);
+	        	
+	        	return handled;
+	        	
+	        }
 
-		if (keyCode == KeyEvent.KEYCODE_BACK)
-		{
-			handleBack();
-			return true;
-				
-		}
-		
-		return super.onKeyDown(keyCode, event);
-	}
+	        return super.onKeyDown(keyCode, event);
+	    }
+
 }

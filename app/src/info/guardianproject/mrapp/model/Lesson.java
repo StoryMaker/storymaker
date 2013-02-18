@@ -13,6 +13,7 @@ public class Lesson {
 	public String mImage;
 	public int mStatus;
 	public File mLocalPath;
+	public Integer mSortIdx;
 
 	public final static int STATUS_NOT_STARTED = 0;
 	public final static int STATUS_IN_PROGRESS = 1;

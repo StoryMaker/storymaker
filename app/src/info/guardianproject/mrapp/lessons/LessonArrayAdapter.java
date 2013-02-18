@@ -32,6 +32,8 @@ public class LessonArrayAdapter extends ArrayAdapter {
         TextView tvTitle;
         TextView tvStatus;
         
+        boolean isEnabled = true;
+        
         if(row == null)
         {
             LayoutInflater inflater = ((Activity)getContext()).getLayoutInflater();
@@ -49,6 +51,15 @@ public class LessonArrayAdapter extends ArrayAdapter {
         	tvStatus.setText(R.string.lesson_status_in_progress);
         else if (lesson.mStatus == Lesson.STATUS_COMPLETE)
         	tvStatus.setText(R.string.lesson_status_complete);
+        else if (position > 0 && ((Lesson)getItem(position-1)).mStatus != Lesson.STATUS_COMPLETE)
+    	{
+        	isEnabled = false;
+    	}
+        
+    	row.setEnabled(isEnabled);
+    	tvTitle.setEnabled(isEnabled);
+    	tvStatus.setEnabled(isEnabled);
+    
         
         return row;
     }

@@ -7,10 +7,10 @@ import info.guardianproject.mrapp.StoryMakerApp;
 import info.guardianproject.mrapp.model.Lesson;
 import info.guardianproject.mrapp.model.LessonGroup;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Locale;
 
-import org.holoeverywhere.widget.AdapterView.OnItemClickListener;
 import org.holoeverywhere.widget.ListView;
 import org.holoeverywhere.widget.Toast;
 
@@ -19,9 +19,8 @@ import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
-import android.view.View;
+import android.view.KeyEvent;
 import android.widget.ArrayAdapter;
-import android.widget.TextView;
 
 
 
@@ -30,6 +29,8 @@ public class LessonListView extends ListView implements LessonManagerListener {
 		
 	private LessonManager mLessonManager;
 	private ArrayList<Lesson> mListLessons;
+	private ArrayList<LessonGroup> mLessonGroups;
+	
 	
 	private String mSubFolder = null; 
 	private LessonsActivity mActivity;
@@ -42,11 +43,30 @@ public class LessonListView extends ListView implements LessonManagerListener {
         
     	super (context);
     	
+    	setDivider(null);
+    	setDividerHeight(0);
+    	
     	mActivity = activity;
     	mLocale = ((StoryMakerApp)mActivity.getApplication()).getCurrentLocale();
     	
         mLessonManager = StoryMakerApp.getLessonManager();
         mLessonManager.setListener(this);
+        
+        new Thread ()
+        {
+        	public void run ()
+        	{
+
+        		Message msg = mHandler.obtainMessage(0);
+        		mHandler.sendMessage(msg);
+        		loadData();
+        		mHandler.sendEmptyMessage(3);
+        	}
+        }.start();
+    }
+    
+    private void loadData ()
+    {
         
         if (mSubFolder == null)
         {
@@ -64,8 +84,9 @@ public class LessonListView extends ListView implements LessonManagerListener {
 
 			
 			@Override
-			public void onItemClick(android.widget.AdapterView<?> arg0,
-					android.view.View arg1, int selIdx, long arg3) {
+			public void onItemClick(android.widget.AdapterView<?> aview,
+					android.view.View view, int selIdx, long arg3) {
+				
 				
 				mLastIdx = selIdx;
 				
@@ -76,8 +97,11 @@ public class LessonListView extends ListView implements LessonManagerListener {
 				}
 				else if (selIdx < mListLessons.size())
 				{
-					Lesson lesson = mListLessons.get(selIdx);
-					accessLesson(lesson);
+					if (selIdx == 0 || mListLessons.get(selIdx-1).mStatus == Lesson.STATUS_COMPLETE)
+					{
+						Lesson lesson = mListLessons.get(selIdx);
+						accessLesson(lesson);
+					}
 				}
 			}
         	
@@ -91,7 +115,7 @@ public class LessonListView extends ListView implements LessonManagerListener {
     	String[] lessonSections = getResources().getStringArray(R.array.lesson_sections);
     	String[] lessonSectionsFolder = getResources().getStringArray(R.array.lesson_sections_folder);
 
-    	ArrayList<LessonGroup> alGroups = new ArrayList<LessonGroup>();
+    	mLessonGroups = new ArrayList<LessonGroup>();
     	int idx = 0;
     	
     	for (String folder : lessonSections)
@@ -101,7 +125,7 @@ public class LessonListView extends ListView implements LessonManagerListener {
     		
     		String subFolder = lessonSectionsFolder[idx++];
     	
-    		ArrayList<Lesson> lessons = LessonManager.loadLessonList(getContext(), mLessonManager.getLessonRoot(), subFolder, mLocale.getLanguage());
+    		ArrayList<Lesson> lessons = LessonManager.loadLessonList(getContext(), mLessonManager.getLessonRoot(), subFolder, mLocale.getLanguage(),-1);
     		
     		int lessonsComplete = 0;
     		
@@ -118,14 +142,15 @@ public class LessonListView extends ListView implements LessonManagerListener {
     		{
     			lg.mStatus = lessonsComplete + getContext().getString(R.string._of_) + lessons.size() + getContext().getString(R.string._lesson_complete);
     		}
-    		alGroups.add(lg);
+    		mLessonGroups.add(lg);
     	}
     	
-    	setAdapter(new LessonGroupArrayAdapter(getContext(),R.layout.list_lesson_row, alGroups));
     	
     	
     }
     
+   
+   
     public boolean handleBack ()
     {
     	if (mSubFolder != null)
@@ -133,8 +158,7 @@ public class LessonListView extends ListView implements LessonManagerListener {
     		mSubFolder = null;
     		
     		showLessonGroups();
-    		
-        
+    		mHandler.sendEmptyMessage(3);
     		
     		return true;
     	}
@@ -152,17 +176,15 @@ public class LessonListView extends ListView implements LessonManagerListener {
     	if (mListLessons.size() == 0)
     	{
 
-    		mActivity.setProgressBarIndeterminate(true);
-	        mActivity.setProgressBarIndeterminateVisibility (true);
 	        
+	        mActivity.setSupportProgressBarIndeterminateVisibility(true);
 	        
     		mLessonManager.updateLessonsFromRemote();
     		
     	}
-    	else
-    	{
-    		loadLessonListAdapter();
-    	}
+    	
+    	loadLessonListAdapter();
+    	
     }
     
     
@@ -180,12 +202,20 @@ public class LessonListView extends ListView implements LessonManagerListener {
 			}
 		}
 		
-		Intent intent = new Intent(getContext(),LessonViewActivity.class);
-		intent.putExtra("title", lesson.mTitle);
-		intent.putExtra("url", lesson.mResourcePath);
-		intent.putExtra("lessonPath", lesson.mLocalPath.getAbsolutePath());
-		mActivity.startActivityForResult(intent, 1);
-		
+		try
+		{
+			LessonManager.updateLessonResource(getContext(),lesson,mLocale.getLanguage());
+			
+			Intent intent = new Intent(getContext(),LessonViewActivity.class);
+			intent.putExtra("title", lesson.mTitle);
+			intent.putExtra("url", lesson.mResourcePath);
+			intent.putExtra("lessonPath", lesson.mLocalPath.getAbsolutePath());
+			mActivity.startActivityForResult(intent, 1);
+		}
+		catch (IOException e)
+		{
+			Log.e(AppConstants.TAG,"error updating lesson",e);
+		}
 	}
 	
 	
@@ -206,20 +236,31 @@ public class LessonListView extends ListView implements LessonManagerListener {
 						if (msg.getData().containsKey("status"))
 							Toast.makeText(getContext(), msg.getData().getString("status"),Toast.LENGTH_SHORT).show();
 
-						((ArrayAdapter)getAdapter()).notifyDataSetChanged();
+						if (getAdapter() != null)
+							((ArrayAdapter)getAdapter()).notifyDataSetChanged();
 
+						mActivity.setSupportProgressBarIndeterminateVisibility(true);
+				        
 				 break;
 				case 1:
 
-			        mActivity.setProgressBarIndeterminateVisibility (false);
-			        ((ArrayAdapter)getAdapter()).notifyDataSetChanged();
+			    	mListLessons = mLessonManager.loadLessonList(getContext(), mLocale.getLanguage());
+
 					loadLessonListAdapter();
 					
 					
 				break;
 				case 2:
+					mActivity.setSupportProgressBarIndeterminateVisibility(false);
+			    break;
+			    
+				case 3: //update group list
 
-			        mActivity.setProgressBarIndeterminateVisibility (false);					
+			    	setAdapter(new LessonGroupArrayAdapter(getContext(),R.layout.list_lesson_row, mLessonGroups));
+					mActivity.setSupportProgressBarIndeterminateVisibility(false);
+
+				break;
+				
 				default:
 				
 			}
@@ -249,6 +290,8 @@ public class LessonListView extends ListView implements LessonManagerListener {
 		
     	mListLessons = mLessonManager.loadLessonList(getContext(), mLocale.getLanguage());
     	mHandler.sendEmptyMessage(1);
+    	mHandler.sendEmptyMessage(2);
+    	
 		
 		
 	}
@@ -258,6 +301,7 @@ public class LessonListView extends ListView implements LessonManagerListener {
 	@Override
 	public void loadingLessonFromServer(String subFolder, String lessonTitle) {
 		
+		/*
 		int rowIdx = Integer.parseInt(subFolder)-1;
 		
 		Object item = this.getItemAtPosition(rowIdx);
@@ -266,9 +310,10 @@ public class LessonListView extends ListView implements LessonManagerListener {
 		{
 			((LessonGroup)item).mStatus = "loading lesson: " + lessonTitle;
 		}
+		*/
 		
 		mHandler.sendEmptyMessage(0);
-		
+		mHandler.sendEmptyMessage(1);
 		
 	}
 

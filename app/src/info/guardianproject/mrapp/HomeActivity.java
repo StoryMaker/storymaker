@@ -17,6 +17,7 @@ import java.util.Locale;
 
 import org.ffmpeg.android.MediaUtils;
 import org.holoeverywhere.app.AlertDialog;
+import org.holoeverywhere.app.ProgressDialog;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -31,6 +32,7 @@ import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
@@ -133,7 +135,6 @@ public class HomeActivity extends BaseActivity implements ActionBar.TabListener 
         
         Eula.show(this);
         
-        checkCreds ();
         
         if (getIntent().hasExtra("showtab"))
         {
@@ -262,16 +263,6 @@ public class HomeActivity extends BaseActivity implements ActionBar.TabListener 
 		Intent intent = new Intent(this,SimplePreferences.class);
 		this.startActivityForResult(intent, 9999);
 	}
-	
-	
-	
-	
-	
-	private void showLogin ()
-	{
-		Intent intent = new Intent(this,LoginActivity.class);
-		startActivity(intent);
-	}
 
     @Override
     public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
@@ -333,24 +324,63 @@ public class HomeActivity extends BaseActivity implements ActionBar.TabListener 
        
         public static final String ARG_SECTION_NUMBER = "section_number";
 
+        private View mView;
+        private LinearLayout mLayoutView;
+        private ProgressDialog mLoading;
+        private Context mContext;
+        private ArrayList<Lesson> mLessonsCompleted;
+        private ArrayList<Project> mListProjects;
+        
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                Bundle savedInstanceState) {
+            Bundle savedInstanceState) {
 
-        		View view = inflater.inflate(R.layout.fragment_home_activity, null);
-            
+    		mView = inflater.inflate(R.layout.fragment_home_activity, null);
+    		new getAsynctask().execute("");
+    		mLayoutView = (LinearLayout)mView.findViewById(R.id.activityll);
+        	
+    		mContext = mView.getContext();
 
-                initActivityList(view);
-                
-                
-           
-            return view;
+            return mView;
+        }
+        
+        class getAsynctask extends AsyncTask<String, Long, Integer> {
+
+            protected void onPreExecute() {
+                super.onPreExecute();
+                mLoading = ProgressDialog.show(mView.getContext(), null, "Please wait...");
+            }
+            protected Integer doInBackground(String... params) {
+                try {
+                	
+                	mLessonsCompleted = getLessonsCompleted(mContext);
+                	mListProjects = Project.getAllAsList(mContext);
+
+                    return null;
+                } catch (Exception e) {
+                	Log.e(AppConstants.TAG,"error loading home view",e);
+                	return null;
+                }
+
+            }
+
+            protected void onPostExecute(Integer result) {
+                super.onPostExecute(result);
+                try {
+                    if (mLoading != null && mLoading.isShowing())
+                    	mLoading.dismiss();
+                    
+
+                	initActivityList(mView);
+                } catch (Throwable t) {
+                    Log.v("this is praki", "loading.dismiss() problem", t);
+                }
+            }
         }
         
         private void initActivityList (View view)
         {
-        	LinearLayout lView = (LinearLayout)view;
-    		LinearLayout.LayoutParams lp1 = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT); // Verbose!
+        	LinearLayout.LayoutParams lp1 = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT); // Verbose!
     		//lp.weight = 1.0f; // This is critical. Doesn't work without it.
             lp1.setMargins(0, 20, 0, 5);
             
@@ -362,7 +392,6 @@ public class HomeActivity extends BaseActivity implements ActionBar.TabListener 
            
         	Button button;
         	Drawable img;
-        	
         	
         	
         	//setup new lessons
@@ -384,13 +413,13 @@ public class HomeActivity extends BaseActivity implements ActionBar.TabListener 
 
                 }
             });
-    		lView.addView(button, lp1);        		
+    		mLayoutView.addView(button, lp1);        		
         	
-        	ArrayList<Lesson> lessonsCompleted = getLessonsCompleted(context);
         	
-        	for (int i = lessonsCompleted.size()-1; i > lessonsCompleted.size()-4 && i > -1; i--)
+        	
+        	for (int i = mLessonsCompleted.size()-1; i > mLessonsCompleted.size()-4 && i > -1; i--)
             {
-        		Lesson lesson = lessonsCompleted.get(i);
+        		Lesson lesson = mLessonsCompleted.get(i);
         		button = new Button(context);
         		button.setText(lesson.mTitle + " completed!");
         		button.setBackgroundColor(Color.WHITE);
@@ -406,7 +435,7 @@ public class HomeActivity extends BaseActivity implements ActionBar.TabListener 
 
                     }
                 });
-        		lView.addView(button, lp2);        		
+        		mLayoutView.addView(button, lp2);        		
         		
         	}
         	
@@ -417,7 +446,7 @@ public class HomeActivity extends BaseActivity implements ActionBar.TabListener 
     		button.setBackgroundColor(Color.WHITE);
     		
     		img = context.getResources().getDrawable( R.drawable.ic_list_projects );
-    		img.setBounds( 0, 0, 80, 60 );
+    		img.setBounds( 0, 0, 60, 60 );
     		button.setCompoundDrawables( img, null, null, null );
     		button.setGravity(Gravity.LEFT|Gravity.CENTER);
     		button.setOnClickListener(new OnClickListener() {
@@ -431,13 +460,12 @@ public class HomeActivity extends BaseActivity implements ActionBar.TabListener 
 
                 }
             });
-    		lView.addView(button, lp1); 
+    		mLayoutView.addView(button, lp1); 
     		
-        	ArrayList<Project> listProjects = Project.getAllAsList(context);
         	
-        	for (int i = listProjects.size()-1; i > listProjects.size()-4 && i > -1; i--)
+        	for (int i = mListProjects.size()-1; i > mListProjects.size()-4 && i > -1; i--)
         	{
-        		Project project = listProjects.get(i);
+        		Project project = mListProjects.get(i);
         		button = new Button(context);
         		button.setText("  " + project.getTitle());
         		button.setBackgroundColor(Color.WHITE);
@@ -446,7 +474,6 @@ public class HomeActivity extends BaseActivity implements ActionBar.TabListener 
                     
                     @Override
                     public void onClick(View v) {
-                    	//startActivity(new Intent(getActivity(), StoryNewActivity.class));
                     	
                     	showProject(((Button)v).getText().toString());
                     }
@@ -473,7 +500,7 @@ public class HomeActivity extends BaseActivity implements ActionBar.TabListener 
                 		}
                 }
                 
-        		lView.addView(button, lp2);        		
+                mLayoutView.addView(button, lp2);        		
         		
         	}
         	
@@ -608,7 +635,7 @@ public class HomeActivity extends BaseActivity implements ActionBar.TabListener 
         		
         		String subFolder = lessonSectionsFolder[idx++];
         	
-        		ArrayList<Lesson> lessons = LessonManager.loadLessonList(context, lessonManager.getLessonRoot(), subFolder, locale.getLanguage());
+        		ArrayList<Lesson> lessons = LessonManager.loadLessonList(context, lessonManager.getLessonRoot(), subFolder, locale.getLanguage(), Lesson.STATUS_COMPLETE);
         		
         		for (Lesson lesson : lessons)
         			if (lesson.mStatus == Lesson.STATUS_COMPLETE)
