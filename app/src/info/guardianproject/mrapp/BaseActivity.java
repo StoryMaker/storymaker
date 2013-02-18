@@ -30,10 +30,11 @@ public class BaseActivity extends SlidingActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
+        /*
         requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
-        setProgressBarIndeterminate(true);
+        setProgressBarIndeterminate(false);
         setProgressBarIndeterminateVisibility(false);
+        */
         
         // setup drawer
         setBehindContentView(R.layout.fragment_drawer);
@@ -114,6 +115,10 @@ public class BaseActivity extends SlidingActivity {
             }
         });
         
+    }
+    
+    private void detectCoachOverlay ()
+    {
         try {
         	
         	if (this.getClass().getName().contains("SceneEditorActivity"))

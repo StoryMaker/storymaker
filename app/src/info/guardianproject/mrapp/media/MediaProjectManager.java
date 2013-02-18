@@ -303,7 +303,8 @@ public class MediaProjectManager implements MediaManager {
     public void applyExportSettings (MediaDesc mdout)
     {
     	//look this up from prefs?
-    	mdout.videoCodec = "libx264";
+    	//mdout.videoCodec = "libx264";
+    	
     	mdout.videoBitrate = 1500;
     	mdout.audioBitrate = 128;
     	mdout.videoFps = "29.97";
@@ -407,10 +408,8 @@ public class MediaProjectManager implements MediaManager {
     }
     
     
-    /*
     public void prerenderMedia (MediaClip mClip, ShellCallback shellCallback)
     {
-    	
     	
     		MediaRenderer mRenderer = new MediaRenderer(mContext, (MediaManager)this, mHandler, mClip, mFileExternDir, shellCallback);
     		// Convert to video
@@ -418,7 +417,7 @@ public class MediaProjectManager implements MediaManager {
     		thread.setPriority(Thread.NORM_PRIORITY);
     		thread.start();
 	
-    }*/
+    }
     
     	
 	

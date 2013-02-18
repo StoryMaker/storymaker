@@ -87,8 +87,9 @@ h3 {
 	padding:10px;
 	font-size:10pt;
 	margin-bottom:20px;
-	width:300px;
+	width:90%;
 	display: inline-block;
+	
 	
 }
 
@@ -96,7 +97,7 @@ h3 {
      margin:0px;
      padding:0px;
 
-    width:320px;
+    width:100%;
 	height:auto;
      display:none;
 }
@@ -105,14 +106,14 @@ h3 {
     margin:0px;
     padding:0px;
     
-    width:320px;
+    width:100%;
 	height:auto;
 	display:block;
 }
 
 .imageslides_container div img
 {
-width:100%;
+width:90%;
 min-height:200px;
 margin:0px;
 padding:0px;
@@ -123,5 +124,5 @@ padding:0px;
 	font-size:10px;
 	color:#999999;
 	text-align:center;
-	width:300px;
+	width:90%;
 }
