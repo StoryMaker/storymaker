@@ -54,6 +54,10 @@ public class LessonViewActivity extends BaseActivity {
         		setTitle(mTitle);
         
         	mUrl = intent.getStringExtra("url");
+        	
+        	if (!mUrl.startsWith("file://"))
+        		mUrl = "file://" + mUrl;
+        	
         	mLessonPath = intent.getStringExtra("lessonPath");
         	
         	mWebView = (WebView) findViewById(R.id.web_engine);  
