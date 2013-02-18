@@ -48,7 +48,7 @@
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/textView2"
         android:layout_below="@+id/textView2"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="10dp"
         android:text="@string/new_story_choose_a_medium"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
