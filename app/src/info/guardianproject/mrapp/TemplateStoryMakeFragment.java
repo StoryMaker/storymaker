@@ -86,13 +86,13 @@ public class TemplateStoryMakeFragment extends Fragment {
         
         lv.setOnItemClickListener(new OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> arg0, View arg1,
-                    int arg2, long arg3) {
+            public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
                 Intent intent = new Intent(getActivity(), SceneEditorActivity.class);
                 intent.putExtra("template_path", mTemplateJsonPath);
                 intent.putExtra("story_mode", mActivity.mMPM.mProject.getStoryType());
                 intent.putExtra("pid", mActivity.mMPM.mProject.getId());
                 intent.putExtra("title", mActivity.mMPM.mProject.getTitle());
+                intent.putExtra("scene", position);
                 getActivity().startActivity(intent);
             }
         });
