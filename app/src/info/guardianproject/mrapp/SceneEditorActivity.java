@@ -45,9 +45,8 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
 	
 	private final static int REQ_OVERLAY_CAM = 888; //for resp handling from overlay cam launch
 	
-    protected boolean templateStory = false; 
+    protected boolean mTemplateStory = false; 
     protected Menu mMenu = null;
-    private Context mContext = null;
     
     private String mTemplateJsonPath = null;
     private int mScene = 0;
@@ -56,8 +55,6 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
     private final static String CAPTURE_MIMETYPE_AUDIO = "audio/3gpp";
     public Fragment mFragmentTab0, mFragmentTab1, mLastTabFrag;
     public PublishFragment mPublishFragment;
-	
-    private ProgressDialog mProgressDialog = null;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -65,30 +62,28 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
 
         Intent intent = getIntent();
         
-        templateStory = intent.hasExtra("template_story");
-        mTemplateJsonPath = getIntent().getStringExtra("template_path");
+        mTemplateJsonPath = getIntent().getStringExtra("template_path"); 
         mStoryMode = getIntent().getIntExtra("story_mode", Project.STORY_TYPE_VIDEO);
 
         int pid = intent.getIntExtra("pid", -1); //project id
 
         mScene = getIntent().getIntExtra("scene", 0);
-        
-        mContext = getBaseContext();
 
         if (pid != -1)
         {
             mMPM = new MediaProjectManager(this, mContext, getIntent(), mHandlerPub, pid);
+            mTemplateStory = (mMPM.mProject.getScenesAsArray().length > 1); // FIXME TESTME
         }
         else
         {
-            int clipCount = 5; // FIXME get rid of hardcode
+            int clipCount = 5; // FIXME get rid of hardcoded clipCount = 5
 
             String title = intent.getStringExtra("title");
         
             Project project = new Project(mContext, clipCount);
             project.setTitle(title);
             project.save();
-            
+            mTemplateStory = false;
             mMPM = new MediaProjectManager(this, mContext, getIntent(), mHandlerPub, project);
         }
         
@@ -102,147 +97,13 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
         // For each of the sections in the app, add a tab to the action bar.
         actionBar.addTab(actionBar.newTab().setText(R.string.tab_add_clips).setTabListener(this));
         actionBar.addTab(actionBar.newTab().setText(R.string.tab_order).setTabListener(this));
-        actionBar.addTab(actionBar.newTab().setText(R.string.tab_publish).setTabListener(this));
-
-    }
-
-    public Handler mHandlerPub = new Handler()
-    {
-
-		@Override
-		public void handleMessage(Message msg) {
-			
-			String statusTitle = msg.getData().getString("statusTitle");
-			String status = msg.getData().getString("status");
-
-  	        String error = msg.getData().getString("error");
-  	        if (error == null)
-  	        	error = msg.getData().getString("err");
-  	        
-  	        int progress = msg.getData().getInt("progress");
-  	        
-  	        if (mProgressDialog != null)
-  	        {
-  	        	if (progress >= 0)
-  	        	mProgressDialog.setProgress(progress);
-  	        
-  	        	if (statusTitle != null)
-  					mProgressDialog.setTitle(statusTitle);
-  				
-  	        }
-
-			
-			switch (msg.what)
-			{
-				case 0:
-				case 1:
-					
-					if (status != null)
-					{
-						if (mProgressDialog != null)
-						{
-							mProgressDialog.setMessage(status);
-						}
-						else
-						{
-							Toast.makeText(mContext, status, Toast.LENGTH_SHORT).show();
-							
-						}
-					}
-				break;
-				
-				case 999:
-					
-						mProgressDialog = new ProgressDialog(SceneEditorActivity.this);
-	          		    mProgressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-	          		    mProgressDialog.setTitle(getString(R.string.rendering));
-	          		    mProgressDialog.setMessage(getString(R.string.rendering_project_));
-	          		    mProgressDialog.setCancelable(true);
-	          		    mProgressDialog.show();
-					
-				break;
-				
-				case 888:
-	          		  mProgressDialog.setMessage(status);
-	            break;
-				case 777:
-					
-		  	        String videoId = msg.getData().getString("youtubeid");
-		  	        String url = msg.getData().getString("urlPost");
-		  	        String localPath = msg.getData().getString("fileMedia");
-		  	        String mimeType = msg.getData().getString("mime");
-		  	        
-					mProgressDialog.dismiss();
-					mProgressDialog = null;
-					
-					showPublished(url,new File(localPath),videoId,mimeType);
-					
-					
-				break;
-				case -1:
-					Toast.makeText(mContext, error, Toast.LENGTH_SHORT).show();
-					if (mProgressDialog != null)
-					{
-						mProgressDialog.dismiss();
-						mProgressDialog = null;
-					}
-					 
-				break;
-				default:
-				
-					
-			}
-			
-			
-		}
-    	
-    };
-
-    public void showPublished(final String postUrl, final File localMedia, final String youTubeId,
-            final String mimeType)
-    {
-        if (youTubeId != null || postUrl != null)
-        {
-            DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-
-                    switch (which) {
-                        case DialogInterface.BUTTON_POSITIVE:
-
-                            String urlOnline = postUrl;
-
-                            if (youTubeId != null)
-                                urlOnline = "https://www.youtube.com/watch?v=" + youTubeId;
-
-                            Intent i = new Intent(Intent.ACTION_VIEW);
-                            i.setData(Uri.parse(urlOnline));
-                            startActivity(i);
-                            break;
-
-                        case DialogInterface.BUTTON_NEGATIVE:
-
-                            mMPM.mMediaHelper.playMedia(localMedia, mimeType);
-
-                            break;
-                    }
-                }
-            };
-
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setMessage(R.string.view_published_media_online_or_local_copy_)
-                    .setPositiveButton(R.string.youtube, dialogClickListener)
-                    .setNegativeButton(R.string.local, dialogClickListener).show();
-        }
-        else
-        {
-
-            mMPM.mMediaHelper.playMedia(localMedia, mimeType);
-
+        if (mTemplateStory) {
+            actionBar.addTab(actionBar.newTab().setText(R.string.tab_finish).setTabListener(this));
+        } else {
+            actionBar.addTab(actionBar.newTab().setText(R.string.tab_publish).setTabListener(this));
         }
 
     }
-
 
     @Override
     public void onRestoreInstanceState(Bundle savedInstanceState) {
@@ -272,7 +133,7 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                if (templateStory) {
+                if (mTemplateStory) {
                     NavUtils.navigateUpTo(this, new Intent(this, StoryTemplateActivity.class));
                 } else {
                     NavUtils.navigateUpFromSameTask(this);
@@ -429,34 +290,38 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
             mLastTabFrag = mFragmentTab1;
 
         } else if (tab.getPosition() == 2) {
-            layout = R.layout.fragment_story_publish;
-            
-            if (mPublishFragment == null)
-            {
-                try {
-                    mPublishFragment = new PublishFragment(layout, this);
-
-                    Bundle args = new Bundle();
-                    args.putInt(PublishFragment.ARG_SECTION_NUMBER, tab.getPosition() + 1);
-                    mPublishFragment.setArguments(args);
-
-                } catch (IOException e) {
-                    Log.e("SceneEditr", "IO erorr", e);
-                } catch (JSONException e) {
-                    Log.e("SceneEditr", "json error", e);
-                }
-                fm.beginTransaction()
-                        .add(R.id.container, mPublishFragment, layout + "")
-                        .commit();
-
+            if (mTemplateStory) {
+                finish();
             } else {
-
-                fm.beginTransaction()
-                        .show(mPublishFragment)
-                        .commit();
+                layout = R.layout.fragment_story_publish;
+                
+                if (mPublishFragment == null)
+                {
+                    try {
+                        mPublishFragment = new PublishFragment(layout, this);
+    
+                        Bundle args = new Bundle();
+                        args.putInt(PublishFragment.ARG_SECTION_NUMBER, tab.getPosition() + 1);
+                        mPublishFragment.setArguments(args);
+    
+                    } catch (IOException e) {
+                        Log.e("SceneEditr", "IO erorr", e);
+                    } catch (JSONException e) {
+                        Log.e("SceneEditr", "json error", e);
+                    }
+                    fm.beginTransaction()
+                            .add(R.id.container, mPublishFragment, layout + "")
+                            .commit();
+    
+                } else {
+    
+                    fm.beginTransaction()
+                            .show(mPublishFragment)
+                            .commit();
+                }
+    
+                mLastTabFrag = mPublishFragment;
             }
-
-            mLastTabFrag = mPublishFragment;
         }
     }
 

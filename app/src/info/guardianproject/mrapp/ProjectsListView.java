@@ -74,46 +74,18 @@ public class ProjectsListView extends ListView implements Runnable {
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 			
 				Project project = mListProjects.get(position);
-				
-				Intent intent = new Intent(getContext(), SceneEditorActivity.class);
-		    	intent.putExtra("story_mode", project.getStoryType());
-		    	intent.putExtra("pid", project.getId());
-		    	intent.putExtra("title", project.getTitle());
-		    	
-		    	String templateJsonPath = null;
-		    	String lang = StoryMakerApp.getCurrentLocale().getLanguage();
-		    	
-		    	if (project.getStoryType() == Project.STORY_TYPE_VIDEO)
-		    	{
-		    		//video
-		    		templateJsonPath = "story/templates/" + lang + "/video_simple.json";
-//		    	    templateJsonPath = "story/templates/" + lang + "/video_3_scene.json"; // FIXME testing new template loader
-		    	
-		    		
-		    	}
-		    	else if (project.getStoryType() == Project.STORY_TYPE_PHOTO)
-		    	{
-		
-		    		//photo
-		    	
-		    		templateJsonPath = "story/templates/" + lang + "/photo_simple.json";
-		    	}
-		    	else if (project.getStoryType() == Project.STORY_TYPE_AUDIO)
-		    	{
-		
-		    		//audio
-		    	
-		    		templateJsonPath = "story/templates/" + lang + "/audio_simple.json";
-		    	}
-		    	else if (project.getStoryType() == Project.STORY_TYPE_ESSAY)
-		    	{
-		    		//essay
-		    		templateJsonPath = "story/templates/" + lang + "/essay_simple.json";
-		    		
-		    	}
-		    	
-		    	intent.putExtra("template_path", templateJsonPath);
-		    	
+				Intent intent = null;
+				if (project.getScenesAsArray().length > 1) {
+				    intent = new Intent(getContext(), StoryTemplateActivity.class);
+				    String lang = StoryMakerApp.getCurrentLocale().getLanguage();
+				    intent.putExtra("template_path", "story/templates/" + lang + "/video_3_scene.json");
+			    }else {
+    				intent = new Intent(getContext(), SceneEditorActivity.class);
+    		    	intent.putExtra("template_path", getSimpleTemplateJsonPath(project));
+			    }
+				intent.putExtra("story_mode", project.getStoryType());
+                intent.putExtra("pid", project.getId());
+                intent.putExtra("title", project.getTitle());
 		        getContext().startActivity(intent);
 			}
         	
@@ -130,14 +102,35 @@ public class ProjectsListView extends ListView implements Runnable {
         
     }
     
+    private String getSimpleTemplateJsonPath(Project project) {
+        String templateJsonPath = null;
+        String lang = StoryMakerApp.getCurrentLocale().getLanguage();
+        if (project.getStoryType() == Project.STORY_TYPE_VIDEO)
+        {
+            templateJsonPath = "story/templates/" + lang + "/video_simple.json";
+        }
+        else if (project.getStoryType() == Project.STORY_TYPE_PHOTO)
+        {
+            templateJsonPath = "story/templates/" + lang + "/photo_simple.json";
+        }
+        else if (project.getStoryType() == Project.STORY_TYPE_AUDIO)
+        {
+            templateJsonPath = "story/templates/" + lang + "/audio_simple.json";
+        }
+        else if (project.getStoryType() == Project.STORY_TYPE_ESSAY)
+        {
+            templateJsonPath = "story/templates/" + lang + "/essay_simple.json";
+        }
+        
+        return templateJsonPath;
+    }
+    
     private void deleteProject (Project project)
     {
     	mListProjects.remove(project);
         aaProjects.notifyDataSetChanged();
         
     	project.delete();
-        
-        
     }
     
     class ProjectArrayAdapter extends ArrayAdapter {
