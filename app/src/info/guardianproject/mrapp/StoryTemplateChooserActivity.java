@@ -104,16 +104,19 @@ public class StoryTemplateChooserActivity extends BaseActivity {
                 Project project = new Project(this, sceneCount);
                 project.setTitle(mProjectName);
                 project.save();
+                int i = 0;
                 for (info.guardianproject.mrapp.model.template.Scene s : mTemplate.getScenes()) {
                     Scene scene = new Scene(this, s.getClips().size());
                     scene.setProjectId(project.getId());
+                    scene.setProjectIndex(i);
                     scene.save();
+                    i++;
                 }
-                Intent i = new Intent(getBaseContext(), StoryTemplateActivity.class);
-                i.putExtra("pid", project.getId());
-                i.putExtra("template_path", mTemplatePath);
+                Intent intent = new Intent(getBaseContext(), StoryTemplateActivity.class);
+                intent.putExtra("pid", project.getId());
+                intent.putExtra("template_path", mTemplatePath);
                 
-                startActivity(i);
+                startActivity(intent);
                 return true;
         }
         return super.onOptionsItemSelected(item);

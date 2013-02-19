@@ -65,14 +65,17 @@ public class Project {
         
         int projectIndex = 0;
         
-        if (cursor.moveToFirst()) {
-            do {
-                Scene scene = new Scene(context, cursor);
-                projectIndex = Math.max(projectIndex, scene.getProjectIndex());
-            } while (cursor.moveToNext());
-        }
+        mSceneCount = cursor.getCount();
         
-        mSceneCount = projectIndex + 1; //size is one higher than max index
+        // FIXME CLEANUP --- not sure why this was calculated this way, but for now I am just using count
+//        if (cursor.moveToFirst()) {
+//            do {
+//                Scene scene = new Scene(context, cursor);
+//                projectIndex = Math.max(projectIndex, scene.getProjectIndex());
+//            } while (cursor.moveToNext());
+//        }
+        
+//        mSceneCount = projectIndex + 1; //size is one higher than max index
         
         cursor.close();
         
