@@ -141,7 +141,7 @@ public class StoryTemplateActivity extends EditorBaseActivity implements ActionB
         public Fragment getItem(int i) {
             Fragment fragment = null;
             if (i == 0) {
-                fragment = new TemplateStoryMakeFragment();
+                fragment = new TemplateStoryMakeFragment(StoryTemplateActivity.this);
                 Bundle args = new Bundle();
                 args.putInt(TemplateStoryMakeFragment.ARG_SECTION_NUMBER, i + 1);
                 fragment.setArguments(args);
