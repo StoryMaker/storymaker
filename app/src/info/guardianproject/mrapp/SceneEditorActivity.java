@@ -291,6 +291,12 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
 
         } else if (tab.getPosition() == 2) {
             if (mTemplateStory) {
+                Intent intent = new Intent(getBaseContext(), StoryTemplateActivity.class);
+                intent.putExtra("template_path", mTemplateJsonPath);
+                intent.putExtra("story_mode", mMPM.mProject.getStoryType());
+                intent.putExtra("pid", mMPM.mProject.getId());
+                intent.putExtra("title", mMPM.mProject.getTitle());
+                startActivity(intent);
                 finish();
             } else {
                 layout = R.layout.fragment_story_publish;

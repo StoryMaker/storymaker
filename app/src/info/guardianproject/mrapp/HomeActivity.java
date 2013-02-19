@@ -537,7 +537,6 @@ public class HomeActivity extends BaseActivity implements ActionBar.TabListener 
 	    	{
 	    		//video
 	    		templateJsonPath = "story/templates/" + lang + "/video_simple.json";
-//	    	    templateJsonPath = "story/templates/" + lang + "/video_3_scene.json"; // FIXME testing new template loader
 	    	}
 	    	else if (project.getStoryType() == Project.STORY_TYPE_PHOTO)
 	    	{

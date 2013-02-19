@@ -146,10 +146,6 @@ public class StoryTemplateActivity extends EditorBaseActivity implements ActionB
                 args.putInt(TemplateStoryMakeFragment.ARG_SECTION_NUMBER, i + 1);
                 fragment.setArguments(args);
             } else if (i == 1) {
-//                layout = R.layout.fragment_story_review;
-                // FIXME we need to create a review fragment
-                // FIXME testing:
-
                 fragment = new TemplateStoryReviewFragment();
                 Bundle args = new Bundle();
                 args.putInt(TemplateStoryMakeFragment.ARG_SECTION_NUMBER, i + 1);
@@ -158,9 +154,9 @@ public class StoryTemplateActivity extends EditorBaseActivity implements ActionB
                 try {
                     fragment = new PublishFragment(R.layout.fragment_story_publish, StoryTemplateActivity.this);
                 } catch (IOException e) {
-                    Log.e("SceneEditr", "IO erorr", e);
+                    Log.e("SceneEditr", "IO erorr", e); // FIXME
                 } catch (JSONException e) {
-                    Log.e("SceneEditr", "json error", e);
+                    Log.e("SceneEditr", "json error", e);  // FIXME
                 }
                 Bundle args = new Bundle();
                 args.putInt(TemplateStoryMakeFragment.ARG_SECTION_NUMBER, i + 1);
