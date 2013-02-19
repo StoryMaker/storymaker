@@ -52,11 +52,11 @@ public class Scene {
                         .getColumnIndex(StoryMakerDB.Schema.Scenes.COL_PROJECT_ID))
         		);
         
-        getMaxClipCount();
+        calculateMaxClipCount();
         
     }
     
-    private void getMaxClipCount ()
+    private void calculateMaxClipCount ()
     {
         Cursor cursor = getMediaAsCursor();
         

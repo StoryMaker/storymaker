@@ -27,9 +27,9 @@ public class Project {
     
     public int mSceneCount = -1;
     
-    public Project(Context context, int clipCount) {
+    public Project(Context context, int sceneCount) {
         this.context = context;
-        mSceneCount = clipCount;
+        mSceneCount = sceneCount;
     }
 
     public Project(Context context, int id, String title, String thumbnailPath, int storyType) {
@@ -55,11 +55,11 @@ public class Project {
                                 .getColumnIndex(StoryMakerDB.Schema.Projects.COL_STORY_TYPE))      
         		);
         
-        getMaxSceneCount();
+        calculateMaxSceneCount();
         
     }
     
-    private void getMaxSceneCount ()
+    private void calculateMaxSceneCount ()
     {
         Cursor cursor = getScenesAsCursor();
         
