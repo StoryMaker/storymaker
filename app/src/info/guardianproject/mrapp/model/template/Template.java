@@ -59,8 +59,12 @@ public class Template {
 
 		    JSONObject jobjScene = jarrayScenes.getJSONObject(scenesIdx);
 
-		    if (!jobjScene.isNull("title")) {
+            if (!jobjScene.isNull("title")) {
                 scene.mTitle = jobjScene.getString("title");
+            }
+            
+            if (!jobjScene.isNull("description")) {
+                scene.mDescription = jobjScene.getString("description");
             }
 
 	        jarrayClips = jobjScene.getJSONArray("clips");
