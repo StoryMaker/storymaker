@@ -103,6 +103,7 @@ public class StoryTemplateChooserActivity extends BaseActivity {
                 int sceneCount = mTemplate.getScenes().size(); 
                 Project project = new Project(this, sceneCount);
                 project.setTitle(mProjectName);
+                project.setTemplatePath(mTemplatePath);
                 project.save();
                 int i = 0;
                 for (info.guardianproject.mrapp.model.template.Scene s : mTemplate.getScenes()) {

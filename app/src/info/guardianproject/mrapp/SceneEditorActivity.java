@@ -6,6 +6,7 @@ import info.guardianproject.mrapp.media.OverlayCameraActivity;
 import info.guardianproject.mrapp.model.template.Clip;
 import info.guardianproject.mrapp.model.Media;
 import info.guardianproject.mrapp.model.Project;
+import info.guardianproject.mrapp.model.Scene;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -45,11 +46,10 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
 	
 	private final static int REQ_OVERLAY_CAM = 888; //for resp handling from overlay cam launch
 	
-    protected boolean mTemplateStory = false; 
     protected Menu mMenu = null;
     
     private String mTemplateJsonPath = null;
-    private int mScene = 0;
+    private int mSceneIndex = 0;
     
     private int mStoryMode = Project.STORY_TYPE_VIDEO;;
     private final static String CAPTURE_MIMETYPE_AUDIO = "audio/3gpp";
@@ -67,12 +67,17 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
 
         int pid = intent.getIntExtra("pid", -1); //project id
 
-        mScene = getIntent().getIntExtra("scene", 0);
+        mSceneIndex = getIntent().getIntExtra("scene", -1);
 
         if (pid != -1)
         {
-            mMPM = new MediaProjectManager(this, mContext, getIntent(), mHandlerPub, pid);
-            mTemplateStory = (mMPM.mProject.getScenesAsArray().length > 1); // FIXME TESTME
+            Project project = Project.get(mContext, pid);
+            Scene scene = null;
+            if ((mSceneIndex != -1) && (mSceneIndex < project.getScenesAsArray().length)) {
+                scene = project.getScenesAsArray()[mSceneIndex];
+            }
+            mMPM = new MediaProjectManager(this, mContext, getIntent(), mHandlerPub, project, scene);
+            mMPM.addAllProjectMediaToEditor();
         }
         else
         {
@@ -83,7 +88,6 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
             Project project = new Project(mContext, clipCount);
             project.setTitle(title);
             project.save();
-            mTemplateStory = false;
             mMPM = new MediaProjectManager(this, mContext, getIntent(), mHandlerPub, project);
         }
         
@@ -93,11 +97,14 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
         final ActionBar actionBar = getSupportActionBar();
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
         actionBar.setDisplayHomeAsUpEnabled(true);
+        if (mMPM.mScene != null) {
+            actionBar.setTitle(mMPM.mScene.getTitle());
+        }
 
         // For each of the sections in the app, add a tab to the action bar.
         actionBar.addTab(actionBar.newTab().setText(R.string.tab_add_clips).setTabListener(this));
         actionBar.addTab(actionBar.newTab().setText(R.string.tab_order).setTabListener(this));
-        if (mTemplateStory) {
+        if (mMPM.mProject.isTemplateStory()) {
             actionBar.addTab(actionBar.newTab().setText(R.string.tab_finish).setTabListener(this));
         } else {
             actionBar.addTab(actionBar.newTab().setText(R.string.tab_publish).setTabListener(this));
@@ -133,8 +140,14 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                if (mTemplateStory) {
-                    NavUtils.navigateUpTo(this, new Intent(this, StoryTemplateActivity.class));
+                if (mMPM.mProject.isTemplateStory()) {
+                    Intent intent = new Intent(this, StoryTemplateActivity.class);
+                    String lang = StoryMakerApp.getCurrentLocale().getLanguage();
+                    intent.putExtra("template_path", "story/templates/" + lang + "/video_3_scene.json");
+                    intent.putExtra("story_mode", mMPM.mProject.getStoryType());
+                    intent.putExtra("pid", mMPM.mProject.getId());
+                    intent.putExtra("title", mMPM.mProject.getTitle());
+                    NavUtils.navigateUpTo(this, intent);
                 } else {
                     NavUtils.navigateUpFromSameTask(this);
                 }
@@ -225,7 +238,7 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
             if (mFragmentTab0 == null)
             {
                 try {
-                    mFragmentTab0 = new AddClipsFragment(layout, fm, mTemplateJsonPath, mScene, this);
+                    mFragmentTab0 = new AddClipsFragment(layout, fm, mTemplateJsonPath, mSceneIndex, this);
 
                     Bundle args = new Bundle();
                     args.putInt(AddClipsFragment.ARG_SECTION_NUMBER, tab.getPosition() + 1);
@@ -290,7 +303,7 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
             mLastTabFrag = mFragmentTab1;
 
         } else if (tab.getPosition() == 2) {
-            if (mTemplateStory) {
+            if (mMPM.mProject.isTemplateStory()) {
                 Intent intent = new Intent(getBaseContext(), StoryTemplateActivity.class);
                 intent.putExtra("template_path", mTemplateJsonPath);
                 intent.putExtra("story_mode", mMPM.mProject.getStoryType());
