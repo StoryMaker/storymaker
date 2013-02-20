@@ -19,6 +19,7 @@ public class Project {
     protected String title;
     protected String thumbnailPath;
     protected int storyType;
+    protected String template;
     
     public final static int STORY_TYPE_VIDEO = 0;
     public final static int STORY_TYPE_AUDIO = 1;
@@ -32,13 +33,14 @@ public class Project {
         mSceneCount = sceneCount;
     }
 
-    public Project(Context context, int id, String title, String thumbnailPath, int storyType) {
+    public Project(Context context, int id, String title, String thumbnailPath, int storyType, String template) {
         super();
         this.context = context;
         this.id = id;
         this.title = title;
         this.thumbnailPath = thumbnailPath;
         this.storyType = storyType;
+        this.template = template;
     }
 
     public Project(Context context, Cursor cursor) {
@@ -51,12 +53,13 @@ public class Project {
                         .getColumnIndex(StoryMakerDB.Schema.Projects.COL_TITLE)),
                 cursor.getString(cursor
                         .getColumnIndex(StoryMakerDB.Schema.Projects.COL_THUMBNAIL_PATH)),
-                  cursor.getInt(cursor
-                                .getColumnIndex(StoryMakerDB.Schema.Projects.COL_STORY_TYPE))      
-        		);
-        
+                cursor.getInt(cursor
+                        .getColumnIndex(StoryMakerDB.Schema.Projects.COL_STORY_TYPE)),
+                cursor.getString(cursor
+                        .getColumnIndex(StoryMakerDB.Schema.Projects.COL_TEMPLATE)));
+
         calculateMaxSceneCount();
-        
+
     }
     
     private void calculateMaxSceneCount ()
@@ -267,13 +270,21 @@ public class Project {
         this.thumbnailPath = thumbnailPath;
     }
 
-	public int getStoryType() {
-		return storyType;
-	}
+    public int getStoryType() {
+        return storyType;
+    }
 
-	public void setStoryType(int storyType) {
-		this.storyType = storyType;
-	}
+    public void setStoryType(int storyType) {
+        this.storyType = storyType;
+    }
+
+    public String getTemplate() {
+        return template;
+    }
+
+    public void setTemplate(String template) {
+        this.template = template;
+    }
     
     
 }
