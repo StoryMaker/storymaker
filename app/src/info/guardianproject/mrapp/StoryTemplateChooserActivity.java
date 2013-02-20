@@ -99,7 +99,7 @@ public class StoryTemplateChooserActivity extends BaseActivity {
                 NavUtils.navigateUpFromSameTask(this);
                 return true;
             case R.id.itemForward:
-                // FIXME setup new project from template (empty scenes)
+                // FIXME this should be split into a method, probably in the model.Project class?
                 int sceneCount = mTemplate.getScenes().size(); 
                 Project project = new Project(this, sceneCount);
                 project.setTitle(mProjectName);
@@ -108,6 +108,7 @@ public class StoryTemplateChooserActivity extends BaseActivity {
                 int i = 0;
                 for (info.guardianproject.mrapp.model.template.Scene s : mTemplate.getScenes()) {
                     Scene scene = new Scene(this, s.getClips().size());
+                    scene.setTitle(s.mTitle);
                     scene.setProjectId(project.getId());
                     scene.setProjectIndex(i);
                     scene.save();
