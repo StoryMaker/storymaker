@@ -21,12 +21,14 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.TextView;
 
 @SuppressLint("ValidFragment") // FIxME maybe we shouldn't supress this
 public class TemplateStoryMakeFragment extends Fragment {
     EditorBaseActivity mActivity;
     public static final String ARG_SECTION_NUMBER = "section_number";
     private String mTemplateJsonPath = null;
+    private Template mTemplate;
     
     public TemplateStoryMakeFragment(EditorBaseActivity activity) {
         mActivity = activity;
@@ -41,9 +43,9 @@ public class TemplateStoryMakeFragment extends Fragment {
         mTemplateJsonPath = intent.getStringExtra("template_path");
         
         // FIXME fetch template from the Project db record
-        Template template = new Template();
+        mTemplate = new Template();
         try {
-            template.parseAsset(getActivity(), mTemplateJsonPath);
+            mTemplate.parseAsset(getActivity(), mTemplateJsonPath);
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -52,7 +54,10 @@ public class TemplateStoryMakeFragment extends Fragment {
             e.printStackTrace();
         }
 
-        ArrayList<Scene> scenes = template.getScenes();
+        TextView title = (TextView) view.findViewById(R.id.textTitle);
+        title.setText(mActivity.mMPM.mProject.getTitle());
+        
+        ArrayList<Scene> scenes = mTemplate.getScenes();
         String[] egTitles = new String[scenes.size() + 1];
         String[] egDescriptions = new String[scenes.size() + 1];
         String[] egStatuses = new String[scenes.size() + 1];

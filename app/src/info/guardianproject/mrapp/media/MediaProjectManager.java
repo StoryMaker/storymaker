@@ -51,22 +51,27 @@ public class MediaProjectManager implements MediaManager {
 	public int mClipIndex;  // FIXME hack to get clip we are adding media too into intent handler
 
     public MediaProjectManager (Activity activity, Context context, Intent intent, Handler handler, int pid) {
-    
         this(activity, context, intent, handler, Project.get(context, pid));
     }
     
     public MediaProjectManager (Activity activity, Context context, Intent intent, Handler handler, Project project) {
+        this(activity, context, intent, handler, project, null);
+    }
+    
+    public MediaProjectManager (Activity activity, Context context, Intent intent, Handler handler, Project project, Scene scene) {
         mActivity = activity;
         mContext = context;
         mHandler = handler;
         
         mProject = project;
-        mScene = project.getScenesAsArray()[0]; // FIXME defaulting to first scene for now
-        
-        initProject();
+        if (scene == null) {
+            mScene = project.getScenesAsArray()[0];
+        } else {
+            mScene = scene;
+        }
     }
     
-    private void initProject()
+    public void addAllProjectMediaToEditor()
     {
         mMediaList = new ArrayList<MediaClip>(mScene.getClipCount());
         

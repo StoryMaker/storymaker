@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import org.holoeverywhere.app.AlertDialog;
 import org.json.JSONException;
 
+import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -25,6 +26,7 @@ import android.view.ViewGroup;
 /**
  * 
  */
+@SuppressLint("ValidFragment")
 public class AddClipsFragment extends Fragment {
     private final static String TAG = "AddClipsFragment";
     int layout;

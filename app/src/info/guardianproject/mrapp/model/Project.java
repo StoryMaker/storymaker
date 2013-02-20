@@ -221,6 +221,10 @@ public class Project {
         mSceneCount = Math.max((projectIndex+1), mSceneCount);
     }
     
+    
+    public boolean isTemplateStory() {
+        return (templatePath != null) && !templatePath.equals(""); 
+    }
     /***** getters and setters *****/
 
     /**
