@@ -19,7 +19,7 @@ public class Project {
     protected String title;
     protected String thumbnailPath;
     protected int storyType;
-    protected String template;
+    protected String templatePath;
     
     public final static int STORY_TYPE_VIDEO = 0;
     public final static int STORY_TYPE_AUDIO = 1;
@@ -33,14 +33,14 @@ public class Project {
         mSceneCount = sceneCount;
     }
 
-    public Project(Context context, int id, String title, String thumbnailPath, int storyType, String template) {
+    public Project(Context context, int id, String title, String thumbnailPath, int storyType, String templatePath) {
         super();
         this.context = context;
         this.id = id;
         this.title = title;
         this.thumbnailPath = thumbnailPath;
         this.storyType = storyType;
-        this.template = template;
+        this.templatePath = templatePath;
     }
 
     public Project(Context context, Cursor cursor) {
@@ -56,7 +56,7 @@ public class Project {
                 cursor.getInt(cursor
                         .getColumnIndex(StoryMakerDB.Schema.Projects.COL_STORY_TYPE)),
                 cursor.getString(cursor
-                        .getColumnIndex(StoryMakerDB.Schema.Projects.COL_TEMPLATE)));
+                        .getColumnIndex(StoryMakerDB.Schema.Projects.COL_TEMPLATE_PATH)));
 
         calculateMaxSceneCount();
 
@@ -141,11 +141,9 @@ public class Project {
     private ContentValues getValues() {
         ContentValues values = new ContentValues();
         values.put(StoryMakerDB.Schema.Projects.COL_TITLE, title);
-        values.put(StoryMakerDB.Schema.Projects.COL_THUMBNAIL_PATH,
-                thumbnailPath);
-        values.put(StoryMakerDB.Schema.Projects.COL_STORY_TYPE,
-                storyType);
-        
+        values.put(StoryMakerDB.Schema.Projects.COL_THUMBNAIL_PATH, thumbnailPath);
+        values.put(StoryMakerDB.Schema.Projects.COL_STORY_TYPE, storyType);
+        values.put(StoryMakerDB.Schema.Projects.COL_TEMPLATE_PATH, templatePath);
         
         return values;
     }
@@ -278,12 +276,12 @@ public class Project {
         this.storyType = storyType;
     }
 
-    public String getTemplate() {
-        return template;
+    public String getTemplatePath() {
+        return templatePath;
     }
 
-    public void setTemplate(String template) {
-        this.template = template;
+    public void setTemplatePath(String template) {
+        this.templatePath = template;
     }
     
     
