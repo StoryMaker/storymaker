@@ -58,9 +58,9 @@ public class TemplateStoryMakeFragment extends Fragment {
         title.setText(mActivity.mMPM.mProject.getTitle());
         
         ArrayList<Scene> scenes = mTemplate.getScenes();
-        String[] egTitles = new String[scenes.size() + 1];
-        String[] egDescriptions = new String[scenes.size() + 1];
-        String[] egStatuses = new String[scenes.size() + 1];
+        String[] egTitles = new String[scenes.size()];
+        String[] egDescriptions = new String[scenes.size()];
+        String[] egStatuses = new String[scenes.size()];
         for (int i = 0 ; i < scenes.size() ; i++) {
             Scene scene = scenes.get(i);
             egTitles[i] = scene.mTitle;
