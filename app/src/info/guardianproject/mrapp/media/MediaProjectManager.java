@@ -71,17 +71,23 @@ public class MediaProjectManager implements MediaManager {
         }
     }
     
-    public void addAllProjectMediaToEditor()
+    public void initProject()
     {
-        mMediaList = new ArrayList<MediaClip>(mScene.getClipCount());
-        
-        for (int i = 0; i < mScene.getClipCount(); i++)
-            mMediaList.add(null); 
-        
+        int clipCount = 0;
+        for (Scene s : mProject.getScenesAsArray()) {
+            clipCount += s.getClipCount();
+        } 
+        mMediaList = new ArrayList<MediaClip>(clipCount);
+        for (int i = 0; i < clipCount; i++) {
+            mMediaList.add(null);
+        }
+    
         mMediaHelper = new MediaHelper (mActivity, mHandler);
         
         initExternalStorage();
-
+    }
+        
+    public void addAllProjectMediaToEditor() {
         Media[] _medias = mScene.getMediaAsArray();
         for (Media media: _medias) {
         	if (media != null) {

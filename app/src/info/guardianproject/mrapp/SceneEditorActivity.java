@@ -77,6 +77,7 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
                 scene = project.getScenesAsArray()[mSceneIndex];
             }
             mMPM = new MediaProjectManager(this, mContext, getIntent(), mHandlerPub, project, scene);
+            mMPM.initProject();
             mMPM.addAllProjectMediaToEditor();
         }
         else
@@ -89,6 +90,7 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
             project.setTitle(title);
             project.save();
             mMPM = new MediaProjectManager(this, mContext, getIntent(), mHandlerPub, project);
+            mMPM.initProject();
         }
         
         setContentView(R.layout.activity_scene_editor_no_swipe);
