@@ -10,6 +10,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.content.Context;
+import android.content.res.Resources;
 
 public class Template {
 
@@ -61,10 +62,20 @@ public class Template {
 
             if (!jobjScene.isNull("title")) {
                 scene.mTitle = jobjScene.getString("title");
+                
+                int resId = Resources.getSystem().getIdentifier(scene.mTitle, "string", null);
+                
+                if (resId != 0)
+                	scene.mTitle = context.getString(resId);
             }
             
             if (!jobjScene.isNull("description")) {
                 scene.mDescription = jobjScene.getString("description");
+                
+                int resId = Resources.getSystem().getIdentifier(scene.mDescription, "string", null);
+                
+                if (resId != 0)
+                	scene.mDescription = context.getString(resId);
             }
 
 	        jarrayClips = jobjScene.getJSONArray("clips");

@@ -74,7 +74,7 @@ public class LessonViewActivity extends BaseActivity {
         		new WebViewSetupJB(mWebView);
         	}
         	
-        	mWebView.getSettings().setSupportZoom(false);
+        	mWebView.getSettings().setSupportZoom(true);
         
         	mWebView.setWebChromeClient(new WebChromeClient ()
         	{

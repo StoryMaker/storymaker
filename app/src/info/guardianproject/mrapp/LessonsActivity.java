@@ -1,21 +1,30 @@
 package info.guardianproject.mrapp;
 
 import info.guardianproject.mrapp.lessons.LessonListView;
+import info.guardianproject.mrapp.lessons.WebViewSetupJB;
 
 import org.holoeverywhere.LayoutInflater;
 import org.holoeverywhere.app.Fragment;
 
 import android.content.Intent;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.NavUtils;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.ConsoleMessage;
+import android.webkit.WebChromeClient;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
+import android.webkit.WebSettings.PluginState;
 import android.widget.TextView;
 
 import com.actionbarsherlock.app.ActionBar;
@@ -209,14 +218,67 @@ public class LessonsActivity extends BaseActivity implements ActionBar.TabListen
 
         public static final String ARG_SECTION_NUMBER = "section_number";
 
+        private WebView mWebView;
+        private String mUrl = "file:///android_asset/glossary/glossary.html";
+        
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                 Bundle savedInstanceState) {
-            TextView textView = new TextView(getActivity());
-            textView.setGravity(Gravity.CENTER);
-            Bundle args = getArguments();
-            textView.setText(Integer.toString(args.getInt(ARG_SECTION_NUMBER)));
-            return textView;
+        	
+        	mWebView = new WebView(getActivity());
+        	mWebView.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
+        	mWebView.getSettings().setJavaScriptEnabled(true);
+        	mWebView.getSettings().setPluginsEnabled(true);
+        	mWebView.getSettings().setPluginState(PluginState.ON);
+        	mWebView.getSettings().setAllowFileAccess(true);
+        	if (Build.VERSION.SDK_INT >= 16)
+        	{
+        		new WebViewSetupJB(mWebView);
+        	}
+        	
+        	mWebView.setWebChromeClient(new WebChromeClient ()
+        	{
+
+				@Override
+				public boolean onConsoleMessage(ConsoleMessage consoleMessage) {
+					
+					Log.w(AppConstants.TAG,"web console: " + consoleMessage.lineNumber() + ": " + consoleMessage.message());
+					return super.onConsoleMessage(consoleMessage);
+				}
+
+				
+        		
+        	});
+        	
+        	mWebView.setWebViewClient(new WebViewClient ()
+        	{
+
+        		
+				@Override
+				public boolean shouldOverrideUrlLoading(WebView view, String url) {
+
+					boolean handled = false;
+					
+					
+					
+					return handled;// super.shouldOverrideUrlLoading(view, url);
+				}
+
+				@Override
+				public void onReceivedError(WebView view, int errorCode,
+						String description, String failingUrl) {
+					
+					Log.e(AppConstants.TAG,"web error occured for " + failingUrl + "; " + errorCode + "=" + description);
+					//super.onReceivedError(view, errorCode, description, failingUrl);
+				}
+				
+				
+        		
+        	});
+        	
+        	mWebView.loadUrl(mUrl); 
+        	
+            return mWebView;
         }
     }
     

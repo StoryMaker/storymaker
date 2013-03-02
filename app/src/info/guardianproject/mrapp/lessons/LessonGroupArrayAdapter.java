@@ -40,10 +40,10 @@ public class LessonGroupArrayAdapter extends ArrayAdapter {
             
         }
         
-        tvTitle = (TextView)row.findViewById(R.id.lessonRowTitle);
+        tvTitle = (TextView)row.findViewById(R.id.title);
         tvTitle.setText(group.mTitle);        
         
-        tvStatus = (TextView)row.findViewById(R.id.lessonRowStatus);
+        tvStatus = (TextView)row.findViewById(R.id.description);
         tvStatus.setText(group.mStatus);        
         
         return row;

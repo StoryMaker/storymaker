@@ -67,7 +67,7 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
 
         int pid = intent.getIntExtra("pid", -1); //project id
 
-        mSceneIndex = getIntent().getIntExtra("scene", -1);
+        mSceneIndex = getIntent().getIntExtra("scene", 0);
 
         if (pid != -1)
         {

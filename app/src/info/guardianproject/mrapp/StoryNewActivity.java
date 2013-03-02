@@ -47,7 +47,7 @@ public class StoryNewActivity extends BaseActivity {
 				if (checkedId == R.id.radioStoryType0)
 		    	{
 		    		//video
-					txtNewStoryDesc.setText(R.string.new_story_video);
+					txtNewStoryDesc.setText(R.string.template_video_desc);
 		    		
 		    	}
 		    	else if (checkedId == R.id.radioStoryType1)
@@ -55,20 +55,20 @@ public class StoryNewActivity extends BaseActivity {
 
 		    		//photo
 
-					txtNewStoryDesc.setText(R.string.new_story_photo);
+					txtNewStoryDesc.setText(R.string.template_photo_desc);
 		    	}
 		    	else if (checkedId == R.id.radioStoryType2)
 		    	{
 
 		    		//audio
 
-					txtNewStoryDesc.setText(R.string.new_story_audio);
+					txtNewStoryDesc.setText(R.string.template_audio_desc);
 		    	}
 		    	else if (checkedId == R.id.radioStoryType3)
 		    	{
 		    		//essay
 
-					txtNewStoryDesc.setText(R.string.new_story_essay);
+					txtNewStoryDesc.setText(R.string.template_essay_desc);
 		    		
 		    	}
 				

@@ -5,77 +5,139 @@
     android:background="#565552"
     android:orientation="vertical" >
 
+     <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/drawer_quick_capture"
+        android:textAppearance="?android:attr/textAppearanceSmall" 
+        android:layout_margin="3sp"
+        android:textColor="#dddddd"
+        />
+    <View
+    android:layout_width="fill_parent"
+    android:layout_height="1dp"
+    android:background="#33999999"/>
+     
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20sp"
+         >
 
+        
         <ImageButton
-            android:id="@+id/btnDrawerNewProject"
+            android:id="@+id/btnDrawerQuickCaptureVideo"
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:background="@android:color/transparent"
             android:padding="5dp"
             android:scaleType="fitCenter"
-            android:src="@drawable/new_project" />
-
-        <ImageButton
-            android:id="@+id/btnDrawerNewLesson"
+            android:src="@drawable/quick_capture_video" />
+        
+           <ImageButton
+            android:id="@+id/btnDrawerQuickCapturePhoto"
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:background="@android:color/transparent"
             android:padding="5dp"
             android:scaleType="fitCenter"
-            android:src="@drawable/new_lesson" />
-
-        <ImageButton
-            android:id="@+id/btnDrawerQuickCapture"
+            android:src="@drawable/quick_capture_photo" />
+           
+              <ImageButton
+            android:id="@+id/btnDrawerQuickCaptureAudio"
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:background="@android:color/transparent"
             android:padding="5dp"
             android:scaleType="fitCenter"
-            android:src="@drawable/quick_capture" />
+            android:src="@drawable/quick_capture_audio" />
 
     </LinearLayout>
-
+<View
+    android:layout_width="fill_parent"
+    android:layout_height="1dp"
+    android:background="#33999999"/>
     <Button
         android:id="@+id/btnDrawerHome"
         android:layout_width="180dp"
         android:layout_height="wrap_content"
-        android:drawableLeft="@drawable/ic_home_project"
-        android:text="@string/drawer_home"
-        android:visibility="gone" />
-
+        android:background="@android:color/transparent"
+        android:drawableLeft="@drawable/ic_nav_home"
+                android:gravity="left|center_vertical"
+        android:textColor="#dddddd"
+        android:text="@string/title_activity_home"
+    />
+<View
+    android:layout_width="fill_parent"
+    android:layout_height="1dp"
+    android:background="#33999999"/>
     <Button
         android:id="@+id/btnDrawerProjects"
         android:layout_width="180dp"
         android:layout_height="wrap_content"
-        android:drawableLeft="@drawable/ic_home_project"
+        
+            android:background="@android:color/transparent"
+        android:drawableLeft="@drawable/ic_home_projects"
         android:gravity="left|center_vertical"
-        android:text="  Projects" />
-
+        android:text="@string/menu_projects"
+        android:textColor="#dddddd"
+        
+         />
+<View
+    android:layout_width="fill_parent"
+    android:layout_height="1dp"
+    android:background="#33999999"/>
     <Button
         android:id="@+id/btnDrawerLessons"
         android:layout_width="180dp"
         android:layout_height="wrap_content"
-        android:drawableLeft="@drawable/ic_home_lesson"
+        
+            android:background="@android:color/transparent"
+        android:drawableLeft="@drawable/ic_nav_lessons"
         android:gravity="left|center_vertical"
-        android:text="  Lessons" />
+        android:text="@string/menu_lessons"
+        android:textColor="#dddddd"
 
+/>
+<View
+    android:layout_width="fill_parent"
+    android:layout_height="1dp"
+    android:background="#33999999"/>
     <Button
         android:id="@+id/btnDrawerAccount"
         android:layout_width="180dp"
         android:layout_height="wrap_content"
-        android:drawableLeft="@drawable/ic_nav_media_settings"
+        
+            android:background="@android:color/transparent"
+        android:drawableLeft="@drawable/ic_nav_preferences"
         android:gravity="left|center_vertical"
-        android:text="  Account" />
+        android:text="@string/drawer_profile"
+                android:textColor="#dddddd"
+        
+         />
+    
+    <View
+    android:layout_width="fill_parent"
+    android:layout_height="1dp"
+    android:background="#33999999"
+    
+    />
     
     <Button
         android:id="@+id/btnDrawerSettings"
         android:layout_width="180dp"
         android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
         android:drawableLeft="@drawable/ic_nav_media_settings"
         android:gravity="left|center_vertical"
-        android:text="  Settings" />
-
+        android:text="@string/menu_settings"
+                android:textColor="#dddddd"
+        
+        
+         />
+<View
+    android:layout_width="fill_parent"
+    android:layout_height="1dp"
+    android:background="#33999999"/>
 </LinearLayout>

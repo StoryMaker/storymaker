@@ -2,6 +2,7 @@ package info.guardianproject.mrapp.server;
 
 
 import info.guardianproject.mrapp.AppConstants;
+import info.guardianproject.mrapp.BaseActivity;
 import info.guardianproject.mrapp.R;
 import info.guardianproject.mrapp.StoryMakerApp;
 
@@ -20,7 +21,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
  
-public class LoginActivity extends org.holoeverywhere.app.Activity implements Runnable 
+public class LoginActivity extends BaseActivity implements Runnable 
 {
 	
 	private ImageView viewLogo;
