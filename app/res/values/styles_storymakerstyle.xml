@@ -18,7 +18,9 @@
 
 <resources>
 
-    <style name="Theme.storymakerstyle" parent="@style/Theme.Sherlock.Light.DarkActionBar">
+    <style name="Theme.storymakerstyle" parent="@style/Holo.Theme.Light.DarkActionBar">
+                  <item name="android:windowAnimationStyle">@null</item>
+        
         <item name="actionBarItemBackground">@drawable/selectable_background_storymakerstyle</item>
         <item name="popupMenuStyle">@style/storymakerstyle_PopupMenu</item>
         <item name="dropDownListViewStyle">@style/storymakerstyle_DropDownListView</item>

@@ -69,10 +69,12 @@
   <string name="new_story_working_title">جاري تشغيل العنوان...</string>
   <string name="new_story_choose_something">اختر شيئاً موجزاً يحدد الموضوع ويشد انتباه جمهورك.</string>
   <string name="new_story_choose_a_medium">اختر أحد الوسائط.</string>
+ <!-- 
   <string name="new_story_video">الفيديو: شيء ما هنا عن سبب جودة الفيديو البسيط القصير. بشكل عام، يجب أن تكون المدة مقاربة لمدة السلاسل الأخرى.</string>
   <string name="new_story_essay">المقالة المصورة: قص قصة عن شخصية واحدة. اتبع هذا القالب لتحرير قصة مقالة مصورة بسيطة عن شخصية واحدة.</string>
   <string name="new_story_photo">صورة واحدة: من المهارة إخبار قصة قوية بصورة واحدة فق. لتبسيط الأمر، توضح هذه القوالب بعض أنواع الصور الأساسية.</string>
   <string name="new_story_audio">الصوت: شيء ما هنا عن استخدام الصوت لإخبار قصة. بشكل شخصي، أحب فعلاً الاستماع إلى المذياع أو البودكاست أثناء القيام بأعمال المنزل!</string>
+ -->
   <string name="new_story_simple_story">قصة بسيطة</string>
   <string name="new_story_choose_template">اختر قالباً</string>
   <string name="home_new_story">قصة جديدة</string>
@@ -180,4 +182,9 @@
   <string name="lessons_congratulations_you_have_completed_the_lesson_">تهانينا. لقد أتممت الدرس!</string>
   <string name="lesson_status_in_progress">جاري التنفيذ</string>
   <string name="lesson_status_complete">تم!</string>
+  
+      <string name="no_lessons_available_tap_to_load_">لا تتوفر الدروس (اضغط لتحميل)</string>
+          <string name="_lesson_complete">الدرس الكامل</string>
+      
+  
 </resources>
