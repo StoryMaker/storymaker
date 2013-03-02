@@ -1,4 +1,5 @@
 package info.guardianproject.mrapp;
+import info.guardianproject.mrapp.media.OverlayCameraActivity;
 import info.guardianproject.mrapp.server.LoginActivity;
 
 import java.io.IOException;
@@ -26,6 +27,8 @@ import com.slidingmenu.lib.app.SlidingActivity;
 
 public class BaseActivity extends SlidingActivity {
 
+	private SlidingMenu mSlidingMenu;
+	
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,18 +41,18 @@ public class BaseActivity extends SlidingActivity {
         
         // setup drawer
         setBehindContentView(R.layout.fragment_drawer);
-        SlidingMenu sm = getSlidingMenu();
-        sm.setShadowWidthRes(R.dimen.shadow_width);
-        sm.setShadowDrawable(R.drawable.shadow);
+        mSlidingMenu = getSlidingMenu();
+        mSlidingMenu.setShadowWidthRes(R.dimen.shadow_width);
+        mSlidingMenu.setShadowDrawable(R.drawable.shadow);
 //        sm.setBehindOffsetRes(R.dimen.slidingmenu_offset);
-        sm.setBehindWidthRes(R.dimen.slidingmenu_offset);
-        
+        mSlidingMenu.setBehindWidthRes(R.dimen.slidingmenu_offset);
         
         final Activity activity = this;
         
-        ImageButton btnDrawerNewProject = (ImageButton) findViewById(R.id.btnDrawerNewProject);
-        ImageButton btnDrawerNewLesson = (ImageButton) findViewById(R.id.btnDrawerNewLesson);
-        ImageButton btnDrawerQuickCapture = (ImageButton) findViewById(R.id.btnDrawerQuickCapture);
+        ImageButton btnDrawerQuickCaptureVideo = (ImageButton) findViewById(R.id.btnDrawerQuickCaptureVideo);
+        ImageButton btnDrawerQuickCapturePhoto = (ImageButton) findViewById(R.id.btnDrawerQuickCapturePhoto);
+        ImageButton btnDrawerQuickCaptureAudio = (ImageButton) findViewById(R.id.btnDrawerQuickCaptureAudio);
+        
         Button btnDrawerHome = (Button) findViewById(R.id.btnDrawerHome);
         Button btnDrawerProjects = (Button) findViewById(R.id.btnDrawerProjects);
         Button btnDrawerLessons = (Button) findViewById(R.id.btnDrawerLessons);
@@ -57,43 +60,40 @@ public class BaseActivity extends SlidingActivity {
         Button btnDrawerSettings = (Button) findViewById(R.id.btnDrawerSettings);
         
 
-        btnDrawerNewProject.setOnClickListener(new OnClickListener() {
+       
+        btnDrawerQuickCaptureVideo.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(activity, StoryNewActivity.class);
-                activity.startActivity(i);
-            }
+            	 Intent i = new Intent(activity, OverlayCameraActivity.class);
+                 activity.startActivity(i);           
+                 }
         });
-        btnDrawerNewLesson.setOnClickListener(new OnClickListener() {
+        
+        btnDrawerHome.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(activity, LessonsActivity.class);
-                activity.startActivity(i);
+            	
+            	mSlidingMenu.showContent(true);
+                
+            	 Intent i = new Intent(activity, HomeActivity.class);
+                 activity.startActivity(i);
             }
         });
-        btnDrawerQuickCapture.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(activity, "Quick Capture coming soon...", Toast.LENGTH_SHORT).show();
-            }
-        });
-//        btnDrawerHome.setOnClickListener(new OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Toast.makeText(activity, "Coming soon...", Toast.LENGTH_SHORT).show();
-//            }
-//        });
         btnDrawerProjects.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(activity, HomeActivity.class);
-                i.putExtra("showtab",1);
-                activity.startActivity(i);
+
+            	mSlidingMenu.showContent(true);
+            	  Intent i = new Intent(activity, ProjectsActivity.class);
+                  activity.startActivity(i);
             }
         });
         btnDrawerLessons.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
+
+            	mSlidingMenu.showContent(true);
+            	
                 Intent i = new Intent(activity, LessonsActivity.class);
                 activity.startActivity(i);
             }
@@ -102,6 +102,8 @@ public class BaseActivity extends SlidingActivity {
         btnDrawerAccount.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
+
+            	mSlidingMenu.showContent(true);
                 Intent i = new Intent(activity, LoginActivity.class);
                 activity.startActivity(i);
             }
@@ -110,6 +112,8 @@ public class BaseActivity extends SlidingActivity {
         btnDrawerSettings.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
+            	mSlidingMenu.showContent(true);
+
                 Intent i = new Intent(activity, SimplePreferences.class);
                 activity.startActivity(i);
             }
@@ -135,6 +139,23 @@ public class BaseActivity extends SlidingActivity {
 			e.printStackTrace();
 		}
     }
+    
+    /**
+     * 
+	public void switchContent(final Fragment fragment) {
+		mContent = fragment;
+		getSupportFragmentManager()
+		.beginTransaction()
+		.replace(R.id.content_frame, fragment)
+		.commit();
+		Handler h = new Handler();
+		h.postDelayed(new Runnable() {
+			public void run() {
+				getSlidingMenu().showContent();
+			}
+		}, 50);
+	}	
+**/
     
     private void showCoachOverlay (String path) throws IOException
     {

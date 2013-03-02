@@ -5,6 +5,7 @@ import java.util.ArrayList;
 public class Scene {
 
     public String mTitle;
+    public String mDescription;
     ArrayList<Clip> mArrayClips;
     
     public Scene()
@@ -15,6 +16,7 @@ public class Scene {
     public void setDefaults()
     {
         mTitle="Your scene";
+        mDescription="Scene description.";
     }
     
     public ArrayList<Clip> getClips()

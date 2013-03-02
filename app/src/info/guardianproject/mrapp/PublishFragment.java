@@ -17,6 +17,7 @@ import org.json.JSONException;
 import redstone.xmlrpc.XmlRpcFault;
 import android.accounts.Account;
 import android.accounts.AccountManager;
+import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -42,6 +43,7 @@ import com.animoto.android.views.DraggableGridView;
  * A dummy fragment representing a section of the app, but that simply
  * displays dummy text.
  */
+@SuppressLint("ValidFragment")
 public class PublishFragment extends Fragment {
     private final static String TAG = "PublishFragment";
     private final static int REQ_SOUNDCLOUD = 999;
@@ -63,7 +65,7 @@ public class PublishFragment extends Fragment {
             throws IOException, JSONException {
         this.layout = layout;
         mActivity = activity;
-        mHandlerPub = ((SceneEditorActivity)mActivity).mHandlerPub;
+        mHandlerPub = activity.mHandlerPub;
     }
 
     public static final String ARG_SECTION_NUMBER = "section_number";

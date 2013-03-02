@@ -1,18 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string-array name="drawer_list_titles">
-        <item>@string/drawer_home</item>
-        <item>@string/drawer_projects</item>
-        <item>@string/drawer_lessons</item>
-        <item>@string/drawer_profile</item>
-    </string-array>
-    
-    <string-array name="drawer_list_icons">
-        <item>@drawable/ic_launcher</item>
-        <item>@drawable/ic_home_project</item>
-        <item>@drawable/ic_home_lesson</item>
-        <item>@drawable/ic_action_profile</item>
-    </string-array>
     
     <string-array name="cliptype_thumbnails">
         <item>@drawable/cliptype_close</item>

@@ -1,6 +1,5 @@
 package info.guardianproject.mrapp;
 
-
 import info.guardianproject.mrapp.model.Media;
 import info.guardianproject.mrapp.model.Project;
 
@@ -18,6 +17,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Bundle;
+import android.support.v4.app.NavUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,18 +28,107 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemLongClickListener;
 
-public class ProjectsListView extends ListView implements Runnable {
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuItem;
 
-	
+public class ProjectsActivity extends BaseActivity {
+
+
+	ListView mListView;
+
 	private ArrayList<Project> mListProjects;
 	private ProjectArrayAdapter aaProjects;
 	
-    public ProjectsListView (Context context) {
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         
-    	super (context);
+        
+        setContentView(R.layout.activity_projects);
+        
+        // action bar stuff
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        
+        mListView = (ListView)findViewById(R.id.projectslist);
+        initListView(mListView);
+    }
     
-    	this.setOnItemLongClickListener(new OnItemLongClickListener(){
+    
+    
+    @Override
+	protected void onResume() {
+		super.onResume();
+		
+
+		refreshProjects();
+
+	}
+
+
+
+	
+    
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getSupportMenuInflater().inflate(R.menu.activity_projects, menu);
+        return true;
+    }
+
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+
+		switch (item.getItemId()) {
+         case android.R.id.home:
+
+	        	NavUtils.navigateUpFromSameTask(this);
+	        	
+             return true;
+         case R.id.menu_new_project:
+ 		
+			 startActivity(new Intent(this, StoryNewActivity.class));
+
+             return true;
+     }
+ 		
+     return super.onOptionsItemSelected(item);
+  
+	}
+    
+	
+	private void showPreferences ()
+	{
+		Intent intent = new Intent(this,SimplePreferences.class);
+		this.startActivityForResult(intent, 9999);
+	}
+
+    
+    
+ 
+
+	@Override
+	protected void onActivityResult(int arg0, int arg1, Intent arg2) {
+		
+		super.onActivityResult(arg0, arg1, arg2);
+		
+
+		boolean changed = ((StoryMakerApp)getApplication()).checkLocale();
+		if (changed)
+		{
+			startActivity(new Intent(this,ProjectsActivity.class));
+			
+			finish();
+			
+		}
+	}
+
+	
+    public void initListView (ListView list) {
+    
+    	list.setOnItemLongClickListener(new OnItemLongClickListener(){
 
             @Override
             public boolean onItemLongClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
@@ -47,7 +137,7 @@ public class ProjectsListView extends ListView implements Runnable {
                 final Project project = mListProjects.get(arg2);
 
 
-            AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+            AlertDialog.Builder builder = new AlertDialog.Builder(ProjectsActivity.this);
             builder.setMessage(R.string.delete_project_)
                     .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener(){
 
@@ -66,7 +156,7 @@ public class ProjectsListView extends ListView implements Runnable {
     	    
     	});
     	
-        setOnItemClickListener(new OnItemClickListener ()
+        list.setOnItemClickListener(new OnItemClickListener ()
         {
 
 			
@@ -74,60 +164,57 @@ public class ProjectsListView extends ListView implements Runnable {
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 			
 				Project project = mListProjects.get(position);
-				
-				Intent intent = new Intent(getContext(), SceneEditorActivity.class);
-		    	intent.putExtra("story_mode", project.getStoryType());
-		    	intent.putExtra("pid", project.getId());
-		    	intent.putExtra("title", project.getTitle());
-		    	
-		    	String templateJsonPath = null;
-		    	String lang = StoryMakerApp.getCurrentLocale().getLanguage();
-		    	
-		    	if (project.getStoryType() == Project.STORY_TYPE_VIDEO)
-		    	{
-		    		//video
-		    		templateJsonPath = "story/templates/" + lang + "/video_simple.json";
-//		    	    templateJsonPath = "story/templates/" + lang + "/video_3_scene.json"; // FIXME testing new template loader
-		    	
-		    		
-		    	}
-		    	else if (project.getStoryType() == Project.STORY_TYPE_PHOTO)
-		    	{
-		
-		    		//photo
-		    	
-		    		templateJsonPath = "story/templates/" + lang + "/photo_simple.json";
-		    	}
-		    	else if (project.getStoryType() == Project.STORY_TYPE_AUDIO)
-		    	{
-		
-		    		//audio
-		    	
-		    		templateJsonPath = "story/templates/" + lang + "/audio_simple.json";
-		    	}
-		    	else if (project.getStoryType() == Project.STORY_TYPE_ESSAY)
-		    	{
-		    		//essay
-		    		templateJsonPath = "story/templates/" + lang + "/essay_simple.json";
-		    		
-		    	}
-		    	
-		    	intent.putExtra("template_path", templateJsonPath);
-		    	
-		        getContext().startActivity(intent);
+				Intent intent = null;
+				if (project.getScenesAsArray().length > 1) {
+				    intent = new Intent(ProjectsActivity.this, StoryTemplateActivity.class);
+				    String lang = StoryMakerApp.getCurrentLocale().getLanguage();
+				    intent.putExtra("template_path", "story/templates/" + lang + "/video_3_scene.json");
+			    }else {
+    				intent = new Intent(ProjectsActivity.this, SceneEditorActivity.class);
+    		    	intent.putExtra("template_path", getSimpleTemplateJsonPath(project));
+			    }
+				intent.putExtra("story_mode", project.getStoryType());
+                intent.putExtra("pid", project.getId());
+                intent.putExtra("title", project.getTitle());
+		        startActivity(intent);
 			}
         	
         });
         
-        mListProjects = Project.getAllAsList(getContext());
-        aaProjects = new ProjectArrayAdapter(getContext(), 
-          	   R.layout.list_project_row, mListProjects);
+       refreshProjects();
         
-        setAdapter(aaProjects);
-        
-        
+    }
+    
+    public void refreshProjects ()
+    {
+    	 mListProjects = Project.getAllAsList(this);
+         aaProjects = new ProjectArrayAdapter(this, 
+           	   R.layout.list_project_row, mListProjects);
          
+         mListView.setAdapter(aaProjects);
+    }
+    
+    private String getSimpleTemplateJsonPath(Project project) {
+        String templateJsonPath = null;
+        String lang = StoryMakerApp.getCurrentLocale().getLanguage();
+        if (project.getStoryType() == Project.STORY_TYPE_VIDEO)
+        {
+            templateJsonPath = "story/templates/" + lang + "/video_simple.json";
+        }
+        else if (project.getStoryType() == Project.STORY_TYPE_PHOTO)
+        {
+            templateJsonPath = "story/templates/" + lang + "/photo_simple.json";
+        }
+        else if (project.getStoryType() == Project.STORY_TYPE_AUDIO)
+        {
+            templateJsonPath = "story/templates/" + lang + "/audio_simple.json";
+        }
+        else if (project.getStoryType() == Project.STORY_TYPE_ESSAY)
+        {
+            templateJsonPath = "story/templates/" + lang + "/essay_simple.json";
+        }
         
+        return templateJsonPath;
     }
     
     private void deleteProject (Project project)
@@ -136,8 +223,6 @@ public class ProjectsListView extends ListView implements Runnable {
         aaProjects.notifyDataSetChanged();
         
     	project.delete();
-        
-        
     }
     
     class ProjectArrayAdapter extends ArrayAdapter {
@@ -168,16 +253,16 @@ public class ProjectsListView extends ListView implements Runnable {
                 
             }
             
-            tv = (TextView)row.findViewById(R.id.projectTitle);
+            tv = (TextView)row.findViewById(R.id.title);
             
             Project project = projects.get(position);
             
             tv.setText(project.getTitle());       
             
-            tv = (TextView)row.findViewById(R.id.projectSummary);
+            tv = (TextView)row.findViewById(R.id.description);
             
-            ImageView ivType = (ImageView)row.findViewById(R.id.projectIconType);
-            ImageView ivIcon = (ImageView)row.findViewById(R.id.projectIcon);
+            ImageView ivType = (ImageView)row.findViewById(R.id.cardIcon);
+            ImageView ivIcon = (ImageView)row.findViewById(R.id.imageView1);
             
             // FIXME default to use first scene
             Media[] mediaList = project.getScenesAsArray()[0].getMediaAsArray();
@@ -276,12 +361,6 @@ public class ProjectsListView extends ListView implements Runnable {
             return BitmapFactory.decodeResource(getResources(), R.drawable.thumb_complete);
         }
     }
-
-	@Override
-	public void run() {
-		// TODO Auto-generated method stub
-		
-	}
-	
-	
+    
+    
 }

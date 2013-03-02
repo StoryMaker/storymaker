@@ -53,12 +53,14 @@ public class StoryMakerDB extends SQLiteOpenHelper {
             public static final String COL_TITLE = "title";
             public static final String COL_THUMBNAIL_PATH = "thumbnail_path";
             public static final String COL_STORY_TYPE = "story_type";
+            public static final String COL_TEMPLATE_PATH = "template_path";
             
             private static final String CREATE_TABLE_PROJECTS = "create table " + NAME + " (" 
                     + ID + " integer primary key autoincrement, " 
                     + COL_TITLE + " text not null, " 
                     + COL_THUMBNAIL_PATH + " text,"
-                    + COL_STORY_TYPE + " integer"
+                    + COL_STORY_TYPE + " integer,"
+                    + COL_TEMPLATE_PATH + " text"
                     + "); ";
             
             private static final String UPDATE_TABLE_PROJECTS = "alter table " + NAME + " " 

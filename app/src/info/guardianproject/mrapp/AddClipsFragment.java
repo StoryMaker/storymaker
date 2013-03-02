@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import org.holoeverywhere.app.AlertDialog;
 import org.json.JSONException;
 
+import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -25,6 +26,7 @@ import android.view.ViewGroup;
 /**
  * 
  */
+@SuppressLint("ValidFragment")
 public class AddClipsFragment extends Fragment {
     private final static String TAG = "AddClipsFragment";
     int layout;
@@ -85,14 +87,15 @@ public class AddClipsFragment extends Fragment {
         mAddClipsViewPager.setCurrentItem(cItemIdx);
     }
     
+    // only gets called from addShotToScene
     public void addTemplateClip (Clip clip) throws IOException, JSONException
     {
-        mTemplate.getScene(0).addClip(clip); // FIXME get rid of hard code 0, should have a scene object directly
+        mTemplate.getScene(mScene).addClip(clip); 
         mAddClipsPagerAdapter = new AddClipsPagerAdapter(mFm, mTemplate, mScene);
         mAddClipsViewPager.setAdapter(mAddClipsPagerAdapter);
         
-        mAddClipsViewPager.setCurrentItem(mTemplate.getScenes().size()-1);
-        mActivity.mMPM.mClipIndex = mTemplate.getScenes().size()-1;
+        mAddClipsViewPager.setCurrentItem(mTemplate.getScene(mScene).getClips().size()-1); 
+        mActivity.mMPM.mClipIndex = mTemplate.getScene(mScene).getClips().size()-1; 
         
         mActivity.mdExported = null;
         
@@ -126,7 +129,7 @@ public class AddClipsFragment extends Fragment {
                 @Override
                 public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
                     
-                    if (((position+1) == mTemplate.getScenes().size()) && positionOffset == 0 & positionOffsetPixels == 0)
+                    if (((position+1) == mTemplate.getScene(mScene).getClips().size()) && positionOffset == 0 & positionOffsetPixels == 0)
                     {
                         mDragAtEnd++;
                         
@@ -199,7 +202,7 @@ public class AddClipsFragment extends Fragment {
         
         @Override
         public int getCount() {
-            return sTemplate.getScene(mScene).getClips().size();
+            return sTemplate.getScene(mScene).getClips().size(); 
         }
 
         @Override

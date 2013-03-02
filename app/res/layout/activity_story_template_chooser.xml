@@ -30,60 +30,37 @@
             android:layout_height="wrap_content" >
 
             <Button
-                android:id="@+id/Button05"
+                android:id="@+id/btnEvent"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Event"
+                android:text="@string/story_type_event_title"
                 android:textAppearance="?android:attr/textAppearanceSmallInverse" />
 
             <Button
-                android:id="@+id/button2"
+                android:id="@+id/btnBreakingNews"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Breaking News"
+                android:text="@string/story_type_news_title"
                 android:textAppearance="?android:attr/textAppearanceSmallInverse" />
 
             <Button
-                android:id="@+id/button3"
+                android:id="@+id/btnIssue"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Issue"
-                android:textAppearance="?android:attr/textAppearanceSmallInverse" />
-
-        </TableRow>
-
-        <TableRow
-            android:id="@+id/tableRow2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" >
-
-            <Button
-                android:id="@+id/button1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Feature"
+                android:text="@string/story_type_issue_title"
                 android:textAppearance="?android:attr/textAppearanceSmallInverse" />
 
             <Button
-                android:id="@+id/Button01"
+                android:id="@+id/btnFeature"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Vox Pop"
+                android:text="@string/story_type_profile_title"
                 android:textAppearance="?android:attr/textAppearanceSmallInverse" />
 
-            <Button
-                android:id="@+id/Button02"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="(n/a)"
-                android:textAppearance="?android:attr/textAppearanceSmallInverse"
-                android:visibility="invisible" />
 
         </TableRow>
     </TableLayout>

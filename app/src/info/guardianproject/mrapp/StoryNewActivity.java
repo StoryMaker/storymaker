@@ -47,7 +47,7 @@ public class StoryNewActivity extends BaseActivity {
 				if (checkedId == R.id.radioStoryType0)
 		    	{
 		    		//video
-					txtNewStoryDesc.setText(R.string.new_story_video);
+					txtNewStoryDesc.setText(R.string.template_video_desc);
 		    		
 		    	}
 		    	else if (checkedId == R.id.radioStoryType1)
@@ -55,20 +55,20 @@ public class StoryNewActivity extends BaseActivity {
 
 		    		//photo
 
-					txtNewStoryDesc.setText(R.string.new_story_photo);
+					txtNewStoryDesc.setText(R.string.template_photo_desc);
 		    	}
 		    	else if (checkedId == R.id.radioStoryType2)
 		    	{
 
 		    		//audio
 
-					txtNewStoryDesc.setText(R.string.new_story_audio);
+					txtNewStoryDesc.setText(R.string.template_audio_desc);
 		    	}
 		    	else if (checkedId == R.id.radioStoryType3)
 		    	{
 		    		//essay
 
-					txtNewStoryDesc.setText(R.string.new_story_essay);
+					txtNewStoryDesc.setText(R.string.template_essay_desc);
 		    		
 		    	}
 				
@@ -81,8 +81,9 @@ public class StoryNewActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
             	
-            	checkTypeAndLaunchEditor();
-            	
+            	if (formValid()) {
+            	    launchSimpleStory();
+            	}
             	
             }
         });
@@ -91,84 +92,92 @@ public class StoryNewActivity extends BaseActivity {
             
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getBaseContext(), StoryTemplateChooserActivity.class));
+                Intent i = new Intent(getBaseContext(), StoryTemplateChooserActivity.class);
+                if (formValid()) {
+                    i.putExtra("project_title", editTextStoryName.getText().toString());
+                    startActivity(i);
+                }
             }
         });
     }
     
-    private void checkTypeAndLaunchEditor ()
+    private boolean formValid ()
     {
-    	
     	String pName = editTextStoryName.getText().toString();
-    	
-    	int clipCount = DEFAULT_CLIP_COUNT;
     	    
     	if (pName == null || pName.length() == 0)
     	{
     		Toast.makeText(this, R.string.you_must_enter_a_project_name, Toast.LENGTH_SHORT).show();
+    		return false;
     	}
     	else
     	{
-    		Project project = new Project (this, clipCount);
-            project.setTitle(pName);
-            project.save();
-            
-    		Scene scene = new Scene(this, clipCount);
-    		scene.setProjectIndex(0);
-    		scene.setProjectId(project.getId());
-    		scene.save();
-    	
-	    	int checkedId = rGroup.getCheckedRadioButtonId();
-	    	
-	    	String templateJsonPath = null;
-	    	int storyMode = -1;
-	    	String lang = StoryMakerApp.getCurrentLocale().getLanguage();
-	    	
-	    	
-	    	if (checkedId == R.id.radioStoryType0)
-	    	{
-	    		//video
-	    		templateJsonPath = "story/templates/" + lang + "/video_simple.json";
-//	    	    templateJsonPath = "story/templates/" + lang + "/video_3_scene.json"; // FIXME testing new template loader
-	    		storyMode = Project.STORY_TYPE_VIDEO;
-	    		
-	    	}
-	    	else if (checkedId == R.id.radioStoryType1)
-	    	{
-	
-	    		//photo
-	    		storyMode = Project.STORY_TYPE_PHOTO;
-	    		templateJsonPath = "story/templates/" + lang + "/photo_simple.json";
-	    	}
-	    	else if (checkedId == R.id.radioStoryType2)
-	    	{
-	
-	    		//audio
-	    		storyMode = Project.STORY_TYPE_AUDIO;
-	    		templateJsonPath = "story/templates/" + lang + "/audio_simple.json";
-	    	}
-	    	else if (checkedId == R.id.radioStoryType3)
-	    	{
-	    		//essay
-	    		storyMode = Project.STORY_TYPE_ESSAY;
-	    		templateJsonPath = "story/templates/" + lang + "/essay_simple.json";
-	    		
-	    	}
-	    	
-	    	project.setStoryType(storyMode);
-	    	project.save();
-	    	
-	    	Intent intent = new Intent(getBaseContext(), SceneEditorActivity.class);
-	    	intent.putExtra("story_mode", storyMode);
-	    	intent.putExtra("template_path", templateJsonPath);
-	    	intent.putExtra("title", project.getTitle());
-	    	intent.putExtra("pid", project.getId());
-	    	intent.putExtra("scene", 0);
-	    	
-	        startActivity(intent);
-	        
-	        finish();
+    		return true;
     	}
+    }
+    
+    private void launchSimpleStory() {
+        String pName = editTextStoryName.getText().toString();
+        int clipCount = DEFAULT_CLIP_COUNT;
+        
+        Project project = new Project (this, clipCount);
+        project.setTitle(pName);
+        project.save();
+        
+        Scene scene = new Scene(this, clipCount);
+        scene.setProjectIndex(0);
+        scene.setProjectId(project.getId());
+        scene.save();
+    
+        int checkedId = rGroup.getCheckedRadioButtonId();
+        
+        String templateJsonPath = null;
+        int storyMode = -1;
+        String lang = StoryMakerApp.getCurrentLocale().getLanguage();
+        
+        
+        if (checkedId == R.id.radioStoryType0)
+        {
+            //video
+            templateJsonPath = "story/templates/" + lang + "/video_simple.json";
+            storyMode = Project.STORY_TYPE_VIDEO;
+            
+        }
+        else if (checkedId == R.id.radioStoryType1)
+        {
+
+            //photo
+            storyMode = Project.STORY_TYPE_PHOTO;
+            templateJsonPath = "story/templates/" + lang + "/photo_simple.json";
+        }
+        else if (checkedId == R.id.radioStoryType2)
+        {
+
+            //audio
+            storyMode = Project.STORY_TYPE_AUDIO;
+            templateJsonPath = "story/templates/" + lang + "/audio_simple.json";
+        }
+        else if (checkedId == R.id.radioStoryType3)
+        {
+            //essay
+            storyMode = Project.STORY_TYPE_ESSAY;
+            templateJsonPath = "story/templates/" + lang + "/essay_simple.json";
+            
+        }
+        
+        project.setStoryType(storyMode);
+        project.save();
+        
+        Intent intent = new Intent(getBaseContext(), SceneEditorActivity.class);
+        intent.putExtra("story_mode", storyMode);
+        intent.putExtra("template_path", templateJsonPath);
+        intent.putExtra("title", project.getTitle());
+        intent.putExtra("pid", project.getId());
+        intent.putExtra("scene", 0);
+        
+        startActivity(intent);
+        
+        finish();
     }
 
     @Override

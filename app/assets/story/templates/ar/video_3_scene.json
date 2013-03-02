@@ -53,7 +53,8 @@
                     "Title": "Environmental"
                 }
             ], 
-            "title": "Scene 1"
+            "title": "Scene 1",
+            "description": "Other text about the goal of this scene is written here"
         },
         {
             "clips": [
@@ -108,7 +109,8 @@
                     "Title": "Environmental"
                 }
             ], 
-            "title": "Scene 2"
+            "title": "Scene 2",
+            "description": "Scene 2's goal."
         },
         {
             "clips": [
@@ -163,7 +165,8 @@
                     "Title": "Environmental"
                 }
             ], 
-            "title": "Scene 3"
+            "title": "Scene 3",
+            "description": "Description for Scene 3."
         }
     ], 
     "title": "Video 3 Scene"

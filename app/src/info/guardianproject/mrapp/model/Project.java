@@ -19,6 +19,7 @@ public class Project {
     protected String title;
     protected String thumbnailPath;
     protected int storyType;
+    protected String templatePath;
     
     public final static int STORY_TYPE_VIDEO = 0;
     public final static int STORY_TYPE_AUDIO = 1;
@@ -27,18 +28,19 @@ public class Project {
     
     public int mSceneCount = -1;
     
-    public Project(Context context, int clipCount) {
+    public Project(Context context, int sceneCount) {
         this.context = context;
-        mSceneCount = clipCount;
+        mSceneCount = sceneCount;
     }
 
-    public Project(Context context, int id, String title, String thumbnailPath, int storyType) {
+    public Project(Context context, int id, String title, String thumbnailPath, int storyType, String templatePath) {
         super();
         this.context = context;
         this.id = id;
         this.title = title;
         this.thumbnailPath = thumbnailPath;
         this.storyType = storyType;
+        this.templatePath = templatePath;
     }
 
     public Project(Context context, Cursor cursor) {
@@ -51,28 +53,32 @@ public class Project {
                         .getColumnIndex(StoryMakerDB.Schema.Projects.COL_TITLE)),
                 cursor.getString(cursor
                         .getColumnIndex(StoryMakerDB.Schema.Projects.COL_THUMBNAIL_PATH)),
-                  cursor.getInt(cursor
-                                .getColumnIndex(StoryMakerDB.Schema.Projects.COL_STORY_TYPE))      
-        		);
-        
-        getMaxSceneCount();
-        
+                cursor.getInt(cursor
+                        .getColumnIndex(StoryMakerDB.Schema.Projects.COL_STORY_TYPE)),
+                cursor.getString(cursor
+                        .getColumnIndex(StoryMakerDB.Schema.Projects.COL_TEMPLATE_PATH)));
+
+        calculateMaxSceneCount();
+
     }
     
-    private void getMaxSceneCount ()
+    private void calculateMaxSceneCount ()
     {
         Cursor cursor = getScenesAsCursor();
         
         int projectIndex = 0;
         
-        if (cursor.moveToFirst()) {
-            do {
-                Scene scene = new Scene(context, cursor);
-                projectIndex = Math.max(projectIndex, scene.getProjectIndex());
-            } while (cursor.moveToNext());
-        }
+        mSceneCount = cursor.getCount();
         
-        mSceneCount = projectIndex + 1; //size is one higher than max index
+        // FIXME CLEANUP --- not sure why this was calculated this way, but for now I am just using count
+//        if (cursor.moveToFirst()) {
+//            do {
+//                Scene scene = new Scene(context, cursor);
+//                projectIndex = Math.max(projectIndex, scene.getProjectIndex());
+//            } while (cursor.moveToNext());
+//        }
+        
+//        mSceneCount = projectIndex + 1; //size is one higher than max index
         
         cursor.close();
         
@@ -135,11 +141,9 @@ public class Project {
     private ContentValues getValues() {
         ContentValues values = new ContentValues();
         values.put(StoryMakerDB.Schema.Projects.COL_TITLE, title);
-        values.put(StoryMakerDB.Schema.Projects.COL_THUMBNAIL_PATH,
-                thumbnailPath);
-        values.put(StoryMakerDB.Schema.Projects.COL_STORY_TYPE,
-                storyType);
-        
+        values.put(StoryMakerDB.Schema.Projects.COL_THUMBNAIL_PATH, thumbnailPath);
+        values.put(StoryMakerDB.Schema.Projects.COL_STORY_TYPE, storyType);
+        values.put(StoryMakerDB.Schema.Projects.COL_TEMPLATE_PATH, templatePath);
         
         return values;
     }
@@ -217,6 +221,10 @@ public class Project {
         mSceneCount = Math.max((projectIndex+1), mSceneCount);
     }
     
+    
+    public boolean isTemplateStory() {
+        return (templatePath != null) && !templatePath.equals(""); 
+    }
     /***** getters and setters *****/
 
     /**
@@ -264,13 +272,21 @@ public class Project {
         this.thumbnailPath = thumbnailPath;
     }
 
-	public int getStoryType() {
-		return storyType;
-	}
+    public int getStoryType() {
+        return storyType;
+    }
 
-	public void setStoryType(int storyType) {
-		this.storyType = storyType;
-	}
+    public void setStoryType(int storyType) {
+        this.storyType = storyType;
+    }
+
+    public String getTemplatePath() {
+        return templatePath;
+    }
+
+    public void setTemplatePath(String template) {
+        this.templatePath = template;
+    }
     
     
 }

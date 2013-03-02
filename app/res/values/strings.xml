@@ -98,12 +98,13 @@ Build number: <xliff:g id="build_number">%s</xliff:g>\n
     <string name="new_story_choose_something">Choose something brief that defines the topic and intrigues your audience.</string>
     <string name="new_story_choose_a_medium">Choose a medium.</string>
     
+    <!-- 
     <string name="new_story_video">Video: Something here about why simple, short video is good! Ideally it should be about the same length as the other strings.</string>
    	<string name="new_story_essay">Photo Essay: Tell a story about one character. Follow this template to produce a simple photo essay story about one character.</string>
     <string name="new_story_photo">Single Photo: Telling a strong story with one image is a skill. To simplify, these templates explain some primary photo types.</string>
     
     <string name="new_story_audio">Audio: Something here about using audio to tell a story. Personally, I really like to listen to the radio and podcasts while I do housework!</string>
-    
+     -->
     
     <string name="new_story_simple_story">Simple Story</string>
     <string name="new_story_choose_template">Choose Template</string>
@@ -117,6 +118,7 @@ Build number: <xliff:g id="build_number">%s</xliff:g>\n
     <string name="tab_make">Make</string>
     <string name="tab_review">Review</string>
     <string name="tab_publish">Publish</string>
+    <string name="tab_finish">Finish</string>
     
     <string name="tab_add_clips">Make</string>
     <string name="tab_order">Order</string>
@@ -238,10 +240,7 @@ Build number: <xliff:g id="build_number">%s</xliff:g>\n
     <string name="you_must_enter_a_project_name">Please enter a working draft title. You can change this later.</string>
     <string name="delete_project_">Delete project?</string>
     <string name="add_new_clip_to_the_scene_">Add new clip to the scene?</string>
-    
-    <string name="drawer_home">Home</string>
-    <string name="drawer_projects">Projects</string>
-    <string name="drawer_lessons">Lessons</string>
+
     <string name="drawer_profile">Profile</string>
 
     <string name="video_project_project_type">Video Project</string>
@@ -262,4 +261,6 @@ Build number: <xliff:g id="build_number">%s</xliff:g>\n
     <string name="publish_youtube">YouTube</string>
     
     <string name="action_render">Export</string>
+    
+    <string name="drawer_quick_capture">Quick Capture</string>
 </resources>

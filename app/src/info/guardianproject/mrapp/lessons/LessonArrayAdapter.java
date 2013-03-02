@@ -6,6 +6,7 @@ import info.guardianproject.mrapp.R;
 import info.guardianproject.mrapp.model.Lesson;
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,10 +42,10 @@ public class LessonArrayAdapter extends ArrayAdapter {
             
         }
         
-        tvTitle = (TextView)row.findViewById(R.id.lessonRowTitle);
+        tvTitle = (TextView)row.findViewById(R.id.title);
         tvTitle.setText(lesson.mTitle);        
         
-        tvStatus = (TextView)row.findViewById(R.id.lessonRowStatus);
+        tvStatus = (TextView)row.findViewById(R.id.description);
         tvStatus.setText(R.string.lesson_status_have_not_started);        
         
         if (lesson.mStatus == Lesson.STATUS_IN_PROGRESS)
@@ -54,7 +55,19 @@ public class LessonArrayAdapter extends ArrayAdapter {
         else if (position > 0 && ((Lesson)getItem(position-1)).mStatus != Lesson.STATUS_COMPLETE)
     	{
         	isEnabled = false;
+
     	}
+        
+        if (!isEnabled)
+        {
+
+        	row.setBackgroundColor(Color.LTGRAY);
+        }
+        else
+        {
+
+        	row.setBackgroundColor(Color.TRANSPARENT);
+        }
         
     	row.setEnabled(isEnabled);
     	tvTitle.setEnabled(isEnabled);

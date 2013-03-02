@@ -1,9 +1,16 @@
 package info.guardianproject.mrapp;
 
+import info.guardianproject.mrapp.media.MediaProjectManager;
+import info.guardianproject.mrapp.model.Project;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import org.json.JSONException;
+
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -12,6 +19,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.NavUtils;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,7 +32,7 @@ import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 
-public class StoryTemplateActivity extends BaseActivity implements ActionBar.TabListener {
+public class StoryTemplateActivity extends EditorBaseActivity implements ActionBar.TabListener {
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide fragments for each of the
@@ -34,6 +42,9 @@ public class StoryTemplateActivity extends BaseActivity implements ActionBar.Tab
      */
     SectionsPagerAdapter mSectionsPagerAdapter;
 
+    private String mTemplateJsonPath = null;
+    private Project mProject; 
+    
     /**
      * The {@link ViewPager} that will host the section contents.
      */
@@ -44,6 +55,12 @@ public class StoryTemplateActivity extends BaseActivity implements ActionBar.Tab
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_story_template);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        
+        Intent intent = getIntent();
+        mTemplateJsonPath = getIntent().getStringExtra("template_path"); 
+        int pid = intent.getIntExtra("pid", -1); //project id
+        mMPM = new MediaProjectManager(this, this, getIntent(), mHandlerPub, pid);
+        mMPM.initProject();
         // Create the adapter that will return a fragment for each of the three primary sections
         // of the app.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
@@ -78,23 +95,6 @@ public class StoryTemplateActivity extends BaseActivity implements ActionBar.Tab
         }
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getSupportMenuInflater().inflate(R.menu.activity_story_template, menu);
-        return true;
-    }
-
-    
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                NavUtils.navigateUpFromSameTask(this);
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
 
     @Override
     public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
@@ -122,16 +122,30 @@ public class StoryTemplateActivity extends BaseActivity implements ActionBar.Tab
 
         @Override
         public Fragment getItem(int i) {
-            int layout = R.layout.fragment_make;
-            if (i == 1) {
-                layout = R.layout.fragment_story_review;
+            Fragment fragment = null;
+            if (i == 0) {
+                fragment = new TemplateStoryMakeFragment(StoryTemplateActivity.this);
+                Bundle args = new Bundle();
+                args.putInt(TemplateStoryMakeFragment.ARG_SECTION_NUMBER, i + 1);
+                fragment.setArguments(args);
+            } else if (i == 1) {
+                fragment = new TemplateStoryReviewFragment();
+                Bundle args = new Bundle();
+                args.putInt(TemplateStoryMakeFragment.ARG_SECTION_NUMBER, i + 1);
+                fragment.setArguments(args);
             } else if (i == 2) {
-                layout = R.layout.fragment_story_publish;
+                try {
+                    fragment = new PublishFragment(R.layout.fragment_story_publish, StoryTemplateActivity.this);
+                } catch (IOException e) {
+                    Log.e("SceneEditr", "IO erorr", e); // FIXME
+                } catch (JSONException e) {
+                    Log.e("SceneEditr", "json error", e);  // FIXME
+                }
+                Bundle args = new Bundle();
+                args.putInt(TemplateStoryMakeFragment.ARG_SECTION_NUMBER, i + 1);
+                fragment.setArguments(args);
             } 
-            Fragment fragment = new DummySectionFragment(layout);
-            Bundle args = new Bundle();
-            args.putInt(DummySectionFragment.ARG_SECTION_NUMBER, i + 1);
-            fragment.setArguments(args);
+            
             return fragment;
         }
 
@@ -151,70 +165,5 @@ public class StoryTemplateActivity extends BaseActivity implements ActionBar.Tab
         }
     }
 
-    /**
-     * A dummy fragment representing a section of the app, but that simply displays dummy text.
-     */
-    public static class DummySectionFragment extends Fragment {
-        int layout;
-        public DummySectionFragment(int layout) {
-            this.layout = layout;
-        }
-
-        public static final String ARG_SECTION_NUMBER = "section_number";
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                Bundle savedInstanceState) {
-            View view = inflater.inflate(layout, null);
-            if (this.layout == R.layout.fragment_make) {
-                String[] egTitles = getResources().getStringArray(R.array.eg_scene_titles);
-                String[] egDescriptions = getResources().getStringArray(R.array.eg_scene_descriptions);
-                String[] egStatuses = getResources().getStringArray(R.array.eg_scene_statuses);
-                
-                // create the item mapping
-                String[] from = new String[] {"title", "description", "status" };
-                int[] to = new int[] { R.id.textViewTitle, R.id.textViewDescription, R.id.textViewStatus  };
-
-                List<HashMap<String, String>> fillMaps = new ArrayList<HashMap<String, String>>();
-                for(int i = 0; i < egTitles.length; i++){
-                    HashMap<String, String> map = new HashMap<String, String>();
-                    map.put("title", egTitles[i]);
-                    map.put("description", egDescriptions[i]);
-                    map.put("status", egStatuses[i]);
-                    fillMaps.add(map);
-                }
-                
-                SimpleAdapter adapter = new SimpleAdapter(getActivity(), fillMaps, R.layout.list_item_scene, from, to);
-                ListView lv = (ListView) view.findViewById(R.id.listView1);
-                lv.setAdapter(adapter);
-                
-                lv.setOnItemClickListener(new OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> arg0, View arg1,
-                            int arg2, long arg3) {
-                    	Intent i = new Intent(getActivity(), SceneEditorActivity.class);
-                    	i.putExtra("template_story", true);
-                        getActivity().startActivity(i);
-                        
-                    }
-                });
-            } else if (this.layout == R.layout.fragment_story_review) {
-            } else if (this.layout == R.layout.fragment_story_publish) {
-                /*
-                Spinner spinnerSections = (Spinner) getActivity().findViewById(R.id.spinnerSections);
-                Spinner spinnerTopics = (Spinner) view.findViewById(R.id.spinnerTopics);
-                
-                ArrayAdapter<CharSequence> adapterTopics = ArrayAdapter.createFromResource(getActivity(),
-                        R.array.story_topics, android.R.layout.simple_spinner_item);
-                adapterTopics.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                spinnerTopics.setAdapter(adapterTopics);
-                
-                ArrayAdapter<CharSequence> adapterSections = ArrayAdapter.createFromResource(getActivity(),
-                        R.array.story_sections, android.R.layout.simple_spinner_item);
-                adapterSections.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                spinnerTopics.setAdapter(adapterSections);*/
-            }
-            return view;
-        }
-    }
+    
 }

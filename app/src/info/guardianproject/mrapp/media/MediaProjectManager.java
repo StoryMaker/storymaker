@@ -51,32 +51,43 @@ public class MediaProjectManager implements MediaManager {
 	public int mClipIndex;  // FIXME hack to get clip we are adding media too into intent handler
 
     public MediaProjectManager (Activity activity, Context context, Intent intent, Handler handler, int pid) {
-    
         this(activity, context, intent, handler, Project.get(context, pid));
     }
     
     public MediaProjectManager (Activity activity, Context context, Intent intent, Handler handler, Project project) {
+        this(activity, context, intent, handler, project, null);
+    }
+    
+    public MediaProjectManager (Activity activity, Context context, Intent intent, Handler handler, Project project, Scene scene) {
         mActivity = activity;
         mContext = context;
         mHandler = handler;
         
         mProject = project;
-        mScene = project.getScenesAsArray()[0]; // FIXME defaulting to first scene for now
-        
-        initProject();
+        if (scene == null) {
+            mScene = project.getScenesAsArray()[0];
+        } else {
+            mScene = scene;
+        }
     }
     
-    private void initProject()
+    public void initProject()
     {
-        mMediaList = new ArrayList<MediaClip>(mScene.getClipCount());
-        
-        for (int i = 0; i < mScene.getClipCount(); i++)
-            mMediaList.add(null); 
-        
+        int clipCount = 0;
+        for (Scene s : mProject.getScenesAsArray()) {
+            clipCount += s.getClipCount();
+        } 
+        mMediaList = new ArrayList<MediaClip>(clipCount);
+        for (int i = 0; i < clipCount; i++) {
+            mMediaList.add(null);
+        }
+    
         mMediaHelper = new MediaHelper (mActivity, mHandler);
         
         initExternalStorage();
-
+    }
+        
+    public void addAllProjectMediaToEditor() {
         Media[] _medias = mScene.getMediaAsArray();
         for (Media media: _medias) {
         	if (media != null) {
@@ -156,8 +167,15 @@ public class MediaProjectManager implements MediaManager {
     {
     	 Message msg = mHandler.obtainMessage(0);
          msg.getData().putString("status","cancelled");
-
-         ArrayList<Media> mList = mScene.getMediaAsList();
+         ArrayList<Media> mList = null;
+         if (mProject.isTemplateStory()) {
+             mList = new ArrayList<Media>();
+             for (Scene s : mProject.getScenesAsArray()) {
+                 mList.addAll(s.getMediaAsList());
+             }
+         } else {
+             mList = mScene.getMediaAsList();
+         }
          ArrayList<MediaDesc> alMediaIn = new ArrayList<MediaDesc>();
          
          //for video, render the sequence together

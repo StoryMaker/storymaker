@@ -103,7 +103,7 @@
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/radioGroupStoryType"
         android:layout_marginTop="10dp"
-        android:text="@string/new_story_video"
+        android:text="@string/template_video_desc"
         android:textAppearance="?android:attr/textAppearanceSmall" />
 
     <Button
