@@ -29,6 +29,7 @@ import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.RadioGroup;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
@@ -146,22 +147,31 @@ public class StoryTemplateChooserActivity extends BaseActivity {
     private void showTemplateEditor ()
     {
     	int pageIdx = mPager.getCurrentItem();
+    	String templateLevel = "basic";
+    	
+    	RadioGroup view = ((RadioGroup)findViewById(R.id.radioGroupStoryLevel));
+    	if (view.getCheckedRadioButtonId() == R.id.radioStoryType1)
+    		templateLevel = "expert";
+    	
+    	String templateType = null;
     	
     	switch (pageIdx)
 		{
-			case 0: //essay
-		         loadTemplateSummary ("event","basic", mStoryMode);
+			case 0:
+				templateType = "event";
 			break;
-			case 1: //essay
-		         loadTemplateSummary ("news","basic", mStoryMode);
+			case 1:
+				templateType = "news";
 			break;
-			case 2: //essay
-		         loadTemplateSummary ("issue","basic", mStoryMode);
+			case 2: 
+				templateType = "issue";
 			break;
-			case 3: //essay
-		         loadTemplateSummary ("profile","basic", mStoryMode);
+			case 3: 
+				templateType = "profile";
 			break;
 		}
+    	
+    	 loadTemplateSummary (templateType, templateLevel, mStoryMode);
     	
         // FIXME this should be split into a method, probably in the model.Project class?
         int sceneCount = mTemplate.getScenes().size(); 

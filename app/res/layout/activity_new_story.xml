@@ -123,20 +123,41 @@
         android:layout_marginTop="10dp"
                 android:layout_below="@+id/llMedium"
         android:gravity="center"
+        android:orientation="vertical"
          >
-    
+     <RadioGroup
+        android:id="@+id/radioGroupStoryLevel"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:gravity="center"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:orientation="horizontal" >
+         <RadioButton
+            android:id="@+id/radioStoryType0"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            
+            android:text="@string/new_story_simple_story"
+            android:checked="true" />
+
+        <RadioButton
+            android:id="@+id/radioStoryType1"
+              android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/new_story_choose_template"
+            />
+        </RadioGroup>
+        
     <Button
-                android:id="@+id/buttonSimpleStory"
+                android:id="@+id/buttonStartStory"
         
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/new_story_simple_story" />
+        android:gravity="center"
+        android:text="@string/button_start_my_story" />
 
-    <Button
-        android:id="@+id/buttonChooseTemplate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/new_story_choose_template" />
 </LinearLayout>
 </RelativeLayout>
 </ScrollView>

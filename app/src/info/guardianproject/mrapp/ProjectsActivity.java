@@ -284,18 +284,16 @@ public class ProjectsActivity extends BaseActivity {
             		}
             }
             
-            String projectType = "";
-            
+            String projectType = project.getScenesAsList().size() + " scene(s)";
+
             if (project.getStoryType() == Project.STORY_TYPE_VIDEO)
 	    	{
 	    		//video
-	    		projectType = mediaList.length + " video clips";
 	    		ivType.setImageDrawable(getContext().getResources().getDrawable(R.drawable.btn_toggle_ic_list_video));
 	    	}
 	    	else if (project.getStoryType() == Project.STORY_TYPE_PHOTO)
 	    	{	
 	    		//photo	    	
-	    		projectType = mediaList.length + " photos";
 	    		ivType.setImageDrawable(getContext().getResources().getDrawable(R.drawable.btn_toggle_ic_list_photo));
 
 	    	}
@@ -303,14 +301,12 @@ public class ProjectsActivity extends BaseActivity {
 	    	{
 	
 	    		//audio	    	
-	    		projectType = mediaList.length + " audio clips";
 	    		ivType.setImageDrawable(getContext().getResources().getDrawable(R.drawable.btn_toggle_ic_list_audio));
 
 	    	}
 	    	else if (project.getStoryType() == Project.STORY_TYPE_ESSAY)
 	    	{
 	    		//essay
-	    		projectType = mediaList.length + " essay photos";
 	    		ivType.setImageDrawable(getContext().getResources().getDrawable(R.drawable.btn_toggle_ic_list_essay));
 	
 	    	}

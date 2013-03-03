@@ -27,7 +27,7 @@
  <android.support.v4.view.ViewPager
         android:layout_width="match_parent" 
         android:id="@+id/pager"
-        android:layout_height="wrap_content"
+        android:layout_height="250dp"
         android:layout_weight="1"
         />
    <com.viewpagerindicator.CirclePageIndicator
@@ -43,21 +43,30 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp" >
 
-        <Button
-            android:id="@+id/Button03"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Basic, 3 scenes"
-            android:textAppearance="?android:attr/textAppearanceSmallInverse" />
+         <RadioGroup
+        android:id="@+id/radioGroupStoryLevel"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal" >
 
-        <Button
-            android:id="@+id/Button04"
+        <RadioButton
+            android:id="@+id/radioStoryType0"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            
+            android:text="Basic, 3 scenes"
+            android:checked="true" />
+
+        <RadioButton
+            android:id="@+id/radioStoryType1"
+              android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:text="Expert, 5 scenes"
-            android:textAppearance="?android:attr/textAppearanceSmallInverse" />
+            />
+
+    </RadioGroup>
     </LinearLayout>
 
   

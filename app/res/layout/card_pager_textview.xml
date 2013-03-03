@@ -11,7 +11,6 @@
             style="@style/CardTitle"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:gravity="center"
             android:text="title" />
     
@@ -19,7 +18,8 @@
         android:id="@+id/description"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="18sp"
+        android:textSize="16sp"
+        android:textColor="#555555"
         android:text="hello"
          />
 </LinearLayout>

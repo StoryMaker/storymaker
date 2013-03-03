@@ -76,28 +76,23 @@ public class StoryNewActivity extends BaseActivity {
         	
         });
         
-        ((Button) findViewById(R.id.buttonSimpleStory)).setOnClickListener(new OnClickListener() {
+        ((Button) findViewById(R.id.buttonStartStory)).setOnClickListener(new OnClickListener() {
             
             @Override
             public void onClick(View v) {
             	
             	if (formValid()) {
-            	    launchSimpleStory();
+
+                	RadioGroup view = ((RadioGroup)findViewById(R.id.radioGroupStoryLevel));
+                	if (view.getCheckedRadioButtonId() == R.id.radioStoryType0)
+                		launchSimpleStory();
+                	else
+                		launchTemplateChooser();
             	}
             	
             }
         });
         
-        ((Button) findViewById(R.id.buttonChooseTemplate)).setOnClickListener(new OnClickListener() {
-            
-            @Override
-            public void onClick(View v) {
-                if (formValid()) {
-                	launchTemplateChooser();
-                	
-                }
-            }
-        });
     }
     
     private boolean formValid ()
