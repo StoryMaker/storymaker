@@ -54,7 +54,7 @@ public class Template {
 	 */
 	public static Template parseAsset(Context context, String assetPathTemplate, String assetPathScene) throws IOException, JSONException
 	{
-		Template template = parseAsset(context, assetPathScene);
+		Template template = parseAsset(context, assetPathTemplate);
 		Template templateScene = parseAsset(context, assetPathScene);
 		
 		for (Scene scene : template.getScenes())
@@ -88,6 +88,11 @@ public class Template {
 		
         if (!jobjTemplate.isNull("title")) {
             result.mTitle = jobjTemplate.getString("title");
+            
+            int resId = context.getResources().getIdentifier(result.mTitle, "string", context.getPackageName());
+            
+            if (resId != 0)
+            	result.mTitle = context.getString(resId);
         }
 		
 		JSONArray jarrayScenes = jobjTemplate.getJSONArray("scenes");
@@ -103,7 +108,7 @@ public class Template {
             if (!jobjScene.isNull("title")) {
                 scene.mTitle = jobjScene.getString("title");
                 
-                int resId = Resources.getSystem().getIdentifier(scene.mTitle, null, null);
+                int resId = context.getResources().getIdentifier(scene.mTitle, "string", context.getPackageName());
                 
                 if (resId != 0)
                 	scene.mTitle = context.getString(resId);
@@ -112,62 +117,65 @@ public class Template {
             if (!jobjScene.isNull("description")) {
                 scene.mDescription = jobjScene.getString("description");
                 
-                int resId = Resources.getSystem().getIdentifier(scene.mDescription, null, null);
+                int resId = context.getResources().getIdentifier(scene.mDescription, "string", context.getPackageName());
                 
                 if (resId != 0)
                 	scene.mDescription = context.getString(resId);
             }
 
-	        jarrayClips = jobjScene.getJSONArray("clips");
-		    
-    		for (int clipsIdx = 0; clipsIdx < jarrayClips.length() && (!jarrayClips.isNull(clipsIdx)); clipsIdx++)
-    		{
-    			Clip clip = new Clip();
-    			
-    			JSONObject jobjClip = jarrayClips.getJSONObject(clipsIdx);
-    			clip.mTitle = jobjClip.getString("Title");
-    			
-    			if (!jobjClip.isNull("Artwork")) {
-    				clip.mArtwork = jobjClip.getString("Artwork");
-    			}
-    			
-    			if (!jobjClip.isNull("Shot Size")) {
-    				clip.mShotSize = jobjClip.getString("Shot Size");
-    			}
-    			
-    			if (clip.mArtwork != null) {
-    				if (clip.mArtwork.equals("cliptype_close"))
-    					clip.mShotType = 0;
-    				else if (clip.mArtwork.equals("cliptype_detail"))
-    					clip.mShotType = 1;
-    				else if (clip.mArtwork.equals("cliptype_long"))
-    					clip.mShotType = 2;
-    				else if (clip.mArtwork.equals("cliptype_medium"))
-    					clip.mShotType = 3;
-    				if (clip.mArtwork.equals("cliptype_wide"))
-    					clip.mShotType = 4;
-    				
-    			} else if (clip.mShotSize != null) {
-    				if (clip.mShotSize.equals("Close"))
-    					clip.mShotType = 0;
-    				else if (clip.mShotSize.equals("Detail"))
-    					clip.mShotType = 1;
-    				else if (clip.mShotSize.equals("Long"))
-    					clip.mShotType = 2;
-    				else if (clip.mShotSize.equals("Medium"))
-    					clip.mShotType = 3;
-    				else if (clip.mShotSize.equals("Wide"))
-    					clip.mShotType = 4;
-    			}
-    	        
-    			clip.mGoal = jobjClip.getString("Goal");
-    			clip.mLength = jobjClip.getString("Length");
-    			clip.mDescription = jobjClip.getString("Description");
-    			clip.mTip = jobjClip.getString("Tip");
-    			clip.mSecurity = jobjClip.getString("Security Concern");
-    			
-    			scene.addClip(clip);
-    		}
+            if (!jobjScene.isNull("clips"))
+            {
+		        jarrayClips = jobjScene.getJSONArray("clips");
+			    
+	    		for (int clipsIdx = 0; clipsIdx < jarrayClips.length() && (!jarrayClips.isNull(clipsIdx)); clipsIdx++)
+	    		{
+	    			Clip clip = new Clip();
+	    			
+	    			JSONObject jobjClip = jarrayClips.getJSONObject(clipsIdx);
+	    			clip.mTitle = jobjClip.getString("Title");
+	    			
+	    			if (!jobjClip.isNull("Artwork")) {
+	    				clip.mArtwork = jobjClip.getString("Artwork");
+	    			}
+	    			
+	    			if (!jobjClip.isNull("Shot Size")) {
+	    				clip.mShotSize = jobjClip.getString("Shot Size");
+	    			}
+	    			
+	    			if (clip.mArtwork != null) {
+	    				if (clip.mArtwork.equals("cliptype_close"))
+	    					clip.mShotType = 0;
+	    				else if (clip.mArtwork.equals("cliptype_detail"))
+	    					clip.mShotType = 1;
+	    				else if (clip.mArtwork.equals("cliptype_long"))
+	    					clip.mShotType = 2;
+	    				else if (clip.mArtwork.equals("cliptype_medium"))
+	    					clip.mShotType = 3;
+	    				if (clip.mArtwork.equals("cliptype_wide"))
+	    					clip.mShotType = 4;
+	    				
+	    			} else if (clip.mShotSize != null) {
+	    				if (clip.mShotSize.equals("Close"))
+	    					clip.mShotType = 0;
+	    				else if (clip.mShotSize.equals("Detail"))
+	    					clip.mShotType = 1;
+	    				else if (clip.mShotSize.equals("Long"))
+	    					clip.mShotType = 2;
+	    				else if (clip.mShotSize.equals("Medium"))
+	    					clip.mShotType = 3;
+	    				else if (clip.mShotSize.equals("Wide"))
+	    					clip.mShotType = 4;
+	    			}
+	    	        
+	    			clip.mGoal = jobjClip.getString("Goal");
+	    			clip.mLength = jobjClip.getString("Length");
+	    			clip.mDescription = jobjClip.getString("Description");
+	    			clip.mTip = jobjClip.getString("Tip");
+	    			clip.mSecurity = jobjClip.getString("Security Concern");
+	    			
+	    			scene.addClip(clip);
+	    		}
+            }
             
     		result.addScene(scene);
         }

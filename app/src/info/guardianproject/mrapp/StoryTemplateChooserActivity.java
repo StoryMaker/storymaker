@@ -4,6 +4,8 @@ import info.guardianproject.mrapp.R;
 import info.guardianproject.mrapp.model.Project;
 import info.guardianproject.mrapp.model.Scene;
 import info.guardianproject.mrapp.model.template.Template;
+import info.guardianproject.mrapp.ui.MyCardPager.MyAdapter;
+import info.guardianproject.mrapp.ui.MyCardPager.MyFragment;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -14,73 +16,108 @@ import org.json.JSONException;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.NavUtils;
+import android.support.v4.view.ViewPager;
+import android.support.v4.view.ViewPager.OnPageChangeListener;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.TextView;
 
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
+import com.viewpagerindicator.CirclePageIndicator;
 
 public class StoryTemplateChooserActivity extends BaseActivity {
     private String mTemplatePath;
     private Template mTemplate;
     private String mProjectName;
+    private int mStoryMode;
+    private String mStoryModeTemplate;
     
+
+	private ViewPager mPager = null;
+	private MyAdapter mAdapter = null;
+	
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_story_template_chooser);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         
-        mProjectName = getIntent().getExtras().getString("project_title");
-
-        String[] egTitles = getResources().getStringArray(R.array.eg_scene_titles);
-        String[] egDescriptions = getResources().getStringArray(R.array.eg_scene_descriptions);
-        String[] egStatuses = getResources().getStringArray(R.array.eg_scene_statuses);
+        Intent intent = getIntent();
+        mProjectName = intent.getStringExtra("project_title");
+        mStoryMode = intent.getIntExtra("story_mode", Project.STORY_TYPE_VIDEO);
+        mStoryModeTemplate = intent.getStringExtra("story_mode_template");
         
-        // create the item mapping
-        String[] from = new String[] {"title", "description", "status" };
-        int[] to = new int[] { R.id.textViewTitle, R.id.textViewDescription, R.id.textViewStatus  };
-
-        List<HashMap<String, String>> fillMaps = new ArrayList<HashMap<String, String>>();
-        for(int i = 0; i < egTitles.length; i++){
-            HashMap<String, String> map = new HashMap<String, String>();
-            map.put("title", egTitles[i]);
-            map.put("description", egDescriptions[i]);
-            map.put("status", "");
-            fillMaps.add(map);
-        }
+        int[] title = {
+        	R.string.story_type_event_title,
+        	R.string.story_type_news_title,
+        	R.string.story_type_issue_title,
+        	R.string.story_type_profile_title
+        	
+        };
         
-        SimpleAdapter adapter = new SimpleAdapter(this, fillMaps, R.layout.list_item_scene, from, to);
-        ListView lv = (ListView) this.findViewById(R.id.listView1);
-        lv.setAdapter(adapter);
+        int[] messages = {
+            	R.string.story_type_event_desc,
+            	R.string.story_type_news_desc,
+            	R.string.story_type_issue_desc,
+            	R.string.story_type_profile_desc
+            	
+            };
         
-        Button buttonEvent = (Button) findViewById(R.id.btnEvent);
-        buttonEvent.setOnClickListener(new OnClickListener() {
-            
-            @Override
-            public void onClick(View v) {
-//               mTemplatePath = "video_3_scene.json";
-            }
-        }); 
+        mAdapter = new MyAdapter(getSupportFragmentManager(), title,messages);
+		mPager = ((ViewPager)findViewById(R.id.pager));
+		mPager.setId((int)(Math.random()*10000));
+		mPager.setOffscreenPageLimit(5);
+		
+		 mPager.setAdapter(mAdapter);
+		 
+		//Bind the title indicator to the adapter
+         CirclePageIndicator indicator = (CirclePageIndicator)findViewById(R.id.circles);
+         indicator.setViewPager(mPager);
+         indicator.setSnap(true);
+         
+         final float density = getResources().getDisplayMetrics().density;
+         
+         indicator.setRadius(5 * density);
+         indicator.setFillColor(0xFFFF0000);
+         indicator.setPageColor(0xFFaaaaaa);
+         //indicator.setStrokeColor(0xFF000000);
+         //indicator.setStrokeWidth(2 * density);
         
-        // FIXME default to Event template
-        String templateJsonPath = null;
+         loadTemplateSummary ("event","basic", mStoryMode);
+       
+    }
+    
+    private void loadTemplateSummary (String name, String type, int mode) 
+    {
+    	try
+    	{	
+        
         String lang = StoryMakerApp.getCurrentLocale().getLanguage();
-        mTemplatePath = "story/templates/" + lang + "/video_3_scene.json";
-        mTemplate = new Template();
-        try {
-            mTemplate.parseAsset(this, mTemplatePath);
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (JSONException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+        mTemplatePath = "story/templates/" + lang + '/' + name + '/' + name + '_' + type + ".json";
+        
+    	if (mStoryModeTemplate != null)
+    		mTemplate = Template.parseAsset(this, mTemplatePath, mStoryModeTemplate);
+    	else
+    		mTemplate = Template.parseAsset(this, mTemplatePath);
+        	
+     	
         }
+        catch (Exception e)
+        {
+        	Log.e(AppConstants.TAG,"error loading template",e);
+        }
+      
     }
     
     // FIXME display template's scenes in list
@@ -99,29 +136,119 @@ public class StoryTemplateChooserActivity extends BaseActivity {
                 NavUtils.navigateUpFromSameTask(this);
                 return true;
             case R.id.itemForward:
-                // FIXME this should be split into a method, probably in the model.Project class?
-                int sceneCount = mTemplate.getScenes().size(); 
-                Project project = new Project(this, sceneCount);
-                project.setTitle(mProjectName);
-                project.setTemplatePath(mTemplatePath);
-                project.save();
-                int i = 0;
-                for (info.guardianproject.mrapp.model.template.Scene s : mTemplate.getScenes()) {
-                    Scene scene = new Scene(this, s.getClips().size());
-                    scene.setTitle(s.mTitle);
-                    scene.setProjectId(project.getId());
-                    scene.setProjectIndex(i);
-                    scene.save();
-                    i++;
-                }
-                Intent intent = new Intent(getBaseContext(), StoryTemplateActivity.class);
-                intent.putExtra("pid", project.getId());
-                intent.putExtra("template_path", mTemplatePath);
-                
-                startActivity(intent);
+            	showTemplateEditor();
+            	
                 return true;
         }
         return super.onOptionsItemSelected(item);
     }
+    
+    private void showTemplateEditor ()
+    {
+    	int pageIdx = mPager.getCurrentItem();
+    	
+    	switch (pageIdx)
+		{
+			case 0: //essay
+		         loadTemplateSummary ("event","basic", mStoryMode);
+			break;
+			case 1: //essay
+		         loadTemplateSummary ("news","basic", mStoryMode);
+			break;
+			case 2: //essay
+		         loadTemplateSummary ("issue","basic", mStoryMode);
+			break;
+			case 3: //essay
+		         loadTemplateSummary ("profile","basic", mStoryMode);
+			break;
+		}
+    	
+        // FIXME this should be split into a method, probably in the model.Project class?
+        int sceneCount = mTemplate.getScenes().size(); 
+        Project project = new Project(this, sceneCount);
+        project.setTitle(mProjectName);
+        project.setTemplatePath(mTemplatePath);
+        project.setStoryType(mStoryMode);
+        project.save();
+        int i = 0;
+        for (info.guardianproject.mrapp.model.template.Scene s : mTemplate.getScenes()) {
+            Scene scene = new Scene(this, s.getClips().size());
+            scene.setTitle(s.mTitle);
+            scene.setProjectId(project.getId());
+            scene.setProjectIndex(i);
+            scene.save();
+            i++;
+        }
+        Intent intent = new Intent(getBaseContext(), StoryTemplateActivity.class);
+        intent.putExtra("pid", project.getId());
+        intent.putExtra("template_path", mTemplatePath);
+        
+        startActivity(intent);
+        finish();
+    }
+    
+    public class MyAdapter extends FragmentPagerAdapter {
+		 
+		 int[] mMessages;
+		 int[] mTitles;
+		 
+	        public MyAdapter(FragmentManager fm, int[] titles, int[] messages) {
+	            super(fm);
+	            mTitles = titles;
+	            mMessages = messages;
+	        }
+
+	        @Override
+	        public int getCount() {
+	            return mMessages.length;
+	        }
+
+	        @Override
+	        public Fragment getItem(int position) {
+	        	Bundle bundle = new Bundle();
+	        	bundle.putString("title",getString(mTitles[position]));
+	        	bundle.putString("msg", getString(mMessages[position]));
+	        	
+	        	Fragment f = new MyFragment();
+	        	f.setArguments(bundle);
+	        	
+	            return f;
+	        }
+	    }
+	
+	public class MyFragment extends Fragment {
+	
+		String mMessage;
+		String mTitle;
+		
+		 /**
+        * When creating, retrieve this instance's number from its arguments.
+        */
+       @Override
+       public void onCreate(Bundle savedInstanceState) {
+           super.onCreate(savedInstanceState);
+
+           mTitle = getArguments().getString("title");
+           mMessage = getArguments().getString("msg");
+       }
+
+       /**
+        * The Fragment's UI is just a simple text view showing its
+        * instance number.
+        */
+       @Override
+       public View onCreateView(LayoutInflater inflater, ViewGroup container,
+               Bundle savedInstanceState) {
+           
+           ViewGroup root = (ViewGroup) inflater.inflate(R.layout.card_pager_textview, null);
+           
+           ((TextView)root.findViewById(R.id.title)).setText(mTitle);
+           
+           ((TextView)root.findViewById(R.id.description)).setText(mMessage);
+           
+           return root;
+       }
+	
+	}
 
 }

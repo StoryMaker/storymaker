@@ -17,21 +17,7 @@
         <item>cliptype_wide</item>
     </string-array>
     
-    <string-array name="eg_scene_titles">
-        <item>Scene 1: Introduction</item>
-        <item>Scene 2: When</item>
-        <item>Scene 3: Where</item>
-    </string-array>
-    <string-array name="eg_scene_descriptions">
-        <item>Other test about the goal of this scene is written here.</item>
-        <item>Scene 2\'s description.</item>
-        <item>Description for Scene 3.</item>
-    </string-array>
-    <string-array name="eg_scene_statuses">
-        <item>Finished</item>
-        <item>1 clip left</item>
-        <item>5 clips left</item>
-    </string-array>
+   
     <string-array name="story_sections">
         <item>Politics</item>
         <item>Business</item>

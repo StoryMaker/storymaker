@@ -145,7 +145,7 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
                 if (mMPM.mProject.isTemplateStory()) {
                     Intent intent = new Intent(this, StoryTemplateActivity.class);
                     String lang = StoryMakerApp.getCurrentLocale().getLanguage();
-                    intent.putExtra("template_path", "story/templates/" + lang + "/video_3_scene.json");
+                    intent.putExtra("template_path", "story/templates/" + lang + "/event/event_basic.json");
                     intent.putExtra("story_mode", mMPM.mProject.getStoryType());
                     intent.putExtra("pid", mMPM.mProject.getId());
                     intent.putExtra("title", mMPM.mProject.getTitle());

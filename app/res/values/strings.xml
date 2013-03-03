@@ -106,10 +106,10 @@ Build number: <xliff:g id="build_number">%s</xliff:g>\n
     <string name="new_story_audio">Audio: Something here about using audio to tell a story. Personally, I really like to listen to the radio and podcasts while I do housework!</string>
      -->
     
-    <string name="new_story_simple_story">Simple Story</string>
-    <string name="new_story_choose_template">Choose Template</string>
-    <string name="home_new_story">Create a new story project</string>
-    <string name="home_start_a_lesson">Begin a new lesson</string>
+    <string name="new_story_simple_story">Story</string>
+    <string name="new_story_choose_template">Template</string>
+    <string name="home_new_story">MAKE A STORY</string>
+    <string name="home_start_a_lesson">EXPLORE LESSONS</string>
     <string name="title_activity_new_story">New Story</string>
     <string name="title_activity_lessons">Lessons</string>
     <string name="title_activity_scene_editor">Scene Editor</string>
@@ -263,4 +263,6 @@ Build number: <xliff:g id="build_number">%s</xliff:g>\n
     <string name="action_render">Export</string>
     
     <string name="drawer_quick_capture">Quick Capture</string>
+    
+    <string name="select_story_type">Select story type</string>
 </resources>

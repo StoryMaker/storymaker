@@ -165,14 +165,18 @@ public class ProjectsActivity extends BaseActivity {
 			
 				Project project = mListProjects.get(position);
 				Intent intent = null;
+
+			    
 				if (project.getScenesAsArray().length > 1) {
+					
 				    intent = new Intent(ProjectsActivity.this, StoryTemplateActivity.class);
-				    String lang = StoryMakerApp.getCurrentLocale().getLanguage();
-				    intent.putExtra("template_path", "story/templates/" + lang + "/video_3_scene.json");
+				    
+				    
 			    }else {
     				intent = new Intent(ProjectsActivity.this, SceneEditorActivity.class);
-    		    	intent.putExtra("template_path", getSimpleTemplateJsonPath(project));
-			    }
+    		    }
+				
+				intent.putExtra("template_path",project.getTemplatePath());
 				intent.putExtra("story_mode", project.getStoryType());
                 intent.putExtra("pid", project.getId());
                 intent.putExtra("title", project.getTitle());
@@ -194,28 +198,31 @@ public class ProjectsActivity extends BaseActivity {
          mListView.setAdapter(aaProjects);
     }
     
+    /*
     private String getSimpleTemplateJsonPath(Project project) {
-        String templateJsonPath = null;
+        
         String lang = StoryMakerApp.getCurrentLocale().getLanguage();
+        String templateJsonPath = "story/templates/" + lang + "/simple/";
+        
         if (project.getStoryType() == Project.STORY_TYPE_VIDEO)
         {
-            templateJsonPath = "story/templates/" + lang + "/video_simple.json";
+            templateJsonPath += "video_simple.json";
         }
         else if (project.getStoryType() == Project.STORY_TYPE_PHOTO)
         {
-            templateJsonPath = "story/templates/" + lang + "/photo_simple.json";
+            templateJsonPath += "photo_simple.json";
         }
         else if (project.getStoryType() == Project.STORY_TYPE_AUDIO)
         {
-            templateJsonPath = "story/templates/" + lang + "/audio_simple.json";
+            templateJsonPath += "audio_simple.json";
         }
         else if (project.getStoryType() == Project.STORY_TYPE_ESSAY)
         {
-            templateJsonPath = "story/templates/" + lang + "/essay_simple.json";
+            templateJsonPath += "essay_simple.json";
         }
         
         return templateJsonPath;
-    }
+    }*/
     
     private void deleteProject (Project project)
     {

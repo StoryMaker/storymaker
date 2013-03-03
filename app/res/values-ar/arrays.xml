@@ -14,21 +14,7 @@
     <item>cliptype_medium</item>
     <item>cliptype_wide</item>
   </string-array>
-  <string-array name="eg_scene_titles">
-    <item>المشهد 1: مقدمة</item>
-    <item>المشهد 2: متى</item>
-    <item>المشهد 3: أين</item>
-  </string-array>
-  <string-array name="eg_scene_descriptions">
-    <item>مكتوب هنا اختبار آخر عن الهدف من هذا المشهد.</item>
-    <item>وصف المشهد 2. </item>
-    <item>وصف للمشهد 3</item>
-  </string-array>
-  <string-array name="eg_scene_statuses">
-    <item>انتهى</item>
-    <item>لقطة واحدة متبقية</item>
-    <item>5 لقطات متبقية</item>
-  </string-array>
+  
   <string-array name="story_sections">
     <item>السياسة</item>
     <item>الأعمال</item>

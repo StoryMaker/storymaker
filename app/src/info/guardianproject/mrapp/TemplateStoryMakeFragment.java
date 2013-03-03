@@ -1,5 +1,6 @@
 package info.guardianproject.mrapp;
 
+import info.guardianproject.mrapp.model.Project;
 import info.guardianproject.mrapp.model.template.Scene;
 import info.guardianproject.mrapp.model.template.Template;
 
@@ -27,8 +28,8 @@ import android.widget.TextView;
 public class TemplateStoryMakeFragment extends Fragment {
     EditorBaseActivity mActivity;
     public static final String ARG_SECTION_NUMBER = "section_number";
-    private String mTemplateJsonPath = null;
     private Template mTemplate;
+    private Project mProject;
     
     public TemplateStoryMakeFragment(EditorBaseActivity activity) {
         mActivity = activity;
@@ -40,12 +41,13 @@ public class TemplateStoryMakeFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_make, null);
         
         Intent intent = getActivity().getIntent();
-        mTemplateJsonPath = intent.getStringExtra("template_path");
+        
+        int pid = intent.getIntExtra("pid", -1); //project id
+        mProject = Project.get(this.getActivity(),pid);
         
         // FIXME fetch template from the Project db record
-        mTemplate = new Template();
         try {
-            mTemplate.parseAsset(getActivity(), mTemplateJsonPath);
+            mTemplate = Template.parseAsset(getActivity(), mProject.getTemplatePath(), Project.getSimpleTemplateForMode(mProject.getStoryType()));
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -65,12 +67,9 @@ public class TemplateStoryMakeFragment extends Fragment {
             Scene scene = scenes.get(i);
             egTitles[i] = scene.mTitle;
             egDescriptions[i] = scene.mDescription;
-            egStatuses[i] = "test 123"; // FIXME status is to be set by how many clips we have left to add
+            egStatuses[i] = ""; // FIXME status is to be set by how many clips we have left to add
         }
 
-//        String[] egTitles = getResources().getStringArray(R.array.eg_scene_titles);
-//        String[] egDescriptions = getResources().getStringArray(R.array.eg_scene_descriptions);
-//        String[] egStatuses = getResources().getStringArray(R.array.eg_scene_statuses);
         
         // create the item mapping
         String[] from = new String[] {"title", "description", "status" };
@@ -93,10 +92,10 @@ public class TemplateStoryMakeFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
                 Intent intent = new Intent(getActivity(), SceneEditorActivity.class);
-                intent.putExtra("template_path", mTemplateJsonPath);
-                intent.putExtra("story_mode", mActivity.mMPM.mProject.getStoryType());
-                intent.putExtra("pid", mActivity.mMPM.mProject.getId());
-                intent.putExtra("title", mActivity.mMPM.mProject.getTitle());
+                intent.putExtra("template_path",  mProject.getTemplatePath());
+                intent.putExtra("story_mode",mProject.getStoryType());
+                intent.putExtra("pid", mProject.getId());
+                intent.putExtra("title", mProject.getTitle());
                 intent.putExtra("scene", position);
                 getActivity().startActivity(intent);
             }

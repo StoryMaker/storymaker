@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:background="@color/transparent"
+    android:layout_height="fill_parent"   
+     android:background="#eaeae5"
     android:fillViewport="true" >
     
 <RelativeLayout
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:padding="20dp" >
 
     <TextView
@@ -42,6 +42,16 @@
         android:text="@string/new_story_choose_something"
         android:textAppearance="?android:attr/textAppearanceSmall" />
 
+     <LinearLayout
+        android:id="@+id/llMedium"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+                android:layout_below="@+id/textView2"
+        android:orientation="vertical"
+        android:background="#ffffff"
+        android:padding="6sp"
+         >
     <TextView
         android:id="@+id/textViewChooseAMedium"
         android:layout_width="wrap_content"
@@ -105,24 +115,28 @@
         android:layout_marginTop="10dp"
         android:text="@string/template_video_desc"
         android:textAppearance="?android:attr/textAppearanceSmall" />
-
-    <Button
-        android:id="@+id/buttonSimpleStory"
+</LinearLayout>
+    <LinearLayout
+        android:id="@+id/llStoryType"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/txtNewStoryDesc"
-        android:layout_below="@+id/txtNewStoryDesc"
         android:layout_marginTop="10dp"
+                android:layout_below="@+id/llMedium"
+        android:gravity="center"
+         >
+    
+    <Button
+                android:id="@+id/buttonSimpleStory"
+        
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:text="@string/new_story_simple_story" />
 
     <Button
         android:id="@+id/buttonChooseTemplate"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignRight="@+id/buttonSimpleStory"
-        android:layout_below="@+id/buttonSimpleStory"
-        android:layout_marginTop="10dp"
         android:text="@string/new_story_choose_template" />
-
+</LinearLayout>
 </RelativeLayout>
 </ScrollView>
