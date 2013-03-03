@@ -1,17 +1,17 @@
 {
     "scenes": [
         {
-            "title": "@string/when",
-            "description": "@string/story_type_event_text1"
+            "title": "when",
+            "description": "story_type_event_text1"
         },
         {
-            "title": "@string/what",
-            "description": "@string/story_type_event_text2"
+            "title": "what",
+            "description": "story_type_event_text2"
         },
         {
-            "title": "@string/why",
-            "description": "@string/story_type_event_text3"
+            "title": "why",
+            "description": "story_type_event_text3"
         }
     ], 
-    "title": "@string/story_type_event_title"
+    "title": "story_type_event_title"
 }
