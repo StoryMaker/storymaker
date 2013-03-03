@@ -12,10 +12,19 @@ import org.json.JSONObject;
 import android.content.Context;
 import android.content.res.Resources;
 
+/**
+ * @author n8fr8
+ *
+ */
 public class Template {
 
     public String mTitle;
 	ArrayList<Scene> mArrayScenes;
+	
+	private Template ()
+	{
+		
+	}
 	
 	public ArrayList<Scene> getScenes()
 	{
@@ -35,8 +44,39 @@ public class Template {
 	    return mArrayScenes.get(idx);
 	}
 	
-	public void parseAsset(Context context, String assetPath) throws IOException, JSONException
+	/**
+	 * @param context
+	 * @param assetPathTemplate the path to the multi-scene template, that has no clips
+	 * @param assetPathScene the path to the specific scene template with clips to use for each scene
+	 * @return
+	 * @throws IOException
+	 * @throws JSONException
+	 */
+	public static Template parseAsset(Context context, String assetPathTemplate, String assetPathScene) throws IOException, JSONException
 	{
+		Template template = parseAsset(context, assetPathScene);
+		Template templateScene = parseAsset(context, assetPathScene);
+		
+		for (Scene scene : template.getScenes())
+		{
+			if (templateScene.getScenes().size() > 0)
+				scene.setClips(templateScene.getScene(0).getClips());
+		}
+		
+		return template;
+	}
+	
+	/**
+	 * @param context
+	 * @param assetPath a complete template with scene and clips
+	 * @return
+	 * @throws IOException
+	 * @throws JSONException
+	 */
+	public static Template parseAsset(Context context, String assetPath) throws IOException, JSONException
+	{
+		Template result = new Template ();
+		
 		StringBuffer jsonsb = new StringBuffer();
 		
 		Iterator<String> it = IOUtils.readLines(context.getAssets().open(assetPath)).iterator();
@@ -47,7 +87,7 @@ public class Template {
 		JSONObject jobjTemplate = new JSONObject(jsonsb.toString());
 		
         if (!jobjTemplate.isNull("title")) {
-            mTitle = jobjTemplate.getString("title");
+            result.mTitle = jobjTemplate.getString("title");
         }
 		
 		JSONArray jarrayScenes = jobjTemplate.getJSONArray("scenes");
@@ -63,7 +103,7 @@ public class Template {
             if (!jobjScene.isNull("title")) {
                 scene.mTitle = jobjScene.getString("title");
                 
-                int resId = Resources.getSystem().getIdentifier(scene.mTitle, "string", null);
+                int resId = Resources.getSystem().getIdentifier(scene.mTitle, null, null);
                 
                 if (resId != 0)
                 	scene.mTitle = context.getString(resId);
@@ -72,7 +112,7 @@ public class Template {
             if (!jobjScene.isNull("description")) {
                 scene.mDescription = jobjScene.getString("description");
                 
-                int resId = Resources.getSystem().getIdentifier(scene.mDescription, "string", null);
+                int resId = Resources.getSystem().getIdentifier(scene.mDescription, null, null);
                 
                 if (resId != 0)
                 	scene.mDescription = context.getString(resId);
@@ -128,7 +168,10 @@ public class Template {
     			
     			scene.addClip(clip);
     		}
-    		addScene(scene);
+            
+    		result.addScene(scene);
         }
+		
+		return result;
 	}
 }
