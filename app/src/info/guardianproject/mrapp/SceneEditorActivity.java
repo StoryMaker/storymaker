@@ -54,7 +54,6 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
     private Template mTemplate = null;
     private int mSceneIndex = 0;
     
-    private int mStoryMode = Project.STORY_TYPE_VIDEO;;
     private final static String CAPTURE_MIMETYPE_AUDIO = "audio/3gpp";
     public Fragment mFragmentTab0, mFragmentTab1, mLastTabFrag;
     public PublishFragment mPublishFragment;
@@ -388,13 +387,13 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
 
 	public void openCaptureMode (Clip clip, int clipIndex)
 	{
-		if (mStoryMode == Project.STORY_TYPE_AUDIO)
+		if (mProject.getStoryType() == Project.STORY_TYPE_AUDIO)
 		{
 			Intent i = new Intent(mContext, SoundRecorder.class);
 			i.setType(CAPTURE_MIMETYPE_AUDIO);
-			i.putExtra("mode", mStoryMode);
+			i.putExtra("mode", mProject.getStoryType());
 			mMPM.mClipIndex = clipIndex;
-			startActivityForResult(i,mStoryMode);
+			startActivityForResult(i,mProject.getStoryType());
 
         }
         else
@@ -405,7 +404,7 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
 
             Intent i = new Intent(mContext, OverlayCameraActivity.class);
             i.putExtra("group", clip.mShotType);
-            i.putExtra("mode", mStoryMode);
+            i.putExtra("mode", mProject.getStoryType());
             mMPM.mClipIndex = clipIndex;
             startActivityForResult(i, REQ_OVERLAY_CAM);
         }
@@ -422,16 +421,16 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
             {
                 File fileMediaFolder = getExternalFilesDir(null);
 
-                if (mStoryMode == Project.STORY_TYPE_VIDEO)
+                if (mProject.getStoryType() == Project.STORY_TYPE_VIDEO)
                 {
                     mCapturePath = mMPM.mMediaHelper.captureVideo(fileMediaFolder);
 
                 }
-                else if (mStoryMode == Project.STORY_TYPE_PHOTO)
+                else if (mProject.getStoryType() == Project.STORY_TYPE_PHOTO)
                 {
                     mCapturePath = mMPM.mMediaHelper.capturePhoto(fileMediaFolder);
                 }
-                else if (mStoryMode == Project.STORY_TYPE_ESSAY)
+                else if (mProject.getStoryType() == Project.STORY_TYPE_ESSAY)
                 {
                     mCapturePath = mMPM.mMediaHelper.capturePhoto(fileMediaFolder);
                 }
