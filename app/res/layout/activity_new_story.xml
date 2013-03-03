@@ -8,23 +8,13 @@
 <RelativeLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="20dp" >
-
-    <TextView
-        android:id="@+id/textView1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:text="@string/new_story_name_it"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+    android:padding="10dp" >
 
     <EditText
         android:id="@+id/editTextStoryName"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_below="@+id/textView1"
         android:layout_marginTop="10dp"
         android:ems="10"
         android:hint="@string/new_story_working_title" >
