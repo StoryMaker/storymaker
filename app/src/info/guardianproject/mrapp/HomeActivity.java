@@ -330,7 +330,15 @@ public class HomeActivity extends BaseActivity {
 
 		Project project = mListProjects.get(id);
 		
-    	Intent intent = new Intent(this, SceneEditorActivity.class);
+		Intent intent = new Intent(this, SceneEditorActivity.class);
+    	
+		if (project.getScenesAsArray().length > 1) {
+			
+		    intent = new Intent(this, StoryTemplateActivity.class);
+		    
+		    
+	    }
+
     	intent.putExtra("story_mode", project.getStoryType());
     	intent.putExtra("pid", project.getId());
     	intent.putExtra("title", project.getTitle());

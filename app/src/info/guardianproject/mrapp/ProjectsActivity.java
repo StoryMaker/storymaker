@@ -198,31 +198,6 @@ public class ProjectsActivity extends BaseActivity {
          mListView.setAdapter(aaProjects);
     }
     
-    /*
-    private String getSimpleTemplateJsonPath(Project project) {
-        
-        String lang = StoryMakerApp.getCurrentLocale().getLanguage();
-        String templateJsonPath = "story/templates/" + lang + "/simple/";
-        
-        if (project.getStoryType() == Project.STORY_TYPE_VIDEO)
-        {
-            templateJsonPath += "video_simple.json";
-        }
-        else if (project.getStoryType() == Project.STORY_TYPE_PHOTO)
-        {
-            templateJsonPath += "photo_simple.json";
-        }
-        else if (project.getStoryType() == Project.STORY_TYPE_AUDIO)
-        {
-            templateJsonPath += "audio_simple.json";
-        }
-        else if (project.getStoryType() == Project.STORY_TYPE_ESSAY)
-        {
-            templateJsonPath += "essay_simple.json";
-        }
-        
-        return templateJsonPath;
-    }*/
     
     private void deleteProject (Project project)
     {

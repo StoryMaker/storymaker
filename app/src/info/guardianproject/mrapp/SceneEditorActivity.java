@@ -4,6 +4,7 @@ package info.guardianproject.mrapp;
 import info.guardianproject.mrapp.media.MediaProjectManager;
 import info.guardianproject.mrapp.media.OverlayCameraActivity;
 import info.guardianproject.mrapp.model.template.Clip;
+import info.guardianproject.mrapp.model.template.Template;
 import info.guardianproject.mrapp.model.Media;
 import info.guardianproject.mrapp.model.Project;
 import info.guardianproject.mrapp.model.Scene;
@@ -48,7 +49,9 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
 	
     protected Menu mMenu = null;
     
-    private String mTemplateJsonPath = null;
+    //private String mTemplateJsonPath = null;
+    private Project mProject = null;
+    private Template mTemplate = null;
     private int mSceneIndex = 0;
     
     private int mStoryMode = Project.STORY_TYPE_VIDEO;;
@@ -62,8 +65,8 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
 
         Intent intent = getIntent();
         
-        mTemplateJsonPath = getIntent().getStringExtra("template_path"); 
-        mStoryMode = getIntent().getIntExtra("story_mode", Project.STORY_TYPE_VIDEO);
+//        mTemplateJsonPath = getIntent().getStringExtra("template_path"); 
+ //       mStoryMode = getIntent().getIntExtra("story_mode", Project.STORY_TYPE_VIDEO);
 
         int pid = intent.getIntExtra("pid", -1); //project id
 
@@ -71,12 +74,12 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
 
         if (pid != -1)
         {
-            Project project = Project.get(mContext, pid);
+        	mProject = Project.get(mContext, pid);
             Scene scene = null;
-            if ((mSceneIndex != -1) && (mSceneIndex < project.getScenesAsArray().length)) {
-                scene = project.getScenesAsArray()[mSceneIndex];
+            if ((mSceneIndex != -1) && (mSceneIndex < mProject.getScenesAsArray().length)) {
+                scene = mProject.getScenesAsArray()[mSceneIndex];
             }
-            mMPM = new MediaProjectManager(this, mContext, getIntent(), mHandlerPub, project, scene);
+            mMPM = new MediaProjectManager(this, mContext, getIntent(), mHandlerPub, mProject, scene);
             mMPM.initProject();
             mMPM.addAllProjectMediaToEditor();
         }
@@ -86,13 +89,30 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
 
             String title = intent.getStringExtra("title");
         
-            Project project = new Project(mContext, clipCount);
-            project.setTitle(title);
-            project.save();
-            mMPM = new MediaProjectManager(this, mContext, getIntent(), mHandlerPub, project);
+            mProject = new Project(mContext, clipCount);
+            mProject.setTitle(title);
+            mProject.save();
+            mMPM = new MediaProjectManager(this, mContext, getIntent(), mHandlerPub, mProject);
             mMPM.initProject();
         }
         
+        try
+        {
+	        if (mProject.getScenesAsList().size() > 1)
+	        {
+	        	mTemplate = Template.parseAsset(this, mProject.getTemplatePath(),Project.getSimpleTemplateForMode(mProject.getStoryType()));
+	        	
+	        }
+	        else
+	        {
+	        	mTemplate = Template.parseAsset(this, Project.getSimpleTemplateForMode(mProject.getStoryType()));
+	        	
+	        }
+        }
+        catch (Exception e)
+        {
+        	Log.e(AppConstants.TAG,"could not parse templates",e);
+        }
         setContentView(R.layout.activity_scene_editor_no_swipe);
 
         // Set up the action bar.
@@ -240,7 +260,7 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
             if (mFragmentTab0 == null)
             {
                 try {
-                    mFragmentTab0 = new AddClipsFragment(layout, fm, mTemplateJsonPath, mSceneIndex, this);
+                    mFragmentTab0 = new AddClipsFragment(layout, fm, mTemplate, mSceneIndex, this);
 
                     Bundle args = new Bundle();
                     args.putInt(AddClipsFragment.ARG_SECTION_NUMBER, tab.getPosition() + 1);
@@ -307,7 +327,7 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
         } else if (tab.getPosition() == 2) {
             if (mMPM.mProject.isTemplateStory()) {
                 Intent intent = new Intent(getBaseContext(), StoryTemplateActivity.class);
-                intent.putExtra("template_path", mTemplateJsonPath);
+                intent.putExtra("template_path", mProject.getTemplatePath());
                 intent.putExtra("story_mode", mMPM.mProject.getStoryType());
                 intent.putExtra("pid", mMPM.mProject.getId());
                 intent.putExtra("title", mMPM.mProject.getTitle());

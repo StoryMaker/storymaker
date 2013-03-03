@@ -59,6 +59,9 @@ public class TemplateStoryMakeFragment extends Fragment {
         TextView title = (TextView) view.findViewById(R.id.textTitle);
         title.setText(mActivity.mMPM.mProject.getTitle());
         
+        TextView title2 = (TextView) view.findViewById(R.id.textPublishDate);
+        title2.setText(mTemplate.mTitle);
+        
         ArrayList<Scene> scenes = mTemplate.getScenes();
         String[] egTitles = new String[scenes.size()];
         String[] egDescriptions = new String[scenes.size()];
