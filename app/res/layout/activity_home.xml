@@ -1,14 +1,136 @@
-<?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#eaeae5"
+    android:orientation="vertical"
+    android:padding="0dp"
+         android:background="#eaeae5"
      >
 
     <com.fima.cardsui.views.CardUI
         android:id="@+id/cardsview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="wrap_content"
+         />
+    
+    <LinearLayout
+        android:id="@+id/llLessons"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+    android:orientation="vertical"
+        android:layout_margin="10dp"
+        
+        android:layout_weight="1"
+         >
+         
+ <android.support.v4.view.ViewPager
+        android:layout_width="match_parent" 
+        android:id="@+id/pager1"
+        android:layout_height="160dp"
+        
+      android:background="#ffffff"
+        />
+   <com.viewpagerindicator.CirclePageIndicator
+            android:id="@+id/circles1"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+                        android:padding="3dp"
+            
+      android:background="#ffffff"
+             />
+ <View
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="4dp"
+        android:background="@color/stroke" />
+       
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="bottom"
+        android:orientation="vertical"
+            android:background="#cccccc"
+        android:padding="4dp"
+        android:layout_marginBottom="0dp"
+         >
 
-</RelativeLayout>
+        <!-- 
+        android:background="@drawable/selectable_background_cardbank" -->
+        <TextView
+            android:id="@+id/cardButton1"
+            style="@style/CardText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:gravity="center"
+            android:padding="6dp"
+            android:text="@string/home_intro_button_lessons"
+            android:textColor="#333333"
+            />
+    </LinearLayout>
+    </LinearLayout>
+   
+     <LinearLayout
+        android:id="@+id/llProjects"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+    android:orientation="vertical"
+        android:layout_margin="10dp"
+        android:layout_weight="1"
+         >
+
+ <android.support.v4.view.ViewPager
+        android:layout_width="match_parent" 
+        android:id="@+id/pager2"
+        android:layout_height="160dp"
+        
+      android:background="#ffffff"
+        />
+   <com.viewpagerindicator.CirclePageIndicator
+            android:id="@+id/circles2"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:padding="3dp"
+      android:background="#ffffff"
+             />
+   
+     <View
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="4dp"
+        android:background="@color/stroke" />
+       
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="bottom"
+        android:orientation="vertical"
+        
+            android:background="#cccccc"
+        android:padding="4dp"
+        android:layout_marginBottom="0dp"
+    
+         >
+
+        <!-- 
+        android:background="@drawable/selectable_background_cardbank" -->
+        <TextView
+            android:id="@+id/cardButton2"
+            style="@style/CardText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:gravity="center"
+            android:padding="6dp"
+            android:text="@string/home_intro_button_projects"
+            android:textColor="#333333"
+            
+            />
+    </LinearLayout>
+
+    </LinearLayout>
+   
+
+  
+
+</LinearLayout>

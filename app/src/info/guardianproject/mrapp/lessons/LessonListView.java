@@ -16,8 +16,10 @@ import org.holoeverywhere.widget.Toast;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Handler;
 import android.os.Message;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.widget.ArrayAdapter;
@@ -79,6 +81,12 @@ public class LessonListView extends ListView implements LessonManagerListener {
         }
         
 
+
+      	 SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getContext());
+
+  	     final boolean requireComplete = !settings.getBoolean("plessondebug", false);
+  	     
+
         setOnItemClickListener(new OnItemClickListener ()
         {
 
@@ -97,7 +105,7 @@ public class LessonListView extends ListView implements LessonManagerListener {
 				}
 				else if (selIdx < mListLessons.size())
 				{
-					if (selIdx == 0 || mListLessons.get(selIdx-1).mStatus == Lesson.STATUS_COMPLETE)
+					if ((!requireComplete) || selIdx == 0 || mListLessons.get(selIdx-1).mStatus == Lesson.STATUS_COMPLETE)
 					{
 						Lesson lesson = mListLessons.get(selIdx);
 						accessLesson(lesson);
@@ -280,8 +288,13 @@ public class LessonListView extends ListView implements LessonManagerListener {
     
     private void loadLessonListAdapter ()
     {
+
+       	 SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getContext());
+
+   	     boolean requireComplete = !settings.getBoolean("plessondebug", false);
+   	     
     	   setAdapter(new LessonArrayAdapter(getContext(), 
-    	   R.layout.list_lesson_row, mListLessons));
+    	   R.layout.list_lesson_row, mListLessons,requireComplete));
     }
     
     

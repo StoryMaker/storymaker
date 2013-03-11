@@ -16,12 +16,14 @@ import android.widget.TextView;
 
 public class LessonArrayAdapter extends ArrayAdapter {
 	
-    int layoutResourceId;    
+    int mLayoutResourceId;    
+    boolean mRequireLessonComplete = true;
     
-    public LessonArrayAdapter(Context context, int layoutResourceId,ArrayList<Lesson> lessons) {
+    public LessonArrayAdapter(Context context, int layoutResourceId,ArrayList<Lesson> lessons, boolean requireComplete) {
         super(context, layoutResourceId, lessons);        
         
-        this.layoutResourceId = layoutResourceId;
+        mLayoutResourceId = layoutResourceId;
+        mRequireLessonComplete = requireComplete;
     }
 
     @Override
@@ -38,7 +40,7 @@ public class LessonArrayAdapter extends ArrayAdapter {
         if(row == null)
         {
             LayoutInflater inflater = ((Activity)getContext()).getLayoutInflater();
-            row = inflater.inflate(layoutResourceId, parent, false);
+            row = inflater.inflate(mLayoutResourceId, parent, false);
             
         }
         
@@ -52,7 +54,7 @@ public class LessonArrayAdapter extends ArrayAdapter {
         	tvStatus.setText(R.string.lesson_status_in_progress);
         else if (lesson.mStatus == Lesson.STATUS_COMPLETE)
         	tvStatus.setText(R.string.lesson_status_complete);
-        else if (position > 0 && ((Lesson)getItem(position-1)).mStatus != Lesson.STATUS_COMPLETE)
+        else if (mRequireLessonComplete && position > 0 && ((Lesson)getItem(position-1)).mStatus != Lesson.STATUS_COMPLETE)
     	{
         	isEnabled = false;
 

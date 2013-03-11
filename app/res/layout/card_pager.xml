@@ -45,7 +45,6 @@
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
         android:orientation="vertical"
-        
             android:background="#cccccc"
         android:padding="4dp"
         android:layout_marginBottom="0dp"
@@ -61,6 +60,8 @@
             android:maxLines="1"
             android:gravity="center"
             android:padding="6dp"
+            android:text="click me"
+            android:textColor="#333333"
             />
     </LinearLayout>
 

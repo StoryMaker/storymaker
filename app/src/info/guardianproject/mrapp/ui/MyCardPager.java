@@ -50,7 +50,6 @@ public class MyCardPager extends Card {
 		
 		mListener = listener;
 		
-		super.setOnClickListener(mListener);
 	}
 
 	@Override
@@ -61,13 +60,12 @@ public class MyCardPager extends Card {
 		
 		mTextViewDesc = ( (TextView) mView.findViewById(R.id.description));
 		mTextViewDesc.setText(mDesc);
-
+		mTextViewDesc.setOnClickListener(mListener);
+		
 		if (mId != -1)
 		{
 			mView.setId(mId);
-			mView.setOnClickListener(mListener);
 			mTextViewDesc.setId(mId);
-			mView.setOnClickListener(mListener);
 		}
 		
         mAdapter = new MyAdapter(mActivity.getSupportFragmentManager(), mTitles,mMessages);

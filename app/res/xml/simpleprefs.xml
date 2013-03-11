@@ -13,5 +13,10 @@
 	<PreferenceCategory android:title="Media">
 		<EditTextPreference android:title="Slide Duration" android:summary="Duration of each slide in a photo essay" android:key="pslideduration" android:defaultValue="5" android:enabled="true"/>
 	</PreferenceCategory>
+	
+	
+	<PreferenceCategory android:title="Debug">
+		<CheckBoxPreference android:title="Disable lesson completion requirement" android:key="plessondebug"/>
+	</PreferenceCategory>
 </PreferenceScreen>
 

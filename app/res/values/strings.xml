@@ -267,4 +267,8 @@ Build number: <xliff:g id="build_number">%s</xliff:g>\n
     <string name="select_story_type">Select story type</string>
     
     <string name="button_start_my_story">START MY STORY</string>
+    
+    <string name="home_intro_button_lessons">EXPLORE LESSONS</string>
+    <string name="home_intro_button_projects">MAKE A STORY</string>
+    
 </resources>

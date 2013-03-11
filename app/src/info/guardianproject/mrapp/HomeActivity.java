@@ -1,5 +1,7 @@
 package info.guardianproject.mrapp;
 
+import info.guardianproject.mrapp.StoryTemplateChooserActivity.MyAdapter;
+import info.guardianproject.mrapp.StoryTemplateChooserActivity.MyFragment;
 import info.guardianproject.mrapp.lessons.LessonManager;
 import info.guardianproject.mrapp.model.Lesson;
 import info.guardianproject.mrapp.model.LessonGroup;
@@ -36,7 +38,9 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -44,12 +48,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.fima.cardsui.views.CardUI;
 import com.slidingmenu.lib.SlidingMenu;
+import com.viewpagerindicator.CirclePageIndicator;
 
 public class HomeActivity extends BaseActivity {
 
@@ -81,7 +87,6 @@ public class HomeActivity extends BaseActivity {
         
         // action bar stuff
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        
         
 //        // setup drawer
         SlidingMenu sm = getSlidingMenu();
@@ -136,9 +141,12 @@ public class HomeActivity extends BaseActivity {
             try {
                 if (mLoading != null && mLoading.isShowing())
                 	mLoading.dismiss();
-                
 
-            	initActivityList();
+                if (mLessonsCompleted.size() == 0 && mListProjects.size() == 0)
+                	initIntroActivityList();
+                else
+                	initActivityList();
+                
             } catch (Throwable t) {
                 Log.v(AppConstants.TAG, "loading.dismiss() problem", t);
             }
@@ -147,31 +155,22 @@ public class HomeActivity extends BaseActivity {
 	
     private void initActivityList ()
     {
+    	findViewById(R.id.llLessons).setVisibility(View.GONE);
+    	findViewById(R.id.llProjects).setVisibility(View.GONE);
     	
     	mCardView = (CardUI) findViewById(R.id.cardsview);
- 
     	mCardView.clearCards();
 		
     	mCardView.setSwipeable(false);
     	
-    	if (mLessonsCompleted.size() == 0)
-    	{
-    		String[] titles =
-    			{getString(R.string.tutorial_title_1),
-    				getString(R.string.tutorial_title_2),
-    				getString(R.string.tutorial_title_3),
-    				getString(R.string.tutorial_title_4),
-    				getString(R.string.tutorial_title_5)
-    				};
-    		String[] messages =
-    			{getString(R.string.tutorial_text_1),
-    				getString(R.string.tutorial_text_2),
-    				getString(R.string.tutorial_text_3),
-    				getString(R.string.tutorial_text_4),
-    				getString(R.string.tutorial_text_5)
-    				};
+    	
+    	for (int i = mLessonsCompleted.size()-1; i > mLessonsCompleted.size()-4 && i > -1; i--)
+        {
+
+    		Lesson lesson = mLessonsCompleted.get(i);
     		
-    		MyCardPager card = new MyCardPager(HomeActivity.this.getString(R.string.home_start_a_lesson),titles,messages,this);
+    		MyCard card = new MyCard(getString(R.string.lessons_congratulations_you_have_completed_the_lesson_),lesson.mTitle);
+    		card.setIcon(R.drawable.ic_home_lesson);
     		
     		card.setOnClickListener(new OnClickListener() {
 
@@ -182,148 +181,194 @@ public class HomeActivity extends BaseActivity {
 
     			}
     		});
-
     		mCardView.addCard(card);
     		
+    		
     	}
-    	else
+    	
+    		
+    	for (int i = mListProjects.size()-1; i > mListProjects.size()-4 && i > -1; i--)
     	{
-        	for (int i = mLessonsCompleted.size()-1; i > mLessonsCompleted.size()-4 && i > -1; i--)
-            {
+    		Project project = mListProjects.get(i);
 
-        		Lesson lesson = mLessonsCompleted.get(i);
+    		
+    		// FIXME default to use first scene
+    	    Media[] mediaList = project.getScenesAsArray()[0].getMediaAsArray();
+            
+    	    Drawable img = null;
+    	    
+            if (mediaList != null && mediaList.length > 0)    
+            {
+            	for (Media media: mediaList)
+            		if (media != null)
+            		{
+            			Bitmap bmp = getThumbnail(media);
+            			 
+            			if (bmp != null)
+            			{
+            				img = new BitmapDrawable(getResources(),bmp);
+            			
+            				break;
+            			}
+            		}
+            }
+            
+
+			if (img != null)
+			{
         		
-        		MyCard card = new MyCard(getString(R.string.lessons_congratulations_you_have_completed_the_lesson_),lesson.mTitle);
-        		card.setIcon(R.drawable.ic_home_lesson);
+        		MyCard card = new MyCard(getString(R.string.title_activity_new_story),project.getTitle());
+        		card.setImage(img);
+        		card.setId(i);
+        		card.setOnClickListener(new OnClickListener() {
+
+        			@Override
+        			public void onClick(View v) {
+        				
+	                    showProject(v.getId());
+
+        			}
+        		});
+        		
+        		mCardView.addCard(card);
+        		
+			}
+			else
+			{
+        		
+        		MyCard card = new MyCard(getString(R.string.title_activity_new_story),project.getTitle());
+        		card.setId(i);
         		
         		card.setOnClickListener(new OnClickListener() {
 
         			@Override
         			public void onClick(View v) {
-                        startActivity(new Intent(HomeActivity.this, LessonsActivity.class));
-
+	                    showProject(v.getId());
 
         			}
         		});
         		mCardView.addCard(card);
         		
         		
-        	}
-    	}
-    	
-
-    	if (mListProjects.size() == 0)
-    	{
-    		
-    		String[] titles =
-    			{getString(R.string.tutorial_title_7),
-    				getString(R.string.tutorial_title_8),
-    				getString(R.string.tutorial_title_9),
-    				getString(R.string.tutorial_title_10),
-    				getString(R.string.tutorial_title_11)
-    				};
-    		String[] messages =
-    			{getString(R.string.tutorial_text_7),
-    				getString(R.string.tutorial_text_8),
-    				getString(R.string.tutorial_text_9),
-    				getString(R.string.tutorial_text_10),
-    				getString(R.string.tutorial_text_11)
-    				};
-    		
-    		MyCardPager card = new MyCardPager(HomeActivity.this.getString(R.string.home_new_story),titles,messages,this);
-    		
-    		card.setOnClickListener(new OnClickListener() {
-
-    			@Override
-    			public void onClick(View v) {
-                    startActivity(new Intent(HomeActivity.this, StoryNewActivity.class));
-
-
-    			}
-    		});
-
-    		mCardView.addCard(card);      		
-        	
-    	}
-    	else
-    	{
-    		
-        	for (int i = mListProjects.size()-1; i > mListProjects.size()-4 && i > -1; i--)
-        	{
-        		Project project = mListProjects.get(i);
-
         		
-        		// FIXME default to use first scene
-        	    Media[] mediaList = project.getScenesAsArray()[0].getMediaAsArray();
-                
-        	    Drawable img = null;
-        	    
-                if (mediaList != null && mediaList.length > 0)    
-                {
-                	for (Media media: mediaList)
-                		if (media != null)
-                		{
-                			Bitmap bmp = getThumbnail(media);
-                			 
-                			if (bmp != null)
-                			{
-                				img = new BitmapDrawable(getResources(),bmp);
-                			
-                				break;
-                			}
-                		}
-                }
-                
-
-				if (img != null)
-				{
-	        		
-	        		MyCard card = new MyCard(getString(R.string.title_activity_new_story),project.getTitle());
-	        		card.setImage(img);
-	        		card.setId(i);
-	        		card.setOnClickListener(new OnClickListener() {
-
-	        			@Override
-	        			public void onClick(View v) {
-	        				
-		                    showProject(v.getId());
-
-	        			}
-	        		});
-	        		
-	        		mCardView.addCard(card);
-	        		
-				}
-				else
-				{
-	        		
-	        		MyCard card = new MyCard(getString(R.string.title_activity_new_story),project.getTitle());
-	        		card.setId(i);
-	        		
-	        		card.setOnClickListener(new OnClickListener() {
-
-	        			@Override
-	        			public void onClick(View v) {
-		                    showProject(v.getId());
-
-	        			}
-	        		});
-	        		mCardView.addCard(card);
-	        		
-	        		
-	        		
-				}
-                      
-        		
-        	}
+			}
+                  
+    		
     	}
-    	
 
 
 		// draw cards
 		mCardView.refresh();
 		
+		
     }
+    
+    private void initIntroActivityList ()
+    {
+      	
+		int[] titles1 =
+			{(R.string.tutorial_title_1),
+				(R.string.tutorial_title_2),
+				(R.string.tutorial_title_3),
+				(R.string.tutorial_title_4),
+				(R.string.tutorial_title_5)
+				};
+		int[] messages1 =
+			{(R.string.tutorial_text_1),
+				(R.string.tutorial_text_2),
+				(R.string.tutorial_text_3),
+				(R.string.tutorial_text_4),
+				(R.string.tutorial_text_5)
+				};
+		
+
+    	
+
+		MyAdapter adapter = new MyAdapter(getSupportFragmentManager(), titles1,messages1);
+		ViewPager pager = ((ViewPager)findViewById(R.id.pager1));
+		
+		pager.setId((int)(Math.random()*10000));
+		pager.setOffscreenPageLimit(5);
+			
+		pager.setAdapter(adapter);
+			 
+		//Bind the title indicator to the adapter
+         CirclePageIndicator indicator = (CirclePageIndicator)findViewById(R.id.circles1);
+         indicator.setViewPager(pager);
+         indicator.setSnap(true);
+         
+         
+         final float density = getResources().getDisplayMetrics().density;
+         
+         indicator.setRadius(5 * density);
+         indicator.setFillColor(0xFFFF0000);
+         indicator.setPageColor(0xFFaaaaaa);
+         //indicator.setStrokeColor(0xFF000000);
+         //indicator.setStrokeWidth(2 * density);
+		    		
+         
+         View button = findViewById(R.id.cardButton1);
+         button.setOnClickListener(new OnClickListener()
+         {
+
+			@Override
+			public void onClick(View v) {
+				
+				Intent intent = new Intent(HomeActivity.this, LessonsActivity.class);
+				startActivity(intent);
+			}
+        	 
+         });
+    	
+    		
+    		int[] titles2 =
+			{(R.string.tutorial_title_7),
+				(R.string.tutorial_title_8),
+				(R.string.tutorial_title_9),
+				(R.string.tutorial_title_10),
+				(R.string.tutorial_title_11)
+				};
+		int[] messages2 =
+			{(R.string.tutorial_text_7),
+				(R.string.tutorial_text_8),
+				(R.string.tutorial_text_9),
+				(R.string.tutorial_text_10),
+				(R.string.tutorial_text_11)
+				};
+		
+		MyAdapter adapter2 = new MyAdapter(getSupportFragmentManager(), titles2,messages2);
+		ViewPager pager2 = ((ViewPager)findViewById(R.id.pager2));
+		
+		pager2.setId((int)(Math.random()*10000));
+		pager2.setOffscreenPageLimit(5);
+			
+		pager2.setAdapter(adapter2);
+			 
+		//Bind the title indicator to the adapter
+         CirclePageIndicator indicator2 = (CirclePageIndicator)findViewById(R.id.circles2);
+         indicator2.setViewPager(pager2);
+         indicator2.setSnap(true);
+      
+         indicator2.setRadius(5 * density);
+         indicator2.setFillColor(0xFFFF0000);
+         indicator2.setPageColor(0xFFaaaaaa);
+         //indicator.setStrokeColor(0xFF000000);
+         //indicator.setStrokeWidth(2 * density);
+	
+         button = findViewById(R.id.cardButton2);
+         button.setOnClickListener(new OnClickListener()
+         {
+
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent(HomeActivity.this, StoryNewActivity.class);
+				startActivity(intent);
+				
+			}
+        	 
+         });
+    }
+    
     
     private void showProject (int id)
     {
@@ -616,6 +661,70 @@ public class HomeActivity extends BaseActivity {
 			finish();
 			
 		}
+	}
+	
+	public class MyAdapter extends FragmentPagerAdapter {
+		 
+		 int[] mMessages;
+		 int[] mTitles;
+		 
+	        public MyAdapter(FragmentManager fm, int[] titles, int[] messages) {
+	            super(fm);
+	            mTitles = titles;
+	            mMessages = messages;
+	        }
+
+	        @Override
+	        public int getCount() {
+	            return mMessages.length;
+	        }
+
+	        @Override
+	        public Fragment getItem(int position) {
+	        	Bundle bundle = new Bundle();
+	        	bundle.putString("title",getString(mTitles[position]));
+	        	bundle.putString("msg", getString(mMessages[position]));
+	        	
+	        	Fragment f = new MyFragment();
+	        	f.setArguments(bundle);
+	        	
+	            return f;
+	        }
+	    }
+	
+	public class MyFragment extends Fragment {
+	
+		String mMessage;
+		String mTitle;
+		
+		 /**
+       * When creating, retrieve this instance's number from its arguments.
+       */
+      @Override
+      public void onCreate(Bundle savedInstanceState) {
+          super.onCreate(savedInstanceState);
+
+          mTitle = getArguments().getString("title");
+          mMessage = getArguments().getString("msg");
+      }
+
+      /**
+       * The Fragment's UI is just a simple text view showing its
+       * instance number.
+       */
+      @Override
+      public View onCreateView(LayoutInflater inflater, ViewGroup container,
+              Bundle savedInstanceState) {
+          
+          ViewGroup root = (ViewGroup) inflater.inflate(R.layout.card_pager_textview, null);
+          
+          ((TextView)root.findViewById(R.id.title)).setText(mTitle);
+          
+          ((TextView)root.findViewById(R.id.description)).setText(mMessage);
+          
+          return root;
+      }
+	
 	}
 
     
