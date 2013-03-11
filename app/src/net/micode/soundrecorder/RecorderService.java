@@ -186,19 +186,26 @@ public class RecorderService extends Service implements MediaRecorder.OnErrorLis
             }
 
             mRecorder = new MediaRecorder();
-            mRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
+            mRecorder.setAudioSource(MediaRecorder.AudioSource.DEFAULT);
+            
             if (outputfileformat == MediaRecorder.OutputFormat.THREE_GPP) {
                 mRemainingTimeCalculator.setBitRate(SoundRecorder.BITRATE_3GPP);
-                mRecorder.setAudioSamplingRate(highQuality ? 44100 : 22050);
+              //
+                mRecorder.setAudioChannels(1);
+                mRecorder.setAudioSamplingRate(44100);
+                mRecorder.setAudioEncodingBitRate(SoundRecorder.BITRATE_3GPP);
                 mRecorder.setOutputFormat(outputfileformat);
                 mRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AAC);
             } else {
                 mRemainingTimeCalculator.setBitRate(SoundRecorder.BITRATE_AMR);
                 mRecorder.setAudioSamplingRate(highQuality ? 16000 : 8000);
+                
                 mRecorder.setOutputFormat(outputfileformat);
                 mRecorder.setAudioEncoder(highQuality ? MediaRecorder.AudioEncoder.AMR_WB
                         : MediaRecorder.AudioEncoder.AMR_NB);
             }
+            
+            
             mRecorder.setOutputFile(path);
             mRecorder.setOnErrorListener(this);
 
