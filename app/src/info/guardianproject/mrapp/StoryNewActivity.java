@@ -76,29 +76,23 @@ public class StoryNewActivity extends BaseActivity {
         	
         });
         
-        ((Button) findViewById(R.id.buttonSimpleStory)).setOnClickListener(new OnClickListener() {
+        ((Button) findViewById(R.id.buttonStartStory)).setOnClickListener(new OnClickListener() {
             
             @Override
             public void onClick(View v) {
             	
             	if (formValid()) {
-            	    launchSimpleStory();
+
+                	RadioGroup view = ((RadioGroup)findViewById(R.id.radioGroupStoryLevel));
+                	if (view.getCheckedRadioButtonId() == R.id.radioStoryType0)
+                		launchSimpleStory();
+                	else
+                		launchTemplateChooser();
             	}
             	
             }
         });
         
-        ((Button) findViewById(R.id.buttonChooseTemplate)).setOnClickListener(new OnClickListener() {
-            
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(getBaseContext(), StoryTemplateChooserActivity.class);
-                if (formValid()) {
-                    i.putExtra("project_title", editTextStoryName.getText().toString());
-                    startActivity(i);
-                }
-            }
-        });
     }
     
     private boolean formValid ()
@@ -116,6 +110,51 @@ public class StoryNewActivity extends BaseActivity {
     	}
     }
     
+    private int getSelectedStoryMode ()
+    {
+    	   int checkedId = rGroup.getCheckedRadioButtonId();
+    	   int resultMode = -1;
+    	   
+    	   switch (checkedId)
+    	   {
+    	   case R.id.radioStoryType0:
+    		   resultMode = Project.STORY_TYPE_VIDEO;
+    		   break;
+    	   case R.id.radioStoryType1:
+    		   resultMode = Project.STORY_TYPE_PHOTO;
+    		   break;
+    		   
+    	   case R.id.radioStoryType2:
+    		   resultMode = Project.STORY_TYPE_AUDIO;
+    		   break;
+    		   
+    	   case R.id.radioStoryType3:
+    		   resultMode = Project.STORY_TYPE_ESSAY;
+    		   break;
+    		   
+    	   }
+    	   
+    	   return resultMode;
+    }
+    		
+    private void launchTemplateChooser ()
+    {
+        int storyMode = getSelectedStoryMode();
+
+        String templateJsonPath = Project.getSimpleTemplateForMode(storyMode);
+        
+        Intent i = new Intent(getBaseContext(), StoryTemplateChooserActivity.class);
+
+        i.putExtra("project_title", editTextStoryName.getText().toString());
+        i.putExtra("story_mode", storyMode);
+        i.putExtra("story_mode_template", templateJsonPath);
+        
+        startActivity(i);
+        finish();
+    }
+    
+   
+    
     private void launchSimpleStory() {
         String pName = editTextStoryName.getText().toString();
         int clipCount = DEFAULT_CLIP_COUNT;
@@ -129,42 +168,9 @@ public class StoryNewActivity extends BaseActivity {
         scene.setProjectId(project.getId());
         scene.save();
     
-        int checkedId = rGroup.getCheckedRadioButtonId();
-        
-        String templateJsonPath = null;
-        int storyMode = -1;
-        String lang = StoryMakerApp.getCurrentLocale().getLanguage();
-        
-        
-        if (checkedId == R.id.radioStoryType0)
-        {
-            //video
-            templateJsonPath = "story/templates/" + lang + "/video_simple.json";
-            storyMode = Project.STORY_TYPE_VIDEO;
-            
-        }
-        else if (checkedId == R.id.radioStoryType1)
-        {
-
-            //photo
-            storyMode = Project.STORY_TYPE_PHOTO;
-            templateJsonPath = "story/templates/" + lang + "/photo_simple.json";
-        }
-        else if (checkedId == R.id.radioStoryType2)
-        {
-
-            //audio
-            storyMode = Project.STORY_TYPE_AUDIO;
-            templateJsonPath = "story/templates/" + lang + "/audio_simple.json";
-        }
-        else if (checkedId == R.id.radioStoryType3)
-        {
-            //essay
-            storyMode = Project.STORY_TYPE_ESSAY;
-            templateJsonPath = "story/templates/" + lang + "/essay_simple.json";
-            
-        }
-        
+        int storyMode = getSelectedStoryMode();
+        String templateJsonPath = Project.getSimpleTemplateForMode(storyMode);
+       
         project.setStoryType(storyMode);
         project.save();
         

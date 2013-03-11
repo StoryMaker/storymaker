@@ -34,39 +34,21 @@ public class AddClipsFragment extends Fragment {
     View mView = null;
     public AddClipsPagerAdapter mAddClipsPagerAdapter;
     private FragmentManager mFm;
-    private String mTemplatePath;
     private Template mTemplate;
     private EditorBaseActivity mActivity;
     private int mScene;
 
-    public AddClipsFragment(int layout, FragmentManager fm, String templatePath, int scene, EditorBaseActivity activity)
+    public AddClipsFragment(int layout, FragmentManager fm, Template template, int scene, EditorBaseActivity activity)
             throws IOException, JSONException {
         this.layout = layout;
         mFm = fm;
-        mTemplatePath = templatePath;
+        mTemplate = template;
         mActivity = activity;
         mScene = scene;
         
-        initTemplate();
-
         mAddClipsPagerAdapter = new AddClipsPagerAdapter(fm, mTemplate, scene);
     }
     
-    public void initTemplate ()  throws IOException, JSONException 
-    {
-     //   int count = mActivity.mMPM.mScene.getClipCount();
-        
-        mTemplate = new Template();
-        mTemplate.parseAsset(mActivity.getBaseContext(), mTemplatePath);
-
-        // FIXME not sure the point of this yet, needs update to multi scene templates
-//        while (mTemplate.getScenes().size() < count)
-//        {
-//            Clip clip = new Clip();
-//            clip.setDefaults();
-//            mTemplate.addScene(clip);
-//        }
-    }
     
     public Template getTemplate ()
     {

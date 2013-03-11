@@ -1,0 +1,25 @@
+{
+    "scenes": [
+        {
+            "title": "what",
+            "description": "story_type_news_text4"
+        },
+        {
+            "title": "where",
+            "description": "story_type_news_text5"
+        },
+        {
+            "title": "who",
+            "description": "story_type_news_text6"
+        },
+        {
+            "title": "why",
+            "description": "story_type_news_text7"
+        },
+        {
+            "title": "how",
+            "description": "story_type_news_text8"
+        }
+    ], 
+    "title": "story_type_news_title"
+}

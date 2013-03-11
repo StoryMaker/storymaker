@@ -3,103 +3,72 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="10dp" >
+    android:padding="10dp"
+         android:background="#eaeae5"
+     >
 
     <LinearLayout
         android:id="@+id/llStoryType"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp" >
+        android:layout_marginTop="10dp"
+      android:background="#ffffff"
+      android:padding="6dp"
+    android:orientation="vertical"
+         >
 
         <TextView
             android:id="@+id/textView1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Chose a story type."
+            android:text="@string/select_story_type"
             android:textAppearance="?android:attr/textAppearanceLarge" />
 
+ <android.support.v4.view.ViewPager
+        android:layout_width="match_parent" 
+        android:id="@+id/pager"
+        android:layout_height="200dp"
+        android:layout_weight="1"
+        />
+   <com.viewpagerindicator.CirclePageIndicator
+            android:id="@+id/circles"
+            android:layout_height="wrap_content"
+            android:layout_width="fill_parent" />
+
     </LinearLayout>
-
-    <TableLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
-
-        <TableRow
-            android:id="@+id/tableRow1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" >
-
-            <Button
-                android:id="@+id/btnEvent"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/story_type_event_title"
-                android:textAppearance="?android:attr/textAppearanceSmallInverse" />
-
-            <Button
-                android:id="@+id/btnBreakingNews"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/story_type_news_title"
-                android:textAppearance="?android:attr/textAppearanceSmallInverse" />
-
-            <Button
-                android:id="@+id/btnIssue"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/story_type_issue_title"
-                android:textAppearance="?android:attr/textAppearanceSmallInverse" />
-
-            <Button
-                android:id="@+id/btnFeature"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/story_type_profile_title"
-                android:textAppearance="?android:attr/textAppearanceSmallInverse" />
-
-
-        </TableRow>
-    </TableLayout>
-
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingTop="10dp"
-        android:text="Chose a level."
-        android:textAppearance="?android:attr/textAppearanceLarge" />
-
+   
     <LinearLayout
         android:id="@+id/LinearLayout02"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp" >
 
-        <Button
-            android:id="@+id/Button03"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Basic"
-            android:textAppearance="?android:attr/textAppearanceSmallInverse" />
+         <RadioGroup
+        android:id="@+id/radioGroupStoryLevel"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal" >
 
-        <Button
-            android:id="@+id/Button04"
+        <RadioButton
+            android:id="@+id/radioStoryType0"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Expert"
-            android:textAppearance="?android:attr/textAppearanceSmallInverse" />
+            
+            android:text="Basic, 3 scenes"
+            android:checked="true" />
+
+        <RadioButton
+            android:id="@+id/radioStoryType1"
+              android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Expert, 5 scenes"
+            />
+
+    </RadioGroup>
     </LinearLayout>
 
-    <ListView
-        android:id="@+id/listView1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
-    </ListView>
+  
 
 </LinearLayout>

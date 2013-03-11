@@ -7,6 +7,7 @@ import info.guardianproject.mrapp.model.Media;
 import info.guardianproject.mrapp.model.Project;
 import info.guardianproject.mrapp.server.LoginActivity;
 import info.guardianproject.mrapp.ui.MyCard;
+import info.guardianproject.mrapp.ui.MyCardPager;
 import info.guardianproject.onionkit.ui.OrbotHelper;
 
 import java.io.File;
@@ -35,6 +36,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -89,6 +91,7 @@ public class HomeActivity extends BaseActivity {
         sm.setBehindWidthRes(R.dimen.slidingmenu_offset);
 
         Eula.show(this);
+        
         
        
     }
@@ -153,9 +156,22 @@ public class HomeActivity extends BaseActivity {
     	
     	if (mLessonsCompleted.size() == 0)
     	{
-    		MyCard card = new MyCard(HomeActivity.this.getString(R.string.menu_lessons),HomeActivity.this.getString(R.string.home_start_a_lesson));
-    		card.setIcon(R.drawable.ic_home_lesson);
+    		String[] titles =
+    			{getString(R.string.tutorial_title_1),
+    				getString(R.string.tutorial_title_2),
+    				getString(R.string.tutorial_title_3),
+    				getString(R.string.tutorial_title_4),
+    				getString(R.string.tutorial_title_5)
+    				};
+    		String[] messages =
+    			{getString(R.string.tutorial_text_1),
+    				getString(R.string.tutorial_text_2),
+    				getString(R.string.tutorial_text_3),
+    				getString(R.string.tutorial_text_4),
+    				getString(R.string.tutorial_text_5)
+    				};
     		
+    		MyCardPager card = new MyCardPager(HomeActivity.this.getString(R.string.home_start_a_lesson),titles,messages,this);
     		
     		card.setOnClickListener(new OnClickListener() {
 
@@ -169,25 +185,6 @@ public class HomeActivity extends BaseActivity {
 
     		mCardView.addCard(card);
     		
-    		card = new MyCard(HomeActivity.this.getString(R.string.tutorial_title_1),HomeActivity.this.getString(R.string.tutorial_text_1));
-    		card.setIcon(R.drawable.ic_home_lesson);
-
-    		mCardView.addCardToLastStack(card);
-    		
-    		card = new MyCard(HomeActivity.this.getString(R.string.tutorial_title_2),HomeActivity.this.getString(R.string.tutorial_text_2));
-    		card.setIcon(R.drawable.ic_home_lesson);
-
-    		mCardView.addCardToLastStack(card);
-    		
-    		
-    		card = new MyCard(HomeActivity.this.getString(R.string.tutorial_title_3),HomeActivity.this.getString(R.string.tutorial_text_3));
-    		card.setIcon(R.drawable.ic_home_lesson);
-
-    		mCardView.addCardToLastStack(card);
-    		
-    		
-    		       		
-        	
     	}
     	else
     	{
@@ -217,7 +214,24 @@ public class HomeActivity extends BaseActivity {
 
     	if (mListProjects.size() == 0)
     	{
-    		MyCard card = new MyCard(HomeActivity.this.getString(R.string.menu_projects),HomeActivity.this.getString(R.string.home_new_story));
+    		
+    		String[] titles =
+    			{getString(R.string.tutorial_title_7),
+    				getString(R.string.tutorial_title_8),
+    				getString(R.string.tutorial_title_9),
+    				getString(R.string.tutorial_title_10),
+    				getString(R.string.tutorial_title_11)
+    				};
+    		String[] messages =
+    			{getString(R.string.tutorial_text_7),
+    				getString(R.string.tutorial_text_8),
+    				getString(R.string.tutorial_text_9),
+    				getString(R.string.tutorial_text_10),
+    				getString(R.string.tutorial_text_11)
+    				};
+    		
+    		MyCardPager card = new MyCardPager(HomeActivity.this.getString(R.string.home_new_story),titles,messages,this);
+    		
     		card.setOnClickListener(new OnClickListener() {
 
     			@Override
@@ -227,26 +241,8 @@ public class HomeActivity extends BaseActivity {
 
     			}
     		});
-    		mCardView.addCard(card);
-    		
-    		card = new MyCard(HomeActivity.this.getString(R.string.tutorial_title_7),HomeActivity.this.getString(R.string.tutorial_text_7));
-    		card.setIcon(R.drawable.ic_home_project);
 
-    		mCardView.addCardToLastStack(card);
-    		
-    		
-    		card = new MyCard(HomeActivity.this.getString(R.string.tutorial_title_8),HomeActivity.this.getString(R.string.tutorial_text_8));
-    		card.setIcon(R.drawable.ic_home_project);
-
-    		mCardView.addCardToLastStack(card);
-    		
-    		
-    		card = new MyCard(HomeActivity.this.getString(R.string.tutorial_title_9),HomeActivity.this.getString(R.string.tutorial_text_9));
-    		card.setIcon(R.drawable.ic_home_project);
-
-    		mCardView.addCardToLastStack(card);
-    		
-    		       		
+    		mCardView.addCard(card);      		
         	
     	}
     	else
@@ -334,37 +330,45 @@ public class HomeActivity extends BaseActivity {
 
 		Project project = mListProjects.get(id);
 		
-    	Intent intent = new Intent(this, SceneEditorActivity.class);
+		Intent intent = new Intent(this, SceneEditorActivity.class);
+    	
+		if (project.getScenesAsArray().length > 1) {
+			
+		    intent = new Intent(this, StoryTemplateActivity.class);
+		    
+		    
+	    }
+
     	intent.putExtra("story_mode", project.getStoryType());
     	intent.putExtra("pid", project.getId());
     	intent.putExtra("title", project.getTitle());
     	
-    	String templateJsonPath = null;
     	String lang = StoryMakerApp.getCurrentLocale().getLanguage();
+    	String templateJsonPath = "story/templates/" + lang + "/simple/";
     	
     	if (project.getStoryType() == Project.STORY_TYPE_VIDEO)
     	{
     		//video
-    		templateJsonPath = "story/templates/" + lang + "/video_simple.json";
+    		templateJsonPath += "video_simple.json";
     	}
     	else if (project.getStoryType() == Project.STORY_TYPE_PHOTO)
     	{
 
     		//photo
     	
-    		templateJsonPath = "story/templates/" + lang + "/photo_simple.json";
+    		templateJsonPath += "photo_simple.json";
     	}
     	else if (project.getStoryType() == Project.STORY_TYPE_AUDIO)
     	{
 
     		//audio
     	
-    		templateJsonPath = "story/templates/" + lang + "/audio_simple.json";
+    		templateJsonPath += "audio_simple.json";
     	}
     	else if (project.getStoryType() == Project.STORY_TYPE_ESSAY)
     	{
     		//essay
-    		templateJsonPath = "story/templates/" + lang + "/essay_simple.json";
+    		templateJsonPath += "essay_simple.json";
     		
     	}
     	
