@@ -10,3 +10,6 @@
 [submodule "external/SlidingMenu"]
 	path = external/SlidingMenu
 	url = git@github.com:vitriolix/SlidingMenu.git
+[submodule "external/cardsui-for-android"]
+	path = external/cardsui-for-android
+	url = https://github.com/nadavfima/cardsui-for-android.git
