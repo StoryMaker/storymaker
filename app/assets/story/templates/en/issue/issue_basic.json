@@ -1,0 +1,17 @@
+{
+    "scenes": [
+        {
+            "title": "how",
+            "description": "story_type_issue_text1"
+        },
+        {
+            "title": "who",
+            "description": "story_type_issue_text2"
+        },
+        {
+            "title": "what",
+            "description": "story_type_issue_text3"
+        }
+    ], 
+    "title": "story_type_issue_title"
+}

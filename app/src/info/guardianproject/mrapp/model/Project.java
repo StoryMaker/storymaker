@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import info.guardianproject.mrapp.StoryMakerApp;
 import info.guardianproject.mrapp.db.ProjectsProvider;
 import info.guardianproject.mrapp.db.StoryMakerDB;
 import android.content.ContentValues;
@@ -288,5 +289,31 @@ public class Project {
         this.templatePath = template;
     }
     
+    public static String getSimpleTemplateForMode (int storyMode)
+    {
+    	 String lang = StoryMakerApp.getCurrentLocale().getLanguage();
+
+         String templateJsonPath = "story/templates/" + lang + "/simple/";
+         
+         switch (storyMode)
+         {
+         
+         case Project.STORY_TYPE_VIDEO:
+             templateJsonPath += "video_simple.json";
+             break;
+         case Project.STORY_TYPE_AUDIO:
+             templateJsonPath += "audio_simple.json";
+             break;
+         case Project.STORY_TYPE_PHOTO:
+             templateJsonPath += "photo_simple.json";
+             break;
+         case Project.STORY_TYPE_ESSAY:
+             templateJsonPath += "essay_simple.json";
+             break;
+             
+         }
+         
+         return templateJsonPath;
+    }
     
 }

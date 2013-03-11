@@ -82,9 +82,9 @@ public class SoundRecorder extends Activity implements Button.OnClickListener,
 
     private static final String FILE_EXTENSION_3GPP = ".3gpp";
 
-    public static final int BITRATE_AMR = 2 * 1024 * 8; // bits/sec
+    public static final int BITRATE_AMR = 16 * 1024; // bits/sec
 
-    public static final int BITRATE_3GPP = 20 * 1024 * 8; // bits/sec
+    public static final int BITRATE_3GPP = 320 * 1024; // bits/sec
 
     private static final int SEEK_BAR_MAX = 10000;
 

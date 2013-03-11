@@ -36,4 +36,9 @@ public class Scene {
         
         mArrayClips.add(clip);
     }
+    
+    public void setClips (ArrayList<Clip> clips)
+    {
+    	mArrayClips = clips;
+    }
 }
