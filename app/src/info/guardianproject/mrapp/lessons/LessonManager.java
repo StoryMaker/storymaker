@@ -223,6 +223,8 @@ public class LessonManager implements Runnable {
 		if (mHttpClient == null)
 			mHttpClient = new StrongHttpsClient(mContext);
 		
+		mHttpClient.getStrongTrustManager().setNotifyVerificationSuccess(true);
+		
 		return mHttpClient;
 	}
 	
@@ -372,6 +374,7 @@ public class LessonManager implements Runnable {
 		catch (Exception ioe)
 		{
 			Log.e(AppConstants.TAG,"error loading lessons from server: " + sUrlLesson,ioe);
+			
 			if (mListener != null)
 				mListener.errorLoadingLessons(ioe.getLocalizedMessage());
 			
