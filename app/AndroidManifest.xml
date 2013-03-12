@@ -54,6 +54,7 @@
             android:configChanges="locale"
             android:label="@string/app_name"
             android:launchMode="singleTop"
+            android:screenOrientation="portrait" 
             
              >
             <intent-filter android:label="@string/app_name" >
