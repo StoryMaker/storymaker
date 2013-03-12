@@ -1,6 +1,3 @@
-[submodule "external/HoloEverywhere"]
-	path = external/HoloEverywhere
-	url = git://github.com/ChristopheVersieux/HoloEverywhere.git
 [submodule "external/OnionKit"]
 	path = external/OnionKit
 	url = git://github.com/guardianproject/OnionKit.git
@@ -16,3 +13,6 @@
 [submodule "external/Android-ViewPagerIndicator"]
 	path = external/Android-ViewPagerIndicator
 	url = https://github.com/JakeWharton/Android-ViewPagerIndicator.git
+[submodule "external/HoloEverywhere"]
+	path = external/HoloEverywhere
+	url = git://github.com/ChristopheVersieux/HoloEverywhere.git
