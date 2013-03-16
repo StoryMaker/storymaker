@@ -168,10 +168,14 @@ $.ajax({
  		 		
  		 	}
  		 	else
- 		 	 	msg = 'Please try again';
+	 		{
+	 			msg = 'Incorrect. Please try again!';
+	 		}
+	 		
+	 		window.alert(msg);
+	 		
+ 		 		
  		 	 	
- 		 	alert(msg);
- 		 	
   			return false;
   		
 		});

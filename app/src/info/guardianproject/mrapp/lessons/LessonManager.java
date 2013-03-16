@@ -82,7 +82,7 @@ public class LessonManager implements Runnable {
 		mSubFolder = subFolder;
 	}
 	
-	public void setListener (LessonManagerListener listener)
+	public void setLessonManagerListener (LessonManagerListener listener)
 	{
 		mListener = listener;
 	}
@@ -223,7 +223,7 @@ public class LessonManager implements Runnable {
 		if (mHttpClient == null)
 			mHttpClient = new StrongHttpsClient(mContext);
 		
-		mHttpClient.getStrongTrustManager().setNotifyVerificationSuccess(true);
+		//mHttpClient.getStrongTrustManager().setNotifyVerificationSuccess(true);
 		
 		return mHttpClient;
 	}

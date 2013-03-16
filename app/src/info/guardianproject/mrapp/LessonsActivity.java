@@ -5,6 +5,7 @@ import info.guardianproject.mrapp.lessons.WebViewSetupJB;
 
 import org.holoeverywhere.LayoutInflater;
 import org.holoeverywhere.app.Fragment;
+import org.holoeverywhere.app.ProgressDialog;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -51,14 +52,11 @@ public class LessonsActivity extends BaseActivity implements ActionBar.TabListen
     @Override
     public void onCreate(Bundle savedInstanceState) {
      
-        requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
         
         super.onCreate(savedInstanceState);
            
         setContentView(R.layout.activity_lessons);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        
-        setSupportProgressBarIndeterminateVisibility(false);
         
     	mListView = new LessonListView(this, this);
         
@@ -97,6 +95,8 @@ public class LessonsActivity extends BaseActivity implements ActionBar.TabListen
                             .setText(mSectionsPagerAdapter.getPageTitle(i))
                             .setTabListener(this));
         }
+        
+        
     }
 
     @Override
@@ -138,12 +138,18 @@ public class LessonsActivity extends BaseActivity implements ActionBar.TabListen
 		}
     }
     
+    public ProgressDialog mProgressLoading;
+    
     private void updateLessons ()
     {
-    	setSupportProgressBarIndeterminateVisibility(true);
-    	StoryMakerApp.getLessonManager().updateLessonsFromRemote();
+
+    	
     	
 
+    	mProgressLoading = ProgressDialog.show(this, null, "Loading Lessons...",true,true);
+        
+    	StoryMakerApp.getLessonManager().updateLessonsFromRemote();
+    	
     }
 
 

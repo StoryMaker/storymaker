@@ -88,21 +88,10 @@ public class HomeActivity extends BaseActivity {
         // action bar stuff
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         
-//        // setup drawer
-        SlidingMenu sm = getSlidingMenu();
-        sm.setShadowWidthRes(R.dimen.shadow_width);
-        sm.setShadowDrawable(R.drawable.shadow);
-//        sm.setBehindOffsetRes(R.dimen.slidingmenu_offset);
-        sm.setBehindWidthRes(R.dimen.slidingmenu_offset);
-
         Eula.show(this);
         
-        
-       
     }
     
-    
-        
     
     
     @Override
@@ -125,9 +114,11 @@ public class HomeActivity extends BaseActivity {
         protected Integer doInBackground(String... params) {
             try {
             	
+                
             	mLessonsCompleted = getLessonsCompleted(HomeActivity.this);
             	mListProjects = Project.getAllAsList(HomeActivity.this);
 
+            	
                 return null;
             } catch (Exception e) {
             	Log.e(AppConstants.TAG,"error loading home view",e);
@@ -139,6 +130,8 @@ public class HomeActivity extends BaseActivity {
         protected void onPostExecute(Integer result) {
             super.onPostExecute(result);
             try {
+            	
+
                 if (mLoading != null && mLoading.isShowing())
                 	mLoading.dismiss();
 
@@ -155,8 +148,8 @@ public class HomeActivity extends BaseActivity {
 	
     private void initActivityList ()
     {
-    	findViewById(R.id.llLessons).setVisibility(View.GONE);
-    	findViewById(R.id.llProjects).setVisibility(View.GONE);
+
+	
     	
     	mCardView = (CardUI) findViewById(R.id.cardsview);
     	mCardView.clearCards();
@@ -265,6 +258,8 @@ public class HomeActivity extends BaseActivity {
     
     private void initIntroActivityList ()
     {
+      	setContentView(R.layout.activity_home_intro);
+      	initSlidingMenu();
       	
 		int[] titles1 =
 			{(R.string.tutorial_title_1),
@@ -556,7 +551,7 @@ public class HomeActivity extends BaseActivity {
 
         if (item.getItemId() == android.R.id.home)
         {
-            toggle();
+        	mSlidingMenu.toggle();
         }
         else if (item.getItemId() == R.id.menu_settings)
         {

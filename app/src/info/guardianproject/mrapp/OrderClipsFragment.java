@@ -64,6 +64,11 @@ public class OrderClipsFragment extends Fragment {
      */
     protected DraggableGridView mOrderClipsDGV;
 
+    public OrderClipsFragment()
+    {
+    	
+    }
+    
     public OrderClipsFragment(int layout, EditorBaseActivity activity)
             throws IOException, JSONException {
         this.layout = layout;
