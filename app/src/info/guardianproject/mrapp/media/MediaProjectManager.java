@@ -353,6 +353,7 @@ public class MediaProjectManager implements MediaManager {
     	    mMediaList.add(null);
     	}
 
+    	/*
 		if (mimeType.startsWith("audio") && mMediaList.get(clipIndex) != null 
 		        && (!mMediaList.get(mMediaList.size()-1).mMediaDescOriginal.mimeType.equals(mimeType)))
 		{
@@ -371,7 +372,7 @@ public class MediaProjectManager implements MediaManager {
 			
 		}
 		else
-		{
+		{*/
 			//its the first clip and/or the previous item is the same type as this, or this is not an audio clip
     		
 			MediaClip mClip = new MediaClip();
@@ -381,7 +382,7 @@ public class MediaProjectManager implements MediaManager {
 			
 			((SceneEditorActivity)mActivity).refreshClipPager(); // FIXME we should handle this by emitting a change event directly
 
-		}
+		//}
 		
 		mOut = null;
     	
