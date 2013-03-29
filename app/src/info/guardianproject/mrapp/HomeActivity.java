@@ -16,6 +16,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -156,6 +158,7 @@ public class HomeActivity extends BaseActivity {
 		
     	mCardView.setSwipeable(false);
     	
+    	ArrayList<ActivityEntry> alActivity = new ArrayList<ActivityEntry>();
     	
     	for (int i = mLessonsCompleted.size()-1; i > mLessonsCompleted.size()-4 && i > -1; i--)
         {
@@ -174,7 +177,13 @@ public class HomeActivity extends BaseActivity {
 
     			}
     		});
-    		mCardView.addCard(card);
+    		
+    		Date cardDate = new Date();
+    		if (lesson.mStatusModified != null)
+    			cardDate = lesson.mStatusModified;
+    		
+    		ActivityEntry ae = new ActivityEntry(card,cardDate);
+    		alActivity.add(ae);
     		
     		
     	}
@@ -183,7 +192,6 @@ public class HomeActivity extends BaseActivity {
     	for (int i = mListProjects.size()-1; i > mListProjects.size()-4 && i > -1; i--)
     	{
     		Project project = mListProjects.get(i);
-
     		
     		// FIXME default to use first scene
     	    Media[] mediaList = project.getScenesAsArray()[0].getMediaAsArray();
@@ -223,7 +231,10 @@ public class HomeActivity extends BaseActivity {
         			}
         		});
         		
-        		mCardView.addCard(card);
+
+        		Date cardDate = new Date(new File(mediaList[0].getPath()).lastModified());
+        		ActivityEntry ae = new ActivityEntry(card,cardDate);
+        		alActivity.add(ae);
         		
 			}
 			else
@@ -242,19 +253,47 @@ public class HomeActivity extends BaseActivity {
         		});
         		mCardView.addCard(card);
         		
+        		Date cardDate = new Date();
+        		
+        		if (mediaList.length > 0)
+        			cardDate = new Date(new File(mediaList[0].getPath()).lastModified());
+        			
+        		ActivityEntry ae = new ActivityEntry(card,cardDate);
+        		alActivity.add(ae);
         		
         		
 			}
                   
     		
     	}
+    	
+    	Collections.sort(alActivity);
 
-
+    	for (ActivityEntry ae : alActivity)
+    		mCardView.addCard(ae.card);
+    	
 		// draw cards
 		mCardView.refresh();
 		
 		
     }
+    
+    public static class ActivityEntry implements Comparable<HomeActivity.ActivityEntry> {
+
+    	  public Date dateTime;
+    	  public MyCard card;
+    	  
+    	  public ActivityEntry (MyCard card, Date dateTime)
+    	  {
+    		  this.card = card;
+    		  this.dateTime = dateTime;
+    	  }
+
+    	  @Override
+    	  public int compareTo(ActivityEntry o) {
+    	    return dateTime.compareTo(o.dateTime)*-1;//let's flip the compare output around
+    	  }
+    	}
     
     private void initIntroActivityList ()
     {
