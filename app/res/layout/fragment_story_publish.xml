@@ -73,7 +73,6 @@
         android:layout_marginTop="5dp"
         android:background="@android:color/darker_gray" />
 
-    <!-- 
     <TextView
         android:id="@+id/textViewSection"
         android:layout_width="wrap_content"
@@ -90,6 +89,7 @@
         android:id="@+id/spinnerSections"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/divider2"
         android:layout_alignParentRight="true"
         android:layout_below="@+id/divider1"
         android:layout_toRightOf="@+id/textViewSection"
@@ -122,13 +122,11 @@
         android:id="@+id/spinnerTopics"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/divider3"
         android:layout_alignParentRight="true"
         android:layout_below="@id/divider2"
-        android:paddingRight="10dp" 
-       android:layout_toRightOf="@+id/textViewTopics"
-        
-        />
- 
+        android:layout_toRightOf="@+id/textViewTopics"
+        android:paddingRight="10dp" />
     
     <View
         android:id="@+id/divider3"
@@ -138,8 +136,7 @@
         android:layout_marginBottom="5dp"
         android:layout_marginTop="5dp"
         android:background="@android:color/darker_gray" />
- -->
- <!-- 
+ 
     <TextView
         android:id="@+id/textViewLocation"
         android:layout_width="wrap_content"
@@ -173,7 +170,7 @@
         android:layout_marginBottom="5dp"
         android:layout_marginTop="5dp"
         android:background="@android:color/darker_gray" />
--->
+<!-- 
     <TextView
         android:id="@+id/editTextShare"
         android:layout_width="wrap_content"
@@ -210,6 +207,7 @@
         android:textAllCaps="false"
         android:textOff="@string/publish_youtube"
         android:textOn="@string/publish_youtube" />
+        -->
 <!-- 
     <ToggleButton
         android:id="@+id/toggleButtonVimeo"
@@ -243,7 +241,6 @@
         android:textAllCaps="false"
         android:textOff=""
         android:textOn="" />
- -->
 
 
     <View
@@ -254,6 +251,7 @@
         android:layout_marginBottom="5dp"
         android:layout_marginTop="5dp"
         android:background="@android:color/darker_gray" />
+ -->
 
     <!-- 
     <TextView
@@ -317,7 +315,7 @@
         android:id="@+id/lblViewStatus"
         android:layout_width="wrap_content"
         android:layout_height="40dp"
-        android:layout_below="@+id/divider5"
+        android:layout_below="@+id/divider4"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="5dp"
         android:text="@string/story_publish_status"
@@ -331,36 +329,13 @@
         android:layout_height="fill_parent"
         android:layout_alignBottom="@+id/lblViewStatus"
         android:layout_alignTop="@+id/lblViewStatus"
-        android:layout_below="@+id/divider5"
+        android:layout_below="@+id/divider4"
         android:layout_marginLeft="10dp"
         android:layout_toRightOf="@+id/lblViewStatus"
         android:gravity="center_vertical"
         android:text="@string/story_publish_status_not" />
-
-     <Button
-        android:id="@+id/btnRender"
-        android:layout_width="wrap_content"
-        android:layout_height="fill_parent"
-        android:layout_alignBottom="@+id/textViewStatus"
-        android:layout_alignTop="@+id/textViewStatus"
-        android:layout_below="@+id/divider5"
-        android:layout_marginLeft="10dp"
-        android:layout_toRightOf="@+id/textViewStatus"
-        android:gravity="center_vertical"
-        android:text="@string/action_render" />
-     
-    <Button
-        android:id="@+id/btnPublish"
-        android:layout_width="wrap_content"
-        android:layout_height="fill_parent"
-        android:layout_alignBottom="@+id/textViewStatus"
-        android:layout_alignTop="@+id/textViewStatus"
-        android:layout_below="@+id/divider5"
-        android:layout_marginLeft="10dp"
-        android:layout_toRightOf="@+id/btnRender"
-        android:gravity="center_vertical"
-        android:text="@string/action_publish" />
-        
+    
+    
     <View
         android:id="@+id/divider7"
         android:layout_width="fill_parent"
@@ -369,6 +344,26 @@
         android:layout_marginBottom="5dp"
         android:layout_marginTop="5dp"
         android:background="@android:color/darker_gray" />
+
+     <Button
+        android:id="@+id/btnRender"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:layout_below="@+id/divider7"
+        android:layout_marginLeft="10dp"
+        android:gravity="center_vertical"
+        android:text="@string/action_render" />
+     
+    <Button
+        android:id="@+id/btnPublish"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:layout_below="@+id/divider7"
+        android:layout_marginLeft="10dp"
+        android:layout_toRightOf="@+id/btnRender"
+        android:gravity="center_vertical"
+        android:text="@string/action_publish" />
+        
 
 </RelativeLayout>
 </ScrollView>
