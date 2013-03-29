@@ -9,8 +9,6 @@
  */
 package net.bican.wordpress;
 
-import org.json.JSONException;
-import org.json.JSONObject;
 
 /**
  * This class represents custom fields in wordpress.
@@ -18,8 +16,7 @@ import org.json.JSONObject;
  * @author alok
  * 
  */
-public class CustomField extends XmlRpcMapped implements StringHeader,
-    JSONConvertable {
+public class CustomField extends XmlRpcMapped implements StringHeader {
   String id = null;
 
   String key = null;
@@ -38,25 +35,6 @@ public class CustomField extends XmlRpcMapped implements StringHeader,
     return "Id" + TAB + "Key" + TAB + "Value";
   }
 
-  /**
-   * (non-Javadoc)
-   * 
-   * @see net.bican.wordpress.XmlRpcMapped#toString()
-   */
-  @SuppressWarnings("nls")
-  @Override
-  public String toString() {
-    JSONObject o = new JSONObject();
-    try {
-      o.put("id", this.getId());
-      o.put("key", this.getKey());
-      o.put("value", this.getValue());
-    } catch (JSONException e) {
-      // TODO Auto-generated catch block
-      e.printStackTrace();
-    }
-    return o.toString();
-  }
 
   /**
    * @return id of custom field
@@ -100,31 +78,6 @@ public class CustomField extends XmlRpcMapped implements StringHeader,
     this.value = value;
   }
 
-  /**
-   * 
-   * (non-Javadoc)
-   * 
-   * @see net.bican.wordpress.JSONConvertable#fromJSONObject(org.json.JSONObject)
-   * 
-   */
-  @Override
-  @SuppressWarnings("nls")
-  public void fromJSONObject(JSONObject o) {
-    try {
-      this.setId(o.getString("id"));
-    } catch (JSONException e) {
-      this.setId(null);
-    }
-    try {
-      this.setKey(o.getString("key"));
-    } catch (JSONException e) {
-      this.setKey(null);
-    }
-    try {
-      this.setValue(o.getString("value"));
-    } catch (JSONException e) {
-      this.setValue(null);
-    }
-  }
+
 
 }
