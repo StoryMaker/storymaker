@@ -11,6 +11,7 @@ import net.bican.wordpress.Comment;
 import net.bican.wordpress.MediaObject;
 import net.bican.wordpress.Page;
 import net.bican.wordpress.Wordpress;
+import redstone.xmlrpc.XmlRpcArray;
 import redstone.xmlrpc.XmlRpcClient;
 import redstone.xmlrpc.XmlRpcFault;
 import android.app.Activity;
@@ -123,9 +124,9 @@ public class ServerManager {
 		return mWordpress.getComments(null, page.getPostid(), null, null);
 	}
 
-	public String post (String title, String body) throws XmlRpcFault, MalformedURLException
+	public String post (String title, String body, String[] cats) throws XmlRpcFault, MalformedURLException
 	{
-		return post (title, body, null, null);
+		return post (title, body, cats, null, null);
 	}
 	
 	public String addMedia (String mimeType, File file) throws XmlRpcFault, MalformedURLException
@@ -140,7 +141,7 @@ public class ServerManager {
 		return mObj.getUrl();
 	}
 	
-	public String post (String title, String body, String mimeType, File file) throws XmlRpcFault, MalformedURLException
+	public String post (String title, String body, String[] catstrings, String mimeType, File file) throws XmlRpcFault, MalformedURLException
 	{
 		connect();
 		
@@ -163,7 +164,15 @@ public class ServerManager {
 		
 		page.setDescription(sbBody.toString());
 		
-		boolean publish = false; //submit as draft only for review
+		if (catstrings != null && catstrings.length > 0)
+		{
+			XmlRpcArray cats = new XmlRpcArray();
+			for (String catstr : catstrings)
+				cats.add(catstr);
+			page.setCategories(cats);
+		}
+		
+		boolean publish = true; //let's push it out!
 		String postId = mWordpress.newPost(page, publish);
 		
 		return postId;

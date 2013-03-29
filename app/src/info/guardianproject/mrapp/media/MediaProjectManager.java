@@ -32,7 +32,8 @@ public class MediaProjectManager implements MediaManager {
 	
 	private ArrayList<MediaClip> mMediaList = null;// FIXME refactor this to use it as a prop on project object
 	
-	private File mFileExternDir;
+	private File mFileExternDir; //where working files go
+	private File mFileExportDir; //where exported files go
 	
 	//private File mMediaTmp;
 	private MediaDesc mOut;
@@ -147,23 +148,64 @@ public class MediaProjectManager implements MediaManager {
     	
     	if (extState.equals(Environment.MEDIA_MOUNTED) || extState.equals(Environment.MEDIA_SHARED))
     	{
-			//fileExternDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MOVIES);
-    		mFileExternDir = new File(mContext.getExternalFilesDir(null),AppConstants.FILE_MEDIAFOLDER_NAME);    		
+			
+    		mFileExternDir = new File(mContext.getExternalFilesDir(null),AppConstants.FILE_MEDIAFOLDER_NAME);  
+    		mFileExportDir = new File(Environment.getExternalStorageDirectory(),"storymaker");
+    		
+    		
     	}
     	else
     	{
-    		mFileExternDir = new File(Environment.getDataDirectory(),AppConstants.FILE_MEDIAFOLDER_NAME);    		
+    		mFileExternDir = new File(Environment.getDataDirectory(),AppConstants.FILE_MEDIAFOLDER_NAME);  
+    		mFileExportDir = mFileExternDir;
     	}
     	
     	mFileExternDir.mkdirs();
+    	mFileExportDir.mkdirs();
     }
     
-    private final static String EXPORT_VIDEO_FILE_EXT = ".mp4";
-    private final static String EXPORT_AUDIO_FILE_EXT = ".3gp";
-    private final static String EXPORT_PHOTO_FILE_EXT = ".jpg";
-    private final static String EXPORT_ESSAY_FILE_EXT = ".mp4";
+    public final static String EXPORT_VIDEO_FILE_EXT = ".mp4";
+    public final static String EXPORT_AUDIO_FILE_EXT = ".3gp";
+    public final static String EXPORT_PHOTO_FILE_EXT = ".jpg";
+    public final static String EXPORT_ESSAY_FILE_EXT = ".mp4";
     
-    public void doExportMedia (String fileName, boolean doCompress) throws IOException
+    public File getExportMediaFile ()
+    {
+
+        String fileName = mProject.getId() + "-export";
+        
+    	File fileExport = null;
+    	
+    	if (mProject.getStoryType() == Project.STORY_TYPE_VIDEO)
+        {
+    		fileExport = new File(mFileExportDir, fileName + EXPORT_VIDEO_FILE_EXT);
+		    
+        }    
+        else if (mProject.getStoryType() == Project.STORY_TYPE_AUDIO)
+        {
+
+        	fileExport = new File(mFileExportDir, fileName + EXPORT_AUDIO_FILE_EXT);
+		    
+        }
+        else if (mProject.getStoryType() == Project.STORY_TYPE_PHOTO)
+        {
+       	 			
+			//	there should be only one
+			fileExport = new File(mFileExportDir, fileName + EXPORT_PHOTO_FILE_EXT);
+ 	    	
+        }
+        else if (mProject.getStoryType() == Project.STORY_TYPE_ESSAY)
+        {
+       	
+		    
+		    fileExport = new File(mFileExportDir, fileName + EXPORT_ESSAY_FILE_EXT);
+		    
+        }
+    	
+    	return fileExport;
+    }
+    
+    public void doExportMedia (File fileExport, boolean doCompress, boolean doOverwrite) throws IOException
     {
     	 Message msg = mHandler.obtainMessage(0);
          msg.getData().putString("status","cancelled");
@@ -201,14 +243,17 @@ public class MediaProjectManager implements MediaManager {
 
 		    if (doCompress)
 		    	applyExportSettings(mOut);
-		    
-		    File fileExport = new File(mFileExternDir, fileName + EXPORT_VIDEO_FILE_EXT);
-		    fileExport.delete();
-		    fileExport.createNewFile();
+
 		    mOut.path = fileExport.getAbsolutePath();
 		    
-		   MediaVideoAudioExporter mEx = new MediaVideoAudioExporter(mContext, mHandler, alMediaIn, mOut);
-		   mEx.run();
+		    if ((!fileExport.exists()) || doOverwrite)
+		    {
+			    fileExport.delete();
+			    fileExport.createNewFile();
+			    
+			   MediaVideoAudioExporter mEx = new MediaVideoAudioExporter(mContext, mHandler, alMediaIn, mOut);
+			   mEx.run();
+		    }
 	   
          }    
          else if (mProject.getStoryType() == Project.STORY_TYPE_AUDIO)
@@ -231,13 +276,17 @@ public class MediaProjectManager implements MediaManager {
 
  		    applyExportSettingsAudio(mOut);
  		    
- 		    File fileExport = new File(mFileExternDir, fileName + EXPORT_AUDIO_FILE_EXT);
- 		    fileExport.delete();
- 		    fileExport.createNewFile();
  		    mOut.path = fileExport.getAbsolutePath();
  		    
- 		   MediaVideoAudioExporter mEx = new MediaVideoAudioExporter(mContext, mHandler, alMediaIn, mOut);
- 		   mEx.run();
+ 		   if ((!fileExport.exists()) || doOverwrite)
+		    {
+ 		    
+
+ 	 		    fileExport.delete();
+ 	 		    fileExport.createNewFile();
+ 	 		    MediaVideoAudioExporter mEx = new MediaVideoAudioExporter(mContext, mHandler, alMediaIn, mOut);
+ 	 		    mEx.run();
+		    }
          }
          else if (mProject.getStoryType() == Project.STORY_TYPE_PHOTO)
          {
@@ -256,8 +305,6 @@ public class MediaProjectManager implements MediaManager {
   	    			
   	    			if (fileSrc.exists())
   	    			{
-  	    				//	there should be only one
-  	    				File fileExport = new File(mFileExternDir, fileName + EXPORT_PHOTO_FILE_EXT);
   	    				fileExport.createNewFile();
   	    				IOUtils.copy(new FileInputStream(fileSrc),new FileOutputStream(fileExport));
   	    				 mOut = new MediaDesc ();
@@ -290,9 +337,7 @@ public class MediaProjectManager implements MediaManager {
 		    mOut = new MediaDesc ();
 		    applyExportSettings(mOut);
 		    
-		    File fileExport = new File(mFileExternDir, fileName + EXPORT_ESSAY_FILE_EXT);
-		    fileExport.delete();
-		    fileExport.createNewFile();
+		   
 		    mOut.path = fileExport.getAbsolutePath();
 		    mOut.mimeType = AppConstants.MimeTypes.MP4;
 		    
@@ -305,38 +350,41 @@ public class MediaProjectManager implements MediaManager {
     		if (fileAudio.exists())
     			audioPath = fileAudio.getAbsolutePath();
     		
-		   MediaSlideshowExporter mEx = new MediaSlideshowExporter(mContext, mHandler, alMediaIn,audioPath, slideDuration, mOut);
-		   mEx.run();
+    		if ((!fileExport.exists()) || doOverwrite)
+   		    {
+    			   fileExport.delete();
+    			    fileExport.createNewFile();
+    			    MediaSlideshowExporter mEx = new MediaSlideshowExporter(mContext, mHandler, alMediaIn,audioPath, slideDuration, mOut);
+    			    mEx.run();
+   		    }
          }
     }
     
-/*
-    private File createOutputFile (String fileext) throws IOException
-    {
-		File saveFile = File.createTempFile("output", '.' + fileext, mFileExternDir);	
-		return saveFile;
-    }
-    */
+    public final static int DEFAULT_VIDEO_BITRATE = 1000;
+    public final static int DEFAULT_AUDIO_BITRATE = 128;
+    public final static String DEFAULT_FRAME_RATE = "29.97";
     
     public void applyExportSettings (MediaDesc mdout)
     {
-    	//look this up from prefs?
-    	//mdout.videoCodec = "libx264";
     	
-    	mdout.videoBitrate = 1500;
-    	mdout.audioBitrate = 128;
-    	mdout.videoFps = "29.97";
-    	mdout.width = 720;
-    	mdout.height = 480;
+    	SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(mContext);
+    	
+    	mdout.videoBitrate = Integer.parseInt(settings.getString("p_video_bitrate", DEFAULT_VIDEO_BITRATE+""));;
+    	mdout.audioBitrate = Integer.parseInt(settings.getString("p_audio_bitrate", DEFAULT_AUDIO_BITRATE+""));;
+    	mdout.videoFps = settings.getString("p_video_framerate", DEFAULT_FRAME_RATE);
+    	//mdout.width = Integer.parseInt(settings.getString("p_audio_bitrate", DEFAULT_AUDIO_BITRATE+""));
+    	//mdout.height = Integer.parseInt(settings.getString("p_audio_bitrate", DEFAULT_AUDIO_BITRATE+""));
     	
     }
 
     public void applyExportSettingsAudio (MediaDesc mdout)
     {
+    	SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(mContext);
+
     	//look this up from prefs?
     	mdout.videoCodec = null; 
     	mdout.audioCodec = "aac";
-    	mdout.audioBitrate = 128;
+    	mdout.audioBitrate = Integer.parseInt(settings.getString("p_audio_bitrate", DEFAULT_AUDIO_BITRATE+""));;
     	mdout.format = "3gp";
     }
     
@@ -352,6 +400,8 @@ public class MediaProjectManager implements MediaManager {
     	{
     	    mMediaList.add(null);
     	}
+    	
+    	
 
     	/*
 		if (mimeType.startsWith("audio") && mMediaList.get(clipIndex) != null 

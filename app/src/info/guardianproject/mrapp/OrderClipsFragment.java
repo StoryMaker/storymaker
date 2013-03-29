@@ -448,14 +448,13 @@ public class OrderClipsFragment extends Fragment {
     private void renderPreview ()
     {
 
-        String exportFileName = "preview-" + mMPM.mScene.getId();
         Message msg = mHandlerPub.obtainMessage(888);
         msg.getData().putString("status",
                 getActivity().getString(R.string.rendering_clips_));
         mHandlerPub.sendMessage(msg);
 
         try {
-            mMPM.doExportMedia(exportFileName, false);
+            mMPM.doExportMedia(mMPM.getExportMediaFile(), false, true);
             MediaDesc mdExported = mMPM.getExportMedia();
             File mediaFile = new File(mdExported.path);
 

@@ -81,44 +81,7 @@ public class PublishFragment extends Fragment {
 
             etTitle.setText(mActivity.mMPM.mProject.getTitle());
 
-            ToggleButton tbYouTube = (ToggleButton) view.findViewById(R.id.toggleButtonYoutube);
 
-            tbYouTube.setOnCheckedChangeListener(new OnCheckedChangeListener() {
-
-                @Override
-                public void onCheckedChanged(CompoundButton buttonView,
-                        boolean isChecked) {
-
-                    if (isChecked) {
-                        checkYouTubeAccount();
-                    }
-
-                }
-
-            });
-
-            ToggleButton tbStoryMaker = (ToggleButton) view
-                    .findViewById(R.id.toggleButtonStoryMaker);
-
-            tbStoryMaker.setOnCheckedChangeListener(new OnCheckedChangeListener() {
-
-                @Override
-                public void onCheckedChanged(CompoundButton buttonView,
-                        boolean isChecked) {
-
-                    if (isChecked)
-                    {
-                        ServerManager sm = StoryMakerApp.getServerManager();
-                        sm.setContext(mActivity.getBaseContext());
-
-                        if (!sm.hasCreds())
-                            showLogin();
-                    }
-
-                }
-
-            });
-            
             Button btnRender = (Button) view.findViewById(R.id.btnRender);
             btnRender.setOnClickListener(new OnClickListener()
             {
@@ -126,6 +89,10 @@ public class PublishFragment extends Fragment {
                 @Override
                 public void onClick(View arg0) {
                     
+                	File fileExport = mActivity.mMPM.getExportMediaFile();
+                	if (fileExport.exists())
+                		fileExport.delete();
+                	
                     handlePublish(false, false);
                 }
                 
@@ -149,16 +116,11 @@ public class PublishFragment extends Fragment {
         ServerManager sm = StoryMakerApp.getServerManager();
         sm.setContext(mActivity.getBaseContext());
 
-        ToggleButton tbYouTube = (ToggleButton) mActivity.findViewById(R.id.toggleButtonYoutube);
-        ToggleButton tbStoryMaker = (ToggleButton) mActivity
-                .findViewById(R.id.toggleButtonStoryMaker);
-        final boolean doYouTube = tbYouTube.isChecked();
-        final boolean doStoryMaker = tbStoryMaker.isChecked();
-
-        if (!sm.hasCreds() && doStoryMaker)
+        if (!sm.hasCreds())
             showLogin();
         else
-            handlePublish(doYouTube, doStoryMaker);
+        	checkYouTubeAccount();
+        
     }
 
     private void showLogin() {
@@ -185,39 +147,20 @@ public class PublishFragment extends Fragment {
                 builder.setItems(accountNames, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int item) {
                         mMediaUploadAccount = accounts[item].name;
-                        // SharedPreferences settings =
-                        // PreferenceManager.getDefaultSharedPreferences(SceneEditorNoSwipeActivity.this);
-                        // settings.edit().putString("youTubeUserName",
-                        // mYouTubeUsername);
-                        // settings.edit().commit();
+
+                        
+                        handlePublish(true, true);
+                        
                     }
                 }).show();
             }
         }
     }
 
-    private String processTitle(String title) {
-        String result = title;
-        result = result.replace(' ', '_');
-        result = result.replace('!', '_');
-        result = result.replace('/', '_');
-        result = result.replace('!', '_');
-        result = result.replace('#', '_');
-        result = result.replace('"', '_');
-        result = result.replace('\'', '_');
-        return result;
-    }
-
     private void handlePublish(final boolean doYouTube, final boolean doStoryMaker) {
         
         EditText etTitle = (EditText) mActivity.findViewById(R.id.etStoryTitle);
         EditText etDesc = (EditText) mActivity.findViewById(R.id.editTextDescribe);
-
-        // final String exportFileName =
-        // processTitle(mMPM.mProject.getTitle()) + "-export-" + new
-        // Date().getTime();
-        final String exportFileName = mActivity.mMPM.mProject.getId() + "-export-" + new Date().getTime();
-
 
         mHandlerPub.sendEmptyMessage(999);
 
@@ -249,9 +192,12 @@ public class PublishFragment extends Fragment {
 
                 try {
                     
-                    //if (mActivity.mdExported == null)
-                       
-                	mActivity.mMPM.doExportMedia(exportFileName, doYouTube);
+                    File fileExport = mActivity.mMPM.getExportMediaFile();
+
+                    
+                    boolean overwrite = false;
+                    
+                    mActivity.mMPM.doExportMedia(fileExport, doYouTube, overwrite);
                     
                     mActivity.mdExported = mActivity.mMPM.getExportMedia();
                     File mediaFile = new File(mActivity.mdExported.path);
@@ -318,7 +264,10 @@ public class PublishFragment extends Fragment {
 
                             if (doStoryMaker) {
                                 String descWithMedia = desc + "\n\n" + mediaEmbed;
-                                String postId = sm.post(title, descWithMedia);
+                                String[] categories = null;
+                                
+                                String postId = sm.post(title, descWithMedia, categories);
+                                
                                 String urlPost = sm.getPostUrl(postId);
                                 message.getData().putString("urlPost", urlPost);
                             }

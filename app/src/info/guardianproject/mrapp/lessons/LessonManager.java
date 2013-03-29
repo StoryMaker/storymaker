@@ -20,6 +20,7 @@ import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
@@ -149,13 +150,14 @@ public class LessonManager implements Runnable {
 
 					File fileStatus = new File(fileLesson,LESSON_STATUS_FILE);
 					int status = -1;
+					Date statusModified = null;
 					
 					if (fileStatus.exists())
 					{
 						byte[] bStatus = new byte[(int)fileStatus.length()];
 						IOUtils.readFully(new FileInputStream(fileStatus),bStatus);
 						status = Integer.parseInt(new String(bStatus).trim());
-						
+						statusModified = new Date(fileStatus.lastModified());
 						
 					}
 					
@@ -171,6 +173,7 @@ public class LessonManager implements Runnable {
 						lesson.mTitle = fileLesson.getName() + ": " + lesson.mTitle;
 						lesson.mResourcePath = fileIdx.getAbsolutePath();
 						lesson.mStatus = status;
+						lesson.mStatusModified = statusModified;
 						
 						lessons.add(lesson);
 						
