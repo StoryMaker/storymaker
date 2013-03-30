@@ -10,103 +10,107 @@
     
      >
     
-    <FrameLayout  android:layout_width="fill_parent"
-         android:layout_height="170dip"   >
- <ImageView
-         android:id="@+id/clipTypeImage"
-         android:layout_width="fill_parent"
-         android:layout_height="fill_parent"    
-    />
- <TextView
-         android:layout_width="fill_parent"
-         android:layout_height="fill_parent"
-         android:text="@string/tap_to_start_capture"
-         android:gravity="center_vertical|center_horizontal"
-         android:textAppearance="?android:attr/textAppearanceMedium"
-         />
- </FrameLayout>
 
-     <TextView
-         android:id="@+id/clipTypeTitle"
-         android:layout_width="wrap_content"
-         android:layout_height="wrap_content"
-         android:paddingTop="5dp"
-         android:textAppearance="?android:attr/textAppearanceMedium"
-         android:text="the title"
-         />
-     
+    <ScrollView
+        android:id="@+id/scrollView1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="none" >
 
-     <TextView
-         android:id="@+id/clipTypeGoal"
-         android:layout_width="wrap_content"
-         android:layout_height="wrap_content"
-         android:textStyle="bold"
-         android:text="more info here more info here more info here more info here"
-         android:textAppearance="?android:attr/textAppearanceMedium" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical" >
 
-     
-     <TextView
-         android:id="@+id/clipTypeShotSize"
-         android:layout_width="wrap_content"
-         android:layout_height="wrap_content"
-         android:paddingTop="5dp"
-         android:textAppearance="?android:attr/textAppearanceSmall"
-         />
-     
-     <TextView
-         android:id="@+id/clipTypeGoalLength"
-         android:layout_width="wrap_content"
-         android:layout_height="wrap_content"
-         android:textAppearance="?android:attr/textAppearanceSmall" />
+            <FrameLayout
+                android:layout_width="fill_parent"
+                android:layout_height="170dip" >
 
-     <TextView
-         android:id="@+id/clipTypeDescription"
-         android:layout_width="wrap_content"
-         android:layout_height="wrap_content"
-         android:paddingTop="15dp"
-         android:textAppearance="?android:attr/textAppearanceSmall" />
+                <ImageView
+                    android:id="@+id/clipTypeImage"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent" />
 
-     <LinearLayout
-         android:layout_width="wrap_content"
-         android:layout_height="wrap_content"
-         android:layout_gravity="center_vertical"
-         android:layout_marginTop="10sp"
-         android:background="#FFFFFF"
-          >
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:text="@string/tap_to_start_capture"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+            </FrameLayout>
 
-         <ImageView
-             android:id="@+id/imageView1"
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content"
-             android:padding="5dp"
-             android:src="@drawable/ic_context_tip" />
+            <TextView
+                android:id="@+id/clipTypeTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="5dp"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
 
-         <TextView
-             android:id="@+id/clipTypeTip"
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content"
-             android:textAppearance="?android:attr/textAppearanceSmall" />
+            <TextView
+                android:id="@+id/clipTypeGoal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge" />
 
-     </LinearLayout>
+            <TextView
+                android:id="@+id/clipTypeShotSize"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="5dp"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
 
-     <LinearLayout
-         android:layout_width="match_parent"
-         android:layout_height="wrap_content"
-         android:layout_marginTop="10sp"
-        >
+            <TextView
+                android:id="@+id/clipTypeGoalLength"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
 
-         <ImageView
-             android:id="@+id/imageView2"
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content"
-             android:padding="5dp"
-             android:src="@drawable/ic_context_warning" />
+            <TextView
+                android:id="@+id/clipTypeDescription"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="15dp"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
 
-         <TextView
-             android:id="@+id/clipTypeSecurity"
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content"
-             android:textAppearance="?android:attr/textAppearanceSmall" />
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10sp"
+                android:background="#FFFFFF" >
 
-     </LinearLayout>
+                <ImageView
+                    android:id="@+id/imageView1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:src="@drawable/ic_context_tip" />
+
+                <TextView
+                    android:id="@+id/clipTypeTip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10sp" >
+
+                <ImageView
+                    android:id="@+id/imageView2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:src="@drawable/ic_context_warning" />
+
+                <TextView
+                    android:id="@+id/clipTypeSecurity"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
  </LinearLayout>
