@@ -78,9 +78,9 @@ public class AddClipsThumbnailFragment extends Fragment {
             
             ((TextView) view.findViewById(R.id.clipTypeGoal)).setText(clip.mGoal);
             ((TextView) view.findViewById(R.id.clipTypeDescription)).setText(clip.mDescription);
-            ((TextView) view.findViewById(R.id.clipTypeGoalLength)).setText(clip.mLength);
+      //      ((TextView) view.findViewById(R.id.clipTypeGoalLength)).setText(clip.mLength);
             ((TextView) view.findViewById(R.id.clipTypeTip)).setText(clip.mTip);
-            ((TextView) view.findViewById(R.id.clipTypeSecurity)).setText(clip.mSecurity);
+        //    ((TextView) view.findViewById(R.id.clipTypeSecurity)).setText(clip.mSecurity);
 
             iv.setOnClickListener(new OnClickListener()
             {
