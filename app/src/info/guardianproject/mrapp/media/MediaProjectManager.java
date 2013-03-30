@@ -364,6 +364,9 @@ public class MediaProjectManager implements MediaManager {
     public final static int DEFAULT_AUDIO_BITRATE = 128;
     public final static String DEFAULT_FRAME_RATE = "29.97";
     
+    public final static int DEFAULT_WIDTH = 720;
+    public final static int DEFAULT_HEIGHT = 480;
+    
     public void applyExportSettings (MediaDesc mdout)
     {
     	
@@ -372,8 +375,8 @@ public class MediaProjectManager implements MediaManager {
     	mdout.videoBitrate = Integer.parseInt(settings.getString("p_video_bitrate", DEFAULT_VIDEO_BITRATE+""));;
     	mdout.audioBitrate = Integer.parseInt(settings.getString("p_audio_bitrate", DEFAULT_AUDIO_BITRATE+""));;
     	mdout.videoFps = settings.getString("p_video_framerate", DEFAULT_FRAME_RATE);
-    	//mdout.width = Integer.parseInt(settings.getString("p_audio_bitrate", DEFAULT_AUDIO_BITRATE+""));
-    	//mdout.height = Integer.parseInt(settings.getString("p_audio_bitrate", DEFAULT_AUDIO_BITRATE+""));
+    	mdout.width = Integer.parseInt(settings.getString("p_video_width", DEFAULT_WIDTH+""));
+    	mdout.height = Integer.parseInt(settings.getString("p_video_height", DEFAULT_HEIGHT+""));
     	
     }
 

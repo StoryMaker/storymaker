@@ -138,9 +138,9 @@ public class ServerManager {
 		return mWordpress.getComments(null, page.getPostid(), null, null);
 	}
 
-	public String post (String title, String body, String[] cats, String medium) throws XmlRpcFault, MalformedURLException
+	public String post (String title, String body, String[] cats, String medium, String mediaService, String mediaGuid) throws XmlRpcFault, MalformedURLException
 	{
-		return post (title, body, cats, medium, null, null);
+		return post (title, body, cats, medium, mediaService, mediaGuid, null, null);
 	}
 	
 	public String addMedia (String mimeType, File file) throws XmlRpcFault, MalformedURLException
@@ -155,7 +155,7 @@ public class ServerManager {
 		return mObj.getUrl();
 	}
 	
-	public String post (String title, String body, String[] catstrings, String medium, String mimeType, File file) throws XmlRpcFault, MalformedURLException
+	public String post (String title, String body, String[] catstrings, String medium, String mediaService, String mediaGuid, String mimeType, File file) throws XmlRpcFault, MalformedURLException
 	{
 		connect();
 		
@@ -186,52 +186,46 @@ public class ServerManager {
 			page.setCategories(cats);
 		}
 		
+		XmlRpcArray custom_fields = new XmlRpcArray();
+
+		
 		if (medium != null)
 		{
-			
-			XmlRpcArray custom_fields = new XmlRpcArray();
-
-			XmlRpcArray custom_fields_medium = new XmlRpcArray();
 
 			XmlRpcStruct struct = new XmlRpcStruct();
-			struct.put("key",CUSTOM_FIELD_MEDIUM);
-			custom_fields_medium.add(struct);
-			
-			XmlRpcStruct struct2 = new XmlRpcStruct();
-			struct2.put("value",medium);
-			custom_fields_medium.add(struct2);
-			
-			custom_fields.add(custom_fields_medium);
-			
-			page.setCustom_fields(custom_fields);
+			struct.put("key","medium");
+			struct.put("value",medium);			
+			custom_fields.add(struct);
+
 		}
+
+		if (mediaService != null)
+		{
+			
+			
+			XmlRpcStruct struct = new XmlRpcStruct();
+			struct.put("key","media_value");
+			struct.put("value",mediaService);
+			custom_fields.add(struct);
+
+		}
+		
+		if (mediaGuid != null)
+		{
+			
+			XmlRpcStruct struct = new XmlRpcStruct();
+			struct.put("key","media_guid");
+			struct.put("value",mediaGuid);
+			custom_fields.add(struct);
+
+		}
+		
+
+		page.setCustom_fields(custom_fields);
 		
 		boolean publish = true; //let's push it out!
 		String postId = mWordpress.newPost(page, publish);
 		
-		
-		Page pageNew = mWordpress.getPost(Integer.parseInt(postId));
-		XmlRpcArray arrayCf = pageNew.getCustom_fields();
-		
-		Iterator<Object> itCf = arrayCf.iterator();
-		
-		while (itCf.hasNext())
-		{
-			Object cf = itCf.next();
-			
-			if (cf instanceof XmlRpcArray)
-			{
-				
-			}
-			else if (cf instanceof XmlRpcStruct)
-			{
-				
-			}
-			else if (cf instanceof CustomField)
-			{
-				
-			}
-		}
 		
 		return postId;
 	}

@@ -567,9 +567,7 @@ public class YouTubeSubmit {
        
        Message msg = handler.obtainMessage(888);
        
-       String title = "Uploading to YouTube...";
-       if (mUseTor)
-      	 title = "Uploading to YouTube (through Tor)...";
+       String title = mContext.getString(R.string.uploading);
        
        msg.getData().putString("statusTitle", title);
        msg.getData().putString("status", status);
@@ -739,6 +737,9 @@ public class YouTubeSubmit {
 	else
 		this.youTubeName = accountName;
 	  
+	clientLoginToken = authorizer.getAuthToken(accountName);
+	
+	/*
     this.authorizer.fetchAuthToken(accountName, activity, new AuthorizationListener<String>() {
       @Override
       public void onCanceled() {
@@ -752,9 +753,15 @@ public class YouTubeSubmit {
       @Override
       public void onSuccess(String result) {
         YouTubeSubmit.this.clientLoginToken = result;
+        
         Log.d("YouTube","got client token: " + result);
-        upload(youTubeName,videoFile, videoContentType);
-      }});
+      }});*/
+  }
+  
+  public void upload ()
+  {
+	  upload(youTubeName,videoFile, videoContentType);
+      
   }
 
 /*

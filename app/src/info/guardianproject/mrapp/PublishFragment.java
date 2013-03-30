@@ -125,6 +125,8 @@ public class PublishFragment extends Fragment {
                 @Override
                 public void onClick(View v) {
                     
+
+                    
                     doPublish(); 
 
                 }
@@ -134,6 +136,9 @@ public class PublishFragment extends Fragment {
     }
     
     public void doPublish() {
+    	
+    	setUploadAccount();
+        
         ServerManager sm = StoryMakerApp.getServerManager();
         sm.setContext(mActivity.getBaseContext());
 
@@ -150,29 +155,43 @@ public class PublishFragment extends Fragment {
         startActivity(new Intent(mActivity, LoginActivity.class));
     }
 
-    private void setUploadAccount(String mimeType) {
+    private void setUploadAccount() {
         SharedPreferences settings = PreferenceManager
                 .getDefaultSharedPreferences(mActivity);
         mMediaUploadAccount = settings.getString("youTubeUserName", null);
 
+        
         if (mMediaUploadAccount == null) {
-            AccountManager accountManager = AccountManager.get(mActivity);
-            final Account[] accounts = accountManager.getAccounts();
+        
+        	AccountManager accountManager = AccountManager.get(mActivity.getBaseContext());
+            Account[] accounts = accountManager.getAccounts();
 
+            String projectType = null;
+            
+            if (mActivity.mMPM.mProject.getStoryType() == Project.STORY_TYPE_VIDEO
+                    || mActivity.mMPM.mProject.getStoryType() == Project.STORY_TYPE_ESSAY
+                    )
+            	projectType = "video";
+            else if (mActivity.mMPM.mProject.getStoryType() == Project.STORY_TYPE_AUDIO)
+            	projectType = "audio";
+            else if (mActivity.mMPM.mProject.getStoryType() == Project.STORY_TYPE_PHOTO)
+            	projectType = "image";
+            
             if (accounts.length > 0) {
             	
             	for (Account account : accounts)
             	{
-            		if (mimeType.startsWith("audio") && account.type.contains("com.soundcloud"))
-            		{
-            			mMediaUploadAccount = account.name;
-            			break;
-            		}
-            		else if (mimeType.startsWith("video") && account.type.contains("com.google"))
-            		{
-            			mMediaUploadAccount = account.name;
-            			break;
-            		}
+            		if (account.type != null)
+	            		if (projectType.startsWith("audio") && account.type.contains("com.soundcloud"))
+	            		{
+	            			mMediaUploadAccount = account.name;
+	            			break;
+	            		}
+	            		else if (projectType.startsWith("video") && account.type.contains("com.google"))
+	            		{
+	            			mMediaUploadAccount = account.name;
+	            			break;
+	            		}
             	}
                 
               
@@ -225,8 +244,12 @@ public class PublishFragment extends Fragment {
         final YouTubeSubmit yts = new YouTubeSubmit(null, title, ytdesc, new Date(),
                 mActivity, mHandlerPub, mActivity.getBaseContext());
 
+
         Thread thread = new Thread() {
             public void run() {
+
+                yts.getAuthTokenWithPermission(mMediaUploadAccount);
+                
                 ServerManager sm = StoryMakerApp.getServerManager();
                 sm.setContext(mActivity.getBaseContext());
 
@@ -239,14 +262,15 @@ public class PublishFragment extends Fragment {
                     
                     File fileExport = mActivity.mMPM.getExportMediaFile();
 
+                    SharedPreferences settings = PreferenceManager
+                            .getDefaultSharedPreferences(mActivity);
                     
+                    boolean compress = settings.getBoolean("pcompress",true);//compress video?
                     boolean overwrite = false;
                     
-                    mActivity.mMPM.doExportMedia(fileExport, doYouTube, overwrite);
+                    mActivity.mMPM.doExportMedia(fileExport, compress, overwrite);
                     
                     mActivity.mdExported = mActivity.mMPM.getExportMedia();
-                    
-                    setUploadAccount(mActivity.mdExported.mimeType);
                     
                     File mediaFile = new File(mActivity.mdExported.path);
 
@@ -261,6 +285,8 @@ public class PublishFragment extends Fragment {
                             String mediaEmbed = "";
                             
                             String medium = null;
+                            String mediaService = null;
+                            String mediaGuid = null;
 
                             if (mActivity.mMPM.mProject.getStoryType() == Project.STORY_TYPE_VIDEO
                                     || mActivity.mMPM.mProject.getStoryType() == Project.STORY_TYPE_ESSAY
@@ -277,10 +303,8 @@ public class PublishFragment extends Fragment {
                                 mHandlerPub.sendMessage(msg);
 
                                 yts.setVideoFile(mediaFile, mActivity.mdExported.mimeType);
-                                yts.getAuthTokenWithPermission(mMediaUploadAccount);
-                                // yts.upload(mYouTubeUsername,new
-                                // File(mActivity.mdExported.path));
-
+                                yts.upload();
+                                
                                 while (yts.videoId == null) {
                                     try {
                                         Thread.sleep(1000);
@@ -289,7 +313,9 @@ public class PublishFragment extends Fragment {
                                 }
 
                                 mediaEmbed = "[youtube]" + yts.videoId + "[/youtube]";
-
+                                mediaService = "youtube";
+                                mediaGuid = yts.videoId;
+                                
                                 message.getData().putString("youtubeid", yts.videoId);
                             }
                             else if (mActivity.mMPM.mProject.getStoryType() == Project.STORY_TYPE_AUDIO) {
@@ -300,13 +326,18 @@ public class PublishFragment extends Fragment {
                                         .isCompatibleSoundCloudInstalled(mActivity.getBaseContext());
 
                                 if (installed) {
+                                	
+                                	String scTitle = title + " " + new Date().getTime();
+                                	
                                     String scurl = SoundCloudUploader.buildSoundCloudURL(
-                                            mMediaUploadAccount, mediaFile, title);
+                                            mMediaUploadAccount, mediaFile, scTitle);
                                     mediaEmbed = "[soundcloud]" + scurl + "[/soundcloud]";
 
-                                    SoundCloudUploader.uploadSound(mediaFile, title, desc,
+                                    SoundCloudUploader.uploadSound(mediaFile, scTitle, desc,
                                             REQ_SOUNDCLOUD, mActivity);
 
+                                    mediaService = "soundcloud";
+                                    mediaGuid = scurl;
                                 }
                                 else {
                                     SoundCloudUploader.installSoundCloud(mActivity.getBaseContext());
@@ -322,8 +353,14 @@ public class PublishFragment extends Fragment {
                             }
 
                             if (doStoryMaker) {
+                            	
+                            	Message msgStatus = mHandlerPub.obtainMessage(888);
+                            	msgStatus.getData().putString("status",
+                                        getActivity().getString(R.string.uploading_to_storymaker));
+                                mHandlerPub.sendMessage(msgStatus);
+                            	
                                 String descWithMedia = desc + "\n\n" + mediaEmbed;
-                                String postId = sm.post(title, descWithMedia, categories, medium);
+                                String postId = sm.post(title, descWithMedia, categories, medium, mediaService, mediaGuid);
                                 
                                 String urlPost = sm.getPostUrl(postId);
                                 message.getData().putString("urlPost", urlPost);

@@ -23,10 +23,9 @@ public class SoundCloudUploader {
 		String fileName = myAudioFile.getName();
 		fileName = fileName.substring(0,fileName.indexOf("."));
 		fileName = fileName.replace(' ', '_');
-		
 		result += fileName;
 		*/
-		String titlePath = title.replace(' ', '_').replace(".", "").replace("!", "");
+		String titlePath = title.replace(' ', '-').replace(".", "").replace("!", "");
 		result += titlePath;
 		
 		return result;
@@ -34,10 +33,17 @@ public class SoundCloudUploader {
 	
 	public static void uploadSound (File myAudiofile, String title, String desc, int REQCODE, Activity activity)
 	{
+		String clientId = "storymaker";
+		
 		Intent intent = new Intent("com.soundcloud.android.SHARE")
 		  .putExtra(Intent.EXTRA_STREAM, Uri.fromFile(myAudiofile))
 		  .putExtra("com.soundcloud.android.extra.title", title)
-		  .putExtra("com.soundcloud.android.extra.description", desc);
+		  .putExtra("com.soundcloud.android.extra.description", desc)
+		  .putExtra("com.soundcloud.android.extra.public", true)
+		  .putExtra("com.soundcloud.android.extra.tags", new String[] {
+                  "soundcloud:created-with-client-id="+clientId
+                  });
+		
 		  // more metadata can be set, see below
 
 		try {
