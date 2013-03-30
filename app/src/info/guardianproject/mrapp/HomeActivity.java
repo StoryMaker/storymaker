@@ -258,7 +258,7 @@ public class HomeActivity extends BaseActivity {
         		
         		Date cardDate = new Date();
         		
-        		if (mediaList.length > 0)
+        		if (mediaList.length > 0 && mediaList[0] != null && mediaList[0].getPath() != null)
         			cardDate = new Date(new File(mediaList[0].getPath()).lastModified());
         			
         		ActivityEntry ae = new ActivityEntry(card,cardDate);
