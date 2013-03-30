@@ -11,11 +11,12 @@
         android:layout_height="wrap_content" android:background="#ffffff">
 
     <ImageView
-        android:id="@+id/imageView1"
-        android:layout_width="wrap_content"
+        android:id="@+id/storyThumb"
+        android:layout_width="140sp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp"
+        android:layout_weight="1"
         android:src="@drawable/cliptype_close" />
 
     <EditText
@@ -23,15 +24,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="false"
-        android:layout_alignTop="@+id/imageView1"
+        android:layout_alignTop="@+id/storyThumb"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginTop="10dp"
-        android:layout_toRightOf="@+id/imageView1"
+        android:layout_toRightOf="@+id/storyThumb"
         android:hint="@string/story_publish_story_title"
-        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textAppearance="?android:attr/textAppearanceMedium"
         />
 
+    <!-- 
     <TextView
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
@@ -41,12 +43,13 @@
         android:layout_marginTop="5dp"
         android:text="@string/story_publish_story_date"
         android:textAppearance="?android:attr/textAppearanceSmall" />
+         -->
  
     <View
         android:id="@+id/divider0"
         android:layout_width="fill_parent"
         android:layout_height="1dp"
-        android:layout_below="@+id/imageView1"
+        android:layout_below="@+id/storyThumb"
         android:layout_marginBottom="5dp"
         android:layout_marginTop="10dp"
         android:background="@android:color/darker_gray" />
@@ -59,7 +62,8 @@
         android:ems="10"
         android:hint="@string/story_publish_describe_hint"
         android:inputType="textMultiLine"
-        android:lines="3" >
+        android:lines="3" 
+        >
 
         <requestFocus />
     </EditText>
@@ -73,7 +77,6 @@
         android:layout_marginTop="5dp"
         android:background="@android:color/darker_gray" />
 
-    <!-- 
     <TextView
         android:id="@+id/textViewSection"
         android:layout_width="wrap_content"
@@ -90,9 +93,11 @@
         android:id="@+id/spinnerSections"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/divider2"
         android:layout_alignParentRight="true"
         android:layout_below="@+id/divider1"
         android:layout_toRightOf="@+id/textViewSection"
+        android:textAppearance="?android:attr/textAppearanceMedium"
         android:paddingRight="10dp" />
 
     <View
@@ -104,7 +109,7 @@
         android:layout_marginTop="5dp"
         android:background="@android:color/darker_gray" />
 
-    
+    <!-- 
     <TextView
         android:id="@+id/textViewTopics"
         android:layout_width="wrap_content"
@@ -122,13 +127,11 @@
         android:id="@+id/spinnerTopics"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/divider3"
         android:layout_alignParentRight="true"
         android:layout_below="@id/divider2"
-        android:paddingRight="10dp" 
-       android:layout_toRightOf="@+id/textViewTopics"
-        
-        />
- 
+        android:layout_toRightOf="@+id/textViewTopics"
+        android:paddingRight="10dp" />
     
     <View
         android:id="@+id/divider3"
@@ -138,15 +141,15 @@
         android:layout_marginBottom="5dp"
         android:layout_marginTop="5dp"
         android:background="@android:color/darker_gray" />
- -->
- <!-- 
+         -->
+ 
     <TextView
         android:id="@+id/textViewLocation"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/editTextLocation"
         android:layout_alignTop="@+id/editTextLocation"
-        android:layout_below="@+id/divider1"
+        android:layout_below="@+id/divider2"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="5dp"
         android:gravity="center_vertical"
@@ -159,7 +162,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
-        android:layout_below="@+id/divider3"
+        android:layout_below="@+id/divider2"
         android:layout_toRightOf="@+id/textViewLocation"
         android:layout_weight="1"
         android:ems="10"
@@ -173,7 +176,7 @@
         android:layout_marginBottom="5dp"
         android:layout_marginTop="5dp"
         android:background="@android:color/darker_gray" />
--->
+<!-- 
     <TextView
         android:id="@+id/editTextShare"
         android:layout_width="wrap_content"
@@ -210,6 +213,7 @@
         android:textAllCaps="false"
         android:textOff="@string/publish_youtube"
         android:textOn="@string/publish_youtube" />
+        -->
 <!-- 
     <ToggleButton
         android:id="@+id/toggleButtonVimeo"
@@ -243,7 +247,6 @@
         android:textAllCaps="false"
         android:textOff=""
         android:textOn="" />
- -->
 
 
     <View
@@ -254,6 +257,7 @@
         android:layout_marginBottom="5dp"
         android:layout_marginTop="5dp"
         android:background="@android:color/darker_gray" />
+ -->
 
     <!-- 
     <TextView
@@ -317,7 +321,7 @@
         android:id="@+id/lblViewStatus"
         android:layout_width="wrap_content"
         android:layout_height="40dp"
-        android:layout_below="@+id/divider5"
+        android:layout_below="@+id/divider4"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="5dp"
         android:text="@string/story_publish_status"
@@ -331,36 +335,13 @@
         android:layout_height="fill_parent"
         android:layout_alignBottom="@+id/lblViewStatus"
         android:layout_alignTop="@+id/lblViewStatus"
-        android:layout_below="@+id/divider5"
+        android:layout_below="@+id/divider4"
         android:layout_marginLeft="10dp"
         android:layout_toRightOf="@+id/lblViewStatus"
         android:gravity="center_vertical"
         android:text="@string/story_publish_status_not" />
-
-     <Button
-        android:id="@+id/btnRender"
-        android:layout_width="wrap_content"
-        android:layout_height="fill_parent"
-        android:layout_alignBottom="@+id/textViewStatus"
-        android:layout_alignTop="@+id/textViewStatus"
-        android:layout_below="@+id/divider5"
-        android:layout_marginLeft="10dp"
-        android:layout_toRightOf="@+id/textViewStatus"
-        android:gravity="center_vertical"
-        android:text="@string/action_render" />
-     
-    <Button
-        android:id="@+id/btnPublish"
-        android:layout_width="wrap_content"
-        android:layout_height="fill_parent"
-        android:layout_alignBottom="@+id/textViewStatus"
-        android:layout_alignTop="@+id/textViewStatus"
-        android:layout_below="@+id/divider5"
-        android:layout_marginLeft="10dp"
-        android:layout_toRightOf="@+id/btnRender"
-        android:gravity="center_vertical"
-        android:text="@string/action_publish" />
-        
+    
+    
     <View
         android:id="@+id/divider7"
         android:layout_width="fill_parent"
@@ -369,6 +350,26 @@
         android:layout_marginBottom="5dp"
         android:layout_marginTop="5dp"
         android:background="@android:color/darker_gray" />
+
+     <Button
+        android:id="@+id/btnRender"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/divider7"
+        android:layout_marginLeft="10dp"
+        android:gravity="center_vertical"
+        android:text="@string/action_render" />
+     
+    <Button
+        android:id="@+id/btnPublish"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/divider7"
+        android:layout_marginLeft="10dp"
+        android:layout_toRightOf="@+id/btnRender"
+        android:gravity="center_vertical"
+        android:text="@string/action_publish" />
+        
 
 </RelativeLayout>
 </ScrollView>

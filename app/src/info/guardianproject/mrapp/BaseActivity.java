@@ -23,29 +23,44 @@ import android.widget.ImageView;
 
 import com.actionbarsherlock.view.Window;
 import com.slidingmenu.lib.SlidingMenu;
+import com.slidingmenu.lib.SlidingMenu.OnClosedListener;
 import com.slidingmenu.lib.app.SlidingActivity;
 
-public class BaseActivity extends SlidingActivity {
+public class BaseActivity extends Activity {
+//public class BaseActivity extends Activity {
 
-	private SlidingMenu mSlidingMenu;
+	public SlidingMenu mSlidingMenu;
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        /*
-        requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
-        setProgressBarIndeterminate(false);
-        setProgressBarIndeterminateVisibility(false);
-        */
         
-        // setup drawer
-        setBehindContentView(R.layout.fragment_drawer);
-        mSlidingMenu = getSlidingMenu();
+      
+    }
+    
+    public void initSlidingMenu ()
+    {
+
+        mSlidingMenu = new SlidingMenu(this);
         mSlidingMenu.setShadowWidthRes(R.dimen.shadow_width);
         mSlidingMenu.setShadowDrawable(R.drawable.shadow);
-//        sm.setBehindOffsetRes(R.dimen.slidingmenu_offset);
+        mSlidingMenu.setTouchModeAbove(SlidingMenu.TOUCHMODE_MARGIN);
+        
         mSlidingMenu.setBehindWidthRes(R.dimen.slidingmenu_offset);
+        mSlidingMenu.setFadeDegree(0.35f);
+        mSlidingMenu.setMenu(R.layout.fragment_drawer);
+
+		mSlidingMenu.attachToActivity(this, SlidingMenu.SLIDING_CONTENT);
+		
+        mSlidingMenu.setOnClosedListener(new OnClosedListener() {
+
+            @Override
+            public void onClosed() {
+                mSlidingMenu.requestLayout();
+
+            }
+        });
+      //
         
         final Activity activity = this;
         
@@ -119,9 +134,23 @@ public class BaseActivity extends SlidingActivity {
             }
         });
         
+        
     }
     
-    private void detectCoachOverlay ()
+    
+    
+    @Override
+	public void onPostCreate(Bundle savedInstanceState) {
+		
+		super.onPostCreate(savedInstanceState);
+	
+
+        initSlidingMenu();
+	}
+
+
+
+	private void detectCoachOverlay ()
     {
         try {
         	

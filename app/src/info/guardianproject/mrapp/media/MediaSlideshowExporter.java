@@ -95,7 +95,7 @@ public class MediaSlideshowExporter implements Runnable {
     	MediaDesc mdAudio = new MediaDesc();
     	mdAudio.path = audioPath;
     	
-//    	ffmpegc.createSlideshowFromImagesAndAudio(listMediaDesc, mdAudio, exportWidth, exportHeight, slideDuration, bitrate, mdout.path, scDefault);
+    	ffmpegc.createSlideshowFromImagesAndAudio(listMediaDesc, mdAudio, exportWidth, exportHeight, slideDuration, bitrate, mdout.path, scDefault);
     	
 		
    }

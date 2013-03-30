@@ -1,6 +1,7 @@
 package info.guardianproject.mrapp.model;
 
 import java.io.File;
+import java.util.Date;
 
 import org.json.JSONObject;
 
@@ -18,7 +19,8 @@ public class Lesson {
 	public final static int STATUS_NOT_STARTED = 0;
 	public final static int STATUS_IN_PROGRESS = 1;
 	public final static int STATUS_COMPLETE = 2;
-	
+
+	public Date mStatusModified;
 
 	public static Lesson parse (String jsonTxt) throws Exception
 	{

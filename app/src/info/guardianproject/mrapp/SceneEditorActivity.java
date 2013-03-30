@@ -130,6 +130,7 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
         } else {
             actionBar.addTab(actionBar.newTab().setText(R.string.tab_publish).setTabListener(this));
         }
+        
 
     }
 

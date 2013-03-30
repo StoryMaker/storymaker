@@ -17,6 +17,7 @@ import android.widget.SimpleAdapter;
 import android.widget.AdapterView.OnItemClickListener;
 
 public class TemplateStoryReviewFragment extends Fragment {
+	
     public TemplateStoryReviewFragment() {
     }
 

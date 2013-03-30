@@ -27,18 +27,6 @@
         <item>Health</item>
         <item>Education</item>
         <item>Environment</item>
-        <item>Feature Stories</item>
-        <item>Special Reports</item>
-    </string-array>
-    <string-array name="story_topics">
-        <item>Gender</item>
-        <item>Placeholder 1</item>
-        <item>Placeholder 2</item>
-        <item>Placeholder 3</item>
-        <item>Placeholder 4</item>
-        <item>Placeholder 5</item>
-        <item>Placeholder 6</item>
-        <item>Placeholder 7</item>
     </string-array>
     
      <integer-array name="vibration_button">
