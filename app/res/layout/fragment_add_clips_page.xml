@@ -59,12 +59,13 @@
                 android:paddingTop="5dp"
                 android:textAppearance="?android:attr/textAppearanceSmall" />
 
+            <!-- 
             <TextView
                 android:id="@+id/clipTypeGoalLength"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceSmall" />
-
+ -->
             <TextView
                 android:id="@+id/clipTypeDescription"
                 android:layout_width="wrap_content"
@@ -85,6 +86,7 @@
                     android:padding="5dp"
                     android:src="@drawable/ic_context_tip" />
 
+                
                 <TextView
                     android:id="@+id/clipTypeTip"
                     android:layout_width="wrap_content"
@@ -92,6 +94,7 @@
                     android:textAppearance="?android:attr/textAppearanceSmall" />
             </LinearLayout>
 
+            <!-- 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -110,6 +113,7 @@
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceSmall" />
             </LinearLayout>
+            -->
 
         </LinearLayout>
     </ScrollView>

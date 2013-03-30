@@ -110,7 +110,7 @@ Build number: <xliff:g id="build_number">%s</xliff:g>\n
     <string name="new_story_choose_template">Scene Template</string>
     <string name="home_new_story">MAKE A STORY</string>
     <string name="home_start_a_lesson">EXPLORE LESSONS</string>
-    <string name="title_activity_new_story">New Story</string>
+    <string name="title_activity_new_story">Your created a story!</string>
     <string name="title_activity_lessons">Lessons</string>
     <string name="title_activity_scene_editor">Scene Editor</string>
     <string name="title_activity_choose_template">Choose Template</string>
@@ -220,7 +220,7 @@ Build number: <xliff:g id="build_number">%s</xliff:g>\n
 	<!--  youtube upload -->
 	
     <string name="lesson_status_have_not_started">Have not started</string>
-    <string name="lessons_congratulations_you_have_completed_the_lesson_">Congratulations. You have completed the lesson!</string>
+    <string name="lessons_congratulations_you_have_completed_the_lesson_">You completed a lesson!</string>
     <string name="lesson_status_in_progress">In progress</string>
     <string name="lesson_status_complete">COMPLETE!</string>
     <string name="tap_to_start_capture">tap to start capture</string>
