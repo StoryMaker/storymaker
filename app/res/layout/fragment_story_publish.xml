@@ -80,7 +80,7 @@
     <TextView
         android:id="@+id/textViewSection"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="40sp"
         android:layout_below="@+id/divider1"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="5dp"
@@ -97,7 +97,7 @@
         android:layout_alignParentRight="true"
         android:layout_below="@+id/divider1"
         android:layout_toRightOf="@+id/textViewSection"
-        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textAppearance="?android:attr/textAppearanceSmall"
         android:paddingRight="10dp" />
 
     <View
@@ -317,6 +317,7 @@
         android:layout_marginTop="5dp"
         android:background="@android:color/darker_gray" />
  -->
+ <!-- 
     <TextView
         android:id="@+id/lblViewStatus"
         android:layout_width="wrap_content"
@@ -340,7 +341,7 @@
         android:layout_toRightOf="@+id/lblViewStatus"
         android:gravity="center_vertical"
         android:text="@string/story_publish_status_not" />
-    
+     
     
     <View
         android:id="@+id/divider7"
@@ -350,12 +351,12 @@
         android:layout_marginBottom="5dp"
         android:layout_marginTop="5dp"
         android:background="@android:color/darker_gray" />
-
+-->
      <Button
         android:id="@+id/btnRender"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/divider7"
+        android:layout_below="@+id/divider4"
         android:layout_marginLeft="10dp"
         android:gravity="center_vertical"
         android:text="@string/action_render" />
@@ -364,7 +365,7 @@
         android:id="@+id/btnPublish"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/divider7"
+        android:layout_below="@+id/divider4"
         android:layout_marginLeft="10dp"
         android:layout_toRightOf="@+id/btnRender"
         android:gravity="center_vertical"
