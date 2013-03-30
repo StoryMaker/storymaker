@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
+import android.view.ViewParent;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -87,9 +88,7 @@ public class AddClipsThumbnailFragment extends Fragment {
 
                 @Override
                 public void onClick(View v) {
-                    ViewPager vp = (ViewPager) v.getParent().getParent().getParent()
-                            .getParent();
-                    mActivity.mMPM.mClipIndex = vp.getCurrentItem();
+                	
 
                     ((SceneEditorActivity) mActivity).openCaptureMode(clip, mClipIndex);
 

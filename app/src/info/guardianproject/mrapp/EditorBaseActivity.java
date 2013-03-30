@@ -174,6 +174,10 @@ public class EditorBaseActivity extends BaseActivity {
 
             return BitmapFactory.decodeFile(path, options);
         }
+        else if (media.getMimeType().startsWith("audio"))
+        {
+            return BitmapFactory.decodeResource(getResources(), R.drawable.thumb_audio);
+        }
         else 
         {
             return BitmapFactory.decodeResource(getResources(), R.drawable.thumb_complete);

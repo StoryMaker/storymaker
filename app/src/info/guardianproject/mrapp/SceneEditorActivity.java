@@ -375,6 +375,7 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
 
 	public void openCaptureMode (Clip clip, int clipIndex)
 	{
+		
 		if (mProject.getStoryType() == Project.STORY_TYPE_AUDIO)
 		{
 			Intent i = new Intent(mContext, SoundRecorder.class);
