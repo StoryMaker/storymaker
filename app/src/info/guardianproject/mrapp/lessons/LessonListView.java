@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Locale;
 
+import org.holoeverywhere.widget.ListAdapterWrapper;
 import org.holoeverywhere.widget.ListView;
 import org.holoeverywhere.widget.Toast;
 
@@ -52,7 +53,7 @@ public class LessonListView extends ListView implements LessonManagerListener {
     	mLocale = ((StoryMakerApp)mActivity.getApplication()).getCurrentLocale();
     	
         mLessonManager = StoryMakerApp.getLessonManager();
-        mLessonManager.setListener(this);
+        mLessonManager.setLessonManagerListener(this);
         
         new Thread ()
         {
@@ -183,10 +184,6 @@ public class LessonListView extends ListView implements LessonManagerListener {
     	
     	if (mListLessons.size() == 0)
     	{
-
-	        
-	        mActivity.setSupportProgressBarIndeterminateVisibility(true);
-	        
     		mLessonManager.updateLessonsFromRemote();
     		
     	}
@@ -244,11 +241,21 @@ public class LessonListView extends ListView implements LessonManagerListener {
 						if (msg.getData().containsKey("status"))
 							Toast.makeText(getContext(), msg.getData().getString("status"),Toast.LENGTH_SHORT).show();
 
-						if (getAdapter() != null)
-							((ArrayAdapter)getAdapter()).notifyDataSetChanged();
+						Object adapter = getAdapter();
+						
+						if (adapter != null)
+						{
+							if (adapter instanceof ArrayAdapter)
+							{
+								((ArrayAdapter)adapter).notifyDataSetChanged();
+							}
+							else if (adapter instanceof ListAdapterWrapper)
+							{
+								((ListAdapterWrapper)adapter).notifyDataSetChanged();
+							}
+							
+						}
 
-						mActivity.setSupportProgressBarIndeterminateVisibility(true);
-				        
 				 break;
 				case 1:
 
@@ -259,14 +266,21 @@ public class LessonListView extends ListView implements LessonManagerListener {
 					
 				break;
 				case 2:
-					mActivity.setSupportProgressBarIndeterminateVisibility(false);
+					mActivity.mProgressLoading.cancel();
+					
 			    break;
 			    
 				case 3: //update group list
 
 			    	setAdapter(new LessonGroupArrayAdapter(getContext(),R.layout.list_lesson_row, mLessonGroups));
-					mActivity.setSupportProgressBarIndeterminateVisibility(false);
+			    	
 
+				break;
+				
+				case 4: //error
+					mActivity.mProgressLoading.cancel();
+					Toast.makeText(getContext(), msg.getData().getString("err"), Toast.LENGTH_LONG).show();
+					
 				break;
 				
 				default:
@@ -314,16 +328,6 @@ public class LessonListView extends ListView implements LessonManagerListener {
 	@Override
 	public void loadingLessonFromServer(String subFolder, String lessonTitle) {
 		
-		/*
-		int rowIdx = Integer.parseInt(subFolder)-1;
-		
-		Object item = this.getItemAtPosition(rowIdx);
-		
-		if (item instanceof LessonGroup)
-		{
-			((LessonGroup)item).mStatus = "loading lesson: " + lessonTitle;
-		}
-		*/
 		
 		mHandler.sendEmptyMessage(0);
 		mHandler.sendEmptyMessage(1);
@@ -331,10 +335,12 @@ public class LessonListView extends ListView implements LessonManagerListener {
 	}
 
 	@Override
-	public void errorLoadingLessons(String msg) {
+	public void errorLoadingLessons(String errMsg) {
 		
 		
-		mHandler.sendEmptyMessage(2);
+		Message msg = mHandler.obtainMessage(4);
+		msg.getData().putString("err",errMsg);
+		mHandler.sendMessage(msg);
 	}
 
 	

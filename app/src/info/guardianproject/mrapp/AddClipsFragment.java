@@ -38,6 +38,8 @@ public class AddClipsFragment extends Fragment {
     private EditorBaseActivity mActivity;
     private int mScene;
 
+    public AddClipsFragment(){}
+    
     public AddClipsFragment(int layout, FragmentManager fm, Template template, int scene, EditorBaseActivity activity)
             throws IOException, JSONException {
         this.layout = layout;

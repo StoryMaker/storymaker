@@ -16,6 +16,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -88,21 +90,10 @@ public class HomeActivity extends BaseActivity {
         // action bar stuff
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         
-//        // setup drawer
-        SlidingMenu sm = getSlidingMenu();
-        sm.setShadowWidthRes(R.dimen.shadow_width);
-        sm.setShadowDrawable(R.drawable.shadow);
-//        sm.setBehindOffsetRes(R.dimen.slidingmenu_offset);
-        sm.setBehindWidthRes(R.dimen.slidingmenu_offset);
-
         Eula.show(this);
         
-        
-       
     }
     
-    
-        
     
     
     @Override
@@ -125,9 +116,11 @@ public class HomeActivity extends BaseActivity {
         protected Integer doInBackground(String... params) {
             try {
             	
+                
             	mLessonsCompleted = getLessonsCompleted(HomeActivity.this);
             	mListProjects = Project.getAllAsList(HomeActivity.this);
 
+            	
                 return null;
             } catch (Exception e) {
             	Log.e(AppConstants.TAG,"error loading home view",e);
@@ -139,6 +132,8 @@ public class HomeActivity extends BaseActivity {
         protected void onPostExecute(Integer result) {
             super.onPostExecute(result);
             try {
+            	
+
                 if (mLoading != null && mLoading.isShowing())
                 	mLoading.dismiss();
 
@@ -155,14 +150,18 @@ public class HomeActivity extends BaseActivity {
 	
     private void initActivityList ()
     {
-    	findViewById(R.id.llLessons).setVisibility(View.GONE);
-    	findViewById(R.id.llProjects).setVisibility(View.GONE);
-    	
+
+	
     	mCardView = (CardUI) findViewById(R.id.cardsview);
+    	
+    	if (mCardView == null)
+    		return;
+    	
     	mCardView.clearCards();
 		
     	mCardView.setSwipeable(false);
     	
+    	ArrayList<ActivityEntry> alActivity = new ArrayList<ActivityEntry>();
     	
     	for (int i = mLessonsCompleted.size()-1; i > mLessonsCompleted.size()-4 && i > -1; i--)
         {
@@ -181,7 +180,13 @@ public class HomeActivity extends BaseActivity {
 
     			}
     		});
-    		mCardView.addCard(card);
+    		
+    		Date cardDate = new Date();
+    		if (lesson.mStatusModified != null)
+    			cardDate = lesson.mStatusModified;
+    		
+    		ActivityEntry ae = new ActivityEntry(card,cardDate);
+    		alActivity.add(ae);
     		
     		
     	}
@@ -190,7 +195,6 @@ public class HomeActivity extends BaseActivity {
     	for (int i = mListProjects.size()-1; i > mListProjects.size()-4 && i > -1; i--)
     	{
     		Project project = mListProjects.get(i);
-
     		
     		// FIXME default to use first scene
     	    Media[] mediaList = project.getScenesAsArray()[0].getMediaAsArray();
@@ -230,7 +234,10 @@ public class HomeActivity extends BaseActivity {
         			}
         		});
         		
-        		mCardView.addCard(card);
+
+        		Date cardDate = new Date(new File(mediaList[0].getPath()).lastModified());
+        		ActivityEntry ae = new ActivityEntry(card,cardDate);
+        		alActivity.add(ae);
         		
 			}
 			else
@@ -249,22 +256,52 @@ public class HomeActivity extends BaseActivity {
         		});
         		mCardView.addCard(card);
         		
+        		Date cardDate = new Date();
+        		
+        		if (mediaList.length > 0)
+        			cardDate = new Date(new File(mediaList[0].getPath()).lastModified());
+        			
+        		ActivityEntry ae = new ActivityEntry(card,cardDate);
+        		alActivity.add(ae);
         		
         		
 			}
                   
     		
     	}
+    	
+    	Collections.sort(alActivity);
 
-
+    	for (ActivityEntry ae : alActivity)
+    		mCardView.addCard(ae.card);
+    	
 		// draw cards
 		mCardView.refresh();
 		
 		
     }
     
+    public static class ActivityEntry implements Comparable<HomeActivity.ActivityEntry> {
+
+    	  public Date dateTime;
+    	  public MyCard card;
+    	  
+    	  public ActivityEntry (MyCard card, Date dateTime)
+    	  {
+    		  this.card = card;
+    		  this.dateTime = dateTime;
+    	  }
+
+    	  @Override
+    	  public int compareTo(ActivityEntry o) {
+    	    return dateTime.compareTo(o.dateTime)*-1;//let's flip the compare output around
+    	  }
+    	}
+    
     private void initIntroActivityList ()
     {
+      	setContentView(R.layout.activity_home_intro);
+      	initSlidingMenu();
       	
 		int[] titles1 =
 			{(R.string.tutorial_title_1),
@@ -556,7 +593,7 @@ public class HomeActivity extends BaseActivity {
 
         if (item.getItemId() == android.R.id.home)
         {
-            toggle();
+        	mSlidingMenu.toggle();
         }
         else if (item.getItemId() == R.id.menu_settings)
         {

@@ -24,12 +24,14 @@ import android.widget.SimpleAdapter;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.TextView;
 
-@SuppressLint("ValidFragment") // FIxME maybe we shouldn't supress this
 public class TemplateStoryMakeFragment extends Fragment {
     EditorBaseActivity mActivity;
     public static final String ARG_SECTION_NUMBER = "section_number";
     private Template mTemplate;
     private Project mProject;
+    
+    public TemplateStoryMakeFragment()
+    {}
     
     public TemplateStoryMakeFragment(EditorBaseActivity activity) {
         mActivity = activity;

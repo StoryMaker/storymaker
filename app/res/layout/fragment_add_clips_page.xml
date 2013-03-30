@@ -3,9 +3,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:paddingTop="10dip"
-    android:paddingLeft="30dip"
-    android:paddingRight="30dip"
+    android:paddingTop="10dp"
+    android:paddingLeft="30dp"
+    android:paddingRight="30dp"
+    android:layout_margin="5dp"
+    
      >
     
     <FrameLayout  android:layout_width="fill_parent"
@@ -30,6 +32,7 @@
          android:layout_height="wrap_content"
          android:paddingTop="5dp"
          android:textAppearance="?android:attr/textAppearanceMedium"
+         android:text="the title"
          />
      
 
@@ -37,7 +40,9 @@
          android:id="@+id/clipTypeGoal"
          android:layout_width="wrap_content"
          android:layout_height="wrap_content"
-         android:textAppearance="?android:attr/textAppearanceLarge" />
+         android:textStyle="bold"
+         android:text="more info here more info here more info here more info here"
+         android:textAppearance="?android:attr/textAppearanceMedium" />
 
      
      <TextView

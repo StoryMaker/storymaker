@@ -25,6 +25,8 @@ public class AddClipsThumbnailFragment extends Fragment {
     private Media mMedia;
     private EditorBaseActivity mActivity;
     
+    public AddClipsThumbnailFragment(){}
+    
     public AddClipsThumbnailFragment(Clip clip, int clipIndex, Media media, EditorBaseActivity activity) {
         this.clip = clip;
         mClipIndex = clipIndex;

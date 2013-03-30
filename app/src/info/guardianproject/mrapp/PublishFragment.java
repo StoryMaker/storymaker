@@ -1,5 +1,6 @@
 package info.guardianproject.mrapp;
 
+import info.guardianproject.mrapp.model.Media;
 import info.guardianproject.mrapp.model.Project;
 import info.guardianproject.mrapp.server.LoginActivity;
 import info.guardianproject.mrapp.server.ServerManager;
@@ -8,9 +9,12 @@ import info.guardianproject.mrapp.server.YouTubeSubmit;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.StringTokenizer;
 
 import org.holoeverywhere.app.AlertDialog;
+import org.holoeverywhere.widget.Spinner;
 import org.holoeverywhere.widget.ToggleButton;
 import org.json.JSONException;
 
@@ -32,10 +36,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.CompoundButton.OnCheckedChangeListener;
+import android.widget.ImageView;
 
 import com.animoto.android.views.DraggableGridView;
 
@@ -76,49 +82,27 @@ public class PublishFragment extends Fragment {
 
         View view = inflater.inflate(layout, null);
         if (this.layout == R.layout.fragment_story_publish) {
+        	
+        	ImageView ivThumb = (ImageView)view.findViewById(R.id.storyThumb);
+
+            Media[] medias = mActivity.mMPM.mScene.getMediaAsArray();
+            if (medias.length > 0)
+            {
+            	ivThumb.setImageBitmap(mActivity.getThumbnail(medias[0]));
+            }
+        	
             EditText etTitle = (EditText) view.findViewById(R.id.etStoryTitle);
             EditText etDesc = (EditText) view.findViewById(R.id.editTextDescribe);
 
             etTitle.setText(mActivity.mMPM.mProject.getTitle());
-
-            ToggleButton tbYouTube = (ToggleButton) view.findViewById(R.id.toggleButtonYoutube);
-
-            tbYouTube.setOnCheckedChangeListener(new OnCheckedChangeListener() {
-
-                @Override
-                public void onCheckedChanged(CompoundButton buttonView,
-                        boolean isChecked) {
-
-                    if (isChecked) {
-                        checkYouTubeAccount();
-                    }
-
-                }
-
-            });
-
-            ToggleButton tbStoryMaker = (ToggleButton) view
-                    .findViewById(R.id.toggleButtonStoryMaker);
-
-            tbStoryMaker.setOnCheckedChangeListener(new OnCheckedChangeListener() {
-
-                @Override
-                public void onCheckedChanged(CompoundButton buttonView,
-                        boolean isChecked) {
-
-                    if (isChecked)
-                    {
-                        ServerManager sm = StoryMakerApp.getServerManager();
-                        sm.setContext(mActivity.getBaseContext());
-
-                        if (!sm.hasCreds())
-                            showLogin();
-                    }
-
-                }
-
-            });
             
+            ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
+            		  mActivity, R.array.story_sections, android.R.layout.simple_spinner_item );
+            		adapter.setDropDownViewResource( android.R.layout.simple_spinner_dropdown_item );
+            		
+			Spinner s = (Spinner) view.findViewById( R.id.spinnerSections );
+			s.setAdapter( adapter );
+
             Button btnRender = (Button) view.findViewById(R.id.btnRender);
             btnRender.setOnClickListener(new OnClickListener()
             {
@@ -126,6 +110,10 @@ public class PublishFragment extends Fragment {
                 @Override
                 public void onClick(View arg0) {
                     
+                	File fileExport = mActivity.mMPM.getExportMediaFile();
+                	if (fileExport.exists())
+                		fileExport.delete();
+                	
                     handlePublish(false, false);
                 }
                 
@@ -137,6 +125,8 @@ public class PublishFragment extends Fragment {
                 @Override
                 public void onClick(View v) {
                     
+
+                    
                     doPublish(); 
 
                 }
@@ -146,79 +136,96 @@ public class PublishFragment extends Fragment {
     }
     
     public void doPublish() {
+    	
+    	setUploadAccount();
+        
         ServerManager sm = StoryMakerApp.getServerManager();
         sm.setContext(mActivity.getBaseContext());
 
-        ToggleButton tbYouTube = (ToggleButton) mActivity.findViewById(R.id.toggleButtonYoutube);
-        ToggleButton tbStoryMaker = (ToggleButton) mActivity
-                .findViewById(R.id.toggleButtonStoryMaker);
-        final boolean doYouTube = tbYouTube.isChecked();
-        final boolean doStoryMaker = tbStoryMaker.isChecked();
-
-        if (!sm.hasCreds() && doStoryMaker)
+        if (!sm.hasCreds())
             showLogin();
         else
-            handlePublish(doYouTube, doStoryMaker);
+        {
+        	handlePublish(true, true);
+        }
+        
     }
 
     private void showLogin() {
         startActivity(new Intent(mActivity, LoginActivity.class));
     }
 
-    private void checkYouTubeAccount() {
+    private void setUploadAccount() {
         SharedPreferences settings = PreferenceManager
                 .getDefaultSharedPreferences(mActivity);
         mMediaUploadAccount = settings.getString("youTubeUserName", null);
 
+        
         if (mMediaUploadAccount == null) {
-            AccountManager accountManager = AccountManager.get(mActivity);
-            final Account[] accounts = accountManager.getAccounts();
+        
+        	AccountManager accountManager = AccountManager.get(mActivity.getBaseContext());
+            Account[] accounts = accountManager.getAccounts();
 
+            String projectType = null;
+            
+            if (mActivity.mMPM.mProject.getStoryType() == Project.STORY_TYPE_VIDEO
+                    || mActivity.mMPM.mProject.getStoryType() == Project.STORY_TYPE_ESSAY
+                    )
+            	projectType = "video";
+            else if (mActivity.mMPM.mProject.getStoryType() == Project.STORY_TYPE_AUDIO)
+            	projectType = "audio";
+            else if (mActivity.mMPM.mProject.getStoryType() == Project.STORY_TYPE_PHOTO)
+            	projectType = "image";
+            
             if (accounts.length > 0) {
-                String[] accountNames = new String[accounts.length];
-                for (int i = 0; i < accounts.length; i++) {
-                    accountNames[i] = accounts[i].name + " (" + accounts[i].type + ")";
-                }
-
-                AlertDialog.Builder builder = new AlertDialog.Builder(mActivity);
-                builder.setTitle(R.string.choose_account_for_youtube_upload);
-                builder.setItems(accountNames, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int item) {
-                        mMediaUploadAccount = accounts[item].name;
-                        // SharedPreferences settings =
-                        // PreferenceManager.getDefaultSharedPreferences(SceneEditorNoSwipeActivity.this);
-                        // settings.edit().putString("youTubeUserName",
-                        // mYouTubeUsername);
-                        // settings.edit().commit();
-                    }
-                }).show();
+            	
+            	for (Account account : accounts)
+            	{
+            		if (account.type != null)
+	            		if (projectType.startsWith("audio") && account.type.contains("com.soundcloud"))
+	            		{
+	            			mMediaUploadAccount = account.name;
+	            			break;
+	            		}
+	            		else if (projectType.startsWith("video") && account.type.contains("com.google"))
+	            		{
+	            			mMediaUploadAccount = account.name;
+	            			break;
+	            		}
+            	}
+                
+              
             }
         }
-    }
-
-    private String processTitle(String title) {
-        String result = title;
-        result = result.replace(' ', '_');
-        result = result.replace('!', '_');
-        result = result.replace('/', '_');
-        result = result.replace('!', '_');
-        result = result.replace('#', '_');
-        result = result.replace('"', '_');
-        result = result.replace('\'', '_');
-        return result;
     }
 
     private void handlePublish(final boolean doYouTube, final boolean doStoryMaker) {
         
         EditText etTitle = (EditText) mActivity.findViewById(R.id.etStoryTitle);
         EditText etDesc = (EditText) mActivity.findViewById(R.id.editTextDescribe);
+        EditText etLocation = (EditText)  mActivity.findViewById(R.id.editTextLocation);
+        
+		Spinner s = (Spinner) mActivity.findViewById( R.id.spinnerSections );
 
-        // final String exportFileName =
-        // processTitle(mMPM.mProject.getTitle()) + "-export-" + new
-        // Date().getTime();
-        final String exportFileName = mActivity.mMPM.mProject.getId() + "-export-" + new Date().getTime();
-
-
+		//only one item can be selected
+		ArrayList<String> alCats = new ArrayList<String>();
+		if (s.getSelectedItem() != null)
+			alCats.add((String)s.getSelectedItem());
+		
+		//now support location with comma in it and set each one as a place category
+		StringTokenizer st = new StringTokenizer(etLocation.getText().toString());
+		while (st.hasMoreTokens())
+		{
+			alCats.add(st.nextToken());
+		}
+		
+		String[] cattmp = new String[alCats.size()];
+		int i = 0;
+		for (String catstring: alCats)
+			cattmp[i++] = catstring;
+		
+		final String[] categories = cattmp;
+		
         mHandlerPub.sendEmptyMessage(999);
 
         final String title = etTitle.getText().toString();
@@ -237,8 +244,12 @@ public class PublishFragment extends Fragment {
         final YouTubeSubmit yts = new YouTubeSubmit(null, title, ytdesc, new Date(),
                 mActivity, mHandlerPub, mActivity.getBaseContext());
 
+
         Thread thread = new Thread() {
             public void run() {
+
+                yts.getAuthTokenWithPermission(mMediaUploadAccount);
+                
                 ServerManager sm = StoryMakerApp.getServerManager();
                 sm.setContext(mActivity.getBaseContext());
 
@@ -249,11 +260,18 @@ public class PublishFragment extends Fragment {
 
                 try {
                     
-                    //if (mActivity.mdExported == null)
-                       
-                	mActivity.mMPM.doExportMedia(exportFileName, doYouTube);
+                    File fileExport = mActivity.mMPM.getExportMediaFile();
+
+                    SharedPreferences settings = PreferenceManager
+                            .getDefaultSharedPreferences(mActivity);
+                    
+                    boolean compress = settings.getBoolean("pcompress",true);//compress video?
+                    boolean overwrite = false;
+                    
+                    mActivity.mMPM.doExportMedia(fileExport, compress, overwrite);
                     
                     mActivity.mdExported = mActivity.mMPM.getExportMedia();
+                    
                     File mediaFile = new File(mActivity.mdExported.path);
 
                     if (mediaFile.exists()) {
@@ -265,11 +283,18 @@ public class PublishFragment extends Fragment {
                         if (doYouTube) {
 
                             String mediaEmbed = "";
+                            
+                            String medium = null;
+                            String mediaService = null;
+                            String mediaGuid = null;
 
                             if (mActivity.mMPM.mProject.getStoryType() == Project.STORY_TYPE_VIDEO
                                     || mActivity.mMPM.mProject.getStoryType() == Project.STORY_TYPE_ESSAY
                                     
                                     ) {
+                            	
+                            	medium = ServerManager.CUSTOM_FIELD_MEDIUM_VIDEO;
+                            	
                                 msg = mHandlerPub.obtainMessage(888);
                                 msg.getData().putString("statusTitle",
                                         getActivity().getString(R.string.uploading));
@@ -278,10 +303,8 @@ public class PublishFragment extends Fragment {
                                 mHandlerPub.sendMessage(msg);
 
                                 yts.setVideoFile(mediaFile, mActivity.mdExported.mimeType);
-                                yts.getAuthTokenWithPermission(mMediaUploadAccount);
-                                // yts.upload(mYouTubeUsername,new
-                                // File(mActivity.mdExported.path));
-
+                                yts.upload();
+                                
                                 while (yts.videoId == null) {
                                     try {
                                         Thread.sleep(1000);
@@ -290,35 +313,55 @@ public class PublishFragment extends Fragment {
                                 }
 
                                 mediaEmbed = "[youtube]" + yts.videoId + "[/youtube]";
-
+                                mediaService = "youtube";
+                                mediaGuid = yts.videoId;
+                                
                                 message.getData().putString("youtubeid", yts.videoId);
                             }
                             else if (mActivity.mMPM.mProject.getStoryType() == Project.STORY_TYPE_AUDIO) {
+                            	
+                            	medium = ServerManager.CUSTOM_FIELD_MEDIUM_AUDIO;
+                            	
                                 boolean installed = SoundCloudUploader
                                         .isCompatibleSoundCloudInstalled(mActivity.getBaseContext());
 
                                 if (installed) {
+                                	
+                                	String scTitle = title + " " + new Date().getTime();
+                                	
                                     String scurl = SoundCloudUploader.buildSoundCloudURL(
-                                            mMediaUploadAccount, mediaFile, title);
+                                            mMediaUploadAccount, mediaFile, scTitle);
                                     mediaEmbed = "[soundcloud]" + scurl + "[/soundcloud]";
 
-                                    SoundCloudUploader.uploadSound(mediaFile, title, desc,
+                                    SoundCloudUploader.uploadSound(mediaFile, scTitle, desc,
                                             REQ_SOUNDCLOUD, mActivity);
 
+                                    mediaService = "soundcloud";
+                                    mediaGuid = scurl;
                                 }
                                 else {
                                     SoundCloudUploader.installSoundCloud(mActivity.getBaseContext());
                                 }
                             }
-                            else if (sm.hasCreds())
+                            else if (sm.hasCreds()) //must be photo
                             {
+                            	medium = ServerManager.CUSTOM_FIELD_MEDIUM_PHOTO;
+
                                 String murl = sm.addMedia(mActivity.mdExported.mimeType, mediaFile);
-                                mediaEmbed = murl;
+                                mediaEmbed = "<img src=\"" + murl + "\"/>";
+                                
                             }
 
                             if (doStoryMaker) {
+                            	
+                            	Message msgStatus = mHandlerPub.obtainMessage(888);
+                            	msgStatus.getData().putString("status",
+                                        getActivity().getString(R.string.uploading_to_storymaker));
+                                mHandlerPub.sendMessage(msgStatus);
+                            	
                                 String descWithMedia = desc + "\n\n" + mediaEmbed;
-                                String postId = sm.post(title, descWithMedia);
+                                String postId = sm.post(title, descWithMedia, categories, medium, mediaService, mediaGuid);
+                                
                                 String urlPost = sm.getPostUrl(postId);
                                 message.getData().putString("urlPost", urlPost);
                             }

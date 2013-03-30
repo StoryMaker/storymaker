@@ -701,6 +701,7 @@ public class Wordpress {
    */
   @SuppressWarnings("boxing")
   public String newPage(Page post, String publish) throws XmlRpcFault {
+	  
     return this.wp.newPage(0, this.username, this.password,
         post.toXmlRpcStruct(), publish);
   }
