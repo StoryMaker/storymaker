@@ -13,6 +13,8 @@ import org.ffmpeg.android.MediaUtils;
 import org.holoeverywhere.app.AlertDialog;
 import org.holoeverywhere.app.ProgressDialog;
 
+import com.actionbarsherlock.view.MenuItem;
+
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -22,6 +24,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.app.NavUtils;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -215,6 +218,27 @@ public class EditorBaseActivity extends BaseActivity {
 
         }
 
+    }
+    
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                if (mMPM.mProject.isTemplateStory()) {
+                    Intent intent = new Intent(this, StoryTemplateActivity.class);
+                    String lang = StoryMakerApp.getCurrentLocale().getLanguage();
+                    intent.putExtra("template_path", "story/templates/" + lang + "/event/event_basic.json");
+                    intent.putExtra("story_mode", mMPM.mProject.getStoryType());
+                    intent.putExtra("pid", mMPM.mProject.getId());
+                    intent.putExtra("title", mMPM.mProject.getTitle());
+                    NavUtils.navigateUpTo(this, intent);
+                } else {
+                    NavUtils.navigateUpFromSameTask(this);
+                }
+                return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
     
 }
