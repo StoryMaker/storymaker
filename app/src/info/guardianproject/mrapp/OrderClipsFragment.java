@@ -13,6 +13,7 @@ import org.holoeverywhere.widget.SeekBar;
 import org.holoeverywhere.widget.SeekBar.OnSeekBarChangeListener;
 import org.json.JSONException;
 
+import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -34,10 +35,12 @@ import android.widget.AdapterView.OnItemClickListener;
 
 import com.animoto.android.views.DraggableGridView;
 import com.animoto.android.views.OnRearrangeListener;
+import com.efor18.rangeseekbar.RangeSeekBar;
 
 /**
  * 
  */
+@SuppressLint("ValidFragment") // FIXME don't do this
 public class OrderClipsFragment extends Fragment {
     private final static String TAG = "OrderClipsFragment";
     int layout;
@@ -48,6 +51,7 @@ public class OrderClipsFragment extends Fragment {
     private ImageView mImageViewMedia;
     private PreviewVideoView mPreviewVideoView = null;
     private SeekBar mSeekBar = null;
+    RangeSeekBar<Integer> mRangeSeekBar = null;
     public MediaProjectManager mMPM;
     private Handler mHandlerPub;
     
@@ -121,6 +125,11 @@ public class OrderClipsFragment extends Fragment {
             }
             
         });
+        
+        mRangeSeekBar = new RangeSeekBar<Integer>(0, 99, getActivity());
+
+        ViewGroup layout = (ViewGroup) view.findViewById(R.id.llRangeSeekBar);
+        layout.addView(mRangeSeekBar);
         
         if (mMPM.mProject.getStoryType() == Project.STORY_TYPE_ESSAY)
         {
@@ -473,6 +482,15 @@ public class OrderClipsFragment extends Fragment {
             mHandlerPub.sendMessage(msgErr);
             Log.e(AppConstants.TAG, "error posting", e);
         }
+    }
     
+    public void enableTrim(boolean enable) {
+        if (enable) {
+//            mSeekBar.setVisibility(View.GONE);
+            mRangeSeekBar.setVisibility(View.VISIBLE);
+        } else {
+//            mSeekBar.setVisibility(View.VISIBLE);
+            mRangeSeekBar.setVisibility(View.GONE);
+        }
     }
 }
