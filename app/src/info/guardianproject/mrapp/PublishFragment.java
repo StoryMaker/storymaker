@@ -25,6 +25,7 @@ import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -88,7 +89,8 @@ public class PublishFragment extends Fragment {
             Media[] medias = mActivity.mMPM.mScene.getMediaAsArray();
             if (medias.length > 0)
             {
-            	ivThumb.setImageBitmap(mActivity.getThumbnail(medias[0]));
+                Bitmap bitmap = mActivity.getThumbnail(medias[0]);
+            	if (bitmap != null) ivThumb.setImageBitmap(bitmap);
             }
         	
             EditText etTitle = (EditText) view.findViewById(R.id.etStoryTitle);

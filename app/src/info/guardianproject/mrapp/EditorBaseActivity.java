@@ -133,6 +133,9 @@ public class EditorBaseActivity extends BaseActivity {
     
     public Bitmap getThumbnail(Media media)
     {
+        if (media == null)
+            return null;
+        
         String path = media.getPath();
 
         if (media.getMimeType() == null)
