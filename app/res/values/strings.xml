@@ -228,9 +228,8 @@ Build number: <xliff:g id="build_number">%s</xliff:g>\n
     <string name="_lesson_complete">" lesson complete"</string>
     <string name="_of_">" of "</string>
     <string name="default_youtube_desc">A StoryMaker project</string>
-    <string name="view_published_media_online_or_local_copy_">View published media online or local copy?</string>
-    <string name="youtube">YouTube</string>
-    <string name="local">Local</string>
+    <string name="view_published_media_online_or_local_copy_">View published media online?</string>
+  
     <string name="choose_account_for_youtube_upload">Choose Account for Upload</string>
     <string name="rendering">Rendering</string>
     <string name="rendering_project_">Rendering project...</string>

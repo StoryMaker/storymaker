@@ -1,42 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"   
-     android:background="#eaeae5"
-    android:fillViewport="true" >
-    
 <LinearLayout
-      
+      xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
     android:orientation="vertical"
         android:layout_margin="0dp"
-        android:padding="0dp"
-         >
+        android:padding="10dp"
+         xmlns:app="http://schemas.android.com/apk/res/info.guardianproject.mrapp">
     
-    <LinearLayout
-        android:id="@+id/llLessons"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-    android:orientation="vertical"
-        android:layout_margin="10dp"
-        
-        android:layout_weight="1"
-         >
+   
          
  <android.support.v4.view.ViewPager
         android:layout_width="match_parent" 
         android:id="@+id/pager1"
-        android:layout_height="180dp"
-        
+        android:layout_height="140sp"
+        android:layout_weight="1"
       android:background="#ffffff"
         />
    <com.viewpagerindicator.CirclePageIndicator
             android:id="@+id/circles1"
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
-                        android:padding="3dp"
-            
       android:background="#ffffff"
              />
  <View
@@ -69,32 +53,25 @@
             android:textColor="#333333"
             />
     </LinearLayout>
-    </LinearLayout>
-   
-     <LinearLayout
-        android:id="@+id/llProjects"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-    android:orientation="vertical"
-        android:layout_margin="10dp"
-        android:layout_weight="1"
-         >
+
 
  <android.support.v4.view.ViewPager
         android:layout_width="match_parent" 
         android:id="@+id/pager2"
-        android:layout_height="180dp"
+        android:layout_height="140sp"
+        android:layout_marginTop="6sp"
+                android:layout_weight="1"
         
       android:background="#ffffff"
         />
+ 
+ 
    <com.viewpagerindicator.CirclePageIndicator
             android:id="@+id/circles2"
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
-            android:padding="3dp"
       android:background="#ffffff"
-             />
-   
+             />  
      <View
         android:layout_width="fill_parent"
         android:layout_height="1dp"
@@ -129,8 +106,5 @@
             />
     </LinearLayout>
 
-    </LinearLayout>
-   
 
   </LinearLayout>
-  </ScrollView>

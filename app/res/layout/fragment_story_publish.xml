@@ -12,10 +12,11 @@
 
     <ImageView
         android:id="@+id/storyThumb"
-        android:layout_width="wrap_content"
+        android:layout_width="140sp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp"
+        android:layout_weight="1"
         android:src="@drawable/cliptype_close" />
 
     <EditText
@@ -29,7 +30,7 @@
         android:layout_marginTop="10dp"
         android:layout_toRightOf="@+id/storyThumb"
         android:hint="@string/story_publish_story_title"
-        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textAppearance="?android:attr/textAppearanceMedium"
         />
 
     <!-- 
@@ -61,7 +62,8 @@
         android:ems="10"
         android:hint="@string/story_publish_describe_hint"
         android:inputType="textMultiLine"
-        android:lines="3" >
+        android:lines="3" 
+        >
 
         <requestFocus />
     </EditText>
