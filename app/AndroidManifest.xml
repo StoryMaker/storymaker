@@ -1,8 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="info.guardianproject.mrapp"
     android:installLocation="auto"
-    android:versionCode="34"
-    android:versionName="0.0.5-alpha-7" >
+    android:versionCode="40"
+    android:versionName="0.0.5-alpha-8" >
     <uses-sdk
         android:minSdkVersion="8"
         android:targetSdkVersion="17" />
@@ -110,7 +110,6 @@
         </activity>
         <activity
             android:name="info.guardianproject.mrapp.SceneEditorActivity"
-            android:screenOrientation="portrait"
             android:configChanges="orientation|screenSize"
             android:label="@string/title_activity_scene_editor" >
             <meta-data
@@ -129,28 +128,12 @@
             android:name=".lessons.LessonViewActivity"
             android:screenOrientation="portrait" />
         <activity android:name=".server.WebViewActivity" />
+        
            <activity
             android:name=".media.MediaProjectManager"
             android:screenOrientation="landscape"
             android:configChanges="orientation|keyboardHidden|screenSize" >   
-            	  <intent-filter>
-            
-                 
-                <action android:name="android.intent.action.MAIN" />
-                
-                
-                 <category android:name="android.intent.category.DEFAULT" />
-                 <category android:name="android.intent.category.ALTERNATIVE" /> 
-                 <category android:name="android.intent.category.SELECTED_ALTERNATIVE" /> 
-            
-                 <!-- 
-			    <action android:name="android.intent.action.EDIT" />
-                 <action android:name="android.intent.action.SEND" />
-                 <data android:mimeType="image/*" />
-                 <data android:mimeType="video/*" />
-                 <data android:mimeType="audio/*" />
-                  -->
-             </intent-filter>          
+            	      
         </activity>
         <activity android:name=".MediaOutputPreferences" />
         <activity android:name=".SimplePreferences" />
@@ -174,11 +157,13 @@
         <provider
 		    android:authorities="info.guardianproject.mrapp.db.LessonsProvider"
 		    android:multiprocess="true"
+		    android:exported="false"
 		    android:name="info.guardianproject.mrapp.db.LessonsProvider"></provider>
         
         <provider
 		    android:authorities="info.guardianproject.mrapp.db.ProjectsProvider"
 		    android:multiprocess="true"
+		     android:exported="false"
 		    android:name="info.guardianproject.mrapp.db.ProjectsProvider"></provider>
 		      
         <activity
