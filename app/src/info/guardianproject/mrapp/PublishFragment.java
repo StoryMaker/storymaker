@@ -158,6 +158,19 @@ public class PublishFragment extends Fragment {
     private void setUploadAccount() {
         SharedPreferences settings = PreferenceManager
                 .getDefaultSharedPreferences(mActivity);
+
+        String projectType = null;
+        
+        if (mActivity.mMPM.mProject.getStoryType() == Project.STORY_TYPE_VIDEO
+                || mActivity.mMPM.mProject.getStoryType() == Project.STORY_TYPE_ESSAY
+                )
+        	projectType = "video";
+        else if (mActivity.mMPM.mProject.getStoryType() == Project.STORY_TYPE_AUDIO)
+        	projectType = "audio";
+        else if (mActivity.mMPM.mProject.getStoryType() == Project.STORY_TYPE_PHOTO)
+        	projectType = "image";
+        
+        
         mMediaUploadAccount = settings.getString("youTubeUserName", null);
 
         
@@ -166,17 +179,7 @@ public class PublishFragment extends Fragment {
         	AccountManager accountManager = AccountManager.get(mActivity.getBaseContext());
             Account[] accounts = accountManager.getAccounts();
 
-            String projectType = null;
-            
-            if (mActivity.mMPM.mProject.getStoryType() == Project.STORY_TYPE_VIDEO
-                    || mActivity.mMPM.mProject.getStoryType() == Project.STORY_TYPE_ESSAY
-                    )
-            	projectType = "video";
-            else if (mActivity.mMPM.mProject.getStoryType() == Project.STORY_TYPE_AUDIO)
-            	projectType = "audio";
-            else if (mActivity.mMPM.mProject.getStoryType() == Project.STORY_TYPE_PHOTO)
-            	projectType = "image";
-            
+          
             if (accounts.length > 0) {
             	
             	for (Account account : accounts)
