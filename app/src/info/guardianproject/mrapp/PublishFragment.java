@@ -161,15 +161,14 @@ public class PublishFragment extends Fragment {
 
             if (accounts.length > 0) {
             	
-            	
             	for (Account account : accounts)
             	{
-            		if (mimeType.startsWith("audio") && account.type.contains("soundcloud"))
+            		if (mimeType.startsWith("audio") && account.type.contains("com.soundcloud"))
             		{
             			mMediaUploadAccount = account.name;
             			break;
             		}
-            		else if (mimeType.startsWith("video") && account.type.contains("google"))
+            		else if (mimeType.startsWith("video") && account.type.contains("com.google"))
             		{
             			mMediaUploadAccount = account.name;
             			break;

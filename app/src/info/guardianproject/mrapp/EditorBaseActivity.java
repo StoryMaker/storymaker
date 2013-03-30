@@ -186,20 +186,15 @@ public class EditorBaseActivity extends BaseActivity {
                     switch (which) {
                         case DialogInterface.BUTTON_POSITIVE:
 
-                            String urlOnline = postUrl;
-
-                            if (youTubeId != null)
-                                urlOnline = "https://www.youtube.com/watch?v=" + youTubeId;
 
                             Intent i = new Intent(Intent.ACTION_VIEW);
-                            i.setData(Uri.parse(urlOnline));
+                            i.setData(Uri.parse(postUrl));
                             startActivity(i);
                             break;
 
                         case DialogInterface.BUTTON_NEGATIVE:
 
-                            mMPM.mMediaHelper.playMedia(localMedia, mimeType);
-
+                           
                             break;
                     }
                 }
@@ -207,8 +202,8 @@ public class EditorBaseActivity extends BaseActivity {
 
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setMessage(R.string.view_published_media_online_or_local_copy_)
-                    .setPositiveButton(R.string.youtube, dialogClickListener)
-                    .setNegativeButton(R.string.local, dialogClickListener).show();
+                    .setPositiveButton(R.string.yes, dialogClickListener)
+                    .setNegativeButton(R.string.no, dialogClickListener).show();
         }
         else
         {

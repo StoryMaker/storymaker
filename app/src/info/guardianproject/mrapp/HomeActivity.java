@@ -152,8 +152,11 @@ public class HomeActivity extends BaseActivity {
     {
 
 	
-    	
     	mCardView = (CardUI) findViewById(R.id.cardsview);
+    	
+    	if (mCardView == null)
+    		return;
+    	
     	mCardView.clearCards();
 		
     	mCardView.setSwipeable(false);

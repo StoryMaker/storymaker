@@ -83,7 +83,7 @@ public class YouTubeSubmit {
   private String title = null;
   private String description = null;
   
-  private Authorizer authorizer = null;
+  private GlsAuthorizer authorizer = null;
   
   private String tags = null;
 
@@ -120,9 +120,12 @@ public class YouTubeSubmit {
   
   
   public YouTubeSubmit(File videoFile, String title, String description, Date dateTaken, Activity activity, Handler handler, Context context) {
-      this.authorizer = new GlsAuthorizer.GlsAuthorizerFactory().getAuthorizer(activity,
+     
+	  
+	  authorizer = (GlsAuthorizer)new GlsAuthorizer.GlsAuthorizerFactory().getAuthorizer(activity,
         GlsAuthorizer.YOUTUBE_AUTH_TOKEN_TYPE);
-
+	  authorizer.setHandler(handler);
+	  
     this.videoFile = videoFile;
     this.activity = activity;
     this.title = title;
@@ -133,9 +136,7 @@ public class YouTubeSubmit {
 
 	httpClient = new StrongHttpsClient(mContext);
 
-    StrongHttpsClient httpClient = new StrongHttpsClient(mContext);
     SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(mContext);
-
     mUseTor = settings.getBoolean("pusetor", false);
     
 	if (mUseTor)

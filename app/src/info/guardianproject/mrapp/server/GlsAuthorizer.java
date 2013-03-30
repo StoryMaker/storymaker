@@ -24,6 +24,7 @@ import android.accounts.OperationCanceledException;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 
 import java.io.IOException;
@@ -44,7 +45,8 @@ public class GlsAuthorizer implements Authorizer {
   private final String authTokenType;
 
   private final String[] features;
-
+  private Handler handler;
+  
   private static class Config {
 	  private static final String APP_NAME = "GlsAuthorizer";
   }
@@ -54,6 +56,11 @@ public class GlsAuthorizer implements Authorizer {
 
     this.authTokenType = authTokenType;
     this.features = features;
+  }
+  
+  public void setHandler (Handler handler)
+  {
+	  this.handler = handler;
   }
 
   public static class GlsAuthorizerFactory implements AuthorizerFactory {
@@ -97,12 +104,14 @@ public class GlsAuthorizer implements Authorizer {
   public void fetchAuthToken(final String accountName, Activity activity,
       final AuthorizationListener<String> listener) {
     final Account account = getAccount(accountName);
+    Bundle bundle = new Bundle();
     
     if (account != null) {
+    	
       accountManager.getAuthToken(
           account,
           authTokenType,
-          null, // loginOptions,
+          bundle, // loginOptions,
           activity,
           new AccountManagerCallback<Bundle>() {
             public void run(AccountManagerFuture<Bundle> future) {
@@ -120,7 +129,7 @@ public class GlsAuthorizer implements Authorizer {
               }
             }
           },
-          null); // handler
+          handler); // handler
     } else {
       listener.onError(new Exception("Could not find account " + accountName));
     }
