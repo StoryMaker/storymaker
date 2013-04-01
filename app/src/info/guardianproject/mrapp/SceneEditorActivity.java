@@ -188,7 +188,7 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
                 
                 return true;
             case R.id.itemTrim:
-                if (mFragmentTab1!= null) { 
+                if (mFragmentTab1 != null) { 
                     ((OrderClipsFragment) mFragmentTab1).enableTrim(true);
                     startActionMode(mActionModeCallback);
                 }
@@ -233,6 +233,7 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
         @Override
         public void onDestroyActionMode(ActionMode mode) {
 //            mActionMode = null;
+            ((OrderClipsFragment) mFragmentTab1).enableTrim(false);
         }
     };
     
