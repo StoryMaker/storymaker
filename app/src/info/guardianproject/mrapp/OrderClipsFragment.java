@@ -52,6 +52,7 @@ public class OrderClipsFragment extends Fragment {
     private PreviewVideoView mPreviewVideoView = null;
     private SeekBar mSeekBar = null;
     RangeSeekBar<Integer> mRangeSeekBar = null;
+    ViewGroup mRangeSeekBarContainer = null;
     public MediaProjectManager mMPM;
     private Handler mHandlerPub;
     
@@ -128,8 +129,8 @@ public class OrderClipsFragment extends Fragment {
         
         mRangeSeekBar = new RangeSeekBar<Integer>(0, 99, getActivity());
 
-        ViewGroup layout = (ViewGroup) view.findViewById(R.id.llRangeSeekBar);
-        layout.addView(mRangeSeekBar);
+        mRangeSeekBarContainer = (ViewGroup) view.findViewById(R.id.llRangeSeekBar);
+        mRangeSeekBarContainer.addView(mRangeSeekBar);
         
         if (mMPM.mProject.getStoryType() == Project.STORY_TYPE_ESSAY)
         {
@@ -486,11 +487,11 @@ public class OrderClipsFragment extends Fragment {
     
     public void enableTrim(boolean enable) {
         if (enable) {
-//            mSeekBar.setVisibility(View.GONE);
-            mRangeSeekBar.setVisibility(View.VISIBLE);
+            mSeekBar.setVisibility(View.GONE);
+            mRangeSeekBarContainer.setVisibility(View.VISIBLE);
         } else {
-//            mSeekBar.setVisibility(View.VISIBLE);
-            mRangeSeekBar.setVisibility(View.GONE);
+            mSeekBar.setVisibility(View.VISIBLE);
+            mRangeSeekBarContainer.setVisibility(View.GONE);
         }
     }
 }
