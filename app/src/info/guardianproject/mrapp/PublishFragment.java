@@ -6,6 +6,7 @@ import info.guardianproject.mrapp.server.LoginActivity;
 import info.guardianproject.mrapp.server.ServerManager;
 import info.guardianproject.mrapp.server.SoundCloudUploader;
 import info.guardianproject.mrapp.server.YouTubeSubmit;
+import info.guardianproject.mrapp.server.Authorizer.AuthorizationListener;
 
 import java.io.File;
 import java.io.IOException;
@@ -25,6 +26,7 @@ import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
@@ -43,6 +45,7 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.animoto.android.views.DraggableGridView;
 
@@ -60,7 +63,13 @@ public class PublishFragment extends Fragment {
     View mView = null;
     private EditorBaseActivity mActivity;
     private Handler mHandlerPub;
+    
     private String mMediaUploadAccount = null;
+    private String mMediaUploadAccountKey = null;
+    
+
+    private SharedPreferences mSettings = null;
+    
 
     /**
      * The sortable grid view that contains the clips to reorder on the
@@ -73,6 +82,9 @@ public class PublishFragment extends Fragment {
         this.layout = layout;
         mActivity = activity;
         mHandlerPub = activity.mHandlerPub;
+        
+        mSettings = PreferenceManager
+        .getDefaultSharedPreferences(mActivity.getApplicationContext());
     }
 
     public static final String ARG_SECTION_NUMBER = "section_number";
@@ -138,18 +150,20 @@ public class PublishFragment extends Fragment {
     }
     
     public void doPublish() {
-    	
-    	setUploadAccount();
-        
-        ServerManager sm = StoryMakerApp.getServerManager();
-        sm.setContext(mActivity.getBaseContext());
 
-        if (!sm.hasCreds())
-            showLogin();
-        else
-        {
-        	handlePublish(true, true);
-        }
+    	String account = setUploadAccount();
+    	
+    	if (account != null && account.length() > 0)
+    	{
+	        ServerManager sm = StoryMakerApp.getServerManager();
+	      
+	        if (!sm.hasCreds())
+	            showLogin();
+	        else
+	        {
+	        	handlePublish(true, true);
+	        }
+    	}
         
     }
 
@@ -157,53 +171,69 @@ public class PublishFragment extends Fragment {
         startActivity(new Intent(mActivity, LoginActivity.class));
     }
 
-    private void setUploadAccount() {
-        SharedPreferences settings = PreferenceManager
-                .getDefaultSharedPreferences(mActivity);
-
-        String projectType = null;
+    private String setUploadAccount() {
+       
+        mMediaUploadAccountKey = null;
         
         if (mActivity.mMPM.mProject.getStoryType() == Project.STORY_TYPE_VIDEO
                 || mActivity.mMPM.mProject.getStoryType() == Project.STORY_TYPE_ESSAY
                 )
-        	projectType = "video";
+        {
+        	mMediaUploadAccountKey = "youTubeUserName";
+        	mMediaUploadAccount = mSettings.getString(mMediaUploadAccountKey, null);
+        }
         else if (mActivity.mMPM.mProject.getStoryType() == Project.STORY_TYPE_AUDIO)
-        	projectType = "audio";
-        else if (mActivity.mMPM.mProject.getStoryType() == Project.STORY_TYPE_PHOTO)
-        	projectType = "image";
-        
-        
-        mMediaUploadAccount = settings.getString("youTubeUserName", null);
+        {
+        	mMediaUploadAccountKey = "soundCloudUserName";
+        	mMediaUploadAccount = mSettings.getString(mMediaUploadAccountKey, null);
+        }
+         
 
-        
-        if (mMediaUploadAccount == null) {
+        if (mMediaUploadAccountKey != null && (mMediaUploadAccount == null || mMediaUploadAccount.length() == 0)) {
         
         	AccountManager accountManager = AccountManager.get(mActivity.getBaseContext());
-            Account[] accounts = accountManager.getAccounts();
+            final Account[] accounts = accountManager.getAccounts();
 
-          
             if (accounts.length > 0) {
             	
-            	for (Account account : accounts)
-            	{
-            		if (account.type != null)
-	            		if (projectType.startsWith("audio") && account.type.contains("com.soundcloud"))
-	            		{
-	            			mMediaUploadAccount = account.name;
-	            			break;
-	            		}
-	            		else if (projectType.startsWith("video") && account.type.contains("com.google"))
-	            		{
-	            			mMediaUploadAccount = account.name;
-	            			break;
-	            		}
-            	}
+                String[] accountNames = new String[accounts.length];
+
+                for (int i = 0; i < accounts.length; i++) {
+                    accountNames[i] = accounts[i].name + " (" + accounts[i].type + ")";
+                }
+                
+                AlertDialog.Builder builder = new AlertDialog.Builder(mActivity);
+                builder.setTitle(R.string.choose_account_for_youtube_upload);
+                builder.setItems(accountNames, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int item) {
+                        mMediaUploadAccount = accounts[item].name;
+                        
+                        Editor editor = mSettings.edit();
+                        
+                        editor.putString(mMediaUploadAccountKey, mMediaUploadAccount);
+                        editor.commit();
+                        
+                        doPublish();
+                        
+
+                    }
+                }).show();
                 
               
             }
+            else
+            {
+            	Toast.makeText(mActivity,R.string.err_you_need_at_least_one_account_configured_on_your_device,Toast.LENGTH_LONG).show();
+            }
+            
         }
+        
+        return mMediaUploadAccount;
     }
 
+    private Thread mThreadYouTubeAuth;
+    private Thread mThreadPublish;
+    
     private void handlePublish(final boolean doYouTube, final boolean doStoryMaker) {
         
         EditText etTitle = (EditText) mActivity.findViewById(R.id.etStoryTitle);
@@ -245,15 +275,47 @@ public class PublishFragment extends Fragment {
                                                                              // for
                                                                              // YouTube
         }
+        
+        ytdesc += "\n\n" + getString(R.string.created_with_storymaker_tag);;
 
         final YouTubeSubmit yts = new YouTubeSubmit(null, title, ytdesc, new Date(),
                 mActivity, mHandlerPub, mActivity.getBaseContext());
 
 
-        Thread thread = new Thread() {
+        mThreadYouTubeAuth = new Thread() {
             public void run() {
 
-                yts.getAuthTokenWithPermission(mMediaUploadAccount);
+	                yts.getAuthTokenWithPermission(mMediaUploadAccount,  new AuthorizationListener<String>() {
+	                    @Override
+	                    public void onCanceled() {
+	                    }
+	
+	                    @Override
+	                    public void onError(Exception e) {
+	                  	  Log.d("YouTube","error on auth",e);
+	                  	 Message msgErr = new Message();
+	                     msgErr.what = -1;
+	                     msgErr.getData().putString("err", e.getLocalizedMessage());
+	                     mHandlerPub.sendMessage(msgErr);
+	                  	  
+	                    }
+	
+	                    @Override
+	                    public void onSuccess(String result) {
+	                      yts.setClientLoginToken(result);
+	                      
+	                      Log.d("YouTube","got client token: " + result);
+	                      mThreadPublish.start();
+	                    }});
+            	 
+            }
+            
+        	};
+            
+        	mThreadPublish = new Thread() {
+
+            public void run ()
+            {
                 
                 ServerManager sm = StoryMakerApp.getServerManager();
                 sm.setContext(mActivity.getBaseContext());
@@ -267,11 +329,9 @@ public class PublishFragment extends Fragment {
                     
                     File fileExport = mActivity.mMPM.getExportMediaFile();
 
-                    SharedPreferences settings = PreferenceManager
-                            .getDefaultSharedPreferences(mActivity);
                     
-                    boolean compress = settings.getBoolean("pcompress",true);//compress video?
-                    boolean overwrite = false;
+                    boolean compress = mSettings.getBoolean("pcompress",false);//compress video?
+                    boolean overwrite = true;
                     
                     mActivity.mMPM.doExportMedia(fileExport, compress, overwrite);
                     
@@ -332,13 +392,13 @@ public class PublishFragment extends Fragment {
 
                                 if (installed) {
                                 	
-                                	String scTitle = title + " " + new Date().getTime();
-                                	
                                     String scurl = SoundCloudUploader.buildSoundCloudURL(
-                                            mMediaUploadAccount, mediaFile, scTitle);
+                                            mMediaUploadAccount, mediaFile, title);
                                     mediaEmbed = "[soundcloud]" + scurl + "[/soundcloud]";
 
-                                    SoundCloudUploader.uploadSound(mediaFile, scTitle, desc,
+                                    String scDesc = desc + "\n\n" + getString(R.string.created_with_storymaker_tag);;
+
+                                    SoundCloudUploader.uploadSound(mediaFile, title, scDesc,
                                             REQ_SOUNDCLOUD, mActivity);
 
                                     mediaService = "soundcloud";
@@ -395,7 +455,18 @@ public class PublishFragment extends Fragment {
                 }
             }
         };
+        
 
-        thread.start();
+   	 if (mActivity.mMPM.mProject.getStoryType() == Project.STORY_TYPE_VIDEO
+                || mActivity.mMPM.mProject.getStoryType() == Project.STORY_TYPE_ESSAY
+                
+                ) {
+
+   		 			mThreadYouTubeAuth.start();
+   	 }
+   	 else
+   	 {
+   		 mThreadPublish.start();
+   	 }
     }
 }

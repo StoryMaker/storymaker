@@ -37,17 +37,17 @@ public class SoundRecorderPreferenceActivity extends PreferenceActivity {
     }
 
     public static String getRecordType(Context context) {
-        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context.getApplicationContext());
         return settings.getString(RECORD_TYPE, context.getString(R.string.prefDefault_recordType));
     }
 
     public static boolean isHighQuality(Context context) {
-        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context.getApplicationContext());
         return settings.getBoolean(ENABLE_HIGH_QUALITY, true);
     }
 
     public static boolean isEnabledSoundEffect(Context context) {
-        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context.getApplicationContext());
         return settings.getBoolean(ENABLE_SOUND_EFFECT, true);
     }
 }

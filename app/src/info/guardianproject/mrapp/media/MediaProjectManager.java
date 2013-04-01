@@ -51,6 +51,8 @@ public class MediaProjectManager implements MediaManager {
 	
 	public int mClipIndex;  // FIXME hack to get clip we are adding media too into intent handler
 
+	private SharedPreferences mSettings;
+	
     public MediaProjectManager (Activity activity, Context context, Intent intent, Handler handler, int pid) {
         this(activity, context, intent, handler, Project.get(context, pid));
     }
@@ -70,6 +72,10 @@ public class MediaProjectManager implements MediaManager {
         } else {
             mScene = scene;
         }
+        
+
+        mSettings = PreferenceManager.getDefaultSharedPreferences(mContext.getApplicationContext());
+
     }
     
     public void initProject()
@@ -341,9 +347,8 @@ public class MediaProjectManager implements MediaManager {
 		    mOut.path = fileExport.getAbsolutePath();
 		    mOut.mimeType = AppConstants.MimeTypes.MP4;
 		    
-			 SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(mContext);
 
-		    int slideDuration = Integer.parseInt(settings.getString("pslideduration", AppConstants.DEFAULT_SLIDE_DURATION+""));
+		    int slideDuration = Integer.parseInt(mSettings.getString("pslideduration", AppConstants.DEFAULT_SLIDE_DURATION+""));
 
     		File fileAudio = new File(mContext.getExternalFilesDir(null),"narration" + mScene.getId() + ".wav");
     		String audioPath = null;
@@ -370,24 +375,20 @@ public class MediaProjectManager implements MediaManager {
     public void applyExportSettings (MediaDesc mdout)
     {
     	
-    	SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(mContext);
-    	
-    	mdout.videoBitrate = Integer.parseInt(settings.getString("p_video_bitrate", DEFAULT_VIDEO_BITRATE+""));;
-    	mdout.audioBitrate = Integer.parseInt(settings.getString("p_audio_bitrate", DEFAULT_AUDIO_BITRATE+""));;
-    	mdout.videoFps = settings.getString("p_video_framerate", DEFAULT_FRAME_RATE);
-    	mdout.width = Integer.parseInt(settings.getString("p_video_width", DEFAULT_WIDTH+""));
-    	mdout.height = Integer.parseInt(settings.getString("p_video_height", DEFAULT_HEIGHT+""));
+    	mdout.videoBitrate = Integer.parseInt(mSettings.getString("p_video_bitrate", DEFAULT_VIDEO_BITRATE+""));;
+    	mdout.audioBitrate = Integer.parseInt(mSettings.getString("p_audio_bitrate", DEFAULT_AUDIO_BITRATE+""));;
+    	mdout.videoFps = mSettings.getString("p_video_framerate", DEFAULT_FRAME_RATE);
+    	mdout.width = Integer.parseInt(mSettings.getString("p_video_width", DEFAULT_WIDTH+""));
+    	mdout.height = Integer.parseInt(mSettings.getString("p_video_height", DEFAULT_HEIGHT+""));
     	
     }
 
     public void applyExportSettingsAudio (MediaDesc mdout)
     {
-    	SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(mContext);
-
     	//look this up from prefs?
     	mdout.videoCodec = null; 
     	mdout.audioCodec = "aac";
-    	mdout.audioBitrate = Integer.parseInt(settings.getString("p_audio_bitrate", DEFAULT_AUDIO_BITRATE+""));;
+    	mdout.audioBitrate = Integer.parseInt(mSettings.getString("p_audio_bitrate", DEFAULT_AUDIO_BITRATE+""));;
     	mdout.format = "3gp";
     }
     

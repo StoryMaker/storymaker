@@ -85,7 +85,7 @@ public class OrderClipsFragment extends Fragment {
 
         View view = inflater.inflate(layout, null);
         
-         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(view.getContext());
+         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(view.getContext().getApplicationContext());
          mPhotoEssaySlideLength = Integer.parseInt(settings.getString("pslideduration", AppConstants.DEFAULT_SLIDE_DURATION+""));
         
         

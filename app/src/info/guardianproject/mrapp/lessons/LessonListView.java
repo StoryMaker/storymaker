@@ -83,7 +83,7 @@ public class LessonListView extends ListView implements LessonManagerListener {
         
 
 
-      	 SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getContext());
+      	 SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getContext().getApplicationContext());
 
   	     final boolean requireComplete = !settings.getBoolean("plessondebug", false);
   	     
@@ -184,14 +184,12 @@ public class LessonListView extends ListView implements LessonManagerListener {
     	
     	if (mListLessons.size() == 0)
     	{
-    		mLessonManager.updateLessonsFromRemote();
-    		
+    		mActivity.updateLessons();
     	}
     	
     	loadLessonListAdapter();
     	
     }
-    
     
 	private void accessLesson (Lesson lesson)
 	{
@@ -302,8 +300,7 @@ public class LessonListView extends ListView implements LessonManagerListener {
     
     private void loadLessonListAdapter ()
     {
-
-       	 SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getContext());
+       	 SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getContext().getApplicationContext());
 
    	     boolean requireComplete = !settings.getBoolean("plessondebug", false);
    	     

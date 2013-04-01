@@ -168,9 +168,20 @@ public class HomeActivity extends BaseActivity {
 
     		Lesson lesson = mLessonsCompleted.get(i);
     		
-    		MyCard card = new MyCard(getString(R.string.lessons_congratulations_you_have_completed_the_lesson_),lesson.mTitle);
-    		card.setIcon(R.drawable.ic_home_lesson);
+    		MyCard card = null;
     		
+    		if (lesson.mStatus == Lesson.STATUS_COMPLETE)
+    		{	
+    			card = new MyCard(getString(R.string.lessons_congratulations_you_have_completed_the_lesson_),lesson.mTitle);
+    		}
+    		else if (lesson.mStatus == Lesson.STATUS_IN_PROGRESS)
+    		{	
+    			card = new MyCard(getString(R.string.you_began_a_new_lesson),lesson.mTitle);
+    		}
+    		
+    			
+    		card.setIcon(R.drawable.ic_home_lesson);
+        		
     		card.setOnClickListener(new OnClickListener() {
 
     			@Override
@@ -239,6 +250,31 @@ public class HomeActivity extends BaseActivity {
         		ActivityEntry ae = new ActivityEntry(card,cardDate);
         		alActivity.add(ae);
         		
+        		if (project.getStoryType() == Project.STORY_TYPE_VIDEO)
+    	    	{
+    	    		//video
+        			card.setIcon(R.drawable.btn_toggle_ic_list_video);
+    	    	}
+    	    	else if (project.getStoryType() == Project.STORY_TYPE_PHOTO)
+    	    	{	
+    	    		//photo	    	
+    	    		card.setIcon(R.drawable.btn_toggle_ic_list_photo);
+
+    	    	}
+    	    	else if (project.getStoryType() == Project.STORY_TYPE_AUDIO)
+    	    	{
+    	
+    	    		//audio	    	
+    	    		card.setIcon(R.drawable.btn_toggle_ic_list_audio);
+
+    	    	}
+    	    	else if (project.getStoryType() == Project.STORY_TYPE_ESSAY)
+    	    	{
+    	    		//essay
+    	    		card.setIcon(R.drawable.btn_toggle_ic_list_essay);
+    	
+    	    	}
+        		
 			}
 			else
 			{
@@ -255,6 +291,32 @@ public class HomeActivity extends BaseActivity {
         			}
         		});
         		mCardView.addCard(card);
+        		
+        		if (project.getStoryType() == Project.STORY_TYPE_VIDEO)
+    	    	{
+    	    		//video
+        			card.setIcon(R.drawable.btn_toggle_ic_list_video);
+    	    	}
+    	    	else if (project.getStoryType() == Project.STORY_TYPE_PHOTO)
+    	    	{	
+    	    		//photo	    	
+    	    		card.setIcon(R.drawable.btn_toggle_ic_list_photo);
+
+    	    	}
+    	    	else if (project.getStoryType() == Project.STORY_TYPE_AUDIO)
+    	    	{
+    	
+    	    		//audio	    	
+    	    		card.setIcon(R.drawable.btn_toggle_ic_list_audio);
+
+    	    	}
+    	    	else if (project.getStoryType() == Project.STORY_TYPE_ESSAY)
+    	    	{
+    	    		//essay
+    	    		card.setIcon(R.drawable.btn_toggle_ic_list_essay);
+    	
+    	    	}
+        		
         		
         		Date cardDate = new Date();
         		
@@ -536,6 +598,9 @@ public class HomeActivity extends BaseActivity {
     		for (Lesson lesson : lessons)
     			if (lesson.mStatus == Lesson.STATUS_COMPLETE)
     				result.add(lesson);        		
+    			//else if (lesson.mStatus == Lesson.STATUS_IN_PROGRESS)
+    			//	result.add(lesson);        		
+			
     	}
     	
     	return result;
@@ -550,7 +615,7 @@ public class HomeActivity extends BaseActivity {
 
 	private void checkForTor ()
     {
-    	 SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
+    	 SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 
 	     boolean useTor = settings.getBoolean("pusetor", false);
 	     
@@ -574,7 +639,7 @@ public class HomeActivity extends BaseActivity {
     private void checkCreds ()
     {
     	
-        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
        
         String user = settings.getString("user",null);
         

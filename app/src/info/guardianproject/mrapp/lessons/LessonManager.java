@@ -246,7 +246,7 @@ public class LessonManager implements Runnable {
 			// open URL and download file listing
 			StrongHttpsClient httpClient = getHttpClientInstance();
 			
-			 SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(mContext);
+			 SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(mContext.getApplicationContext());
 
 		     boolean useTor = settings.getBoolean("pusetor", false);
 		     

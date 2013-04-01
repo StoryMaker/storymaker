@@ -42,7 +42,7 @@ public class StoryMakerApp extends Application {
 	 
 	 public static String initServerUrls (Context context)
 	 {
-		 SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context);
+		 SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context.getApplicationContext());
 		 mBaseUrl = settings.getString("pserver", STORYMAKER_DEFAULT_SERVER_URL) ;
 		 return mBaseUrl;
 	 }
@@ -79,7 +79,7 @@ public class StoryMakerApp extends Application {
 			initServerUrls(this);
 			
 			mLessonManager = new LessonManager (this, mBaseUrl + URL_PATH_LESSONS + mLocale.getLanguage() + "/", new File(getExternalFilesDir(null), "lessons/" + mLocale.getLanguage()));
-			mServerManager = new ServerManager (getBaseContext());
+			mServerManager = new ServerManager (getApplicationContext());
 		}
 		catch (Exception e)
 		{
@@ -90,7 +90,7 @@ public class StoryMakerApp extends Application {
 	public void updateLocale (String newLocale)
 	{
         mLocale = new Locale(newLocale);
-        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         settings.edit().putString(PREF_LOCALE,newLocale);
         settings.edit().commit();
         checkLocale();
@@ -107,7 +107,7 @@ public class StoryMakerApp extends Application {
 	
 	 public boolean checkLocale ()
 	    {
-	        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
+	        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 
 	        Configuration config = getResources().getConfiguration();
 
