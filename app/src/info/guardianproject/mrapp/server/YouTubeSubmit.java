@@ -36,7 +36,6 @@ import javax.xml.parsers.ParserConfigurationException;
 import org.apache.http.Header;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpPost;
-import org.apache.http.client.methods.HttpPut;
 import org.apache.http.entity.AbstractHttpEntity;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.message.BasicHeader;
@@ -48,15 +47,11 @@ import org.xml.sax.SAXException;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.preference.PreferenceManager;
 import android.util.Log;
-import android.widget.TextView;
 
 public class YouTubeSubmit {
 
@@ -136,7 +131,7 @@ public class YouTubeSubmit {
 
 	httpClient = new StrongHttpsClient(mContext);
 
-    SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(mContext);
+    SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(mContext.getApplicationContext());
     mUseTor = settings.getBoolean("pusetor", false);
     
 	if (mUseTor)
@@ -176,6 +171,7 @@ public class YouTubeSubmit {
               submitCount++;
               videoId = startUpload(videoFile, contentType);
               assert videoId!=null;
+              break;
             } catch (Internal500ResumeException e500) { // TODO - this should not really happen
               if (submitCount<MAX_RETRIES) {
                 Log.w(LOG_TAG, e500.getMessage());
@@ -198,20 +194,20 @@ public class YouTubeSubmit {
           e.printStackTrace();
           msg.what = -1;
           
-          bundle.putString("error", e.getMessage());
+          bundle.putString("err", e.getMessage());
           handler.sendMessage(msg);
           return;
         } catch (SAXException e) {
           e.printStackTrace();
           msg.what = -1;
           
-          bundle.putString("error", e.getMessage());
+          bundle.putString("err", e.getMessage());
           handler.sendMessage(msg);
         } catch (ParserConfigurationException e) {
           e.printStackTrace(); 
           msg.what = -1;
           
-          bundle.putString("error", e.getMessage());
+          bundle.putString("err", e.getMessage());
           handler.sendMessage(msg);
         }
 
@@ -521,7 +517,7 @@ public class YouTubeSubmit {
      {
      
         
-       byte[] tmp = new byte[1024*16]; //16kb chunks
+       byte[] tmp = new byte[1024*8]; //16kb chunks
        int bytesRead;
        
        BufferedOutputStream bos = new BufferedOutputStream(outstream);
@@ -730,32 +726,19 @@ public class YouTubeSubmit {
     return connection;
   }*/
 
-  public void getAuthTokenWithPermission(String accountName) {
+  public void setClientLoginToken (String token)
+  {
+	  this.clientLoginToken = token;
+  }
+  
+  public void getAuthTokenWithPermission(String accountName, AuthorizationListener listener) {
 	
 	if (accountName == null)
 		this.youTubeName = ((GlsAuthorizer)authorizer).getAccount(null).name;
 	else
 		this.youTubeName = accountName;
-	  
-	clientLoginToken = authorizer.getAuthToken(accountName);
 	
-	/*
-    this.authorizer.fetchAuthToken(accountName, activity, new AuthorizationListener<String>() {
-      @Override
-      public void onCanceled() {
-      }
-
-      @Override
-      public void onError(Exception e) {
-    	  Log.e("YouTube","error on auth",e);
-      }
-
-      @Override
-      public void onSuccess(String result) {
-        YouTubeSubmit.this.clientLoginToken = result;
-        
-        Log.d("YouTube","got client token: " + result);
-      }});*/
+    this.authorizer.fetchAuthToken(accountName, activity, listener);
   }
   
   public void upload ()

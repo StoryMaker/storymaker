@@ -45,6 +45,8 @@ public class ServerManager {
 	public final static String CUSTOM_FIELD_MEDIA_HOST_YOUTUBE = "youtube"; //youtube or soundcloud
 	public final static String CUSTOM_FIELD_MEDIA_HOST_SOUNDCLOUD = "soundcloud"; //youtube or soundcloud
 
+	private SharedPreferences mSettings;
+	
 	public ServerManager (Context context)
 	{
 		this(context, StoryMakerApp.initServerUrls(context));
@@ -55,6 +57,9 @@ public class ServerManager {
 	{
 		mContext = context;
 		mServerUrl = serverUrl;
+		
+		mSettings = PreferenceManager.getDefaultSharedPreferences(mContext.getApplicationContext());
+	       
 	}
 	
 	public void setContext (Context context)
@@ -65,9 +70,8 @@ public class ServerManager {
 	//if the user hasn't registered with the user, show the login screen
     public boolean hasCreds ()
     {
-        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(mContext);
        
-        String user = settings.getString("user","");
+        String user = mSettings.getString("user","");
         
         return (user != null && user.length() > 0);
         
@@ -77,10 +81,8 @@ public class ServerManager {
     {
     	if (mWordpress == null)
     	{
-    	   SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(mContext);
-           
-           String user = settings.getString("user","");
-           String pass = settings.getString("pass", "");
+           String user = mSettings.getString("user","");
+           String pass = mSettings.getString("pass", "");
          
            if (user != null && user.length() > 0)
         	   connect (user, pass);
@@ -90,9 +92,8 @@ public class ServerManager {
 	public void connect (String username, String password) throws MalformedURLException, XmlRpcFault
 	{
 		XmlRpcClient.setContext(mContext);
-		SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(mContext);
 
-	    boolean useTor = settings.getBoolean("pusetor", false);
+	    boolean useTor = mSettings.getBoolean("pusetor", false);
 	    
 		if (useTor)
 		{

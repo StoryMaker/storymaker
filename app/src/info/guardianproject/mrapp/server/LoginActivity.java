@@ -92,7 +92,7 @@ public class LoginActivity extends BaseActivity implements Runnable
     
     private void saveCreds (String user, String pass)
     { 
-        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         Editor edit = settings.edit(); 
         
         edit.putString("user", user);
@@ -104,7 +104,7 @@ public class LoginActivity extends BaseActivity implements Runnable
     
     private void getCreds ()
     { 
-        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
        
         String user = settings.getString("user",null);
         String pass = settings.getString("pass",null);

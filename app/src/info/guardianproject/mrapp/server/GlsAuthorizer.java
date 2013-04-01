@@ -103,16 +103,15 @@ public class GlsAuthorizer implements Authorizer {
 
   public void fetchAuthToken(final String accountName, Activity activity,
       final AuthorizationListener<String> listener) {
+	  
     final Account account = getAccount(accountName);
-    Bundle bundle = new Bundle();
     
     if (account != null) {
     	
       accountManager.getAuthToken(
           account,
           authTokenType,
-          bundle, // loginOptions,
-          activity,
+          false, // loginOptions,
           new AccountManagerCallback<Bundle>() {
             public void run(AccountManagerFuture<Bundle> future) {
               try {
