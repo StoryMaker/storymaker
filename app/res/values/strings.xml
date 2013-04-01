@@ -272,5 +272,8 @@ Build number: <xliff:g id="build_number">%s</xliff:g>\n
     
     <string name="home_intro_button_lessons">EXPLORE LESSONS</string>
     <string name="home_intro_button_projects">MAKE A STORY</string>
+    <string name="created_with_storymaker_tag">Created with StoryMaker - https://storymaker.cc/</string>
+    <string name="err_you_need_at_least_one_account_configured_on_your_device">You need at least one account configured on your device</string>
+    <string name="you_began_a_new_lesson">You began a new lesson</string>
     
 </resources>

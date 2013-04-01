@@ -6,6 +6,7 @@
 	    		<CheckBoxPreference android:title="Use Orbot (Tor)" android:summary="Send all network traffic through the Tor network (https://torproject.org)" android:key="pusetor"/>
 	
 	<EditTextPreference android:title="YouTube Account" android:summary="the YouTube account to use for video uploads" android:key="youTubeUserName" android:enabled="true"/>
+	<EditTextPreference android:title="SouldCloud Account" android:summary="the SoundCloud account to use for audio uploads" android:key="souldCloudUserName" android:enabled="true"/>
 	    
 	</PreferenceCategory>
 	<PreferenceCategory android:title="Locales">
@@ -16,7 +17,7 @@
 	<PreferenceCategory android:title="Media">
 		<EditTextPreference android:title="Slide Duration" android:summary="Duration of each slide in a photo essay" android:key="pslideduration" android:defaultValue="5" android:enabled="true"/>
 	
-	<CheckBoxPreference android:title="Enable Compression" android:summary="compress all video and audio using the settings below" android:key="pcompress"/>
+	<CheckBoxPreference android:title="Enable Compression" android:summary="compress all video and audio using the settings below" android:key="pcompress" android:defaultValue="false"/>
 		
 	<EditTextPreference android:title="Video Width" android:summary="Export video width" android:key="p_video_width" android:defaultValue="720" android:enabled="true"/>
 		<EditTextPreference android:title="Video Height" android:summary="Export video height" android:key="p_video_height" android:defaultValue="480" android:enabled="true"/>
