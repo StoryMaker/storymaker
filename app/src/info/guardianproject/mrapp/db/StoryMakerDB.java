@@ -6,7 +6,7 @@ import android.content.Context;
 
 public class StoryMakerDB extends SQLiteOpenHelper {
 	
-    private static final int DB_VERSION = 2;
+    private static final int DB_VERSION = 3;
     private static final String DB_NAME = "sm.db";
     
     public StoryMakerDB(Context context) {
@@ -24,7 +24,13 @@ public class StoryMakerDB extends SQLiteOpenHelper {
     
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-    	db.execSQL(StoryMakerDB.Schema.Projects.UPDATE_TABLE_PROJECTS);
+        if ((oldVersion < 2) && (newVersion == 2)) {
+            db.execSQL(StoryMakerDB.Schema.Projects.UPDATE_TABLE_PROJECTS);
+        } 
+        if ((oldVersion < 3) && (newVersion == 3)) {
+            db.execSQL(StoryMakerDB.Schema.Media.UPDATE_TABLE_MEDIA_ADD_TRIM_START);
+            db.execSQL(StoryMakerDB.Schema.Media.UPDATE_TABLE_MEDIA_ADD_TRIM_END);
+        } 
     }
     
     public class Schema 
@@ -98,6 +104,8 @@ public class StoryMakerDB extends SQLiteOpenHelper {
 	    	public static final String COL_MIME_TYPE = "mime_type";
 	    	public static final String COL_CLIP_TYPE = "clip_type";
 	    	public static final String COL_CLIP_INDEX = "clip_index";
+            public static final String COL_TRIM_START = "trim_start";
+            public static final String COL_TRIM_END = "trim_end";
 	    	
 	    	private static final String CREATE_TABLE_MEDIA = "create table " + NAME + " ("
 	    			+ ID + " integer primary key autoincrement, "
@@ -105,8 +113,18 @@ public class StoryMakerDB extends SQLiteOpenHelper {
 	    			+ COL_PATH + " text not null, "
 	    			+ COL_MIME_TYPE + " text not null, " 
 	    			+ COL_CLIP_TYPE + " text not null, " 
-	    			+ COL_CLIP_INDEX + " integer not null" 
+	    			+ COL_CLIP_INDEX + " integer not null," 
+                    + COL_TRIM_START + " integer," 
+                    + COL_TRIM_END + " integer" 
 	    			+ "); ";
+            
+            private static final String UPDATE_TABLE_MEDIA_ADD_TRIM_START = "alter table " + NAME + " " 
+                    + "ADD COLUMN "
+                    + COL_TRIM_START + " integer;";
+
+            private static final String UPDATE_TABLE_MEDIA_ADD_TRIM_END = "alter table " + NAME + " " 
+                    + "ADD COLUMN "
+                    + COL_TRIM_END + " integer;";
     	}
     	
 //    	public static final String DB_SCHEMA = Lessons.CREATE_TABLE_LESSONS 
