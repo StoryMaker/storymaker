@@ -237,6 +237,12 @@ public class MediaProjectManager implements MediaManager {
     	    		MediaDesc mDesc = new MediaDesc();
     	    		mDesc.mimeType = media.getMimeType();
     	    		mDesc.path = media.getPath();
+    	    		if (media.getTrimStart() > 0) {
+    	    		    mDesc.startTime = "" + media.getTrimmedStartTime() / 1000F;
+                        mDesc.duration = "" + media.getTrimmedDuration() / 1000F;
+    	    		} else if ((media.getTrimEnd() < 99) && media.getTrimEnd() > 0) {
+    	    		    mDesc.duration = "" + media.getTrimmedDuration() / 1000F;
+    	    		}
     	    		
     	        	applyExportSettings(mDesc);
     	    		alMediaIn.add(mIdx, mDesc);
