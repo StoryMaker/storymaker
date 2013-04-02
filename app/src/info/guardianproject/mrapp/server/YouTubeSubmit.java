@@ -26,24 +26,22 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.security.Principal;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
-import org.apache.http.Header;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.AbstractHttpEntity;
-import org.apache.http.entity.StringEntity;
-import org.apache.http.message.BasicHeader;
+import org.apache.commons.io.IOUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
+import android.accounts.Account;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -52,6 +50,22 @@ import android.os.Handler;
 import android.os.Message;
 import android.preference.PreferenceManager;
 import android.util.Log;
+import ch.boye.httpclientandroidlib.Header;
+import ch.boye.httpclientandroidlib.HttpException;
+import ch.boye.httpclientandroidlib.HttpRequest;
+import ch.boye.httpclientandroidlib.HttpRequestInterceptor;
+import ch.boye.httpclientandroidlib.HttpResponse;
+import ch.boye.httpclientandroidlib.auth.AuthScope;
+import ch.boye.httpclientandroidlib.auth.AuthState;
+import ch.boye.httpclientandroidlib.auth.Credentials;
+import ch.boye.httpclientandroidlib.auth.UsernamePasswordCredentials;
+import ch.boye.httpclientandroidlib.client.CredentialsProvider;
+import ch.boye.httpclientandroidlib.client.methods.HttpPost;
+import ch.boye.httpclientandroidlib.client.protocol.ClientContext;
+import ch.boye.httpclientandroidlib.entity.AbstractHttpEntity;
+import ch.boye.httpclientandroidlib.entity.StringEntity;
+import ch.boye.httpclientandroidlib.impl.auth.BasicScheme;
+import ch.boye.httpclientandroidlib.protocol.HttpContext;
 
 public class YouTubeSubmit {
 
@@ -61,6 +75,8 @@ public class YouTubeSubmit {
   private static final String CONTENT_TYPE = "application/atom+xml; charset=UTF-8";
   private static final String DEFAULT_VIDEO_CATEGORY = "News";
   private static final String DEFAULT_VIDEO_TAGS = "mobile, storymaker";
+  
+  private static final String HOST_UPLOADS = "uploads.gdata.youtube.com";
 
   private static final int MAX_RETRIES = 10;
   private static final int BACKOFF = 6; // base of exponential backoff
@@ -74,11 +90,12 @@ public class YouTubeSubmit {
   //private Uri videoUri = null;
   private File videoFile = null;
   private String clientLoginToken = null;
-  private String youTubeName = null;
+  private Account accountYouTube = null;
   private String title = null;
   private String description = null;
   
   private GlsAuthorizer authorizer = null;
+  
   
   private String tags = null;
 
@@ -119,6 +136,10 @@ public class YouTubeSubmit {
 	  
 	  authorizer = (GlsAuthorizer)new GlsAuthorizer.GlsAuthorizerFactory().getAuthorizer(activity,
         GlsAuthorizer.YOUTUBE_AUTH_TOKEN_TYPE);
+	  
+	  authorizer.setAccountFeatures(GlsAuthorizer.YOUTUBE_FEATURES);
+	  authorizer.setAccountType(GlsAuthorizer.ACCOUNT_TYPE_GOOGLE);
+	  
 	  authorizer.setHandler(handler);
 	  
     this.videoFile = videoFile;
@@ -130,6 +151,8 @@ public class YouTubeSubmit {
     this.mContext = context;
 
 	httpClient = new StrongHttpsClient(mContext);
+	  httpClient.log.enableDebug(true);
+
 
     SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(mContext.getApplicationContext());
     mUseTor = settings.getBoolean("pusetor", false);
@@ -147,9 +170,8 @@ public class YouTubeSubmit {
 	  this.videoContentType = contentType;
   }
 
-  public void upload(String youTubeName, File videoFile, String contentType) {
+  public void upload(File videoFile, String contentType) {
    
-	this.youTubeName = youTubeName;
     this.videoFile = videoFile;
     
     asyncUpload(videoFile,contentType);
@@ -222,7 +244,7 @@ public class YouTubeSubmit {
 
     if (this.clientLoginToken == null) {
       // The stored gmail account is not linked to YouTube
-      throw new YouTubeAccountException(this.youTubeName + " is not linked to a YouTube account.");
+      throw new YouTubeAccountException(accountYouTube.name + " is not linked to a YouTube account.");
     }
 
     String slug = file.getName();
@@ -288,15 +310,12 @@ public class YouTubeSubmit {
     String uploadUrl = INITIAL_UPLOAD_URL;
 
  			
-    HttpPost hPost = this.getGDataHttpPost(uploadUrl, slug);
-    
-  //  HttpURLConnection urlConnection = getGDataUrlConnection(uploadUrl, slug);
-    //urlConnection.setRequestMethod("POST");
-    //urlConnection.setDoOutput(true);
-    
+    HttpPost hPost = getGDataHttpPost(HOST_UPLOADS, uploadUrl, slug);
+   
+
+    //provide information about the media that is being uploaded
     hPost.setHeader("X-Upload-Content-Type",contentType);
     hPost.setHeader("X-Upload-Content-Length",contentLength+"");
-    
     
     String atomData;
 
@@ -306,59 +325,47 @@ public class YouTubeSubmit {
     String template = Util.readFile(activity, R.raw.gdata).toString();
     atomData = String.format(template, title, description, category, this.tags);
   
-      /*
-  } else {
-      String template = Util.readFile(activity, R.raw.gdata_geo).toString();
-      atomData = String.format(template, title, description, category, this.tags,
-          videoLocation.getLatitude(), videoLocation.getLongitude());
-    }*/
-    
+    //set the length of this post
    // hPost.setHeader("Content-Length", atomData.length()+"");
 
-    StringEntity entity = new StringEntity(atomData);
+    /*//this is already set
     entity.setContentType(new BasicHeader("Content-Type",
         "application/atom+xml"));
+    
+    */
+    
+    StringEntity entity = new StringEntity(atomData);
     hPost.setEntity(entity);
+    
     
     HttpResponse hResp = httpClient.execute(hPost);
     
     int responseCode = hResp.getStatusLine().getStatusCode();
-
-	// ERROR LOGGING
-    /*
-	InputStream is = httpClient.get
-	if (is != null) {
-		Log.e(LOG_TAG, " Error stream from Youtube available!");
-		BufferedReader in = new BufferedReader(
-				new InputStreamReader(is));
-		String inputLine;
-
-		while ((inputLine = in.readLine()) != null) {
-			Log.d(LOG_TAG, inputLine);
-		}
-		in.close();
-
-		Map<String, List<String>> hfs = urlConnection.getHeaderFields();
-		for (Entry<String, List<String>> hf : hfs.entrySet()) {
-			Log.d(LOG_TAG, " entry : " + hf.getKey());
-			List<String> vals = hf.getValue();
-			for (String s : vals) {
-				Log.d(LOG_TAG, "vals:" + s);
-			}
-		}
-	}*/
     
+    StringBuffer errMsg = new StringBuffer();
+    InputStream is = hResp.getEntity().getContent();
+	 List<String> list = IOUtils.readLines(is);
+	 for (String line : list)
+	 {
+		 Log.d(LOG_TAG,"http resp line: " + line);
+		 errMsg.append(line).append("\n");
+	 }
     
     if (responseCode < 200 || responseCode >= 300) {
       // The response code is 40X
       if ((responseCode + "").startsWith("4") && retry) {
-        Log.d(LOG_TAG, "retrying to fetch auth token for " + youTubeName);
-        this.clientLoginToken = authorizer.getFreshAuthToken(youTubeName, clientLoginToken);
+        
+        //invalidate our old one, that is locally cached
+        this.clientLoginToken = authorizer.getFreshAuthToken(accountYouTube.name, clientLoginToken);
         // Try again with fresh token
         return uploadMetaDataToGetLocation(slug, contentType, contentLength, false);
       } else {
-        throw new IOException(String.format("response code='%s' (code %d)" + " for %s",
-            hResp.getStatusLine().getReasonPhrase(), responseCode, hPost.getRequestLine().getUri()));
+    	  
+    	  
+        throw new IOException(String.format("response code='%s' (code %d)" + " for %s. Output=%s",
+            hResp.getStatusLine().getReasonPhrase(), responseCode, hPost.getRequestLine().getUri(),errMsg.toString()));
+        
+        
       }
     }
 
@@ -373,7 +380,7 @@ public class YouTubeSubmit {
     //byte[] buffer = new byte[bufferSize];
     FileInputStream fileStream = new FileInputStream(file);
 
-    HttpPost hPut = getGDataHttpPost(uploadUrl, null);
+    HttpPost hPut = getGDataHttpPost(HOST_UPLOADS, uploadUrl, null);
     hPut.setHeader("X-HTTP-Method-Override", "PUT");
     
     // some mobile proxies do not support PUT, using X-HTTP-Method-Override to get around this problem
@@ -593,7 +600,7 @@ public class YouTubeSubmit {
 	  
 	  
 	  	  
-	  HttpPost hPost = this.getGDataHttpPost(uploadUrl, file.getName());
+	  HttpPost hPost = this.getGDataHttpPost(HOST_UPLOADS, uploadUrl, file.getName());
 	 
 	  hPost.setHeader("Content-Range", "bytes */*");
      hPost.setHeader("X-HTTP-Method-Override", "PUT");
@@ -673,26 +680,29 @@ public class YouTubeSubmit {
     return null;
   }
 
-  private HttpPost getGDataHttpPost (String urlString, String slug) throws IOException
+  private HttpPost getGDataHttpPost (String host, String urlString, String slug) throws IOException
   {
 	    
 	    HttpPost request = new HttpPost(urlString);
 	    
-	    request.setHeader("Host", "uploads.gdata.youtube.com");
+	    request.setHeader("Host", host);
 	    request.setHeader("Content-Type", CONTENT_TYPE);
-	    
 
-	    String devKey = activity.getString(R.string.dev_key);
-	    request.setHeader("X-GData-Key", String.format("key=%s", devKey));
-	    
-	    if (clientLoginToken != null)
-			request.setHeader("Authorization", String.format(
-					"GoogleLogin auth=\"%s\"", clientLoginToken));
-	    
-	    
 	    request.setHeader("GData-Version", "2");
+	    request.setHeader("X-GData-Version", "2");
 	    
-
+	    String devKey = activity.getString(R.string.dev_key);
+	    request.setHeader("X-GData-Key", "key=" + devKey);
+	  
+	    if (clientLoginToken != null) //should this ever be null?
+	    {
+	    	request.setHeader("Authorization", 
+	    		"GoogleLogin auth=" + clientLoginToken);
+	    	
+	    }
+	    
+	    
+	     
 	    if (slug != null)
 	    	request.setHeader("Slug", slug);
 	    
@@ -700,7 +710,54 @@ public class YouTubeSubmit {
 
   }
   
-  
+  /*
+  private void setHttpAuthCreds ()
+  {
+	  Credentials credsFoo = new Credentials ()
+	    {
+
+			@Override
+			public String getPassword() {
+				return clientLoginToken;
+			}
+
+			@Override
+			public Principal getUserPrincipal() {
+				Principal p = new Principal(){
+
+					@Override
+					public String getName() {
+						return youTubeName;
+					}
+					
+				};
+				
+				return p;
+			}
+	    	
+	    };
+	    
+	    httpClient.getCredentialsProvider().setCredentials(AuthScope.ANY, credsFoo);
+	    httpClient.addRequestInterceptor(new HttpRequestInterceptor() {
+	        public void process(HttpRequest request, HttpContext context) throws HttpException, IOException {
+	            AuthState state = (AuthState) context.getAttribute(ClientContext.TARGET_AUTH_STATE);
+	            if (state.getAuthScheme() == null) {
+	                BasicScheme scheme = new BasicScheme();
+	                CredentialsProvider credentialsProvider = (CredentialsProvider) context.getAttribute(ClientContext.CREDS_PROVIDER);
+	                Credentials credentials = credentialsProvider.getCredentials(AuthScope.ANY);
+	                
+	                
+	                if (credentials == null) {
+	                    throw new HttpException();
+	                }
+	                state.setAuthScope(AuthScope.ANY);
+	                state.setAuthScheme(scheme);
+	                state.setCredentials(credentials);
+	                
+	            }
+	        }
+	    }, 0); // 0 = first, and you really want to be first.
+  }*/
   
   /*
   private HttpURLConnection getGDataUrlConnection(String urlString, String slug) throws IOException {
@@ -733,17 +790,16 @@ public class YouTubeSubmit {
   
   public void getAuthTokenWithPermission(String accountName, AuthorizationListener listener) {
 	
-	if (accountName == null)
-		this.youTubeName = ((GlsAuthorizer)authorizer).getAccount(null).name;
-	else
-		this.youTubeName = accountName;
+
+	accountYouTube = ((GlsAuthorizer)authorizer).getAccount(accountName);
+	  
 	
     this.authorizer.fetchAuthToken(accountName, activity, listener);
   }
   
   public void upload ()
   {
-	  upload(youTubeName,videoFile, videoContentType);
+	  upload(videoFile, videoContentType);
       
   }
 
