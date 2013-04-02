@@ -1,5 +1,5 @@
 <!DOCTYPE html> 
-<html lang="ar" dir=”rtl” xml:lang="ar" xmlns="http://www.w3.org/1999/xhtml"> 
+<html dir=”rtl” lang="ar" xml:lang="ar" xmlns="http://www.w3.org/1999/xhtml"> 
 <head> 
 	<title>StoryMaker</title> 
 	<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0'/> 
@@ -12,7 +12,7 @@
 	<script src="file:///android_asset/template/js/slides.min.jquery.js"></script>	
 	<script src="file:///android_asset/template/js/smtemplate.js"></script>
 	<style>
-		html,body{text-align:right;}
+	.subswipe{text-align:right;}
 	</style>
 </head> 
 <body> 
