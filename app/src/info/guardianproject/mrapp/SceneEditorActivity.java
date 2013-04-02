@@ -55,6 +55,8 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
     private Project mProject = null;
     private Template mTemplate = null;
     private int mSceneIndex = 0;
+
+    boolean mTrimMode = false;
     
     private final static String CAPTURE_MIMETYPE_AUDIO = "audio/3gpp";
     public Fragment mFragmentTab0, mFragmentTab1, mLastTabFrag;
@@ -189,6 +191,7 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
                 return true;
             case R.id.itemTrim:
                 if (mFragmentTab1 != null) { 
+                    ((OrderClipsFragment) mFragmentTab1).loadTrim();
                     ((OrderClipsFragment) mFragmentTab1).enableTrim(true);
                     startActionMode(mActionModeCallback);
                 }
@@ -213,6 +216,7 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
         // may be called multiple times if the mode is invalidated.
         @Override
         public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+            mTrimMode = true;
             return false; // Return false if nothing is done
         }
 
@@ -220,10 +224,13 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
         @Override
         public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
             switch (item.getItemId()) {
-//                case R.id.menu_share:
-//                    shareCurrentItem();
-//                    mode.finish(); // Action picked, so close the CAB
-//                    return true;
+                case R.id.menu_cancel:
+                    mode.finish();
+                    return true;
+                case R.id.menu_trim_clip:
+                    ((OrderClipsFragment) mFragmentTab1).saveTrim();
+                    mode.finish();
+                    return true;
                 default:
                     return false;
             }
@@ -234,6 +241,7 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
         public void onDestroyActionMode(ActionMode mode) {
 //            mActionMode = null;
             ((OrderClipsFragment) mFragmentTab1).enableTrim(false);
+            mTrimMode = false;
         }
     };
     
