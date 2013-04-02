@@ -18,7 +18,7 @@ import android.widget.VideoView;
 public class PreviewVideoView extends VideoView implements MediaPlayer.OnCompletionListener {
 	private final static String TAG = "PreviewVideoView";
 	protected int mCurrentMedia = 0;
-	protected String[] mPathArray;
+	protected Media[] mMediaArray;
 	//MediaPlayer mp;
 	protected Runnable mCompletionCallback = null;
 	
@@ -41,8 +41,8 @@ public class PreviewVideoView extends VideoView implements MediaPlayer.OnComplet
 	}
 		 
 	
-	public void setMedia(String[] pathArray) {
-		mPathArray = pathArray;
+	public void setMedia(Media[] media) {
+		mMediaArray = media;
 		mCurrentMedia = 0;
 	}
 	
@@ -51,15 +51,15 @@ public class PreviewVideoView extends VideoView implements MediaPlayer.OnComplet
 	}
 	
 	public void play() {
-		for (; mCurrentMedia <= mPathArray.length ; mCurrentMedia++) {
-			if (mCurrentMedia == mPathArray.length) {
+		for (; mCurrentMedia <= mMediaArray.length ; mCurrentMedia++) {
+			if (mCurrentMedia == mMediaArray.length) {
 				mCurrentMedia = 0;
 				if (mCompletionCallback != null) {
 					mCompletionCallback.run();
 				}
 				break;
 			} else {
-				String path = mPathArray[mCurrentMedia];
+				String path = mMediaArray[mCurrentMedia].getPath();
 				if (path != null) {
 					File file = new File(path);
 					if (file.exists()) {
@@ -74,7 +74,7 @@ public class PreviewVideoView extends VideoView implements MediaPlayer.OnComplet
 	
 	public void play(int startFrom) {
 		// TODO if we are already playing, stop, load the new video and start.
-		if (startFrom >= 0 && startFrom < mPathArray.length) {
+		if (startFrom >= 0 && startFrom < mMediaArray.length) {
 			mCurrentMedia = startFrom;
 			this.play();
 			
@@ -83,7 +83,7 @@ public class PreviewVideoView extends VideoView implements MediaPlayer.OnComplet
 
 	@Override
 	public void onCompletion(MediaPlayer mp) {
-		if (mCurrentMedia < mPathArray.length) {
+		if (mCurrentMedia < mMediaArray.length) {
 			mCurrentMedia++;
 			play();
 		} else {
