@@ -212,8 +212,7 @@ public class OrderClipsFragment extends Fragment {
                 mPreviewVideoView.setVisibility(View.GONE);
                 mKeepRunningPreview = false;
                 mPlayButton.setText(R.string.play_recording);
-                mCurrentClipIdx = 0;
-                showThumbnail(0);
+                showThumbnail(mCurrentClipIdx);
             }
         });
         
