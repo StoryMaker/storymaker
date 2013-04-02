@@ -90,27 +90,18 @@ public class PreviewVideoView extends VideoView implements MediaPlayer.OnComplet
 	
 	private void doPlay() {
         Media media = mMediaArray[mCurrentMedia];
-
-        int duration = getDuration();
-        int trimStart = media.getTrimStart();
-        int trimEnd = media.getTrimEnd();
-        float startPercent = (trimStart + 1) / 100F;
-        float endPercent = (trimEnd + 1) / 100F;
-        int startTime = Math.round(startPercent * duration);
-        int endTime = Math.round(endPercent * duration);
-        int trimmedLength = endTime - startTime;
         
         if ((media.getTrimStart() > 0) && (media.getTrimStart() < 99)) {
-            seekTo(startTime);
+            seekTo(media.getTrimmedStartTime());
         }
         
         if  ((media.getTrimEnd() != 0) && (media.getTrimEnd() < 99)) {// && (media.getTrimStart() < media.getTrimEnd())) {
             mHandler.removeCallbacks(mTrimClipEndTask);
-            mHandler.postDelayed(mTrimClipEndTask, trimmedLength);
+            mHandler.postDelayed(mTrimClipEndTask, media.getTrimmedDuration());
         }
 
         start();
-        // FIXME make sure to kill off the time if we close the activity/stop
+        // FIXME make sure to kill off the timer if we close the activity/stop
 	}
 	
 	public void play(int startFrom) {
