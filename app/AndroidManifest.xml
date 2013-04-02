@@ -1,8 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="info.guardianproject.mrapp"
     android:installLocation="auto"
-    android:versionCode="40"
-    android:versionName="0.0.5-alpha-8" >
+    android:versionCode="45"
+    android:versionName="0.0.5-alpha-8e" >
     <uses-sdk
         android:minSdkVersion="8"
         android:targetSdkVersion="17" />
