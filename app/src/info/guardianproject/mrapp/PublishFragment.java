@@ -265,6 +265,7 @@ public class PublishFragment extends Fragment {
 
         final String title = etTitle.getText().toString();
         final String desc = etDesc.getText().toString();
+        
         String ytdesc = desc;
         if (ytdesc.length() == 0) {
             ytdesc = getActivity().getString(R.string.default_youtube_desc); // can't
@@ -276,7 +277,7 @@ public class PublishFragment extends Fragment {
                                                                              // YouTube
         }
         
-        ytdesc += "\n\n" + getString(R.string.created_with_storymaker_tag);;
+        ytdesc += "\n\n" + getString(R.string.created_with_storymaker_tag);
 
         final YouTubeSubmit yts = new YouTubeSubmit(null, title, ytdesc, new Date(),
                 mActivity, mHandlerPub, mActivity.getBaseContext());
