@@ -379,8 +379,7 @@ public class OrderClipsFragment extends Fragment {
              mPreviewVideoView.setVisibility(View.VISIBLE);
              
              // play
-             String[] pathArray = mMPM.mScene.getMediaAsPathArray();
-             mPreviewVideoView.setMedia(pathArray);
+             mPreviewVideoView.setMedia(mMPM.mScene.getMediaAsArray());
              mPreviewVideoView.play();
              
              new Thread ()
@@ -454,8 +453,8 @@ public class OrderClipsFragment extends Fragment {
                 mPreviewVideoView.setVisibility(View.VISIBLE);
                 // play
                 mPreviewVideoView.stopPlayback();
-                String[] pathArray = {medias[position].getPath()};
-                mPreviewVideoView.setMedia(pathArray);
+                Media[] mediaArray = {medias[position]};
+                mPreviewVideoView.setMedia(mediaArray);
                 mPreviewVideoView.play();
                 
                 //mSeekBar.setMax(mPreviewVideoView.getDuration());
