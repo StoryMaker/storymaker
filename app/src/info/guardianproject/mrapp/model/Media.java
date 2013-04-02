@@ -22,13 +22,14 @@ public class Media {
     protected int sceneId; // foreign key to the Scene which holds this media
     protected int trimStart;
     protected int trimEnd;
+    protected int duration;
 
     public Media(Context context) {
         this.context = context;
     }
 
     public Media(Context context, int id, String path, String mimeType, String clipType, int clipIndex,
-            int sceneId, int trimStart, int trimEnd) {
+            int sceneId, int trimStart, int trimEnd, int duration) {
         super();
         this.context = context;
         this.id = id;
@@ -39,6 +40,7 @@ public class Media {
         this.sceneId = sceneId;
         this.trimStart = trimStart;
         this.trimEnd = trimEnd;
+        this.duration = duration;
     }
 
     public Media(Context context, Cursor cursor) {
@@ -60,7 +62,9 @@ public class Media {
                 cursor.getInt(cursor
                         .getColumnIndex(StoryMakerDB.Schema.Media.COL_TRIM_START)),
                 cursor.getInt(cursor
-                        .getColumnIndex(StoryMakerDB.Schema.Media.COL_TRIM_END)));
+                        .getColumnIndex(StoryMakerDB.Schema.Media.COL_TRIM_END)),
+                cursor.getInt(cursor
+                        .getColumnIndex(StoryMakerDB.Schema.Media.COL_DURATION)));
     }
 
     /***** Table level static methods *****/
@@ -81,6 +85,45 @@ public class Media {
             return null;
         }
     }
+    
+    /***** Calculated object level methods *****/
+
+    /** 
+     * @return 0.0-1.0 percent into the clip to start play
+     */
+    public float getTrimmedStartPercent() {
+        return (trimStart + 1) / 100F;
+    }
+
+    /** 
+     * @return 0.0-1.0 percent into the clip to end play
+     */
+    public float getTrimmedEndPercent() {
+        return (trimEnd + 1) / 100F;
+    }
+
+    /** 
+     * @return milliseconds into clip trimmed clip to start playback
+     */
+    public int getTrimmedStartTime() {
+        return Math.round(getTrimmedStartPercent() * duration);
+    }
+
+    /** 
+     * @return milliseconds to end of trimmed clip
+     */
+    public int getTrimmedEndTime() {
+        return Math.round(getTrimmedEndPercent() * duration);
+    }
+
+    /** 
+     * @return milliseconds trimmed clip will last
+     */
+    public int getTrimmedDuration() {
+        return getTrimmedEndTime() - getTrimmedStartTime();
+    }
+    
+    /***** Object level methods *****/
 
 
     /*
@@ -147,6 +190,7 @@ public class Media {
         values.put(StoryMakerDB.Schema.Media.COL_SCENE_ID, sceneId);
         values.put(StoryMakerDB.Schema.Media.COL_TRIM_START, trimStart);
         values.put(StoryMakerDB.Schema.Media.COL_TRIM_END, trimEnd);
+        values.put(StoryMakerDB.Schema.Media.COL_DURATION, duration);
         
         return values;
     }
@@ -307,5 +351,20 @@ public class Media {
      */
     public void setTrimEnd(int trimEnd) {
         this.trimEnd = trimEnd;
+    }
+
+
+    /**
+     * @return the duration
+     */
+    public int getDuration() {
+        return duration;
+    }
+
+    /**
+     * @param duration the duration to set
+     */
+    public void setDuration(int duration) {
+        this.duration = duration;
     }
 }

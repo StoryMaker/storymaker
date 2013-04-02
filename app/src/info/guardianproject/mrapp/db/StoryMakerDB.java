@@ -30,6 +30,7 @@ public class StoryMakerDB extends SQLiteOpenHelper {
         if ((oldVersion < 3) && (newVersion == 3)) {
             db.execSQL(StoryMakerDB.Schema.Media.UPDATE_TABLE_MEDIA_ADD_TRIM_START);
             db.execSQL(StoryMakerDB.Schema.Media.UPDATE_TABLE_MEDIA_ADD_TRIM_END);
+            db.execSQL(StoryMakerDB.Schema.Media.UPDATE_TABLE_MEDIA_ADD_DURATION);
         } 
     }
     
@@ -106,6 +107,7 @@ public class StoryMakerDB extends SQLiteOpenHelper {
 	    	public static final String COL_CLIP_INDEX = "clip_index";
             public static final String COL_TRIM_START = "trim_start";
             public static final String COL_TRIM_END = "trim_end";
+            public static final String COL_DURATION = "duration";
 	    	
 	    	private static final String CREATE_TABLE_MEDIA = "create table " + NAME + " ("
 	    			+ ID + " integer primary key autoincrement, "
@@ -115,7 +117,8 @@ public class StoryMakerDB extends SQLiteOpenHelper {
 	    			+ COL_CLIP_TYPE + " text not null, " 
 	    			+ COL_CLIP_INDEX + " integer not null," 
                     + COL_TRIM_START + " integer," 
-                    + COL_TRIM_END + " integer" 
+                    + COL_TRIM_END + " integer," 
+                    + COL_DURATION + " integer" 
 	    			+ "); ";
             
             private static final String UPDATE_TABLE_MEDIA_ADD_TRIM_START = "alter table " + NAME + " " 
@@ -125,6 +128,10 @@ public class StoryMakerDB extends SQLiteOpenHelper {
             private static final String UPDATE_TABLE_MEDIA_ADD_TRIM_END = "alter table " + NAME + " " 
                     + "ADD COLUMN "
                     + COL_TRIM_END + " integer;";
+
+            private static final String UPDATE_TABLE_MEDIA_ADD_DURATION = "alter table " + NAME + " " 
+                    + "ADD COLUMN "
+                    + COL_DURATION + " integer;";
     	}
     	
 //    	public static final String DB_SCHEMA = Lessons.CREATE_TABLE_LESSONS 
