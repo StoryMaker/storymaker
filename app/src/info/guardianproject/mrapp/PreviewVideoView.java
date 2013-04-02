@@ -91,13 +91,21 @@ public class PreviewVideoView extends VideoView implements MediaPlayer.OnComplet
 	private void doPlay() {
         Media media = mMediaArray[mCurrentMedia];
         
+        if (media.getDuration() == 0) {
+            // old projects didn't save duration, we need it
+            media.setDuration(getDuration());
+            media.save();
+        }
+        
         if ((media.getTrimStart() > 0) && (media.getTrimStart() < 99)) {
-            seekTo(media.getTrimmedStartTime());
+            int startTime = media.getTrimmedStartTime();
+            seekTo(startTime);
         }
         
         if  ((media.getTrimEnd() != 0) && (media.getTrimEnd() < 99)) {// && (media.getTrimStart() < media.getTrimEnd())) {
             mHandler.removeCallbacks(mTrimClipEndTask);
-            mHandler.postDelayed(mTrimClipEndTask, media.getTrimmedDuration());
+            int duration = media.getTrimmedDuration();
+            mHandler.postDelayed(mTrimClipEndTask, duration);
         }
 
         start();
