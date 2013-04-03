@@ -152,7 +152,7 @@ public class YouTubeSubmit {
 	  authorizer.setAccountFeatures(GlsAuthorizer.YOUTUBE_FEATURES);
 	  authorizer.setAccountType(GlsAuthorizer.ACCOUNT_TYPE_GOOGLE);
 	  
-	  authorizer.setAuthMethod(settings.getInt("glsauthmethod", 0));
+	  authorizer.setAuthMethod(Integer.parseInt(settings.getString("glsauthmethod", "0")));
 	  
 	  authorizer.setHandler(handler);
 
