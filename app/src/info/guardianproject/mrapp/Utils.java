@@ -6,11 +6,23 @@ import java.text.SimpleDateFormat;
 import org.holoeverywhere.app.Activity;
 import org.holoeverywhere.widget.Toast;
 
+import android.support.v4.app.FragmentActivity;
+
 public class Utils {
     public static void toastOnUiThread(Activity activity, String message) {
         final Activity _activity = activity;
         final String _msg = message;
         activity.runOnUiThread(new Runnable() {
+                public void run() {
+                        Toast.makeText(_activity.getApplicationContext(), _msg, Toast.LENGTH_SHORT).show();
+                }
+        });
+    }
+    
+    public static void toastOnUiThread(FragmentActivity fragmentActivity, String message) {
+        final FragmentActivity _activity = fragmentActivity;
+        final String _msg = message;
+        fragmentActivity.runOnUiThread(new Runnable() {
                 public void run() {
                         Toast.makeText(_activity.getApplicationContext(), _msg, Toast.LENGTH_SHORT).show();
                 }

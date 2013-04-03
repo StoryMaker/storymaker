@@ -192,7 +192,7 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
             case R.id.itemTrim:
                 if (mFragmentTab1 != null) { 
                     ((OrderClipsFragment) mFragmentTab1).loadTrim();
-                    ((OrderClipsFragment) mFragmentTab1).enableTrim(true);
+                    ((OrderClipsFragment) mFragmentTab1).enableTrimMode(true);
                     startActionMode(mActionModeCallback);
                 }
                 return true;
@@ -201,6 +201,7 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
         return super.onOptionsItemSelected(item);
     }
     
+    private boolean actionModelCancel = false;
     private ActionMode.Callback mActionModeCallback = new ActionMode.Callback() {
 
         // Called when the action mode is created; startActionMode() was called
@@ -209,6 +210,7 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
             // Inflate a menu resource providing context menu items
             MenuInflater inflater = mode.getMenuInflater();
             inflater.inflate(R.menu.context_menu_trim, menu);
+            actionModelCancel = false;
             return true;
         }
 
@@ -226,9 +228,9 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
             switch (item.getItemId()) {
                 case R.id.menu_cancel:
                     mode.finish();
+                    actionModelCancel = true;
                     return true;
                 case R.id.menu_trim_clip:
-                    ((OrderClipsFragment) mFragmentTab1).saveTrim();
                     mode.finish();
                     return true;
                 default:
@@ -236,12 +238,18 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
             }
         }
 
-        // Called when the user exits the action mode
+        // this has slightly odd save logic so that I can always save exit actionmode as 
+        // the checkmark button acts as a cancel but the users will treat it as an accept
         @Override
         public void onDestroyActionMode(ActionMode mode) {
 //            mActionMode = null;
-            ((OrderClipsFragment) mFragmentTab1).enableTrim(false);
+            ((OrderClipsFragment) mFragmentTab1).enableTrimMode(false);
             mTrimMode = false;
+            if (actionModelCancel) {
+                ((OrderClipsFragment) mFragmentTab1).undoSaveTrim();
+            } else {
+                ((OrderClipsFragment) mFragmentTab1).saveTrim();
+            }
         }
     };
     
