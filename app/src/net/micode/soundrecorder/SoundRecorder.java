@@ -208,6 +208,9 @@ public class SoundRecorder extends Activity implements Button.OnClickListener,
     @Override
     public void onCreate(Bundle icycle) {
         super.onCreate(icycle);
+        
+        getWindow().addFlags(android.view.WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+        
         initInternalState(getIntent());
         setContentView(R.layout.activity_sound_recorder);
 
