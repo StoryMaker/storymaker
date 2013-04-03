@@ -227,8 +227,8 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
         public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.menu_cancel:
-                    mode.finish();
                     actionModelCancel = true;
+                    mode.finish();
                     return true;
                 case R.id.menu_trim_clip:
                     mode.finish();
