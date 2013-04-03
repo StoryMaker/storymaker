@@ -9,6 +9,7 @@ import java.io.File;
 import java.io.IOException;
 
 import org.ffmpeg.android.MediaDesc;
+import org.holoeverywhere.widget.LinearLayout;
 import org.holoeverywhere.widget.SeekBar;
 import org.holoeverywhere.widget.SeekBar.OnSeekBarChangeListener;
 import org.json.JSONException;
@@ -50,6 +51,7 @@ public class OrderClipsFragment extends Fragment {
     Button mPlayButton, mButtonAddNarration, mButtonPlayNarration;
     private ImageView mImageViewMedia;
     private PreviewVideoView mPreviewVideoView = null;
+    private LinearLayout mLLControlBar = null;
     private SeekBar mSeekBar = null;
     RangeSeekBar<Integer> mRangeSeekBar = null;
     ViewGroup mRangeSeekBarContainer = null;
@@ -100,6 +102,8 @@ public class OrderClipsFragment extends Fragment {
         mImageViewMedia = (ImageView) view.findViewById(R.id.imageView1);
 
         mPreviewVideoView = (PreviewVideoView) view.findViewById(R.id.previewVideoView);
+        
+        mLLControlBar = (LinearLayout) view.findViewById(R.id.llControlBar);
         
         mSeekBar = (SeekBar) view.findViewById(R.id.seekBar1);
        
@@ -520,11 +524,11 @@ public class OrderClipsFragment extends Fragment {
     
     public void enableTrim(boolean enable) {
         if (enable) {
-            mSeekBar.setVisibility(View.GONE);
+            mLLControlBar.setVisibility(View.GONE);
             mRangeSeekBarContainer.setVisibility(View.VISIBLE);
             mTrimMode = true;
         } else {
-            mSeekBar.setVisibility(View.VISIBLE);
+            mLLControlBar.setVisibility(View.VISIBLE);
             mRangeSeekBarContainer.setVisibility(View.GONE);
             mTrimMode = false;
         }
