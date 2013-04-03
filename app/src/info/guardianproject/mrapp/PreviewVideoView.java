@@ -8,6 +8,7 @@ import java.io.File;
 import info.guardianproject.mrapp.model.Media;
 import android.content.Context;
 import android.media.MediaPlayer;
+import android.os.Handler;
 import android.util.AttributeSet;
 import android.widget.VideoView;
 
@@ -18,9 +19,18 @@ import android.widget.VideoView;
 public class PreviewVideoView extends VideoView implements MediaPlayer.OnCompletionListener {
 	private final static String TAG = "PreviewVideoView";
 	protected int mCurrentMedia = 0;
-	protected String[] mPathArray;
+	protected Media[] mMediaArray;
 	//MediaPlayer mp;
 	protected Runnable mCompletionCallback = null;
+	
+	private Handler mHandler = new Handler();
+	private Runnable mTrimClipEndTask = new Runnable() {
+	    public void run() {
+	        PreviewVideoView.this.stopPlayback();
+	        PreviewVideoView.this.doComplete();
+	    }
+	 };
+
 	
 	public PreviewVideoView(Context context) {
 		super(context);
@@ -41,8 +51,8 @@ public class PreviewVideoView extends VideoView implements MediaPlayer.OnComplet
 	}
 		 
 	
-	public void setMedia(String[] pathArray) {
-		mPathArray = pathArray;
+	public void setMedia(Media[] media) {
+		mMediaArray = media;
 		mCurrentMedia = 0;
 	}
 	
@@ -51,20 +61,26 @@ public class PreviewVideoView extends VideoView implements MediaPlayer.OnComplet
 	}
 	
 	public void play() {
-		for (; mCurrentMedia <= mPathArray.length ; mCurrentMedia++) {
-			if (mCurrentMedia == mPathArray.length) {
+		for (; mCurrentMedia <= mMediaArray.length ; mCurrentMedia++) {
+			if (mCurrentMedia == mMediaArray.length) {
 				mCurrentMedia = 0;
 				if (mCompletionCallback != null) {
 					mCompletionCallback.run();
 				}
 				break;
 			} else {
-				String path = mPathArray[mCurrentMedia];
+			    Media media = mMediaArray[mCurrentMedia];
+				String path = media.getPath();
 				if (path != null) {
 					File file = new File(path);
 					if (file.exists()) {
-						this.setVideoPath(path);
-						this.start();
+                        setOnPreparedListener(new MediaPlayer.OnPreparedListener()  {
+                            @Override
+                            public void onPrepared(MediaPlayer mp) {                         
+                                PreviewVideoView.this.doPlay();
+                            }
+                        });
+                        this.setVideoPath(path);
 						break;
 					}
 				}
@@ -72,9 +88,33 @@ public class PreviewVideoView extends VideoView implements MediaPlayer.OnComplet
 		}
 	}
 	
+	private void doPlay() {
+        Media media = mMediaArray[mCurrentMedia];
+        
+        if (media.getDuration() == 0) {
+            // old projects didn't save duration, we need it
+            media.setDuration(getDuration());
+            media.save();
+        }
+        
+        if ((media.getTrimStart() > 0) && (media.getTrimStart() < 99)) {
+            int startTime = media.getTrimmedStartTime();
+            seekTo(startTime);
+        }
+        
+        if  ((media.getTrimEnd() != 0) && (media.getTrimEnd() < 99)) {// && (media.getTrimStart() < media.getTrimEnd())) {
+            mHandler.removeCallbacks(mTrimClipEndTask);
+            int duration = media.getTrimmedDuration();
+            mHandler.postDelayed(mTrimClipEndTask, duration);
+        }
+
+        start();
+        // FIXME make sure to kill off the timer if we close the activity/stop
+	}
+	
 	public void play(int startFrom) {
 		// TODO if we are already playing, stop, load the new video and start.
-		if (startFrom >= 0 && startFrom < mPathArray.length) {
+		if (startFrom >= 0 && startFrom < mMediaArray.length) {
 			mCurrentMedia = startFrom;
 			this.play();
 			
@@ -83,14 +123,19 @@ public class PreviewVideoView extends VideoView implements MediaPlayer.OnComplet
 
 	@Override
 	public void onCompletion(MediaPlayer mp) {
-		if (mCurrentMedia < mPathArray.length) {
-			mCurrentMedia++;
-			play();
-		} else {
-			mCurrentMedia = 0;
-			if (mCompletionCallback != null) {
-				mCompletionCallback.run();
-			}
-		}
+	    doComplete();
+	}
+	
+	private void doComplete() {
+        mHandler.removeCallbacks(mTrimClipEndTask);
+        if (mCurrentMedia < mMediaArray.length) {
+            mCurrentMedia++;
+            play();
+        } else {
+            mCurrentMedia = 0;
+            if (mCompletionCallback != null) {
+                mCompletionCallback.run();
+            }
+        }
 	}
 }

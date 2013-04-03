@@ -16,3 +16,6 @@
 [submodule "external/HoloEverywhere"]
 	path = external/HoloEverywhere
 	url = git://github.com/ChristopheVersieux/HoloEverywhere.git
+[submodule "external/RangeSeekBar"]
+	path = external/RangeSeekBar
+	url = git@github.com:vitriolix/RangeSeekBar.git

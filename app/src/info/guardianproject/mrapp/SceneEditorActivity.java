@@ -39,7 +39,9 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.actionbarsherlock.app.ActionBar;
+import com.actionbarsherlock.view.ActionMode;
 import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 
 public class SceneEditorActivity extends EditorBaseActivity implements ActionBar.TabListener {
@@ -53,6 +55,8 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
     private Project mProject = null;
     private Template mTemplate = null;
     private int mSceneIndex = 0;
+
+    boolean mTrimMode = false;
     
     private final static String CAPTURE_MIMETYPE_AUDIO = "audio/3gpp";
     public Fragment mFragmentTab0, mFragmentTab1, mLastTabFrag;
@@ -185,10 +189,69 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
                 addShotToScene();
                 
                 return true;
+            case R.id.itemTrim:
+                if (mFragmentTab1 != null) { 
+                    ((OrderClipsFragment) mFragmentTab1).loadTrim();
+                    ((OrderClipsFragment) mFragmentTab1).enableTrimMode(true);
+                    startActionMode(mActionModeCallback);
+                }
+                return true;
                 
         }
         return super.onOptionsItemSelected(item);
     }
+    
+    private boolean actionModelCancel = false;
+    private ActionMode.Callback mActionModeCallback = new ActionMode.Callback() {
+
+        // Called when the action mode is created; startActionMode() was called
+        @Override
+        public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+            // Inflate a menu resource providing context menu items
+            MenuInflater inflater = mode.getMenuInflater();
+            inflater.inflate(R.menu.context_menu_trim, menu);
+            actionModelCancel = false;
+            return true;
+        }
+
+        // Called each time the action mode is shown. Always called after onCreateActionMode, but
+        // may be called multiple times if the mode is invalidated.
+        @Override
+        public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+            mTrimMode = true;
+            return false; // Return false if nothing is done
+        }
+
+        // Called when the user selects a contextual menu item
+        @Override
+        public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+            switch (item.getItemId()) {
+                case R.id.menu_cancel:
+                    actionModelCancel = true;
+                    mode.finish();
+                    return true;
+                case R.id.menu_trim_clip:
+                    mode.finish();
+                    return true;
+                default:
+                    return false;
+            }
+        }
+
+        // this has slightly odd save logic so that I can always save exit actionmode as 
+        // the checkmark button acts as a cancel but the users will treat it as an accept
+        @Override
+        public void onDestroyActionMode(ActionMode mode) {
+//            mActionMode = null;
+            ((OrderClipsFragment) mFragmentTab1).enableTrimMode(false);
+            mTrimMode = false;
+            if (actionModelCancel) {
+                ((OrderClipsFragment) mFragmentTab1).undoSaveTrim();
+            } else {
+                ((OrderClipsFragment) mFragmentTab1).saveTrim();
+            }
+        }
+    };
     
     // FIXME move this into AddClipsFragment?
     public void addShotToScene ()

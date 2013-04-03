@@ -4,81 +4,87 @@
     android:layout_height="match_parent"
     android:layout_gravity="center_vertical"
     android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#000000"
+        android:orientation="vertical" >
+
+        <ImageView
+            android:id="@+id/imageView1"
+            android:layout_width="fill_parent"
+            android:layout_height="200dip"
+            android:adjustViewBounds="true"
+            android:src="@drawable/cliptype_long" />
+
+        <info.guardianproject.mrapp.PreviewVideoView
+            android:id="@+id/previewVideoView"
+            android:layout_width="match_parent"
+            android:layout_height="200dip"
+            android:adjustViewBounds="true"
+            android:visibility="gone" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/llControlBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#000000" >
+
+        <Button
+            android:id="@+id/buttonPlay"
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:text="@string/play_recording" />
+
+        <SeekBar
+            android:id="@+id/seekBar1"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+    </LinearLayout>
     
      <LinearLayout
-         android:layout_width="match_parent"
-         android:layout_height="wrap_content"
-         android:background="#000000" >
-     <ImageView
-        android:id="@+id/imageView1"
-        android:layout_width="fill_parent"
-         android:layout_height="200dip"   
-        android:adjustViewBounds="true"
-        android:src="@drawable/cliptype_long" />
-
-     <info.guardianproject.mrapp.PreviewVideoView
-         android:id="@+id/previewVideoView"
-         android:layout_width="match_parent"
-         android:layout_height="200dip"
-         android:visibility="gone"
-         android:adjustViewBounds="true"
-         
-          />
-</LinearLayout>
-     <LinearLayout
+         android:id="@+id/llRangeSeekBar"
          android:layout_width="match_parent"
          android:layout_height="wrap_content"
          android:background="#000000"
+         android:visibility="gone"
           >
+    </LinearLayout>
+        
 
-         <Button
-             android:id="@+id/buttonPlay"
-             style="?android:attr/buttonStyleSmall"
-             android:layout_width="wrap_content"
-             android:layout_height="30dp"
-             android:text="@string/play_recording" />
-
-         <SeekBar
-             android:id="@+id/seekBar1"
-             android:layout_width="0dip"
-             android:layout_height="wrap_content"
-             
-             android:layout_weight="1" />
-
-     </LinearLayout>
-	<com.animoto.android.views.DraggableGridView
+    <com.animoto.android.views.DraggableGridView
         android:id="@+id/DraggableGridView01"
         android:layout_width="fill_parent"
-        android:layout_height="150dp">
+        android:layout_height="150dp" >
     </com.animoto.android.views.DraggableGridView>
-     <LinearLayout
-         android:layout_width="match_parent"
-         android:layout_height="0dip"
-         android:layout_weight="1"
-         android:orientation="horizontal"
-         >
 
-       
-         <Button
-             android:id="@+id/buttonAddNarration"
-             style="?android:attr/buttonStyleSmall"
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content"
-             android:text="@string/button_add_narration"
-             			 android:layout_weight="1"
-              
-			 android:enabled="false"
-             />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dip"
+        android:layout_weight="1"
+        android:orientation="horizontal" >
 
-          <Button
-             android:id="@+id/buttonPlayNarration"
-             style="?android:attr/buttonStyleSmall"
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content"
-             android:text="@string/button_play_narration"
-			 android:layout_weight="1"
-			 android:enabled="false"
-             />
-     </LinearLayout>
-     
+        <Button
+            android:id="@+id/buttonAddNarration"
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:enabled="false"
+            android:text="@string/button_add_narration" />
+
+        <Button
+            android:id="@+id/buttonPlayNarration"
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:enabled="false"
+            android:text="@string/button_play_narration" />
+    </LinearLayout>
+
 </LinearLayout>

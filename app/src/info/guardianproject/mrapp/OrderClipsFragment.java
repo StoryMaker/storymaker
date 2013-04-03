@@ -9,10 +9,12 @@ import java.io.File;
 import java.io.IOException;
 
 import org.ffmpeg.android.MediaDesc;
+import org.holoeverywhere.widget.LinearLayout;
 import org.holoeverywhere.widget.SeekBar;
 import org.holoeverywhere.widget.SeekBar.OnSeekBarChangeListener;
 import org.json.JSONException;
 
+import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -34,10 +36,13 @@ import android.widget.AdapterView.OnItemClickListener;
 
 import com.animoto.android.views.DraggableGridView;
 import com.animoto.android.views.OnRearrangeListener;
+import com.efor18.rangeseekbar.RangeSeekBar;
+import com.efor18.rangeseekbar.RangeSeekBar.OnRangeSeekBarChangeListener;
 
 /**
  * 
  */
+@SuppressLint("ValidFragment") // FIXME don't do this
 public class OrderClipsFragment extends Fragment {
     private final static String TAG = "OrderClipsFragment";
     int layout;
@@ -47,13 +52,17 @@ public class OrderClipsFragment extends Fragment {
     Button mPlayButton, mButtonAddNarration, mButtonPlayNarration;
     private ImageView mImageViewMedia;
     private PreviewVideoView mPreviewVideoView = null;
+    private LinearLayout mLLControlBar = null;
     private SeekBar mSeekBar = null;
+    RangeSeekBar<Integer> mRangeSeekBar = null;
+    ViewGroup mRangeSeekBarContainer = null;
     public MediaProjectManager mMPM;
     private Handler mHandlerPub;
-    
+    int mCurrentClipIdx = 0;
     AudioRecorderView mAudioNarrator = null;
     private boolean mKeepRunningPreview = false;
-
+    boolean mTrimMode = false;
+    
     private File mFileAudioNarration = null;
     
     int mPhotoEssaySlideLength = -1;//5 seconds
@@ -95,6 +104,8 @@ public class OrderClipsFragment extends Fragment {
 
         mPreviewVideoView = (PreviewVideoView) view.findViewById(R.id.previewVideoView);
         
+        mLLControlBar = (LinearLayout) view.findViewById(R.id.llControlBar);
+        
         mSeekBar = (SeekBar) view.findViewById(R.id.seekBar1);
        
         mSeekBar.setOnSeekBarChangeListener(new OnSeekBarChangeListener(){
@@ -120,6 +131,40 @@ public class OrderClipsFragment extends Fragment {
                 
             }
             
+        });
+        
+        mRangeSeekBar = new RangeSeekBar<Integer>(0, 99, getActivity());
+
+        mRangeSeekBarContainer = (ViewGroup) view.findViewById(R.id.llRangeSeekBar);
+        mRangeSeekBarContainer.addView(mRangeSeekBar);
+        
+        mRangeSeekBar.setOnRangeSeekBarChangeListener(new OnRangeSeekBarChangeListener<Integer>() {
+
+            @Override
+            public void onRangeSeekBarValuesChanged(RangeSeekBar<?> bar, Integer minValue,
+                    Integer maxValue) {
+            }
+
+            int min = -1;
+            int max = -1;
+            @Override
+            public void onStartTrackingTouch(RangeSeekBar<?> bar) {
+                min = bar.getSelectedMinValue().intValue();
+                max = bar.getSelectedMaxValue().intValue();
+            }
+
+            @Override
+            public void onStopTrackingTouch(RangeSeekBar<?> bar) {
+                saveTrim();
+                previewClip(mCurrentClipIdx);
+//                if (min != bar.getSelectedMinValue().intValue()) {
+//                    // they were dragging the first handle
+//                    previewClip(mCurrentClipIdx);
+//                } else {
+//                    // they were dragging the second handle
+//                    // FIXME try showing the last 1 second only to help picking the end point
+//                }
+            }
         });
         
         if (mMPM.mProject.getStoryType() == Project.STORY_TYPE_ESSAY)
@@ -199,13 +244,24 @@ public class OrderClipsFragment extends Fragment {
             public void run() {
                 mImageViewMedia.setVisibility(View.VISIBLE);
                 mPreviewVideoView.setVisibility(View.GONE);
-                mKeepRunningPreview = false;;
+                mKeepRunningPreview = false;
+                mPlayButton.setText(R.string.play_recording);
+                showThumbnail(mCurrentClipIdx);
             }
         });
+        
+        
        
         loadMedia();
         
-      
+        mImageViewMedia.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                previewClip(mCurrentClipIdx);
+            }
+        });
+        
+        showThumbnail(mCurrentClipIdx);
         
         
         return view;
@@ -364,8 +420,7 @@ public class OrderClipsFragment extends Fragment {
              mPreviewVideoView.setVisibility(View.VISIBLE);
              
              // play
-             String[] pathArray = mMPM.mScene.getMediaAsPathArray();
-             mPreviewVideoView.setMedia(pathArray);
+             mPreviewVideoView.setMedia(mMPM.mScene.getMediaAsArray());
              mPreviewVideoView.play();
              
              new Thread ()
@@ -418,31 +473,46 @@ public class OrderClipsFragment extends Fragment {
 
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Log.d(TAG, "item clicked");
-                Media[] medias = mMPM.mScene.getMediaAsArray();
-                if (medias[position] != null) {
-                    
-                    if (medias[position].getMimeType().startsWith("video"))
-                    {
-                        mImageViewMedia.setVisibility(View.GONE);
-                        mPreviewVideoView.setVisibility(View.VISIBLE);
-                        // play
-                        mPreviewVideoView.stopPlayback();
-                        String[] pathArray = {medias[position].getPath()};
-                        mPreviewVideoView.setMedia(pathArray);
-                        mPreviewVideoView.play();
-                        
-                        //mSeekBar.setMax(mPreviewVideoView.getDuration());
-                        
-                    }
-                    else
-                    {
-                        mImageViewMedia.setImageBitmap(mActivity.getThumbnail(medias[position]));
-                    }
+                if (!mTrimMode) {
+                    Log.d(TAG, "item clicked");
+                    mCurrentClipIdx = position;
+                    showThumbnail(position);
+    //                previewClip(position);
                 }
             }
         });
       
+    }
+    
+    private void previewClip(int position) {
+        Media[] medias = mMPM.mScene.getMediaAsArray();
+        if (medias[position] != null) {
+            
+            if (medias[position].getMimeType().startsWith("video"))
+            {
+                mImageViewMedia.setVisibility(View.GONE);
+                mPreviewVideoView.setVisibility(View.VISIBLE);
+                // play
+                mPreviewVideoView.stopPlayback();
+                Media[] mediaArray = {medias[position]};
+                mPreviewVideoView.setMedia(mediaArray);
+                mPreviewVideoView.play();
+                
+                //mSeekBar.setMax(mPreviewVideoView.getDuration());
+                
+            }
+            else
+            {
+                showThumbnail(position);
+            }
+        }
+    }
+    
+    private void showThumbnail(int position) {
+        Media[] medias = mMPM.mScene.getMediaAsArray();
+        if (medias[position] != null) {
+            mImageViewMedia.setImageBitmap(mActivity.getThumbnail(medias[position]));
+        }
     }
     
     private void renderPreview ()
@@ -480,6 +550,62 @@ public class OrderClipsFragment extends Fragment {
             mHandlerPub.sendMessage(msgErr);
             Log.e(AppConstants.TAG, "error posting", e);
         }
+    }
     
+    public void enableTrimMode(boolean enable) {
+        if (enable) {
+            mLLControlBar.setVisibility(View.GONE);
+            mRangeSeekBarContainer.setVisibility(View.VISIBLE);
+            mTrimMode = true;
+            setupTrimUndo();
+        } else {
+            mLLControlBar.setVisibility(View.VISIBLE);
+            mRangeSeekBarContainer.setVisibility(View.GONE);
+            mTrimMode = false;
+        }
+    }
+    
+    public void saveTrim() {
+        Media media = mMPM.mScene.getMediaAsArray()[mCurrentClipIdx];
+        boolean dirty = false;
+        
+        if (media.getTrimStart() != mRangeSeekBar.getSelectedMinValue()) {
+            media.setTrimStart(mRangeSeekBar.getSelectedMinValue());
+            dirty = true;
+        }
+        
+        if (media.getTrimEnd() != mRangeSeekBar.getSelectedMaxValue()) {
+            media.setTrimEnd(mRangeSeekBar.getSelectedMaxValue());
+            dirty = true;
+        }
+        
+        if (dirty) media.save(); // FIXME move dirty into model classes save() method
+    }
+    
+    private int trimStartUndo = -1;
+    private int trimEndUndo = -1;
+    public void setupTrimUndo() {
+        Media media = mMPM.mScene.getMediaAsArray()[mCurrentClipIdx];
+        
+        trimStartUndo = media.getTrimStart();
+        trimEndUndo = media.getTrimEnd();
+    }
+    
+    public void undoSaveTrim() {
+        Media media = mMPM.mScene.getMediaAsArray()[mCurrentClipIdx];
+        
+        if (trimStartUndo != -1) media.setTrimStart(trimStartUndo);
+        if (trimEndUndo != -1) media.setTrimEnd(trimEndUndo);
+        media.save();
+    }
+    
+    public void loadTrim() {
+        Media media = mMPM.mScene.getMediaAsArray()[mCurrentClipIdx];
+        mRangeSeekBar.setSelectedMinValue(media.getTrimStart());
+        if (media.getTrimEnd() > 0) {
+            mRangeSeekBar.setSelectedMaxValue(media.getTrimEnd());
+        } else {
+            mRangeSeekBar.setSelectedMaxValue(99);
+        }
     }
 }

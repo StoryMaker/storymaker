@@ -20,13 +20,16 @@ public class Media {
     protected String clipType; // R.arrays.cliptypes
     protected int clipIndex; // which clip is this in the scene
     protected int sceneId; // foreign key to the Scene which holds this media
+    protected int trimStart;
+    protected int trimEnd;
+    protected int duration;
 
     public Media(Context context) {
         this.context = context;
     }
 
     public Media(Context context, int id, String path, String mimeType, String clipType, int clipIndex,
-            int sceneId) {
+            int sceneId, int trimStart, int trimEnd, int duration) {
         super();
         this.context = context;
         this.id = id;
@@ -35,6 +38,9 @@ public class Media {
         this.clipType = clipType;
         this.clipIndex = clipIndex;
         this.sceneId = sceneId;
+        this.trimStart = trimStart;
+        this.trimEnd = trimEnd;
+        this.duration = duration;
     }
 
     public Media(Context context, Cursor cursor) {
@@ -52,7 +58,13 @@ public class Media {
                 cursor.getInt(cursor
                         .getColumnIndex(StoryMakerDB.Schema.Media.COL_CLIP_INDEX)),
                 cursor.getInt(cursor
-                        .getColumnIndex(StoryMakerDB.Schema.Media.COL_SCENE_ID)));
+                        .getColumnIndex(StoryMakerDB.Schema.Media.COL_SCENE_ID)),
+                cursor.getInt(cursor
+                        .getColumnIndex(StoryMakerDB.Schema.Media.COL_TRIM_START)),
+                cursor.getInt(cursor
+                        .getColumnIndex(StoryMakerDB.Schema.Media.COL_TRIM_END)),
+                cursor.getInt(cursor
+                        .getColumnIndex(StoryMakerDB.Schema.Media.COL_DURATION)));
     }
 
     /***** Table level static methods *****/
@@ -73,6 +85,45 @@ public class Media {
             return null;
         }
     }
+    
+    /***** Calculated object level methods *****/
+
+    /** 
+     * @return 0.0-1.0 percent into the clip to start play
+     */
+    public float getTrimmedStartPercent() {
+        return (trimStart + 1) / 100F;
+    }
+
+    /** 
+     * @return 0.0-1.0 percent into the clip to end play
+     */
+    public float getTrimmedEndPercent() {
+        return (trimEnd + 1) / 100F;
+    }
+
+    /** 
+     * @return milliseconds into clip trimmed clip to start playback
+     */
+    public int getTrimmedStartTime() {
+        return Math.round(getTrimmedStartPercent() * duration);
+    }
+
+    /** 
+     * @return milliseconds to end of trimmed clip
+     */
+    public int getTrimmedEndTime() {
+        return Math.round(getTrimmedEndPercent() * duration);
+    }
+
+    /** 
+     * @return milliseconds trimmed clip will last
+     */
+    public int getTrimmedDuration() {
+        return getTrimmedEndTime() - getTrimmedStartTime();
+    }
+    
+    /***** Object level methods *****/
 
 
     /*
@@ -116,22 +167,6 @@ public class Media {
     }
 
     /***** Object level methods *****/
-
-//    public void save() {
-//        // FIXME be smart about insert vs update
-//        ContentValues values = new ContentValues();
-//        values.put(StoryMakerDB.Schema.Media.COL_PATH, path);
-//        values.put(StoryMakerDB.Schema.Media.COL_MIME_TYPE, mimeType);
-//        values.put(StoryMakerDB.Schema.Media.COL_CLIP_TYPE, clipType);
-//        values.put(StoryMakerDB.Schema.Media.COL_CLIP_INDEX, clipIndex);
-//        values.put(StoryMakerDB.Schema.Media.COL_SCENE_ID, sceneId);
-//        ContentResolver cr = context.getContentResolver();
-//        Uri uri = cr.insert(
-//                ProjectsProvider.MEDIA_CONTENT_URI, values);
-//        String lastSegment = uri.getLastPathSegment();
-//        int newId = Integer.parseInt(lastSegment);
-//        this.setId(newId);
-//    }
     
     public void save() {
     	Cursor cursor = getAsCursor(context, id);
@@ -153,6 +188,9 @@ public class Media {
         values.put(StoryMakerDB.Schema.Media.COL_CLIP_TYPE, clipType);
         values.put(StoryMakerDB.Schema.Media.COL_CLIP_INDEX, clipIndex);
         values.put(StoryMakerDB.Schema.Media.COL_SCENE_ID, sceneId);
+        values.put(StoryMakerDB.Schema.Media.COL_TRIM_START, trimStart);
+        values.put(StoryMakerDB.Schema.Media.COL_TRIM_END, trimEnd);
+        values.put(StoryMakerDB.Schema.Media.COL_DURATION, duration);
         
         return values;
     }
@@ -273,17 +311,60 @@ public class Media {
 		this.clipType = clipType;
 	}
 
-	/**
-	 * @return the clipIndex
-	 */
-	public int getClipIndex() {
-		return clipIndex;
-	}
+    /**
+     * @return the clipIndex
+     */
+    public int getClipIndex() {
+        return clipIndex;
+    }
 
-	/**
-	 * @param clipIndex the clipIndex to set
-	 */
-	public void setClipIndex(int clipIndex) {
-		this.clipIndex = clipIndex;
-	}
+    /**
+     * @param clipIndex the clipIndex to set
+     */
+    public void setClipIndex(int clipIndex) {
+        this.clipIndex = clipIndex;
+    }
+
+    /**
+     * @return the trimStart
+     */
+    public int getTrimStart() {
+        return trimStart;
+    }
+
+    /**
+     * @param trimStart the trimStart to set
+     */
+    public void setTrimStart(int trimStart) {
+        this.trimStart = trimStart;
+    }
+
+    /**
+     * @return the trimEnd
+     */
+    public int getTrimEnd() {
+        return trimEnd;
+    }
+
+    /**
+     * @param trimEnd the trimEnd to set
+     */
+    public void setTrimEnd(int trimEnd) {
+        this.trimEnd = trimEnd;
+    }
+
+
+    /**
+     * @return the duration
+     */
+    public int getDuration() {
+        return duration;
+    }
+
+    /**
+     * @param duration the duration to set
+     */
+    public void setDuration(int duration) {
+        this.duration = duration;
+    }
 }
