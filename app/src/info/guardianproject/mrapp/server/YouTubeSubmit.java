@@ -337,7 +337,7 @@ public class YouTubeSubmit {
     /*//this is already set
     entity.setContentType(new BasicHeader("Content-Type",
         "application/atom+xml"));
-    
+
     */
     
     StringEntity entity = new StringEntity(atomData);
