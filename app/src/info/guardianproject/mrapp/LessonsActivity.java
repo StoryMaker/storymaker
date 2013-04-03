@@ -143,8 +143,7 @@ public class LessonsActivity extends BaseActivity implements ActionBar.TabListen
     public void updateLessons ()
     {
 
-    	
-    	mProgressLoading = ProgressDialog.show(this, null, "Loading Lessons...",true,true);
+    	mProgressLoading = ProgressDialog.show(this, getString(R.string.title_lessons),getString(R.string.downloading_lessons_from_server_),true,true);
         
     	StoryMakerApp.getLessonManager().updateLessonsFromRemote();
     	

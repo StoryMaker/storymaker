@@ -3,9 +3,9 @@
 	<PreferenceCategory android:title="Networking &amp; Security">
 	    <EditTextPreference android:title="StoryMaker Server" android:summary="server for hosting all lesson and story content" android:key="pserver" android:defaultValue="https://storymaker.cc" android:enabled="true"/>
 	    
-	    		<CheckBoxPreference android:title="Use Orbot (Tor)" android:summary="Send all network traffic through the Tor network (https://torproject.org)" android:key="pusetor"/>
+	   <CheckBoxPreference android:title="Use Orbot (Tor)" android:summary="Send all network traffic through the Tor network (https://torproject.org)" android:key="pusetor"/>
 	
-	<EditTextPreference android:title="YouTube Account" android:summary="the YouTube account to use for video uploads" android:key="youTubeUserName" android:enabled="true"/>
+	<EditTextPreference android:title="YouTube Account" android:summary="the YouTube account to use for video uploads. This MUST be registered on your device." android:key="youTubeUserName" android:enabled="true"/>
 	<EditTextPreference android:title="SouldCloud Account" android:summary="the SoundCloud account to use for audio uploads" android:key="souldCloudUserName" android:enabled="true"/>
 	    
 	</PreferenceCategory>
@@ -30,7 +30,10 @@
 	
 	
 	<PreferenceCategory android:title="Debug">
-		<CheckBoxPreference android:title="Disable lesson completion requirement" android:key="plessondebug"/>
+		<CheckBoxPreference android:title="Disable lesson completion" android:key="plessondebug"/>
+		<EditTextPreference android:title="YouTube Auth Method" android:summary="0-4 for different auth approaches" android:key="glsauthmethod" android:defaultValue="0" android:enabled="true"/>
+		
+		
 	</PreferenceCategory>
 </PreferenceScreen>
 

@@ -3,10 +3,8 @@ package info.guardianproject.mrapp.lessons;
 import info.guardianproject.mrapp.AppConstants;
 import info.guardianproject.mrapp.model.Lesson;
 import info.guardianproject.onionkit.trust.StrongHttpsClient;
-import info.guardianproject.onionkit.ui.OrbotHelper;
 
 import java.io.BufferedInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -15,29 +13,15 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URI;
-import java.net.URL;
-import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map.Entry;
-import java.util.Set;
-import java.util.SortedMap;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
 import org.apache.commons.io.IOUtils;
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpHost;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -45,6 +29,10 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.util.Log;
+import ch.boye.httpclientandroidlib.HttpEntity;
+import ch.boye.httpclientandroidlib.HttpResponse;
+import ch.boye.httpclientandroidlib.client.methods.HttpGet;
+import ch.boye.httpclientandroidlib.util.EntityUtils;
 
 public class LessonManager implements Runnable {
 	
@@ -234,6 +222,8 @@ public class LessonManager implements Runnable {
 	public void run ()
 	{
 
+		Log.d(AppConstants.TAG,"loading lessons from remote");
+		
 		String sUrlLesson = null;
 		
 		try
@@ -242,7 +232,10 @@ public class LessonManager implements Runnable {
 			if (mSubFolder != null)
 				lessonFolder = new File(mLocalStorageRoot, mSubFolder);
 		
-				
+			
+			Log.d(AppConstants.TAG,"current lesson folder: " + lessonFolder.getAbsolutePath());
+			
+			
 			// open URL and download file listing
 			StrongHttpsClient httpClient = getHttpClientInstance();
 			
@@ -252,8 +245,7 @@ public class LessonManager implements Runnable {
 		     
 			if (useTor)
 			{
-				//
-//				httpClient.useProxy(true, "SOCKS", AppConstants.TOR_PROXY_HOST, AppConstants.TOR_PROXY_PORT);
+				httpClient.useProxy(true, "SOCKS", AppConstants.TOR_PROXY_HOST, AppConstants.TOR_PROXY_PORT);
 			}
 			
 			String urlBase = mUrlRemoteRepo;

@@ -260,11 +260,10 @@ public class PublishFragment extends Fragment {
 			cattmp[i++] = catstring;
 		
 		final String[] categories = cattmp;
-		
-        mHandlerPub.sendEmptyMessage(999);
 
         final String title = etTitle.getText().toString();
         final String desc = etDesc.getText().toString();
+        
         String ytdesc = desc;
         if (ytdesc.length() == 0) {
             ytdesc = getActivity().getString(R.string.default_youtube_desc); // can't
@@ -276,7 +275,7 @@ public class PublishFragment extends Fragment {
                                                                              // YouTube
         }
         
-        ytdesc += "\n\n" + getString(R.string.created_with_storymaker_tag);;
+        ytdesc += "\n\n" + getString(R.string.created_with_storymaker_tag);
 
         final YouTubeSubmit yts = new YouTubeSubmit(null, title, ytdesc, new Date(),
                 mActivity, mHandlerPub, mActivity.getBaseContext());
@@ -306,6 +305,8 @@ public class PublishFragment extends Fragment {
 	                      
 	                      Log.d("YouTube","got client token: " + result);
 	                      mThreadPublish.start();
+	                      
+
 	                    }});
             	 
             }
@@ -316,6 +317,9 @@ public class PublishFragment extends Fragment {
 
             public void run ()
             {
+            	
+                mHandlerPub.sendEmptyMessage(999);
+
                 
                 ServerManager sm = StoryMakerApp.getServerManager();
                 sm.setContext(mActivity.getBaseContext());

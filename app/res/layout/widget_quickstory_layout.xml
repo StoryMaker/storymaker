@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/widget_layout"
+    android:layout_width="300dp"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dip"
+    android:background="#66cccccc"
+    android:gravity="center"
+     >
+     
+    
+   <ImageButton
+            android:id="@+id/btnWidgetHome"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:background="@android:color/transparent"
+            android:padding="5dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_launcher" />
+    
+   <ImageButton
+            android:id="@+id/btnWidgetVideo"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:background="@android:color/transparent"
+            android:padding="5dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/quick_capture_video" />
+        
+           <ImageButton
+            android:id="@+id/btnWidgetPhoto"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:background="@android:color/transparent"
+            android:padding="5dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/quick_capture_photo" />
+           
+              <ImageButton
+            android:id="@+id/btnWidgetAudio"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:background="@android:color/transparent"
+            android:padding="5dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/quick_capture_audio" />
+
+</LinearLayout> 
