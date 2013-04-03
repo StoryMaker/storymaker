@@ -4,10 +4,12 @@ import info.guardianproject.mrapp.server.LoginActivity;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Date;
 
 import org.holoeverywhere.app.Activity;
 import org.holoeverywhere.widget.Toast;
 
+import android.app.PendingIntent;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -79,8 +81,48 @@ public class BaseActivity extends Activity {
         btnDrawerQuickCaptureVideo.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-            	 Intent i = new Intent(activity, OverlayCameraActivity.class);
-                 activity.startActivity(i);           
+            	
+            	String dateNowStr = new Date().toLocaleString();
+                
+            	Intent intent = new Intent(BaseActivity.this, StoryNewActivity.class);
+            	intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            	intent.putExtra("story_name", "Quick Story " + dateNowStr);
+            	intent.putExtra("story_type", 0);
+            	intent.putExtra("auto_capture", true);
+                
+                 activity.startActivity(intent);           
+                 }
+        });
+        
+        btnDrawerQuickCapturePhoto.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+            	
+            	String dateNowStr = new Date().toLocaleString();
+                
+            	Intent intent = new Intent(BaseActivity.this, StoryNewActivity.class);
+            	intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            	intent.putExtra("story_name", "Quick Story " + dateNowStr);
+            	intent.putExtra("story_type", 2);
+            	intent.putExtra("auto_capture", true);
+                
+                 activity.startActivity(intent);           
+                 }
+        });
+        
+        btnDrawerQuickCaptureAudio.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+            	
+            	String dateNowStr = new Date().toLocaleString();
+                
+            	Intent intent = new Intent(BaseActivity.this, StoryNewActivity.class);
+            	intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            	intent.putExtra("story_name", "Quick Story " + dateNowStr);
+            	intent.putExtra("story_type", 1);
+            	intent.putExtra("auto_capture", true);
+                
+                 activity.startActivity(intent);           
                  }
         });
         

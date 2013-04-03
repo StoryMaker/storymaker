@@ -260,8 +260,6 @@ public class PublishFragment extends Fragment {
 			cattmp[i++] = catstring;
 		
 		final String[] categories = cattmp;
-		
-        mHandlerPub.sendEmptyMessage(999);
 
         final String title = etTitle.getText().toString();
         final String desc = etDesc.getText().toString();
@@ -307,6 +305,8 @@ public class PublishFragment extends Fragment {
 	                      
 	                      Log.d("YouTube","got client token: " + result);
 	                      mThreadPublish.start();
+	                      
+
 	                    }});
             	 
             }
@@ -317,6 +317,9 @@ public class PublishFragment extends Fragment {
 
             public void run ()
             {
+            	
+                mHandlerPub.sendEmptyMessage(999);
+
                 
                 ServerManager sm = StoryMakerApp.getServerManager();
                 sm.setContext(mActivity.getBaseContext());
