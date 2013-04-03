@@ -20,7 +20,7 @@
             android:adjustViewBounds="true"
             android:baselineAlignBottom="true"
             android:scaleType="centerCrop"
-            android:src="@drawable/play"
+            android:src="@drawable/ic_launcher"
              />
 
         
