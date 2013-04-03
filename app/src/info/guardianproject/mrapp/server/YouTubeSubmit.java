@@ -35,7 +35,9 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
+import org.apache.commons.codec.binary.StringUtils;
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang3.StringEscapeUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -131,9 +133,18 @@ public class YouTubeSubmit {
   }
   
   
-  public YouTubeSubmit(File videoFile, String title, String description, Date dateTaken, Activity activity, Handler handler, Context context) {
-     
-	    SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(mContext.getApplicationContext());
+  public YouTubeSubmit(File videoFile, String title, String description, Date dateTaken, Activity activity, Handler handler, Context context) 
+  {
+	  
+    this.videoFile = videoFile;
+    this.activity = activity;
+    this.title = title;
+    this.description = description;
+    this.dateTaken = dateTaken;
+    this.handler = handler;
+    this.mContext = context;
+    
+    SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(mContext.getApplicationContext());
 
 	  authorizer = (GlsAuthorizer)new GlsAuthorizer.GlsAuthorizerFactory().getAuthorizer(activity,
         GlsAuthorizer.YOUTUBE_AUTH_TOKEN_TYPE);
@@ -144,14 +155,7 @@ public class YouTubeSubmit {
 	  authorizer.setAuthMethod(settings.getInt("glsauthmethod", 0));
 	  
 	  authorizer.setHandler(handler);
-	  
-    this.videoFile = videoFile;
-    this.activity = activity;
-    this.title = title;
-    this.description = description;
-    this.dateTaken = dateTaken;
-    this.handler = handler;
-    this.mContext = context;
+
 
 	httpClient = new StrongHttpsClient(mContext);
 	  httpClient.log.enableDebug(true);
@@ -325,7 +329,7 @@ public class YouTubeSubmit {
     this.tags = DEFAULT_VIDEO_TAGS;
 
     String template = Util.readFile(activity, R.raw.gdata).toString();
-    atomData = String.format(template, title, description, category, this.tags);
+    atomData = String.format(template, StringEscapeUtils.escapeHtml4(title),  StringEscapeUtils.escapeHtml4(description), category, this.tags);
   
     //set the length of this post
    // hPost.setHeader("Content-Length", atomData.length()+"");
