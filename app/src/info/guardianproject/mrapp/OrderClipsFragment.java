@@ -543,6 +543,10 @@ public class OrderClipsFragment extends Fragment {
     public void loadTrim() {
         Media media = mMPM.mScene.getMediaAsArray()[mCurrentClipIdx];
         mRangeSeekBar.setSelectedMinValue(media.getTrimStart());
-        mRangeSeekBar.setSelectedMaxValue(media.getTrimEnd());
+        if (media.getTrimEnd() > 0) {
+            mRangeSeekBar.setSelectedMaxValue(media.getTrimEnd());
+        } else {
+            mRangeSeekBar.setSelectedMaxValue(99);
+        }
     }
 }
