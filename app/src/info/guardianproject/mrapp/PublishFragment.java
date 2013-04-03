@@ -67,7 +67,9 @@ public class PublishFragment extends Fragment {
     private String mMediaUploadAccount = null;
     private String mMediaUploadAccountKey = null;
     
-
+    EditText mTitle;
+    EditText mDescription;
+    
     private SharedPreferences mSettings = null;
     
 
@@ -105,10 +107,10 @@ public class PublishFragment extends Fragment {
             	if (bitmap != null) ivThumb.setImageBitmap(bitmap);
             }
         	
-            EditText etTitle = (EditText) view.findViewById(R.id.etStoryTitle);
-            EditText etDesc = (EditText) view.findViewById(R.id.editTextDescribe);
+            mTitle = (EditText) view.findViewById(R.id.etStoryTitle);
+            mDescription = (EditText) view.findViewById(R.id.editTextDescribe);
 
-            etTitle.setText(mActivity.mMPM.mProject.getTitle());
+            mTitle.setText(mActivity.mMPM.mProject.getTitle());
             
             ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
             		  mActivity, R.array.story_sections, android.R.layout.simple_spinner_item );
@@ -123,7 +125,7 @@ public class PublishFragment extends Fragment {
 
                 @Override
                 public void onClick(View arg0) {
-                    
+                    saveForm();
                 	File fileExport = mActivity.mMPM.getExportMediaFile();
                 	if (fileExport.exists())
                 		fileExport.delete();
@@ -138,11 +140,8 @@ public class PublishFragment extends Fragment {
 
                 @Override
                 public void onClick(View v) {
-                    
-
-                    
+                    saveForm();
                     doPublish(); 
-
                 }
             });
         }
@@ -165,6 +164,12 @@ public class PublishFragment extends Fragment {
 	        }
     	}
         
+    }
+    
+    private void saveForm() {
+        mActivity.mMPM.mProject.setTitle(mTitle.getText().toString());
+        mActivity.mMPM.mProject.setTitle(mDescription.getText().toString());
+        mActivity.mMPM.mProject.save();
     }
 
     private void showLogin() {

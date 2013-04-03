@@ -139,7 +139,6 @@ public class OrderClipsFragment extends Fragment {
         
         mButtonAddNarration.setOnClickListener(new OnClickListener ()
         {
-
             @Override
             public void onClick(View v) {
 
@@ -148,7 +147,6 @@ public class OrderClipsFragment extends Fragment {
                 else
                     stopRecordNarration();
             }
-            
         });
         
         mButtonPlayNarration= (Button)view.findViewById(R.id.buttonPlayNarration);
@@ -157,15 +155,10 @@ public class OrderClipsFragment extends Fragment {
         
         mButtonPlayNarration.setOnClickListener(new OnClickListener ()
         {
-
             @Override
             public void onClick(View v) {
-
                 playNarration(!mAudioNarrator.isPlaying());
-                    
-                
             }
-            
         });
         
         mPlayButton = (Button) view.findViewById(R.id.buttonPlay);
