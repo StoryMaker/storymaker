@@ -1,5 +1,7 @@
 package info.guardianproject.mrapp;
 
+import java.util.Date;
+
 import org.holoeverywhere.widget.Toast;
 
 import info.guardianproject.mrapp.R;
@@ -24,8 +26,6 @@ public class StoryNewActivity extends BaseActivity {
 	private RadioGroup rGroup;
 	private TextView txtNewStoryDesc;
 	private EditText editTextStoryName;
-	
-	private final static int DEFAULT_CLIP_COUNT = 5;
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -85,7 +85,7 @@ public class StoryNewActivity extends BaseActivity {
 
                 	RadioGroup view = ((RadioGroup)findViewById(R.id.radioGroupStoryLevel));
                 	if (view.getCheckedRadioButtonId() == R.id.radioStoryType0)
-                		launchSimpleStory();
+                		launchSimpleStory(editTextStoryName.getText().toString(), getSelectedStoryMode(), false);
                 	else
                 		launchTemplateChooser();
             	}
@@ -93,6 +93,23 @@ public class StoryNewActivity extends BaseActivity {
             }
         });
         
+        
+        Intent intent = getIntent();
+        
+        if (intent.hasExtra("story_name") && intent.hasExtra("story_type"))
+        {
+        	String storyName = intent.getExtras().getString("story_name");
+        	int storyType = intent.getExtras().getInt("story_type");
+        	boolean autoCapture = false;
+        	
+        	if (intent.hasExtra("auto_capture"))
+        			autoCapture = intent.getExtras().getBoolean("auto_capture");
+        	
+        	storyName += " " + new Date().toLocaleString();
+        	
+        	launchSimpleStory(storyName, storyType, autoCapture);
+        	
+        }
     }
     
     private boolean formValid ()
@@ -155,9 +172,8 @@ public class StoryNewActivity extends BaseActivity {
     
    
     
-    private void launchSimpleStory() {
-        String pName = editTextStoryName.getText().toString();
-        int clipCount = DEFAULT_CLIP_COUNT;
+    private void launchSimpleStory(String pName, int storyMode, boolean autoCapture) {
+        int clipCount = AppConstants.DEFAULT_CLIP_COUNT;
         
         Project project = new Project (this, clipCount);
         project.setTitle(pName);
@@ -168,7 +184,6 @@ public class StoryNewActivity extends BaseActivity {
         scene.setProjectId(project.getId());
         scene.save();
     
-        int storyMode = getSelectedStoryMode();
         String templateJsonPath = Project.getSimpleTemplateForMode(storyMode);
        
         project.setStoryType(storyMode);
@@ -180,6 +195,7 @@ public class StoryNewActivity extends BaseActivity {
         intent.putExtra("title", project.getTitle());
         intent.putExtra("pid", project.getId());
         intent.putExtra("scene", 0);
+        intent.putExtra("auto_capture", autoCapture);
         
         startActivity(intent);
         

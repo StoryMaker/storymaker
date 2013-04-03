@@ -90,7 +90,7 @@ public class AddClipsThumbnailFragment extends Fragment {
                 public void onClick(View v) {
                 	
 
-                    ((SceneEditorActivity) mActivity).openCaptureMode(clip, mClipIndex);
+                    ((SceneEditorActivity) mActivity).openCaptureMode(clip.mShotType, mClipIndex);
 
                 }
 

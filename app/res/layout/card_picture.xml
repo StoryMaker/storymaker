@@ -28,6 +28,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:padding="3sp"
+            android:textSize="20sp"
             android:text="title" />
 
     </LinearLayout>

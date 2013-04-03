@@ -131,6 +131,13 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
             actionBar.addTab(actionBar.newTab().setText(R.string.tab_publish).setTabListener(this));
         }
         
+        
+        if (intent.hasExtra("auto_capture")
+        		&& intent.getBooleanExtra("auto_capture", false))
+        {
+        	openCaptureMode(0, 0);
+        	
+        }
 
     }
 
@@ -373,7 +380,7 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
         super.onConfigurationChanged(newConfig);
     }
 
-	public void openCaptureMode (Clip clip, int clipIndex)
+	public void openCaptureMode (int shotType, int clipIndex)
 	{
 		
 		if (mProject.getStoryType() == Project.STORY_TYPE_AUDIO)
@@ -392,7 +399,7 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
             // mMPM.mMediaHelper.captureVideo(mContext.getExternalFilesDir(null));
 
             Intent i = new Intent(mContext, OverlayCameraActivity.class);
-            i.putExtra("group", clip.mShotType);
+            i.putExtra("group", shotType);
             i.putExtra("mode", mProject.getStoryType());
             mMPM.mClipIndex = clipIndex;
             startActivityForResult(i, REQ_OVERLAY_CAM);

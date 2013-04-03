@@ -23,7 +23,10 @@ public final static String TAG = "StoryMaker";
 	public final static int LOGOUT = 2;
 	
 
-	public final static int DEFAULT_SLIDE_DURATION = 5;
+	public final static int DEFAULT_SLIDE_DURATION = 10;
+	
+
+	public final static int DEFAULT_CLIP_COUNT = 5;
 	
 	
 	

@@ -18,6 +18,8 @@
             android:layout_height="0dp"
             android:layout_weight="1"
             android:gravity="center"
+            
+            android:textSize="20sp"
             android:text="title" />
 
     </LinearLayout>

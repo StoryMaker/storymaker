@@ -1,0 +1,17 @@
+{
+    "scenes": [
+        {
+            "title": "who",
+            "description": "story_type_profile_text1"
+        },
+        {
+            "title": "what",
+            "description": "story_type_profile_text2"
+        },
+        {
+            "title": "how",
+            "description": "story_type_profile_text3"
+        }
+    ], 
+    "title": "story_type_profile_title"
+}
