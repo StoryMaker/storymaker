@@ -21,14 +21,18 @@ import android.accounts.AccountManagerCallback;
 import android.accounts.AccountManagerFuture;
 import android.accounts.AuthenticatorException;
 import android.accounts.OperationCanceledException;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 
 import java.io.IOException;
 
+@SuppressLint("NewApi")
 public class GlsAuthorizer implements Authorizer {
 
   public static final String ACCOUNT_TYPE_GOOGLE = "com.google";
@@ -47,18 +51,33 @@ public class GlsAuthorizer implements Authorizer {
   private AuthToken mLastAuthToken = new AuthToken ();
   private String[] mAccountFeatures = YOUTUBE_FEATURES;
 	  
+  private Context mContext = null;
+  private Activity mActivity = null;
+  
+  private int mAuthMethod = 0;
+  
   private static class Config {
 	  private static final String APP_NAME = "GlsAuthorizer";
   }
   
   public GlsAuthorizer(Context context) {
     accountManager = AccountManager.get(context);
-
+    mContext = context;
   }
 
   public void setAccountFeatures (String[] features)
   {
 	  mAccountFeatures = features;
+  }
+  
+  public void setAuthMethod (int authMethod)
+  {
+	  mAuthMethod = authMethod;
+  }
+  
+  public void setParentActivity (Activity activity)
+  {
+	  mActivity = activity;
   }
   
   public void setAccountType (String aType)
@@ -149,6 +168,27 @@ public class GlsAuthorizer implements Authorizer {
 
 	                	listener.onSuccess(mLastAuthToken.mToken);
 	            	}
+	            	else if (extras.containsKey(AccountManager.KEY_INTENT))
+	            	{
+	            		Intent intent = (Intent)extras.get(AccountManager.KEY_INTENT);
+	                    if(intent != null){              
+	                    	
+	                    	if (mActivity != null)
+	                    	{
+	                    		mActivity.startActivity(intent);
+	                    	}
+	                    	else
+	                    	{
+	                    		intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+	                    		mContext.startActivity(intent);
+	                    	}
+	                    	
+	                    	//In the activity that runs this I check for a flag in the onResume, 
+	                        //which tells me that we returned from this activity
+
+	                    }
+
+	            	}
 	                else
 	                {	            		
 	                	String err =  extras.getString(AccountManager.KEY_AUTH_FAILED_MESSAGE);
@@ -165,30 +205,39 @@ public class GlsAuthorizer implements Authorizer {
               }
             }
           };
-    	/*
-      accountManager.getAuthToken(
-          account,
-          mLastAuthToken.mTokenType,
-          true, // loginOptions,
-          callback,
-          handler); // handler
-          */
-        
-        try
-        {
-        	accountManager.getAuthToken(account, mLastAuthToken.mTokenType, new Bundle(), activity, callback, handler);
-        }
-        catch (Error err)
-        {
-        	accountManager.getAuthToken(account, mLastAuthToken.mTokenType, true, callback, handler);
+          
+          Bundle options = new Bundle ();
+          if (mAuthMethod == 0)
+          {
+        	  //this is the most common one that works
+          	accountManager.getAuthToken(account, mLastAuthToken.mTokenType, options, activity, callback, handler);
 
-        }
-        catch (Exception err)
-        {
-        	accountManager.getAuthToken(account, mLastAuthToken.mTokenType, true, callback, handler);
+          }
+          else if (mAuthMethod == 1)
+          {        	  
+        	  //this one also works, using the older method
+        	  accountManager.getAuthToken(account, mLastAuthToken.mTokenType, false, callback, handler);
 
-        }
-    	
+          }
+          else if (mAuthMethod == 2)
+          {
+        	  //this is the API 14 approach
+        	  accountManager.getAuthToken(account, mLastAuthToken.mTokenType, options, false, callback, handler);
+
+          }
+          else if (mAuthMethod == 3)
+          {        	  
+        	  //this is the older method with a null handler
+        	  accountManager.getAuthToken(account, mLastAuthToken.mTokenType, false, callback, null);
+
+          }
+          else if (mAuthMethod == 4)
+          {        	  
+        	  //this shows a notification alert
+        	  accountManager.getAuthToken(account, mLastAuthToken.mTokenType, true, callback, null);
+
+          }
+            	
           
     } else {
       listener.onError(new Exception("Could not find account " + accountName));
