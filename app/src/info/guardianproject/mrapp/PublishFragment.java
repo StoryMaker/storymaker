@@ -168,7 +168,7 @@ public class PublishFragment extends Fragment {
     
     private void saveForm() {
         mActivity.mMPM.mProject.setTitle(mTitle.getText().toString());
-        mActivity.mMPM.mProject.setTitle(mDescription.getText().toString());
+        mActivity.mMPM.mProject.setDescription(mDescription.getText().toString());
         mActivity.mMPM.mProject.save();
     }
 
