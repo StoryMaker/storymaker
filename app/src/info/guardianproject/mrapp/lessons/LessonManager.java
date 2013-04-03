@@ -222,6 +222,8 @@ public class LessonManager implements Runnable {
 	public void run ()
 	{
 
+		Log.d(AppConstants.TAG,"loading lessons from remote");
+		
 		String sUrlLesson = null;
 		
 		try
@@ -230,7 +232,10 @@ public class LessonManager implements Runnable {
 			if (mSubFolder != null)
 				lessonFolder = new File(mLocalStorageRoot, mSubFolder);
 		
-				
+			
+			Log.d(AppConstants.TAG,"current lesson folder: " + lessonFolder.getAbsolutePath());
+			
+			
 			// open URL and download file listing
 			StrongHttpsClient httpClient = getHttpClientInstance();
 			
@@ -240,8 +245,7 @@ public class LessonManager implements Runnable {
 		     
 			if (useTor)
 			{
-				//
-//				httpClient.useProxy(true, "SOCKS", AppConstants.TOR_PROXY_HOST, AppConstants.TOR_PROXY_PORT);
+				httpClient.useProxy(true, "SOCKS", AppConstants.TOR_PROXY_HOST, AppConstants.TOR_PROXY_PORT);
 			}
 			
 			String urlBase = mUrlRemoteRepo;

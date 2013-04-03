@@ -25,8 +25,6 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.widget.ArrayAdapter;
 
-
-
 public class LessonListView extends ListView implements LessonManagerListener {
 
 		
@@ -180,6 +178,7 @@ public class LessonListView extends ListView implements LessonManagerListener {
     	mSubFolder = subFolder;
     	mLessonManager.setSubFolder(mSubFolder);
     	
+    	Log.d(AppConstants.TAG,"loading lesson from folder: " + subFolder);
     	mListLessons = mLessonManager.loadLessonList(getContext(), mLocale.getLanguage());
     	
     	if (mListLessons.size() == 0)
@@ -276,7 +275,10 @@ public class LessonListView extends ListView implements LessonManagerListener {
 				break;
 				
 				case 4: //error
-					mActivity.mProgressLoading.cancel();
+					
+					if (mActivity.mProgressLoading != null)
+						mActivity.mProgressLoading.cancel();
+					
 					Toast.makeText(getContext(), msg.getData().getString("err"), Toast.LENGTH_LONG).show();
 					
 				break;
@@ -300,6 +302,8 @@ public class LessonListView extends ListView implements LessonManagerListener {
     
     private void loadLessonListAdapter ()
     {
+    	Log.d(AppConstants.TAG,"Lesson list adapter loading");
+    	
        	 SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getContext().getApplicationContext());
 
    	     boolean requireComplete = !settings.getBoolean("plessondebug", false);
@@ -312,6 +316,8 @@ public class LessonListView extends ListView implements LessonManagerListener {
 	@Override
 	public void lessonsLoadedFromServer() {
 		
+		Log.d(AppConstants.TAG,"Lessons loaded from server");
+    	
     	mListLessons = mLessonManager.loadLessonList(getContext(), mLocale.getLanguage());
     	mHandler.sendEmptyMessage(1);
     	mHandler.sendEmptyMessage(2);
@@ -333,7 +339,6 @@ public class LessonListView extends ListView implements LessonManagerListener {
 
 	@Override
 	public void errorLoadingLessons(String errMsg) {
-		
 		
 		Message msg = mHandler.obtainMessage(4);
 		msg.getData().putString("err",errMsg);
