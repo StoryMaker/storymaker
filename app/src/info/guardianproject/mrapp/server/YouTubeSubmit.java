@@ -26,7 +26,6 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.security.Principal;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -35,7 +34,6 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
-import org.apache.commons.codec.binary.StringUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringEscapeUtils;
 import org.w3c.dom.Document;
@@ -53,21 +51,10 @@ import android.os.Message;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import ch.boye.httpclientandroidlib.Header;
-import ch.boye.httpclientandroidlib.HttpException;
-import ch.boye.httpclientandroidlib.HttpRequest;
-import ch.boye.httpclientandroidlib.HttpRequestInterceptor;
 import ch.boye.httpclientandroidlib.HttpResponse;
-import ch.boye.httpclientandroidlib.auth.AuthScope;
-import ch.boye.httpclientandroidlib.auth.AuthState;
-import ch.boye.httpclientandroidlib.auth.Credentials;
-import ch.boye.httpclientandroidlib.auth.UsernamePasswordCredentials;
-import ch.boye.httpclientandroidlib.client.CredentialsProvider;
 import ch.boye.httpclientandroidlib.client.methods.HttpPost;
-import ch.boye.httpclientandroidlib.client.protocol.ClientContext;
 import ch.boye.httpclientandroidlib.entity.AbstractHttpEntity;
 import ch.boye.httpclientandroidlib.entity.StringEntity;
-import ch.boye.httpclientandroidlib.impl.auth.BasicScheme;
-import ch.boye.httpclientandroidlib.protocol.HttpContext;
 
 public class YouTubeSubmit {
 
@@ -158,14 +145,22 @@ public class YouTubeSubmit {
 
 
 	httpClient = new StrongHttpsClient(mContext);
-	  httpClient.log.enableDebug(true);
 
+	httpClient.getStrongTrustManager().setNotifyVerificationSuccess(true);
+	httpClient.getStrongTrustManager().setNotifyVerificationFail(true);
+	
+	
 
     mUseTor = settings.getBoolean("pusetor", false);
     
 	if (mUseTor)
 	{		
 		httpClient.useProxy(true, "SOCKS", AppConstants.TOR_PROXY_HOST, AppConstants.TOR_PROXY_PORT);
+	}
+	else
+	{
+		httpClient.useProxy(false, null, null, -1);
+
 	}
 	  
   }
