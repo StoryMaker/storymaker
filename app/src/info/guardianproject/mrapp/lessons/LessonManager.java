@@ -214,7 +214,8 @@ public class LessonManager implements Runnable {
 		if (mHttpClient == null)
 			mHttpClient = new StrongHttpsClient(mContext);
 		
-		//mHttpClient.getStrongTrustManager().setNotifyVerificationSuccess(true);
+		mHttpClient.getStrongTrustManager().setNotifyVerificationSuccess(true);
+		mHttpClient.getStrongTrustManager().setNotifyVerificationFail(true);
 		
 		return mHttpClient;
 	}
@@ -246,6 +247,11 @@ public class LessonManager implements Runnable {
 			if (useTor)
 			{
 				httpClient.useProxy(true, "SOCKS", AppConstants.TOR_PROXY_HOST, AppConstants.TOR_PROXY_PORT);
+			}
+			else
+			{
+				httpClient.useProxy(false, null, null, -1);
+
 			}
 			
 			String urlBase = mUrlRemoteRepo;
