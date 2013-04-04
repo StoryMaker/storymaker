@@ -494,6 +494,19 @@ public class OrderClipsFragment extends Fragment {
                 //mSeekBar.setMax(mPreviewVideoView.getDuration());
                 
             }
+            else if (medias[position].getMimeType().startsWith("audio"))
+            {
+                mImageViewMedia.setVisibility(View.GONE);
+                mPreviewVideoView.setVisibility(View.VISIBLE);
+                // play
+                mPreviewVideoView.stopPlayback();
+                Media[] mediaArray = {medias[position]};
+                mPreviewVideoView.setMedia(mediaArray);
+                mPreviewVideoView.play();
+                
+                //mSeekBar.setMax(mPreviewVideoView.getDuration());
+                
+            }
             else
             {
                 showThumbnail(position);
