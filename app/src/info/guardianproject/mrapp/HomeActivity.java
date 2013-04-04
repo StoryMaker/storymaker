@@ -74,7 +74,6 @@ public class HomeActivity extends BaseActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
       
-        checkForTor ();
         
         try {
             String pkg = getPackageName();
@@ -91,6 +90,9 @@ public class HomeActivity extends BaseActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         
         Eula.show(this);
+        
+
+        checkForTor ();
         
     }
     
