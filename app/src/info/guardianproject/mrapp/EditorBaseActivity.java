@@ -32,17 +32,13 @@ import android.widget.Toast;
  * EditorBaseActivity acts as the base class for StoryTemplateActivity and SceneEditorActivity
  */
 public class EditorBaseActivity extends BaseActivity {
+	
     public MediaProjectManager mMPM;
     public MediaDesc mdExported = null;
     private ProgressDialog mProgressDialog = null;
-    protected Context mContext = null;
     
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        mContext = getBaseContext();
-    }
-
+    public final static int REQ_YOUTUBE_AUTH = 999;
+	
     public Handler mHandlerPub = new Handler()
     {
 
@@ -82,7 +78,7 @@ public class EditorBaseActivity extends BaseActivity {
                         }
                         else
                         {
-                            Toast.makeText(mContext, status, Toast.LENGTH_SHORT).show();
+                            Toast.makeText(EditorBaseActivity.this, status, Toast.LENGTH_SHORT).show();
                             
                         }
                     }
@@ -117,7 +113,7 @@ public class EditorBaseActivity extends BaseActivity {
                     
                 break;
                 case -1:
-                    Toast.makeText(mContext, error, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(EditorBaseActivity.this, error, Toast.LENGTH_SHORT).show();
                     if (mProgressDialog != null)
                     {
                         mProgressDialog.dismiss();
@@ -244,5 +240,7 @@ public class EditorBaseActivity extends BaseActivity {
 
         return super.onOptionsItemSelected(item);
     }
+    
+    
     
 }

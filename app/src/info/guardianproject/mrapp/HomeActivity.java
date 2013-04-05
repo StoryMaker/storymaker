@@ -181,7 +181,9 @@ public class HomeActivity extends BaseActivity {
     			card = new MyCard(getString(R.string.you_began_a_new_lesson),lesson.mTitle);
     		}
     		
-    			
+    		if (lesson.mImage != null)
+    			card.setImage(BitmapDrawable.createFromPath(lesson.mImage));
+    		
     		card.setIcon(R.drawable.ic_home_lesson);
         		
     		card.setOnClickListener(new OnClickListener() {
@@ -209,26 +211,32 @@ public class HomeActivity extends BaseActivity {
     	{
     		Project project = mListProjects.get(i);
     		
-    		// FIXME default to use first scene
-    	    Media[] mediaList = project.getScenesAsArray()[0].getMediaAsArray();
-            
-    	    Drawable img = null;
-    	    
-            if (mediaList != null && mediaList.length > 0)    
-            {
-            	for (Media media: mediaList)
-            		if (media != null)
-            		{
-            			Bitmap bmp = getThumbnail(media);
-            			 
-            			if (bmp != null)
-            			{
-            				img = new BitmapDrawable(getResources(),bmp);
-            			
-            				break;
-            			}
-            		}
-            }
+    		Drawable img = null;
+    		Date cardDate = new Date();
+    		
+    		for (int n = 0; n < project.getScenesAsArray().length && img == null; n++)
+    		{
+    		
+	    	    Media[] mediaList = project.getScenesAsArray()[n].getMediaAsArray();
+	            
+	            if (mediaList != null && mediaList.length > 0)    
+	            {
+	            	for (Media media: mediaList)
+	            		if (media != null)
+	            		{
+	            			Bitmap bmp = getThumbnail(media);
+	            			 
+	            			if (bmp != null)
+	            			{
+	            				img = new BitmapDrawable(getResources(),bmp);
+
+	                   		 	cardDate = new Date(new File(media.getPath()).lastModified());
+	                   		 
+	            				break;
+	            			}
+	            		}
+	            }
+    		}
             
 
 			if (img != null)
@@ -248,7 +256,6 @@ public class HomeActivity extends BaseActivity {
         		});
         		
 
-        		Date cardDate = new Date(new File(mediaList[0].getPath()).lastModified());
         		ActivityEntry ae = new ActivityEntry(card,cardDate);
         		alActivity.add(ae);
         		
@@ -292,7 +299,6 @@ public class HomeActivity extends BaseActivity {
 
         			}
         		});
-        		mCardView.addCard(card);
         		
         		if (project.getStoryType() == Project.STORY_TYPE_VIDEO)
     	    	{
@@ -320,10 +326,6 @@ public class HomeActivity extends BaseActivity {
     	    	}
         		
         		
-        		Date cardDate = new Date();
-        		
-        		if (mediaList.length > 0 && mediaList[0] != null && mediaList[0].getPath() != null)
-        			cardDate = new Date(new File(mediaList[0].getPath()).lastModified());
         			
         		ActivityEntry ae = new ActivityEntry(card,cardDate);
         		alActivity.add(ae);

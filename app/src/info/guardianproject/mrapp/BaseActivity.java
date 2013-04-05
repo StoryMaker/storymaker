@@ -33,12 +33,6 @@ public class BaseActivity extends Activity {
 
 	public SlidingMenu mSlidingMenu;
 	
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        
-      
-    }
     
     public void initSlidingMenu ()
     {

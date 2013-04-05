@@ -26,6 +26,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.URL;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -58,14 +59,17 @@ import ch.boye.httpclientandroidlib.entity.StringEntity;
 
 public class YouTubeSubmit {
 
-  private static final String INITIAL_UPLOAD_URL =
-      "http://uploads.gdata.youtube.com/resumable/feeds/api/users/default/uploads";
+  public static final String RESUMABLE_UPLOAD_URL =
+   "http://uploads.gdata.youtube.com/resumable/feeds/api/users/default/uploads";
+
+  public static final String STANDARD_UPLOAD_URL =
+		    "http://gdata.youtube.com/feeds/api/users/default/uploads";
 
   private static final String CONTENT_TYPE = "application/atom+xml; charset=UTF-8";
   private static final String DEFAULT_VIDEO_CATEGORY = "News";
   private static final String DEFAULT_VIDEO_TAGS = "mobile, storymaker";
   
-  private static final String HOST_UPLOADS = "uploads.gdata.youtube.com";
+ // private String mServerDomain = "uploads.gdata.youtube.com";
 
   private static final int MAX_RETRIES = 10;
   private static final int BACKOFF = 6; // base of exponential backoff
@@ -74,8 +78,8 @@ public class YouTubeSubmit {
 
   public String videoId = null;
   
-  private String ytdDomain = null;
-  private String assignmentId = null;
+  //private String ytdDomain = null;
+  //private String assignmentId = null;
   //private Uri videoUri = null;
   private File videoFile = null;
   private String clientLoginToken = null;
@@ -85,6 +89,8 @@ public class YouTubeSubmit {
   
   private GlsAuthorizer authorizer = null;
   
+  private String mDevKey = null;
+  private String mAuthMode = "GoogleLogin";
   
   private String tags = null;
 
@@ -165,20 +171,30 @@ public class YouTubeSubmit {
 	  
   }
   
+  public void setAuthMode (String authMode)
+  {
+	  mAuthMode = authMode;
+  }
+  
+  public void setDeveloperKey (String devKey)
+  {
+	  mDevKey = devKey;
+  }
+  
   public void setVideoFile (File videoFile, String contentType)
   {
 	  this.videoFile = videoFile;
 	  this.videoContentType = contentType;
   }
 
-  public void upload(File videoFile, String contentType) {
+  public void upload(File videoFile, String contentType, String uploadEndPoint) {
    
     this.videoFile = videoFile;
     
-    asyncUpload(videoFile,contentType);
+    asyncUpload(videoFile,contentType,uploadEndPoint);
   }
 
-  public void asyncUpload(final File videoFile, final String contentType) {
+  public void asyncUpload(final File videoFile, final String contentType, final String uploadEndPoint) {
     new Thread(new Runnable() {
       @Override
       public void run() {
@@ -192,7 +208,7 @@ public class YouTubeSubmit {
           while (submitCount<=MAX_RETRIES && videoId == null) {
             try {
               submitCount++;
-              videoId = startUpload(videoFile, contentType);
+              videoId = startUpload(videoFile, contentType, uploadEndPoint);
               assert videoId!=null;
               break;
             } catch (Internal500ResumeException e500) { // TODO - this should not really happen
@@ -241,7 +257,7 @@ public class YouTubeSubmit {
   }
 
  
-  private String startUpload(File file, String contentType) throws IOException, YouTubeAccountException, SAXException, ParserConfigurationException, Internal500ResumeException {
+  private String startUpload(File file, String contentType, String uploadEndPoint) throws IOException, YouTubeAccountException, SAXException, ParserConfigurationException, Internal500ResumeException {
 
     if (this.clientLoginToken == null) {
       // The stored gmail account is not linked to YouTube
@@ -249,7 +265,7 @@ public class YouTubeSubmit {
     }
 
     String slug = file.getName();
-    String uploadUrl = uploadMetaDataToGetLocation(slug, contentType, file.length(), true);
+    String uploadUrl = uploadMetaDataToGetLocation(uploadEndPoint, slug, contentType, file.length(), true);
 
     Log.d(LOG_TAG, "uploadUrl=" + uploadUrl);
     Log.d(LOG_TAG, String.format("Client token : %s ",this.clientLoginToken));
@@ -307,11 +323,9 @@ public class YouTubeSubmit {
     return videoId;
   }
 
-  private String uploadMetaDataToGetLocation(String slug, String contentType, long contentLength, boolean retry) throws IOException {
-    String uploadUrl = INITIAL_UPLOAD_URL;
-
- 			
-    HttpPost hPost = getGDataHttpPost(HOST_UPLOADS, uploadUrl, slug);
+  private String uploadMetaDataToGetLocation(String uploadUrl, String slug, String contentType, long contentLength, boolean retry) throws IOException {
+   		
+    HttpPost hPost = getGDataHttpPost(new URL(uploadUrl).getHost(), uploadUrl, slug);
    
 
     //provide information about the media that is being uploaded
@@ -354,12 +368,12 @@ public class YouTubeSubmit {
     
     if (responseCode < 200 || responseCode >= 300) {
       // The response code is 40X
-      if ((responseCode + "").startsWith("4") && retry) {
+      if ((responseCode + "").startsWith("4") && retry && accountYouTube != null) {
         
         //invalidate our old one, that is locally cached
         this.clientLoginToken = authorizer.getFreshAuthToken(accountYouTube.name, clientLoginToken);
         // Try again with fresh token
-        return uploadMetaDataToGetLocation(slug, contentType, contentLength, false);
+        return uploadMetaDataToGetLocation(uploadUrl, slug, contentType, contentLength, false);
       } else {
     	  
     	  
@@ -380,8 +394,8 @@ public class YouTubeSubmit {
     //int bufferSize = 1024;
     //byte[] buffer = new byte[bufferSize];
     FileInputStream fileStream = new FileInputStream(file);
-
-    HttpPost hPut = getGDataHttpPost(HOST_UPLOADS, uploadUrl, null);
+    URL url = new URL(uploadUrl);
+    HttpPost hPut = getGDataHttpPost(url.getHost(), uploadUrl, null);
     hPut.setHeader("X-HTTP-Method-Override", "PUT");
     
     // some mobile proxies do not support PUT, using X-HTTP-Method-Override to get around this problem
@@ -599,9 +613,8 @@ public class YouTubeSubmit {
 
   private ResumeInfo resumeFileUpload(String uploadUrl, File file) throws IOException, ParserConfigurationException, SAXException, Internal500ResumeException {
 	  
-	  
-	  	  
-	  HttpPost hPost = this.getGDataHttpPost(HOST_UPLOADS, uploadUrl, file.getName());
+	  	
+	  HttpPost hPost = getGDataHttpPost(new URL(uploadUrl).getHost(), uploadUrl, file.getName());
 	 
 	  hPost.setHeader("Content-Range", "bytes */*");
      hPost.setHeader("X-HTTP-Method-Override", "PUT");
@@ -615,7 +628,6 @@ public class YouTubeSubmit {
 	  Log.d(LOG_TAG, "responseMessage=" + hResp.getStatusLine().getReasonPhrase());
 
 	    InputStream isResp = hResp.getEntity().getContent();
-
 
     if (respCode >= 300 && respCode < 400) {
       int nextByteToUpload;
@@ -692,14 +704,20 @@ public class YouTubeSubmit {
 	    request.setHeader("GData-Version", "2");
 	    request.setHeader("X-GData-Version", "2");
 	    
-	    String devKey = activity.getString(R.string.dev_key);
-	    request.setHeader("X-GData-Key", "key=" + devKey);
+	    request.setHeader("X-GData-Key", "key=" + mDevKey);
 	  
 	    if (clientLoginToken != null) //should this ever be null?
 	    {
-	    	request.setHeader("Authorization", 
-	    		"GoogleLogin auth=" + clientLoginToken);
-	    	
+	    	if(mAuthMode.equals("Bearer"))
+	    	{
+	    		request.setHeader("Authorization",
+	    				mAuthMode + " " + clientLoginToken);
+	    	}
+	    	else
+	    	{
+	    		request.setHeader("Authorization", 
+	    				mAuthMode + " auth=" + clientLoginToken + "");
+	    	}
 	    }
 	    
 	    
@@ -789,18 +807,23 @@ public class YouTubeSubmit {
 	  this.clientLoginToken = token;
   }
   
-  public void getAuthTokenWithPermission(String accountName, AuthorizationListener listener) {
-	
+  public Account setYouTubeAccount (String accountName)
+  {
 
-	accountYouTube = ((GlsAuthorizer)authorizer).getAccount(accountName);
-	  
-	
-    this.authorizer.fetchAuthToken(accountName, activity, listener);
+
+		return (accountYouTube = ((GlsAuthorizer)authorizer).getAccount(accountName));
+		  
   }
   
-  public void upload ()
+  public void getAuthTokenWithPermission(AuthorizationListener listener) {
+	
+	
+    this.authorizer.fetchAuthToken(accountYouTube.name, activity, listener);
+  }
+  
+  public void upload (String urlEndPoint)
   {
-	  upload(videoFile, videoContentType);
+	  upload(videoFile, videoContentType, urlEndPoint);
       
   }
 

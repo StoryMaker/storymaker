@@ -8,6 +8,7 @@ import info.guardianproject.mrapp.model.template.Template;
 import info.guardianproject.mrapp.model.Media;
 import info.guardianproject.mrapp.model.Project;
 import info.guardianproject.mrapp.model.Scene;
+import info.guardianproject.mrapp.server.OAuthAccessTokenActivity;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -49,6 +50,7 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
 	
 	private final static int REQ_OVERLAY_CAM = 888; //for resp handling from overlay cam launch
 	
+	
     protected Menu mMenu = null;
     
     //private String mTemplateJsonPath = null;
@@ -77,12 +79,12 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
 
         if (pid != -1)
         {
-        	mProject = Project.get(mContext, pid);
+        	mProject = Project.get(getApplicationContext(), pid);
             Scene scene = null;
             if ((mSceneIndex != -1) && (mSceneIndex < mProject.getScenesAsArray().length)) {
                 scene = mProject.getScenesAsArray()[mSceneIndex];
             }
-            mMPM = new MediaProjectManager(this, mContext, getIntent(), mHandlerPub, mProject, scene);
+            mMPM = new MediaProjectManager(this, getApplicationContext(), getIntent(), mHandlerPub, mProject, scene);
             mMPM.initProject();
             mMPM.addAllProjectMediaToEditor();
         }
@@ -92,10 +94,10 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
 
             String title = intent.getStringExtra("title");
         
-            mProject = new Project(mContext, clipCount);
+            mProject = new Project(getApplicationContext(), clipCount);
             mProject.setTitle(title);
             mProject.save();
-            mMPM = new MediaProjectManager(this, mContext, getIntent(), mHandlerPub, mProject);
+            mMPM = new MediaProjectManager(this, getApplicationContext(), getIntent(), mHandlerPub, mProject);
             mMPM.initProject();
         }
         
@@ -448,7 +450,7 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
 		
 		if (mProject.getStoryType() == Project.STORY_TYPE_AUDIO)
 		{
-			Intent i = new Intent(mContext, SoundRecorder.class);
+			Intent i = new Intent(getApplicationContext(), SoundRecorder.class);
 			i.setType(CAPTURE_MIMETYPE_AUDIO);
 			i.putExtra("mode", mProject.getStoryType());
 			mMPM.mClipIndex = clipIndex;
@@ -461,7 +463,7 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
             // mMPM.mMediaHelper.openGalleryChooser("*/*");
             // mMPM.mMediaHelper.captureVideo(mContext.getExternalFilesDir(null));
 
-            Intent i = new Intent(mContext, OverlayCameraActivity.class);
+            Intent i = new Intent(getApplicationContext(), OverlayCameraActivity.class);
             i.putExtra("group", shotType);
             i.putExtra("mode", mProject.getStoryType());
             mMPM.mClipIndex = clipIndex;
@@ -474,6 +476,7 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
     @Override
     protected void onActivityResult(int reqCode, int resCode, Intent intent) {
 
+    	
         if (resCode == RESULT_OK)
         {
             if (reqCode == REQ_OVERLAY_CAM)
@@ -495,6 +498,16 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
                 }
 
             }
+            else if (reqCode == REQ_YOUTUBE_AUTH)
+            {
+            	if (resCode == RESULT_OK)
+            	{
+            		
+            		String oauthToken = intent.getStringExtra("token");
+            		Log.d("OAuth","got token: " + oauthToken);
+            		mPublishFragment.setYouTubeAuth(oauthToken);
+            	}
+            }
             else
             {
                 mMPM.handleResponse(intent, mCapturePath);
@@ -506,10 +519,6 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
         }
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        
-        
-    }
+  
+    
 }

@@ -167,6 +167,10 @@ public class LessonManager implements Runnable {
 						
 						lesson.mLocalPath = fileLesson;
 						
+						File fileImage = new File(fileLesson,"1.png");
+						if (fileImage.exists())
+							lesson.mImage = fileImage.getAbsolutePath();
+						
 						lesson.mSortIdx = Integer.parseInt(lesson.mTitle.substring(2,lesson.mTitle.indexOf(":")));
 					}
 				}

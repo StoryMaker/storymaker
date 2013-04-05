@@ -3,6 +3,7 @@ package info.guardianproject.mrapp;
 import info.guardianproject.mrapp.media.MediaProjectManager;
 import info.guardianproject.mrapp.model.Project;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -44,7 +45,7 @@ public class StoryTemplateActivity extends EditorBaseActivity implements ActionB
 
     private String mTemplateJsonPath = null;
     private Project mProject; 
-    
+    private PublishFragment mPublishFragment;
     /**
      * The {@link ViewPager} that will host the section contents.
      */
@@ -135,7 +136,8 @@ public class StoryTemplateActivity extends EditorBaseActivity implements ActionB
                 fragment.setArguments(args);
             } else if (i == 2) {
                 try {
-                    fragment = new PublishFragment(R.layout.fragment_story_publish, StoryTemplateActivity.this);
+                	mPublishFragment = new PublishFragment(R.layout.fragment_story_publish, StoryTemplateActivity.this);
+                    fragment = mPublishFragment;
                 } catch (IOException e) {
                     Log.e("SceneEditr", "IO erorr", e); // FIXME
                 } catch (JSONException e) {
@@ -162,6 +164,25 @@ public class StoryTemplateActivity extends EditorBaseActivity implements ActionB
                 case 2: return getString(R.string.tab_publish).toUpperCase();
             }
             return null;
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int reqCode, int resCode, Intent intent) {
+
+    	
+        if (resCode == RESULT_OK)
+        {
+            if (reqCode == REQ_YOUTUBE_AUTH)
+            {
+            	if (resCode == RESULT_OK)
+            	{
+            		String oauthToken = intent.getStringExtra("token");
+            		Log.d("OAuth","got token: " + oauthToken);
+            		mPublishFragment.setYouTubeAuth(oauthToken);
+            	}
+            }
+
         }
     }
 

@@ -3,6 +3,8 @@ package info.guardianproject.mrapp;
 import info.guardianproject.mrapp.model.Media;
 import info.guardianproject.mrapp.model.Project;
 import info.guardianproject.mrapp.server.LoginActivity;
+import info.guardianproject.mrapp.server.OAuth2ClientCredentials;
+import info.guardianproject.mrapp.server.OAuthAccessTokenActivity;
 import info.guardianproject.mrapp.server.ServerManager;
 import info.guardianproject.mrapp.server.SoundCloudUploader;
 import info.guardianproject.mrapp.server.YouTubeSubmit;
@@ -70,6 +72,12 @@ public class PublishFragment extends Fragment {
     EditText mTitle;
     EditText mDescription;
     
+    private YouTubeSubmit mYouTubeClient = null;
+
+     private Thread mThreadYouTubeAuth;
+     private Thread mThreadPublish;
+     private boolean mUseOAuthWeb = true;
+     
     private SharedPreferences mSettings = null;
     
 
@@ -237,8 +245,6 @@ public class PublishFragment extends Fragment {
         return mMediaUploadAccount;
     }
 
-    private Thread mThreadYouTubeAuth;
-    private Thread mThreadPublish;
     
     private void handlePublish(final boolean doYouTube, final boolean doStoryMaker) {
         
@@ -283,14 +289,16 @@ public class PublishFragment extends Fragment {
         
         ytdesc += "\n\n" + getString(R.string.created_with_storymaker_tag);
 
-        final YouTubeSubmit yts = new YouTubeSubmit(null, title, ytdesc, new Date(),
+        mYouTubeClient = new YouTubeSubmit(null, title, ytdesc, new Date(),
                 mActivity, mHandlerPub, mActivity.getBaseContext());
 
-
+		mYouTubeClient.setDeveloperKey(getString(R.string.dev_key));
+		Account account = mYouTubeClient.setYouTubeAccount(mMediaUploadAccount);
+		
         mThreadYouTubeAuth = new Thread() {
             public void run() {
 
-	                yts.getAuthTokenWithPermission(mMediaUploadAccount,  new AuthorizationListener<String>() {
+	    			mYouTubeClient.getAuthTokenWithPermission(new AuthorizationListener<String>() {
 	                    @Override
 	                    public void onCanceled() {
 	                    }
@@ -307,13 +315,14 @@ public class PublishFragment extends Fragment {
 	
 	                    @Override
 	                    public void onSuccess(String result) {
-	                      yts.setClientLoginToken(result);
+	                    	mYouTubeClient.setClientLoginToken(result);
 	                      
 	                      Log.d("YouTube","got client token: " + result);
 	                      mThreadPublish.start();
 	                      
 
 	                    }});
+            	
             	 
             }
             
@@ -377,21 +386,21 @@ public class PublishFragment extends Fragment {
                                         R.string.connecting_to_youtube_));
                                 mHandlerPub.sendMessage(msg);
 
-                                yts.setVideoFile(mediaFile, mActivity.mdExported.mimeType);
-                                yts.upload();
+                                mYouTubeClient.setVideoFile(mediaFile, mActivity.mdExported.mimeType);
+                                mYouTubeClient.upload(YouTubeSubmit.RESUMABLE_UPLOAD_URL);
                                 
-                                while (yts.videoId == null) {
+                                while (mYouTubeClient.videoId == null) {
                                     try {
                                         Thread.sleep(1000);
                                     } catch (Exception e) {
                                     }
                                 }
 
-                                mediaEmbed = "[youtube]" + yts.videoId + "[/youtube]";
+                                mediaEmbed = "[youtube]" + mYouTubeClient.videoId + "[/youtube]";
                                 mediaService = "youtube";
-                                mediaGuid = yts.videoId;
+                                mediaGuid = mYouTubeClient.videoId;
                                 
-                                message.getData().putString("youtubeid", yts.videoId);
+                                message.getData().putString("youtubeid", mYouTubeClient.videoId);
                             }
                             else if (mActivity.mMPM.mProject.getStoryType() == Project.STORY_TYPE_AUDIO) {
                             	
@@ -471,12 +480,31 @@ public class PublishFragment extends Fragment {
                 || mActivity.mMPM.mProject.getStoryType() == Project.STORY_TYPE_ESSAY
                 
                 ) {
-
-   		 			mThreadYouTubeAuth.start();
+   		
+   		 mUseOAuthWeb = mSettings.getBoolean("pyoutubewebauth", false);
+   		 
+   		 if (mUseOAuthWeb)
+   		 {
+   			 Intent intent = new Intent(mActivity.getApplicationContext(),OAuthAccessTokenActivity.class);
+   		 
+   			 mActivity.startActivityForResult(intent,EditorBaseActivity.REQ_YOUTUBE_AUTH);
+   		 }
+   		 else
+   		 {
+		 			mThreadYouTubeAuth.start();
+   		 }
    	 }
    	 else
    	 {
    		 mThreadPublish.start();
    	 }
+    }
+    
+    public void setYouTubeAuth (String token)
+    {
+    	//mYouTubeClient.setServerDomain("gdata.youtube.com");
+    	mYouTubeClient.setAuthMode("Bearer");
+    	mYouTubeClient.setClientLoginToken(token);
+    	mThreadPublish.start();
     }
 }

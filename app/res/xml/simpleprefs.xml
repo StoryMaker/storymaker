@@ -31,7 +31,10 @@
 	
 	<PreferenceCategory android:title="Debug">
 		<CheckBoxPreference android:title="Disable lesson completion" android:key="plessondebug"/>
-		<EditTextPreference android:title="YouTube Auth Method" android:summary="0-4 for different auth approaches" android:key="glsauthmethod" android:defaultValue="0" android:enabled="true"/>
+		
+		<CheckBoxPreference android:title="YouTube Login" android:summary="Use YouTube web authentication" android:key="pyoutubewebauth"/>
+		<EditTextPreference android:title="YouTube Method" android:summary="debug auth method type" android:key="glsauthmethod" android:defaultValue="0" android:enabled="true"/>
+		
 		
 		
 	</PreferenceCategory>
