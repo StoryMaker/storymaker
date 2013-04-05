@@ -158,19 +158,17 @@ public class PublishFragment extends Fragment {
     
     public void doPublish() {
 
-    	String account = setUploadAccount();
+    	setUploadAccount();
+    
+        ServerManager sm = StoryMakerApp.getServerManager();
+      
+        if (!sm.hasCreds())
+            showLogin();
+        else
+        {
+        	handlePublish(true, true);
+        }
     	
-    	if (account != null && account.length() > 0)
-    	{
-	        ServerManager sm = StoryMakerApp.getServerManager();
-	      
-	        if (!sm.hasCreds())
-	            showLogin();
-	        else
-	        {
-	        	handlePublish(true, true);
-	        }
-    	}
         
     }
     
