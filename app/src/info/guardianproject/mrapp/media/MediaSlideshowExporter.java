@@ -27,8 +27,8 @@ public class MediaSlideshowExporter implements Runnable {
     private String mAudioPath;
     
 
-	int exportWidth = 1280;
-	int exportHeight = 720;
+	int exportWidth = -1;
+	int exportHeight = -1;
     
 	public MediaSlideshowExporter (Context context, Handler handler, ArrayList<MediaDesc> mediaList, String audioPath, int slideDuration, MediaDesc out)
 	{
@@ -40,6 +40,12 @@ public class MediaSlideshowExporter implements Runnable {
 		mAudioPath = audioPath;
 	}
 	
+	
+	public void setDimensions (int width, int height)
+	{
+		exportHeight = height;
+		exportWidth = width;
+	}
 	
 	public void run ()
 	{
@@ -90,7 +96,7 @@ public class MediaSlideshowExporter implements Runnable {
     	
     	FfmpegController ffmpegc = new FfmpegController (mContext);
 
-    	String bitrate = "1000k";
+    	String bitrate = "1500k";
     	
     	MediaDesc mdAudio = new MediaDesc();
     	mdAudio.path = audioPath;

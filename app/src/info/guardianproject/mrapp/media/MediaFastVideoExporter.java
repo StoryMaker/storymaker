@@ -14,7 +14,10 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 
-public class MediaVideoAudioExporter implements Runnable {
+/*
+ * uses MP4Stream concat to quickly render videos
+ */
+public class MediaFastVideoExporter implements Runnable {
 
 	private Handler mHandler;
 	private Context mContext;
@@ -24,7 +27,7 @@ public class MediaVideoAudioExporter implements Runnable {
 	
     private int current, total;
 
-	public MediaVideoAudioExporter (Context context, Handler handler, ArrayList<MediaDesc> mediaList, MediaDesc out)
+	public MediaFastVideoExporter (Context context, Handler handler, ArrayList<MediaDesc> mediaList, MediaDesc out)
 	{
 		mHandler = handler;
 		mContext = context;

@@ -119,6 +119,10 @@ public class MediaHelper implements MediaScannerConnectionClient {
 		
     }
 	 public void playMedia (File mediaFile, String mimeType) {
+		 
+		 if (mimeType == null)
+			 mimeType = getMimeType(mediaFile.getAbsolutePath());
+		 
 		 playMedia(Uri.fromFile(mediaFile), mimeType);
 	 }
 	
