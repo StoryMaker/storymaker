@@ -214,7 +214,18 @@ public class SoundRecorder extends Activity implements Button.OnClickListener,
         initInternalState(getIntent());
         setContentView(R.layout.activity_sound_recorder);
 
-        mRecorder = new Recorder(this);
+        if (getIntent().hasExtra("dir"))
+        {
+        	File fileDir = (File)getIntent().getExtras().get("dir");
+        	mRecorder = new Recorder(this, fileDir);
+        }
+        else
+        {
+        	File sampleDir = new File(Environment.getExternalStorageDirectory().getAbsolutePath()
+        	                  + "sound_recorder");
+        	mRecorder = new Recorder(this, sampleDir);
+        }
+        
         mRecorder.setOnStateChangedListener(this);
         mReceiver = new RecorderReceiver();
         mRemainingTimeCalculator = new RemainingTimeCalculator();
