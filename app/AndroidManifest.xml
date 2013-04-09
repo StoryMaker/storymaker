@@ -33,7 +33,6 @@
         android:hardwareAccelerated="true"
         android:largeHeap="true"
         android:configChanges="orientation|keyboardHidden|screenSize|locale"
-        android:screenOrientation="portrait"
 		android:supportsRtl="true"
          >
      
@@ -54,7 +53,6 @@
             android:configChanges="locale"
             android:label="@string/app_name"
             android:launchMode="singleTop"
-            android:screenOrientation="portrait" 
             
              >
             <intent-filter android:label="@string/app_name" >
@@ -73,7 +71,6 @@
             android:name=".ProjectsActivity"
             android:configChanges="locale"
             android:label="@string/title_projects"
-            android:screenOrientation="portrait" 
             android:launchMode="singleTop"
             >
             <meta-data
@@ -84,7 +81,6 @@
             android:name=".LessonsActivity"
             android:configChanges="locale"
             android:label="@string/title_activity_lessons"
-            android:screenOrientation="portrait" 
             android:launchMode="singleTop"
             >
             <meta-data
@@ -95,14 +91,13 @@
         <activity
             android:name=".StoryTemplateChooserActivity"
             android:label="@string/title_activity_choose_template"
-            android:screenOrientation="portrait" >
+            >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".HomeActivity" />
         </activity>
         <activity
             android:name=".StoryTemplateActivity"
-            android:screenOrientation="portrait"
             android:label="@string/title_activity_story_template" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -126,12 +121,12 @@
         </activity>
         <activity
             android:name=".lessons.LessonViewActivity"
-            android:screenOrientation="portrait" />
+            />
         <activity android:name=".server.WebViewActivity" />
         
            <activity
             android:name=".media.MediaProjectManager"
-            android:screenOrientation="landscape"
+          
             android:configChanges="orientation|keyboardHidden|screenSize" >   
             	      
         </activity>
