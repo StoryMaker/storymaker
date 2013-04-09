@@ -143,6 +143,23 @@ public class PublishFragment extends Fragment {
                 
             });
             
+            Button btnPlay = (Button) view.findViewById(R.id.btnPlay);
+            btnPlay.setOnClickListener(new OnClickListener()
+            {
+
+                @Override
+                public void onClick(View arg0) {
+                    
+                	File fileExport = mActivity.mMPM.getExportMediaFile();
+                	if (fileExport.exists())
+                	{
+                		
+                		mActivity.mMPM.mMediaHelper.playMedia(fileExport, null);
+                	}
+                }
+                
+            });
+            
             Button btn = (Button) view.findViewById(R.id.btnPublish);
             btn.setOnClickListener(new OnClickListener() {
 
@@ -274,27 +291,29 @@ public class PublishFragment extends Fragment {
         final String title = etTitle.getText().toString();
         final String desc = etDesc.getText().toString();
         
-        String ytdesc = desc;
-        if (ytdesc.length() == 0) {
-            ytdesc = getActivity().getString(R.string.default_youtube_desc); // can't
-                                                                             // leave
-                                                                             // the
-                                                                             // description
-                                                                             // blank
-                                                                             // for
-                                                                             // YouTube
-        }
-        
-        ytdesc += "\n\n" + getString(R.string.created_with_storymaker_tag);
-
-        mYouTubeClient = new YouTubeSubmit(null, title, ytdesc, new Date(),
-                mActivity, mHandlerPub, mActivity.getBaseContext());
-
-		mYouTubeClient.setDeveloperKey(getString(R.string.dev_key));
-		Account account = mYouTubeClient.setYouTubeAccount(mMediaUploadAccount);
+      
 		
         mThreadYouTubeAuth = new Thread() {
             public void run() {
+
+            	  String ytdesc = desc;
+                  if (ytdesc.length() == 0) {
+                      ytdesc = getString(R.string.default_youtube_desc); // can't
+                                                                                       // leave
+                                                                                       // the
+                                                                                       // description
+                                                                                       // blank
+                                                                                       // for
+                                                                                       // YouTube
+                  }
+                  
+                  ytdesc += "\n\n" + getString(R.string.created_with_storymaker_tag);
+
+                mYouTubeClient = new YouTubeSubmit(null, title, ytdesc, new Date(),
+                        mActivity, mHandlerPub, mActivity.getBaseContext());
+
+        		mYouTubeClient.setDeveloperKey(getString(R.string.dev_key));
+        		Account account = mYouTubeClient.setYouTubeAccount(mMediaUploadAccount);
 
 	    			mYouTubeClient.getAuthTokenWithPermission(new AuthorizationListener<String>() {
 	                    @Override
@@ -346,11 +365,11 @@ public class PublishFragment extends Fragment {
                     
                     File fileExport = mActivity.mMPM.getExportMediaFile();
 
-                    
+                    boolean fastExport = true;
                     boolean compress = mSettings.getBoolean("pcompress",false);//compress video?
                     boolean overwrite = true;
                     
-                    mActivity.mMPM.doExportMedia(fileExport, compress, overwrite);
+                    mActivity.mMPM.doExportMedia(fileExport, compress, overwrite, fastExport);
                     
                     mActivity.mdExported = mActivity.mMPM.getExportMedia();
                     
@@ -474,28 +493,30 @@ public class PublishFragment extends Fragment {
         };
         
 
-   	 if (mActivity.mMPM.mProject.getStoryType() == Project.STORY_TYPE_VIDEO
-                || mActivity.mMPM.mProject.getStoryType() == Project.STORY_TYPE_ESSAY
-                
-                ) {
-   		
-   		 mUseOAuthWeb = mSettings.getBoolean("pyoutubewebauth", false);
-   		 
-   		 if (mUseOAuthWeb)
-   		 {
-   			 Intent intent = new Intent(mActivity.getApplicationContext(),OAuthAccessTokenActivity.class);
-   		 
-   			 mActivity.startActivityForResult(intent,EditorBaseActivity.REQ_YOUTUBE_AUTH);
-   		 }
-   		 else
-   		 {
-		 			mThreadYouTubeAuth.start();
-   		 }
-   	 }
-   	 else
-   	 {
-   		 mThreadPublish.start();
-   	 }
+	   	 if ((mActivity.mMPM.mProject.getStoryType() == Project.STORY_TYPE_VIDEO
+	                || mActivity.mMPM.mProject.getStoryType() == Project.STORY_TYPE_ESSAY)
+	               &&  doYouTube 
+	                ) {
+	   		
+	   		 //if do youtube, get the auth token!
+	   		 
+	   		 mUseOAuthWeb = mSettings.getBoolean("pyoutubewebauth", false);
+	   		 
+	   		 if (mUseOAuthWeb)
+	   		 {
+	   			 Intent intent = new Intent(mActivity.getApplicationContext(),OAuthAccessTokenActivity.class);
+	   		 
+	   			 mActivity.startActivityForResult(intent,EditorBaseActivity.REQ_YOUTUBE_AUTH);
+	   		 }
+	   		 else
+	   		 {
+			 			mThreadYouTubeAuth.start();
+	   		 }
+	   	 }
+	   	 else
+	   	 {
+	   		 mThreadPublish.start();
+	   	 }
     }
     
     public void setYouTubeAuth (String token)

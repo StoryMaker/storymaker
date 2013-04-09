@@ -118,6 +118,7 @@ public class Util {
     return null;
   }
 
+  /*
   public String getGoogleAuth(String type) {
     AccountManager mgr = AccountManager.get(activity);
     Account[] accts = mgr.getAccountsByType("com.google");
@@ -148,7 +149,7 @@ public class Util {
       e.printStackTrace();
     }
     return null;
-  }
+  }*/
 
   public boolean isCallable(Intent intent) {
     List<ResolveInfo> list = activity.getPackageManager().queryIntentActivities(intent,

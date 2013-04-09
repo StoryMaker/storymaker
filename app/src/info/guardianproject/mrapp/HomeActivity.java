@@ -680,7 +680,23 @@ public class HomeActivity extends BaseActivity {
 		{
 			 startActivity(new Intent(this, StoryNewActivity.class));
 		}
-		
+		else if (item.getItemId() == R.id.menu_bug_report)
+		{
+			String url = "https://docs.google.com/forms/d/1KrsTg-NNr8gtQWTCjo-7Fv2L5cml84EcmIuGGNiC4fY/viewform";
+
+            Intent i = new Intent(Intent.ACTION_VIEW);
+            i.setData(Uri.parse(url));
+            startActivity(i);
+		}
+		else if (item.getItemId() == R.id.menu_about)
+		{
+			String url = "https://storymaker.cc";
+
+            Intent i = new Intent(Intent.ACTION_VIEW);
+            i.setData(Uri.parse(url));
+            startActivity(i);
+		}
+        
 		return true;
 	}
     

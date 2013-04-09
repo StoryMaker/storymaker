@@ -451,6 +451,7 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
 		if (mProject.getStoryType() == Project.STORY_TYPE_AUDIO)
 		{
 			Intent i = new Intent(getApplicationContext(), SoundRecorder.class);
+			i.putExtra("dir", mMPM.getProjectFolder(mProject));
 			i.setType(CAPTURE_MIMETYPE_AUDIO);
 			i.putExtra("mode", mProject.getStoryType());
 			mMPM.mClipIndex = clipIndex;
@@ -459,10 +460,6 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
         }
         else
         {
-
-            // mMPM.mMediaHelper.openGalleryChooser("*/*");
-            // mMPM.mMediaHelper.captureVideo(mContext.getExternalFilesDir(null));
-
             Intent i = new Intent(getApplicationContext(), OverlayCameraActivity.class);
             i.putExtra("group", shotType);
             i.putExtra("mode", mProject.getStoryType());
@@ -481,7 +478,7 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
         {
             if (reqCode == REQ_OVERLAY_CAM)
             {
-                File fileMediaFolder = getExternalFilesDir(null);
+                File fileMediaFolder = mMPM.getProjectFolder(mProject);
 
                 if (mProject.getStoryType() == Project.STORY_TYPE_VIDEO)
                 {

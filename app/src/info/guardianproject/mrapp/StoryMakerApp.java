@@ -4,6 +4,7 @@ import info.guardianproject.mrapp.lessons.LessonManager;
 import info.guardianproject.mrapp.server.ServerManager;
 
 import java.io.File;
+import java.net.URL;
 import java.util.Locale;
 
 import net.sqlcipher.database.SQLiteDatabase;
@@ -77,9 +78,29 @@ public class StoryMakerApp extends Application {
 		try
 		{
 			initServerUrls(this);
-			
-			mLessonManager = new LessonManager (this, mBaseUrl + URL_PATH_LESSONS + mLocale.getLanguage() + "/", new File(getExternalFilesDir(null), "lessons/" + mLocale.getLanguage()));
-			mServerManager = new ServerManager (getApplicationContext());
+	
+		    SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+		    String customLessonLoc = settings.getString("plessonloc", null);
+		    
+		    String lessonUrlPath = mBaseUrl + URL_PATH_LESSONS + mLocale.getLanguage() + "/";
+		    String lessonLocalPath = "lessons/" + mLocale.getLanguage();
+		    
+		    if (customLessonLoc != null)
+		    {
+		    	if (customLessonLoc.toLowerCase().startsWith("http"))
+		    	{
+		    		lessonUrlPath = customLessonLoc;
+		    		lessonLocalPath = "lessons/" + lessonUrlPath.substring(lessonUrlPath.lastIndexOf('/')+1);
+		    	}
+		    	else
+		    	{
+		    		lessonUrlPath = mBaseUrl + URL_PATH_LESSONS + customLessonLoc + "/";
+		    		lessonLocalPath = "lessons/" + customLessonLoc;
+		    	}
+		    }
+	
+	    	mLessonManager = new LessonManager (this, lessonUrlPath, new File(getExternalFilesDir(null), lessonLocalPath));
+		    mServerManager = new ServerManager (getApplicationContext());
 		}
 		catch (Exception e)
 		{

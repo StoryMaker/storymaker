@@ -96,6 +96,7 @@ public class EditorBaseActivity extends BaseActivity {
                 break;
                 
                 case 888:
+                	if (mProgressDialog != null)
                       mProgressDialog.setMessage(status);
                 break;
                 case 777:
@@ -105,8 +106,11 @@ public class EditorBaseActivity extends BaseActivity {
                     String localPath = msg.getData().getString("fileMedia");
                     String mimeType = msg.getData().getString("mime");
                     
-                    mProgressDialog.dismiss();
-                    mProgressDialog = null;
+                    if (mProgressDialog != null)
+                    {
+                    	mProgressDialog.dismiss();
+                    	mProgressDialog = null;
+                    }
                     
                     showPublished(url,new File(localPath),videoId,mimeType);
                     
@@ -213,8 +217,30 @@ public class EditorBaseActivity extends BaseActivity {
         }
         else
         {
+        	
+        	DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
 
-            mMPM.mMediaHelper.playMedia(localMedia, mimeType);
+                    switch (which) {
+                        case DialogInterface.BUTTON_POSITIVE:
+
+                        	mMPM.mMediaHelper.playMedia(localMedia, mimeType);
+                            break;
+
+                        case DialogInterface.BUTTON_NEGATIVE:
+                            mMPM.mMediaHelper.shareMedia(localMedia, mimeType);
+
+                           
+                            break;
+                    }
+                }
+            };
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setMessage(R.string.play_or_share_exported_media_)
+                    .setPositiveButton(R.string.menu_play_media, dialogClickListener)
+                    .setNegativeButton(R.string.menu_share_media, dialogClickListener).show();
 
         }
 

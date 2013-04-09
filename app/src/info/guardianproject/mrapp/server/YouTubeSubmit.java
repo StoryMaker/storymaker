@@ -155,7 +155,6 @@ public class YouTubeSubmit {
 	httpClient.getStrongTrustManager().setNotifyVerificationSuccess(true);
 	httpClient.getStrongTrustManager().setNotifyVerificationFail(true);
 	
-	
 
     mUseTor = settings.getBoolean("pusetor", false);
     

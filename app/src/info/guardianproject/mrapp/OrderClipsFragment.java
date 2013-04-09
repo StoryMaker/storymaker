@@ -173,65 +173,73 @@ public class OrderClipsFragment extends Fragment {
             if (mAudioNarrator == null)
             {
                 String audioFile = "narration" + mMPM.mScene.getId() + ".wav";
-                mFileAudioNarration = new File(mActivity.getExternalFilesDir(null),audioFile);
+                mFileAudioNarration = new File(mMPM.getProjectFolder(mMPM.mProject),audioFile);
                 mAudioNarrator = new AudioRecorderView(mFileAudioNarration,getActivity());
             }
         }
         
         mButtonAddNarration = (Button)view.findViewById(R.id.buttonAddNarration);
-        if (mMPM.mProject.getStoryType() == Project.STORY_TYPE_ESSAY)
-            mButtonAddNarration.setEnabled(true);
-        
-        mButtonAddNarration.setOnClickListener(new OnClickListener ()
+        if (mMPM.mProject.getStoryType() == Project.STORY_TYPE_ESSAY
+        		|| mMPM.mProject.getStoryType() == Project.STORY_TYPE_VIDEO
+        		)
         {
-            @Override
-            public void onClick(View v) {
-
-                if (!mAudioNarrator.isRecording())
-                    recordNarration();
-                else
-                    stopRecordNarration();
-            }
-        });
+        	
+        	View viewRow = view.findViewById(R.id.rowNarration);
+        	viewRow.setVisibility(View.VISIBLE);
+        	
+	        mButtonAddNarration.setEnabled(true);
+	        
+	        mButtonAddNarration.setOnClickListener(new OnClickListener ()
+	        {
+	            @Override
+	            public void onClick(View v) {
+	
+	                if (!mAudioNarrator.isRecording())
+	                    recordNarration();
+	                else
+	                    stopRecordNarration();
+	            }
+	        });
+	        
+	        mButtonPlayNarration= (Button)view.findViewById(R.id.buttonPlayNarration);
+	        if (mFileAudioNarration != null && mFileAudioNarration.exists())
+	            mButtonPlayNarration.setEnabled(true);
+	        
+	        mButtonPlayNarration.setOnClickListener(new OnClickListener ()
+	        {
+	            @Override
+	            public void onClick(View v) {
+	                playNarration(!mAudioNarrator.isPlaying());
+	            }
+	        });
+	        
+	        mPlayButton = (Button) view.findViewById(R.id.buttonPlay);
+	        mPlayButton.setOnClickListener(new OnClickListener() {
+	
+	            @Override
+	            public void onClick(View v) {
+	                
+	                if (mMPM.mProject.getStoryType() == Project.STORY_TYPE_VIDEO
+	                        || mMPM.mProject.getStoryType() == Project.STORY_TYPE_AUDIO)
+	                {
+	                   handleVideoAudioPlayToggle();
+	                }
+	                else if (mMPM.mProject.getStoryType() == Project.STORY_TYPE_ESSAY
+	                    || mMPM.mProject.getStoryType() == Project.STORY_TYPE_PHOTO)
+	                {
+	                    
+	                    handlePhotoPlayToggle();
+	                    
+	                }
+	                
+	                // FIXME need to detect which clip user last clicked on
+	                // and start from there
+	                // FIXME need to know when mPreviewVideoView is done
+	                // playing so we can return the thumbnail
+	            }
+	        });
+        }
         
-        mButtonPlayNarration= (Button)view.findViewById(R.id.buttonPlayNarration);
-        if (mFileAudioNarration != null && mFileAudioNarration.exists())
-            mButtonPlayNarration.setEnabled(true);
-        
-        mButtonPlayNarration.setOnClickListener(new OnClickListener ()
-        {
-            @Override
-            public void onClick(View v) {
-                playNarration(!mAudioNarrator.isPlaying());
-            }
-        });
-        
-        mPlayButton = (Button) view.findViewById(R.id.buttonPlay);
-        mPlayButton.setOnClickListener(new OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                
-                if (mMPM.mProject.getStoryType() == Project.STORY_TYPE_VIDEO
-                        || mMPM.mProject.getStoryType() == Project.STORY_TYPE_AUDIO)
-                {
-                   handleVideoAudioPlayToggle();
-                }
-                else if (mMPM.mProject.getStoryType() == Project.STORY_TYPE_ESSAY
-                    || mMPM.mProject.getStoryType() == Project.STORY_TYPE_PHOTO)
-                {
-                    
-                    handlePhotoPlayToggle();
-                    
-                }
-                
-                // FIXME need to detect which clip user last clicked on
-                // and start from there
-                // FIXME need to know when mPreviewVideoView is done
-                // playing so we can return the thumbnail
-            }
-        });
-
         mPreviewVideoView.setCompletionCallback(new Runnable() {
             @Override
             public void run() {
@@ -521,6 +529,7 @@ public class OrderClipsFragment extends Fragment {
         }
     }
     
+    /*
     private void renderPreview ()
     {
 
@@ -556,7 +565,7 @@ public class OrderClipsFragment extends Fragment {
             mHandlerPub.sendMessage(msgErr);
             Log.e(AppConstants.TAG, "error posting", e);
         }
-    }
+    }*/
     
     public void enableTrimMode(boolean enable) {
         if (enable) {
