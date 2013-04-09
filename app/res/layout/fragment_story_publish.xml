@@ -352,22 +352,52 @@
         android:layout_marginTop="5dp"
         android:background="@android:color/darker_gray" />
 -->
+  <CheckBox
+        android:id="@+id/cbRenderType"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:checked="true"
+                android:layout_below="@+id/divider4"
+        
+        android:text="@string/cbRenderTypeLabel" />
+  
+    <View
+        android:id="@+id/divider5"
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/cbRenderType"
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="5dp"
+        android:background="@android:color/darker_gray" />
+  
      <Button
         android:id="@+id/btnRender"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/divider4"
+        android:layout_below="@+id/divider5"
         android:layout_marginLeft="10dp"
         android:gravity="center_vertical"
         android:text="@string/action_render" />
+     
+       <Button
+        android:id="@+id/btnPlay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/divider5"
+        android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@+id/btnRender"
+        
+        android:gravity="center_vertical"
+        android:enabled="false"
+        android:text="@string/action_play" />
      
     <Button
         android:id="@+id/btnPublish"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/divider4"
+        android:layout_below="@+id/divider5"
         android:layout_marginLeft="10dp"
-        android:layout_toRightOf="@+id/btnRender"
+        android:layout_toRightOf="@+id/btnPlay"
         android:gravity="center_vertical"
         android:text="@string/action_publish" />
         

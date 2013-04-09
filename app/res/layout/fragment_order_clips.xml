@@ -9,7 +9,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#000000"
-        android:orientation="vertical" >
+        android:orientation="vertical"
+        android:gravity="center"
+         >
 
         <ImageView
             android:id="@+id/imageView1"
@@ -66,7 +68,11 @@
         android:layout_width="match_parent"
         android:layout_height="0dip"
         android:layout_weight="1"
-        android:orientation="horizontal" >
+        android:orientation="horizontal"
+        
+            android:id="@+id/rowNarration"
+            android:visibility="gone"
+         >
 
         <Button
             android:id="@+id/buttonAddNarration"
@@ -74,7 +80,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:enabled="false"
+            android:enabled="true"
             android:text="@string/button_add_narration" />
 
         <Button
