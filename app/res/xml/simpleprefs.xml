@@ -6,11 +6,12 @@
 	   <CheckBoxPreference android:title="Use Orbot (Tor)" android:summary="Send all network traffic through the Tor network (https://torproject.org)" android:key="pusetor"/>
 	
 	<EditTextPreference android:title="YouTube Account" android:summary="the YouTube account to use for video uploads. This MUST be registered on your device." android:key="youTubeUserName" android:enabled="true"/>
-	<EditTextPreference android:title="SouldCloud Account" android:summary="the SoundCloud account to use for audio uploads" android:key="souldCloudUserName" android:enabled="true"/>
+	<EditTextPreference android:title="SoundCloud Account" android:summary="the SoundCloud account to use for audio uploads" android:key="souldCloudUserName" android:enabled="true"/>
 	    
 	</PreferenceCategory>
 	<PreferenceCategory android:title="Locales">
 		<CheckBoxPreference android:title="Enable Arabic mode" android:key="plocalear"/>
+		<EditTextPreference android:title="Custom Lesson Location" android:summary="shortcode or URL to custom lesson location" android:key="plessonloc" android:enabled="true"/>
 		
 	</PreferenceCategory>
 	

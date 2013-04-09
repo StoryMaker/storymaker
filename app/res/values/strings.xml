@@ -7,7 +7,7 @@
     <string name="title_projects">Stories</string>
     <string name="title_lessons">Lessons</string>
 
-    <string name="action_publish">Publish Online</string>
+    <string name="action_publish">Publish</string>
     <!-- menus -->
     <string name="menu_new_project">New</string>
     <string name="menu_projects">Stories</string>
@@ -23,10 +23,13 @@
     <string name="menu_play_media">Play</string>
     <string name="menu_render_media">Render</string>
     
+    <string name="menu_bug_report">Bug Report</string>
     <string name="menu_login">Login</string>
     <string name="menu_logs">Send Log</string>
     <string name="menu_update">Update</string>
 
+    <string name="menu_about">About</string>
+    
     <string name="menu_save_project">Save</string>
 
     <string name="menu_overlay_camera">Camera</string>
@@ -262,8 +265,10 @@ Build number: <xliff:g id="build_number">%s</xliff:g>\n
     <string name="publish_sm">StoryMaker.cc</string>
     <string name="publish_youtube">YouTube</string>
     
-    <string name="action_render">Export Local</string>
+    <string name="action_render">Export</string>
+    <string name="action_play">Play</string>
     
+    <string name="cbRenderTypeLabel">Use Fast Renderer</string>
     <string name="drawer_quick_capture">Quick Capture</string>
     
     <string name="select_story_type">Select story type</string>
@@ -279,5 +284,6 @@ Build number: <xliff:g id="build_number">%s</xliff:g>\n
     <string name="scene_editor_please_add_clips">Please add clips on the \'Make\' tab before selecting this tab.</string>
     <string name="scene_editor_trim_clip">Trim clip</string>
     <string name="cancel">Cancel</string>
+    <string name="play_or_share_exported_media_">Play or Share exported media?</string>
     
 </resources>
