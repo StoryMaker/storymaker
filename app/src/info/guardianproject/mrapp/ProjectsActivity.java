@@ -205,6 +205,8 @@ public class ProjectsActivity extends BaseActivity {
         aaProjects.notifyDataSetChanged();
         
     	project.delete();
+    	
+    	//should we delete project folders here too?
     }
     
     class ProjectArrayAdapter extends ArrayAdapter {

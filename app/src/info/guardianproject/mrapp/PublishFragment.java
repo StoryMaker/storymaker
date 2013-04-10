@@ -43,6 +43,7 @@ import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.CompoundButton.OnCheckedChangeListener;
@@ -71,6 +72,7 @@ public class PublishFragment extends Fragment {
     
     EditText mTitle;
     EditText mDescription;
+    CheckBox mRenderType;
     
     private YouTubeSubmit mYouTubeClient = null;
 
@@ -126,7 +128,13 @@ public class PublishFragment extends Fragment {
             		
 			Spinner s = (Spinner) view.findViewById( R.id.spinnerSections );
 			s.setAdapter( adapter );
-
+			
+			mRenderType = (CheckBox)view.findViewById(R.id.cbRenderType);
+			if(mActivity.mMPM.mProject.getStoryType() == Project.STORY_TYPE_VIDEO)
+			{
+				mRenderType.setVisibility(View.VISIBLE);
+			}
+			
             Button btnRender = (Button) view.findViewById(R.id.btnRender);
             btnRender.setOnClickListener(new OnClickListener()
             {
@@ -138,12 +146,16 @@ public class PublishFragment extends Fragment {
                 	if (fileExport.exists())
                 		fileExport.delete();
                 	
-                    handlePublish(false, false);
+                	//do local render, overwrite always
+                    handlePublish(false, false, true);
                 }
                 
             });
             
             Button btnPlay = (Button) view.findViewById(R.id.btnPlay);
+        	File fileExport = mActivity.mMPM.getExportMediaFile();
+        	btnPlay.setEnabled(fileExport.exists());
+        	
             btnPlay.setOnClickListener(new OnClickListener()
             {
 
@@ -183,7 +195,8 @@ public class PublishFragment extends Fragment {
             showLogin();
         else
         {
-        	handlePublish(true, true);
+        	// do render + publish, don't overwrite
+        	handlePublish(true, true, false);
         }
     	
         
@@ -261,7 +274,7 @@ public class PublishFragment extends Fragment {
     }
 
     
-    private void handlePublish(final boolean doYouTube, final boolean doStoryMaker) {
+    private void handlePublish(final boolean doYouTube, final boolean doStoryMaker, final boolean doOverwrite) {
         
         EditText etTitle = (EditText) mActivity.findViewById(R.id.etStoryTitle);
         EditText etDesc = (EditText) mActivity.findViewById(R.id.editTextDescribe);
@@ -291,28 +304,28 @@ public class PublishFragment extends Fragment {
         final String title = etTitle.getText().toString();
         final String desc = etDesc.getText().toString();
         
-      
-		
+        String ytdesc = desc;
+        if (ytdesc.length() == 0) {
+            ytdesc = getString(R.string.default_youtube_desc); // can't
+                                                                             // leave
+                                                                             // the
+                                                                             // description
+                                                                             // blank
+                                                                             // for
+                                                                             // YouTube
+        }
+        
+        ytdesc += "\n\n" + getString(R.string.created_with_storymaker_tag);
+
+
+        mYouTubeClient = new YouTubeSubmit(null, title, ytdesc, new Date(),
+                mActivity, mHandlerPub, mActivity.getBaseContext());
+		mYouTubeClient.setDeveloperKey(getString(R.string.dev_key));
+
         mThreadYouTubeAuth = new Thread() {
             public void run() {
 
-            	  String ytdesc = desc;
-                  if (ytdesc.length() == 0) {
-                      ytdesc = getString(R.string.default_youtube_desc); // can't
-                                                                                       // leave
-                                                                                       // the
-                                                                                       // description
-                                                                                       // blank
-                                                                                       // for
-                                                                                       // YouTube
-                  }
-                  
-                  ytdesc += "\n\n" + getString(R.string.created_with_storymaker_tag);
 
-                mYouTubeClient = new YouTubeSubmit(null, title, ytdesc, new Date(),
-                        mActivity, mHandlerPub, mActivity.getBaseContext());
-
-        		mYouTubeClient.setDeveloperKey(getString(R.string.dev_key));
         		Account account = mYouTubeClient.setYouTubeAccount(mMediaUploadAccount);
 
 	    			mYouTubeClient.getAuthTokenWithPermission(new AuthorizationListener<String>() {
@@ -365,11 +378,10 @@ public class PublishFragment extends Fragment {
                     
                     File fileExport = mActivity.mMPM.getExportMediaFile();
 
-                    boolean fastExport = true;
+                    boolean fastExport = mRenderType.isChecked();//if checked, do fast render
                     boolean compress = mSettings.getBoolean("pcompress",false);//compress video?
-                    boolean overwrite = true;
                     
-                    mActivity.mMPM.doExportMedia(fileExport, compress, overwrite, fastExport);
+                    mActivity.mMPM.doExportMedia(fileExport, compress, doOverwrite, fastExport);
                     
                     mActivity.mdExported = mActivity.mMPM.getExportMedia();
                     
@@ -521,7 +533,6 @@ public class PublishFragment extends Fragment {
     
     public void setYouTubeAuth (String token)
     {
-    	//mYouTubeClient.setServerDomain("gdata.youtube.com");
     	mYouTubeClient.setAuthMode("Bearer");
     	mYouTubeClient.setClientLoginToken(token);
     	mThreadPublish.start();
