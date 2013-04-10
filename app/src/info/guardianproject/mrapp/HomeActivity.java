@@ -230,7 +230,7 @@ public class HomeActivity extends BaseActivity {
 	            			{
 	            				img = new BitmapDrawable(getResources(),bmp);
 
-	                   		 	cardDate = new Date(new File(media.getPath()).lastModified());
+	                   		 	cardDate = new Date(new File(media.getPath()).getParentFile().lastModified());
 	                   		 
 	            				break;
 	            			}
