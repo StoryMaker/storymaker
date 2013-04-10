@@ -257,8 +257,8 @@ Build number: <xliff:g id="build_number">%s</xliff:g>\n
     <string name="eula_accept">Accept</string>
     <string name="eula_refuse">Refuse</string>
     
-    <string name="button_add_narration">Record narration</string>
-    <string name="button_play_narration">Play narration</string>
+    <string name="button_add_narration">Record Voiceover</string>
+    <string name="button_play_narration">Play Voiceover</string>
     
     <string name="button_render_preview">Render Preview</string>
     
@@ -268,7 +268,7 @@ Build number: <xliff:g id="build_number">%s</xliff:g>\n
     <string name="action_render">Export</string>
     <string name="action_play">Play</string>
     
-    <string name="cbRenderTypeLabel">Use Fast Renderer</string>
+    <string name="cbRenderTypeLabel">Use Fast Video Renderer</string>
     <string name="drawer_quick_capture">Quick Capture</string>
     
     <string name="select_story_type">Select story type</string>
