@@ -71,9 +71,8 @@ public class MediaFullVideoExporter implements Runnable {
     		ArrayList<Double> durations = maExport.getDurations();
     		for (MediaDesc mdesc : mMediaList)
     		{
-    			mdesc.startTime = "00:00:00.500"; //trim one second off the beginning of each clip
+    			mdesc.startTime = "00:00:00.700"; //trim one second off the beginning of each clip
     		}
-    		
     		
         	ffmpegc.concatAndTrimFilesMPEG(mMediaList, mOut, true, sc);
         	
