@@ -7,6 +7,7 @@ import java.io.IOException;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.ApplicationInfo;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
@@ -36,6 +37,8 @@ public class OAuthAccessTokenActivity extends Activity implements Runnable {
 
 	private String mCode; //returned code from web
 	
+	private boolean isDebuggable = false;
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -55,8 +58,17 @@ public class OAuthAccessTokenActivity extends Activity implements Runnable {
         webview.getSettings().setJavaScriptEnabled(true);  
         webview.setVisibility(View.VISIBLE);
         setContentView(webview);
-        String authorizationUrl = new GoogleAuthorizationRequestUrl(getString(R.string.client_id_debug), OAuth2ClientCredentials.REDIRECT_URI, OAuth2ClientCredentials.SCOPE).build();
+        String authorizationUrl = null;
         
+        isDebuggable =  ( 0 != ( getApplicationInfo().flags &= ApplicationInfo.FLAG_DEBUGGABLE ) );
+    	authorizationUrl = new GoogleAuthorizationRequestUrl(getString(R.string.client_id_debug), OAuth2ClientCredentials.REDIRECT_URI, OAuth2ClientCredentials.SCOPE).build();
+
+        /*
+        if (isDebuggable)
+        	authorizationUrl = new GoogleAuthorizationRequestUrl(getString(R.string.client_id_debug), OAuth2ClientCredentials.REDIRECT_URI, OAuth2ClientCredentials.SCOPE).build();
+        else
+         	authorizationUrl = new GoogleAuthorizationRequestUrl(getString(R.string.client_id_release), OAuth2ClientCredentials.REDIRECT_URI, OAuth2ClientCredentials.SCOPE).build();
+         */
         
         /* WebViewClient must be set BEFORE calling loadUrl! */  
         webview.setWebViewClient(new WebViewClient() {  
@@ -107,8 +119,17 @@ public class OAuthAccessTokenActivity extends Activity implements Runnable {
 		
 		try
 		{
+			
 		String clientId = getString(R.string.client_id_debug);
 		String clientSecret = getString(R.string.client_id_debug_secret);
+		
+		/*
+		if (!isDebuggable)
+		{
+			clientId = getString(R.string.client_id_release);
+			clientSecret = "";
+		}
+		*/
 		
 	      mAuthResp = new GoogleAuthorizationCodeGrant(new NetHttpTransport(),
 					      new JacksonFactory(),

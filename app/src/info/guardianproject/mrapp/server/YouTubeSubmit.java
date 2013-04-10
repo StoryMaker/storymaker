@@ -701,7 +701,6 @@ public class YouTubeSubmit {
 	    request.setHeader("Content-Type", CONTENT_TYPE);
 
 	    request.setHeader("GData-Version", "2");
-	    request.setHeader("X-GData-Version", "2");
 	    
 	    request.setHeader("X-GData-Key", "key=" + mDevKey);
 	  
@@ -728,78 +727,6 @@ public class YouTubeSubmit {
 
   }
   
-  /*
-  private void setHttpAuthCreds ()
-  {
-	  Credentials credsFoo = new Credentials ()
-	    {
-
-			@Override
-			public String getPassword() {
-				return clientLoginToken;
-			}
-
-			@Override
-			public Principal getUserPrincipal() {
-				Principal p = new Principal(){
-
-					@Override
-					public String getName() {
-						return youTubeName;
-					}
-					
-				};
-				
-				return p;
-			}
-	    	
-	    };
-	    
-	    httpClient.getCredentialsProvider().setCredentials(AuthScope.ANY, credsFoo);
-	    httpClient.addRequestInterceptor(new HttpRequestInterceptor() {
-	        public void process(HttpRequest request, HttpContext context) throws HttpException, IOException {
-	            AuthState state = (AuthState) context.getAttribute(ClientContext.TARGET_AUTH_STATE);
-	            if (state.getAuthScheme() == null) {
-	                BasicScheme scheme = new BasicScheme();
-	                CredentialsProvider credentialsProvider = (CredentialsProvider) context.getAttribute(ClientContext.CREDS_PROVIDER);
-	                Credentials credentials = credentialsProvider.getCredentials(AuthScope.ANY);
-	                
-	                
-	                if (credentials == null) {
-	                    throw new HttpException();
-	                }
-	                state.setAuthScope(AuthScope.ANY);
-	                state.setAuthScheme(scheme);
-	                state.setCredentials(credentials);
-	                
-	            }
-	        }
-	    }, 0); // 0 = first, and you really want to be first.
-  }*/
-  
-  /*
-  private HttpURLConnection getGDataUrlConnection(String urlString, String slug) throws IOException {
-    URL url = new URL(urlString);
-    HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-    connection.setRequestProperty("Host", "uploads.gdata.youtube.com");
-    
-    connection.setRequestProperty("Content-Type", CONTENT_TYPE);
-    
-    String devKey = activity.getString(R.string.dev_key);
-    connection.setRequestProperty("X-GData-Key", String.format("key=%s", devKey));
-    
-    if (clientLoginToken != null)
-		connection.setRequestProperty("Authorization", String.format(
-				"GoogleLogin auth=\"%s\"", clientLoginToken));
-    
-    
-    connection.setRequestProperty("GData-Version", "2");
-    
-    if (slug != null)
-    	connection.setRequestProperty("Slug", slug);
-        
-    return connection;
-  }*/
 
   public void setClientLoginToken (String token)
   {
