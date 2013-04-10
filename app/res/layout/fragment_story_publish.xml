@@ -358,6 +358,7 @@
         android:layout_height="wrap_content"
         android:checked="true"
                 android:layout_below="@+id/divider4"
+                android:visibility="gone"
         
         android:text="@string/cbRenderTypeLabel" />
   
