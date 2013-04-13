@@ -3,6 +3,8 @@ package info.guardianproject.mrapp.media;
 import java.io.File;
 import java.util.ArrayList;
 
+import net.sourceforge.sox.SoxController;
+
 import org.ffmpeg.android.FfmpegController;
 import org.ffmpeg.android.MediaDesc;
 import org.ffmpeg.android.ShellUtils.ShellCallback;
@@ -31,6 +33,8 @@ public class MediaFullVideoExporter implements Runnable {
     private MediaDesc maOut;
     private FfmpegController ffmpegc;
     
+    private ArrayList<MediaDesc> mAudioTracks;
+    
 	public MediaFullVideoExporter (Context context, Handler handler, ArrayList<MediaDesc> mediaList, MediaDesc out)
 	{
 		mHandler = handler;
@@ -38,10 +42,14 @@ public class MediaFullVideoExporter implements Runnable {
 		mOut = out;
 		mMediaList = mediaList;
 		
-		
+		mAudioTracks = new ArrayList<MediaDesc>();
     	
 	}
 	
+	public void addAudioTrack (MediaDesc audioTrack)
+	{
+		mAudioTracks.add(audioTrack);
+	}
 	
 	public void run ()
 	{
@@ -55,26 +63,51 @@ public class MediaFullVideoExporter implements Runnable {
     		
     		//first let's get the audio done
     		maOut = new MediaDesc();
-    		maOut.path = mOut.path + ".3gp";
-    		maOut.audioCodec = "aac";
-    		maOut.audioBitrate = 256;
+    		maOut.path = mOut.path + ".wav";
+    		
+    		//maOut.audioCodec = "aac";
+    		//maOut.audioBitrate = 256;
     		
     		maExport = new MediaAudioExporter (mContext, mHandler, mMediaList, maOut);
     		maExport.run();
     		
-    		String finalPath = mOut.path;
+    		ArrayList<String> mAudioTracksPaths = new ArrayList<String>();
+    		//now merge all audio tracks into main audio track
+    		for (MediaDesc audioTrack : mAudioTracks)
+    		{
+    			ffmpegc.convertToWaveAudio(audioTrack, audioTrack.path+"-tmp.wav", MediaAudioExporter.SAMPLE_RATE, MediaAudioExporter.CHANNELS, sc);
+    			mAudioTracksPaths.add(audioTrack.path+"-tmp.wav");
+    			
+    		}
+    		mAudioTracksPaths.add(maOut.path);
     		
+    		String finalAudioMix = maOut.path + "-mix.wav";
+
+    		SoxController sxCon = new SoxController(mContext);
+    		sxCon.combineMix(mAudioTracksPaths, finalAudioMix);
+    		
+    		if (!new File(finalAudioMix).exists())
+    		{
+    			throw new Exception("Audio rendering error");
+    		}
+    		
+    		maOut.path = finalAudioMix;
+    		
+    		//now merge audio and video
+    		String finalPath = mOut.path;
     		mOut.path = mOut.path + "-tmp.mp4";
     		
     		String outputType = mOut.mimeType;
     		
-    		ArrayList<Double> durations = maExport.getDurations();
     		for (MediaDesc mdesc : mMediaList)
     		{
     			mdesc.startTime = "00:00:00.700"; //trim one second off the beginning of each clip
     		}
     		
         	ffmpegc.concatAndTrimFilesMPEG(mMediaList, mOut, true, sc);
+        	
+        	maOut.audioCodec = "aac";
+        	maOut.audioBitrate = 128;
         	
     		ffmpegc.combineAudioAndVideo(mOut, maOut, finalPath, sc);
 
@@ -192,7 +225,15 @@ public class MediaFullVideoExporter implements Runnable {
 
 			@Override
 			public void processComplete(int exitValue) {
-				// TODO Auto-generated method stub
+			
+				 Message msg = mHandler.obtainMessage(1);
+                 
+				    msg.getData().putString("status", "file processing complete");                 
+          
+				    msg.getData().putInt("progress", 100);
+		       
+					
+				    mHandler.sendMessage(msg);
 				
 			}
  	};

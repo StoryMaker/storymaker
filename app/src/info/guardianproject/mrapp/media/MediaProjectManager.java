@@ -268,6 +268,19 @@ public class MediaProjectManager implements MediaManager {
 
 		    mOut.path = fileExport.getAbsolutePath();
 		    
+		    String audioPath = null;
+		    
+		    File fileAudio = new File(getProjectFolder(mProject),"narration" + mScene.getId() + ".wav");
+    		
+    		if (fileAudio.exists())
+    			audioPath = fileAudio.getAbsolutePath();
+    		else
+    		{
+    			fileAudio = new File(mContext.getExternalFilesDir(null),"narration" + mScene.getId() + ".wav");
+    			if (fileAudio.exists())
+        			audioPath = fileAudio.getAbsolutePath();
+    		}
+		    
 		    if ((!fileExport.exists()) || doOverwrite)
 		    {
 			    fileExport.delete();
@@ -281,6 +294,13 @@ public class MediaProjectManager implements MediaManager {
 			    else
 			    {
 			    	MediaFullVideoExporter mEx = new MediaFullVideoExporter(mContext, mHandler, alMediaIn, mOut);
+			    
+			    	if (audioPath != null)
+			    	{
+			    		MediaDesc audioTrack = new MediaDesc();
+			    		audioTrack.path = audioPath;
+			    		mEx.addAudioTrack(audioTrack);
+			    	}
 				    mEx.run();
 			    }
 		    }

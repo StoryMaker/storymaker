@@ -31,6 +31,9 @@ public class MediaAudioExporter implements Runnable {
     
 	 double fadeLen = 1.0f;
 	 String fadeType = "t"; //triangle/linear
+	 
+	 public final static String SAMPLE_RATE = "44100";
+	 public final static int CHANNELS = 1;
 /*
  *  fade [type] fade-in-length [stop-time [fade-out-length]]
               Apply a fade effect to the beginning, end, or both of the audio.
@@ -139,9 +142,8 @@ public class MediaAudioExporter implements Runnable {
 		 //convert each input file to a WAV so we can use Sox to process
 		 for (MediaDesc mediaIn : listMediaDesc)
 		 {
-		 	 
 		 
-	    	MediaDesc audioOut = ffmpegc.convertToWaveAudio(mediaIn, mediaIn.path + ".wav", new ShellCallback() {
+	    	MediaDesc audioOut = ffmpegc.convertToWaveAudio(mediaIn, mediaIn.path + ".wav",SAMPLE_RATE,CHANNELS, new ShellCallback() {
 
 				@Override
 				public void shellOut(String line) {

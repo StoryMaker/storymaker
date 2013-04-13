@@ -167,23 +167,20 @@ public class OrderClipsFragment extends Fragment {
             }
         });
         
-        if (mMPM.mProject.getStoryType() == Project.STORY_TYPE_ESSAY)
-        {
-            
-            if (mAudioNarrator == null)
-            {
-                String audioFile = "narration" + mMPM.mScene.getId() + ".wav";
-                mFileAudioNarration = new File(mMPM.getProjectFolder(mMPM.mProject),audioFile);
-                mAudioNarrator = new AudioRecorderView(mFileAudioNarration,getActivity());
-            }
-        }
         
-        mButtonAddNarration = (Button)view.findViewById(R.id.buttonAddNarration);
         if (mMPM.mProject.getStoryType() == Project.STORY_TYPE_ESSAY
         		|| mMPM.mProject.getStoryType() == Project.STORY_TYPE_VIDEO
         		)
         {
-        	
+        
+        	mButtonAddNarration = (Button)view.findViewById(R.id.buttonAddNarration);
+	    	  if (mAudioNarrator == null)
+	          {
+	              String audioFile = "narration" + mMPM.mScene.getId() + ".wav";
+	              mFileAudioNarration = new File(mMPM.getProjectFolder(mMPM.mProject),audioFile);
+	              mAudioNarrator = new AudioRecorderView(mFileAudioNarration,getActivity());
+	          }
+	    	  
         	View viewRow = view.findViewById(R.id.rowNarration);
         	viewRow.setVisibility(View.VISIBLE);
         	
@@ -248,6 +245,12 @@ public class OrderClipsFragment extends Fragment {
                 mKeepRunningPreview = false;
                 mPlayButton.setText(R.string.play_recording);
                 showThumbnail(mCurrentClipIdx);
+                
+                if (mAudioNarrator.isRecording())
+                    stopRecordNarration ();
+                else if (mAudioNarrator.isPlaying())
+                    mAudioNarrator.stopPlaying();
+
             }
         });
         
