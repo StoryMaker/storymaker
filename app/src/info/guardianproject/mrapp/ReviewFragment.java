@@ -126,23 +126,8 @@ public class ReviewFragment extends Fragment {
 	            @Override
 	            public void onClick(View v) {
 	                
-	                if (mMPM.mProject.getStoryType() == Project.STORY_TYPE_VIDEO
-	                        || mMPM.mProject.getStoryType() == Project.STORY_TYPE_AUDIO)
-	                {
-	                   handleVideoAudioPlayToggle();
-	                }
-	                else if (mMPM.mProject.getStoryType() == Project.STORY_TYPE_ESSAY
-	                    || mMPM.mProject.getStoryType() == Project.STORY_TYPE_PHOTO)
-	                {
-	                    
-	                    handlePhotoPlayToggle();
-	                    
-	                }
+	                playNarration(true);
 	                
-	                // FIXME need to detect which clip user last clicked on
-	                // and start from there
-	                // FIXME need to know when mPreviewVideoView is done
-	                // playing so we can return the thumbnail
 	            }
 	        });
         }
@@ -187,10 +172,13 @@ public class ReviewFragment extends Fragment {
     private void playNarration (boolean start)
     {
         
-        if (start)
-            mAudioNarrator.startPlaying();
-        else
-            mAudioNarrator.stopPlaying();
+        if (mAudioNarrator != null) { 
+            if (start) {
+                mAudioNarrator.startPlaying();
+            } else {
+                mAudioNarrator.stopPlaying();
+            }
+        }
         
         //start the playback
         if (mMPM.mProject.getStoryType() == Project.STORY_TYPE_ESSAY)
