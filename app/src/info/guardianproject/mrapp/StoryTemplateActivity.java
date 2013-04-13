@@ -130,7 +130,7 @@ public class StoryTemplateActivity extends EditorBaseActivity implements ActionB
                 args.putInt(TemplateStoryMakeFragment.ARG_SECTION_NUMBER, i + 1);
                 fragment.setArguments(args);
             } else if (i == 1) {
-                fragment = new TemplateStoryReviewFragment();
+                fragment = new ReviewFragment();
                 Bundle args = new Bundle();
                 args.putInt(TemplateStoryMakeFragment.ARG_SECTION_NUMBER, i + 1);
                 fragment.setArguments(args);
