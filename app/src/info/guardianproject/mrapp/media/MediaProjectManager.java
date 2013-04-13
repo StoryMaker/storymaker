@@ -226,15 +226,7 @@ public class MediaProjectManager implements MediaManager {
     {
     	 Message msg = mHandler.obtainMessage(0);
          msg.getData().putString("status","cancelled");
-         ArrayList<Media> mList = null;
-         if (mProject.isTemplateStory()) {
-             mList = new ArrayList<Media>();
-             for (Scene s : mProject.getScenesAsArray()) {
-                 mList.addAll(s.getMediaAsList());
-             }
-         } else {
-             mList = mScene.getMediaAsList();
-         }
+         ArrayList<Media> mList = mProject.getMediaAsList();
          ArrayList<MediaDesc> alMediaIn = new ArrayList<MediaDesc>();
          
          //for video, render the sequence together
