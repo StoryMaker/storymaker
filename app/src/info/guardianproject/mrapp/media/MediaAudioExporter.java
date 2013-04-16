@@ -143,90 +143,7 @@ public class MediaAudioExporter implements Runnable {
 		 for (MediaDesc mediaIn : listMediaDesc)
 		 {
 		 
-	    	MediaDesc audioOut = ffmpegc.convertToWaveAudio(mediaIn, mediaIn.path + ".wav",SAMPLE_RATE,CHANNELS, new ShellCallback() {
-
-				@Override
-				public void shellOut(String line) {
-					
-					
-					if (!line.startsWith("frame"))
-						Log.d(AppConstants.TAG, line);
-					
-					
-					int idx1;
-					String newStatus = null;
-					int progress = -1;
-					
-					if ((idx1 = line.indexOf("Duration:"))!=-1)
-					{
-						int idx2 = line.indexOf(",", idx1);
-						String time = line.substring(idx1+10,idx2);
-						
-						int hour = Integer.parseInt(time.substring(0,2));
-						int min = Integer.parseInt(time.substring(3,5));
-						int sec = Integer.parseInt(time.substring(6,8));
-						
-						total = (hour * 60 * 60) + (min * 60) + sec;
-						
-						//newStatus = line;
-						
-						progress = 0;
-					}
-					else if ((idx1 = line.indexOf("time="))!=-1)
-					{
-						int idx2 = line.indexOf(" ", idx1);
-						String time = line.substring(idx1+5,idx2);
-						//newStatus = line;
-						
-						int hour = Integer.parseInt(time.substring(0,2));
-						int min = Integer.parseInt(time.substring(3,5));
-						int sec = Integer.parseInt(time.substring(6,8));
-						
-						current = (hour * 60 * 60) + (min * 60) + sec;
-						
-						progress = (int)( ((float)current) / ((float)total) *100f );
-					}
-					else if (line.startsWith("cat"))
-					{
-					    newStatus = "Combining audio clips...";
-					}
-					else if (line.startsWith("Input"))
-					{
-					    //12-18 02:48:07.187: D/StoryMaker(10508): Input #0, mov,mp4,m4a,3gp,3g2,mj2, from '/storage/sdcard0/DCIM/Camera/VID_20121211_140815.mp4':
-					    idx1 = line.indexOf("'");
-					    int idx2 = line.indexOf('\'', idx1+1);
-					    newStatus = "Rendering clip: " + line.substring(idx1, idx2);
-					}
-					    
-
-                    Message msg = mHandler.obtainMessage(1);
-                    
-					if (newStatus != null)
-					    msg.getData().putString("status", newStatus);                 
-                    
-					if (progress != -1)
-					    msg.getData().putInt("progress", progress);
-			       
-					
-				    mHandler.sendMessage(msg);
-	                
-				}
-
-				@Override
-				public void processComplete(int exitValue) {
-					
-					   Message msg = mHandler.obtainMessage(1);
-	                    
-					    msg.getData().putString("status", "audio clip processed...");                 
-                    
-					    msg.getData().putInt("progress", 100);
-			       
-						
-					    mHandler.sendMessage(msg);
-					
-				}
-	    	});
-	    	
+	    	MediaDesc audioOut = ffmpegc.convertToWaveAudio(mediaIn, mediaIn.path + ".wav",SAMPLE_RATE,CHANNELS, sc);
 	    	alAudio.add(audioOut);
 		 }
 		
@@ -257,91 +174,92 @@ public class MediaAudioExporter implements Runnable {
 		 mdout.audioBitrate = exportBitRate;
 		 mdout.audioCodec = exportCodec;
 		 
-		 MediaDesc exportOut = ffmpegc.convertTo3GPAudio(mdFinalIn, mdout, new ShellCallback() {
-
-				@Override
-				public void shellOut(String line) {
-					
-					
-					if (!line.startsWith("frame"))
-						Log.d(AppConstants.TAG, line);
-					
-					
-					int idx1;
-					String newStatus = null;
-					int progress = -1;
-					
-					if ((idx1 = line.indexOf("Duration:"))!=-1)
-					{
-						int idx2 = line.indexOf(",", idx1);
-						String time = line.substring(idx1+10,idx2);
-						
-						int hour = Integer.parseInt(time.substring(0,2));
-						int min = Integer.parseInt(time.substring(3,5));
-						int sec = Integer.parseInt(time.substring(6,8));
-						
-						total = (hour * 60 * 60) + (min * 60) + sec;
-						
-						//newStatus = line;
-						
-						progress = 0;
-					}
-					else if ((idx1 = line.indexOf("time="))!=-1)
-					{
-						int idx2 = line.indexOf(" ", idx1);
-						String time = line.substring(idx1+5,idx2);
-						//newStatus = line;
-						
-						int hour = Integer.parseInt(time.substring(0,2));
-						int min = Integer.parseInt(time.substring(3,5));
-						int sec = Integer.parseInt(time.substring(6,8));
-						
-						current = (hour * 60 * 60) + (min * 60) + sec;
-						
-						progress = (int)( ((float)current) / ((float)total) *100f );
-					}
-					else if (line.startsWith("cat"))
-					{
-					    newStatus = "Combining clips...";
-					}
-					else if (line.startsWith("Input"))
-					{
-					    //12-18 02:48:07.187: D/StoryMaker(10508): Input #0, mov,mp4,m4a,3gp,3g2,mj2, from '/storage/sdcard0/DCIM/Camera/VID_20121211_140815.mp4':
-					    idx1 = line.indexOf("'");
-					    int idx2 = line.indexOf('\'', idx1+1);
-					    newStatus = "Rendering clip: " + line.substring(idx1, idx2);
-					}
-					    
-
-                 Message msg = mHandler.obtainMessage(1);
-                 
-					if (newStatus != null)
-					    msg.getData().putString("status", newStatus);                 
-                 
-					if (progress != -1)
-					    msg.getData().putInt("progress", progress);
-			       
-					
-				    mHandler.sendMessage(msg);
-	                
-				}
-
-				@Override
-				public void processComplete(int exitValue) {
-					
-					   Message msg = mHandler.obtainMessage(1);
-	                    
-					    msg.getData().putString("status", "export complete");                 
-                 
-					    msg.getData().putInt("progress", 100);
-			       
-						
-					    mHandler.sendMessage(msg);
-					
-				}
-	    	});
+		 MediaDesc exportOut = ffmpegc.convertTo3GPAudio(mdFinalIn, mdout, sc);
 		 
 	   }
 	    
+	 private ShellCallback sc = new ShellCallback() {
+
+			@Override
+			public void shellOut(String line) {
+				
+				
+				if (!line.startsWith("frame"))
+					Log.d(AppConstants.TAG, line);
+				
+				
+				int idx1;
+				String newStatus = null;
+				int progress = -1;
+				
+				if ((idx1 = line.indexOf("Duration:"))!=-1)
+				{
+					int idx2 = line.indexOf(",", idx1);
+					String time = line.substring(idx1+10,idx2);
+					
+					int hour = Integer.parseInt(time.substring(0,2));
+					int min = Integer.parseInt(time.substring(3,5));
+					int sec = Integer.parseInt(time.substring(6,8));
+					
+					total = (hour * 60 * 60) + (min * 60) + sec;
+					
+					//newStatus = line;
+					
+					progress = 0;
+				}
+				else if ((idx1 = line.indexOf("time="))!=-1)
+				{
+					int idx2 = line.indexOf(" ", idx1);
+					String time = line.substring(idx1+5,idx2);
+					//newStatus = line;
+					
+					int hour = Integer.parseInt(time.substring(0,2));
+					int min = Integer.parseInt(time.substring(3,5));
+					int sec = Integer.parseInt(time.substring(6,8));
+					
+					current = (hour * 60 * 60) + (min * 60) + sec;
+					
+					progress = (int)( ((float)current) / ((float)total) *100f );
+				}
+				else if (line.startsWith("cat"))
+				{
+				    newStatus = "Combining audio clips...";
+				}
+				else if (line.startsWith("Input"))
+				{
+				    //12-18 02:48:07.187: D/StoryMaker(10508): Input #0, mov,mp4,m4a,3gp,3g2,mj2, from '/storage/sdcard0/DCIM/Camera/VID_20121211_140815.mp4':
+				    idx1 = line.indexOf("'");
+				    int idx2 = line.indexOf('\'', idx1+1);
+				    newStatus = "Rendering clip: " + line.substring(idx1, idx2);
+				}
+				    
+
+             Message msg = mHandler.obtainMessage(1);
+             
+				if (newStatus != null)
+				    msg.getData().putString("status", newStatus);                 
+             
+				if (progress != -1)
+				    msg.getData().putInt("progress", progress);
+		       
+				
+			    mHandler.sendMessage(msg);
+             
+			}
+
+			@Override
+			public void processComplete(int exitValue) {
+				
+				   Message msg = mHandler.obtainMessage(1);
+                 
+				    msg.getData().putString("status", "audio clip processed...");                 
+             
+				    msg.getData().putInt("progress", 100);
+		       
+					
+				    mHandler.sendMessage(msg);
+				
+			}
+ 	};
 	    
 }
