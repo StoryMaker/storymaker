@@ -214,11 +214,9 @@ public class Project {
     
     public ArrayList<Media> getMediaAsList() {
         ArrayList<Media> mediaList = null;
-        if (isTemplateStory()) {
-            mediaList = new ArrayList<Media>();
-            for (Scene s : getScenesAsArray()) {
-                mediaList.addAll(s.getMediaAsList());
-            }
+        mediaList = new ArrayList<Media>();
+        for (Scene s : getScenesAsArray()) {
+            mediaList.addAll(s.getMediaAsList());
         }
         return mediaList;
     }
