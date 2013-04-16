@@ -4,6 +4,7 @@
 package info.guardianproject.mrapp;
 
 import java.io.File;
+import java.util.ArrayList;
 
 import info.guardianproject.mrapp.model.Media;
 import android.content.Context;
@@ -27,7 +28,7 @@ public class PreviewVideoView extends VideoView implements MediaPlayer.OnComplet
 	private Runnable mTrimClipEndTask = new Runnable() {
 	    public void run() {
 	        PreviewVideoView.this.stopPlayback();
-	        PreviewVideoView.this.doComplete();
+	        PreviewVideoView.this.playNext();
 	    }
 	 };
 
@@ -50,11 +51,16 @@ public class PreviewVideoView extends VideoView implements MediaPlayer.OnComplet
 		setOnCompletionListener(this);
 	}
 		 
-	
-	public void setMedia(Media[] media) {
-		mMediaArray = media;
-		mCurrentMedia = 0;
-	}
+
+    public void setMedia(ArrayList<Media> media) {
+        mMediaArray = media.toArray(new Media[media.size()]);
+        mCurrentMedia = 0;
+    }
+    
+    public void setMedia(Media[] media) {
+        mMediaArray = media;
+        mCurrentMedia = 0;
+    }
 	
 	public void setCompletionCallback(Runnable runnable) {
 		mCompletionCallback = runnable;
@@ -62,13 +68,16 @@ public class PreviewVideoView extends VideoView implements MediaPlayer.OnComplet
 	
 	public void play() {
 		for (; mCurrentMedia <= mMediaArray.length ; mCurrentMedia++) {
-			if (mCurrentMedia == mMediaArray.length) {
+		    if (mCurrentMedia == mMediaArray.length) { 
 				mCurrentMedia = 0;
 				if (mCompletionCallback != null) {
 					mCompletionCallback.run();
 				}
 				break;
-			} else {
+			} else if (mMediaArray[mCurrentMedia] == null) {
+                playNext(); // skip null media in playlist
+            }
+            else {
 			    Media media = mMediaArray[mCurrentMedia];
 				String path = media.getPath();
 				if (path != null) {
@@ -123,10 +132,10 @@ public class PreviewVideoView extends VideoView implements MediaPlayer.OnComplet
 
 	@Override
 	public void onCompletion(MediaPlayer mp) {
-	    doComplete();
+	    playNext();
 	}
 	
-	private void doComplete() {
+	private void playNext() {
         mHandler.removeCallbacks(mTrimClipEndTask);
         if (mCurrentMedia < mMediaArray.length) {
             mCurrentMedia++;

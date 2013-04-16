@@ -3,6 +3,7 @@ package info.guardianproject.mrapp.model;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 
 import info.guardianproject.mrapp.StoryMakerApp;
 import info.guardianproject.mrapp.db.ProjectsProvider;
@@ -209,6 +210,30 @@ public class Project {
         return context.getContentResolver().query(
                 ProjectsProvider.SCENES_CONTENT_URI, null, selection,
                 selectionArgs, orderBy);
+    }
+    
+    public ArrayList<Media> getMediaAsList() {
+        ArrayList<Media> mediaList = null;
+        if (isTemplateStory()) {
+            mediaList = new ArrayList<Media>();
+            for (Scene s : getScenesAsArray()) {
+                mediaList.addAll(s.getMediaAsList());
+            }
+        }
+        return mediaList;
+    }
+    
+    public String[] getMediaAsPathArray() {
+        ArrayList<Media> mediaList = getMediaAsList();
+
+        // purge nulls
+        mediaList.removeAll(Collections.singleton(null));
+        
+        String[] pathArray = new String[mediaList.size()];
+        for (int i = 0 ; i < mediaList.size() ; i++) {
+            pathArray[i] = mediaList.get(i).getPath(); // how this makes me long for python
+        }
+        return pathArray;
     }
 
     /**
