@@ -18,6 +18,8 @@
 	<PreferenceCategory android:title="Media">
 		<EditTextPreference android:title="Slide Duration" android:summary="Duration of each slide in a photo essay" android:key="pslideduration" android:defaultValue="5" android:enabled="true"/>
 	
+	<CheckBoxPreference android:title="Fast Video Export" android:summary="for slower devices, export using the lower quality, fast video renderer" android:key="pfastrender" android:defaultValue="false"/>
+	
 	<CheckBoxPreference android:title="Enable Compression" android:summary="compress all video and audio using the settings below" android:key="pcompress" android:defaultValue="false"/>
 		
 	<EditTextPreference android:title="Video Width" android:summary="Export video width" android:key="p_video_width" android:defaultValue="720" android:enabled="true"/>

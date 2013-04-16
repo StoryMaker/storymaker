@@ -48,19 +48,6 @@ public class StoryMakerApp extends Application {
 		 return mBaseUrl;
 	 }
 	 
-//	public void InitializeSQLCipher(String dbName, String passphrase) {
-//
-//		File databaseFile = getDatabasePath(dbName);
-//		databaseFile.mkdirs();
-//		databaseFile.delete();
-//		SQLiteDatabase database = SQLiteDatabase.openOrCreateDatabase(databaseFile, passphrase, null);
-//		database.execSQL(StoryMakerDB.Schema.Projects.CREATE_TABLE_PROJECTS);
-//		database.execSQL(StoryMakerDB.Schema.Lessons.CREATE_TABLE_LESSONS);
-//		database.execSQL(StoryMakerDB.Schema.Medias.CREATE_TABLE_MEDIAS);
-//		database.close();
-//
-//	}
-
 	@Override
 	public void onCreate() {
 		super.onCreate();

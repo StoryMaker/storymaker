@@ -95,7 +95,10 @@ public class MediaFullVideoExporter implements Runnable {
     		
     		//now merge audio and video
     		String finalPath = mOut.path;
+    		String finalAudioCodec = mOut.audioCodec;
+    		
     		mOut.path = mOut.path + "-tmp.mp4";
+    		mOut.audioCodec = null;
     		
     		String outputType = mOut.mimeType;
     		
@@ -114,6 +117,7 @@ public class MediaFullVideoExporter implements Runnable {
     		ffmpegc.combineAudioAndVideo(mOut, maOut, finalPath, sc);
 
     		mOut.path = finalPath; //reset to initial
+    		mOut.audioCodec = finalAudioCodec;
     		
     		//processing complete message
     		Message msg = mHandler.obtainMessage(0);

@@ -2,7 +2,7 @@
     package="info.guardianproject.mrapp"
     android:installLocation="auto"
     android:versionCode="53"
-    android:versionName="0.0.5-beta-1" >
+    android:versionName="0.0.5-build53-beta1" >
     <uses-sdk
         android:minSdkVersion="8"
         android:targetSdkVersion="17" />

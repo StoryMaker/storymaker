@@ -72,7 +72,6 @@ public class PublishFragment extends Fragment {
     
     EditText mTitle;
     EditText mDescription;
-    CheckBox mRenderType;
     
     private YouTubeSubmit mYouTubeClient = null;
 
@@ -129,11 +128,6 @@ public class PublishFragment extends Fragment {
 			Spinner s = (Spinner) view.findViewById( R.id.spinnerSections );
 			s.setAdapter( adapter );
 			
-			mRenderType = (CheckBox)view.findViewById(R.id.cbRenderType);
-			if(mActivity.mMPM.mProject.getStoryType() == Project.STORY_TYPE_VIDEO)
-			{
-				mRenderType.setVisibility(View.VISIBLE);
-			}
 			
             Button btnRender = (Button) view.findViewById(R.id.btnRender);
             btnRender.setOnClickListener(new OnClickListener()
@@ -378,7 +372,7 @@ public class PublishFragment extends Fragment {
                     
                     File fileExport = mActivity.mMPM.getExportMediaFile();
 
-                    boolean fastExport = mRenderType.isChecked();//if checked, do fast render
+                    boolean fastExport = mSettings.getBoolean("pfastrender", false);
                     boolean compress = mSettings.getBoolean("pcompress",false);//compress video?
                     
                     mActivity.mMPM.doExportMedia(fileExport, compress, doOverwrite, fastExport);
