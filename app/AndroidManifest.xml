@@ -1,8 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="info.guardianproject.mrapp"
     android:installLocation="auto"
-    android:versionCode="53"
-    android:versionName="0.0.5-build53-beta1" >
+    android:versionCode="54"
+    android:versionName="0.0.5-beta1-build54" >
     <uses-sdk
         android:minSdkVersion="8"
         android:targetSdkVersion="17" />
@@ -201,6 +201,13 @@
           android:name="android.appwidget.provider"
           android:resource="@xml/quickstory_widget_info" />
 </receiver> 
+
+         <activity android:name="info.guardianproject.onionkit.ui.CertDisplayActivity"
+            android:configChanges="locale|screenSize|orientation"
+         	android:theme="@android:style/Theme.Dialog"
+         	 android:taskAffinity=""
+            />
+        
     </application>
 
 </manifest>
