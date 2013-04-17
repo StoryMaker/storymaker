@@ -29,6 +29,8 @@
 		<EditTextPreference android:title="Audio Bitrate" android:summary="Export audio bitrate (kbps)" android:key="p_audio_bitrate" android:defaultValue="128" android:enabled="true"/>
 		<EditTextPreference android:title="Video Framerate" android:summary="Export frame rate per second (fps)" android:key="p_video_framerate" android:defaultValue="29.97" android:enabled="true"/>
 	
+		<EditTextPreference android:title="Audio Samplerate" android:summary="Default audio sample rate (khz)" android:key="p_audio_samplerate" android:defaultValue="44100" android:enabled="true"/>
+	
 	</PreferenceCategory>
 	
 	

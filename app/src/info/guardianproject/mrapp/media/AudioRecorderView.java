@@ -14,6 +14,7 @@ import com.actionbarsherlock.app.SherlockActivity;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.media.AudioFormat;
 import android.media.AudioManager;
 import android.media.AudioRecord;
@@ -24,6 +25,7 @@ import android.media.MediaRecorder;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -36,7 +38,7 @@ public class AudioRecorderView {
 	private static final String AUDIO_RECORDER_FILE_EXT_WAV = ".wav";
 	private static final String AUDIO_RECORDER_FOLDER = "AudioRecorder";
 	private static final String AUDIO_RECORDER_TEMP_FILE = "record_temp.raw";
-	private static final int RECORDER_SAMPLERATE = 44100;
+
 	private static final int RECORDER_CHANNELS = AudioFormat.CHANNEL_IN_STEREO;
 	private static final int RECORDER_AUDIO_ENCODING = AudioFormat.ENCODING_PCM_16BIT;
 	
@@ -54,6 +56,8 @@ public class AudioRecorderView {
 	
 	private File mTempFile;
 	
+	private int mAudioSampleRate = -1;
+	
     public AudioRecorderView (File path, Context context)
     {
      
@@ -61,7 +65,11 @@ public class AudioRecorderView {
     	
     	mFilePath = path;
     	
-        bufferSize = AudioRecord.getMinBufferSize(RECORDER_SAMPLERATE,RECORDER_CHANNELS,RECORDER_AUDIO_ENCODING);
+        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(mContext.getApplicationContext());
+        mAudioSampleRate = Integer.parseInt(settings.getString("p_audio_samplerate", "44100"));
+  
+    	
+        bufferSize = AudioRecord.getMinBufferSize(mAudioSampleRate,RECORDER_CHANNELS,RECORDER_AUDIO_ENCODING);
         
     }
     
@@ -73,10 +81,10 @@ public class AudioRecorderView {
         	mTempFile.delete();
 		
 		recorder = new AudioRecord(MediaRecorder.AudioSource.DEFAULT,
-						RECORDER_SAMPLERATE, RECORDER_CHANNELS,RECORDER_AUDIO_ENCODING, bufferSize);
+						mAudioSampleRate, RECORDER_CHANNELS,RECORDER_AUDIO_ENCODING, bufferSize);
 		
 		/*
-		livePlayer =  new AudioTrack( AudioManager.STREAM_MUSIC, RECORDER_SAMPLERATE, 
+		livePlayer =  new AudioTrack( AudioManager.STREAM_MUSIC, mAudioSampleRate, 
 				RECORDER_CHANNELS, RECORDER_AUDIO_ENCODING, 
 				bufferSize, AudioTrack.MODE_STREAM);
 		*/
@@ -192,9 +200,9 @@ public class AudioRecorderView {
 		FileOutputStream out = null;
 		long totalAudioLen = 0;
 		long totalDataLen = totalAudioLen + 36;
-		long longSampleRate = RECORDER_SAMPLERATE;
+		long longSampleRate = mAudioSampleRate;
 		int channels = 2;
-		long byteRate = RECORDER_BPP * RECORDER_SAMPLERATE * channels/8;
+		long byteRate = RECORDER_BPP * mAudioSampleRate * channels/8;
 		
 		byte[] data = new byte[bufferSize];
                 

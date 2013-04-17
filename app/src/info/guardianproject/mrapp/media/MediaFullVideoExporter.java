@@ -11,9 +11,11 @@ import org.ffmpeg.android.ShellUtils.ShellCallback;
 
 import info.guardianproject.mrapp.AppConstants;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.media.MediaScannerConnection;
 import android.os.Handler;
 import android.os.Message;
+import android.preference.PreferenceManager;
 import android.util.Log;
 
 /*
@@ -35,6 +37,8 @@ public class MediaFullVideoExporter implements Runnable {
     
     private ArrayList<MediaDesc> mAudioTracks;
     
+    private int mAudioSampleRate = -1;
+    
 	public MediaFullVideoExporter (Context context, Handler handler, ArrayList<MediaDesc> mediaList, MediaDesc out)
 	{
 		mHandler = handler;
@@ -43,6 +47,10 @@ public class MediaFullVideoExporter implements Runnable {
 		mMediaList = mediaList;
 		
 		mAudioTracks = new ArrayList<MediaDesc>();
+		
+
+        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(mContext.getApplicationContext());
+        mAudioSampleRate = Integer.parseInt(settings.getString("p_audio_samplerate", "44100"));
     	
 	}
 	
@@ -75,7 +83,7 @@ public class MediaFullVideoExporter implements Runnable {
     		//now merge all audio tracks into main audio track
     		for (MediaDesc audioTrack : mAudioTracks)
     		{
-    			ffmpegc.convertToWaveAudio(audioTrack, audioTrack.path+"-tmp.wav", MediaAudioExporter.SAMPLE_RATE, MediaAudioExporter.CHANNELS, sc);
+    			ffmpegc.convertToWaveAudio(audioTrack, audioTrack.path+"-tmp.wav", mAudioSampleRate, MediaAudioExporter.CHANNELS, sc);
     			mAudioTracksPaths.add(audioTrack.path+"-tmp.wav");
     			
     		}

@@ -12,9 +12,11 @@ import org.ffmpeg.android.ShellUtils.ShellCallback;
 
 import info.guardianproject.mrapp.AppConstants;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.media.MediaScannerConnection;
 import android.os.Handler;
 import android.os.Message;
+import android.preference.PreferenceManager;
 import android.util.Log;
 
 public class MediaAudioExporter implements Runnable {
@@ -32,8 +34,8 @@ public class MediaAudioExporter implements Runnable {
 	 double fadeLen = 1.0f;
 	 String fadeType = "t"; //triangle/linear
 	 
-	 public final static String SAMPLE_RATE = "44100";
 	 public final static int CHANNELS = 1;
+	 private int mAudioSampleRate = -1;
 /*
  *  fade [type] fade-in-length [stop-time [fade-out-length]]
               Apply a fade effect to the beginning, end, or both of the audio.
@@ -62,6 +64,10 @@ public class MediaAudioExporter implements Runnable {
 		mContext = context;
 		mOut = out;
 		mMediaList = mediaList;
+		
+        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(mContext.getApplicationContext());
+        mAudioSampleRate = Integer.parseInt(settings.getString("p_audio_samplerate", "44100"));
+ 
 	}
 	
 	public void setFadeLength (double fadeLen)
@@ -143,7 +149,7 @@ public class MediaAudioExporter implements Runnable {
 		 for (MediaDesc mediaIn : listMediaDesc)
 		 {
 		 
-	    	MediaDesc audioOut = ffmpegc.convertToWaveAudio(mediaIn, mediaIn.path + ".wav",SAMPLE_RATE,CHANNELS, sc);
+	    	MediaDesc audioOut = ffmpegc.convertToWaveAudio(mediaIn, mediaIn.path + ".wav",mAudioSampleRate,CHANNELS, sc);
 	    	alAudio.add(audioOut);
 		 }
 		

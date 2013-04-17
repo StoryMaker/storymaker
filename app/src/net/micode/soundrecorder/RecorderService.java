@@ -16,6 +16,7 @@
 
 package net.micode.soundrecorder;
 
+import info.guardianproject.mrapp.AppConstants;
 import info.guardianproject.mrapp.R;
 
 import java.io.File;
@@ -28,6 +29,7 @@ import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.media.AudioManager;
 import android.media.MediaRecorder;
 import android.net.Uri;
@@ -36,6 +38,7 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.os.PowerManager;
 import android.os.PowerManager.WakeLock;
+import android.preference.PreferenceManager;
 import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
 
@@ -107,7 +110,8 @@ public class RecorderService extends Service implements MediaRecorder.OnErrorLis
     };
 
     private boolean mNeedUpdateRemainingTime;
-
+    private int mAudioSampleRate = -1;
+    
     @Override
     public void onCreate() {
         super.onCreate();
@@ -121,6 +125,11 @@ public class RecorderService extends Service implements MediaRecorder.OnErrorLis
         PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
         mWakeLock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "SoundRecorder");
         mKeyguardManager = (KeyguardManager) getSystemService(Context.KEYGUARD_SERVICE);
+        
+        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        mAudioSampleRate = Integer.parseInt(settings.getString("p_audio_samplerate", "44100"));
+        
+        
     }
 
     @Override
@@ -192,7 +201,7 @@ public class RecorderService extends Service implements MediaRecorder.OnErrorLis
                 mRemainingTimeCalculator.setBitRate(SoundRecorder.BITRATE_3GPP);
               //
                 mRecorder.setAudioChannels(1);
-                mRecorder.setAudioSamplingRate(44100);
+                mRecorder.setAudioSamplingRate(mAudioSampleRate);
                 mRecorder.setAudioEncodingBitRate(SoundRecorder.BITRATE_3GPP);
                 mRecorder.setOutputFormat(outputfileformat);
                 mRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AAC);
