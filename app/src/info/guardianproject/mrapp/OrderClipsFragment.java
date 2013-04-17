@@ -319,6 +319,7 @@ public class OrderClipsFragment extends Fragment {
             handleVideoAudioPlayToggle();
     }
     
+    private Thread mPhotoThread = null;
     
     private void handlePhotoPlayToggle ()
     {
@@ -327,6 +328,9 @@ public class OrderClipsFragment extends Fragment {
             mPlayButton.setText(R.string.play_recording);
             mSeekBar.setProgress(0);
             mKeepRunningPreview = false;
+            
+            if (mPhotoThread != null)
+            	mPhotoThread.interrupt();
         }
         else
         {
@@ -336,7 +340,7 @@ public class OrderClipsFragment extends Fragment {
             mPlayButton.setText(R.string.stop_recording);
             mKeepRunningPreview = true;
             
-            Thread thread = new Thread ()
+            mPhotoThread = new Thread ()
             {
             
                 public void run ()
@@ -362,7 +366,7 @@ public class OrderClipsFragment extends Fragment {
                 
             };
             
-            thread.start();
+            mPhotoThread.start();
             
             
              
