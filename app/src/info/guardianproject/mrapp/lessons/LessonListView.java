@@ -282,6 +282,9 @@ public class LessonListView extends ListView implements LessonManagerListener {
 					Toast.makeText(getContext(), msg.getData().getString("err"), Toast.LENGTH_LONG).show();
 					
 				break;
+				case 5: //status update
+				
+					mActivity.updateLessonProgress(msg.getData().getString("status"));
 				
 				default:
 				
@@ -321,19 +324,26 @@ public class LessonListView extends ListView implements LessonManagerListener {
     	mListLessons = mLessonManager.loadLessonList(getContext(), mLocale.getLanguage());
     	mHandler.sendEmptyMessage(1);
     	mHandler.sendEmptyMessage(2);
-    	
-		
+    			
 		
 	}
 
 	
 
 	@Override
-	public void loadingLessonFromServer(String subFolder, String lessonTitle) {
+	public void lessonLoadingStatusMessage(String status) {
 		
+		Message msg = mHandler.obtainMessage(5);
+		msg.getData().putString("status", status);
+		mHandler.sendMessage(msg);
+	}
+
+	@Override
+	public void loadingLessonFromServer(String subFolder, String lessonTitle) {
 		
 		mHandler.sendEmptyMessage(0);
 		mHandler.sendEmptyMessage(1);
+
 		
 	}
 

@@ -300,6 +300,9 @@ public class LessonManager implements Runnable {
 				{
 					try
 					{
+						if (mListener != null)
+							mListener.lessonLoadingStatusMessage("Loading " + (i+1) + " of " + jarray.length() + " lessons");
+								
 						JSONObject jobj = jarray.getJSONObject(i);
 						
 						String title = jobj.getString("title");
@@ -309,6 +312,7 @@ public class LessonManager implements Runnable {
 						sUrlLesson = urlBase + lessonUrl;
 						
 						Log.d(AppConstants.TAG,"Loading lesson zip: " + sUrlLesson);
+						
 						
 						URI urlLesson = new URI(sUrlLesson);
 						request = new HttpGet(urlLesson);
@@ -332,6 +336,10 @@ public class LessonManager implements Runnable {
 							}
 							else
 							{
+								if (mListener != null)
+									mListener.lessonLoadingStatusMessage("Loading " + (i+1) + " of " + jarray.length() + " lessons" + "\nSize: " + remoteLen/1000000 + "MB");
+								
+								
 								Log.d(AppConstants.TAG,"local file is out of date; updating...");
 
 								//otherwise, delete and download

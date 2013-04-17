@@ -149,7 +149,11 @@ public class LessonsActivity extends BaseActivity implements ActionBar.TabListen
     	
     }
 
-
+    public void updateLessonProgress (String msg)
+    {
+    	mProgressLoading.setMessage(msg);
+    }
+    
     @Override
     public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
     }
