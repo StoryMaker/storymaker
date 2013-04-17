@@ -97,7 +97,6 @@ public class OrderClipsFragment extends Fragment {
          SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(view.getContext().getApplicationContext());
          mPhotoEssaySlideLength = Integer.parseInt(settings.getString("pslideduration", AppConstants.DEFAULT_SLIDE_DURATION+""));
         
-        
         mOrderClipsDGV = (DraggableGridView) view.findViewById(R.id.DraggableGridView01);
 
         mImageViewMedia = (ImageView) view.findViewById(R.id.imageView1);
@@ -167,7 +166,6 @@ public class OrderClipsFragment extends Fragment {
             }
         });
         
-        
         if (mMPM.mProject.getStoryType() == Project.STORY_TYPE_ESSAY
         		|| mMPM.mProject.getStoryType() == Project.STORY_TYPE_VIDEO
         		)
@@ -210,32 +208,34 @@ public class OrderClipsFragment extends Fragment {
 	            }
 	        });
 	        
-	        mPlayButton = (Button) view.findViewById(R.id.buttonPlay);
-	        mPlayButton.setOnClickListener(new OnClickListener() {
-	
-	            @Override
-	            public void onClick(View v) {
-	                
-	                if (mMPM.mProject.getStoryType() == Project.STORY_TYPE_VIDEO
-	                        || mMPM.mProject.getStoryType() == Project.STORY_TYPE_AUDIO)
-	                {
-	                   handleVideoAudioPlayToggle();
-	                }
-	                else if (mMPM.mProject.getStoryType() == Project.STORY_TYPE_ESSAY
-	                    || mMPM.mProject.getStoryType() == Project.STORY_TYPE_PHOTO)
-	                {
-	                    
-	                    handlePhotoPlayToggle();
-	                    
-	                }
-	                
-	                // FIXME need to detect which clip user last clicked on
-	                // and start from there
-	                // FIXME need to know when mPreviewVideoView is done
-	                // playing so we can return the thumbnail
-	            }
-	        });
+	      
         }
+        
+        mPlayButton = (Button) view.findViewById(R.id.buttonPlay);
+        mPlayButton.setOnClickListener(new OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                
+                if (mMPM.mProject.getStoryType() == Project.STORY_TYPE_VIDEO
+                        || mMPM.mProject.getStoryType() == Project.STORY_TYPE_AUDIO)
+                {
+                   handleVideoAudioPlayToggle();
+                }
+                else if (mMPM.mProject.getStoryType() == Project.STORY_TYPE_ESSAY
+                    || mMPM.mProject.getStoryType() == Project.STORY_TYPE_PHOTO)
+                {
+                    
+                    handlePhotoPlayToggle();
+                    
+                }
+                
+                // FIXME need to detect which clip user last clicked on
+                // and start from there
+                // FIXME need to know when mPreviewVideoView is done
+                // playing so we can return the thumbnail
+            }
+        });
         
         mPreviewVideoView.setCompletionCallback(new Runnable() {
             @Override
@@ -246,11 +246,13 @@ public class OrderClipsFragment extends Fragment {
                 mPlayButton.setText(R.string.play_recording);
                 showThumbnail(mCurrentClipIdx);
                 
-                if (mAudioNarrator.isRecording())
-                    stopRecordNarration ();
-                else if (mAudioNarrator.isPlaying())
-                    mAudioNarrator.stopPlaying();
-
+                if (mAudioNarrator != null)
+                {
+	                if (mAudioNarrator.isRecording())
+	                    stopRecordNarration ();
+	                else if (mAudioNarrator.isPlaying())
+	                    mAudioNarrator.stopPlaying();
+                }
             }
         });
         
@@ -415,9 +417,18 @@ public class OrderClipsFragment extends Fragment {
             mKeepRunningPreview = false;
              mPreviewVideoView.stopPlayback();
             
+
+         		mImageViewMedia.setVisibility(View.GONE);
+         		mPreviewVideoView.setVisibility(View.VISIBLE);
+         	
+             
          }
          else
          {
+        		mImageViewMedia.setVisibility(View.VISIBLE);
+         		mPreviewVideoView.setVisibility(View.GONE);
+         	
+         		
             mPlayButton.setText(R.string.stop_recording);
             mKeepRunningPreview = true;
              mImageViewMedia.setVisibility(View.GONE);
@@ -468,8 +479,9 @@ public class OrderClipsFragment extends Fragment {
 
             @Override
             public void onRearrange(int oldIndex, int newIndex) {
-                mMPM.mScene.moveMedia(oldIndex, newIndex);
-                mActivity.mdExported= null;
+                
+            	mMPM.mScene.moveMedia(oldIndex, newIndex);
+                
             }
         });
 
@@ -480,8 +492,8 @@ public class OrderClipsFragment extends Fragment {
                 if (!mTrimMode) {
                     Log.d(TAG, "item clicked");
                     mCurrentClipIdx = position;
-                    showThumbnail(position);
-    //                previewClip(position);
+          //          showThumbnail(position);
+                    previewClip(position);
                 }
             }
         });
@@ -494,28 +506,42 @@ public class OrderClipsFragment extends Fragment {
             
             if (medias[position].getMimeType().startsWith("video"))
             {
-                mImageViewMedia.setVisibility(View.GONE);
-                mPreviewVideoView.setVisibility(View.VISIBLE);
-                // play
-                mPreviewVideoView.stopPlayback();
-                Media[] mediaArray = {medias[position]};
-                mPreviewVideoView.setMedia(mediaArray);
-                mPreviewVideoView.play();
-                
-                //mSeekBar.setMax(mPreviewVideoView.getDuration());
+            	if (mImageViewMedia.getVisibility() == View.VISIBLE)
+            	{
+            		mImageViewMedia.setVisibility(View.GONE);
+            		mPreviewVideoView.setVisibility(View.VISIBLE);
+            	}
+            	
+            	// play
+            	if (mPreviewVideoView.isPlaying())
+            		mPreviewVideoView.stopPlayback();
+            	else
+            	{
+	                Media[] mediaArray = {medias[position]};
+	                mPreviewVideoView.setMedia(mediaArray);
+	                mPreviewVideoView.invalidate();
+	                mPreviewVideoView.play();
+            	}
+            	
                 
             }
             else if (medias[position].getMimeType().startsWith("audio"))
             {
-                mImageViewMedia.setVisibility(View.GONE);
-                mPreviewVideoView.setVisibility(View.VISIBLE);
-                // play
-                mPreviewVideoView.stopPlayback();
-                Media[] mediaArray = {medias[position]};
-                mPreviewVideoView.setMedia(mediaArray);
-                mPreviewVideoView.play();
-                
-                //mSeekBar.setMax(mPreviewVideoView.getDuration());
+            	if (mImageViewMedia.getVisibility() == View.VISIBLE)
+            	{
+            		mImageViewMedia.setVisibility(View.GONE);
+            		mPreviewVideoView.setVisibility(View.VISIBLE);
+            	}
+            	
+            	if (mPreviewVideoView.isPlaying())
+            		mPreviewVideoView.stopPlayback();
+            	else
+            	{
+	                Media[] mediaArray = {medias[position]};
+	                mPreviewVideoView.setMedia(mediaArray);
+	                mPreviewVideoView.play();
+            	}
+            	
                 
             }
             else
@@ -528,7 +554,11 @@ public class OrderClipsFragment extends Fragment {
     private void showThumbnail(int position) {
         Media[] medias = mMPM.mScene.getMediaAsArray();
         if (medias[position] != null) {
+        	mImageViewMedia.setVisibility(View.VISIBLE);
+            mPreviewVideoView.setVisibility(View.GONE);
+            
             mImageViewMedia.setImageBitmap(mActivity.getThumbnail(medias[position]));
+            mImageViewMedia.invalidate();
         }
     }
     

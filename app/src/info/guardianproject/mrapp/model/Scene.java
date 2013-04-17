@@ -262,16 +262,22 @@ public class Scene {
     	}
     }
     
+    
     public void moveMedia(int oldIndex, int newIndex) {
-        Media media[] = getMediaAsArray();
-        Media oldMedia = media[oldIndex];
+    	
+    	//first get the list, and the item that is to be moved
+    	List<Media> alMedia = getMediaAsList();
+        Media oldMedia = alMedia.get(oldIndex);
         
-        // FIXME we can do this much more efficiently
-        List<Media> al = new ArrayList<Media>(Arrays.asList(media));
-        al.remove(oldIndex);
-        al.add(newIndex, oldMedia);
-        for (int i = 0 ; i < media.length ; i++) {
-            Media m = al.get(i);
+        //remove the media clip from the old location
+        alMedia.remove(oldIndex);
+        
+        //insert it into the new location
+        alMedia.add(newIndex, oldMedia);
+        
+        //now reset all the indexes based on position in the list
+        for (int i = 0 ; i < alMedia.size() ; i++) {
+            Media m = alMedia.get(i);
             m.setClipIndex(i);
             m.save();
         }
