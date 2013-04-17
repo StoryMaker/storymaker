@@ -281,6 +281,7 @@ public class MediaProjectManager implements MediaManager {
 			    if (fastExport)
 			    {
 			    	MediaFastVideoExporter mEx = new MediaFastVideoExporter(mContext, mHandler, alMediaIn, mOut);
+			    	//MediaMediumVideoExporter mEx = new MediaMediumVideoExporter(mContext, mHandler, alMediaIn, mOut);
 			    	mEx.run();
 			    }
 			    else

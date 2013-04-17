@@ -1,6 +1,9 @@
 package info.guardianproject.mrapp.media;
 
 import java.io.File;
+import java.text.DecimalFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import net.sourceforge.sox.SoxController;
@@ -38,6 +41,8 @@ public class MediaFullVideoExporter implements Runnable {
     private ArrayList<MediaDesc> mAudioTracks;
     
     private int mAudioSampleRate = -1;
+    
+    private float fadeLen = .5f;
     
 	public MediaFullVideoExporter (Context context, Handler handler, ArrayList<MediaDesc> mediaList, MediaDesc out)
 	{
@@ -77,6 +82,7 @@ public class MediaFullVideoExporter implements Runnable {
     		//maOut.audioBitrate = 256;
     		
     		maExport = new MediaAudioExporter (mContext, mHandler, mMediaList, maOut);
+    		maExport.setFadeLength(fadeLen);
     		maExport.run();
     		
     		ArrayList<String> mAudioTracksPaths = new ArrayList<String>();
@@ -110,17 +116,36 @@ public class MediaFullVideoExporter implements Runnable {
     		
     		String outputType = mOut.mimeType;
     		
-    		/*
-    		for (MediaDesc mdesc : mMediaList)
+    		
+    		ArrayList<Double> durations = maExport.getDurations();
+    		
+    		for (int i = 0; i < mMediaList.size(); i++)
     		{
-    			if (mdesc.startTime != null)
-    				mdesc.startTime = "00:00:00.700"; //trim one second off the beginning of each clip
-    		}*/
+    			MediaDesc media = mMediaList.get(i);
+    			
+    			if (media.startTime == null)
+    				media.startTime = formatTimePeriod(fadeLen / 2);
+    			else
+    			{
+    				double startTime = this.parseTimePeriod(media.startTime);
+    				media.startTime = formatTimePeriod(startTime + (fadeLen / 2));
+    			}
+    			
+    			if (media.duration == null)
+    				media.duration = formatTimePeriod(durations.get(i)-fadeLen);
+    			else
+    			{
+    				double duration = this.parseTimePeriod(media.duration);
+    				media.duration = formatTimePeriod(duration-fadeLen);
+    			}
+    			
+    		}
+    		
     		
         	ffmpegc.concatAndTrimFilesMPEG(mMediaList, mOut, true, sc);
         	
-        	maOut.audioCodec = "aac";
-        	maOut.audioBitrate = 128;
+        	maOut.audioCodec = "aac"; //hardcoded (for now) export audio codec
+        	maOut.audioBitrate = 128; //hardcoded (for now) export audio bitrate
         	
     		ffmpegc.combineAudioAndVideo(mOut, maOut, finalPath, sc);
 
@@ -252,4 +277,25 @@ public class MediaFullVideoExporter implements Runnable {
 			}
  	};
 	    
+
+	/**
+	 * Takes a seconds.frac value and formats it into:
+	 * 	hh:mm:ss:ss.frac
+	 * @param seconds
+	 */
+	public String formatTimePeriod(double seconds) {
+		String seconds_frac = new DecimalFormat("#.##").format(seconds);
+		return String.format("0:0:%s", seconds_frac);
+	}
+	
+	/**
+	 * Takes a seconds.frac value and formats it into:
+	 * 	hh:mm:ss:ss.frac
+	 * @param seconds
+	 */
+	public Double parseTimePeriod(String seconds) throws ParseException {
+		DecimalFormat format = new DecimalFormat("#.##");
+		return format.parse(seconds).doubleValue();
+	}
+	
 }
