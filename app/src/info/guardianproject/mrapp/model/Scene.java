@@ -1,6 +1,8 @@
 package info.guardianproject.mrapp.model;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import info.guardianproject.mrapp.db.ProjectsProvider;
 import info.guardianproject.mrapp.db.StoryMakerDB;
@@ -258,6 +260,21 @@ public class Scene {
     		newMedia.setClipIndex(oldIndex);
     		newMedia.save();
     	}
+    }
+    
+    public void moveMedia(int oldIndex, int newIndex) {
+        Media media[] = getMediaAsArray();
+        Media oldMedia = media[oldIndex];
+        
+        // FIXME we can do this much more efficiently
+        List<Media> al = new ArrayList<Media>(Arrays.asList(media));
+        al.remove(oldIndex);
+        al.add(newIndex, oldMedia);
+        for (int i = 0 ; i < media.length ; i++) {
+            Media m = al.get(i);
+            m.setClipIndex(i);
+            m.save();
+        }
     }
     
     /***** getters and setters *****/

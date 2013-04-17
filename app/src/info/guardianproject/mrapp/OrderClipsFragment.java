@@ -468,7 +468,7 @@ public class OrderClipsFragment extends Fragment {
 
             @Override
             public void onRearrange(int oldIndex, int newIndex) {
-                mMPM.mScene.swapMediaIndex(oldIndex, newIndex);
+                mMPM.mScene.moveMedia(oldIndex, newIndex);
                 mActivity.mdExported= null;
             }
         });
