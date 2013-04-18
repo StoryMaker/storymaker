@@ -237,11 +237,13 @@ public class EditorBaseActivity extends BaseActivity {
                 }
             };
 
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setMessage(R.string.play_or_share_exported_media_)
-                    .setPositiveButton(R.string.menu_play_media, dialogClickListener)
-                    .setNegativeButton(R.string.menu_share_media, dialogClickListener).show();
-
+            if (this.getWindow().isActive())
+            {
+	            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+	            builder.setMessage(R.string.play_or_share_exported_media_)
+	                    .setPositiveButton(R.string.menu_play_media, dialogClickListener)
+	                    .setNegativeButton(R.string.menu_share_media, dialogClickListener).show();
+            }
         }
 
     }

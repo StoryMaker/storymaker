@@ -132,7 +132,11 @@ public class PreviewVideoView extends VideoView implements MediaPlayer.OnComplet
 
 	@Override
 	public void onCompletion(MediaPlayer mp) {
-	    playNext();
+		
+		if (isPlaying())
+		{
+			playNext();
+		}
 	}
 	
 	private void playNext() {

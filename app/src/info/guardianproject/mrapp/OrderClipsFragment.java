@@ -239,7 +239,7 @@ public class OrderClipsFragment extends Fragment {
                 	if (mFileAudioNarration != null && mFileAudioNarration.exists())
                 	  playNarration(!mAudioNarrator.isPlaying());
                 	else
-                		handleVideoAudioPlayToggle();
+                		startPreviewPlayback();
                 	
                 }
                 else if (mMPM.mProject.getStoryType() == Project.STORY_TYPE_ESSAY
@@ -301,7 +301,7 @@ public class OrderClipsFragment extends Fragment {
         if (mMPM.mProject.getStoryType() == Project.STORY_TYPE_ESSAY)
             handlePhotoPlayToggle ();
         else if (mMPM.mProject.getStoryType() == Project.STORY_TYPE_VIDEO)
-            handleVideoAudioPlayToggle();
+        	startPreviewPlayback();
         
         //start the audio recorder
         mAudioNarrator.startRecording();
@@ -320,7 +320,7 @@ public class OrderClipsFragment extends Fragment {
         if (mMPM.mProject.getStoryType() == Project.STORY_TYPE_ESSAY)
             handlePhotoPlayToggle ();
         else if (mMPM.mProject.getStoryType() == Project.STORY_TYPE_VIDEO)
-            handleVideoAudioPlayToggle();
+            stopPreviewPlayback();
 
     }
     
@@ -336,7 +336,7 @@ public class OrderClipsFragment extends Fragment {
         if (mMPM.mProject.getStoryType() == Project.STORY_TYPE_ESSAY)
             handlePhotoPlayToggle ();
         else
-            handleVideoAudioPlayToggle();
+            startPreviewPlayback();
     }
     
     private Thread mPhotoThread = null;
@@ -433,10 +433,9 @@ public class OrderClipsFragment extends Fragment {
         
     };
     
-    private void handleVideoAudioPlayToggle ()
+    private void stopPreviewPlayback ()
     {
-         if (mPreviewVideoView.isPlaying())
-         {
+        
             mPlayButton.setText(R.string.play_recording);
             mKeepRunningPreview = false;
              mPreviewVideoView.stopPlayback();
@@ -444,11 +443,10 @@ public class OrderClipsFragment extends Fragment {
 
          		mImageViewMedia.setVisibility(View.GONE);
          		mPreviewVideoView.setVisibility(View.VISIBLE);
+    }
          	
-             
-         }
-         else
-         {
+    private void startPreviewPlayback ()
+    {
         		mImageViewMedia.setVisibility(View.VISIBLE);
          		mPreviewVideoView.setVisibility(View.GONE);
          	
@@ -475,7 +473,7 @@ public class OrderClipsFragment extends Fragment {
 
                 }
              }.start();
-         }
+         
     }
     
     public void loadMedia ()
