@@ -166,6 +166,26 @@ public class PublishFragment extends Fragment {
                 
             });
             
+            Button btnShare = (Button) view.findViewById(R.id.btnShare);
+            btnShare.setEnabled(fileExport.exists());
+        	
+            btnShare.setOnClickListener(new OnClickListener()
+            {
+
+                @Override
+                public void onClick(View arg0) {
+                    
+                	File fileExport = mActivity.mMPM.getExportMediaFile();
+                	if (fileExport.exists())
+                	{
+                		
+                		mActivity.mMPM.mMediaHelper.shareMedia(fileExport, null);
+                	}
+                }
+                
+            });
+            
+            
             Button btn = (Button) view.findViewById(R.id.btnPublish);
             btn.setOnClickListener(new OnClickListener() {
 

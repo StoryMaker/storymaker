@@ -558,7 +558,7 @@ public class YouTubeSubmit {
 
          sendStatusMessage (totalBytesUploaded, currentFileSize);
          
-         if (totalBytesUploaded >= mContentLength) {
+         if (totalBytesUploaded >= currentFileSize) {
              break;
            }
         
@@ -578,7 +578,7 @@ public class YouTubeSubmit {
    
    private void sendStatusMessage (double totalBytesUploaded, double currentFileSize)
    {
-       double percent = (totalBytesUploaded / currentFileSize) * 99;
+       double percent = (totalBytesUploaded / currentFileSize) * 100;
 
 	   String status = String.format( "%,d/%,d bytes transfered",  Math.round(totalBytesUploaded),  Math.round(currentFileSize));
        

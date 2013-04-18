@@ -1,4 +1,4 @@
-package info.guardianproject.mrapp.media;
+package info.guardianproject.mrapp.media.exporter;
 
 import java.io.File;
 import java.text.DecimalFormat;
@@ -44,13 +44,15 @@ public class MediaFullVideoExporter implements Runnable {
     
     private float fadeLen = .5f;
     
-	public MediaFullVideoExporter (Context context, Handler handler, ArrayList<MediaDesc> mediaList, MediaDesc out)
+    private File mFileProject;
+    
+	public MediaFullVideoExporter (Context context, Handler handler, ArrayList<MediaDesc> mediaList, File fileProject, MediaDesc out)
 	{
 		mHandler = handler;
 		mContext = context;
 		mOut = out;
 		mMediaList = mediaList;
-		
+		mFileProject = fileProject;
 		mAudioTracks = new ArrayList<MediaDesc>();
 		
 
@@ -72,46 +74,49 @@ public class MediaFullVideoExporter implements Runnable {
     		//get lengths of all clips
     		
     		
-    		ffmpegc = new FfmpegController (mContext);
+    		ffmpegc = new FfmpegController (mContext, mFileProject);
     		
     		//first let's get the audio done
     		maOut = new MediaDesc();
-    		maOut.path = mOut.path + ".wav";
+    		maOut.path = new File(mFileProject, "tmp.wav").getAbsolutePath();
     		
-    		//maOut.audioCodec = "aac";
-    		//maOut.audioBitrate = 256;
-    		
-    		maExport = new MediaAudioExporter (mContext, mHandler, mMediaList, maOut);
+    		maExport = new MediaAudioExporter (mContext, mHandler, mMediaList, mFileProject, maOut);
     		maExport.setFadeLength(fadeLen);
     		maExport.run();
     		
-    		ArrayList<String> mAudioTracksPaths = new ArrayList<String>();
-    		//now merge all audio tracks into main audio track
-    		for (MediaDesc audioTrack : mAudioTracks)
+    		if (mAudioTracks.size() > 0)
     		{
-    			ffmpegc.convertToWaveAudio(audioTrack, audioTrack.path+"-tmp.wav", mAudioSampleRate, MediaAudioExporter.CHANNELS, sc);
-    			mAudioTracksPaths.add(audioTrack.path+"-tmp.wav");
-    			
+	    		ArrayList<String> mAudioTracksPaths = new ArrayList<String>();
+	    		//now merge all audio tracks into main audio track
+	    		int idxAudioTracks = 0;
+	    		for (MediaDesc audioTrack : mAudioTracks)
+	    		{
+	    			File fileAudioTrack = new File(mFileProject,idxAudioTracks + "-tmp.wav");
+	    			MediaDesc out = ffmpegc.convertToWaveAudio(audioTrack, fileAudioTrack.getAbsolutePath(), mAudioSampleRate, MediaAudioExporter.CHANNELS, sc);
+	    			mAudioTracksPaths.add(out.path);
+	    			idxAudioTracks++;
+	    		}
+	    		
+	    		mAudioTracksPaths.add(maOut.path);
+	    		
+	    		String finalAudioMix = maOut.path + "-mix.wav";
+	
+	    		SoxController sxCon = new SoxController(mContext);
+	    		sxCon.combineMix(mAudioTracksPaths, finalAudioMix);
+	    		
+	    		if (!new File(finalAudioMix).exists())
+	    		{
+	    			throw new Exception("Audio rendering error");
+	    		}
+	    		
+	    		maOut.path = finalAudioMix;
     		}
-    		mAudioTracksPaths.add(maOut.path);
-    		
-    		String finalAudioMix = maOut.path + "-mix.wav";
-
-    		SoxController sxCon = new SoxController(mContext);
-    		sxCon.combineMix(mAudioTracksPaths, finalAudioMix);
-    		
-    		if (!new File(finalAudioMix).exists())
-    		{
-    			throw new Exception("Audio rendering error");
-    		}
-    		
-    		maOut.path = finalAudioMix;
     		
     		//now merge audio and video
     		String finalPath = mOut.path;
     		String finalAudioCodec = mOut.audioCodec;
     		
-    		mOut.path = mOut.path + "-tmp.mp4";
+    		mOut.path = new File(mFileProject,"merge.mp4").getAbsolutePath();
     		mOut.audioCodec = null;
     		
     		String outputType = mOut.mimeType;
@@ -243,7 +248,7 @@ public class MediaFullVideoExporter implements Runnable {
 				else if (line.startsWith("Input"))
 				{
 				    //12-18 02:48:07.187: D/StoryMaker(10508): Input #0, mov,mp4,m4a,3gp,3g2,mj2, from '/storage/sdcard0/DCIM/Camera/VID_20121211_140815.mp4':
-				    idx1 = line.indexOf("'");
+				    idx1 = line.indexOf("'")+1;
 				    int idx2 = line.indexOf('\'', idx1+1);
 				    newStatus = "Rendering clip: " + line.substring(idx1, idx2);
 				}

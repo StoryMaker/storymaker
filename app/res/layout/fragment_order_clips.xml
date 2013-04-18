@@ -84,13 +84,13 @@
             android:text="@string/button_add_narration" />
 
         <Button
-            android:id="@+id/buttonPlayNarration"
+            android:id="@+id/buttonDeleteNarration"
             style="?android:attr/buttonStyleSmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:enabled="false"
-            android:text="@string/button_play_narration" />
+            android:text="@string/button_delete_narration" />
     </LinearLayout>
 
 </LinearLayout>

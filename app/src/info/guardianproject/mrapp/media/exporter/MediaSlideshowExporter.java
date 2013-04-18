@@ -1,4 +1,4 @@
-package info.guardianproject.mrapp.media;
+package info.guardianproject.mrapp.media.exporter;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -8,6 +8,7 @@ import org.ffmpeg.android.MediaDesc;
 import org.ffmpeg.android.ShellUtils.ShellCallback;
 
 import info.guardianproject.mrapp.AppConstants;
+import info.guardianproject.mrapp.media.MediaConstants;
 import android.content.Context;
 import android.media.MediaScannerConnection;
 import android.os.Handler;
@@ -26,11 +27,12 @@ public class MediaSlideshowExporter implements Runnable {
     private int mSlideDuration = 5;
     private String mAudioPath;
     
-
+    private File mFileProject;
+    
 	int exportWidth = -1;
 	int exportHeight = -1;
     
-	public MediaSlideshowExporter (Context context, Handler handler, ArrayList<MediaDesc> mediaList, String audioPath, int slideDuration, MediaDesc out)
+	public MediaSlideshowExporter (Context context, Handler handler, ArrayList<MediaDesc> mediaList, File fileProject, String audioPath, int slideDuration, MediaDesc out)
 	{
 		mHandler = handler;
 		mContext = context;
@@ -38,6 +40,7 @@ public class MediaSlideshowExporter implements Runnable {
 		mMediaList = mediaList;
 		mSlideDuration = slideDuration;
 		mAudioPath = audioPath;
+		mFileProject = fileProject;
 	}
 	
 	
@@ -93,8 +96,7 @@ public class MediaSlideshowExporter implements Runnable {
 	
 	private void makeSlideShow (ArrayList<MediaDesc> listMediaDesc, int slideDuration, String audioPath, MediaDesc mdout) throws Exception
     {
-    	
-    	FfmpegController ffmpegc = new FfmpegController (mContext);
+    	FfmpegController ffmpegc = new FfmpegController (mContext, mFileProject);
 
     	String bitrate = "1500k";
     	

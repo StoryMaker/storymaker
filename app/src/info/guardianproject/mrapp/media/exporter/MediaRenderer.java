@@ -1,6 +1,8 @@
-package info.guardianproject.mrapp.media;
+package info.guardianproject.mrapp.media.exporter;
 
 import info.guardianproject.mrapp.AppConstants;
+import info.guardianproject.mrapp.media.MediaClip;
+import info.guardianproject.mrapp.media.MediaManager;
 
 import java.io.File;
 import java.io.IOException;
@@ -62,7 +64,7 @@ public class MediaRenderer implements Runnable
 	
 	private MediaDesc prerenderAudio (MediaDesc mediaIn) throws Exception
     {
-    	FfmpegController ffmpegc = new FfmpegController (mContext);
+    	FfmpegController ffmpegc = new FfmpegController (mContext, mFileExternDir);
     	
     	File outPath = createOutputFile(mediaIn.path,"mp4");
     	mMediaManager.applyExportSettings(mediaIn);
@@ -76,7 +78,7 @@ public class MediaRenderer implements Runnable
    }
     private MediaDesc prerenderVideo (MediaDesc mediaIn, boolean preconvertMP4) throws Exception
     {
-    	FfmpegController ffmpegc = new FfmpegController (mContext);
+    	FfmpegController ffmpegc = new FfmpegController (mContext, mFileExternDir);
     	
     	File outPath = createOutputFile(mediaIn.path,"mp4");
     	mMediaManager.applyExportSettings(mediaIn);
@@ -90,7 +92,7 @@ public class MediaRenderer implements Runnable
     private MediaDesc prerenderImage (MediaDesc mediaIn) throws Exception
     {
     	
-    	FfmpegController ffmpegc = new FfmpegController (mContext);
+    	FfmpegController ffmpegc = new FfmpegController (mContext, mFileExternDir);
     	
     	int durationSecs = 5;
     	

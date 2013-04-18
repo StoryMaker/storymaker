@@ -359,7 +359,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/divider4"
-        android:layout_marginLeft="10dp"
+        android:layout_marginLeft="5dp"
         android:gravity="center_vertical"
         android:text="@string/action_render" />
      
@@ -368,20 +368,31 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/divider4"
-        android:layout_marginLeft="10dp"
+        android:layout_marginLeft="5dp"
                 android:layout_toRightOf="@+id/btnRender"
         
         android:gravity="center_vertical"
         android:enabled="false"
         android:text="@string/action_play" />
+       
+     <Button
+        android:id="@+id/btnShare"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/divider4"
+        android:layout_marginLeft="15dp"
+        android:gravity="center_vertical"
+        android:text="@string/action_share"
+        android:layout_toRightOf="@+id/btnPlay"
+         />
      
     <Button
         android:id="@+id/btnPublish"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/divider4"
-        android:layout_marginLeft="10dp"
-        android:layout_toRightOf="@+id/btnPlay"
+        android:layout_marginLeft="5dp"
+        android:layout_toRightOf="@+id/btnShare"
         android:gravity="center_vertical"
         android:text="@string/action_publish" />
         

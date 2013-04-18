@@ -49,7 +49,7 @@ public class OrderClipsFragment extends Fragment {
     public ViewPager mAddClipsViewPager;
     View mView = null;
     private EditorBaseActivity mActivity;
-    Button mPlayButton, mButtonAddNarration, mButtonPlayNarration;
+    Button mPlayButton, mButtonAddNarration, mButtonDeleteNarration;
     private ImageView mImageViewMedia;
     private PreviewVideoView mPreviewVideoView = null;
     private LinearLayout mLLControlBar = null;
@@ -196,6 +196,21 @@ public class OrderClipsFragment extends Fragment {
 	            }
 	        });
 	        
+	        
+	        mButtonDeleteNarration= (Button)view.findViewById(R.id.buttonDeleteNarration);
+	        if (mFileAudioNarration != null && mFileAudioNarration.exists())
+	        	mButtonDeleteNarration.setEnabled(true);
+	        
+	        mButtonDeleteNarration.setOnClickListener(new OnClickListener ()
+	        {
+	            @Override
+	            public void onClick(View v) {
+	            	mFileAudioNarration.delete();
+	            	mButtonDeleteNarration.setEnabled(false);
+	            	mFileAudioNarration = null;
+	            }
+	        });
+	        /*
 	        mButtonPlayNarration= (Button)view.findViewById(R.id.buttonPlayNarration);
 	        if (mFileAudioNarration != null && mFileAudioNarration.exists())
 	            mButtonPlayNarration.setEnabled(true);
@@ -207,7 +222,7 @@ public class OrderClipsFragment extends Fragment {
 	                playNarration(!mAudioNarrator.isPlaying());
 	            }
 	        });
-	        
+	        */
 	      
         }
         
@@ -220,7 +235,12 @@ public class OrderClipsFragment extends Fragment {
                 if (mMPM.mProject.getStoryType() == Project.STORY_TYPE_VIDEO
                         || mMPM.mProject.getStoryType() == Project.STORY_TYPE_AUDIO)
                 {
-                   handleVideoAudioPlayToggle();
+                
+                	if (mFileAudioNarration != null && mFileAudioNarration.exists())
+                	  playNarration(!mAudioNarrator.isPlaying());
+                	else
+                		handleVideoAudioPlayToggle();
+                	
                 }
                 else if (mMPM.mProject.getStoryType() == Project.STORY_TYPE_ESSAY
                     || mMPM.mProject.getStoryType() == Project.STORY_TYPE_PHOTO)
@@ -286,7 +306,7 @@ public class OrderClipsFragment extends Fragment {
         //start the audio recorder
         mAudioNarrator.startRecording();
         
-        mButtonPlayNarration.setEnabled(true);
+        mButtonDeleteNarration.setEnabled(true);
         mButtonAddNarration.setText("Recording now... (speak!)");
     }
     

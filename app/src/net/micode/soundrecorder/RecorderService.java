@@ -39,8 +39,6 @@ import android.os.IBinder;
 import android.os.PowerManager;
 import android.os.PowerManager.WakeLock;
 import android.preference.PreferenceManager;
-import android.telephony.PhoneStateListener;
-import android.telephony.TelephonyManager;
 
 public class RecorderService extends Service implements MediaRecorder.OnErrorListener {
 
@@ -84,20 +82,9 @@ public class RecorderService extends Service implements MediaRecorder.OnErrorLis
 
     private Notification mLowStorageNotification;
 
-    private TelephonyManager mTeleManager;
-
     private WakeLock mWakeLock;
 
     private KeyguardManager mKeyguardManager;
-
-    private final PhoneStateListener mPhoneStateListener = new PhoneStateListener() {
-        @Override
-        public void onCallStateChanged(int state, String incomingNumber) {
-            if (state != TelephonyManager.CALL_STATE_IDLE) {
-                localStopRecording();
-            }
-        }
-    };
 
     private final Handler mHandler = new Handler();
 
@@ -120,8 +107,6 @@ public class RecorderService extends Service implements MediaRecorder.OnErrorLis
         mRemainingTimeCalculator = new RemainingTimeCalculator();
         mNeedUpdateRemainingTime = false;
         mNotifiManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        mTeleManager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
-        mTeleManager.listen(mPhoneStateListener, PhoneStateListener.LISTEN_CALL_STATE);
         PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
         mWakeLock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "SoundRecorder");
         mKeyguardManager = (KeyguardManager) getSystemService(Context.KEYGUARD_SERVICE);
@@ -168,7 +153,6 @@ public class RecorderService extends Service implements MediaRecorder.OnErrorLis
 
     @Override
     public void onDestroy() {
-        mTeleManager.listen(mPhoneStateListener, PhoneStateListener.LISTEN_NONE);
         if (mWakeLock.isHeld()) {
             mWakeLock.release();
         }

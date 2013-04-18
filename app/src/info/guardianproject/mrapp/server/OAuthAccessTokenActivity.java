@@ -61,14 +61,12 @@ public class OAuthAccessTokenActivity extends Activity implements Runnable {
         String authorizationUrl = null;
         
         isDebuggable =  ( 0 != ( getApplicationInfo().flags &= ApplicationInfo.FLAG_DEBUGGABLE ) );
-    	authorizationUrl = new GoogleAuthorizationRequestUrl(getString(R.string.client_id_debug), OAuth2ClientCredentials.REDIRECT_URI, OAuth2ClientCredentials.SCOPE).build();
+    	//authorizationUrl = new GoogleAuthorizationRequestUrl(getString(R.string.client_id_debug), OAuth2ClientCredentials.REDIRECT_URI, OAuth2ClientCredentials.SCOPE).build();
 
-        /*
         if (isDebuggable)
         	authorizationUrl = new GoogleAuthorizationRequestUrl(getString(R.string.client_id_debug), OAuth2ClientCredentials.REDIRECT_URI, OAuth2ClientCredentials.SCOPE).build();
         else
          	authorizationUrl = new GoogleAuthorizationRequestUrl(getString(R.string.client_id_release), OAuth2ClientCredentials.REDIRECT_URI, OAuth2ClientCredentials.SCOPE).build();
-         */
         
         /* WebViewClient must be set BEFORE calling loadUrl! */  
         webview.setWebViewClient(new WebViewClient() {  
@@ -123,13 +121,12 @@ public class OAuthAccessTokenActivity extends Activity implements Runnable {
 		String clientId = getString(R.string.client_id_debug);
 		String clientSecret = getString(R.string.client_id_debug_secret);
 		
-		/*
+		
 		if (!isDebuggable)
 		{
 			clientId = getString(R.string.client_id_release);
 			clientSecret = "";
 		}
-		*/
 		
 	      mAuthResp = new GoogleAuthorizationCodeGrant(new NetHttpTransport(),
 					      new JacksonFactory(),

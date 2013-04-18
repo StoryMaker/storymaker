@@ -2,6 +2,11 @@ package info.guardianproject.mrapp.media;
 
 import info.guardianproject.mrapp.AppConstants;
 import info.guardianproject.mrapp.SceneEditorActivity;
+import info.guardianproject.mrapp.media.exporter.MediaAudioExporter;
+import info.guardianproject.mrapp.media.exporter.MediaFastVideoExporter;
+import info.guardianproject.mrapp.media.exporter.MediaFullVideoExporter;
+import info.guardianproject.mrapp.media.exporter.MediaMediumVideoExporter;
+import info.guardianproject.mrapp.media.exporter.MediaSlideshowExporter;
 import info.guardianproject.mrapp.model.Media;
 import info.guardianproject.mrapp.model.Project;
 import info.guardianproject.mrapp.model.Scene;
@@ -146,23 +151,17 @@ public class MediaProjectManager implements MediaManager {
     }
 
    
-    private void initExternalStorage ()
+    private synchronized void initExternalStorage ()
     {
-    	String extState = Environment.getExternalStorageState();
+    	//String extState = Environment.getExternalStorageState();
     	
-    	if (extState.equals(Environment.MEDIA_MOUNTED) || extState.equals(Environment.MEDIA_SHARED))
+    	if (mFileExternDir == null)
     	{
-			
-    		mFileExternDir = new File(Environment.getExternalStorageDirectory(),"storymaker");
-    		
-    		
+	    	File basePath = mContext.getExternalFilesDir(null);
+	    	
+	    	mFileExternDir = new File(basePath,AppConstants.FOLDER_PROJECTS_NAME);
+	    	mFileExternDir.mkdirs();
     	}
-    	else
-    	{
-    		mFileExternDir = new File(Environment.getDataDirectory(),AppConstants.FILE_MEDIAFOLDER_NAME);  
-    	}
-    	
-    	mFileExternDir.mkdirs();
     }
     
     
@@ -170,6 +169,7 @@ public class MediaProjectManager implements MediaManager {
     {
     	String folderName = project.getId()+"";
     	File fileProject = new File(mFileExternDir,folderName);
+    	fileProject.mkdirs();
     	return fileProject;
     }
     
@@ -191,31 +191,33 @@ public class MediaProjectManager implements MediaManager {
         
         File fileExportProjectDir = getProjectFolder(mProject);
         fileExportProjectDir.mkdirs();
-    	File fileExport = null;
+        
+        //default to "project" folder
+    	File fileExport = new File(fileExportProjectDir, fileName + EXPORT_VIDEO_FILE_EXT);
+	    
     	
     	if (mProject.getStoryType() == Project.STORY_TYPE_VIDEO)
         {
-    		fileExport = new File(fileExportProjectDir, fileName + EXPORT_VIDEO_FILE_EXT);
+    		fileExport = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MOVIES), fileName + EXPORT_VIDEO_FILE_EXT);
 		    
         }    
         else if (mProject.getStoryType() == Project.STORY_TYPE_AUDIO)
         {
 
-        	fileExport = new File(fileExportProjectDir, fileName + EXPORT_AUDIO_FILE_EXT);
+        	fileExport = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PODCASTS), fileName + EXPORT_AUDIO_FILE_EXT);
 		    
         }
         else if (mProject.getStoryType() == Project.STORY_TYPE_PHOTO)
         {
        	 			
 			//	there should be only one
-			fileExport = new File(fileExportProjectDir, fileName + EXPORT_PHOTO_FILE_EXT);
+			fileExport = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), fileName + EXPORT_PHOTO_FILE_EXT);
  	    	
         }
         else if (mProject.getStoryType() == Project.STORY_TYPE_ESSAY)
         {
        	
-		    
-		    fileExport = new File(fileExportProjectDir, fileName + EXPORT_ESSAY_FILE_EXT);
+		    fileExport = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MOVIES), fileName + EXPORT_ESSAY_FILE_EXT);
 		    
         }
     	
@@ -229,6 +231,9 @@ public class MediaProjectManager implements MediaManager {
          ArrayList<Media> mList = mProject.getMediaAsList();
          ArrayList<MediaDesc> alMediaIn = new ArrayList<MediaDesc>();
          
+
+		 File fileProject = getProjectFolder(mProject);
+		    
          //for video, render the sequence together
          if (mProject.getStoryType() == Project.STORY_TYPE_VIDEO)
          {
@@ -262,7 +267,7 @@ public class MediaProjectManager implements MediaManager {
 		    
 		    String audioPath = null;
 		    
-		    File fileAudio = new File(getProjectFolder(mProject),"narration" + mScene.getId() + ".wav");
+		    File fileAudio = new File(fileProject,"narration" + mScene.getId() + ".wav");
     		
     		if (fileAudio.exists())
     			audioPath = fileAudio.getAbsolutePath();
@@ -280,13 +285,23 @@ public class MediaProjectManager implements MediaManager {
 			    
 			    if (fastExport)
 			    {
-			    	MediaFastVideoExporter mEx = new MediaFastVideoExporter(mContext, mHandler, alMediaIn, mOut);
-			    	//MediaMediumVideoExporter mEx = new MediaMediumVideoExporter(mContext, mHandler, alMediaIn, mOut);
+			    	MediaFastVideoExporter mEx = new MediaFastVideoExporter(mContext, mHandler, alMediaIn, fileProject, mOut);
+			    	
+			    	/*
+			    	//MediaMediumVideoExporter mEx = new MediaMediumVideoExporter(mContext, mHandler, alMediaIn, fileProject, mOut);
+			    	
+			    	if (audioPath != null)
+			    	{
+			    		MediaDesc audioTrack = new MediaDesc();
+			    		audioTrack.path = audioPath;
+			    		mEx.addAudioTrack(audioTrack);
+			    	}*/
+			    	
 			    	mEx.run();
 			    }
 			    else
 			    {
-			    	MediaFullVideoExporter mEx = new MediaFullVideoExporter(mContext, mHandler, alMediaIn, mOut);
+			    	MediaFullVideoExporter mEx = new MediaFullVideoExporter(mContext, mHandler, alMediaIn, fileProject, mOut);
 			    
 			    	if (audioPath != null)
 			    	{
@@ -327,7 +342,7 @@ public class MediaProjectManager implements MediaManager {
 
  	 		    fileExport.delete();
  	 		    fileExport.createNewFile();
- 	 		    MediaAudioExporter mEx = new MediaAudioExporter(mContext, mHandler, alMediaIn, mOut);
+ 	 		    MediaAudioExporter mEx = new MediaAudioExporter(mContext, mHandler, alMediaIn, fileProject, mOut);
  	 		    mEx.run();
 		    }
          }
@@ -404,7 +419,7 @@ public class MediaProjectManager implements MediaManager {
    		    {
     			   fileExport.delete();
     			    fileExport.createNewFile();
-    			    MediaSlideshowExporter mEx = new MediaSlideshowExporter(mContext, mHandler, alMediaIn,audioPath, slideDuration, mOut);
+    			    MediaSlideshowExporter mEx = new MediaSlideshowExporter(mContext, mHandler, alMediaIn, fileProject, audioPath, slideDuration, mOut);
     			    
     			    //mEx.setDimensions(width, height)
     			    

@@ -1,6 +1,8 @@
-package info.guardianproject.mrapp.media;
+package info.guardianproject.mrapp.media.exporter;
 
 import info.guardianproject.mrapp.AppConstants;
+import info.guardianproject.mrapp.media.MediaClip;
+import info.guardianproject.mrapp.media.MediaManager;
 
 import java.io.File;
 import java.io.IOException;
@@ -75,7 +77,7 @@ public class MediaMerger implements Runnable
 	
     private MediaDesc doMerge (MediaDesc videoIn, MediaDesc audioIn) throws Exception
     {
-    	FfmpegController ffmpegc = new FfmpegController (mContext);
+    	FfmpegController ffmpegc = new FfmpegController (mContext, mFileExternDir);
     	
 		File fileOutPath = createOutputFile("mp4"); 
     	mMediaManager.applyExportSettings(videoIn);

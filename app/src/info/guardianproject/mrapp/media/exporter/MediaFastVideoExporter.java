@@ -1,4 +1,4 @@
-package info.guardianproject.mrapp.media;
+package info.guardianproject.mrapp.media.exporter;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -26,13 +26,15 @@ public class MediaFastVideoExporter implements Runnable {
 	private MediaDesc mOut;
 	
     private int current, total;
-
-	public MediaFastVideoExporter (Context context, Handler handler, ArrayList<MediaDesc> mediaList, MediaDesc out)
+    private File mFileTemp;
+    
+	public MediaFastVideoExporter (Context context, Handler handler, ArrayList<MediaDesc> mediaList, File fileTemp, MediaDesc out)
 	{
 		mHandler = handler;
 		mContext = context;
 		mOut = out;
 		mMediaList = mediaList;
+		mFileTemp = fileTemp;
 	}
 	
 	
@@ -84,7 +86,7 @@ public class MediaFastVideoExporter implements Runnable {
 	    	  	
 	    	boolean mediaNeedConvert = true;
 	    	
-	    	FfmpegController ffmpegc = new FfmpegController (mContext);
+	    	FfmpegController ffmpegc = new FfmpegController (mContext, mFileTemp);
 	    	
 	    	ffmpegc.concatAndTrimFilesMP4Stream(listMediaDesc, mdout, mediaNeedConvert, new ShellCallback() {
 

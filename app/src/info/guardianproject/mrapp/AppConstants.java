@@ -49,6 +49,7 @@ public final static String TAG = "StoryMaker";
 	public static final int TAP = 3;
 	
 	public static final String FILE_MEDIAFOLDER_NAME = "StoryMaker";
+	public static final String FOLDER_PROJECTS_NAME = "stories";
 	
 	// Maximum zoom scale
 	public static final float MAX_SCALE = 10f;

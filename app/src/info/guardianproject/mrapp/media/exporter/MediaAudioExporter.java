@@ -1,4 +1,4 @@
-package info.guardianproject.mrapp.media;
+package info.guardianproject.mrapp.media.exporter;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -36,6 +36,8 @@ public class MediaAudioExporter implements Runnable {
 	 
 	 public final static int CHANNELS = 1;
 	 private int mAudioSampleRate = -1;
+	 
+	 private File mFileTemp;
 /*
  *  fade [type] fade-in-length [stop-time [fade-out-length]]
               Apply a fade effect to the beginning, end, or both of the audio.
@@ -58,13 +60,13 @@ public class MediaAudioExporter implements Runnable {
 
  */
 	 
-	public MediaAudioExporter (Context context, Handler handler, ArrayList<MediaDesc> mediaList, MediaDesc out)
+	public MediaAudioExporter (Context context, Handler handler, ArrayList<MediaDesc> mediaList, File fileTemp, MediaDesc out)
 	{
 		mHandler = handler;
 		mContext = context;
 		mOut = out;
 		mMediaList = mediaList;
-		
+		mFileTemp = fileTemp;
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(mContext.getApplicationContext());
         mAudioSampleRate = Integer.parseInt(settings.getString("p_audio_samplerate", "44100"));
  
@@ -140,17 +142,23 @@ public class MediaAudioExporter implements Runnable {
 
 		 String fadeLenStr = sxCon.formatTimePeriod(fadeLen);
 		 
-		 FfmpegController ffmpegc = new FfmpegController (mContext);
+		 FfmpegController ffmpegc = new FfmpegController (mContext, mFileTemp);
 	    
 		 ArrayList<MediaDesc> alAudio = new ArrayList<MediaDesc>();
 		 
 		 
 		 //convert each input file to a WAV so we can use Sox to process
+		 int wavIdx = 0;
+		 
 		 for (MediaDesc mediaIn : listMediaDesc)
 		 {
-		 
-	    	MediaDesc audioOut = ffmpegc.convertToWaveAudio(mediaIn, mediaIn.path + ".wav",mAudioSampleRate,CHANNELS, sc);
-	    	alAudio.add(audioOut);
+			if (new File(mediaIn.path).exists())
+			{
+		    	MediaDesc audioOut = ffmpegc.convertToWaveAudio(mediaIn, new File(mFileTemp, wavIdx+".wav").getAbsolutePath(),mAudioSampleRate,CHANNELS, sc);
+		    	alAudio.add(audioOut);
+		    	
+		    	wavIdx++;
+			}
 		 }
 		
 		 mDurations = new ArrayList<Double>();
