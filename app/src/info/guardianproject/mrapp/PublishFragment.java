@@ -231,7 +231,7 @@ public class PublishFragment extends Fragment {
         else
         {
         	// do render + publish, don't overwrite
-        	handlePublish(true, true, false);
+        	handlePublish(true, true, true);
         	
         	
         }

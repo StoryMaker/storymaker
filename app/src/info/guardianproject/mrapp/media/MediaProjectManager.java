@@ -245,6 +245,7 @@ public class MediaProjectManager implements MediaManager {
     	    		MediaDesc mDesc = new MediaDesc();
     	    		mDesc.mimeType = media.getMimeType();
     	    		mDesc.path = media.getPath();
+    	    		
     	    		if (media.getTrimStart() > 0) {
     	    		    mDesc.startTime = "" + media.getTrimmedStartTime() / 1000F;
                         mDesc.duration = "" + media.getTrimmedDuration() / 1000F;
