@@ -285,7 +285,10 @@ public class MediaProjectManager implements MediaManager {
 		    
 		    if ((!fileExport.exists()) || doOverwrite)
 		    {
-			    fileExport.delete();
+		    	if (fileExport.exists())
+		    		fileExport.delete();
+		    	
+		    	fileExport.getParentFile().mkdirs();
 			    fileExport.createNewFile();
 			    	
 			    //there can be only one renderer now - MP4Stream !!
@@ -342,10 +345,13 @@ public class MediaProjectManager implements MediaManager {
  		    
  		   if ((!fileExport.exists()) || doOverwrite)
 		    {
- 		    
 
- 	 		    fileExport.delete();
- 	 		    fileExport.createNewFile();
+		    	if (fileExport.exists())
+		    		fileExport.delete();
+		    	
+		    	fileExport.getParentFile().mkdirs();
+			    fileExport.createNewFile();
+
  	 		    MediaAudioExporter mEx = new MediaAudioExporter(mContext, mHandler, alMediaIn, fileProject, mOut);
  	 		    mEx.run();
 		    }
@@ -367,6 +373,10 @@ public class MediaProjectManager implements MediaManager {
   	    			
   	    			if (fileSrc.exists())
   	    			{
+
+  	  		    	
+  	    				fileExport.getParentFile().mkdirs();
+  	  			    
   	    				fileExport.createNewFile();
   	    				IOUtils.copy(new FileInputStream(fileSrc),new FileOutputStream(fileExport));
   	    				 mOut = new MediaDesc ();
@@ -421,8 +431,13 @@ public class MediaProjectManager implements MediaManager {
     		
     		if ((!fileExport.exists()) || doOverwrite)
    		    {
-    			   fileExport.delete();
-    			    fileExport.createNewFile();
+
+		    	if (fileExport.exists())
+		    		fileExport.delete();
+		    	
+		    	fileExport.getParentFile().mkdirs();
+			    fileExport.createNewFile();
+			    
     			    MediaSlideshowExporter mEx = new MediaSlideshowExporter(mContext, mHandler, alMediaIn, fileProject, audioPath, slideDuration, mOut);
     			    
     			    //mEx.setDimensions(width, height)
