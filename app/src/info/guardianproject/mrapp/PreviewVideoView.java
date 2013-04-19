@@ -23,6 +23,7 @@ public class PreviewVideoView extends VideoView implements MediaPlayer.OnComplet
 	protected Media[] mMediaArray;
 	//MediaPlayer mp;
 	protected Runnable mCompletionCallback = null;
+	private boolean isPlayingMultiple = false;
 	
 	private Handler mHandler = new Handler();
 	private Runnable mTrimClipEndTask = new Runnable() {
@@ -67,6 +68,9 @@ public class PreviewVideoView extends VideoView implements MediaPlayer.OnComplet
 	}
 	
 	public void play() {
+		
+		isPlayingMultiple = true;
+		
 		for (; mCurrentMedia <= mMediaArray.length ; mCurrentMedia++) {
 		    if (mCurrentMedia == mMediaArray.length) { 
 				mCurrentMedia = 0;
@@ -133,10 +137,10 @@ public class PreviewVideoView extends VideoView implements MediaPlayer.OnComplet
 	@Override
 	public void onCompletion(MediaPlayer mp) {
 		
-		if (isPlaying())
-		{
+		if (isPlayingMultiple)
 			playNext();
-		}
+		
+	
 	}
 	
 	private void playNext() {
@@ -149,6 +153,7 @@ public class PreviewVideoView extends VideoView implements MediaPlayer.OnComplet
             if (mCompletionCallback != null) {
                 mCompletionCallback.run();
             }
+            isPlayingMultiple = false;
         }
 	}
 }

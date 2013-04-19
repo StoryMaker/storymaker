@@ -26,6 +26,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.NavUtils;
 import android.util.Log;
+import android.widget.Button;
 import android.widget.Toast;
 
 /*
@@ -37,7 +38,9 @@ public class EditorBaseActivity extends BaseActivity {
     public MediaDesc mdExported = null;
     private ProgressDialog mProgressDialog = null;
     
+    //sublaunch codes
     public final static int REQ_YOUTUBE_AUTH = 999;
+	public final static int REQ_OVERLAY_CAM = 888; //for resp handling from overlay cam launch
 	
     public Handler mHandlerPub = new Handler()
     {
@@ -112,7 +115,16 @@ public class EditorBaseActivity extends BaseActivity {
                     	mProgressDialog = null;
                     }
                     
-                    showPublished(url,new File(localPath),videoId,mimeType);
+                    File fileMedia = new File(localPath);
+                    
+                    if (fileMedia.exists() && fileMedia.length() > 0)
+                    {
+                    	showPublished(url,fileMedia,videoId,mimeType);
+                    }
+                    else
+                    {
+                    	//show what?
+                    }
                     
                     
                 break;
@@ -134,6 +146,7 @@ public class EditorBaseActivity extends BaseActivity {
         
     };
     
+
     public Bitmap getThumbnail(Media media)
     {
         if (media == null)
@@ -187,7 +200,7 @@ public class EditorBaseActivity extends BaseActivity {
     public void showPublished(final String postUrl, final File localMedia, final String youTubeId,
             final String mimeType)
     {
-        if (youTubeId != null || postUrl != null)
+        if ((youTubeId != null || postUrl != null))
         {
             DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
                 @Override

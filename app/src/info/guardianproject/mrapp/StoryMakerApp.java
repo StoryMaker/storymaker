@@ -12,6 +12,7 @@ import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
@@ -86,7 +87,10 @@ public class StoryMakerApp extends Application {
 		    	}
 		    }
 	
-	    	mLessonManager = new LessonManager (this, lessonUrlPath, new File(getExternalFilesDir(null), lessonLocalPath));
+
+	    	File basePath = getExternalFilesDir(null);
+	    	
+	    	mLessonManager = new LessonManager (this, lessonUrlPath, new File(basePath, lessonLocalPath));
 		    mServerManager = new ServerManager (getApplicationContext());
 		}
 		catch (Exception e)

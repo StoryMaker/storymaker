@@ -449,13 +449,14 @@ public class OrderClipsFragment extends Fragment {
              mImageViewMedia.setVisibility(View.GONE);
              mPreviewVideoView.setVisibility(View.VISIBLE);
             
-             if (mFileAudioNarration != null && mFileAudioNarration.exists())
-            	 mAudioNarrator.startPlaying();
-            
              // play
              mPreviewVideoView.setMedia(mMPM.mScene.getMediaAsArray());
              mPreviewVideoView.play();
-             
+            
+
+             if (mFileAudioNarration != null && mFileAudioNarration.exists())
+            	 mAudioNarrator.startPlaying();
+            
          	 
              new Thread ()
              {

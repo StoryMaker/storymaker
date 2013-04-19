@@ -68,7 +68,7 @@ public class MediaAudioExporter implements Runnable {
 		mMediaList = mediaList;
 		mFileTemp = fileTemp;
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(mContext.getApplicationContext());
-        mAudioSampleRate = Integer.parseInt(settings.getString("p_audio_samplerate", "44100"));
+        mAudioSampleRate = Integer.parseInt(settings.getString("p_audio_samplerate", AppConstants.DEFAULT_AUDIO_SAMPLE_RATE));
  
 	}
 	

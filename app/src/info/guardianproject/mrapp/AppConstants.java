@@ -48,8 +48,11 @@ public final static String TAG = "StoryMaker";
 	public static final int ZOOM = 2;
 	public static final int TAP = 3;
 	
+	public static final String EXTERNAL_STORAGE_PATH = "/sdcard/Android/data/info.guardianproject.mrapp/files";
 	public static final String FILE_MEDIAFOLDER_NAME = "StoryMaker";
 	public static final String FOLDER_PROJECTS_NAME = "stories";
+	
+	public final static String DEFAULT_AUDIO_SAMPLE_RATE = "22050";
 	
 	// Maximum zoom scale
 	public static final float MAX_SCALE = 10f;

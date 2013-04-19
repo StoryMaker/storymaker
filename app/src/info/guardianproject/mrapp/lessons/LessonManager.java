@@ -237,6 +237,7 @@ public class LessonManager implements Runnable {
 			if (mSubFolder != null)
 				lessonFolder = new File(mLocalStorageRoot, mSubFolder);
 		
+			lessonFolder.mkdirs();
 			
 			Log.d(AppConstants.TAG,"current lesson folder: " + lessonFolder.getAbsolutePath());
 			

@@ -743,8 +743,8 @@ public class YouTubeSubmit {
   
   public void getAuthTokenWithPermission(AuthorizationListener listener) {
 	
-	
-    this.authorizer.fetchAuthToken(accountYouTube.name, activity, listener);
+	if (authorizer != null && accountYouTube != null)
+		authorizer.fetchAuthToken(accountYouTube.name, activity, listener);
   }
   
   public void upload (String urlEndPoint)

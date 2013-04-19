@@ -823,6 +823,10 @@ public class HomeActivity extends BaseActivity {
 		String mMessage;
 		String mTitle;
 		
+		public MyFragment ()
+		{
+			
+		}
 		 /**
        * When creating, retrieve this instance's number from its arguments.
        */

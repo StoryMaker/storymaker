@@ -66,7 +66,7 @@ public class AudioRecorderView {
     	mFilePath = path;
     	
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(mContext.getApplicationContext());
-        mAudioSampleRate = Integer.parseInt(settings.getString("p_audio_samplerate", "44100"));
+        mAudioSampleRate = Integer.parseInt(settings.getString("p_audio_samplerate", AppConstants.DEFAULT_AUDIO_SAMPLE_RATE));
   
     	
         bufferSize = AudioRecord.getMinBufferSize(mAudioSampleRate,RECORDER_CHANNELS,RECORDER_AUDIO_ENCODING);

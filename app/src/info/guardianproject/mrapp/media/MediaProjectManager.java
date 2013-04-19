@@ -157,7 +157,7 @@ public class MediaProjectManager implements MediaManager {
     	
     	if (mFileExternDir == null)
     	{
-	    	File basePath = mContext.getExternalFilesDir(null);
+	    	File basePath = new File(AppConstants.EXTERNAL_STORAGE_PATH);
 	    	
 	    	mFileExternDir = new File(basePath,AppConstants.FOLDER_PROJECTS_NAME);
 	    	mFileExternDir.mkdirs();

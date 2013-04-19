@@ -48,8 +48,6 @@ import com.actionbarsherlock.view.MenuItem;
 public class SceneEditorActivity extends EditorBaseActivity implements ActionBar.TabListener {
 	private static final String STATE_SELECTED_NAVIGATION_ITEM = "selected_navigation_item";
 	
-	private final static int REQ_OVERLAY_CAM = 888; //for resp handling from overlay cam launch
-	
 	
     protected Menu mMenu = null;
     

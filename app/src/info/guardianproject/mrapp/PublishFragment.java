@@ -59,7 +59,9 @@ import com.animoto.android.views.DraggableGridView;
 @SuppressLint("ValidFragment")
 public class PublishFragment extends Fragment {
     private final static String TAG = "PublishFragment";
-    private final static int REQ_SOUNDCLOUD = 999;
+    
+    private final static int REQ_SOUNDCLOUD = 777;
+    
     
     int layout;
     public ViewPager mAddClipsViewPager;
@@ -104,10 +106,10 @@ public class PublishFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
 
-        View view = inflater.inflate(layout, null);
+        mView = inflater.inflate(layout, null);
         if (this.layout == R.layout.fragment_story_publish) {
         	
-        	ImageView ivThumb = (ImageView)view.findViewById(R.id.storyThumb);
+        	ImageView ivThumb = (ImageView)mView.findViewById(R.id.storyThumb);
 
             Media[] medias = mActivity.mMPM.mScene.getMediaAsArray();
             if (medias.length > 0)
@@ -116,8 +118,8 @@ public class PublishFragment extends Fragment {
             	if (bitmap != null) ivThumb.setImageBitmap(bitmap);
             }
         	
-            mTitle = (EditText) view.findViewById(R.id.etStoryTitle);
-            mDescription = (EditText) view.findViewById(R.id.editTextDescribe);
+            mTitle = (EditText) mView.findViewById(R.id.etStoryTitle);
+            mDescription = (EditText) mView.findViewById(R.id.editTextDescribe);
 
             mTitle.setText(mActivity.mMPM.mProject.getTitle());
             
@@ -125,11 +127,11 @@ public class PublishFragment extends Fragment {
             		  mActivity, R.array.story_sections, android.R.layout.simple_spinner_item );
             		adapter.setDropDownViewResource( android.R.layout.simple_spinner_dropdown_item );
             		
-			Spinner s = (Spinner) view.findViewById( R.id.spinnerSections );
+			Spinner s = (Spinner) mView.findViewById( R.id.spinnerSections );
 			s.setAdapter( adapter );
 			
 			
-            Button btnRender = (Button) view.findViewById(R.id.btnRender);
+            Button btnRender = (Button) mView.findViewById(R.id.btnRender);
             btnRender.setOnClickListener(new OnClickListener()
             {
 
@@ -146,7 +148,7 @@ public class PublishFragment extends Fragment {
                 
             });
             
-            Button btnPlay = (Button) view.findViewById(R.id.btnPlay);
+            Button btnPlay = (Button) mView.findViewById(R.id.btnPlay);
         	File fileExport = mActivity.mMPM.getExportMediaFile();
         	btnPlay.setEnabled(fileExport.exists());
             
@@ -166,7 +168,7 @@ public class PublishFragment extends Fragment {
                 
             });
             
-            Button btnShare = (Button) view.findViewById(R.id.btnShare);
+            Button btnShare = (Button) mView.findViewById(R.id.btnShare);
             btnShare.setEnabled(fileExport.exists());
         	
             btnShare.setOnClickListener(new OnClickListener()
@@ -186,33 +188,42 @@ public class PublishFragment extends Fragment {
             });
             
             
-            Button btn = (Button) view.findViewById(R.id.btnPublish);
+            Button btn = (Button) mView.findViewById(R.id.btnPublish);
             btn.setOnClickListener(new OnClickListener() {
 
                 @Override
                 public void onClick(View v) {
                     saveForm();
-                    doPublish(); 
+                    setUploadAccount(); //triggers do publish! 
                 }
             });
         }
-        return view;
+        return mView;
     }
     
-    private void checkEnablePlayAndShare ()
+    Handler handlerUI = new Handler ()
     {
-    	Button btnPlay = (Button) mView.findViewById(R.id.btnPlay);
-    	File fileExport = mActivity.mMPM.getExportMediaFile();
-    	btnPlay.setEnabled(fileExport.exists());
-    	Button btnShare = (Button) mView.findViewById(R.id.btnShare);
-        btnShare.setEnabled(fileExport.exists());
-        
-    }
+
+		@Override
+		public void handleMessage(Message msg) {
+			// TODO Auto-generated method stub
+			super.handleMessage(msg);
+			
+
+	    	Button btnPlay = (Button) mView.findViewById(R.id.btnPlay);
+	    	File fileExport = mActivity.mMPM.getExportMediaFile();
+	    	btnPlay.setEnabled(fileExport.exists());
+	    	Button btnShare = (Button)mView.findViewById(R.id.btnShare);
+	        btnShare.setEnabled(fileExport.exists());
+		        
+		    
+		    
+		}
+    	
+    };
     
     public void doPublish() {
 
-    	setUploadAccount();
-    
         ServerManager sm = StoryMakerApp.getServerManager();
       
         if (!sm.hasCreds())
@@ -294,6 +305,10 @@ public class PublishFragment extends Fragment {
             	Toast.makeText(mActivity,R.string.err_you_need_at_least_one_account_configured_on_your_device,Toast.LENGTH_LONG).show();
             }
             
+        }
+        else
+        {
+        	 doPublish();
         }
         
         return mMediaUploadAccount;
@@ -503,10 +518,11 @@ public class PublishFragment extends Fragment {
                                 String urlPost = sm.getPostUrl(postId);
                                 message.getData().putString("urlPost", urlPost);
                             }
+                            
+                            handlerUI.sendEmptyMessage(0);
                         }
                         mHandlerPub.sendMessage(message);
                         
-                        checkEnablePlayAndShare();
                     }
                     else {
                         Message msgErr = new Message();

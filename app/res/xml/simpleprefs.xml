@@ -8,7 +8,7 @@
 	<EditTextPreference android:title="YouTube Account" android:summary="the YouTube account to use for video uploads. This MUST be registered on your device." android:key="youTubeUserName" android:enabled="true"/>
 		<CheckBoxPreference android:title="YouTube Login" android:summary="Use YouTube web authentication" android:key="pyoutubewebauth"/>
 	
-	<EditTextPreference android:title="SoundCloud Account" android:summary="the SoundCloud account to use for audio uploads" android:key="souldCloudUserName" android:enabled="true"/>
+	<EditTextPreference android:title="SoundCloud Account" android:summary="the SoundCloud account to use for audio uploads" android:key="soundCloudUserName" android:enabled="true"/>
 	    
 	</PreferenceCategory>
 	<PreferenceCategory android:title="Locales">
@@ -29,7 +29,7 @@
 		<EditTextPreference android:title="Audio Bitrate" android:summary="Export audio bitrate (kbps)" android:key="p_audio_bitrate" android:defaultValue="128" android:enabled="true"/>
 		<EditTextPreference android:title="Video Framerate" android:summary="Export frame rate per second (fps)" android:key="p_video_framerate" android:defaultValue="29.97" android:enabled="true"/>
 	
-		<EditTextPreference android:title="Audio Samplerate" android:summary="Default audio sample rate (khz)" android:key="p_audio_samplerate" android:defaultValue="44100" android:enabled="true"/>
+		<EditTextPreference android:title="Audio Samplerate" android:summary="Default audio sample rate (khz)" android:key="p_audio_samplerate" android:defaultValue="22050" android:enabled="true"/>
 	
 	</PreferenceCategory>
 	

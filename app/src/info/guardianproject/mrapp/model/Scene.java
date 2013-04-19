@@ -278,8 +278,11 @@ public class Scene {
         //now reset all the indexes based on position in the list
         for (int i = 0 ; i < alMedia.size() ; i++) {
             Media m = alMedia.get(i);
-            m.setClipIndex(i);
-            m.save();
+            if (m != null)
+            {
+            	m.setClipIndex(i);
+            	m.save();
+            }
         }
     }
     
