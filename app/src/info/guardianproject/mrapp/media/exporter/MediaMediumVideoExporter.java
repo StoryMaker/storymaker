@@ -133,28 +133,29 @@ public class MediaMediumVideoExporter implements Runnable {
     		String outputType = mOut.mimeType;
     		
     		ArrayList<Double> durations = maExport.getDurations();
-    		
+    		/*
     		for (int i = 0; i < mMediaList.size(); i++)
     		{
     			MediaDesc media = mMediaList.get(i);
     			
     			if (media.startTime == null)
-    				media.startTime = formatTimePeriod(fadeLen / 2);
+    				media.startTime = formatTimePeriod(fadeLen);
     			else
     			{
-    				double startTime = this.parseTimePeriod(media.startTime);
-    				media.startTime = formatTimePeriod(startTime + (fadeLen / 2));
+    				double startTime = parseTimePeriod(media.startTime);
+    				media.startTime = formatTimePeriod(startTime + (fadeLen));
     			}
     			
     			if (media.duration == null)
-    				media.duration = formatTimePeriod(durations.get(i)-fadeLen);
+    				media.duration = formatTimePeriod(durations.get(i)-(fadeLen));
     			else
     			{
-    				double duration = this.parseTimePeriod(media.duration);
-    				media.duration = formatTimePeriod(duration-fadeLen);
+    				double duration = parseTimePeriod(media.duration);
+    				media.duration = formatTimePeriod(duration-(fadeLen));
     			}
     			
     		}
+    		*/
     		
     		msg = mHandler.obtainMessage(0);
             msg.getData().putString("status","Trimming and merging video tracks");
@@ -163,7 +164,7 @@ public class MediaMediumVideoExporter implements Runnable {
         	ffmpegc.concatAndTrimFilesMP4Stream(mMediaList, mMerge, true, sc);
         	
         	msg = mHandler.obtainMessage(0);
-            msg.getData().putString("status","Merging video and audio (almost done!)");
+            msg.getData().putString("status","Merging video and audio...");
 	        mHandler.sendMessage(msg);
 	        
     		ffmpegc.combineAudioAndVideo(mMerge, maOut, mOut, sc);
