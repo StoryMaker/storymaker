@@ -87,7 +87,10 @@ public class MediaMerger implements Runnable
     	audioIn.audioBitrate = 128;
     	audioIn.audioCodec = "aac";
     	
-    	MediaDesc mediaOut = ffmpegc.combineAudioAndVideo(videoIn, audioIn, fileOutPath.getAbsolutePath(), mShellCallback);
+    	MediaDesc mOut = new MediaDesc();
+    	mOut.path = fileOutPath.getAbsolutePath();
+    	
+    	MediaDesc mediaOut = ffmpegc.combineAudioAndVideo(videoIn, audioIn, mOut, mShellCallback);
     
     	return mediaOut;
     

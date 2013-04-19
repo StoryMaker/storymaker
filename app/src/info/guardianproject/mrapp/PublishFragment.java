@@ -149,7 +149,7 @@ public class PublishFragment extends Fragment {
             Button btnPlay = (Button) view.findViewById(R.id.btnPlay);
         	File fileExport = mActivity.mMPM.getExportMediaFile();
         	btnPlay.setEnabled(fileExport.exists());
-        	
+            
             btnPlay.setOnClickListener(new OnClickListener()
             {
 
@@ -199,6 +199,16 @@ public class PublishFragment extends Fragment {
         return view;
     }
     
+    private void checkEnablePlayAndShare ()
+    {
+    	Button btnPlay = (Button) mView.findViewById(R.id.btnPlay);
+    	File fileExport = mActivity.mMPM.getExportMediaFile();
+    	btnPlay.setEnabled(fileExport.exists());
+    	Button btnShare = (Button) mView.findViewById(R.id.btnShare);
+        btnShare.setEnabled(fileExport.exists());
+        
+    }
+    
     public void doPublish() {
 
     	setUploadAccount();
@@ -211,6 +221,8 @@ public class PublishFragment extends Fragment {
         {
         	// do render + publish, don't overwrite
         	handlePublish(true, true, false);
+        	
+        	
         }
     	
         
@@ -378,8 +390,7 @@ public class PublishFragment extends Fragment {
             {
             	
                 mHandlerPub.sendEmptyMessage(999);
-
-                
+   
                 ServerManager sm = StoryMakerApp.getServerManager();
                 sm.setContext(mActivity.getBaseContext());
 
@@ -494,6 +505,8 @@ public class PublishFragment extends Fragment {
                             }
                         }
                         mHandlerPub.sendMessage(message);
+                        
+                        checkEnablePlayAndShare();
                     }
                     else {
                         Message msgErr = new Message();

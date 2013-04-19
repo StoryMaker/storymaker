@@ -80,6 +80,10 @@ public class MediaMediumVideoExporter implements Runnable {
     		maOut = new MediaDesc();
     		maOut.path = new File(mFileProject, "tmp.wav").getAbsolutePath();
     		
+    		Message msg = mHandler.obtainMessage(0);
+            msg.getData().putString("status","Processing audio tracks...");
+	        mHandler.sendMessage(msg);
+    		
     		maExport = new MediaAudioExporter (mContext, mHandler, mMediaList, mFileProject, maOut);
     		maExport.setFadeLength(fadeLen);
     		maExport.run();
@@ -91,16 +95,27 @@ public class MediaMediumVideoExporter implements Runnable {
 	    		int idxAudioTracks = 0;
 	    		for (MediaDesc audioTrack : mAudioTracks)
 	    		{
+
+	        		msg = mHandler.obtainMessage(0);
+	                msg.getData().putString("status","Processing audio track " + (idxAudioTracks+1) + "/" + mAudioTracks.size());
+	    	        mHandler.sendMessage(msg);
+	    	        
 	    			File fileAudioTrack = new File(mFileProject,idxAudioTracks + "-tmp.wav");
 	    			MediaDesc out = ffmpegc.convertToWaveAudio(audioTrack, fileAudioTrack.getAbsolutePath(), mAudioSampleRate, MediaAudioExporter.CHANNELS, sc);
 	    			mAudioTracksPaths.add(out.path);
 	    			idxAudioTracks++;
+	    			
+
 	    		}
 	    		
 	    		mAudioTracksPaths.add(maOut.path);
 	    		
 	    		String finalAudioMix = maOut.path + "-mix.wav";
 	
+	    		msg = mHandler.obtainMessage(0);
+                msg.getData().putString("status","Mixing tracks");
+    	        mHandler.sendMessage(msg);
+    	        
 	    		SoxController sxCon = new SoxController(mContext);
 	    		sxCon.combineMix(mAudioTracksPaths, finalAudioMix);
 	    		
@@ -112,11 +127,8 @@ public class MediaMediumVideoExporter implements Runnable {
 	    		maOut.path = finalAudioMix;
     		}
     		
-    		//now merge audio and video
-    		String finalPath = mOut.path;
-    		String finalAudioCodec = mOut.audioCodec;
-    		
-    		mOut.path = new File(mFileProject,"merge.mp4").getAbsolutePath();
+    		MediaDesc mMerge = new MediaDesc();
+    		mMerge.path = new File(mFileProject,"merge.mp4").getAbsolutePath();
     		
     		String outputType = mOut.mimeType;
     		
@@ -144,20 +156,21 @@ public class MediaMediumVideoExporter implements Runnable {
     			
     		}
     		
-        	ffmpegc.concatAndTrimFilesMP4Stream(mMediaList, mOut, true, sc);
+    		msg = mHandler.obtainMessage(0);
+            msg.getData().putString("status","Trimming and merging video tracks");
+	        mHandler.sendMessage(msg);
+	        
+        	ffmpegc.concatAndTrimFilesMP4Stream(mMediaList, mMerge, true, sc);
         	
-        	maOut.audioCodec = "aac"; //hardcoded (for now) export audio codec
-        	maOut.audioBitrate = 128; //hardcoded (for now) export audio bitrate
-        	
-    		ffmpegc.combineAudioAndVideo(mOut, maOut, finalPath, sc);
+        	msg = mHandler.obtainMessage(0);
+            msg.getData().putString("status","Merging video and audio (almost done!)");
+	        mHandler.sendMessage(msg);
+	        
+    		ffmpegc.combineAudioAndVideo(mMerge, maOut, mOut, sc);
 
-    		mOut.path = finalPath; //reset to initial
-    		mOut.audioCodec = finalAudioCodec;
-    		
     		//processing complete message
-    		Message msg = mHandler.obtainMessage(0);
+    		 msg = mHandler.obtainMessage(0);
 	         mHandler.sendMessage(msg);
-	         
 
 	         //now scan for media to add to gallery
     		File fileTest = new File(mOut.path);
@@ -238,16 +251,12 @@ public class MediaMediumVideoExporter implements Runnable {
 					
 					progress = (int)( ((float)current) / ((float)total) *100f );
 				}
-				else if (line.startsWith("cat"))
-				{
-				    newStatus = "Combining clips...";
-				}
 				else if (line.startsWith("Input"))
 				{
 				    //12-18 02:48:07.187: D/StoryMaker(10508): Input #0, mov,mp4,m4a,3gp,3g2,mj2, from '/storage/sdcard0/DCIM/Camera/VID_20121211_140815.mp4':
-				    idx1 = line.indexOf("'");
-				    int idx2 = line.indexOf('\'', idx1+1);
-				    newStatus = "Rendering clip: " + line.substring(idx1, idx2);
+				   // idx1 = line.indexOf("'");
+				   // int idx2 = line.indexOf('\'', idx1+1);
+				   // newStatus = "Rendering clip: " + line.substring(idx1, idx2);
 				}
 				    
 
@@ -267,14 +276,7 @@ public class MediaMediumVideoExporter implements Runnable {
 			@Override
 			public void processComplete(int exitValue) {
 			
-				 Message msg = mHandler.obtainMessage(1);
-                 
-				    msg.getData().putString("status", "file processing complete");                 
-          
-				    msg.getData().putInt("progress", 100);
-		       
-					
-				    mHandler.sendMessage(msg);
+				
 				
 			}
  	};

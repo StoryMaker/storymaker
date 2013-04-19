@@ -210,19 +210,6 @@ public class OrderClipsFragment extends Fragment {
 	            	mFileAudioNarration = null;
 	            }
 	        });
-	        /*
-	        mButtonPlayNarration= (Button)view.findViewById(R.id.buttonPlayNarration);
-	        if (mFileAudioNarration != null && mFileAudioNarration.exists())
-	            mButtonPlayNarration.setEnabled(true);
-	        
-	        mButtonPlayNarration.setOnClickListener(new OnClickListener ()
-	        {
-	            @Override
-	            public void onClick(View v) {
-	                playNarration(!mAudioNarrator.isPlaying());
-	            }
-	        });
-	        */
 	      
         }
         
@@ -236,11 +223,14 @@ public class OrderClipsFragment extends Fragment {
                         || mMPM.mProject.getStoryType() == Project.STORY_TYPE_AUDIO)
                 {
                 
-                	if (mFileAudioNarration != null && mFileAudioNarration.exists())
-                	  playNarration(!mAudioNarrator.isPlaying());
+                	if (!mPreviewVideoView.isPlaying())
+                	{
+	                	 startPreviewPlayback();
+                	}
                 	else
-                		startPreviewPlayback();
-                	
+                	{
+                		stopPreviewPlayback();
+                	}
                 }
                 else if (mMPM.mProject.getStoryType() == Project.STORY_TYPE_ESSAY
                     || mMPM.mProject.getStoryType() == Project.STORY_TYPE_PHOTO)
@@ -324,20 +314,8 @@ public class OrderClipsFragment extends Fragment {
 
     }
     
-    private void playNarration (boolean start)
-    {
-        
-        if (start)
-            mAudioNarrator.startPlaying();
-        else
-            mAudioNarrator.stopPlaying();
-        
-        //start the playback
-        if (mMPM.mProject.getStoryType() == Project.STORY_TYPE_ESSAY)
-            handlePhotoPlayToggle ();
-        else
-            startPreviewPlayback();
-    }
+ 
+    
     
     private Thread mPhotoThread = null;
     
@@ -351,6 +329,11 @@ public class OrderClipsFragment extends Fragment {
             
             if (mPhotoThread != null)
             	mPhotoThread.interrupt();
+            
+            
+         	if (mFileAudioNarration != null && mFileAudioNarration.exists())
+            	 mAudioNarrator.stopPlaying();
+           
         }
         else
         {
@@ -359,6 +342,11 @@ public class OrderClipsFragment extends Fragment {
         
             mPlayButton.setText(R.string.stop_recording);
             mKeepRunningPreview = true;
+            
+            
+         	if (mFileAudioNarration != null && mFileAudioNarration.exists())
+            	 mAudioNarrator.startPlaying();
+           
             
             mPhotoThread = new Thread ()
             {
@@ -436,10 +424,15 @@ public class OrderClipsFragment extends Fragment {
     private void stopPreviewPlayback ()
     {
         
+
+      	if (mFileAudioNarration != null && mFileAudioNarration.exists())
+         	 mAudioNarrator.stopPlaying();
+      	
             mPlayButton.setText(R.string.play_recording);
             mKeepRunningPreview = false;
              mPreviewVideoView.stopPlayback();
-            
+
+             
 
          		mImageViewMedia.setVisibility(View.GONE);
          		mPreviewVideoView.setVisibility(View.VISIBLE);
@@ -455,11 +448,15 @@ public class OrderClipsFragment extends Fragment {
             mKeepRunningPreview = true;
              mImageViewMedia.setVisibility(View.GONE);
              mPreviewVideoView.setVisibility(View.VISIBLE);
-             
+            
+             if (mFileAudioNarration != null && mFileAudioNarration.exists())
+            	 mAudioNarrator.startPlaying();
+            
              // play
              mPreviewVideoView.setMedia(mMPM.mScene.getMediaAsArray());
              mPreviewVideoView.play();
              
+         	 
              new Thread ()
              {
                 public void run() {

@@ -252,7 +252,9 @@ public class MediaProjectManager implements MediaManager {
     	    		    mDesc.duration = "" + media.getTrimmedDuration() / 1000F;
     	    		}
     	    		
-    	        	applyExportSettings(mDesc);
+    	    		if (doCompress)
+    	    			applyExportSettings(mDesc);
+    	    		
     	    		alMediaIn.add(mIdx, mDesc);
     	    		mIdx++;
 	    	    }
@@ -260,8 +262,11 @@ public class MediaProjectManager implements MediaManager {
 	
 		    mOut = new MediaDesc ();
 	    	mOut.mimeType = AppConstants.MimeTypes.MP4;
-
-	    	applyExportSettings(mOut);
+	    	mOut.audioCodec = "aac";
+	    	mOut.audioBitrate = 128;
+	    	
+	    	if (doCompress)	
+	    		applyExportSettings(mOut);
 
 		    mOut.path = fileExport.getAbsolutePath();
 		    
@@ -282,25 +287,21 @@ public class MediaProjectManager implements MediaManager {
 		    {
 			    fileExport.delete();
 			    fileExport.createNewFile();
-			    
-			    if (fastExport)
-			    {
-			    	MediaFastVideoExporter mEx = new MediaFastVideoExporter(mContext, mHandler, alMediaIn, fileProject, mOut);
 			    	
-			    	/*
-			    	//MediaMediumVideoExporter mEx = new MediaMediumVideoExporter(mContext, mHandler, alMediaIn, fileProject, mOut);
+			    //there can be only one renderer now - MP4Stream !!
+			    	MediaMediumVideoExporter mEx = new MediaMediumVideoExporter(mContext, mHandler, alMediaIn, fileProject, mOut);
 			    	
 			    	if (audioPath != null)
 			    	{
 			    		MediaDesc audioTrack = new MediaDesc();
 			    		audioTrack.path = audioPath;
 			    		mEx.addAudioTrack(audioTrack);
-			    	}*/
+			    	}
 			    	
 			    	mEx.run();
-			    }
-			    else
-			    {
+			    
+			    	/*
+			    	 //this is MPEG based solution - no longer needding
 			    	MediaFullVideoExporter mEx = new MediaFullVideoExporter(mContext, mHandler, alMediaIn, fileProject, mOut);
 			    
 			    	if (audioPath != null)
@@ -310,7 +311,7 @@ public class MediaProjectManager implements MediaManager {
 			    		mEx.addAudioTrack(audioTrack);
 			    	}
 				    mEx.run();
-			    }
+			    	*/
 		    }
 	   
          }    
@@ -324,7 +325,10 @@ public class MediaProjectManager implements MediaManager {
      	    		MediaDesc mDesc = new MediaDesc();
      	    		mDesc.mimeType = media.getMimeType();
      	    		mDesc.path = media.getPath();
-     	        	applyExportSettings(mDesc);
+     	    		
+     	    		if (doCompress)
+     	    			applyExportSettings(mDesc);
+     	    		
      	    		alMediaIn.add(mIdx++,mDesc);
         	    }
  	    	}
@@ -387,14 +391,14 @@ public class MediaProjectManager implements MediaManager {
     	    		MediaDesc mDesc = new MediaDesc();
     	    		mDesc.mimeType = media.getMimeType();
     	    		mDesc.path = media.getPath();
-    	        	applyExportSettings(mDesc);
+    	    		if (doCompress)
+    	    			applyExportSettings(mDesc);
     	    		alMediaIn.add(mDesc);
 	    	    }
 	    	}
 	
 		    mOut = new MediaDesc ();
 		    applyExportSettings(mOut);
-		    
 		   
 		    mOut.path = fileExport.getAbsolutePath();
 		    mOut.mimeType = AppConstants.MimeTypes.MP4;

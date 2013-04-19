@@ -146,6 +146,7 @@ public class MediaAudioExporter implements Runnable {
 	    
 		 ArrayList<MediaDesc> alAudio = new ArrayList<MediaDesc>();
 		 
+		 Message msg = null;
 		 
 		 //convert each input file to a WAV so we can use Sox to process
 		 int wavIdx = 0;
@@ -154,6 +155,11 @@ public class MediaAudioExporter implements Runnable {
 		 {
 			if (new File(mediaIn.path).exists())
 			{
+
+	        	msg = mHandler.obtainMessage(0);
+	            msg.getData().putString("status","Extracting audio track " + (wavIdx+1) + " of " + listMediaDesc.size());
+		        mHandler.sendMessage(msg);
+		        
 		    	MediaDesc audioOut = ffmpegc.convertToWaveAudio(mediaIn, new File(mFileTemp, wavIdx+".wav").getAbsolutePath(),mAudioSampleRate,CHANNELS, sc);
 		    	alAudio.add(audioOut);
 		    	
@@ -167,6 +173,10 @@ public class MediaAudioExporter implements Runnable {
 
 		 mDurations.add(new Double(sxCon.getLength(fileOut)));
 		 
+		 msg = mHandler.obtainMessage(0);
+         msg.getData().putString("status","Crossfading audio...");
+	       mHandler.sendMessage(msg);
+	        
 		 for (int i = 1; i < alAudio.size(); i++)
 		 {		
 			 String fileAdd = alAudio.get(i).path;
@@ -178,6 +188,11 @@ public class MediaAudioExporter implements Runnable {
 		 
 		 }
 		 
+
+		 msg = mHandler.obtainMessage(0);
+         msg.getData().putString("status","Adding overall fade in and out...");
+	       mHandler.sendMessage(msg);
+	       
 		 //1 second fade in and fade out, t = triangle or linear
 		 String fadeFileOut = sxCon.fadeAudio(fileOut, fadeType, fadeLenStr, "0", fadeLenStr);
 		 
@@ -188,6 +203,11 @@ public class MediaAudioExporter implements Runnable {
 		 mdout.audioBitrate = exportBitRate;
 		 mdout.audioCodec = exportCodec;
 		 
+
+		 msg = mHandler.obtainMessage(0);
+         msg.getData().putString("status","Converting to 3GP audio...");
+	       mHandler.sendMessage(msg);
+	       
 		 MediaDesc exportOut = ffmpegc.convertTo3GPAudio(mdFinalIn, mdout, sc);
 		 
 	   }
@@ -235,16 +255,12 @@ public class MediaAudioExporter implements Runnable {
 					
 					progress = (int)( ((float)current) / ((float)total) *100f );
 				}
-				else if (line.startsWith("cat"))
-				{
-				    newStatus = "Combining audio clips...";
-				}
 				else if (line.startsWith("Input"))
 				{
 				    //12-18 02:48:07.187: D/StoryMaker(10508): Input #0, mov,mp4,m4a,3gp,3g2,mj2, from '/storage/sdcard0/DCIM/Camera/VID_20121211_140815.mp4':
-				    idx1 = line.indexOf("'");
-				    int idx2 = line.indexOf('\'', idx1+1);
-				    newStatus = "Rendering clip: " + line.substring(idx1, idx2);
+				   // idx1 = line.indexOf("'");
+				   // int idx2 = line.indexOf('\'', idx1+1);
+				   // newStatus = "Rendering clip: " + line.substring(idx1, idx2);
 				}
 				    
 
@@ -264,14 +280,6 @@ public class MediaAudioExporter implements Runnable {
 			@Override
 			public void processComplete(int exitValue) {
 				
-				   Message msg = mHandler.obtainMessage(1);
-                 
-				    msg.getData().putString("status", "audio clip processed...");                 
-             
-				    msg.getData().putInt("progress", 100);
-		       
-					
-				    mHandler.sendMessage(msg);
 				
 			}
  	};

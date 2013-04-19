@@ -113,11 +113,9 @@ public class MediaFullVideoExporter implements Runnable {
     		}
     		
     		//now merge audio and video
-    		String finalPath = mOut.path;
-    		String finalAudioCodec = mOut.audioCodec;
     		
-    		mOut.path = new File(mFileProject,"merge.mp4").getAbsolutePath();
-    		mOut.audioCodec = null;
+    		MediaDesc mMerge = new MediaDesc();
+    		mMerge.path = new File(mFileProject,"merge.mp4").getAbsolutePath();
     		
     		String outputType = mOut.mimeType;
     		
@@ -147,15 +145,13 @@ public class MediaFullVideoExporter implements Runnable {
     		}
     		
     		
-        	ffmpegc.concatAndTrimFilesMPEG(mMediaList, mOut, true, sc);
+        	ffmpegc.concatAndTrimFilesMPEG(mMediaList, mMerge, true, sc);
         	
         	maOut.audioCodec = "aac"; //hardcoded (for now) export audio codec
         	maOut.audioBitrate = 128; //hardcoded (for now) export audio bitrate
         	
-    		ffmpegc.combineAudioAndVideo(mOut, maOut, finalPath, sc);
+    		ffmpegc.combineAudioAndVideo(mMerge, maOut, mOut, sc);
 
-    		mOut.path = finalPath; //reset to initial
-    		mOut.audioCodec = finalAudioCodec;
     		
     		//processing complete message
     		Message msg = mHandler.obtainMessage(0);

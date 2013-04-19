@@ -6,6 +6,8 @@
 	   <CheckBoxPreference android:title="Use Orbot (Tor)" android:summary="Send all network traffic through the Tor network (https://torproject.org)" android:key="pusetor"/>
 	
 	<EditTextPreference android:title="YouTube Account" android:summary="the YouTube account to use for video uploads. This MUST be registered on your device." android:key="youTubeUserName" android:enabled="true"/>
+		<CheckBoxPreference android:title="YouTube Login" android:summary="Use YouTube web authentication" android:key="pyoutubewebauth"/>
+	
 	<EditTextPreference android:title="SoundCloud Account" android:summary="the SoundCloud account to use for audio uploads" android:key="souldCloudUserName" android:enabled="true"/>
 	    
 	</PreferenceCategory>
@@ -17,8 +19,6 @@
 	
 	<PreferenceCategory android:title="Media">
 		<EditTextPreference android:title="Slide Duration" android:summary="Duration of each slide in a photo essay" android:key="pslideduration" android:defaultValue="5" android:enabled="true"/>
-	
-	<CheckBoxPreference android:title="Fast Video Export" android:summary="for slower devices, export using the lower quality, fast video renderer" android:key="pfastrender" android:defaultValue="false"/>
 	
 	<CheckBoxPreference android:title="Enable Compression" android:summary="compress all video and audio using the settings below" android:key="pcompress" android:defaultValue="false"/>
 		
@@ -37,7 +37,6 @@
 	<PreferenceCategory android:title="Debug">
 		<CheckBoxPreference android:title="Disable lesson completion" android:key="plessondebug"/>
 		
-		<CheckBoxPreference android:title="YouTube Login" android:summary="Use YouTube web authentication" android:key="pyoutubewebauth"/>
 		<EditTextPreference android:title="YouTube Method" android:summary="debug auth method type" android:key="glsauthmethod" android:defaultValue="0" android:enabled="true"/>
 		
 		
