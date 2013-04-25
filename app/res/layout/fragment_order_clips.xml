@@ -57,11 +57,23 @@
           >
     </LinearLayout>
         
-
+  <ScrollView
+        android:id="@+id/scrollView1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="none" >
+   
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center"
+         >
+      
     <com.animoto.android.views.DraggableGridView
         android:id="@+id/DraggableGridView01"
         android:layout_width="fill_parent"
-        android:layout_height="150dp" >
+        android:layout_height="100dp" >
     </com.animoto.android.views.DraggableGridView>
 
     <LinearLayout
@@ -92,5 +104,6 @@
             android:enabled="false"
             android:text="@string/button_delete_narration" />
     </LinearLayout>
-
+    </LinearLayout>
+</ScrollView>
 </LinearLayout>
