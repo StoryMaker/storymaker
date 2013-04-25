@@ -1,12 +1,22 @@
 package info.guardianproject.mrapp.model;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.util.ArrayList;
 
+import org.ffmpeg.android.MediaUtils;
+
+import info.guardianproject.mrapp.AppConstants;
+import info.guardianproject.mrapp.R;
 import info.guardianproject.mrapp.db.ProjectsProvider;
 import info.guardianproject.mrapp.db.StoryMakerDB;
+import info.guardianproject.mrapp.media.MediaProjectManager;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.util.Log;
 
@@ -366,5 +376,55 @@ public class Media {
      */
     public void setDuration(int duration) {
         this.duration = duration;
+    }
+    
+    public static Bitmap getThumbnail(Context context, Media media, Project project)
+    {
+    	if (media == null)
+    		return null;
+    	
+    	
+        if (media.getMimeType() == null)
+        {
+            return null;
+        }
+        else if (media.getMimeType().startsWith("video"))
+        {
+            File fileThumb = new File(MediaProjectManager.getProjectFolder(project), media.getId() + "_thumb.jpg");
+            
+            if (fileThumb.exists())
+            {
+
+                final BitmapFactory.Options options = new BitmapFactory.Options();
+                options.inSampleSize = 8;
+                return BitmapFactory.decodeFile(fileThumb.getAbsolutePath(), options);
+            }
+            else
+            {
+                Bitmap bmp = MediaUtils.getVideoFrame(media.getPath(), -1);
+                try {
+                    bmp.compress(Bitmap.CompressFormat.JPEG, 70, new FileOutputStream(fileThumb));
+                } catch (FileNotFoundException e) {
+                    Log.e(AppConstants.TAG, "could not cache video thumb", e);
+                }
+
+                return bmp;
+            }
+        }
+        else if (media.getMimeType().startsWith("image"))
+        {
+            final BitmapFactory.Options options = new BitmapFactory.Options();
+            options.inSampleSize = 8;
+
+            return BitmapFactory.decodeFile(media.getPath(), options);
+        }
+        else if (media.getMimeType().startsWith("audio"))
+        {
+            return BitmapFactory.decodeResource(context.getResources(), R.drawable.thumb_audio);
+        }
+        else 
+        {
+            return BitmapFactory.decodeResource(context.getResources(), R.drawable.thumb_complete);
+        }
     }
 }

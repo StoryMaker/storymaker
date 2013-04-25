@@ -88,9 +88,10 @@ public class StoryMakerApp extends Application {
 		    }
 	
 
-	    	File basePath = getExternalFilesDir(null);
+	    	File fileDirLessons = new File(getExternalFilesDir(null), lessonLocalPath);
+        	fileDirLessons.mkdirs();
 	    	
-	    	mLessonManager = new LessonManager (this, lessonUrlPath, new File(basePath, lessonLocalPath));
+	    	mLessonManager = new LessonManager (this, lessonUrlPath, fileDirLessons);
 		    mServerManager = new ServerManager (getApplicationContext());
 		}
 		catch (Exception e)
@@ -110,6 +111,28 @@ public class StoryMakerApp extends Application {
         //need to reload lesson manager for new locale
         initServerUrls(this);
 
+	}
+	
+	public boolean isExternalStorageReady ()
+	{
+		boolean mExternalStorageAvailable = false;
+		boolean mExternalStorageWriteable = false;
+		String state = Environment.getExternalStorageState();
+
+		if (Environment.MEDIA_MOUNTED.equals(state)) {
+		    // We can read and write the media
+		    mExternalStorageAvailable = mExternalStorageWriteable = true;
+		} else if (Environment.MEDIA_MOUNTED_READ_ONLY.equals(state)) {
+		    // We can only read the media
+		    mExternalStorageAvailable = true;
+		    mExternalStorageWriteable = false;
+		} else {
+		    // Something else is wrong. It may be one of many other states, but all we need
+		    //  to know is we can neither read nor write
+		    mExternalStorageAvailable = mExternalStorageWriteable = false;
+		}
+		
+		return mExternalStorageAvailable && mExternalStorageWriteable;
 	}
 	
 	public static Locale getCurrentLocale ()
@@ -151,7 +174,9 @@ public class StoryMakerApp extends Application {
 	        if (updatedLocale)
 	        {
 	            //need to reload lesson manager for new locale
-				mLessonManager = new LessonManager (this, mBaseUrl + URL_PATH_LESSONS+ mLocale.getLanguage() + "/", new File(getExternalFilesDir(null), "lessons/" + mLocale.getLanguage()));
+	        	File fileDirLessons = new File(getExternalFilesDir(null), "lessons/" + lang);
+	        	fileDirLessons.mkdirs();
+				mLessonManager = new LessonManager (this, mBaseUrl + URL_PATH_LESSONS+ lang + "/", fileDirLessons);
 
 	        }
 	        

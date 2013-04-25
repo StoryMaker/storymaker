@@ -29,9 +29,6 @@ public class MediaSlideshowExporter implements Runnable {
     
     private File mFileProject;
     
-	int exportWidth = -1;
-	int exportHeight = -1;
-    
 	public MediaSlideshowExporter (Context context, Handler handler, ArrayList<MediaDesc> mediaList, File fileProject, String audioPath, int slideDuration, MediaDesc out)
 	{
 		mHandler = handler;
@@ -43,12 +40,6 @@ public class MediaSlideshowExporter implements Runnable {
 		mFileProject = fileProject;
 	}
 	
-	
-	public void setDimensions (int width, int height)
-	{
-		exportHeight = height;
-		exportWidth = width;
-	}
 	
 	public void run ()
 	{
@@ -77,8 +68,8 @@ public class MediaSlideshowExporter implements Runnable {
 	         }
 	         else
 	         {
-	        		msg = mHandler.obtainMessage(0);
-		            msg.getData().putString("status","Something went wrong with media export");
+	        		msg = mHandler.obtainMessage(-1);
+		            msg.getData().putString("error","Something went wrong with media export");
 
 			        mHandler.sendMessage(msg);
 			         
@@ -86,8 +77,8 @@ public class MediaSlideshowExporter implements Runnable {
     	}
     	catch (Exception e)
     	{
-    		Message msg = mHandler.obtainMessage(0);
-            msg.getData().putString("status","error: " + e.getMessage());
+    		Message msg = mHandler.obtainMessage(-1);
+            msg.getData().putString("error","error: " + e.getMessage());
 
 	         mHandler.sendMessage(msg);
     		Log.e(AppConstants.TAG, "error exporting",e);
@@ -98,13 +89,18 @@ public class MediaSlideshowExporter implements Runnable {
     {
     	FfmpegController ffmpegc = new FfmpegController (mContext, mFileProject);
 
-    	String bitrate = "1500k";
+    	if (mdout.videoBitrate == -1)
+    		mdout.videoBitrate = 1500;
     	
     	MediaDesc mdAudio = new MediaDesc();
     	mdAudio.path = audioPath;
     	
-    	ffmpegc.createSlideshowFromImagesAndAudio(listMediaDesc, mdAudio, exportWidth, exportHeight, slideDuration, bitrate, mdout.path, scDefault);
+    	ffmpegc.createSlideshowFromImagesAndAudio(listMediaDesc, mdAudio, mdout, slideDuration, scDefault);
     	
+    	if (!new File(mdout.path).exists())
+    	{
+    		throw new Exception ("There was an error creating the slideshow");
+    	}
 		
    }
 	/*

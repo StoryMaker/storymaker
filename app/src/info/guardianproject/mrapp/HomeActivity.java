@@ -3,6 +3,7 @@ package info.guardianproject.mrapp;
 import info.guardianproject.mrapp.StoryTemplateChooserActivity.MyAdapter;
 import info.guardianproject.mrapp.StoryTemplateChooserActivity.MyFragment;
 import info.guardianproject.mrapp.lessons.LessonManager;
+import info.guardianproject.mrapp.media.MediaProjectManager;
 import info.guardianproject.mrapp.model.Lesson;
 import info.guardianproject.mrapp.model.LessonGroup;
 import info.guardianproject.mrapp.model.Media;
@@ -104,7 +105,18 @@ public class HomeActivity extends BaseActivity {
 		
 		new getAsynctask().execute("");
 		
-
+		boolean isExternalStorageReady = ((StoryMakerApp)getApplication()).isExternalStorageReady();
+		
+		if (!isExternalStorageReady)
+		{
+			//show storage error message
+			new AlertDialog.Builder(this)
+            .setTitle(getString(R.string.app_name))
+            .setIcon(android.R.drawable.ic_dialog_info)
+            .setMessage(R.string.err_storage_not_ready)
+            .show();
+			
+		}
 	}
 
 
@@ -224,7 +236,7 @@ public class HomeActivity extends BaseActivity {
 	            	for (Media media: mediaList)
 	            		if (media != null)
 	            		{
-	            			Bitmap bmp = getThumbnail(media);
+	            			Bitmap bmp = Media.getThumbnail(this, media, project);
 	            			 
 	            			if (bmp != null)
 	            			{
@@ -525,55 +537,7 @@ public class HomeActivity extends BaseActivity {
         startActivity(intent);
     }
     
-    public Bitmap getThumbnail(Media media)
-    {
-    	if (media == null)
-    		return null;
-    	
-        String path = media.getPath();
-
-        if (media.getMimeType() == null)
-        {
-            return null;
-        }
-        else if (media.getMimeType().startsWith("video"))
-        {
-            File fileThumb = new File(path + ".jpg");
-            if (fileThumb.exists())
-            {
-
-                final BitmapFactory.Options options = new BitmapFactory.Options();
-                options.inSampleSize = 4;
-                return BitmapFactory.decodeFile(fileThumb.getAbsolutePath(), options);
-            }
-            else
-            {
-                Bitmap bmp = MediaUtils.getVideoFrame(path, -1);
-                try {
-                    bmp.compress(Bitmap.CompressFormat.JPEG, 70, new FileOutputStream(fileThumb));
-                } catch (FileNotFoundException e) {
-                    Log.e(AppConstants.TAG, "could not cache video thumb", e);
-                }
-
-                return bmp;
-            }
-        }
-        else if (media.getMimeType().startsWith("image"))
-        {
-            final BitmapFactory.Options options = new BitmapFactory.Options();
-            options.inSampleSize = 4;
-
-            return BitmapFactory.decodeFile(path, options);
-        }
-        else if (media.getMimeType().startsWith("audio"))
-        {
-            return BitmapFactory.decodeResource(getResources(), R.drawable.thumb_audio);
-        }
-        else 
-        {
-            return BitmapFactory.decodeResource(getResources(), R.drawable.thumb_complete);
-        }
-    }
+    
     
     
     private ArrayList<Lesson> getLessonsCompleted (Context context)
@@ -782,9 +746,8 @@ public class HomeActivity extends BaseActivity {
 		boolean changed = ((StoryMakerApp)getApplication()).checkLocale();
 		if (changed)
 		{
+			finish();
 			startActivity(new Intent(this,HomeActivity.class));
-			
-			//finish();
 			
 		}
 	}

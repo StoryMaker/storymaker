@@ -351,7 +351,8 @@ public class ReviewFragment extends Fragment {
     
     private void showThumbnail(int position) {
         if (mMediaList.get(position) != null) {
-            mImageViewMedia.setImageBitmap(mActivity.getThumbnail(mMediaList.get(position)));
+        	Bitmap bmp = Media.getThumbnail(mActivity,mMediaList.get(position),mActivity.mMPM.mProject);
+            mImageViewMedia.setImageBitmap(bmp);
         }
     }
 }

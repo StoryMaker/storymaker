@@ -49,7 +49,7 @@ public class AddClipsThumbnailFragment extends Fragment {
 
             if (mMedia != null) {
 
-                Bitmap thumb = mActivity.getThumbnail(mMedia);
+                Bitmap thumb = Media.getThumbnail(mActivity,mMedia,mActivity.mMPM.mProject);
                 iv.setImageBitmap(thumb);
 
             } else {

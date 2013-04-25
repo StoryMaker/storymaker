@@ -205,10 +205,12 @@ public class MediaAudioExporter implements Runnable {
 		 
 
 		 msg = mHandler.obtainMessage(0);
-         msg.getData().putString("status","Converting to 3GP audio...");
+         msg.getData().putString("status","Converting to output audio...");
 	       mHandler.sendMessage(msg);
+	     
 	       
 		 MediaDesc exportOut = ffmpegc.convertTo3GPAudio(mdFinalIn, mdout, sc);
+		 
 		 
 	   }
 	    

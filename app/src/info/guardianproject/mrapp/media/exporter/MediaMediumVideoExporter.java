@@ -16,6 +16,8 @@ import info.guardianproject.mrapp.AppConstants;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.media.MediaScannerConnection;
+import android.media.MediaScannerConnection.OnScanCompletedListener;
+import android.net.Uri;
 import android.os.Handler;
 import android.os.Message;
 import android.preference.PreferenceManager;
@@ -42,7 +44,7 @@ public class MediaMediumVideoExporter implements Runnable {
     
     private int mAudioSampleRate = -1;
     
-    private float fadeLen = .5f;
+    private float mFadeLen = .5f;
     
     private File mFileProject;
     
@@ -59,6 +61,7 @@ public class MediaMediumVideoExporter implements Runnable {
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(mContext.getApplicationContext());
         mAudioSampleRate = Integer.parseInt(settings.getString("p_audio_samplerate", AppConstants.DEFAULT_AUDIO_SAMPLE_RATE));
     	
+        mFadeLen = Float.parseFloat(settings.getString("p_audio_xfade_len",".5f"));
 	}
 	
 	public void addAudioTrack (MediaDesc audioTrack)
@@ -85,7 +88,7 @@ public class MediaMediumVideoExporter implements Runnable {
 	        mHandler.sendMessage(msg);
     		
     		maExport = new MediaAudioExporter (mContext, mHandler, mMediaList, mFileProject, maOut);
-    		maExport.setFadeLength(fadeLen);
+    		maExport.setFadeLength(mFadeLen);
     		maExport.run();
     		
     		if (mAudioTracks.size() > 0)
@@ -130,32 +133,29 @@ public class MediaMediumVideoExporter implements Runnable {
     		MediaDesc mMerge = new MediaDesc();
     		mMerge.path = new File(mFileProject,"merge.mp4").getAbsolutePath();
     		
-    		String outputType = mOut.mimeType;
-    		
     		ArrayList<Double> durations = maExport.getDurations();
-    		/*
+    		
     		for (int i = 0; i < mMediaList.size(); i++)
     		{
     			MediaDesc media = mMediaList.get(i);
     			
     			if (media.startTime == null)
-    				media.startTime = formatTimePeriod(fadeLen);
+    				media.startTime = formatTimePeriod(mFadeLen);
     			else
     			{
     				double startTime = parseTimePeriod(media.startTime);
-    				media.startTime = formatTimePeriod(startTime + (fadeLen));
+    				media.startTime = formatTimePeriod(startTime + (mFadeLen));
     			}
     			
     			if (media.duration == null)
-    				media.duration = formatTimePeriod(durations.get(i)-(fadeLen));
+    				media.duration = formatTimePeriod(durations.get(i)-(mFadeLen));
     			else
     			{
     				double duration = parseTimePeriod(media.duration);
-    				media.duration = formatTimePeriod(duration-(fadeLen));
+    				media.duration = formatTimePeriod(duration-(mFadeLen));
     			}
     			
     		}
-    		*/
     		
     		msg = mHandler.obtainMessage(0);
             msg.getData().putString("status","Trimming and merging video tracks");
@@ -180,19 +180,27 @@ public class MediaMediumVideoExporter implements Runnable {
 	    		MediaScannerConnection.scanFile(
 	     				mContext,
 	     				new String[] {mOut.path},
-	     				new String[] {outputType},
-	     				null);
+	     				new String[] {mOut.mimeType},
+	     				new OnScanCompletedListener ()
+	     				{
+
+							@Override
+							public void onScanCompleted(String path, Uri uri) {
+
+					    		Message msg = mHandler.obtainMessage(4);
+					            msg.getData().putString("path",mOut.path);
+					            
+					            mHandler.sendMessage(msg);
+								
+							}
+	     					
+	     				});
 	    
-	    		msg = mHandler.obtainMessage(4);
-	            msg.getData().putString("path",mOut.path);
-	            
-	            mHandler.sendMessage(msg);
 	         }
 	         else
 	         {
 	        		msg = mHandler.obtainMessage(0);
-		            msg.getData().putString("status","Something went wrong with media export");
-
+		            msg.getData().putString("error","Something went wrong with media export");
 			        mHandler.sendMessage(msg);
 			         
 	         }

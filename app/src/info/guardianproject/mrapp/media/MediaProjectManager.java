@@ -35,9 +35,15 @@ import android.util.Log;
 
 public class MediaProjectManager implements MediaManager {
 	
+
+    public final static String EXPORT_VIDEO_FILE_EXT = ".mp4";
+    public final static String EXPORT_AUDIO_FILE_EXT = ".m4a";//".ogg";//"".3gp";
+    public final static String EXPORT_PHOTO_FILE_EXT = ".jpg";
+    public final static String EXPORT_ESSAY_FILE_EXT = ".mp4";
+    
 	private ArrayList<MediaClip> mMediaList = null;// FIXME refactor this to use it as a prop on project object
 	
-	private File mFileExternDir; //where working files go
+	private static File mFileExternDir; //where working files go
 	//private File mMediaTmp;
 	private MediaDesc mOut;
 	
@@ -151,7 +157,7 @@ public class MediaProjectManager implements MediaManager {
     }
 
    
-    private synchronized void initExternalStorage ()
+    private static synchronized void initExternalStorage ()
     {
     	//String extState = Environment.getExternalStorageState();
     	
@@ -165,18 +171,16 @@ public class MediaProjectManager implements MediaManager {
     }
     
     
-    public File getProjectFolder (Project project)
+    public static File getProjectFolder (Project project)
     {
+    	initExternalStorage ();
+    	
     	String folderName = project.getId()+"";
     	File fileProject = new File(mFileExternDir,folderName);
     	fileProject.mkdirs();
     	return fileProject;
     }
     
-    public final static String EXPORT_VIDEO_FILE_EXT = ".mp4";
-    public final static String EXPORT_AUDIO_FILE_EXT = ".3gp";
-    public final static String EXPORT_PHOTO_FILE_EXT = ".jpg";
-    public final static String EXPORT_ESSAY_FILE_EXT = ".mp4";
     
     public File getExportMediaFile ()
     {
@@ -224,13 +228,30 @@ public class MediaProjectManager implements MediaManager {
     	return fileExport;
     }
     
-    public void doExportMedia (File fileExport, boolean doCompress, boolean doOverwrite, boolean fastExport) throws IOException
+    public void doExportMedia (File fileExport, boolean doCompress, boolean doOverwrite) throws IOException
     {
     	 Message msg = mHandler.obtainMessage(0);
          msg.getData().putString("status","cancelled");
          ArrayList<Media> mList = mProject.getMediaAsList();
          ArrayList<MediaDesc> alMediaIn = new ArrayList<MediaDesc>();
-         
+
+
+ 		//first check that all of the input images are accessible
+ 		
+ 		for (Media media : mList)
+ 		{
+ 			if (media == null || media.getPath() == null)
+ 			{
+ 				throw new IOException("Input media object is null");
+ 			}
+ 			else if (!new File(media.getPath()).exists())
+ 			{
+ 				throw new java.io.FileNotFoundException("Input image does not exist or is not readable" + ": " + media.getPath());
+ 				
+ 			}
+ 			
+ 		}
+ 		
 
 		 File fileProject = getProjectFolder(mProject);
 		    
@@ -244,7 +265,7 @@ public class MediaProjectManager implements MediaManager {
 	    	    {
     	    		MediaDesc mDesc = new MediaDesc();
     	    		mDesc.mimeType = media.getMimeType();
-    	    		mDesc.path = media.getPath();
+    	    		mDesc.path = new File(media.getPath()).getAbsolutePath();
     	    		
     	    		if (media.getTrimStart() > 0) {
     	    		    mDesc.startTime = "" + media.getTrimmedStartTime() / 1000F;
@@ -262,12 +283,17 @@ public class MediaProjectManager implements MediaManager {
 	    	}
 	
 		    mOut = new MediaDesc ();
-	    	mOut.mimeType = AppConstants.MimeTypes.MP4;
-	    	mOut.audioCodec = "aac";
-	    	mOut.audioBitrate = 128;
 	    	
 	    	if (doCompress)	
 	    		applyExportSettings(mOut);
+	    	else
+	    	{
+	    		mOut.audioCodec = "aac";
+		    	mOut.audioBitrate = 128;
+	    	}
+	    	
+	    	//override for now
+	    	mOut.mimeType = AppConstants.MimeTypes.MP4;
 
 		    mOut.path = fileExport.getAbsolutePath();
 		    
@@ -338,9 +364,11 @@ public class MediaProjectManager implements MediaManager {
  	    	}
  	
  		    mOut = new MediaDesc ();
- 		    mOut.mimeType = AppConstants.MimeTypes.THREEGPP_AUDIO;
+// 		    mOut.mimeType = AppConstants.MimeTypes.OGG;
+ 		    mOut.mimeType = AppConstants.MimeTypes.MP4_AUDIO;
 
- 		    applyExportSettingsAudio(mOut);
+ 		   // if (doCompress)
+ 		   // applyExportSettingsAudio(mOut);
  		    
  		    mOut.path = fileExport.getAbsolutePath();
  		    
@@ -395,13 +423,30 @@ public class MediaProjectManager implements MediaManager {
          else if (mProject.getStoryType() == Project.STORY_TYPE_ESSAY)
          {
         	
+        	 File fileDirTmp = mContext.getDir("stories",mContext.MODE_WORLD_READABLE);
+        	 fileDirTmp = new File(fileDirTmp,mProject.getId()+"");
+	    		
+	    		
 	    	for (Media media : mList)
 	    	{
 	    	    if (media != null)
 	    	    {
     	    		MediaDesc mDesc = new MediaDesc();
     	    		mDesc.mimeType = media.getMimeType();
-    	    		mDesc.path = media.getPath();
+    	    		
+    	    		File fileSrc = new File(media.getPath());
+    	    		
+    	    		
+    	    		File fileTmp = new File(fileDirTmp,fileSrc.getName());
+    	    		if (!fileTmp.exists())
+    	    		{
+    	    			fileTmp.getParentFile().mkdirs();
+    	    			fileTmp.createNewFile();
+    	    			IOUtils.copy(new FileInputStream(fileSrc),new FileOutputStream(fileTmp));
+    	    		}
+    	    		
+    	    		mDesc.path = fileTmp.getAbsolutePath();
+    	    		
     	    		if (doCompress)
     	    			applyExportSettings(mDesc);
     	    		alMediaIn.add(mDesc);
@@ -439,7 +484,7 @@ public class MediaProjectManager implements MediaManager {
 		    	fileExport.getParentFile().mkdirs();
 			    fileExport.createNewFile();
 			    
-    			    MediaSlideshowExporter mEx = new MediaSlideshowExporter(mContext, mHandler, alMediaIn, fileProject, audioPath, slideDuration, mOut);
+    			    MediaSlideshowExporter mEx = new MediaSlideshowExporter(mContext, mHandler, alMediaIn, fileDirTmp, audioPath, slideDuration, mOut);
     			    
     			    //mEx.setDimensions(width, height)
     			    
@@ -464,17 +509,18 @@ public class MediaProjectManager implements MediaManager {
     	mdout.width = Integer.parseInt(mSettings.getString("p_video_width", DEFAULT_WIDTH+""));
     	mdout.height = Integer.parseInt(mSettings.getString("p_video_height", DEFAULT_HEIGHT+""));
     	
-    	mdout.videoCodec = "libx264";
+    	mdout.videoCodec = mSettings.getString("p_video_codec","mpeg4");
+    	
     }
 
+    /*
     public void applyExportSettingsAudio (MediaDesc mdout)
     {
-    	//look this up from prefs?
     	mdout.videoCodec = null; 
-    	mdout.audioCodec = "aac";
+    	mdout.audioCodec =  mSettings.getString("p_audio_codec","aac");
     	mdout.audioBitrate = Integer.parseInt(mSettings.getString("p_audio_bitrate", DEFAULT_AUDIO_BITRATE+""));;
     	mdout.format = "3gp";
-    }
+    }*/
     
     
     

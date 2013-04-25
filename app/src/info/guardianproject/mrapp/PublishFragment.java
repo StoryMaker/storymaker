@@ -12,6 +12,7 @@ import info.guardianproject.mrapp.server.Authorizer.AuthorizationListener;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.StringTokenizer;
@@ -114,7 +115,7 @@ public class PublishFragment extends Fragment {
             Media[] medias = mActivity.mMPM.mScene.getMediaAsArray();
             if (medias.length > 0)
             {
-                Bitmap bitmap = mActivity.getThumbnail(medias[0]);
+                Bitmap bitmap = Media.getThumbnail(mActivity,medias[0],mActivity.mMPM.mProject);
             	if (bitmap != null) ivThumb.setImageBitmap(bitmap);
             }
         	
@@ -406,9 +407,6 @@ public class PublishFragment extends Fragment {
             	
                 mHandlerPub.sendEmptyMessage(999);
    
-                ServerManager sm = StoryMakerApp.getServerManager();
-                sm.setContext(mActivity.getBaseContext());
-
                 Message msg = mHandlerPub.obtainMessage(888);
                 msg.getData().putString("status",
                         getActivity().getString(R.string.rendering_clips_));
@@ -418,10 +416,9 @@ public class PublishFragment extends Fragment {
                     
                     File fileExport = mActivity.mMPM.getExportMediaFile();
 
-                    boolean fastExport = mSettings.getBoolean("pfastrender", false);
                     boolean compress = mSettings.getBoolean("pcompress",false);//compress video?
                     
-                    mActivity.mMPM.doExportMedia(fileExport, compress, doOverwrite, fastExport);
+                    mActivity.mMPM.doExportMedia(fileExport, compress, doOverwrite);
                     
                     mActivity.mdExported = mActivity.mMPM.getExportMedia();
                     
@@ -462,6 +459,7 @@ public class PublishFragment extends Fragment {
                                     try {
                                         Thread.sleep(1000);
                                     } catch (Exception e) {
+                                    	Log.e(AppConstants.TAG,"unable to sleep during youtube upload",e);
                                     }
                                 }
 
@@ -496,30 +494,29 @@ public class PublishFragment extends Fragment {
                                     SoundCloudUploader.installSoundCloud(mActivity.getBaseContext());
                                 }
                             }
-                            else if (sm.hasCreds()) //must be photo
+                            else if (mActivity.mMPM.mProject.getStoryType() == Project.STORY_TYPE_PHOTO)
                             {
                             	medium = ServerManager.CUSTOM_FIELD_MEDIUM_PHOTO;
 
+
+                                ServerManager sm = StoryMakerApp.getServerManager();
+                                sm.setContext(mActivity.getBaseContext());
+                                
                                 String murl = sm.addMedia(mActivity.mdExported.mimeType, mediaFile);
                                 mediaEmbed = "<img src=\"" + murl + "\"/>";
                                 
                             }
+                            
+
+                            handlerUI.sendEmptyMessage(0);
 
                             if (doStoryMaker) {
+                            
+                            	 postToStoryMaker (title, desc, mediaEmbed, categories, medium, mediaService, mediaGuid);
                             	
-                            	Message msgStatus = mHandlerPub.obtainMessage(888);
-                            	msgStatus.getData().putString("status",
-                                        getActivity().getString(R.string.uploading_to_storymaker));
-                                mHandlerPub.sendMessage(msgStatus);
                             	
-                                String descWithMedia = desc + "\n\n" + mediaEmbed;
-                                String postId = sm.post(title, descWithMedia, categories, medium, mediaService, mediaGuid);
-                                
-                                String urlPost = sm.getPostUrl(postId);
-                                message.getData().putString("urlPost", urlPost);
                             }
                             
-                            handlerUI.sendEmptyMessage(0);
                         }
                         mHandlerPub.sendMessage(message);
                         
@@ -530,6 +527,8 @@ public class PublishFragment extends Fragment {
                         msgErr.getData().putString("err", "Media export failed");
                         mHandlerPub.sendMessage(msgErr);
                     }
+                        
+                        
                 } catch (XmlRpcFault e) {
                     Message msgErr = new Message();
                     msgErr.what = -1;
@@ -572,6 +571,30 @@ public class PublishFragment extends Fragment {
 	   	 {
 	   		 mThreadPublish.start();
 	   	 }
+    }
+    
+    public void postToStoryMaker (String title, String desc, String mediaEmbed, String[] categories, String medium, String mediaService, String mediaGuid) throws MalformedURLException, XmlRpcFault
+    {
+
+        Message message = mHandlerPub.obtainMessage(777);
+        message.getData().putString("fileMedia", mActivity.mdExported.path);
+        message.getData().putString("mime", mActivity.mdExported.mimeType);
+
+        ServerManager sm = StoryMakerApp.getServerManager();
+        sm.setContext(mActivity.getBaseContext());
+
+    	Message msgStatus = mHandlerPub.obtainMessage(888);
+    	msgStatus.getData().putString("status",
+                getActivity().getString(R.string.uploading_to_storymaker));
+        mHandlerPub.sendMessage(msgStatus);
+    	
+        String descWithMedia = desc + "\n\n" + mediaEmbed;
+        String postId = sm.post(title, descWithMedia, categories, medium, mediaService, mediaGuid);
+        
+        String urlPost = sm.getPostUrl(postId);
+        message.getData().putString("urlPost", urlPost);
+
+        mHandlerPub.sendMessage(message);
     }
     
     public void setYouTubeAuth (String token)

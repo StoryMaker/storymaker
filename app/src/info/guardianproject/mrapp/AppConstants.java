@@ -37,9 +37,13 @@ public final static String TAG = "StoryMaker";
 	
 	public final static class MimeTypes {
 		public final static String THREEGPP_AUDIO = "audio/3gpp";
+	//	public final static String OGG = "audio/ogg";
 		public final static String MP3 = "audio/mpeg";
 		public final static String MP4 = "video/mp4";
+		public final static String MP4_AUDIO = "audio/mp4";
+		
 		public final static String JPEG = "image/jpeg";
+		
 		//public static final String MKV = "mkv";
 	}
 	

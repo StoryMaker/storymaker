@@ -75,14 +75,17 @@ public class EditorBaseActivity extends BaseActivity {
                     
                     if (status != null)
                     {
-                        if (mProgressDialog != null)
+                        if (mProgressDialog != null && mProgressDialog.isShowing())
                         {
                             mProgressDialog.setMessage(status);
                         }
                         else
                         {
-                            Toast.makeText(EditorBaseActivity.this, status, Toast.LENGTH_SHORT).show();
-                            
+                           // Toast.makeText(EditorBaseActivity.this, status, Toast.LENGTH_LONG).show();
+
+                            AlertDialog.Builder builder = new AlertDialog.Builder(EditorBaseActivity.this);
+                            builder.setMessage(status).show();
+                        	
                         }
                     }
                 break;
@@ -129,12 +132,16 @@ public class EditorBaseActivity extends BaseActivity {
                     
                 break;
                 case -1:
-                    Toast.makeText(EditorBaseActivity.this, error, Toast.LENGTH_SHORT).show();
+                	
                     if (mProgressDialog != null)
                     {
                         mProgressDialog.dismiss();
                         mProgressDialog = null;
                     }
+                    
+                    AlertDialog.Builder builder = new AlertDialog.Builder(EditorBaseActivity.this);
+                    builder.setMessage(error).show();
+                    
                 break;
                 default:
                 
@@ -147,55 +154,7 @@ public class EditorBaseActivity extends BaseActivity {
     };
     
 
-    public Bitmap getThumbnail(Media media)
-    {
-        if (media == null)
-            return null;
-        
-        String path = media.getPath();
-
-        if (media.getMimeType() == null)
-        {
-            return null;
-        }
-        else if (media.getMimeType().startsWith("video"))
-        {
-            File fileThumb = new File(path + ".jpg");
-            if (fileThumb.exists())
-            {
-
-                final BitmapFactory.Options options = new BitmapFactory.Options();
-                options.inSampleSize = 4;
-                return BitmapFactory.decodeFile(fileThumb.getAbsolutePath(), options);
-            }
-            else
-            {
-                Bitmap bmp = MediaUtils.getVideoFrame(path, -1);
-                try {
-                    bmp.compress(Bitmap.CompressFormat.JPEG, 70, new FileOutputStream(fileThumb));
-                } catch (FileNotFoundException e) {
-                    Log.e(AppConstants.TAG, "could not cache video thumb", e);
-                }
-
-                return bmp;
-            }
-        }
-        else if (media.getMimeType().startsWith("image"))
-        {
-            final BitmapFactory.Options options = new BitmapFactory.Options();
-            options.inSampleSize = 4;
-
-            return BitmapFactory.decodeFile(path, options);
-        }
-        else if (media.getMimeType().startsWith("audio"))
-        {
-            return BitmapFactory.decodeResource(getResources(), R.drawable.thumb_audio);
-        }
-        else 
-        {
-            return BitmapFactory.decodeResource(getResources(), R.drawable.thumb_complete);
-        }
-    }
+   
     
     public void showPublished(final String postUrl, final File localMedia, final String youTubeId,
             final String mimeType)

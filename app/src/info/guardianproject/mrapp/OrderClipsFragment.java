@@ -485,7 +485,9 @@ public class OrderClipsFragment extends Fragment {
             ImageView iv = new ImageView(getActivity());
             
             if (sceneMedias[i] != null) {
-                iv.setImageBitmap(mActivity.getThumbnail(sceneMedias[i]));
+                Bitmap thumb = Media.getThumbnail(mActivity,sceneMedias[i],mActivity.mMPM.mProject);
+
+                iv.setImageBitmap(thumb);
             } 
             else
             {
@@ -577,7 +579,9 @@ public class OrderClipsFragment extends Fragment {
         	mImageViewMedia.setVisibility(View.VISIBLE);
             mPreviewVideoView.setVisibility(View.GONE);
             
-            mImageViewMedia.setImageBitmap(mActivity.getThumbnail(medias[position]));
+            Bitmap thumb = Media.getThumbnail(mActivity,medias[position],mActivity.mMPM.mProject);
+            		
+            mImageViewMedia.setImageBitmap(thumb);
             mImageViewMedia.invalidate();
         }
     }
