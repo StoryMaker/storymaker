@@ -22,14 +22,20 @@
 	
 	<CheckBoxPreference android:title="Enable Compression" android:summary="compress all video and audio using the settings below" android:key="pcompress" android:defaultValue="false"/>
 		
-	<EditTextPreference android:title="Video Width" android:summary="Export video width" android:key="p_video_width" android:defaultValue="720" android:enabled="true"/>
+		<EditTextPreference android:title="Video Codec" android:summary="Export video codec" android:key="p_video_codec" android:defaultValue="mpeg4" android:enabled="true"/>
+		
+		<EditTextPreference android:title="Video Width" android:summary="Export video width" android:key="p_video_width" android:defaultValue="720" android:enabled="true"/>
 		<EditTextPreference android:title="Video Height" android:summary="Export video height" android:key="p_video_height" android:defaultValue="480" android:enabled="true"/>
 		
 		<EditTextPreference android:title="Video Bitrate" android:summary="Export video bitrate (kbps)" android:key="p_video_bitrate" android:defaultValue="1000" android:enabled="true"/>
-		<EditTextPreference android:title="Audio Bitrate" android:summary="Export audio bitrate (kbps)" android:key="p_audio_bitrate" android:defaultValue="128" android:enabled="true"/>
 		<EditTextPreference android:title="Video Framerate" android:summary="Export frame rate per second (fps)" android:key="p_video_framerate" android:defaultValue="29.97" android:enabled="true"/>
 	
-		<EditTextPreference android:title="Audio Samplerate" android:summary="Default audio sample rate (khz)" android:key="p_audio_samplerate" android:defaultValue="22050" android:enabled="true"/>
+		<EditTextPreference android:title="Audio Codec" android:summary="Export audio codec" android:key="p_audio_codec" android:defaultValue="aac" android:enabled="true"/>
+		
+		<EditTextPreference android:title="Audio Bitrate" android:summary="Export audio bitrate (kbps)" android:key="p_audio_bitrate" android:defaultValue="128" android:enabled="true"/>
+		<EditTextPreference android:title="Audio Samplerate" android:summary="Default audio record sample rate (khz)" android:key="p_audio_samplerate" android:defaultValue="22050" android:enabled="true"/>
+	
+		<EditTextPreference android:title="Audio Crossfade" android:summary="Default audio cross fade length" android:key="p_audio_xfade_len" android:defaultValue=".5" android:enabled="true"/>
 	
 	</PreferenceCategory>
 	
