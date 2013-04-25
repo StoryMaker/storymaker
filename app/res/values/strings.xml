@@ -289,5 +289,7 @@ Build number: <xliff:g id="build_number">%s</xliff:g>\n
     <string name="cancel">Cancel</string>
     <string name="play_or_share_exported_media_">Play or Share exported media?</string>
     <string name="err_storage_not_ready">The external storage (SDCard) does not appear to be available for reading and writing at this time. StoryMaker requires access to this for lesson and story project data. Please check your device and restart the pp.</string>
+    <string name="scene_s_">scene(s)</string>
+    <string name="clip_s_">clip(s)</string>
     
 </resources>

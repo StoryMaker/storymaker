@@ -256,13 +256,20 @@ public class ProjectsActivity extends BaseActivity {
             	for (Media media: mediaList)
             		if (media != null)
             		{
-            			ivIcon.setImageBitmap(Media.getThumbnail(ProjectsActivity.this,media,project));
+            			Bitmap bmp = Media.getThumbnail(ProjectsActivity.this,media,project);
+            			if (bmp != null)
+            				ivIcon.setImageBitmap(bmp);
             			break;
             		}
             }
             
-            String projectType = project.getScenesAsList().size() + " scene(s)";
+            int sceneCount = project.getScenesAsList().size();
+            int clipCount = project.getMediaAsList().size();
+            
+            String projectDesc = sceneCount + " " + getContext().getString(R.string.scene_s_) + ", " + clipCount + ' ' + getContext().getString(R.string.clip_s_);
 
+            tv.setText(projectDesc);
+            
             if (project.getStoryType() == Project.STORY_TYPE_VIDEO)
 	    	{
 	    		//video
@@ -288,7 +295,6 @@ public class ProjectsActivity extends BaseActivity {
 	
 	    	}
 	    	
-            tv.setText(projectType);
             
             return row;
         }

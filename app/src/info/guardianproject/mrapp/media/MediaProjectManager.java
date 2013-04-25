@@ -2,6 +2,7 @@ package info.guardianproject.mrapp.media;
 
 import info.guardianproject.mrapp.AppConstants;
 import info.guardianproject.mrapp.SceneEditorActivity;
+import info.guardianproject.mrapp.StoryMakerApp;
 import info.guardianproject.mrapp.media.exporter.MediaAudioExporter;
 import info.guardianproject.mrapp.media.exporter.MediaFastVideoExporter;
 import info.guardianproject.mrapp.media.exporter.MediaFullVideoExporter;
@@ -235,6 +236,8 @@ public class MediaProjectManager implements MediaManager {
          ArrayList<Media> mList = mProject.getMediaAsList();
          ArrayList<MediaDesc> alMediaIn = new ArrayList<MediaDesc>();
 
+         //is storage ready
+         ((StoryMakerApp)mActivity.getApplication()).isExternalStorageReady();
 
  		//first check that all of the input images are accessible
  		
@@ -242,7 +245,7 @@ public class MediaProjectManager implements MediaManager {
  		{
  			if (media == null || media.getPath() == null)
  			{
- 				throw new IOException("Input media object is null");
+ 				//throw new IOException("Input media object is null");
  			}
  			else if (!new File(media.getPath()).exists())
  			{

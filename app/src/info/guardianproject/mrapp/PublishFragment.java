@@ -207,7 +207,6 @@ public class PublishFragment extends Fragment {
 
 		@Override
 		public void handleMessage(Message msg) {
-			// TODO Auto-generated method stub
 			super.handleMessage(msg);
 			
 
@@ -359,48 +358,50 @@ public class PublishFragment extends Fragment {
         
         ytdesc += "\n\n" + getString(R.string.created_with_storymaker_tag);
 
-
-        mYouTubeClient = new YouTubeSubmit(null, title, ytdesc, new Date(),
+        if (doYouTube)
+        {
+        	mYouTubeClient = new YouTubeSubmit(null, title, ytdesc, new Date(),
                 mActivity, mHandlerPub, mActivity.getBaseContext());
-		mYouTubeClient.setDeveloperKey(getString(R.string.dev_key));
-
-        mThreadYouTubeAuth = new Thread() {
-            public void run() {
-
-
-        		Account account = mYouTubeClient.setYouTubeAccount(mMediaUploadAccount);
-
-	    			mYouTubeClient.getAuthTokenWithPermission(new AuthorizationListener<String>() {
-	                    @Override
-	                    public void onCanceled() {
-	                    }
+			mYouTubeClient.setDeveloperKey(getString(R.string.dev_key));
+        
+	        mThreadYouTubeAuth = new Thread() {
+	            public void run() {
 	
-	                    @Override
-	                    public void onError(Exception e) {
-	                  	  Log.d("YouTube","error on auth",e);
-	                  	 Message msgErr = new Message();
-	                     msgErr.what = -1;
-	                     msgErr.getData().putString("err", e.getLocalizedMessage());
-	                     mHandlerPub.sendMessage(msgErr);
-	                  	  
-	                    }
 	
-	                    @Override
-	                    public void onSuccess(String result) {
-	                    	mYouTubeClient.setClientLoginToken(result);
-	                      
-	                      Log.d("YouTube","got client token: " + result);
-	                      mThreadPublish.start();
-	                      
-
-	                    }});
-            	
-            	 
-            }
+	        		Account account = mYouTubeClient.setYouTubeAccount(mMediaUploadAccount);
+	
+		    			mYouTubeClient.getAuthTokenWithPermission(new AuthorizationListener<String>() {
+		                    @Override
+		                    public void onCanceled() {
+		                    }
+		
+		                    @Override
+		                    public void onError(Exception e) {
+		                  	  Log.d("YouTube","error on auth",e);
+		                  	 Message msgErr = new Message();
+		                     msgErr.what = -1;
+		                     msgErr.getData().putString("err", e.getLocalizedMessage());
+		                     mHandlerPub.sendMessage(msgErr);
+		                  	  
+		                    }
+		
+		                    @Override
+		                    public void onSuccess(String result) {
+		                    	mYouTubeClient.setClientLoginToken(result);
+		                      
+		                      Log.d("YouTube","got client token: " + result);
+		                      mThreadPublish.start();
+		                      
+	
+		                    }});
+	            	
+	            	 
+	            }
+	            
+	        	};
+        }
             
-        	};
-            
-        	mThreadPublish = new Thread() {
+        mThreadPublish = new Thread() {
 
             public void run ()
             {
@@ -508,16 +509,20 @@ public class PublishFragment extends Fragment {
                             }
                             
 
-                            handlerUI.sendEmptyMessage(0);
-
                             if (doStoryMaker) {
                             
-                            	 postToStoryMaker (title, desc, mediaEmbed, categories, medium, mediaService, mediaGuid);
-                            	
+                            	String postUrl = postToStoryMaker (title, desc, mediaEmbed, categories, medium, mediaService, mediaGuid);
+
+                                message.getData().putString("urlPost", postUrl);
+
                             	
                             }
                             
                         }
+                        
+
+                        handlerUI.sendEmptyMessage(0);
+
                         mHandlerPub.sendMessage(message);
                         
                     }
@@ -573,12 +578,9 @@ public class PublishFragment extends Fragment {
 	   	 }
     }
     
-    public void postToStoryMaker (String title, String desc, String mediaEmbed, String[] categories, String medium, String mediaService, String mediaGuid) throws MalformedURLException, XmlRpcFault
+    public String postToStoryMaker (String title, String desc, String mediaEmbed, String[] categories, String medium, String mediaService, String mediaGuid) throws MalformedURLException, XmlRpcFault
     {
 
-        Message message = mHandlerPub.obtainMessage(777);
-        message.getData().putString("fileMedia", mActivity.mdExported.path);
-        message.getData().putString("mime", mActivity.mdExported.mimeType);
 
         ServerManager sm = StoryMakerApp.getServerManager();
         sm.setContext(mActivity.getBaseContext());
@@ -592,9 +594,8 @@ public class PublishFragment extends Fragment {
         String postId = sm.post(title, descWithMedia, categories, medium, mediaService, mediaGuid);
         
         String urlPost = sm.getPostUrl(postId);
-        message.getData().putString("urlPost", urlPost);
-
-        mHandlerPub.sendMessage(message);
+        return urlPost;
+        
     }
     
     public void setYouTubeAuth (String token)

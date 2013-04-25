@@ -34,6 +34,8 @@ public class Media {
     protected int trimEnd;
     protected int duration;
 
+    public final static int IMAGE_SAMPLE_SIZE = 4;
+    
     public Media(Context context) {
         this.context = context;
     }
@@ -396,25 +398,29 @@ public class Media {
             {
 
                 final BitmapFactory.Options options = new BitmapFactory.Options();
-                options.inSampleSize = 8;
+                options.inSampleSize = IMAGE_SAMPLE_SIZE;
                 return BitmapFactory.decodeFile(fileThumb.getAbsolutePath(), options);
             }
             else
             {
                 Bitmap bmp = MediaUtils.getVideoFrame(media.getPath(), -1);
-                try {
-                    bmp.compress(Bitmap.CompressFormat.JPEG, 70, new FileOutputStream(fileThumb));
-                } catch (FileNotFoundException e) {
-                    Log.e(AppConstants.TAG, "could not cache video thumb", e);
+                
+                if (bmp != null)
+                {
+	                try {
+	                    bmp.compress(Bitmap.CompressFormat.JPEG, 70, new FileOutputStream(fileThumb));
+	                } catch (FileNotFoundException e) {
+	                    Log.e(AppConstants.TAG, "could not cache video thumb", e);
+	                }
                 }
-
+                
                 return bmp;
             }
         }
         else if (media.getMimeType().startsWith("image"))
         {
             final BitmapFactory.Options options = new BitmapFactory.Options();
-            options.inSampleSize = 8;
+            options.inSampleSize = IMAGE_SAMPLE_SIZE;
 
             return BitmapFactory.decodeFile(media.getPath(), options);
         }

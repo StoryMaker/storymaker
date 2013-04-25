@@ -194,7 +194,11 @@ public class HomeActivity extends BaseActivity {
     		}
     		
     		if (lesson.mImage != null)
-    			card.setImage(BitmapDrawable.createFromPath(lesson.mImage));
+    		{
+                final BitmapFactory.Options options = new BitmapFactory.Options();
+                options.inSampleSize = 2;
+    			card.setImage(new BitmapDrawable(BitmapFactory.decodeFile(lesson.mImage, options)));
+    		}
     		
     		card.setIcon(R.drawable.ic_home_lesson);
         		
