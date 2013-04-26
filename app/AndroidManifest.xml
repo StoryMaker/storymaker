@@ -251,6 +251,9 @@
          	android:theme="@android:style/Theme.Dialog"
          	 android:taskAffinity=""
             />
+
+<activity android:name="net.hockeyapp.android.UpdateActivity" />
+
         
     </application>
 

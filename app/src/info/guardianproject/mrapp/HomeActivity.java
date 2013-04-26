@@ -22,6 +22,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import net.hockeyapp.android.CrashManager;
+import net.hockeyapp.android.UpdateManager;
+
 import org.ffmpeg.android.MediaUtils;
 import org.holoeverywhere.app.AlertDialog;
 import org.holoeverywhere.app.ProgressDialog;
@@ -95,6 +98,8 @@ public class HomeActivity extends BaseActivity {
 
         checkForTor ();
         
+        checkForUpdates();
+        
     }
     
     
@@ -117,6 +122,8 @@ public class HomeActivity extends BaseActivity {
             .show();
 			
 		}
+		
+		 checkForCrashes();
 	}
 
 
@@ -823,6 +830,15 @@ public class HomeActivity extends BaseActivity {
       }
 	
 	}
+	
+	private void checkForCrashes() {
+	   CrashManager.register(this, AppConstants.HOCKEY_APP_ID);
+	 }
+
+	 private void checkForUpdates() {
+	   // Remove this for store builds!
+	   UpdateManager.register(this, AppConstants.HOCKEY_APP_ID);
+	 }
 
     
     

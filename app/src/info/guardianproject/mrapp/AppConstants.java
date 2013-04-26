@@ -28,7 +28,7 @@ public final static String TAG = "StoryMaker";
 
 	public final static int DEFAULT_CLIP_COUNT = 5;
 	
-	
+	public final static String HOCKEY_APP_ID = "b5b37e4bfd65abdc3791f41d4dee339d";
 	
 	
 	public final static String TOR_PROXY_HOST = "localhost";
