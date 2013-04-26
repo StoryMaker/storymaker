@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Locale;
 import java.util.StringTokenizer;
 
 import org.holoeverywhere.app.AlertDialog;
@@ -247,7 +248,7 @@ public class PublishFragment extends Fragment {
     }
 
     private void showLogin() {
-        startActivity(new Intent(mActivity, LoginActivity.class));
+        mActivity.startActivity(new Intent(mActivity, LoginActivity.class));
     }
 
     private String setUploadAccount() {
@@ -362,7 +363,7 @@ public class PublishFragment extends Fragment {
         {
         	mYouTubeClient = new YouTubeSubmit(null, title, ytdesc, new Date(),
                 mActivity, mHandlerPub, mActivity.getBaseContext());
-			mYouTubeClient.setDeveloperKey(getString(R.string.dev_key));
+			mYouTubeClient.setDeveloperKey(getString(R.string.dev_key,Locale.US));
         
 	        mThreadYouTubeAuth = new Thread() {
 	            public void run() {
@@ -492,7 +493,7 @@ public class PublishFragment extends Fragment {
                                     mediaGuid = scurl;
                                 }
                                 else {
-                                    SoundCloudUploader.installSoundCloud(mActivity.getBaseContext());
+                                    SoundCloudUploader.installSoundCloud(mActivity);
                                 }
                             }
                             else if (mActivity.mMPM.mProject.getStoryType() == Project.STORY_TYPE_PHOTO)

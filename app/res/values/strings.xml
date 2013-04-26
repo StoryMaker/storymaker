@@ -246,7 +246,7 @@ Build number: <xliff:g id="build_number">%s</xliff:g>\n
     <string name="delete_project_">Delete project?</string>
     <string name="add_new_clip_to_the_scene_">Add new clip to the scene?</string>
 
-    <string name="drawer_profile">Profile</string>
+    <string name="drawer_profile">Login</string>
 
     <string name="video_project_project_type">Video Project</string>
     <string name="photo_project_project_type">Photo Project</string>

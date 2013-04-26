@@ -65,7 +65,7 @@ public class YouTubeSubmit {
   public static final String STANDARD_UPLOAD_URL =
 		    "http://gdata.youtube.com/feeds/api/users/default/uploads";
 
-  private static final String CONTENT_TYPE = "application/atom+xml; charset=UTF-8";
+  private static final String CONTENT_TYPE = "application/atom+xml; charset=utf-8";
   private static final String DEFAULT_VIDEO_CATEGORY = "News";
   private static final String DEFAULT_VIDEO_TAGS = "mobile, storymaker";
   
@@ -213,7 +213,7 @@ public class YouTubeSubmit {
             } catch (Internal500ResumeException e500) { // TODO - this should not really happen
               if (submitCount<MAX_RETRIES) {
                 Log.w(LOG_TAG, e500.getMessage());
-                Log.d(LOG_TAG, String.format("Upload retry :%d.",submitCount));
+                Log.d(LOG_TAG, String.format("Upload retry :%d.",submitCount, Locale.US));
               } else {
                 Log.d(LOG_TAG, "Giving up");
                 Log.e(LOG_TAG, e500.getMessage());
@@ -267,7 +267,7 @@ public class YouTubeSubmit {
     String uploadUrl = uploadMetaDataToGetLocation(uploadEndPoint, slug, contentType, file.length(), true);
 
     Log.d(LOG_TAG, "uploadUrl=" + uploadUrl);
-    Log.d(LOG_TAG, String.format("Client token : %s ",this.clientLoginToken));
+    Log.d(LOG_TAG, String.format("Client token : %s ",this.clientLoginToken, Locale.US));
 
     this.currentFileSize = file.length();
     this.totalBytesUploaded = 0;
@@ -292,26 +292,26 @@ public class YouTubeSubmit {
 	        ResumeInfo resumeInfo = null;
 	        do {
 		          if (!shouldResume()) {
-		            Log.d(LOG_TAG, String.format("Giving up uploading '%s'.", uploadUrl));
+		            Log.d(LOG_TAG, String.format("Giving up uploading '%s'.", uploadUrl, Locale.US));
 		            throw e;
 		          }
 		          try {
 		            resumeInfo = resumeFileUpload(uploadUrl,file);
 		          } catch (IOException re) {
 		            // ignore
-		            Log.d(LOG_TAG, String.format("Failed retry attempt of : %s due to: '%s'.", uploadUrl, re.getMessage()));
+		            Log.d(LOG_TAG, String.format("Failed retry attempt of : %s due to: '%s'.", uploadUrl, re.getMessage(), Locale.US));
 		          }
 	        } while (resumeInfo == null);
 	        
-	        Log.d(LOG_TAG, String.format("Resuming stalled upload to: %s.", uploadUrl));
+	        Log.d(LOG_TAG, String.format("Resuming stalled upload to: %s.", uploadUrl, Locale.US));
 	       
 	        if (resumeInfo.videoId != null) { // upload actually complted despite the exception
 	          videoId = resumeInfo.videoId;
-	          Log.d(LOG_TAG, String.format("No need to resume video ID '%s'.", videoId));          
+	          Log.d(LOG_TAG, String.format("No need to resume video ID '%s'.", videoId, Locale.US));          
 	          break;
 	        } else {
 	          int nextByteToUpload = resumeInfo.nextByteToUpload;
-	          Log.d(LOG_TAG, String.format("Next byte to upload is '%d'.", nextByteToUpload));
+	          Log.d(LOG_TAG, String.format("Next byte to upload is '%d'.", nextByteToUpload, Locale.US, Locale.US));
 	          this.totalBytesUploaded = nextByteToUpload; // possibly rolling back the previosuly saved value
 	          fileSize = this.currentFileSize - nextByteToUpload;
 	          start = nextByteToUpload;
@@ -330,27 +330,21 @@ public class YouTubeSubmit {
     //provide information about the media that is being uploaded
     hPost.setHeader("X-Upload-Content-Type",contentType);
     hPost.setHeader("X-Upload-Content-Length",contentLength+"");
+    hPost.setHeader("X-Upload-Content-Encoding","UTF-8");
+    
     
     String atomData;
 
     String category = DEFAULT_VIDEO_CATEGORY;
-    this.tags = DEFAULT_VIDEO_TAGS;
+    tags = DEFAULT_VIDEO_TAGS;
 
     String template = Util.readFile(activity, R.raw.gdata).toString();
-    atomData = String.format(template, StringEscapeUtils.escapeHtml4(title),  StringEscapeUtils.escapeHtml4(description), category, this.tags);
-  
-    //set the length of this post
-   // hPost.setHeader("Content-Length", atomData.length()+"");
-
-    /*//this is already set
-    entity.setContentType(new BasicHeader("Content-Type",
-        "application/atom+xml"));
-
-    */
+    atomData = String.format(Locale.US,template, title,  description, category, tags);
     
     StringEntity entity = new StringEntity(atomData);
+    entity.setContentType(contentType);
+    entity.setContentEncoding("UTF-8");
     hPost.setEntity(entity);
-    
     
     HttpResponse hResp = httpClient.execute(hPost);
     
@@ -376,7 +370,7 @@ public class YouTubeSubmit {
       } else {
     	  
     	  
-        throw new IOException(String.format("response code='%s' (code %d)" + " for %s. Output=%s",
+        throw new IOException(String.format(Locale.US, "response code='%s' (code %d)" + " for %s. Output=%s",
             hResp.getStatusLine().getReasonPhrase(), responseCode, hPost.getRequestLine().getUri(),errMsg.toString()));
         
         
@@ -399,14 +393,14 @@ public class YouTubeSubmit {
     
     // some mobile proxies do not support PUT, using X-HTTP-Method-Override to get around this problem
     if (isFirstRequest()) {
-      Log.d(LOG_TAG, String.format("First time...Uploaded %d bytes so far.", (int)totalBytesUploaded));
+      Log.d(LOG_TAG, String.format("First time...Uploaded %d bytes so far.", (int)totalBytesUploaded, Locale.US));
 
       
    
     } else {
       
      
-    	Log.d(LOG_TAG, String.format("Retry: Uploaded %d bytes so far.",
+    	Log.d(LOG_TAG, String.format(Locale.US, "Retry: Uploaded %d bytes so far.",
         (int)totalBytesUploaded));
     }
     
@@ -444,7 +438,7 @@ public class YouTubeSubmit {
         String latLng = null;
         if (this.videoLocation != null) {
           latLng = String.format("lat=%f lng=%f", this.videoLocation.getLatitude(),
-              this.videoLocation.getLongitude());
+              this.videoLocation.getLongitude(), Locale.US);
         }
         */
         
@@ -456,17 +450,17 @@ public class YouTubeSubmit {
       } else if (responseCode == 200) {
         Header[] headers = hResp.getAllHeaders();
         
-        Log.d(LOG_TAG, String.format("Headers keys %s.", headers.length));
+        Log.d(LOG_TAG, String.format("Headers keys %s.", headers.length, Locale.US));
         for (Header header : headers) {
-          Log.d(LOG_TAG, String.format("Header key %s value %s.", header.getName(), header.getValue()));          
+          Log.d(LOG_TAG, String.format("Header key %s value %s.", header.getName(), header.getValue(), Locale.US));          
         }
         Log.w(LOG_TAG, "Received 200 response during resumable uploading");
-        throw new IOException(String.format("Unexpected response code : responseCode=%d responseMessage=%s", responseCode,
+        throw new IOException(String.format(Locale.US,"Unexpected response code : responseCode=%d responseMessage=%s", responseCode,
               hResp.getStatusLine().getReasonPhrase()));
       } else {
     	  
         if ((responseCode + "").startsWith("5")) {
-          String error = String.format("responseCode=%d responseMessage=%s", responseCode,
+          String error = String.format(Locale.US,"responseCode=%d responseMessage=%s", responseCode,
         		  hResp.getStatusLine().getReasonPhrase());
           Log.w(LOG_TAG, error);
           // TODO - this exception will trigger retry mechanism to kick in
@@ -480,7 +474,7 @@ public class YouTubeSubmit {
         } else {
           // TODO - this case is not handled properly yet
           Log.w(LOG_TAG, String.format("Unexpected return code : %d %s while uploading :%s", responseCode,
-        		  hResp.getStatusLine().getReasonPhrase(), uploadUrl));
+        		  hResp.getStatusLine().getReasonPhrase(), uploadUrl, Locale.US));
         }
         
       }
@@ -580,7 +574,7 @@ public class YouTubeSubmit {
    {
        double percent = (totalBytesUploaded / currentFileSize) * 100;
 
-	   String status = String.format( "%,d/%,d bytes transfered",  Math.round(totalBytesUploaded),  Math.round(currentFileSize));
+	   String status = String.format ("%,d/%,d bytes transfered",  Math.round(totalBytesUploaded),  Math.round(currentFileSize));
        
        Message msg = handler.obtainMessage(888);
        
@@ -632,10 +626,10 @@ public class YouTubeSubmit {
       int nextByteToUpload;
       String range = hResp.getFirstHeader("Range").getValue();
       if (range == null) {
-        Log.d(LOG_TAG, String.format("PUT to %s did not return 'Range' header.", uploadUrl));
+        Log.d(LOG_TAG, String.format("PUT to %s did not return 'Range' header.", uploadUrl, Locale.US));
         nextByteToUpload = 0;
       } else {
-        Log.d(LOG_TAG, String.format("Range header is '%s'.", range));
+        Log.d(LOG_TAG, String.format("Range header is '%s'.", range, Locale.US));
         String[] parts = range.split("-");
         if (parts.length > 1) {
           nextByteToUpload = Integer.parseInt(parts[1]) + 1;
@@ -649,10 +643,10 @@ public class YouTubeSubmit {
     } else if (respCode == 500) {
       // TODO this is a workaround for current problems with resuming uploads while switching transport (Wifi->EDGE)
       throw new Internal500ResumeException(String.format("Unexpected response for PUT to %s: %s " +
-      		"(code %d)", uploadUrl, respMessage, respCode));
+      		"(code %d)", uploadUrl, respMessage, respCode, Locale.US));
     } else {
       throw new IOException(String.format("Unexpected response for PUT to %s: %s " +
-      		"(code %d)", uploadUrl, respMessage, respCode));
+      		"(code %d)", uploadUrl, respMessage, respCode, Locale.US));
     }
   }
 
@@ -665,9 +659,9 @@ public class YouTubeSubmit {
     }
     try {
       int sleepSeconds = (int) Math.pow(BACKOFF, this.numberOfRetries);
-      Log.d(LOG_TAG,String.format("Zzzzz for : %d sec.", sleepSeconds));
+      Log.d(LOG_TAG,String.format("Zzzzz for : %d sec.", sleepSeconds, Locale.US));
       Thread.currentThread().sleep(sleepSeconds * 1000);
-      Log.d(LOG_TAG,String.format("Zzzzz for : %d sec done.", sleepSeconds));      
+      Log.d(LOG_TAG,String.format("Zzzzz for : %d sec done.", sleepSeconds, Locale.US));      
     } catch (InterruptedException se) {
       se.printStackTrace();
       return false;
@@ -702,7 +696,9 @@ public class YouTubeSubmit {
 
 	    request.setHeader("GData-Version", "2");
 	    
-	    request.setHeader("X-GData-Key", "key=" + mDevKey);
+	    String formattedDevKeyHeader = String.format(Locale.US, "key=%s",mDevKey);
+	    Log.d(AppConstants.TAG,"dev key header=" + formattedDevKeyHeader);
+	    request.setHeader("X-GData-Key", formattedDevKeyHeader);
 	  
 	    if (clientLoginToken != null) //should this ever be null?
 	    {
@@ -713,8 +709,9 @@ public class YouTubeSubmit {
 	    	}
 	    	else
 	    	{
-	    		request.setHeader("Authorization", 
-	    				mAuthMode + " auth=" + clientLoginToken + "");
+	    		String authHeader = String.format(Locale.US,"%s auth=%s",mAuthMode,clientLoginToken);
+	    		
+	    		request.setHeader("Authorization",authHeader);
 	    	}
 	    }
 	    
@@ -778,7 +775,7 @@ public class YouTubeSubmit {
           Log.d(LOG_TAG, "lng=" + lng);
 
           TextView locationText = (TextView) findViewById(R.id.locationLabel);
-          locationText.setText("Geo Location: " + String.format("lat=%.2f lng=%.2f", lat, lng));
+          locationText.setText("Geo Location: " + String.format(Locale.US,"lat=%.2f lng=%.2f", lat, lng));
           locationManager.removeUpdates(this);
         } else {
           Log.d(LOG_TAG, "location is null");

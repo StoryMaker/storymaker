@@ -2,9 +2,11 @@ package info.guardianproject.mrapp.media.exporter;
 
 import java.io.File;
 import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Locale;
 
 import net.sourceforge.sox.SoxController;
 
@@ -296,9 +298,11 @@ public class MediaMediumVideoExporter implements Runnable {
 	 * 	hh:mm:ss:ss.frac
 	 * @param seconds
 	 */
-	public String formatTimePeriod(double seconds) {
-		String seconds_frac = new DecimalFormat("#.##").format(seconds);
-		return String.format("0:0:%s", seconds_frac);
+ 	public String formatTimePeriod(double seconds) {
+		DecimalFormat df = new DecimalFormat("#.##");
+		df.setDecimalFormatSymbols(new DecimalFormatSymbols(Locale.US));
+		 String seconds_frac = df.format(seconds);
+		return String.format(Locale.US, "0:0:%s", seconds_frac);
 	}
 	
 	/**

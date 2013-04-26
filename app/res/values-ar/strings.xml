@@ -174,10 +174,6 @@
   <string name="help_clip_select">انتقل إلى اختيار نوع اللقطة، ثم انقر صورة اللقطة لبدء الفيديو أو الصورة أو اللقطة الصوتية</string>
   <!--youtube upload-->
   <string name="yt_account_prompt">اختر حسابك على جوجل/يوتيوب</string>
-  <string name="dev_key">TODO-dev-key</string>
-  <string name="client_id">TODO-client-ID</string>
-  <string name="default_ytd_domain">TODO-appname.appspot.com</string>
-  <string name="default_ytd_domain_name">TODO-name – مثلاً منطقة خليج سان فرانسيسكو</string>
   <string name="lesson_status_have_not_started">لم تبدأ</string>
   <string name="lessons_congratulations_you_have_completed_the_lesson_">تهانينا. لقد أتممت الدرس!</string>
   <string name="lesson_status_in_progress">جاري التنفيذ</string>
@@ -187,4 +183,9 @@
           <string name="_lesson_complete">الدرس الكامل</string>
       
   
+              <string name="drawer_profile">دخول</string>
+          
+    <string name="action_render">أصدر</string>
+    <string name="action_play">عزف</string>
+    <string name="action_share">شارك</string>
 </resources>

@@ -2,9 +2,9 @@
 <resources>
     <string name="dev_key">AI39si7bADf48aTTEEISvRUNn2E8IAdgCLAX-hkgVqN1rXWE9jlinNsSOOQFAyQvltWsa9B7044n_c5OdCkthjhhJnH3oSRu0A</string>
     
-    
-    <string name="client_id_release">422811616434-f0k3leqp86aphojq5taou5531vcs0kh2.apps.googleusercontent.com</string>
-    
+  <!--   <string name="client_id_release">422811616434-f0k3leqp86aphojq5taou5531vcs0kh2.apps.googleusercontent.com</string>
+     -->
+     
     <string name="client_id_debug">422811616434-03efee9fu30quev60avpopvvg8osird3.apps.googleusercontent.com</string>
     <string name="client_id_debug_secret">UsH4wlEuM9eEy7K1VBbrvbH8</string>
 </resources>

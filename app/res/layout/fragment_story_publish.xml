@@ -3,13 +3,20 @@
   xmlns:android="http://schemas.android.com/apk/res/android"
   android:layout_width="fill_parent"
   android:layout_height="fill_parent"
-  android:fillViewport="true"
-  android:background="#EEEEEE">
+  android:fillViewport="true">
 
-  <RelativeLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content" android:background="#ffffff">
-
+    
+  <LinearLayout 
+      android:orientation="vertical" 
+         android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="#ffffff"
+        >
+        
+  <LinearLayout 
+      android:orientation="horizontal" 
+         android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
     <ImageView
         android:id="@+id/storyThumb"
         android:layout_width="140sp"
@@ -28,10 +35,10 @@
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginTop="10dp"
-        android:layout_toRightOf="@+id/storyThumb"
         android:hint="@string/story_publish_story_title"
         android:textAppearance="?android:attr/textAppearanceMedium"
         />
+    </LinearLayout>
 
     <!-- 
     <TextView
@@ -77,11 +84,15 @@
         android:layout_marginTop="5dp"
         android:background="@android:color/darker_gray" />
 
+    
+  <LinearLayout 
+      android:orientation="horizontal" 
+         android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
     <TextView
         android:id="@+id/textViewSection"
         android:layout_width="wrap_content"
         android:layout_height="40sp"
-        android:layout_below="@+id/divider1"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="5dp"
         android:gravity="center_vertical"
@@ -95,11 +106,9 @@
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/divider2"
         android:layout_alignParentRight="true"
-        android:layout_below="@+id/divider1"
-        android:layout_toRightOf="@+id/textViewSection"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:paddingRight="10dp" />
-
+</LinearLayout>
     <View
         android:id="@+id/divider2"
         android:layout_width="fill_parent"
@@ -143,13 +152,16 @@
         android:background="@android:color/darker_gray" />
          -->
  
+  <LinearLayout 
+      android:orientation="horizontal" 
+         android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
     <TextView
         android:id="@+id/textViewLocation"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/editTextLocation"
         android:layout_alignTop="@+id/editTextLocation"
-        android:layout_below="@+id/divider2"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="5dp"
         android:gravity="center_vertical"
@@ -162,20 +174,18 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
-        android:layout_below="@+id/divider2"
-        android:layout_toRightOf="@+id/textViewLocation"
         android:layout_weight="1"
         android:ems="10"
         android:hint="@string/story_publish_location_hint" />
- 
+ </LinearLayout>
     <View
         android:id="@+id/divider4"
         android:layout_width="fill_parent"
         android:layout_height="1dp"
-        android:layout_below="@+id/editTextLocation"
         android:layout_marginBottom="5dp"
         android:layout_marginTop="5dp"
         android:background="@android:color/darker_gray" />
+    
 <!-- 
     <TextView
         android:id="@+id/editTextShare"
@@ -353,12 +363,14 @@
         android:background="@android:color/darker_gray" />
 -->
   
-  
+  <LinearLayout 
+      android:orientation="horizontal"
+        android:layout_below="@+id/divider4"    android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
      <Button
         android:id="@+id/btnRender"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/divider4"
         android:layout_marginLeft="5dp"
         android:gravity="center_vertical"
         android:text="@string/action_render" />
@@ -367,9 +379,7 @@
         android:id="@+id/btnPlay"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/divider4"
         android:layout_marginLeft="5dp"
-                android:layout_toRightOf="@+id/btnRender"
         
         android:gravity="center_vertical"
         android:enabled="false"
@@ -379,23 +389,20 @@
         android:id="@+id/btnShare"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/divider4"
         android:layout_marginLeft="5dp"
         android:gravity="center_vertical"
         android:text="@string/action_share"
-        android:layout_toRightOf="@+id/btnPlay"
          />
      
     <Button
         android:id="@+id/btnPublish"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/divider4"
         android:layout_marginLeft="5dp"
-        android:layout_toRightOf="@+id/btnShare"
         android:gravity="center_vertical"
         android:text="@string/action_publish" />
         
+    </LinearLayout>
 
-</RelativeLayout>
+  </LinearLayout>
 </ScrollView>

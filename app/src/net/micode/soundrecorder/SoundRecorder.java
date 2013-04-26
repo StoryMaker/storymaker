@@ -22,6 +22,7 @@ import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Locale;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -956,7 +957,7 @@ public class SoundRecorder extends Activity implements Button.OnClickListener,
         boolean ongoing = state == Recorder.RECORDING_STATE || state == Recorder.PLAYING_STATE;
 
         long time = mRecorder.progress();
-        String timeStr = String.format(mTimerFormat, time / 60, time % 60);
+        String timeStr = String.format(mTimerFormat, time / 60, time % 60, Locale.US);
         mTimerLayout.removeAllViews();
         for (int i = 0; i < timeStr.length(); i++) {
             mTimerLayout.addView(getTimerImage(timeStr.charAt(i)));
@@ -973,7 +974,7 @@ public class SoundRecorder extends Activity implements Button.OnClickListener,
 
     private void setTimerView(float progress) {
         long time = (long) (progress * mRecorder.sampleLength());
-        String timeStr = String.format(mTimerFormat, time / 60, time % 60);
+        String timeStr = String.format(mTimerFormat, time / 60, time % 60, Locale.US);
         mTimerLayout.removeAllViews();
         for (int i = 0; i < timeStr.length(); i++) {
             mTimerLayout.addView(getTimerImage(timeStr.charAt(i)));
@@ -1098,9 +1099,9 @@ public class SoundRecorder extends Activity implements Button.OnClickListener,
 
                     mVUMeterLayout.setVisibility(View.GONE);
                     mSeekBarLayout.setVisibility(View.VISIBLE);
-                    mStartTime.setText(String.format(mTimerFormat, 0, 0));
+                    mStartTime.setText(String.format(mTimerFormat, 0, 0, Locale.US));
                     mTotalTime.setText(String.format(mTimerFormat, mRecorder.sampleLength() / 60,
-                            mRecorder.sampleLength() % 60));
+                            mRecorder.sampleLength() % 60, Locale.US));
                 }
 
                 if (mRecorder.sampleLength() > 0) {

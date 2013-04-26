@@ -481,8 +481,12 @@ public class XmlRpcClient extends XmlRpcParser implements XmlRpcInvocationHandle
 		
 		request.setHeader("Content-Type", "text/xml; charset=" +
 	            XmlRpcMessages.getString( "XmlRpcClient.Encoding" ));
-		    
-
+		
+		entity.setContentEncoding(XmlRpcMessages.getString( "XmlRpcClient.Encoding" ));
+		entity.setContentType("text/xml; charset=" +
+	            XmlRpcMessages.getString( "XmlRpcClient.Encoding" ));
+		
+		
         if ( requestProperties != null )
         {
             for ( Iterator propertyNames = requestProperties.keySet().iterator();
