@@ -73,7 +73,7 @@ public class StoryMakerApp extends Application {
 		    String lessonUrlPath = mBaseUrl + URL_PATH_LESSONS + mLocale.getLanguage() + "/";
 		    String lessonLocalPath = "lessons/" + mLocale.getLanguage();
 		    
-		    if (customLessonLoc != null)
+		    if (customLessonLoc != null && customLessonLoc.length() > 0)
 		    {
 		    	if (customLessonLoc.toLowerCase().startsWith("http"))
 		    	{
@@ -161,6 +161,7 @@ public class StoryMakerApp extends Application {
 	            config.locale = mLocale;
 	            getResources().updateConfiguration(config, getResources().getDisplayMetrics());
 	            updatedLocale = true;
+	            lang = config.locale.getLanguage();
 	        }
 	        else if (Locale.getDefault().getLanguage().equalsIgnoreCase(LANG_ARABIC))
 	        {
@@ -169,6 +170,7 @@ public class StoryMakerApp extends Application {
 		            config.locale = mLocale;
 		            getResources().updateConfiguration(config, getResources().getDisplayMetrics());
 		            updatedLocale = true;
+		            lang = config.locale.getLanguage();
 	        }
 	        
 	        if (updatedLocale)
