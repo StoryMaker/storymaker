@@ -426,11 +426,16 @@ public class Media {
         }
         else if (media.getMimeType().startsWith("audio"))
         {
-            return BitmapFactory.decodeResource(context.getResources(), R.drawable.thumb_audio);
+        	 final BitmapFactory.Options options = new BitmapFactory.Options();
+             options.inSampleSize = IMAGE_SAMPLE_SIZE;
+
+            return BitmapFactory.decodeResource(context.getResources(), R.drawable.thumb_audio,  options);
         }
         else 
         {
-            return BitmapFactory.decodeResource(context.getResources(), R.drawable.thumb_complete);
+        	 final BitmapFactory.Options options = new BitmapFactory.Options();
+             options.inSampleSize = IMAGE_SAMPLE_SIZE;
+            return BitmapFactory.decodeResource(context.getResources(), R.drawable.thumb_complete,options);
         }
     }
 }

@@ -1,6 +1,7 @@
 package info.guardianproject.mrapp.lessons;
 
 import info.guardianproject.mrapp.AppConstants;
+import info.guardianproject.mrapp.R;
 import info.guardianproject.mrapp.model.Lesson;
 import info.guardianproject.onionkit.trust.StrongHttpsClient;
 
@@ -302,8 +303,10 @@ public class LessonManager implements Runnable {
 					try
 					{
 						if (mListener != null)
-							mListener.lessonLoadingStatusMessage("Loading " + (i+1) + " of " + jarray.length() + " lessons");
-								
+						{
+							mListener.lessonLoadingStatusMessage(String.format("%d" + mContext.getString(R.string._of_) + "%d",(i+1),jarray.length()));
+						}
+						
 						JSONObject jobj = jarray.getJSONObject(i);
 						
 						String title = jobj.getString("title");

@@ -147,7 +147,7 @@ public class LessonListView extends ListView implements LessonManagerListener {
     		}
     		else
     		{
-    			lg.mStatus = lessonsComplete + getContext().getString(R.string._of_) + lessons.size() + getContext().getString(R.string._lesson_complete);
+    			lg.mStatus = String.format("%d" + getContext().getString(R.string._of_) + "%d" + getContext().getString(R.string._lesson_complete),lessonsComplete,lessons.size());
     		}
     		mLessonGroups.add(lg);
     	}
