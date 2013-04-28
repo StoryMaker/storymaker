@@ -292,4 +292,14 @@ Build number: <xliff:g id="build_number">%s</xliff:g>\n
     <string name="scene_s_">scene(s)</string>
     <string name="clip_s_">clip(s)</string>
     
+    <string name="sc_app_not_found">SoundCloud App not found!</string>
+    <string name="sc_app_not_found_message">Do you want to install it now?</string>
+    <string name="no_active_sc_account">No active SoundCloud account found, please login/sign up</string>
+    <string name="operation_canceled">Operation canceled</string>
+    <string name="could_not_get_token">Could not get token</string>
+    <string name="getting_details">Getting user details</string>
+    <string name="could_not_create_account">Could not create account</string>
+    <string name="uploading">Uploading...</string>
+    <string name="canceled">Canceled upload</string>
+    
 </resources>
