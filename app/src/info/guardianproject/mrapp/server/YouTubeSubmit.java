@@ -339,10 +339,10 @@ public class YouTubeSubmit {
     tags = DEFAULT_VIDEO_TAGS;
 
     String template = Util.readFile(activity, R.raw.gdata).toString();
-    atomData = String.format(template, title,  description, category, tags);
+    
+    atomData = String.format(template, StringEscapeUtils.escapeHtml4(title),  StringEscapeUtils.escapeHtml4(description), category, tags);
     
     StringEntity entity = new StringEntity(atomData,HTTP.UTF_8);
-//    entity.setContentType(contentType);
     hPost.setEntity(entity);
     
     HttpResponse hResp = httpClient.execute(hPost);
