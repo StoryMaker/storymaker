@@ -132,7 +132,9 @@ public class HomeActivity extends BaseActivity {
 
         protected void onPreExecute() {
             super.onPreExecute();
-            mLoading = ProgressDialog.show(HomeActivity.this, null, "Please wait...");
+            
+            if (mLoading == null || (!mLoading.isShowing()))
+            	mLoading = ProgressDialog.show(HomeActivity.this, null, "Please wait...", true, true);
         }
         protected Integer doInBackground(String... params) {
             try {
