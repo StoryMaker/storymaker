@@ -6,9 +6,9 @@ import info.guardianproject.mrapp.server.LoginActivity;
 import info.guardianproject.mrapp.server.OAuth2ClientCredentials;
 import info.guardianproject.mrapp.server.OAuthAccessTokenActivity;
 import info.guardianproject.mrapp.server.ServerManager;
-import info.guardianproject.mrapp.server.SoundCloudUploader;
 import info.guardianproject.mrapp.server.YouTubeSubmit;
 import info.guardianproject.mrapp.server.Authorizer.AuthorizationListener;
+import info.guardianproject.mrapp.server.soundcloud.SoundCloudUploader;
 
 import java.io.File;
 import java.io.IOException;
@@ -480,17 +480,26 @@ public class PublishFragment extends Fragment {
 
                                 if (installed) {
                                 	
-                                    String scurl = SoundCloudUploader.buildSoundCloudURL(
-                                            mMediaUploadAccount, mediaFile, title);
-                                    mediaEmbed = "[soundcloud]" + scurl + "[/soundcloud]";
-
+                                
+                                
                                     String scDesc = desc + "\n\n" + getString(R.string.created_with_storymaker_tag);;
+                                    
+                                    SoundCloudUploader scu = new SoundCloudUploader();
+                                    
+                                    String scurl = scu.uploadSound(mediaFile, title, scDesc,
+                                            REQ_SOUNDCLOUD, mActivity, mHandlerPub);
 
-                                    SoundCloudUploader.uploadSound(mediaFile, title, scDesc,
-                                            REQ_SOUNDCLOUD, mActivity);
-
-                                    mediaService = "soundcloud";
-                                    mediaGuid = scurl;
+                                    if (scurl != null)
+                                    {
+		                                mediaEmbed = "[soundcloud]" + scurl + "[/soundcloud]";
+		
+		                                mediaService = "soundcloud";
+		                                mediaGuid = scurl;
+                                    }
+                                    else
+                                    {
+                                    	throw new IOException("SoundCloud upload failed");
+                                    }
                                 }
                                 else {
                                     SoundCloudUploader.installSoundCloud(mActivity);
