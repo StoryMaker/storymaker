@@ -133,7 +133,7 @@ public class EditorBaseActivity extends BaseActivity {
                 break;
                 case -1:
                 	
-                    if (mProgressDialog != null)
+                    if (mProgressDialog != null && mProgressDialog.isShowing())
                     {
                         mProgressDialog.dismiss();
                         mProgressDialog = null;
