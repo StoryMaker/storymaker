@@ -39,6 +39,7 @@ import ch.boye.httpclientandroidlib.client.methods.HttpPost;
 import ch.boye.httpclientandroidlib.entity.AbstractHttpEntity;
 import ch.boye.httpclientandroidlib.entity.StringEntity;
 import ch.boye.httpclientandroidlib.message.BasicHeader;
+import ch.boye.httpclientandroidlib.protocol.HTTP;
 
 /**
  *  An XmlRpcClient represents a connection to an XML-RPC enabled server. It
@@ -339,7 +340,7 @@ public class XmlRpcClient extends XmlRpcParser implements XmlRpcInvocationHandle
             writer.write( "</methodCall>" );
 
             String xmlOut = ( ( StringWriter ) writer ).getBuffer().toString();
-            StringEntity entity = new StringEntity(xmlOut);
+            StringEntity entity = new StringEntity(xmlOut,HTTP.UTF_8);
             entity.setContentType(
             		new BasicHeader("Content-Type", "text/xml; charset=" + XmlRpcMessages.getString( "XmlRpcClient.Encoding" ))
             );

@@ -717,8 +717,10 @@ public class Wordpress {
    */
   @SuppressWarnings("boxing")
   public String newPost(Page page, boolean publish) throws XmlRpcFault {
+	  XmlRpcStruct struct = page.toXmlRpcStruct();
+	 
     return this.mw.newPost(0, this.username, this.password,
-        page.toXmlRpcStruct(), publish);
+        struct, publish);
   }
 
   /**

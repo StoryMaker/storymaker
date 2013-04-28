@@ -56,6 +56,7 @@ import ch.boye.httpclientandroidlib.HttpResponse;
 import ch.boye.httpclientandroidlib.client.methods.HttpPost;
 import ch.boye.httpclientandroidlib.entity.AbstractHttpEntity;
 import ch.boye.httpclientandroidlib.entity.StringEntity;
+import ch.boye.httpclientandroidlib.protocol.HTTP;
 
 public class YouTubeSubmit {
 
@@ -65,7 +66,7 @@ public class YouTubeSubmit {
   public static final String STANDARD_UPLOAD_URL =
 		    "http://gdata.youtube.com/feeds/api/users/default/uploads";
 
-  private static final String CONTENT_TYPE = "application/atom+xml; charset=utf-8";
+  private static final String CONTENT_TYPE = "application/atom+xml; charset=UTF-8";
   private static final String DEFAULT_VIDEO_CATEGORY = "News";
   private static final String DEFAULT_VIDEO_TAGS = "mobile, storymaker";
   
@@ -330,8 +331,7 @@ public class YouTubeSubmit {
     //provide information about the media that is being uploaded
     hPost.setHeader("X-Upload-Content-Type",contentType);
     hPost.setHeader("X-Upload-Content-Length",contentLength+"");
-    hPost.setHeader("X-Upload-Content-Encoding","UTF-8");
-    
+    hPost.setHeader("X-Upload-Content-Encoding","utf-8");
     
     String atomData;
 
@@ -339,11 +339,10 @@ public class YouTubeSubmit {
     tags = DEFAULT_VIDEO_TAGS;
 
     String template = Util.readFile(activity, R.raw.gdata).toString();
-    atomData = String.format(Locale.US,template, title,  description, category, tags);
+    atomData = String.format(template, title,  description, category, tags);
     
-    StringEntity entity = new StringEntity(atomData);
-    entity.setContentType(contentType);
-    entity.setContentEncoding("UTF-8");
+    StringEntity entity = new StringEntity(atomData,HTTP.UTF_8);
+//    entity.setContentType(contentType);
     hPost.setEntity(entity);
     
     HttpResponse hResp = httpClient.execute(hPost);

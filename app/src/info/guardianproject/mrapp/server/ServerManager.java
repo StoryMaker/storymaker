@@ -92,6 +92,7 @@ public class ServerManager {
 	public void connect (String username, String password) throws MalformedURLException, XmlRpcFault
 	{
 		XmlRpcClient.setContext(mContext);
+		
 
 	    boolean useTor = mSettings.getBoolean("pusetor", false);
 	    
@@ -107,6 +108,7 @@ public class ServerManager {
 		
 		Log.d(AppConstants.TAG,"Logging into Wordpress: " + username + '@' + mServerUrl + PATH_XMLRPC);
 		mWordpress = new Wordpress(username, password, mServerUrl + PATH_XMLRPC);	
+		
 		mWordpress.getRecentPosts(1); //need to do a test to force authentication
 	}
 	
@@ -220,6 +222,7 @@ public class ServerManager {
 			custom_fields.add(struct);
 
 		}
+		
 		
 
 		page.setCustom_fields(custom_fields);
