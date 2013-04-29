@@ -1,21 +1,20 @@
 package info.guardianproject.mrapp;
 
-import info.guardianproject.mrapp.StoryTemplateChooserActivity.MyAdapter;
-import info.guardianproject.mrapp.StoryTemplateChooserActivity.MyFragment;
 import info.guardianproject.mrapp.lessons.LessonManager;
-import info.guardianproject.mrapp.media.MediaProjectManager;
 import info.guardianproject.mrapp.model.Lesson;
 import info.guardianproject.mrapp.model.LessonGroup;
 import info.guardianproject.mrapp.model.Media;
 import info.guardianproject.mrapp.model.Project;
 import info.guardianproject.mrapp.server.LoginActivity;
 import info.guardianproject.mrapp.ui.MyCard;
-import info.guardianproject.mrapp.ui.MyCardPager;
 import info.guardianproject.onionkit.ui.OrbotHelper;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -25,7 +24,6 @@ import java.util.Locale;
 import net.hockeyapp.android.CrashManager;
 import net.hockeyapp.android.UpdateManager;
 
-import org.ffmpeg.android.MediaUtils;
 import org.holoeverywhere.app.AlertDialog;
 import org.holoeverywhere.app.ProgressDialog;
 
@@ -43,6 +41,7 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -51,16 +50,13 @@ import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.View.OnClickListener;
-import android.widget.Button;
+import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.fima.cardsui.views.CardUI;
-import com.slidingmenu.lib.SlidingMenu;
 import com.viewpagerindicator.CirclePageIndicator;
 
 public class HomeActivity extends BaseActivity {
@@ -678,56 +674,30 @@ public class HomeActivity extends BaseActivity {
 	}
     
 	void collectAndSendLog(){
-        final PackageManager packageManager = getPackageManager();
-        final Intent intent = new Intent(ACTION_SEND_LOG);
-        List<ResolveInfo> list = packageManager.queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY);
-        final boolean isInstalled = list.size() > 0;
-        
-        if (!isInstalled){
-            new AlertDialog.Builder(this)
-            .setTitle(getString(R.string.app_name))
-            .setIcon(android.R.drawable.ic_dialog_info)
-            .setMessage("Install the free and open source Log Collector application to collect the device log and send it to the developer.")
-            .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener(){
-                public void onClick(DialogInterface dialog, int whichButton){
-                    Intent marketIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("market://search?q=pname:" + LOG_COLLECTOR_PACKAGE_NAME));
-                    marketIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    startActivity(marketIntent); 
-                }
-            })
-            .setNegativeButton(android.R.string.cancel, null)
-            .show();
-        }
-        else{
-            new AlertDialog.Builder(this)
-            .setTitle(getString(R.string.app_name))
-            .setIcon(android.R.drawable.ic_dialog_info)
-            .setMessage("Run Log Collector application.\nIt will collect the device log and send it to <support email>.\nYou will have an opportunity to review and modify the data being sent.")
-            .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener(){
-                public void onClick(DialogInterface dialog, int whichButton){
-                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    intent.putExtra(EXTRA_SEND_INTENT_ACTION, Intent.ACTION_SEND);
-                    final String email = "";
-                    intent.putExtra(EXTRA_DATA, Uri.parse("mailto:" + email));
-                    intent.putExtra(EXTRA_ADDITIONAL_INFO, "Additonal info: <additional info from the device (firmware revision, etc.)>\n");
-                    intent.putExtra(Intent.EXTRA_SUBJECT, "Application failure report");
-                    
-                    intent.putExtra(EXTRA_FORMAT, "time");
-                    
-                    //The log can be filtered to contain data relevant only to your app
-                    /*String[] filterSpecs = new String[3];
-                    filterSpecs[0] = "AndroidRuntime:E";
-                    filterSpecs[1] = TAG + ":V";
-                    filterSpecs[2] = "*:S";
-                    intent.putExtra(EXTRA_FILTER_SPECS, filterSpecs);*/
-                    
-                    startActivity(intent);
-                }
-            })
-            .setNegativeButton(android.R.string.cancel, null)
-            .show();
-        }
+		
+		File fileLog = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS),"storymakerlog.txt");
+		fileLog.getParentFile().mkdirs();
+		
+		try
+		{
+			writeLogToDisk("StoryMaker",fileLog);
+			writeLogToDisk("FFMPEG",fileLog);
+			writeLogToDisk("SOX",fileLog);
+			
+			Intent i = new Intent(Intent.ACTION_SEND);
+			i.putExtra(Intent.EXTRA_EMAIL, "help@guardianproject.info");
+			i.putExtra(Intent.EXTRA_SUBJECT, "StoryMaker Log");
+			i.putExtra(Intent.EXTRA_TEXT, "StoryMaker log email: " + new Date().toGMTString());
+			i.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(fileLog));
+			i.setType("text/plain");
+			startActivity(Intent.createChooser(i, "Send mail"));
+		}
+		catch (IOException e)
+		{
+			
+		}
     }
+	
 	private void showPreferences ()
 	{
 		Intent intent = new Intent(this,SimplePreferences.class);
@@ -843,5 +813,26 @@ public class HomeActivity extends BaseActivity {
 	 }
 
     
+	 private void writeLogToDisk (String tag, File fileLog) throws IOException
+	 {
+		 
+		FileWriter fos = new FileWriter(fileLog,true);
+		BufferedWriter writer = new BufferedWriter(fos);
+
+		      Process process = Runtime.getRuntime().exec("logcat -d " + tag + ":D *:S");
+		      BufferedReader bufferedReader = 
+		        new BufferedReader(new InputStreamReader(process.getInputStream()));
+
+		     
+		      String line;
+		      while ((line = bufferedReader.readLine()) != null) {
+		    	  
+		    	  writer.write(line);
+		    	  writer.write('\n');
+		      }
+		      bufferedReader.close();
+
+		      writer.close();
+	 }
     
 }
