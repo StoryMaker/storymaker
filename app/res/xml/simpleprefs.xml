@@ -21,7 +21,8 @@
 		<EditTextPreference android:title="Slide Duration" android:summary="Duration of each slide in a photo essay" android:key="pslideduration" android:defaultValue="5" android:enabled="true"/>
 	
 	<CheckBoxPreference android:title="Enable Compression" android:summary="compress all video and audio using the settings below" android:key="pcompress" android:defaultValue="false"/>
-		
+	<CheckBoxPreference android:title="Preprocess 3GP" android:summary="convert 3GP video clips to MPEG-4" android:key="p_preconvert_mp4" android:defaultValue="false"/>
+	
 		<EditTextPreference android:title="Video Codec" android:summary="Export video codec" android:key="p_video_codec" android:defaultValue="mpeg4" android:enabled="true"/>
 		
 		<EditTextPreference android:title="Video Width" android:summary="Export video width" android:key="p_video_width" android:defaultValue="720" android:enabled="true"/>

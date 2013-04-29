@@ -50,6 +50,10 @@ public class MediaMediumVideoExporter implements Runnable {
     
     private File mFileProject;
     
+	
+	boolean mPreconvertClipsToMP4 = false;
+ 
+	
 	public MediaMediumVideoExporter (Context context, Handler handler, ArrayList<MediaDesc> mediaList, File fileProject, MediaDesc out)
 	{
 		mHandler = handler;
@@ -58,12 +62,13 @@ public class MediaMediumVideoExporter implements Runnable {
 		mMediaList = mediaList;
 		mFileProject = fileProject;
 		mAudioTracks = new ArrayList<MediaDesc>();
-		
 
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(mContext.getApplicationContext());
         mAudioSampleRate = Integer.parseInt(settings.getString("p_audio_samplerate", AppConstants.DEFAULT_AUDIO_SAMPLE_RATE));
     	
         mFadeLen = Float.parseFloat(settings.getString("p_audio_xfade_len",".5f"));
+        
+        mPreconvertClipsToMP4 = settings.getBoolean("p_preconvert_mp4", false);
 	}
 	
 	public void addAudioTrack (MediaDesc audioTrack)
@@ -134,6 +139,7 @@ public class MediaMediumVideoExporter implements Runnable {
     		
     		MediaDesc mMerge = new MediaDesc();
     		mMerge.path = new File(mFileProject,"merge.mp4").getAbsolutePath();
+    	   
     		
     		ArrayList<Double> durations = maExport.getDurations();
     		
@@ -157,13 +163,18 @@ public class MediaMediumVideoExporter implements Runnable {
     				media.duration = formatTimePeriod(duration-(mFadeLen));
     			}
     			
+    			if (media.path.endsWith(".3gp") && (!mPreconvertClipsToMP4))
+    			{
+    				mPreconvertClipsToMP4 = true;
+    			}
     		}
     		
     		msg = mHandler.obtainMessage(0);
             msg.getData().putString("status","Trimming and merging video tracks");
 	        mHandler.sendMessage(msg);
 	        
-        	ffmpegc.concatAndTrimFilesMP4Stream(mMediaList, mMerge, true, sc);
+	        
+        	ffmpegc.concatAndTrimFilesMP4Stream(mMediaList, mMerge, mPreconvertClipsToMP4, sc);
         	
         	msg = mHandler.obtainMessage(0);
             msg.getData().putString("status","Merging video and audio...");
