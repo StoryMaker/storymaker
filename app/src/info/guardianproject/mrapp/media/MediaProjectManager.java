@@ -128,14 +128,14 @@ public class MediaProjectManager implements MediaManager {
     	return mOut;
     }
     
-    public void handleResponse (Intent intent, File fileCapturePath)
+    public void handleResponse (Intent intent, File fileCapturePath) throws IOException
     {                
         MediaDesc result = mMediaHelper.handleIntentLaunch(intent);
         
         if (result == null && fileCapturePath != null)
         {
         	result = new MediaDesc();
-        	result.path = fileCapturePath.getAbsolutePath();
+        	result.path = fileCapturePath.getCanonicalPath();
         	result.mimeType = mMediaHelper.getMimeType(result.path);
         }
         
@@ -268,7 +268,7 @@ public class MediaProjectManager implements MediaManager {
 	    	    {
     	    		MediaDesc mDesc = new MediaDesc();
     	    		mDesc.mimeType = media.getMimeType();
-    	    		mDesc.path = new File(media.getPath()).getAbsolutePath();
+    	    		mDesc.path = new File(media.getPath()).getCanonicalPath();
     	    		
     	    		if (media.getTrimStart() > 0) {
     	    		    mDesc.startTime = "" + media.getTrimmedStartTime() / 1000F;
@@ -298,19 +298,19 @@ public class MediaProjectManager implements MediaManager {
 	    	//override for now
 	    	mOut.mimeType = AppConstants.MimeTypes.MP4;
 
-		    mOut.path = fileExport.getAbsolutePath();
+		    mOut.path = fileExport.getCanonicalPath();
 		    
 		    String audioPath = null;
 		    
 		    File fileAudio = new File(fileProject,"narration" + mScene.getId() + ".wav");
     		
     		if (fileAudio.exists())
-    			audioPath = fileAudio.getAbsolutePath();
+    			audioPath = fileAudio.getCanonicalPath();
     		else
     		{
     			fileAudio = new File(mContext.getExternalFilesDir(null),"narration" + mScene.getId() + ".wav");
     			if (fileAudio.exists())
-        			audioPath = fileAudio.getAbsolutePath();
+        			audioPath = fileAudio.getCanonicalPath();
     		}
 		    
 		    if ((!fileExport.exists()) || doOverwrite)
@@ -373,7 +373,7 @@ public class MediaProjectManager implements MediaManager {
  		   // if (doCompress)
  		   // applyExportSettingsAudio(mOut);
  		    
- 		    mOut.path = fileExport.getAbsolutePath();
+ 		    mOut.path = fileExport.getCanonicalPath();
  		    
  		   if ((!fileExport.exists()) || doOverwrite)
 		    {
@@ -412,7 +412,7 @@ public class MediaProjectManager implements MediaManager {
   	    				fileExport.createNewFile();
   	    				IOUtils.copy(new FileInputStream(fileSrc),new FileOutputStream(fileExport));
   	    				 mOut = new MediaDesc ();
-  	    				mOut.path = fileExport.getAbsolutePath();
+  	    				mOut.path = fileExport.getCanonicalPath();
   	    				mOut.mimeType = AppConstants.MimeTypes.JPEG;
   	    				
   	    				break;
@@ -448,7 +448,7 @@ public class MediaProjectManager implements MediaManager {
     	    			IOUtils.copy(new FileInputStream(fileSrc),new FileOutputStream(fileTmp));
     	    		}
     	    		
-    	    		mDesc.path = fileTmp.getAbsolutePath();
+    	    		mDesc.path = fileTmp.getCanonicalPath();
     	    		
     	    		if (doCompress)
     	    			applyExportSettings(mDesc);
@@ -459,7 +459,7 @@ public class MediaProjectManager implements MediaManager {
 		    mOut = new MediaDesc ();
 		    applyExportSettings(mOut);
 		   
-		    mOut.path = fileExport.getAbsolutePath();
+		    mOut.path = fileExport.getCanonicalPath();
 		    mOut.mimeType = AppConstants.MimeTypes.MP4;
 		    
 
@@ -470,12 +470,12 @@ public class MediaProjectManager implements MediaManager {
     		File fileAudio = new File(getProjectFolder(mProject),"narration" + mScene.getId() + ".wav");
     		
     		if (fileAudio.exists())
-    			audioPath = fileAudio.getAbsolutePath();
+    			audioPath = fileAudio.getCanonicalPath();
     		else
     		{
     			fileAudio = new File(mContext.getExternalFilesDir(null),"narration" + mScene.getId() + ".wav");
     			if (fileAudio.exists())
-        			audioPath = fileAudio.getAbsolutePath();
+        			audioPath = fileAudio.getCanonicalPath();
     		}
     		
     		if ((!fileExport.exists()) || doOverwrite)

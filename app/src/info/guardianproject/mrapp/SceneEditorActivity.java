@@ -505,10 +505,16 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
             }
             else
             {
-                mMPM.handleResponse(intent, mCapturePath);
+            	try
+            	{
+            		mMPM.handleResponse(intent, mCapturePath);
 
-                refreshClipPager();
-                
+            		refreshClipPager();
+            	}
+            	catch (IOException e)
+            	{
+            		Log.e(AppConstants.TAG,"error handling capture response: " + mCapturePath,e);
+            	}
             }
 
         }

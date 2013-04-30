@@ -88,7 +88,7 @@ public class MediaMediumVideoExporter implements Runnable {
     		
     		//first let's get the audio done
     		maOut = new MediaDesc();
-    		maOut.path = new File(mFileProject, "tmp.wav").getAbsolutePath();
+    		maOut.path = new File(mFileProject, "tmp.wav").getCanonicalPath();
     		
     		Message msg = mHandler.obtainMessage(0);
             msg.getData().putString("status","Processing audio tracks...");
@@ -111,7 +111,7 @@ public class MediaMediumVideoExporter implements Runnable {
 	    	        mHandler.sendMessage(msg);
 	    	        
 	    			File fileAudioTrack = new File(mFileProject,idxAudioTracks + "-tmp.wav");
-	    			MediaDesc out = ffmpegc.convertToWaveAudio(audioTrack, fileAudioTrack.getAbsolutePath(), mAudioSampleRate, MediaAudioExporter.CHANNELS, sc);
+	    			MediaDesc out = ffmpegc.convertToWaveAudio(audioTrack, fileAudioTrack.getCanonicalPath(), mAudioSampleRate, MediaAudioExporter.CHANNELS, sc);
 	    			mAudioTracksPaths.add(out.path);
 	    			idxAudioTracks++;
 	    			
@@ -138,7 +138,7 @@ public class MediaMediumVideoExporter implements Runnable {
     		}
     		
     		MediaDesc mMerge = new MediaDesc();
-    		mMerge.path = new File(mFileProject,"merge.mp4").getAbsolutePath();
+    		mMerge.path = new File(mFileProject,"merge.mp4").getCanonicalPath();
     	   
     		
     		ArrayList<Double> durations = maExport.getDurations();

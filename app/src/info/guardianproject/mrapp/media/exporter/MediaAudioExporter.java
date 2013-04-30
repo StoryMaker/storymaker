@@ -160,7 +160,7 @@ public class MediaAudioExporter implements Runnable {
 	            msg.getData().putString("status","Extracting audio track " + (wavIdx+1) + " of " + listMediaDesc.size());
 		        mHandler.sendMessage(msg);
 		        
-		    	MediaDesc audioOut = ffmpegc.convertToWaveAudio(mediaIn, new File(mFileTemp, wavIdx+".wav").getAbsolutePath(),mAudioSampleRate,CHANNELS, sc);
+		    	MediaDesc audioOut = ffmpegc.convertToWaveAudio(mediaIn, new File(mFileTemp, wavIdx+".wav").getCanonicalPath(),mAudioSampleRate,CHANNELS, sc);
 		    	alAudio.add(audioOut);
 		    	
 		    	wavIdx++;
