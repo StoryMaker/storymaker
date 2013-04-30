@@ -142,6 +142,11 @@ public class OrderClipsFragment extends Fragment {
             @Override
             public void onRangeSeekBarValuesChanged(RangeSeekBar<?> bar, Integer minValue,
                     Integer maxValue) {
+            	
+            	  min = bar.getSelectedMinValue().intValue();
+                  max = bar.getSelectedMaxValue().intValue();
+            	 saveTrim();
+            	 previewClip(mCurrentClipIdx);
             }
 
             int min = -1;
