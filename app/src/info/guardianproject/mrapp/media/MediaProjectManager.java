@@ -457,6 +457,8 @@ public class MediaProjectManager implements MediaManager {
 	    	}
 	
 		    mOut = new MediaDesc ();
+		    
+		    if (doCompress)
 		    applyExportSettings(mOut);
 		   
 		    mOut.path = fileExport.getCanonicalPath();
