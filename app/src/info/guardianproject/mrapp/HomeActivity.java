@@ -771,7 +771,7 @@ public class HomeActivity extends BaseActivity {
 		
 		public MyFragment ()
 		{
-			
+			super ();
 		}
 		 /**
        * When creating, retrieve this instance's number from its arguments.
