@@ -4,9 +4,7 @@ import info.guardianproject.mrapp.AppConstants;
 import info.guardianproject.mrapp.SceneEditorActivity;
 import info.guardianproject.mrapp.StoryMakerApp;
 import info.guardianproject.mrapp.media.exporter.MediaAudioExporter;
-import info.guardianproject.mrapp.media.exporter.MediaFastVideoExporter;
-import info.guardianproject.mrapp.media.exporter.MediaFullVideoExporter;
-import info.guardianproject.mrapp.media.exporter.MediaMediumVideoExporter;
+import info.guardianproject.mrapp.media.exporter.MediaVideoExporter;
 import info.guardianproject.mrapp.media.exporter.MediaSlideshowExporter;
 import info.guardianproject.mrapp.model.Media;
 import info.guardianproject.mrapp.model.Project;
@@ -322,7 +320,7 @@ public class MediaProjectManager implements MediaManager {
 			    fileExport.createNewFile();
 			    	
 			    //there can be only one renderer now - MP4Stream !!
-			    	MediaMediumVideoExporter mEx = new MediaMediumVideoExporter(mContext, mHandler, alMediaIn, fileProject, mOut);
+			    	MediaVideoExporter mEx = new MediaVideoExporter(mContext, mHandler, alMediaIn, fileProject, mOut);
 			    	
 			    	if (audioPath != null)
 			    	{

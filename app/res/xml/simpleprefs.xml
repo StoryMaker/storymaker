@@ -22,6 +22,7 @@
 	
 	<CheckBoxPreference android:title="Enable Compression" android:summary="compress all video and audio using the settings below" android:key="pcompress" android:defaultValue="false"/>
 	<CheckBoxPreference android:title="Preprocess 3GP" android:summary="convert 3GP video clips to MPEG-4" android:key="p_preconvert_mp4" android:defaultValue="false"/>
+	<CheckBoxPreference android:title="Use 'Cat' Command" android:summary="Use 'cat' command to merge videos" android:key="p_use_cat" android:defaultValue="false"/>
 	
 		<EditTextPreference android:title="Video Codec" android:summary="Export video codec" android:key="p_video_codec" android:defaultValue="mpeg4" android:enabled="true"/>
 		

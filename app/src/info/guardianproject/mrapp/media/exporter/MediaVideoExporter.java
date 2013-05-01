@@ -18,6 +18,8 @@ import info.guardianproject.mrapp.AppConstants;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.media.MediaScannerConnection;
+import android.media.MediaScannerConnection.OnScanCompletedListener;
+import android.net.Uri;
 import android.os.Handler;
 import android.os.Message;
 import android.preference.PreferenceManager;
@@ -26,7 +28,7 @@ import android.util.Log;
 /*
  * cross fades audio and other niceities
  */
-public class MediaFullVideoExporter implements Runnable {
+public class MediaVideoExporter implements Runnable {
 
 	private Handler mHandler;
 	private Context mContext;
@@ -44,11 +46,15 @@ public class MediaFullVideoExporter implements Runnable {
     
     private int mAudioSampleRate = -1;
     
-    private float fadeLen = .5f;
+    private float mFadeLen = .5f;
     
     private File mFileProject;
     
-	public MediaFullVideoExporter (Context context, Handler handler, ArrayList<MediaDesc> mediaList, File fileProject, MediaDesc out)
+	
+	boolean mPreconvertClipsToMP4 = false;
+	boolean mUseCatCmd = false;
+	
+	public MediaVideoExporter (Context context, Handler handler, ArrayList<MediaDesc> mediaList, File fileProject, MediaDesc out)
 	{
 		mHandler = handler;
 		mContext = context;
@@ -56,11 +62,16 @@ public class MediaFullVideoExporter implements Runnable {
 		mMediaList = mediaList;
 		mFileProject = fileProject;
 		mAudioTracks = new ArrayList<MediaDesc>();
-		
 
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(mContext.getApplicationContext());
         mAudioSampleRate = Integer.parseInt(settings.getString("p_audio_samplerate", AppConstants.DEFAULT_AUDIO_SAMPLE_RATE));
     	
+        mFadeLen = Float.parseFloat(settings.getString("p_audio_xfade_len",".5f"));
+        
+        mPreconvertClipsToMP4 = settings.getBoolean("p_preconvert_mp4", false);
+     
+        mUseCatCmd = settings.getBoolean("p_use_cat", false);
+        
 	}
 	
 	public void addAudioTrack (MediaDesc audioTrack)
@@ -80,10 +91,14 @@ public class MediaFullVideoExporter implements Runnable {
     		
     		//first let's get the audio done
     		maOut = new MediaDesc();
-    		maOut.path = new File(mFileProject, "tmp.wav").getAbsolutePath();
+    		maOut.path = new File(mFileProject, "tmp.wav").getCanonicalPath();
+    		
+    		Message msg = mHandler.obtainMessage(0);
+            msg.getData().putString("status","Processing audio tracks...");
+	        mHandler.sendMessage(msg);
     		
     		maExport = new MediaAudioExporter (mContext, mHandler, mMediaList, mFileProject, maOut);
-    		maExport.setFadeLength(fadeLen);
+    		maExport.setFadeLength(mFadeLen);
     		maExport.run();
     		
     		if (mAudioTracks.size() > 0)
@@ -93,16 +108,27 @@ public class MediaFullVideoExporter implements Runnable {
 	    		int idxAudioTracks = 0;
 	    		for (MediaDesc audioTrack : mAudioTracks)
 	    		{
+
+	        		msg = mHandler.obtainMessage(0);
+	                msg.getData().putString("status","Processing audio track " + (idxAudioTracks+1) + "/" + mAudioTracks.size());
+	    	        mHandler.sendMessage(msg);
+	    	        
 	    			File fileAudioTrack = new File(mFileProject,idxAudioTracks + "-tmp.wav");
-	    			MediaDesc out = ffmpegc.convertToWaveAudio(audioTrack, fileAudioTrack.getAbsolutePath(), mAudioSampleRate, MediaAudioExporter.CHANNELS, sc);
+	    			MediaDesc out = ffmpegc.convertToWaveAudio(audioTrack, fileAudioTrack.getCanonicalPath(), mAudioSampleRate, MediaAudioExporter.CHANNELS, sc);
 	    			mAudioTracksPaths.add(out.path);
 	    			idxAudioTracks++;
+	    			
+
 	    		}
 	    		
 	    		mAudioTracksPaths.add(maOut.path);
 	    		
 	    		String finalAudioMix = maOut.path + "-mix.wav";
 	
+	    		msg = mHandler.obtainMessage(0);
+                msg.getData().putString("status","Mixing tracks");
+    	        mHandler.sendMessage(msg);
+    	        
 	    		SoxController sxCon = new SoxController(mContext);
 	    		sxCon.combineMix(mAudioTracksPaths, finalAudioMix);
 	    		
@@ -114,13 +140,9 @@ public class MediaFullVideoExporter implements Runnable {
 	    		maOut.path = finalAudioMix;
     		}
     		
-    		//now merge audio and video
-    		
     		MediaDesc mMerge = new MediaDesc();
-    		mMerge.path = new File(mFileProject,"merge.mp4").getAbsolutePath();
-    		
-    		String outputType = mOut.mimeType;
-    		
+    		mMerge.path = new File(mFileProject,"merge.mp4").getCanonicalPath();
+    	   
     		
     		ArrayList<Double> durations = maExport.getDurations();
     		
@@ -129,36 +151,43 @@ public class MediaFullVideoExporter implements Runnable {
     			MediaDesc media = mMediaList.get(i);
     			
     			if (media.startTime == null)
-    				media.startTime = formatTimePeriod(fadeLen / 2);
+    				media.startTime = formatTimePeriod(mFadeLen);
     			else
     			{
-    				double startTime = this.parseTimePeriod(media.startTime);
-    				media.startTime = formatTimePeriod(startTime + (fadeLen / 2));
+    				double startTime = parseTimePeriod(media.startTime);
+    				media.startTime = formatTimePeriod(startTime + (mFadeLen));
     			}
     			
     			if (media.duration == null)
-    				media.duration = formatTimePeriod(durations.get(i)-fadeLen);
+    				media.duration = formatTimePeriod(durations.get(i)-(mFadeLen));
     			else
     			{
-    				double duration = this.parseTimePeriod(media.duration);
-    				media.duration = formatTimePeriod(duration-fadeLen);
+    				double duration = parseTimePeriod(media.duration);
+    				media.duration = formatTimePeriod(duration-(mFadeLen));
     			}
     			
+    			if (media.path.endsWith(".3gp") && (!mPreconvertClipsToMP4))
+    			{
+    				mPreconvertClipsToMP4 = true;
+    			}
     		}
     		
-    		
-        	ffmpegc.concatAndTrimFilesMPEG(mMediaList, mMerge, true, sc);
+    		msg = mHandler.obtainMessage(0);
+            msg.getData().putString("status","Trimming and merging video tracks");
+	        mHandler.sendMessage(msg);
+	        
+	        
+        	ffmpegc.concatAndTrimFilesMP4Stream(mMediaList, mMerge, mPreconvertClipsToMP4, mUseCatCmd, sc);
         	
-        	maOut.audioCodec = "aac"; //hardcoded (for now) export audio codec
-        	maOut.audioBitrate = 128; //hardcoded (for now) export audio bitrate
-        	
+        	msg = mHandler.obtainMessage(0);
+            msg.getData().putString("status","Merging video and audio...");
+	        mHandler.sendMessage(msg);
+	        
     		ffmpegc.combineAudioAndVideo(mMerge, maOut, mOut, sc);
 
-    		
     		//processing complete message
-    		Message msg = mHandler.obtainMessage(0);
+    		 msg = mHandler.obtainMessage(0);
 	         mHandler.sendMessage(msg);
-	         
 
 	         //now scan for media to add to gallery
     		File fileTest = new File(mOut.path);
@@ -167,19 +196,27 @@ public class MediaFullVideoExporter implements Runnable {
 	    		MediaScannerConnection.scanFile(
 	     				mContext,
 	     				new String[] {mOut.path},
-	     				new String[] {outputType},
-	     				null);
+	     				new String[] {mOut.mimeType},
+	     				new OnScanCompletedListener ()
+	     				{
+
+							@Override
+							public void onScanCompleted(String path, Uri uri) {
+
+					    		Message msg = mHandler.obtainMessage(4);
+					            msg.getData().putString("path",mOut.path);
+					            
+					            mHandler.sendMessage(msg);
+								
+							}
+	     					
+	     				});
 	    
-	    		msg = mHandler.obtainMessage(4);
-	            msg.getData().putString("path",mOut.path);
-	            
-	            mHandler.sendMessage(msg);
 	         }
 	         else
 	         {
 	        		msg = mHandler.obtainMessage(0);
-		            msg.getData().putString("status","Something went wrong with media export");
-
+		            msg.getData().putString("error","Something went wrong with media export");
 			        mHandler.sendMessage(msg);
 			         
 	         }
@@ -239,16 +276,12 @@ public class MediaFullVideoExporter implements Runnable {
 					
 					progress = (int)( ((float)current) / ((float)total) *100f );
 				}
-				else if (line.startsWith("cat"))
-				{
-				    newStatus = "Combining clips...";
-				}
 				else if (line.startsWith("Input"))
 				{
 				    //12-18 02:48:07.187: D/StoryMaker(10508): Input #0, mov,mp4,m4a,3gp,3g2,mj2, from '/storage/sdcard0/DCIM/Camera/VID_20121211_140815.mp4':
-				    idx1 = line.indexOf("'")+1;
-				    int idx2 = line.indexOf('\'', idx1+1);
-				    newStatus = "Rendering clip: " + line.substring(idx1, idx2);
+				   // idx1 = line.indexOf("'");
+				   // int idx2 = line.indexOf('\'', idx1+1);
+				   // newStatus = "Rendering clip: " + line.substring(idx1, idx2);
 				}
 				    
 
@@ -268,14 +301,7 @@ public class MediaFullVideoExporter implements Runnable {
 			@Override
 			public void processComplete(int exitValue) {
 			
-				 Message msg = mHandler.obtainMessage(1);
-                 
-				    msg.getData().putString("status", "file processing complete");                 
-          
-				    msg.getData().putInt("progress", 100);
-		       
-					
-				    mHandler.sendMessage(msg);
+				
 				
 			}
  	};
@@ -287,11 +313,12 @@ public class MediaFullVideoExporter implements Runnable {
 	 * @param seconds
 	 */
  	public String formatTimePeriod(double seconds) {
-			DecimalFormat df = new DecimalFormat("#.##");
-			df.setDecimalFormatSymbols(new DecimalFormatSymbols(Locale.US));
-			 String seconds_frac = df.format(seconds);
-			return String.format(Locale.US, "0:0:%s", seconds_frac);
-		}
+		DecimalFormat df = new DecimalFormat("#.##");
+		df.setDecimalFormatSymbols(new DecimalFormatSymbols(Locale.US));
+		 String seconds_frac = df.format(seconds);
+		return String.format(Locale.US, "0:0:%s", seconds_frac);
+	}
+	
 	/**
 	 * Takes a seconds.frac value and formats it into:
 	 * 	hh:mm:ss:ss.frac
