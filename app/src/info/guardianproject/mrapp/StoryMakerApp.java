@@ -71,6 +71,9 @@ public class StoryMakerApp extends Application {
 	{
 		try
 		{
+
+			clearRenderTmpFolders(getApplicationContext());
+			
 			initServerUrls(this);
 	
 			killZombieProcs ();
@@ -457,7 +460,8 @@ public class StoryMakerApp extends Application {
 		try
 		{
 		 File fileRenderTmpDir = context.getDir("render", Context.MODE_PRIVATE);
-		 deleteRecursive(fileRenderTmpDir,true);
+		// deleteRecursive(fileRenderTmpDir,false);
+		 Runtime.getRuntime().exec("rm -rf " + fileRenderTmpDir.getCanonicalPath());
 		}
 		catch (IOException ioe)
 		{
