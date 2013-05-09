@@ -180,7 +180,7 @@ public class OrderClipsFragment extends Fragment {
 	    	  if (mAudioNarrator == null)
 	          {
 	              String audioFile = "narration" + mMPM.mScene.getId() + ".wav";
-	              mFileAudioNarration = new File(mMPM.getProjectFolder(mMPM.mProject),audioFile);
+	              mFileAudioNarration = new File(mMPM.getExternalProjectFolder(mMPM.mProject, mActivity.getBaseContext()),audioFile);
 	              mAudioNarrator = new AudioRecorderView(mFileAudioNarration,getActivity());
 	          }
 	    	  
@@ -210,9 +210,12 @@ public class OrderClipsFragment extends Fragment {
 	        {
 	            @Override
 	            public void onClick(View v) {
-	            	mFileAudioNarration.delete();
-	            	mButtonDeleteNarration.setEnabled(false);
-	            	mFileAudioNarration = null;
+	            	if (mFileAudioNarration != null)
+	            	{
+	            		mFileAudioNarration.delete();
+	            		mButtonDeleteNarration.setEnabled(false);
+	            		mFileAudioNarration = null;
+	            	}
 	            }
 	        });
 	      
@@ -677,12 +680,17 @@ public class OrderClipsFragment extends Fragment {
     }
     
     public void loadTrim() {
+    	
         Media media = mMPM.mScene.getMediaAsArray()[mCurrentClipIdx];
-        mRangeSeekBar.setSelectedMinValue(media.getTrimStart());
-        if (media.getTrimEnd() > 0) {
-            mRangeSeekBar.setSelectedMaxValue(media.getTrimEnd());
-        } else {
-            mRangeSeekBar.setSelectedMaxValue(99);
+        
+        if (media != null)
+        {
+	        mRangeSeekBar.setSelectedMinValue(media.getTrimStart());
+	        if (media.getTrimEnd() > 0) {
+	            mRangeSeekBar.setSelectedMaxValue(media.getTrimEnd());
+	        } else {
+	            mRangeSeekBar.setSelectedMaxValue(99);
+	        }
         }
     }
 }

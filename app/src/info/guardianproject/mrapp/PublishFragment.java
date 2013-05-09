@@ -18,6 +18,7 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.StringTokenizer;
 
+import org.apache.commons.lang3.ArrayUtils;
 import org.holoeverywhere.app.AlertDialog;
 import org.holoeverywhere.widget.Spinner;
 import org.holoeverywhere.widget.ToggleButton;
@@ -85,6 +86,7 @@ public class PublishFragment extends Fragment {
      
     private SharedPreferences mSettings = null;
     
+    private File mFileLastExport = null;
 
     /**
      * The sortable grid view that contains the clips to reorder on the
@@ -140,10 +142,9 @@ public class PublishFragment extends Fragment {
                 @Override
                 public void onClick(View arg0) {
                     saveForm();
-                	File fileExport = mActivity.mMPM.getExportMediaFile();
-                	if (fileExport.exists())
-                		fileExport.delete();
-                	
+                    
+                    mFileLastExport = mActivity.mMPM.getExportMediaFile();
+               
                 	//do local render, overwrite always
                     handlePublish(false, false, true);
                 }
@@ -151,8 +152,8 @@ public class PublishFragment extends Fragment {
             });
             
             Button btnPlay = (Button) mView.findViewById(R.id.btnPlay);
-        	File fileExport = mActivity.mMPM.getExportMediaFile();
-        	btnPlay.setEnabled(fileExport.exists());
+        	//File fileExport = mActivity.mMPM.getExportMediaFile();
+        	//btnPlay.setEnabled(fileExport.exists());
             
             btnPlay.setOnClickListener(new OnClickListener()
             {
@@ -160,18 +161,17 @@ public class PublishFragment extends Fragment {
                 @Override
                 public void onClick(View arg0) {
                     
-                	File fileExport = mActivity.mMPM.getExportMediaFile();
-                	if (fileExport.exists())
+                	if (mFileLastExport != null && mFileLastExport.exists())
                 	{
                 		
-                		mActivity.mMPM.mMediaHelper.playMedia(fileExport, null);
+                		mActivity.mMPM.mMediaHelper.playMedia(mFileLastExport, null);
                 	}
                 }
                 
             });
             
             Button btnShare = (Button) mView.findViewById(R.id.btnShare);
-            btnShare.setEnabled(fileExport.exists());
+          //  btnShare.setEnabled(fileExport.exists());
         	
             btnShare.setOnClickListener(new OnClickListener()
             {
@@ -179,11 +179,10 @@ public class PublishFragment extends Fragment {
                 @Override
                 public void onClick(View arg0) {
                     
-                	File fileExport = mActivity.mMPM.getExportMediaFile();
-                	if (fileExport.exists())
+                	if (mFileLastExport != null && mFileLastExport.exists())
                 	{
                 		
-                		mActivity.mMPM.mMediaHelper.shareMedia(fileExport, null);
+                		mActivity.mMPM.mMediaHelper.shareMedia(mFileLastExport, null);
                 	}
                 }
                 
@@ -210,13 +209,17 @@ public class PublishFragment extends Fragment {
 		public void handleMessage(Message msg) {
 			super.handleMessage(msg);
 			
+	    	if (mFileLastExport != null && mFileLastExport.exists())
+	    	{
 
-	    	Button btnPlay = (Button) mView.findViewById(R.id.btnPlay);
-	    	File fileExport = mActivity.mMPM.getExportMediaFile();
-	    	btnPlay.setEnabled(fileExport.exists());
-	    	Button btnShare = (Button)mView.findViewById(R.id.btnShare);
-	        btnShare.setEnabled(fileExport.exists());
+
+		    	Button btnPlay = (Button) mView.findViewById(R.id.btnPlay);
+		    	
+		    	Button btnShare = (Button)mView.findViewById(R.id.btnShare);
 		        
+	    		btnShare.setEnabled(true);
+	    		btnPlay.setEnabled(true);
+	    	}    
 		    
 		    
 		}
@@ -336,6 +339,11 @@ public class PublishFragment extends Fragment {
 			alCats.add(st.nextToken());
 		}
 		
+		//now add story type to categories: event, breaking-news, issue, feature.
+		String catTag = mActivity.mMPM.mProject.getTemplateTag();
+		if (catTag != null)
+			alCats.add(catTag);
+		
 		String[] cattmp = new String[alCats.size()];
 		int i = 0;
 		for (String catstring: alCats)
@@ -416,11 +424,11 @@ public class PublishFragment extends Fragment {
 
                 try {
                     
-                    File fileExport = mActivity.mMPM.getExportMediaFile();
+                	mFileLastExport = mActivity.mMPM.getExportMediaFile();
 
                     boolean compress = mSettings.getBoolean("pcompress",false);//compress video?
                     
-                    mActivity.mMPM.doExportMedia(fileExport, compress, doOverwrite);
+                    mActivity.mMPM.doExportMedia(mFileLastExport, compress, doOverwrite);
                     
                     mActivity.mdExported = mActivity.mMPM.getExportMedia();
                     

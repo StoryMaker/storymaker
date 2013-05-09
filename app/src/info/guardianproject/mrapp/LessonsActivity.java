@@ -151,7 +151,9 @@ public class LessonsActivity extends BaseActivity implements ActionBar.TabListen
 
     public void updateLessonProgress (String msg)
     {
-    	mProgressLoading.setMessage(msg);
+    	if (mProgressLoading != null && mProgressLoading.isShowing())
+    		mProgressLoading.setMessage(msg);
+    	
     }
     
     @Override

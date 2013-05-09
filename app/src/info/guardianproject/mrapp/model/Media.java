@@ -3,6 +3,7 @@ package info.guardianproject.mrapp.model;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import org.ffmpeg.android.MediaUtils;
@@ -380,7 +381,7 @@ public class Media {
         this.duration = duration;
     }
     
-    public static Bitmap getThumbnail(Context context, Media media, Project project)
+    public static Bitmap getThumbnail(Context context, Media media, Project project) 
     {
     	if (media == null)
     		return null;
@@ -392,7 +393,7 @@ public class Media {
         }
         else if (media.getMimeType().startsWith("video"))
         {
-            File fileThumb = new File(MediaProjectManager.getProjectFolder(project), media.getId() + "_thumb.jpg");
+            File fileThumb = new File(MediaProjectManager.getExternalProjectFolder(project, context), media.getId() + "_thumb.jpg");
             
             if (fileThumb.exists())
             {
@@ -403,18 +404,31 @@ public class Media {
             }
             else
             {
-                Bitmap bmp = MediaUtils.getVideoFrame(media.getPath(), -1);
-                
-                if (bmp != null)
-                {
-	                try {
-	                    bmp.compress(Bitmap.CompressFormat.JPEG, 70, new FileOutputStream(fileThumb));
-	                } catch (FileNotFoundException e) {
-	                    Log.e(AppConstants.TAG, "could not cache video thumb", e);
+            	try
+            	{
+	                Bitmap bmp = MediaUtils.getVideoFrame(new File(media.getPath()).getCanonicalPath(), -1);
+	                
+	                if (bmp != null)
+	                {
+		                try {
+		                    bmp.compress(Bitmap.CompressFormat.PNG, 70, new FileOutputStream(fileThumb));
+		                } catch (FileNotFoundException e) {
+		                    Log.e(AppConstants.TAG, "could not cache video thumb", e);
+		                }
 	                }
-                }
-                
-                return bmp;
+	                
+	                return bmp;
+            	}
+            	catch (Exception e)
+            	{
+            		Log.w(AppConstants.TAG,"Could not generate thumbnail: " + media.getPath(),e);
+            		return null;
+            	}
+            	catch (OutOfMemoryError oe)
+            	{
+            		Log.e(AppConstants.TAG,"Could not generate thumbnail - OutofMemory!: " + media.getPath());
+            		return null;
+            	}
             }
         }
         else if (media.getMimeType().startsWith("image"))

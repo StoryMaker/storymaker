@@ -137,7 +137,16 @@ public class OverlayCameraActivity extends SherlockActivity implements Callback,
 		finish();
     }
     
-    private void setOverlayImage (int idx)
+    @Override
+	protected void onDestroy() {
+    	
+		super.onDestroy();
+		
+		closeOverlay();
+	}
+
+
+	private void setOverlayImage (int idx)
     {
         try 
         {
@@ -221,16 +230,13 @@ public class OverlayCameraActivity extends SherlockActivity implements Callback,
         
     	camera = Camera.open();
     	cameraOn = true;
+    	
     }
 
     @Override
     public void surfaceDestroyed(SurfaceHolder holder) {
         
-    	if (cameraOn)
-    	{
-    		camera.stopPreview();
-    		camera.release();
-    	}
+    	closeOverlay();
     }
 
 

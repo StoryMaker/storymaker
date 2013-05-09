@@ -15,7 +15,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 
-public class MediaSlideshowExporter implements Runnable {
+public class MediaSlideshowExporter extends MediaExporter {
 
 	private Handler mHandler;
 	private Context mContext;
@@ -41,7 +41,7 @@ public class MediaSlideshowExporter implements Runnable {
 	}
 	
 	
-	public void run ()
+	public void export ()
 	{
     	try
     	{

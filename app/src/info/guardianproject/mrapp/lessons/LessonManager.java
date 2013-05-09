@@ -33,6 +33,8 @@ import android.util.Log;
 import ch.boye.httpclientandroidlib.HttpEntity;
 import ch.boye.httpclientandroidlib.HttpResponse;
 import ch.boye.httpclientandroidlib.client.methods.HttpGet;
+import ch.boye.httpclientandroidlib.params.HttpConnectionParams;
+import ch.boye.httpclientandroidlib.params.HttpParams;
 import ch.boye.httpclientandroidlib.util.EntityUtils;
 
 public class LessonManager implements Runnable {
@@ -270,6 +272,7 @@ public class LessonManager implements Runnable {
 			
 			
 			HttpGet request = new HttpGet(urlIndex);
+			
 			HttpResponse response = httpClient.execute(request);
 
 			HttpEntity entity = response.getEntity();

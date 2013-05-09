@@ -391,6 +391,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="5dp"
         android:gravity="center_vertical"
+                android:enabled="false"
         android:text="@string/action_share"
          />
      

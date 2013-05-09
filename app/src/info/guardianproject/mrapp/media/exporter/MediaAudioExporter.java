@@ -19,7 +19,7 @@ import android.os.Message;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
-public class MediaAudioExporter implements Runnable {
+public class MediaAudioExporter extends MediaExporter {
 
 	private Handler mHandler;
 	private Context mContext;
@@ -29,7 +29,6 @@ public class MediaAudioExporter implements Runnable {
 	
     private int current, total;
     
-    private ArrayList<Double> mDurations;
     
 	 double fadeLen = 1.0f;
 	 String fadeType = "t"; //triangle/linear
@@ -82,7 +81,7 @@ public class MediaAudioExporter implements Runnable {
 		this.fadeType = fadeType;
 	}
 	
-	public void run ()
+	public void export ()
 	{
     	try
     	{
@@ -125,23 +124,16 @@ public class MediaAudioExporter implements Runnable {
     	}
 	}
 	
-	public ArrayList<Double> getDurations ()
-	{
-		return mDurations;
-	}
-	
 	
 	 private void concatMediaFiles (ArrayList<MediaDesc> listMediaDesc, MediaDesc mdout) throws Exception
 	    {
 
 		 //now add 1 second cross fade to each audio file and cat them together
-		 SoxController sxCon = new SoxController(mContext);
+		 SoxController sxCon = new SoxController(mContext,sc);
 		
 		 int exportBitRate = mdout.audioBitrate;
 		 String exportCodec = mdout.audioCodec;
 
-		 String fadeLenStr = sxCon.formatTimePeriod(fadeLen);
-		 
 		 FfmpegController ffmpegc = new FfmpegController (mContext, mFileTemp);
 	    
 		 ArrayList<MediaDesc> alAudio = new ArrayList<MediaDesc>();
@@ -157,7 +149,7 @@ public class MediaAudioExporter implements Runnable {
 			{
 
 	        	msg = mHandler.obtainMessage(0);
-	            msg.getData().putString("status","Extracting audio track " + (wavIdx+1) + " of " + listMediaDesc.size());
+	            msg.getData().putString("status",String.format("Extracting audio track %s of %s",(wavIdx+1),listMediaDesc.size()));
 		        mHandler.sendMessage(msg);
 		        
 		    	MediaDesc audioOut = ffmpegc.convertToWaveAudio(mediaIn, new File(mFileTemp, wavIdx+".wav").getCanonicalPath(),mAudioSampleRate,CHANNELS, sc);
@@ -166,34 +158,32 @@ public class MediaAudioExporter implements Runnable {
 		    	wavIdx++;
 			}
 		 }
-		
-		 mDurations = new ArrayList<Double>();
-		 
+
 		 String fileOut = alAudio.get(0).path;
 
-		 mDurations.add(new Double(sxCon.getLength(fileOut)));
-		 
 		 msg = mHandler.obtainMessage(0);
          msg.getData().putString("status","Crossfading audio...");
 	       mHandler.sendMessage(msg);
 	        
 		 for (int i = 1; i < alAudio.size(); i++)
 		 {		
-			 String fileAdd = alAudio.get(i).path;
-			 
-			 mDurations.add(new Double(sxCon.getLength(fileAdd)));
-			 
+			 String fileAdd = new File(alAudio.get(i).path).getCanonicalPath();
 			 CrossfadeCat xCat = new CrossfadeCat(sxCon, fileOut, fileAdd, fadeLen, fileOut);
 			 xCat.start();
+			 
+			 msg = mHandler.obtainMessage(0);
+	         msg.getData().putString("status",String.format("Crossfading audio: %s of %s",(i+1),alAudio.size()));
+		       mHandler.sendMessage(msg);
 		 
 		 }
 		 
 
 		 msg = mHandler.obtainMessage(0);
-         msg.getData().putString("status","Adding overall fade in and out...");
+         msg.getData().putString("status","Fade full audio in and out...");
 	       mHandler.sendMessage(msg);
 	       
 		 //1 second fade in and fade out, t = triangle or linear
+	       String fadeLenStr = sxCon.formatTimePeriod(fadeLen);
 		 String fadeFileOut = sxCon.fadeAudio(fileOut, fadeType, fadeLenStr, "0", fadeLenStr);
 		 
 		 //now export the final file to our requested output format
@@ -219,10 +209,7 @@ public class MediaAudioExporter implements Runnable {
 			@Override
 			public void shellOut(String line) {
 				
-				
-				if (!line.startsWith("frame"))
-					Log.d(AppConstants.TAG, line);
-				
+				Log.d(AppConstants.TAG, line);
 				
 				int idx1;
 				String newStatus = null;
@@ -281,7 +268,8 @@ public class MediaAudioExporter implements Runnable {
 
 			@Override
 			public void processComplete(int exitValue) {
-				
+			
+				Log.d(AppConstants.TAG,"process complete; exit=" + exitValue);
 				
 			}
  	};

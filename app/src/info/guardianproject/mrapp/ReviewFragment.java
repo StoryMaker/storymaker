@@ -111,7 +111,7 @@ public class ReviewFragment extends Fragment {
             {
                 // FIXME make this work for project review tab
                 String audioFile = "narration" + mMPM.mScene.getId() + ".wav";
-                mFileAudioNarration = new File(mMPM.getProjectFolder(mMPM.mProject),audioFile);
+                mFileAudioNarration = new File(mMPM.getExternalProjectFolder(mMPM.mProject,mActivity.getBaseContext()),audioFile);
                 mAudioNarrator = new AudioRecorderView(mFileAudioNarration,getActivity());
             }
         }

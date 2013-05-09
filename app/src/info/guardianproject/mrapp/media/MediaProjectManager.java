@@ -17,6 +17,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.channels.FileChannel;
 import java.util.ArrayList;
+import java.util.Date;
 
 import org.apache.commons.io.IOUtils;
 import org.ffmpeg.android.MediaDesc;
@@ -99,7 +100,7 @@ public class MediaProjectManager implements MediaManager {
     
         mMediaHelper = new MediaHelper (mActivity, mHandler);
         
-        initExternalStorage();
+        initExternalStorage(mContext);
     }
         
     public void addAllProjectMediaToEditor() {
@@ -156,23 +157,22 @@ public class MediaProjectManager implements MediaManager {
     }
 
    
-    private static synchronized void initExternalStorage ()
+    private static synchronized void initExternalStorage (Context context)
     {
     	//String extState = Environment.getExternalStorageState();
     	
     	if (mFileExternDir == null)
     	{
-	    	File basePath = new File(AppConstants.EXTERNAL_STORAGE_PATH);
 	    	
-	    	mFileExternDir = new File(basePath,AppConstants.FOLDER_PROJECTS_NAME);
+	    	mFileExternDir = context.getDir(AppConstants.FOLDER_PROJECTS_NAME,Context.MODE_WORLD_WRITEABLE);
 	    	mFileExternDir.mkdirs();
     	}
     }
     
     
-    public static File getProjectFolder (Project project)
+    public static File getExternalProjectFolder (Project project, Context context)
     {
-    	initExternalStorage ();
+    	initExternalStorage (context);
     	
     	String folderName = project.getId()+"";
     	File fileProject = new File(mFileExternDir,folderName);
@@ -188,15 +188,17 @@ public class MediaProjectManager implements MediaManager {
         
         try
         {
+
         	fileName = java.net.URLEncoder.encode(mProject.getTitle(),"UTF-8").toString();
+        	
+            String timeStamp = new java.text.SimpleDateFormat("ddMMyyyyHHmmss").format(new java.util.Date ());
+        	fileName += timeStamp;
         }
         catch (Exception e){}
         
-        File fileExportProjectDir = getProjectFolder(mProject);
-        fileExportProjectDir.mkdirs();
         
         //default to "project" folder
-    	File fileExport = new File(fileExportProjectDir, fileName + EXPORT_VIDEO_FILE_EXT);
+    	File fileExport = null;
 	    
     	
     	if (mProject.getStoryType() == Project.STORY_TYPE_VIDEO)
@@ -223,11 +225,16 @@ public class MediaProjectManager implements MediaManager {
 		    fileExport = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MOVIES), fileName + EXPORT_ESSAY_FILE_EXT);
 		    
         }
+        else
+        {
+		    fileExport = new File(Environment.getExternalStoragePublicDirectory(null), fileName + EXPORT_ESSAY_FILE_EXT);
+
+        }
     	
     	return fileExport;
     }
     
-    public void doExportMedia (File fileExport, boolean doCompress, boolean doOverwrite) throws IOException
+    public void doExportMedia (File fileExport, boolean doCompress, boolean doOverwrite) throws Exception
     {
     	 Message msg = mHandler.obtainMessage(0);
          msg.getData().putString("status","cancelled");
@@ -236,6 +243,7 @@ public class MediaProjectManager implements MediaManager {
 
          //is storage ready
          ((StoryMakerApp)mActivity.getApplication()).isExternalStorageReady();
+         ((StoryMakerApp)mActivity.getApplication()).killZombieProcs();
 
  		//first check that all of the input images are accessible
  		
@@ -252,10 +260,11 @@ public class MediaProjectManager implements MediaManager {
  			}
  			
  		}
- 		
 
-		 File fileProject = getProjectFolder(mProject);
-		    
+		 File fileRenderTmpDir = mContext.getDir("render", Context.MODE_PRIVATE);
+		 File fileRenderTmp = new File(fileRenderTmpDir,new Date().getTime() + "");
+		 fileRenderTmp.mkdirs();
+		 
          //for video, render the sequence together
          if (mProject.getStoryType() == Project.STORY_TYPE_VIDEO)
          {
@@ -290,7 +299,7 @@ public class MediaProjectManager implements MediaManager {
 	    	else
 	    	{
 	    		mOut.audioCodec = "aac";
-		    	mOut.audioBitrate = 128;
+		    	mOut.audioBitrate = 64;
 	    	}
 	    	
 	    	//override for now
@@ -300,7 +309,7 @@ public class MediaProjectManager implements MediaManager {
 		    
 		    String audioPath = null;
 		    
-		    File fileAudio = new File(fileProject,"narration" + mScene.getId() + ".wav");
+		    File fileAudio = new File(getExternalProjectFolder(mProject, mContext),"narration" + mScene.getId() + ".wav");
     		
     		if (fileAudio.exists())
     			audioPath = fileAudio.getCanonicalPath();
@@ -317,10 +326,9 @@ public class MediaProjectManager implements MediaManager {
 		    		fileExport.delete();
 		    	
 		    	fileExport.getParentFile().mkdirs();
-			    fileExport.createNewFile();
 			    	
 			    //there can be only one renderer now - MP4Stream !!
-			    	MediaVideoExporter mEx = new MediaVideoExporter(mContext, mHandler, alMediaIn, fileProject, mOut);
+			    	MediaVideoExporter mEx = new MediaVideoExporter(mContext, mHandler, alMediaIn, fileRenderTmp, mOut);
 			    	
 			    	if (audioPath != null)
 			    	{
@@ -329,20 +337,8 @@ public class MediaProjectManager implements MediaManager {
 			    		mEx.addAudioTrack(audioTrack);
 			    	}
 			    	
-			    	mEx.run();
+			    	mEx.export();
 			    
-			    	/*
-			    	 //this is MPEG based solution - no longer needding
-			    	MediaFullVideoExporter mEx = new MediaFullVideoExporter(mContext, mHandler, alMediaIn, fileProject, mOut);
-			    
-			    	if (audioPath != null)
-			    	{
-			    		MediaDesc audioTrack = new MediaDesc();
-			    		audioTrack.path = audioPath;
-			    		mEx.addAudioTrack(audioTrack);
-			    	}
-				    mEx.run();
-			    	*/
 		    }
 	   
          }    
@@ -356,6 +352,14 @@ public class MediaProjectManager implements MediaManager {
      	    		MediaDesc mDesc = new MediaDesc();
      	    		mDesc.mimeType = media.getMimeType();
      	    		mDesc.path = media.getPath();
+     	    		
+
+    	    		if (media.getTrimStart() > 0) {
+    	    		    mDesc.startTime = "" + media.getTrimmedStartTime() / 1000F;
+                        mDesc.duration = "" + media.getTrimmedDuration() / 1000F;
+    	    		} else if ((media.getTrimEnd() < 99) && media.getTrimEnd() > 0) {
+    	    		    mDesc.duration = "" + media.getTrimmedDuration() / 1000F;
+    	    		}
      	    		
      	    		if (doCompress)
      	    			applyExportSettings(mDesc);
@@ -380,10 +384,9 @@ public class MediaProjectManager implements MediaManager {
 		    		fileExport.delete();
 		    	
 		    	fileExport.getParentFile().mkdirs();
-			    fileExport.createNewFile();
 
- 	 		    MediaAudioExporter mEx = new MediaAudioExporter(mContext, mHandler, alMediaIn, fileProject, mOut);
- 	 		    mEx.run();
+ 	 		    MediaAudioExporter mEx = new MediaAudioExporter(mContext, mHandler, alMediaIn, fileRenderTmp, mOut);
+ 	 		    mEx.export();
 		    }
          }
          else if (mProject.getStoryType() == Project.STORY_TYPE_PHOTO)
@@ -424,9 +427,6 @@ public class MediaProjectManager implements MediaManager {
          else if (mProject.getStoryType() == Project.STORY_TYPE_ESSAY)
          {
         	
-        	 File fileDirTmp = mContext.getDir("stories",mContext.MODE_WORLD_READABLE);
-        	 fileDirTmp = new File(fileDirTmp,mProject.getId()+"");
-	    		
 	    		
 	    	for (Media media : mList)
 	    	{
@@ -438,7 +438,7 @@ public class MediaProjectManager implements MediaManager {
     	    		File fileSrc = new File(media.getPath());
     	    		
     	    		
-    	    		File fileTmp = new File(fileDirTmp,fileSrc.getName());
+    	    		File fileTmp = new File(fileRenderTmp,fileSrc.getName());
     	    		if (!fileTmp.exists())
     	    		{
     	    			fileTmp.getParentFile().mkdirs();
@@ -467,7 +467,7 @@ public class MediaProjectManager implements MediaManager {
 
 		    String audioPath = null;
     		
-    		File fileAudio = new File(getProjectFolder(mProject),"narration" + mScene.getId() + ".wav");
+    		File fileAudio = new File(getExternalProjectFolder(mProject, mContext),"narration" + mScene.getId() + ".wav");
     		
     		if (fileAudio.exists())
     			audioPath = fileAudio.getCanonicalPath();
@@ -485,15 +485,29 @@ public class MediaProjectManager implements MediaManager {
 		    		fileExport.delete();
 		    	
 		    	fileExport.getParentFile().mkdirs();
-			    fileExport.createNewFile();
 			    
-    			    MediaSlideshowExporter mEx = new MediaSlideshowExporter(mContext, mHandler, alMediaIn, fileDirTmp, audioPath, slideDuration, mOut);
-    			    
-    			    //mEx.setDimensions(width, height)
-    			    
-    			    mEx.run();
+			    MediaSlideshowExporter mEx = new MediaSlideshowExporter(mContext, mHandler, alMediaIn, fileRenderTmp, audioPath, slideDuration, mOut);
+			    
+			    mEx.export();
    		    }
          }
+         
+         deleteRecursive(fileRenderTmp, true);
+		 
+         
+    }
+    
+    void deleteRecursive(File fileOrDirectory, boolean onExit) throws IOException {
+        if (fileOrDirectory.isDirectory())
+            for (File child : fileOrDirectory.listFiles())
+            	deleteRecursive(child, onExit);
+
+        if (!onExit)
+        {
+        	fileOrDirectory.delete();
+        }
+        else
+        	fileOrDirectory.deleteOnExit();
     }
     
     public final static int DEFAULT_VIDEO_BITRATE = 1000;

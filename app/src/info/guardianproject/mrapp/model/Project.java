@@ -28,6 +28,39 @@ public class Project {
     public final static int STORY_TYPE_PHOTO = 2;
     public final static int STORY_TYPE_ESSAY = 3;
     
+    // event, breaking-news, issue, feature. match category tag on server
+    public final static String STORY_TEMPLATE_TYPE_EVENT = "event";
+    public final static String STORY_TEMPLATE_TYPE_BREAKINGNEWS = "breaking-news";
+    public final static String STORY_TEMPLATE_TYPE_ISSUE = "issue";
+    public final static String STORY_TEMPLATE_TYPE_FEATURE = "feature";
+    
+    public String getTemplateTag ()
+    {
+    	String path = getTemplatePath();
+    	
+    	if (path != null)
+    	{
+    		if (path.contains("event"))
+    		{
+    			return STORY_TEMPLATE_TYPE_EVENT;
+    		}
+    		else if (path.contains("issue"))
+    		{
+    			return STORY_TEMPLATE_TYPE_ISSUE;
+    		}
+    		else if (path.contains("profile"))
+    		{
+    			return STORY_TEMPLATE_TYPE_FEATURE;
+    		}
+    		else if (path.contains("news"))
+    		{
+    			return STORY_TEMPLATE_TYPE_BREAKINGNEWS;
+    		}
+    	}
+    	
+    	return null;
+    }
+    
     public int mSceneCount = -1;
     
     public Project(Context context, int sceneCount) {

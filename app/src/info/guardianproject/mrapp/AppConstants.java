@@ -52,7 +52,7 @@ public final static String TAG = "StoryMaker";
 	public static final int ZOOM = 2;
 	public static final int TAP = 3;
 	
-	public static final String EXTERNAL_STORAGE_PATH = "/sdcard/Android/data/info.guardianproject.mrapp/files";
+	//public static final String EXTERNAL_STORAGE_PATH = "/sdcard/Android/data/info.guardianproject.mrapp/files";
 	public static final String FILE_MEDIAFOLDER_NAME = "StoryMaker";
 	public static final String FOLDER_PROJECTS_NAME = "stories";
 	

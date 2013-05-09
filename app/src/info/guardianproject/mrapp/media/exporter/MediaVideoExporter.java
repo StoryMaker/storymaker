@@ -6,6 +6,7 @@ import java.text.DecimalFormatSymbols;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Locale;
 
 import net.sourceforge.sox.SoxController;
@@ -28,7 +29,7 @@ import android.util.Log;
 /*
  * cross fades audio and other niceities
  */
-public class MediaVideoExporter implements Runnable {
+public class MediaVideoExporter extends MediaExporter {
 
 	private Handler mHandler;
 	private Context mContext;
@@ -79,7 +80,7 @@ public class MediaVideoExporter implements Runnable {
 		mAudioTracks.add(audioTrack);
 	}
 	
-	public void run ()
+	public void export ()
 	{
     	try
     	{
@@ -97,14 +98,16 @@ public class MediaVideoExporter implements Runnable {
             msg.getData().putString("status","Processing audio tracks...");
 	        mHandler.sendMessage(msg);
     		
+	        //export video clips and crossfade
     		maExport = new MediaAudioExporter (mContext, mHandler, mMediaList, mFileProject, maOut);
     		maExport.setFadeLength(mFadeLen);
-    		maExport.run();
+    		maExport.export();
     		
+    		
+    		//now merge all audio tracks into main audio track
     		if (mAudioTracks.size() > 0)
     		{
 	    		ArrayList<String> mAudioTracksPaths = new ArrayList<String>();
-	    		//now merge all audio tracks into main audio track
 	    		int idxAudioTracks = 0;
 	    		for (MediaDesc audioTrack : mAudioTracks)
 	    		{
@@ -129,7 +132,7 @@ public class MediaVideoExporter implements Runnable {
                 msg.getData().putString("status","Mixing tracks");
     	        mHandler.sendMessage(msg);
     	        
-	    		SoxController sxCon = new SoxController(mContext);
+	    		SoxController sxCon = new SoxController(mContext,sc);
 	    		sxCon.combineMix(mAudioTracksPaths, finalAudioMix);
 	    		
 	    		if (!new File(finalAudioMix).exists())
@@ -144,45 +147,38 @@ public class MediaVideoExporter implements Runnable {
     		mMerge.path = new File(mFileProject,"merge.mp4").getCanonicalPath();
     	   
     		
-    		ArrayList<Double> durations = maExport.getDurations();
-    		
     		for (int i = 0; i < mMediaList.size(); i++)
     		{
+    			
     			MediaDesc media = mMediaList.get(i);
     			
-    			if (media.startTime == null)
-    				media.startTime = formatTimePeriod(mFadeLen);
-    			else
+    			Log.d(AppConstants.TAG,"parsing times for clip: " + media.startTime + " to " + media.duration);
+    			
+    			/*
+    			if (media.startTime != null)
     			{
     				double startTime = parseTimePeriod(media.startTime);
     				media.startTime = formatTimePeriod(startTime + (mFadeLen));
     			}
     			
-    			if (media.duration == null)
-    				media.duration = formatTimePeriod(durations.get(i)-(mFadeLen));
-    			else
+    			if (media.duration != null)
     			{
     				double duration = parseTimePeriod(media.duration);
     				media.duration = formatTimePeriod(duration-(mFadeLen));
-    			}
+    			}*/
     			
-    			if (media.path.endsWith(".3gp") && (!mPreconvertClipsToMP4))
-    			{
-    				mPreconvertClipsToMP4 = true;
-    			}
     		}
     		
     		msg = mHandler.obtainMessage(0);
-            msg.getData().putString("status","Trimming and merging video tracks");
+            msg.getData().putString("status","Trimming and merging videos");
 	        mHandler.sendMessage(msg);
-	        
 	        
         	ffmpegc.concatAndTrimFilesMP4Stream(mMediaList, mMerge, mPreconvertClipsToMP4, mUseCatCmd, sc);
         	
         	msg = mHandler.obtainMessage(0);
             msg.getData().putString("status","Merging video and audio...");
 	        mHandler.sendMessage(msg);
-	        
+	       
     		ffmpegc.combineAudioAndVideo(mMerge, maOut, mOut, sc);
 
     		//processing complete message
@@ -238,10 +234,7 @@ public class MediaVideoExporter implements Runnable {
 			@Override
 			public void shellOut(String line) {
 				
-				
-				if (!line.startsWith("frame"))
-					Log.d(AppConstants.TAG, line);
-				
+				Log.d(AppConstants.TAG, line);
 				
 				int idx1;
 				String newStatus = null;
@@ -283,6 +276,10 @@ public class MediaVideoExporter implements Runnable {
 				   // int idx2 = line.indexOf('\'', idx1+1);
 				   // newStatus = "Rendering clip: " + line.substring(idx1, idx2);
 				}
+				else if (line.startsWith("status:"))
+				{
+					newStatus = line.substring(7);
+				}
 				    
 
              Message msg = mHandler.obtainMessage(1);
@@ -313,10 +310,19 @@ public class MediaVideoExporter implements Runnable {
 	 * @param seconds
 	 */
  	public String formatTimePeriod(double seconds) {
+ 		
+ 		/*
 		DecimalFormat df = new DecimalFormat("#.##");
+	//	DecimalFormat df = new DecimalFormat("#");
+		
 		df.setDecimalFormatSymbols(new DecimalFormatSymbols(Locale.US));
 		 String seconds_frac = df.format(seconds);
-		return String.format(Locale.US, "0:0:%s", seconds_frac);
+		return String.format(Locale.US, "%s", seconds_frac);
+		*/
+ 		
+		long milliTime = (long)(seconds * 100f);
+		Date dateTime = new Date(milliTime);
+		return String.format(Locale.US, "%s:%s:%s", dateTime.getHours(),dateTime.getMinutes(),dateTime.getSeconds());
 	}
 	
 	/**

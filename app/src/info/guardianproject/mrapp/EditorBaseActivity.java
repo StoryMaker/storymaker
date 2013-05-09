@@ -81,10 +81,8 @@ public class EditorBaseActivity extends BaseActivity {
                         }
                         else
                         {
-                           // Toast.makeText(EditorBaseActivity.this, status, Toast.LENGTH_LONG).show();
+                            Toast.makeText(EditorBaseActivity.this, status, Toast.LENGTH_LONG).show();
 
-                            AlertDialog.Builder builder = new AlertDialog.Builder(EditorBaseActivity.this);
-                            builder.setMessage(status).show();
                         	
                         }
                     }

@@ -72,8 +72,8 @@ public class HomeActivity extends BaseActivity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-      
+    
+    	super.onCreate(savedInstanceState);
         
         try {
             String pkg = getPackageName();
@@ -764,15 +764,11 @@ public class HomeActivity extends BaseActivity {
 	        }
 	    }
 	
-	public class MyFragment extends Fragment {
+	public static final class MyFragment extends Fragment {
 	
 		String mMessage;
 		String mTitle;
 		
-		public MyFragment ()
-		{
-			super ();
-		}
 		 /**
        * When creating, retrieve this instance's number from its arguments.
        */
