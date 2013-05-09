@@ -47,7 +47,7 @@ public class MediaVideoExporter extends MediaExporter {
     
     private int mAudioSampleRate = -1;
     
-    private float mFadeLen = .5f;
+    private double mFadeLen = .5f;
     
     private File mFileProject;
     
@@ -67,7 +67,7 @@ public class MediaVideoExporter extends MediaExporter {
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(mContext.getApplicationContext());
         mAudioSampleRate = Integer.parseInt(settings.getString("p_audio_samplerate", AppConstants.DEFAULT_AUDIO_SAMPLE_RATE));
     	
-        mFadeLen = Float.parseFloat(settings.getString("p_audio_xfade_len",".5f"));
+        mFadeLen = Float.parseFloat(settings.getString("p_audio_xfade_len","1"));
         
         mPreconvertClipsToMP4 = settings.getBoolean("p_preconvert_mp4", false);
      
@@ -103,6 +103,8 @@ public class MediaVideoExporter extends MediaExporter {
     		maExport.setFadeLength(mFadeLen);
     		maExport.export();
     		
+
+    		SoxController sxCon = new SoxController(mContext,sc);
     		
     		//now merge all audio tracks into main audio track
     		if (mAudioTracks.size() > 0)
@@ -132,7 +134,6 @@ public class MediaVideoExporter extends MediaExporter {
                 msg.getData().putString("status","Mixing tracks");
     	        mHandler.sendMessage(msg);
     	        
-	    		SoxController sxCon = new SoxController(mContext,sc);
 	    		sxCon.combineMix(mAudioTracksPaths, finalAudioMix);
 	    		
 	    		if (!new File(finalAudioMix).exists())
@@ -146,27 +147,35 @@ public class MediaVideoExporter extends MediaExporter {
     		MediaDesc mMerge = new MediaDesc();
     		mMerge.path = new File(mFileProject,"merge.mp4").getCanonicalPath();
     	   
+    		Double videoFadeLen = mFadeLen;
     		
     		for (int i = 0; i < mMediaList.size(); i++)
     		{
     			
     			MediaDesc media = mMediaList.get(i);
     			
-    			Log.d(AppConstants.TAG,"parsing times for clip: " + media.startTime + " to " + media.duration);
     			
-    			/*
-    			if (media.startTime != null)
+    			if (media.startTime == null)
     			{
-    				double startTime = parseTimePeriod(media.startTime);
-    				media.startTime = formatTimePeriod(startTime + (mFadeLen));
+    				media.startTime = String.format(Locale.US, "%.2f",videoFadeLen);
+    			}
+    			else
+    			{
+    				double newStartTime = Double.parseDouble(media.startTime)+videoFadeLen;
+    				media.startTime = String.format(Locale.US, "%.2f",newStartTime);
+
     			}
     			
-    			if (media.duration != null)
+    			if (media.duration == null)
     			{
-    				double duration = parseTimePeriod(media.duration);
-    				media.duration = formatTimePeriod(duration-(mFadeLen));
-    			}*/
-    			
+    				media = ffmpegc.getInfo(media);
+    				media.duration = String.format(Locale.US,"%.2f",Double.parseDouble(media.duration)-videoFadeLen);
+    			}
+    			else
+    			{
+    				double newDuration = Double.parseDouble(media.duration)-videoFadeLen;
+    				media.duration = String.format(Locale.US, "%.2f",newDuration);
+    			}
     		}
     		
     		msg = mHandler.obtainMessage(0);
@@ -261,6 +270,8 @@ public class MediaVideoExporter extends MediaExporter {
 					String time = line.substring(idx1+5,idx2);
 					//newStatus = line;
 					
+					try
+					{
 					int hour = Integer.parseInt(time.substring(0,2));
 					int min = Integer.parseInt(time.substring(3,5));
 					int sec = Integer.parseInt(time.substring(6,8));
@@ -268,6 +279,9 @@ public class MediaVideoExporter extends MediaExporter {
 					current = (hour * 60 * 60) + (min * 60) + sec;
 					
 					progress = (int)( ((float)current) / ((float)total) *100f );
+					}
+					catch (Exception e)
+					{}//sometimes parse exceptions happen here
 				}
 				else if (line.startsWith("Input"))
 				{
@@ -304,35 +318,5 @@ public class MediaVideoExporter extends MediaExporter {
  	};
 	    
 
-	/**
-	 * Takes a seconds.frac value and formats it into:
-	 * 	hh:mm:ss:ss.frac
-	 * @param seconds
-	 */
- 	public String formatTimePeriod(double seconds) {
- 		
- 		/*
-		DecimalFormat df = new DecimalFormat("#.##");
-	//	DecimalFormat df = new DecimalFormat("#");
-		
-		df.setDecimalFormatSymbols(new DecimalFormatSymbols(Locale.US));
-		 String seconds_frac = df.format(seconds);
-		return String.format(Locale.US, "%s", seconds_frac);
-		*/
- 		
-		long milliTime = (long)(seconds * 100f);
-		Date dateTime = new Date(milliTime);
-		return String.format(Locale.US, "%s:%s:%s", dateTime.getHours(),dateTime.getMinutes(),dateTime.getSeconds());
-	}
-	
-	/**
-	 * Takes a seconds.frac value and formats it into:
-	 * 	hh:mm:ss:ss.frac
-	 * @param seconds
-	 */
-	public Double parseTimePeriod(String seconds) throws ParseException {
-		DecimalFormat format = new DecimalFormat("#.##");
-		return format.parse(seconds).doubleValue();
-	}
 	
 }

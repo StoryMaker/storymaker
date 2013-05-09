@@ -1,6 +1,7 @@
 package info.guardianproject.mrapp.media.exporter;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 import net.sourceforge.sox.CrossfadeCat;
@@ -157,6 +158,10 @@ public class MediaAudioExporter extends MediaExporter {
 		    	
 		    	wavIdx++;
 			}
+			else
+			{
+				throw new FileNotFoundException(mediaIn.path);
+			}
 		 }
 
 		 String fileOut = alAudio.get(0).path;
@@ -183,8 +188,9 @@ public class MediaAudioExporter extends MediaExporter {
 	       mHandler.sendMessage(msg);
 	       
 		 //1 second fade in and fade out, t = triangle or linear
-	       String fadeLenStr = sxCon.formatTimePeriod(fadeLen);
-		 String fadeFileOut = sxCon.fadeAudio(fileOut, fadeType, fadeLenStr, "0", fadeLenStr);
+	       //String fadeLenStr = sxCon.formatTimePeriod(fadeLen);
+	       
+		 String fadeFileOut = sxCon.fadeAudio(fileOut, fadeType, fadeLen, 0, fadeLen);
 		 
 		 //now export the final file to our requested output format
 		 MediaDesc mdFinalIn = new MediaDesc();
