@@ -154,28 +154,35 @@ public class MediaVideoExporter extends MediaExporter {
     			
     			MediaDesc media = mMediaList.get(i);
     			
-    			
-    			if (media.startTime == null)
+    			/*
+    			if (i > 0)
     			{
-    				media.startTime = String.format(Locale.US, "%.2f",videoFadeLen);
-    			}
-    			else
-    			{
-    				double newStartTime = Double.parseDouble(media.startTime)+videoFadeLen;
-    				media.startTime = String.format(Locale.US, "%.2f",newStartTime);
-
-    			}
+	    			if (media.startTime == null)
+	    			{
+	    				media.startTime = String.format(Locale.US, "%.2f",videoFadeLen);
+	    			}
+	    			else
+	    			{
+	    				double newStartTime = Double.parseDouble(media.startTime)+videoFadeLen;
+	    				media.startTime = String.format(Locale.US, "%.2f",newStartTime);
+	
+	    			}
+    			}*/
     			
+    		
     			if (media.duration == null)
     			{
     				media = ffmpegc.getInfo(media);
-    				media.duration = String.format(Locale.US,"%.2f",Double.parseDouble(media.duration)-videoFadeLen);
+    				media.duration = String.format(Locale.US,"%.2f",Double.parseDouble(media.duration)-(videoFadeLen));
     			}
     			else
     			{
-    				double newDuration = Double.parseDouble(media.duration)-videoFadeLen;
+    				double newDuration = Double.parseDouble(media.duration)-(videoFadeLen);
     				media.duration = String.format(Locale.US, "%.2f",newDuration);
     			}
+    			
+    			
+    			Log.d(AppConstants.TAG,"video clip start=" + media.startTime + " length=" + media.duration);
     		}
     		
     		msg = mHandler.obtainMessage(0);

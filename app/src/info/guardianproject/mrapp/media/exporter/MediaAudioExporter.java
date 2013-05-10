@@ -3,6 +3,7 @@ package info.guardianproject.mrapp.media.exporter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Locale;
 
 import net.sourceforge.sox.CrossfadeCat;
 import net.sourceforge.sox.SoxController;
@@ -156,6 +157,19 @@ public class MediaAudioExporter extends MediaExporter {
 		    	MediaDesc audioOut = ffmpegc.convertToWaveAudio(mediaIn, new File(mFileTemp, wavIdx+".wav").getCanonicalPath(),mAudioSampleRate,CHANNELS, sc);
 		    	alAudio.add(audioOut);
 		    	
+	    		double duration = sxCon.getLength(new File(audioOut.path).getCanonicalPath());
+	    		Log.d(AppConstants.TAG,"got clip " + wavIdx + " length: " + duration);
+
+		    	if (mediaIn.duration == null)
+		    	{	
+		    		mediaIn.duration = String.format(Locale.US, "%.2f",duration);
+		    	}
+		    	else
+		    	{
+		    		Log.d(AppConstants.TAG,"found clip " + wavIdx + " existing length: " + mediaIn.duration);
+		    	}
+		    		
+
 		    	wavIdx++;
 			}
 			else
