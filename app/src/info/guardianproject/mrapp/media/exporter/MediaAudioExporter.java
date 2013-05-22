@@ -206,7 +206,9 @@ public class MediaAudioExporter extends MediaExporter {
 	       
 		 String fadeFileOut = sxCon.fadeAudio(fileOut, fadeType, fadeLen, 0, fadeLen);
 		 
-		 //now export the final file to our requested output format
+		 //now export the final file to our requested output format		    mOut.mimeType = AppConstants.MimeTypes.MP4_AUDIO;
+
+		 
 		 MediaDesc mdFinalIn = new MediaDesc();
 		 mdFinalIn.path = fadeFileOut;
 		 
@@ -220,7 +222,6 @@ public class MediaAudioExporter extends MediaExporter {
 	     
 	       
 		 MediaDesc exportOut = ffmpegc.convertTo3GPAudio(mdFinalIn, mdout, sc);
-		 
 		 
 	   }
 	    
