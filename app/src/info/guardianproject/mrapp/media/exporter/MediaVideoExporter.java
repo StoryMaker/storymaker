@@ -250,8 +250,9 @@ public class MediaVideoExporter extends MediaExporter {
 			@Override
 			public void shellOut(String line) {
 				
-				Log.d(AppConstants.TAG, line);
-				
+				if (!line.startsWith("frame"))
+					Log.d(AppConstants.TAG, line);
+			
 				int idx1;
 				String newStatus = null;
 				int progress = -1;
