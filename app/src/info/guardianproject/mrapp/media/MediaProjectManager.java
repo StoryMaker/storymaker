@@ -157,6 +157,15 @@ public class MediaProjectManager implements MediaManager {
         }
         
     }
+    
+    public void deleteCurrentClip ()
+    {
+    	
+    //	mScene.setMedia(mClipIndex, "FIXME", null, null);
+    	Media media = mScene.getMediaAsList().get(mClipIndex);
+    	media.delete();
+    	((SceneEditorActivity)mActivity).refreshClipPager();
+    }
 
    
     private static synchronized void initExternalStorage (Context context)

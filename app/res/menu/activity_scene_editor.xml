@@ -4,5 +4,6 @@
     <item android:id="@+id/itemForward" android:icon="@drawable/ic_action_forward_white_redbg" android:showAsAction="always" android:visible="true" android:title="Forward" android:orderInCategory="3"></item>
      <item android:id="@+id/addFromGallery" android:showAsAction="never" android:visible="true" android:title="@string/menu_add_from_gallery"></item>
      <item android:id="@+id/addNewShot" android:showAsAction="never" android:visible="true" android:title="@string/menu_add_new_shot"></item>
+     <item android:id="@+id/delShot" android:showAsAction="never" android:visible="true" android:title="@string/menu_del_shot"></item>
      
 </menu>
