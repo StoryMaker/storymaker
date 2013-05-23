@@ -25,6 +25,14 @@ public final static String TAG = "StoryMaker";
 
 	public final static int DEFAULT_SLIDE_DURATION = 10;
 	
+	public final static int DEFAULT_VIDEO_BITRATE = 1000;
+    public final static int DEFAULT_AUDIO_BITRATE = 64;
+    public final static String DEFAULT_FRAME_RATE = "29.97";
+    
+    public final static int DEFAULT_WIDTH = 720;
+    public final static int DEFAULT_HEIGHT = 480;
+    
+	
 
 	public final static int DEFAULT_CLIP_COUNT = 5;
 	

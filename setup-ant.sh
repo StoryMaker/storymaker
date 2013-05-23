@@ -9,12 +9,17 @@ readarray <<END
 external/HoloEverywhere/contrib/ActionBarSherlock/library
 external/HoloEverywhere/library
 external/android-ffmpeg-java
-external/OnionKit/library
+external/OnionKit/libonionkit
 external/WordpressJavaAndroid
+external/RangeSeekBar/library
+external/Android-ViewPagerIndicator/library
+external/cardsui-for-android/CardsUILib
+external/SlidingMenu/library
 END
 
+
 for project in "${MAPFILE[@]}"; do
-        android update project --path $project -t 10
+        android update project --path $project -t 1
 done
 
 cd app

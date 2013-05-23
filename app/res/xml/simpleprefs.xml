@@ -43,6 +43,9 @@
 	
 	
 	<PreferenceCategory android:title="Debug">
+	    
+	    <CheckBoxPreference android:title="Internal Storage" android:summary="use internal project storage" android:key="p_use_internal_storage" android:defaultValue="false"/>
+	    
 		<CheckBoxPreference android:title="Disable lesson completion" android:key="plessondebug"/>
 		
 		<EditTextPreference android:title="YouTube Method" android:summary="debug auth method type" android:key="glsauthmethod" android:defaultValue="0" android:enabled="true"/>

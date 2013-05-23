@@ -37,7 +37,9 @@ public class MediaProjectManager implements MediaManager {
 	
 
     public final static String EXPORT_VIDEO_FILE_EXT = ".mp4";
-    public final static String EXPORT_AUDIO_FILE_EXT = ".m4a";//".ogg";//"".3gp";
+//    public final static String EXPORT_AUDIO_FILE_EXT = ".m4a";//".ogg";//"".3gp";
+    public final static String EXPORT_AUDIO_FILE_EXT = ".3gp";//".ogg";//"".3gp";
+
     public final static String EXPORT_PHOTO_FILE_EXT = ".jpg";
     public final static String EXPORT_ESSAY_FILE_EXT = ".mp4";
     
@@ -155,17 +157,35 @@ public class MediaProjectManager implements MediaManager {
         }
         
     }
+    
+    public void deleteCurrentClip ()
+    {
+    	
+    //	mScene.setMedia(mClipIndex, "FIXME", null, null);
+    	Media media = mScene.getMediaAsList().get(mClipIndex);
+    	media.delete();
+    	((SceneEditorActivity)mActivity).refreshClipPager();
+    }
 
    
     private static synchronized void initExternalStorage (Context context)
     {
-    	//String extState = Environment.getExternalStorageState();
+    	
     	
     	if (mFileExternDir == null)
     	{
-	    	
-	    	mFileExternDir = context.getDir(AppConstants.FOLDER_PROJECTS_NAME,Context.MODE_WORLD_WRITEABLE);
+    	
+    		SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context.getApplicationContext());
+    		 
+    		boolean useInternal = settings.getBoolean("p_use_internal_storage",false);
+        	
+    		if (useInternal)
+    			mFileExternDir = context.getDir(AppConstants.FOLDER_PROJECTS_NAME,Context.MODE_WORLD_WRITEABLE|Context.MODE_WORLD_READABLE);
+    		else
+    			mFileExternDir = new File(context.getExternalFilesDir(null),AppConstants.FOLDER_PROJECTS_NAME);
+    		
 	    	mFileExternDir.mkdirs();
+	    	
     	}
     }
     
@@ -176,7 +196,9 @@ public class MediaProjectManager implements MediaManager {
     	
     	String folderName = project.getId()+"";
     	File fileProject = new File(mFileExternDir,folderName);
+    	
     	fileProject.mkdirs();
+    	
     	return fileProject;
     }
     
@@ -370,10 +392,11 @@ public class MediaProjectManager implements MediaManager {
  	
  		    mOut = new MediaDesc ();
 // 		    mOut.mimeType = AppConstants.MimeTypes.OGG;
- 		    mOut.mimeType = AppConstants.MimeTypes.MP4_AUDIO;
-
+ //		    mOut.mimeType = AppConstants.MimeTypes.MP4_AUDIO;
+		    mOut.mimeType = AppConstants.MimeTypes.THREEGPP_AUDIO;
+ 		    
  		   // if (doCompress)
- 		   // applyExportSettingsAudio(mOut);
+ 		   applyExportSettingsAudio(mOut);
  		    
  		    mOut.path = fileExport.getCanonicalPath();
  		    
@@ -510,34 +533,28 @@ public class MediaProjectManager implements MediaManager {
         	fileOrDirectory.deleteOnExit();
     }
     
-    public final static int DEFAULT_VIDEO_BITRATE = 1000;
-    public final static int DEFAULT_AUDIO_BITRATE = 128;
-    public final static String DEFAULT_FRAME_RATE = "29.97";
-    
-    public final static int DEFAULT_WIDTH = 720;
-    public final static int DEFAULT_HEIGHT = 480;
     
     public void applyExportSettings (MediaDesc mdout)
     {
     	
-    	mdout.videoBitrate = Integer.parseInt(mSettings.getString("p_video_bitrate", DEFAULT_VIDEO_BITRATE+""));;
-    	mdout.audioBitrate = Integer.parseInt(mSettings.getString("p_audio_bitrate", DEFAULT_AUDIO_BITRATE+""));;
-    	mdout.videoFps = mSettings.getString("p_video_framerate", DEFAULT_FRAME_RATE);
-    	mdout.width = Integer.parseInt(mSettings.getString("p_video_width", DEFAULT_WIDTH+""));
-    	mdout.height = Integer.parseInt(mSettings.getString("p_video_height", DEFAULT_HEIGHT+""));
+    	mdout.videoBitrate = Integer.parseInt(mSettings.getString("p_video_bitrate", AppConstants.DEFAULT_VIDEO_BITRATE+""));;
+    	mdout.audioBitrate = Integer.parseInt(mSettings.getString("p_audio_bitrate", AppConstants.DEFAULT_AUDIO_BITRATE+""));;
+    	mdout.videoFps = mSettings.getString("p_video_framerate", AppConstants.DEFAULT_FRAME_RATE);
+    	mdout.width = Integer.parseInt(mSettings.getString("p_video_width", AppConstants.DEFAULT_WIDTH+""));
+    	mdout.height = Integer.parseInt(mSettings.getString("p_video_height", AppConstants.DEFAULT_HEIGHT+""));
     	
     	mdout.videoCodec = mSettings.getString("p_video_codec","mpeg4");
     	
     }
 
-    /*
+    
     public void applyExportSettingsAudio (MediaDesc mdout)
     {
     	mdout.videoCodec = null; 
     	mdout.audioCodec =  mSettings.getString("p_audio_codec","aac");
-    	mdout.audioBitrate = Integer.parseInt(mSettings.getString("p_audio_bitrate", DEFAULT_AUDIO_BITRATE+""));;
+    	mdout.audioBitrate = Integer.parseInt(mSettings.getString("p_audio_bitrate", AppConstants.DEFAULT_AUDIO_BITRATE+""));;
     	mdout.format = "3gp";
-    }*/
+    }
     
     
     

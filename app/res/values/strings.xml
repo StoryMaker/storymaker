@@ -35,7 +35,8 @@
     <string name="menu_overlay_camera">Camera</string>
 
     <string name="menu_add_from_gallery">Import from Gallery</string>
-        <string name="menu_add_new_shot">Add Clip to Scene</string>
+    <string name="menu_add_new_shot">Add Clip to Scene</string>
+    <string name="menu_del_shot">Delete Current Clip</string>
     
     <string name="welcome_message">Hey there!\nWelcome to StoryMaker</string>
 

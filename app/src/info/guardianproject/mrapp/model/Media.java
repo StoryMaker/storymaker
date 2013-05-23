@@ -238,7 +238,7 @@ public class Media {
         // FIXME make sure 1 row updated
     }
     
-    private void delete() {
+    public void delete() {
     	Uri uri = ProjectsProvider.MEDIA_CONTENT_URI.buildUpon().appendPath("" + id).build();
         String selection = StoryMakerDB.Schema.Media.ID + "=?";
         String[] selectionArgs = new String[] { "" + id };

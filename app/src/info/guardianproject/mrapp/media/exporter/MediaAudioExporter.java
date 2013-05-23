@@ -206,7 +206,9 @@ public class MediaAudioExporter extends MediaExporter {
 	       
 		 String fadeFileOut = sxCon.fadeAudio(fileOut, fadeType, fadeLen, 0, fadeLen);
 		 
-		 //now export the final file to our requested output format
+		 //now export the final file to our requested output format		    mOut.mimeType = AppConstants.MimeTypes.MP4_AUDIO;
+
+		 
 		 MediaDesc mdFinalIn = new MediaDesc();
 		 mdFinalIn.path = fadeFileOut;
 		 
@@ -221,7 +223,6 @@ public class MediaAudioExporter extends MediaExporter {
 	       
 		 MediaDesc exportOut = ffmpegc.convertTo3GPAudio(mdFinalIn, mdout, sc);
 		 
-		 
 	   }
 	    
 	 private ShellCallback sc = new ShellCallback() {
@@ -229,7 +230,9 @@ public class MediaAudioExporter extends MediaExporter {
 			@Override
 			public void shellOut(String line) {
 				
-				Log.d(AppConstants.TAG, line);
+				if (!line.startsWith("frame"))
+					Log.d(AppConstants.TAG, line);
+			
 				
 				int idx1;
 				String newStatus = null;
