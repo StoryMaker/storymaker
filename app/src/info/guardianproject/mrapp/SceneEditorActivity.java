@@ -189,6 +189,10 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
                 addShotToScene();
                 
                 return true;
+            case R.id.delShot:
+            	
+            	deleteCurrentShot();
+            	return true;
             case R.id.itemTrim:
                 if (mFragmentTab1 != null) { 
                     ((OrderClipsFragment) mFragmentTab1).loadTrim();
@@ -269,6 +273,13 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
         }
     }
 
+    public void deleteCurrentShot ()
+    {
+		mMPM.deleteCurrentClip();
+    	
+    }
+    
+    
     private void addMediaFromGallery()
     {
         mMPM.mMediaHelper.openGalleryChooser("*/*");

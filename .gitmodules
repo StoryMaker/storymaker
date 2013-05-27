@@ -1,12 +1,12 @@
 [submodule "external/OnionKit"]
 	path = external/OnionKit
-	url = git://github.com/guardianproject/OnionKit.git
+	url = https://github.com/guardianproject/OnionKit.git
 [submodule "external/android-ffmpeg-java"]
 	path = external/android-ffmpeg-java
 	url = https://github.com/guardianproject/android-ffmpeg-java
 [submodule "external/SlidingMenu"]
 	path = external/SlidingMenu
-	url = git@github.com:vitriolix/SlidingMenu.git
+	url = https://github.com/vitriolix/SlidingMenu.git
 [submodule "external/cardsui-for-android"]
 	path = external/cardsui-for-android
 	url = https://github.com/nadavfima/cardsui-for-android.git
@@ -15,7 +15,7 @@
 	url = https://github.com/JakeWharton/Android-ViewPagerIndicator.git
 [submodule "external/HoloEverywhere"]
 	path = external/HoloEverywhere
-	url = git://github.com/Prototik/HoloEverywhere.git
+	url = https://github.com/Prototik/HoloEverywhere.git
 [submodule "external/RangeSeekBar"]
 	path = external/RangeSeekBar
-	url = git@github.com:vitriolix/RangeSeekBar.git
+	url = https://github.com/vitriolix/RangeSeekBar.git

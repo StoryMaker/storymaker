@@ -11,6 +11,8 @@ import org.json.JSONException;
 
 import android.accounts.Account;
 import android.accounts.AccountManager;
+import android.accounts.AccountManagerCallback;
+import android.accounts.AccountManagerFuture;
 import android.accounts.AuthenticatorException;
 import android.accounts.OperationCanceledException;
 import android.app.Activity;
@@ -19,6 +21,7 @@ import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 
@@ -60,17 +63,38 @@ public class SoundCloudUploader {
 		
 		mFileSize = audioFile.length();
 		
-		AccountManager accountManager = AccountManager.get(mContext);
+		AccountManager accountManager = AccountManager.get(mContext.getApplicationContext());
 		Account[] acc = accountManager.getAccountsByType("com.soundcloud.android.account");
 		if (acc.length > 0) {
 		    // possibly ask user for permission to obtain token
 			//accountManager.getAuthToken(account, authTokenType, notifyAuthFailure, callback, handler)
 			
-		    String access = accountManager.blockingGetAuthToken(acc[0], "access_token", false);
-		//	String access = accountManager.getAuthToken(account, authTokenType, notifyAuthFailure, callback, handler);
+		    String access = accountManager.blockingGetAuthToken(acc[0], "access_token", true);
 			
 		    if (access == null)
-		    	throw new IOException ("unable to get access token for SoundCloud account: " + acc[0].name);
+		    {
+		    	Bundle options = new Bundle();
+		    
+	          	accountManager.getAuthToken(acc[0], "access_token", options, activity,  new AccountManagerCallback<Bundle>() {
+
+					@Override
+					public void run(AccountManagerFuture<Bundle> arg0) {
+						// TODO Auto-generated method stub
+						
+					}}, handler);
+
+	          	/*
+		    	AccountManagerFuture<Bundle> bundleFuture = accountManager.getAuthToken(acc[0], "access_token", options, false, new AccountManagerCallback<Bundle>() {
+
+					@Override
+					public void run(AccountManagerFuture<Bundle> arg0) {
+						// TODO Auto-generated method stub
+						
+					}}, mHandler);
+				*/
+	          	
+		    	throw new IOException ("Please press 'Publish' again once you have authorized SoundCloud access");
+		    }
 		    
 		    Token token = new Token(access, null, Token.SCOPE_NON_EXPIRING);
 		    ApiWrapper wrapper = new ApiWrapper(null, null, null, token, Env.LIVE);
