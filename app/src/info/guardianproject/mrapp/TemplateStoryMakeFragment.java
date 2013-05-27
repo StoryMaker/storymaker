@@ -25,18 +25,14 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.TextView;
 
 public class TemplateStoryMakeFragment extends Fragment {
-    EditorBaseActivity mActivity;
+  //  public EditorBaseActivity mActivity;
     public static final String ARG_SECTION_NUMBER = "section_number";
     private Template mTemplate;
     private Project mProject;
     
     public TemplateStoryMakeFragment()
     {}
-    
-    public TemplateStoryMakeFragment(EditorBaseActivity activity) {
-        mActivity = activity;
-    }
-    
+   
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
@@ -59,7 +55,7 @@ public class TemplateStoryMakeFragment extends Fragment {
         }
 
         TextView title = (TextView) view.findViewById(R.id.textTitle);
-        title.setText(mActivity.mMPM.mProject.getTitle());
+        title.setText(getArguments().getString("title"));
         
         TextView title2 = (TextView) view.findViewById(R.id.textPublishDate);
         title2.setText(mTemplate.mTitle);

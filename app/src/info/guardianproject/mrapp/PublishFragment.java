@@ -65,10 +65,9 @@ public class PublishFragment extends Fragment {
     
     private final static int REQ_SOUNDCLOUD = 777;
     
-    
-    int layout;
     public ViewPager mAddClipsViewPager;
     View mView = null;
+ 
     private EditorBaseActivity mActivity;
     private Handler mHandlerPub;
     
@@ -94,15 +93,20 @@ public class PublishFragment extends Fragment {
      */
     protected DraggableGridView mOrderClipsDGV;
 
-    public PublishFragment(int layout, EditorBaseActivity activity)
-            throws IOException, JSONException {
-        this.layout = layout;
-        mActivity = activity;
-        mHandlerPub = activity.mHandlerPub;
+    
+
+    private void initFragment ()
+    {
+    	mActivity = (EditorBaseActivity)getActivity();
+    	
+        mHandlerPub = mActivity.mHandlerPub;
         
+
         mSettings = PreferenceManager
-        .getDefaultSharedPreferences(mActivity.getApplicationContext());
+        .getDefaultSharedPreferences(getActivity().getApplicationContext());
+	
     }
+    
 
     public static final String ARG_SECTION_NUMBER = "section_number";
 
@@ -110,8 +114,12 @@ public class PublishFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
 
+    	initFragment ();
+    	
+    	int layout = getArguments().getInt("layout");
+    	
         mView = inflater.inflate(layout, null);
-        if (this.layout == R.layout.fragment_story_publish) {
+        if (layout == R.layout.fragment_story_publish) {
         	
         	ImageView ivThumb = (ImageView)mView.findViewById(R.id.storyThumb);
 
@@ -256,6 +264,7 @@ public class PublishFragment extends Fragment {
 
     private String setUploadAccount() {
        
+
         mMediaUploadAccountKey = null;
         
         if (mActivity.mMPM.mProject.getStoryType() == Project.STORY_TYPE_VIDEO
@@ -321,11 +330,13 @@ public class PublishFragment extends Fragment {
     
     private void handlePublish(final boolean doYouTube, final boolean doStoryMaker, final boolean doOverwrite) {
         
-        EditText etTitle = (EditText) mActivity.findViewById(R.id.etStoryTitle);
-        EditText etDesc = (EditText) mActivity.findViewById(R.id.editTextDescribe);
-        EditText etLocation = (EditText)  mActivity.findViewById(R.id.editTextLocation);
+    	initFragment();
+    	
+        EditText etTitle = (EditText) mView.findViewById(R.id.etStoryTitle);
+        EditText etDesc = (EditText) mView.findViewById(R.id.editTextDescribe);
+        EditText etLocation = (EditText)  mView.findViewById(R.id.editTextLocation);
         
-		Spinner s = (Spinner) mActivity.findViewById( R.id.spinnerSections );
+		Spinner s = (Spinner) mView.findViewById( R.id.spinnerSections );
 
 		//only one item can be selected
 		ArrayList<String> alCats = new ArrayList<String>();
@@ -452,6 +463,7 @@ public class PublishFragment extends Fragment {
                                     || mActivity.mMPM.mProject.getStoryType() == Project.STORY_TYPE_ESSAY
                                     
                                     ) {
+                            	
                             	
                             	medium = ServerManager.CUSTOM_FIELD_MEDIUM_VIDEO;
                             	

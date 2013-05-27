@@ -434,8 +434,8 @@ public class Media {
         else if (media.getMimeType().startsWith("image"))
         {
             final BitmapFactory.Options options = new BitmapFactory.Options();
-            options.inSampleSize = IMAGE_SAMPLE_SIZE;
-
+            options.inSampleSize = IMAGE_SAMPLE_SIZE * 2; //images will be bigger than video or audio
+        
             return BitmapFactory.decodeFile(media.getPath(), options);
         }
         else if (media.getMimeType().startsWith("audio"))

@@ -1,6 +1,7 @@
 package info.guardianproject.mrapp;
 
 import info.guardianproject.mrapp.lessons.LessonManager;
+import info.guardianproject.mrapp.media.MediaProjectManager;
 import info.guardianproject.mrapp.server.ServerManager;
 
 import java.io.BufferedReader;
@@ -459,7 +460,7 @@ public class StoryMakerApp extends Application {
 	{
 		try
 		{
-		 File fileRenderTmpDir = context.getDir("render", Context.MODE_PRIVATE);
+		 File fileRenderTmpDir = MediaProjectManager.getRenderPath(context);
 		// deleteRecursive(fileRenderTmpDir,false);
 		 Runtime.getRuntime().exec("rm -rf " + fileRenderTmpDir.getCanonicalPath());
 		}
