@@ -169,8 +169,8 @@ public class LessonListView extends ListView implements LessonManagerListener {
     		
     		return true;
     	}
-    	else
-    		return false;
+
+    	return false;
     }
     
     public void changeLessonFolder (String subFolder)
@@ -263,7 +263,8 @@ public class LessonListView extends ListView implements LessonManagerListener {
 					
 				break;
 				case 2:
-					mActivity.mProgressLoading.cancel();
+					if (mActivity != null && mActivity.mProgressLoading != null)
+						mActivity.mProgressLoading.cancel();
 					
 			    break;
 			    
@@ -276,7 +277,7 @@ public class LessonListView extends ListView implements LessonManagerListener {
 				
 				case 4: //error
 					
-					if (mActivity.mProgressLoading != null)
+					if (mActivity != null && mActivity.mProgressLoading != null)
 						mActivity.mProgressLoading.cancel();
 					
 					Toast.makeText(getContext(), msg.getData().getString("err"), Toast.LENGTH_LONG).show();
@@ -284,7 +285,8 @@ public class LessonListView extends ListView implements LessonManagerListener {
 				break;
 				case 5: //status update
 				
-					mActivity.updateLessonProgress(msg.getData().getString("status"));
+					if (mActivity != null && mActivity.mProgressLoading != null)
+						mActivity.updateLessonProgress(msg.getData().getString("status"));
 				
 				default:
 				

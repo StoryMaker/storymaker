@@ -26,15 +26,22 @@ import org.apache.commons.io.IOUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import android.app.DownloadManager;
+import android.app.DownloadManager.Query;
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.net.Uri;
+import android.os.ParcelFileDescriptor;
 import android.preference.PreferenceManager;
 import android.util.Log;
+import android.widget.Toast;
 import ch.boye.httpclientandroidlib.HttpEntity;
 import ch.boye.httpclientandroidlib.HttpResponse;
 import ch.boye.httpclientandroidlib.client.methods.HttpGet;
-import ch.boye.httpclientandroidlib.params.HttpConnectionParams;
-import ch.boye.httpclientandroidlib.params.HttpParams;
 import ch.boye.httpclientandroidlib.util.EntityUtils;
 
 public class LessonManager implements Runnable {
@@ -50,8 +57,12 @@ public class LessonManager implements Runnable {
 	
 	public final static String LESSON_METADATA_FILE = "lesson.json";
 	public final static String LESSON_STATUS_FILE = "status.txt";
-	//public final static String LESSON_INDEX_FILE = "index.json";
-	
+	//public final static String LESSON_INDEX_FILE = "index.json";'
+
+	private final static int SO_TIMEOUT = 60000;
+
+	private static StrongHttpsClient mHttpClient;
+		
 	public LessonManager (Context context, String remoteRepoUrl, File localStorageRoot)
 	{
 		mContext = context;
@@ -210,11 +221,9 @@ public class LessonManager implements Runnable {
 	
 		  InputStream is = context.getAssets().open("template/index.html." + locale);
 		  OutputStream os = new java.io.FileOutputStream(fileIdx);
-		  IOUtils.copyLarge(is, os);
+		  IOUtils.copy(is, os);
 		
 	}
-	
-	private static StrongHttpsClient mHttpClient;
 	
 	private synchronized StrongHttpsClient getHttpClientInstance ()
 	{
@@ -223,6 +232,11 @@ public class LessonManager implements Runnable {
 		
 		mHttpClient.getStrongTrustManager().setNotifyVerificationSuccess(true);
 		mHttpClient.getStrongTrustManager().setNotifyVerificationFail(true);
+		
+	//	HttpParams params = mHttpClient.getParams();
+	//	HttpConnectionParams.setConnectionTimeout(params, SO_TIMEOUT);
+	//	HttpConnectionParams.setSoTimeout(params, SO_TIMEOUT);	
+//		DefaultHttpClient.setDefaultHttpParams(params);
 		
 		return mHttpClient;
 	}
@@ -244,11 +258,12 @@ public class LessonManager implements Runnable {
 			
 			Log.d(AppConstants.TAG,"current lesson folder: " + lessonFolder.getAbsolutePath());
 			
+			 SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(mContext.getApplicationContext());
+			
+			boolean useDownloadManager = settings.getBoolean("pusedownloadmanager", true);
 			
 			// open URL and download file listing
 			StrongHttpsClient httpClient = getHttpClientInstance();
-			
-			 SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(mContext.getApplicationContext());
 
 		     boolean useTor = settings.getBoolean("pusetor", false);
 		     
@@ -320,52 +335,62 @@ public class LessonManager implements Runnable {
 						
 						Log.d(AppConstants.TAG,"Loading lesson zip: " + sUrlLesson);
 						
-						
-						URI urlLesson = new URI(sUrlLesson);
-						request = new HttpGet(urlLesson);
-						response = httpClient.execute(request);
-						
-						String fileName = urlLesson.getPath();
-						fileName = fileName.substring(fileName.lastIndexOf('/')+1);
-						File fileZip = new File(lessonFolder,fileName);
-						
-						if (fileZip.exists())
+						if (useDownloadManager)
 						{
-							long remoteLen = response.getEntity().getContentLength();
-							long localLen = fileZip.length();
+							URI urlLesson = new URI(sUrlLesson);
+							String fileName = urlLesson.getPath();
+							fileName = fileName.substring(fileName.lastIndexOf('/')+1);
+							File fileZip = new File(lessonFolder,fileName);
 							
-							if (localLen == remoteLen)
-							{
-								//same file, leave it be
-								Log.d(AppConstants.TAG,"file already exists locally; skipping!");
-								response.getEntity().consumeContent();
-								continue;							
-							}
-							else
-							{
-								if (mListener != null)
-									mListener.lessonLoadingStatusMessage("Loading " + (i+1) + " of " + jarray.length() + " lessons" + "\nSize: " + remoteLen/1000000 + "MB");
-								
-								
-								Log.d(AppConstants.TAG,"local file is out of date; updating...");
-
-								//otherwise, delete and download
-								fileZip.delete();
-							}
-						
+							doDownloadManager(Uri.parse(sUrlLesson), title, fileName, Uri.fromFile(fileZip));
+							
 						}
+						else
+						{
+							URI urlLesson = new URI(sUrlLesson);
+							request = new HttpGet(urlLesson);
+							response = httpClient.execute(request);
+							
+							String fileName = urlLesson.getPath();
+							fileName = fileName.substring(fileName.lastIndexOf('/')+1);
+							File fileZip = new File(lessonFolder,fileName);
+							long remoteLen = response.getEntity().getContentLength();
+							
+							if (fileZip.exists())
+							{
+								long localLen = fileZip.length();
+								
+								if (localLen == remoteLen)
+								{
+									//same file, leave it be
+									Log.d(AppConstants.TAG,"file already exists locally; skipping!");
+									response.getEntity().consumeContent();
+									continue;							
+								}
+								else
+								{
+									
+									Log.d(AppConstants.TAG,"local file is out of date; updating...");
 	
-						if (mListener != null)
-							mListener.loadingLessonFromServer(mSubFolder, title);
+									//otherwise, delete and download
+									fileZip.delete();
+								}
+							
+							}
 						
-						fileZip.getParentFile().mkdirs();
+							if (mListener != null)
+								mListener.lessonLoadingStatusMessage("Loading " + (i+1) + " of " + jarray.length() + " lessons" + "\nSize: " + remoteLen/1000000 + "MB");
+							
+							fileZip.getParentFile().mkdirs();
+							
+							BufferedInputStream bis = new BufferedInputStream(response.getEntity().getContent());
+							IOUtils.copy(bis,new FileOutputStream(fileZip));
+							
+							unpack(fileZip,lessonFolder);
+
+							fileZip.delete();
+						}
 						
-						BufferedInputStream bis = new BufferedInputStream(response.getEntity().getContent());
-						IOUtils.copyLarge(bis,new FileOutputStream(fileZip));
-						
-						unpack(fileZip,lessonFolder);
-						
-					//	fileZip.delete();
 					}
 					catch (Exception ioe)
 					{
@@ -425,9 +450,87 @@ public class LessonManager implements Runnable {
 
 	    InputStream is = zip.getInputStream(entry); // get the input stream
 	    OutputStream os = new java.io.FileOutputStream(f);
-	    IOUtils.copyLarge(is, os);
+	    IOUtils.copy(is, os);
+	    
 	    
 	  }
 	  
 	}
+	
+	private DownloadManager mgr;
+	private long lastDownload = -1L;
+	
+	private synchronized void initDownloadManager ()
+	{
+		if (mgr == null)
+		{
+		  mgr=(DownloadManager)mContext.getSystemService(mContext.DOWNLOAD_SERVICE);
+		  mContext.registerReceiver(onComplete,
+		                     new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE));
+		  mContext.registerReceiver(onNotificationClick,
+		                     new IntentFilter(DownloadManager.ACTION_NOTIFICATION_CLICKED));
+		}
+	}
+	
+	private void doDownloadManager (Uri uri, String title, String desc, Uri uriFile)
+	{
+		initDownloadManager();
+		
+	    lastDownload=
+	      mgr.enqueue(new DownloadManager.Request(uri)
+	                  .setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI |
+	                                          DownloadManager.Request.NETWORK_MOBILE)
+	                  .setAllowedOverRoaming(false)
+	                  .setTitle(title)
+	                  .setDescription(desc)
+	                  .setVisibleInDownloadsUi(false)
+	                  .setDestinationUri(uriFile));
+	}
+	
+	 BroadcastReceiver onComplete=new BroadcastReceiver() {
+		    public void onReceive(Context ctxt, Intent intent) {
+		    	
+		    	 String action = intent.getAction();
+	                if (DownloadManager.ACTION_DOWNLOAD_COMPLETE.equals(action)) {
+	                    long downloadId = intent.getLongExtra(
+	                            DownloadManager.EXTRA_DOWNLOAD_ID, 0);
+	                    Query query = new Query();
+	                    query.setFilterById(downloadId);
+	                    Cursor c = mgr.query(query);
+	                    if (c.moveToFirst()) {
+	                        int columnIndex = c
+	                                .getColumnIndex(DownloadManager.COLUMN_STATUS);
+	                        if (DownloadManager.STATUS_SUCCESSFUL == c
+	                                .getInt(columnIndex)) {
+	 
+	                        	String uriString = c
+	                                    .getString(c
+	                                            .getColumnIndex(DownloadManager.COLUMN_LOCAL_URI));
+	                        	
+	                        
+	                        	File fileZip = new File(Uri.parse(uriString).getPath());
+	                        	
+	                        	try {
+									unpack(fileZip,fileZip.getParentFile());
+									
+
+									if (mListener != null)
+										mListener.lessonsLoadedFromServer();
+									
+									fileZip.delete();
+								} catch (IOException e) {
+									
+									Log.e(AppConstants.TAG,"unable to unzip file:" + fileZip.getAbsolutePath(),e);
+								}
+	                        }
+	                    }
+	                }
+		    }
+	  };
+	  
+	  BroadcastReceiver onNotificationClick=new BroadcastReceiver() {
+	    public void onReceive(Context ctxt, Intent intent) {
+	     
+	    }
+	  };
 }
