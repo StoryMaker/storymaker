@@ -7,6 +7,7 @@ import java.io.FileOutputStream;
 import info.guardianproject.mrapp.media.MediaProjectManager;
 import info.guardianproject.mrapp.model.Media;
 import info.guardianproject.mrapp.model.Project;
+import info.guardianproject.mrapp.model.template.Template;
 
 import org.ffmpeg.android.MediaDesc;
 import org.ffmpeg.android.MediaUtils;
@@ -41,6 +42,14 @@ public class EditorBaseActivity extends BaseActivity {
     //sublaunch codes
     public final static int REQ_YOUTUBE_AUTH = 999;
 	public final static int REQ_OVERLAY_CAM = 888; //for resp handling from overlay cam launch
+	
+	public Project mProject = null;
+	public Template mTemplate = null;
+    
+	public Template getTemplate ()
+	{
+		return mTemplate;
+	}
 	
     public Handler mHandlerPub = new Handler()
     {

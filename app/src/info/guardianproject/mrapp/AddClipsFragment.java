@@ -19,6 +19,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,7 +30,6 @@ import android.view.ViewGroup;
 @SuppressLint("ValidFragment")
 public class AddClipsFragment extends Fragment {
     private final static String TAG = "AddClipsFragment";
-    int layout;
     public ViewPager mAddClipsViewPager;
     View mView = null;
     public AddClipsPagerAdapter mAddClipsPagerAdapter;
@@ -38,17 +38,18 @@ public class AddClipsFragment extends Fragment {
     private EditorBaseActivity mActivity;
     private int mScene;
 
-    public AddClipsFragment(){}
-    
-    public AddClipsFragment(int layout, FragmentManager fm, Template template, int scene, EditorBaseActivity activity)
-            throws IOException, JSONException {
-        this.layout = layout;
-        mFm = fm;
-        mTemplate = template;
-        mActivity = activity;
-        mScene = scene;
+    private void initAddClips() throws IOException, JSONException
+    {
+    	mActivity = (EditorBaseActivity)getActivity();
         
-        mAddClipsPagerAdapter = new AddClipsPagerAdapter(fm, mTemplate, scene);
+    	mTemplate = mActivity.getTemplate();
+        
+        mFm = getFragmentManager();
+        
+        mScene = getArguments().getInt("scene");
+        mAddClipsPagerAdapter = new AddClipsPagerAdapter(mFm, mTemplate, mScene);
+        
+        
     }
     
     
@@ -90,8 +91,20 @@ public class AddClipsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
 
+    	try
+    	{
+    		if (mActivity == null)
+    			initAddClips();
+    	}
+    	catch (Exception e)
+    	{
+    		Log.e(AppConstants.TAG,"error creating add clips view",e);
+    		return null;
+    	}
+    	
+    	int layout = getArguments().getInt("layout");
         View view = inflater.inflate(layout, null);
-        if (this.layout == R.layout.fragment_add_clips) {
+        if (layout == R.layout.fragment_add_clips) {
 
             // Set up the AddClips ViewPager with the AddClips adapter.
             mAddClipsViewPager = (ViewPager) view.findViewById(R.id.viewPager);
@@ -117,7 +130,7 @@ public class AddClipsFragment extends Fragment {
                     {
                         mDragAtEnd++;
                         
-                        if (mDragAtEnd > 5)
+                        if (mDragAtEnd > mTemplate.getScene(mScene).getClips().size())
                         {
                             AlertDialog.Builder builder = new AlertDialog.Builder(mActivity);
                             builder.setMessage(R.string.add_new_clip_to_the_scene_)
@@ -162,8 +175,19 @@ public class AddClipsFragment extends Fragment {
             super(fm);
             sTemplate = template;
             mScene = scene;
-          
-        }
+            
+            ArrayList<Media> lMedia = mActivity.mMPM.mScene.getMediaAsList();
+
+            while (lMedia.size() > sTemplate.getScene(mScene).getClips().size())
+            {
+            	Clip tClip = new Clip();
+                tClip.setDefaults();
+                mTemplate.getScene(mScene).addClip(tClip); 
+
+            }
+        }            
+        
+        
 
     
         @Override
@@ -186,7 +210,8 @@ public class AddClipsFragment extends Fragment {
         
         @Override
         public int getCount() {
-            return sTemplate.getScene(mScene).getClips().size(); 
+            return sTemplate.getScene(mScene).getClips().size();
+            
         }
 
         @Override

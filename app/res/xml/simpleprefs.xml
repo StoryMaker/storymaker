@@ -3,13 +3,15 @@
 	<PreferenceCategory android:title="Networking &amp; Security">
 	    <EditTextPreference android:title="StoryMaker Server" android:summary="server for hosting all lesson and story content" android:key="pserver" android:defaultValue="https://storymaker.cc" android:enabled="true"/>
 	    
-	   <CheckBoxPreference android:title="Use Orbot (Tor)" android:summary="Send all network traffic through the Tor network (https://torproject.org)" android:key="pusetor"/>
+	   <CheckBoxPreference android:title="Use Orbot (Tor)" android:summary="Send all network traffic through the Tor network using the Orbot app" android:key="pusetor" android:defaultValue="false"/>
+	   <CheckBoxPreference android:title="Use Download Manager" android:summary="Download lesson archives with the Android DownloadManager service" android:key="pusedownloadmanager" android:defaultValue="true"/>
 	
 	<EditTextPreference android:title="YouTube Account" android:summary="the YouTube account to use for video uploads. This MUST be registered on your device." android:key="youTubeUserName" android:enabled="true"/>
 		<CheckBoxPreference android:title="YouTube Login" android:summary="Use YouTube web authentication" android:key="pyoutubewebauth"/>
 	
 	<EditTextPreference android:title="SoundCloud Account" android:summary="the SoundCloud account to use for audio uploads" android:key="soundCloudUserName" android:enabled="true"/>
 	    
+	
 	</PreferenceCategory>
 	<PreferenceCategory android:title="Locales">
 		<CheckBoxPreference android:title="Enable Arabic mode" android:key="plocalear"/>

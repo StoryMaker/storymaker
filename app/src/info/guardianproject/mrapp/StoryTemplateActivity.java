@@ -135,9 +135,11 @@ public class StoryTemplateActivity extends EditorBaseActivity implements ActionB
         public Fragment getItem(int i) {
             Fragment fragment = null;
             if (i == 0) {
-                fragment = new TemplateStoryMakeFragment(StoryTemplateActivity.this);
+                fragment = new TemplateStoryMakeFragment();
+                
                 Bundle args = new Bundle();
                 args.putInt(TemplateStoryMakeFragment.ARG_SECTION_NUMBER, i + 1);
+                args.putString("title", mMPM.mProject.getTitle());
                 fragment.setArguments(args);
             } else if (i == 1) {
                 fragment = new ReviewFragment();
@@ -145,16 +147,13 @@ public class StoryTemplateActivity extends EditorBaseActivity implements ActionB
                 args.putInt(TemplateStoryMakeFragment.ARG_SECTION_NUMBER, i + 1);
                 fragment.setArguments(args);
             } else if (i == 2) {
-                try {
-                	mPublishFragment = new PublishFragment(R.layout.fragment_story_publish, StoryTemplateActivity.this);
-                    fragment = mPublishFragment;
-                } catch (IOException e) {
-                    Log.e("SceneEditr", "IO erorr", e); // FIXME
-                } catch (JSONException e) {
-                    Log.e("SceneEditr", "json error", e);  // FIXME
-                }
+               
+            	mPublishFragment = new PublishFragment();
+                fragment = mPublishFragment;
+                
                 Bundle args = new Bundle();
                 args.putInt(TemplateStoryMakeFragment.ARG_SECTION_NUMBER, i + 1);
+            	args.putInt("layout", R.layout.fragment_story_publish);
                 fragment.setArguments(args);
             } 
             
