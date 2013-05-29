@@ -1,8 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="info.guardianproject.mrapp"
     android:installLocation="auto"
-    android:versionCode="82"
-    android:versionName="0.0.5-beta1-build82" >
+    android:versionCode="83"
+    android:versionName="0.0.5-beta1-build83" >
    
     <uses-sdk
         android:minSdkVersion="10"
@@ -38,36 +38,6 @@
         android:smallScreens="true"
         android:resizeable="true"   />
 
-    <compatible-screens>
-
-    <!-- small size screens -->
-     <screen android:screenSize="small" android:screenDensity="ldpi" />
-    <screen android:screenSize="small" android:screenDensity="mdpi" />
-    <screen android:screenSize="small" android:screenDensity="hdpi" />
-    <screen android:screenSize="small" android:screenDensity="xhdpi" />
-
-    <!--Only hdpi and xhdpi for normal size screens -->
-    <screen android:screenSize="normal" android:screenDensity="ldpi" />
-    <screen android:screenSize="normal" android:screenDensity="mdpi" />
-    <screen android:screenSize="normal" android:screenDensity="hdpi" />
-    <screen android:screenSize="normal" android:screenDensity="xhdpi" />
-
-    <!-- all large size screens -->
-    <screen android:screenSize="large" android:screenDensity="ldpi" />
-    <screen android:screenSize="large" android:screenDensity="mdpi" />
-    <screen android:screenSize="large" android:screenDensity="hdpi" />
-    <screen android:screenSize="large" android:screenDensity="xhdpi" />
-
-    <!-- all xlarge size screens -->
-    <screen android:screenSize="xlarge" android:screenDensity="ldpi" />
-    <screen android:screenSize="xlarge" android:screenDensity="mdpi" />
-    <screen android:screenSize="xlarge" android:screenDensity="hdpi" />
-    <screen android:screenSize="xlarge" android:screenDensity="xhdpi" />
-
-    <!-- Special case for Nexus 7 -->
-    <screen android:screenSize="large" android:screenDensity="213" />
-
-    </compatible-screens>
     
 
     <application
