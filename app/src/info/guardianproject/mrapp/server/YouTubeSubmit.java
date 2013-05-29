@@ -146,7 +146,17 @@ public class YouTubeSubmit {
 	  authorizer.setAccountFeatures(GlsAuthorizer.YOUTUBE_FEATURES);
 	  authorizer.setAccountType(GlsAuthorizer.ACCOUNT_TYPE_GOOGLE);
 	  
-	  authorizer.setAuthMethod(Integer.parseInt(settings.getString("glsauthmethod", "0")));
+	  try
+	  {
+		  authorizer.setAuthMethod(Integer.parseInt(settings.getString("glsauthmethod", "0")));
+	  }
+	  catch (NumberFormatException nfe)
+	  {
+		  Log.e(AppConstants.TAG,"someone put a bad value in the youtube auth method: " + settings.getString("glsauthmethod", "0"));
+	  
+		  authorizer.setAuthMethod(0);
+		  
+	  }
 	  
 	  authorizer.setHandler(handler);
 
