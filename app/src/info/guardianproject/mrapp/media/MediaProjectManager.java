@@ -64,6 +64,8 @@ public class MediaProjectManager implements MediaManager {
 
 	private SharedPreferences mSettings;
 	
+	private static boolean mUseInternal = false;
+	
     public MediaProjectManager (Activity activity, Context context, Intent intent, Handler handler, int pid) {
         this(activity, context, intent, handler, Project.get(context, pid));
     }
@@ -171,15 +173,14 @@ public class MediaProjectManager implements MediaManager {
     private static synchronized void initExternalStorage (Context context)
     {
     	
-    	
     	if (mFileExternDir == null)
     	{
     	
     		SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context.getApplicationContext());
     		 
-    		boolean useInternal = settings.getBoolean("p_use_internal_storage",false);
+    		mUseInternal = settings.getBoolean("p_use_internal_storage",false);
         	
-    		if (useInternal)
+    		if (mUseInternal)
     			mFileExternDir = context.getDir(AppConstants.FOLDER_PROJECTS_NAME,Context.MODE_WORLD_WRITEABLE|Context.MODE_WORLD_READABLE);
     		else
     			mFileExternDir = new File(context.getExternalFilesDir(null),AppConstants.FOLDER_PROJECTS_NAME);
@@ -189,6 +190,18 @@ public class MediaProjectManager implements MediaManager {
     	}
     }
     
+    public static File getRenderPath (Context context)
+    {
+
+		 File fileRenderTmpDir = null;
+		 
+		 if (mUseInternal)
+			 fileRenderTmpDir = context.getDir("render", Context.MODE_PRIVATE);
+		 else
+			 fileRenderTmpDir = new File(context.getExternalFilesDir(null),"render");
+		 
+		 return fileRenderTmpDir;
+    }
     
     public static File getExternalProjectFolder (Project project, Context context)
     {
@@ -283,7 +296,8 @@ public class MediaProjectManager implements MediaManager {
  			
  		}
 
-		 File fileRenderTmpDir = mContext.getDir("render", Context.MODE_PRIVATE);
+		 File fileRenderTmpDir = getRenderPath(mContext);
+
 		 File fileRenderTmp = new File(fileRenderTmpDir,new Date().getTime() + "");
 		 fileRenderTmp.mkdirs();
 		 

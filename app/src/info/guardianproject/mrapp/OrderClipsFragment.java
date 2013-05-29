@@ -45,7 +45,7 @@ import com.efor18.rangeseekbar.RangeSeekBar.OnRangeSeekBarChangeListener;
 @SuppressLint("ValidFragment") // FIXME don't do this
 public class OrderClipsFragment extends Fragment {
     private final static String TAG = "OrderClipsFragment";
-    int layout;
+   
     public ViewPager mAddClipsViewPager;
     View mView = null;
     private EditorBaseActivity mActivity;
@@ -73,16 +73,11 @@ public class OrderClipsFragment extends Fragment {
      */
     protected DraggableGridView mOrderClipsDGV;
 
-    public OrderClipsFragment()
-    {
     	
-    }
-    
-    public OrderClipsFragment(int layout, EditorBaseActivity activity)
-            throws IOException, JSONException {
-        this.layout = layout;
-        mActivity = activity;
-        mMPM = activity.mMPM;
+    private void init ()
+    {
+        mActivity = (EditorBaseActivity)getActivity();
+        mMPM = mActivity.mMPM;
         mHandlerPub = ((SceneEditorActivity)mActivity).mHandlerPub;
     }
 
@@ -92,6 +87,9 @@ public class OrderClipsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
 
+    	init ();
+    	
+    	int layout = getArguments().getInt("layout");
         View view = inflater.inflate(layout, null);
         
          SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(view.getContext().getApplicationContext());
@@ -126,7 +124,7 @@ public class OrderClipsFragment extends Fragment {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                // TODO Auto-generated method stub
+               
                 
             }
             
@@ -145,8 +143,7 @@ public class OrderClipsFragment extends Fragment {
             	
             	  min = bar.getSelectedMinValue().intValue();
                   max = bar.getSelectedMaxValue().intValue();
-            	 saveTrim();
-            	 previewClip(mCurrentClipIdx);
+            	
             }
 
             int min = -1;
@@ -160,14 +157,19 @@ public class OrderClipsFragment extends Fragment {
             @Override
             public void onStopTrackingTouch(RangeSeekBar<?> bar) {
                 saveTrim();
-                previewClip(mCurrentClipIdx);
-//                if (min != bar.getSelectedMinValue().intValue()) {
-//                    // they were dragging the first handle
-//                    previewClip(mCurrentClipIdx);
-//                } else {
-//                    // they were dragging the second handle
-//                    // FIXME try showing the last 1 second only to help picking the end point
-//                }
+                
+                lastPlayed = -1;
+               
+                if (min != bar.getSelectedMinValue().intValue()) {
+                    // they were dragging the first handle
+                    previewClip(mCurrentClipIdx);
+                } else {
+                    Media media = mMPM.mScene.getMediaAsArray()[mCurrentClipIdx];
+
+                	 previewClip(mCurrentClipIdx,media.getTrimmedStartTime()+media.getTrimmedDuration()-2);
+                    // they were dragging the second handle
+                    // FIXME try showing the last 1 second only to help picking the end point
+                }
             }
         });
         
@@ -530,7 +532,13 @@ public class OrderClipsFragment extends Fragment {
       
     }
     
+    private int lastPlayed = -1;
+    
     private void previewClip(int position) {
+    	previewClip(position, -1);
+    }
+    
+    private void previewClip(int position, int startTime) {
         Media[] medias = mMPM.mScene.getMediaAsArray();
         if (medias[position] != null) {
             
@@ -545,15 +553,25 @@ public class OrderClipsFragment extends Fragment {
             	// play
             	if (mPreviewVideoView.isPlaying())
             		mPreviewVideoView.stopPlayback();
-            	else
+            
+            	if (position != lastPlayed)
             	{
+            	
 	                Media[] mediaArray = {medias[position]};
 	                mPreviewVideoView.setMedia(mediaArray);
 	                mPreviewVideoView.invalidate();
+	                
+	                if (startTime != -1)
+	                	mPreviewVideoView.seekTo(startTime);
+	                
 	                mPreviewVideoView.play();
+
+	                lastPlayed = position;
             	}
-            	
-                
+            	else
+            	{
+            		lastPlayed = -1;
+            	}
             }
             else if (medias[position].getMimeType().startsWith("audio"))
             {
@@ -565,13 +583,19 @@ public class OrderClipsFragment extends Fragment {
             	
             	if (mPreviewVideoView.isPlaying())
             		mPreviewVideoView.stopPlayback();
+            	
+            	if (position != lastPlayed)
+            	{
+            		Media[] mediaArray = {medias[position]};
+            		mPreviewVideoView.setMedia(mediaArray);
+                	mPreviewVideoView.play();
+
+                    lastPlayed = position;
+            	}
             	else
             	{
-	                Media[] mediaArray = {medias[position]};
-	                mPreviewVideoView.setMedia(mediaArray);
-	                mPreviewVideoView.play();
+            		lastPlayed = -1;
             	}
-            	
                 
             }
             else
@@ -579,6 +603,7 @@ public class OrderClipsFragment extends Fragment {
                 showThumbnail(position);
             }
         }
+        
     }
     
     private void showThumbnail(int position) {
@@ -664,11 +689,19 @@ public class OrderClipsFragment extends Fragment {
     
     private int trimStartUndo = -1;
     private int trimEndUndo = -1;
+    
     public void setupTrimUndo() {
-        Media media = mMPM.mScene.getMediaAsArray()[mCurrentClipIdx];
-        
-        trimStartUndo = media.getTrimStart();
-        trimEndUndo = media.getTrimEnd();
+    
+    	if (mMPM != null && mMPM.mScene != null)
+    	{
+	    	Media media = mMPM.mScene.getMediaAsArray()[mCurrentClipIdx];
+	        
+	    	if (media != null)
+	    	{
+	    		trimStartUndo = media.getTrimStart();
+	    		trimEndUndo = media.getTrimEnd();
+	    	}
+    	}
     }
     
     public void undoSaveTrim() {

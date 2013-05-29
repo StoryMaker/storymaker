@@ -52,8 +52,6 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
     protected Menu mMenu = null;
     
     //private String mTemplateJsonPath = null;
-    private Project mProject = null;
-    private Template mTemplate = null;
     private int mSceneIndex = 0;
 
     boolean mTrimMode = false;
@@ -327,19 +325,16 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
 
             if (mFragmentTab0 == null)
             {
-                try {
-                    mFragmentTab0 = new AddClipsFragment(layout, fm, mTemplate, mSceneIndex, this);
+               
+            //    mFragmentTab0 = new AddClipsFragment(layout, fm, mTemplate, mSceneIndex, this);
+                mFragmentTab0 = new AddClipsFragment();
 
-                    Bundle args = new Bundle();
-                    args.putInt(AddClipsFragment.ARG_SECTION_NUMBER, tab.getPosition() + 1);
-                    mFragmentTab0.setArguments(args);
-
-                } catch (IOException e) {
-                    Log.e("SceneEditr", "IO erorr", e);
-                } catch (JSONException e) {
-                    Log.e("SceneEditr", "json error", e);
-                }
-
+                Bundle args = new Bundle();
+                args.putInt(AddClipsFragment.ARG_SECTION_NUMBER, tab.getPosition() + 1);
+                args.putInt("layout", layout);
+                args.putInt("scene",mSceneIndex);
+                mFragmentTab0.setArguments(args);
+             
                 fm.beginTransaction()
                         .add(R.id.container, mFragmentTab0, layout + "")
                         .commit();
@@ -362,20 +357,14 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
 
             if (mFragmentTab1 == null)
             {
-                try {
-                    mFragmentTab1 = new OrderClipsFragment(layout, this);
+                
+                mFragmentTab1 = new OrderClipsFragment();
 
-                    Bundle args = new Bundle();
-                    args.putInt(OrderClipsFragment.ARG_SECTION_NUMBER, tab.getPosition() + 1);
-                    mFragmentTab1.setArguments(args);
+                Bundle args = new Bundle();
+                args.putInt(OrderClipsFragment.ARG_SECTION_NUMBER, tab.getPosition() + 1);
+                args.putInt("layout", layout);
+                mFragmentTab1.setArguments(args);
 
-                } catch (IOException e) {
-                    Log.e("SceneEditr", "IO erorr", e);
-
-                } catch (JSONException e) {
-                    Log.e("SceneEditr", "json error", e);
-
-                }
 
                 fm.beginTransaction()
                         .add(R.id.container, mFragmentTab1, layout + "")
@@ -406,18 +395,15 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
                 
                 if (mPublishFragment == null)
                 {
-                    try {
-                        mPublishFragment = new PublishFragment(layout, this);
+                    	
+
+                	mPublishFragment = new PublishFragment();
+                    Bundle args = new Bundle();
+                    args.putInt(PublishFragment.ARG_SECTION_NUMBER, tab.getPosition() + 1);
+                	args.putInt("layout",layout);
+                	mPublishFragment.setArguments(args);
+                        
     
-                        Bundle args = new Bundle();
-                        args.putInt(PublishFragment.ARG_SECTION_NUMBER, tab.getPosition() + 1);
-                        mPublishFragment.setArguments(args);
-    
-                    } catch (IOException e) {
-                        Log.e("SceneEditr", "IO erorr", e);
-                    } catch (JSONException e) {
-                        Log.e("SceneEditr", "json error", e);
-                    }
                     fm.beginTransaction()
                             .add(R.id.container, mPublishFragment, layout + "")
                             .commit();

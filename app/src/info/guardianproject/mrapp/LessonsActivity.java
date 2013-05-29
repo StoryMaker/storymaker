@@ -8,6 +8,7 @@ import org.holoeverywhere.app.Fragment;
 import org.holoeverywhere.app.ProgressDialog;
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -105,7 +106,7 @@ public class LessonsActivity extends BaseActivity implements ActionBar.TabListen
         return true;
     }
 
-    
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
