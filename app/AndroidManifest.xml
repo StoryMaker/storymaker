@@ -1,8 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="info.guardianproject.mrapp"
     android:installLocation="auto"
-    android:versionCode="81"
-    android:versionName="0.0.5-beta1-build81" >
+    android:versionCode="82"
+    android:versionName="0.0.5-beta1-build82" >
    
     <uses-sdk
         android:minSdkVersion="10"
@@ -12,14 +12,14 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.READ_MEDIA_STORAGE" />      
+    <uses-permission android:name="android.permission.READ_MEDIA_STORAGE"  android:required="false"  />      
     
-    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"  android:required="false"  />
      
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
    
-    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.WAKE_LOCK"  android:required="false"  />
     
     <uses-feature android:name="android.hardware.camera" android:required="false" />
     
@@ -27,11 +27,12 @@
   	<uses-permission android:name="android.permission.MANAGE_ACCOUNTS"></uses-permission> 
     <uses-permission android:name="android.permission.USE_CREDENTIALS"></uses-permission>
 
-    <uses-permission android:name="com.google.android.googleapps.permission.GOOGLE_AUTH"/>
-    <uses-permission android:name="com.google.android.googleapps.permission.GOOGLE_AUTH.youtube"/>
+    <uses-permission android:name="com.google.android.googleapps.permission.GOOGLE_AUTH"  android:required="false" />
+    <uses-permission android:name="com.google.android.googleapps.permission.GOOGLE_AUTH.youtube"  android:required="false" />
     
     <supports-screens
         android:anyDensity="true"
+        android:xlargeScreens="true"
         android:largeScreens="true"
         android:normalScreens="true"
         android:smallScreens="true"
