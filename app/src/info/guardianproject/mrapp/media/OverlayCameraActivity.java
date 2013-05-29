@@ -232,9 +232,11 @@ public class OverlayCameraActivity extends SherlockActivity implements Callback,
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
         
-    	camera = Camera.open();
-    	cameraOn = true;
-    	
+    	if (camera == null && (!cameraOn)&& Camera.getNumberOfCameras() > 0)
+    	{
+    		camera = Camera.open();
+    		cameraOn = true;
+    	}
     }
 
     @Override
