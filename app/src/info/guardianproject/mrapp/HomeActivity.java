@@ -94,7 +94,7 @@ public class HomeActivity extends BaseActivity {
 
         checkForTor ();
         
-        checkForUpdates();
+        //checkForUpdates();
         
     }
     
@@ -497,6 +497,9 @@ public class HomeActivity extends BaseActivity {
     private void showProject (int id)
     {
 
+    	if (id >= mListProjects.size())
+    		return; //sometimes we get a long random number here - n8fr8
+    	
 		Project project = mListProjects.get(id);
 		
 		Intent intent = new Intent(this, SceneEditorActivity.class);
