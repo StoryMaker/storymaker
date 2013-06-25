@@ -19,7 +19,7 @@ END
 
 
 for project in "${MAPFILE[@]}"; do
-        android update project --path $project -t 1
+        android update project --path $project -t "android-17"
 done
 
 cd app
