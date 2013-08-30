@@ -33,7 +33,6 @@ public class PreviewVideoView extends VideoView implements MediaPlayer.OnComplet
 	    }
 	 };
 
-	
 	public PreviewVideoView(Context context) {
 		super(context);
 		setOnCompletionListener(this);
@@ -52,7 +51,6 @@ public class PreviewVideoView extends VideoView implements MediaPlayer.OnComplet
 		setOnCompletionListener(this);
 	}
 		 
-
     public void setMedia(ArrayList<Media> media) {
         mMediaArray = media.toArray(new Media[media.size()]);
         mCurrentMedia = 0;
@@ -78,8 +76,9 @@ public class PreviewVideoView extends VideoView implements MediaPlayer.OnComplet
 					mCompletionCallback.run();
 				}
 				break;
-			} else if (mMediaArray[mCurrentMedia] == null) {
-                playNext(); // skip null media in playlist
+			} 
+		    else if (mMediaArray[mCurrentMedia] == null) {
+                //playNext(); // skip null media in playlist (commented out to fix issues/991 - Skipping Clip after Empty Clip Bug)
             }
             else {
 			    Media media = mMediaArray[mCurrentMedia];
@@ -135,12 +134,9 @@ public class PreviewVideoView extends VideoView implements MediaPlayer.OnComplet
 	}
 
 	@Override
-	public void onCompletion(MediaPlayer mp) {
-		
+	public void onCompletion(MediaPlayer mp) {	
 		if (isPlayingMultiple)
 			playNext();
-		
-	
 	}
 	
 	private void playNext() {
