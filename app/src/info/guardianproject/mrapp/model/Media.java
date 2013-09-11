@@ -443,7 +443,31 @@ public class Media {
         	 final BitmapFactory.Options options = new BitmapFactory.Options();
              options.inSampleSize = IMAGE_SAMPLE_SIZE;
 
-            return BitmapFactory.decodeResource(context.getResources(), R.drawable.thumb_audio,  options);
+             int audioId;
+             
+             //mod by 5 to repeat the colors in order
+             switch(media.clipIndex % 5)
+             {    
+	             case 0:
+	            	 audioId = R.drawable.thumb_audio_signature;
+	            	 break;
+	             case 1:
+	            	 audioId = R.drawable.thumb_audio_ambient;
+	            	 break;
+	             case 2:
+	            	 audioId = R.drawable.thumb_audio_narrative;
+	            	 break;
+	             case 3:
+	            	 audioId = R.drawable.thumb_audio_interview;
+	            	 break;
+	             case 4:
+	            	 audioId = R.drawable.thumb_audio_enviromental;
+	            	 break;
+	             default:
+	            	audioId = R.drawable.thumb_audio; 
+             }
+             
+            return BitmapFactory.decodeResource(context.getResources(), audioId,  options);
         }
         else 
         {
