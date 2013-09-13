@@ -273,7 +273,7 @@ public class MediaProjectManager implements MediaManager {
     }
     
     public void doExportMedia (File fileExport, boolean doCompress, boolean doOverwrite) throws Exception
-    {
+    {    	
     	 Message msg = mHandler.obtainMessage(0);
          msg.getData().putString("status","cancelled");
          ArrayList<Media> mList = mProject.getMediaAsList();
@@ -301,7 +301,7 @@ public class MediaProjectManager implements MediaManager {
  			{
  				File currentFile = new File(media.getPath());
  				totalBytesRequired += (long)currentFile.length();
- 			} 				
+ 			} 	
  		}
  		
  		//get memory path
@@ -314,7 +314,8 @@ public class MediaProjectManager implements MediaManager {
  		{
  			memoryPath = Environment.getExternalStorageDirectory().getPath();
  		}
- 		
+
+
  		//get memory
  		StatFs stat = new StatFs(memoryPath);
  		Long totalBytesAvailable = (long)stat.getAvailableBlocks() * (long)stat.getBlockSize();

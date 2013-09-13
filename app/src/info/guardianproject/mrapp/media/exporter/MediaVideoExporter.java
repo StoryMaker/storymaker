@@ -71,7 +71,7 @@ public class MediaVideoExporter extends MediaExporter {
         
         //FIXME The Export fails if the Audio Codec length is 0 (Bug #1950)
         if (mFadeLen <= 0)
-        	mFadeLen = 0.001;
+        	mFadeLen = 0.001f;
         
         mPreconvertClipsToMP4 = settings.getBoolean("p_preconvert_mp4", false);
      
