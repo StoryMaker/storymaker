@@ -27,9 +27,10 @@
 	<CheckBoxPreference android:title="Use 'Cat' Command" android:summary="Use 'cat' command to merge videos" android:key="p_use_cat" android:defaultValue="false"/>
 	
 		<EditTextPreference android:title="Video Codec" android:summary="Export video codec" android:key="p_video_codec" android:defaultValue="mpeg4" android:enabled="true"/>
-		
-		<EditTextPreference android:title="Video Width" android:summary="Export video width" android:key="p_video_width" android:defaultValue="720" android:enabled="true"/>
-		<EditTextPreference android:title="Video Height" android:summary="Export video height" android:key="p_video_height" android:defaultValue="480" android:enabled="true"/>
+
+		<ListPreference android:title="Video Resolution" android:summary="Export video resolution" android:key="p_video_resolution" android:defaultValue="480" android:entries="@array/resolution_options" android:entryValues="@array/resolution_options_values" android:enabled="true"/>
+		<EditTextPreference android:title="Video Width" android:inputType="number" android:summary="Export video width" android:key="p_video_width" android:defaultValue="720" android:enabled="false"/>
+		<EditTextPreference android:title="Video Height" android:inputType="number" android:summary="Export video height" android:key="p_video_height" android:defaultValue="480" android:enabled="false" android:selectable="false"/>
 		
 		<EditTextPreference android:title="Video Bitrate" android:summary="Export video bitrate (kbps)" android:key="p_video_bitrate" android:defaultValue="1000" android:enabled="true"/>
 		<EditTextPreference android:title="Video Framerate" android:summary="Export frame rate per second (fps)" android:key="p_video_framerate" android:defaultValue="29.97" android:enabled="true"/>

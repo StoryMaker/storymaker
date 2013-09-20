@@ -273,7 +273,7 @@ public class MediaProjectManager implements MediaManager {
     }
     
     public void doExportMedia (File fileExport, boolean doCompress, boolean doOverwrite) throws Exception
-    {    	
+    {
     	 Message msg = mHandler.obtainMessage(0);
          msg.getData().putString("status","cancelled");
          ArrayList<Media> mList = mProject.getMediaAsList();
@@ -355,6 +355,8 @@ public class MediaProjectManager implements MediaManager {
     	    		if (doCompress)
     	    			applyExportSettings(mDesc);
     	    		
+    	    		applyExportSettingsResolution(mDesc);
+    	    		
     	    		alMediaIn.add(mIdx, mDesc);
     	    		mIdx++;
 	    	    }
@@ -364,11 +366,13 @@ public class MediaProjectManager implements MediaManager {
 	    	
 	    	if (doCompress)	
 	    		applyExportSettings(mOut);
-	    	else
+	    	else //this is the default audio codec settings
 	    	{
 	    		mOut.audioCodec = "aac";
 		    	mOut.audioBitrate = 64;
 	    	}
+	    	
+	    	applyExportSettingsResolution(mOut);
 	    	
 	    	//override for now
 	    	mOut.mimeType = AppConstants.MimeTypes.MP4;
@@ -432,6 +436,8 @@ public class MediaProjectManager implements MediaManager {
      	    		if (doCompress)
      	    			applyExportSettings(mDesc);
      	    		
+     	    		applyExportSettingsResolution(mDesc);
+     	    		
      	    		alMediaIn.add(mIdx++,mDesc);
         	    }
  	    	}
@@ -443,6 +449,8 @@ public class MediaProjectManager implements MediaManager {
  		    
  		   // if (doCompress)
  		   applyExportSettingsAudio(mOut);
+ 		   
+ 		   applyExportSettingsResolution(mOut);
  		    
  		    mOut.path = fileExport.getCanonicalPath();
  		    
@@ -485,6 +493,8 @@ public class MediaProjectManager implements MediaManager {
   	    				mOut.path = fileExport.getCanonicalPath();
   	    				mOut.mimeType = AppConstants.MimeTypes.JPEG;
   	    				
+  	    				applyExportSettingsResolution(mOut);
+  	    				
   	    				break;
   	    			}
   	    			
@@ -494,9 +504,7 @@ public class MediaProjectManager implements MediaManager {
   	    	}
          }
          else if (mProject.getStoryType() == Project.STORY_TYPE_ESSAY)
-         {
-        	
-	    		
+         {    		
 	    	for (Media media : mList)
 	    	{
 	    	    if (media != null)
@@ -519,6 +527,9 @@ public class MediaProjectManager implements MediaManager {
     	    		
     	    		if (doCompress)
     	    			applyExportSettings(mDesc);
+    	    		
+    	    		applyExportSettingsResolution(mDesc);
+    	    		
     	    		alMediaIn.add(mDesc);
 	    	    }
 	    	}
@@ -527,6 +538,8 @@ public class MediaProjectManager implements MediaManager {
 		    
 		    if (doCompress)
 		    applyExportSettings(mOut);
+		    
+		    applyExportSettingsResolution(mOut);
 		   
 		    mOut.path = fileExport.getCanonicalPath();
 		    mOut.mimeType = AppConstants.MimeTypes.MP4;
@@ -561,9 +574,7 @@ public class MediaProjectManager implements MediaManager {
    		    }
          }
          
-         deleteRecursive(fileRenderTmp, true);
-		 
-         
+         deleteRecursive(fileRenderTmp, true);      
     }
     
     void deleteRecursive(File fileOrDirectory, boolean onExit) throws IOException {
@@ -581,16 +592,16 @@ public class MediaProjectManager implements MediaManager {
     
     
     public void applyExportSettings (MediaDesc mdout)
-    {
-    	
-    	mdout.videoBitrate = Integer.parseInt(mSettings.getString("p_video_bitrate", AppConstants.DEFAULT_VIDEO_BITRATE+""));;
-    	mdout.audioBitrate = Integer.parseInt(mSettings.getString("p_audio_bitrate", AppConstants.DEFAULT_AUDIO_BITRATE+""));;
+    { 	
+    	mdout.videoBitrate = Integer.parseInt(mSettings.getString("p_video_bitrate", AppConstants.DEFAULT_VIDEO_BITRATE+""));
     	mdout.videoFps = mSettings.getString("p_video_framerate", AppConstants.DEFAULT_FRAME_RATE);
-    	mdout.width = Integer.parseInt(mSettings.getString("p_video_width", AppConstants.DEFAULT_WIDTH+""));
-    	mdout.height = Integer.parseInt(mSettings.getString("p_video_height", AppConstants.DEFAULT_HEIGHT+""));
-    	
     	mdout.videoCodec = mSettings.getString("p_video_codec","mpeg4");
     	
+    	mdout.audioBitrate = Integer.parseInt(mSettings.getString("p_audio_bitrate", AppConstants.DEFAULT_AUDIO_BITRATE+""));
+    	mdout.audioCodec = mSettings.getString("p_audio_codec", AppConstants.DEFAULT_AUDIO_CODEC);
+    	
+    	mdout.width = Integer.parseInt(mSettings.getString("p_video_width", AppConstants.DEFAULT_WIDTH+""));
+    	mdout.height = Integer.parseInt(mSettings.getString("p_video_height", AppConstants.DEFAULT_HEIGHT+""));
     }
 
     
@@ -602,6 +613,39 @@ public class MediaProjectManager implements MediaManager {
     	mdout.format = "3gp";
     }
     
+    /***
+     Method to convert video/images within resolution boundaries:
+      1)Stock Media Player (1920x1088 MAX)
+      2)MPEG-1 (4095x4095 MAX) 
+    ***/
+    public void applyExportSettingsResolution (MediaDesc mdout)
+    {
+    	int videoRes = Integer.parseInt(mSettings.getString("p_video_resolution", "0"));
+    	
+    	switch (videoRes)
+    	{
+	        case 1080:	
+        		mdout.width = 1920;
+        		mdout.height = 1080;
+            	break;
+	        case 720:
+        		mdout.width = 1280;
+        		mdout.height = 720;
+        		break;
+	        case 480:  
+        		mdout.width = 720;
+    			mdout.height = 480;
+             	break;
+	        case 360: 
+        		mdout.width = 640;
+        		mdout.height = 360;
+        		break;
+	        default:
+        		mdout.width = Integer.parseInt(mSettings.getString("p_video_width", AppConstants.DEFAULT_WIDTH+""));
+        		mdout.height = Integer.parseInt(mSettings.getString("p_video_height", AppConstants.DEFAULT_HEIGHT+""));
+                break;
+    	}
+    }
     
     
     private void addMediaFile (int clipIndex, String path, String mimeType) throws IOException
