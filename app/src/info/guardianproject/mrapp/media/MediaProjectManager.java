@@ -3,6 +3,7 @@ package info.guardianproject.mrapp.media;
 import info.guardianproject.mrapp.AppConstants;
 import info.guardianproject.mrapp.SceneEditorActivity;
 import info.guardianproject.mrapp.StoryMakerApp;
+import info.guardianproject.mrapp.Utils;
 import info.guardianproject.mrapp.media.exporter.MediaAudioExporter;
 import info.guardianproject.mrapp.media.exporter.MediaVideoExporter;
 import info.guardianproject.mrapp.media.exporter.MediaSlideshowExporter;
@@ -22,14 +23,16 @@ import java.util.Date;
 import org.apache.commons.io.IOUtils;
 import org.ffmpeg.android.MediaDesc;
 import org.ffmpeg.android.ShellUtils.ShellCallback;
+import org.holoeverywhere.widget.Toast;
 
-import android.app.Activity;
+import org.holoeverywhere.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
+import android.os.StatFs;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
@@ -270,7 +273,7 @@ public class MediaProjectManager implements MediaManager {
     }
     
     public void doExportMedia (File fileExport, boolean doCompress, boolean doOverwrite) throws Exception
-    {
+    {    	
     	 Message msg = mHandler.obtainMessage(0);
          msg.getData().putString("status","cancelled");
          ArrayList<Media> mList = mProject.getMediaAsList();
@@ -280,6 +283,7 @@ public class MediaProjectManager implements MediaManager {
          ((StoryMakerApp)mActivity.getApplication()).isExternalStorageReady();
          ((StoryMakerApp)mActivity.getApplication()).killZombieProcs();
 
+         Long totalBytesRequired= 0l;
  		//first check that all of the input images are accessible
  		
  		for (Media media : mList)
@@ -293,9 +297,37 @@ public class MediaProjectManager implements MediaManager {
  				throw new java.io.FileNotFoundException("Input image does not exist or is not readable" + ": " + media.getPath());
  				
  			}
- 			
+ 			else
+ 			{
+ 				File currentFile = new File(media.getPath());
+ 				totalBytesRequired += (long)currentFile.length();
+ 			} 				
  		}
+ 		
+ 		//get memory path
+        String memoryPath;
+ 		if(mUseInternal)
+ 		{	
+ 			memoryPath = Environment.getDataDirectory().getPath();
+ 		}
+ 		else
+ 		{
+ 			memoryPath = Environment.getExternalStorageDirectory().getPath();
+ 		}
+ 		
+ 		//get memory
+ 		StatFs stat = new StatFs(memoryPath);
+ 		Long totalBytesAvailable = (long)stat.getAvailableBlocks() * (long)stat.getBlockSize();
 
+    	//if not enough storage
+ 		if(totalBytesRequired > totalBytesAvailable)
+ 		{
+ 			double totalMBRequired = totalBytesRequired /(double)(1024*1024);
+ 			
+ 			Utils.toastOnUiThread(mActivity, String.format("Whoops, we're out of space. Please make approximately %.2f%nMB available and try again!", totalMBRequired), true);
+ 			return;
+ 		}
+ 		
 		 File fileRenderTmpDir = getRenderPath(mContext);
 
 		 File fileRenderTmp = new File(fileRenderTmpDir,new Date().getTime() + "");
