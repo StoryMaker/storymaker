@@ -350,9 +350,14 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
             layout = R.layout.fragment_order_clips;
 
             if (mMenu != null) {
-                mMenu.findItem(R.id.itemInfo).setVisible(true);
-                mMenu.findItem(R.id.itemTrim).setVisible(true);
+                mMenu.findItem(R.id.itemInfo).setVisible(true);       
                 mMenu.findItem(R.id.itemForward).setEnabled(true);
+                
+                //if only photos, no need to display trim option
+                if(!(mMPM.mProject.getStoryType() == Project.STORY_TYPE_ESSAY || mMPM.mProject.getStoryType() == Project.STORY_TYPE_PHOTO))
+                {
+                	mMenu.findItem(R.id.itemTrim).setVisible(true);
+                }             
             }
 
             if (mFragmentTab1 == null)
