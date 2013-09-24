@@ -125,7 +125,7 @@ Build number: <xliff:g id="build_number">%s</xliff:g>\n
     <string name="tab_finish">Finish</string>
     
     <string name="tab_add_clips">Make</string>
-    <string name="tab_order">Order</string>
+    <string name="tab_order">Edit</string>
     <string name="story_publish_section">Section</string>
     <string name="story_publish_section_hint">Sports</string>
     <string name="story_publish_topics">Topics</string>
