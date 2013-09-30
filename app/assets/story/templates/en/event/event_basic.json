@@ -1,0 +1,17 @@
+{
+    "scenes": [
+        {
+            "title": "when",
+            "description": "story_type_event_text1"
+        },
+        {
+            "title": "what",
+            "description": "story_type_event_text2"
+        },
+        {
+            "title": "why",
+            "description": "story_type_event_text3"
+        }
+    ], 
+    "title": "story_type_event_title"
+}
