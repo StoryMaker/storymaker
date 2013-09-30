@@ -47,7 +47,7 @@ public class MediaVideoExporter extends MediaExporter {
     
     private int mAudioSampleRate = -1;
     
-    private double mFadeLen = .5f;
+    private float mFadeLen = .5f;
     
     private File mFileProject;
     
@@ -151,7 +151,7 @@ public class MediaVideoExporter extends MediaExporter {
     		MediaDesc mMerge = new MediaDesc();
     		mMerge.path = new File(mFileProject,"merge.mp4").getCanonicalPath();
     	   
-    		Double videoFadeLen = mFadeLen;
+    		float videoFadeLen = mFadeLen;
     		
     		for (int i = 0; i < mMediaList.size(); i++)
     		{
@@ -177,12 +177,12 @@ public class MediaVideoExporter extends MediaExporter {
     			if (media.duration == null)
     			{
     				media = ffmpegc.getInfo(media);
-    				media.duration = String.format(Locale.US,"%.2f",Double.parseDouble(media.duration)-(videoFadeLen));
+    				media.duration = String.format(Locale.US,"%f",Float.parseFloat(media.duration)-(videoFadeLen));
     			}
     			else
     			{
-    				double newDuration = Double.parseDouble(media.duration)-(videoFadeLen);
-    				media.duration = String.format(Locale.US, "%.2f",newDuration);
+    				float newDuration = Float.parseFloat(media.duration)-(videoFadeLen);
+    				media.duration = String.format(Locale.US, "%f", newDuration);
     			}
     			
     			

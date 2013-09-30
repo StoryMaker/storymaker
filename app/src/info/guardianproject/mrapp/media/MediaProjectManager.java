@@ -346,7 +346,7 @@ public class MediaProjectManager implements MediaManager {
     	    		mDesc.path = new File(media.getPath()).getCanonicalPath();
     	    		
     	    		if (media.getTrimStart() > 0) {
-    	    		    mDesc.startTime = "" + media.getTrimmedStartTime() / 1000F;
+    	    		    mDesc.startTime = "" + media.getTrimmedStartTimeFloat() / 1000F;
                         mDesc.duration = "" + media.getTrimmedDuration() / 1000F;
     	    		} else if ((media.getTrimEnd() < 99) && media.getTrimEnd() > 0) {
     	    		    mDesc.duration = "" + media.getTrimmedDuration() / 1000F;
@@ -427,7 +427,7 @@ public class MediaProjectManager implements MediaManager {
      	    		
 
     	    		if (media.getTrimStart() > 0) {
-    	    		    mDesc.startTime = "" + media.getTrimmedStartTime() / 1000F;
+    	    		    mDesc.startTime = "" + media.getTrimmedStartTimeFloat() / 1000F;
                         mDesc.duration = "" + media.getTrimmedDuration() / 1000F;
     	    		} else if ((media.getTrimEnd() < 99) && media.getTrimEnd() > 0) {
     	    		    mDesc.duration = "" + media.getTrimmedDuration() / 1000F;

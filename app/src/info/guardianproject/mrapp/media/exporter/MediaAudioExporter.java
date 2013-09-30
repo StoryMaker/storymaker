@@ -32,7 +32,7 @@ public class MediaAudioExporter extends MediaExporter {
     private int current, total;
     
     
-	 double fadeLen = 1.0f;
+	 float fadeLen = 1.0f;
 	 String fadeType = "t"; //triangle/linear
 	 
 	 public final static int CHANNELS = 1;
@@ -73,7 +73,7 @@ public class MediaAudioExporter extends MediaExporter {
  
 	}
 	
-	public void setFadeLength (double fadeLen)
+	public void setFadeLength (float fadeLen)
 	{
 		this.fadeLen = fadeLen;
 	}
@@ -157,12 +157,12 @@ public class MediaAudioExporter extends MediaExporter {
 		    	MediaDesc audioOut = ffmpegc.convertToWaveAudio(mediaIn, new File(mFileTemp, wavIdx+".wav").getCanonicalPath(),mAudioSampleRate,CHANNELS, sc);
 		    	alAudio.add(audioOut);
 		    	
-	    		double duration = sxCon.getLength(new File(audioOut.path).getCanonicalPath());
+	    		float duration = (float) sxCon.getLength(new File(audioOut.path).getCanonicalPath());
 	    		Log.d(AppConstants.TAG,"got clip " + wavIdx + " length: " + duration);
-
+	    		
 		    	if (mediaIn.duration == null)
 		    	{	
-		    		mediaIn.duration = String.format(Locale.US, "%.2f",duration);
+		    		mediaIn.duration = String.format(Locale.US, "%f", duration);
 		    	}
 		    	else
 		    	{

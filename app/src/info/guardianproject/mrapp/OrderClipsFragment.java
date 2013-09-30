@@ -687,8 +687,8 @@ public class OrderClipsFragment extends Fragment {
         if (dirty) media.save(); // FIXME move dirty into model classes save() method
     }
     
-    private int trimStartUndo = -1;
-    private int trimEndUndo = -1;
+    private float trimStartUndo = -1f;
+    private float trimEndUndo = -1f;
     
     public void setupTrimUndo() {
     
@@ -717,10 +717,10 @@ public class OrderClipsFragment extends Fragment {
         Media media = mMPM.mScene.getMediaAsArray()[mCurrentClipIdx];
         
         if (media != null)
-        {
-	        mRangeSeekBar.setSelectedMinValue(media.getTrimStart());
+        { 	
+	        mRangeSeekBar.setSelectedMinValue(Math.round(media.getTrimStart()));
 	        if (media.getTrimEnd() > 0) {
-	            mRangeSeekBar.setSelectedMaxValue(media.getTrimEnd());
+	            mRangeSeekBar.setSelectedMaxValue(Math.round(media.getTrimEnd()));
 	        } else {
 	            mRangeSeekBar.setSelectedMaxValue(99);
 	        }
