@@ -14,6 +14,7 @@ import java.util.List;
 
 import org.json.JSONException;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -60,22 +61,30 @@ public class StoryTemplateChooserActivity extends BaseActivity {
         mStoryModeTemplate = intent.getStringExtra("story_mode_template");
         
         int[] title = {
-        	R.string.story_type_event_title,
-        	R.string.story_type_news_title,
-        	R.string.story_type_issue_title,
-        	R.string.story_type_profile_title
-        	
+        	R.string.story_type_event_news_title,
+        	R.string.story_type_event_feature_title,
+        	R.string.story_type_event_breaking_title,
+        	R.string.story_type_issue_social_title,
+        	R.string.story_type_issue_political_title,
+        	R.string.story_type_issue_economic_title,
+        	R.string.story_type_profile_public_title,
+        	R.string.story_type_profile_professional_title,
+        	R.string.story_type_profile_personal_title
         };
         
         int[] messages = {
-            	R.string.story_type_event_desc,
-            	R.string.story_type_news_desc,
-            	R.string.story_type_issue_desc,
-            	R.string.story_type_profile_desc
-            	
-            };
+        	R.string.story_type_event_news_desc,
+        	R.string.story_type_event_feature_desc,
+        	R.string.story_type_event_breaking_desc,
+        	R.string.story_type_issue_social_desc,
+        	R.string.story_type_issue_political_desc,
+        	R.string.story_type_issue_economic_desc,
+        	R.string.story_type_profile_public_desc,
+        	R.string.story_type_profile_professional_desc,
+        	R.string.story_type_profile_personal_desc
+        };
         
-        mAdapter = new MyAdapter(getSupportFragmentManager(), title,messages);
+        mAdapter = new MyAdapter(getSupportFragmentManager(), title, messages);
 		mPager = ((ViewPager)findViewById(R.id.pager));
 		mPager.setId((int)(Math.random()*10000));
 		mPager.setOffscreenPageLimit(5);
@@ -158,20 +167,35 @@ public class StoryTemplateChooserActivity extends BaseActivity {
     	switch (pageIdx)
 		{
 			case 0:
-				templateType = "event";
+				templateType = "event_news";
 			break;
 			case 1:
-				templateType = "news";
+				templateType = "event_feature";
 			break;
 			case 2: 
-				templateType = "issue";
+				templateType = "event_breaking";
 			break;
 			case 3: 
-				templateType = "profile";
+				templateType = "issue_social";
+			break;
+			case 4: 
+				templateType = "issue_political";
+			break;
+			case 5: 
+				templateType = "issue_economic";
+			break;
+			case 6: 
+				templateType = "profile_public";
+			break;
+			case 7: 
+				templateType = "profile_professional";
+			break;
+			case 8: 
+				templateType = "profile_personal";
 			break;
 		}
     	
-    	 loadTemplateSummary (templateType, templateLevel, mStoryMode);
+    	loadTemplateSummary (templateType, templateLevel, mStoryMode);
     	
         // FIXME this should be split into a method, probably in the model.Project class?
         int sceneCount = mTemplate.getScenes().size(); 
@@ -226,6 +250,7 @@ public class StoryTemplateChooserActivity extends BaseActivity {
 	        }
 	    }
 	
+	@SuppressLint("ValidFragment")
 	public class MyFragment extends Fragment {
 	
 		String mMessage;
