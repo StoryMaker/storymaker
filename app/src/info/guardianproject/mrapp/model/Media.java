@@ -449,19 +449,19 @@ public class Media {
              switch(media.clipIndex % 5)
              {    
 	             case 0:
-	            	 audioId = R.drawable.thumb_audio_signature;
+	            	 audioId = R.drawable.cliptype_audio_signature;
 	            	 break;
 	             case 1:
-	            	 audioId = R.drawable.thumb_audio_ambient;
+	            	 audioId = R.drawable.cliptype_audio_ambient;
 	            	 break;
 	             case 2:
-	            	 audioId = R.drawable.thumb_audio_narrative;
+	            	 audioId = R.drawable.cliptype_audio_narrative;
 	            	 break;
 	             case 3:
-	            	 audioId = R.drawable.thumb_audio_interview;
+	            	 audioId = R.drawable.cliptype_audio_interview;
 	            	 break;
 	             case 4:
-	            	 audioId = R.drawable.thumb_audio_enviromental;
+	            	 audioId = R.drawable.cliptype_audio_environmental;
 	            	 break;
 	             default:
 	            	audioId = R.drawable.thumb_audio; 
