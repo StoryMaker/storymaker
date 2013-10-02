@@ -333,17 +333,7 @@ public class OrderClipsFragment extends Fragment {
     {
         if (mKeepRunningPreview)
         {
-            mPlayButton.setText(R.string.play_recording);
-            mSeekBar.setProgress(0);
-            mKeepRunningPreview = false;
-            
-            if (mPhotoThread != null)
-            	mPhotoThread.interrupt();
-            
-            
-         	if (mFileAudioNarration != null && mFileAudioNarration.exists())
-            	 mAudioNarrator.stopPlaying();
-           
+        	stopPhotoPlayback();           
         }
         else
         {
@@ -433,8 +423,6 @@ public class OrderClipsFragment extends Fragment {
     
     private void stopPreviewPlayback ()
     {
-        
-
       	if (mFileAudioNarration != null && mFileAudioNarration.exists())
          	 mAudioNarrator.stopPlaying();
       	
@@ -482,6 +470,19 @@ public class OrderClipsFragment extends Fragment {
                 }
              }.start();
          
+    }
+    
+    private void stopPhotoPlayback()
+    {
+    	mPlayButton.setText(R.string.play_recording);
+    	mSeekBar.setProgress(0);
+    	mKeepRunningPreview = false;
+    	           
+    	if (mPhotoThread != null)
+    		mPhotoThread.interrupt();
+    	           
+    	if (mFileAudioNarration != null && mFileAudioNarration.exists())
+    		mAudioNarrator.stopPlaying();
     }
     
     public void loadMedia ()
@@ -724,6 +725,24 @@ public class OrderClipsFragment extends Fragment {
 	        } else {
 	            mRangeSeekBar.setSelectedMaxValue(99);
 	        }
+        }
+    }
+    
+    public void stopPlaybackOnTabChange()
+    { 
+        if (mMPM.mProject.getStoryType() == Project.STORY_TYPE_VIDEO || mMPM.mProject.getStoryType() == Project.STORY_TYPE_AUDIO)
+        {       
+        	if (mPreviewVideoView.isPlaying())
+        	{
+            	 stopPreviewPlayback();
+        	}
+        }
+        else if (mMPM.mProject.getStoryType() == Project.STORY_TYPE_ESSAY || mMPM.mProject.getStoryType() == Project.STORY_TYPE_PHOTO)
+        {
+            if (mKeepRunningPreview)
+            {
+                stopPhotoPlayback();           
+            }        
         }
     }
 }

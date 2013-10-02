@@ -316,7 +316,12 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
             mMenu.findItem(R.id.itemInfo).setVisible(false);
             mMenu.findItem(R.id.itemTrim).setVisible(false);
         }
-
+        
+        if(mLastTabFrag instanceof OrderClipsFragment)
+        {
+        	((OrderClipsFragment) mLastTabFrag).stopPlaybackOnTabChange();
+        }
+        
         if (tab.getPosition() == 0) {
             if (mMenu != null) {
                 mMenu.findItem(R.id.itemForward).setEnabled(true);
