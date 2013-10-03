@@ -111,6 +111,19 @@ public class StoryMakerApp extends Application {
 			Log.e(AppConstants.TAG,"error init app",e);
 		}
 	}
+		
+	@Override
+    public void onConfigurationChanged(Configuration newConfig)
+    {
+		super.onConfigurationChanged(newConfig);
+        if (mLocale != null)
+        {
+            Locale.setDefault(mLocale);
+            Configuration config = new Configuration();
+            config.locale = mLocale;
+            getResources().updateConfiguration(config, getResources().getDisplayMetrics());
+        }
+    }
 	
 	public void killZombieProcs () throws Exception
 	{
