@@ -19,8 +19,14 @@ END
 
 
 for project in "${MAPFILE[@]}"; do
-        android update project --path $project -t 1
+        android update project --path $project -t android-17
 done
+
+cp app/libs/android-support-v4.jar external/SlidingMenu/library/libs/android-support-v4.jar
+cp app/libs/android-support-v4.jar external/HoloEverywhere/contrib/ActionBarSherlock/library/libs/android-support-v4.jar
+cp app/libs/android-support-v4.jar external/Android-ViewPagerIndicator/library/libs/android-support-v4.jar
+cp app/libs/android-support-v4.jar external/RangeSeekBar/library/libs/android-support-v4.jar
+
 
 cd app
 android update project --path .
