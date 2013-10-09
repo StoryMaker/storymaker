@@ -1,6 +1,7 @@
 package info.guardianproject.mrapp.media;
 
 import info.guardianproject.mrapp.AppConstants;
+import info.guardianproject.mrapp.R;
 import info.guardianproject.mrapp.SceneEditorActivity;
 import info.guardianproject.mrapp.StoryMakerApp;
 import info.guardianproject.mrapp.Utils;
@@ -27,6 +28,7 @@ import org.ffmpeg.android.ShellUtils.ShellCallback;
 import org.holoeverywhere.widget.Toast;
 
 import org.holoeverywhere.app.Activity;
+
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -744,11 +746,11 @@ public class MediaProjectManager implements MediaManager {
  		Long totalBytesAvailable = (long)stat.getAvailableBlocks() * (long)stat.getBlockSize();
 
     	//if not enough storage
- 		if(totalBytesRequired > totalBytesAvailable)
+ 		if(totalBytesRequired < totalBytesAvailable)
  		{
  			double totalMBRequired = totalBytesRequired /(double)(1024*1024);
  			
- 			Utils.toastOnUiThread(mActivity, String.format("Whoops, we're out of space. Please make approximately %.2f%nMB available and try again!", totalMBRequired), true);
+ 			Utils.toastOnUiThread(mActivity, String.format(mContext.getString(R.string.error_storage_space), totalMBRequired), true);
  			return false;
  		}
     	  	
