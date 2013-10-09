@@ -295,7 +295,7 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
 		try 
 		{
 	    	File fileProjectSrc = MediaProjectManager.getExternalProjectFolder(mMPM.mProject, mMPM.getContext());
-	    	String mDestPath = fileProjectSrc.getCanonicalPath() + "project_files.zip";
+	    	String mZipFileName = fileProjectSrc.getCanonicalPath() + "project_files.zip";
 	    	ArrayList<File> fileList= new ArrayList<File>();
 	    	
 	    	//if not enough space
@@ -314,14 +314,18 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
 	    	
 	    	//add thumbnails
 	    	fileList.addAll(Arrays.asList(fileProjectSrc.listFiles()));
+	    	
+	    	//add database file
+	    	fileList.add(getDatabasePath("sm.db"));
 	    	    	
-			FileOutputStream fos = new FileOutputStream(mDestPath);
+			FileOutputStream fos = new FileOutputStream(mZipFileName);
 			ZipOutputStream zos = new ZipOutputStream(fos);
 			
 			exportProjectFiles(zos, fileList.toArray( new File[fileList.size()]));
 
 			zos.close();
 			
+			onExportProjectSuccess(mZipFileName);
 		}
 		catch (IOException ioe) 
 		{
@@ -359,6 +363,30 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
 				Log.e(AppConstants.TAG, "Error creating zip file:", ioe);
 			}			
 		}
+    }
+    
+    private void onExportProjectSuccess(final String zipFileName)
+    {
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
+        dialogBuilder.setTitle(R.string.export_dialog_title);
+        dialogBuilder.setPositiveButton(R.string.export_dialog_share, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                
+            	Intent shareIntent = new Intent();
+            	shareIntent.setAction(Intent.ACTION_SEND);
+            	shareIntent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File(zipFileName)));
+            	shareIntent.setType("*/*");
+            	startActivity(shareIntent);  	
+            }
+        });
+        dialogBuilder.setNegativeButton(R.string.export_dialog_close,
+            new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                }
+            });
+        dialogBuilder.show();
     }
      
     private void addMediaFromGallery()

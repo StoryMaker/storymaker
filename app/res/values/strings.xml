@@ -304,4 +304,9 @@ Build number: <xliff:g id="build_number">%s</xliff:g>\n
     <string name="uploading">Uploading...</string>
     <string name="canceled">Canceled upload</string>
     
+    <!-- add for project export -->
+    <string name="export_dialog_title">Would you like to share this project zip?</string>
+    <string name="export_dialog_close">Close</string>
+    <string name="export_dialog_share">Share</string>
+    
 </resources>
