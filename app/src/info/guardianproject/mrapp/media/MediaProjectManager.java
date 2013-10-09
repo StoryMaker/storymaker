@@ -19,6 +19,7 @@ import java.io.IOException;
 import java.nio.channels.FileChannel;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.zip.ZipEntry;
 
 import org.apache.commons.io.IOUtils;
 import org.ffmpeg.android.MediaDesc;
@@ -283,52 +284,12 @@ public class MediaProjectManager implements MediaManager {
          ((StoryMakerApp)mActivity.getApplication()).isExternalStorageReady();
          ((StoryMakerApp)mActivity.getApplication()).killZombieProcs();
 
-         Long totalBytesRequired= 0l;
- 		//first check that all of the input images are accessible
- 		
- 		for (Media media : mList)
- 		{
- 			if (media == null || media.getPath() == null)
- 			{
- 				//throw new IOException("Input media object is null");
- 			}
- 			else if (!new File(media.getPath()).exists())
- 			{
- 				throw new java.io.FileNotFoundException("Input image does not exist or is not readable" + ": " + media.getPath());
- 				
- 			}
- 			else
- 			{
- 				File currentFile = new File(media.getPath());
- 				totalBytesRequired += (long)currentFile.length();
- 			} 	
- 		}
- 		
- 		//get memory path
-        String memoryPath;
- 		if(mUseInternal)
- 		{	
- 			memoryPath = Environment.getDataDirectory().getPath();
- 		}
- 		else
- 		{
- 			memoryPath = Environment.getExternalStorageDirectory().getPath();
- 		}
-
-
- 		//get memory
- 		StatFs stat = new StatFs(memoryPath);
- 		Long totalBytesAvailable = (long)stat.getAvailableBlocks() * (long)stat.getBlockSize();
-
-    	//if not enough storage
- 		if(totalBytesRequired > totalBytesAvailable)
- 		{
- 			double totalMBRequired = totalBytesRequired /(double)(1024*1024);
- 			
- 			Utils.toastOnUiThread(mActivity, String.format("Whoops, we're out of space. Please make approximately %.2f%nMB available and try again!", totalMBRequired), true);
- 			return;
- 		}
- 		
+         //if not enough space
+         if(!checkStorageSpace())
+         {
+        	 return;
+         }
+         
 		 File fileRenderTmpDir = getRenderPath(mContext);
 
 		 File fileRenderTmp = new File(fileRenderTmpDir,new Date().getTime() + "");
@@ -591,7 +552,6 @@ public class MediaProjectManager implements MediaManager {
         	fileOrDirectory.deleteOnExit();
     }
     
-    
     public void applyExportSettings (MediaDesc mdout)
     { 	
     	mdout.videoBitrate = Integer.parseInt(mSettings.getString("p_video_bitrate", AppConstants.DEFAULT_VIDEO_BITRATE+""));
@@ -735,6 +695,65 @@ public class MediaProjectManager implements MediaManager {
     	
     }
     
+    public Context getContext()
+    {
+    	return this.mContext;
+    }
+    
+    public boolean checkStorageSpace()
+    {
+    	ArrayList<Media> mList = this.mProject.getMediaAsList();
+    	Long totalBytesRequired= 0l;
+    	
+ 		//first check that all of the input images are accessible		
+ 		for (Media media : mList)
+ 		{		
+			try 
+			{
+	 			if (media == null || media.getPath() == null)
+	 			{}
+	 			else if (!new File(media.getPath()).exists())
+	 			{
+	 				throw new java.io.FileNotFoundException();			
+	 			}
+	 			else
+	 			{
+	 				File currentFile = new File(media.getPath());
+	 				totalBytesRequired += (long)currentFile.length();
+	 			} 
+			} 
+			catch (java.io.FileNotFoundException fnfe) 
+			{
+				Log.e(AppConstants.TAG, "Input image does not exist or is not readable" + ": " + media.getPath(), fnfe);
+			}			
+ 		}
+ 		
+ 		//get memory path
+        String memoryPath;
+ 		if(mUseInternal)
+ 		{	
+ 			memoryPath = Environment.getDataDirectory().getPath();
+ 		}
+ 		else
+ 		{
+ 			memoryPath = Environment.getExternalStorageDirectory().getPath();
+ 		}
+ 		
+ 		//get memory
+ 		StatFs stat = new StatFs(memoryPath);
+ 		Long totalBytesAvailable = (long)stat.getAvailableBlocks() * (long)stat.getBlockSize();
+
+    	//if not enough storage
+ 		if(totalBytesRequired > totalBytesAvailable)
+ 		{
+ 			double totalMBRequired = totalBytesRequired /(double)(1024*1024);
+ 			
+ 			Utils.toastOnUiThread(mActivity, String.format("Whoops, we're out of space. Please make approximately %.2f%nMB available and try again!", totalMBRequired), true);
+ 			return false;
+ 		}
+    	  	
+    	return true;
+    }
     
     /*
     public void prerenderMedia (MediaClip mClip, ShellCallback shellCallback)

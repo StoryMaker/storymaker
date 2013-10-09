@@ -1,6 +1,7 @@
 
 package info.guardianproject.mrapp;
 
+import info.guardianproject.mrapp.media.MediaClip;
 import info.guardianproject.mrapp.media.MediaProjectManager;
 import info.guardianproject.mrapp.media.OverlayCameraActivity;
 import info.guardianproject.mrapp.model.template.Clip;
@@ -10,10 +11,18 @@ import info.guardianproject.mrapp.model.Project;
 import info.guardianproject.mrapp.model.Scene;
 import info.guardianproject.mrapp.server.OAuthAccessTokenActivity;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 
 import net.micode.soundrecorder.SoundRecorder;
 
@@ -191,6 +200,10 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
             	
             	deleteCurrentShot();
             	return true;
+            case R.id.exportProjectFiles:
+                exportProjectFiles();
+            
+                return true;
             case R.id.itemTrim:
                 if (mFragmentTab1 != null) { 
                     ((OrderClipsFragment) mFragmentTab1).loadTrim();
@@ -277,7 +290,77 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
     	
     }
     
+    private void exportProjectFiles()
+    {	
+		try 
+		{
+	    	File fileProjectSrc = MediaProjectManager.getExternalProjectFolder(mMPM.mProject, mMPM.getContext());
+	    	String mDestPath = fileProjectSrc.getCanonicalPath() + "project_files.zip";
+	    	ArrayList<File> fileList= new ArrayList<File>();
+	    	
+	    	//if not enough space
+	    	if(!mMPM.checkStorageSpace())
+	        {
+	    		return;
+	        }
+	         
+	    	String[] mMediaPaths = mMPM.mProject.getMediaAsPathArray();
+	    	
+	    	//add videos
+	    	for (String path : mMediaPaths)
+	    	{
+	    		fileList.add(new File(path));
+	    	}
+	    	
+	    	//add thumbnails
+	    	fileList.addAll(Arrays.asList(fileProjectSrc.listFiles()));
+	    	    	
+			FileOutputStream fos = new FileOutputStream(mDestPath);
+			ZipOutputStream zos = new ZipOutputStream(fos);
+			
+			exportProjectFiles(zos, fileList.toArray( new File[fileList.size()]));
+
+			zos.close();
+			
+		}
+		catch (IOException ioe) 
+		{
+			Log.e(AppConstants.TAG, "Error creating zip file:", ioe);
+		} 	
+    }
     
+    
+    private void exportProjectFiles(ZipOutputStream zos, File[] fileList)
+    {
+    	final int BUFFER = 2048;
+    	
+		for (int i = 0; i < fileList.length; i++) 
+		{		
+			try 
+			{
+				byte[] data = new byte[BUFFER];
+
+				FileInputStream fis = new FileInputStream(fileList[i]);
+				zos.putNextEntry(new ZipEntry(fileList[i].getName()));
+				
+				int count;
+				while ((count = fis.read(data, 0, BUFFER)) != -1) 
+				{ 
+					zos.write(data, 0, count); 
+				} 
+
+				//close steams
+				zos.closeEntry();
+				fis.close();
+
+			} 
+			catch (IOException ioe) 
+			{
+				Log.e(AppConstants.TAG, "Error creating zip file:", ioe);
+			}			
+		}
+    }
+     
     private void addMediaFromGallery()
     {
         mMPM.mMediaHelper.openGalleryChooser("*/*");
