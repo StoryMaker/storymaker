@@ -19,8 +19,10 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
@@ -45,6 +47,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.NavUtils;
+import android.text.format.DateFormat;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -294,9 +297,9 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
     {	
 		try 
 		{
-	    	File fileProjectSrc = MediaProjectManager.getExternalProjectFolder(mMPM.mProject, mMPM.getContext());
-	    	String mZipFileName = fileProjectSrc.getCanonicalPath() + "project_files.zip";
+	    	File fileProjectSrc = MediaProjectManager.getExternalProjectFolder(mMPM.mProject, mMPM.getContext());	
 	    	ArrayList<File> fileList= new ArrayList<File>();
+	    	String mZipFileName = buildZipFilePath(fileProjectSrc.getAbsolutePath());
 	    	
 	    	//if not enough space
 	    	if(!mMPM.checkStorageSpace())
@@ -387,6 +390,18 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
                 }
             });
         dialogBuilder.show();
+    }
+    
+    private String buildZipFilePath(String filePath)
+    {
+    	//create datestamp
+    	Date date = new Date();
+    	SimpleDateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy");
+    	
+    	int index = filePath.lastIndexOf('/');
+    	filePath = filePath.substring(0, index + 1);
+    	
+    	return String.format("%sstorymaker_project_%s_%s.zip", filePath, mMPM.mProject.getId(), dateFormat.format(date));
     }
      
     private void addMediaFromGallery()
