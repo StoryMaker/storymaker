@@ -1,0 +1,25 @@
+{
+    "scenes": [
+        {
+            "title": "overview",
+            "description": "story_type_profile_professional_text1"
+        },
+        {
+            "title": "involvement",
+            "description": "story_type_profile_professional_text2"
+        },
+        {
+            "title": "motivation",
+            "description": "story_type_profile_professional_text3"
+        },
+        {
+            "title": "experience",
+            "description": "story_type_profile_professional_text4"
+        },
+        {
+            "title": "moving_forward",
+            "description": "story_type_profile_professional_text5"
+        }
+    ], 
+    "title": "story_type_profile_professional_title"
+}

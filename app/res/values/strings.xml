@@ -37,6 +37,7 @@
     <string name="menu_add_from_gallery">Import from Gallery</string>
     <string name="menu_add_new_shot">Add Clip to Scene</string>
     <string name="menu_del_shot">Delete Current Clip</string>
+    <string name="menu_export_project_files">Export Project Files as Zip</string>
     
     <string name="welcome_message">Hey there!\nWelcome to StoryMaker</string>
 
@@ -125,7 +126,7 @@ Build number: <xliff:g id="build_number">%s</xliff:g>\n
     <string name="tab_finish">Finish</string>
     
     <string name="tab_add_clips">Make</string>
-    <string name="tab_order">Order</string>
+    <string name="tab_order">Edit</string>
     <string name="story_publish_section">Section</string>
     <string name="story_publish_section_hint">Sports</string>
     <string name="story_publish_topics">Topics</string>
@@ -188,6 +189,8 @@ Build number: <xliff:g id="build_number">%s</xliff:g>\n
     <string name="error_app_internal">Internal application error</string>
     <!-- shown as the message in a dialog when the recording could not be added to the media database -->
     <string name="error_mediadb_new_record">Unable to save recorded audio</string>
+    <!-- shown as the message in a dialog when an export will tak up too much space -->
+    <string name="error_storage_space" formatted="false">"Whoops, we're out of space. Please make approximately %.2f%nMB available and try again!"</string>
 
     <!-- add for libra begin -->
     <string name="default_record_name">untitled record</string>
@@ -302,5 +305,12 @@ Build number: <xliff:g id="build_number">%s</xliff:g>\n
     <string name="could_not_create_account">Could not create account</string>
     <string name="uploading">Uploading...</string>
     <string name="canceled">Canceled upload</string>
+    
+    
+    
+    <!-- add for project export -->
+    <string name="export_dialog_title">Would you like to share this project zip?</string>
+    <string name="export_dialog_close">Close</string>
+    <string name="export_dialog_share">Share</string>
     
 </resources>

@@ -10,21 +10,29 @@ import android.support.v4.app.FragmentActivity;
 
 public class Utils {
     public static void toastOnUiThread(Activity activity, String message) {
+    	toastOnUiThread(activity, message, false);
+    }
+    
+    public static void toastOnUiThread(Activity activity, String message, final boolean isLongToast) {
         final Activity _activity = activity;
         final String _msg = message;
         activity.runOnUiThread(new Runnable() {
                 public void run() {
-                        Toast.makeText(_activity.getApplicationContext(), _msg, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(_activity.getApplicationContext(), _msg, isLongToast ? Toast.LENGTH_LONG : Toast.LENGTH_SHORT).show();
                 }
         });
     }
     
     public static void toastOnUiThread(FragmentActivity fragmentActivity, String message) {
+    	toastOnUiThread(fragmentActivity, message, false);
+    }
+    
+    public static void toastOnUiThread(FragmentActivity fragmentActivity, String message, final boolean isLongToast) {
         final FragmentActivity _activity = fragmentActivity;
         final String _msg = message;
         fragmentActivity.runOnUiThread(new Runnable() {
                 public void run() {
-                        Toast.makeText(_activity.getApplicationContext(), _msg, Toast.LENGTH_SHORT).show();
+                		Toast.makeText(_activity.getApplicationContext(), _msg, isLongToast ? Toast.LENGTH_LONG : Toast.LENGTH_SHORT).show();
                 }
         });
     }

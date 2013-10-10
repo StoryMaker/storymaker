@@ -1,6 +1,7 @@
 
 package info.guardianproject.mrapp;
 
+import info.guardianproject.mrapp.media.MediaClip;
 import info.guardianproject.mrapp.media.MediaProjectManager;
 import info.guardianproject.mrapp.media.OverlayCameraActivity;
 import info.guardianproject.mrapp.model.template.Clip;
@@ -10,10 +11,20 @@ import info.guardianproject.mrapp.model.Project;
 import info.guardianproject.mrapp.model.Scene;
 import info.guardianproject.mrapp.server.OAuthAccessTokenActivity;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 
 import net.micode.soundrecorder.SoundRecorder;
 
@@ -36,6 +47,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.NavUtils;
+import android.text.format.DateFormat;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -191,6 +203,10 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
             	
             	deleteCurrentShot();
             	return true;
+            case R.id.exportProjectFiles:
+                exportProjectFiles();
+            
+                return true;
             case R.id.itemTrim:
                 if (mFragmentTab1 != null) { 
                     ((OrderClipsFragment) mFragmentTab1).loadTrim();
@@ -277,7 +293,117 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
     	
     }
     
+    private void exportProjectFiles()
+    {	
+		try 
+		{
+	    	File fileProjectSrc = MediaProjectManager.getExternalProjectFolder(mMPM.mProject, mMPM.getContext());	
+	    	ArrayList<File> fileList= new ArrayList<File>();
+	    	String mZipFileName = buildZipFilePath(fileProjectSrc.getAbsolutePath());
+	    	
+	    	//if not enough space
+	    	if(!mMPM.checkStorageSpace())
+	        {
+	    		return;
+	        }
+	         
+	    	String[] mMediaPaths = mMPM.mProject.getMediaAsPathArray();
+	    	
+	    	//add videos
+	    	for (String path : mMediaPaths)
+	    	{
+	    		fileList.add(new File(path));
+	    	}
+	    	
+	    	//add thumbnails
+	    	fileList.addAll(Arrays.asList(fileProjectSrc.listFiles()));
+	    	
+	    	//add database file
+	    	fileList.add(getDatabasePath("sm.db"));
+	    	    	
+			FileOutputStream fos = new FileOutputStream(mZipFileName);
+			ZipOutputStream zos = new ZipOutputStream(fos);
+			
+			exportProjectFiles(zos, fileList.toArray( new File[fileList.size()]));
+
+			zos.close();
+			
+			onExportProjectSuccess(mZipFileName);
+		}
+		catch (IOException ioe) 
+		{
+			Log.e(AppConstants.TAG, "Error creating zip file:", ioe);
+		} 	
+    }
     
+    
+    private void exportProjectFiles(ZipOutputStream zos, File[] fileList)
+    {
+    	final int BUFFER = 2048;
+    	
+		for (int i = 0; i < fileList.length; i++) 
+		{		
+			try 
+			{
+				byte[] data = new byte[BUFFER];
+
+				FileInputStream fis = new FileInputStream(fileList[i]);
+				zos.putNextEntry(new ZipEntry(fileList[i].getName()));
+				
+				int count;
+				while ((count = fis.read(data, 0, BUFFER)) != -1) 
+				{ 
+					zos.write(data, 0, count); 
+				} 
+
+				//close steams
+				zos.closeEntry();
+				fis.close();
+
+			} 
+			catch (IOException ioe) 
+			{
+				Log.e(AppConstants.TAG, "Error creating zip file:", ioe);
+			}			
+		}
+    }
+    
+    private void onExportProjectSuccess(final String zipFileName)
+    {
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
+        dialogBuilder.setTitle(R.string.export_dialog_title);
+        dialogBuilder.setPositiveButton(R.string.export_dialog_share, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                
+            	Intent shareIntent = new Intent();
+            	shareIntent.setAction(Intent.ACTION_SEND);
+            	shareIntent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File(zipFileName)));
+            	shareIntent.setType("*/*");
+            	startActivity(shareIntent);  	
+            }
+        });
+        dialogBuilder.setNegativeButton(R.string.export_dialog_close,
+            new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                }
+            });
+        dialogBuilder.show();
+    }
+    
+    private String buildZipFilePath(String filePath)
+    {
+    	//create datestamp
+    	Date date = new Date();
+    	SimpleDateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy");
+    	
+    	int index = filePath.lastIndexOf('/');
+    	filePath = filePath.substring(0, index + 1);
+    	
+    	return String.format("%sstorymaker_project_%s_%s.zip", filePath, mMPM.mProject.getId(), dateFormat.format(date));
+    }
+     
     private void addMediaFromGallery()
     {
         mMPM.mMediaHelper.openGalleryChooser("*/*");
@@ -316,7 +442,12 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
             mMenu.findItem(R.id.itemInfo).setVisible(false);
             mMenu.findItem(R.id.itemTrim).setVisible(false);
         }
-
+        
+        if(mLastTabFrag instanceof OrderClipsFragment)
+        {
+        	((OrderClipsFragment) mLastTabFrag).stopPlaybackOnTabChange();
+        }
+        
         if (tab.getPosition() == 0) {
             if (mMenu != null) {
                 mMenu.findItem(R.id.itemForward).setEnabled(true);
@@ -350,9 +481,14 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
             layout = R.layout.fragment_order_clips;
 
             if (mMenu != null) {
-                mMenu.findItem(R.id.itemInfo).setVisible(true);
-                mMenu.findItem(R.id.itemTrim).setVisible(true);
+                mMenu.findItem(R.id.itemInfo).setVisible(true);       
                 mMenu.findItem(R.id.itemForward).setEnabled(true);
+                
+                //if only photos, no need to display trim option
+                if(!(mMPM.mProject.getStoryType() == Project.STORY_TYPE_ESSAY || mMPM.mProject.getStoryType() == Project.STORY_TYPE_PHOTO))
+                {
+                	mMenu.findItem(R.id.itemTrim).setVisible(true);
+                }             
             }
 
             if (mFragmentTab1 == null)

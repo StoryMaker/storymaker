@@ -333,17 +333,7 @@ public class OrderClipsFragment extends Fragment {
     {
         if (mKeepRunningPreview)
         {
-            mPlayButton.setText(R.string.play_recording);
-            mSeekBar.setProgress(0);
-            mKeepRunningPreview = false;
-            
-            if (mPhotoThread != null)
-            	mPhotoThread.interrupt();
-            
-            
-         	if (mFileAudioNarration != null && mFileAudioNarration.exists())
-            	 mAudioNarrator.stopPlaying();
-           
+        	stopPhotoPlayback();           
         }
         else
         {
@@ -433,8 +423,6 @@ public class OrderClipsFragment extends Fragment {
     
     private void stopPreviewPlayback ()
     {
-        
-
       	if (mFileAudioNarration != null && mFileAudioNarration.exists())
          	 mAudioNarrator.stopPlaying();
       	
@@ -482,6 +470,19 @@ public class OrderClipsFragment extends Fragment {
                 }
              }.start();
          
+    }
+    
+    private void stopPhotoPlayback()
+    {
+    	mPlayButton.setText(R.string.play_recording);
+    	mSeekBar.setProgress(0);
+    	mKeepRunningPreview = false;
+    	           
+    	if (mPhotoThread != null)
+    		mPhotoThread.interrupt();
+    	           
+    	if (mFileAudioNarration != null && mFileAudioNarration.exists())
+    		mAudioNarrator.stopPlaying();
     }
     
     public void loadMedia ()
@@ -687,8 +688,8 @@ public class OrderClipsFragment extends Fragment {
         if (dirty) media.save(); // FIXME move dirty into model classes save() method
     }
     
-    private int trimStartUndo = -1;
-    private int trimEndUndo = -1;
+    private float trimStartUndo = -1f;
+    private float trimEndUndo = -1f;
     
     public void setupTrimUndo() {
     
@@ -717,13 +718,31 @@ public class OrderClipsFragment extends Fragment {
         Media media = mMPM.mScene.getMediaAsArray()[mCurrentClipIdx];
         
         if (media != null)
-        {
-	        mRangeSeekBar.setSelectedMinValue(media.getTrimStart());
+        { 	
+	        mRangeSeekBar.setSelectedMinValue(Math.round(media.getTrimStart()));
 	        if (media.getTrimEnd() > 0) {
-	            mRangeSeekBar.setSelectedMaxValue(media.getTrimEnd());
+	            mRangeSeekBar.setSelectedMaxValue(Math.round(media.getTrimEnd()));
 	        } else {
 	            mRangeSeekBar.setSelectedMaxValue(99);
 	        }
+        }
+    }
+    
+    public void stopPlaybackOnTabChange()
+    { 
+        if (mMPM.mProject.getStoryType() == Project.STORY_TYPE_VIDEO || mMPM.mProject.getStoryType() == Project.STORY_TYPE_AUDIO)
+        {       
+        	if (mPreviewVideoView.isPlaying())
+        	{
+            	 stopPreviewPlayback();
+        	}
+        }
+        else if (mMPM.mProject.getStoryType() == Project.STORY_TYPE_ESSAY || mMPM.mProject.getStoryType() == Project.STORY_TYPE_PHOTO)
+        {
+            if (mKeepRunningPreview)
+            {
+                stopPhotoPlayback();           
+            }        
         }
     }
 }

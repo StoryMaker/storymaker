@@ -3,9 +3,9 @@
 
 <string name="terms_title">Storymaker Terms</string>
 <string name="terms_text_1">You keep all ownership rights to your content, you can pull it down whenever you wish, and we will not sell any of your data. By agreeing to share your content with StoryMaker.cc you permit Small World News and partners to place your stories with similar stories created with Storymaker. We group them based on story types, topics, and locations.</string>
-<string name="terms_text_2">Your story is still posted on the sharing site of your choice, but it is referenced on StoryMaker.cc as well. Title, story decription, and tags will be posted to StoryMaker.cc all other content will be references to your personal feed at your sharing site.
-</string>
+<string name="terms_text_2">Your story is still posted on the sharing site of your choice, but it is referenced on StoryMaker.cc as well. Title, story decription, and tags will be posted to StoryMaker.cc all other content will be references to your personal feed at your sharing site.</string>
 
+<!-- tutorial_lessons -->
 <string name="tutorial_title_1">Learn storytelling.</string>
 <string name="tutorial_text_1">Learn to be a journalist while staying safe, and producing great audio, photo, and video stories.</string>
 
@@ -23,33 +23,132 @@
 
 <string name="tutorial_title_6">Continue Learning.</string>
 <string name="tutorial_text_6">Share your stories with the StoryMaker.cc community, and learn to be a better storymaker with each story you share.</string>
+<!-- /tutorial_lessons -->
 
+<!-- tutorial_story -->
+<string name="tutorial_title_7">Tell stories better.</string>
+<string name="tutorial_text_7">A good story has a beginning, middle and end. Interview someone to provide more context to your story. Show us where they live. Keep it personal.</string>
+
+<string name="tutorial_title_8">Choose your medium.</string>
+<string name="tutorial_text_8">Audio, photo, and video suit different storytelling styles. Check out the lessons to learn more. Choose a medium, and learn as you go.</string>
+
+<string name="tutorial_title_9">Tell a story in five.</string>
+<string name="tutorial_text_9">Use five clips to tell your story. Describe the location of your story. Introduce your primary subject. The remaining three tell a story with a beginning, middle, and end.</string>
+
+<string name="tutorial_title_10">Break the mold.</string>
+<string name="tutorial_text_10">Assemble your clips in different orders for the most impact.</string>
+
+<string name="tutorial_title_11">Tell longer stories.</string>
+<string name="tutorial_text_11">Story Templates tell you how.</string>
+<!-- /tutorial_story -->
+
+<!-- template_description -->
 <string name="template_audio_desc">Record the sounds that tell your story, who, what. If you cannot get strong visuals, audio is a great alternative.</string>
-
 <string name="template_photo_desc">A picture is worth a thousand words. Show us who or what is important in your story, or how it happens.</string>
-
 <string name="template_essay_desc">Sometimes several photos are needed. Show us how the story happens, tell a story in a series of related images.</string>
-
 <string name="template_video_desc">Capture compelling images and actions as they happen. Show us who or what is important and why.</string>
+<!-- /template_description -->
 
-<string name="story_type_event_title">Event</string>
-<string name="story_type_issue_title">Issue</string>
-<string name="story_type_profile_title">Profile</string>
-<string name="story_type_news_title">Breaking News</string>
+<!-- story_type -->
+<string name="story_type_event_news_title">News Event</string>
+<string name="story_type_event_feature_title">Feature Event</string>
+<string name="story_type_event_breaking_title">Breaking News Event</string>
+<string name="story_type_issue_social_title">Social Issue</string>
+<string name="story_type_issue_political_title">Political Issue</string>
+<string name="story_type_issue_economic_title">Economic Issue</string>
+<string name="story_type_profile_public_title">Public Profile</string>
+<string name="story_type_profile_professional_title">Professional Profile</string>
+<string name="story_type_profile_personal_title">Personal Profile</string>
+<!-- /story_type -->
 
-<string name="story_type_event_desc">Event stories have an established timeframe and a set place. Focus on what happens at the event. Organize your story around when the event happens, where, and why it happens at this time and place.</string>
+<!-- story_type_description -->
+<string name="story_type_event_news_desc">Stories about events with immediate importance, often scheduled, and have a clear start and end. An election or a demonstration are good news events.</string>
+<string name="story_type_event_feature_desc">Stories about events that may not have hard news implications. A sporting event, a new business in a neighborhood, emerging technology are good feature events.</string>
+<string name="story_type_event_breaking_desc">Unscheduled events with important news value. A fire, a surprise announcement by a government official, or a natural disaster are good breaking news events.</string>
+<string name="story_type_issue_social_desc">Stories about issues that affect communities. A change in local government regulation or infrastructure is a good social issue.</string>
+<string name="story_type_issue_political_desc">Stories about government and the work of public officials.  A story about new laws or parliament changes is a good political issue.</string>
+<string name="story_type_issue_economic_desc">Stories about the broader economy or about people’s personal finance.  A story about the impact of changes in government subsidies to farmers is a good economic issue.</string>
+<string name="story_type_profile_public_desc">Stories about a subject’s role in the public view. A profile of a politician running for office is a good public profile.</string>
+<string name="story_type_profile_professional_desc">Stories about people and their jobs. A profile of a famous artist or athlete is a good professional profile.</string>
+<string name="story_type_profile_personal_desc">Stories about a subject’s experiences, often related to events in the news. A profile with a former soldier on the anniversary of the war might be a good personal profile.</string>
+<!-- /story_type_description -->
 
-<string name="story_type_issue_desc">Issue stories examine a broad subject. Focus on how the issue affects a community or group of people. Organize your story around who it impacts and what is being done in response.</string>
-
-<string name="story_type_profile_desc">Profile a specific character. Focus on who the character is. Organize your story around the characters daily life, what happens, and how the character deals with challenges.</string>
-
-<string name="story_type_news_desc">Breaking news is immediate. Focus on one angle. Organize your story around factoids, who, what, where, when. User narration to add context.</string>
-
+<!-- template_options -->
 <string name="choose_level">Choose a Level</string>
-
 <string name="choose_level_basic">Basic</string>
-
 <string name="choose_level_advanced">Advanced</string>
+<!-- /template_options -->
+
+<!-- story_type_new -->
+<string name="overview">Overview</string>
+<string name="activity">Activity</string>
+<string name="impact">Impact</string>
+<string name="background">Background</string>
+<string name="involvement">Involvement</string>
+<string name="motivation">Motivation</string>
+<string name="location">Location</string>
+<string name="experience">Experience</string>
+<string name="results">Results</string>
+<string name="next_steps">Next Steps</string>
+<string name="moving_forward">Moving Forward</string>
+<string name="conclusion">Conclusion</string>
+
+<string name="story_type_event_news_text1">What is happening at this event?</string>
+<string name="story_type_event_news_text2">How are you involved?</string>
+<string name="story_type_event_news_text3">Who is most affected by this event?</string>
+<string name="story_type_event_news_text4">What’s the story behind this event?</string>
+<string name="story_type_event_news_text5">What is the impact of this event?</string>
+
+<string name="story_type_event_feature_text1">What is happening at this event?</string>
+<string name="story_type_event_feature_text2">Why are you involved with this event?</string>
+<string name="story_type_event_feature_text3">Where is the event happening?</string>
+<string name="story_type_event_feature_text4">How are you involved personally?</string>
+<string name="story_type_event_feature_text5">What is the impact of this event?</string>
+
+<string name="story_type_event_breaking_text1">What is happening?</string>
+<string name="story_type_event_breaking_text2">Where is it happening?</string>
+<string name="story_type_event_breaking_text3">Who is affected?</string>
+<string name="story_type_event_breaking_text4">Is there any immediate danger?</string>
+<string name="story_type_event_breaking_text5">How are people responding?</string>
+
+<string name="story_type_issue_social_text1">Please describe the social issue.</string>
+<string name="story_type_issue_social_text2">When &amp; where did this issue begin?</string>
+<string name="story_type_issue_social_text3">How is this impacting the community?</string>
+<string name="story_type_issue_social_text4">Tell us a story about how this affects your life.</string>
+<string name="story_type_issue_social_text5">What can be done to fix this issue?</string>
+
+<string name="story_type_issue_political_text1">Please describe the political issue.</string>
+<string name="story_type_issue_political_text2">Who does it impact directly?</string>
+<string name="story_type_issue_political_text3">How does it impact the government?</string>
+<string name="story_type_issue_political_text4">Why is this important to you personally?</string>
+<string name="story_type_issue_political_text5">What can be done to fix this issue?</string>
+
+<string name="story_type_issue_economic_text1">Please describe the economic issue.</string>
+<string name="story_type_issue_economic_text2">What is your relationship to this issue?</string>
+<string name="story_type_issue_economic_text3">How does it impact the economy?</string>
+<string name="story_type_issue_economic_text4">Who will be most affected by this?</string>
+<string name="story_type_issue_economic_text5">What can be done to fix this issue?</string>
+
+<string name="story_type_profile_public_text1">Explain a little about who you are.</string>
+<string name="story_type_profile_public_text2">When did you get started?</string>
+<string name="story_type_profile_public_text3">What do you do?</string>
+<string name="story_type_profile_public_text4">Describe a moment you felt proud of your job.</string>
+<string name="story_type_profile_public_text5">How do you see your role in the future?</string>
+
+<string name="story_type_profile_professional_text1">Who are you and what is your job?</string>
+<string name="story_type_profile_professional_text2">Please explain how you do your job.</string>
+<string name="story_type_profile_professional_text3">Why is this job important to you?</string>
+<string name="story_type_profile_professional_text4">How do you make an impact with this job?</string>
+<string name="story_type_profile_professional_text5">What is next for you with this job?</string>
+
+<string name="story_type_profile_personal_text1">Please explain a little about who you are.</string>
+<string name="story_type_profile_personal_text2">What is an important experience that happened to you?</string>
+<string name="story_type_profile_personal_text3">How did this experience make you feel?</string>
+<string name="story_type_profile_personal_text4">What do you do differently now?</string>
+<string name="story_type_profile_personal_text5">What would you like to see happen in the future?</string>
+<!-- /story_type_new -->
+
+<!-- story_type_old -->
 <string name="scene_number">Scene <xliff:g id="number">%1$d</xliff:g></string>
 <string name="when">When?</string>
 <string name="how">How?</string>
@@ -94,19 +193,6 @@
 <string name="story_type_news_text7">Why did it happen?</string>
 <string name="story_type_news_text8">How is it being responded to?</string>
 
-<string name="tutorial_title_7">Tell stories better.</string>
-<string name="tutorial_text_7">A good story has a beginning, middle and end. Interview someone to provide more context to your story. Show us where they live. Keep it personal.</string>
-
-<string name="tutorial_title_8">Choose your medium.</string>
-<string name="tutorial_text_8">Audio, photo, and video suit different storytelling styles. Check out the lessons to learn more. Choose a medium, and learn as you go.</string>
-
-<string name="tutorial_title_9">Tell a story in five.</string>
-<string name="tutorial_text_9">Use five clips to tell your story. Describe the location of your story. Introduce your primary subject. The remaining three tell a story with a beginning, middle, and end.</string>
-
-<string name="tutorial_title_10">Break the mold.</string>
-<string name="tutorial_text_10">Assemble your clips in different orders for the most impact.</string>
-
-<string name="tutorial_title_11">Tell longer stories.</string>
-<string name="tutorial_text_11">Story Templates tell you how.</string>
+<!-- /story_type_old -->
 
 </resources>

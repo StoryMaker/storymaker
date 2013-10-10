@@ -108,7 +108,7 @@ public class AddClipsFragment extends Fragment {
 
             // Set up the AddClips ViewPager with the AddClips adapter.
             mAddClipsViewPager = (ViewPager) view.findViewById(R.id.viewPager);
-            mAddClipsViewPager.setPageMargin(-75);
+            //mAddClipsViewPager.setPageMargin(-75);
             mAddClipsViewPager.setPageMarginDrawable(R.drawable.ic_action_forward_gray);
             //mAddClipsViewPager.setOffscreenPageLimit(5);
             

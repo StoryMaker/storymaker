@@ -5,5 +5,8 @@
      <item android:id="@+id/addFromGallery" android:showAsAction="never" android:visible="true" android:title="@string/menu_add_from_gallery"></item>
      <item android:id="@+id/addNewShot" android:showAsAction="never" android:visible="true" android:title="@string/menu_add_new_shot"></item>
      <item android:id="@+id/delShot" android:showAsAction="never" android:visible="true" android:title="@string/menu_del_shot"></item>
+     <item android:id="@+id/exportProjectFiles" android:showAsAction="never" android:visible="true" android:title="@string/menu_export_project_files"></item>
+     
+     
      
 </menu>

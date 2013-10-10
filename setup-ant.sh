@@ -19,7 +19,7 @@ END
 
 
 for project in "${MAPFILE[@]}"; do
-        android update project --path $project -t android-17
+        android update project --path $project -t "android-17"
 done
 
 cp app/libs/android-support-v4.jar external/SlidingMenu/library/libs/android-support-v4.jar

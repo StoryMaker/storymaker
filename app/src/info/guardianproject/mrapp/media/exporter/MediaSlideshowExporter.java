@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import org.ffmpeg.android.FfmpegController;
 import org.ffmpeg.android.MediaDesc;
 import org.ffmpeg.android.ShellUtils.ShellCallback;
+import org.holoeverywhere.preference.SharedPreferences;
 
 import info.guardianproject.mrapp.AppConstants;
 import info.guardianproject.mrapp.media.MediaConstants;
@@ -13,6 +14,7 @@ import android.content.Context;
 import android.media.MediaScannerConnection;
 import android.os.Handler;
 import android.os.Message;
+import android.preference.PreferenceManager;
 import android.util.Log;
 
 public class MediaSlideshowExporter extends MediaExporter {
@@ -100,8 +102,7 @@ public class MediaSlideshowExporter extends MediaExporter {
     	if (!new File(mdout.path).exists())
     	{
     		throw new Exception ("There was an error creating the slideshow");
-    	}
-		
+    	}	
    }
 	/*
 	 private void makeSlideShow (ArrayList<MediaDesc> listMediaDesc, int slideDuration, String audioPath, MediaDesc mdout) throws Exception

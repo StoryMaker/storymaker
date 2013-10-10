@@ -190,4 +190,18 @@
         <item>5</item>
     </string-array>
     
+    <string-array name="resolution_options">
+        <item name="1080">1080p (1920 x 1080)</item>
+        <item name="720">720p (1280 x 720)</item>
+        <item name="480">480p (720 x 480)</item>
+        <item name="360">360p (640 x 360)</item>
+    </string-array>
+    
+    <string-array name="resolution_options_values">
+        <item name="1080">1080</item>
+        <item name="720">720</item>
+        <item name="480">480</item>
+        <item name="360">360</item>
+    </string-array>
+    
 </resources>

@@ -31,9 +31,9 @@ public class Media {
     protected String clipType; // R.arrays.cliptypes
     protected int clipIndex; // which clip is this in the scene
     protected int sceneId; // foreign key to the Scene which holds this media
-    protected int trimStart;
-    protected int trimEnd;
-    protected int duration;
+    protected float trimStart;
+    protected float trimEnd;
+    protected float duration;
 
     public final static int IMAGE_SAMPLE_SIZE = 4;
     
@@ -42,7 +42,7 @@ public class Media {
     }
 
     public Media(Context context, int id, String path, String mimeType, String clipType, int clipIndex,
-            int sceneId, int trimStart, int trimEnd, int duration) {
+            int sceneId, float trimStart, float trimEnd, float duration) {
         super();
         this.context = context;
         this.id = id;
@@ -122,11 +122,18 @@ public class Media {
         return Math.round(getTrimmedStartPercent() * duration);
     }
 
+    public float getTrimmedStartTimeFloat() {
+        return (getTrimmedStartPercent() * duration);
+    }
     /** 
      * @return milliseconds to end of trimmed clip
      */
     public int getTrimmedEndTime() {
         return Math.round(getTrimmedEndPercent() * duration);
+    }
+    
+    public float getTrimmedEndTimeFloat() {
+        return (getTrimmedEndPercent() * duration);
     }
 
     /** 
@@ -341,28 +348,28 @@ public class Media {
     /**
      * @return the trimStart
      */
-    public int getTrimStart() {
+    public float getTrimStart() {
         return trimStart;
     }
 
     /**
      * @param trimStart the trimStart to set
      */
-    public void setTrimStart(int trimStart) {
+    public void setTrimStart(float trimStart) {
         this.trimStart = trimStart;
     }
 
     /**
      * @return the trimEnd
      */
-    public int getTrimEnd() {
+    public float getTrimEnd() {
         return trimEnd;
     }
 
     /**
      * @param trimEnd the trimEnd to set
      */
-    public void setTrimEnd(int trimEnd) {
+    public void setTrimEnd(float trimEnd) {
         this.trimEnd = trimEnd;
     }
 
@@ -370,7 +377,7 @@ public class Media {
     /**
      * @return the duration
      */
-    public int getDuration() {
+    public float getDuration() {
         return duration;
     }
 
@@ -449,19 +456,19 @@ public class Media {
              switch(media.clipIndex % 5)
              {    
 	             case 0:
-	            	 audioId = R.drawable.thumb_audio_signature;
+	            	 audioId = R.drawable.cliptype_audio_signature;
 	            	 break;
 	             case 1:
-	            	 audioId = R.drawable.thumb_audio_ambient;
+	            	 audioId = R.drawable.cliptype_audio_ambient;
 	            	 break;
 	             case 2:
-	            	 audioId = R.drawable.thumb_audio_narrative;
+	            	 audioId = R.drawable.cliptype_audio_narrative;
 	            	 break;
 	             case 3:
-	            	 audioId = R.drawable.thumb_audio_interview;
+	            	 audioId = R.drawable.cliptype_audio_interview;
 	            	 break;
 	             case 4:
-	            	 audioId = R.drawable.thumb_audio_enviromental;
+	            	 audioId = R.drawable.cliptype_audio_environmental;
 	            	 break;
 	             default:
 	            	audioId = R.drawable.thumb_audio; 

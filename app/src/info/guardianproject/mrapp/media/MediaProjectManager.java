@@ -1,8 +1,10 @@
 package info.guardianproject.mrapp.media;
 
 import info.guardianproject.mrapp.AppConstants;
+import info.guardianproject.mrapp.R;
 import info.guardianproject.mrapp.SceneEditorActivity;
 import info.guardianproject.mrapp.StoryMakerApp;
+import info.guardianproject.mrapp.Utils;
 import info.guardianproject.mrapp.media.exporter.MediaAudioExporter;
 import info.guardianproject.mrapp.media.exporter.MediaVideoExporter;
 import info.guardianproject.mrapp.media.exporter.MediaSlideshowExporter;
@@ -18,18 +20,22 @@ import java.io.IOException;
 import java.nio.channels.FileChannel;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.zip.ZipEntry;
 
 import org.apache.commons.io.IOUtils;
 import org.ffmpeg.android.MediaDesc;
 import org.ffmpeg.android.ShellUtils.ShellCallback;
+import org.holoeverywhere.widget.Toast;
 
-import android.app.Activity;
+import org.holoeverywhere.app.Activity;
+
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
+import android.os.StatFs;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
@@ -270,7 +276,7 @@ public class MediaProjectManager implements MediaManager {
     }
     
     public void doExportMedia (File fileExport, boolean doCompress, boolean doOverwrite) throws Exception
-    {
+    {    	
     	 Message msg = mHandler.obtainMessage(0);
          msg.getData().putString("status","cancelled");
          ArrayList<Media> mList = mProject.getMediaAsList();
@@ -280,22 +286,12 @@ public class MediaProjectManager implements MediaManager {
          ((StoryMakerApp)mActivity.getApplication()).isExternalStorageReady();
          ((StoryMakerApp)mActivity.getApplication()).killZombieProcs();
 
- 		//first check that all of the input images are accessible
- 		
- 		for (Media media : mList)
- 		{
- 			if (media == null || media.getPath() == null)
- 			{
- 				//throw new IOException("Input media object is null");
- 			}
- 			else if (!new File(media.getPath()).exists())
- 			{
- 				throw new java.io.FileNotFoundException("Input image does not exist or is not readable" + ": " + media.getPath());
- 				
- 			}
- 			
- 		}
-
+         //if not enough space
+         if(!checkStorageSpace())
+         {
+        	 return;
+         }
+         
 		 File fileRenderTmpDir = getRenderPath(mContext);
 
 		 File fileRenderTmp = new File(fileRenderTmpDir,new Date().getTime() + "");
@@ -314,7 +310,7 @@ public class MediaProjectManager implements MediaManager {
     	    		mDesc.path = new File(media.getPath()).getCanonicalPath();
     	    		
     	    		if (media.getTrimStart() > 0) {
-    	    		    mDesc.startTime = "" + media.getTrimmedStartTime() / 1000F;
+    	    		    mDesc.startTime = "" + media.getTrimmedStartTimeFloat() / 1000F;
                         mDesc.duration = "" + media.getTrimmedDuration() / 1000F;
     	    		} else if ((media.getTrimEnd() < 99) && media.getTrimEnd() > 0) {
     	    		    mDesc.duration = "" + media.getTrimmedDuration() / 1000F;
@@ -322,6 +318,8 @@ public class MediaProjectManager implements MediaManager {
     	    		
     	    		if (doCompress)
     	    			applyExportSettings(mDesc);
+    	    		
+    	    		applyExportSettingsResolution(mDesc);
     	    		
     	    		alMediaIn.add(mIdx, mDesc);
     	    		mIdx++;
@@ -332,11 +330,13 @@ public class MediaProjectManager implements MediaManager {
 	    	
 	    	if (doCompress)	
 	    		applyExportSettings(mOut);
-	    	else
+	    	else //this is the default audio codec settings
 	    	{
 	    		mOut.audioCodec = "aac";
 		    	mOut.audioBitrate = 64;
 	    	}
+	    	
+	    	applyExportSettingsResolution(mOut);
 	    	
 	    	//override for now
 	    	mOut.mimeType = AppConstants.MimeTypes.MP4;
@@ -391,7 +391,7 @@ public class MediaProjectManager implements MediaManager {
      	    		
 
     	    		if (media.getTrimStart() > 0) {
-    	    		    mDesc.startTime = "" + media.getTrimmedStartTime() / 1000F;
+    	    		    mDesc.startTime = "" + media.getTrimmedStartTimeFloat() / 1000F;
                         mDesc.duration = "" + media.getTrimmedDuration() / 1000F;
     	    		} else if ((media.getTrimEnd() < 99) && media.getTrimEnd() > 0) {
     	    		    mDesc.duration = "" + media.getTrimmedDuration() / 1000F;
@@ -399,6 +399,8 @@ public class MediaProjectManager implements MediaManager {
      	    		
      	    		if (doCompress)
      	    			applyExportSettings(mDesc);
+     	    		
+     	    		applyExportSettingsResolution(mDesc);
      	    		
      	    		alMediaIn.add(mIdx++,mDesc);
         	    }
@@ -411,6 +413,8 @@ public class MediaProjectManager implements MediaManager {
  		    
  		   // if (doCompress)
  		   applyExportSettingsAudio(mOut);
+ 		   
+ 		   applyExportSettingsResolution(mOut);
  		    
  		    mOut.path = fileExport.getCanonicalPath();
  		    
@@ -453,6 +457,8 @@ public class MediaProjectManager implements MediaManager {
   	    				mOut.path = fileExport.getCanonicalPath();
   	    				mOut.mimeType = AppConstants.MimeTypes.JPEG;
   	    				
+  	    				applyExportSettingsResolution(mOut);
+  	    				
   	    				break;
   	    			}
   	    			
@@ -462,9 +468,7 @@ public class MediaProjectManager implements MediaManager {
   	    	}
          }
          else if (mProject.getStoryType() == Project.STORY_TYPE_ESSAY)
-         {
-        	
-	    		
+         {    		
 	    	for (Media media : mList)
 	    	{
 	    	    if (media != null)
@@ -487,6 +491,9 @@ public class MediaProjectManager implements MediaManager {
     	    		
     	    		if (doCompress)
     	    			applyExportSettings(mDesc);
+    	    		
+    	    		applyExportSettingsResolution(mDesc);
+    	    		
     	    		alMediaIn.add(mDesc);
 	    	    }
 	    	}
@@ -495,6 +502,8 @@ public class MediaProjectManager implements MediaManager {
 		    
 		    if (doCompress)
 		    applyExportSettings(mOut);
+		    
+		    applyExportSettingsResolution(mOut);
 		   
 		    mOut.path = fileExport.getCanonicalPath();
 		    mOut.mimeType = AppConstants.MimeTypes.MP4;
@@ -529,9 +538,7 @@ public class MediaProjectManager implements MediaManager {
    		    }
          }
          
-         deleteRecursive(fileRenderTmp, true);
-		 
-         
+         deleteRecursive(fileRenderTmp, true);      
     }
     
     void deleteRecursive(File fileOrDirectory, boolean onExit) throws IOException {
@@ -547,18 +554,17 @@ public class MediaProjectManager implements MediaManager {
         	fileOrDirectory.deleteOnExit();
     }
     
-    
     public void applyExportSettings (MediaDesc mdout)
-    {
-    	
-    	mdout.videoBitrate = Integer.parseInt(mSettings.getString("p_video_bitrate", AppConstants.DEFAULT_VIDEO_BITRATE+""));;
-    	mdout.audioBitrate = Integer.parseInt(mSettings.getString("p_audio_bitrate", AppConstants.DEFAULT_AUDIO_BITRATE+""));;
+    { 	
+    	mdout.videoBitrate = Integer.parseInt(mSettings.getString("p_video_bitrate", AppConstants.DEFAULT_VIDEO_BITRATE+""));
     	mdout.videoFps = mSettings.getString("p_video_framerate", AppConstants.DEFAULT_FRAME_RATE);
-    	mdout.width = Integer.parseInt(mSettings.getString("p_video_width", AppConstants.DEFAULT_WIDTH+""));
-    	mdout.height = Integer.parseInt(mSettings.getString("p_video_height", AppConstants.DEFAULT_HEIGHT+""));
-    	
     	mdout.videoCodec = mSettings.getString("p_video_codec","mpeg4");
     	
+    	mdout.audioBitrate = Integer.parseInt(mSettings.getString("p_audio_bitrate", AppConstants.DEFAULT_AUDIO_BITRATE+""));
+    	mdout.audioCodec = mSettings.getString("p_audio_codec", AppConstants.DEFAULT_AUDIO_CODEC);
+    	
+    	mdout.width = Integer.parseInt(mSettings.getString("p_video_width", AppConstants.DEFAULT_WIDTH+""));
+    	mdout.height = Integer.parseInt(mSettings.getString("p_video_height", AppConstants.DEFAULT_HEIGHT+""));
     }
 
     
@@ -570,6 +576,39 @@ public class MediaProjectManager implements MediaManager {
     	mdout.format = "3gp";
     }
     
+    /***
+     Method to convert video/images within resolution boundaries:
+      1)Stock Media Player (1920x1088 MAX)
+      2)MPEG-1 (4095x4095 MAX) 
+    ***/
+    public void applyExportSettingsResolution (MediaDesc mdout)
+    {
+    	int videoRes = Integer.parseInt(mSettings.getString("p_video_resolution", "0"));
+    	
+    	switch (videoRes)
+    	{
+	        case 1080:	
+        		mdout.width = 1920;
+        		mdout.height = 1080;
+            	break;
+	        case 720:
+        		mdout.width = 1280;
+        		mdout.height = 720;
+        		break;
+	        case 480:  
+        		mdout.width = 720;
+    			mdout.height = 480;
+             	break;
+	        case 360: 
+        		mdout.width = 640;
+        		mdout.height = 360;
+        		break;
+	        default:
+        		mdout.width = Integer.parseInt(mSettings.getString("p_video_width", AppConstants.DEFAULT_WIDTH+""));
+        		mdout.height = Integer.parseInt(mSettings.getString("p_video_height", AppConstants.DEFAULT_HEIGHT+""));
+                break;
+    	}
+    }
     
     
     private void addMediaFile (int clipIndex, String path, String mimeType) throws IOException
@@ -658,6 +697,65 @@ public class MediaProjectManager implements MediaManager {
     	
     }
     
+    public Context getContext()
+    {
+    	return this.mContext;
+    }
+    
+    public boolean checkStorageSpace()
+    {
+    	ArrayList<Media> mList = this.mProject.getMediaAsList();
+    	Long totalBytesRequired= 0l;
+    	
+ 		//first check that all of the input images are accessible		
+ 		for (Media media : mList)
+ 		{		
+			try 
+			{
+	 			if (media == null || media.getPath() == null)
+	 			{}
+	 			else if (!new File(media.getPath()).exists())
+	 			{
+	 				throw new java.io.FileNotFoundException();			
+	 			}
+	 			else
+	 			{
+	 				File currentFile = new File(media.getPath());
+	 				totalBytesRequired += (long)currentFile.length();
+	 			} 
+			} 
+			catch (java.io.FileNotFoundException fnfe) 
+			{
+				Log.e(AppConstants.TAG, "Input image does not exist or is not readable" + ": " + media.getPath(), fnfe);
+			}			
+ 		}
+ 		
+ 		//get memory path
+        String memoryPath;
+ 		if(mUseInternal)
+ 		{	
+ 			memoryPath = Environment.getDataDirectory().getPath();
+ 		}
+ 		else
+ 		{
+ 			memoryPath = Environment.getExternalStorageDirectory().getPath();
+ 		}
+ 		
+ 		//get memory
+ 		StatFs stat = new StatFs(memoryPath);
+ 		Long totalBytesAvailable = (long)stat.getAvailableBlocks() * (long)stat.getBlockSize();
+
+    	//if not enough storage
+ 		if(totalBytesRequired > totalBytesAvailable)
+ 		{
+ 			double totalMBRequired = totalBytesRequired /(double)(1024*1024);
+ 			
+ 			Utils.toastOnUiThread(mActivity, String.format(mContext.getString(R.string.error_storage_space), totalMBRequired), true);
+ 			return false;
+ 		}
+    	  	
+    	return true;
+    }
     
     /*
     public void prerenderMedia (MediaClip mClip, ShellCallback shellCallback)
