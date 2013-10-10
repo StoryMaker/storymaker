@@ -746,7 +746,7 @@ public class MediaProjectManager implements MediaManager {
  		Long totalBytesAvailable = (long)stat.getAvailableBlocks() * (long)stat.getBlockSize();
 
     	//if not enough storage
- 		if(totalBytesRequired < totalBytesAvailable)
+ 		if(totalBytesRequired > totalBytesAvailable)
  		{
  			double totalMBRequired = totalBytesRequired /(double)(1024*1024);
  			
