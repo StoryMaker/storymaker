@@ -260,6 +260,12 @@ Build number: <xliff:g id="build_number">%s</xliff:g>\n
     <string name="eula_title">You agree to:</string>
     <string name="eula_accept">Accept</string>
     <string name="eula_refuse">Refuse</string>
+    <string name="privacy_policy">Privacy Policy</string>
+    <string name="privacy_policy_url"><a href="http://storymaker.cc/about/privacy/">http://storymaker.cc/about/privacy/</a></string>
+    <string name="end_user_license_agreement">End User License Agreement</string>
+    <string name="end_user_license_agreement_url"><a href="http://storymaker.cc/about/eula/">http://storymaker.cc/about/eula/</a></string>
+    <string name="send_annonymous_data">Send anonymous usage data to help us improve StoryMaker.</string>
+    <string name="by_clicking_accept">By clicking \'Accept\' you agree to our End User License Agreement and that you have read our Privacy Policy:</string>
     
     <string name="button_add_narration">Record Voiceover</string>
     <string name="button_play_narration">Play Voiceover</string>
@@ -312,5 +318,5 @@ Build number: <xliff:g id="build_number">%s</xliff:g>\n
     <string name="export_dialog_title">Would you like to share this project zip?</string>
     <string name="export_dialog_close">Close</string>
     <string name="export_dialog_share">Share</string>
-    
+  
 </resources>

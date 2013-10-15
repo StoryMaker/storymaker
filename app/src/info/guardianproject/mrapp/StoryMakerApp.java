@@ -12,7 +12,10 @@ import java.io.OutputStreamWriter;
 import java.util.Locale;
 import java.util.StringTokenizer;
 
+import com.google.analytics.tracking.android.GoogleAnalytics;
+
 import net.sqlcipher.database.SQLiteDatabase;
+import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.ActivityManager.MemoryInfo;
 import android.app.Application;
@@ -64,6 +67,11 @@ public class StoryMakerApp extends Application {
 		
 		SQLiteDatabase.loadLibs(this);
 
+		boolean optOut = true;
+		final SharedPreferences prefsAnalytics = getSharedPreferences(Globals.PREFERENCES_ANALYTICS, Activity.MODE_PRIVATE);
+		optOut = !(prefsAnalytics.getBoolean(Globals.PREFERENCE_ANALYTICS_OPTIN, false));
+		GoogleAnalytics.getInstance(this).setAppOptOut(optOut);
+		
 		initApp();
 		 
 	}
