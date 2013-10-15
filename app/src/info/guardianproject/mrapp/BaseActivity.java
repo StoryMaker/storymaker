@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -24,16 +25,27 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 
 import com.actionbarsherlock.view.Window;
+import com.google.analytics.tracking.android.EasyTracker;
 import com.slidingmenu.lib.SlidingMenu;
 import com.slidingmenu.lib.SlidingMenu.OnClosedListener;
 import com.slidingmenu.lib.app.SlidingActivity;
 
 public class BaseActivity extends Activity {
-//public class BaseActivity extends Activity {
 
 	public SlidingMenu mSlidingMenu;
-	
-    
+
+	@Override
+	public void onStart() {
+		super.onStart();
+		EasyTracker.getInstance(this).activityStart(this);
+	}
+
+	@Override
+	public void onStop() {
+		super.onStop();
+		EasyTracker.getInstance(this).activityStop(this);
+	}
+
     public void initSlidingMenu ()
     {
 
@@ -56,7 +68,6 @@ public class BaseActivity extends Activity {
 
             }
         });
-      //
         
         final Activity activity = this;
         
@@ -173,7 +184,13 @@ public class BaseActivity extends Activity {
         
     }
     
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
     
+    	super.onCreate(savedInstanceState);
+        
+        (new Eula(this)).show();
+    }
     
     @Override
 	public void onPostCreate(Bundle savedInstanceState) {

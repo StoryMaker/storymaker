@@ -57,6 +57,7 @@ import android.widget.TextView;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.fima.cardsui.views.CardUI;
+import com.google.analytics.tracking.android.GoogleAnalytics;
 import com.viewpagerindicator.CirclePageIndicator;
 
 public class HomeActivity extends BaseActivity {
@@ -74,7 +75,6 @@ public class HomeActivity extends BaseActivity {
     public void onCreate(Bundle savedInstanceState) {
     
     	super.onCreate(savedInstanceState);
-        
         try {
             String pkg = getPackageName();
             String vers= getPackageManager().getPackageInfo(pkg, 0).versionName;
@@ -89,10 +89,7 @@ public class HomeActivity extends BaseActivity {
         // action bar stuff
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         
-        Eula.show(this);
-        
-
-        checkForTor ();
+        checkForTor();
         
         //checkForUpdates();
         

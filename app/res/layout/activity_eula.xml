@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp" >
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/by_clicking_accept"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        android:id="@+id/txtPrivacyPolicy"
+        style="?android:attr/spinnerDropDownItemStyle"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:ellipsize="marquee"
+        android:paddingTop="8dp"
+        android:singleLine="false"
+        android:text="@string/privacy_policy" />
+    
+    <TextView
+        android:id="@+id/txtPrivacyPolicyUrl"
+        style="?android:attr/spinnerDropDownItemStyle"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:ellipsize="marquee"
+        android:singleLine="false"
+        android:autoLink="web"
+        android:text="@string/privacy_policy_url" />
+
+    <TextView
+        android:id="@+id/txtEULA"
+        style="?android:attr/spinnerDropDownItemStyle"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:ellipsize="marquee"
+        android:paddingTop="8dp"
+        android:singleLine="false"
+        android:text="@string/end_user_license_agreement" />
+    
+    <TextView
+        android:id="@+id/txtEULAUrl"
+        style="?android:attr/spinnerDropDownItemStyle"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:ellipsize="marquee"
+        android:paddingBottom="16dp"
+        android:singleLine="false"
+        android:autoLink="web"
+        android:text="@string/end_user_license_agreement_url" />
+
+	<LinearLayout 
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:gravity="center_vertical" >
+	
+	    <CheckBox
+	        android:id="@+id/checkbox"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+            android:duplicateParentState="true"
+            android:clickable="true"
+            android:focusable="true" 
+            android:checked="true"/>
+	
+	    <TextView
+	        android:id="@+id/txtAnalytics"
+	        style="?android:attr/spinnerDropDownItemStyle"
+	        android:layout_width="0dp"
+	        android:layout_height="wrap_content"
+	        android:layout_weight="1"
+	        android:ellipsize="marquee"
+	        android:singleLine="false"
+	        android:text="@string/send_annonymous_data" />
+
+    </LinearLayout>
+
+</LinearLayout>
