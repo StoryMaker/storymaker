@@ -30,7 +30,7 @@ cd external/android-ffmpeg-java/external/android-ffmpeg/
 cd $projectroot
 
 if [ -e ~/.android/ant.properties ]; then
-    cp ~/.android/ant.properties $projectroot/
+    cp ~/.android/ant.properties $projectroot/app/
 else
     echo "skipping release ant.properties"
 fi
