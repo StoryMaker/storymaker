@@ -44,7 +44,6 @@ public class WebViewActivity extends SherlockActivity {
         	
         	mWebView.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
         	mWebView.getSettings().setJavaScriptEnabled(true);
-        	mWebView.getSettings().setPluginsEnabled(true);
         	mWebView.getSettings().setPluginState(PluginState.ON);
         	mWebView.getSettings().setAllowFileAccess(true);
         	mWebView.getSettings().setSupportZoom(false);

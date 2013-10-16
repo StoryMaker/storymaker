@@ -64,7 +64,6 @@ public class LessonViewActivity extends BaseActivity {
         	
         	mWebView.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
         	mWebView.getSettings().setJavaScriptEnabled(true);
-        	mWebView.getSettings().setPluginsEnabled(true);
         	mWebView.getSettings().setPluginState(PluginState.ON);
         	
         	mWebView.getSettings().setAllowFileAccess(true);

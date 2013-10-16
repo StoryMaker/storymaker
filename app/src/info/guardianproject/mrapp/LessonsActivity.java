@@ -238,7 +238,6 @@ public class LessonsActivity extends BaseActivity implements ActionBar.TabListen
         	mWebView = new WebView(getActivity());
         	mWebView.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
         	mWebView.getSettings().setJavaScriptEnabled(true);
-        	mWebView.getSettings().setPluginsEnabled(true);
         	mWebView.getSettings().setPluginState(PluginState.ON);
         	mWebView.getSettings().setAllowFileAccess(true);
         	if (Build.VERSION.SDK_INT >= 16)
