@@ -1,7 +1,5 @@
 package info.guardianproject.mrapp;
 
-import java.util.Date;
-
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;

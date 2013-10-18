@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import org.ffmpeg.android.FfmpegController;
 import org.ffmpeg.android.MediaDesc;
 import org.ffmpeg.android.ShellUtils.ShellCallback;
-import org.holoeverywhere.preference.SharedPreferences;
 
 import info.guardianproject.mrapp.AppConstants;
 import info.guardianproject.mrapp.media.MediaConstants;
@@ -14,7 +13,6 @@ import android.content.Context;
 import android.media.MediaScannerConnection;
 import android.os.Handler;
 import android.os.Message;
-import android.preference.PreferenceManager;
 import android.util.Log;
 
 public class MediaSlideshowExporter extends MediaExporter {

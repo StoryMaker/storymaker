@@ -1,30 +1,19 @@
 package info.guardianproject.mrapp.media;
 
-import java.io.File;
 import java.io.IOException;
-import android.R.string;
 import android.app.Activity;
-import android.content.Intent;
 import android.content.pm.ActivityInfo;
 
 import android.media.CamcorderProfile;
 import android.media.MediaRecorder;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.view.Surface;
 import android.view.SurfaceHolder;
-import android.view.SurfaceHolder.Callback;
 import android.view.SurfaceView;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.Toast;
 
 public class VideoCamera extends Activity implements OnClickListener, SurfaceHolder.Callback{
 

@@ -5,11 +5,9 @@ import info.guardianproject.mrapp.StoryMakerApp;
 
 import java.io.File;
 import java.net.MalformedURLException;
-import java.util.Iterator;
 import java.util.List;
 
 import net.bican.wordpress.Comment;
-import net.bican.wordpress.CustomField;
 import net.bican.wordpress.MediaObject;
 import net.bican.wordpress.Page;
 import net.bican.wordpress.Wordpress;

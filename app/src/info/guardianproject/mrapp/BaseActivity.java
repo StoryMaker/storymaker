@@ -1,5 +1,4 @@
 package info.guardianproject.mrapp;
-import info.guardianproject.mrapp.media.OverlayCameraActivity;
 import info.guardianproject.mrapp.server.LoginActivity;
 
 import java.io.IOException;
@@ -7,16 +6,13 @@ import java.io.InputStream;
 import java.util.Date;
 
 import org.holoeverywhere.app.Activity;
-import org.holoeverywhere.widget.Toast;
 
-import android.app.PendingIntent;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -24,11 +20,9 @@ import android.graphics.PixelFormat;
 import android.view.WindowManager;
 import android.widget.ImageView;
 
-import com.actionbarsherlock.view.Window;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.slidingmenu.lib.SlidingMenu;
 import com.slidingmenu.lib.SlidingMenu.OnClosedListener;
-import com.slidingmenu.lib.app.SlidingActivity;
 
 public class BaseActivity extends Activity {
 

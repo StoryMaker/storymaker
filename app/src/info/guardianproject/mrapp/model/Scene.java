@@ -1,7 +1,6 @@
 package info.guardianproject.mrapp.model;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import info.guardianproject.mrapp.db.ProjectsProvider;

@@ -3,7 +3,6 @@ package info.guardianproject.mrapp.lessons;
 import java.util.ArrayList;
 
 import info.guardianproject.mrapp.R;
-import info.guardianproject.mrapp.model.Lesson;
 import info.guardianproject.mrapp.model.LessonGroup;
 import android.app.Activity;
 import android.content.Context;
@@ -11,7 +10,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 public class LessonGroupArrayAdapter extends ArrayAdapter {

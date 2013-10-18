@@ -9,11 +9,9 @@ import info.guardianproject.mrapp.model.Lesson;
 
 import java.io.IOException;
 
-import org.holoeverywhere.app.Activity;
 import org.holoeverywhere.widget.Toast;
 
 import android.annotation.SuppressLint;
-import android.annotation.TargetApi;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;

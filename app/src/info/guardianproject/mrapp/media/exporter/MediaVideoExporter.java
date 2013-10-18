@@ -1,12 +1,7 @@
 package info.guardianproject.mrapp.media.exporter;
 
 import java.io.File;
-import java.text.DecimalFormat;
-import java.text.DecimalFormatSymbols;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Locale;
 
 import net.sourceforge.sox.SoxController;

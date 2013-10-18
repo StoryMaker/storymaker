@@ -7,9 +7,6 @@ import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.Toast;

@@ -6,16 +6,11 @@ import info.guardianproject.mrapp.model.Media;
 import info.guardianproject.mrapp.model.Project;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 
-import org.ffmpeg.android.MediaDesc;
-import org.holoeverywhere.widget.LinearLayout;
 import org.holoeverywhere.widget.SeekBar;
 import org.holoeverywhere.widget.SeekBar.OnSeekBarChangeListener;
-import org.json.JSONException;
 
-import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -25,20 +20,12 @@ import android.os.Message;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.AdapterView.OnItemClickListener;
-
-import com.animoto.android.views.DraggableGridView;
-import com.animoto.android.views.OnRearrangeListener;
-import com.efor18.rangeseekbar.RangeSeekBar;
-import com.efor18.rangeseekbar.RangeSeekBar.OnRangeSeekBarChangeListener;
 
 /**
  * 

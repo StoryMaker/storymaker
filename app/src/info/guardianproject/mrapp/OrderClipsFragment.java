@@ -6,14 +6,9 @@ import info.guardianproject.mrapp.model.Media;
 import info.guardianproject.mrapp.model.Project;
 
 import java.io.File;
-import java.io.IOException;
-
-import org.ffmpeg.android.MediaDesc;
 import org.holoeverywhere.widget.LinearLayout;
 import org.holoeverywhere.widget.SeekBar;
 import org.holoeverywhere.widget.SeekBar.OnSeekBarChangeListener;
-import org.json.JSONException;
-
 import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;

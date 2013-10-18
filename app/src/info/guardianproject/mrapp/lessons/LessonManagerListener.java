@@ -1,7 +1,5 @@
 package info.guardianproject.mrapp.lessons;
 
-import info.guardianproject.mrapp.model.Lesson;
-
 public interface LessonManagerListener {
 
 	public void lessonLoadingStatusMessage (String msg);

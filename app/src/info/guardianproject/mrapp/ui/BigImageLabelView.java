@@ -6,9 +6,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
-import android.support.v4.view.ViewPager;
 import android.view.View;
-import android.widget.TextView;
 
 public class BigImageLabelView extends View {
 

@@ -3,7 +3,6 @@ package info.guardianproject.mrapp;
 import info.guardianproject.mrapp.model.Media;
 import info.guardianproject.mrapp.model.Project;
 import info.guardianproject.mrapp.server.LoginActivity;
-import info.guardianproject.mrapp.server.OAuth2ClientCredentials;
 import info.guardianproject.mrapp.server.OAuthAccessTokenActivity;
 import info.guardianproject.mrapp.server.ServerManager;
 import info.guardianproject.mrapp.server.YouTubeSubmit;
@@ -18,12 +17,8 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.StringTokenizer;
 
-import org.apache.commons.lang3.ArrayUtils;
 import org.holoeverywhere.app.AlertDialog;
 import org.holoeverywhere.widget.Spinner;
-import org.holoeverywhere.widget.ToggleButton;
-import org.json.JSONException;
-
 import redstone.xmlrpc.XmlRpcFault;
 import android.accounts.Account;
 import android.accounts.AccountManager;
@@ -46,10 +41,7 @@ import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.EditText;
-import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.ImageView;
 import android.widget.Toast;
 

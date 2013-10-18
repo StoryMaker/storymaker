@@ -1,26 +1,15 @@
 package info.guardianproject.mrapp.media;
 
 import info.guardianproject.mrapp.AppConstants;
-import info.guardianproject.mrapp.BaseActivity;
-import info.guardianproject.mrapp.model.Project;
 import info.guardianproject.mrapp.ui.ActivitySwipeDetector;
 import info.guardianproject.mrapp.ui.SwipeInterface;
 
-import java.io.File;
 import java.io.IOException;
 
-import android.app.Activity;
-import android.content.Context;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.ColorFilter;
-import android.graphics.ColorMatrixColorFilter;
 import android.graphics.Picture;
-import android.graphics.PorterDuff.Mode;
 import android.graphics.Rect;
-import android.graphics.drawable.PictureDrawable;
 import android.hardware.Camera;
 import android.hardware.Camera.PictureCallback;
 import android.hardware.Camera.ShutterCallback;

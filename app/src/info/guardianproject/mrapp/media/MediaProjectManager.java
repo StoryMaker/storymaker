@@ -14,19 +14,12 @@ import info.guardianproject.mrapp.model.Scene;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.nio.channels.FileChannel;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.zip.ZipEntry;
-
 import org.apache.commons.io.IOUtils;
 import org.ffmpeg.android.MediaDesc;
-import org.ffmpeg.android.ShellUtils.ShellCallback;
-import org.holoeverywhere.widget.Toast;
-
 import org.holoeverywhere.app.Activity;
 
 import android.content.Context;

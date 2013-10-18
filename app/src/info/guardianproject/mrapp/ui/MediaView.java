@@ -1,18 +1,11 @@
 package info.guardianproject.mrapp.ui;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 
 import info.guardianproject.mrapp.AppConstants;
-import info.guardianproject.mrapp.AppConstants;
 import info.guardianproject.mrapp.R;
 import info.guardianproject.mrapp.media.MediaClip;
-import info.guardianproject.mrapp.media.MediaConstants;
 import info.guardianproject.mrapp.media.MediaManager;
-import info.guardianproject.mrapp.media.MediaProjectManager;
-
-import org.ffmpeg.android.MediaDesc;
 import org.ffmpeg.android.ShellUtils.ShellCallback;
 import org.ffmpeg.android.filters.DrawTextVideoFilter;
 import org.ffmpeg.android.filters.FadeVideoFilter;
@@ -30,7 +23,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 public class MediaView extends BigImageLabelView implements OnClickListener, OnDismissListener, ShellCallback {
 

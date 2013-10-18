@@ -18,7 +18,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 public class AudioActivity extends Activity implements OnClickListener {
 /** Called when the activity is first created. */
