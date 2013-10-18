@@ -1,8 +1,9 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<resources>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string name="terms_title">أحكام Storymaker</string>
-  <string name="terms_text_1">تحتفظ بكافة حقوق الملكية للمحتوى الخاص بك، ويمكنك سحبه وقتما ترغب في ذلك، ونمتنع عن بيع أي من البيانات الخاصة بك. وبالموافقة على المشاركة بالمحتوى الخاص بك مع موقع alive.in/ تسمح لموقع Small World News  وشركائه بطرح قصصك مع قصص مشابهة تم إنشاؤها بمساعدة Storymaker. ونقوم بتجميعها بناءً على أنواع وموضوعات ومواقع القصص.</string>
-  <string name="terms_text_2">لا تزال قصتك منشورة على موقع المشاركة الذي قمت باختياره، لكن موقع alive.in/ أيضاً يحتوي على إشارة إليها. وسيتم نشر العنوان ووصف القصة والعلامات على موقع alive.in/ وكافة المحتويات الأخرى ستكون إشارات إلى التلقيم الشخصي في موقع المشاركة الخاص بك.\n</string>
+  <string name="terms_text_1">تبقى حقوق ملكية المحتوى خاصة بك ، و يمكنك سحبه متى شئت و نحن لن نبيع معلوماتك. بموافقتكم على نشر محتواكم على StoryMaker.cc تخولون لـــ Small World News و شركاؤها بوضع قصصكم مع قصص مشابهة لها تم انتاجها باستعمال StoryMaker. نحن نجمعهم حسب نوع القصة، حسب المواضيع و حسب المكان.</string>
+  <string name="terms_text_2">تبقى قصتك منشورة في الموقع الذي تختاره لكن تشير أيضا إلى StoryMaker.cc. العنوان، وصف القصة و الكلمات المفاتيح ستنشر في StoryMaker.cc  و كل المحتوى الآخر شتكون إشارات تغذية في موقع النشر الخاص بك</string>
+  <!--tutorial_lessons-->
   <string name="tutorial_title_1">تعلم رواية القصص.</string>
   <string name="tutorial_text_1">تعلم كيف تكون صحفياً مع البقاء في أمان وإنتاج قصص رائعة من الصوت والصور والفيديو.</string>
   <string name="tutorial_title_2">كن دقيقاً.</string>
@@ -14,11 +15,22 @@
   <string name="tutorial_title_5">اختبر نفسك.</string>
   <string name="tutorial_text_5">ينتهي كل درس بامتحان موجز للتعرف على مدى استيعابك للدرس.</string>
   <string name="tutorial_title_6">استمر في التعلم.</string>
-  <string name="tutorial_text_6">شارك بقصصك في موقع Alive.in/، وتعلم كيف تكون صانع قصص بصورة أفضل في كل قصة تشارك بها.</string>
-  <string name="template_audio_desc">سجل الأصوات التي تحكي قصتك وعن الأشخاص والأشياء. وإذا لم تتمكن من الحصول على مواد بصرية قوية يعد الصوت بديلاً رائعاً.</string>
-  <string name="template_photo_desc">الصورة تعبر أفضل من ألف كلمة. وضح لنا الشخص أو الشيء المهم في قصتك، أو طريقة وقوع الحدث.</string>
-  <string name="template_essay_desc">يتطلب الأمر أحياناً عدة صور. وضح لنا كيف تحدث القصة وقص قصة في شكل سلسلة من الصور المترابطة.</string>
-  <string name="template_video_desc">التقط الصور والتصرفات المقنعة على نحو وقوعها. وضح لنا الشخص أو الشيء المهم وسبب ذلك.</string>
+  <string name="tutorial_text_6">انشر فققك عبر بوابة StoryMaker.cc و تعلم كيف تكون صانع قصص جيد مع كل قصة تنشرها</string>
+  <!--/tutorial_lessons-->
+  <!--tutorial_story-->
+  <string name="tutorial_title_7">قص القصص بصورة أفضل.</string>
+  <string name="tutorial_text_7">تحتاج أية قصة جيدة إلى بداية ومنتصف ونهاية. قدم مقابلة مع شخص يقدم مزيداً من السياق لقصتك. وضح لنا أين يعيش ذلك الشخص. وحافظ على الطابع الشخصي.</string>
+  <string name="tutorial_title_8">اختر الوسيط الخاص بك.</string>
+  <string name="tutorial_text_8">يتناسب الصوت والصورة والفيديو مع الأنماط المختلفة لرواية القصص. ارجع إلى الدروس لتعلم المزيد. اختر أحد الوسائط واكتسب المعرفة عبر الدروس المختلفة.</string>
+  <string name="tutorial_title_9">قص قصة في خمس لقطات.</string>
+  <string name="tutorial_text_9">استخدم خمس لقطات لقص قصتك. لقطة لوصف موقع قصتك. ولقطة لتقديم موضوعك الأساسي. واللقطات الثلاث المتبقية تقدم قصة بها بداية ومنتصف ونهاية.</string>
+  <string name="tutorial_title_10">اكسر القوالب الجامدة.</string>
+  <string name="tutorial_text_10">جمع لقطاتك بترتيب مختلف للأكثر تأثراً.</string>
+  <string name="tutorial_title_11">قص قصصاً أطول.</string>
+  <string name="tutorial_text_11">قوالب القصص تخبرك طريقة ذلك.</string>
+  <!--/tutorial_story-->
+  <!--legacy_story_type-->
+  <!--once we refactor to keep this extra text fields in the db instead of referencing this strings file we can remove these (after doing a migration step)-->
   <string name="story_type_event_title">الحدث</string>
   <string name="story_type_issue_title">الموضوع</string>
   <string name="story_type_profile_title">الملف الشخصي</string>
@@ -27,9 +39,99 @@
   <string name="story_type_issue_desc">تتناول قصص المشاكل موضوعاً واسعاً. ركز على مدى تأثير المشكلة على مجتمع أو مجموعة من الناس. اجعل محور قصتك من تؤثر عليهم المشكلة وما يتم فعله استجابة للمشكلة.</string>
   <string name="story_type_profile_desc">قدم لمحة مختصرة عن شخصية محددة. ركز على داخلية الشخصية. اجعل محور قصتك الحياة اليومية للشخصية وما يحدث وكيف تتعامل الشخصية مع التحديات.</string>
   <string name="story_type_news_desc">الأخبار العاجلة طارئة. ركز على إحدى الزوايا. اجعل محور قصتك الحقائق ومن وماذا وأين ومتى. استخدم الرواية لإضافة سياق.</string>
+  <string name="template_audio_desc">سجل الأصوات التي تحكي قصتك وعن الأشخاص والأشياء. وإذا لم تتمكن من الحصول على مواد بصرية قوية يعد الصوت بديلاً رائعاً.</string>
+  <string name="template_photo_desc">الصورة تعبر أفضل من ألف كلمة. وضح لنا الشخص أو الشيء المهم في قصتك، أو طريقة وقوع الحدث.</string>
+  <string name="template_essay_desc">يتطلب الأمر أحياناً عدة صور. وضح لنا كيف تحدث القصة وقص قصة في شكل سلسلة من الصور المترابطة.</string>
+  <string name="template_video_desc">التقط الصور والتصرفات المقنعة على نحو وقوعها. وضح لنا الشخص أو الشيء المهم وسبب ذلك.</string>
+  <!--/ legacy_story_type-->
+  <!--story_type-->
+  <string name="story_type_event_news_title">أخبار</string>
+  <string name="story_type_event_feature_title">حدث مميز</string>
+  <string name="story_type_event_breaking_title">أخبار عاجلة</string>
+  <string name="story_type_issue_social_title">مشكل إجتماعي</string>
+  <string name="story_type_issue_political_title">مشكل سياسي</string>
+  <string name="story_type_issue_economic_title">مشكل اقتصادي</string>
+  <string name="story_type_profile_public_title">ملف عام</string>
+  <string name="story_type_profile_professional_title">ملف مهني</string>
+  <string name="story_type_profile_personal_title">ملف شخصي</string>
+  <!--/story_type-->
+  <!--story_type_description-->
+  <string name="story_type_event_news_desc">قصص عن الأحداث ذات الأهمية الفورية، وغالبا المقررة ، ويكون لها بداية واضحة ونهاية. انتخابات أو مظاهرة هي أحداث أخبار جيدة.</string>
+  <string name="story_type_event_feature_desc">قصص حول الأحداث التي قد لا يكون لها صبغة  أو تأثيرات اخبارية. حدث رياضي، أعمال تجارية جديدة في حي والتكنولوجيا الناشئة هي أحداث ميزة جيدة.</string>
+  <string name="story_type_event_breaking_desc">أحداث غير مبرمجة لكن ذات أهمية اخبارية.  اطلاق نار، إعلان مفاجئ من جانب مسؤول حكومي، أو وقوع كارثة طبيعية هي الأحداث الأخبار العاجلة جيدة.</string>
+  <string name="story_type_issue_social_desc">قصص حول القضايا التي تؤثر على المجتمعات المحلية.  تغيير في التنظيم الحكومي المحلي أو البنية التحتية هي قضية اجتماعية جيدة.</string>
+  <string name="story_type_issue_political_desc">قصص عن الحكومة والعمل من الموظفين العموميين.  قصة حول قوانين جديدة أو تغييرات البرلمان هي قضية سياسية جيدة.</string>
+  <string name="story_type_issue_economic_desc">قصص حول الاقتصاد عموما أو حول التمويل الشخصي من الناس. قصة عن تأثير التغيرات في الدعم الحكومي للمزارعين هي قضية اقتصادية جيدة.</string>
+  <string name="story_type_profile_public_desc">قصص حول دور  إحدى الشخصيات في الرأي العام، ملف عن عمل أحد السياسيين  يعتبر ملف عام جيد</string>
+  <string name="story_type_profile_professional_desc">قصص عن الناس وظائفهم. لمحة عن فنان مشهور أو رياضي لمحة مهنية جيدة.</string>
+  <string name="story_type_profile_personal_desc">قصص عن تجارب  شخصية، وغالبا ما تتعلق بأحداث في الأخبار. ملف تعريف مع جندي سابق في الذكرى السنوية للحرب قد تكون لمحة شخصية جيدة.</string>
+  <!--/story_type_description-->
+  <!--template_options-->
   <string name="choose_level">اختر مستوى</string>
   <string name="choose_level_basic">أساسي</string>
   <string name="choose_level_advanced">متقدم</string>
+  <!--/template_options-->
+  <!--story_type_new-->
+  <string name="overview">نظرة عامة</string>
+  <string name="activity">النشاط</string>
+  <string name="impact">تأثير</string>
+  <string name="background">خلفية</string>
+  <string name="involvement">مشاركة</string>
+  <string name="motivation">حافز</string>
+  <string name="location">الموقع</string>
+  <string name="experience">الخبرة</string>
+  <string name="results">نتائج</string>
+  <string name="next_steps">الخطوات التالية</string>
+  <string name="moving_forward">التحرك إلى الأمام</string>
+  <string name="conclusion">خاتمة</string>
+  <string name="story_type_event_news_text1">ما الذي يحصل في هذا الحدث؟</string>
+  <string name="story_type_event_news_text2">كيف شاركت ؟</string>
+  <string name="story_type_event_news_text3">من المتأثر بهذا الحدث ؟</string>
+  <string name="story_type_event_news_text4">ماهي القصة من وراء هذا الحدث؟</string>
+  <string name="story_type_event_news_text5">ماهو تأثير هذا الحدث؟</string>
+  <string name="story_type_event_feature_text1">ما الذي يحصل في هذا الحدث؟</string>
+  <string name="story_type_event_feature_text2">لماذا شاركت في هذا الحدث؟</string>
+  <string name="story_type_event_feature_text3">أين يحصل الحدث ؟</string>
+  <string name="story_type_event_feature_text4">شخصيا كيف شاركت ؟</string>
+  <string name="story_type_event_feature_text5">ماهو تأثير هذا الحدث؟</string>
+  <string name="story_type_event_breaking_text1">ما الذي يحدث؟</string>
+  <string name="story_type_event_breaking_text2">أين يحصل الحدث ؟</string>
+  <string name="story_type_event_breaking_text3">من المتأثر؟</string>
+  <string name="story_type_event_breaking_text4">هل هناك أي خطر فوري؟</string>
+  <string name="story_type_event_breaking_text5">كيف يستجيب الناس؟</string>
+  <string name="story_type_issue_social_text1">يرجى وصف المشكل الاجتماعي.</string>
+  <string name="story_type_issue_social_text2">متى و أين بدأ هذا المشكل ؟</string>
+  <string name="story_type_issue_social_text3">ما مدى تأثيره  على المجتمع؟</string>
+  <string name="story_type_issue_social_text4">اخبرنا قصة عن مدى تأثير هذا على حياتك</string>
+  <string name="story_type_issue_social_text5">مالذي يمكن فعله لمعالجة هذا المشكل؟</string>
+  <string name="story_type_issue_political_text1">يرجى وصف المشكل السياسي ؟</string>
+  <string name="story_type_issue_political_text2">على من تؤثر القصة مباشرة؟</string>
+  <string name="story_type_issue_political_text3">كيف يؤثر هذا على الحكومة ؟</string>
+  <string name="story_type_issue_political_text4">ما مدى أهميته بالنسبة إليك؟</string>
+  <string name="story_type_issue_political_text5">مالذي يمكن فعله لمعالجة هذا المشكل؟</string>
+  <string name="story_type_issue_economic_text1">يرجى وصف المشكل الاقتصادي</string>
+  <string name="story_type_issue_economic_text2">ماهي علاقتك بهذا المشكل ؟</string>
+  <string name="story_type_issue_economic_text3">كيف يؤثر هذا على الإقتصاد ؟</string>
+  <string name="story_type_issue_economic_text4">مَن سيتأثر أكثر بهذا ؟</string>
+  <string name="story_type_issue_economic_text5">مالذي يمكن فعله لمعالجة هذا المشكل؟</string>
+  <string name="story_type_profile_public_text1">يرجى الشرح قليلا عمن تكون .</string>
+  <string name="story_type_profile_public_text2">متى بدأت؟</string>
+  <string name="story_type_profile_public_text3">ماذا تقعل ؟</string>
+  <string name="story_type_profile_public_text4">وصف لحظة شعرت فيها بالفخر من وظيفتك.</string>
+  <string name="story_type_profile_public_text5">كيف ترى دورك في المستقبل ؟</string>
+  <string name="story_type_profile_professional_text1">مَن أنت و ماهي مهنتك ؟</string>
+  <string name="story_type_profile_professional_text2">يرجى شرح كيف تؤدي عملك.</string>
+  <string name="story_type_profile_professional_text3">لماذا هذه  الوظيفة مهمة بالنسبة لك؟</string>
+  <string name="story_type_profile_professional_text4">كيف لك أن تؤثر بهذه الوظيفة؟</string>
+  <string name="story_type_profile_professional_text5">ما هي الخطوة التالية بالنسبة لك مع هذه الوظيفة؟</string>
+  <string name="story_type_profile_personal_text1">يرجى الشرح قليلا عمن تكون .</string>
+  <string name="story_type_profile_personal_text2">ما هي التجربة المهمة التي حدثت لك؟</string>
+  <string name="story_type_profile_personal_text3">كيف تجعلك تشعر هذه التجربة  ؟</string>
+  <string name="story_type_profile_personal_text4">ماذا تفعل بشكل مختلف الآن؟</string>
+  <string name="story_type_profile_personal_text5">ماذا تريد أن يحدث في المستقبل؟</string>
+  <!--/story_type_new-->
+  <!--story_type_old-->
+  <string name="scene_number">Scene &lt;xliff:g id="number"&gt;%1$d&lt;/xliff:g&gt;</string>
   <string name="when">متى؟</string>
   <string name="how">كيف؟</string>
   <string name="what">ماذا؟</string>
@@ -67,14 +169,5 @@
   <string name="story_type_news_text6">من المتأثر؟</string>
   <string name="story_type_news_text7">لماذا حدث؟</string>
   <string name="story_type_news_text8">كيف يتم الاستجابة للحدث؟</string>
-  <string name="tutorial_title_7">قص القصص بصورة أفضل.</string>
-  <string name="tutorial_text_7">تحتاج أية قصة جيدة إلى بداية ومنتصف ونهاية. قدم مقابلة مع شخص يقدم مزيداً من السياق لقصتك. وضح لنا أين يعيش ذلك الشخص. وحافظ على الطابع الشخصي.</string>
-  <string name="tutorial_title_8">اختر الوسيط الخاص بك.</string>
-  <string name="tutorial_text_8">يتناسب الصوت والصورة والفيديو مع الأنماط المختلفة لرواية القصص. ارجع إلى الدروس لتعلم المزيد. اختر أحد الوسائط واكتسب المعرفة عبر الدروس المختلفة.</string>
-  <string name="tutorial_title_9">قص قصة في خمس لقطات.</string>
-  <string name="tutorial_text_9">استخدم خمس لقطات لقص قصتك. لقطة لوصف موقع قصتك. ولقطة لتقديم موضوعك الأساسي. واللقطات الثلاث المتبقية تقدم قصة بها بداية ومنتصف ونهاية.</string>
-  <string name="tutorial_title_10">اكسر القوالب الجامدة.</string>
-  <string name="tutorial_text_10">جمع لقطاتك بترتيب مختلف للأكثر تأثراً.</string>
-  <string name="tutorial_title_11">قص قصصاً أطول.</string>
-  <string name="tutorial_text_11">قوالب القصص تخبرك طريقة ذلك.</string>
+  <!--/story_type_old-->
 </resources>
