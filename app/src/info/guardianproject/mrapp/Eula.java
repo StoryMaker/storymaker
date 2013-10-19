@@ -30,7 +30,7 @@ import org.holoeverywhere.LayoutInflater;
 import org.holoeverywhere.app.AlertDialog;
 import org.holoeverywhere.widget.CheckBox;
 
-import com.google.analytics.tracking.android.GoogleAnalytics;
+//import com.google.analytics.tracking.android.GoogleAnalytics;
 
 /**
  * Displays an EULA ("End User License Agreement") that the user has to accept before
@@ -53,7 +53,7 @@ class Eula {
     }
     
     Activity mActivity;
-    CheckBox cb;
+//    CheckBox cb;
     
     Eula(final Activity activity) {
     	mActivity = activity;
@@ -69,14 +69,15 @@ class Eula {
     boolean show() {
         final SharedPreferences prefsEula = mActivity.getSharedPreferences(Globals.PREFERENCES_EULA, Activity.MODE_PRIVATE);
 		final SharedPreferences prefsAnalytics = mActivity.getSharedPreferences(Globals.PREFERENCES_ANALYTICS, Activity.MODE_PRIVATE);
-		boolean noOptIn = !prefsAnalytics.contains(Globals.PREFERENCE_ANALYTICS_OPTIN);
+//		boolean noOptIn = !prefsAnalytics.contains(Globals.PREFERENCE_ANALYTICS_OPTIN);
 		boolean noEula = !prefsEula.getBoolean(Globals.PREFERENCE_EULA_ACCEPTED, false);
 
-        if (noEula || noOptIn) {
+        //if (noEula || noOptIn) {
+		if (noEula) {
             final AlertDialog.Builder builder = new AlertDialog.Builder(mActivity);
             LayoutInflater adbInflater = LayoutInflater.from(mActivity);
             View view = adbInflater.inflate(R.layout.activity_eula, null);
-            cb = (CheckBox) view.findViewById(R.id.checkbox);
+//            cb = (CheckBox) view.findViewById(R.id.checkbox);
             builder.setView(view);
             builder.setTitle(R.string.eula_title);
             builder.setCancelable(true);
@@ -108,11 +109,11 @@ class Eula {
     private void accept(SharedPreferences preferences) {
         preferences.edit().putBoolean(Globals.PREFERENCE_EULA_ACCEPTED, true).commit();
         
-    	final SharedPreferences prefsAnalytics = mActivity.getSharedPreferences(Globals.PREFERENCES_ANALYTICS, Activity.MODE_PRIVATE);
-        prefsAnalytics.edit().putBoolean(Globals.PREFERENCE_ANALYTICS_OPTIN, cb.isChecked()).commit();
-        if (cb.isChecked()) {
-        	GoogleAnalytics.getInstance(mActivity).setAppOptOut(false);
-        }
+//    	final SharedPreferences prefsAnalytics = mActivity.getSharedPreferences(Globals.PREFERENCES_ANALYTICS, Activity.MODE_PRIVATE);
+//        prefsAnalytics.edit().putBoolean(Globals.PREFERENCE_ANALYTICS_OPTIN, cb.isChecked()).commit();
+//        if (cb.isChecked()) {
+//        	GoogleAnalytics.getInstance(mActivity).setAppOptOut(false);
+//        }
     }
 
     private static void refuse(Activity activity) {

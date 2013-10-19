@@ -53,6 +53,7 @@
         android:autoLink="web"
         android:text="@string/end_user_license_agreement_url" />
 
+    <!-- 
 	<LinearLayout 
 	    android:layout_width="wrap_content"
 	    android:layout_height="wrap_content"
@@ -78,5 +79,6 @@
 	        android:text="@string/send_annonymous_data" />
 
     </LinearLayout>
+    -->
 
 </LinearLayout>
