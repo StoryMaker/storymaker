@@ -39,7 +39,7 @@ fi
 cd app/
 ant release
 
-apk=$projectroot/bin/$projectname-release.apk
+apk=$projectroot/app/bin/$projectname-release.apk
 if [ -e $apk ]; then
     gpg --detach-sign $apk
 else
