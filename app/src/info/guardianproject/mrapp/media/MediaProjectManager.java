@@ -22,6 +22,7 @@ import org.apache.commons.io.IOUtils;
 import org.ffmpeg.android.MediaDesc;
 import org.holoeverywhere.app.Activity;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -44,7 +45,7 @@ public class MediaProjectManager implements MediaManager {
     
 	private ArrayList<MediaClip> mMediaList = null;// FIXME refactor this to use it as a prop on project object
 	
-	private static File mFileExternDir; //where working files go
+	private static File sFileExternDir; //where working files go
 	//private File mMediaTmp;
 	private MediaDesc mOut;
 	
@@ -169,23 +170,28 @@ public class MediaProjectManager implements MediaManager {
     }
 
    
-    private static synchronized void initExternalStorage (Context context)
-    {
-    	
-    	if (mFileExternDir == null)
-    	{
-    	
-    		SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context.getApplicationContext());
-    		 
+    @SuppressLint("NewApi")
+	private static synchronized void initExternalStorage (Context context)
+    {   	
+    	if (sFileExternDir == null){
+    	   	
+    		SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context.getApplicationContext());	 
     		mUseInternal = settings.getBoolean("p_use_internal_storage",false);
-        	
-    		if (mUseInternal)
-    			mFileExternDir = context.getDir(AppConstants.FOLDER_PROJECTS_NAME,Context.MODE_WORLD_WRITEABLE|Context.MODE_WORLD_READABLE);
-    		else
-    			mFileExternDir = new File(context.getExternalFilesDir(null),AppConstants.FOLDER_PROJECTS_NAME);
+
+    		boolean isStorageEmulated = false;
     		
-	    	mFileExternDir.mkdirs();
-	    	
+    		if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.HONEYCOMB){
+    			isStorageEmulated = Environment.isExternalStorageEmulated();
+    		}
+    		
+    		if (mUseInternal && !isStorageEmulated){
+    			sFileExternDir = new File (context.getFilesDir(), AppConstants.FOLDER_PROJECTS_NAME);
+    		}
+    		else{
+    			sFileExternDir = new File(Environment.getExternalStorageDirectory(), AppConstants.FOLDER_PROJECTS_NAME);
+    		}
+    		
+    		sFileExternDir.mkdirs();
     	}
     }
     
@@ -207,7 +213,7 @@ public class MediaProjectManager implements MediaManager {
     	initExternalStorage (context);
     	
     	String folderName = project.getId()+"";
-    	File fileProject = new File(mFileExternDir,folderName);
+    	File fileProject = new File(sFileExternDir,folderName);
     	
     	fileProject.mkdirs();
     	

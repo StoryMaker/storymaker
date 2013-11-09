@@ -52,24 +52,20 @@ public class MediaHelper implements MediaScannerConnectionClient {
          mMediaUriTmp = Uri.fromFile(mMediaFileTmp);
          
      	Intent intent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
-//        intent.putExtra( MediaStore.EXTRA_OUTPUT, mMediaUriTmp);
+        intent.putExtra( MediaStore.EXTRA_OUTPUT, mMediaUriTmp);
 
      	mActivity.startActivityForResult(intent, MediaConstants.CAMERA_RESULT);
          
-         return mMediaFileTmp;
+        return mMediaFileTmp;
 	}
 	
 	public File capturePhoto (File fileExternDir)
-	{
-     	
-          
-        ContentValues values = new ContentValues();
-      
+	{        
+        ContentValues values = new ContentValues();      
         values.put(MediaStore.Images.Media.TITLE, MediaConstants.CAMERA_TMP_FILE);      
         values.put(MediaStore.Images.Media.DESCRIPTION,MediaConstants.CAMERA_TMP_FILE);
 
-        mMediaFileTmp = new File(fileExternDir, new Date().getTime() + '-' + MediaConstants.CAMERA_TMP_FILE);
-    	
+        mMediaFileTmp = new File(fileExternDir, new Date().getTime() + '-' + MediaConstants.CAMERA_TMP_FILE);	
         mMediaUriTmp = Uri.fromFile(mMediaFileTmp);
         //uriCameraImage = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
 
@@ -78,7 +74,7 @@ public class MediaHelper implements MediaScannerConnectionClient {
         
         mActivity.startActivityForResult(intent, MediaConstants.CAMERA_RESULT);
         
-         return mMediaFileTmp;
+        return mMediaFileTmp;
 	}
 	
 	/*
