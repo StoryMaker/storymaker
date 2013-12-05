@@ -143,19 +143,19 @@ public class HomeActivity extends BaseActivity {
 
         protected void onPostExecute(Integer result) {
             super.onPostExecute(result);
-            try {
-            	
+            if (mLoading != null && mLoading.isShowing()) {
+                try {
+                    mLoading.dismiss();
+                    mLoading = null;
+                } catch (Exception e) {
+                    // ignore: http://stackoverflow.com/questions/2745061/java-lang-illegalargumentexception-view-not-attached-to-window-manager
+                }
+            }
 
-                if (mLoading != null && mLoading.isShowing())
-                	mLoading.dismiss();
-
-                if (mLessonsCompleted.size() == 0 && mListProjects.size() == 0)
-                	initIntroActivityList();
-                else
-                	initActivityList();
-                
-            } catch (Throwable t) {
-                Log.v(AppConstants.TAG, "loading.dismiss() problem", t);
+            if (mLessonsCompleted.size() == 0 && mListProjects.size() == 0) {
+                initIntroActivityList();
+            } else {
+                initActivityList();
             }
         }
     }

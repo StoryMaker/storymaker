@@ -78,8 +78,6 @@ public class UploadTask extends AsyncTask<File, Long, HttpResponse> {
     protected void onPostExecute(HttpResponse response) {
         Activity activity = mContext.get();
         if (activity != null) {
-         //   if (!activity.isFinishing()) mProgress.dismiss();
-
             if (response == null) {
                 Toast.makeText(activity, "Error during upload: " + mException.getMessage(),
                         Toast.LENGTH_LONG).show();

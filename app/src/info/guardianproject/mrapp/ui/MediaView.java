@@ -69,15 +69,20 @@ public class MediaView extends BigImageLabelView implements OnClickListener, OnD
 		mEditFadeOut = (EditText)mDialog.findViewById(R.id.editFadeOut);
 		mBtnApply = (Button)mDialog.findViewById(R.id.btnApply);
 		mBtnApply.setOnClickListener(new OnClickListener ()
-		{
+        {
 
-			@Override
-			public void onClick(View v) {
-				updateSettings ();
-				mDialog.dismiss();
-			}
-			
-		});
+            @Override
+            public void onClick(View v) {
+                updateSettings();
+                try {
+                    mDialog.dismiss();
+                    mDialog = null;
+                } catch (Exception e) {
+                    // ignore: http://stackoverflow.com/questions/2745061/java-lang-illegalargumentexception-view-not-attached-to-window-manager
+                }
+            }
+
+        });
 	}
 
 	private void updateSettings ()
