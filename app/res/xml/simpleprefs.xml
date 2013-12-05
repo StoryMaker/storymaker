@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 	<PreferenceCategory android:title="Networking &amp; Security">
-	    <EditTextPreference android:title="StoryMaker Server" android:summary="server for hosting all lesson and story content" android:key="pserver" android:defaultValue="https://storymaker.cc" android:enabled="true"/>
+	    <EditTextPreference android:title="@string/prefs_storymaker_server_title" android:summary="@string/prefs_storymaker_server_summary" android:key="pserver" android:defaultValue="https://storymaker.cc" android:enabled="true"/>
 	    
 	   <CheckBoxPreference android:title="Use Orbot (Tor)" android:summary="Send all network traffic through the Tor network using the Orbot app" android:key="pusetor" android:defaultValue="false"/>
 	   <CheckBoxPreference android:title="Use Download Manager" android:summary="Download lesson archives with the Android DownloadManager service" android:key="pusedownloadmanager" android:defaultValue="true"/>

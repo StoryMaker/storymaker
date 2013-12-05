@@ -211,4 +211,11 @@
 
 <!-- /story_type_old -->
 
+<!-- prefs -->
+
+<string name="prefs_storymaker_server_title">StoryMaker Server</string>
+<string name="prefs_storymaker_server_summary">server for hosting all lesson and story content</string>
+
+<!-- /prefs -->
+
 </resources>
