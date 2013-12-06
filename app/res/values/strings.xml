@@ -240,7 +240,6 @@ Build number: <xliff:g id="build_number">%s</xliff:g>\n
     <string name="choose_account_for_youtube_upload">Choose Account for Upload</string>
     <string name="rendering">Rendering</string>
     <string name="rendering_project_">Rendering project...</string>
-    <string name="uploading">Uploading</string>
     <string name="publishing">Publishing</string>
     
     <string name="connecting_to_youtube_">connecting to YouTube...</string>

@@ -59,10 +59,6 @@
 <string name="story_type_issue_desc">Issue stories examine a broad subject. Focus on how the issue affects a community or group of people. Organize your story around who it impacts and what is being done in response.</string>
 <string name="story_type_profile_desc">Profile a specific character. Focus on who the character is. Organize your story around the characters daily life, what happens, and how the character deals with challenges.</string>
 <string name="story_type_news_desc">Breaking news is immediate. Focus on one angle. Organize your story around factoids, who, what, where, when. User narration to add context.</string>
-<string name="template_audio_desc">Record the sounds that tell your story, who, what. If you cannot get strong visuals, audio is a great alternative.</string>
-<string name="template_photo_desc">A picture is worth a thousand words. Show us who or what is important in your story, or how it happens.</string>
-<string name="template_essay_desc">Sometimes several photos are needed. Show us how the story happens, tell a story in a series of related images.</string>
-<string name="template_video_desc">Capture compelling images and actions as they happen. Show us who or what is important and why.</string>
 <!-- / legacy_story_type -->
 
 <!-- story_type -->
