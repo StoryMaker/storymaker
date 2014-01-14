@@ -9,7 +9,7 @@
 	url = https://github.com/vitriolix/SlidingMenu.git
 [submodule "external/cardsui-for-android"]
 	path = external/cardsui-for-android
-	url = https://github.com/nadavfima/cardsui-for-android.git
+	url = https://github.com/kapilsukhyani/cardsui-for-android.git
 [submodule "external/Android-ViewPagerIndicator"]
 	path = external/Android-ViewPagerIndicator
 	url = https://github.com/JakeWharton/Android-ViewPagerIndicator.git
