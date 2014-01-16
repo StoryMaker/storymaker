@@ -34,7 +34,7 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 
 public class MediaProjectManager implements MediaManager {
-	
+	public final static String TAG = "MediaProjectManager";
 
     public final static String EXPORT_VIDEO_FILE_EXT = ".mp4";
 //    public final static String EXPORT_AUDIO_FILE_EXT = ".m4a";//".ogg";//"".3gp";
@@ -190,7 +190,13 @@ public class MediaProjectManager implements MediaManager {
     		else{
     			sFileExternDir = new File(Environment.getExternalStorageDirectory(), AppConstants.FOLDER_PROJECTS_NAME);
     		}
-    		
+            Log.d(TAG, "sFileExternDir:" + sFileExternDir.getAbsolutePath());
+            try {
+                Log.d(TAG, "sFileExternDir.getCanonicalPath():" + sFileExternDir.getCanonicalPath());
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
     		sFileExternDir.mkdirs();
     	}
     }
