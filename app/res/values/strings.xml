@@ -2,11 +2,8 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
 
     <string name="app_name">StoryMaker</string>
-
-
     <string name="title_projects">Stories</string>
     <string name="title_lessons">Lessons</string>
-
     <string name="action_publish">Publish</string>
     <!-- menus -->
     <string name="menu_new_project">New</string>
@@ -15,33 +12,29 @@
     <string name="menu_glossary">Glossary</string>
     <string name="menu_contacts">Contacts</string>
     <string name="menu_settings">Settings</string>
+    <string name="menu_accounts">Accounts</string>
     <string name="menu_archive">Archive</string>
+    <string name="drawer_profile">Login</string> <!-- FIXME: rename -->
     <string name="menu_add_media">Add</string>
     <string name="menu_capture_media">Record</string>
     <string name="menu_share_media">Share</string>
     <string name="menu_save_media">Save</string>
     <string name="menu_play_media">Play</string>
     <string name="menu_render_media">Render</string>
-    
     <string name="menu_bug_report">Bug Report</string>
     <string name="menu_login">Login</string>
     <string name="menu_logs">Send Log</string>
     <string name="menu_update">Update</string>
-
     <string name="menu_about">About</string>
-    
     <string name="menu_save_project">Save</string>
-
     <string name="menu_overlay_camera">Camera</string>
-
     <string name="menu_add_from_gallery">Import from Gallery</string>
     <string name="menu_add_new_shot">Add Clip to Scene</string>
     <string name="menu_del_shot">Delete Current Clip</string>
     <string name="menu_export_project_files">Export Project Files as Zip</string>
-    
     <string name="welcome_message">Hey there!\nWelcome to StoryMaker</string>
 
-    <!--  project list -->
+    <!-- project list -->
     <string name="default_project_list_view">This is your first time creating a project!\n\n- tap to start -</string>
     <string name="default_project_view_message">You have choices.\nTell your story with video, audio or photos.\n\n- tap to add -</string>
 
@@ -65,7 +58,6 @@
     <string name="hintEndTime">duratio (00:00:00)</string>
     <string name="hintFadeIn">fade in (frames)</string>
     <string name="hintFadeOut">fade out (frames)</string>
-
     <string name="start_recording">Record</string>
     <string name="stop_recording">Stop</string>
     <string name="play_recording">Play</string>
@@ -73,7 +65,7 @@
     <string name="downloading_lessons_from_server_">Downloading lessons from server...</string>
     <string name="checking_for_updates_">Checking for updates...</string>
 
-    <!--  LOG COLLECTOR -->
+    <!-- LOG COLLECTOR -->
     <string name="app_name_lc">Log Collector</string>
     <string name="message_subject">Android device log</string>
     <string name="acquiring_log_progress_dialog_message">Acquiring log from the system\u2026</string>
@@ -81,36 +73,31 @@
     <string name="failed_to_get_log_message">"Failed to get the log from the system."</string>
     <string name="main_dialog_text">"This application will attempt to collect the device log.
 The collected log will be sent using an application of your choice.
-You also will have an opportunity to see and modify the data being sent."
-	</string>
-	<string name="device_info_fmt">
-Log Collector version: <xliff:g id="application_version">%s</xliff:g>\n
+You also will have an opportunity to see and modify the data being sent."</string>
+    <string name="device_info_fmt">Log Collector version: <xliff:g id="application_version">%s</xliff:g>\n
 Device model: <xliff:g id="device_model">%s</xliff:g>\n
 Firmware version: <xliff:g id="firmware_revision">%s</xliff:g>\n
 Kernel version: <xliff:g id="kernel_version">%s</xliff:g>\n
-Build number: <xliff:g id="build_number">%s</xliff:g>\n
-</string>
-
+Build number: <xliff:g id="build_number">%s</xliff:g>\n</string>
     <string name="title_home_projects">Projects</string>
     <string name="title_home_activity">Activity</string>
     <string name="title_lessons_lessons">Lessons</string>
     <string name="title_lessons_glossary">Glossary</string>
     <string name="hello_world">Hello world!</string>
-    
     <string name="title_activity_home">Home</string>
     <string name="new_story_name_it">Name it.</string>
     <string name="new_story_working_title">Working title…</string>
     <string name="new_story_choose_something">Choose something brief that defines the topic and intrigues your audience.</string>
     <string name="new_story_choose_a_medium">Choose a medium.</string>
-    
-    <!-- 
+
+    <!--
     <string name="new_story_video">Video: Something here about why simple, short video is good! Ideally it should be about the same length as the other strings.</string>
    	<string name="new_story_essay">Photo Essay: Tell a story about one character. Follow this template to produce a simple photo essay story about one character.</string>
     <string name="new_story_photo">Single Photo: Telling a strong story with one image is a skill. To simplify, these templates explain some primary photo types.</string>
     
     <string name="new_story_audio">Audio: Something here about using audio to tell a story. Personally, I really like to listen to the radio and podcasts while I do housework!</string>
-     -->
-    
+    -->
+
     <string name="new_story_simple_story">Simple Story</string>
     <string name="new_story_choose_template">Scene Template</string>
     <string name="home_new_story">MAKE A STORY</string>
@@ -124,7 +111,6 @@ Build number: <xliff:g id="build_number">%s</xliff:g>\n
     <string name="tab_review">Review</string>
     <string name="tab_publish">Publish</string>
     <string name="tab_finish">Finish</string>
-    
     <string name="tab_add_clips">Make</string>
     <string name="tab_order">Edit</string>
     <string name="story_publish_section">Section</string>
@@ -138,7 +124,6 @@ Build number: <xliff:g id="build_number">%s</xliff:g>\n
     <string name="story_publish_status">Status</string>
     <string name="story_publish_status_processing">Processing</string>
     <string name="story_publish_status_not">Not Published</string>
-    
     <string name="story_publish_describe_hint">Describe your story…</string>
     <string name="story_publish_story_title">Story Title here</string>
     <string name="story_publish_story_date">Story Date Here</string>
@@ -149,7 +134,6 @@ Build number: <xliff:g id="build_number">%s</xliff:g>\n
     <string name="title_section2">Section 2</string>
     <string name="title_section1">Section 1</string>
     <string name="title_activity_test_drag">TestDrag</string>
-    
 
     <!-- Screen title before and during recording -->
     <!-- Screen title after recording -->
@@ -167,6 +151,7 @@ Build number: <xliff:g id="build_number">%s</xliff:g>\n
     <!-- label shown when there is more than 1 minute but less than 9 minutes of space left to record -->
     <!-- label shown when there is less than 1 minute of space left to record -->
 
+
     <!-- button to accept the current recording and return it to the caller -->
     <!-- button to discard the current recording and return to the caller -->
     <!-- acknowlegement button in a number of dialogs -->
@@ -174,6 +159,7 @@ Build number: <xliff:g id="build_number">%s</xliff:g>\n
     <!-- Do not translate. Format of the timer that shows how much has been recorded so far -->
     <string name="timer_format"><xliff:g id="format">%02d</xliff:g>:<xliff:g id="format">%02d</xliff:g></string>
     <!-- label shown before the user has recorded anything -->
+
 
     <!-- the name under which recordings will be visible in the media database is formatted like this -->
     <string name="audio_db_title_format"><xliff:g id="format">yyyy-MM-dd HH:mm:ss</xliff:g></string>
@@ -217,15 +203,15 @@ Build number: <xliff:g id="build_number">%s</xliff:g>\n
         <item>amr</item>
         <item>3gpp</item>
     </string-array>
-    <string-array translatable="false" name="prefValues_recordType">
+    <string-array name="prefValues_recordType" translatable="false">
         <item>audio/amr</item>
         <item>audio/3gpp</item>
     </string-array>
     <!-- add for libra end -->
-   <string name="help_clip_select">Swipe to select a clip type, then tap the clip image to start video, photo or audio capture</string>
+    <string name="help_clip_select">Swipe to select a clip type, then tap the clip image to start video, photo or audio capture</string>
 
-	<!--  youtube upload -->
-	
+    <!-- youtube upload -->
+
     <string name="lesson_status_have_not_started">Have not started</string>
     <string name="lessons_congratulations_you_have_completed_the_lesson_">You completed a lesson!</string>
     <string name="lesson_status_in_progress">In progress</string>
@@ -236,26 +222,20 @@ Build number: <xliff:g id="build_number">%s</xliff:g>\n
     <string name="_of_">" of "</string>
     <string name="default_youtube_desc">A StoryMaker project</string>
     <string name="view_published_media_online_or_local_copy_">View published media online?</string>
-  
     <string name="choose_account_for_youtube_upload">Choose Account for Upload</string>
     <string name="rendering">Rendering</string>
     <string name="rendering_project_">Rendering project...</string>
     <string name="publishing">Publishing</string>
-    
     <string name="connecting_to_youtube_">connecting to YouTube...</string>
     <string name="uploading_to_storymaker">publishing to StoryMaker site...</string>
     <string name="rendering_clips_">rendering clips...</string>
     <string name="you_must_enter_a_project_name">Please enter a working draft title. You can change this later.</string>
     <string name="delete_project_">Delete project?</string>
     <string name="add_new_clip_to_the_scene_">Add new clip to the scene?</string>
-
-    <string name="drawer_profile">Login</string>
-
     <string name="video_project_project_type">Video Project</string>
     <string name="photo_project_project_type">Photo Project</string>
     <string name="audio_project_project_type">Audio Project</string>
     <string name="photo_essay_project_project_type">Photo Essay Project</string>
-    
     <string name="eula_title">You agree to:</string>
     <string name="eula_accept">Accept</string>
     <string name="eula_refuse">Refuse</string>
@@ -265,34 +245,24 @@ Build number: <xliff:g id="build_number">%s</xliff:g>\n
     <string name="end_user_license_agreement_url"><a href="http://storymaker.cc/about/eula/">http://storymaker.cc/about/eula/</a></string>
     <string name="send_annonymous_data">Send anonymous usage data to help us improve StoryMaker.</string>
     <string name="by_clicking_accept">By clicking \'Accept\' you agree to our End User License Agreement and that you have read our Privacy Policy:</string>
-    
     <string name="button_add_narration">Record Voiceover</string>
     <string name="button_play_narration">Play Voiceover</string>
     <string name="button_delete_narration">Delete Voiceover</string>
-    
     <string name="button_render_preview">Render Preview</string>
-    
     <string name="publish_sm">StoryMaker.cc</string>
     <string name="publish_youtube">YouTube</string>
-    
     <string name="action_render">Export</string>
     <string name="action_play">Play</string>
     <string name="action_share">Share</string>
-    
-    
     <string name="cbRenderTypeLabel">Use Fast Video Renderer</string>
     <string name="drawer_quick_capture">Quick Capture</string>
-    
     <string name="select_story_type">Select story type</string>
-    
     <string name="button_start_my_story">START MY STORY</string>
-    
     <string name="home_intro_button_lessons">EXPLORE LESSONS</string>
     <string name="home_intro_button_projects">MAKE A STORY</string>
     <string name="created_with_storymaker_tag">Created with StoryMaker - https://storymaker.cc/</string>
     <string name="err_you_need_at_least_one_account_configured_on_your_device">You need at least one account configured on your device</string>
     <string name="you_began_a_new_lesson">You began a new lesson</string>
-    
     <string name="scene_editor_please_add_clips">Please add clips on the \'Make\' tab before selecting this tab.</string>
     <string name="scene_editor_trim_clip">Trim clip</string>
     <string name="cancel">Cancel</string>
@@ -300,7 +270,6 @@ Build number: <xliff:g id="build_number">%s</xliff:g>\n
     <string name="err_storage_not_ready">The external storage (SDCard) does not appear to be available for reading and writing at this time. StoryMaker requires access to this for lesson and story project data. Please check your device and restart the pp.</string>
     <string name="scene_s_">scene(s)</string>
     <string name="clip_s_">clip(s)</string>
-    
     <string name="sc_app_not_found">SoundCloud App not found!</string>
     <string name="sc_app_not_found_message">Do you want to install it now?</string>
     <string name="no_active_sc_account">No active SoundCloud account found, please login/sign up</string>
@@ -310,12 +279,12 @@ Build number: <xliff:g id="build_number">%s</xliff:g>\n
     <string name="could_not_create_account">Could not create account</string>
     <string name="uploading">Uploading...</string>
     <string name="canceled">Canceled upload</string>
-    
-    
-    
+
     <!-- add for project export -->
     <string name="export_dialog_title">Would you like to share this project zip?</string>
     <string name="export_dialog_close">Close</string>
     <string name="export_dialog_share">Share</string>
-  
+    <string name="title_activity_accounts">Accounts</string>
+    <string name="action_settings">Settings</string>
+
 </resources>

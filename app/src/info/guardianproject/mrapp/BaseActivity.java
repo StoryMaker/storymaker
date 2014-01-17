@@ -74,6 +74,7 @@ public class BaseActivity extends Activity {
         Button btnDrawerLessons = (Button) findViewById(R.id.btnDrawerLessons);
         Button btnDrawerAccount = (Button) findViewById(R.id.btnDrawerAccount);
         Button btnDrawerSettings = (Button) findViewById(R.id.btnDrawerSettings);
+        Button btnDrawerAccounts = (Button) findViewById(R.id.btnDrawerAccounts);
         
 
        
@@ -168,9 +169,19 @@ public class BaseActivity extends Activity {
         btnDrawerSettings.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-            	mSlidingMenu.showContent(true);
+                mSlidingMenu.showContent(true);
 
                 Intent i = new Intent(activity, SimplePreferences.class);
+                activity.startActivity(i);
+            }
+        });
+        
+        btnDrawerAccounts.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mSlidingMenu.showContent(true);
+
+                Intent i = new Intent(activity, AccountsActivity.class);
                 activity.startActivity(i);
             }
         });
