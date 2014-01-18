@@ -204,4 +204,35 @@
         <item name="360">360</item>
     </string-array>
     
+    <string-array name="array_story_locations">
+        <item>Egypt</item>
+        <item>Iraq</item>
+        <item>Morocco</item>
+        <item>Tunisia</item>
+    </string-array>
+    
+    <string-array name="array_autocomplete_tags">
+        <item>atesttag</item>
+        <item>btesttag</item>
+        <item>ctesttag</item>
+        <item>dtesttag</item>
+        <item>etesttag</item>
+        <item>ftesttag</item>
+        <item>gtesttag</item>
+        <item>htesttag</item>
+    </string-array>
+    
+    <string-array name="array_story_sections">
+        <item>Politics</item>
+        <item>Business</item>
+        <item>Sports</item>
+        <item>Arts</item>
+        <item>Science</item>
+        <item>Health</item>
+        <item>Education</item>
+        <item>Environment</item>
+        <item>Technology</item>
+        <item>Travel</item>
+    </string-array>
+    
 </resources>

@@ -125,7 +125,7 @@ public class MyCardPager extends Card {
 	        }
 	    }
 	
-	public class MyFragment extends Fragment {
+	public static class MyFragment extends Fragment {
 	
 		String mMessage;
 		String mTitle;

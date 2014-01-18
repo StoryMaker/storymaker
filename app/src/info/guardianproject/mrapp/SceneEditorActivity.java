@@ -56,6 +56,8 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        startActivity(new Intent(this, StoryOverviewActivity.class));
+        
         Intent intent = getIntent();
         
 //        mTemplateJsonPath = getIntent().getStringExtra("template_path"); 

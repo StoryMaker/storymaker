@@ -217,6 +217,14 @@
             android:name="info.guardianproject.mrapp.AccountsActivity"
             android:label="@string/title_activity_accounts" >
         </activity>
+        <activity
+            android:name="info.guardianproject.mrapp.StoryOverviewActivity"
+            android:label="@string/title_activity_story_overview" >
+        </activity>
+        <activity
+            android:name="info.guardianproject.mrapp.StoryOverviewEditActivity"
+            android:label="@string/title_activity_story_overview_edit" >
+        </activity>
     </application>
 
 </manifest>

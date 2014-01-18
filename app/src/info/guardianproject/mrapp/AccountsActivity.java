@@ -1,6 +1,7 @@
 
 package info.guardianproject.mrapp;
 
+//import io.scal.secureshareui.lib.ChooseAccountFragment;
 import io.scal.secureshareui.lib.ChooseAccountFragment;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -20,10 +21,11 @@ public class AccountsActivity extends BaseActivity {
     public void addChooseAccountFragment() {
         FragmentManager fragManager = getSupportFragmentManager();
         FragmentTransaction fragTrans = fragManager.beginTransaction();
-             
+        
+        
         Fragment caFragment = (Fragment) new ChooseAccountFragment();
         fragTrans.add(R.id.fragmentLayout, caFragment);
-        fragTrans.commit();      
+        fragTrans.commit();    
     }
 
 //    @Override
