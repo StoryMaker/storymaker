@@ -55,8 +55,6 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        startActivity(new Intent(this, StoryOverviewActivity.class));
         
         Intent intent = getIntent();
         
