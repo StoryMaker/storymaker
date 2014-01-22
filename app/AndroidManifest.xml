@@ -223,7 +223,19 @@
         </activity>
         <activity
             android:name="info.guardianproject.mrapp.StoryOverviewEditActivity"
-            android:label="@string/title_activity_story_overview_edit" >
+            android:label="@string/title_activity_story_overview_edit"
+            android:parentActivityName="StoryOverviewActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".StoryOverviewActivity" />
+        </activity>
+        <activity
+            android:name="info.guardianproject.mrapp.ProjectTagFragment"
+            android:label="@string/title_activity_project_tag_fragment"
+            android:parentActivityName="android.support.v4.app.FragmentActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="android.support.v4.app.FragmentActivity" />
         </activity>
     </application>
 

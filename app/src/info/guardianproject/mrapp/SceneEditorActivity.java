@@ -187,6 +187,12 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
                 exportProjectFiles();
             
                 return true;
+            case R.id.itemInfo:
+            	Intent intent = new Intent(this, StoryOverviewActivity.class);
+            	intent.putExtra("pid", mProject.getId());
+            	startActivity(intent);
+            	
+            	return true;
             case R.id.itemTrim:
                 if (mFragmentTab1 != null) { 
                     ((OrderClipsFragment) mFragmentTab1).loadTrim();

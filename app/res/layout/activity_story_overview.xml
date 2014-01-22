@@ -20,6 +20,11 @@
 	        android:id="@+id/tv_story_desciption" 
 			style="@style/TextGeneral" />
 		
+		<FrameLayout
+		    android:id="@+id/fl_tag_container"
+		    android:layout_width="match_parent"
+		    android:layout_height="match_parent" />
+		
 		<LinearLayout
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
@@ -46,6 +51,27 @@
 	        android:id="@+id/tv_story_location" 
 			style="@style/TextGeneral" />
 		    
-		</LinearLayout>	
+		</LinearLayout>
+			
+		<LinearLayout
+			android:layout_width="fill_parent"
+			android:layout_height="fill_parent"
+			android:orientation="vertical"
+			android:background="@color/light_grey_super"
+			android:layout_marginTop="24dp"
+			android:padding="8dp">
+		
+		    <TextView
+		        android:text="@string/label_activities"
+				style="@style/LabelHeader" />	
+				
+			<TextView
+		        android:text="Story share on Facebook" 
+				style="@style/TextGeneral" />
+			<TextView
+		        android:text="Story Created" 
+				style="@style/TextGeneral" />
+	    
+    	</LinearLayout>		
 	</LinearLayout>
 </ScrollView>

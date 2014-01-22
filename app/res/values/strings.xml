@@ -277,7 +277,7 @@ Build number: <xliff:g id="build_number">%s</xliff:g>\n</string>
     <string name="could_not_get_token">Could not get token</string>
     <string name="getting_details">Getting user details</string>
     <string name="could_not_create_account">Could not create account</string>
-    <string name="uploading">Uploading...</string>
+    <string name="uploading">Uploading&#8230;</string>
     <string name="canceled">Canceled upload</string>
 
     <!-- added for project export -->
@@ -293,6 +293,8 @@ Build number: <xliff:g id="build_number">%s</xliff:g>\n</string>
     <string name="label_description">Description</string>
     <string name="label_tags">Tags</string>
     <string name="label_add">Add</string>
+    <string name="label_edit">Edit</string>
+    <string name="label_activities">Activities</string>
     <string name="hint_story_title">Enter a Title</string>
     <string name="hint_story_description">Describe your story&#8230;</string>
     <string name="hint_story_tag">#addtags</string>
@@ -300,5 +302,6 @@ Build number: <xliff:g id="build_number">%s</xliff:g>\n</string>
     <string name="label_location">Location</string>
     <string name="title_activity_story_overview">StoryOverview</string>
     <string name="title_activity_story_overview_edit">StoryOverviewEdit</string>
+    <string name="title_activity_project_tag_fragment">ProjectTagFragment</string>
 
 </resources>

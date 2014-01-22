@@ -1,30 +1,48 @@
 package info.guardianproject.mrapp;
 
-import info.guardianproject.mrapp.model.StoryTag;
-import java.util.ArrayList;
-import java.util.List;
+import info.guardianproject.mrapp.model.Project;
 
 import org.holoeverywhere.widget.Toast;
 
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuItem;
-
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
 
+import com.actionbarsherlock.app.ActionBar;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuItem;
+
 public class StoryOverviewActivity extends BaseActivity {
 
-	List<StoryTag> mALStoryTags = new ArrayList<StoryTag>();
+	private Project mProject;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_story_overview);
+			
+		int pid = getIntent().getIntExtra("pid", -1); //project i
+		if (pid < 0)
+			return;
+		mProject = Project.get(getApplicationContext(), pid);
 		
-		getStoryInfo();
-		addStoryInfo();
+	    initialize();
+		setStoryInfo();
 	}
 	
+	private void initialize() {
+		
+		ActionBar actionBar = getSupportActionBar();
+	    actionBar.setDisplayHomeAsUpEnabled(true);
+	    
+	    Bundle tags = new Bundle();
+	    tags.putStringArray("tags", mProject.getTagsAsArray());
+	    
+	    ProjectTagFragment fragPT = new ProjectTagFragment();
+	    fragPT.setArguments(tags);
+        getSupportFragmentManager().beginTransaction().add(R.id.fl_tag_container, fragPT).commit();
+	}
+    	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		
@@ -37,7 +55,10 @@ public class StoryOverviewActivity extends BaseActivity {
 		
         switch (item.getItemId()) {
             case R.id.itemEditStory:
-                Toast.makeText(this, "Edit", Toast.LENGTH_SHORT).show();
+            	Intent intent = new Intent(this, StoryOverviewEditActivity.class);
+            	intent.putExtra("pid", mProject.getId());
+            	startActivity(intent);
+            	
                 break;
             case R.id.itemSendStory:
             	Toast.makeText(this, "Send", Toast.LENGTH_SHORT).show();
@@ -45,37 +66,25 @@ public class StoryOverviewActivity extends BaseActivity {
             case R.id.itemShareStory:
             	Toast.makeText(this, "Share", Toast.LENGTH_SHORT).show();
             	break;
-                
+            case android.R.id.home:
+            	onBackPressed();
+            	break;             
         }
         
         return super.onOptionsItemSelected(item);
     }
 	
-	private void getStoryInfo() {
-		
-		int i = 0;
-		
-		mALStoryTags.add(new StoryTag(i++, "story"));
-		mALStoryTags.add(new StoryTag(i++, "news"));
-		mALStoryTags.add(new StoryTag(i++, "morocco"));
-		mALStoryTags.add(new StoryTag(i++, "desert"));
-		mALStoryTags.add(new StoryTag(i++, "market"));
-		mALStoryTags.add(new StoryTag(i++, "camel"));
-		mALStoryTags.add(new StoryTag(i++, "politics"));
-		mALStoryTags.add(new StoryTag(i++, "arabic"));
-	}
-	
-	private void addStoryInfo() { 
+	private void setStoryInfo() { 
     	
     	TextView tvStoryTitle = (TextView) findViewById(R.id.tv_story_title);
     	TextView tvStoryDesc = (TextView) findViewById(R.id.tv_story_desciption);
     	TextView tvStorySection = (TextView) findViewById(R.id.tv_story_section);
     	TextView tvStoryLocation = (TextView) findViewById(R.id.tv_story_location);
     	
-    	tvStoryTitle.setText("Hello");
-    	tvStoryDesc.setText("Description of the beautiful story.");
-    	tvStorySection.setText("Politics");
-    	tvStoryLocation.setText("Alabama");
+    	tvStoryTitle.setText(mProject.getTitle());
+    	tvStoryDesc.setText(mProject.getDescription());
+    	tvStorySection.setText(mProject.getSection());
+    	tvStoryLocation.setText(mProject.getLocation());
     }
 
 }
