@@ -513,7 +513,7 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
                 startActivity(intent);
                 finish();
             } else {
-                layout = R.layout.fragment_story_publish;
+                layout = R.layout.fragment_complete_story;
                 
                 if (mPublishFragment == null)
                 {

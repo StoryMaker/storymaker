@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center_vertical"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <ImageView
+            android:id="@+id/storyThumb"
+            android:layout_width="fill_parent"
+            android:layout_height="200dip"
+            android:adjustViewBounds="true"
+            android:src="@drawable/cliptype_long" />
+
+        <info.guardianproject.mrapp.PreviewVideoView
+            android:id="@+id/previewVideoView"
+            android:layout_width="match_parent"
+            android:layout_height="200dip"
+            android:adjustViewBounds="true"
+            android:visibility="gone" />
+
+        <ImageButton
+            android:id="@+id/btnRender"
+            android:layout_width="128dp"
+            android:layout_height="128dp"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:scaleType="centerInside"
+            android:src="@drawable/render" />
+
+        <ImageButton
+            android:id="@+id/btnRenderingSpinner"
+            android:layout_width="128dp"
+            android:layout_height="128dp"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:scaleType="centerInside"
+            android:src="@drawable/render_spinner" 
+            android:visibility="gone" />
+
+        <ImageView
+            android:id="@+id/imageSeparator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/separator" 
+            android:visibility="gone"/>
+
+        <ImageButton
+            android:id="@+id/btnPlay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="26dp"
+            android:src="@drawable/circle_play"  
+            android:visibility="gone"/>
+
+        <ImageButton
+            android:id="@+id/btnPublish"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="26dp"
+            android:src="@drawable/circle_upload"  
+            android:visibility="gone"/>
+
+        <TextView
+            android:id="@+id/textRendering"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:text="Rendering..."
+            android:textAppearance="?android:attr/textAppearanceSmall" 
+            android:visibility="gone" />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/llControlBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#ffffff" 
+        android:visibility="gone">
+
+        <Button
+            android:id="@+id/buttonPlay"
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="36dp"
+            android:text="@string/play_recording" />
+
+        <SeekBar
+            android:id="@+id/seekBar1"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+    </LinearLayout>
+    
+     <LinearLayout
+         android:id="@+id/llRangeSeekBar"
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         android:background="#ffffff"
+         android:visibility="gone"
+         android:orientation="vertical"
+          >
+    </LinearLayout>
+
+     <TextView
+         android:id="@+id/textTitle"
+         android:layout_width="fill_parent"
+         android:layout_height="wrap_content"
+         android:layout_gravity="center_horizontal"
+         android:layout_marginBottom="16dp"
+         android:layout_marginTop="16dp"
+         android:text="Story Title Goes Here"
+         android:textAppearance="?android:attr/textAppearanceLarge" />
+
+     <TextView
+         android:id="@+id/textView1"
+         android:layout_width="fill_parent"
+         android:layout_height="wrap_content"
+         android:layout_marginBottom="16dp"
+         android:layout_marginTop="16dp"
+         android:text="Tags go here..."
+         android:textAppearance="?android:attr/textAppearanceLarge" />
+    
+</LinearLayout>

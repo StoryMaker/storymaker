@@ -19,6 +19,8 @@ import java.util.StringTokenizer;
 
 import org.holoeverywhere.app.AlertDialog;
 import org.holoeverywhere.widget.Spinner;
+import org.holoeverywhere.widget.TextView;
+
 import redstone.xmlrpc.XmlRpcFault;
 import android.accounts.Account;
 import android.accounts.AccountManager;
@@ -42,6 +44,7 @@ import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -66,8 +69,10 @@ public class PublishFragment extends Fragment {
     private String mMediaUploadAccount = null;
     private String mMediaUploadAccountKey = null;
     
-    EditText mTitle;
-    EditText mDescription;
+//    EditText mTitle;
+//    EditText mDescription;
+    TextView mTitle;
+    TextView mDescription;
     
     private YouTubeSubmit mYouTubeClient = null;
 
@@ -111,7 +116,7 @@ public class PublishFragment extends Fragment {
     	int layout = getArguments().getInt("layout");
     	
         mView = inflater.inflate(layout, null);
-        if (layout == R.layout.fragment_story_publish) {
+        if (layout == R.layout.fragment_complete_story) {
         	
         	ImageView ivThumb = (ImageView)mView.findViewById(R.id.storyThumb);
 
@@ -121,9 +126,11 @@ public class PublishFragment extends Fragment {
                 Bitmap bitmap = Media.getThumbnail(mActivity,medias[0],mActivity.mMPM.mProject);
             	if (bitmap != null) ivThumb.setImageBitmap(bitmap);
             }
-        	
-            mTitle = (EditText) mView.findViewById(R.id.etStoryTitle);
-            mDescription = (EditText) mView.findViewById(R.id.editTextDescribe);
+
+//          mTitle = (EditText) mView.findViewById(R.id.etStoryTitle);
+//          mDescription = (EditText) mView.findViewById(R.id.editTextDescribe);
+          mTitle = (TextView) mView.findViewById(R.id.textTitle);
+//          mDescription = (TextView) mView.findViewById(R.id.textDescription);
 
             mTitle.setText(mActivity.mMPM.mProject.getTitle());
             
@@ -131,27 +138,40 @@ public class PublishFragment extends Fragment {
             		  mActivity, R.array.story_sections, android.R.layout.simple_spinner_item );
             		adapter.setDropDownViewResource( android.R.layout.simple_spinner_dropdown_item );
             		
-			Spinner s = (Spinner) mView.findViewById( R.id.spinnerSections );
-			s.setAdapter( adapter );
+//			Spinner s = (Spinner) mView.findViewById( R.id.spinnerSections );
+//			s.setAdapter( adapter );
 			
-			
-            Button btnRender = (Button) mView.findViewById(R.id.btnRender);
+            ImageButton btnRender = (ImageButton) mView.findViewById(R.id.btnRender);
             btnRender.setOnClickListener(new OnClickListener()
             {
 
                 @Override
                 public void onClick(View arg0) {
-                    saveForm();
-                    
-                    mFileLastExport = mActivity.mMPM.getExportMediaFile();
-               
-                	//do local render, overwrite always
-                    handlePublish(false, false, true);
+                    showRender(false);
+                    startFakeRender();
+//                    saveForm();
+//                    
+//                    mFileLastExport = mActivity.mMPM.getExportMediaFile();
+//               
+//                	//do local render, overwrite always
+//                    handlePublish(false, false, true);
                 }
                 
             });
             
-            Button btnPlay = (Button) mView.findViewById(R.id.btnPlay);
+            ImageButton btnRenderingSpinner = (ImageButton) mView.findViewById(R.id.btnRenderingSpinner);
+            btnRenderingSpinner.setOnClickListener(new OnClickListener()
+            {
+
+                @Override
+                public void onClick(View arg0) {
+                    showRenderingSpinner(false);
+                    showPlayAndUpload(true);
+                }
+                
+            });
+            
+            ImageButton btnPlay = (ImageButton) mView.findViewById(R.id.btnPlay);
         	//File fileExport = mActivity.mMPM.getExportMediaFile();
         	//btnPlay.setEnabled(fileExport.exists());
             
@@ -170,34 +190,34 @@ public class PublishFragment extends Fragment {
                 
             });
             
-            Button btnShare = (Button) mView.findViewById(R.id.btnShare);
-          //  btnShare.setEnabled(fileExport.exists());
-        	
-            btnShare.setOnClickListener(new OnClickListener()
-            {
-
-                @Override
-                public void onClick(View arg0) {
-                    
-                	if (mFileLastExport != null && mFileLastExport.exists())
-                	{
-                		
-                		mActivity.mMPM.mMediaHelper.shareMedia(mFileLastExport, null);
-                	}
-                }
-                
-            });
+//            Button btnShare = (Button) mView.findViewById(R.id.btnShare);
+//          //  btnShare.setEnabled(fileExport.exists());
+//        	
+//            btnShare.setOnClickListener(new OnClickListener()
+//            {
+//
+//                @Override
+//                public void onClick(View arg0) {
+//                    
+//                	if (mFileLastExport != null && mFileLastExport.exists())
+//                	{
+//                		
+//                		mActivity.mMPM.mMediaHelper.shareMedia(mFileLastExport, null);
+//                	}
+//                }
+//                
+//            });
             
             
-            Button btn = (Button) mView.findViewById(R.id.btnPublish);
-            btn.setOnClickListener(new OnClickListener() {
-
-                @Override
-                public void onClick(View v) {
-                    saveForm();
-                    setUploadAccount(); //triggers do publish! 
-                }
-            });
+//            Button btn = (Button) mView.findViewById(R.id.btnPublish);
+//            btn.setOnClickListener(new OnClickListener() {
+//
+//                @Override
+//                public void onClick(View v) {
+//                    saveForm();
+//                    setUploadAccount(); //triggers do publish! 
+//                }
+//            });
         }
         return mView;
     }
@@ -215,9 +235,9 @@ public class PublishFragment extends Fragment {
 
 		    	Button btnPlay = (Button) mView.findViewById(R.id.btnPlay);
 		    	
-		    	Button btnShare = (Button)mView.findViewById(R.id.btnShare);
+//		    	Button btnShare = (Button)mView.findViewById(R.id.btnShare);
 		        
-	    		btnShare.setEnabled(true);
+//	    		btnShare.setEnabled(true);
 	    		btnPlay.setEnabled(true);
 	    	}    
 		    
@@ -252,6 +272,25 @@ public class PublishFragment extends Fragment {
 
     private void showLogin() {
         mActivity.startActivity(new Intent(mActivity, LoginActivity.class));
+    }
+
+    private void startFakeRender() {
+        showRenderingSpinner(true);
+    }
+    
+    private void showRenderingSpinner(boolean vis) {
+        ((ImageButton) mView.findViewById(R.id.btnRenderingSpinner)).setVisibility(vis ? View.VISIBLE : View.GONE);
+        ((TextView) mView.findViewById(R.id.textRendering)).setVisibility(vis ? View.VISIBLE : View.GONE);
+    }
+    
+    private void showPlayAndUpload(boolean vis) {
+        ((ImageButton) mView.findViewById(R.id.btnPlay)).setVisibility(vis ? View.VISIBLE : View.GONE);
+        ((ImageButton) mView.findViewById(R.id.btnPublish)).setVisibility(vis ? View.VISIBLE : View.GONE);
+        ((ImageView) mView.findViewById(R.id.imageSeparator)).setVisibility(vis ? View.VISIBLE : View.GONE);
+    }
+
+    private void showRender(boolean vis) {
+        ((ImageButton) mView.findViewById(R.id.btnRender)).setVisibility(vis ? View.VISIBLE : View.GONE);
     }
 
     private String setUploadAccount() {
