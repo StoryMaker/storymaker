@@ -18,6 +18,7 @@ import com.actionbarsherlock.view.ActionMode;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
+import com.actionbarsherlock.view.Window;
 
 
 public class StoryOverviewEditActivity extends BaseActivity {
@@ -33,6 +34,7 @@ public class StoryOverviewEditActivity extends BaseActivity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+        this.requestWindowFeature(Window.FEATURE_ACTION_BAR);
 		setContentView(R.layout.activity_story_overview_edit);
 		
 		startActionMode(mActionModeCallback);

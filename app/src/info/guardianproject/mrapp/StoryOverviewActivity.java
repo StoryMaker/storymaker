@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
+import com.actionbarsherlock.view.Window;
 
 public class StoryOverviewActivity extends BaseActivity {
 
@@ -19,6 +20,7 @@ public class StoryOverviewActivity extends BaseActivity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+        this.requestWindowFeature(Window.FEATURE_ACTION_BAR);
 		setContentView(R.layout.activity_story_overview);
 			
 		int pid = getIntent().getIntExtra("pid", -1); //project i
@@ -34,7 +36,7 @@ public class StoryOverviewActivity extends BaseActivity {
 		
 		ActionBar actionBar = getSupportActionBar();
 	    actionBar.setDisplayHomeAsUpEnabled(true);
-	    
+
 	    Bundle tags = new Bundle();
 	    tags.putStringArray("tags", mProject.getTagsAsArray());
 	    

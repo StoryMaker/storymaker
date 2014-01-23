@@ -6,7 +6,7 @@
     android:versionName="0.0.7-build93" >
 
     <uses-sdk
-        android:minSdkVersion="10"
+        android:minSdkVersion="14"
         android:targetSdkVersion="17" />
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -219,12 +219,14 @@
         </activity>
         <activity
             android:name="info.guardianproject.mrapp.StoryOverviewActivity"
-            android:label="@string/title_activity_story_overview" >
+            android:label="@string/title_activity_story_overview"
+            android:theme="@style/PopupTheme" >
         </activity>
         <activity
             android:name="info.guardianproject.mrapp.StoryOverviewEditActivity"
             android:label="@string/title_activity_story_overview_edit"
             android:parentActivityName="StoryOverviewActivity" >
+            android:theme="@style/PopupTheme" 
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".StoryOverviewActivity" />
