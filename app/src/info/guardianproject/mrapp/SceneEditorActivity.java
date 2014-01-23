@@ -425,7 +425,6 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
         FragmentManager fm = getSupportFragmentManager();
 
         if (mMenu != null) {
-            mMenu.findItem(R.id.itemInfo).setVisible(false);
             mMenu.findItem(R.id.itemTrim).setVisible(false);
         }
         
@@ -466,8 +465,7 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
         } else if (tab.getPosition() == 1) {
             layout = R.layout.fragment_order_clips;
 
-            if (mMenu != null) {
-                mMenu.findItem(R.id.itemInfo).setVisible(true);       
+            if (mMenu != null) {      
                 mMenu.findItem(R.id.itemForward).setEnabled(true);
                 
                 //if only photos, no need to display trim option
