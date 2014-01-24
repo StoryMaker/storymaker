@@ -66,14 +66,12 @@ public class StoryOverviewEditActivity extends BaseActivity {
 		    	if (!tagText.equals("")) {
 		    		
 		    		mProject.addTag(tagText);
-		    		addProjectTag(tagText);
-		    		
+		    		addProjectTag(tagText);	    		
 		    	}
 		    	
 		    	tvStoryTag.setText(null);
 		    }
-		});
-		
+		});		
 	}
 	
 	private void setProjectInfo() {
@@ -116,8 +114,8 @@ public class StoryOverviewEditActivity extends BaseActivity {
 		});
     }
 	
+	private boolean actionModeCancel = false;
 	private ActionMode.Callback mActionModeCallback = new ActionMode.Callback(){
-
 		@Override
 		public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
 			return false;
@@ -125,37 +123,37 @@ public class StoryOverviewEditActivity extends BaseActivity {
 		
 	    @Override 
 	    public boolean onCreateActionMode(ActionMode mode, Menu menu) {
-	          MenuInflater inflater = mode.getMenuInflater();
-	          inflater.inflate(R.menu.context_menu_edit, menu);
-	          return true;
-	        }
-
-	    @Override
-	    public void onDestroyActionMode(ActionMode mode) {
-
+			MenuInflater inflater = mode.getMenuInflater();
+			inflater.inflate(R.menu.context_menu_edit, menu);
+			return true;
 	    }
 
 	    @Override
 	    public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
-	    	int i = item.getItemId();
-	    	int j = i + 1;
 	    	
 	        switch (item.getItemId()) {
 	            case R.id.menu_cancel:
+	            	actionModeCancel = true;
 	            	mode.finish();
-	            	onBackPressed();
-	                return false;
+	                return true;
 	            case R.id.menu_edit_confirm:
-	            	saveProjectInfo();
 	            	mode.finish();
-	            	onBackPressed();
-	            	return false;
+	            	return true;
 	            default:
 	                mode.finish();
-	                onBackPressed();
 	                return true;
 	       }
-	    }		
+	    }
+	    
+	    // this has slightly odd save logic so that I can always save exit actionmode as 
+        // the checkmark button acts as a cancel but the users will treat it as an accept
+	    @Override
+	    public void onDestroyActionMode(ActionMode mode) {
+	    	if(!actionModeCancel)
+	    		saveProjectInfo();
+	    	
+	    	StoryOverviewEditActivity.this.finish();
+	    }
 	};
 	
 	private int getSpinnerIndex(Spinner spinner, String string) {	
