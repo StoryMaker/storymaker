@@ -300,8 +300,8 @@ Build number: <xliff:g id="build_number">%s</xliff:g>\n</string>
     <string name="hint_story_tag">#addtags</string>
     <string name="label_section">Section</string>
     <string name="label_location">Location</string>
-    <string name="title_activity_story_overview">StoryOverview</string>
-    <string name="title_activity_story_overview_edit">StoryOverviewEdit</string>
+    <string name="title_activity_story_overview">Info</string>
+    <string name="title_activity_story_overview_edit">Edit Info</string>
     <string name="title_activity_project_tag_fragment">ProjectTagFragment</string>
 
 </resources>

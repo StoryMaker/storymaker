@@ -38,6 +38,7 @@ public class StoryOverviewActivity extends BaseActivity {
 		addTestData();//TODO remove
 		
 		ActionBar actionBar = getSupportActionBar();
+		actionBar.setIcon(R.drawable.ic_action_info);
 	    actionBar.setDisplayHomeAsUpEnabled(true);
 
 	    Bundle tags = new Bundle();
