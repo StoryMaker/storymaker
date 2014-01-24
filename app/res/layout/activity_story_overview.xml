@@ -58,16 +58,20 @@
 		    
 		</LinearLayout>
 			
+		<View
+		    android:layout_marginTop="8dp"
+    		style="@style/DividerHorizontal"/>
+		
 		<LinearLayout
 			android:layout_width="fill_parent"
 			android:layout_height="wrap_content"
 			android:orientation="vertical"
 			android:background="@color/light_grey_super"
-			android:layout_marginTop="24dp"
-			android:padding="8dp">
+			android:padding="4dp">
 		
 		    <TextView
 		        android:text="@string/label_activities"
+		        android:gravity="center_horizontal"
 				style="@style/LabelHeader" />	
 				
 			<TextView

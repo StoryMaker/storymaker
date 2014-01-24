@@ -95,6 +95,7 @@ public class StoryOverviewEditActivity extends BaseActivity {
 		mProject.setSection(spStorySection.getSelectedItem().toString());
 		mProject.setLocation(spStoryLocation.getSelectedItem().toString());
 		
+		mProject.save();
 		//TODO Save Tags
 	}
 	
