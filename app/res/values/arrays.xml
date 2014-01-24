@@ -180,6 +180,7 @@
         <item>Audio</item>
         <item>Photography</item>
         <item>Videography</item>
+        <item>Story</item>
     </string-array>
     
      <string-array name="lesson_sections_folder">
@@ -188,6 +189,7 @@
         <item>3</item>
         <item>4</item>
         <item>5</item>
+        <item>6</item>
     </string-array>
     
     <string-array name="resolution_options">
