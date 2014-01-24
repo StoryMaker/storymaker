@@ -6,6 +6,7 @@ import org.holoeverywhere.widget.Toast;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.NavUtils;
 import android.widget.TextView;
 
 import com.actionbarsherlock.app.ActionBar;
@@ -34,6 +35,8 @@ public class StoryOverviewActivity extends BaseActivity {
 	
 	private void initialize() {
 		
+		addTestData();//TODO remove
+		
 		ActionBar actionBar = getSupportActionBar();
 	    actionBar.setDisplayHomeAsUpEnabled(true);
 
@@ -44,6 +47,17 @@ public class StoryOverviewActivity extends BaseActivity {
 	    fragPT.setArguments(tags);
         getSupportFragmentManager().beginTransaction().add(R.id.fl_tag_container, fragPT).commit();
 	}
+	
+	private void addTestData() {
+	
+		mProject.setDescription("A story about a trial.");
+		mProject.setLocation("Iraq");
+		mProject.setSection("Politics");
+		
+		mProject.addTag("storymaker");
+		mProject.addTag("news");	
+	}
+	
     	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -59,21 +73,25 @@ public class StoryOverviewActivity extends BaseActivity {
             case R.id.itemEditStory:
             	Intent intent = new Intent(this, StoryOverviewEditActivity.class);
             	intent.putExtra("pid", mProject.getId());
-            	startActivity(intent);
+            	startActivity(intent);    
             	
-                break;
+            	return true;
             case R.id.itemSendStory:
             	Toast.makeText(this, "Send", Toast.LENGTH_SHORT).show();
-            	break;
+            	
+            	return true;
             case R.id.itemShareStory:
             	Toast.makeText(this, "Share", Toast.LENGTH_SHORT).show();
-            	break;
+            	
+            	return true;
             case android.R.id.home:
-            	onBackPressed();
-            	break;             
+            	//NavUtils.navigateUpFromSameTask(this);
+            	finish();
+            	
+            	return true;
+            default:
+            	return super.onOptionsItemSelected(item);
         }
-        
-        return super.onOptionsItemSelected(item);
     }
 	
 	private void setStoryInfo() { 
@@ -88,5 +106,4 @@ public class StoryOverviewActivity extends BaseActivity {
     	tvStorySection.setText(mProject.getSection());
     	tvStoryLocation.setText(mProject.getLocation());
     }
-
 }

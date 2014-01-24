@@ -221,12 +221,14 @@
             android:name="info.guardianproject.mrapp.StoryOverviewActivity"
             android:label="@string/title_activity_story_overview"
             android:theme="@style/PopupTheme" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".SceneEditorActivity" />
         </activity>
         <activity
             android:name="info.guardianproject.mrapp.StoryOverviewEditActivity"
             android:label="@string/title_activity_story_overview_edit"
-            android:parentActivityName="StoryOverviewActivity" >
-            android:theme="@style/PopupTheme" 
+            android:theme="@style/PopupTheme"> 
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".StoryOverviewActivity" />
