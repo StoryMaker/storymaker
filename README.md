@@ -33,6 +33,10 @@ Follow these steps to setup your dev environment:
         external/OnionKit/
         external/android-ffmpeg-java/
         external/WordpressJavaAndroid/
+        external/cardsui-for-android/CardsUILib
+        external/SlidingMenu/library
+        external/Android-ViewPagerIndicator/library
+        external/RangeSeekBar/library
 
 
    **Using command line**
