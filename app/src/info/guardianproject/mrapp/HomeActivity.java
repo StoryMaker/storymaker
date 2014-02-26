@@ -630,44 +630,50 @@ public class HomeActivity extends BaseActivity {
     }
 
 
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
 
         if (item.getItemId() == android.R.id.home)
         {
-        	mSlidingMenu.toggle();
+            mSlidingMenu.toggle();
+            return true;
         }
         else if (item.getItemId() == R.id.menu_settings)
         {
-			showPreferences();
-		}
-		else if (item.getItemId() == R.id.menu_logs)
-		{
-			collectAndSendLog();
-		}
-		else if (item.getItemId() == R.id.menu_new_project)
-		{
-			 startActivity(new Intent(this, StoryNewActivity.class));
-		}
-		else if (item.getItemId() == R.id.menu_bug_report)
-		{
-			String url = "https://docs.google.com/forms/d/1KrsTg-NNr8gtQWTCjo-7Fv2L5cml84EcmIuGGNiC4fY/viewform";
+            showPreferences();
+            return true;
+        }
+        else if (item.getItemId() == R.id.menu_logs)
+        {
+            collectAndSendLog();
+            return true;
+        }
+        else if (item.getItemId() == R.id.menu_new_project)
+        {
+            startActivity(new Intent(this, StoryNewActivity.class));
+            return true;
+        }
+        else if (item.getItemId() == R.id.menu_bug_report)
+        {
+            String url = "https://docs.google.com/forms/d/1KrsTg-NNr8gtQWTCjo-7Fv2L5cml84EcmIuGGNiC4fY/viewform";
 
             Intent i = new Intent(Intent.ACTION_VIEW);
             i.setData(Uri.parse(url));
             startActivity(i);
-		}
-		else if (item.getItemId() == R.id.menu_about)
-		{
-			String url = "https://storymaker.cc";
+            return true;
+        }
+        else if (item.getItemId() == R.id.menu_about)
+        {
+            String url = "https://storymaker.cc";
 
             Intent i = new Intent(Intent.ACTION_VIEW);
             i.setData(Uri.parse(url));
             startActivity(i);
-		}
-        
-		return true;
-	}
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
     
 	void collectAndSendLog(){
 		
