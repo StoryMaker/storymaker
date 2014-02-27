@@ -2,6 +2,7 @@
 package info.guardianproject.mrapp.model.json;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonDeserializationContext;
@@ -15,6 +16,7 @@ import com.google.gson.JsonSerializer;
 
 import info.guardianproject.mrapp.model.Media;
 import info.guardianproject.mrapp.model.Scene;
+import info.guardianproject.mrapp.model.json.ModelJson.ModelSerializerDeserializer;
 
 import java.lang.reflect.Type;
 
@@ -24,18 +26,15 @@ import java.lang.reflect.Type;
  * @author David Brodsky
  */
 public class SceneJson {
+    private static final String TAG = "SceneJson";
 
-    public static class SceneSerializerDeserializer implements JsonSerializer<Scene>,
+    public static class SceneSerializerDeserializer extends ModelSerializerDeserializer implements
+            JsonSerializer<Scene>,
+
             JsonDeserializer<Scene> {
 
-        private Context mContext;
-
-        public SceneSerializerDeserializer(Context context) {
-            mContext = context;
-        }
-
-        private Context getContext() {
-            return mContext;
+        public SceneSerializerDeserializer(Context context, boolean doPersist) {
+            super(context, doPersist);
         }
 
         public JsonElement serialize(final Scene scene, final Type type,
@@ -55,9 +54,15 @@ public class SceneJson {
 
             JsonArray mediaArray = new JsonArray();
             for (Media media : scene.getMediaAsList()) {
-                mediaArray.add(context.serialize(media));
+                if (media != null) {
+                    mediaArray.add(context.serialize(media));
+                } else {
+                    Log.w(TAG, "Ignoring null Scene Media. Scene.mClipCount (" + scene.getClipCount() + ") may be incorrect");
+                }
             }
-            result.add("media", mediaArray);
+            if (mediaArray.size() > 0) {
+                result.add("media", mediaArray);
+            }
 
             return result;
         }
@@ -80,14 +85,19 @@ public class SceneJson {
                 scene.setThumbnailPath(source.getAsJsonPrimitive("thumbnailPath").getAsString());
             }
 
-            if (media != null) {
+            if (media != null && mPersistOnDeserialization) {
                 for (int x = 0; x < media.size(); x++) {
-                    scene.setMedia(0, (Media) context.deserialize(media.get(x), Media.class));
+                    ((Media) context.deserialize(media.get(x), Media.class)).save();
                 }
+            }
+
+            if (mPersistOnDeserialization) {
+                scene.save();
             }
 
             return scene;
         }
+
     }
 
 }

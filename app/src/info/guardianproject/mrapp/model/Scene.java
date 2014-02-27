@@ -248,10 +248,6 @@ public class Scene {
                 
     }
     
-    public void setMedia(int clipIndex, Media media){
-    	media.save();
-    	mClipCount = Math.max((clipIndex+1), mClipCount);
-    }
 
     public void swapMediaIndex(int oldIndex, int newIndex) {
     	Media media[] = getMediaAsArray();

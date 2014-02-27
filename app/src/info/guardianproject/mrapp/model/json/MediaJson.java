@@ -2,6 +2,8 @@
 package info.guardianproject.mrapp.model.json;
 
 import info.guardianproject.mrapp.model.Media;
+import info.guardianproject.mrapp.model.json.ModelJson.ModelSerializerDeserializer;
+
 import java.lang.reflect.Type;
 
 import android.content.Context;
@@ -22,17 +24,11 @@ import com.google.gson.JsonSerializer;
  */
 public class MediaJson {
 
-    public static class MediaSerializerDeserializer implements JsonSerializer<Media>,
-            JsonDeserializer<Media> {
+    public static class MediaSerializerDeserializer extends ModelSerializerDeserializer implements
+            JsonSerializer<Media>, JsonDeserializer<Media> {
 
-        private Context mContext;
-
-        public MediaSerializerDeserializer(Context context) {
-            mContext = context;
-        }
-
-        private Context getContext() {
-            return mContext;
+        public MediaSerializerDeserializer(Context context, boolean doPersist) {
+            super(context, doPersist);
         }
 
         public JsonElement serialize(final Media media, final Type type,
@@ -81,8 +77,13 @@ public class MediaJson {
                 media.setClipType(source.getAsJsonPrimitive("clipType").getAsString());
             }
 
+            if (mPersistOnDeserialization) {
+                media.save();
+            }
+
             return media;
         }
+
     }
 
 }
