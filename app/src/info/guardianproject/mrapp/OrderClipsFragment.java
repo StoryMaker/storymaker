@@ -653,22 +653,21 @@ public class OrderClipsFragment extends Fragment {
         }
     }*/
     
-    public void enableTrimMode(boolean enable) {
-        if (enable) {
+    public void enableTrimMode() {
+        if (mTrimMode) {
             mLLControlBar.setVisibility(View.GONE);
             mRangeSeekBarContainer.setVisibility(View.VISIBLE);
-            mTrimMode = true;
             setupTrimUndo();
         } else {
             mLLControlBar.setVisibility(View.VISIBLE);
             mRangeSeekBarContainer.setVisibility(View.GONE);
-            mTrimMode = false;
         }
     }
     
     public void saveTrim() {
         Media media = mMPM.mScene.getMediaAsArray()[mCurrentClipIdx];
         boolean dirty = false;
+        mTrimMode = false;
         
         if (media.getTrimStart() != mRangeSeekBar.getSelectedMinValue()) {
             media.setTrimStart(mRangeSeekBar.getSelectedMinValue());
@@ -702,18 +701,20 @@ public class OrderClipsFragment extends Fragment {
     
     public void undoSaveTrim() {
         Media media = mMPM.mScene.getMediaAsArray()[mCurrentClipIdx];
+        mTrimMode = false;
         
         if (trimStartUndo != -1) media.setTrimStart(trimStartUndo);
         if (trimEndUndo != -1) media.setTrimEnd(trimEndUndo);
         media.save();
     }
     
-    public void loadTrim() {
+    public boolean loadTrim() {
     	
         Media media = mMPM.mScene.getMediaAsArray()[mCurrentClipIdx];
         
         if (media != null)
         { 	
+        	mTrimMode = true;
 	        mRangeSeekBar.setSelectedMinValue(Math.round(media.getTrimStart()));
 	        if (media.getTrimEnd() > 0) {
 	            mRangeSeekBar.setSelectedMaxValue(Math.round(media.getTrimEnd()));
@@ -721,6 +722,8 @@ public class OrderClipsFragment extends Fragment {
 	            mRangeSeekBar.setSelectedMaxValue(99);
 	        }
         }
+        
+        return mTrimMode;
     }
     
     public void stopPlaybackOnTabChange()

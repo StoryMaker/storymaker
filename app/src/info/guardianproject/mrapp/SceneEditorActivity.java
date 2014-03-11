@@ -45,8 +45,6 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
     
     //private String mTemplateJsonPath = null;
     private int mSceneIndex = 0;
-
-    boolean mTrimMode = false;
     
     private final static String CAPTURE_MIMETYPE_AUDIO = "audio/3gpp";
     public Fragment mFragmentTab0, mFragmentTab1, mLastTabFrag;
@@ -188,10 +186,13 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
             
                 return true;
             case R.id.itemTrim:
-                if (mFragmentTab1 != null) { 
-                    ((OrderClipsFragment) mFragmentTab1).loadTrim();
-                    ((OrderClipsFragment) mFragmentTab1).enableTrimMode(true);
-                    startActionMode(mActionModeCallback);
+                if (mFragmentTab1 != null) {
+                	if(((OrderClipsFragment) mFragmentTab1).loadTrim()) {
+                		((OrderClipsFragment) mFragmentTab1).enableTrimMode();
+                        startActionMode(mActionModeCallback);
+                	}
+                	
+                	return true;
                 }
                 return true;
                 
@@ -216,7 +217,6 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
         // may be called multiple times if the mode is invalidated.
         @Override
         public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
-            mTrimMode = true;
             return false; // Return false if nothing is done
         }
 
@@ -240,14 +240,13 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
         // the checkmark button acts as a cancel but the users will treat it as an accept
         @Override
         public void onDestroyActionMode(ActionMode mode) {
-//            mActionMode = null;
-            ((OrderClipsFragment) mFragmentTab1).enableTrimMode(false);
-            mTrimMode = false;
             if (actionModelCancel) {
                 ((OrderClipsFragment) mFragmentTab1).undoSaveTrim();
             } else {
                 ((OrderClipsFragment) mFragmentTab1).saveTrim();
             }
+            
+            ((OrderClipsFragment) mFragmentTab1).enableTrimMode();
         }
     };
     
