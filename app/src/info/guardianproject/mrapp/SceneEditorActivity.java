@@ -427,9 +427,13 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
         	((OrderClipsFragment) mLastTabFrag).stopPlaybackOnTabChange();
         }
         
+        //Make Tab
         if (tab.getPosition() == 0) {
             if (mMenu != null) {
                 mMenu.findItem(R.id.itemForward).setEnabled(true);
+                
+                //show relevant menu items
+                setMenuItemsVisibility(true);
             }
             layout = R.layout.fragment_add_clips;
 
@@ -455,13 +459,16 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
                         .commit();
             }
             mLastTabFrag = mFragmentTab0;
-
+          //Edit Tab
         } else if (tab.getPosition() == 1) {
             layout = R.layout.fragment_order_clips;
 
             if (mMenu != null) {
                 mMenu.findItem(R.id.itemInfo).setVisible(true);       
                 mMenu.findItem(R.id.itemForward).setEnabled(true);
+                
+                //hide irrelevant menu items
+                setMenuItemsVisibility(false);
                 
                 //if only photos, no need to display trim option
                 if(!(mMPM.mProject.getStoryType() == Project.STORY_TYPE_ESSAY || mMPM.mProject.getStoryType() == Project.STORY_TYPE_PHOTO))
@@ -495,8 +502,14 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
             }
 
             mLastTabFrag = mFragmentTab1;
-
+          //Publish Tab
         } else if (tab.getPosition() == 2) {
+        	
+        	if (mMenu != null) {
+	        	//hide irrelevant menu items
+	            setMenuItemsVisibility(false);
+        	}
+        	
             if (mMPM.mProject.isTemplateStory()) {
                 Intent intent = new Intent(getBaseContext(), StoryTemplateActivity.class);
                 intent.putExtra("template_path", mProject.getTemplatePath());
@@ -537,6 +550,13 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
 
     @Override
     public void onTabReselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
+    }
+    
+    private void setMenuItemsVisibility(boolean show) {
+    	//hide irrelevant menu items
+        mMenu.findItem(R.id.addFromGallery).setVisible(show);
+        mMenu.findItem(R.id.addNewShot).setVisible(show);
+        mMenu.findItem(R.id.delShot).setVisible(show);
     }
 
     public void refreshClipPager() {
