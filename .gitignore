@@ -17,3 +17,10 @@ local.properties
 
 # Eclipse stuff
 *.settings/
+
+# Mac Garbage
+.DS_Store
+
+# Android Studio
+*.iml
+.idea/

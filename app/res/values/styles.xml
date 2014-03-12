@@ -46,5 +46,5 @@
         <item name="android:padding">4dp</item>
         <item name="android:background">@color/light_blue</item>
     </style>
-	
+    	
 </resources>

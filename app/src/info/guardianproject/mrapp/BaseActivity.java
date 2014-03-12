@@ -22,6 +22,7 @@ import android.graphics.PixelFormat;
 import android.view.WindowManager;
 import android.widget.ImageView;
 
+
 //import com.google.analytics.tracking.android.EasyTracker;
 import com.slidingmenu.lib.SlidingMenu;
 import com.slidingmenu.lib.SlidingMenu.OnClosedListener;
@@ -205,10 +206,12 @@ public class BaseActivity extends Activity {
     
     @Override
     public void onCreate(Bundle savedInstanceState) {
-    
     	super.onCreate(savedInstanceState);
-        
-        (new Eula(this)).show();
+    	if(!Eula.isAccepted(this)) {
+            Intent firstStartIntent = new Intent(this, FirstStartActivity.class);
+            firstStartIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(firstStartIntent);
+        }
     }
     
     @Override

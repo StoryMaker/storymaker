@@ -1,0 +1,83 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context=".FirstStartActivity" >
+
+    <ImageView
+        android:id="@+id/backgroundImage"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop" />
+
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:src="@drawable/ic_launcher" />
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/logo"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:fontFamily="sans-serif-condensed"
+        android:text="@string/app_name"
+        android:textSize="30sp" />
+
+    <TextView
+        android:id="@+id/tagline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/title"
+        android:layout_centerHorizontal="true"
+        android:fontFamily="sans-serif-condensed"
+        android:text="Make your story great"
+        android:textSize="18sp"
+        android:textStyle="italic" />
+
+    <Button
+        android:id="@+id/btnSignup"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tagline"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="30dp"
+        android:fontFamily="sans-serif-condensed"
+        android:onClick="onSignupButtonClick"
+        android:text="SIGN UP FOR STORYMAKER"
+        android:textSize="14sp" />
+
+    <Button
+        android:id="@+id/btnNoThanks"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/btnSignup"
+        android:layout_centerHorizontal="true"
+        android:fontFamily="sans-serif-condensed"
+        android:onClick="onNoThanksButtonClick"
+        android:text="NO THANKS"
+        android:textSize="14sp" />
+
+    <Button
+        android:id="@+id/btnTos"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/btnNoThanks"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:drawableLeft="@drawable/ic_contextsm_checkbox"
+        android:fontFamily="sans-serif-condensed"
+        android:onClick="onTosButtonClick"
+        android:text="I AGREE TO THE TERMS OF SERVICE"
+        android:textSize="12sp" />
+
+</RelativeLayout>

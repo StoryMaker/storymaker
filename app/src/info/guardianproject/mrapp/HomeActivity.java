@@ -69,7 +69,6 @@ public class HomeActivity extends BaseActivity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-    
     	super.onCreate(savedInstanceState);
         try {
             String pkg = getPackageName();

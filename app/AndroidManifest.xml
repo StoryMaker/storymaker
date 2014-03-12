@@ -228,7 +228,7 @@
         <activity
             android:name="info.guardianproject.mrapp.StoryOverviewEditActivity"
             android:label="@string/title_activity_story_overview_edit"
-            android:theme="@style/PopupTheme"> 
+            android:theme="@style/PopupTheme" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".StoryOverviewActivity" />
@@ -240,6 +240,8 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="android.support.v4.app.FragmentActivity" />
+        </activity>
+        <activity android:name="info.guardianproject.mrapp.FirstStartActivity" >
         </activity>
     </application>
 

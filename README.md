@@ -33,6 +33,7 @@ Follow these steps to setup your dev environment:
         external/OnionKit/
         external/android-ffmpeg-java/
         external/WordpressJavaAndroid/
+        external/SecureShareLib/SecureShareUILibrary/
 
 
    **Using command line**
@@ -40,4 +41,3 @@ Follow these steps to setup your dev environment:
         cd app/
         ./setup-ant.sh
         ant clean debug
-
