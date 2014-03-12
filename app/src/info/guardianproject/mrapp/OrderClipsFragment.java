@@ -653,7 +653,7 @@ public class OrderClipsFragment extends Fragment {
         }
     }*/
     
-    public void enableTrimMode() {
+    public void enableTrimUIMode() {
         if (mTrimMode) {
             mLLControlBar.setVisibility(View.GONE);
             mRangeSeekBarContainer.setVisibility(View.VISIBLE);
@@ -708,6 +708,10 @@ public class OrderClipsFragment extends Fragment {
         media.save();
     }
     
+    /**
+     * Load trim values from the currently selected media clip.  
+     * @return if the media clip is null it returns false
+     */
     public boolean loadTrim() {
     	
         Media media = mMPM.mScene.getMediaAsArray()[mCurrentClipIdx];
