@@ -116,7 +116,7 @@ class Eula {
      * wish to show a EULA dialog for the negative condition
      * 
      * @param context
-     * @return
+     * @return whether the EULA was accepted
      */
     public static boolean isAccepted(Context context) {
         SharedPreferences prefsEula = context.getSharedPreferences(
