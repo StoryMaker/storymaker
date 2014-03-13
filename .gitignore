@@ -17,3 +17,6 @@ local.properties
 
 # Eclipse stuff
 *.settings/
+
+# Mac OS junk
+.DS_Store

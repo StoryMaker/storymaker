@@ -20,7 +20,7 @@ public class Scene {
     protected int projectIndex; // position this scene is in the project
     protected int projectId; // foreign key to the Scene which holds this media
     
-    public int mClipCount = -1;
+    protected int mClipCount = -1;
     
     public Scene(Context context, int clipCount) {
         this.context = context;
@@ -193,6 +193,9 @@ public class Scene {
         return medias.toArray(new Media[] {});
     }
     
+    public void setClipCount (int clipCount){
+    	mClipCount = clipCount;
+    }
     public int getClipCount ()
     {
         return mClipCount;
@@ -244,6 +247,7 @@ public class Scene {
         mClipCount = Math.max((clipIndex+1), mClipCount);
                 
     }
+    
 
     public void swapMediaIndex(int oldIndex, int newIndex) {
     	Media media[] = getMediaAsArray();
