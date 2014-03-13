@@ -243,6 +243,8 @@
         </activity>
         <activity android:name="info.guardianproject.mrapp.FirstStartActivity" >
         </activity>
+        <activity android:name="info.guardianproject.mrapp.server.WordPressAuthWebViewActivity" >
+        </activity>
     </application>
 
 </manifest>

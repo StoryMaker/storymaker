@@ -2,6 +2,7 @@
 package info.guardianproject.mrapp;
 
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
@@ -49,7 +50,16 @@ public class FirstStartActivity extends Activity implements OnEulaAgreedTo {
     @Override
     public void onPause() {
         super.onPause();
-        Log.i("FirstStart", "onPause");
+    }
+    
+    @Override
+    public void onResume() {
+        super.onResume();
+        if ( PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getBoolean(Globals.PREFERENCES_WP_REGISTERED, false) ) {
+            Intent homeIntent = new Intent(this, HomeActivity.class);
+            homeIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(homeIntent);
+        }
     }
 
     /**
@@ -92,8 +102,8 @@ public class FirstStartActivity extends Activity implements OnEulaAgreedTo {
                             new OnClickListener() {
 
                                 @Override
-                                public void onClick(DialogInterface arg0, int arg1) {
-                                    arg0.dismiss();
+                                public void onClick(DialogInterface dialog, int arg1) {
+                                    dialog.dismiss();
                                 }
 
                             }).show();

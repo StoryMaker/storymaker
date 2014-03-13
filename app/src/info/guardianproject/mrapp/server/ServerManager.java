@@ -11,16 +11,19 @@ import net.bican.wordpress.Comment;
 import net.bican.wordpress.MediaObject;
 import net.bican.wordpress.Page;
 import net.bican.wordpress.Wordpress;
+
 import redstone.xmlrpc.XmlRpcArray;
 import redstone.xmlrpc.XmlRpcClient;
 import redstone.xmlrpc.XmlRpcFault;
 import redstone.xmlrpc.XmlRpcStruct;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.util.Log;
+import android.webkit.WebView;
 
 public class ServerManager {
 
@@ -31,6 +34,7 @@ public class ServerManager {
 	private final static String PATH_XMLRPC = "/xmlrpc.php";
 	private final static String PATH_REGISTER = "/wp-login.php?action=register";
 	private final static String PATH_LOGIN = "/wp-admin";
+	public final static String PATH_REGISTERED = "/wp-login.php?checkemail=registered";
 	
 	public final static String CUSTOM_FIELD_MEDIUM = "medium"; //Text, Audio, Photo, Video
 	
@@ -235,7 +239,7 @@ public class ServerManager {
 	public void createAccount (Activity activity)
 	{
 		//open web view here to reg form
-		Intent intent = new Intent(mContext,WebViewActivity.class);
+		Intent intent = new Intent(mContext,WordPressAuthWebViewActivity.class);
 		intent.putExtra("title", "New Account");
 		intent.putExtra("url", mServerUrl + PATH_REGISTER);
 		

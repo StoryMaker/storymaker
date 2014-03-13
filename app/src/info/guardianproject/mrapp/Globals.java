@@ -6,4 +6,5 @@ public class Globals {
     public static final String PREFERENCES_EULA = "eula";
     public static final String PREFERENCE_ANALYTICS_OPTIN = "analytics.optin";
     public static final String PREFERENCES_ANALYTICS = "analytics";
+    public static final String PREFERENCES_WP_REGISTERED = "wp.registered";
 }
