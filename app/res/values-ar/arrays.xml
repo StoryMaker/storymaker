@@ -43,6 +43,7 @@
     <item>الصوت</item>
     <item>التصوير الفوتوغرافي</item>
     <item>تصوير الفيديو</item>
+    <item>Story</item>
   </string-array>
   <string-array name="lesson_sections_folder">
     <item>1</item>
@@ -50,5 +51,6 @@
     <item>3</item>
     <item>4</item>
     <item>5</item>
+    <item>6</item>
   </string-array>
 </resources>

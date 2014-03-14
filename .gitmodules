@@ -3,7 +3,7 @@
 	url = https://github.com/guardianproject/OnionKit.git
 [submodule "external/android-ffmpeg-java"]
 	path = external/android-ffmpeg-java
-	url = https://github.com/guardianproject/android-ffmpeg-java
+	url = https://github.com/scalio/android-ffmpeg-java
 [submodule "external/SlidingMenu"]
 	path = external/SlidingMenu
 	url = https://github.com/vitriolix/SlidingMenu.git

@@ -45,8 +45,6 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
     
     //private String mTemplateJsonPath = null;
     private int mSceneIndex = 0;
-
-    boolean mTrimMode = false;
     
     private final static String CAPTURE_MIMETYPE_AUDIO = "audio/3gpp";
     public Fragment mFragmentTab0, mFragmentTab1, mLastTabFrag;
@@ -194,10 +192,13 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
             	
             	return true;
             case R.id.itemTrim:
-                if (mFragmentTab1 != null) { 
-                    ((OrderClipsFragment) mFragmentTab1).loadTrim();
-                    ((OrderClipsFragment) mFragmentTab1).enableTrimMode(true);
-                    startActionMode(mActionModeCallback);
+                if (mFragmentTab1 != null) {
+                	if(((OrderClipsFragment) mFragmentTab1).loadTrim()) {
+                        ((OrderClipsFragment) mFragmentTab1).enableTrimUIMode();
+                        startActionMode(mActionModeCallback);
+                	}
+                	
+                	return true;
                 }
                 return true;
                 
@@ -222,7 +223,6 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
         // may be called multiple times if the mode is invalidated.
         @Override
         public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
-            mTrimMode = true;
             return false; // Return false if nothing is done
         }
 
@@ -246,14 +246,13 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
         // the checkmark button acts as a cancel but the users will treat it as an accept
         @Override
         public void onDestroyActionMode(ActionMode mode) {
-//            mActionMode = null;
-            ((OrderClipsFragment) mFragmentTab1).enableTrimMode(false);
-            mTrimMode = false;
             if (actionModelCancel) {
                 ((OrderClipsFragment) mFragmentTab1).undoSaveTrim();
             } else {
                 ((OrderClipsFragment) mFragmentTab1).saveTrim();
             }
+            
+            ((OrderClipsFragment) mFragmentTab1).enableTrimUIMode();
         }
     };
     
@@ -433,9 +432,13 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
         	((OrderClipsFragment) mLastTabFrag).stopPlaybackOnTabChange();
         }
         
+        //Make Tab
         if (tab.getPosition() == 0) {
             if (mMenu != null) {
                 mMenu.findItem(R.id.itemForward).setEnabled(true);
+                
+                //show relevant menu items
+                setMenuItemsVisibility(true);
             }
             layout = R.layout.fragment_add_clips;
 
@@ -461,12 +464,15 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
                         .commit();
             }
             mLastTabFrag = mFragmentTab0;
-
+          //Edit Tab
         } else if (tab.getPosition() == 1) {
             layout = R.layout.fragment_order_clips;
 
             if (mMenu != null) {      
                 mMenu.findItem(R.id.itemForward).setEnabled(true);
+                
+                //hide irrelevant menu items
+                setMenuItemsVisibility(false);
                 
                 //if only photos, no need to display trim option
                 if(!(mMPM.mProject.getStoryType() == Project.STORY_TYPE_ESSAY || mMPM.mProject.getStoryType() == Project.STORY_TYPE_PHOTO))
@@ -500,8 +506,14 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
             }
 
             mLastTabFrag = mFragmentTab1;
-
+          //Publish Tab
         } else if (tab.getPosition() == 2) {
+        	
+        	if (mMenu != null) {
+	        	//hide irrelevant menu items
+	            setMenuItemsVisibility(false);
+        	}
+        	
             if (mMPM.mProject.isTemplateStory()) {
                 Intent intent = new Intent(getBaseContext(), StoryTemplateActivity.class);
                 intent.putExtra("template_path", mProject.getTemplatePath());
@@ -542,6 +554,13 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
 
     @Override
     public void onTabReselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
+    }
+    
+    private void setMenuItemsVisibility(boolean show) {
+    	//hide irrelevant menu items
+        mMenu.findItem(R.id.addFromGallery).setVisible(show);
+        mMenu.findItem(R.id.addNewShot).setVisible(show);
+        mMenu.findItem(R.id.delShot).setVisible(show);
     }
 
     public void refreshClipPager() {
