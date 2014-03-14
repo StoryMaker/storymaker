@@ -11,7 +11,7 @@ Story Maker
 
 Follow these steps to setup your dev environment:
 
-1. Clone the git repo, make sure you fork first if you indent to commit
+1. Clone the git repo, make sure you fork first if you intend to commit
 
 2. Init and update git submodules
 
