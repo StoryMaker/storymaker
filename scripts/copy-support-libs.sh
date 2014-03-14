@@ -4,6 +4,7 @@ echo "updating SlidingMenu"
 cp app/libs/android-support-v4.jar external/SlidingMenu/library/libs/android-support-v4.jar
 
 echo "updating HoloEverywhere" 
+mkdir external/HoloEverywhere/library/libs/
 cp app/libs/android-support-v4.jar external/HoloEverywhere/library/libs/android-support-v4.jar
 
 echo "updating HoloEverywhere/contrib/ActionBarSherlock" 

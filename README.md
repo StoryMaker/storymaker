@@ -7,10 +7,12 @@ Story Maker
 
 * [Android SDK](https://developer.android.com/sdk/installing/index.html)
 * Working [Android NDK](https://developer.android.com/tools/sdk/ndk/index.html) toolchain
+* Unix build toolchain.  Linux and OS X are well tested.
 
 Follow these steps to setup your dev environment:
 
-1. Checkout mrapp git repo
+1. Clone the git repo, make sure you fork first if you indent to commit
+
 2. Init and update git submodules
 
     git submodule update --init --recursive
@@ -34,7 +36,10 @@ Follow these steps to setup your dev environment:
         external/android-ffmpeg-java/
         external/WordpressJavaAndroid/
         external/SecureShareLib/SecureShareUILibrary/
-
+        external/cardsui-for-android/CardsUILib
+        external/SlidingMenu/library
+        external/Android-ViewPagerIndicator/library
+        external/RangeSeekBar/library
 
    **Using command line**
 
