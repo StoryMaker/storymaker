@@ -22,14 +22,18 @@ public class ProjectsProvider extends ContentProvider {
     public static final int MEDIA_ID = 113;
     public static final int SCENES = 104;
     public static final int SCENE_ID = 114;
+    public static final int AUTH = 105;
+    public static final int AUTH_ID = 115;
     public static final String PROJECTS_BASE_PATH = "projects";
     public static final String SCENES_BASE_PATH = "scenes";
     public static final String LESSONS_BASE_PATH = "lessons";
     public static final String MEDIA_BASE_PATH = "media";
+    public static final String AUTH_BASE_PATH = "auth";
     public static final Uri PROJECTS_CONTENT_URI = Uri.parse("content://" + AUTHORITY + "/" + PROJECTS_BASE_PATH);
     public static final Uri SCENES_CONTENT_URI = Uri.parse("content://" + AUTHORITY + "/" + SCENES_BASE_PATH);
     public static final Uri LESSONS_CONTENT_URI = Uri.parse("content://" + AUTHORITY + "/" + LESSONS_BASE_PATH);
     public static final Uri MEDIA_CONTENT_URI = Uri.parse("content://" + AUTHORITY + "/" + MEDIA_BASE_PATH);
+    public static final Uri AUTH_CONTENT_URI = Uri.parse("content://" + AUTHORITY + "/" + AUTH_BASE_PATH);
 
     public static final String PROJECTS_CONTENT_ITEM_TYPE = ContentResolver.CURSOR_ITEM_BASE_TYPE
             + "/projects";
@@ -47,6 +51,10 @@ public class ProjectsProvider extends ContentProvider {
             + "/media";
     public static final String MEDIA_CONTENT_TYPE = ContentResolver.CURSOR_DIR_BASE_TYPE
             + "/media";
+    public static final String AUTH_CONTENT_ITEM_TYPE = ContentResolver.CURSOR_ITEM_BASE_TYPE
+            + "/auth";
+    public static final String AUTH_CONTENT_TYPE = ContentResolver.CURSOR_DIR_BASE_TYPE
+            + "/auth";
     
     private static final UriMatcher sURIMatcher = new UriMatcher(
             UriMatcher.NO_MATCH);
@@ -60,6 +68,8 @@ public class ProjectsProvider extends ContentProvider {
         sURIMatcher.addURI(AUTHORITY, LESSONS_BASE_PATH + "/#", LESSON_ID);
         sURIMatcher.addURI(AUTHORITY, MEDIA_BASE_PATH, MEDIA);
         sURIMatcher.addURI(AUTHORITY, MEDIA_BASE_PATH + "/#", MEDIA_ID);
+        sURIMatcher.addURI(AUTHORITY, AUTH_BASE_PATH, AUTH);
+        sURIMatcher.addURI(AUTHORITY, AUTH_BASE_PATH + "/#", AUTH_ID);
     }
     
     @Override
@@ -112,6 +122,14 @@ public class ProjectsProvider extends ContentProvider {
         case MEDIA:
         	queryBuilder.setTables(StoryMakerDB.Schema.Media.NAME);
             break;
+        case AUTH_ID:
+            queryBuilder.setTables(StoryMakerDB.Schema.Auth.NAME);
+            queryBuilder.appendWhere(StoryMakerDB.Schema.Auth.ID + "="
+                    + uri.getLastPathSegment());
+            break;
+        case AUTH:
+        	queryBuilder.setTables(StoryMakerDB.Schema.Auth.NAME);
+            break;
         default:
             throw new IllegalArgumentException("Unknown URI");
         }
@@ -147,6 +165,11 @@ public class ProjectsProvider extends ContentProvider {
             	.insertOrThrow(StoryMakerDB.Schema.Media.NAME, null, values);
             getContext().getContentResolver().notifyChange(uri, null);
             return MEDIA_CONTENT_URI.buildUpon().appendPath(MEDIA_BASE_PATH).appendPath("" + newId).build();
+		case AUTH:
+            newId = mDB.getWritableDatabase(mPassphrase)
+            	.insertOrThrow(StoryMakerDB.Schema.Auth.NAME, null, values);
+            getContext().getContentResolver().notifyChange(uri, null);
+            return AUTH_CONTENT_URI.buildUpon().appendPath(AUTH_BASE_PATH).appendPath("" + newId).build();
 		default:
 			throw new IllegalArgumentException("Unknown URI");
 		}
@@ -173,6 +196,10 @@ public class ProjectsProvider extends ContentProvider {
 		case MEDIA:
 		case MEDIA_ID:
 			table = StoryMakerDB.Schema.Media.NAME;
+			break;
+		case AUTH:
+		case AUTH_ID:
+			table = StoryMakerDB.Schema.Auth.NAME;
 			break;
 		default:
 			throw new IllegalArgumentException("Unknown URI");
@@ -204,6 +231,10 @@ public class ProjectsProvider extends ContentProvider {
 		case MEDIA:
 		case MEDIA_ID:
 			table = StoryMakerDB.Schema.Media.NAME;
+			break;
+		case AUTH:
+		case AUTH_ID:
+			table = StoryMakerDB.Schema.Auth.NAME;
 			break;
 		default:
 			throw new IllegalArgumentException("Unknown URI");
