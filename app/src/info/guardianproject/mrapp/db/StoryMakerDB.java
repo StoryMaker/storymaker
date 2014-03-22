@@ -3,9 +3,10 @@ package info.guardianproject.mrapp.db;
 import net.sqlcipher.database.SQLiteDatabase;
 import net.sqlcipher.database.SQLiteOpenHelper;
 import android.content.Context;
+import android.util.Log;
 
 public class StoryMakerDB extends SQLiteOpenHelper {
-	
+    private static final String TAG = "StoryMakerDB";
     private static final int DB_VERSION = 4;
     private static final String DB_NAME = "sm.db";
     
@@ -25,6 +26,7 @@ public class StoryMakerDB extends SQLiteOpenHelper {
     
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        Log.d(TAG, "updating db from " + oldVersion + " to " + newVersion);
         if ((oldVersion < 2) && (newVersion == 2)) {
             db.execSQL(StoryMakerDB.Schema.Projects.UPDATE_TABLE_PROJECTS);
         } 
