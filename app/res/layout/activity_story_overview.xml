@@ -1,0 +1,86 @@
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+   	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content"
+	android:background="@color/light_grey"
+	tools:context=".StoryOverviewActivity">
+
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:orientation="vertical"
+		android:padding="16dp">
+	    
+		<TextView
+	        android:id="@+id/tv_story_title"
+			style="@style/LabelHeader" />	
+			
+		<TextView
+	        android:id="@+id/tv_story_desciption" 
+			style="@style/TextGeneral" />
+		
+		<FrameLayout
+		    android:id="@+id/fl_tag_container"
+		    android:layout_width="match_parent"
+		    android:layout_height="match_parent" />
+		
+		<LinearLayout
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:orientation="horizontal" >
+		
+			<TextView
+		        android:text="@string/label_section" 
+				style="@style/LabelGeneral"
+				android:paddingLeft="8dp"  
+				android:paddingRight="16dp"/>
+				
+			<TextView
+		        android:id="@+id/tv_story_section" 
+				style="@style/TextGeneral" />
+			
+		</LinearLayout>	
+		
+		<LinearLayout
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:orientation="horizontal" >
+		
+		    <TextView
+	        android:text="@string/label_location" 
+			style="@style/LabelGeneral"
+			android:paddingRight="16dp"/>
+		    		
+			<TextView
+	        android:id="@+id/tv_story_location" 
+			style="@style/TextGeneral" />
+		    
+		</LinearLayout>
+			
+		<View
+		    android:layout_marginTop="8dp"
+    		style="@style/DividerHorizontal"/>
+		
+		<LinearLayout
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:orientation="vertical"
+			android:background="@color/light_grey_super"
+			android:padding="4dp">
+		
+		    <TextView
+		        android:text="@string/label_activities"
+		        android:gravity="center_horizontal"
+				style="@style/LabelHeader" />	
+				
+			<TextView
+		        android:text="Story shared on Facebook" 
+				style="@style/TextGeneral" />
+			<TextView
+		        android:text="Story Created" 
+				style="@style/TextGeneral" />
+	    
+    	</LinearLayout>		
+	</LinearLayout>
+</ScrollView>

@@ -17,9 +17,13 @@ public class Project {
     protected Context context;
     protected int id;
     protected String title;
+    protected String description;
     protected String thumbnailPath;
     protected int storyType;
     protected String templatePath;
+    protected String section;
+    protected String location;
+    protected ArrayList<String> tags = new ArrayList<String>();
     
     public final static int STORY_TYPE_VIDEO = 0;
     public final static int STORY_TYPE_AUDIO = 1;
@@ -311,6 +315,13 @@ public class Project {
     public void setTitle(String title) {
         this.title = title;
     }
+    
+    public String getDescription() {
+	     return this.description;
+	}
+	public void setDescription(String description) {
+	     this.description = description;
+	}
 
     /**
      * @return the thumbnailPath
@@ -342,6 +353,31 @@ public class Project {
     public void setTemplatePath(String template) {
         this.templatePath = template;
     }
+    
+	public String getSection() {
+	     return this.section;
+	}
+	public void setSection(String section) {
+	     this.section = section;
+	}
+	
+	public String getLocation() {
+		return this.location;
+	}
+	public void setLocation(String location) {
+		this.location = location;
+	}
+	
+	public String[] getTagsAsArray() {	
+		return tags.toArray(new String[tags.size()]);
+	}
+	public void addTag(String tag) {
+		this.tags.add(tag);
+	}
+	public void removeTag(String tag) {
+		this.tags.remove(tag);
+	}
+	
     
     public static String getSimpleTemplateForMode (int storyMode)
     {

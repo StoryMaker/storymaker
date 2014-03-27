@@ -1,143 +1,207 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="180dp"
-    android:layout_height="match_parent"
-    android:background="#565552"
-    android:orientation="vertical" >
 
-     <TextView
-        android:id="@+id/textView1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/drawer_quick_capture"
-        android:textAppearance="?android:attr/textAppearanceSmall" 
-        android:layout_margin="3sp"
-        android:textColor="#dddddd"
-        />
-    <View
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="1dp"
-    android:background="#33999999"/>
-     
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="20sp"
-         >
-
-        
-        <ImageButton
-            android:id="@+id/btnDrawerQuickCaptureVideo"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:background="@android:color/transparent"
-            android:padding="5dp"
-            android:scaleType="fitCenter"
-            android:src="@drawable/quick_capture_video" />
-        
-           <ImageButton
-            android:id="@+id/btnDrawerQuickCapturePhoto"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:background="@android:color/transparent"
-            android:padding="5dp"
-            android:scaleType="fitCenter"
-            android:src="@drawable/quick_capture_photo" />
-           
-              <ImageButton
-            android:id="@+id/btnDrawerQuickCaptureAudio"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:background="@android:color/transparent"
-            android:padding="5dp"
-            android:scaleType="fitCenter"
-            android:src="@drawable/quick_capture_audio" />
-
-    </LinearLayout>
-<View
-    android:layout_width="fill_parent"
-    android:layout_height="1dp"
-    android:background="#33999999"/>
-    <Button
-        android:id="@+id/btnDrawerHome"
-        android:layout_width="180dp"
-        android:layout_height="wrap_content"
-        android:background="@android:color/transparent"
-        android:drawableLeft="@drawable/ic_nav_home"
-                android:gravity="left|center_vertical"
-        android:textColor="#dddddd"
-        android:text="@string/title_activity_home"
-    />
-<View
-    android:layout_width="fill_parent"
-    android:layout_height="1dp"
-    android:background="#33999999"/>
-    <Button
-        android:id="@+id/btnDrawerProjects"
-        android:layout_width="180dp"
-        android:layout_height="wrap_content"
-        
-            android:background="@android:color/transparent"
-        android:drawableLeft="@drawable/ic_home_projects"
-        android:gravity="left|center_vertical"
-        android:text="@string/menu_projects"
-        android:textColor="#dddddd"
-        
-         />
-<View
-    android:layout_width="fill_parent"
-    android:layout_height="1dp"
-    android:background="#33999999"/>
-    <Button
-        android:id="@+id/btnDrawerLessons"
-        android:layout_width="180dp"
-        android:layout_height="wrap_content"
-        
-            android:background="@android:color/transparent"
-        android:drawableLeft="@drawable/ic_nav_lessons"
-        android:gravity="left|center_vertical"
-        android:text="@string/menu_lessons"
-        android:textColor="#dddddd"
-
-/>
-<View
-    android:layout_width="fill_parent"
-    android:layout_height="1dp"
-    android:background="#33999999"/>
-    <Button
-        android:id="@+id/btnDrawerAccount"
-        android:layout_width="180dp"
-        android:layout_height="wrap_content"
-        
-            android:background="@android:color/transparent"
-        android:drawableLeft="@drawable/ic_nav_preferences"
-        android:gravity="left|center_vertical"
-        android:text="@string/drawer_profile"
-                android:textColor="#dddddd"
-        
-         />
+    android:layout_height="fill_parent"
     
-    <View
-    android:layout_width="fill_parent"
-    android:layout_height="1dp"
-    android:background="#33999999"
-    
-    />
-    
-    <Button
-        android:id="@+id/btnDrawerSettings"
-        android:layout_width="180dp"
-        android:layout_height="wrap_content"
-        android:background="@android:color/transparent"
-        android:drawableLeft="@drawable/ic_nav_media_settings"
-        android:gravity="left|center_vertical"
-        android:text="@string/menu_settings"
-                android:textColor="#dddddd"
-        
-        
-         />
-<View
-    android:layout_width="fill_parent"
-    android:layout_height="1dp"
-    android:background="#33999999"/>
-</LinearLayout>
+    >
+
+	<LinearLayout 
+	    android:layout_width="180dp"
+	    android:layout_height="match_parent"
+	    android:background="#565552"
+	    android:orientation="vertical" >
+	
+	    
+	    <LinearLayout
+	        android:id="@+id/llLogin"
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:layout_marginBottom="8sp"
+	        android:clickable="true"
+	        android:background="@color/blue"
+	        android:orientation="vertical">
+	        
+	        <TextView
+	            android:layout_width="fill_parent"
+	            android:layout_height="wrap_content"
+	            android:layout_marginTop="16sp"
+	        	android:layout_marginBottom="8sp"
+	        	android:layout_marginLeft="8sp"
+	            android:text="@string/menu_join_storymaker" 
+	            android:textColor="#dddddd"/>
+	        
+	        <TextView
+	            android:layout_width="fill_parent"
+	            android:layout_height="wrap_content"
+	            android:layout_marginLeft="8sp"
+	        	android:layout_marginBottom="8sp"
+	            android:text="@string/menu_sign_up" 
+	            android:textColor="#dddddd"
+	            android:textStyle="bold"/>
+	        
+		</LinearLayout>       
+	
+	    <TextView
+	        android:id="@+id/textView1"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_margin="4sp"
+	        android:text="@string/drawer_quick_capture"
+	        android:textAppearance="?android:attr/textAppearanceSmall"
+	        android:textColor="#dddddd" />
+	
+	    <View
+	        android:layout_width="fill_parent"
+	        android:layout_height="1dp"
+	        android:background="#33999999" />
+	
+	    <LinearLayout
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:layout_marginBottom="20sp" >
+	
+	        <ImageButton
+	            android:id="@+id/btnDrawerQuickCaptureVideo"
+	            android:layout_width="60dp"
+	            android:layout_height="60dp"
+	            android:background="@android:color/transparent"
+	            android:padding="5dp"
+	            android:scaleType="fitCenter"
+	            android:src="@drawable/quick_capture_video" />
+	
+	        <ImageButton
+	            android:id="@+id/btnDrawerQuickCapturePhoto"
+	            android:layout_width="60dp"
+	            android:layout_height="60dp"
+	            android:background="@android:color/transparent"
+	            android:padding="5dp"
+	            android:scaleType="fitCenter"
+	            android:src="@drawable/quick_capture_photo" />
+	
+	        <ImageButton
+	            android:id="@+id/btnDrawerQuickCaptureAudio"
+	            android:layout_width="60dp"
+	            android:layout_height="60dp"
+	            android:background="@android:color/transparent"
+	            android:padding="5dp"
+	            android:scaleType="fitCenter"
+	            android:src="@drawable/quick_capture_audio" />
+	    </LinearLayout>
+	
+	    <View
+	        android:layout_width="fill_parent"
+	        android:layout_height="1dp"
+	        android:background="#33999999" />
+	
+	    <Button
+	        android:id="@+id/btnDrawerHome"
+	        android:layout_width="180dp"
+	        android:layout_height="wrap_content"
+	        android:background="@android:color/transparent"
+	        android:drawableLeft="@drawable/ic_nav_home"
+	        android:gravity="left|center_vertical"
+	        android:text="@string/title_activity_home"
+	        android:textColor="#dddddd" />
+	
+	    <View
+	        android:layout_width="fill_parent"
+	        android:layout_height="1dp"
+	        android:background="#33999999" />
+	
+	    <Button
+	        android:id="@+id/btnDrawerProjects"
+	        android:layout_width="180dp"
+	        android:layout_height="wrap_content"
+	        android:background="@android:color/transparent"
+	        android:drawableLeft="@drawable/ic_home_projects"
+	        android:gravity="left|center_vertical"
+	        android:text="@string/menu_projects"
+	        android:textColor="#dddddd" />
+	
+	    <View
+	        android:layout_width="fill_parent"
+	        android:layout_height="1dp"
+	        android:background="#33999999" />
+	
+	    <Button
+	        android:id="@+id/btnDrawerLessons"
+	        android:layout_width="180dp"
+	        android:layout_height="wrap_content"
+	        android:background="@android:color/transparent"
+	        android:drawableLeft="@drawable/ic_nav_lessons"
+	        android:gravity="left|center_vertical"
+	        android:text="@string/menu_lessons"
+	        android:textColor="#dddddd" />
+	
+	    <View
+	        android:layout_width="fill_parent"
+	        android:layout_height="1dp"
+	        android:background="#33999999" />
+	
+	    <!-- FIXME: rename btnDrawerAccount to btnDrawerLogin or btnDrawerProfile -->
+	
+	    <!-- <Button
+	        android:id="@+id/btnDrawerAccount"
+	        android:layout_width="180dp"
+	        android:layout_height="wrap_content"
+	        android:background="@android:color/transparent"
+	        android:drawableLeft="@drawable/ic_nav_preferences"
+	        android:gravity="left|center_vertical"
+	        android:text="@string/drawer_profile"
+	        android:textColor="#dddddd" />
+	
+	    <View
+	        android:layout_width="fill_parent"
+	        android:layout_height="1dp"
+	        android:background="#33999999" /> -->
+	
+	    <Button
+	        android:id="@+id/btnDrawerAccounts"
+	        android:layout_width="180dp"
+	        android:layout_height="wrap_content"
+	        android:background="@android:color/transparent"
+	        android:drawableLeft="@drawable/ic_nav_preferences"
+	        android:gravity="left|center_vertical"
+	        android:text="@string/menu_accounts"
+	        android:textColor="#dddddd" />
+	
+	    <View
+	        android:layout_width="fill_parent"
+	        android:layout_height="1dp"
+	        android:background="#33999999" />
+	
+	    <Button
+	        android:id="@+id/btnDrawerUploadManager"
+	        android:layout_width="180dp"
+	        android:layout_height="wrap_content"
+	        android:background="@android:color/transparent"
+	        android:drawableLeft="@drawable/ic_nav_media_settings"
+	        android:gravity="left|center_vertical"
+	        android:text="@string/menu_upload_manager"
+	        android:textColor="#dddddd" /> 
+	
+	    <View
+	        android:layout_width="fill_parent"
+	        android:layout_height="1dp"
+	        android:background="#33999999" />
+	    
+	    <!-- <Button
+	        android:id="@+id/btnDrawerSettings"
+	        android:layout_width="180dp"
+	        android:layout_height="wrap_content"
+	        android:background="@android:color/transparent"
+	        android:drawableLeft="@drawable/ic_nav_media_settings"
+	        android:gravity="left|center_vertical"
+	        android:text="@string/menu_settings"
+	        android:textColor="#dddddd" /> 
+	
+	    <View
+	        android:layout_width="fill_parent"
+	        android:layout_height="1dp"
+	        android:background="#33999999" />-->
+	
+	</LinearLayout>
+
+</ScrollView>

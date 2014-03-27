@@ -47,6 +47,7 @@ Follow these steps to setup your dev environment:
         external/SlidingMenu/library
         external/Android-ViewPagerIndicator/library
         external/RangeSeekBar/library
+        external/SecureShareLib/SecureShareUILibrary/
 
 1. Import the StoryMaker project from the app/ subfolder
 

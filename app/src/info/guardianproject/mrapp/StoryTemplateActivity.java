@@ -134,7 +134,7 @@ public class StoryTemplateActivity extends EditorBaseActivity implements ActionB
                 
                 Bundle args = new Bundle();
                 args.putInt(TemplateStoryMakeFragment.ARG_SECTION_NUMBER, i + 1);
-            	args.putInt("layout", R.layout.fragment_story_publish);
+            	args.putInt("layout", R.layout.fragment_complete_story);
                 fragment.setArguments(args);
             } 
             

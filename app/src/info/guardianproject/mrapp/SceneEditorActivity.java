@@ -53,7 +53,7 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        
         Intent intent = getIntent();
         
 //        mTemplateJsonPath = getIntent().getStringExtra("template_path"); 
@@ -185,6 +185,12 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
                 exportProjectFiles();
             
                 return true;
+            case R.id.itemInfo:
+            	Intent intent = new Intent(this, StoryOverviewActivity.class);
+            	intent.putExtra("pid", mProject.getId());
+            	startActivity(intent);
+            	
+            	return true;
             case R.id.itemTrim:
                 if (mFragmentTab1 != null) {
                 	if(((OrderClipsFragment) mFragmentTab1).loadTrim()) {
@@ -418,7 +424,6 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
         FragmentManager fm = getSupportFragmentManager();
 
         if (mMenu != null) {
-            mMenu.findItem(R.id.itemInfo).setVisible(false);
             mMenu.findItem(R.id.itemTrim).setVisible(false);
         }
         
@@ -463,8 +468,7 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
         } else if (tab.getPosition() == 1) {
             layout = R.layout.fragment_order_clips;
 
-            if (mMenu != null) {
-                mMenu.findItem(R.id.itemInfo).setVisible(true);       
+            if (mMenu != null) {      
                 mMenu.findItem(R.id.itemForward).setEnabled(true);
                 
                 //hide irrelevant menu items
@@ -519,7 +523,7 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
                 startActivity(intent);
                 finish();
             } else {
-                layout = R.layout.fragment_story_publish;
+                layout = R.layout.fragment_complete_story;
                 
                 if (mPublishFragment == null)
                 {

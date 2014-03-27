@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="info.guardianproject.mrapp"
     android:installLocation="auto"
@@ -5,115 +6,115 @@
     android:versionName="0.0.7-build95" >
    
     <uses-sdk
-        android:minSdkVersion="10"
+        android:minSdkVersion="14"
         android:targetSdkVersion="17" />
-    
+
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.READ_MEDIA_STORAGE"  android:required="false"  />      
-    
-    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"  android:required="false"  />
-     
+    <uses-permission
+        android:name="android.permission.READ_MEDIA_STORAGE"
+        android:required="false" />
+    <uses-permission
+        android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"
+        android:required="false" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
-   
-    <uses-permission android:name="android.permission.WAKE_LOCK"  android:required="false"  />
-    
-    <uses-feature android:name="android.hardware.camera" android:required="false" />
-    
-    <uses-permission android:name="android.permission.GET_ACCOUNTS"></uses-permission>
-  	<uses-permission android:name="android.permission.MANAGE_ACCOUNTS"></uses-permission> 
-    <uses-permission android:name="android.permission.USE_CREDENTIALS"></uses-permission>
+    <uses-permission
+        android:name="android.permission.WAKE_LOCK"
+        android:required="false" />
 
-    <uses-permission android:name="com.google.android.googleapps.permission.GOOGLE_AUTH"  android:required="false" />
-    <uses-permission android:name="com.google.android.googleapps.permission.GOOGLE_AUTH.youtube"  android:required="false" />
-    
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="false" />
+
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" >
+    </uses-permission>
+    <uses-permission android:name="android.permission.MANAGE_ACCOUNTS" >
+    </uses-permission>
+    <uses-permission android:name="android.permission.USE_CREDENTIALS" >
+    </uses-permission>
+    <uses-permission
+        android:name="com.google.android.googleapps.permission.GOOGLE_AUTH"
+        android:required="false" />
+    <uses-permission
+        android:name="com.google.android.googleapps.permission.GOOGLE_AUTH.youtube"
+        android:required="false" />
+
     <supports-screens
         android:anyDensity="true"
-        android:xlargeScreens="true"
         android:largeScreens="true"
         android:normalScreens="true"
+        android:resizeable="true"
         android:smallScreens="true"
-        android:resizeable="true"   />
-
-    
+        android:xlargeScreens="true" />
 
     <application
-        android:name=".StoryMakerApp"
+        android:name="info.guardianproject.mrapp.StoryMakerApp"
+        android:configChanges="orientation|keyboardHidden|screenSize|locale"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/Theme.storymakerstyle"
         android:largeHeap="true"
-        android:configChanges="orientation|keyboardHidden|screenSize|locale"
-		android:supportsRtl="true"
-         >
-     
-        <activity android:name=".server.LoginActivity"
-            android:windowSoftInputMode="stateHidden"
-              android:screenOrientation="portrait"
-             android:configChanges="locale"
-
-            >
+        android:supportsRtl="true"
+        android:theme="@style/Theme.storymakerstyle" >
+        <activity
+            android:name="info.guardianproject.mrapp.server.LoginActivity"
+            android:configChanges="locale"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" >
         </activity>
         <!-- Entry for RegisterActivity.class -->
         <activity
-            android:name=".server.RegisterActivity"
+            android:name="info.guardianproject.mrapp.server.RegisterActivity"
             android:label="Register New Account" >
         </activity>
         <activity
-            android:name=".HomeActivity"
+            android:name="info.guardianproject.mrapp.HomeActivity"
             android:configChanges="locale"
             android:label="@string/app_name"
-            android:launchMode="singleTop"
-            
-             >
+            android:launchMode="singleTop" >
             <intent-filter android:label="@string/app_name" >
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
-            android:name=".StoryNewActivity"
+            android:name="info.guardianproject.mrapp.StoryNewActivity"
             android:label="@string/title_activity_new_story" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".HomeActivity" />
         </activity>
-              <activity
-            android:name=".ProjectsActivity"
+        <activity
+            android:name="info.guardianproject.mrapp.ProjectsActivity"
             android:configChanges="locale"
             android:label="@string/title_projects"
-            android:launchMode="singleTop"
-            >
+            android:launchMode="singleTop" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".HomeActivity" />
         </activity>
         <activity
-            android:name=".LessonsActivity"
+            android:name="info.guardianproject.mrapp.LessonsActivity"
             android:configChanges="locale"
             android:label="@string/title_activity_lessons"
             android:launchMode="singleTop"
-            android:screenOrientation="portrait"
-            >
+            android:screenOrientation="portrait" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".HomeActivity" />
         </activity>
-
         <activity
-            android:name=".StoryTemplateChooserActivity"
-            android:label="@string/title_activity_choose_template"
-            >
+            android:name="info.guardianproject.mrapp.StoryTemplateChooserActivity"
+            android:label="@string/title_activity_choose_template" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ProjectsActivity" />
         </activity>
         <activity
-            android:name=".StoryTemplateActivity"
+            android:name="info.guardianproject.mrapp.StoryTemplateActivity"
             android:configChanges="orientation|screenSize"
             android:label="@string/title_activity_story_template" >
             <meta-data
@@ -121,7 +122,7 @@
                 android:value=".ProjectsActivity" />
         </activity>
         <activity
-            android:name=".SceneEditorActivity"
+            android:name="info.guardianproject.mrapp.SceneEditorActivity"
             android:configChanges="orientation|screenSize"
             android:label="@string/title_activity_scene_editor" >
             <meta-data
@@ -129,61 +130,50 @@
                 android:value=".ProjectsActivity" />
         </activity>
         <activity
-            android:name=".WelcomeActivity"
-            android:label="@string/app_name"            
-             >
-        </activity>  
-         <activity
-            android:name=".ProjectListActivity">
-             <meta-data
+            android:name="info.guardianproject.mrapp.WelcomeActivity"
+            android:label="@string/app_name" >
+        </activity>
+        <activity android:name="info.guardianproject.mrapp.ProjectListActivity" >
+            <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".HomeActivity" />
         </activity>
-        <activity
-            android:name=".lessons.LessonViewActivity"
-            >
-              <meta-data
+        <activity android:name="info.guardianproject.mrapp.lessons.LessonViewActivity" >
+            <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".LessonsActivity" />
-             </activity>
-        <activity android:name=".server.WebViewActivity" />
-        
-           <activity
-            android:name=".media.MediaProjectManager"
-          
-            android:configChanges="orientation|keyboardHidden|screenSize" >   
-            	      
         </activity>
-        <activity android:name=".MediaOutputPreferences" />
-        <activity android:name=".SimplePreferences" />
-        
-        <activity android:name=".media.OverlayCameraActivity" 
-             android:screenOrientation="landscape"
-            />
-       
-         <activity android:name=".media.AudioRecorderActivity" />
-
-       <activity android:name=".server.OAuthAccessTokenActivity" />
-         
-       
-       
-        <provider
-		    android:authorities="info.guardianproject.mrapp.db.LessonsProvider"
-		    android:multiprocess="true"
-		    android:exported="false"
-		    android:name="info.guardianproject.mrapp.db.LessonsProvider"></provider>
-        
-        <provider
-		    android:authorities="info.guardianproject.mrapp.db.ProjectsProvider"
-		    android:multiprocess="true"
-		     android:exported="false"
-		    android:name="info.guardianproject.mrapp.db.ProjectsProvider"></provider>
-		      
+        <activity android:name="info.guardianproject.mrapp.server.WebViewActivity" />
         <activity
+            android:name="info.guardianproject.mrapp.media.MediaProjectManager"
+            android:configChanges="orientation|keyboardHidden|screenSize" >
+        </activity>
+        <activity android:name="info.guardianproject.mrapp.MediaOutputPreferences" />
+        <activity android:name="info.guardianproject.mrapp.SimplePreferences" />
+        <activity
+            android:name="info.guardianproject.mrapp.media.OverlayCameraActivity"
+            android:screenOrientation="landscape" />
+        <activity android:name="info.guardianproject.mrapp.media.AudioRecorderActivity" />
+        <activity android:name="info.guardianproject.mrapp.server.OAuthAccessTokenActivity" />
+
+        <provider
+            android:name="info.guardianproject.mrapp.db.LessonsProvider"
+            android:authorities="info.guardianproject.mrapp.db.LessonsProvider"
+            android:exported="false"
+            android:multiprocess="true" >
+        </provider>
+        <provider
+            android:name="info.guardianproject.mrapp.db.ProjectsProvider"
+            android:authorities="info.guardianproject.mrapp.db.ProjectsProvider"
+            android:exported="false"
+            android:multiprocess="true" >
+        </provider>
+
+        <activity
+            android:name="net.micode.soundrecorder.SoundRecorder"
             android:configChanges="keyboardHidden"
-           android:name="net.micode.soundrecorder.SoundRecorder"
-            android:screenOrientation="portrait">
-              <intent-filter>
+            android:screenOrientation="portrait" >
+            <intent-filter>
                 <action android:name="android.intent.action.GET_CONTENT" />
 
                 <category android:name="android.intent.category.DEFAULT" />
@@ -192,41 +182,69 @@
                 <data android:mimeType="audio/amr" />
                 <data android:mimeType="audio/3gpp" />
             </intent-filter>
-            <intent-filter >
+            <intent-filter>
                 <action android:name="android.provider.MediaStore.RECORD_SOUND" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
 
-
         <service
-            android:exported="false"
-            android:name="net.micode.soundrecorder.RecorderService" >
+            android:name="net.micode.soundrecorder.RecorderService"
+            android:exported="false" >
         </service>
-        
+
         <receiver
-       android:icon="@drawable/ic_launcher"
-       android:label="StoryMaker QuickStory"
-       android:name="QuickStoryWidgetProvider" >
-       <intent-filter >
-            <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
-       </intent-filter>
+            android:name="info.guardianproject.mrapp.QuickStoryWidgetProvider"
+            android:icon="@drawable/ic_launcher"
+            android:label="StoryMaker QuickStory" >
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
 
-       <meta-data
-          android:name="android.appwidget.provider"
-          android:resource="@xml/quickstory_widget_info" />
-</receiver> 
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/quickstory_widget_info" />
+        </receiver>
 
-         <activity android:name="info.guardianproject.onionkit.ui.CertDisplayActivity"
+        <activity
+            android:name="info.guardianproject.onionkit.ui.CertDisplayActivity"
             android:configChanges="locale|screenSize|orientation"
-         	android:theme="@android:style/Theme.Dialog"
-         	 android:taskAffinity=""
-            />
-
-<activity android:name="net.hockeyapp.android.UpdateActivity" />
-
-        
+            android:taskAffinity=""
+            android:theme="@android:style/Theme.Dialog" />
+        <activity android:name="net.hockeyapp.android.UpdateActivity" />
+        <activity
+            android:name="info.guardianproject.mrapp.AccountsActivity"
+            android:label="@string/title_activity_accounts" >
+        </activity>
+        <activity
+            android:name="info.guardianproject.mrapp.StoryOverviewActivity"
+            android:label="@string/title_activity_story_overview"
+            android:theme="@style/PopupTheme" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".SceneEditorActivity" />
+        </activity>
+        <activity
+            android:name="info.guardianproject.mrapp.StoryOverviewEditActivity"
+            android:label="@string/title_activity_story_overview_edit"
+            android:theme="@style/PopupTheme" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".StoryOverviewActivity" />
+        </activity>
+        <activity
+            android:name="info.guardianproject.mrapp.ProjectTagFragment"
+            android:label="@string/title_activity_project_tag_fragment"
+            android:parentActivityName="android.support.v4.app.FragmentActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="android.support.v4.app.FragmentActivity" />
+        </activity>
+        <activity android:name="info.guardianproject.mrapp.FirstStartActivity" >
+        </activity>
+        <activity android:name="info.guardianproject.mrapp.server.WordPressAuthWebViewActivity" >
+        </activity>
     </application>
 
 </manifest>

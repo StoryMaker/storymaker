@@ -2,6 +2,7 @@ package info.guardianproject.mrapp.server;
 
 import info.guardianproject.mrapp.R;
 import info.guardianproject.mrapp.media.MediaHelper;
+
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -14,9 +15,10 @@ import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 
+
 public class WebViewActivity extends SherlockActivity {
 
-	WebView mWebView;
+	protected WebView mWebView;
 	MediaHelper mMediaHelper;
 
 	@Override
@@ -63,7 +65,7 @@ public class WebViewActivity extends SherlockActivity {
 						mMediaHelper.playMedia(Uri.parse(url), mimeType);
 					}
 					
-					return isMedia;// super.shouldOverrideUrlLoading(view, url);
+					return isMedia;
 				}
         		
         	});

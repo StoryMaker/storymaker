@@ -18,5 +18,9 @@ local.properties
 # Eclipse stuff
 *.settings/
 
-# Mac OS junk
+# Mac Garbage
 .DS_Store
+
+# Android Studio
+*.iml
+.idea/

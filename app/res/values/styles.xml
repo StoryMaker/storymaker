@@ -6,7 +6,7 @@
 	<item name="android:windowNoTitle">true</item>
 	</style>
 
-<color name="light_grey">#e9ebe7</color>
+
     
     <style name="AppTheme" parent="@style/Holo.Theme.Light.DarkActionBar" >
         <item name="android:windowBackground">@color/light_grey</item>
@@ -14,5 +14,37 @@
                   <item name="android:windowAnimationStyle">@null</item>
         
     </style>
+    
+        <!-- Custom Colors -->
+    <color name="light_grey">#E9EBE7</color>
+    <color name="light_grey_super">#D4D4D4</color>
+	<color name="light_blue">#10B2EF</color>
+    
+    <!-- Custom Styles -->
+	<style name="LabelHeader" >
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">22sp</item>
+    </style>
 	
+	<style name="LabelGeneral" >
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+    
+	<style name="TextGeneral" >
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+    
+	<style name="DividerHorizontal" >
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">1dp</item>
+        <item name="android:padding">4dp</item>
+        <item name="android:background">@color/light_blue</item>
+    </style>
+    	
 </resources>

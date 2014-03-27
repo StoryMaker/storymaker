@@ -15,6 +15,7 @@ external/RangeSeekBar/library
 external/Android-ViewPagerIndicator/library
 external/cardsui-for-android/CardsUILib
 external/SlidingMenu/library
+external/SecureShareLib/SecureShareUILibrary
 END
 
 

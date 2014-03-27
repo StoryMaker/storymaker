@@ -291,4 +291,10 @@
 
 <!-- /prefs -->
 
+
+<!-- FirstStartActivity -->
+
+<string name="tos_dialog_title">Terms of Service</string>
+<string name="tos_dialog_msg">Please Accept our Terms of Service before continuing</string>
+<string name="tos_dialog_positive_button">Got it</string>
 </resources>

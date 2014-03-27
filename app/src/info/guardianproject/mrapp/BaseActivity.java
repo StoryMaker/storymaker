@@ -1,4 +1,5 @@
 package info.guardianproject.mrapp;
+
 import info.guardianproject.mrapp.server.LoginActivity;
 
 import java.io.IOException;
@@ -6,6 +7,7 @@ import java.io.InputStream;
 import java.util.Date;
 
 import org.holoeverywhere.app.Activity;
+import org.holoeverywhere.widget.LinearLayout;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -19,6 +21,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.PixelFormat;
 import android.view.WindowManager;
 import android.widget.ImageView;
+
 
 //import com.google.analytics.tracking.android.EasyTracker;
 import com.slidingmenu.lib.SlidingMenu;
@@ -65,6 +68,8 @@ public class BaseActivity extends Activity {
         
         final Activity activity = this;
         
+        LinearLayout llDrawerLogin = (LinearLayout) findViewById(R.id.llLogin);
+        
         ImageButton btnDrawerQuickCaptureVideo = (ImageButton) findViewById(R.id.btnDrawerQuickCaptureVideo);
         ImageButton btnDrawerQuickCapturePhoto = (ImageButton) findViewById(R.id.btnDrawerQuickCapturePhoto);
         ImageButton btnDrawerQuickCaptureAudio = (ImageButton) findViewById(R.id.btnDrawerQuickCaptureAudio);
@@ -72,11 +77,22 @@ public class BaseActivity extends Activity {
         Button btnDrawerHome = (Button) findViewById(R.id.btnDrawerHome);
         Button btnDrawerProjects = (Button) findViewById(R.id.btnDrawerProjects);
         Button btnDrawerLessons = (Button) findViewById(R.id.btnDrawerLessons);
-        Button btnDrawerAccount = (Button) findViewById(R.id.btnDrawerAccount);
-        Button btnDrawerSettings = (Button) findViewById(R.id.btnDrawerSettings);
+        //Button btnDrawerAccount = (Button) findViewById(R.id.btnDrawerAccount);
+        //Button btnDrawerSettings = (Button) findViewById(R.id.btnDrawerSettings);
+        Button btnDrawerAccounts = (Button) findViewById(R.id.btnDrawerAccounts);
         
 
-       
+        llDrawerLogin.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+            	
+            	mSlidingMenu.showContent(true);
+                
+	        	Intent i = new Intent(activity, LoginActivity.class);
+	            activity.startActivity(i);
+            }
+        });
+        
         btnDrawerQuickCaptureVideo.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -155,7 +171,7 @@ public class BaseActivity extends Activity {
             }
         });
         
-        btnDrawerAccount.setOnClickListener(new OnClickListener() {
+        /*btnDrawerAccount.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -163,14 +179,24 @@ public class BaseActivity extends Activity {
                 Intent i = new Intent(activity, LoginActivity.class);
                 activity.startActivity(i);
             }
-        });
+        });*/
         
-        btnDrawerSettings.setOnClickListener(new OnClickListener() {
+        /*btnDrawerSettings.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-            	mSlidingMenu.showContent(true);
+                mSlidingMenu.showContent(true);
 
                 Intent i = new Intent(activity, SimplePreferences.class);
+                activity.startActivity(i);
+            }
+        });*/
+        
+        btnDrawerAccounts.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mSlidingMenu.showContent(true);
+
+                Intent i = new Intent(activity, AccountsActivity.class);
                 activity.startActivity(i);
             }
         });
@@ -180,10 +206,12 @@ public class BaseActivity extends Activity {
     
     @Override
     public void onCreate(Bundle savedInstanceState) {
-    
     	super.onCreate(savedInstanceState);
-        
-        (new Eula(this)).show();
+    	if(!Eula.isAccepted(this)) {
+            Intent firstStartIntent = new Intent(this, FirstStartActivity.class);
+            firstStartIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(firstStartIntent);
+        }
     }
     
     @Override

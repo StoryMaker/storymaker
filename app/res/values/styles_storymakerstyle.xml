@@ -96,5 +96,13 @@
         <item name="android:popupMenuStyle">@style/storymakerstyle_PopupMenu</item>
         <item name="android:dropDownListViewStyle">@style/storymakerstyle_DropDownListView</item>
     </style>
+    <style name="PopupTheme" parent="Holo.Theme.Dialog">
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowSoftInputMode">stateAlwaysHidden</item>
+        <item name="android:windowActionModeOverlay">true</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowNoTitle">false</item>
+    </style>
 
 </resources>
