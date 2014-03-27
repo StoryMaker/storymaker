@@ -297,4 +297,9 @@
 <string name="tos_dialog_title">Terms of Service</string>
 <string name="tos_dialog_msg">Please Accept our Terms of Service before continuing</string>
 <string name="tos_dialog_positive_button">Got it</string>
+
+<string name="acct_created_dialog_title">Access your Account</string>
+<string name="acct_created_dialog_msg"><b>Your StoryMaker password will be emailed to you shortly.</b> After obtaining your password, you may login at any time via the drawer menu (Accessed by swiping from the left screen edge).</string>
+<string name="acct_created_dialog_positive_button">Get Started!</string>
+
 </resources>

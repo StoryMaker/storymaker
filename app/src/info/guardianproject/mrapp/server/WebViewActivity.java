@@ -11,12 +11,13 @@ import android.webkit.WebSettings.PluginState;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
-import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 
+import org.holoeverywhere.app.Activity;
 
-public class WebViewActivity extends SherlockActivity {
+
+public class WebViewActivity extends Activity {
 
 	protected WebView mWebView;
 	MediaHelper mMediaHelper;
@@ -27,7 +28,7 @@ public class WebViewActivity extends SherlockActivity {
 
         setContentView(R.layout.activity_web_view);
 
-        getSherlock().getActionBar().setDisplayHomeAsUpEnabled(true);
+        getActionBar().setDisplayHomeAsUpEnabled(true);
         
         Intent intent = getIntent();
         if (intent != null)
