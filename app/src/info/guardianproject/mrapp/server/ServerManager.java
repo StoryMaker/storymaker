@@ -66,14 +66,10 @@ public class ServerManager {
 		mContext = context;
 	}
 	
-	//if the user hasn't registered with the user, show the login screen
+	//if the user hasn't logged in, show the login screen
     public boolean hasCreds ()
     {
-       
-        String user = mSettings.getString("user","");
-        
-        return (user != null && user.length() > 0);
-        
+        return Auth.getAuthDefault(mContext, Auth.STORYMAKER).credentialsAreValid();
     }
     
     private void connect() throws MalformedURLException, XmlRpcFault

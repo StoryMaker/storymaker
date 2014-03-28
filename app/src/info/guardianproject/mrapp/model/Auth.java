@@ -153,6 +153,26 @@ public class Auth {
         }
         updCursor.close();
     }
+    
+    /**
+     * @return true if credentials exist and are not passed their expiry date
+     */
+    public boolean credentialsAreValid() {
+        return ((!(getUserName() == null) || getUserName() == "") 
+                && (!(getCredentials() == null) || getCredentials() == "") 
+                && !credentialsExpired());
+    }
+    
+    /**
+     * 
+     * @return true if Now is passed the expiry date for the credentials
+     */
+    public boolean credentialsExpired() {
+        if (getExpires() == null) {
+            return false;
+        } 
+        return (new Date()).after(getExpires());
+    }
 
     // insert/update current record
     public void save() {
