@@ -53,7 +53,7 @@
         android:layout_marginTop="30dp"
         android:fontFamily="sans-serif-condensed"
         android:onClick="onSignupButtonClick"
-        android:text="SIGN UP FOR STORYMAKER"
+        android:text="@string/sign_up_btn"
         android:textSize="14sp" />
 
     <Button
@@ -64,7 +64,7 @@
         android:layout_centerHorizontal="true"
         android:fontFamily="sans-serif-condensed"
         android:onClick="onNoThanksButtonClick"
-        android:text="NO THANKS"
+        android:text="@string/no_thanks_btn"
         android:textSize="14sp" />
 
     <Button
@@ -77,7 +77,7 @@
         android:drawableLeft="@drawable/ic_contextsm_checkbox"
         android:fontFamily="sans-serif-condensed"
         android:onClick="onTosButtonClick"
-        android:text="I AGREE TO THE TERMS OF SERVICE"
+        android:text="@string/tos_btn"
         android:textSize="12sp" />
 
 </RelativeLayout>

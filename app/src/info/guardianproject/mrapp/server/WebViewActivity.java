@@ -28,7 +28,7 @@ public class WebViewActivity extends Activity {
 
         setContentView(R.layout.activity_web_view);
 
-        getActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         
         Intent intent = getIntent();
         if (intent != null)

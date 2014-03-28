@@ -88,7 +88,7 @@ public class BaseActivity extends Activity {
             	
             	mSlidingMenu.showContent(true);
                 
-	        	Intent i = new Intent(activity, LoginActivity.class);
+	        	Intent i = new Intent(activity, ConnectAccountActivity.class);
 	            activity.startActivity(i);
             }
         });

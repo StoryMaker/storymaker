@@ -4,7 +4,7 @@
     android:installLocation="auto"
     android:versionCode="95"
     android:versionName="0.0.7-build95" >
-   
+
     <uses-sdk
         android:minSdkVersion="14"
         android:targetSdkVersion="17" />
@@ -244,6 +244,10 @@
         <activity android:name="info.guardianproject.mrapp.FirstStartActivity" >
         </activity>
         <activity android:name="info.guardianproject.mrapp.server.WordPressAuthWebViewActivity" >
+        </activity>
+        <activity
+            android:name="info.guardianproject.mrapp.ConnectAccountActivity"
+            android:label="@string/title_activity_connect_account" >
         </activity>
     </application>
 
