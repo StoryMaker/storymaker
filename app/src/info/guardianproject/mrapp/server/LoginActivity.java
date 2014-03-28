@@ -93,7 +93,7 @@ public class LoginActivity extends BaseActivity implements Runnable
     
     private void saveCreds (String user, String pass)
     {   
-        ArrayList<Auth> results = Auth.getAuthsAsList(getApplicationContext(), "storymaker");
+        ArrayList<Auth> results = Auth.getAuthsAsList(getApplicationContext(), Auth.STORYMAKER);
         for (Auth deleteAuth : results) {
         	// only a single username/password is stored at a time
         	deleteAuth.delete();
@@ -102,7 +102,7 @@ public class LoginActivity extends BaseActivity implements Runnable
         Auth storymakerAuth = new Auth(getApplicationContext(),
         		                       -1, // should be set to a real value by insert method
         		                       "StoryMaker.cc",
-        		                       "storymaker",
+        		                       Auth.STORYMAKER,
         		                       user,
         		                       pass,
         		                       null,
@@ -110,15 +110,10 @@ public class LoginActivity extends BaseActivity implements Runnable
         storymakerAuth.save();
     } 
     
-    private void getCreds ()
+    private void getCreds()
     { 
-        ArrayList<Auth> results = Auth.getAuthsAsList(getApplicationContext(), "storymaker");
-        if (results.isEmpty()) {
-        	Log.w(AppConstants.TAG,"no username/password found for \"storymaker\"");
-        } else if (results.size() > 1) {
-        	Log.e(AppConstants.TAG,results.size() + " usernames/passwords found for \"storymaker\"");
-        } else {
-        	Auth storymakerAuth = results.get(0);
+        Auth storymakerAuth = Auth.getAuthDefault(getApplicationContext(), Auth.STORYMAKER);
+        if (storymakerAuth != null) {
         	txtUser.setText(storymakerAuth.getUserName());
         	txtPass.setText(storymakerAuth.getCredentials());
         }

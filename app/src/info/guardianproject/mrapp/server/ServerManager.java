@@ -2,6 +2,7 @@ package info.guardianproject.mrapp.server;
 
 import info.guardianproject.mrapp.AppConstants;
 import info.guardianproject.mrapp.StoryMakerApp;
+import info.guardianproject.mrapp.model.Auth;
 
 import java.io.File;
 import java.net.MalformedURLException;
@@ -23,7 +24,7 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 
 public class ServerManager {
-
+    private static final String TAG = "ServerManager";
 	private Wordpress mWordpress;	
 	private String mServerUrl;
 	private Context mContext;
@@ -75,16 +76,21 @@ public class ServerManager {
         
     }
     
-    private void connect () throws MalformedURLException, XmlRpcFault
+    private void connect() throws MalformedURLException, XmlRpcFault
     {
-    	if (mWordpress == null)
-    	{
-           String user = mSettings.getString("user","");
-           String pass = mSettings.getString("pass", "");
-         
-           if (user != null && user.length() > 0)
-        	   connect (user, pass);
-    	}
+        if (mWordpress == null)
+        {
+            Auth auth = Auth.getAuthDefault(mContext, Auth.STORYMAKER);
+            if (auth != null) {
+                String user = auth.getUserName();
+                String pass = auth.getCredentials();
+                if (user != null && user.length() > 0) {
+                    connect(user, pass);
+                    return;
+                }
+            }
+            Log.e(TAG, "connect() bailing out, user credentials are null or blank");
+        }
     }
 	
 	public void connect (String username, String password) throws MalformedURLException, XmlRpcFault
@@ -104,7 +110,7 @@ public class ServerManager {
 
 		}
 		
-		Log.d(AppConstants.TAG,"Logging into Wordpress: " + username + '@' + mServerUrl + PATH_XMLRPC);
+		Log.d(TAG, "Logging into Wordpress: " + username + '@' + mServerUrl + PATH_XMLRPC);
 		mWordpress = new Wordpress(username, password, mServerUrl + PATH_XMLRPC);	
 		
 		mWordpress.getRecentPosts(1); //need to do a test to force authentication

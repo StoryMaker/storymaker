@@ -23,6 +23,8 @@ public class Auth {
     protected String credentials;
     protected Date expires; // long stored in database as 8-bit int
     protected Date lastLogin; // long stored in database as 8-bit int
+    
+    public static final String STORYMAKER = "storymaker";
 
     // context constructor
     public Auth(Context context) {
@@ -221,6 +223,23 @@ public class Auth {
         }
         cursor.close();
         return auths;
+    }
+    
+    /**
+     * @param context
+     * @param site
+     * @return first item in the list that matches this site, null if none do
+     */
+    public static Auth getAuthDefault(Context context, String site) {
+        ArrayList<Auth> results = Auth.getAuthsAsList(context, site);
+        if (results.isEmpty()) {
+            Log.w(TAG,"no username/password found for \"storymaker\"");
+        } else if (results.size() > 1) {
+            Log.e(TAG,results.size() + " usernames/passwords found for \"storymaker\"");
+        } else {
+            return results.get(0);
+        }
+        return null;
     }
 
     // get result array for all rows with the specified site 
