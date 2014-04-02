@@ -3,6 +3,7 @@ package info.guardianproject.mrapp.server;
 import info.guardianproject.mrapp.AppConstants;
 import info.guardianproject.mrapp.StoryMakerApp;
 import info.guardianproject.mrapp.model.Auth;
+import info.guardianproject.mrapp.model.AuthTable;
 
 import java.io.File;
 import java.net.MalformedURLException;
@@ -69,14 +70,14 @@ public class ServerManager {
 	//if the user hasn't logged in, show the login screen
     public boolean hasCreds ()
     {
-        return Auth.getAuthDefault(mContext, Auth.STORYMAKER).credentialsAreValid();
+        return (new AuthTable()).getAuthDefault(mContext, Auth.STORYMAKER).credentialsAreValid();
     }
     
     private void connect() throws MalformedURLException, XmlRpcFault
     {
         if (mWordpress == null)
         {
-            Auth auth = Auth.getAuthDefault(mContext, Auth.STORYMAKER);
+            Auth auth = (new AuthTable()).getAuthDefault(mContext, Auth.STORYMAKER);
             if (auth != null) {
                 String user = auth.getUserName();
                 String pass = auth.getCredentials();

@@ -19,10 +19,6 @@ import android.net.Uri;
 
 public class Lesson extends Model {
 
-	Lesson(Context context) {
-        super(context);
-    }
-
     public String mTitle;
 	public String mDescription;
 	public String mResourcePath; //file, http, asset
@@ -37,54 +33,23 @@ public class Lesson extends Model {
 
 	public Date mStatusModified;
 
+    Lesson(Context context) {
+        super(context);
+    }
+    
+    Lesson(SQLiteDatabase db, Context context) {
+        super(db, context);
+    }
 
     @Override
     protected Table getTable() {
         if (mTable == null) {
-            mTable = new LessonTable();
+            mTable = new LessonTable(mDB);
         }
         return mTable;
     }
-    
-//    public static Cursor queryOne(Context context, SQLiteDatabase db, Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
-//        SQLiteQueryBuilder queryBuilder = new SQLiteQueryBuilder();
-//        queryBuilder.setTables(StoryMakerDB.Schema.Lessons.NAME);
-//        queryBuilder.appendWhere(StoryMakerDB.Schema.Lessons.ID + "=" + uri.getLastPathSegment());
-//        
-//        Cursor cursor = queryBuilder.query(db, projection, selection, selectionArgs, null, null, sortOrder);
-//        cursor.setNotificationUri(context.getContentResolver(), uri);
-//        return cursor;
-//    }
-//
-//    public static Cursor queryAll(Context context, SQLiteDatabase db, Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
-//        SQLiteQueryBuilder queryBuilder = new SQLiteQueryBuilder();
-//        queryBuilder.setTables(StoryMakerDB.Schema.Lessons.NAME);
-//        
-//        Cursor cursor = queryBuilder.query(db, projection, selection, selectionArgs, null, null, sortOrder);
-//        cursor.setNotificationUri(context.getContentResolver(), uri);
-//        return cursor;
-//    }
 
-//    public static Uri insert(Context context, SQLiteDatabase db, Uri uri, ContentValues values) {
-//        long newId;
-//        newId = db.insertOrThrow(StoryMakerDB.Schema.Lessons.NAME, null, values);
-//        context.getContentResolver().notifyChange(uri, null);
-//        return ProjectsProvider.LESSONS_CONTENT_URI.buildUpon().appendPath(ProjectsProvider.LESSONS_BASE_PATH).appendPath("" + newId).build();
-//    }
-//    
-//    public static int delete(Context context, SQLiteDatabase db, Uri uri, String selection, String[] selectionArgs) {
-//        int count = db.delete(StoryMakerDB.Schema.Lessons.NAME, selection, selectionArgs);
-//        context.getContentResolver().notifyChange(uri, null);
-//        return count;
-//    }
-//
-//    public static int update(Context context, SQLiteDatabase db, Uri uri, ContentValues values, String selection, String[] selectionArgs) {
-//        int count;
-//        count = db.update(StoryMakerDB.Schema.Lessons.NAME, values, selection, selectionArgs);
-//        context.getContentResolver().notifyChange(uri, null);
-//        return count;
-//    }
-    
+    // FIXME probably should move this to LessonTable
 	public static Lesson parse (Context context, String jsonTxt) throws Exception
 	{
 		Lesson result = new Lesson(context);

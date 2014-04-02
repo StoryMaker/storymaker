@@ -27,12 +27,39 @@ public class Auth extends Model {
     
     public static final String STORYMAKER = "storymaker";
 
-    // context constructor
+    /**
+     * Create a new, blank record via the Content Provider interface
+     * 
+     * @param context
+     */
     public Auth(Context context) {
         super(context);
     }
+    
+    /**
+     * Create a new, blank record via direct db access.  
+     * 
+     * This should be used within DB Migrations and Model or Table classes
+     * 
+     * @param db
+     * @param context
+     */
+    public Auth(SQLiteDatabase db, Context context) {
+        super(db, context);
+    }
 
-    // context + data constructor
+    /**
+     * Create a Model object via direct params, using Content Provider interface.
+     * 
+     * @param context
+     * @param id
+     * @param name
+     * @param site
+     * @param userName
+     * @param credentials
+     * @param expires
+     * @param lastLogin
+     */
     public Auth(Context context, int id, String name, String site, String userName, String credentials, Date expires, Date lastLogin ) {
         super(context);
         this.context = context;
@@ -44,8 +71,33 @@ public class Auth extends Model {
         this.expires = expires;
         this.lastLogin = lastLogin;
     }
+    
+    /**
+     * Create a Model object via direct params via direct db access.
+     * 
+     * This should be used within DB Migrations and Model or Table classes
+     * 
+     * @param db
+     * @param context
+     * @param id
+     * @param name
+     * @param site
+     * @param userName
+     * @param credentials
+     * @param expires
+     * @param lastLogin
+     */
+    public Auth(SQLiteDatabase db, Context context, int id, String name, String site, String userName, String credentials, Date expires, Date lastLogin ) {
+        this(context, id, name, site, userName, credentials, expires, lastLogin);
+        this.mDB = db;
+    }
 
-    // context + cursor constructor
+    /**
+     * Inflate record from a cursor
+     *  
+     * @param context
+     * @param cursor
+     */
     public Auth(Context context, Cursor cursor) {
         this(context,
              cursor.getInt(cursor.getColumnIndex(StoryMakerDB.Schema.Auth.ID)),
@@ -60,49 +112,23 @@ public class Auth extends Model {
         // expires/last_login columns are nullable, need to avoid errors creating Date objects
     }
 
+    /**
+     * Default constructor to inflate record from a cursor via direct db access.  This should be used within DB Migrations and within an Model or Tabel classes
+     * @param db
+     * @param context
+     */
+    public Auth(SQLiteDatabase db, Context context, Cursor cursor) {
+        this(context, cursor);
+        this.mDB = db;
+    }
+
     @Override
     protected Table getTable() {
         if (mTable == null) {
-            mTable = new AuthTable();
+            mTable = new AuthTable(mDB);
         }
         
         return mTable;
-    }
-    
-    // utility method to check if login credentials have expired
-    public static boolean getExpired(Context context, String site, String userName) {
-        Cursor expCursor = AuthTable.getAsCursor(context, site, userName);
-        if ((expCursor.getCount() > 0) && expCursor.moveToFirst()) {
-            do {
-                if (!expCursor.isNull(expCursor.getColumnIndex(StoryMakerDB.Schema.Auth.COL_EXPIRES))) {
-                    // get current time
-                    Date now = new Date();
-                    if (now.getTime() < expCursor.getLong(expCursor.getColumnIndex(StoryMakerDB.Schema.Auth.COL_EXPIRES))) {
-                        expCursor.close();
-                        return false;
-                    } else {
-                        expCursor.close();
-                        return true;
-                    }
-                } 
-            } while (expCursor.moveToNext()); // is there a more elegant way to handle a single record result set?
-        } 
-        // assumes no value = no expiration
-        expCursor.close();
-        return false;
-    }
-    
-    // utility method to update last login time
-    public static void updateLastLogin(Context context, String site, String userName) {
-        Cursor updCursor = AuthTable.getAsCursor(context, site, userName);
-        if ((updCursor.getCount() > 0) && updCursor.moveToFirst()) {
-            do {
-                Auth updateAuth = new Auth(context, updCursor);
-                updateAuth.setLastLogin(new Date()); // assumes method called at time of login
-                updateAuth.update();
-            } while (updCursor.moveToNext()); // is there a more elegant way to handle a single record result set?
-        }
-        updCursor.close();
     }
     
     /**
@@ -152,30 +178,13 @@ public class Auth extends Model {
     @Override
     public void insert() {
         // check for duplicates and delete
-        Cursor dupCursor = AuthTable.getAsCursor(context, site, userName);
+        Cursor dupCursor = (new AuthTable(mDB)).getAsCursor(context, site, userName);
         if ((dupCursor.getCount() > 0) && dupCursor.moveToFirst()) {
             do {
-                (new Auth(context, dupCursor)).delete();
+                (new Auth(mDB, context, dupCursor)).delete();
             } while (dupCursor.moveToNext()); // is there a more elegant way to handle a single record result set?
         }
         super.insert();
-    }
-    
-    /**
-     * @param context
-     * @param site
-     * @return first item in the list that matches this site, null if none do
-     */
-    public static Auth getAuthDefault(Context context, String site) {
-        ArrayList<Auth> results = AuthTable.getAuthsAsList(context, site);
-        if (results.isEmpty()) {
-            Log.w(TAG,"no username/password found for \"storymaker\"");
-        } else if (results.size() > 1) {
-            Log.e(TAG,results.size() + " usernames/passwords found for \"storymaker\"");
-        } else {
-            return results.get(0);
-        }
-        return null;
     }
 
     // getters and setters

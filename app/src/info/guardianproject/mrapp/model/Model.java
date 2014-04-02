@@ -1,5 +1,6 @@
 package info.guardianproject.mrapp.model;
 
+import net.sqlcipher.database.SQLiteDatabase;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -14,9 +15,29 @@ public abstract class Model {
     protected abstract ContentValues getValues();
     protected abstract Table getTable();
     protected Table mTable;
+    
+    protected SQLiteDatabase mDB = null;
 
+    /**
+     * Create a new, blank record via the Content Provider interface
+     * 
+     * @param context
+     */
     Model(Context context) {
         this.context = context;  
+    }
+    
+    /**
+     * Create a new, blank record via direct db access.  
+     * 
+     * This should be used within DB Migrations and Model or Table classes
+     *  
+     * @param db
+     * @param context
+     */
+    Model(SQLiteDatabase db, Context context) {
+        this.context = context;
+        mDB = db;
     }
 
     // getters and setters

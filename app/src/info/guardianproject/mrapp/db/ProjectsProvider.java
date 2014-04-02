@@ -90,10 +90,6 @@ public class ProjectsProvider extends ContentProvider {
         return true;
     }
     
-    public void setDB(SQLiteDatabase db) {
-        mDB = db;
-    }
-    
     private SQLiteDatabase getDB() {
         if (mDB == null) {
             mDB = mDBHelper.getWritableDatabase(mPassphrase);
@@ -112,25 +108,25 @@ public class ProjectsProvider extends ContentProvider {
         int uriType = sURIMatcher.match(uri);
         switch (uriType) {
         case PROJECT_ID:
-            return (new ProjectTable()).queryOne(getContext(), getDB(), uri, projection, selection, selectionArgs, sortOrder);
+            return (new ProjectTable(getDB())).queryOne(getContext(), uri, projection, selection, selectionArgs, sortOrder);
         case PROJECTS:
-            return (new ProjectTable()).queryAll(getContext(), getDB(), uri, projection, selection, selectionArgs, sortOrder);
+            return (new ProjectTable(getDB())).queryAll(getContext(), uri, projection, selection, selectionArgs, sortOrder);
         case SCENE_ID:
-            return (new SceneTable()).queryOne(getContext(), getDB(), uri, projection, selection, selectionArgs, sortOrder);
+            return (new SceneTable(getDB())).queryOne(getContext(), uri, projection, selection, selectionArgs, sortOrder);
         case SCENES:
-            return (new SceneTable()).queryAll(getContext(), getDB(), uri, projection, selection, selectionArgs, sortOrder);
+            return (new SceneTable(getDB())).queryAll(getContext(), uri, projection, selection, selectionArgs, sortOrder);
         case LESSON_ID:
-            return (new LessonTable()).queryOne(getContext(), getDB(), uri, projection, selection, selectionArgs, sortOrder);
+            return (new LessonTable(getDB())).queryOne(getContext(), uri, projection, selection, selectionArgs, sortOrder);
         case LESSONS:
-            return (new LessonTable()).queryAll(getContext(), getDB(), uri, projection, selection, selectionArgs, sortOrder);
+            return (new LessonTable(getDB())).queryAll(getContext(), uri, projection, selection, selectionArgs, sortOrder);
         case MEDIA_ID:
-            return (new MediaTable()).queryOne(getContext(), getDB(), uri, projection, selection, selectionArgs, sortOrder);
+            return (new MediaTable(getDB())).queryOne(getContext(), uri, projection, selection, selectionArgs, sortOrder);
         case MEDIA:
-            return (new MediaTable()).queryAll(getContext(), getDB(), uri, projection, selection, selectionArgs, sortOrder);
+            return (new MediaTable(getDB())).queryAll(getContext(), uri, projection, selection, selectionArgs, sortOrder);
         case AUTH_ID:
-            return (new AuthTable()).queryOne(getContext(), getDB(), uri, projection, selection, selectionArgs, sortOrder);
+            return (new AuthTable(getDB())).queryOne(getContext(), uri, projection, selection, selectionArgs, sortOrder);
         case AUTH:
-            return (new AuthTable()).queryAll(getContext(), getDB(), uri, projection, selection, selectionArgs, sortOrder);
+            return (new AuthTable(getDB())).queryAll(getContext(), uri, projection, selection, selectionArgs, sortOrder);
         default:
             throw new IllegalArgumentException("Unknown URI");
         }
@@ -142,15 +138,15 @@ public class ProjectsProvider extends ContentProvider {
         int uriType = sURIMatcher.match(uri);
         switch (uriType) {
         case PROJECTS:
-            return (new ProjectTable()).insert(getContext(), mDB, uri, values);
+            return (new ProjectTable(getDB())).insert(getContext(), uri, values);
         case SCENES:
-            return (new SceneTable()).insert(getContext(), mDB, uri, values);
+            return (new SceneTable(getDB())).insert(getContext(), uri, values);
         case LESSONS:
-            return (new LessonTable()).insert(getContext(), mDB, uri, values);
+            return (new LessonTable(getDB())).insert(getContext(), uri, values);
         case MEDIA:
-            return (new MediaTable()).insert(getContext(), mDB, uri, values);
+            return (new MediaTable(getDB())).insert(getContext(), uri, values);
         case AUTH:
-            return (new AuthTable()).insert(getContext(), mDB, uri, values);
+            return (new AuthTable(getDB())).insert(getContext(), uri, values);
         default:
             throw new IllegalArgumentException("Unknown URI");
         }
@@ -162,19 +158,19 @@ public class ProjectsProvider extends ContentProvider {
         switch (uriType) {
         case PROJECTS:
         case PROJECT_ID:
-            return (new ProjectTable()).delete(getContext(), getDB(), uri, selection, selectionArgs);
+            return (new ProjectTable(getDB())).delete(getContext(), uri, selection, selectionArgs);
         case SCENES:
         case SCENE_ID:
-            return (new SceneTable()).delete(getContext(), getDB(), uri, selection, selectionArgs);
+            return (new SceneTable(getDB())).delete(getContext(), uri, selection, selectionArgs);
         case LESSONS:
         case LESSON_ID:
-            return (new LessonTable()).delete(getContext(), getDB(), uri, selection, selectionArgs);
+            return (new LessonTable(getDB())).delete(getContext(), uri, selection, selectionArgs);
         case MEDIA:
         case MEDIA_ID:
-            return (new MediaTable()).delete(getContext(), getDB(), uri, selection, selectionArgs);
+            return (new MediaTable(getDB())).delete(getContext(), uri, selection, selectionArgs);
         case AUTH:
         case AUTH_ID:
-            return (new AuthTable()).delete(getContext(), getDB(), uri, selection, selectionArgs);
+            return (new AuthTable(getDB())).delete(getContext(), uri, selection, selectionArgs);
         default:
             throw new IllegalArgumentException("Unknown URI");
         }
@@ -186,19 +182,19 @@ public class ProjectsProvider extends ContentProvider {
         switch (uriType) {
         case PROJECTS:
         case PROJECT_ID:
-            return (new ProjectTable()).update(getContext(), mDB, uri, values, selection, selectionArgs);
+            return (new ProjectTable(getDB())).update(getContext(), uri, values, selection, selectionArgs);
         case SCENES:
         case SCENE_ID:
-            return (new SceneTable()).update(getContext(), mDB, uri, values, selection, selectionArgs);
+            return (new SceneTable(getDB())).update(getContext(), uri, values, selection, selectionArgs);
         case LESSONS:
         case LESSON_ID:
-            return (new LessonTable()).update(getContext(), mDB, uri, values, selection, selectionArgs);
+            return (new LessonTable(getDB())).update(getContext(), uri, values, selection, selectionArgs);
         case MEDIA:
         case MEDIA_ID:
-            return (new MediaTable()).update(getContext(), mDB, uri, values, selection, selectionArgs);
+            return (new MediaTable(getDB())).update(getContext(), uri, values, selection, selectionArgs);
         case AUTH:
         case AUTH_ID:
-            return (new AuthTable()).update(getContext(), mDB, uri, values, selection, selectionArgs);
+            return (new AuthTable(getDB())).update(getContext(), uri, values, selection, selectionArgs);
         default:
             throw new IllegalArgumentException("Unknown URI");
         }

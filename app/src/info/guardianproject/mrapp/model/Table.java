@@ -18,44 +18,77 @@ public abstract class Table {
     protected abstract Uri getURI();
     protected abstract String getProviderBasePath();
     
+    protected SQLiteDatabase mDB = null;
 
-    public Cursor queryOne(Context context, SQLiteDatabase db, Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
+    public Table() {
+        
+    }
+    
+    public Table(SQLiteDatabase db) {
+        mDB = db;
+    }
+    
+    public Cursor queryOne(Context context, Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
         SQLiteQueryBuilder queryBuilder = new SQLiteQueryBuilder();
         queryBuilder.setTables(getTableName());
         queryBuilder.appendWhere(getIDColumnName() + "=" + uri.getLastPathSegment());
         
-        Cursor cursor = queryBuilder.query(db, projection, selection, selectionArgs, null, null, sortOrder);
+        Cursor cursor = queryBuilder.query(mDB, projection, selection, selectionArgs, null, null, sortOrder);
         cursor.setNotificationUri(context.getContentResolver(), uri);
         return cursor;
     }
 
-    public Cursor queryAll(Context context, SQLiteDatabase db, Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
+    public Cursor queryAll(Context context, Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
         SQLiteQueryBuilder queryBuilder = new SQLiteQueryBuilder();
         queryBuilder.setTables(getTableName());
         
-        Cursor cursor = queryBuilder.query(db, projection, selection, selectionArgs, null, null, sortOrder);
+        Cursor cursor = queryBuilder.query(mDB, projection, selection, selectionArgs, null, null, sortOrder);
         cursor.setNotificationUri(context.getContentResolver(), uri);
         return cursor;
     }
 
-    public Uri insert(Context context, SQLiteDatabase db, Uri uri, ContentValues values) {
+    public Uri insert(Context context, Uri uri, ContentValues values) {
         long newId;
-        newId = db.insertOrThrow(getTableName(), null, values);
+        newId = mDB.insertOrThrow(getTableName(), null, values);
         context.getContentResolver().notifyChange(uri, null);
         return getURI().buildUpon().appendPath(getProviderBasePath()).appendPath("" + newId).build();
     }
     
-    public int delete(Context context, SQLiteDatabase db, Uri uri, String selection, String[] selectionArgs) {
-        int count = db.delete(getTableName(), selection, selectionArgs);
+    public int delete(Context context, Uri uri, String selection, String[] selectionArgs) {
+        int count = mDB.delete(getTableName(), selection, selectionArgs);
         context.getContentResolver().notifyChange(uri, null);
         return count;
     }
 
-    public int update(Context context, SQLiteDatabase db, Uri uri, ContentValues values, String selection, String[] selectionArgs) {
+    public int update(Context context, Uri uri, ContentValues values, String selection, String[] selectionArgs) {
         int count;
-        count = db.update(getTableName(), values, selection, selectionArgs);
+        count = mDB.update(getTableName(), values, selection, selectionArgs);
         context.getContentResolver().notifyChange(uri, null);
         return count;
+    }
+
+    /** 
+     * get inflated model object for specified row id 
+     */
+    public Model get(Context context, int id) {
+        Cursor cursor = getAsCursor(context, id);
+        Model model = null;
+        final String name = getTableName();
+        if (cursor.moveToFirst()) {
+            if (name == (new AuthTable()).getTableName()) {
+                model = new Auth(context, cursor);
+            } else if (name == (new LessonTable()).getTableName()) {
+                model = new Lesson(context);
+            } else if (name == (new MediaTable()).getTableName()) {
+                model = new Media(context, cursor);
+            } else if (name == (new ProjectTable()).getTableName()) {
+                model = new Project(context, cursor);
+            } else if (name == (new SceneTable()).getTableName()) {
+                model = new Scene(context, cursor);
+            }
+        } 
+        cursor.close();
+        return model;
     }
     
     // get result cursor for specified row id
@@ -63,21 +96,30 @@ public abstract class Table {
         String selection = getIDColumnName() + "=?";
         String[] selectionArgs = new String[] { "" + id };
         ContentResolver resolver = context.getContentResolver();
-        return resolver.query(getURI(), null, selection, selectionArgs, null);
+        if (mDB == null) {
+            return resolver.query(getURI(), null, selection, selectionArgs, null);
+        } else {
+            return queryOne(context, getURI(), null, selection, selectionArgs, null);
+        }
     }
-
-    // get result cursor for specified row id
-    public Cursor getAsCursor(SQLiteDatabase db, Context context, int id) {
-        String selection = getIDColumnName() + "=?";
-        String[] selectionArgs = new String[] { "" + id };
-        
-        return queryOne(context, db, getURI(), null, selection, selectionArgs, null);
+    
+    // get result cursor for all rows
+    public Cursor getAllAsCursor(Context context) {
+        if (mDB == null) {
+            return context.getContentResolver().query(getURI(), null, null, null, null);
+        } else {
+            return mDB.query(getTableName(), null, null, null, null, null, null);
+        }
     }
 
     // get result array for all rows
     public ArrayList<? extends Model> getAllAsList(Context context) {
-        ArrayList<? extends Model> models = null;
         Cursor cursor = getAllAsCursor(context);
+        return _getAllAsList(context, cursor);
+    }
+    
+    private ArrayList<? extends Model> _getAllAsList(Context context, Cursor cursor) {
+        ArrayList<? extends Model> models = null;
         Model model = null;
         final String name = getTableName();
         
@@ -115,43 +157,5 @@ public abstract class Table {
         }
         cursor.close();
         return models;
-    }
-
-    // get result for specified row id
-    public Model get(Context context, int id) {
-        Cursor cursor = getAsCursor(context, id);
-        Model model = null;
-        final String name = getTableName();
-        if (cursor.moveToFirst()) {
-            if (name == (new AuthTable()).getTableName()) {
-                model = new Auth(context, cursor);
-            } else if (name == (new LessonTable()).getTableName()) {
-                model = new Lesson(context);
-            } else if (name == (new MediaTable()).getTableName()) {
-                model = new Media(context, cursor);
-            } else if (name == (new ProjectTable()).getTableName()) {
-                model = new Project(context, cursor);
-            } else if (name == (new SceneTable()).getTableName()) {
-                model = new Scene(context, cursor);
-            }
-        } 
-        cursor.close();
-        return model;
-    }
-
-    // get result for specified row id
-    public Model get(SQLiteDatabase db, Context context, int id) {
-        Cursor cursor = getAsCursor(db, context, id);
-        Model model = null;
-        if (cursor.moveToFirst()) {
-            model = new Auth(context, cursor);
-        } 
-        cursor.close();
-        return model;
-    }
-    
-    // get result cursor for all rows
-    public Cursor getAllAsCursor(Context context) {
-        return context.getContentResolver().query(getURI(), null, null, null, null);
     }
 }

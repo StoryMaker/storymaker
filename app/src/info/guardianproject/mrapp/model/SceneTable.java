@@ -1,10 +1,21 @@
 package info.guardianproject.mrapp.model;
 
+import net.sqlcipher.database.SQLiteDatabase;
 import info.guardianproject.mrapp.db.ProjectsProvider;
 import info.guardianproject.mrapp.db.StoryMakerDB;
 import android.net.Uri;
 
 public class SceneTable extends Table {
+    private final static String TAG = "SceneTable";
+    
+    public SceneTable() {
+        
+    }
+    
+    public SceneTable(SQLiteDatabase db) {
+        super(db);
+    }
+    
     @Override
     protected String getTableName() {
         return StoryMakerDB.Schema.Scenes.NAME;

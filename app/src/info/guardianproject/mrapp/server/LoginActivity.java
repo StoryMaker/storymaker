@@ -113,7 +113,7 @@ public class LoginActivity extends BaseActivity implements Runnable
     
     private void getCreds()
     { 
-        Auth storymakerAuth = Auth.getAuthDefault(getApplicationContext(), Auth.STORYMAKER);
+        Auth storymakerAuth = (new AuthTable()).getAuthDefault(getApplicationContext(), Auth.STORYMAKER);
         if (storymakerAuth != null) {
         	txtUser.setText(storymakerAuth.getUserName());
         	txtPass.setText(storymakerAuth.getCredentials());

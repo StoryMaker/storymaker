@@ -23,11 +23,40 @@ public class Scene extends Model {
     
     protected int mClipCount = -1;
     
+    /**
+     * Create new blank Scene with a predetermined clip count via the Content Provider
+     * 
+     * @param context
+     * @param clipCount
+     */
     public Scene(Context context, int clipCount) {
         super(context);
         mClipCount = clipCount;
     }
 
+    /**
+     * Create new blank Scene with a predetermined clip count via direct db access.
+     * 
+     * This should be used within DB Migrations and Model or Table classes
+     *
+     * @param context
+     * @param clipCount
+     */
+    public Scene(SQLiteDatabase db, Context context, int clipCount) {
+        this(context, clipCount);
+        this.mDB = db;
+    }
+
+    /**
+     * Create a Model object via direct params
+     * 
+     * @param context
+     * @param id
+     * @param title
+     * @param thumbnailPath
+     * @param projectIndex
+     * @param projectId
+     */
     public Scene(Context context, int id, String title, String thumbnailPath, int projectIndex, int projectId) {
         super(context);
         this.id = id;
@@ -36,7 +65,31 @@ public class Scene extends Model {
         this.projectIndex = projectIndex;
         this.projectId = projectId;
     }
+    
+    /**
+     * Create a Model object via direct params via direct db access.
+     * 
+     * This should be used within DB Migrations and Model or Table classes
+     *
+     * @param db
+     * @param context
+     * @param id
+     * @param title
+     * @param thumbnailPath
+     * @param projectIndex
+     * @param projectId
+     */
+    public Scene(SQLiteDatabase db, Context context, int id, String title, String thumbnailPath, int projectIndex, int projectId) {
+        this(context, id, title, thumbnailPath, projectIndex, projectId);
+        this.mDB = db;
+    }
 
+    /**
+     * Inflate record from a cursor via the Content Provider
+     *
+     * @param context
+     * @param cursor
+     */
     public Scene(Context context, Cursor cursor) {
         // FIXME use column id's directly to optimize this one schema stabilizes
         this(
@@ -56,10 +109,24 @@ public class Scene extends Model {
         calculateMaxClipCount();
     }
 
+    /**
+     * Inflate record from a cursor via direct db access.  
+     * 
+     * This should be used within DB Migrations and Model or Table classes
+     * 
+     * @param db
+     * @param context
+     * @param cursor
+     */
+    public Scene(SQLiteDatabase db, Context context, Cursor cursor) {
+        this(context, cursor);
+        this.mDB = db;
+    }
+
     @Override
     protected Table getTable() {
         if (mTable == null) {
-            mTable = new SceneTable();
+            mTable = new SceneTable(mDB);
         }
         return mTable;
     }
@@ -72,7 +139,7 @@ public class Scene extends Model {
         
         if (cursor.moveToFirst()) {
             do {
-                Media media = new Media(context, cursor);
+                Media media = new Media(mDB, context, cursor);
                 clipIndex = Math.max(clipIndex, media.clipIndex);
             } while (cursor.moveToNext());
         }
@@ -92,18 +159,31 @@ public class Scene extends Model {
         
         return values;
     }
-    
+
+    // FIXME testme
+    public Cursor getMediaAsCursor() {
+        String selection = "scene_id=?";
+        String[] selectionArgs = new String[] {"" + getId()};
+        String orderBy = "clip_index";
+        if (mDB == null) {
+            return context.getContentResolver().query(ProjectsProvider.MEDIA_CONTENT_URI, null, selection, selectionArgs, orderBy);
+        } else {
+            return mDB.query(getTable().getTableName(), null, selection, selectionArgs, null, null, orderBy);
+        }
+    }
+       
     public ArrayList<Media> getMediaAsList() {
         Cursor cursor = getMediaAsCursor();
         
         ArrayList<Media> medias = new ArrayList<Media>(mClipCount);
         
-        for (int i = 0; i < mClipCount; i++)
+        for (int i = 0; i < mClipCount; i++) {
             medias.add(null);
+        }
         
         if (cursor.moveToFirst()) {
             do {
-            	Media media = new Media(context, cursor);
+            	Media media = new Media(mDB, context, cursor);
                 medias.set(media.clipIndex, media);
             } while (cursor.moveToNext());
         }
@@ -111,6 +191,7 @@ public class Scene extends Model {
         return medias;
     }
 
+ // FIXME make provider free version
     public Media[] getMediaAsArray() {
         ArrayList<Media> medias = getMediaAsList();
         return medias.toArray(new Media[] {});
@@ -124,6 +205,7 @@ public class Scene extends Model {
         return mClipCount;
     }
 
+ // FIXME make provider free version
     public ArrayList<String> getMediaAsPathList() {
         Cursor cursor = getMediaAsCursor();
         ArrayList<String> paths = new ArrayList<String>(mClipCount);
@@ -133,7 +215,7 @@ public class Scene extends Model {
        
         if (cursor.moveToFirst()) {
             do {
-            	Media media = new Media(context, cursor);
+            	Media media = new Media(mDB, context, cursor);
                 paths.set(media.clipIndex, media.getPath());
             } while (cursor.moveToNext());
         }
@@ -141,25 +223,18 @@ public class Scene extends Model {
         return paths;
     }
 
+ // FIXME make provider free version
     public String[] getMediaAsPathArray() {
         ArrayList<String> paths = getMediaAsPathList();
         return paths.toArray(new String[] {});
     }
 
-    public Cursor getMediaAsCursor() {
-        String selection = "scene_id=?";
-        String[] selectionArgs = new String[] { "" + getId() };
-        String orderBy = "clip_index";
-        return context.getContentResolver().query(
-                ProjectsProvider.MEDIA_CONTENT_URI, null, selection,
-                selectionArgs, orderBy);
-    }
-
     /**
      * @param media append this media to the back of the scene's media list
      */
+ // FIXME make provider free version
     public void setMedia(int clipIndex, String clipType, String path, String mimeType) {
-        Media media = new Media(context);
+        Media media = new Media(mDB, context);
         media.setPath(path);
         media.setMimeType(mimeType);
         media.setClipType(clipType);

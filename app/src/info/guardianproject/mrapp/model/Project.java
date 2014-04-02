@@ -33,40 +33,43 @@ public class Project extends Model {
     public final static String STORY_TEMPLATE_TYPE_ISSUE = "issue";
     public final static String STORY_TEMPLATE_TYPE_FEATURE = "feature";
     
-    public String getTemplateTag ()
-    {
-    	String path = getTemplatePath();
-    	
-    	if (path != null)
-    	{
-    		if (path.contains("event"))
-    		{
-    			return STORY_TEMPLATE_TYPE_EVENT;
-    		}
-    		else if (path.contains("issue"))
-    		{
-    			return STORY_TEMPLATE_TYPE_ISSUE;
-    		}
-    		else if (path.contains("profile"))
-    		{
-    			return STORY_TEMPLATE_TYPE_FEATURE;
-    		}
-    		else if (path.contains("news"))
-    		{
-    			return STORY_TEMPLATE_TYPE_BREAKINGNEWS;
-    		}
-    	}
-    	
-    	return null;
-    }
-    
     public int mSceneCount = -1;
     
+    /**
+     * Create new Project with a predetermined sceneCount via Provider Interface
+     * 
+     * @param context
+     * @param sceneCount
+     */
     public Project(Context context, int sceneCount) {
         super(context);
         mSceneCount = sceneCount;
     }
+    
+    /** 
+     * Create new Project with a predetermined sceneCount via direct db access.
+     * 
+     * This should be used within DB Migrations and Model or Table classes
+     *
+     * @param db
+     * @param context
+     * @param sceneCount
+     */
+    public Project(SQLiteDatabase db, Context context, int sceneCount) {
+        this(context, sceneCount);
+        this.mDB = db;
+    }
 
+    /**
+     * Create a Model object via direct params
+     * 
+     * @param context
+     * @param id
+     * @param title
+     * @param thumbnailPath
+     * @param storyType
+     * @param templatePath
+     */
     public Project(Context context, int id, String title, String thumbnailPath, int storyType, String templatePath) {
         super(context);
         this.id = id;
@@ -75,7 +78,31 @@ public class Project extends Model {
         this.storyType = storyType;
         this.templatePath = templatePath;
     }
+    
+    /**
+     * Create a Model object via direct params via direct db access.
+     * 
+     * This should be used within DB Migrations and Model or Table classes
+     *
+     * @param db
+     * @param context
+     * @param id
+     * @param title
+     * @param thumbnailPath
+     * @param storyType
+     * @param templatePath
+     */
+    public Project(SQLiteDatabase db, Context context, int id, String title, String thumbnailPath, int storyType, String templatePath) {
+        this(context, id, title, thumbnailPath, storyType, templatePath);
+        this.mDB = db;
+    }
 
+    /**
+     * Inflate record from a cursor via the Content Provider
+     * 
+     * @param context
+     * @param cursor
+     */
     public Project(Context context, Cursor cursor) {
         // FIXME use column id's directly to optimize this one schema stabilizes
         this(
@@ -94,11 +121,52 @@ public class Project extends Model {
         calculateMaxSceneCount();
 
     }
+    
+    /**
+     * Inflate record from a cursor via direct db access.  
+     * 
+     * This should be used within DB Migrations and Model or Table classes
+     * 
+     * @param db
+     * @param context
+     * @param cursor
+     */
+    public Project(SQLiteDatabase db, Context context, Cursor cursor) {
+        this(context, cursor);
+        this.mDB = db;
+    }
+    
+    public String getTemplateTag ()
+    {
+        String path = getTemplatePath();
+        
+        if (path != null)
+        {
+            if (path.contains("event"))
+            {
+                return STORY_TEMPLATE_TYPE_EVENT;
+            }
+            else if (path.contains("issue"))
+            {
+                return STORY_TEMPLATE_TYPE_ISSUE;
+            }
+            else if (path.contains("profile"))
+            {
+                return STORY_TEMPLATE_TYPE_FEATURE;
+            }
+            else if (path.contains("news"))
+            {
+                return STORY_TEMPLATE_TYPE_BREAKINGNEWS;
+            }
+        }
+        
+        return null;
+    }
 
     @Override
     protected Table getTable() {
         if (mTable == null) {
-            mTable = new ProjectTable();
+            mTable = new ProjectTable(mDB);
         }
         
         return mTable;
@@ -135,7 +203,8 @@ public class Project extends Model {
         
         return values;
     }
-
+    
+ // FIXME make provider free version
     public ArrayList<Scene> getScenesAsList() {
         Cursor cursor = getScenesAsCursor();
         
@@ -153,12 +222,12 @@ public class Project extends Model {
         cursor.close();
         return scenes;
     }
-
+ // FIXME make provider free version
     public Scene[] getScenesAsArray() {
         ArrayList<Scene> scenes = getScenesAsList();
         return scenes.toArray(new Scene[] {});
     }
-
+ // FIXME make provider free version
     public Cursor getScenesAsCursor() {
         String selection = "project_id=?";
         String[] selectionArgs = new String[] { "" + getId() };
@@ -168,6 +237,7 @@ public class Project extends Model {
                 selectionArgs, orderBy);
     }
     
+    // FIXME make provider free version
     public ArrayList<Media> getMediaAsList() {
         ArrayList<Media> mediaList = null;
         mediaList = new ArrayList<Media>();
@@ -177,6 +247,7 @@ public class Project extends Model {
         return mediaList;
     }
     
+    // FIXME make provider free version
     public String[] getMediaAsPathArray() {
         ArrayList<Media> mediaList = getMediaAsList();
 
