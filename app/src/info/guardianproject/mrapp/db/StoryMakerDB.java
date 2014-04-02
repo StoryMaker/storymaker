@@ -1,5 +1,6 @@
 package info.guardianproject.mrapp.db;
 
+import info.guardianproject.mrapp.model.Auth;
 import net.sqlcipher.database.SQLiteDatabase;
 import net.sqlcipher.database.SQLiteOpenHelper;
 import android.content.Context;
@@ -7,12 +8,13 @@ import android.util.Log;
 
 public class StoryMakerDB extends SQLiteOpenHelper {
     private static final String TAG = "StoryMakerDB";
-    private static final int DB_VERSION = 4;
+    private static final int DB_VERSION = 3;
     private static final String DB_NAME = "sm.db";
+    private Context mContext;
     
     public StoryMakerDB(Context context) {
         super(context, DB_NAME, null, DB_VERSION);
-        
+        mContext = context;
     }
     
     @Override
@@ -38,6 +40,9 @@ public class StoryMakerDB extends SQLiteOpenHelper {
         if ((oldVersion < 4) && (newVersion == 4)) {
             db.execSQL(StoryMakerDB.Schema.Auth.UPDATE_TABLE_AUTH);
         } 
+        if ((oldVersion < 5) && (newVersion == 5)) {
+            Auth a = Auth.getAuthDefault(mContext, Auth.STORYMAKER);
+        }
     }
     
     public class Schema 

@@ -3,6 +3,9 @@ package info.guardianproject.mrapp.model;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import net.sqlcipher.database.SQLiteDatabase;
+import net.sqlcipher.database.SQLiteQueryBuilder;
+
 import info.guardianproject.mrapp.StoryMakerApp;
 import info.guardianproject.mrapp.db.ProjectsProvider;
 import info.guardianproject.mrapp.db.StoryMakerDB;
@@ -12,10 +15,8 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.util.Log;
 
-public class Project {
+public class Project extends Model {
 	final private String TAG = "Project";
-    protected Context context;
-    protected int id;
     protected String title;
     protected String thumbnailPath;
     protected int storyType;
@@ -62,13 +63,12 @@ public class Project {
     public int mSceneCount = -1;
     
     public Project(Context context, int sceneCount) {
-        this.context = context;
+        super(context);
         mSceneCount = sceneCount;
     }
 
     public Project(Context context, int id, String title, String thumbnailPath, int storyType, String templatePath) {
-        super();
-        this.context = context;
+        super(context);
         this.id = id;
         this.title = title;
         this.thumbnailPath = thumbnailPath;
@@ -94,6 +94,15 @@ public class Project {
         calculateMaxSceneCount();
 
     }
+
+    @Override
+    protected Table getTable() {
+        if (mTable == null) {
+            mTable = new ProjectTable();
+        }
+        
+        return mTable;
+    }
     
     private void calculateMaxSceneCount ()
     {
@@ -116,62 +125,8 @@ public class Project {
         cursor.close();
         
     }
-
-    /***** Table level static methods *****/
-
-    public static Cursor getAsCursor(Context context, int id) {
-        String selection = StoryMakerDB.Schema.Projects.ID + "=?";
-        String[] selectionArgs = new String[] { "" + id };
-        return context.getContentResolver().query(
-                ProjectsProvider.PROJECTS_CONTENT_URI, null, selection,
-                selectionArgs, null);
-    }
-
-    public static Project get(Context context, int id) {
-        Cursor cursor = Project.getAsCursor(context, id);
-        Project project = null;
-        
-        if (cursor.moveToFirst()) {
-            project = new Project(context, cursor);
-           
-        } 
-        
-        cursor.close();
-        return project;
-    }
-
-    public static Cursor getAllAsCursor(Context context) {
-        return context.getContentResolver().query(
-                ProjectsProvider.PROJECTS_CONTENT_URI, null, null, null, null);
-    }
-
-    public static ArrayList<Project> getAllAsList(Context context) {
-        ArrayList<Project> projects = new ArrayList<Project>();
-        Cursor cursor = getAllAsCursor(context);
-        if (cursor.moveToFirst()) {
-            do {
-                projects.add(new Project(context, cursor));
-            } while (cursor.moveToNext());
-        }
-        
-        cursor.close();
-        return projects;
-    }
-
-    /***** Object level methods *****/
-
-    public void save() {
-    	Cursor cursor = getAsCursor(context, id);
-    	if (cursor.getCount() == 0) {
-    		insert();
-    	} else {
-    		update();
-    	}
-    	
-    	cursor.close();
-    }
     
-    private ContentValues getValues() {
+    protected ContentValues getValues() {
         ContentValues values = new ContentValues();
         values.put(StoryMakerDB.Schema.Projects.COL_TITLE, title);
         values.put(StoryMakerDB.Schema.Projects.COL_THUMBNAIL_PATH, thumbnailPath);
@@ -179,36 +134,6 @@ public class Project {
         values.put(StoryMakerDB.Schema.Projects.COL_TEMPLATE_PATH, templatePath);
         
         return values;
-    }
-    private void insert() {
-        ContentValues values = getValues();
-        Uri uri = context.getContentResolver().insert(
-                ProjectsProvider.PROJECTS_CONTENT_URI, values);
-        String lastSegment = uri.getLastPathSegment();
-        int newId = Integer.parseInt(lastSegment);
-        this.setId(newId);
-    }
-    
-    private void update() {
-    	Uri uri = ProjectsProvider.PROJECTS_CONTENT_URI.buildUpon().appendPath("" + id).build();
-        String selection = StoryMakerDB.Schema.Projects.ID + "=?";
-        String[] selectionArgs = new String[] { "" + id };
-    	ContentValues values = getValues();
-        int count = context.getContentResolver().update(
-                uri, values, selection, selectionArgs);
-        // FIXME make sure 1 row updated
-    }
-    
-    public void delete() {
-    	Uri uri = ProjectsProvider.PROJECTS_CONTENT_URI.buildUpon().appendPath("" + id).build();
-        String selection = StoryMakerDB.Schema.Projects.ID + "=?";
-        String[] selectionArgs = new String[] { "" + id };
-        int count = context.getContentResolver().delete(
-                uri, selection, selectionArgs);
-        Log.d(TAG, "deleted project: " + id + ", rows deleted: " + count);
-        // FIXME make sure 1 row updated
-        
-        //TODO should we also delete all media files associated with this project?
     }
 
     public ArrayList<Scene> getScenesAsList() {

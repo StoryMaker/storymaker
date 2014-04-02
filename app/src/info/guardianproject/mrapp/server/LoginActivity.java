@@ -9,6 +9,7 @@ import info.guardianproject.mrapp.BaseActivity;
 import info.guardianproject.mrapp.R;
 import info.guardianproject.mrapp.StoryMakerApp;
 import info.guardianproject.mrapp.model.Auth;
+import info.guardianproject.mrapp.model.AuthTable;
 
 import org.holoeverywhere.widget.Button;
 import org.holoeverywhere.widget.EditText;
@@ -93,7 +94,7 @@ public class LoginActivity extends BaseActivity implements Runnable
     
     private void saveCreds (String user, String pass)
     {   
-        ArrayList<Auth> results = Auth.getAuthsAsList(getApplicationContext(), Auth.STORYMAKER);
+        ArrayList<Auth> results = (new AuthTable()).getAuthsAsList(getApplicationContext(), Auth.STORYMAKER);
         for (Auth deleteAuth : results) {
         	// only a single username/password is stored at a time
         	deleteAuth.delete();

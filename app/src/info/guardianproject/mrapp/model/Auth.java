@@ -6,41 +6,35 @@ import info.guardianproject.mrapp.db.ProjectsProvider;
 import java.util.ArrayList;
 import java.util.Date;
 
+import net.sqlcipher.database.SQLiteDatabase;
+import net.sqlcipher.database.SQLiteQueryBuilder;
+
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
 import android.util.Log;
 
-public class Auth {
+public class Auth extends Model {
     private static final String TAG = "Auth";
     
-    protected Context context;
-    protected int id;
     protected String name;
     protected String site;
     protected String userName;
     protected String credentials;
-    protected Date expires; // long stored in database as 8-bit int
-    protected Date lastLogin; // long stored in database as 8-bit int
+    protected Date expires; // long stored in database as 8-bit int; null or 0 means no expiration
+    protected Date lastLogin; // long stored in database as 8-bit int; null or 0 means never logged in
     
     public static final String STORYMAKER = "storymaker";
 
     // context constructor
     public Auth(Context context) {
-        this.context = context;
+        super(context);
     }
 
     // context + data constructor
-    public Auth(Context context, 
-                int id, 
-                String name, 
-                String site, 
-                String userName, 
-                String credentials, 
-                Date expires, 
-                Date lastLogin ) {
-        super();
+    public Auth(Context context, int id, String name, String site, String userName, String credentials, Date expires, Date lastLogin ) {
+        super(context);
         this.context = context;
         this.id = id;
         this.name = name;
@@ -52,8 +46,7 @@ public class Auth {
     }
 
     // context + cursor constructor
-    public Auth(Context context, 
-                Cursor cursor) {
+    public Auth(Context context, Cursor cursor) {
         this(context,
              cursor.getInt(cursor.getColumnIndex(StoryMakerDB.Schema.Auth.ID)),
              cursor.getString(cursor.getColumnIndex(StoryMakerDB.Schema.Auth.COL_NAME)),
@@ -67,58 +60,18 @@ public class Auth {
         // expires/last_login columns are nullable, need to avoid errors creating Date objects
     }
 
-    // get result cursor for specified row id
-    public static Cursor getAsCursor(Context context, 
-                                     int id) {
-        String selection = StoryMakerDB.Schema.Auth.ID + "=?";
-        String[] selectionArgs = new String[] { "" + id };
-        
-        return context.getContentResolver().query(ProjectsProvider.AUTH_CONTENT_URI, 
-                                                  null, 
-                                                  selection,
-                                                  selectionArgs, 
-                                                  null);
-    }
-
-    // get result for specified row id
-    public static Auth get(Context context, 
-                           int id) {
-        Cursor cursor = Auth.getAsCursor(context, id);
-        Auth auth = null;
-        if (cursor.moveToFirst()) {
-            auth = new Auth(context, cursor);
-        } 
-        cursor.close();
-        return auth;
-    }
-    
-    // get result cursor for all rows
-    public static Cursor getAllAsCursor(Context context) {
-        return context.getContentResolver().query(ProjectsProvider.AUTH_CONTENT_URI, 
-                                                  null, 
-                                                  null, 
-                                                  null, 
-                                                  null);
-    }
-
-    // get result array for all rows
-    public static ArrayList<Auth> getAllAsList(Context context) {
-        ArrayList<Auth> auths = new ArrayList<Auth>();
-        Cursor cursor = getAllAsCursor(context);
-        if (cursor.moveToFirst()) {
-            do {
-                auths.add(new Auth(context, cursor));
-            } while (cursor.moveToNext());
+    @Override
+    protected Table getTable() {
+        if (mTable == null) {
+            mTable = new AuthTable();
         }
-        cursor.close();
-        return auths;
+        
+        return mTable;
     }
     
     // utility method to check if login credentials have expired
-    public static boolean getExpired(Context context, 
-                                     String site, 
-                                     String userName) {
-        Cursor expCursor = getAsCursor(context, site, userName);
+    public static boolean getExpired(Context context, String site, String userName) {
+        Cursor expCursor = AuthTable.getAsCursor(context, site, userName);
         if ((expCursor.getCount() > 0) && expCursor.moveToFirst()) {
             do {
                 if (!expCursor.isNull(expCursor.getColumnIndex(StoryMakerDB.Schema.Auth.COL_EXPIRES))) {
@@ -140,10 +93,8 @@ public class Auth {
     }
     
     // utility method to update last login time
-    public static void updateLastLogin(Context context, 
-                                       String site, 
-                                       String userName) {
-        Cursor updCursor = getAsCursor(context, site, userName);
+    public static void updateLastLogin(Context context, String site, String userName) {
+        Cursor updCursor = AuthTable.getAsCursor(context, site, userName);
         if ((updCursor.getCount() > 0) && updCursor.moveToFirst()) {
             do {
                 Auth updateAuth = new Auth(context, updCursor);
@@ -173,21 +124,10 @@ public class Auth {
         } 
         return (new Date()).after(getExpires());
     }
-
-    // insert/update current record
-    public void save() {
-        Cursor cursor = getAsCursor(context, id);
-        if (cursor.getCount() == 0) {
-            cursor.close();
-            insert();
-        } else {
-            cursor.close();
-            update();            
-        }
-    }
     
     // build values set from current record
-    private ContentValues getValues() {
+    @Override
+    protected ContentValues getValues() {
         ContentValues values = new ContentValues();
         values.put(StoryMakerDB.Schema.Auth.COL_NAME, name);
         values.put(StoryMakerDB.Schema.Auth.COL_SITE, site);
@@ -203,46 +143,22 @@ public class Auth {
         // can't put null in values set, so only add entry if non-null
         return values;
     }
-    
-    // get result cursor for specified site/username
-    public static Cursor getAsCursor(Context context, 
-                                     String site, 
-                                     String userName) {
-        String selection = StoryMakerDB.Schema.Auth.COL_SITE + "=? and " +
-                           StoryMakerDB.Schema.Auth.COL_USER_NAME + "=?";
-        String[] selectionArgs = new String[] { "" + site, "" + userName };
-        return context.getContentResolver().query(ProjectsProvider.AUTH_CONTENT_URI, 
-                                                  null, 
-                                                  selection,
-                                                  selectionArgs, 
-                                                  null);
-    }
 
-    // get result cursor for specified site/username 
-    public static Auth get(Context context, 
-                           String site, 
-                           String userName) {
-        Cursor cursor = Auth.getAsCursor(context, site, userName);
-        Auth auth = null;
-        if (cursor.moveToFirst()) {
-            auth = new Auth(context, cursor);
-        } 
-        cursor.close();
-        return auth;
-    }
-
-    // get result list for all rows with the specified site 
-    public static ArrayList<Auth> getAuthsAsList(Context context, 
-                                                 String site) {
-        Cursor cursor = getAuthsAsCursor(context, site);
-        ArrayList<Auth> auths = new ArrayList<Auth>();
-        if (cursor.moveToFirst()) {
+    // FIXME testme, make sure we preserver the single record per site+user
+    // FIXME make a db only version of this
+    /**
+     *  insert database row with current values, allowing only one record per site+username
+     */
+    @Override
+    public void insert() {
+        // check for duplicates and delete
+        Cursor dupCursor = AuthTable.getAsCursor(context, site, userName);
+        if ((dupCursor.getCount() > 0) && dupCursor.moveToFirst()) {
             do {
-                auths.add(new Auth(context, cursor));
-            } while (cursor.moveToNext());
+                (new Auth(context, dupCursor)).delete();
+            } while (dupCursor.moveToNext()); // is there a more elegant way to handle a single record result set?
         }
-        cursor.close();
-        return auths;
+        super.insert();
     }
     
     /**
@@ -251,7 +167,7 @@ public class Auth {
      * @return first item in the list that matches this site, null if none do
      */
     public static Auth getAuthDefault(Context context, String site) {
-        ArrayList<Auth> results = Auth.getAuthsAsList(context, site);
+        ArrayList<Auth> results = AuthTable.getAuthsAsList(context, site);
         if (results.isEmpty()) {
             Log.w(TAG,"no username/password found for \"storymaker\"");
         } else if (results.size() > 1) {
@@ -262,82 +178,8 @@ public class Auth {
         return null;
     }
 
-    // get result array for all rows with the specified site 
-    public static Auth[] getAuthsAsArray(Context context, 
-                                         String site) {
-        ArrayList<Auth> auths = getAuthsAsList(context, site);
-        return auths.toArray(new Auth[] {});
-    }
-
-    // get result cursor for all rows with the specified site 
-    public static Cursor getAuthsAsCursor(Context context, 
-                                          String site) {
-        String selection = StoryMakerDB.Schema.Auth.COL_SITE + "=?";
-        String[] selectionArgs = new String[] { "" + site };
-        String orderBy = StoryMakerDB.Schema.Auth.ID;
-        return context.getContentResolver().query(ProjectsProvider.AUTH_CONTENT_URI, 
-                                                  null, 
-                                                  selection,
-                                                  selectionArgs, 
-                                                  orderBy);
-    }
-
-    // insert database row with current values
-    private void insert() {
-        // check for duplicates and delete
-        Cursor dupCursor = getAsCursor(context, site, userName);
-        if ((dupCursor.getCount() > 0) && dupCursor.moveToFirst()) {
-            do {
-                (new Auth(context, dupCursor)).delete();
-            } while (dupCursor.moveToNext()); // is there a more elegant way to handle a single record result set?
-        }
-        ContentValues values = getValues();
-        Uri uri = context.getContentResolver().insert(ProjectsProvider.AUTH_CONTENT_URI, values);
-        String lastSegment = uri.getLastPathSegment();
-        this.setId(Integer.parseInt(lastSegment));
-        dupCursor.close();
-    }
-    
-    // update database row with current values
-    private void update() {
-        Uri uri = ProjectsProvider.AUTH_CONTENT_URI.buildUpon().appendPath("" + id).build();
-        String selection = StoryMakerDB.Schema.Auth.ID + "=?";
-        String[] selectionArgs = new String[] { "" + id };
-        ContentValues values = getValues();
-        int count = context.getContentResolver().update(uri, 
-                                                        values, 
-                                                        selection, 
-                                                        selectionArgs);
-        // confirm update?
-    }
-    
-    // delete database row with current values
-    public void delete() {
-        Uri uri = ProjectsProvider.AUTH_CONTENT_URI.buildUpon().appendPath("" + id).build();
-        String selection = StoryMakerDB.Schema.Auth.ID + "=?";
-        String[] selectionArgs = new String[] { "" + id };
-        int count = context.getContentResolver().delete(uri, 
-                                                        selection, 
-                                                        selectionArgs);
-        // confirm delete?
-    }
-    
     // getters and setters
-
-    /**
-     * @return id
-     */
-    public int getId() {
-        return id;
-    }
-
-    /**
-     * @param id
-     */
-    public void setId(int id) {
-        this.id = id;
-    }
-
+    
     /**
      * @return name
      */

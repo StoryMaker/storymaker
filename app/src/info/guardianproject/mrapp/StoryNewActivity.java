@@ -175,7 +175,7 @@ public class StoryNewActivity extends BaseActivity {
     private void launchSimpleStory(String pName, int storyMode, boolean autoCapture) {
         int clipCount = AppConstants.DEFAULT_CLIP_COUNT;
         
-        Project project = new Project (this, clipCount);
+        Project project = new Project (getBaseContext(), clipCount);
         project.setTitle(pName);
         project.save();
         

@@ -1,5 +1,16 @@
 package info.guardianproject.mrapp.db;
 
+import info.guardianproject.mrapp.model.Auth;
+import info.guardianproject.mrapp.model.AuthTable;
+import info.guardianproject.mrapp.model.LessonTable;
+import info.guardianproject.mrapp.model.MediaTable;
+import info.guardianproject.mrapp.model.Project;
+import info.guardianproject.mrapp.model.ProjectTable;
+import info.guardianproject.mrapp.model.Scene;
+import info.guardianproject.mrapp.model.Media;
+import info.guardianproject.mrapp.model.Lesson;
+import info.guardianproject.mrapp.model.SceneTable;
+import net.sqlcipher.database.SQLiteDatabase;
 import net.sqlcipher.database.SQLiteQueryBuilder;
 import android.content.ContentProvider;
 import android.content.ContentResolver;
@@ -10,7 +21,8 @@ import android.net.Uri;
 
 // FIXME rename this to SMProvier and get rid of LessonsProvider
 public class ProjectsProvider extends ContentProvider {  
-	private StoryMakerDB mDB;
+	private StoryMakerDB mDBHelper;
+	private SQLiteDatabase mDB = null;
     private String mPassphrase = "foo"; //how and when do we set this??
     
     private static final String AUTHORITY = "info.guardianproject.mrapp.db.ProjectsProvider";
@@ -74,8 +86,19 @@ public class ProjectsProvider extends ContentProvider {
     
     @Override
     public boolean onCreate() {
-        mDB = new StoryMakerDB(getContext()); 
+        mDBHelper = new StoryMakerDB(getContext()); 
         return true;
+    }
+    
+    public void setDB(SQLiteDatabase db) {
+        mDB = db;
+    }
+    
+    private SQLiteDatabase getDB() {
+        if (mDB == null) {
+            mDB = mDBHelper.getWritableDatabase(mPassphrase);
+        }
+        return mDB;
     }
 
 	@Override
@@ -83,6 +106,106 @@ public class ProjectsProvider extends ContentProvider {
 		// TODO Auto-generated method stub
 		return null;
 	}
+    
+    @Override
+    public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
+        int uriType = sURIMatcher.match(uri);
+        switch (uriType) {
+        case PROJECT_ID:
+            return (new ProjectTable()).queryOne(getContext(), getDB(), uri, projection, selection, selectionArgs, sortOrder);
+        case PROJECTS:
+            return (new ProjectTable()).queryAll(getContext(), getDB(), uri, projection, selection, selectionArgs, sortOrder);
+        case SCENE_ID:
+            return (new SceneTable()).queryOne(getContext(), getDB(), uri, projection, selection, selectionArgs, sortOrder);
+        case SCENES:
+            return (new SceneTable()).queryAll(getContext(), getDB(), uri, projection, selection, selectionArgs, sortOrder);
+        case LESSON_ID:
+            return (new LessonTable()).queryOne(getContext(), getDB(), uri, projection, selection, selectionArgs, sortOrder);
+        case LESSONS:
+            return (new LessonTable()).queryAll(getContext(), getDB(), uri, projection, selection, selectionArgs, sortOrder);
+        case MEDIA_ID:
+            return (new MediaTable()).queryOne(getContext(), getDB(), uri, projection, selection, selectionArgs, sortOrder);
+        case MEDIA:
+            return (new MediaTable()).queryAll(getContext(), getDB(), uri, projection, selection, selectionArgs, sortOrder);
+        case AUTH_ID:
+            return (new AuthTable()).queryOne(getContext(), getDB(), uri, projection, selection, selectionArgs, sortOrder);
+        case AUTH:
+            return (new AuthTable()).queryAll(getContext(), getDB(), uri, projection, selection, selectionArgs, sortOrder);
+        default:
+            throw new IllegalArgumentException("Unknown URI");
+        }
+    }
+
+    @Override
+    public Uri insert(Uri uri, ContentValues values) {
+        long newId;
+        int uriType = sURIMatcher.match(uri);
+        switch (uriType) {
+        case PROJECTS:
+            return (new ProjectTable()).insert(getContext(), mDB, uri, values);
+        case SCENES:
+            return (new SceneTable()).insert(getContext(), mDB, uri, values);
+        case LESSONS:
+            return (new LessonTable()).insert(getContext(), mDB, uri, values);
+        case MEDIA:
+            return (new MediaTable()).insert(getContext(), mDB, uri, values);
+        case AUTH:
+            return (new AuthTable()).insert(getContext(), mDB, uri, values);
+        default:
+            throw new IllegalArgumentException("Unknown URI");
+        }
+    }
+    
+    @Override
+    public int delete(Uri uri, String selection, String[] selectionArgs) {
+        int uriType = sURIMatcher.match(uri);
+        switch (uriType) {
+        case PROJECTS:
+        case PROJECT_ID:
+            return (new ProjectTable()).delete(getContext(), getDB(), uri, selection, selectionArgs);
+        case SCENES:
+        case SCENE_ID:
+            return (new SceneTable()).delete(getContext(), getDB(), uri, selection, selectionArgs);
+        case LESSONS:
+        case LESSON_ID:
+            return (new LessonTable()).delete(getContext(), getDB(), uri, selection, selectionArgs);
+        case MEDIA:
+        case MEDIA_ID:
+            return (new MediaTable()).delete(getContext(), getDB(), uri, selection, selectionArgs);
+        case AUTH:
+        case AUTH_ID:
+            return (new AuthTable()).delete(getContext(), getDB(), uri, selection, selectionArgs);
+        default:
+            throw new IllegalArgumentException("Unknown URI");
+        }
+    }
+
+    @Override
+    public int update(Uri uri, ContentValues values, String selection, String[] selectionArgs) {
+        int uriType = sURIMatcher.match(uri);
+        switch (uriType) {
+        case PROJECTS:
+        case PROJECT_ID:
+            return (new ProjectTable()).update(getContext(), mDB, uri, values, selection, selectionArgs);
+        case SCENES:
+        case SCENE_ID:
+            return (new SceneTable()).update(getContext(), mDB, uri, values, selection, selectionArgs);
+        case LESSONS:
+        case LESSON_ID:
+            return (new LessonTable()).update(getContext(), mDB, uri, values, selection, selectionArgs);
+        case MEDIA:
+        case MEDIA_ID:
+            return (new MediaTable()).update(getContext(), mDB, uri, values, selection, selectionArgs);
+        case AUTH:
+        case AUTH_ID:
+            return (new AuthTable()).update(getContext(), mDB, uri, values, selection, selectionArgs);
+        default:
+            throw new IllegalArgumentException("Unknown URI");
+        }
+    }
+    
+    /*
+
     
     @Override
     public Cursor query(Uri uri, String[] projection, String selection,
@@ -112,7 +235,7 @@ public class ProjectsProvider extends ContentProvider {
                     + uri.getLastPathSegment());
             break;
         case LESSONS:
-        	queryBuilder.setTables(StoryMakerDB.Schema.Lessons.NAME);
+            queryBuilder.setTables(StoryMakerDB.Schema.Lessons.NAME);
             break;
         case MEDIA_ID:
             queryBuilder.setTables(StoryMakerDB.Schema.Media.NAME);
@@ -120,7 +243,7 @@ public class ProjectsProvider extends ContentProvider {
                     + uri.getLastPathSegment());
             break;
         case MEDIA:
-        	queryBuilder.setTables(StoryMakerDB.Schema.Media.NAME);
+            queryBuilder.setTables(StoryMakerDB.Schema.Media.NAME);
             break;
         case AUTH_ID:
             queryBuilder.setTables(StoryMakerDB.Schema.Auth.NAME);
@@ -128,59 +251,54 @@ public class ProjectsProvider extends ContentProvider {
                     + uri.getLastPathSegment());
             break;
         case AUTH:
-        	queryBuilder.setTables(StoryMakerDB.Schema.Auth.NAME);
+            queryBuilder.setTables(StoryMakerDB.Schema.Auth.NAME);
             break;
         default:
             throw new IllegalArgumentException("Unknown URI");
         }
         
-        Cursor cursor = queryBuilder.query(mDB.getReadableDatabase(mPassphrase),
+        Cursor cursor = queryBuilder.query(getDB(),
                 projection, selection, selectionArgs, null, null, sortOrder);
         cursor.setNotificationUri(getContext().getContentResolver(), uri);
         return cursor;
     }
 
-	@Override
-	public Uri insert(Uri uri, ContentValues values) {
-		long newId;
-		int uriType = sURIMatcher.match(uri);
-		switch (uriType) {
+    @Override
+    public Uri insert(Uri uri, ContentValues values) {
+        long newId;
+        int uriType = sURIMatcher.match(uri);
+        switch (uriType) {
         case PROJECTS:
-            newId = mDB.getWritableDatabase(mPassphrase)
-                .insertOrThrow(StoryMakerDB.Schema.Projects.NAME, null, values);
+            newId = getDB().insertOrThrow(StoryMakerDB.Schema.Projects.NAME, null, values);
             getContext().getContentResolver().notifyChange(uri, null);
             return PROJECTS_CONTENT_URI.buildUpon().appendPath(PROJECTS_BASE_PATH).appendPath("" + newId).build();
         case SCENES:
-            newId = mDB.getWritableDatabase(mPassphrase)
-                .insertOrThrow(StoryMakerDB.Schema.Scenes.NAME, null, values);
+            newId = getDB().insertOrThrow(StoryMakerDB.Schema.Scenes.NAME, null, values);
             getContext().getContentResolver().notifyChange(uri, null);
             return SCENES_CONTENT_URI.buildUpon().appendPath(SCENES_BASE_PATH).appendPath("" + newId).build();
-		case LESSONS:
-            newId = mDB.getWritableDatabase(mPassphrase)
-            	.insertOrThrow(StoryMakerDB.Schema.Lessons.NAME, null, values);
+        case LESSONS:
+            newId = getDB().insertOrThrow(StoryMakerDB.Schema.Lessons.NAME, null, values);
             getContext().getContentResolver().notifyChange(uri, null);
             return LESSONS_CONTENT_URI.buildUpon().appendPath(LESSONS_BASE_PATH).appendPath("" + newId).build();
-		case MEDIA:
-            newId = mDB.getWritableDatabase(mPassphrase)
-            	.insertOrThrow(StoryMakerDB.Schema.Media.NAME, null, values);
+        case MEDIA:
+            newId = getDB().insertOrThrow(StoryMakerDB.Schema.Media.NAME, null, values);
             getContext().getContentResolver().notifyChange(uri, null);
             return MEDIA_CONTENT_URI.buildUpon().appendPath(MEDIA_BASE_PATH).appendPath("" + newId).build();
-		case AUTH:
-            newId = mDB.getWritableDatabase(mPassphrase)
-            	.insertOrThrow(StoryMakerDB.Schema.Auth.NAME, null, values);
+        case AUTH:
+            newId = getDB().insertOrThrow(StoryMakerDB.Schema.Auth.NAME, null, values);
             getContext().getContentResolver().notifyChange(uri, null);
             return AUTH_CONTENT_URI.buildUpon().appendPath(AUTH_BASE_PATH).appendPath("" + newId).build();
-		default:
-			throw new IllegalArgumentException("Unknown URI");
-		}
-	}
+        default:
+            throw new IllegalArgumentException("Unknown URI");
+        }
+    }
     
-	@Override
-	public int delete(Uri uri, String selection, String[] selectionArgs) {
-		int uriType = sURIMatcher.match(uri);
-		int count;
-		String table;
-		switch (uriType) {
+    @Override
+    public int delete(Uri uri, String selection, String[] selectionArgs) {
+        int uriType = sURIMatcher.match(uri);
+        int count;
+        String table;
+        switch (uriType) {
         case PROJECTS:
         case PROJECT_ID:
             table = StoryMakerDB.Schema.Projects.NAME;
@@ -189,33 +307,33 @@ public class ProjectsProvider extends ContentProvider {
         case SCENE_ID:
             table = StoryMakerDB.Schema.Scenes.NAME;
             break;
-		case LESSONS:
-		case LESSON_ID:
-			table = StoryMakerDB.Schema.Lessons.NAME;
-			break;
-		case MEDIA:
-		case MEDIA_ID:
-			table = StoryMakerDB.Schema.Media.NAME;
-			break;
-		case AUTH:
-		case AUTH_ID:
-			table = StoryMakerDB.Schema.Auth.NAME;
-			break;
-		default:
-			throw new IllegalArgumentException("Unknown URI");
-		}
-		count = mDB.getWritableDatabase(mPassphrase).delete(table, selection, selectionArgs);
+        case LESSONS:
+        case LESSON_ID:
+            table = StoryMakerDB.Schema.Lessons.NAME;
+            break;
+        case MEDIA:
+        case MEDIA_ID:
+            table = StoryMakerDB.Schema.Media.NAME;
+            break;
+        case AUTH:
+        case AUTH_ID:
+            table = StoryMakerDB.Schema.Auth.NAME;
+            break;
+        default:
+            throw new IllegalArgumentException("Unknown URI");
+        }
+        count = getDB().delete(table, selection, selectionArgs);
         getContext().getContentResolver().notifyChange(uri, null);
-		return count;
-	}
+        return count;
+    }
 
-	@Override
-	public int update(Uri uri, ContentValues values, String selection,
-			String[] selectionArgs) {
-		int uriType = sURIMatcher.match(uri);
-		int count;
-		String table;
-		switch (uriType) {
+    @Override
+    public int update(Uri uri, ContentValues values, String selection,
+            String[] selectionArgs) {
+        int uriType = sURIMatcher.match(uri);
+        int count;
+        String table;
+        switch (uriType) {
         case PROJECTS:
         case PROJECT_ID:
             table = StoryMakerDB.Schema.Projects.NAME;
@@ -224,23 +342,24 @@ public class ProjectsProvider extends ContentProvider {
         case SCENE_ID:
             table = StoryMakerDB.Schema.Scenes.NAME;
             break;
-		case LESSONS:
-		case LESSON_ID:
-			table = StoryMakerDB.Schema.Lessons.NAME;
-			break;
-		case MEDIA:
-		case MEDIA_ID:
-			table = StoryMakerDB.Schema.Media.NAME;
-			break;
-		case AUTH:
-		case AUTH_ID:
-			table = StoryMakerDB.Schema.Auth.NAME;
-			break;
-		default:
-			throw new IllegalArgumentException("Unknown URI");
-		}
-		count = mDB.getWritableDatabase(mPassphrase).update(table, values, selection, selectionArgs);
+        case LESSONS:
+        case LESSON_ID:
+            table = StoryMakerDB.Schema.Lessons.NAME;
+            break;
+        case MEDIA:
+        case MEDIA_ID:
+            table = StoryMakerDB.Schema.Media.NAME;
+            break;
+        case AUTH:
+        case AUTH_ID:
+            table = StoryMakerDB.Schema.Auth.NAME;
+            break;
+        default:
+            throw new IllegalArgumentException("Unknown URI");
+        }
+        count = getDB().update(table, values, selection, selectionArgs);
         getContext().getContentResolver().notifyChange(uri, null);
-		return count;
-	}
+        return count;
+    }     
+     */
 }

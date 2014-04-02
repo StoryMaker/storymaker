@@ -10,6 +10,7 @@ import info.guardianproject.mrapp.media.exporter.MediaVideoExporter;
 import info.guardianproject.mrapp.media.exporter.MediaSlideshowExporter;
 import info.guardianproject.mrapp.model.Media;
 import info.guardianproject.mrapp.model.Project;
+import info.guardianproject.mrapp.model.ProjectTable;
 import info.guardianproject.mrapp.model.Scene;
 
 import java.io.File;
@@ -67,7 +68,7 @@ public class MediaProjectManager implements MediaManager {
 	private static boolean mUseInternal = false;
 	
     public MediaProjectManager (Activity activity, Context context, Intent intent, Handler handler, int pid) {
-        this(activity, context, intent, handler, Project.get(context, pid));
+        this(activity, context, intent, handler, (Project)(new ProjectTable()).get(context, pid)); // FIXME ugly
     }
     
     public MediaProjectManager (Activity activity, Context context, Intent intent, Handler handler, Project project) {

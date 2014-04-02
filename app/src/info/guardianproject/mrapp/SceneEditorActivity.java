@@ -6,6 +6,7 @@ import info.guardianproject.mrapp.media.OverlayCameraActivity;
 import info.guardianproject.mrapp.model.template.Clip;
 import info.guardianproject.mrapp.model.template.Template;
 import info.guardianproject.mrapp.model.Project;
+import info.guardianproject.mrapp.model.ProjectTable;
 import info.guardianproject.mrapp.model.Scene;
 import java.io.File;
 import java.io.FileInputStream;
@@ -65,7 +66,7 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
 
         if (pid != -1)
         {
-        	mProject = Project.get(getApplicationContext(), pid);
+        	mProject = (Project)(new ProjectTable()).get(getApplicationContext(), pid); // FIXME ugly
             Scene scene = null;
             if ((mSceneIndex != -1) && (mSceneIndex < mProject.getScenesAsArray().length)) {
                 scene = mProject.getScenesAsArray()[mSceneIndex];
