@@ -9,7 +9,7 @@ import android.util.Log;
 
 public class StoryMakerDB extends SQLiteOpenHelper {
     private static final String TAG = "StoryMakerDB";
-    private static final int DB_VERSION = 3;
+    private static final int DB_VERSION = 4;
     private static final String DB_NAME = "sm.db";
     private Context mContext;
     
