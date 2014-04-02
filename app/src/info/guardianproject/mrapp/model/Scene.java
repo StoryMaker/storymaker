@@ -168,7 +168,7 @@ public class Scene extends Model {
         if (mDB == null) {
             return context.getContentResolver().query(ProjectsProvider.MEDIA_CONTENT_URI, null, selection, selectionArgs, orderBy);
         } else {
-            return mDB.query(getTable().getTableName(), null, selection, selectionArgs, null, null, orderBy);
+            return mDB.query((new MediaTable(mDB)).getTableName(), null, selection, selectionArgs, null, null, orderBy);
         }
     }
        

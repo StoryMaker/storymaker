@@ -138,19 +138,19 @@ public abstract class Table {
         if (cursor.moveToFirst()) {
             do {
                 if (name == (new AuthTable()).getTableName()) {
-                    model = new Auth(context, cursor);
+                    model = new Auth(mDB, context, cursor);
                     ((ArrayList<Auth>)models).add((Auth)model); // FIXME ugly again
                 } else if (name == (new LessonTable()).getTableName()) {
-                    model = new Lesson(context);
+                    model = new Lesson(mDB, context);
                     ((ArrayList<Lesson>)models).add((Lesson)model);
                 } else if (name == (new MediaTable()).getTableName()) {
-                    model = new Media(context, cursor);
+                    model = new Media(mDB, context, cursor);
                     ((ArrayList<Media>)models).add((Media)model);
                 } else if (name == (new ProjectTable()).getTableName()) {
-                    model = new Project(context, cursor);
+                    model = new Project(mDB, context, cursor);
                     ((ArrayList<Project>)models).add((Project)model);
                 } else if (name == (new SceneTable()).getTableName()) {
-                    model = new Scene(context, cursor);
+                    model = new Scene(mDB, context, cursor);
                     ((ArrayList<Scene>)models).add((Scene)model);
                 }
             } while (cursor.moveToNext());

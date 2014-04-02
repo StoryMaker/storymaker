@@ -1,7 +1,11 @@
 package info.guardianproject.mrapp.db;
 
+import java.util.ArrayList;
+
 import info.guardianproject.mrapp.model.Auth;
 import info.guardianproject.mrapp.model.AuthTable;
+import info.guardianproject.mrapp.model.Project;
+import info.guardianproject.mrapp.model.ProjectTable;
 import net.sqlcipher.database.SQLiteDatabase;
 import net.sqlcipher.database.SQLiteOpenHelper;
 import android.content.Context;
@@ -41,9 +45,6 @@ public class StoryMakerDB extends SQLiteOpenHelper {
         if ((oldVersion < 4) && (newVersion == 4)) {
             db.execSQL(StoryMakerDB.Schema.Auth.UPDATE_TABLE_AUTH);
         } 
-        if ((oldVersion < 5) && (newVersion == 5)) {
-            Auth a = (new AuthTable()).getAuthDefault(mContext, Auth.STORYMAKER);
-        }
     }
     
     public class Schema 

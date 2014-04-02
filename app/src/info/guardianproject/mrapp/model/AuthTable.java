@@ -70,7 +70,11 @@ public class AuthTable extends Table {
         String selection = StoryMakerDB.Schema.Auth.COL_SITE + "=?";
         String[] selectionArgs = new String[] { "" + site };
         String orderBy = StoryMakerDB.Schema.Auth.ID;
-        return context.getContentResolver().query(ProjectsProvider.AUTH_CONTENT_URI, null, selection, selectionArgs, orderBy);
+        if (mDB == null) {
+            return context.getContentResolver().query(ProjectsProvider.AUTH_CONTENT_URI, null, selection, selectionArgs, orderBy);
+        } else {
+            return mDB.query(getTableName(), null, selection, selectionArgs, null, null, orderBy);
+        }
     }
 
     /**

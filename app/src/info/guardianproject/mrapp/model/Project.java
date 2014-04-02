@@ -132,8 +132,21 @@ public class Project extends Model {
      * @param cursor
      */
     public Project(SQLiteDatabase db, Context context, Cursor cursor) {
-        this(context, cursor);
+        // FIXME use column id's directly to optimize this one schema stabilizes
+        this(
+                context,
+                cursor.getInt(cursor
+                        .getColumnIndex(StoryMakerDB.Schema.Projects.ID)),
+                cursor.getString(cursor
+                        .getColumnIndex(StoryMakerDB.Schema.Projects.COL_TITLE)),
+                cursor.getString(cursor
+                        .getColumnIndex(StoryMakerDB.Schema.Projects.COL_THUMBNAIL_PATH)),
+                cursor.getInt(cursor
+                        .getColumnIndex(StoryMakerDB.Schema.Projects.COL_STORY_TYPE)),
+                cursor.getString(cursor
+                        .getColumnIndex(StoryMakerDB.Schema.Projects.COL_TEMPLATE_PATH)));
         this.mDB = db;
+        calculateMaxSceneCount(); // had to dupe the Project(context, cursor) constructor in here because of this call being fired before we set mDB 
     }
     
     public String getTemplateTag ()
@@ -180,16 +193,6 @@ public class Project extends Model {
         
         mSceneCount = cursor.getCount();
         
-        // FIXME CLEANUP --- not sure why this was calculated this way, but for now I am just using count
-//        if (cursor.moveToFirst()) {
-//            do {
-//                Scene scene = new Scene(context, cursor);
-//                projectIndex = Math.max(projectIndex, scene.getProjectIndex());
-//            } while (cursor.moveToNext());
-//        }
-        
-//        mSceneCount = projectIndex + 1; //size is one higher than max index
-        
         cursor.close();
         
     }
@@ -204,40 +207,41 @@ public class Project extends Model {
         return values;
     }
     
- // FIXME make provider free version
     public ArrayList<Scene> getScenesAsList() {
         Cursor cursor = getScenesAsCursor();
         
         ArrayList<Scene> scenes = new ArrayList<Scene>(mSceneCount);
         
-        for (int i = 0; i < mSceneCount; i++)
+        for (int i = 0; i < mSceneCount; i++) {
             scenes.add(null);
+        }
         
         if (cursor.moveToFirst()) {
             do {
-                Scene scene = new Scene(context, cursor);
+                Scene scene = new Scene(mDB, context, cursor);
                 scenes.set(scene.getProjectIndex(), scene);
             } while (cursor.moveToNext());
         }
         cursor.close();
         return scenes;
     }
- // FIXME make provider free version
+    
     public Scene[] getScenesAsArray() {
         ArrayList<Scene> scenes = getScenesAsList();
         return scenes.toArray(new Scene[] {});
     }
- // FIXME make provider free version
+    
     public Cursor getScenesAsCursor() {
         String selection = "project_id=?";
         String[] selectionArgs = new String[] { "" + getId() };
         String orderBy = "project_index";
-        return context.getContentResolver().query(
-                ProjectsProvider.SCENES_CONTENT_URI, null, selection,
-                selectionArgs, orderBy);
+        if (mDB == null) {
+            return context.getContentResolver().query(ProjectsProvider.SCENES_CONTENT_URI, null, selection, selectionArgs, orderBy);
+        } else {
+            return mDB.query((new SceneTable(mDB)).getTableName(), null, selection, selectionArgs, null, null, orderBy);
+        }
     }
     
-    // FIXME make provider free version
     public ArrayList<Media> getMediaAsList() {
         ArrayList<Media> mediaList = null;
         mediaList = new ArrayList<Media>();
@@ -247,7 +251,6 @@ public class Project extends Model {
         return mediaList;
     }
     
-    // FIXME make provider free version
     public String[] getMediaAsPathArray() {
         ArrayList<Media> mediaList = getMediaAsList();
 
