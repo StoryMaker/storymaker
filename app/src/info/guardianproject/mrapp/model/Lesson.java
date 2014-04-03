@@ -1,14 +1,25 @@
 package info.guardianproject.mrapp.model;
 
+import info.guardianproject.mrapp.db.ProjectsProvider;
+import info.guardianproject.mrapp.db.StoryMakerDB;
+
 import java.io.File;
 import java.util.Date;
 
+import net.sqlcipher.database.SQLiteDatabase;
+import net.sqlcipher.database.SQLiteQueryBuilder;
+
 import org.json.JSONObject;
 
+import android.content.ContentValues;
+import android.content.Context;
+import android.database.Cursor;
+import android.net.Uri;
 
-public class Lesson {
 
-	public String mTitle;
+public class Lesson extends Model {
+
+    public String mTitle;
 	public String mDescription;
 	public String mResourcePath; //file, http, asset
 	public String mImage;
@@ -22,9 +33,26 @@ public class Lesson {
 
 	public Date mStatusModified;
 
-	public static Lesson parse (String jsonTxt) throws Exception
+    Lesson(Context context) {
+        super(context);
+    }
+    
+    Lesson(SQLiteDatabase db, Context context) {
+        super(db, context);
+    }
+
+    @Override
+    protected Table getTable() {
+        if (mTable == null) {
+            mTable = new LessonTable(mDB);
+        }
+        return mTable;
+    }
+
+    // FIXME probably should move this to LessonTable
+	public static Lesson parse (Context context, String jsonTxt) throws Exception
 	{
-		Lesson result = new Lesson();
+		Lesson result = new Lesson(context);
 		
 		JSONObject jobj= new JSONObject(jsonTxt);
 		jobj = jobj.getJSONObject("lesson");
@@ -43,6 +71,14 @@ public class Lesson {
 	{
 		return mTitle;
 	}
+    
+    protected ContentValues getValues() {
+        ContentValues values = new ContentValues();
+        values.put(StoryMakerDB.Schema.Lessons.COL_TITLE, mTitle); // FIXME i don't think the lessons module really uses the model right
+//        values.put(StoryMakerDB.Schema.Lessons.COL_URL, mUrl);
+        
+        return values;
+    }
 }
 /**
 {"lesson": {

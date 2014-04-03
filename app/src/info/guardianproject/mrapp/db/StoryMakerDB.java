@@ -1,17 +1,25 @@
 package info.guardianproject.mrapp.db;
 
+import java.util.ArrayList;
+
+import info.guardianproject.mrapp.model.Auth;
+import info.guardianproject.mrapp.model.AuthTable;
+import info.guardianproject.mrapp.model.Project;
+import info.guardianproject.mrapp.model.ProjectTable;
 import net.sqlcipher.database.SQLiteDatabase;
 import net.sqlcipher.database.SQLiteOpenHelper;
 import android.content.Context;
+import android.util.Log;
 
 public class StoryMakerDB extends SQLiteOpenHelper {
-	
-    private static final int DB_VERSION = 3;
+    private static final String TAG = "StoryMakerDB";
+    private static final int DB_VERSION = 4;
     private static final String DB_NAME = "sm.db";
+    private Context mContext;
     
     public StoryMakerDB(Context context) {
         super(context, DB_NAME, null, DB_VERSION);
-        
+        mContext = context;
     }
     
     @Override
@@ -20,10 +28,12 @@ public class StoryMakerDB extends SQLiteOpenHelper {
         db.execSQL(StoryMakerDB.Schema.Scenes.CREATE_TABLE_SCENES);
 		db.execSQL(StoryMakerDB.Schema.Lessons.CREATE_TABLE_LESSONS);
 		db.execSQL(StoryMakerDB.Schema.Media.CREATE_TABLE_MEDIA);
+		db.execSQL(StoryMakerDB.Schema.Auth.CREATE_TABLE_AUTH);
     }
     
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        Log.d(TAG, "updating db from " + oldVersion + " to " + newVersion);
         if ((oldVersion < 2) && (newVersion == 2)) {
             db.execSQL(StoryMakerDB.Schema.Projects.UPDATE_TABLE_PROJECTS);
         } 
@@ -31,6 +41,9 @@ public class StoryMakerDB extends SQLiteOpenHelper {
             db.execSQL(StoryMakerDB.Schema.Media.UPDATE_TABLE_MEDIA_ADD_TRIM_START);
             db.execSQL(StoryMakerDB.Schema.Media.UPDATE_TABLE_MEDIA_ADD_TRIM_END);
             db.execSQL(StoryMakerDB.Schema.Media.UPDATE_TABLE_MEDIA_ADD_DURATION);
+        } 
+        if ((oldVersion < 4) && (newVersion == 4)) {
+            db.execSQL(StoryMakerDB.Schema.Auth.UPDATE_TABLE_AUTH);
         } 
     }
     
@@ -133,6 +146,31 @@ public class StoryMakerDB extends SQLiteOpenHelper {
                     + "ADD COLUMN "
                     + COL_DURATION + " integer;";
     	}
+    	
+    	public class Auth
+        {
+            public static final String NAME = "auth";
+            
+            public static final String ID = "_id";
+            public static final String COL_NAME = "name";
+            public static final String COL_SITE = "site";
+            public static final String COL_USER_NAME = "user_name";
+            public static final String COL_CREDENTIALS = "credentials";
+            public static final String COL_EXPIRES = "expires";
+            public static final String COL_LAST_LOGIN = "last_login";
+            
+            private static final String CREATE_TABLE_AUTH = "create table " + NAME + " (" 
+                    + ID + " integer primary key autoincrement, " 
+                    + COL_NAME + " text not null, "
+                    + COL_SITE + " text not null, "
+                    + COL_USER_NAME + " text not null, "
+                    + COL_CREDENTIALS + " text not null, "
+                    + COL_EXPIRES + " integer, "
+                    + COL_LAST_LOGIN + " integer "
+                    + "); ";
+            
+            private static final String UPDATE_TABLE_AUTH = CREATE_TABLE_AUTH;
+        }
     	
 //    	public static final String DB_SCHEMA = Lessons.CREATE_TABLE_LESSONS 
 //    			+ Projects.CREATE_TABLE_PROJECTS 

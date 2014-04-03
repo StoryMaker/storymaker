@@ -153,7 +153,7 @@ public class LessonManager implements Runnable {
                     if (fileLessonJson.exists())
                     {
 
-                        Lesson lesson = Lesson.parse(IOUtils.toString(new FileInputStream( fileLessonJson)));
+                        Lesson lesson = Lesson.parse(context, IOUtils.toString(new FileInputStream( fileLessonJson)));
                         File fileIdx = new File(fileLesson, lesson.mResourcePath);
 
                         lesson.mTitle = fileLesson.getName() + ": " + lesson.mTitle;

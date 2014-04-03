@@ -5,6 +5,9 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
 
+import net.sqlcipher.database.SQLiteDatabase;
+import net.sqlcipher.database.SQLiteQueryBuilder;
+
 import org.ffmpeg.android.MediaUtils;
 
 import info.guardianproject.mrapp.AppConstants;
@@ -20,11 +23,9 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.util.Log;
 
-public class Media {
+public class Media extends Model {
 	private static final String TAG = "Media";
 	
-    protected Context context;
-    protected int id;
     protected String path;
     protected String mimeType;
     protected String clipType; // R.arrays.cliptypes
@@ -35,14 +36,46 @@ public class Media {
     protected float duration;
 
     public final static int IMAGE_SAMPLE_SIZE = 4;
-    
+
+    /**
+     * Create a new, blank record via the Content Provider interface
+     * 
+     * @param context
+     */
     public Media(Context context) {
-        this.context = context;
+        super(context);
     }
 
+    /**
+     * Create a new, blank record via direct db access.  
+     * 
+     * This should be used within DB Migrations and Model or Table classes
+     *  
+     * @param db
+     * @param context
+     */
+    public Media(SQLiteDatabase db, Context context) {
+        super(context);
+        this.mDB = db;
+    }
+
+    /**
+     * Create a Model object via direct params
+     * 
+     * @param context
+     * @param id
+     * @param path
+     * @param mimeType
+     * @param clipType
+     * @param clipIndex
+     * @param sceneId
+     * @param trimStart
+     * @param trimEnd
+     * @param duration
+     */
     public Media(Context context, int id, String path, String mimeType, String clipType, int clipIndex,
             int sceneId, float trimStart, float trimEnd, float duration) {
-        super();
+        super(context);
         this.context = context;
         this.id = id;
         this.path = path;
@@ -54,7 +87,36 @@ public class Media {
         this.trimEnd = trimEnd;
         this.duration = duration;
     }
+    
+    /**
+     * Create a Model object via direct params via direct db access.
+     * 
+     * This should be used within DB Migrations and Model or Table classes
+     *
+     * @param db
+     * @param context
+     * @param id
+     * @param path
+     * @param mimeType
+     * @param clipType
+     * @param clipIndex
+     * @param sceneId
+     * @param trimStart
+     * @param trimEnd
+     * @param duration
+     */
+    public Media(SQLiteDatabase db, Context context, int id, String path, String mimeType, String clipType, int clipIndex,
+            int sceneId, float trimStart, float trimEnd, float duration) {
+        this(context, id, path, mimeType, clipType, clipIndex, sceneId, trimStart, trimEnd, duration);
+        this.mDB = db;
+    }
 
+    /**
+     * Inflate record from a cursor via the Content Provider
+     * 
+     * @param context
+     * @param cursor
+     */
     public Media(Context context, Cursor cursor) {
         // FIXME use column id's directly to optimize this one schema stabilizes
         this(
@@ -79,23 +141,26 @@ public class Media {
                         .getColumnIndex(StoryMakerDB.Schema.Media.COL_DURATION)));
     }
 
-    /***** Table level static methods *****/
-
-    public static Cursor getAsCursor(Context context, int id) {
-        String selection = StoryMakerDB.Schema.Media.ID + "=?";
-        String[] selectionArgs = new String[] { "" + id };
-        return context.getContentResolver().query(
-                ProjectsProvider.MEDIA_CONTENT_URI, null, selection,
-                selectionArgs, null);
+    /**
+     * Inflate record from a cursor via direct db access.
+     * 
+     * This should be used within DB Migrations and Model or Table classes
+     *
+     * @param db
+     * @param context
+     * @param cursor
+     */
+    public Media(SQLiteDatabase db, Context context, Cursor cursor) {
+        this(context, cursor);
+        this.mDB = db;
     }
 
-    public static Media get(Context context, int id) {
-        Cursor cursor = Media.getAsCursor(context, id);
-        if (cursor.moveToFirst()) {
-            return new Media(context, cursor);
-        } else {
-            return null;
+    @Override
+    protected Table getTable() {
+        if (mTable == null) {
+            mTable = new MediaTable(mDB);
         }
+        return mTable;
     }
     
     /***** Calculated object level methods *****/
@@ -142,65 +207,7 @@ public class Media {
         return getTrimmedEndTime() - getTrimmedStartTime();
     }
     
-    /***** Object level methods *****/
-
-
-    /*
-     * gets media in scene at location clipIndex
-     */
-    public static Cursor getAsCursor(Context context, int sceneId, int clipIndex) {
-        String selection = StoryMakerDB.Schema.Media.COL_SCENE_ID + "=? and " +
-        		StoryMakerDB.Schema.Media.COL_CLIP_INDEX + "=?";
-        String[] selectionArgs = new String[] { "" + sceneId, "" + clipIndex };
-        return context.getContentResolver().query(
-                ProjectsProvider.MEDIA_CONTENT_URI, null, selection,
-                selectionArgs, null);
-    }
-
-    /*
-     * gets media in scene at location clipIndex
-     */
-    public static Media get(Context context, int sceneId, int clipIndex) {
-        Cursor cursor = Media.getAsCursor(context, sceneId, clipIndex);
-        if (cursor.moveToFirst()) {
-            return new Media(context, cursor);
-        } else {
-            return null;
-        }
-    }
-
-    public static Cursor getAllAsCursor(Context context) {
-        return context.getContentResolver().query(
-                ProjectsProvider.MEDIA_CONTENT_URI, null, null, null, null);
-    }
-
-    public static ArrayList<Media> getAllAsList(Context context) {
-        ArrayList<Media> medias = new ArrayList<Media>();
-        Cursor cursor = getAllAsCursor(context);
-        if (cursor.moveToFirst()) {
-            do {
-                medias.add(new Media(context, cursor));
-            } while (cursor.moveToNext());
-        }
-        return medias;
-    }
-
-    /***** Object level methods *****/
-    
-    public void save() {
-    	Cursor cursor = getAsCursor(context, id);
-    	if (cursor.getCount() == 0) {
-    		cursor.close();
-    		insert();
-    	} else {
-    		cursor.close();
-    		update();    		
-    	}
-    	
-    	
-    }
-    
-    private ContentValues getValues() {
+    protected ContentValues getValues() {
         ContentValues values = new ContentValues();
         values.put(StoryMakerDB.Schema.Media.COL_PATH, path);
         values.put(StoryMakerDB.Schema.Media.COL_MIME_TYPE, mimeType);
@@ -214,45 +221,29 @@ public class Media {
         return values;
     }
     
-    private void insert() {
+    // FIXME make a db only version of this
+    // FIXME testme
+    @Override
+    public void insert() {
     	// There can be only one!  check if a media item exists at this location already, if so purge it first.
-    	Cursor cursorDupes = getAsCursor(context, sceneId, clipIndex);
+    	Cursor cursorDupes = (new MediaTable(mDB)).getAsCursor(context, sceneId, clipIndex);
     	if ((cursorDupes.getCount() > 0) && cursorDupes.moveToFirst()) {
         	// FIXME we should allow audio clips to remain so they can be mixed down with their buddies
     		do {
-    			(new Media(context, cursorDupes)).delete();
+    			(new Media(mDB, context, cursorDupes)).delete(); // always pass mDB when newing models within models, this way if we are in provider mode that is null anyhow
     		} while (cursorDupes.moveToNext());
     	}
     	
         ContentValues values = getValues();
-        Uri uri = context.getContentResolver().insert(
-                ProjectsProvider.MEDIA_CONTENT_URI, values);
+        Uri uri = context.getContentResolver().insert(ProjectsProvider.MEDIA_CONTENT_URI, values);
         String lastSegment = uri.getLastPathSegment();
         int newId = Integer.parseInt(lastSegment);
         this.setId(newId);
         
         cursorDupes.close();
+        super.insert();
     }
-    
-    private void update() {
-    	Uri uri = ProjectsProvider.MEDIA_CONTENT_URI.buildUpon().appendPath("" + id).build();
-        String selection = StoryMakerDB.Schema.Media.ID + "=?";
-        String[] selectionArgs = new String[] { "" + id };
-    	ContentValues values = getValues();
-        int count = context.getContentResolver().update(
-                uri, values, selection, selectionArgs);
-        // FIXME make sure 1 row updated
-    }
-    
-    public void delete() {
-    	Uri uri = ProjectsProvider.MEDIA_CONTENT_URI.buildUpon().appendPath("" + id).build();
-        String selection = StoryMakerDB.Schema.Media.ID + "=?";
-        String[] selectionArgs = new String[] { "" + id };
-        int count = context.getContentResolver().delete(
-                uri, selection, selectionArgs);
-        Log.d(TAG, "deleted media: " + id + ", rows deleted: " + count);
-        // FIXME make sure 1 row updated
-    }
+
     
     /***** getters and setters *****/
 
@@ -387,6 +378,7 @@ public class Media {
         this.duration = duration;
     }
     
+    // FIXME this should probably be refactored and split half into the media layer
     public static Bitmap getThumbnail(Context context, Media media, Project project) 
     {
     	if (media == null)
