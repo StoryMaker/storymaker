@@ -131,8 +131,23 @@ public class Scene extends Model {
      * @param cursor
      */
     public Scene(SQLiteDatabase db, Context context, Cursor cursor) {
-        this(context, cursor);
+        // FIXME use column id's directly to optimize this one schema stabilizes
+        this(
+                context,
+                cursor.getInt(cursor
+                        .getColumnIndex(StoryMakerDB.Schema.Scenes.ID)),
+                cursor.getString(cursor
+                        .getColumnIndex(StoryMakerDB.Schema.Scenes.COL_TITLE)),
+                cursor.getString(cursor
+                        .getColumnIndex(StoryMakerDB.Schema.Scenes.COL_THUMBNAIL_PATH)),
+                cursor.getInt(cursor
+                        .getColumnIndex(StoryMakerDB.Schema.Scenes.COL_PROJECT_INDEX)),
+                cursor.getInt(cursor
+                        .getColumnIndex(StoryMakerDB.Schema.Scenes.COL_PROJECT_ID))
+                );
+
         this.mDB = db;
+        calculateMaxClipCount(); // had to dupe the Scene(context, cursor) constructor in here because of this call being fired before we set mDB
     }
 
     @Override
