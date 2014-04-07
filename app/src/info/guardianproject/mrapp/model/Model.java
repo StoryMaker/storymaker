@@ -1,5 +1,6 @@
 package info.guardianproject.mrapp.model;
 
+import info.guardianproject.mrapp.db.ProjectsProvider;
 import net.sqlcipher.database.SQLiteDatabase;
 import android.content.ContentValues;
 import android.content.Context;
@@ -58,29 +59,47 @@ public abstract class Model {
     
     // update database row with current values
     public void update() {
-        Uri uri = getTable().getURI().buildUpon().appendPath("" + id).build();
+        ContentValues values = getValues();
+        
         String selection = getTable().getIDColumnName() + "=?";
         String[] selectionArgs = new String[] { "" + id };
-        ContentValues values = getValues();
-        int count = context.getContentResolver().update(uri, values, selection, selectionArgs);
+        
+        if (mDB == null) {
+            Uri uri = getTable().getURI().buildUpon().appendPath("" + id).build();
+            int count = context.getContentResolver().update(uri, values, selection, selectionArgs);
+        } else {
+            int count = mDB.update(getTable().getTableName(), values, selection, selectionArgs);
+        }
         // FIXME confirm update?
     }
     
     // delete database row with current values
     public void delete() {
-        Uri uri = getTable().getURI().buildUpon().appendPath("" + id).build();
         String selection = getTable().getIDColumnName() + "=?";
         String[] selectionArgs = new String[] { "" + id };
-        int count = context.getContentResolver().delete(uri, selection, selectionArgs);
+        
+        if (mDB == null) {
+            Uri uri = getTable().getURI().buildUpon().appendPath("" + id).build();
+            int count = context.getContentResolver().delete(uri, selection, selectionArgs);
+        } else {
+            int count = mDB.delete(getTable().getTableName(), selection, selectionArgs);
+        }
+        
         // FIXME confirm delete?
     }
     
     // insert database row with current values
     public void insert() {
         ContentValues values = getValues();
-        Uri uri = context.getContentResolver().insert(getTable().getURI(), values);
-        String lastSegment = uri.getLastPathSegment();
-        this.setId(Integer.parseInt(lastSegment));
+
+        if (mDB == null) {
+            Uri uri = context.getContentResolver().insert(getTable().getURI(), values);
+            String lastSegment = uri.getLastPathSegment();
+            this.setId(Integer.parseInt(lastSegment));
+        } else {
+            int newId = (int)mDB.insert(getTable().getTableName(), null, values);
+            this.setId(newId);
+        }
     }
 
     // insert/update current record

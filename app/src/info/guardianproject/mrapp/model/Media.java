@@ -3,7 +3,9 @@ package info.guardianproject.mrapp.model;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 
 import net.sqlcipher.database.SQLiteDatabase;
 import net.sqlcipher.database.SQLiteQueryBuilder;
@@ -34,6 +36,8 @@ public class Media extends Model {
     protected float trimStart;
     protected float trimEnd;
     protected float duration;
+    protected Date createdAt; // long stored in database as 8-bit int
+    protected Date updatedAt; // long stored in database as 8-bit int
 
     public final static int IMAGE_SAMPLE_SIZE = 4;
 
@@ -72,9 +76,11 @@ public class Media extends Model {
      * @param trimStart
      * @param trimEnd
      * @param duration
+     * @param createdAt
+     * @param updatedAt
      */
     public Media(Context context, int id, String path, String mimeType, String clipType, int clipIndex,
-            int sceneId, float trimStart, float trimEnd, float duration) {
+            int sceneId, float trimStart, float trimEnd, float duration, Date createdAt, Date updatedAt) {
         super(context);
         this.context = context;
         this.id = id;
@@ -86,6 +92,8 @@ public class Media extends Model {
         this.trimStart = trimStart;
         this.trimEnd = trimEnd;
         this.duration = duration;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
     }
     
     /**
@@ -104,10 +112,12 @@ public class Media extends Model {
      * @param trimStart
      * @param trimEnd
      * @param duration
+     * @param createdAt
+     * @param updatedAt
      */
     public Media(SQLiteDatabase db, Context context, int id, String path, String mimeType, String clipType, int clipIndex,
-            int sceneId, float trimStart, float trimEnd, float duration) {
-        this(context, id, path, mimeType, clipType, clipIndex, sceneId, trimStart, trimEnd, duration);
+            int sceneId, float trimStart, float trimEnd, float duration, Date createdAt, Date updatedAt) {
+        this(context, id, path, mimeType, clipType, clipIndex, sceneId, trimStart, trimEnd, duration, createdAt, updatedAt);
         this.mDB = db;
     }
 
@@ -138,7 +148,11 @@ public class Media extends Model {
                 cursor.getInt(cursor
                         .getColumnIndex(StoryMakerDB.Schema.Media.COL_TRIM_END)),
                 cursor.getInt(cursor
-                        .getColumnIndex(StoryMakerDB.Schema.Media.COL_DURATION)));
+                        .getColumnIndex(StoryMakerDB.Schema.Media.COL_DURATION)),
+                (!cursor.isNull(cursor.getColumnIndex(StoryMakerDB.Schema.Media.COL_CREATED_AT)) ?
+                        new Date(cursor.getLong(cursor.getColumnIndex(StoryMakerDB.Schema.Media.COL_CREATED_AT))) : null),
+                (!cursor.isNull(cursor.getColumnIndex(StoryMakerDB.Schema.Media.COL_UPDATED_AT)) ?
+                        new Date(cursor.getLong(cursor.getColumnIndex(StoryMakerDB.Schema.Media.COL_UPDATED_AT))) : null));
     }
 
     /**
@@ -217,8 +231,32 @@ public class Media extends Model {
         values.put(StoryMakerDB.Schema.Media.COL_TRIM_START, trimStart);
         values.put(StoryMakerDB.Schema.Media.COL_TRIM_END, trimEnd);
         values.put(StoryMakerDB.Schema.Media.COL_DURATION, duration);
+        if (createdAt != null) {
+            values.put(StoryMakerDB.Schema.Media.COL_CREATED_AT, createdAt.getTime());
+        }
+        if (updatedAt != null) {
+            values.put(StoryMakerDB.Schema.Media.COL_UPDATED_AT, updatedAt.getTime());
+        }
+        // store dates as longs(8-bit ints)
+        // can't put null in values set, so only add entry if non-null
         
         return values;
+    }
+    
+    // insert/update current record
+    // need to set created at/updated at date
+    @Override
+    public void save() {
+        Cursor cursor = getTable().getAsCursor(context, id);
+        if (cursor.getCount() == 0) {
+            cursor.close();
+            setCreatedAt(new Date());
+            insert();
+        } else {
+            cursor.close();
+            setUpdatedAt(new Date());
+            update();            
+        }
     }
     
     // FIXME make a db only version of this
@@ -235,10 +273,16 @@ public class Media extends Model {
     	}
     	
         ContentValues values = getValues();
-        Uri uri = context.getContentResolver().insert(ProjectsProvider.MEDIA_CONTENT_URI, values);
-        String lastSegment = uri.getLastPathSegment();
-        int newId = Integer.parseInt(lastSegment);
-        this.setId(newId);
+        
+        if (mDB == null) {
+        	Uri uri = context.getContentResolver().insert(ProjectsProvider.MEDIA_CONTENT_URI, values);
+        	String lastSegment = uri.getLastPathSegment();
+            int newId = Integer.parseInt(lastSegment);
+            this.setId(newId);
+        } else {
+        	int newId = (int)mDB.insert((new MediaTable(mDB)).getTableName(), null, values);
+        	this.setId(newId);
+        }
         
         cursorDupes.close();
         super.insert();
@@ -377,6 +421,34 @@ public class Media extends Model {
     public void setDuration(int duration) {
         this.duration = duration;
     }
+
+    /**
+     * @return createdAt
+     */
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    /**
+     * @param createdAt 
+     */
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    /**
+     * @return updatedAt
+     */
+    public Date getUpdatedAt() {
+        return updatedAt;
+    }
+
+    /**
+     * @param updatedAt 
+     */
+    public void setUpdatedAt(Date updatedAt) {
+        this.updatedAt = updatedAt;
+    }
     
     // FIXME this should probably be refactored and split half into the media layer
     public static Bitmap getThumbnail(Context context, Media media, Project project) 
@@ -473,5 +545,73 @@ public class Media extends Model {
              options.inSampleSize = IMAGE_SAMPLE_SIZE;
             return BitmapFactory.decodeResource(context.getResources(), R.drawable.thumb_complete,options);
         }
+    }
+    
+    public boolean migrate(Project project, Date projectDate) // called on instances of class returned by Project class method
+    {
+    	// path -> need to migrate (path set with same get external project folder method)
+    	
+    	// parse path, replace /_id/ with /created_at/
+    	
+    	try 
+        {
+    		Log.e("MEDIA MIGRATE", "migrating path " + path);
+    		
+    		Date mediaDate = null;
+    		
+    		// first check thumbnail date
+    		Log.e("MEDIA MIGRATE", "MIME TYPE: " + getMimeType());
+    		if (getMimeType().startsWith("video"))
+    		{
+    		    File fileThumb = new File(MediaProjectManager.getExternalProjectFolderOld(project, context), getId() + "_thumb.jpg");
+    		    Log.e("MEDIA MIGRATE", "looking for thumbnail " + fileThumb.getCanonicalPath());
+                if (fileThumb.exists())
+                {
+                    mediaDate = new Date(fileThumb.lastModified()); // creation time not stored with file
+                    Log.e("MEDIA MIGRATE", "got date from thumbnail " + mediaDate.toString());
+                }
+    		}
+    		
+    		// next try file date
+    		if (mediaDate == null)
+    		{
+    		    File mediaFile = new File(path);
+    		    if (mediaFile.exists())
+    		    {
+    			    mediaDate = new Date(mediaFile.lastModified()); // creation time not stored with file
+    			    Log.e("MEDIA MIGRATE", "got date from file " + mediaDate.toString());
+    		    }
+    		}
+    		
+    		// if all else fails, use project date
+    		if (mediaDate == null)
+    		{
+    		    mediaDate = projectDate;
+    		    Log.e("MEDIA MIGRATE", "got date from project " + projectDate.toString());
+    		}
+    		
+    		setCreatedAt(mediaDate);
+            setUpdatedAt(mediaDate);
+    		
+    	    String fileName = path.substring(path.lastIndexOf(File.separator) + 1);
+    		
+    	    Log.e("MEDIA MIGRATE", "got file name " + fileName);
+    	    
+			String newPath = MediaProjectManager.getExternalProjectFolder(project, context).getCanonicalPath() + File.separator + fileName;
+
+			Log.e("MEDIA MIGRATE", "got path " + newPath);
+			
+			path = newPath;
+		} 
+    	catch (IOException e) 
+    	{
+    		Log.e("MEDIA MIGRATE", "exception?");
+			return false;
+		}
+    	
+    	Log.e("MEDIA MIGRATE", "updating media " + getId());
+    	update();
+    	
+    	return true;
     }
 }

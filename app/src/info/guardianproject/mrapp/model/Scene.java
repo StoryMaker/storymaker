@@ -143,7 +143,11 @@ public class Scene extends Model {
                 cursor.getInt(cursor
                         .getColumnIndex(StoryMakerDB.Schema.Scenes.COL_PROJECT_INDEX)),
                 cursor.getInt(cursor
-                        .getColumnIndex(StoryMakerDB.Schema.Scenes.COL_PROJECT_ID))
+                        .getColumnIndex(StoryMakerDB.Schema.Scenes.COL_PROJECT_ID)),
+                (!cursor.isNull(cursor.getColumnIndex(StoryMakerDB.Schema.Scenes.COL_CREATED_AT)) ?
+                        new Date(cursor.getLong(cursor.getColumnIndex(StoryMakerDB.Schema.Scenes.COL_CREATED_AT))) : null),
+                (!cursor.isNull(cursor.getColumnIndex(StoryMakerDB.Schema.Scenes.COL_UPDATED_AT)) ?
+                        new Date(cursor.getLong(cursor.getColumnIndex(StoryMakerDB.Schema.Scenes.COL_UPDATED_AT))) : null)
                 );
 
         this.mDB = db;
@@ -193,6 +197,22 @@ public class Scene extends Model {
         // can't put null in values set, so only add entry if non-null
         
         return values;
+    }
+    
+    // insert/update current record
+    // need to set created at/updated at date
+    @Override
+    public void save() {
+        Cursor cursor = getTable().getAsCursor(context, id);
+        if (cursor.getCount() == 0) {
+            cursor.close();
+            setCreatedAt(new Date());
+            insert();
+        } else {
+            cursor.close();
+            setUpdatedAt(new Date());
+            update();            
+        }
     }
 
     // FIXME testme
@@ -423,5 +443,17 @@ public class Scene extends Model {
      */
     public void setUpdatedAt(Date updatedAt) {
         this.updatedAt = updatedAt;
+    }
+    
+    public boolean migrate(Project project, Date projectDate) // called on instances of class returned by Project class method
+    {
+        Log.e("SCENE MIGRATE", "got date " + projectDate.toString());
+        setCreatedAt(projectDate);
+        setUpdatedAt(projectDate);
+        
+        Log.e("SCENE MIGRATE", "updating scene " + getId());
+        update();
+        
+        return true;
     }
 }

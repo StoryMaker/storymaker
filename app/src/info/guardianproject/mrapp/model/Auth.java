@@ -1,5 +1,6 @@
 package info.guardianproject.mrapp.model;
 
+import info.guardianproject.mrapp.AppConstants;
 import info.guardianproject.mrapp.db.StoryMakerDB;
 import info.guardianproject.mrapp.db.ProjectsProvider;
 
@@ -11,8 +12,10 @@ import net.sqlcipher.database.SQLiteQueryBuilder;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
+import android.preference.PreferenceManager;
 import android.util.Log;
 
 public class Auth extends Model {
@@ -271,6 +274,32 @@ public class Auth extends Model {
      */
     public void setLastLogin(Date lastLogin) {
         this.lastLogin = lastLogin;
+    }
+    
+    public static boolean migrate(Context context, SQLiteDatabase db) // returns true/false
+    {
+        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context);
+        String user = settings.getString("user",null);
+        String pass = settings.getString("pass",null);
+        
+        if ((user != null) && (pass != null))
+        {
+            Auth storymakerAuth = new Auth(context,
+                                           -1, // should be set to a real value by insert method
+                                           "StoryMaker.cc",
+                                           "storymaker",
+                                           user,
+                                           pass,
+                                           null,
+                                           new Date());
+            storymakerAuth.save();
+            return true;
+        }
+        else
+        {
+            Log.w(AppConstants.TAG,"no username/password migrated for \"storymaker\"");
+            return false;
+        }
     }
 }
     
