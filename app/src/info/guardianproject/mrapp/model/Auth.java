@@ -188,6 +188,7 @@ public class Auth extends Model {
             } while (dupCursor.moveToNext()); // is there a more elegant way to handle a single record result set?
         }
         super.insert();
+        dupCursor.close();
     }
 
     // getters and setters
@@ -282,9 +283,22 @@ public class Auth extends Model {
         String user = settings.getString("user",null);
         String pass = settings.getString("pass",null);
         
+        Log.e("AUTH MIGRATE", "migrating credentials");
+        
+        if (settings.getAll() != null)
+        {
+            for (String s : settings.getAll().keySet())
+            {
+                Log.e("AUTH MIGRATE", "settings: " + s);
+            }
+        }
+        
         if ((user != null) && (pass != null))
         {
-            Auth storymakerAuth = new Auth(context,
+            Log.e("AUTH MIGRATE", "found user/pass: " + user + ", " + pass);
+            
+            Auth storymakerAuth = new Auth(db,
+                                           context,
                                            -1, // should be set to a real value by insert method
                                            "StoryMaker.cc",
                                            "storymaker",
@@ -292,7 +306,8 @@ public class Auth extends Model {
                                            pass,
                                            null,
                                            new Date());
-            storymakerAuth.save();
+            Log.e("AUTH MIGRATE", "check 1");
+            storymakerAuth.insert();
             return true;
         }
         else

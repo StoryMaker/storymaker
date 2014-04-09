@@ -42,19 +42,19 @@ public class StoryMakerDB extends SQLiteOpenHelper {
             db.execSQL(StoryMakerDB.Schema.Media.UPDATE_TABLE_MEDIA_ADD_TRIM_END);
             db.execSQL(StoryMakerDB.Schema.Media.UPDATE_TABLE_MEDIA_ADD_DURATION);
         } 
-        if ((oldVersion < 4) && (newVersion == 4)) {
+        if ((oldVersion < 4) && (newVersion >= 4)) {
             db.execSQL(StoryMakerDB.Schema.Auth.UPDATE_TABLE_AUTH);
             
             Log.e("DB MIGRATE", "migrating to version 4!");
-            Auth.migrate(mContext, db);
+            Auth.migrate(mContext, db); // migrates storymaker login credentials
         } 
         if ((oldVersion < 5) && (newVersion == 5)) {
-           //db.execSQL(StoryMakerDB.Schema.Projects.UPDATE_TABLE_PROJECTS_ADD_CREATED_AT);
-           //db.execSQL(StoryMakerDB.Schema.Projects.UPDATE_TABLE_PROJECTS_ADD_UPDATED_AT);
-           //db.execSQL(StoryMakerDB.Schema.Scenes.UPDATE_TABLE_SCENES_ADD_CREATED_AT);
-           //db.execSQL(StoryMakerDB.Schema.Scenes.UPDATE_TABLE_SCENES_ADD_UPDATED_AT);
-           //db.execSQL(StoryMakerDB.Schema.Media.UPDATE_TABLE_MEDIA_ADD_CREATED_AT);
-           //db.execSQL(StoryMakerDB.Schema.Media.UPDATE_TABLE_MEDIA_ADD_UPDATED_AT);
+           db.execSQL(StoryMakerDB.Schema.Projects.UPDATE_TABLE_PROJECTS_ADD_CREATED_AT);
+           db.execSQL(StoryMakerDB.Schema.Projects.UPDATE_TABLE_PROJECTS_ADD_UPDATED_AT);
+           db.execSQL(StoryMakerDB.Schema.Scenes.UPDATE_TABLE_SCENES_ADD_CREATED_AT);
+           db.execSQL(StoryMakerDB.Schema.Scenes.UPDATE_TABLE_SCENES_ADD_UPDATED_AT);
+           db.execSQL(StoryMakerDB.Schema.Media.UPDATE_TABLE_MEDIA_ADD_CREATED_AT);
+           db.execSQL(StoryMakerDB.Schema.Media.UPDATE_TABLE_MEDIA_ADD_UPDATED_AT);
                
            Log.e("DB MIGRATE", "migrating to version 5!");
            Project.migrate(mContext, db); // migrates existing database records and associated files
@@ -112,7 +112,7 @@ public class StoryMakerDB extends SQLiteOpenHelper {
             
             private static final String UPDATE_TABLE_PROJECTS_ADD_UPDATED_AT = "alter table " + NAME + " " 
                     + "ADD COLUMN "
-                    + COL_UPDATED_AT + " integer;";
+                    + COL_UPDATED_AT + " integer;"; 
         }
         
         public class Scenes
@@ -143,7 +143,7 @@ public class StoryMakerDB extends SQLiteOpenHelper {
             
             private static final String UPDATE_TABLE_SCENES_ADD_UPDATED_AT = "alter table " + NAME + " " 
                     + "ADD COLUMN "
-                    + COL_UPDATED_AT + " integer;";
+                    + COL_UPDATED_AT + " integer;"; 
         }
     	
     	public class Media
@@ -194,7 +194,7 @@ public class StoryMakerDB extends SQLiteOpenHelper {
             
             private static final String UPDATE_TABLE_MEDIA_ADD_UPDATED_AT = "alter table " + NAME + " " 
                     + "ADD COLUMN "
-                    + COL_UPDATED_AT + " integer;";
+                    + COL_UPDATED_AT + " integer;"; 
     	}
     	
     	public class Auth
@@ -221,10 +221,6 @@ public class StoryMakerDB extends SQLiteOpenHelper {
             
             private static final String UPDATE_TABLE_AUTH = CREATE_TABLE_AUTH;
         }
-    	
-//    	public static final String DB_SCHEMA = Lessons.CREATE_TABLE_LESSONS 
-//    			+ Projects.CREATE_TABLE_PROJECTS 
-//    			+ Medias.CREATE_TABLE_MEDIAS;
     }
     
 }

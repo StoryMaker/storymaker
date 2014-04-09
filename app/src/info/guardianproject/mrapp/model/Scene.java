@@ -147,8 +147,7 @@ public class Scene extends Model {
                 (!cursor.isNull(cursor.getColumnIndex(StoryMakerDB.Schema.Scenes.COL_CREATED_AT)) ?
                         new Date(cursor.getLong(cursor.getColumnIndex(StoryMakerDB.Schema.Scenes.COL_CREATED_AT))) : null),
                 (!cursor.isNull(cursor.getColumnIndex(StoryMakerDB.Schema.Scenes.COL_UPDATED_AT)) ?
-                        new Date(cursor.getLong(cursor.getColumnIndex(StoryMakerDB.Schema.Scenes.COL_UPDATED_AT))) : null)
-                );
+                        new Date(cursor.getLong(cursor.getColumnIndex(StoryMakerDB.Schema.Scenes.COL_UPDATED_AT))) : null));
 
         this.mDB = db;
         calculateMaxClipCount(); // had to dupe the Scene(context, cursor) constructor in here because of this call being fired before we set mDB

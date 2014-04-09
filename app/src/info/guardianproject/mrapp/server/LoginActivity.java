@@ -15,9 +15,12 @@ import org.holoeverywhere.widget.Button;
 import org.holoeverywhere.widget.EditText;
 import org.holoeverywhere.widget.TextView;
 
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -117,7 +120,7 @@ public class LoginActivity extends BaseActivity implements Runnable
         if (storymakerAuth != null) {
         	txtUser.setText(storymakerAuth.getUserName());
         	txtPass.setText(storymakerAuth.getCredentials());
-        }
+        } 
     }
     
     public void run ()
