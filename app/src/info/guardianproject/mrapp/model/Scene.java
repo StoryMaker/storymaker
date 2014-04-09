@@ -1,18 +1,16 @@
 package info.guardianproject.mrapp.model;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import net.sqlcipher.database.SQLiteDatabase;
-import net.sqlcipher.database.SQLiteQueryBuilder;
 
 import info.guardianproject.mrapp.db.ProjectsProvider;
 import info.guardianproject.mrapp.db.StoryMakerDB;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-import android.net.Uri;
-import android.util.Log;
 
 public class Scene extends Model {
 	final private String TAG = "Scene";
@@ -20,6 +18,8 @@ public class Scene extends Model {
     protected String thumbnailPath;
     protected int projectIndex; // position this scene is in the project
     protected int projectId; // foreign key to the Scene which holds this media
+    protected Date createdAt; // long stored in database as 8-bit int
+    protected Date updatedAt; // long stored in database as 8-bit int
     
     protected int mClipCount = -1;
     
@@ -56,14 +56,18 @@ public class Scene extends Model {
      * @param thumbnailPath
      * @param projectIndex
      * @param projectId
+     * @param createdAt
+     * @param updatedAt
      */
-    public Scene(Context context, int id, String title, String thumbnailPath, int projectIndex, int projectId) {
+    public Scene(Context context, int id, String title, String thumbnailPath, int projectIndex, int projectId, Date createdAt, Date updatedAt) {
         super(context);
         this.id = id;
         this.title = title;
         this.thumbnailPath = thumbnailPath;
         this.projectIndex = projectIndex;
         this.projectId = projectId;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
     }
     
     /**
@@ -78,9 +82,11 @@ public class Scene extends Model {
      * @param thumbnailPath
      * @param projectIndex
      * @param projectId
+     * @param createdAt
+     * @param updatedAt
      */
-    public Scene(SQLiteDatabase db, Context context, int id, String title, String thumbnailPath, int projectIndex, int projectId) {
-        this(context, id, title, thumbnailPath, projectIndex, projectId);
+    public Scene(SQLiteDatabase db, Context context, int id, String title, String thumbnailPath, int projectIndex, int projectId, Date createdAt, Date updatedAt) {
+        this(context, id, title, thumbnailPath, projectIndex, projectId, createdAt, updatedAt);
         this.mDB = db;
     }
 
@@ -103,8 +109,11 @@ public class Scene extends Model {
                 cursor.getInt(cursor
                         .getColumnIndex(StoryMakerDB.Schema.Scenes.COL_PROJECT_INDEX)),
                 cursor.getInt(cursor
-                        .getColumnIndex(StoryMakerDB.Schema.Scenes.COL_PROJECT_ID))
-        		);
+                        .getColumnIndex(StoryMakerDB.Schema.Scenes.COL_PROJECT_ID)),
+                (!cursor.isNull(cursor.getColumnIndex(StoryMakerDB.Schema.Scenes.COL_CREATED_AT)) ?
+                        new Date(cursor.getLong(cursor.getColumnIndex(StoryMakerDB.Schema.Scenes.COL_CREATED_AT))) : null),
+                (!cursor.isNull(cursor.getColumnIndex(StoryMakerDB.Schema.Scenes.COL_UPDATED_AT)) ?
+                        new Date(cursor.getLong(cursor.getColumnIndex(StoryMakerDB.Schema.Scenes.COL_UPDATED_AT))) : null));
         
         calculateMaxClipCount();
     }
@@ -119,8 +128,26 @@ public class Scene extends Model {
      * @param cursor
      */
     public Scene(SQLiteDatabase db, Context context, Cursor cursor) {
-        this(context, cursor);
+        // FIXME use column id's directly to optimize this one schema stabilizes
+        this(
+                context,
+                cursor.getInt(cursor
+                        .getColumnIndex(StoryMakerDB.Schema.Scenes.ID)),
+                cursor.getString(cursor
+                        .getColumnIndex(StoryMakerDB.Schema.Scenes.COL_TITLE)),
+                cursor.getString(cursor
+                        .getColumnIndex(StoryMakerDB.Schema.Scenes.COL_THUMBNAIL_PATH)),
+                cursor.getInt(cursor
+                        .getColumnIndex(StoryMakerDB.Schema.Scenes.COL_PROJECT_INDEX)),
+                cursor.getInt(cursor
+                        .getColumnIndex(StoryMakerDB.Schema.Scenes.COL_PROJECT_ID)),
+                (!cursor.isNull(cursor.getColumnIndex(StoryMakerDB.Schema.Scenes.COL_CREATED_AT)) ?
+                        new Date(cursor.getLong(cursor.getColumnIndex(StoryMakerDB.Schema.Scenes.COL_CREATED_AT))) : null),
+                (!cursor.isNull(cursor.getColumnIndex(StoryMakerDB.Schema.Scenes.COL_UPDATED_AT)) ?
+                        new Date(cursor.getLong(cursor.getColumnIndex(StoryMakerDB.Schema.Scenes.COL_UPDATED_AT))) : null));
+
         this.mDB = db;
+        calculateMaxClipCount(); // had to dupe the Scene(context, cursor) constructor in here because of this call being fired before we set mDB
     }
 
     @Override
@@ -156,8 +183,32 @@ public class Scene extends Model {
         values.put(StoryMakerDB.Schema.Scenes.COL_THUMBNAIL_PATH, thumbnailPath);
         values.put(StoryMakerDB.Schema.Scenes.COL_PROJECT_INDEX, projectIndex);
         values.put(StoryMakerDB.Schema.Scenes.COL_PROJECT_ID, projectId);
+        if (createdAt != null) {
+            values.put(StoryMakerDB.Schema.Scenes.COL_CREATED_AT, createdAt.getTime());
+        }
+        if (updatedAt != null) {
+            values.put(StoryMakerDB.Schema.Scenes.COL_UPDATED_AT, updatedAt.getTime());
+        }
+        // store dates as longs(8-bit ints)
+        // can't put null in values set, so only add entry if non-null
         
         return values;
+    }
+    
+    // insert/update current record
+    // need to set created at/updated at date
+    @Override
+    public void save() {
+        Cursor cursor = getTable().getAsCursor(context, id);
+        if (cursor.getCount() == 0) {
+            cursor.close();
+            setCreatedAt(new Date());
+            insert();
+        } else {
+            cursor.close();
+            setUpdatedAt(new Date());
+            update();            
+        }
     }
 
     // FIXME testme
@@ -239,7 +290,7 @@ public class Scene extends Model {
         media.setMimeType(mimeType);
         media.setClipType(clipType);
         media.setClipIndex(clipIndex);
-        media.setSceneId(getId());
+        media.setSceneId(getId()); // need created/updated?
         media.save();
         
         mClipCount = Math.max((clipIndex+1), mClipCount);
@@ -360,5 +411,42 @@ public class Scene extends Model {
      */
     public void setProjectId(int projectId) {
         this.projectId = projectId;
+    }
+
+    /**
+     * @return createdAt
+     */
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    /**
+     * @param createdAt 
+     */
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    /**
+     * @return updatedAt
+     */
+    public Date getUpdatedAt() {
+        return updatedAt;
+    }
+
+    /**
+     * @param updatedAt 
+     */
+    public void setUpdatedAt(Date updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+    
+    public boolean migrate(Project project, Date projectDate) // called on instances of class returned by Project class method
+    {
+        setCreatedAt(projectDate);
+        setUpdatedAt(projectDate);
+        update();
+        
+        return true;
     }
 }

@@ -1,11 +1,7 @@
 package info.guardianproject.mrapp.db;
 
-import java.util.ArrayList;
-
 import info.guardianproject.mrapp.model.Auth;
-import info.guardianproject.mrapp.model.AuthTable;
 import info.guardianproject.mrapp.model.Project;
-import info.guardianproject.mrapp.model.ProjectTable;
 import net.sqlcipher.database.SQLiteDatabase;
 import net.sqlcipher.database.SQLiteOpenHelper;
 import android.content.Context;
@@ -13,7 +9,7 @@ import android.util.Log;
 
 public class StoryMakerDB extends SQLiteOpenHelper {
     private static final String TAG = "StoryMakerDB";
-    private static final int DB_VERSION = 4;
+    private static final int DB_VERSION = 5;
     private static final String DB_NAME = "sm.db";
     private Context mContext;
     
@@ -42,9 +38,19 @@ public class StoryMakerDB extends SQLiteOpenHelper {
             db.execSQL(StoryMakerDB.Schema.Media.UPDATE_TABLE_MEDIA_ADD_TRIM_END);
             db.execSQL(StoryMakerDB.Schema.Media.UPDATE_TABLE_MEDIA_ADD_DURATION);
         } 
-        if ((oldVersion < 4) && (newVersion == 4)) {
+        if ((oldVersion < 4) && (newVersion >= 4)) {
             db.execSQL(StoryMakerDB.Schema.Auth.UPDATE_TABLE_AUTH);
+            Auth.migrate(mContext, db); // migrates storymaker login credentials
         } 
+        if ((oldVersion < 5) && (newVersion >= 5)) {
+           db.execSQL(StoryMakerDB.Schema.Projects.UPDATE_TABLE_PROJECTS_ADD_CREATED_AT);
+           db.execSQL(StoryMakerDB.Schema.Projects.UPDATE_TABLE_PROJECTS_ADD_UPDATED_AT);
+           db.execSQL(StoryMakerDB.Schema.Scenes.UPDATE_TABLE_SCENES_ADD_CREATED_AT);
+           db.execSQL(StoryMakerDB.Schema.Scenes.UPDATE_TABLE_SCENES_ADD_UPDATED_AT);
+           db.execSQL(StoryMakerDB.Schema.Media.UPDATE_TABLE_MEDIA_ADD_CREATED_AT);
+           db.execSQL(StoryMakerDB.Schema.Media.UPDATE_TABLE_MEDIA_ADD_UPDATED_AT);
+           Project.migrate(mContext, db); // migrates existing database records and associated files
+       }
     }
     
     public class Schema 
@@ -74,19 +80,31 @@ public class StoryMakerDB extends SQLiteOpenHelper {
             public static final String COL_THUMBNAIL_PATH = "thumbnail_path";
             public static final String COL_STORY_TYPE = "story_type";
             public static final String COL_TEMPLATE_PATH = "template_path";
+            public static final String COL_CREATED_AT = "created_at";
+            public static final String COL_UPDATED_AT = "updated_at";
             
             private static final String CREATE_TABLE_PROJECTS = "create table " + NAME + " (" 
                     + ID + " integer primary key autoincrement, " 
                     + COL_TITLE + " text not null, " 
                     + COL_THUMBNAIL_PATH + " text,"
                     + COL_STORY_TYPE + " integer,"
-                    + COL_TEMPLATE_PATH + " text"
+                    + COL_TEMPLATE_PATH + " text,"
+                    + COL_CREATED_AT + " integer,"
+                    + COL_UPDATED_AT + " integer"
                     + "); ";
             
             private static final String UPDATE_TABLE_PROJECTS = "alter table " + NAME + " " 
                     + "ADD COLUMN "
                     + COL_STORY_TYPE + " integer"
                     + " DEFAULT 0";
+
+            private static final String UPDATE_TABLE_PROJECTS_ADD_CREATED_AT = "alter table " + NAME + " " 
+                    + "ADD COLUMN "
+                    + COL_CREATED_AT + " integer;";
+            
+            private static final String UPDATE_TABLE_PROJECTS_ADD_UPDATED_AT = "alter table " + NAME + " " 
+                    + "ADD COLUMN "
+                    + COL_UPDATED_AT + " integer;"; 
         }
         
         public class Scenes
@@ -98,14 +116,26 @@ public class StoryMakerDB extends SQLiteOpenHelper {
             public static final String COL_THUMBNAIL_PATH = "thumbnail_path";
             public static final String COL_PROJECT_INDEX = "project_index";
             public static final String COL_PROJECT_ID = "project_id";
+            public static final String COL_CREATED_AT = "created_at";
+            public static final String COL_UPDATED_AT = "updated_at";
             
             private static final String CREATE_TABLE_SCENES = "create table " + NAME + " (" 
                     + ID + " integer primary key autoincrement, " 
                     + COL_TITLE + " text, " 
                     + COL_THUMBNAIL_PATH + " text,"
                     + COL_PROJECT_INDEX + " integer not null,"
-                    + COL_PROJECT_ID + " integer not null" 
+                    + COL_PROJECT_ID + " integer not null,"
+                    + COL_CREATED_AT + " integer,"
+                    + COL_UPDATED_AT + " integer" 
                     + "); ";
+
+            private static final String UPDATE_TABLE_SCENES_ADD_CREATED_AT = "alter table " + NAME + " " 
+                    + "ADD COLUMN "
+                    + COL_CREATED_AT + " integer;";
+            
+            private static final String UPDATE_TABLE_SCENES_ADD_UPDATED_AT = "alter table " + NAME + " " 
+                    + "ADD COLUMN "
+                    + COL_UPDATED_AT + " integer;"; 
         }
     	
     	public class Media
@@ -121,6 +151,8 @@ public class StoryMakerDB extends SQLiteOpenHelper {
             public static final String COL_TRIM_START = "trim_start";
             public static final String COL_TRIM_END = "trim_end";
             public static final String COL_DURATION = "duration";
+            public static final String COL_CREATED_AT = "created_at";
+            public static final String COL_UPDATED_AT = "updated_at";
 	    	
 	    	private static final String CREATE_TABLE_MEDIA = "create table " + NAME + " ("
 	    			+ ID + " integer primary key autoincrement, "
@@ -131,7 +163,9 @@ public class StoryMakerDB extends SQLiteOpenHelper {
 	    			+ COL_CLIP_INDEX + " integer not null," 
                     + COL_TRIM_START + " integer," 
                     + COL_TRIM_END + " integer," 
-                    + COL_DURATION + " integer" 
+                    + COL_DURATION + " integer,"
+                    + COL_CREATED_AT + " integer,"
+                    + COL_UPDATED_AT + " integer" 
 	    			+ "); ";
             
             private static final String UPDATE_TABLE_MEDIA_ADD_TRIM_START = "alter table " + NAME + " " 
@@ -145,6 +179,14 @@ public class StoryMakerDB extends SQLiteOpenHelper {
             private static final String UPDATE_TABLE_MEDIA_ADD_DURATION = "alter table " + NAME + " " 
                     + "ADD COLUMN "
                     + COL_DURATION + " integer;";
+            
+            private static final String UPDATE_TABLE_MEDIA_ADD_CREATED_AT = "alter table " + NAME + " " 
+                    + "ADD COLUMN "
+                    + COL_CREATED_AT + " integer;";
+            
+            private static final String UPDATE_TABLE_MEDIA_ADD_UPDATED_AT = "alter table " + NAME + " " 
+                    + "ADD COLUMN "
+                    + COL_UPDATED_AT + " integer;"; 
     	}
     	
     	public class Auth
@@ -171,10 +213,6 @@ public class StoryMakerDB extends SQLiteOpenHelper {
             
             private static final String UPDATE_TABLE_AUTH = CREATE_TABLE_AUTH;
         }
-    	
-//    	public static final String DB_SCHEMA = Lessons.CREATE_TABLE_LESSONS 
-//    			+ Projects.CREATE_TABLE_PROJECTS 
-//    			+ Medias.CREATE_TABLE_MEDIAS;
     }
     
 }

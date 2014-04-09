@@ -1,18 +1,19 @@
 package info.guardianproject.mrapp.model;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 
 import net.sqlcipher.database.SQLiteDatabase;
-import net.sqlcipher.database.SQLiteQueryBuilder;
 
 import info.guardianproject.mrapp.StoryMakerApp;
 import info.guardianproject.mrapp.db.ProjectsProvider;
 import info.guardianproject.mrapp.db.StoryMakerDB;
+import info.guardianproject.mrapp.media.MediaProjectManager;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-import android.net.Uri;
 import android.util.Log;
 
 public class Project extends Model {
@@ -25,6 +26,8 @@ public class Project extends Model {
     protected String section;
     protected String location;
     protected ArrayList<String> tags = new ArrayList<String>();
+    protected Date createdAt; // long stored in database as 8-bit int
+    protected Date updatedAt; // long stored in database as 8-bit int
     
     public final static int STORY_TYPE_VIDEO = 0;
     public final static int STORY_TYPE_AUDIO = 1;
@@ -73,14 +76,18 @@ public class Project extends Model {
      * @param thumbnailPath
      * @param storyType
      * @param templatePath
+     * @param createdAt
+     * @param updatedAt
      */
-    public Project(Context context, int id, String title, String thumbnailPath, int storyType, String templatePath) {
+    public Project(Context context, int id, String title, String thumbnailPath, int storyType, String templatePath, Date createdAt, Date updatedAt) {
         super(context);
         this.id = id;
         this.title = title;
         this.thumbnailPath = thumbnailPath;
         this.storyType = storyType;
         this.templatePath = templatePath;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
     }
     
     /**
@@ -95,9 +102,11 @@ public class Project extends Model {
      * @param thumbnailPath
      * @param storyType
      * @param templatePath
+     * @param createdAt
+     * @param updatedAt
      */
-    public Project(SQLiteDatabase db, Context context, int id, String title, String thumbnailPath, int storyType, String templatePath) {
-        this(context, id, title, thumbnailPath, storyType, templatePath);
+    public Project(SQLiteDatabase db, Context context, int id, String title, String thumbnailPath, int storyType, String templatePath, Date createdAt, Date updatedAt) {
+        this(context, id, title, thumbnailPath, storyType, templatePath, createdAt, updatedAt);
         this.mDB = db;
     }
 
@@ -120,7 +129,11 @@ public class Project extends Model {
                 cursor.getInt(cursor
                         .getColumnIndex(StoryMakerDB.Schema.Projects.COL_STORY_TYPE)),
                 cursor.getString(cursor
-                        .getColumnIndex(StoryMakerDB.Schema.Projects.COL_TEMPLATE_PATH)));
+                        .getColumnIndex(StoryMakerDB.Schema.Projects.COL_TEMPLATE_PATH)),
+                (!cursor.isNull(cursor.getColumnIndex(StoryMakerDB.Schema.Projects.COL_CREATED_AT)) ?
+                        new Date(cursor.getLong(cursor.getColumnIndex(StoryMakerDB.Schema.Projects.COL_CREATED_AT))) : null),
+                (!cursor.isNull(cursor.getColumnIndex(StoryMakerDB.Schema.Projects.COL_UPDATED_AT)) ?
+                        new Date(cursor.getLong(cursor.getColumnIndex(StoryMakerDB.Schema.Projects.COL_UPDATED_AT))) : null));
 
         calculateMaxSceneCount();
 
@@ -148,7 +161,11 @@ public class Project extends Model {
                 cursor.getInt(cursor
                         .getColumnIndex(StoryMakerDB.Schema.Projects.COL_STORY_TYPE)),
                 cursor.getString(cursor
-                        .getColumnIndex(StoryMakerDB.Schema.Projects.COL_TEMPLATE_PATH)));
+                        .getColumnIndex(StoryMakerDB.Schema.Projects.COL_TEMPLATE_PATH)),
+                (!cursor.isNull(cursor.getColumnIndex(StoryMakerDB.Schema.Projects.COL_CREATED_AT)) ?
+                        new Date(cursor.getLong(cursor.getColumnIndex(StoryMakerDB.Schema.Projects.COL_CREATED_AT))) : null),
+                (!cursor.isNull(cursor.getColumnIndex(StoryMakerDB.Schema.Projects.COL_UPDATED_AT)) ?
+                        new Date(cursor.getLong(cursor.getColumnIndex(StoryMakerDB.Schema.Projects.COL_UPDATED_AT))) : null));
         this.mDB = db;
         calculateMaxSceneCount(); // had to dupe the Project(context, cursor) constructor in here because of this call being fired before we set mDB 
     }
@@ -207,8 +224,32 @@ public class Project extends Model {
         values.put(StoryMakerDB.Schema.Projects.COL_THUMBNAIL_PATH, thumbnailPath);
         values.put(StoryMakerDB.Schema.Projects.COL_STORY_TYPE, storyType);
         values.put(StoryMakerDB.Schema.Projects.COL_TEMPLATE_PATH, templatePath);
+        if (createdAt != null) {
+            values.put(StoryMakerDB.Schema.Projects.COL_CREATED_AT, createdAt.getTime());
+        }
+        if (updatedAt != null) {
+            values.put(StoryMakerDB.Schema.Projects.COL_UPDATED_AT, updatedAt.getTime());
+        }
+        // store dates as longs(8-bit ints)
+        // can't put null in values set, so only add entry if non-null
         
         return values;
+    }
+    
+    // insert/update current record
+    // need to set created at/updated at date
+    @Override
+    public void save() {
+        Cursor cursor = getTable().getAsCursor(context, id);
+        if (cursor.getCount() == 0) {
+            cursor.close();
+            setCreatedAt(new Date());
+            insert();
+        } else {
+            cursor.close();
+            setUpdatedAt(new Date());
+            update();            
+        }
     }
     
     public ArrayList<Scene> getScenesAsList() {
@@ -273,7 +314,7 @@ public class Project extends Model {
      */
     public void setScene(int projectIndex, Scene scene) {
         scene.setProjectIndex(projectIndex);
-        scene.setProjectId(getId());
+        scene.setProjectId(getId()); // need created/updated?
         scene.save();
         
         mSceneCount = Math.max((projectIndex+1), mSceneCount);
@@ -335,6 +376,34 @@ public class Project extends Model {
      */
     public void setThumbnailPath(String thumbnailPath) {
         this.thumbnailPath = thumbnailPath;
+    }
+
+    /**
+     * @return createdAt
+     */
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    /**
+     * @param createdAt 
+     */
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    /**
+     * @return updatedAt
+     */
+    public Date getUpdatedAt() {
+        return updatedAt;
+    }
+
+    /**
+     * @param updatedAt 
+     */
+    public void setUpdatedAt(Date updatedAt) {
+        this.updatedAt = updatedAt;
     }
 
     public int getStoryType() {
@@ -405,4 +474,76 @@ public class Project extends Model {
          return templateJsonPath;
     }
     
+    public static ArrayList<Project> migrate(Context context, SQLiteDatabase db) // returns array of records that could not be migrated
+    {
+    	ArrayList<Project> projects = (ArrayList<Project>)(new ProjectTable(db)).getAllAsList(context); //cast necessary?
+        ArrayList<Scene> allScenes = new ArrayList<Scene>();
+    	ArrayList<Media> allMedia = new ArrayList<Media>();
+    	ArrayList<Project> failed = new ArrayList<Project>();
+    	boolean failure;
+    	
+    	for (Project project : projects)
+    	{
+    		failure = false;
+    		
+    		File projectDir = MediaProjectManager.getExternalProjectFolderOld(project, context);
+    		if (projectDir.exists())
+    		{
+    			Date projectDate = new Date(projectDir.lastModified()); // creation time not stored with file
+                project.setCreatedAt(projectDate);
+                project.setUpdatedAt(projectDate);
+    			
+                allScenes = project.getScenesAsList();
+                for (Scene scene : allScenes)
+                {
+                    if (!scene.migrate(project, projectDate))
+                    {
+                        Log.e("PROJECT MIGRATION", "failed to migrate scene " + scene.getId());
+                        failure = true;
+                    }
+                }
+                
+    			allMedia = project.getMediaAsList();
+    		    for (Media media : allMedia)
+    		    {
+                    if (!media.migrate(project, projectDate))
+                    {
+                    	Log.e("PROJECT MIGRATION", "failed to migrate media " + media.getId());
+    			        failure = true;
+                    }
+    		    }
+    		    
+    		    if (!failure)
+    		    {
+   			        if (!MediaProjectManager.migrateProjectFiles(project, context))
+   			        {
+   			        	Log.e("PROJECT MIGRATION", "failed to migrate files");
+   			    	    failure = true;
+   			        }
+    		    }
+    		}
+    		else
+    		{
+    			try {
+    			    Log.e("PROJECT MIGRATION", projectDir.getCanonicalPath() + "does not exist");
+    			} catch (Exception e) {
+    				Log.e("PROJECT MIGRATION", "unexpected exception: " + e.getMessage());
+    			}
+    			failure = true;
+    		}
+
+    		if (!failure)
+    		{ 
+    			project.update();
+    		}
+    		else
+    		{
+    			Log.e("PROJECT MIGRATION", "failed to migrate project " + project.getId());
+    			// if migration failed in some way, add project to result list for error handling upstream
+    			failed.add(project);
+    		}
+    	}
+    	
+    	return null;
+    }			
 }

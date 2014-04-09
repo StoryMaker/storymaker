@@ -74,7 +74,11 @@ public class ServerManager {
 	//if the user hasn't logged in, show the login screen
     public boolean hasCreds ()
     {
-        return (new AuthTable()).getAuthDefault(mContext, Auth.STORYMAKER).credentialsAreValid();
+        Auth checkAuth = (new AuthTable()).getAuthDefault(mContext, Auth.STORYMAKER);
+        if (checkAuth == null) // added null check to prevent uncaught null pointer exception
+            return false;
+        else
+            return checkAuth.credentialsAreValid();
     }
     
     private void connect() throws MalformedURLException, XmlRpcFault
