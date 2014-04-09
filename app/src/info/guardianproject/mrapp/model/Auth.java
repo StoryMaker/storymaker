@@ -2,19 +2,15 @@ package info.guardianproject.mrapp.model;
 
 import info.guardianproject.mrapp.AppConstants;
 import info.guardianproject.mrapp.db.StoryMakerDB;
-import info.guardianproject.mrapp.db.ProjectsProvider;
 
-import java.util.ArrayList;
 import java.util.Date;
 
 import net.sqlcipher.database.SQLiteDatabase;
-import net.sqlcipher.database.SQLiteQueryBuilder;
 
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.Cursor;
-import android.net.Uri;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
@@ -283,20 +279,8 @@ public class Auth extends Model {
         String user = settings.getString("user",null);
         String pass = settings.getString("pass",null);
         
-        Log.e("AUTH MIGRATE", "migrating credentials");
-        
-        if (settings.getAll() != null)
-        {
-            for (String s : settings.getAll().keySet())
-            {
-                Log.e("AUTH MIGRATE", "settings: " + s);
-            }
-        }
-        
         if ((user != null) && (pass != null))
         {
-            Log.e("AUTH MIGRATE", "found user/pass: " + user + ", " + pass);
-            
             Auth storymakerAuth = new Auth(db,
                                            context,
                                            -1, // should be set to a real value by insert method
@@ -306,15 +290,11 @@ public class Auth extends Model {
                                            pass,
                                            null,
                                            new Date());
-            Log.e("AUTH MIGRATE", "check 1");
             storymakerAuth.insert();
             return true;
         }
-        else
-        {
-            Log.w(AppConstants.TAG,"no username/password migrated for \"storymaker\"");
-            return false;
-        }
+
+        return false;
     }
 }
     

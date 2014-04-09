@@ -549,26 +549,17 @@ public class Media extends Model {
     
     public boolean migrate(Project project, Date projectDate) // called on instances of class returned by Project class method
     {
-    	// path -> need to migrate (path set with same get external project folder method)
-    	
-    	// parse path, replace /_id/ with /created_at/
-    	
     	try 
         {
-    		Log.e("MEDIA MIGRATE", "migrating path " + path);
-    		
     		Date mediaDate = null;
     		
     		// first check thumbnail date
-    		Log.e("MEDIA MIGRATE", "MIME TYPE: " + getMimeType());
     		if (getMimeType().startsWith("video"))
     		{
     		    File fileThumb = new File(MediaProjectManager.getExternalProjectFolderOld(project, context), getId() + "_thumb.jpg");
-    		    Log.e("MEDIA MIGRATE", "looking for thumbnail " + fileThumb.getCanonicalPath());
                 if (fileThumb.exists())
                 {
                     mediaDate = new Date(fileThumb.lastModified()); // creation time not stored with file
-                    Log.e("MEDIA MIGRATE", "got date from thumbnail " + mediaDate.toString());
                 }
     		}
     		
@@ -579,7 +570,6 @@ public class Media extends Model {
     		    if (mediaFile.exists())
     		    {
     			    mediaDate = new Date(mediaFile.lastModified()); // creation time not stored with file
-    			    Log.e("MEDIA MIGRATE", "got date from file " + mediaDate.toString());
     		    }
     		}
     		
@@ -587,31 +577,22 @@ public class Media extends Model {
     		if (mediaDate == null)
     		{
     		    mediaDate = projectDate;
-    		    Log.e("MEDIA MIGRATE", "got date from project " + projectDate.toString());
     		}
     		
     		setCreatedAt(mediaDate);
             setUpdatedAt(mediaDate);
     		
-    	    String fileName = path.substring(path.lastIndexOf(File.separator) + 1);
-    		
-    	    Log.e("MEDIA MIGRATE", "got file name " + fileName);
-    	    
+    	    String fileName = path.substring(path.lastIndexOf(File.separator) + 1);    	    
 			String newPath = MediaProjectManager.getExternalProjectFolder(project, context).getCanonicalPath() + File.separator + fileName;
-
-			Log.e("MEDIA MIGRATE", "got path " + newPath);
-			
-			path = newPath;
+			setPath(newPath);
 		} 
     	catch (IOException e) 
     	{
-    		Log.e("MEDIA MIGRATE", "exception?");
+    		Log.e("MEDIA MIGRATION", "unexpected exception: " + e.getMessage());
 			return false;
 		}
     	
-    	Log.e("MEDIA MIGRATE", "updating media " + getId());
     	update();
-    	
     	return true;
     }
 }

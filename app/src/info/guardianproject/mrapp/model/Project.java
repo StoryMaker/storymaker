@@ -6,7 +6,6 @@ import java.util.Collections;
 import java.util.Date;
 
 import net.sqlcipher.database.SQLiteDatabase;
-import net.sqlcipher.database.SQLiteQueryBuilder;
 
 import info.guardianproject.mrapp.StoryMakerApp;
 import info.guardianproject.mrapp.db.ProjectsProvider;
@@ -15,7 +14,6 @@ import info.guardianproject.mrapp.media.MediaProjectManager;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-import android.net.Uri;
 import android.util.Log;
 
 public class Project extends Model {
@@ -442,8 +440,6 @@ public class Project extends Model {
     
     public static ArrayList<Project> migrate(Context context, SQLiteDatabase db) // returns array of records that could not be migrated
     {
-    	Log.e("PROJECT MIGRATE", "begin method");
-    	
     	ArrayList<Project> projects = (ArrayList<Project>)(new ProjectTable(db)).getAllAsList(context); //cast necessary?
         ArrayList<Scene> allScenes = new ArrayList<Scene>();
     	ArrayList<Media> allMedia = new ArrayList<Media>();
@@ -454,32 +450,19 @@ public class Project extends Model {
     	{
     		failure = false;
     		
-    		Log.e("PROJECT MIGRATE", "migrating project " + project.getId());
-    		
     		File projectDir = MediaProjectManager.getExternalProjectFolderOld(project, context);
     		if (projectDir.exists())
     		{
-    			try 
-    			{
-    			    Log.e("PROJECT MIGRATE", projectDir.getCanonicalPath() + " exists");
-    			} 
-    			catch (Exception e) 
-    			{
-    				Log.e("PROJECT MIGRATE", "oops?");
-    			}
-    			
     			Date projectDate = new Date(projectDir.lastModified()); // creation time not stored with file
-                Log.e("PROJECT MIGRATE", "got date " + projectDate.toString());
                 project.setCreatedAt(projectDate);
                 project.setUpdatedAt(projectDate);
     			
                 allScenes = project.getScenesAsList();
                 for (Scene scene : allScenes)
                 {
-                    Log.e("PROJECT MIGRATE", "migrating scene " + scene.getId());
-                    if (!scene.migrate(project, projectDate)) // <- streamline
+                    if (!scene.migrate(project, projectDate))
                     {
-                        Log.e("PROJECT MIGRATE", "failed to migrate scene " + scene.getId());
+                        Log.e("PROJECT MIGRATION", "failed to migrate scene " + scene.getId());
                         failure = true;
                     }
                 }
@@ -487,19 +470,18 @@ public class Project extends Model {
     			allMedia = project.getMediaAsList();
     		    for (Media media : allMedia)
     		    {
-    		    	Log.e("PROJECT MIGRATE", "migrating media " + media.getId());
-                    if (!media.migrate(project, projectDate)) // <- streamline
+                    if (!media.migrate(project, projectDate))
                     {
-                    	Log.e("PROJECT MIGRATE", "failed to migrate media " + media.getId());
+                    	Log.e("PROJECT MIGRATION", "failed to migrate media " + media.getId());
     			        failure = true;
                     }
     		    }
     		    
     		    if (!failure)
     		    {
-   			        if (!MediaProjectManager.migrateProjectFiles(project, context)) // <- streamline
+   			        if (!MediaProjectManager.migrateProjectFiles(project, context))
    			        {
-   			        	Log.e("PROJECT MIGRATE", "failed to migrate files");
+   			        	Log.e("PROJECT MIGRATION", "failed to migrate files");
    			    	    failure = true;
    			        }
     		    }
@@ -507,33 +489,24 @@ public class Project extends Model {
     		else
     		{
     			try {
-    			    Log.e("PROJECT MIGRATE", projectDir.getCanonicalPath() + "does not exist");
+    			    Log.e("PROJECT MIGRATION", projectDir.getCanonicalPath() + "does not exist");
     			} catch (Exception e) {
-    				Log.e("PROJECT MIGRATE", "oops?");
+    				Log.e("PROJECT MIGRATION", "unexpected exception: " + e.getMessage());
     			}
     			failure = true;
     		}
 
     		if (!failure)
     		{ 
-    			Log.e("PROJECT MIGRATE", "updating project " + project.getId());
-    		    project.update();
+    			project.update();
     		}
     		else
     		{
-    			Log.e("PROJECT MIGRATE", "failed to migrate project " + project.getId());
+    			Log.e("PROJECT MIGRATION", "failed to migrate project " + project.getId());
     			// if migration failed in some way, add project to result list for error handling upstream
     			failed.add(project);
     		}
     	}
-    	
-    	// thumbnailPath -> no values to migrate? (path determined by MediaProjectManager)
-    	
-    	// for each project
-    	// get external project folder (need to update method, so just construct old path the same way)
-    	// derive timestamp (how?)
-    	// move project/id# to project/timestamp
-    	// migrate related media
     	
     	return null;
     }			

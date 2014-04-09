@@ -218,7 +218,6 @@ public class MediaProjectManager implements MediaManager {
     
     public static File getExternalProjectFolder (Project project, Context context)
     {
-    	Log.e("MANAGER MIGRATE", "new method");
     	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");
     	
     	initExternalStorage (context);
@@ -227,7 +226,6 @@ public class MediaProjectManager implements MediaManager {
     	if (project.getCreatedAt() != null)
     	    folderName = sdf.format(project.getCreatedAt());
     	File fileProject = new File(sFileExternDir,folderName);
-    	
     	fileProject.mkdirs();
     	
     	return fileProject;
@@ -239,7 +237,6 @@ public class MediaProjectManager implements MediaManager {
     	
     	String folderName = project.getId()+"";
     	File fileProject = new File(sFileExternDir,folderName);
-    	
     	fileProject.mkdirs();
     	
     	return fileProject;
@@ -793,26 +790,12 @@ public class MediaProjectManager implements MediaManager {
             oldString = oldDir.getCanonicalPath();
             newString = newDir.getCanonicalPath();
     	} catch (Exception e) {
-    		Log.e("MANAGER MIGRATE", "exception?");
+    		Log.e("FILE MIGRATION", "exception ocurred while getting project path: " + e.getMessage());
             return false;
     	}
     	
-        Log.e("MANAGER MIGRATE", "old: " + oldString);
-        Log.e("MANAGER MIGRATE", "new: " + newString);
-    	
-    	if (oldDir.exists() && newDir.exists())
+        if (oldDir.exists() && newDir.exists())
     	{
-    	    /*
-    		if (oldDir.renameTo(newDir))
-    		{
-    			Log.e("MANAGER MIGRATE", "rename sucessful");
-    			return true;
-    		}
-    		else
-    		{
-    			Log.e("MANAGER MIGRATE", "rename failed");
-    		}
-    		*/
     	    File[] oldFiles = oldDir.listFiles();
             
             for (File oldFile : oldFiles)
@@ -820,36 +803,31 @@ public class MediaProjectManager implements MediaManager {
                 try{
                     String oldPath = oldFile.getCanonicalPath();
                     String newPath = oldPath.replace(oldString, newString);
-                    Log.e("MANAGER MIGRATE", "moving " + oldPath + " -> " + newPath);
                     File newFile = new File(newPath);
                     oldFile.renameTo(newFile);
-                    Log.e("MANAGER MIGRATE", "sucess?");
-                   
                 } catch (Exception e) {
-                    Log.e("MANAGER MIGRATE", "exception? (moving files)");
+                    Log.e("FILE MIGRATION", "exception ocurred while moving files: " + e.getMessage());
                     return false;
                 }
-                
-                
             }
     	}
     	else if (!oldDir.exists())
     	{
-    		Log.e("MANAGER MIGRATE", oldString + " (old) doesn't exist");
+    		Log.e("FILE MIGRATION", oldString + " (old directory) doesn't exist");
     		return false;
     	}
     	else if (!newDir.exists())
     	{
-    	    Log.e("MANAGER MIGRATE", newString + " (new) doesn't exist"); // created by get external dir method
+    	    Log.e("FILE MIGRATION", newString + " (new directory) doesn't exist"); // created by get external dir method
             return false;
     	}
     	else
     	{
-    	    Log.e("MANAGER MIGRATE", " ??? ");
+    	    Log.e("FILE MIGRATION", "an unexpected error has ocurred");
             return false;
     	}
     	
-    	return true; // foo
+    	return true;
     }
     
     /*

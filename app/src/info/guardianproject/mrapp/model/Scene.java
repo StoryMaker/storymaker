@@ -5,15 +5,12 @@ import java.util.Date;
 import java.util.List;
 
 import net.sqlcipher.database.SQLiteDatabase;
-import net.sqlcipher.database.SQLiteQueryBuilder;
 
 import info.guardianproject.mrapp.db.ProjectsProvider;
 import info.guardianproject.mrapp.db.StoryMakerDB;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-import android.net.Uri;
-import android.util.Log;
 
 public class Scene extends Model {
 	final private String TAG = "Scene";
@@ -446,11 +443,8 @@ public class Scene extends Model {
     
     public boolean migrate(Project project, Date projectDate) // called on instances of class returned by Project class method
     {
-        Log.e("SCENE MIGRATE", "got date " + projectDate.toString());
         setCreatedAt(projectDate);
         setUpdatedAt(projectDate);
-        
-        Log.e("SCENE MIGRATE", "updating scene " + getId());
         update();
         
         return true;

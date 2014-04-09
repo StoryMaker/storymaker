@@ -1,11 +1,7 @@
 package info.guardianproject.mrapp.db;
 
-import java.util.ArrayList;
-
 import info.guardianproject.mrapp.model.Auth;
-import info.guardianproject.mrapp.model.AuthTable;
 import info.guardianproject.mrapp.model.Project;
-import info.guardianproject.mrapp.model.ProjectTable;
 import net.sqlcipher.database.SQLiteDatabase;
 import net.sqlcipher.database.SQLiteOpenHelper;
 import android.content.Context;
@@ -44,19 +40,15 @@ public class StoryMakerDB extends SQLiteOpenHelper {
         } 
         if ((oldVersion < 4) && (newVersion >= 4)) {
             db.execSQL(StoryMakerDB.Schema.Auth.UPDATE_TABLE_AUTH);
-            
-            Log.e("DB MIGRATE", "migrating to version 4!");
             Auth.migrate(mContext, db); // migrates storymaker login credentials
         } 
-        if ((oldVersion < 5) && (newVersion == 5)) {
+        if ((oldVersion < 5) && (newVersion >= 5)) {
            db.execSQL(StoryMakerDB.Schema.Projects.UPDATE_TABLE_PROJECTS_ADD_CREATED_AT);
            db.execSQL(StoryMakerDB.Schema.Projects.UPDATE_TABLE_PROJECTS_ADD_UPDATED_AT);
            db.execSQL(StoryMakerDB.Schema.Scenes.UPDATE_TABLE_SCENES_ADD_CREATED_AT);
            db.execSQL(StoryMakerDB.Schema.Scenes.UPDATE_TABLE_SCENES_ADD_UPDATED_AT);
            db.execSQL(StoryMakerDB.Schema.Media.UPDATE_TABLE_MEDIA_ADD_CREATED_AT);
            db.execSQL(StoryMakerDB.Schema.Media.UPDATE_TABLE_MEDIA_ADD_UPDATED_AT);
-               
-           Log.e("DB MIGRATE", "migrating to version 5!");
            Project.migrate(mContext, db); // migrates existing database records and associated files
        }
     }
