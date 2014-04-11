@@ -9,7 +9,7 @@ import android.util.Log;
 
 public class StoryMakerDB extends SQLiteOpenHelper {
     private static final String TAG = "StoryMakerDB";
-    private static final int DB_VERSION = 5;
+    private static final int DB_VERSION = 6;
     private static final String DB_NAME = "sm.db";
     private Context mContext;
     
@@ -25,6 +25,7 @@ public class StoryMakerDB extends SQLiteOpenHelper {
 		db.execSQL(StoryMakerDB.Schema.Lessons.CREATE_TABLE_LESSONS);
 		db.execSQL(StoryMakerDB.Schema.Media.CREATE_TABLE_MEDIA);
 		db.execSQL(StoryMakerDB.Schema.Auth.CREATE_TABLE_AUTH);
+        db.execSQL(StoryMakerDB.Schema.Tags.CREATE_TABLE_TAGS);
     }
     
     @Override
@@ -43,14 +44,19 @@ public class StoryMakerDB extends SQLiteOpenHelper {
             Auth.migrate(mContext, db); // migrates storymaker login credentials
         } 
         if ((oldVersion < 5) && (newVersion >= 5)) {
-           db.execSQL(StoryMakerDB.Schema.Projects.UPDATE_TABLE_PROJECTS_ADD_CREATED_AT);
-           db.execSQL(StoryMakerDB.Schema.Projects.UPDATE_TABLE_PROJECTS_ADD_UPDATED_AT);
-           db.execSQL(StoryMakerDB.Schema.Scenes.UPDATE_TABLE_SCENES_ADD_CREATED_AT);
-           db.execSQL(StoryMakerDB.Schema.Scenes.UPDATE_TABLE_SCENES_ADD_UPDATED_AT);
-           db.execSQL(StoryMakerDB.Schema.Media.UPDATE_TABLE_MEDIA_ADD_CREATED_AT);
-           db.execSQL(StoryMakerDB.Schema.Media.UPDATE_TABLE_MEDIA_ADD_UPDATED_AT);
-           Project.migrate(mContext, db); // migrates existing database records and associated files
-       }
+            db.execSQL(StoryMakerDB.Schema.Projects.UPDATE_TABLE_PROJECTS_ADD_CREATED_AT);
+            db.execSQL(StoryMakerDB.Schema.Projects.UPDATE_TABLE_PROJECTS_ADD_UPDATED_AT);
+            db.execSQL(StoryMakerDB.Schema.Scenes.UPDATE_TABLE_SCENES_ADD_CREATED_AT);
+            db.execSQL(StoryMakerDB.Schema.Scenes.UPDATE_TABLE_SCENES_ADD_UPDATED_AT);
+            db.execSQL(StoryMakerDB.Schema.Media.UPDATE_TABLE_MEDIA_ADD_CREATED_AT);
+            db.execSQL(StoryMakerDB.Schema.Media.UPDATE_TABLE_MEDIA_ADD_UPDATED_AT);
+            Project.migrate(mContext, db); // migrates existing database records and associated files
+        }
+        if ((oldVersion < 6) && (newVersion >= 6)) {
+            db.execSQL(StoryMakerDB.Schema.Projects.UPDATE_TABLE_PROJECTS_ADD_SECTION);
+            db.execSQL(StoryMakerDB.Schema.Projects.UPDATE_TABLE_PROJECTS_ADD_LOCATION);
+            db.execSQL(StoryMakerDB.Schema.Tags.UPDATE_TABLE_TAGS);
+        }
     }
     
     public class Schema 
@@ -82,6 +88,8 @@ public class StoryMakerDB extends SQLiteOpenHelper {
             public static final String COL_TEMPLATE_PATH = "template_path";
             public static final String COL_CREATED_AT = "created_at";
             public static final String COL_UPDATED_AT = "updated_at";
+            public static final String COL_SECTION = "section";
+            public static final String COL_LOCATION = "location";
             
             private static final String CREATE_TABLE_PROJECTS = "create table " + NAME + " (" 
                     + ID + " integer primary key autoincrement, " 
@@ -90,7 +98,9 @@ public class StoryMakerDB extends SQLiteOpenHelper {
                     + COL_STORY_TYPE + " integer,"
                     + COL_TEMPLATE_PATH + " text,"
                     + COL_CREATED_AT + " integer,"
-                    + COL_UPDATED_AT + " integer"
+                    + COL_UPDATED_AT + " integer,"
+                    + COL_SECTION + " text,"
+                    + COL_LOCATION + " text"
                     + "); ";
             
             private static final String UPDATE_TABLE_PROJECTS = "alter table " + NAME + " " 
@@ -105,6 +115,14 @@ public class StoryMakerDB extends SQLiteOpenHelper {
             private static final String UPDATE_TABLE_PROJECTS_ADD_UPDATED_AT = "alter table " + NAME + " " 
                     + "ADD COLUMN "
                     + COL_UPDATED_AT + " integer;"; 
+
+            private static final String UPDATE_TABLE_PROJECTS_ADD_SECTION = "alter table " + NAME + " " 
+                    + "ADD COLUMN "
+                    + COL_SECTION + " text;";
+            
+            private static final String UPDATE_TABLE_PROJECTS_ADD_LOCATION = "alter table " + NAME + " " 
+                    + "ADD COLUMN "
+                    + COL_LOCATION + " text;";
         }
         
         public class Scenes
@@ -212,6 +230,25 @@ public class StoryMakerDB extends SQLiteOpenHelper {
                     + "); ";
             
             private static final String UPDATE_TABLE_AUTH = CREATE_TABLE_AUTH;
+        }
+    	
+    	public class Tags
+        {
+            public static final String NAME = "tags";
+            
+            public static final String ID = "_id";
+            public static final String COL_TAG = "tag";
+            public static final String COL_PROJECT_ID = "project_id";
+            public static final String COL_CREATED_AT = "created_at";
+            
+            private static final String CREATE_TABLE_TAGS = "create table " + NAME + " (" 
+                    + ID + " integer primary key autoincrement, " 
+                    + COL_TAG + " text not null, "
+                    + COL_PROJECT_ID + " integer not null, "
+                    + COL_CREATED_AT + " integer "
+                    + "); ";
+            
+            private static final String UPDATE_TABLE_TAGS = CREATE_TABLE_TAGS;
         }
     }
     

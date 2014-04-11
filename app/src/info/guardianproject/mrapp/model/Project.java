@@ -24,6 +24,8 @@ public class Project extends Model {
     protected String templatePath;
     protected Date createdAt; // long stored in database as 8-bit int
     protected Date updatedAt; // long stored in database as 8-bit int
+    protected String section;
+    protected String location;
     
     public final static int STORY_TYPE_VIDEO = 0;
     public final static int STORY_TYPE_AUDIO = 1;
@@ -74,8 +76,10 @@ public class Project extends Model {
      * @param templatePath
      * @param createdAt
      * @param updatedAt
+     * @param section
+     * @param location
      */
-    public Project(Context context, int id, String title, String thumbnailPath, int storyType, String templatePath, Date createdAt, Date updatedAt) {
+    public Project(Context context, int id, String title, String thumbnailPath, int storyType, String templatePath, Date createdAt, Date updatedAt, String section, String location) {
         super(context);
         this.id = id;
         this.title = title;
@@ -84,6 +88,8 @@ public class Project extends Model {
         this.templatePath = templatePath;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
+        this.section = section;
+        this.location = location;
     }
     
     /**
@@ -100,9 +106,11 @@ public class Project extends Model {
      * @param templatePath
      * @param createdAt
      * @param updatedAt
+     * @param section
+     * @param location
      */
-    public Project(SQLiteDatabase db, Context context, int id, String title, String thumbnailPath, int storyType, String templatePath, Date createdAt, Date updatedAt) {
-        this(context, id, title, thumbnailPath, storyType, templatePath, createdAt, updatedAt);
+    public Project(SQLiteDatabase db, Context context, int id, String title, String thumbnailPath, int storyType, String templatePath, Date createdAt, Date updatedAt, String section, String location) {
+        this(context, id, title, thumbnailPath, storyType, templatePath, createdAt, updatedAt, section, location);
         this.mDB = db;
     }
 
@@ -129,7 +137,11 @@ public class Project extends Model {
                 (!cursor.isNull(cursor.getColumnIndex(StoryMakerDB.Schema.Projects.COL_CREATED_AT)) ?
                         new Date(cursor.getLong(cursor.getColumnIndex(StoryMakerDB.Schema.Projects.COL_CREATED_AT))) : null),
                 (!cursor.isNull(cursor.getColumnIndex(StoryMakerDB.Schema.Projects.COL_UPDATED_AT)) ?
-                        new Date(cursor.getLong(cursor.getColumnIndex(StoryMakerDB.Schema.Projects.COL_UPDATED_AT))) : null));
+                        new Date(cursor.getLong(cursor.getColumnIndex(StoryMakerDB.Schema.Projects.COL_UPDATED_AT))) : null),
+                cursor.getString(cursor
+                        .getColumnIndex(StoryMakerDB.Schema.Projects.COL_SECTION)),
+                cursor.getString(cursor
+                        .getColumnIndex(StoryMakerDB.Schema.Projects.COL_LOCATION)));
 
         calculateMaxSceneCount();
 
@@ -161,7 +173,11 @@ public class Project extends Model {
                 (!cursor.isNull(cursor.getColumnIndex(StoryMakerDB.Schema.Projects.COL_CREATED_AT)) ?
                         new Date(cursor.getLong(cursor.getColumnIndex(StoryMakerDB.Schema.Projects.COL_CREATED_AT))) : null),
                 (!cursor.isNull(cursor.getColumnIndex(StoryMakerDB.Schema.Projects.COL_UPDATED_AT)) ?
-                        new Date(cursor.getLong(cursor.getColumnIndex(StoryMakerDB.Schema.Projects.COL_UPDATED_AT))) : null));
+                        new Date(cursor.getLong(cursor.getColumnIndex(StoryMakerDB.Schema.Projects.COL_UPDATED_AT))) : null),
+                cursor.getString(cursor
+                        .getColumnIndex(StoryMakerDB.Schema.Projects.COL_SECTION)),
+                cursor.getString(cursor
+                        .getColumnIndex(StoryMakerDB.Schema.Projects.COL_LOCATION)));
         this.mDB = db;
         calculateMaxSceneCount(); // had to dupe the Project(context, cursor) constructor in here because of this call being fired before we set mDB 
     }
@@ -226,6 +242,8 @@ public class Project extends Model {
         if (updatedAt != null) {
             values.put(StoryMakerDB.Schema.Projects.COL_UPDATED_AT, updatedAt.getTime());
         }
+        values.put(StoryMakerDB.Schema.Projects.COL_SECTION, section);
+        values.put(StoryMakerDB.Schema.Projects.COL_LOCATION, location);
         // store dates as longs(8-bit ints)
         // can't put null in values set, so only add entry if non-null
         
@@ -316,7 +334,35 @@ public class Project extends Model {
         mSceneCount = Math.max((projectIndex+1), mSceneCount);
     }
     
+    public Cursor getTagsAsCursor() 
+    {
+        String selection = StoryMakerDB.Schema.Tags.COL_PROJECT_ID + " = ? ";
+        String[] selectionArgs = new String[] { "" + getId() };
+
+        if (mDB == null) 
+            return context.getContentResolver().query(ProjectsProvider.TAGS_CONTENT_URI, null, selection, selectionArgs, null);
+        else 
+            return mDB.query((new TagTable(mDB)).getTableName(), null, selection, selectionArgs, null, null, null);
+    }
     
+    public ArrayList<Tag> getTagsAsList() 
+    {
+        ArrayList<Tag> tagList = new ArrayList<Tag>();
+        
+        Cursor cursor = getTagsAsCursor();
+            
+        if (cursor.moveToFirst()) 
+        {
+            do 
+            {
+                Tag tag = new Tag(mDB, context, cursor);
+                tagList.add(tag);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        return tagList;
+    }
+
     public boolean isTemplateStory() {
         return (templatePath != null) && !templatePath.equals(""); 
     }
@@ -393,6 +439,34 @@ public class Project extends Model {
      */
     public void setUpdatedAt(Date updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    /**
+     * @return section
+     */
+    public String getSection() {
+        return section;
+    }
+
+    /**
+     * @param section
+     */
+    public void setSection(String section) {
+        this.section = section;
+    }
+
+    /**
+     * @return location
+     */
+    public String getLocation() {
+        return location;
+    }
+
+    /**
+     * @param location
+     */
+    public void setLocation(String location) {
+        this.location = location;
     }
 
     public int getStoryType() {

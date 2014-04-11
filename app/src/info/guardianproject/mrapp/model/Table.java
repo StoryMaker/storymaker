@@ -2,8 +2,6 @@ package info.guardianproject.mrapp.model;
 
 import java.util.ArrayList;
 
-import info.guardianproject.mrapp.db.ProjectsProvider;
-import info.guardianproject.mrapp.db.StoryMakerDB;
 import net.sqlcipher.database.SQLiteDatabase;
 import net.sqlcipher.database.SQLiteQueryBuilder;
 import android.content.ContentResolver;
@@ -41,6 +39,27 @@ public abstract class Table {
     public Cursor queryAll(Context context, Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
         SQLiteQueryBuilder queryBuilder = new SQLiteQueryBuilder();
         queryBuilder.setTables(getTableName());
+        
+        Cursor cursor = queryBuilder.query(mDB, projection, selection, selectionArgs, null, null, sortOrder);
+        cursor.setNotificationUri(context.getContentResolver(), uri);
+        return cursor;
+    }
+    
+    public Cursor queryOneDistinct(Context context, Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
+        SQLiteQueryBuilder queryBuilder = new SQLiteQueryBuilder();
+        queryBuilder.setTables(getTableName());
+        queryBuilder.appendWhere(getIDColumnName() + "=" + uri.getLastPathSegment());
+        queryBuilder.setDistinct(true); // "true" specifies distinct results
+        
+        Cursor cursor = queryBuilder.query(mDB, projection, selection, selectionArgs, null, null, sortOrder);
+        cursor.setNotificationUri(context.getContentResolver(), uri);
+        return cursor;
+    }
+
+    public Cursor queryAllDistinct(Context context, Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
+        SQLiteQueryBuilder queryBuilder = new SQLiteQueryBuilder();
+        queryBuilder.setTables(getTableName());
+        queryBuilder.setDistinct(true); // "true" specifies distinct results
         
         Cursor cursor = queryBuilder.query(mDB, projection, selection, selectionArgs, null, null, sortOrder);
         cursor.setNotificationUri(context.getContentResolver(), uri);
@@ -99,7 +118,7 @@ public abstract class Table {
         if (mDB == null) {
             return resolver.query(getURI(), null, selection, selectionArgs, null);
         } else {
-            return queryOne(context, getURI(), null, selection, selectionArgs, null);
+            return mDB.query(getTableName(), null, selection, selectionArgs, null, null, null); 
         }
     }
     
