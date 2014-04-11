@@ -1,6 +1,7 @@
 package info.guardianproject.mrapp;
 
 import info.guardianproject.mrapp.model.Project;
+import info.guardianproject.mrapp.model.ProjectTable;
 
 import org.holoeverywhere.widget.AutoCompleteTextView;
 import org.holoeverywhere.widget.EditText;
@@ -42,7 +43,7 @@ public class StoryOverviewEditActivity extends BaseActivity {
 		int pid = getIntent().getIntExtra("pid", -1); //project i
 		if (pid < 0)
 			return;
-		mProject = Project.get(getApplicationContext(), pid);
+		mProject = (Project) (new ProjectTable()).get(getApplicationContext(), pid);
 		
 		mContainerStoryTagsView = (ViewGroup) findViewById(R.id.story_tag_container);
 		
