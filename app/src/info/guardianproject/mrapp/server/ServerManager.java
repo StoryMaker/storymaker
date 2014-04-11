@@ -79,6 +79,15 @@ public class ServerManager {
         
     }
     
+    /**
+     * Return the StoryMaker user's username
+     * 
+     * @return
+     */
+    public String getUserName() {
+        return mSettings.getString("user", "");
+    }
+    
     private void connect () throws MalformedURLException, XmlRpcFault
     {
     	if (mWordpress == null)

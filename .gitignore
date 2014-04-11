@@ -13,6 +13,7 @@ bin/
 gen/
 external/WordpressJavaAndroid/build/
 app/build/
+spoon-output/
 
 # Local configuration file (sdk path, etc)
 local.properties

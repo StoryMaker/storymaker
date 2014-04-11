@@ -15,6 +15,7 @@
         android:text="@string/my_account" />
 
     <TextView
+        android:id="@+id/titleText"
         android:layout_marginTop="16dp"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
@@ -23,6 +24,7 @@
         android:textSize="24sp" />
 
     <Button
+        android:id="@+id/btnCreateAccount"
         android:onClick="onCreateAccountButtonClick"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
@@ -30,6 +32,7 @@
         android:text="@string/create_account" />
 
     <Button
+        android:id="@+id/btnSignIn"
         android:onClick="onSignInButtonClick"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
