@@ -53,6 +53,18 @@ public class TagTable extends Table
     {
         return ProjectsProvider.TAGS_BASE_PATH;
     }
+    
+    public Cursor getSpecificTag(Context context, String tag, int projectId)
+    {
+        String selection = StoryMakerDB.Schema.Tags.COL_TAG + " = ? AND " +
+                           StoryMakerDB.Schema.Tags.COL_PROJECT_ID + " = ? ";
+        String[] selectionArgs = new String[] { "" + tag, "" + projectId };
+        
+        if (mDB == null) 
+            return context.getContentResolver().query(ProjectsProvider.TAGS_CONTENT_URI, null, selection, selectionArgs, null);
+        else 
+            return mDB.query(getTableName(), null, selection, selectionArgs, null, null, null, null);
+    }
 
     public Cursor getUniqueTagsAsCursor(Context context)
     {
