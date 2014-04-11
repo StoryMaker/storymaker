@@ -50,7 +50,7 @@
 	            android:layout_marginTop="16sp"
 	        	android:layout_marginBottom="8sp"
 	        	android:layout_marginLeft="8sp"
-	        	android:textSize="12sp"
+	        	android:textSize="14sp"
 	        	android:fontFamily="sans-serif-light"
 	        	android:layout_above="@id/textViewSignIn"
 	            android:text="@string/menu_join_storymaker" 

@@ -18,11 +18,14 @@ public class ConnectAccountActivity extends BaseActivity {
     private TextView mTitleText;
     private Button mCreateAccountBtn;
     private Button mSignInOrOutBtn;
+    
+    private ServerManager mServerManager;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_connect_account);
+        mServerManager = ((StoryMakerApp) this.getApplication()).getServerManager();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         mActivityJustCreated = true;
         assignViewReferences();
@@ -37,19 +40,16 @@ public class ConnectAccountActivity extends BaseActivity {
     @Override
     public void onResume() {
         super.onResume();
-        ServerManager serverManager = ((StoryMakerApp) this.getApplication()).getServerManager();
         if ( !mActivityJustCreated && PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getBoolean(Globals.PREFERENCES_WP_REGISTERED, false) ) {
             // The user is returning to this Activity after a successful WordPress signup
             // that originated here.
-            Intent homeIntent = new Intent(ConnectAccountActivity.this, HomeActivity.class);
-            homeIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(homeIntent);
+            startHomeActivityAsNewTask();
         }
         // TODO: Better way to determine if a user is logged in?
-        else if (serverManager.hasCreds()) {
+        else if (mServerManager.hasCreds()) {
             // A WordPress account was already used to log in. Show as "Signed In Screen"
             // TODO: How to get a user's display name, not username
-            mTitleText.setText(serverManager.getUserName());
+            mTitleText.setText(mServerManager.getUserName());
             mCreateAccountBtn.setVisibility(View.INVISIBLE);
             mSignInOrOutBtn.setText(getString(R.string.sign_out));
         }
@@ -61,7 +61,18 @@ public class ConnectAccountActivity extends BaseActivity {
     }
     
     public void onSignInButtonClick(View v) {
-        Intent loginIntent = new Intent(this, LoginActivity.class);
-        startActivity(loginIntent);
+        if (!mServerManager.hasCreds()) {
+            Intent loginIntent = new Intent(this, LoginActivity.class);
+            startActivity(loginIntent);
+        } else {
+            mServerManager.logOut();
+            startHomeActivityAsNewTask();
+        }
+    }
+    
+    private void startHomeActivityAsNewTask() {
+        Intent homeIntent = new Intent(ConnectAccountActivity.this, HomeActivity.class);
+        homeIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(homeIntent);
     }
 }

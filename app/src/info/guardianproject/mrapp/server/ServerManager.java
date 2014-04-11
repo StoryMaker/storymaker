@@ -7,6 +7,7 @@ import info.guardianproject.mrapp.model.AuthTable;
 
 import java.io.File;
 import java.net.MalformedURLException;
+import java.util.Date;
 import java.util.List;
 
 import net.bican.wordpress.Comment;
@@ -87,7 +88,16 @@ public class ServerManager {
      * @return
      */
     public String getUserName() {
-        return mSettings.getString("user", "");
+        Auth checkAuth = (new AuthTable()).getAuthDefault(mContext, Auth.STORYMAKER);
+        return checkAuth.getName();
+    }
+    
+    /**
+     * Log a user out of their StoryMaker account
+     */
+    public void logOut() {
+        Auth checkAuth = (new AuthTable()).getAuthDefault(mContext, Auth.STORYMAKER);
+        checkAuth.setExpires(new Date());
     }
     
     private void connect () throws MalformedURLException, XmlRpcFault

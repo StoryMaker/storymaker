@@ -10,6 +10,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.View;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -47,6 +48,7 @@ public class WordPressAuthWebViewActivity extends WebViewActivity {
 
                 @Override
                 public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                    Log.i("WEBVIEW", "redirect to " + url);
                     if (url.contains(mFinishUrl)) {
                         PreferenceManager.getDefaultSharedPreferences(getApplicationContext())
                                 .edit()
