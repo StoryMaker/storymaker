@@ -14,34 +14,49 @@
 	    android:orientation="vertical" >
 	
 	    
-	    <LinearLayout
+	    <RelativeLayout
 	        android:id="@+id/llLogin"
 	        android:layout_width="fill_parent"
 	        android:layout_height="wrap_content"
 	        android:layout_marginBottom="8sp"
 	        android:clickable="true"
-	        android:background="@color/blue"
+	        android:background="@android:color/black"
 	        android:orientation="vertical">
 	        
+	        <ImageView
+	            android:id="@+id/imageViewProfileBg"
+	            android:layout_width="fill_parent"
+	            android:layout_height="120dp"
+	            android:alpha=".7"
+	            android:scaleType="centerCrop"/>
+	            
 	        <TextView
+	            android:id="@+id/textViewSignIn"
+	            android:layout_width="fill_parent"
+	            android:layout_height="wrap_content"
+	            android:fontFamily="sans-serif-condensed"
+	            android:layout_marginLeft="8sp"
+	        	android:layout_marginBottom="8sp"
+	        	android:layout_alignBottom="@id/imageViewProfileBg"
+	            android:text="@string/menu_sign_up" 
+	            android:textColor="#dddddd"
+	            android:textStyle="bold"/>
+	            
+	        
+	        <TextView
+	            android:id="@+id/textViewJoinStorymaker"
 	            android:layout_width="fill_parent"
 	            android:layout_height="wrap_content"
 	            android:layout_marginTop="16sp"
 	        	android:layout_marginBottom="8sp"
 	        	android:layout_marginLeft="8sp"
+	        	android:textSize="12sp"
+	        	android:fontFamily="sans-serif-light"
+	        	android:layout_above="@id/textViewSignIn"
 	            android:text="@string/menu_join_storymaker" 
 	            android:textColor="#dddddd"/>
-	        
-	        <TextView
-	            android:layout_width="fill_parent"
-	            android:layout_height="wrap_content"
-	            android:layout_marginLeft="8sp"
-	        	android:layout_marginBottom="8sp"
-	            android:text="@string/menu_sign_up" 
-	            android:textColor="#dddddd"
-	            android:textStyle="bold"/>
-	        
-		</LinearLayout>       
+	   
+		</RelativeLayout>       
 	
 	    <TextView
 	        android:id="@+id/textView1"

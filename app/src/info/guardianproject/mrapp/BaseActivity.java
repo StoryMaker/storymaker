@@ -1,6 +1,7 @@
 package info.guardianproject.mrapp;
 
 import info.guardianproject.mrapp.server.LoginActivity;
+import info.guardianproject.mrapp.server.ServerManager;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -8,6 +9,7 @@ import java.util.Date;
 
 import org.holoeverywhere.app.Activity;
 import org.holoeverywhere.widget.LinearLayout;
+import org.holoeverywhere.widget.TextView;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,12 +17,16 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.RelativeLayout;
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.PixelFormat;
 import android.view.WindowManager;
 import android.widget.ImageView;
+
+
+
 
 
 //import com.google.analytics.tracking.android.EasyTracker;
@@ -68,7 +74,7 @@ public class BaseActivity extends Activity {
         
         final Activity activity = this;
         
-        LinearLayout llDrawerLogin = (LinearLayout) findViewById(R.id.llLogin);
+        RelativeLayout llDrawerLogin = (RelativeLayout) findViewById(R.id.llLogin);
         
         ImageButton btnDrawerQuickCaptureVideo = (ImageButton) findViewById(R.id.btnDrawerQuickCaptureVideo);
         ImageButton btnDrawerQuickCapturePhoto = (ImageButton) findViewById(R.id.btnDrawerQuickCapturePhoto);
@@ -81,6 +87,30 @@ public class BaseActivity extends Activity {
         //Button btnDrawerSettings = (Button) findViewById(R.id.btnDrawerSettings);
         Button btnDrawerAccounts = (Button) findViewById(R.id.btnDrawerAccounts);
         
+        // TODO: Better way to determine if a user has creds?
+        ServerManager serverManager = ((StoryMakerApp) this.getApplication()).getServerManager();
+        if (serverManager.hasCreds()) {
+            // The Storymaker user is logged in. Replace Sign/Up language with username
+            TextView textViewSignIn = (TextView) findViewById(R.id.textViewSignIn);
+            textViewSignIn.setText(serverManager.getUserName());
+            TextView textViewJoinStorymaker = (TextView) findViewById(R.id.textViewJoinStorymaker);
+            textViewJoinStorymaker.setVisibility(View.GONE);
+        }
+        
+        // Set a random profile background
+        ImageView imageViewProfileBg = (ImageView) findViewById(R.id.imageViewProfileBg);
+        int profileBg = (int) (Math.random() * 2);
+        switch (profileBg) {
+            case 0:
+                imageViewProfileBg.setImageResource(R.drawable.profile_bg1);
+                break;
+            case 1:
+                imageViewProfileBg.setImageResource(R.drawable.profile_bg2);
+                break;
+            case 2:
+                imageViewProfileBg.setImageResource(R.drawable.profile_bg3);
+                break;
+        }
 
         llDrawerLogin.setOnClickListener(new OnClickListener() {
             @Override
