@@ -25,11 +25,8 @@ public class Project extends Model {
     protected String templatePath;
     protected String section;
     protected String location;
-    protected ArrayList<String> tags = new ArrayList<String>();
     protected Date createdAt; // long stored in database as 8-bit int
     protected Date updatedAt; // long stored in database as 8-bit int
-    protected String section;
-    protected String location;
     
     public final static int STORY_TYPE_VIDEO = 0;
     public final static int STORY_TYPE_AUDIO = 1;
@@ -338,6 +335,13 @@ public class Project extends Model {
         mSceneCount = Math.max((projectIndex+1), mSceneCount);
     }
     
+    public void addTag(String tag) {
+        Tag t = new Tag(mDB, context);
+        t.setProjectId(getId());
+        t.setTag(tag);
+        t.save();
+    }
+    
     public Cursor getTagsAsCursor() 
     {
         String selection = StoryMakerDB.Schema.Tags.COL_PROJECT_ID + " = ? ";
@@ -365,6 +369,19 @@ public class Project extends Model {
         }
         cursor.close();
         return tagList;
+    }
+    
+    public Tag[] getTagsAsArray() {
+        return getTagsAsList().toArray(new Tag[] {});
+    }
+    
+    public String[] getTagsAsStringArray() {
+        ArrayList<Tag> tags = getTagsAsList();
+        String[] strings = new String[tags.size()];
+        for (int i = 0 ; i < tags.size() ; i++) {
+            strings[i] = tags.get(i).getTag();
+        }
+        return strings;
     }
 
     public boolean isTemplateStory() {
@@ -496,31 +513,6 @@ public class Project extends Model {
         this.templatePath = template;
     }
     
-	public String getSection() {
-	     return this.section;
-	}
-	public void setSection(String section) {
-	     this.section = section;
-	}
-	
-	public String getLocation() {
-		return this.location;
-	}
-	public void setLocation(String location) {
-		this.location = location;
-	}
-	
-	public String[] getTagsAsArray() {	
-		return tags.toArray(new String[tags.size()]);
-	}
-	public void addTag(String tag) {
-		this.tags.add(tag);
-	}
-	public void removeTag(String tag) {
-		this.tags.remove(tag);
-	}
-	
-    
     public static String getSimpleTemplateForMode (int storyMode)
     {
     	 String lang = StoryMakerApp.getCurrentLocale().getLanguage();
@@ -618,6 +610,6 @@ public class Project extends Model {
     		}
     	}
     	
-    	return null;
-    }			
+        return null;
+    }
 }

@@ -56,6 +56,7 @@ public class TagTable extends Table
 
     public Cursor getUniqueTagsAsCursor(Context context)
     {
+        // we need to only return the tag column in order for DISTINCT to work
         String[] projection = new String[] { StoryMakerDB.Schema.Tags.COL_TAG };
         
         if (mDB == null) 

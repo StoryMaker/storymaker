@@ -42,11 +42,11 @@ public class StoryOverviewActivity extends BaseActivity {
 		actionBar.setIcon(R.drawable.ic_action_info);
 	    actionBar.setDisplayHomeAsUpEnabled(true);
 
-	    Bundle tags = new Bundle();
-	    tags.putStringArray("tags", mProject.getTagsAsArray());
+	    Bundle bundle = new Bundle();
+	    bundle.putStringArray("tags", mProject.getTagsAsStringArray());
 	    
 	    ProjectTagFragment fragPT = new ProjectTagFragment();
-	    fragPT.setArguments(tags);
+	    fragPT.setArguments(bundle);
         getSupportFragmentManager().beginTransaction().add(R.id.fl_tag_container, fragPT).commit();
 	}
 	
