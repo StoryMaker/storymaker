@@ -1,6 +1,7 @@
 package info.guardianproject.mrapp;
 
 import info.guardianproject.mrapp.model.Project;
+import info.guardianproject.mrapp.model.ProjectTable;
 
 import org.holoeverywhere.widget.Toast;
 
@@ -27,7 +28,7 @@ public class StoryOverviewActivity extends BaseActivity {
 		int pid = getIntent().getIntExtra("pid", -1); //project i
 		if (pid < 0)
 			return;
-		mProject = Project.get(getApplicationContext(), pid);
+		mProject = (Project) (new ProjectTable()).get(getApplicationContext(), pid);
 		
 	    initialize();
 		setStoryInfo();
@@ -41,11 +42,11 @@ public class StoryOverviewActivity extends BaseActivity {
 		actionBar.setIcon(R.drawable.ic_action_info);
 	    actionBar.setDisplayHomeAsUpEnabled(true);
 
-	    Bundle tags = new Bundle();
-	    tags.putStringArray("tags", mProject.getTagsAsArray());
+	    Bundle bundle = new Bundle();
+	    bundle.putStringArray("tags", mProject.getTagsAsStringArray());
 	    
 	    ProjectTagFragment fragPT = new ProjectTagFragment();
-	    fragPT.setArguments(tags);
+	    fragPT.setArguments(bundle);
         getSupportFragmentManager().beginTransaction().add(R.id.fl_tag_container, fragPT).commit();
 	}
 	

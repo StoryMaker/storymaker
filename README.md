@@ -43,11 +43,11 @@ Follow these steps to setup your dev environment:
         external/OnionKit/
         external/android-ffmpeg-java/
         external/WordpressJavaAndroid/
+        external/SecureShareLib/SecureShareUILibrary/
         external/cardsui-for-android/CardsUILib
         external/SlidingMenu/library
         external/Android-ViewPagerIndicator/library
         external/RangeSeekBar/library
-        external/SecureShareLib/SecureShareUILibrary/
 
 1. Import the StoryMaker project from the app/ subfolder
 
@@ -56,4 +56,3 @@ Follow these steps to setup your dev environment:
         $ cd app/
         $ ./setup-ant.sh
         $ ant clean debug
-

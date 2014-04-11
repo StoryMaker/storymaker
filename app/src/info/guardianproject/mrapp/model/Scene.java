@@ -1,42 +1,101 @@
 package info.guardianproject.mrapp.model;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+
+import net.sqlcipher.database.SQLiteDatabase;
 
 import info.guardianproject.mrapp.db.ProjectsProvider;
 import info.guardianproject.mrapp.db.StoryMakerDB;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-import android.net.Uri;
-import android.util.Log;
 
-public class Scene {
+public class Scene extends Model {
 	final private String TAG = "Scene";
-    protected Context context;
-    protected int id;
     protected String title;
     protected String thumbnailPath;
     protected int projectIndex; // position this scene is in the project
     protected int projectId; // foreign key to the Scene which holds this media
+    protected Date createdAt; // long stored in database as 8-bit int
+    protected Date updatedAt; // long stored in database as 8-bit int
     
     protected int mClipCount = -1;
     
+    /**
+     * Create new blank Scene with a predetermined clip count via the Content Provider
+     * 
+     * @param context
+     * @param clipCount
+     */
     public Scene(Context context, int clipCount) {
-        this.context = context;
+        super(context);
         mClipCount = clipCount;
     }
 
-    public Scene(Context context, int id, String title, String thumbnailPath, int projectIndex, int projectId) {
-        super();
-        this.context = context;
+    /**
+     * Create new blank Scene with a predetermined clip count via direct db access.
+     * 
+     * This should be used within DB Migrations and Model or Table classes
+     *
+     * @param context
+     * @param clipCount
+     */
+    public Scene(SQLiteDatabase db, Context context, int clipCount) {
+        this(context, clipCount);
+        this.mDB = db;
+    }
+
+    /**
+     * Create a Model object via direct params
+     * 
+     * @param context
+     * @param id
+     * @param title
+     * @param thumbnailPath
+     * @param projectIndex
+     * @param projectId
+     * @param createdAt
+     * @param updatedAt
+     */
+    public Scene(Context context, int id, String title, String thumbnailPath, int projectIndex, int projectId, Date createdAt, Date updatedAt) {
+        super(context);
         this.id = id;
         this.title = title;
         this.thumbnailPath = thumbnailPath;
         this.projectIndex = projectIndex;
         this.projectId = projectId;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+    }
+    
+    /**
+     * Create a Model object via direct params via direct db access.
+     * 
+     * This should be used within DB Migrations and Model or Table classes
+     *
+     * @param db
+     * @param context
+     * @param id
+     * @param title
+     * @param thumbnailPath
+     * @param projectIndex
+     * @param projectId
+     * @param createdAt
+     * @param updatedAt
+     */
+    public Scene(SQLiteDatabase db, Context context, int id, String title, String thumbnailPath, int projectIndex, int projectId, Date createdAt, Date updatedAt) {
+        this(context, id, title, thumbnailPath, projectIndex, projectId, createdAt, updatedAt);
+        this.mDB = db;
     }
 
+    /**
+     * Inflate record from a cursor via the Content Provider
+     *
+     * @param context
+     * @param cursor
+     */
     public Scene(Context context, Cursor cursor) {
         // FIXME use column id's directly to optimize this one schema stabilizes
         this(
@@ -50,11 +109,53 @@ public class Scene {
                 cursor.getInt(cursor
                         .getColumnIndex(StoryMakerDB.Schema.Scenes.COL_PROJECT_INDEX)),
                 cursor.getInt(cursor
-                        .getColumnIndex(StoryMakerDB.Schema.Scenes.COL_PROJECT_ID))
-        		);
+                        .getColumnIndex(StoryMakerDB.Schema.Scenes.COL_PROJECT_ID)),
+                (!cursor.isNull(cursor.getColumnIndex(StoryMakerDB.Schema.Scenes.COL_CREATED_AT)) ?
+                        new Date(cursor.getLong(cursor.getColumnIndex(StoryMakerDB.Schema.Scenes.COL_CREATED_AT))) : null),
+                (!cursor.isNull(cursor.getColumnIndex(StoryMakerDB.Schema.Scenes.COL_UPDATED_AT)) ?
+                        new Date(cursor.getLong(cursor.getColumnIndex(StoryMakerDB.Schema.Scenes.COL_UPDATED_AT))) : null));
         
         calculateMaxClipCount();
-        
+    }
+
+    /**
+     * Inflate record from a cursor via direct db access.  
+     * 
+     * This should be used within DB Migrations and Model or Table classes
+     * 
+     * @param db
+     * @param context
+     * @param cursor
+     */
+    public Scene(SQLiteDatabase db, Context context, Cursor cursor) {
+        // FIXME use column id's directly to optimize this one schema stabilizes
+        this(
+                context,
+                cursor.getInt(cursor
+                        .getColumnIndex(StoryMakerDB.Schema.Scenes.ID)),
+                cursor.getString(cursor
+                        .getColumnIndex(StoryMakerDB.Schema.Scenes.COL_TITLE)),
+                cursor.getString(cursor
+                        .getColumnIndex(StoryMakerDB.Schema.Scenes.COL_THUMBNAIL_PATH)),
+                cursor.getInt(cursor
+                        .getColumnIndex(StoryMakerDB.Schema.Scenes.COL_PROJECT_INDEX)),
+                cursor.getInt(cursor
+                        .getColumnIndex(StoryMakerDB.Schema.Scenes.COL_PROJECT_ID)),
+                (!cursor.isNull(cursor.getColumnIndex(StoryMakerDB.Schema.Scenes.COL_CREATED_AT)) ?
+                        new Date(cursor.getLong(cursor.getColumnIndex(StoryMakerDB.Schema.Scenes.COL_CREATED_AT))) : null),
+                (!cursor.isNull(cursor.getColumnIndex(StoryMakerDB.Schema.Scenes.COL_UPDATED_AT)) ?
+                        new Date(cursor.getLong(cursor.getColumnIndex(StoryMakerDB.Schema.Scenes.COL_UPDATED_AT))) : null));
+
+        this.mDB = db;
+        calculateMaxClipCount(); // had to dupe the Scene(context, cursor) constructor in here because of this call being fired before we set mDB
+    }
+
+    @Override
+    protected Table getTable() {
+        if (mTable == null) {
+            mTable = new SceneTable(mDB);
+        }
+        return mTable;
     }
     
     private void calculateMaxClipCount ()
@@ -65,7 +166,7 @@ public class Scene {
         
         if (cursor.moveToFirst()) {
             do {
-                Media media = new Media(context, cursor);
+                Media media = new Media(mDB, context, cursor);
                 clipIndex = Math.max(clipIndex, media.clipIndex);
             } while (cursor.moveToNext());
         }
@@ -75,112 +176,65 @@ public class Scene {
         cursor.close();
         
     }
-
-    /***** Table level static methods *****/
-
-    public static Cursor getAsCursor(Context context, int id) {
-        String selection = StoryMakerDB.Schema.Scenes.ID + "=?";
-        String[] selectionArgs = new String[] { "" + id };
-        return context.getContentResolver().query(
-                ProjectsProvider.SCENES_CONTENT_URI, null, selection,
-                selectionArgs, null);
-    }
-
-    public static Scene get(Context context, int id) {
-        Cursor cursor = Scene.getAsCursor(context, id);
-        Scene scene = null;
-        
-        if (cursor.moveToFirst()) {
-            scene = new Scene(context, cursor);
-           
-        } 
-        
-        cursor.close();
-        return scene;
-    }
-
-    public static Cursor getAllAsCursor(Context context) {
-        return context.getContentResolver().query(
-                ProjectsProvider.SCENES_CONTENT_URI, null, null, null, null);
-    }
-
-    public static ArrayList<Scene> getAllAsList(Context context) {
-        ArrayList<Scene> scenes = new ArrayList<Scene>();
-        Cursor cursor = getAllAsCursor(context);
-        if (cursor.moveToFirst()) {
-            do {
-                scenes.add(new Scene(context, cursor));
-            } while (cursor.moveToNext());
-        }
-        
-        cursor.close();
-        return scenes;
-    }
-
-    /***** Object level methods *****/
-
-    public void save() {
-    	Cursor cursor = getAsCursor(context, id);
-    	if (cursor.getCount() == 0) {
-    		insert();
-    	} else {
-    		update();
-    	}
-    	
-    	cursor.close();
-    }
     
-    private ContentValues getValues() {
+    protected ContentValues getValues() {
         ContentValues values = new ContentValues();
         values.put(StoryMakerDB.Schema.Scenes.COL_TITLE, title);
         values.put(StoryMakerDB.Schema.Scenes.COL_THUMBNAIL_PATH, thumbnailPath);
         values.put(StoryMakerDB.Schema.Scenes.COL_PROJECT_INDEX, projectIndex);
         values.put(StoryMakerDB.Schema.Scenes.COL_PROJECT_ID, projectId);
+        if (createdAt != null) {
+            values.put(StoryMakerDB.Schema.Scenes.COL_CREATED_AT, createdAt.getTime());
+        }
+        if (updatedAt != null) {
+            values.put(StoryMakerDB.Schema.Scenes.COL_UPDATED_AT, updatedAt.getTime());
+        }
+        // store dates as longs(8-bit ints)
+        // can't put null in values set, so only add entry if non-null
         
         return values;
     }
-    private void insert() {
-        ContentValues values = getValues();
-        Uri uri = context.getContentResolver().insert(
-                ProjectsProvider.SCENES_CONTENT_URI, values);
-        String lastSegment = uri.getLastPathSegment();
-        int newId = Integer.parseInt(lastSegment);
-        this.setId(newId);
-    }
     
-    private void update() {
-    	Uri uri = ProjectsProvider.SCENES_CONTENT_URI.buildUpon().appendPath("" + id).build();
-        String selection = StoryMakerDB.Schema.Scenes.ID + "=?";
-        String[] selectionArgs = new String[] { "" + id };
-    	ContentValues values = getValues();
-        int count = context.getContentResolver().update(
-                uri, values, selection, selectionArgs);
-        // FIXME make sure 1 row updated
-    }
-    
-    public void delete() {
-    	Uri uri = ProjectsProvider.SCENES_CONTENT_URI.buildUpon().appendPath("" + id).build();
-        String selection = StoryMakerDB.Schema.Scenes.ID + "=?";
-        String[] selectionArgs = new String[] { "" + id };
-        int count = context.getContentResolver().delete(
-                uri, selection, selectionArgs);
-        Log.d(TAG, "deleted scene: " + id + ", rows deleted: " + count);
-        // FIXME make sure 1 row updated
-        
-        //TODO should we also delete all media files associated with this scene?
+    // insert/update current record
+    // need to set created at/updated at date
+    @Override
+    public void save() {
+        Cursor cursor = getTable().getAsCursor(context, id);
+        if (cursor.getCount() == 0) {
+            cursor.close();
+            setCreatedAt(new Date());
+            insert();
+        } else {
+            cursor.close();
+            setUpdatedAt(new Date());
+            update();            
+        }
     }
 
+    // FIXME testme
+    public Cursor getMediaAsCursor() {
+        String selection = "scene_id=?";
+        String[] selectionArgs = new String[] {"" + getId()};
+        String orderBy = "clip_index";
+        if (mDB == null) {
+            return context.getContentResolver().query(ProjectsProvider.MEDIA_CONTENT_URI, null, selection, selectionArgs, orderBy);
+        } else {
+            return mDB.query((new MediaTable(mDB)).getTableName(), null, selection, selectionArgs, null, null, orderBy);
+        }
+    }
+       
     public ArrayList<Media> getMediaAsList() {
         Cursor cursor = getMediaAsCursor();
         
         ArrayList<Media> medias = new ArrayList<Media>(mClipCount);
         
-        for (int i = 0; i < mClipCount; i++)
+        for (int i = 0; i < mClipCount; i++) {
             medias.add(null);
+        }
         
         if (cursor.moveToFirst()) {
             do {
-            	Media media = new Media(context, cursor);
+            	Media media = new Media(mDB, context, cursor);
                 medias.set(media.clipIndex, media);
             } while (cursor.moveToNext());
         }
@@ -188,6 +242,7 @@ public class Scene {
         return medias;
     }
 
+ // FIXME make provider free version
     public Media[] getMediaAsArray() {
         ArrayList<Media> medias = getMediaAsList();
         return medias.toArray(new Media[] {});
@@ -201,6 +256,7 @@ public class Scene {
         return mClipCount;
     }
 
+ // FIXME make provider free version
     public ArrayList<String> getMediaAsPathList() {
         Cursor cursor = getMediaAsCursor();
         ArrayList<String> paths = new ArrayList<String>(mClipCount);
@@ -210,7 +266,7 @@ public class Scene {
        
         if (cursor.moveToFirst()) {
             do {
-            	Media media = new Media(context, cursor);
+            	Media media = new Media(mDB, context, cursor);
                 paths.set(media.clipIndex, media.getPath());
             } while (cursor.moveToNext());
         }
@@ -218,30 +274,23 @@ public class Scene {
         return paths;
     }
 
+ // FIXME make provider free version
     public String[] getMediaAsPathArray() {
         ArrayList<String> paths = getMediaAsPathList();
         return paths.toArray(new String[] {});
     }
 
-    public Cursor getMediaAsCursor() {
-        String selection = "scene_id=?";
-        String[] selectionArgs = new String[] { "" + getId() };
-        String orderBy = "clip_index";
-        return context.getContentResolver().query(
-                ProjectsProvider.MEDIA_CONTENT_URI, null, selection,
-                selectionArgs, orderBy);
-    }
-
     /**
      * @param media append this media to the back of the scene's media list
      */
+ // FIXME make provider free version
     public void setMedia(int clipIndex, String clipType, String path, String mimeType) {
-        Media media = new Media(context);
+        Media media = new Media(mDB, context);
         media.setPath(path);
         media.setMimeType(mimeType);
         media.setClipType(clipType);
         media.setClipIndex(clipIndex);
-        media.setSceneId(getId());
+        media.setSceneId(getId()); // need created/updated?
         media.save();
         
         mClipCount = Math.max((clipIndex+1), mClipCount);
@@ -362,5 +411,42 @@ public class Scene {
      */
     public void setProjectId(int projectId) {
         this.projectId = projectId;
+    }
+
+    /**
+     * @return createdAt
+     */
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    /**
+     * @param createdAt 
+     */
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    /**
+     * @return updatedAt
+     */
+    public Date getUpdatedAt() {
+        return updatedAt;
+    }
+
+    /**
+     * @param updatedAt 
+     */
+    public void setUpdatedAt(Date updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+    
+    public boolean migrate(Project project, Date projectDate) // called on instances of class returned by Project class method
+    {
+        setCreatedAt(projectDate);
+        setUpdatedAt(projectDate);
+        update();
+        
+        return true;
     }
 }

@@ -1,6 +1,7 @@
 package info.guardianproject.mrapp;
 
 import info.guardianproject.mrapp.model.Project;
+import info.guardianproject.mrapp.model.ProjectTable;
 import info.guardianproject.mrapp.model.template.Scene;
 import info.guardianproject.mrapp.model.template.Template;
 
@@ -40,7 +41,7 @@ public class TemplateStoryMakeFragment extends Fragment {
         Intent intent = getActivity().getIntent();
         
         int pid = intent.getIntExtra("pid", -1); //project id
-        mProject = Project.get(this.getActivity(),pid);
+        mProject = (Project)(new ProjectTable()).get(this.getActivity(),pid); // FIXME ugly
         
         // FIXME fetch template from the Project db record
         try {

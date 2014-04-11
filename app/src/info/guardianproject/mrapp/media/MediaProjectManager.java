@@ -10,12 +10,14 @@ import info.guardianproject.mrapp.media.exporter.MediaVideoExporter;
 import info.guardianproject.mrapp.media.exporter.MediaSlideshowExporter;
 import info.guardianproject.mrapp.model.Media;
 import info.guardianproject.mrapp.model.Project;
+import info.guardianproject.mrapp.model.ProjectTable;
 import info.guardianproject.mrapp.model.Scene;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import org.apache.commons.io.IOUtils;
@@ -67,7 +69,7 @@ public class MediaProjectManager implements MediaManager {
 	private static boolean mUseInternal = false;
 	
     public MediaProjectManager (Activity activity, Context context, Intent intent, Handler handler, int pid) {
-        this(activity, context, intent, handler, Project.get(context, pid));
+        this(activity, context, intent, handler, (Project)(new ProjectTable()).get(context, pid)); // FIXME ugly
     }
     
     public MediaProjectManager (Activity activity, Context context, Intent intent, Handler handler, Project project) {
@@ -216,11 +218,25 @@ public class MediaProjectManager implements MediaManager {
     
     public static File getExternalProjectFolder (Project project, Context context)
     {
+    	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");
+    	
+    	initExternalStorage (context);
+    	
+    	String folderName = "no_date"; // not certain how to best handle this
+    	if (project.getCreatedAt() != null)
+    	    folderName = sdf.format(project.getCreatedAt());
+    	File fileProject = new File(sFileExternDir,folderName);
+    	fileProject.mkdirs();
+    	
+    	return fileProject;
+    }
+    
+    public static File getExternalProjectFolderOld (Project project, Context context)
+    {
     	initExternalStorage (context);
     	
     	String folderName = project.getId()+"";
     	File fileProject = new File(sFileExternDir,folderName);
-    	
     	fileProject.mkdirs();
     	
     	return fileProject;
@@ -759,6 +775,58 @@ public class MediaProjectManager implements MediaManager {
  			return false;
  		}
     	  	
+    	return true;
+    }
+    
+    public static boolean migrateProjectFiles(Project project, Context context)
+    {
+    	File oldDir = getExternalProjectFolderOld(project, context);
+    	File newDir = getExternalProjectFolder(project, context);
+    	
+    	String oldString = "";
+    	String newString = "";
+    	
+    	try{
+            oldString = oldDir.getCanonicalPath();
+            newString = newDir.getCanonicalPath();
+    	} catch (Exception e) {
+    		Log.e("FILE MIGRATION", "exception ocurred while getting project path: " + e.getMessage());
+            return false;
+    	}
+    	
+        if (oldDir.exists() && newDir.exists())
+    	{
+    	    File[] oldFiles = oldDir.listFiles();
+            
+            for (File oldFile : oldFiles)
+            {
+                try{
+                    String oldPath = oldFile.getCanonicalPath();
+                    String newPath = oldPath.replace(oldString, newString);
+                    File newFile = new File(newPath);
+                    oldFile.renameTo(newFile);
+                } catch (Exception e) {
+                    Log.e("FILE MIGRATION", "exception ocurred while moving files: " + e.getMessage());
+                    return false;
+                }
+            }
+    	}
+    	else if (!oldDir.exists())
+    	{
+    		Log.e("FILE MIGRATION", oldString + " (old directory) doesn't exist");
+    		return false;
+    	}
+    	else if (!newDir.exists())
+    	{
+    	    Log.e("FILE MIGRATION", newString + " (new directory) doesn't exist"); // created by get external dir method
+            return false;
+    	}
+    	else
+    	{
+    	    Log.e("FILE MIGRATION", "an unexpected error has ocurred");
+            return false;
+    	}
+    	
     	return true;
     }
     

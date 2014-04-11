@@ -20,6 +20,8 @@ local.properties
 
 # Eclipse stuff
 *.settings/
+.classpath
+.project
 
 # Mac Garbage
 .DS_Store

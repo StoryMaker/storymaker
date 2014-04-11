@@ -1,10 +1,15 @@
 package info.guardianproject.mrapp.server;
 
 
+import java.util.ArrayList;
+import java.util.Date;
+
 import info.guardianproject.mrapp.AppConstants;
 import info.guardianproject.mrapp.BaseActivity;
 import info.guardianproject.mrapp.R;
 import info.guardianproject.mrapp.StoryMakerApp;
+import info.guardianproject.mrapp.model.Auth;
+import info.guardianproject.mrapp.model.AuthTable;
 
 import org.holoeverywhere.widget.Button;
 import org.holoeverywhere.widget.EditText;
@@ -91,43 +96,44 @@ public class LoginActivity extends BaseActivity implements Runnable
     }
     
     private void saveCreds (String user, String pass)
-    { 
-        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        Editor edit = settings.edit(); 
-        
-        edit.putString("user", user);
-        edit.putString("pass", pass);
-        
-        edit.commit();
-        
-    }
+    {   
+        ArrayList<Auth> results = (new AuthTable()).getAuthsAsList(getApplicationContext(), Auth.STORYMAKER);
+        for (Auth deleteAuth : results) {
+        	// only a single username/password is stored at a time
+        	deleteAuth.delete();
+        }
+		
+        Auth storymakerAuth = new Auth(getApplicationContext(),
+        		                       -1, // should be set to a real value by insert method
+        		                       "StoryMaker.cc",
+        		                       Auth.STORYMAKER,
+        		                       user,
+        		                       pass,
+        		                       null,
+        		                       new Date());
+        storymakerAuth.save();
+    } 
     
-    private void getCreds ()
+    private void getCreds()
     { 
-        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-       
-        String user = settings.getString("user",null);
-        String pass = settings.getString("pass",null);
-        
-        if (user != null)
-        	txtUser.setText(user);
-        
-        if (pass != null)
-        	txtPass.setText(pass);
-        
+        Auth storymakerAuth = (new AuthTable()).getAuthDefault(getApplicationContext(), Auth.STORYMAKER);
+        if (storymakerAuth != null) {
+        	txtUser.setText(storymakerAuth.getUserName());
+        	txtPass.setText(storymakerAuth.getCredentials());
+        } 
     }
     
     public void run ()
     {
     	String username = txtUser.getText().toString();
     	String password = txtPass.getText().toString();
-    	
-    	//for now just save to keep it simple
-    	saveCreds(username, password);
-    	
+
     	try {
 			StoryMakerApp.getServerManager().connect(username, password);
 
+			// only store username/password for a successful login
+	    	saveCreds(username, password);
+			
 			mHandler.sendEmptyMessage(0);
 	         
 		} catch (Exception e) {

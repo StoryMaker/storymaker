@@ -5,6 +5,7 @@ import info.guardianproject.mrapp.model.Lesson;
 import info.guardianproject.mrapp.model.LessonGroup;
 import info.guardianproject.mrapp.model.Media;
 import info.guardianproject.mrapp.model.Project;
+import info.guardianproject.mrapp.model.ProjectTable;
 import info.guardianproject.mrapp.server.LoginActivity;
 import info.guardianproject.mrapp.ui.MyCard;
 import info.guardianproject.onionkit.ui.OrbotHelper;
@@ -124,20 +125,17 @@ public class HomeActivity extends BaseActivity {
             if (mLoading == null || (!mLoading.isShowing()))
             	mLoading = ProgressDialog.show(HomeActivity.this, null, "Please wait...", true, true);
         }
+        
         protected Integer doInBackground(String... params) {
             try {
-            	
-                
             	mLessonsCompleted = getLessonsCompleted(HomeActivity.this);
-            	mListProjects = Project.getAllAsList(HomeActivity.this);
-
+            	mListProjects = (ArrayList<Project>) (new ProjectTable()).getAllAsList(HomeActivity.this); // FIXME ugly
             	
                 return null;
             } catch (Exception e) {
             	Log.e(AppConstants.TAG,"error loading home view",e);
             	return null;
             }
-
         }
 
         protected void onPostExecute(Integer result) {
