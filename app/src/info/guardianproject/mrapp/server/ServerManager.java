@@ -89,7 +89,11 @@ public class ServerManager {
      */
     public String getUserName() {
         Auth checkAuth = (new AuthTable()).getAuthDefault(mContext, Auth.STORYMAKER);
-        return checkAuth.getName();
+        if (checkAuth != null) {
+            return checkAuth.getUserName();
+        } else {
+            throw new IllegalStateException("No Storymaker Authentication records found!");
+        }
     }
     
     /**
@@ -97,7 +101,10 @@ public class ServerManager {
      */
     public void logOut() {
         Auth checkAuth = (new AuthTable()).getAuthDefault(mContext, Auth.STORYMAKER);
-        checkAuth.setExpires(new Date());
+        Date expiryDate = new Date();
+        expiryDate.setTime(0);
+        checkAuth.setExpires(expiryDate);
+        checkAuth.save();
     }
     
     private void connect () throws MalformedURLException, XmlRpcFault

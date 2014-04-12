@@ -13,6 +13,7 @@ import org.holoeverywhere.widget.TextView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -24,6 +25,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.PixelFormat;
 import android.view.WindowManager;
 import android.widget.ImageView;
+
 
 
 
@@ -87,15 +89,7 @@ public class BaseActivity extends Activity {
         //Button btnDrawerSettings = (Button) findViewById(R.id.btnDrawerSettings);
         Button btnDrawerAccounts = (Button) findViewById(R.id.btnDrawerAccounts);
         
-        // TODO: Better way to determine if a user has creds?
-        ServerManager serverManager = ((StoryMakerApp) this.getApplication()).getServerManager();
-        if (serverManager.hasCreds()) {
-            // The Storymaker user is logged in. Replace Sign/Up language with username
-            TextView textViewSignIn = (TextView) findViewById(R.id.textViewSignIn);
-            textViewSignIn.setText(serverManager.getUserName());
-            TextView textViewJoinStorymaker = (TextView) findViewById(R.id.textViewJoinStorymaker);
-            textViewJoinStorymaker.setVisibility(View.GONE);
-        }
+        updateSlidingMenuWithUserState();
         
         // Set a random profile background
         ImageView imageViewProfileBg = (ImageView) findViewById(R.id.imageViewProfileBg);
@@ -234,6 +228,25 @@ public class BaseActivity extends Activity {
         
     }
     
+    /**
+     * Alter the Profile badge of the SlidingMenu with the current user state
+     * 
+     * e.g: Show username if logged in, prompt to sign up or sign in if not.
+     */
+    private void updateSlidingMenuWithUserState() {
+        ServerManager serverManager = ((StoryMakerApp) this.getApplication()).getServerManager();
+        TextView textViewSignIn = (TextView) findViewById(R.id.textViewSignIn);
+        TextView textViewJoinStorymaker = (TextView) findViewById(R.id.textViewJoinStorymaker);
+        if (serverManager.hasCreds()) {
+            // The Storymaker user is logged in. Replace Sign/Up language with username
+            textViewSignIn.setText(serverManager.getUserName());
+            textViewJoinStorymaker.setVisibility(View.GONE);
+        } else {
+            textViewSignIn.setText(R.string.sign_in);
+            textViewJoinStorymaker.setVisibility(View.VISIBLE);
+        }
+    }
+    
     @Override
     public void onCreate(Bundle savedInstanceState) {
     	super.onCreate(savedInstanceState);
@@ -242,6 +255,12 @@ public class BaseActivity extends Activity {
             firstStartIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(firstStartIntent);
         }
+    }
+    
+    @Override
+    protected void onResume() {
+        super.onResume();
+        updateSlidingMenuWithUserState();
     }
     
     @Override

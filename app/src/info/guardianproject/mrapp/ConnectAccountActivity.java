@@ -4,6 +4,7 @@ package info.guardianproject.mrapp;
 import android.content.Intent;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.View;
 
 import org.holoeverywhere.widget.Button;
@@ -45,10 +46,8 @@ public class ConnectAccountActivity extends BaseActivity {
             // that originated here.
             startHomeActivityAsNewTask();
         }
-        // TODO: Better way to determine if a user is logged in?
         else if (mServerManager.hasCreds()) {
             // A WordPress account was already used to log in. Show as "Signed In Screen"
-            // TODO: How to get a user's display name, not username
             mTitleText.setText(mServerManager.getUserName());
             mCreateAccountBtn.setVisibility(View.INVISIBLE);
             mSignInOrOutBtn.setText(getString(R.string.sign_out));
