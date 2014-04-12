@@ -2,11 +2,11 @@ package info.guardianproject.mrapp.model;
 
 import info.guardianproject.mrapp.AppConstants;
 import info.guardianproject.mrapp.db.StoryMakerDB;
+import io.scal.secureshareui.model.PublishAccount;
 
 import java.util.Date;
 
 import net.sqlcipher.database.SQLiteDatabase;
-
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -295,6 +295,10 @@ public class Auth extends Model {
         }
 
         return false;
+    }
+    
+    public PublishAccount convertToPublishAccountObject() {
+    	return new PublishAccount(Integer.toString(this.id), this.name, this.site, this.userName, this.credentials, true);
     }
 }
     
