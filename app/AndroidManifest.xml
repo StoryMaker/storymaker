@@ -245,6 +245,10 @@
         </activity>
         <activity android:name="info.guardianproject.mrapp.server.WordPressAuthWebViewActivity" >
         </activity>
+        <activity
+            android:name="info.guardianproject.mrapp.ConnectAccountActivity"
+            android:label="@string/title_activity_connect_account" >
+        </activity>
     </application>
 
 </manifest>

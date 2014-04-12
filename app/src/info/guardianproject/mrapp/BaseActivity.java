@@ -1,6 +1,7 @@
 package info.guardianproject.mrapp;
 
 import info.guardianproject.mrapp.server.LoginActivity;
+import info.guardianproject.mrapp.server.ServerManager;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -8,19 +9,26 @@ import java.util.Date;
 
 import org.holoeverywhere.app.Activity;
 import org.holoeverywhere.widget.LinearLayout;
+import org.holoeverywhere.widget.TextView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.RelativeLayout;
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.PixelFormat;
 import android.view.WindowManager;
 import android.widget.ImageView;
+
+
+
+
 
 
 //import com.google.analytics.tracking.android.EasyTracker;
@@ -68,7 +76,7 @@ public class BaseActivity extends Activity {
         
         final Activity activity = this;
         
-        LinearLayout llDrawerLogin = (LinearLayout) findViewById(R.id.llLogin);
+        RelativeLayout llDrawerLogin = (RelativeLayout) findViewById(R.id.llLogin);
         
         ImageButton btnDrawerQuickCaptureVideo = (ImageButton) findViewById(R.id.btnDrawerQuickCaptureVideo);
         ImageButton btnDrawerQuickCapturePhoto = (ImageButton) findViewById(R.id.btnDrawerQuickCapturePhoto);
@@ -81,6 +89,22 @@ public class BaseActivity extends Activity {
         //Button btnDrawerSettings = (Button) findViewById(R.id.btnDrawerSettings);
         Button btnDrawerAccounts = (Button) findViewById(R.id.btnDrawerAccounts);
         
+        updateSlidingMenuWithUserState();
+        
+        // Set a random profile background
+        ImageView imageViewProfileBg = (ImageView) findViewById(R.id.imageViewProfileBg);
+        int profileBg = (int) (Math.random() * 2);
+        switch (profileBg) {
+            case 0:
+                imageViewProfileBg.setImageResource(R.drawable.profile_bg1);
+                break;
+            case 1:
+                imageViewProfileBg.setImageResource(R.drawable.profile_bg2);
+                break;
+            case 2:
+                imageViewProfileBg.setImageResource(R.drawable.profile_bg3);
+                break;
+        }
 
         llDrawerLogin.setOnClickListener(new OnClickListener() {
             @Override
@@ -88,7 +112,7 @@ public class BaseActivity extends Activity {
             	
             	mSlidingMenu.showContent(true);
                 
-	        	Intent i = new Intent(activity, LoginActivity.class);
+	        	Intent i = new Intent(activity, ConnectAccountActivity.class);
 	            activity.startActivity(i);
             }
         });
@@ -204,6 +228,25 @@ public class BaseActivity extends Activity {
         
     }
     
+    /**
+     * Alter the Profile badge of the SlidingMenu with the current user state
+     * 
+     * e.g: Show username if logged in, prompt to sign up or sign in if not.
+     */
+    private void updateSlidingMenuWithUserState() {
+        ServerManager serverManager = ((StoryMakerApp) this.getApplication()).getServerManager();
+        TextView textViewSignIn = (TextView) findViewById(R.id.textViewSignIn);
+        TextView textViewJoinStorymaker = (TextView) findViewById(R.id.textViewJoinStorymaker);
+        if (serverManager.hasCreds()) {
+            // The Storymaker user is logged in. Replace Sign/Up language with username
+            textViewSignIn.setText(serverManager.getUserName());
+            textViewJoinStorymaker.setVisibility(View.GONE);
+        } else {
+            textViewSignIn.setText(R.string.sign_in);
+            textViewJoinStorymaker.setVisibility(View.VISIBLE);
+        }
+    }
+    
     @Override
     public void onCreate(Bundle savedInstanceState) {
     	super.onCreate(savedInstanceState);
@@ -212,6 +255,12 @@ public class BaseActivity extends Activity {
             firstStartIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(firstStartIntent);
         }
+    }
+    
+    @Override
+    protected void onResume() {
+        super.onResume();
+        updateSlidingMenuWithUserState();
     }
     
     @Override

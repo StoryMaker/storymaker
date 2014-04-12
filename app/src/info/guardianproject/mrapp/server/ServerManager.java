@@ -7,6 +7,7 @@ import info.guardianproject.mrapp.model.AuthTable;
 
 import java.io.File;
 import java.net.MalformedURLException;
+import java.util.Date;
 import java.util.List;
 
 import net.bican.wordpress.Comment;
@@ -81,7 +82,32 @@ public class ServerManager {
             return checkAuth.credentialsAreValid();
     }
     
-    private void connect() throws MalformedURLException, XmlRpcFault
+    /**
+     * Return the StoryMaker user's username
+     * 
+     * @return
+     */
+    public String getUserName() {
+        Auth checkAuth = (new AuthTable()).getAuthDefault(mContext, Auth.STORYMAKER);
+        if (checkAuth != null) {
+            return checkAuth.getUserName();
+        } else {
+            throw new IllegalStateException("No Storymaker Authentication records found!");
+        }
+    }
+    
+    /**
+     * Log a user out of their StoryMaker account
+     */
+    public void logOut() {
+        Auth checkAuth = (new AuthTable()).getAuthDefault(mContext, Auth.STORYMAKER);
+        Date expiryDate = new Date();
+        expiryDate.setTime(0);
+        checkAuth.setExpires(expiryDate);
+        checkAuth.save();
+    }
+    
+    private void connect () throws MalformedURLException, XmlRpcFault
     {
         if (mWordpress == null)
         {

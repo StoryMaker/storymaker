@@ -3,7 +3,6 @@ package info.guardianproject.mrapp;
 
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.content.DialogInterface.OnClickListener;
@@ -14,11 +13,14 @@ import android.view.Menu;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.TextView;
 
 import info.guardianproject.mrapp.Eula.OnEulaAgreedTo;
 import info.guardianproject.mrapp.server.LoginActivity;
 import info.guardianproject.mrapp.server.RegisterActivity;
 
+import org.holoeverywhere.LayoutInflater;
+import org.holoeverywhere.app.Activity;
 import org.holoeverywhere.app.AlertDialog;
 import org.holoeverywhere.widget.Toast;
 
@@ -28,7 +30,8 @@ import org.holoeverywhere.widget.Toast;
  * 
  * Should be launched as the start of a new Task, because
  * when this Activity finishes without starting another,
- * it is the result of the user rejecting the TOS / EULA.
+ * it is the result of the user rejecting the TOS / EULA,
+ * and so should result in the app exiting.
  * 
  * @author David Brodsky
  *
@@ -56,7 +59,8 @@ public class FirstStartActivity extends Activity implements OnEulaAgreedTo {
     public void onResume() {
         super.onResume();
         if ( PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getBoolean(Globals.PREFERENCES_WP_REGISTERED, false) ) {
-            Intent homeIntent = new Intent(this, HomeActivity.class);
+            // The user is returning to this Activity after a successful WordPress signup
+            Intent homeIntent = new Intent(FirstStartActivity.this, HomeActivity.class);
             homeIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(homeIntent);
         }
