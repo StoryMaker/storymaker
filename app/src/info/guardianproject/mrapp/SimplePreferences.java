@@ -18,6 +18,9 @@ public class SimplePreferences extends SherlockPreferenceActivity implements OnS
 	public static final String KEY_VIDEO_RESOLUTION = "p_video_resolution";
 	public static final String KEY_VIDEO_WIDTH = "p_video_width";
 	public static final String KEY_VIDEO_HEIGHT = "p_video_height";
+
+    public static final String KEY_LANGUAGE = "pintlanguage";
+    public static final String KEY_LESSON = "pleslanguage";
 	
 	public static final int MAX_VIDEO_WIDTH = 1920;
 	public static final int MAX_VIDEO_HEIGHT = 1080;
@@ -88,6 +91,7 @@ public class SimplePreferences extends SherlockPreferenceActivity implements OnS
 	@Override
 	public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
 				
+	    
 		if (key.equals(KEY_VIDEO_RESOLUTION)) 
 		{
 	    	
@@ -117,6 +121,15 @@ public class SimplePreferences extends SherlockPreferenceActivity implements OnS
 	    	
 	    	sharedPreferences.edit().putString(KEY_VIDEO_WIDTH, Integer.toString(vWidth)).commit();	    	
 	    	sharedPreferences.edit().putString(KEY_VIDEO_HEIGHT, Integer.toString(vHeight)).commit();
+        }
+	    // force update so language settings are applied
+        else if (key.equals(KEY_LANGUAGE))
+        {
+            ((StoryMakerApp)getApplication()).checkLocale();
+        }
+        else if (key.equals(KEY_LESSON))
+        {
+            ((StoryMakerApp)getApplication()).updateLessonLocation();
         }
 	}
 }

@@ -206,4 +206,26 @@
         <item name="360">360</item>
     </string-array>
     
+    <string-array name="interface_language_options">
+        <item name="english">English</item>
+        <item name="arabic">Arabic</item>
+    </string-array>
+    
+    <string-array name="interface_language_options_values">
+        <item name="english">en</item>
+        <item name="arabic">ar</item>
+    </string-array>
+    
+    <string-array name="lesson_language_options">
+        <item name="english">English</item>
+        <item name="arabic">Arabic</item>
+        <item name="safrican">Southern African</item>
+    </string-array>
+    
+    <string-array name="lesson_language_options_values">
+        <item name="english">http://storymaker.cc/appdata/lessons/en</item>
+        <item name="arabic">http://storymaker.cc/appdata/lessons/ar</item>
+        <item name="safrican">http://storymaker.cc/appdata/lessons/sa</item>
+    </string-array>
+    
 </resources>
