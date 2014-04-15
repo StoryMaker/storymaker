@@ -3,14 +3,12 @@
    	xmlns:tools="http://schemas.android.com/tools"
 	android:layout_width="match_parent"
 	android:layout_height="wrap_content"
-	android:background="@color/light_grey"
 	tools:context=".StoryOverviewActivity">
 
 	<LinearLayout
-		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		android:orientation="vertical"
-		android:padding="16dp">
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:orientation="vertical" >
 	    
 		<TextView
 	        android:id="@+id/tv_story_title"
@@ -26,15 +24,15 @@
 		    android:layout_height="match_parent" />
 		
 		<LinearLayout
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:orientation="horizontal" >
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:orientation="horizontal"
+		    android:paddingLeft="16dp" >
 		
 			<TextView
-		        android:text="@string/label_section" 
-				style="@style/LabelGeneral"
-				android:paddingLeft="8dp"  
-				android:paddingRight="16dp"/>
+			    style="@style/LabelGeneral"
+			    android:paddingRight="16dp"
+			    android:text="@string/label_section" />
 				
 			<TextView
 		        android:id="@+id/tv_story_section" 
@@ -48,9 +46,10 @@
 			android:orientation="horizontal" >
 		
 		    <TextView
-	        android:text="@string/label_location" 
-			style="@style/LabelGeneral"
-			android:paddingRight="16dp"/>
+		        style="@style/LabelGeneral"
+		        android:paddingLeft="16dp"
+		        android:paddingRight="16dp"
+		        android:text="@string/label_location" />
 		    		
 			<TextView
 	        android:id="@+id/tv_story_location" 
