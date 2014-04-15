@@ -44,6 +44,7 @@ Follow these steps to setup your dev environment:
         external/android-ffmpeg-java/
         external/WordpressJavaAndroid/
         external/SecureShareLib/SecureShareUILibrary/
+        external/SecureShareLib/SecureShareUILibrary/external/facebook-sdk/
         external/cardsui-for-android/CardsUILib
         external/SlidingMenu/library
         external/Android-ViewPagerIndicator/library
