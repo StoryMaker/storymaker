@@ -138,20 +138,18 @@ public class Tag extends Model
     public void save() 
     {
         Cursor cursor = ((TagTable)getTable()).getSpecificTag(context, tag, projectId);
-        if (cursor.getCount() > 0)
+        if (cursor.getCount() > 0) {
+            cursor.close();
             return; // if a record already exists for the specified tag on the specified project, do not insert a duplicate
-
+        }
         cursor.close();
                     
         cursor = getTable().getAsCursor(context, id);
-        if (cursor.getCount() == 0) 
-        {
+        if (cursor.getCount() == 0) {
             cursor.close();
             setCreatedAt(new Date());
             insert();
-        } 
-        else 
-        {
+        } else {
             cursor.close();
             update();            
         }
