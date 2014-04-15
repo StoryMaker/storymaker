@@ -199,7 +199,7 @@ public class ProjectsActivity extends BaseActivity {
     	mListProjects.remove(project);
         aaProjects.notifyDataSetChanged();
         
-    	project.delete();
+    	project.delete(); // FIXME this is leaving orphaned records for associated Scenes and Media.
     	
     	//should we delete project folders here too?
     }
