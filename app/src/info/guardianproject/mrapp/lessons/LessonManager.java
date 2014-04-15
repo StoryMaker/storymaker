@@ -209,9 +209,6 @@ public class LessonManager implements Runnable {
             mHttpClient = new StrongHttpsClient(mContext);
         }
         
-        mHttpClient.getStrongTrustManager().setNotifyVerificationSuccess(true);
-        mHttpClient.getStrongTrustManager().setNotifyVerificationFail(true);
-
         // HttpParams params = mHttpClient.getParams();
         // HttpConnectionParams.setConnectionTimeout(params, SO_TIMEOUT);
         // HttpConnectionParams.setSoTimeout(params, SO_TIMEOUT);
