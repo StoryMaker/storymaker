@@ -40,7 +40,7 @@ Follow these steps to setup your dev environment:
 
         external/HoloEverywhere/contrib/ActionBarSherlock/library/
         external/HoloEverywhere/library/
-        external/OnionKit/
+        external/NetCipher/
         external/android-ffmpeg-java/
         external/WordpressJavaAndroid/
         external/SecureShareLib/SecureShareUILibrary/
