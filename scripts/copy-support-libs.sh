@@ -18,3 +18,6 @@ cp app/libs/android-support-v4.jar external/RangeSeekBar/library/libs/android-su
 
 echo "updating SecureShareLib" 
 cp app/libs/android-support-v4.jar external/SecureShareLib/SecureShareUILibrary/libs/android-support-v4.jar
+
+echo "updating Facebook SDK" 
+cp app/libs/android-support-v4.jar external/SecureShareLib/SecureShareUILibrary/external/facebook-sdk/facebook/libs/android-support-v4.jar
