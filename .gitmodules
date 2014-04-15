@@ -19,6 +19,9 @@
 [submodule "external/RangeSeekBar"]
 	path = external/RangeSeekBar
 	url = https://github.com/vitriolix/RangeSeekBar.git
+[submodule "external/NetCipher"]
+	path = external/NetCipher
+	url = https://github.com/guardianproject/NetCipher.git
 [submodule "external/SecureShareLib"]
 	path = external/SecureShareLib
 	url = https://github.com/scalio/SecureShareLib.git
