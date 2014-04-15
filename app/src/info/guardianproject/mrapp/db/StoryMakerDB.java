@@ -9,7 +9,7 @@ import android.util.Log;
 
 public class StoryMakerDB extends SQLiteOpenHelper {
     private static final String TAG = "StoryMakerDB";
-    private static final int DB_VERSION = 6;
+    private static final int DB_VERSION = 7;
     private static final String DB_NAME = "sm.db";
     private Context mContext;
     
@@ -57,6 +57,9 @@ public class StoryMakerDB extends SQLiteOpenHelper {
             db.execSQL(StoryMakerDB.Schema.Projects.UPDATE_TABLE_PROJECTS_ADD_LOCATION);
             db.execSQL(StoryMakerDB.Schema.Tags.UPDATE_TABLE_TAGS);
         }
+        if ((oldVersion < 7) && (newVersion >= 7)) {
+            db.execSQL(StoryMakerDB.Schema.Projects.UPDATE_TABLE_PROJECTS_ADD_DESCRIPTION);
+        }
     }
     
     public class Schema 
@@ -90,6 +93,7 @@ public class StoryMakerDB extends SQLiteOpenHelper {
             public static final String COL_UPDATED_AT = "updated_at";
             public static final String COL_SECTION = "section";
             public static final String COL_LOCATION = "location";
+            public static final String COL_DESCRIPTION = "description";
             
             private static final String CREATE_TABLE_PROJECTS = "create table " + NAME + " (" 
                     + ID + " integer primary key autoincrement, " 
@@ -100,7 +104,8 @@ public class StoryMakerDB extends SQLiteOpenHelper {
                     + COL_CREATED_AT + " integer,"
                     + COL_UPDATED_AT + " integer,"
                     + COL_SECTION + " text,"
-                    + COL_LOCATION + " text"
+                    + COL_LOCATION + " text,"
+                    + COL_DESCRIPTION + " text"
                     + "); ";
             
             private static final String UPDATE_TABLE_PROJECTS = "alter table " + NAME + " " 
@@ -123,6 +128,10 @@ public class StoryMakerDB extends SQLiteOpenHelper {
             private static final String UPDATE_TABLE_PROJECTS_ADD_LOCATION = "alter table " + NAME + " " 
                     + "ADD COLUMN "
                     + COL_LOCATION + " text;";
+            
+            private static final String UPDATE_TABLE_PROJECTS_ADD_DESCRIPTION = "alter table " + NAME + " " 
+                    + "ADD COLUMN "
+                    + COL_DESCRIPTION + " text;";
         }
         
         public class Scenes

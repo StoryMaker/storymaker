@@ -72,6 +72,7 @@ public class Project extends Model {
      * @param context
      * @param id
      * @param title
+     * @param description
      * @param thumbnailPath
      * @param storyType
      * @param templatePath
@@ -80,10 +81,11 @@ public class Project extends Model {
      * @param section
      * @param location
      */
-    public Project(Context context, int id, String title, String thumbnailPath, int storyType, String templatePath, Date createdAt, Date updatedAt, String section, String location) {
+    public Project(Context context, int id, String title, String description, String thumbnailPath, int storyType, String templatePath, Date createdAt, Date updatedAt, String section, String location) {
         super(context);
         this.id = id;
         this.title = title;
+        this.description = description;
         this.thumbnailPath = thumbnailPath;
         this.storyType = storyType;
         this.templatePath = templatePath;
@@ -102,6 +104,7 @@ public class Project extends Model {
      * @param context
      * @param id
      * @param title
+     * @param description
      * @param thumbnailPath
      * @param storyType
      * @param templatePath
@@ -110,8 +113,8 @@ public class Project extends Model {
      * @param section
      * @param location
      */
-    public Project(SQLiteDatabase db, Context context, int id, String title, String thumbnailPath, int storyType, String templatePath, Date createdAt, Date updatedAt, String section, String location) {
-        this(context, id, title, thumbnailPath, storyType, templatePath, createdAt, updatedAt, section, location);
+    public Project(SQLiteDatabase db, Context context, int id, String title, String description, String thumbnailPath, int storyType, String templatePath, Date createdAt, Date updatedAt, String section, String location) {
+        this(context, id, title, description, thumbnailPath, storyType, templatePath, createdAt, updatedAt, section, location);
         this.mDB = db;
     }
 
@@ -129,6 +132,8 @@ public class Project extends Model {
                         .getColumnIndex(StoryMakerDB.Schema.Projects.ID)),
                 cursor.getString(cursor
                         .getColumnIndex(StoryMakerDB.Schema.Projects.COL_TITLE)),
+                cursor.getString(cursor
+                        .getColumnIndex(StoryMakerDB.Schema.Projects.COL_DESCRIPTION)),
                 cursor.getString(cursor
                         .getColumnIndex(StoryMakerDB.Schema.Projects.COL_THUMBNAIL_PATH)),
                 cursor.getInt(cursor
@@ -165,6 +170,8 @@ public class Project extends Model {
                         .getColumnIndex(StoryMakerDB.Schema.Projects.ID)),
                 cursor.getString(cursor
                         .getColumnIndex(StoryMakerDB.Schema.Projects.COL_TITLE)),
+                cursor.getString(cursor
+                        .getColumnIndex(StoryMakerDB.Schema.Projects.COL_DESCRIPTION)),
                 cursor.getString(cursor
                         .getColumnIndex(StoryMakerDB.Schema.Projects.COL_THUMBNAIL_PATH)),
                 cursor.getInt(cursor
@@ -234,6 +241,7 @@ public class Project extends Model {
     protected ContentValues getValues() {
         ContentValues values = new ContentValues();
         values.put(StoryMakerDB.Schema.Projects.COL_TITLE, title);
+        values.put(StoryMakerDB.Schema.Projects.COL_DESCRIPTION, description);
         values.put(StoryMakerDB.Schema.Projects.COL_THUMBNAIL_PATH, thumbnailPath);
         values.put(StoryMakerDB.Schema.Projects.COL_STORY_TYPE, storyType);
         values.put(StoryMakerDB.Schema.Projects.COL_TEMPLATE_PATH, templatePath);
@@ -253,6 +261,7 @@ public class Project extends Model {
     
     // insert/update current record
     // need to set created at/updated at date
+    // FIXME move this into the base Model class, unify the date time fields names
     @Override
     public void save() {
         Cursor cursor = getTable().getAsCursor(context, id);
@@ -383,6 +392,22 @@ public class Project extends Model {
         }
         return strings;
     }
+    
+    public ArrayList<String> getTagsAsStringList() {
+        ArrayList<Tag> tags = getTagsAsList();
+        ArrayList<String> strings = new ArrayList<String>();
+        for (int i = 0 ; i < tags.size() ; i++) {
+            strings.add(tags.get(i).getTag());
+        }
+        return strings;
+    }
+    
+    public void setTagsFromStringList(ArrayList<String> tags) {
+        // FIXME we rely on the fact that Tag.save() screens dupes out, we should probably do that ourselves
+        for (String tag: tags) {
+            addTag(tag);
+        }
+    }
 
     public boolean isTemplateStory() {
         return (templatePath != null) && !templatePath.equals(""); 
@@ -418,13 +443,21 @@ public class Project extends Model {
     public void setTitle(String title) {
         this.title = title;
     }
-    
+
+    /**
+     * @param description
+     *            the description to set
+     */
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    /**
+     * @return the description
+     */
     public String getDescription() {
-	     return this.description;
-	}
-	public void setDescription(String description) {
-	     this.description = description;
-	}
+        return description;
+    }
 
     /**
      * @return the thumbnailPath
