@@ -91,7 +91,8 @@ public class StoryOverviewActivity extends BaseActivity {
     	TextView tvStoryLocation = (TextView) findViewById(R.id.tv_story_location);
     	
     	tvStoryTitle.setText(mProject.getTitle());
-    	if (!mProject.getDescription().isEmpty()) tvStoryDesc.setText(mProject.getDescription());
+    	String desc = mProject.getDescription();
+    	if (desc != null && !desc.isEmpty()) tvStoryDesc.setText(desc);
     	tvStorySection.setText(mProject.getSection());
     	tvStoryLocation.setText(mProject.getLocation());
     }
