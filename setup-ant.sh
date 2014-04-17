@@ -9,13 +9,14 @@ readarray <<END
 external/HoloEverywhere/contrib/ActionBarSherlock/library
 external/HoloEverywhere/library
 external/android-ffmpeg-java
-external/OnionKit/libonionkit
+external/NetCipher/libnetcipher
 external/WordpressJavaAndroid
 external/RangeSeekBar/library
 external/Android-ViewPagerIndicator/library
 external/cardsui-for-android/CardsUILib
 external/SlidingMenu/library
 external/SecureShareLib/SecureShareUILibrary
+external/SecureShareLib/SecureShareUILibrary/external/facebook-sdk/facebook/
 END
 
 
@@ -23,11 +24,7 @@ for project in "${MAPFILE[@]}"; do
         android update project --path $project -t "android-17"
 done
 
-cp app/libs/android-support-v4.jar external/SlidingMenu/library/libs/android-support-v4.jar
-cp app/libs/android-support-v4.jar external/HoloEverywhere/contrib/ActionBarSherlock/library/libs/android-support-v4.jar
-cp app/libs/android-support-v4.jar external/Android-ViewPagerIndicator/library/libs/android-support-v4.jar
-cp app/libs/android-support-v4.jar external/RangeSeekBar/library/libs/android-support-v4.jar
-
+sh scripts/copy-support-libs.sh
 
 cd app
 android update project --path .
