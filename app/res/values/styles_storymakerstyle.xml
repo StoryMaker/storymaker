@@ -22,19 +22,16 @@
                   <item name="android:windowAnimationStyle">@null</item>
         
         <item name="actionBarItemBackground">@drawable/selectable_background_storymakerstyle</item>
-        <item name="popupMenuStyle">@style/storymakerstyle_PopupMenu</item>
         <item name="dropDownListViewStyle">@style/storymakerstyle_DropDownListView</item>
         <item name="actionBarTabStyle">@style/storymakerstyle_ActionBarTabStyle</item>
         <item name="actionDropDownStyle">@style/storymakerstyle_DropDownNav</item>
         <item name="actionBarStyle">@style/storymakerstyle_solid_ActionBar</item>
 
         <item name="android:actionBarItemBackground">@drawable/selectable_background_storymakerstyle</item>
-        <item name="android:popupMenuStyle">@style/storymakerstyle_PopupMenu</item>
         <item name="android:dropDownListViewStyle">@style/storymakerstyle_DropDownListView</item>
         <item name="android:actionBarTabStyle">@style/storymakerstyle_ActionBarTabStyle</item>
         <item name="android:actionDropDownStyle">@style/storymakerstyle_DropDownNav</item>
         <item name="android:actionBarStyle">@style/storymakerstyle_solid_ActionBar</item>
-        <item name="android:panelBackground">@drawable/menu_hardkey_panel_storymakerstyle</item>
         
                 <!-- Light.DarkActionBar specific -->
         <item name="actionBarWidgetTheme">@style/Theme.storymakerstyle.widget</item>
@@ -61,11 +58,7 @@
         <item name="android:background">@drawable/ab_transparent_storymakerstyle</item>
         <item name="android:progressBarStyle">@style/storymakerstyle_ProgressBar</item>
     </style>
-	
-    <style name="storymakerstyle_PopupMenu" parent="@style/Widget.Sherlock.ListPopupWindow">	
-        <item name="android:popupBackground">@drawable/menu_dropdown_panel_storymakerstyle</item>	
-    </style>
-	
+
     <style name="storymakerstyle_DropDownListView" parent="@style/Widget.Sherlock.ListView.DropDown">
         <item name="android:listSelector">@drawable/selectable_background_storymakerstyle</item>
     </style>
@@ -80,7 +73,6 @@
         <item name="background">@drawable/spinner_background_ab_storymakerstyle</item>
 
         <item name="android:background">@drawable/spinner_background_ab_storymakerstyle</item>
-        <item name="android:popupBackground">@drawable/menu_dropdown_panel_storymakerstyle</item>
         <item name="android:dropDownSelector">@drawable/selectable_background_storymakerstyle</item>
     </style>
     
@@ -90,10 +82,8 @@
     
     <!-- this style is only referenced in a Light.DarkActionBar based theme -->
     <style name="Theme.storymakerstyle.widget" parent="@style/Theme.Sherlock">
-        <item name="popupMenuStyle">@style/storymakerstyle_PopupMenu</item>
         <item name="dropDownListViewStyle">@style/storymakerstyle_DropDownListView</item>
         
-        <item name="android:popupMenuStyle">@style/storymakerstyle_PopupMenu</item>
         <item name="android:dropDownListViewStyle">@style/storymakerstyle_DropDownListView</item>
     </style>
     
