@@ -18,6 +18,7 @@
         <!-- Custom Colors -->
     <color name="light_grey">#E9EBE7</color>
     <color name="light_grey_super">#D4D4D4</color>
+    <color name="dark_gray">#848484</color>
 	<color name="light_blue">#10B2EF</color>
     
     <!-- Custom Styles -->
