@@ -298,7 +298,7 @@ Build number: <xliff:g id="build_number">%s</xliff:g>\n</string>
     <string name="label_tags">Tags</string>
     <string name="label_add">Add</string>
     <string name="label_edit">Edit</string>
-    <string name="label_activities">Activities</string>
+    <string name="label_activities">Activity log</string>
     <string name="hint_story_title">Enter a Title</string>
     <string name="hint_story_description">Describe your story&#8230;</string>
     <string name="hint_story_tag">#addtags</string>
@@ -308,5 +308,6 @@ Build number: <xliff:g id="build_number">%s</xliff:g>\n</string>
     <string name="title_activity_story_overview_edit">Edit Info</string>
     <string name="title_activity_project_tag_fragment">ProjectTagFragment</string>
     <string name="title_activity_connect_account">StoryMaker Account</string>
+    <string name="hint_no_description">No description.</string>
 
 </resources>

@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
 
 	<style name="CustomDialogTheme" parent="@android:style/Theme.Dialog">
 	<item name="android:windowBackground">@color/transparent_black</item>
@@ -18,6 +18,7 @@
         <!-- Custom Colors -->
     <color name="light_grey">#E9EBE7</color>
     <color name="light_grey_super">#D4D4D4</color>
+    <color name="dark_gray">#848484</color>
 	<color name="light_blue">#10B2EF</color>
     
     <!-- Custom Styles -->
@@ -44,7 +45,15 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">1dp</item>
         <item name="android:padding">4dp</item>
-        <item name="android:background">@color/light_blue</item>
+        <item name="android:background">@color/dark_gray</item>
+    </style>
+    
+	
+    
+	<style name="CenterHeaderText" parent="LabelHeader">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:typeface">sans</item>
+        <item name="android:gravity">center</item>
     </style>
     	
 </resources>

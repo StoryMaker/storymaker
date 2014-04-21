@@ -161,14 +161,6 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.itemForward:
-                int idx = getSupportActionBar().getSelectedNavigationIndex();
-                if (idx < 2) {
-                    getSupportActionBar().setSelectedNavigationItem(Math.min(2, idx + 1));
-                } else {
-                    mPublishFragment.doPublish();
-                }
-                return true;
             case R.id.addFromGallery:
                 addMediaFromGallery();
             
@@ -436,8 +428,6 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
         //Make Tab
         if (tab.getPosition() == 0) {
             if (mMenu != null) {
-                mMenu.findItem(R.id.itemForward).setEnabled(true);
-                
                 //show relevant menu items
                 setMenuItemsVisibility(true);
             }
@@ -470,8 +460,6 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
             layout = R.layout.fragment_order_clips;
 
             if (mMenu != null) {      
-                mMenu.findItem(R.id.itemForward).setEnabled(true);
-                
                 //hide irrelevant menu items
                 setMenuItemsVisibility(false);
                 

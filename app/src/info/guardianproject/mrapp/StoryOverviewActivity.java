@@ -26,8 +26,9 @@ public class StoryOverviewActivity extends BaseActivity {
 		setContentView(R.layout.activity_story_overview);
 			
 		int pid = getIntent().getIntExtra("pid", -1); //project i
-		if (pid < 0)
+		if (pid < 0) {
 			return;
+		}
 		mProject = (Project) (new ProjectTable()).get(getApplicationContext(), pid);
 		
 	    initialize();
@@ -35,9 +36,6 @@ public class StoryOverviewActivity extends BaseActivity {
 	}
 	
 	private void initialize() {
-		
-		addTestData();//TODO remove
-		
 		ActionBar actionBar = getSupportActionBar();
 		actionBar.setIcon(R.drawable.ic_action_info);
 	    actionBar.setDisplayHomeAsUpEnabled(true);
@@ -50,17 +48,6 @@ public class StoryOverviewActivity extends BaseActivity {
         getSupportFragmentManager().beginTransaction().add(R.id.fl_tag_container, fragPT).commit();
 	}
 	
-	private void addTestData() {
-	
-		mProject.setDescription("A story about a trial.");
-		mProject.setLocation("Iraq");
-		mProject.setSection("Politics");
-		
-		mProject.addTag("storymaker");
-		mProject.addTag("news");	
-	}
-	
-    	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		
@@ -75,8 +62,8 @@ public class StoryOverviewActivity extends BaseActivity {
             case R.id.itemEditStory:
             	Intent intent = new Intent(this, StoryOverviewEditActivity.class);
             	intent.putExtra("pid", mProject.getId());
-            	startActivity(intent);    
-            	
+            	startActivity(intent);
+            	finish();
             	return true;
             case R.id.itemSendStory:
             	Toast.makeText(this, "Send", Toast.LENGTH_SHORT).show();
@@ -104,7 +91,8 @@ public class StoryOverviewActivity extends BaseActivity {
     	TextView tvStoryLocation = (TextView) findViewById(R.id.tv_story_location);
     	
     	tvStoryTitle.setText(mProject.getTitle());
-    	tvStoryDesc.setText(mProject.getDescription());
+    	String desc = mProject.getDescription();
+    	if (desc != null && !desc.isEmpty()) tvStoryDesc.setText(desc);
     	tvStorySection.setText(mProject.getSection());
     	tvStoryLocation.setText(mProject.getLocation());
     }

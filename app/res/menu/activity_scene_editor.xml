@@ -1,7 +1,6 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:id="@+id/itemTrim" android:orderInCategory="1" android:icon="@drawable/ic_action_trim" android:visible="false" android:titleCondensed="Trim" android:title="Trim Clips" android:showAsAction="always"></item>
     <item android:id="@+id/itemInfo" android:title="Info" android:visible="true" android:orderInCategory="2" android:showAsAction="always" android:icon="@drawable/ic_action_info"></item>
-    <item android:id="@+id/itemForward" android:icon="@drawable/ic_action_forward_white_redbg" android:showAsAction="always" android:visible="true" android:title="Forward" android:orderInCategory="3"></item>
      <item android:id="@+id/addFromGallery" android:showAsAction="never" android:visible="true" android:title="@string/menu_add_from_gallery"></item>
      <item android:id="@+id/addNewShot" android:showAsAction="never" android:visible="true" android:title="@string/menu_add_new_shot"></item>
      <item android:id="@+id/delShot" android:showAsAction="never" android:visible="true" android:title="@string/menu_del_shot"></item>

@@ -1,5 +1,7 @@
 package info.guardianproject.mrapp;
 
+import java.util.ArrayList;
+
 import info.guardianproject.mrapp.model.Project;
 import info.guardianproject.mrapp.model.ProjectTable;
 
@@ -9,6 +11,7 @@ import org.holoeverywhere.widget.Spinner;
 
 import android.view.ViewGroup.LayoutParams;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,6 +35,8 @@ public class StoryOverviewEditActivity extends BaseActivity {
 	private Spinner spStorySection;
 	private Spinner spStoryLocation;
 	
+	private ArrayList<String> mTags;
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -39,13 +44,19 @@ public class StoryOverviewEditActivity extends BaseActivity {
 		setContentView(R.layout.activity_story_overview_edit);
 		
 		startActionMode(mActionModeCallback);
-		
+
+        mContainerStoryTagsView = (ViewGroup) findViewById(R.id.story_tag_container);
+        
 		int pid = getIntent().getIntExtra("pid", -1); //project i
-		if (pid < 0)
+		if (pid < 0) {
 			return;
+		}
 		mProject = (Project) (new ProjectTable()).get(getApplicationContext(), pid);
 		
-		mContainerStoryTagsView = (ViewGroup) findViewById(R.id.story_tag_container);
+		mTags = mProject.getTagsAsStringList();
+		for (String tag: mTags) {
+		    addProjectTag(tag);
+		}
 		
 		initialize();
 		setProjectInfo();
@@ -65,10 +76,10 @@ public class StoryOverviewEditActivity extends BaseActivity {
 		    	String tagText = tvStoryTag.getText().toString();
 		    	
 		    	if (!tagText.equals("")) {
-		    		
-		    		mProject.addTag(tagText);
-		    		addProjectTag(tagText);	    		
-		    	}
+//		    		mProject.addTag(tagText);
+                    addProjectTag(tagText);
+                    mTags.add(tagText);
+                }
 		    	
 		    	tvStoryTag.setText(null);
 		    }
@@ -97,7 +108,8 @@ public class StoryOverviewEditActivity extends BaseActivity {
 		mProject.setLocation(spStoryLocation.getSelectedItem().toString());
 		
 		mProject.save();
-		//TODO Save Tags
+		
+		mProject.setTagsFromStringList(mTags);
 	}
 	
 	private void addProjectTag(String tag) {
@@ -151,9 +163,13 @@ public class StoryOverviewEditActivity extends BaseActivity {
         // the checkmark button acts as a cancel but the users will treat it as an accept
 	    @Override
 	    public void onDestroyActionMode(ActionMode mode) {
-	    	if(!actionModeCancel)
+	    	if(!actionModeCancel) {
 	    		saveProjectInfo();
-	    	
+	    	}
+
+            Intent intent = new Intent(StoryOverviewEditActivity.this, StoryOverviewActivity.class);
+            intent.putExtra("pid", mProject.getId());
+            startActivity(intent);
 	    	StoryOverviewEditActivity.this.finish();
 	    }
 	};

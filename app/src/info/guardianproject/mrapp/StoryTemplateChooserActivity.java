@@ -15,7 +15,9 @@ import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
@@ -90,6 +92,13 @@ public class StoryTemplateChooserActivity extends BaseActivity {
          //indicator.setStrokeWidth(2 * density);
         
          loadTemplateSummary ("event","basic", mStoryMode);
+         
+         ((Button)findViewById(R.id.buttonStartStory)).setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				showTemplateEditor();
+			}
+		});
        
     }
     
@@ -129,10 +138,6 @@ public class StoryTemplateChooserActivity extends BaseActivity {
         switch (item.getItemId()) {
             case android.R.id.home:
                 NavUtils.navigateUpFromSameTask(this);
-                return true;
-            case R.id.itemForward:
-            	showTemplateEditor();
-            	
                 return true;
         }
         return super.onOptionsItemSelected(item);

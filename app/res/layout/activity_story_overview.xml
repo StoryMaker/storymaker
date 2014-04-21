@@ -1,9 +1,8 @@
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-   	xmlns:tools="http://schemas.android.com/tools"
-	android:layout_width="match_parent"
-	android:layout_height="wrap_content"
-	tools:context=".StoryOverviewActivity">
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="fill_parent"
+    tools:context=".StoryOverviewActivity" >
 
 	<LinearLayout
 	    android:layout_width="match_parent"
@@ -11,12 +10,17 @@
 	    android:orientation="vertical" >
 	    
 		<TextView
-	        android:id="@+id/tv_story_title"
-			style="@style/LabelHeader" />	
+		    android:id="@+id/tv_story_title"
+		    style="@style/CenterHeaderText"
+		    android:padding="24dp"
+		    android:text="This is a long title of a story that should wrap" />
 			
 		<TextView
-	        android:id="@+id/tv_story_desciption" 
-			style="@style/TextGeneral" />
+		    android:id="@+id/tv_story_desciption"
+		    style="@style/TextGeneral"
+		    android:hint="@string/hint_no_description"
+		    android:paddingLeft="24dp"
+		    android:paddingRight="24dp" />
 		
 		<FrameLayout
 		    android:id="@+id/fl_tag_container"
@@ -27,11 +31,11 @@
 		    android:layout_width="wrap_content"
 		    android:layout_height="wrap_content"
 		    android:orientation="horizontal"
-		    android:paddingLeft="16dp" >
+		    android:paddingLeft="24dp" >
 		
 			<TextView
 			    style="@style/LabelGeneral"
-			    android:paddingRight="16dp"
+			    android:paddingTop="8dp"
 			    android:text="@string/label_section" />
 				
 			<TextView
@@ -41,14 +45,14 @@
 		</LinearLayout>	
 		
 		<LinearLayout
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:orientation="horizontal" >
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:orientation="horizontal"
+		    android:paddingLeft="24dp"
+		    android:paddingTop="8dp" >
 		
 		    <TextView
 		        style="@style/LabelGeneral"
-		        android:paddingLeft="16dp"
-		        android:paddingRight="16dp"
 		        android:text="@string/label_location" />
 		    		
 			<TextView
@@ -62,23 +66,33 @@
     		style="@style/DividerHorizontal"/>
 		
 		<LinearLayout
-			android:layout_width="fill_parent"
-			android:layout_height="wrap_content"
-			android:orientation="vertical"
-			android:background="@color/light_grey_super"
-			android:padding="4dp">
+		    android:layout_width="fill_parent"
+		    android:layout_height="0dp"
+		    android:layout_gravity="bottom"
+		    android:layout_weight="1"
+		    android:background="@color/light_grey_super"
+		    android:orientation="vertical" >
 		
 		    <TextView
+		        style="@style/LabelHeader"
+		        android:paddingLeft="24dp"
+		        android:paddingRight="24dp"
 		        android:text="@string/label_activities"
-		        android:gravity="center_horizontal"
-				style="@style/LabelHeader" />	
+		        android:textSize="18sp" />
 				
 			<TextView
-		        android:text="Story shared on Facebook" 
-				style="@style/TextGeneral" />
+			    style="@style/TextGeneral"
+			    android:paddingLeft="24dp"
+			    android:paddingRight="24dp"
+			    android:paddingTop="4dp"
+			    android:text="Story shared on Facebook" />
+
 			<TextView
-		        android:text="Story Created" 
-				style="@style/TextGeneral" />
+			    style="@style/TextGeneral"
+			    android:paddingLeft="24dp"
+			    android:paddingRight="24dp"
+			    android:paddingTop="4dp"
+			    android:text="Story Created" />
 	    
     	</LinearLayout>		
 	</LinearLayout>
