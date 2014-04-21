@@ -1,6 +1,5 @@
 package info.guardianproject.mrapp.model;
 
-import info.guardianproject.mrapp.AppConstants;
 import info.guardianproject.mrapp.db.StoryMakerDB;
 import io.scal.secureshareui.model.PublishAccount;
 
@@ -12,7 +11,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.preference.PreferenceManager;
-import android.util.Log;
 
 public class Auth extends Model {
     private static final String TAG = "Auth";
@@ -298,7 +296,7 @@ public class Auth extends Model {
     }
     
     public PublishAccount convertToPublishAccountObject() {
-    	return new PublishAccount(Integer.toString(this.id), this.name, this.site, this.userName, this.credentials, false);
+    	return new PublishAccount(Integer.toString(this.id), this.name, this.site, this.userName, this.credentials, false, this.credentialsAreValid());
     }
 }
     
