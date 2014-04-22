@@ -1,18 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="fill_parent"
-    
-    >
+    android:background="#000000" >
 
-	<LinearLayout 
+	<LinearLayout
 	    android:layout_width="180dp"
 	    android:layout_height="match_parent"
-	    android:background="#565552"
+	    android:background="#000000"
 	    android:orientation="vertical" >
-	
 	    
 	    <RelativeLayout
 	        android:id="@+id/llLogin"
@@ -28,7 +24,8 @@
 	            android:layout_width="fill_parent"
 	            android:layout_height="120dp"
 	            android:alpha=".7"
-	            android:scaleType="centerCrop"/>
+	            android:scaleType="centerCrop"
+	            android:src="@drawable/profile_bg1" />
 	            
 	        <TextView
 	            android:id="@+id/textViewSignIn"
@@ -75,34 +72,37 @@
 	    <LinearLayout
 	        android:layout_width="match_parent"
 	        android:layout_height="wrap_content"
-	        android:layout_marginBottom="20sp" >
+	        android:layout_marginBottom="0sp" >
 	
 	        <ImageButton
 	            android:id="@+id/btnDrawerQuickCaptureVideo"
 	            android:layout_width="60dp"
 	            android:layout_height="60dp"
 	            android:background="@android:color/transparent"
-	            android:padding="5dp"
+	            android:padding="12dp"
 	            android:scaleType="fitCenter"
-	            android:src="@drawable/quick_capture_video" />
+	            android:src="@drawable/ic_action_med_video" />
 	
 	        <ImageButton
 	            android:id="@+id/btnDrawerQuickCapturePhoto"
 	            android:layout_width="60dp"
 	            android:layout_height="60dp"
+	            android:layout_weight="1"
 	            android:background="@android:color/transparent"
-	            android:padding="5dp"
+	            android:padding="12dp"
 	            android:scaleType="fitCenter"
-	            android:src="@drawable/quick_capture_photo" />
+	            android:src="@drawable/ic_action_med_photo" />
 	
 	        <ImageButton
 	            android:id="@+id/btnDrawerQuickCaptureAudio"
 	            android:layout_width="60dp"
 	            android:layout_height="60dp"
+	            android:layout_weight="1"
 	            android:background="@android:color/transparent"
-	            android:padding="5dp"
+	            android:padding="12dp"
 	            android:scaleType="fitCenter"
-	            android:src="@drawable/quick_capture_audio" />
+	            android:src="@drawable/ic_action_med_audio" />
+
 	    </LinearLayout>
 	
 	    <View

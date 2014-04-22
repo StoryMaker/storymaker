@@ -69,6 +69,12 @@
     </RadioGroup>
     </LinearLayout>
 
-  
+    <Button
+        android:id="@+id/buttonStartStory"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:text="@string/button_start_my_story" />
 
 </LinearLayout>
