@@ -129,17 +129,23 @@ public class Auth extends Model {
     }
     
     /**
-     * @return true if credentials exist and are not passed their expiry date
+     * @return true if credentials exist
+     */
+    public boolean credentialsExist() {
+        return ((!(getUserName() == null) || getUserName() == "") 
+                && (!(getCredentials() == null) || getCredentials() == ""));
+    }
+    
+    /**
+     * @return true if credentials exist and are not passed their expire date
      */
     public boolean credentialsAreValid() {
-        return ((!(getUserName() == null) || getUserName() == "") 
-                && (!(getCredentials() == null) || getCredentials() == "") 
-                && !credentialsExpired());
+        return (credentialsExist() && !credentialsExpired());
     }
     
     /**
      * 
-     * @return true if Now is passed the expiry date for the credentials
+     * @return true if Now is passed the expire date for the credentials
      */
     public boolean credentialsExpired() {
         if (getExpires() == null) {
@@ -296,7 +302,7 @@ public class Auth extends Model {
     }
     
     public PublishAccount convertToPublishAccountObject() {
-    	return new PublishAccount(Integer.toString(this.id), this.name, this.site, this.userName, this.credentials, false, this.credentialsAreValid());
+    	return new PublishAccount(Integer.toString(this.id), this.name, this.site, this.userName, this.credentials, this.credentialsExist(), this.credentialsAreValid());
     }
 }
     
