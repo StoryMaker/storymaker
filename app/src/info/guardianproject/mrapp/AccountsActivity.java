@@ -34,8 +34,7 @@ public class AccountsActivity extends BaseActivity {
         
         caFragment = new ChooseAccountFragment(); 
         
-        //TODO test data
-        
+        //TODO test data     
         Auth auth0 = new Auth(this, 0, "Facebook", "facebook.com", "milucas22", "FaKEcreDENTIALS", null, null);
         Auth auth1 = new Auth(this, 1, "Soundcloud", "soundcloud.com", "milucas22", "FaKEcreDENTIALS", null, null);
         Auth auth2 = new Auth(this, 2, "Wordpress", "wordpress.com", "milucas22", "FaKEcreDENTIALS", null, null);
