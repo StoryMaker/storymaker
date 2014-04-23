@@ -1,6 +1,5 @@
 package info.guardianproject.mrapp.model;
 
-import info.guardianproject.mrapp.AppConstants;
 import info.guardianproject.mrapp.db.StoryMakerDB;
 import io.scal.secureshareui.model.PublishAccount;
 
@@ -12,7 +11,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.preference.PreferenceManager;
-import android.util.Log;
 
 public class Auth extends Model {
     private static final String TAG = "Auth";
@@ -131,17 +129,23 @@ public class Auth extends Model {
     }
     
     /**
-     * @return true if credentials exist and are not passed their expiry date
+     * @return true if credentials exist
+     */
+    public boolean credentialsExist() {
+        return ((!(getUserName() == null) || getUserName() == "") 
+                && (!(getCredentials() == null) || getCredentials() == ""));
+    }
+    
+    /**
+     * @return true if credentials exist and are not passed their expire date
      */
     public boolean credentialsAreValid() {
-        return ((!(getUserName() == null) || getUserName() == "") 
-                && (!(getCredentials() == null) || getCredentials() == "") 
-                && !credentialsExpired());
+        return (credentialsExist() && !credentialsExpired());
     }
     
     /**
      * 
-     * @return true if Now is passed the expiry date for the credentials
+     * @return true if Now is passed the expire date for the credentials
      */
     public boolean credentialsExpired() {
         if (getExpires() == null) {
@@ -298,7 +302,7 @@ public class Auth extends Model {
     }
     
     public PublishAccount convertToPublishAccountObject() {
-    	return new PublishAccount(Integer.toString(this.id), this.name, this.site, this.userName, this.credentials, false);
+    	return new PublishAccount(Integer.toString(this.id), this.name, this.site, this.userName, this.credentials, this.credentialsExist(), this.credentialsAreValid());
     }
 }
     
