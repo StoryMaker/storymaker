@@ -13,7 +13,7 @@ import android.net.Uri;
 public abstract class Table {
     protected abstract String getTableName();
     protected abstract String getIDColumnName(); // FIXME this should just be always _id, move it into a const in here
-    protected abstract Uri getURI();
+    protected abstract Uri getURI(); // FIXME rename to getProviderURI 
     protected abstract String getProviderBasePath();
     
     protected SQLiteDatabase mDB = null;
