@@ -1,13 +1,16 @@
 package info.guardianproject.mrapp;
 
+import info.guardianproject.mrapp.model.Auth;
 import info.guardianproject.mrapp.model.Media;
 import info.guardianproject.mrapp.model.Project;
+import info.guardianproject.mrapp.publish.PublishController;
 import info.guardianproject.mrapp.server.LoginActivity;
 import info.guardianproject.mrapp.server.OAuthAccessTokenActivity;
 import info.guardianproject.mrapp.server.ServerManager;
 import info.guardianproject.mrapp.server.YouTubeSubmit;
 import info.guardianproject.mrapp.server.Authorizer.AuthorizationListener;
 import info.guardianproject.mrapp.server.soundcloud.SoundCloudUploader;
+import io.scal.secureshareui.lib.ChooseAccountFragment;
 
 import java.io.File;
 import java.io.IOException;
@@ -25,6 +28,7 @@ import redstone.xmlrpc.XmlRpcFault;
 import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -108,28 +112,24 @@ public class PublishFragment extends Fragment {
     public static final String ARG_SECTION_NUMBER = "section_number";
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState) {
-
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     	initFragment ();
-    	
     	int layout = getArguments().getInt("layout");
-    	
         mView = inflater.inflate(layout, null);
         if (layout == R.layout.fragment_complete_story) {
-        	
         	ImageView ivThumb = (ImageView)mView.findViewById(R.id.storyThumb);
 
-            Media[] medias = mActivity.mMPM.mScene.getMediaAsArray();
-            if (medias.length > 0)
-            {
-                Bitmap bitmap = Media.getThumbnail(mActivity,medias[0],mActivity.mMPM.mProject);
-            	if (bitmap != null) ivThumb.setImageBitmap(bitmap);
-            }
+			Media[] medias = mActivity.mMPM.mScene.getMediaAsArray();
+			if (medias.length > 0) {
+				Bitmap bitmap = Media.getThumbnail(mActivity, medias[0], mActivity.mMPM.mProject);
+				if (bitmap != null) {
+					ivThumb.setImageBitmap(bitmap);
+				}
+			}
 
 //          mTitle = (EditText) mView.findViewById(R.id.etStoryTitle);
 //          mDescription = (EditText) mView.findViewById(R.id.editTextDescribe);
-          mTitle = (TextView) mView.findViewById(R.id.textTitle);
+            mTitle = (TextView) mView.findViewById(R.id.textTitle);
 //          mDescription = (TextView) mView.findViewById(R.id.textDescription);
 
             mTitle.setText(mActivity.mMPM.mProject.getTitle());
@@ -141,54 +141,37 @@ public class PublishFragment extends Fragment {
 //			Spinner s = (Spinner) mView.findViewById( R.id.spinnerSections );
 //			s.setAdapter( adapter );
 			
-            ImageButton btnRender = (ImageButton) mView.findViewById(R.id.btnRender);
-            btnRender.setOnClickListener(new OnClickListener()
-            {
+			ImageButton btnRender = (ImageButton) mView.findViewById(R.id.btnRender);
+			btnRender.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View arg0) {
+					launchChooseAccountsDialog();
+					showRender(false);
+					startFakeRender();
+				}
+			});
 
-                @Override
-                public void onClick(View arg0) {
-                    showRender(false);
-                    startFakeRender();
-//                    saveForm();
-//                    
-//                    mFileLastExport = mActivity.mMPM.getExportMediaFile();
-//               
-//                	//do local render, overwrite always
-//                    handlePublish(false, false, true);
-                }
-                
-            });
-            
-            ImageButton btnRenderingSpinner = (ImageButton) mView.findViewById(R.id.btnRenderingSpinner);
-            btnRenderingSpinner.setOnClickListener(new OnClickListener()
-            {
-
-                @Override
-                public void onClick(View arg0) {
-                    showRenderingSpinner(false);
-                    showPlayAndUpload(true);
-                }
-                
-            });
+			ImageButton btnRenderingSpinner = (ImageButton) mView.findViewById(R.id.btnRenderingSpinner);
+			btnRenderingSpinner.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View arg0) {
+					showRenderingSpinner(false);
+					showPlayAndUpload(true);
+				}
+			});
             
             ImageButton btnPlay = (ImageButton) mView.findViewById(R.id.btnPlay);
         	//File fileExport = mActivity.mMPM.getExportMediaFile();
         	//btnPlay.setEnabled(fileExport.exists());
             
-            btnPlay.setOnClickListener(new OnClickListener()
-            {
-
-                @Override
-                public void onClick(View arg0) {
-                    
-                	if (mFileLastExport != null && mFileLastExport.exists())
-                	{
-                		
-                		mActivity.mMPM.mMediaHelper.playMedia(mFileLastExport, null);
-                	}
-                }
-                
-            });
+			btnPlay.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View arg0) {
+					if (mFileLastExport != null && mFileLastExport.exists()) {
+						mActivity.mMPM.mMediaHelper.playMedia(mFileLastExport, null);
+					}
+				}
+			});
             
 //            Button btnShare = (Button) mView.findViewById(R.id.btnShare);
 //          //  btnShare.setEnabled(fileExport.exists());
@@ -222,54 +205,30 @@ public class PublishFragment extends Fragment {
         return mView;
     }
     
-    Handler handlerUI = new Handler ()
-    {
-
+	Handler handlerUI = new Handler() {
 		@Override
 		public void handleMessage(Message msg) {
 			super.handleMessage(msg);
-			
-	    	if (mFileLastExport != null && mFileLastExport.exists())
-	    	{
 
-
-		    	Button btnPlay = (Button) mView.findViewById(R.id.btnPlay);
-		    	
-//		    	Button btnShare = (Button)mView.findViewById(R.id.btnShare);
-		        
-//	    		btnShare.setEnabled(true);
-	    		btnPlay.setEnabled(true);
-	    	}    
-		    
-		    
+			if (mFileLastExport != null && mFileLastExport.exists()) {
+				Button btnPlay = (Button) mView.findViewById(R.id.btnPlay);
+				// Button btnShare = (Button)mView.findViewById(R.id.btnShare);
+				// btnShare.setEnabled(true);
+				btnPlay.setEnabled(true);
+			}
 		}
-    	
-    };
+	};
     
-    public void doPublish() {
-
-        ServerManager sm = StoryMakerApp.getServerManager();
-      
-        if (!sm.hasCreds())
-            showLogin();
-        else
-        {
-        	// do render + publish, don't overwrite
-        	handlePublish(true, true, true);
-        	
-        	
-        }
-    	
-        
-    }
+	public void doPublish() {
+		ServerManager sm = StoryMakerApp.getServerManager();
+		if (!sm.hasCreds()) {
+			showLogin();
+		} else {
+			// do render + publish, don't overwrite
+			handlePublish(true, true, true);
+		}
+	}
     
-    private void saveForm() {
-        mActivity.mMPM.mProject.setTitle(mTitle.getText().toString());
-        //commenting this out for now until merges are fixed
-      //  mActivity.mMPM.mProject.setDescription(mDescription.getText().toString());
-        mActivity.mMPM.mProject.save();
-    }
-
     private void showLogin() {
         mActivity.startActivity(new Intent(mActivity, LoginActivity.class));
     }
@@ -292,7 +251,7 @@ public class PublishFragment extends Fragment {
     private void showRender(boolean vis) {
         ((ImageButton) mView.findViewById(R.id.btnRender)).setVisibility(vis ? View.VISIBLE : View.GONE);
     }
-
+    
     private String setUploadAccount() {
        
 
@@ -665,4 +624,25 @@ public class PublishFragment extends Fragment {
     	mYouTubeClient.setClientLoginToken(token);
     	mThreadPublish.start();
     }
+
+    private void launchChooseAccountsDialog() {
+        Intent intent = new Intent(mActivity, AccountsActivity.class);
+        intent.putExtra("isDialog", true);
+        intent.putExtra("inSelectionMode", true);
+        getActivity().startActivityForResult(intent, ChooseAccountFragment.ACCOUNT_REQUEST_CODE);
+    }
+    
+	public void chooseAccountDialogResult(int resultCode, Intent intent) {
+		if (resultCode == Activity.RESULT_OK) {
+			Log.d("PublishFragment", "Choose Accounts dialog return ok");
+			if (intent.hasExtra(ChooseAccountFragment.EXTRAS_ACCOUNT_KEYS)) {
+				ArrayList<String> siteKeys = intent.getStringArrayListExtra(ChooseAccountFragment.EXTRAS_ACCOUNT_KEYS);
+				Utils.toastOnUiThread(mActivity, "selected sites: " + siteKeys);
+			}
+			(new PublishController(mActivity)).startPublish(mActivity.mMPM.mProject, new String[] { Auth.STORYMAKER });
+		} else {
+			Log.d("PublishFragment", "Choose Accounts dialog canceled");
+			Utils.toastOnUiThread(mActivity, "Choose Accounts dialog canceled");
+		}
+	}
 }

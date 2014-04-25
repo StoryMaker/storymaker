@@ -23,6 +23,9 @@ public class AccountsActivity extends BaseActivity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		if (getIntent().getBooleanExtra("isDialog", false)) {
+            setTheme(android.R.style.Theme_Holo_Light_Dialog_NoActionBar_MinWidth);
+		}
 		setContentView(R.layout.activity_accounts);
 		
 		Bundle bundle = null;
@@ -42,9 +45,9 @@ public class AccountsActivity extends BaseActivity {
 		caFragment.setArguments(bundle);
 		
 		//TODO test data     
-		Auth auth0 = new Auth(this, 0, "Facebook", "facebook.com", "milucas22", "FaKEcreDENTIALS", null, null);
-		Auth auth1 = new Auth(this, 1, "Soundcloud", "soundcloud.com", "milucas22", "FaKEcreDENTIALS", null, null);
-		Auth auth2 = new Auth(this, 2, "Wordpress", "wordpress.com", "milucas22", "FaKEcreDENTIALS", null, null);
+		Auth auth0 = new Auth(this, 0, "Facebook", Auth.SITE_FACEBOOK, "milucas22", "FaKEcreDENTIALS", null, null);
+		Auth auth1 = new Auth(this, 1, "Soundcloud", Auth.SITE_SOUNDCLOUD, "milucas22", "FaKEcreDENTIALS", null, null);
+		Auth auth2 = new Auth(this, 2, "Flickr", Auth.SITE_FLICKR, "milucas22", "FaKEcreDENTIALS", null, null);
 		
 		List<PublishAccount> accounts = new ArrayList<PublishAccount>();
 		

@@ -1,5 +1,7 @@
 package info.guardianproject.mrapp.db;
 
+import java.util.Date;
+
 import info.guardianproject.mrapp.model.Auth;
 import info.guardianproject.mrapp.model.Project;
 import net.sqlcipher.database.SQLiteDatabase;
@@ -9,7 +11,7 @@ import android.util.Log;
 
 public class StoryMakerDB extends SQLiteOpenHelper {
     private static final String TAG = "StoryMakerDB";
-    private static final int DB_VERSION = 7;
+    private static final int DB_VERSION = 8;
     private static final String DB_NAME = "sm.db";
     private Context mContext;
     
@@ -26,6 +28,8 @@ public class StoryMakerDB extends SQLiteOpenHelper {
 		db.execSQL(StoryMakerDB.Schema.Media.CREATE_TABLE_MEDIA);
 		db.execSQL(StoryMakerDB.Schema.Auth.CREATE_TABLE_AUTH);
         db.execSQL(StoryMakerDB.Schema.Tags.CREATE_TABLE_TAGS);
+        db.execSQL(StoryMakerDB.Schema.Jobs.CREATE_TABLE_JOBS);
+        db.execSQL(StoryMakerDB.Schema.PublishJobs.CREATE_TABLE_PUBLISH_JOBS);
     }
     
     @Override
@@ -59,6 +63,10 @@ public class StoryMakerDB extends SQLiteOpenHelper {
         }
         if ((oldVersion < 7) && (newVersion >= 7)) {
             db.execSQL(StoryMakerDB.Schema.Projects.UPDATE_TABLE_PROJECTS_ADD_DESCRIPTION);
+        }
+        if ((oldVersion < 8) && (newVersion >= 8)) {
+            db.execSQL(StoryMakerDB.Schema.Jobs.CREATE_TABLE_JOBS);
+            db.execSQL(StoryMakerDB.Schema.PublishJobs.CREATE_TABLE_PUBLISH_JOBS);
         }
     }
     
@@ -240,8 +248,8 @@ public class StoryMakerDB extends SQLiteOpenHelper {
             
             private static final String UPDATE_TABLE_AUTH = CREATE_TABLE_AUTH;
         }
-    	
-    	public class Tags
+        
+        public class Tags
         {
             public static final String NAME = "tags";
             
@@ -258,6 +266,60 @@ public class StoryMakerDB extends SQLiteOpenHelper {
                     + "); ";
             
             private static final String UPDATE_TABLE_TAGS = CREATE_TABLE_TAGS;
+        }
+        
+        public class Jobs
+        {
+            public static final String NAME = "jobs";
+            
+            public static final String ID = "_id";
+            public static final String COL_PROJECT_ID = "project_id";
+            public static final String COL_PUBLISH_JOB_ID = "publish_job_id";
+            public static final String COL_TYPE = "type";
+            public static final String COL_SITE = "site";
+            public static final String COL_SPEC = "spec";
+            public static final String COL_RESULT = "result"; 
+            public static final String COL_ERROR_CODE = "error_code"; 
+            public static final String COL_ERROR_MESSAGE = "error_message"; 
+            public static final String COL_QUEUED_AT = "queued_at";
+            public static final String COL_FINISHED_AT = "finished_at";
+            
+            private static final String CREATE_TABLE_JOBS = "create table " + NAME + " (" 
+                    + ID + " integer primary key autoincrement, " 
+                    + COL_PROJECT_ID + " integer, "
+                    + COL_PUBLISH_JOB_ID + " integer, "
+                    + COL_TYPE + " text, "
+                    + COL_SITE + " text, "
+                    + COL_SPEC + " text, "
+                    + COL_RESULT + " text, " 
+                    + COL_ERROR_CODE + " integer, " 
+                    + COL_ERROR_MESSAGE + " text, " 
+                    + COL_QUEUED_AT + " integer, "
+                    + COL_FINISHED_AT + " integer "
+                    + "); ";
+            
+            private static final String UPDATE_TABLE_JOBS = CREATE_TABLE_JOBS;
+        }
+        
+        public class PublishJobs
+        {
+            public static final String NAME = "publish_jobs";
+            
+            public static final String ID = "_id";
+            public static final String COL_PROJECT_ID = "project_id";
+            public static final String COL_SITE_KEYS = "site_keys";
+            public static final String COL_QUEUED_AT = "queued_at";
+            public static final String COL_FINISHED_AT = "finished_at";
+            
+            private static final String CREATE_TABLE_PUBLISH_JOBS = "create table " + NAME + " (" 
+                    + ID + " integer primary key autoincrement, " 
+                    + COL_PROJECT_ID + " integer, "
+                    + COL_SITE_KEYS + " text, "
+                    + COL_QUEUED_AT + " integer, "
+                    + COL_FINISHED_AT + " integer "
+                    + "); ";
+            
+            private static final String UPDATE_TABLE_PUBLISH_JOBS = CREATE_TABLE_PUBLISH_JOBS;
         }
     }
     

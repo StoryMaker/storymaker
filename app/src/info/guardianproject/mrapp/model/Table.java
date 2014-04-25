@@ -104,6 +104,10 @@ public abstract class Table {
                 model = new Project(context, cursor);
             } else if (name == (new SceneTable()).getTableName()) {
                 model = new Scene(context, cursor);
+            } else if (name == (new JobTable()).getTableName()) {
+                model = new Job(context, cursor);
+            } else if (name == (new PublishJobTable()).getTableName()) {
+                model = new PublishJob(context, cursor);
             }
         } 
         cursor.close();
@@ -142,7 +146,7 @@ public abstract class Table {
         Model model = null;
         final String name = getTableName();
         
-        if (name == (new AuthTable()).getTableName()) { // FIXME would love a way to interact with tables staticly 
+        if (name == (new AuthTable()).getTableName()) { // FIXME would love a way to interact with tables statically
             models = new ArrayList<Auth>();
         } else if (name == (new LessonTable()).getTableName()) {
             models = new ArrayList<Lesson>();
@@ -152,6 +156,10 @@ public abstract class Table {
             models = new ArrayList<Project>();
         } else if (name == (new SceneTable()).getTableName()) {
             models = new ArrayList<Scene>();
+        } else if (name == (new JobTable()).getTableName()) {
+            models = new ArrayList<Job>();
+        } else if (name == (new PublishJobTable()).getTableName()) {
+            models = new ArrayList<PublishJob>();
         }
         
         if (cursor.moveToFirst()) {
@@ -171,6 +179,12 @@ public abstract class Table {
                 } else if (name == (new SceneTable()).getTableName()) {
                     model = new Scene(mDB, context, cursor);
                     ((ArrayList<Scene>)models).add((Scene)model);
+                } else if (name == (new JobTable()).getTableName()) {
+                    model = new Job(mDB, context, cursor);
+                    ((ArrayList<Job>)models).add((Job)model);
+                } else if (name == (new PublishJobTable()).getTableName()) {
+                    model = new PublishJob(mDB, context, cursor);
+                    ((ArrayList<PublishJob>)models).add((PublishJob)model);
                 }
             } while (cursor.moveToNext());
         }

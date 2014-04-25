@@ -24,7 +24,7 @@ public abstract class Model {
      * 
      * @param context
      */
-    Model(Context context) {
+    protected Model(Context context) {
         this.context = context;  
     }
     
@@ -36,7 +36,7 @@ public abstract class Model {
      * @param db
      * @param context
      */
-    Model(SQLiteDatabase db, Context context) {
+    protected Model(SQLiteDatabase db, Context context) {
         this.context = context;
         mDB = db;
     }

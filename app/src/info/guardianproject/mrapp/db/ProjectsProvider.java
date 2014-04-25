@@ -2,10 +2,12 @@ package info.guardianproject.mrapp.db;
 
 import info.guardianproject.mrapp.model.Auth;
 import info.guardianproject.mrapp.model.AuthTable;
+import info.guardianproject.mrapp.model.JobTable;
 import info.guardianproject.mrapp.model.LessonTable;
 import info.guardianproject.mrapp.model.MediaTable;
 import info.guardianproject.mrapp.model.Project;
 import info.guardianproject.mrapp.model.ProjectTable;
+import info.guardianproject.mrapp.model.PublishJobTable;
 import info.guardianproject.mrapp.model.Scene;
 import info.guardianproject.mrapp.model.Media;
 import info.guardianproject.mrapp.model.Lesson;
@@ -41,6 +43,10 @@ public class ProjectsProvider extends ContentProvider {
     public static final int TAG_ID = 116;
     public static final int DISTINCT_TAGS = 126;
     public static final int DISTINCT_TAG_ID = 136;
+    public static final int JOBS = 127;
+    public static final int JOB_ID = 137;
+    public static final int PUBLISH_JOBS = 128;
+    public static final int PUBLISH_JOB_ID = 138;
     public static final String PROJECTS_BASE_PATH = "projects";
     public static final String SCENES_BASE_PATH = "scenes";
     public static final String LESSONS_BASE_PATH = "lessons";
@@ -48,6 +54,8 @@ public class ProjectsProvider extends ContentProvider {
     public static final String AUTH_BASE_PATH = "auth";
     public static final String TAGS_BASE_PATH = "tags";
     public static final String DISTINCT_TAGS_BASE_PATH = "distinct_tags";
+    public static final String JOBS_BASE_PATH = "jobs";
+    public static final String PUBLISH_JOBS_BASE_PATH = "publish_jobs";
     public static final Uri PROJECTS_CONTENT_URI = Uri.parse("content://" + AUTHORITY + "/" + PROJECTS_BASE_PATH);
     public static final Uri SCENES_CONTENT_URI = Uri.parse("content://" + AUTHORITY + "/" + SCENES_BASE_PATH);
     public static final Uri LESSONS_CONTENT_URI = Uri.parse("content://" + AUTHORITY + "/" + LESSONS_BASE_PATH);
@@ -55,6 +63,8 @@ public class ProjectsProvider extends ContentProvider {
     public static final Uri AUTH_CONTENT_URI = Uri.parse("content://" + AUTHORITY + "/" + AUTH_BASE_PATH);
     public static final Uri TAGS_CONTENT_URI = Uri.parse("content://" + AUTHORITY + "/" + TAGS_BASE_PATH);
     public static final Uri DISTINCT_TAGS_CONTENT_URI = Uri.parse("content://" + AUTHORITY + "/" + DISTINCT_TAGS_BASE_PATH);
+    public static final Uri JOBS_CONTENT_URI = Uri.parse("content://" + AUTHORITY + "/" + JOBS_BASE_PATH);
+    public static final Uri PUBLISH_JOBS_CONTENT_URI = Uri.parse("content://" + AUTHORITY + "/" + PUBLISH_JOBS_BASE_PATH);
 
     public static final String PROJECTS_CONTENT_ITEM_TYPE = ContentResolver.CURSOR_ITEM_BASE_TYPE
             + "/projects";
@@ -84,6 +94,14 @@ public class ProjectsProvider extends ContentProvider {
             + "/distinct_tags";
     public static final String DISTINCT_TAGS_CONTENT_TYPE = ContentResolver.CURSOR_DIR_BASE_TYPE
             + "/distinct_tags";
+    public static final String JOBS_CONTENT_ITEM_TYPE = ContentResolver.CURSOR_ITEM_BASE_TYPE
+            + "/jobs";
+    public static final String JOBS_CONTENT_TYPE = ContentResolver.CURSOR_DIR_BASE_TYPE
+            + "/jobs";
+    public static final String PUBLISH_JOBS_CONTENT_ITEM_TYPE = ContentResolver.CURSOR_ITEM_BASE_TYPE
+            + "/publish_jobs";
+    public static final String PUBLISH_JOBS_CONTENT_TYPE = ContentResolver.CURSOR_DIR_BASE_TYPE
+            + "/publish_jobs";
     
     private static final UriMatcher sURIMatcher = new UriMatcher(
             UriMatcher.NO_MATCH);
@@ -103,6 +121,10 @@ public class ProjectsProvider extends ContentProvider {
         sURIMatcher.addURI(AUTHORITY, TAGS_BASE_PATH + "/#", TAG_ID);
         sURIMatcher.addURI(AUTHORITY, DISTINCT_TAGS_BASE_PATH, DISTINCT_TAGS);
         sURIMatcher.addURI(AUTHORITY, DISTINCT_TAGS_BASE_PATH + "/#", DISTINCT_TAG_ID);
+        sURIMatcher.addURI(AUTHORITY, JOBS_BASE_PATH, JOBS);
+        sURIMatcher.addURI(AUTHORITY, JOBS_BASE_PATH + "/#", JOB_ID);
+        sURIMatcher.addURI(AUTHORITY, PUBLISH_JOBS_BASE_PATH, PUBLISH_JOBS);
+        sURIMatcher.addURI(AUTHORITY, PUBLISH_JOBS_BASE_PATH + "/#", PUBLISH_JOB_ID);
     }
     
     @Override
@@ -156,6 +178,14 @@ public class ProjectsProvider extends ContentProvider {
             return (new TagTable(getDB())).queryOneDistinct(getContext(), uri, projection, selection, selectionArgs, sortOrder);
         case DISTINCT_TAGS:
             return (new TagTable(getDB())).queryAllDistinct(getContext(), uri, projection, selection, selectionArgs, sortOrder);
+        case JOB_ID:
+            return (new JobTable(getDB())).queryOne(getContext(), uri, projection, selection, selectionArgs, sortOrder);
+        case JOBS:
+            return (new JobTable(getDB())).queryAll(getContext(), uri, projection, selection, selectionArgs, sortOrder);
+        case PUBLISH_JOB_ID:
+            return (new PublishJobTable(getDB())).queryOne(getContext(), uri, projection, selection, selectionArgs, sortOrder);
+        case PUBLISH_JOBS:
+            return (new PublishJobTable(getDB())).queryAll(getContext(), uri, projection, selection, selectionArgs, sortOrder);
         default:
             throw new IllegalArgumentException("Unknown URI");
         }
@@ -179,6 +209,10 @@ public class ProjectsProvider extends ContentProvider {
         case TAGS:
         case DISTINCT_TAGS:
             return (new TagTable(getDB())).insert(getContext(), uri, values);
+        case JOBS:
+            return (new JobTable(getDB())).insert(getContext(), uri, values);
+        case PUBLISH_JOBS:
+            return (new PublishJobTable(getDB())).insert(getContext(), uri, values);
         default:
             throw new IllegalArgumentException("Unknown URI");
         }
@@ -208,6 +242,12 @@ public class ProjectsProvider extends ContentProvider {
         case DISTINCT_TAGS:
         case DISTINCT_TAG_ID:
             return (new TagTable(getDB())).delete(getContext(), uri, selection, selectionArgs);
+        case JOBS:
+        case JOB_ID:
+            return (new JobTable(getDB())).delete(getContext(), uri, selection, selectionArgs);
+        case PUBLISH_JOBS:
+        case PUBLISH_JOB_ID:
+            return (new PublishJobTable(getDB())).delete(getContext(), uri, selection, selectionArgs);
         default:
             throw new IllegalArgumentException("Unknown URI");
         }
@@ -237,167 +277,14 @@ public class ProjectsProvider extends ContentProvider {
         case DISTINCT_TAGS:
         case DISTINCT_TAG_ID:
             return (new TagTable(getDB())).update(getContext(), uri, values, selection, selectionArgs);
+        case JOBS:
+        case JOB_ID:
+            return (new JobTable(getDB())).update(getContext(), uri, values, selection, selectionArgs);
+        case PUBLISH_JOBS:
+        case PUBLISH_JOB_ID:
+            return (new PublishJobTable(getDB())).update(getContext(), uri, values, selection, selectionArgs);
         default:
             throw new IllegalArgumentException("Unknown URI");
         }
     }
-    
-    /*
-
-    
-    @Override
-    public Cursor query(Uri uri, String[] projection, String selection,
-            String[] selectionArgs, String sortOrder) {
-        SQLiteQueryBuilder queryBuilder = new SQLiteQueryBuilder();
-        int uriType = sURIMatcher.match(uri);
-        switch (uriType) {
-        case PROJECT_ID:
-            queryBuilder.setTables(StoryMakerDB.Schema.Projects.NAME);
-            queryBuilder.appendWhere(StoryMakerDB.Schema.Projects.ID + "="
-                    + uri.getLastPathSegment());
-            break;
-        case PROJECTS:
-            queryBuilder.setTables(StoryMakerDB.Schema.Projects.NAME);
-            break;
-        case SCENE_ID:
-            queryBuilder.setTables(StoryMakerDB.Schema.Scenes.NAME);
-            queryBuilder.appendWhere(StoryMakerDB.Schema.Scenes.ID + "="
-                    + uri.getLastPathSegment());
-            break;
-        case SCENES:
-            queryBuilder.setTables(StoryMakerDB.Schema.Scenes.NAME);
-            break;
-        case LESSON_ID:
-            queryBuilder.setTables(StoryMakerDB.Schema.Lessons.NAME);
-            queryBuilder.appendWhere(StoryMakerDB.Schema.Lessons.ID + "="
-                    + uri.getLastPathSegment());
-            break;
-        case LESSONS:
-            queryBuilder.setTables(StoryMakerDB.Schema.Lessons.NAME);
-            break;
-        case MEDIA_ID:
-            queryBuilder.setTables(StoryMakerDB.Schema.Media.NAME);
-            queryBuilder.appendWhere(StoryMakerDB.Schema.Media.ID + "="
-                    + uri.getLastPathSegment());
-            break;
-        case MEDIA:
-            queryBuilder.setTables(StoryMakerDB.Schema.Media.NAME);
-            break;
-        case AUTH_ID:
-            queryBuilder.setTables(StoryMakerDB.Schema.Auth.NAME);
-            queryBuilder.appendWhere(StoryMakerDB.Schema.Auth.ID + "="
-                    + uri.getLastPathSegment());
-            break;
-        case AUTH:
-            queryBuilder.setTables(StoryMakerDB.Schema.Auth.NAME);
-            break;
-        default:
-            throw new IllegalArgumentException("Unknown URI");
-        }
-        
-        Cursor cursor = queryBuilder.query(getDB(),
-                projection, selection, selectionArgs, null, null, sortOrder);
-        cursor.setNotificationUri(getContext().getContentResolver(), uri);
-        return cursor;
-    }
-
-    @Override
-    public Uri insert(Uri uri, ContentValues values) {
-        long newId;
-        int uriType = sURIMatcher.match(uri);
-        switch (uriType) {
-        case PROJECTS:
-            newId = getDB().insertOrThrow(StoryMakerDB.Schema.Projects.NAME, null, values);
-            getContext().getContentResolver().notifyChange(uri, null);
-            return PROJECTS_CONTENT_URI.buildUpon().appendPath(PROJECTS_BASE_PATH).appendPath("" + newId).build();
-        case SCENES:
-            newId = getDB().insertOrThrow(StoryMakerDB.Schema.Scenes.NAME, null, values);
-            getContext().getContentResolver().notifyChange(uri, null);
-            return SCENES_CONTENT_URI.buildUpon().appendPath(SCENES_BASE_PATH).appendPath("" + newId).build();
-        case LESSONS:
-            newId = getDB().insertOrThrow(StoryMakerDB.Schema.Lessons.NAME, null, values);
-            getContext().getContentResolver().notifyChange(uri, null);
-            return LESSONS_CONTENT_URI.buildUpon().appendPath(LESSONS_BASE_PATH).appendPath("" + newId).build();
-        case MEDIA:
-            newId = getDB().insertOrThrow(StoryMakerDB.Schema.Media.NAME, null, values);
-            getContext().getContentResolver().notifyChange(uri, null);
-            return MEDIA_CONTENT_URI.buildUpon().appendPath(MEDIA_BASE_PATH).appendPath("" + newId).build();
-        case AUTH:
-            newId = getDB().insertOrThrow(StoryMakerDB.Schema.Auth.NAME, null, values);
-            getContext().getContentResolver().notifyChange(uri, null);
-            return AUTH_CONTENT_URI.buildUpon().appendPath(AUTH_BASE_PATH).appendPath("" + newId).build();
-        default:
-            throw new IllegalArgumentException("Unknown URI");
-        }
-    }
-    
-    @Override
-    public int delete(Uri uri, String selection, String[] selectionArgs) {
-        int uriType = sURIMatcher.match(uri);
-        int count;
-        String table;
-        switch (uriType) {
-        case PROJECTS:
-        case PROJECT_ID:
-            table = StoryMakerDB.Schema.Projects.NAME;
-            break;
-        case SCENES:
-        case SCENE_ID:
-            table = StoryMakerDB.Schema.Scenes.NAME;
-            break;
-        case LESSONS:
-        case LESSON_ID:
-            table = StoryMakerDB.Schema.Lessons.NAME;
-            break;
-        case MEDIA:
-        case MEDIA_ID:
-            table = StoryMakerDB.Schema.Media.NAME;
-            break;
-        case AUTH:
-        case AUTH_ID:
-            table = StoryMakerDB.Schema.Auth.NAME;
-            break;
-        default:
-            throw new IllegalArgumentException("Unknown URI");
-        }
-        count = getDB().delete(table, selection, selectionArgs);
-        getContext().getContentResolver().notifyChange(uri, null);
-        return count;
-    }
-
-    @Override
-    public int update(Uri uri, ContentValues values, String selection,
-            String[] selectionArgs) {
-        int uriType = sURIMatcher.match(uri);
-        int count;
-        String table;
-        switch (uriType) {
-        case PROJECTS:
-        case PROJECT_ID:
-            table = StoryMakerDB.Schema.Projects.NAME;
-            break;
-        case SCENES:
-        case SCENE_ID:
-            table = StoryMakerDB.Schema.Scenes.NAME;
-            break;
-        case LESSONS:
-        case LESSON_ID:
-            table = StoryMakerDB.Schema.Lessons.NAME;
-            break;
-        case MEDIA:
-        case MEDIA_ID:
-            table = StoryMakerDB.Schema.Media.NAME;
-            break;
-        case AUTH:
-        case AUTH_ID:
-            table = StoryMakerDB.Schema.Auth.NAME;
-            break;
-        default:
-            throw new IllegalArgumentException("Unknown URI");
-        }
-        count = getDB().update(table, values, selection, selectionArgs);
-        getContext().getContentResolver().notifyChange(uri, null);
-        return count;
-    }     
-     */
 }

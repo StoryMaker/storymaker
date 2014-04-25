@@ -136,6 +136,7 @@ public class Auth extends Model {
      * @return true if credentials exist
      */
     public boolean credentialsExist() {
+        // TODO this needs to defer to the site package authenication validator method (TBD)
         return ((!(getUserName() == null) || getUserName() == "") 
                 && (!(getCredentials() == null) || getCredentials() == ""));
     }
@@ -306,7 +307,8 @@ public class Auth extends Model {
     }
     
     public PublishAccount convertToPublishAccountObject() {
-    	return new PublishAccount(Integer.toString(this.id), this.name, this.site, this.userName, this.credentials, this.credentialsExist(), this.credentialsAreValid());
+//    	return new PublishAccount(Integer.toString(this.id), this.name, this.site, this.userName, this.credentials, this.credentialsExist(), this.credentialsAreValid());
+        return new PublishAccount(Integer.toString(this.id), this.name, this.site, this.userName, this.credentials, true, true);
     }
 }
     

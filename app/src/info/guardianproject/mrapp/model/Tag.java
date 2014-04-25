@@ -9,8 +9,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 
-public class Tag extends Model 
-{
+public class Tag extends Model {
     private static final String TAG = "Tag";
     
     protected String tag;
@@ -22,8 +21,7 @@ public class Tag extends Model
      * 
      * @param context
      */
-    public Tag(Context context) 
-    {
+    public Tag(Context context) {
         super(context);
     }
     
@@ -35,8 +33,7 @@ public class Tag extends Model
      * @param db
      * @param context
      */
-    public Tag(SQLiteDatabase db, Context context) 
-    {
+    public Tag(SQLiteDatabase db, Context context) {
         super(db, context);
     }
     
@@ -49,8 +46,7 @@ public class Tag extends Model
      * @param projectId
      * @param createdAt
      */
-    public Tag(Context context, int id, String tag, int projectId, Date createdAt) 
-    {
+    public Tag(Context context, int id, String tag, int projectId, Date createdAt) {
         super(context);
         this.context = context;
         this.id = id;
@@ -71,8 +67,7 @@ public class Tag extends Model
      * @param projectId
      * @param createdAt
      */
-    public Tag(SQLiteDatabase db, Context context, int id, String tag, int projectId, Date createdAt) 
-    {
+    public Tag(SQLiteDatabase db, Context context, int id, String tag, int projectId, Date createdAt) {
         this(context, id, tag, projectId, createdAt);
         this.mDB = db;
     }
@@ -83,8 +78,7 @@ public class Tag extends Model
      * @param context
      * @param cursor
      */
-    public Tag(Context context, Cursor cursor) 
-    {
+    public Tag(Context context, Cursor cursor) {
         this(context,
              cursor.getInt(cursor.getColumnIndex(StoryMakerDB.Schema.Tags.ID)),
              cursor.getString(cursor.getColumnIndex(StoryMakerDB.Schema.Tags.COL_TAG)),
@@ -97,34 +91,29 @@ public class Tag extends Model
     /**
      * Default constructor to inflate record from a cursor via direct db access.  This should be used within DB Migrations and within an Model or Tabel classes
      * @param db
-     * @param context
+     * @param contextt
+     * @param cursor
      */
-    public Tag(SQLiteDatabase db, Context context, Cursor cursor) 
-    {
+    public Tag(SQLiteDatabase db, Context context, Cursor cursor) {
         this(context, cursor);
         this.mDB = db;
     }
     
     @Override
-    protected Table getTable() 
-    {
-        if (mTable == null) 
-        {
+    protected Table getTable() {
+        if (mTable == null) {
             mTable = new TagTable(mDB);
         }
-        
         return mTable;
     }
     
  // build values set from current record
     @Override
-    protected ContentValues getValues() 
-    {
+    protected ContentValues getValues() {
         ContentValues values = new ContentValues();
         values.put(StoryMakerDB.Schema.Tags.COL_TAG, tag);
         values.put(StoryMakerDB.Schema.Tags.COL_PROJECT_ID, projectId);
-        if (createdAt != null) 
-        {
+        if (createdAt != null) {
             values.put(StoryMakerDB.Schema.Tags.COL_CREATED_AT, createdAt.getTime());
         }
         // store dates as longs(8-bit ints)
@@ -135,8 +124,7 @@ public class Tag extends Model
  // insert/update current record
  // need to set created at date
     @Override
-    public void save() 
-    {
+    public void save() {
         Cursor cursor = ((TagTable)getTable()).getSpecificTag(context, tag, projectId);
         if (cursor.getCount() > 0) {
             cursor.close();
@@ -158,48 +146,42 @@ public class Tag extends Model
     /**
      * @return tag
      */
-    public String getTag() 
-    {
+    public String getTag() {
         return tag;
     }
 
     /**
      * @param tag
      */
-    public void setTag(String tag) 
-    {
+    public void setTag(String tag) {
         this.tag = tag;
     }
     
     /**
      * @return projectId
      */
-    public int getProjectId() 
-    {
+    public int getProjectId() {
         return projectId;
     }
 
     /**
      * @param projectId
      */
-    public void setProjectId(int projectId) 
-    {
+    public void setProjectId(int projectId) {
         this.projectId = projectId;
     }
     
     /**
      * @return createdAt
      */
-    public Date getCreatedAt() 
-    {
+    public Date getCreatedAt() {
         return createdAt;
     }
 
     /**
      * @param createdAt
      */
-    public void setCreatedAt(Date createdAt) 
-    {
+    public void setCreatedAt(Date createdAt) {
         this.createdAt = createdAt;
     }
 }

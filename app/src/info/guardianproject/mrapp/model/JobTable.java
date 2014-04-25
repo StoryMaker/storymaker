@@ -1,0 +1,89 @@
+package info.guardianproject.mrapp.model;
+
+import java.util.ArrayList;
+
+import net.sqlcipher.database.SQLiteDatabase;
+import android.content.Context;
+import android.net.Uri;
+import info.guardianproject.mrapp.db.ProjectsProvider;
+import info.guardianproject.mrapp.db.StoryMakerDB;
+
+
+/**
+ * 
+ * @author Josh Steiner <josh@vitriolix.com>
+ *
+ * This is fake table, the real tables are based on the subclasses
+ */
+public class JobTable extends Table {
+    private final String TAG = "JobTable";
+    
+	public final static String TYPE_UPLOAD = "upload";
+	public final static String TYPE_RENDER = "render";
+//	public final static String TYPE_PUBLISH = "publish";
+
+	public JobTable() {
+	    
+	}
+	
+    public JobTable(SQLiteDatabase db) {
+        super(db);
+    }
+	
+    @Override
+    protected String getTableName() {
+        return StoryMakerDB.Schema.Jobs.NAME;
+    }
+    
+    @Override
+    protected String getIDColumnName() {
+        return StoryMakerDB.Schema.Jobs.ID;
+    }
+
+    @Override
+    protected Uri getURI() {
+        return ProjectsProvider.JOBS_CONTENT_URI;
+    }
+
+    @Override
+    protected String getProviderBasePath() {
+        return ProjectsProvider.JOBS_BASE_PATH;
+    }
+
+    public ArrayList<Job> getUnfinishedAsList(Context context, String type) {
+        // FIXME this isn't very optimized
+    	// type can be TYPE_UPLOAD or TYPE_RENDER
+        ArrayList<Job> jobs = (ArrayList<Job>) getAllAsList(context); // TODO need to make this method for reals
+        ArrayList<Job> purgedList = null;
+        if (jobs != null) {
+            for (Job job: jobs) {
+                if ((job.finishedAt == null) && job.getType().equals(type)) { // FIXME do we need to check something other than null?
+//                    jobs.remove(job); // it's finished.  purge it
+                    if (purgedList == null) {
+                        purgedList = new ArrayList<Job>();
+                    }
+                    purgedList.add(job);
+                }
+            }
+        }
+        return purgedList;
+    }
+	
+    // job's are only ready to be run if they have a queuedAt time.  You can enter jobs in the table before they are ready to run
+    public Job getNextUnfinished(Context context, String type) {
+        ArrayList<Job> jobs = getUnfinishedAsList(context, type);
+        if (jobs != null) {
+            return jobs.get(0); // FIXME is the 0th really the next in line ?  is the list sorted by id?
+        } else {
+            return null;
+        }
+        // FIXME this isn't very optimized
+//    	Job newJob = null;
+//    	if (type == JobTable.TYPE_RENDER) {
+//			newJob = new Job(context, 1, 1, JobTable.TYPE_UPLOAD, Auth.SITE_YOUTUBE, null);
+//		} else if ((type == JobTable.TYPE_UPLOAD)) { 		
+//			newJob  = new Job(context, 1, 2, JobTable.TYPE_UPLOAD, Auth.STORYMAKER, null);
+//		}
+//    	return newJob;
+    }
+}
