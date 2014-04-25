@@ -24,15 +24,22 @@ public class AccountsActivity extends BaseActivity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_accounts);
-
-		addChooseAccountFragment();
+		
+		Bundle bundle = null;
+		Intent intent = getIntent();
+		bundle = new Bundle();
+		bundle.putBoolean("isDialog", intent.getBooleanExtra("isDialog", false));
+		bundle.putBoolean("inSelectionMode", intent.getBooleanExtra("inSelectionMode", false));
+		
+		addChooseAccountFragment(bundle);
 	}
 
-	public void addChooseAccountFragment() {
+	public void addChooseAccountFragment(Bundle bundle) {
 		FragmentManager fragManager = getSupportFragmentManager();
 		FragmentTransaction fragTrans = fragManager.beginTransaction();
 		
 		caFragment = new ChooseAccountFragment(); 
+		caFragment.setArguments(bundle);
 		
 		//TODO test data     
 		Auth auth0 = new Auth(this, 0, "Facebook", "facebook.com", "milucas22", "FaKEcreDENTIALS", null, null);
@@ -47,7 +54,7 @@ public class AccountsActivity extends BaseActivity {
 		accounts.add(auth2.convertToPublishAccountObject());
 		accounts.add(auth3.convertToPublishAccountObject());
 		
-		caFragment.setPublishAccountsList(accounts); 
+		caFragment.setPublishAccountsList(accounts);  // FIXME we should probably make AccountInfo parcelable and pass this through the bundle
 		caFragment.setOnPublishEventListener(new OnPublishEventListener() {
 
 			@Override

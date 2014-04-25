@@ -22,7 +22,11 @@ public class Auth extends Model {
     protected Date expires; // long stored in database as 8-bit int; null or 0 means no expiration
     protected Date lastLogin; // long stored in database as 8-bit int; null or 0 means never logged in
     
-    public static final String STORYMAKER = "storymaker";
+    public static final String STORYMAKER = "storymaker"; // FIXME homogenize these and move them to a better place
+    public static final String SITE_YOUTUBE = "youtube";
+    public static final String SITE_SOUNDCLOUD = "soundcloud";
+    public static final String SITE_FACEBOOK = "facebook";
+    public static final String SITE_FLICKR = "flickr";
 
     /**
      * Create a new, blank record via the Content Provider interface
@@ -145,7 +149,7 @@ public class Auth extends Model {
     
     /**
      * 
-     * @return true if Now is passed the expire date for the credentials
+     * @return true if Now is passed the expiry date for the credentials
      */
     public boolean credentialsExpired() {
         if (getExpires() == null) {
@@ -287,9 +291,9 @@ public class Auth extends Model {
         {
             Auth storymakerAuth = new Auth(db,
                                            context,
-                                           -1, // should be set to a real value by insert method
+                                           -1, // should be set to a real value by insert method // FIXME should make a second constructor to clean this up
                                            "StoryMaker.cc",
-                                           "storymaker",
+                                           Auth.STORYMAKER,
                                            user,
                                            pass,
                                            null,
