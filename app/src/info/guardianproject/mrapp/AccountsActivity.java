@@ -36,14 +36,16 @@ public class AccountsActivity extends BaseActivity {
 		
 		//TODO test data     
 		Auth auth0 = new Auth(this, 0, "Facebook", "facebook.com", "milucas22", "FaKEcreDENTIALS", null, null);
-		Auth auth1 = new Auth(this, 1, "Soundcloud", "soundcloud.com", "milucas22", "FaKEcreDENTIALS", null, null);
-		Auth auth2 = new Auth(this, 2, "Youtube", "youtube.com", "milucas22", "FaKEcreDENTIALS", null, null);
+		Auth auth1 = new Auth(this, 1, "Youtube", "youtube.com", "milucas22", "FaKEcreDENTIALS", null, null);
+		Auth auth2 = new Auth(this, 2, "Soundcloud", "soundcloud.com", "milucas22", "FaKEcreDENTIALS", null, null);
+		Auth auth3 = new Auth(this, 2, "Flickr", "flickr.com", "milucas22", "FaKEcreDENTIALS", null, null);
 		
 		List<PublishAccount> accounts = new ArrayList<PublishAccount>();
 		
 		accounts.add(auth0.convertToPublishAccountObject());
 		accounts.add(auth1.convertToPublishAccountObject());
 		accounts.add(auth2.convertToPublishAccountObject());
+		accounts.add(auth3.convertToPublishAccountObject());
 		
 		caFragment.setPublishAccountsList(accounts); 
 		caFragment.setOnPublishEventListener(new OnPublishEventListener() {
