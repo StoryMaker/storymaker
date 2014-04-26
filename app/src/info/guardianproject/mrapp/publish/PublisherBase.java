@@ -10,5 +10,4 @@ public abstract class PublisherBase {
 	public abstract void jobSucceeded(Job job);
 
 	public abstract void jobFailed(Job job);
-
 }

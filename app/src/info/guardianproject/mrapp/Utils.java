@@ -318,4 +318,8 @@ public class Utils {
 			}
 		};
 	}
+    
+    public static boolean stringNotBlank(String string) {
+        return (string != null) && !string.equals("");
+    }
 }

@@ -23,7 +23,7 @@ public class Job extends Model {
     private String type;				// type upload, render and maybe publish
     private String site;				// site key
     private String spec;				// key to a render type spec (video, slideshow, photo, etc) 
-    private String result;				// depending on job and site type, might be a url, a id on the publishing site, etc
+    private String result;				// depending on job and site type, might be a url, a id on the publishing site, a file path, etc
 	protected int errorCode = -1; 		// -1 for never set, 0 for a-ok, positive for error state
 	protected String errorMessage = ""; // error message to show user
 	protected Date queuedAt = null; 	// long stored in database as 8-bit int.  
@@ -117,7 +117,7 @@ public class Job extends Model {
              cursor.getString(cursor.getColumnIndex(StoryMakerDB.Schema.Jobs.COL_TYPE)),
              cursor.getString(cursor.getColumnIndex(StoryMakerDB.Schema.Jobs.COL_SITE)),
              cursor.getString(cursor.getColumnIndex(StoryMakerDB.Schema.Jobs.COL_SPEC)),
-             cursor.getString(cursor.getColumnIndex(StoryMakerDB.Schema.Jobs.COL_SITE)),
+             cursor.getString(cursor.getColumnIndex(StoryMakerDB.Schema.Jobs.COL_RESULT)),
              cursor.getInt(cursor.getColumnIndex(StoryMakerDB.Schema.Jobs.COL_ERROR_CODE)),
              cursor.getString(cursor.getColumnIndex(StoryMakerDB.Schema.Jobs.COL_ERROR_MESSAGE)),
              (!cursor.isNull(cursor.getColumnIndex(StoryMakerDB.Schema.Jobs.COL_QUEUED_AT)) ?

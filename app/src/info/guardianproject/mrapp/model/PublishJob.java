@@ -1,7 +1,9 @@
 package info.guardianproject.mrapp.model;
 
+import info.guardianproject.mrapp.Utils;
 import info.guardianproject.mrapp.db.StoryMakerDB;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 import android.content.ContentValues;
@@ -142,6 +144,80 @@ public class PublishJob extends Model {
         }
         return mTable;
 	}
+    
+    public Cursor getJobsAsCursor() {
+        String selection = StoryMakerDB.Schema.Jobs.COL_PUBLISH_JOB_ID + "=?";
+        String[] selectionArgs = new String[] { "" + id };
+        if (mDB == null) {
+            return context.getContentResolver().query(mTable.getURI(), null, selection, selectionArgs, null);
+        } else {
+            return mDB.query(mTable.getTableName(), null, selection, selectionArgs, null, null, null);
+        }
+    }
+    
+    public Cursor getJobsAsCursor(String type, String site, String spec) {
+        String selection = StoryMakerDB.Schema.Jobs.COL_PUBLISH_JOB_ID + "=?";
+//        String[] selectionArgs = new String[] { "" + id, "" + type };
+        ArrayList<String> selArgs = new ArrayList<String>();
+        selArgs.add("" + id);
+        
+        if (Utils.stringNotBlank(type)) {
+            selection += " and " + StoryMakerDB.Schema.Jobs.COL_TYPE + "=?";
+            selArgs.add("" + type);
+        } else if (Utils.stringNotBlank(site)) {
+            selection += " and " + StoryMakerDB.Schema.Jobs.COL_SITE + "=?";
+            selArgs.add("" + site);
+        } else if (Utils.stringNotBlank(spec)) {
+            selection += " and " + StoryMakerDB.Schema.Jobs.COL_SPEC + "=?";
+            selArgs.add("" + spec);
+        }
+        String[] selectionArgs = selArgs.toArray(new String[] {});
+        if (mDB == null) {
+            return context.getContentResolver().query((new JobTable()).getURI(), null, selection, selectionArgs, null);
+        } else {
+            return mDB.query((new JobTable()).getTableName(), null, selection, selectionArgs, null, null, null);
+        }
+    }
+    
+    public ArrayList<Job> getJobsAsList() {
+        Cursor cursor = getJobsAsCursor();
+        return _cursorToList(cursor);
+    }
+    
+    public ArrayList<Job> getJobsAsList(String type, String site, String spec) {
+        Cursor cursor = getJobsAsCursor(type, site, spec);
+        return _cursorToList(cursor);
+    }
+    
+    private ArrayList<Job> _cursorToList(Cursor cursor) {
+        ArrayList<Job> models = null;
+        Model model = null;
+        models = new ArrayList<Job>();
+        if (cursor.moveToFirst()) {
+            do {
+                model = new Job(mDB, context, cursor);
+                ((ArrayList<Job>)models).add((Job)model);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        return models;
+    }
+    
+    public String[] getRenderedFilePaths() {
+        if (isFinished()) {
+            // FIXME probably should only return finished jobs
+            ArrayList<Job> jobs = getJobsAsList(JobTable.TYPE_RENDER, null, null);
+            String[] paths = new String[jobs.size()];
+            for (int i = 0; i < jobs.size() ; i++) {
+                paths[i] = jobs.get(i).getResult();
+            }
+            return paths;
+        } else {
+            return null;
+        }
+    }
+	
+	// GETTERS AND SETTERS //////
 	
 	public String[] getSiteKeys() {
 		return siteKeys;
@@ -167,6 +243,14 @@ public class PublishJob extends Model {
 	public void setQueuedAt(Date queuedAt) {
 		this.queuedAt = queuedAt;
 	}
+    
+    public void setQueuedAtNow() {
+        setQueuedAt(new Date());
+    }
+    
+    public boolean isQueued() {
+        return queuedAt != null;
+    }
 
 	public Date getFinishedAt() {
 		return finishedAt;
@@ -175,4 +259,12 @@ public class PublishJob extends Model {
 	public void setFinishedAt(Date finished) {
 		this.finishedAt = finished;
 	}
+    
+    public void setFinishedAtNow() {
+        setFinishedAt(new Date());
+    }
+    
+    public boolean isFinished() {
+        return finishedAt != null;
+    }
 }

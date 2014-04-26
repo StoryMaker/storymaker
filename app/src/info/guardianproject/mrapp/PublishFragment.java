@@ -3,7 +3,9 @@ package info.guardianproject.mrapp;
 import info.guardianproject.mrapp.model.Auth;
 import info.guardianproject.mrapp.model.Media;
 import info.guardianproject.mrapp.model.Project;
+import info.guardianproject.mrapp.model.PublishJob;
 import info.guardianproject.mrapp.publish.PublishController;
+import info.guardianproject.mrapp.publish.PublishController.PublishListener;
 import info.guardianproject.mrapp.server.LoginActivity;
 import info.guardianproject.mrapp.server.OAuthAccessTokenActivity;
 import info.guardianproject.mrapp.server.ServerManager;
@@ -59,7 +61,7 @@ import com.animoto.android.views.DraggableGridView;
  * displays dummy text.
  */
 @SuppressLint("ValidFragment")
-public class PublishFragment extends Fragment {
+public class PublishFragment extends Fragment implements PublishListener {
     private final static String TAG = "PublishFragment";
     
     private final static int REQ_SOUNDCLOUD = 777;
@@ -151,14 +153,14 @@ public class PublishFragment extends Fragment {
 				}
 			});
 
-			ImageButton btnRenderingSpinner = (ImageButton) mView.findViewById(R.id.btnRenderingSpinner);
-			btnRenderingSpinner.setOnClickListener(new OnClickListener() {
-				@Override
-				public void onClick(View arg0) {
-					showRenderingSpinner(false);
-					showPlayAndUpload(true);
-				}
-			});
+//			ImageButton btnRenderingSpinner = (ImageButton) mView.findViewById(R.id.btnRenderingSpinner);
+//			btnRenderingSpinner.setOnClickListener(new OnClickListener() {
+//				@Override
+//				public void onClick(View arg0) {
+//					showRenderingSpinner(false);
+//					showPlayAndUpload(true);
+//				}
+//			});
             
             ImageButton btnPlay = (ImageButton) mView.findViewById(R.id.btnPlay);
         	//File fileExport = mActivity.mMPM.getExportMediaFile();
@@ -639,10 +641,23 @@ public class PublishFragment extends Fragment {
 				ArrayList<String> siteKeys = intent.getStringArrayListExtra(ChooseAccountFragment.EXTRAS_ACCOUNT_KEYS);
 				Utils.toastOnUiThread(mActivity, "selected sites: " + siteKeys);
 			}
-			(new PublishController(mActivity)).startPublish(mActivity.mMPM.mProject, new String[] { Auth.STORYMAKER });
+			(new PublishController(mActivity, this)).startPublish(mActivity.mMPM.mProject, new String[] { Auth.STORYMAKER });
 		} else {
 			Log.d("PublishFragment", "Choose Accounts dialog canceled");
 			Utils.toastOnUiThread(mActivity, "Choose Accounts dialog canceled");
 		}
 	}
+
+    @Override
+    public void publishSucceeded(PublishJob publishJob) {
+        String path = publishJob.getRenderedFilePaths()[0];
+        mFileLastExport = new File(path);
+        showPlayAndUpload(true);
+    }
+
+//    @Override
+//    public void publishFailed(PublishJob publishJob) {
+//        // TODO Auto-generated method stub
+//        
+//    }
 }

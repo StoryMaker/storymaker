@@ -27,14 +27,16 @@ public class PublishController {
 	RenderService renderService;
 	PublisherBase publisher;
 	PublishJob publishJob;
+	PublishListener mListener;
 	
-	public PublishController(Activity activity) {
+	public PublishController(Activity activity, PublishListener listener) {
 	    mActivity = activity;
+	    mListener = listener;
 	}
 
-	public static PublishController getInstance(Activity activity) {
+	public static PublishController getInstance(Activity activity, PublishListener listener) {
 		if (publishController == null) {
-			publishController = new PublishController(activity);
+			publishController = new PublishController(activity, listener);
 		}
 		
 		return publishController;
@@ -58,6 +60,10 @@ public class PublishController {
 		getPublisher(publishJob).start();
 		startRenderService();
 		startUploadService();
+	}
+	
+	public void publishJobSucceeded(PublishJob publishJob) {
+		mListener.publishSucceeded(publishJob);
 	}
 	
 	public void jobSucceeded(Job job, String code) {
@@ -91,4 +97,11 @@ public class PublishController {
 			startRenderService();
 		}
 	}
+	
+	public static interface PublishListener {
+	    public void publishSucceeded(PublishJob publishJob);
+	    
+//	    public void publishFailed(PublishJob publishJob);
+	}
+
 }

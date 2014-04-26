@@ -7,6 +7,7 @@ import info.guardianproject.mrapp.model.PublishJob;
 import info.guardianproject.mrapp.publish.PublishController;
 import info.guardianproject.mrapp.publish.PublisherBase;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 import android.content.Context;
@@ -50,6 +51,9 @@ public class StoryMakerPublisher extends PublisherBase {
 		// FIXME we need to mark the job as successful at some point
 		if (newJob != null) {
 			controller.enqueueJob(newJob);
+		} else {
+		    publishJob.setFinishedAtNow();
+		    controller.publishJobSucceeded(publishJob);
 		}
 	}
 	

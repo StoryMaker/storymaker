@@ -119,6 +119,7 @@ public class AuthTable extends Table {
      * @param site
      * @param userName
      */
+    // FIXME this should probably be in the Auth class
     public void updateLastLogin(Context context, String site, String userName) {
         Cursor updCursor = getAsCursor(context, site, userName);
         if ((updCursor.getCount() > 0) && updCursor.moveToFirst()) {
