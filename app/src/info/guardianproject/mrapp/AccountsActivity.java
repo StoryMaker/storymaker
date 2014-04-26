@@ -3,9 +3,11 @@ package info.guardianproject.mrapp;
 
 //import io.scal.secureshareui.lib.ChooseAccountFragment;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import info.guardianproject.mrapp.model.Auth;
+import info.guardianproject.mrapp.model.AuthTable;
 import io.scal.secureshareui.controller.PublishController.OnPublishEventListener;
 import io.scal.secureshareui.lib.ChooseAccountFragment;
 import io.scal.secureshareui.model.PublishAccount;
@@ -41,33 +43,56 @@ public class AccountsActivity extends BaseActivity {
 		FragmentManager fragManager = getSupportFragmentManager();
 		FragmentTransaction fragTrans = fragManager.beginTransaction();
 		
+		List<PublishAccount> accounts = new ArrayList<PublishAccount>();
+		final AuthTable authTable = new AuthTable();
+		String[] siteAvailableNames = PublishAccount.CONTROLLER_SITE_NAMES;
+		String[] siteAvailableKeys = PublishAccount.CONTROLLER_SITE_KEYS;
+		Auth auth;
+		
+		for(int i = 0; i < siteAvailableKeys.length; i++) {
+			auth = authTable.getAuthDefault(this, siteAvailableKeys[i]);
+			
+			if(auth == null) {
+				accounts.add(new PublishAccount(null, siteAvailableNames[i], siteAvailableKeys[i], "", "", false, false));
+			}
+			else {
+				accounts.add(auth.convertToPublishAccountObject());
+			}
+		}
+		
 		caFragment = new ChooseAccountFragment(); 
 		caFragment.setArguments(bundle);
-		
-		//TODO test data     
-		Auth auth0 = new Auth(this, 0, "Facebook", "facebook.com", "milucas22", "FaKEcreDENTIALS", null, null);
-		Auth auth1 = new Auth(this, 1, "Youtube", "youtube.com", "milucas22", "FaKEcreDENTIALS", null, null);
-		Auth auth2 = new Auth(this, 2, "Soundcloud", "soundcloud.com", "milucas22", "FaKEcreDENTIALS", null, null);
-		Auth auth3 = new Auth(this, 2, "Flickr", "flickr.com", "milucas22", "FaKEcreDENTIALS", null, null);
-		
-		List<PublishAccount> accounts = new ArrayList<PublishAccount>();
-		
-		accounts.add(auth0.convertToPublishAccountObject());
-		accounts.add(auth1.convertToPublishAccountObject());
-		accounts.add(auth2.convertToPublishAccountObject());
-		accounts.add(auth3.convertToPublishAccountObject());
-		
 		caFragment.setPublishAccountsList(accounts);  // FIXME we should probably make AccountInfo parcelable and pass this through the bundle
 		caFragment.setOnPublishEventListener(new OnPublishEventListener() {
 
 			@Override
 			public void onSuccess(PublishAccount publishAccount) {
-				Toast.makeText(getApplicationContext(), publishAccount.getName() + ": Login Successful", Toast.LENGTH_SHORT).show();
+				Auth auth = authTable.getAuthDefault(getApplicationContext(), publishAccount.getSite());
+				
+				//if auth doesn't exist in db
+				if(auth == null) {
+					auth = new Auth(getApplicationContext(), -1, publishAccount.getName(), publishAccount.getSite(), "", "", null, null);
+					auth.insert();
+				}
+
+				auth.setCredentials(publishAccount.getCredentials());			
+				auth.setUserName("TODO");
+				auth.setExpires(null);			
+				authTable.updateLastLogin(getApplicationContext(), publishAccount.getSite(), "TODO");	
+				auth.update();
 			}
 
 			@Override
 			public void onFailure(PublishAccount publishAccount, String failureMessage) {
-				Toast.makeText(getApplicationContext(), publishAccount.getName() + ": Login Failure - " + failureMessage , Toast.LENGTH_SHORT).show();
+				Auth auth = authTable.getAuthDefault(getApplicationContext(), publishAccount.getSite());
+
+				if(auth != null) {
+					//TODO set variables here
+					auth.setCredentials(publishAccount.getCredentials());
+					auth.setUserName("");
+					auth.setExpires(new Date());
+					auth.update();
+				}
 			}
 		});
 
