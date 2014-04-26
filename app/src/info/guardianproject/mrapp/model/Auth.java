@@ -307,8 +307,7 @@ public class Auth extends Model {
     }
     
     public PublishAccount convertToPublishAccountObject() {
-//    	return new PublishAccount(Integer.toString(this.id), this.name, this.site, this.userName, this.credentials, this.credentialsExist(), this.credentialsAreValid());
-        return new PublishAccount(Integer.toString(this.id), this.name, this.site, this.userName, this.credentials, true, true);
+    	return new PublishAccount(Integer.toString(this.id), this.name, this.site, this.userName, this.credentials, this.credentialsExist(), this.credentialsAreValid());
     }
 }
     

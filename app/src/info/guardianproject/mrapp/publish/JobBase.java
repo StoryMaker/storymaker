@@ -1,20 +1,25 @@
 package info.guardianproject.mrapp.publish;
 
+import org.holoeverywhere.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import info.guardianproject.mrapp.model.Job;
 
 public class JobBase {
     private final String TAG = "JobBase";
     
-    Context context;
-    ServiceBase service;
-    Job job;
+    protected Activity mActivity;
+    protected ServiceBase mService;
+    protected Job mJob;
+    protected SharedPreferences mSettings; // FIXME rename to mPrefs
     
-    protected JobBase(Context context, ServiceBase service, Job job) {
-        this.context = context;
-        this.service = service; 
-        this.job = job;
+    protected JobBase(Activity activity, ServiceBase service, Job job) {
+        mActivity = activity;
+        mService = service; 
+        mJob = job;
+        mSettings = PreferenceManager.getDefaultSharedPreferences(activity.getApplicationContext());
     }
     
     public void start() {
@@ -24,18 +29,18 @@ public class JobBase {
     
     public void jobSucceeded(String result) {
         Log.d(TAG, "onSuccess: " + result);
-        job.setResult(result);
-        job.setFinishedAtNow();
-        job.save();
-        service.jobSucceeded(job, result);
+        mJob.setResult(result);
+        mJob.setFinishedAtNow();
+        mJob.save();
+        mService.jobSucceeded(mJob, result);
     }
 
     public void jobFailed(int errorCode, String errorMessage) {
         Log.d(TAG, "onFailure: errorCode: " + errorCode + ", with message: " + errorCode);
-        job.setResult(null);
-        job.setErrorCode(errorCode);
-        job.setErrorMessage(errorMessage);
-        job.save();
-        service.jobFailed(job, errorCode, errorMessage);
+        mJob.setResult(null);
+        mJob.setErrorCode(errorCode);
+        mJob.setErrorMessage(errorMessage);
+        mJob.save();
+        mService.jobFailed(mJob, errorCode, errorMessage);
     }
 }

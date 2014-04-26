@@ -28,8 +28,6 @@ public class Job extends Model {
 	protected String errorMessage = ""; // error message to show user
 	protected Date queuedAt = null; 	// long stored in database as 8-bit int.  
     protected Date finishedAt = null; 	// long stored in database as 8-bit int
-    // FIXME rename those last too to ditch job prefix
-    
 
     // CONSTRUCTORS //////
     
@@ -174,9 +172,6 @@ public class Job extends Model {
 	// HELPER METHODS //////
 	
 	public PublishJob getPublishJob() {
-//		if (publishJobId == -1) {
-//			return (PublishJob) this;
-//		}
 		return (PublishJob) (new PublishJobTable(mDB)).get(context, publishJobId);
 	}
 	
@@ -201,8 +196,6 @@ public class Job extends Model {
 	public Date getQueuedAt() {
 		return queuedAt;
 	}
-
-	// TODO This needs to be manually set when a whole batch is ready.  can we do it in a transaction?
 	public void setQueuedAt(Date queuedAt) {
 		this.queuedAt = queuedAt;
 	}

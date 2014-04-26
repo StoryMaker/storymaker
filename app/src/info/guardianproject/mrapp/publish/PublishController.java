@@ -1,17 +1,14 @@
 package info.guardianproject.mrapp.publish;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 
 import info.guardianproject.mrapp.model.Job;
 import info.guardianproject.mrapp.model.JobTable;
 import info.guardianproject.mrapp.model.Project;
-import info.guardianproject.mrapp.model.ProjectTable;
 import info.guardianproject.mrapp.model.PublishJob;
 import info.guardianproject.mrapp.publish.sites.StoryMakerPublisher;
-import android.content.Context;
+import org.holoeverywhere.app.Activity;
 import android.util.Log;
 
 // TODO we need to make sure this will be thread safe since upload and render jobs are on separate threads and could callback in a race here
@@ -25,19 +22,19 @@ public class PublishController {
     private final String TAG = "PublishController";
     
 	private static PublishController publishController = null;
-	private Context context;
+	private Activity mActivity;
 	UploadService uploadService;
 	RenderService renderService;
 	PublisherBase publisher;
 	PublishJob publishJob;
 	
-	public PublishController(Context context) {
-		this.context = context;
+	public PublishController(Activity activity) {
+	    mActivity = activity;
 	}
 
-	public static PublishController getInstance(Context context) {
+	public static PublishController getInstance(Activity activity) {
 		if (publishController == null) {
-			publishController = new PublishController(context);
+			publishController = new PublishController(activity);
 		}
 		
 		return publishController;
@@ -48,7 +45,7 @@ public class PublishController {
 		String[] keys = publishJob.getSiteKeys();
 		List<String> ks = Arrays.asList(keys);
 		if (ks.contains("storymaker")) {
-			publisher = new StoryMakerPublisher(context, this, publishJob);
+			publisher = new StoryMakerPublisher(mActivity, this, publishJob);
 		}
 		// TODO add others
 		
@@ -56,7 +53,7 @@ public class PublishController {
 	}
 	
 	public void startPublish(Project project, String[] siteKeys) {
-		publishJob = new PublishJob(context, -1, project.getId(), siteKeys);
+		publishJob = new PublishJob(mActivity, -1, project.getId(), siteKeys);
 		publishJob.save();
 		getPublisher(publishJob).start();
 		startRenderService();
@@ -76,12 +73,12 @@ public class PublishController {
 	}
 	
 	private void startUploadService() {
-		uploadService = UploadService.getInstance(context, this);
+		uploadService = UploadService.getInstance(mActivity, this);
 		uploadService.start();
 	}
 	
 	private void startRenderService() {
-		renderService = RenderService.getInstance(context, this);
+		renderService = RenderService.getInstance(mActivity, this);
 		renderService.start();
 	}
 	

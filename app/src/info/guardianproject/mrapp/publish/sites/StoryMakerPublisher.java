@@ -6,7 +6,6 @@ import info.guardianproject.mrapp.model.JobTable;
 import info.guardianproject.mrapp.model.PublishJob;
 import info.guardianproject.mrapp.publish.PublishController;
 import info.guardianproject.mrapp.publish.PublisherBase;
-import info.guardianproject.mrapp.publish.VideoRenderer;
 
 import java.util.Date;
 
@@ -48,7 +47,7 @@ public class StoryMakerPublisher extends PublisherBase {
 		} else if ((job.isType(JobTable.TYPE_UPLOAD)) && (job.isSite(Auth.SITE_YOUTUBE))) { 		
 			newJob  = new Job(context, -1, job.getProjectId(), publishJob.getId(), JobTable.TYPE_UPLOAD, Auth.STORYMAKER, null);
 		}
-		
+		// FIXME we need to mark the job as successful at some point
 		if (newJob != null) {
 			controller.enqueueJob(newJob);
 		}

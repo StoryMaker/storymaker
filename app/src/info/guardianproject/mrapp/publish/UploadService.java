@@ -1,34 +1,30 @@
 package info.guardianproject.mrapp.publish;
 
 import info.guardianproject.mrapp.model.Auth;
-import info.guardianproject.mrapp.model.AuthTable;
 import info.guardianproject.mrapp.model.Job;
 import info.guardianproject.mrapp.model.JobTable;
-import info.guardianproject.mrapp.model.Project;
 import info.guardianproject.mrapp.publish.sites.StoryMakerUploader;
 import info.guardianproject.mrapp.publish.sites.YoutubeUploader;
 
-import java.util.ArrayList;
-
+import org.holoeverywhere.app.Activity;
 import android.content.Context;
 import android.util.Log;
-import net.sqlcipher.database.SQLiteDatabase;
 
 public  class UploadService extends ServiceBase {
     private final String TAG = "UploadService";
     
-	private Context context;
+	private Activity mActivity;
 	private PublishController controller;
 	private static UploadService instance = null;
 	
-	private UploadService(Context context, PublishController controller) {
-        this.context = context;
+	private UploadService(Activity activity, PublishController controller) {
+        mActivity = activity;
         this.controller = controller;
     }
 	
-	public static UploadService getInstance(Context context, PublishController controller) {
+	public static UploadService getInstance(Activity activity, PublishController controller) {
 		if (instance == null) {
-			instance = new UploadService(context, controller);
+			instance = new UploadService(activity, controller);
 		}
 		return instance;
 	}
@@ -36,13 +32,13 @@ public  class UploadService extends ServiceBase {
 	public void start() {
 		// TODO guard against multiple calls if we are running already
 //		ArrayList<Job> jobs = (ArrayList<Job>) (new JobTable(db)).getUnfinishedAsList(context, JobTable.TYPE_UPLOAD);
-		Job job = (new JobTable(null)).getNextUnfinished(context, JobTable.TYPE_UPLOAD);
+		Job job = (new JobTable(null)).getNextUnfinished(mActivity, JobTable.TYPE_UPLOAD);
 		UploaderBase uploader = null;
 		if (job != null) {
     		if (job.isSite(Auth.SITE_YOUTUBE)) {
-    			uploader = new YoutubeUploader(context, this, job);
+    			uploader = new YoutubeUploader(mActivity, this, job);
     		} else if (job.isSite(Auth.STORYMAKER)) {
-    			uploader = new StoryMakerUploader(context, this, job);
+    			uploader = new StoryMakerUploader(mActivity, this, job);
     		} 
     		uploader.start();
 		}

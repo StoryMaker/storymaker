@@ -116,8 +116,6 @@ public class PublishJob extends Model {
 
             for (String n : strings) {
                 nameBuilder.append("'").append(n.replaceAll("'", "\\\\'")).append("',");
-                // can also do the following
-                // nameBuilder.append("'").append(n.replaceAll("'", "''")).append("',");
             }
 
             nameBuilder.deleteCharAt(nameBuilder.length() - 1);
@@ -165,6 +163,7 @@ public class PublishJob extends Model {
 		return queuedAt;
 	}
 
+    // TODO This needs to be manually set when a whole batch is ready and be set for Job's attached to this in a transaction
 	public void setQueuedAt(Date queuedAt) {
 		this.queuedAt = queuedAt;
 	}

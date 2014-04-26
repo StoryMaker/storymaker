@@ -68,29 +68,27 @@ public class MediaProjectManager implements MediaManager {
 	
 	private static boolean mUseInternal = false;
 	
-    public MediaProjectManager (Activity activity, Context context, Intent intent, Handler handler, int pid) {
-        this(activity, context, intent, handler, (Project)(new ProjectTable()).get(context, pid)); // FIXME ugly
+    public MediaProjectManager (Activity activity, Context context, Handler handler, int projectId) {
+        this(activity, context, handler, (Project)(new ProjectTable()).get(context, projectId)); // FIXME ugly
     }
     
-    public MediaProjectManager (Activity activity, Context context, Intent intent, Handler handler, Project project) {
-        this(activity, context, intent, handler, project, null);
+    public MediaProjectManager (Activity activity, Context context, Handler handler, Project project) {
+        this(activity, context, handler, project, null);
     }
     
-    public MediaProjectManager (Activity activity, Context context, Intent intent, Handler handler, Project project, Scene scene) {
+    public MediaProjectManager(Activity activity, Context context, Handler handler, Project project, Scene scene) {
         mActivity = activity;
         mContext = context;
         mHandler = handler;
-        
         mProject = project;
+
         if (scene == null) {
             mScene = project.getScenesAsArray()[0];
         } else {
             mScene = scene;
         }
-        
 
         mSettings = PreferenceManager.getDefaultSharedPreferences(mContext.getApplicationContext());
-
     }
     
     public void initProject()

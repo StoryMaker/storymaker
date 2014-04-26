@@ -73,7 +73,7 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
             if ((mSceneIndex != -1) && (mSceneIndex < mProject.getScenesAsArray().length)) {
                 scene = mProject.getScenesAsArray()[mSceneIndex];
             }
-            mMPM = new MediaProjectManager(this, getApplicationContext(), getIntent(), mHandlerPub, mProject, scene);
+            mMPM = new MediaProjectManager(this, getApplicationContext(), mHandlerPub, mProject, scene);
             mMPM.initProject();
             mMPM.addAllProjectMediaToEditor();
         }
@@ -86,7 +86,7 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
             mProject = new Project(getApplicationContext(), clipCount);
             mProject.setTitle(title);
             mProject.save();
-            mMPM = new MediaProjectManager(this, getApplicationContext(), getIntent(), mHandlerPub, mProject);
+            mMPM = new MediaProjectManager(this, getApplicationContext(), mHandlerPub, mProject);
             mMPM.initProject();
         }
         

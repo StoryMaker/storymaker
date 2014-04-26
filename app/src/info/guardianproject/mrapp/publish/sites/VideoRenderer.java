@@ -1,0 +1,76 @@
+package info.guardianproject.mrapp.publish.sites;
+
+import java.io.File;
+
+import info.guardianproject.mrapp.media.MediaProjectManager;
+import info.guardianproject.mrapp.model.Job;
+import info.guardianproject.mrapp.publish.RenderService;
+import info.guardianproject.mrapp.publish.RendererBase;
+
+import org.ffmpeg.android.MediaDesc;
+import org.holoeverywhere.app.Activity;
+import android.content.Context;
+import android.os.Handler;
+import android.os.Message;
+
+public class VideoRenderer extends RendererBase {
+    private final String TAG = "VideoRenderer";
+	public static String SPEC_KEY = "video";
+	private MediaProjectManager mMPM;
+	
+	public VideoRenderer(Activity activity, RenderService service, Job job) {
+		super(activity, service, job);
+        Handler handler = new Handler() {
+
+            @Override
+            public void dispatchMessage(Message msg) {
+                // TODO Auto-generated method stub
+                super.dispatchMessage(msg);
+            }
+
+            @Override
+            public String getMessageName(Message message) {
+                // TODO Auto-generated method stub
+                return super.getMessageName(message);
+            }
+
+            @Override
+            public void handleMessage(Message msg) {
+                // TODO Auto-generated method stub
+                super.handleMessage(msg);
+            }
+
+            @Override
+            public boolean sendMessageAtTime(Message msg, long uptimeMillis) {
+                // TODO Auto-generated method stub
+                return super.sendMessageAtTime(msg, uptimeMillis);
+            }
+
+            
+        }; // FIXME we need to use this to communicate back with the activity
+        mMPM = new MediaProjectManager(mActivity, mActivity.getBaseContext(), handler, mJob.getProjectId());
+	}
+
+    @Override
+    public void start() {
+        // TODO Auto-generated method stub
+        super.start();
+        renderVideo();
+    }
+	
+    private void renderVideo() {
+        File mFileLastExport = mMPM.getExportMediaFile();
+        boolean compress = mSettings.getBoolean("pcompress", false);// compress
+        boolean doOverwrite = true;
+        try {
+            mMPM.doExportMedia(mFileLastExport, compress, doOverwrite);
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+            jobFailed(0, e.getMessage());
+        }
+        MediaDesc mdExported = mMPM.getExportMedia();
+//        File mediaFile = new File(mdExported.path);
+        jobSucceeded(mdExported.path);
+    }
+}

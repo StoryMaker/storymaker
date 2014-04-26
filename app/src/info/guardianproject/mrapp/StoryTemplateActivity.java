@@ -42,7 +42,7 @@ public class StoryTemplateActivity extends EditorBaseActivity implements ActionB
         Intent intent = getIntent();
         mTemplateJsonPath = getIntent().getStringExtra("template_path"); 
         int pid = intent.getIntExtra("pid", -1); //project id
-        mMPM = new MediaProjectManager(this, this, getIntent(), mHandlerPub, pid);
+        mMPM = new MediaProjectManager(this, this, mHandlerPub, pid);
         mMPM.initProject();
         // Create the adapter that will return a fragment for each of the three primary sections
         // of the app.
