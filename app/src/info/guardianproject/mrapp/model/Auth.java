@@ -136,8 +136,8 @@ public class Auth extends Model {
      * @return true if credentials exist
      */
     public boolean credentialsExist() {
-        return ((!(getUserName() == null) || getUserName() == "") 
-                && (!(getCredentials() == null) || getCredentials() == ""));
+        return (!((getUserName() == null) || getUserName().equals("")) 
+                && !((getCredentials() == null) || getCredentials().equals("")));
     }
     
     /**
