@@ -309,5 +309,7 @@ Build number: <xliff:g id="build_number">%s</xliff:g>\n</string>
     <string name="title_activity_project_tag_fragment">ProjectTagFragment</string>
     <string name="title_activity_connect_account">StoryMaker Account</string>
     <string name="hint_no_description">No description.</string>
+    <string name="trim_clips">Trim Clips</string>
+    <string name="info">Info</string>
 
 </resources>

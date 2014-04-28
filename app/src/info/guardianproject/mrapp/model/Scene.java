@@ -17,7 +17,7 @@ public class Scene extends Model {
     protected String title;
     protected String thumbnailPath;
     protected int projectIndex; // position this scene is in the project
-    protected int projectId; // foreign key to the Scene which holds this media
+    protected int projectId; // foreign key to the Project which holds this scene
     protected Date createdAt; // long stored in database as 8-bit int
     protected Date updatedAt; // long stored in database as 8-bit int
     

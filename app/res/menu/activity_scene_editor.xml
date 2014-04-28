@@ -1,11 +1,45 @@
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:id="@+id/itemTrim" android:orderInCategory="1" android:icon="@drawable/ic_action_trim" android:visible="false" android:titleCondensed="Trim" android:title="Trim Clips" android:showAsAction="always"></item>
-    <item android:id="@+id/itemInfo" android:title="Info" android:visible="true" android:orderInCategory="2" android:showAsAction="always" android:icon="@drawable/ic_action_info"></item>
-     <item android:id="@+id/addFromGallery" android:showAsAction="never" android:visible="true" android:title="@string/menu_add_from_gallery"></item>
-     <item android:id="@+id/addNewShot" android:showAsAction="never" android:visible="true" android:title="@string/menu_add_new_shot"></item>
-     <item android:id="@+id/delShot" android:showAsAction="never" android:visible="true" android:title="@string/menu_del_shot"></item>
-     <item android:id="@+id/exportProjectFiles" android:showAsAction="never" android:visible="true" android:title="@string/menu_export_project_files"></item>
-     
-     
-     
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item
+        android:id="@+id/itemTrim"
+        android:icon="@drawable/ic_action_trim"
+        android:orderInCategory="1"
+        android:showAsAction="always"
+        android:title="@string/trim_clips"
+        android:titleCondensed="Trim"
+        android:visible="false">
+    </item>
+    <item
+        android:id="@+id/itemInfo"
+        android:icon="@drawable/ic_action_info"
+        android:orderInCategory="2"
+        android:showAsAction="always"
+        android:title="@string/info"
+        android:visible="true">
+    </item>
+    <item
+        android:id="@+id/addFromGallery"
+        android:showAsAction="never"
+        android:title="@string/menu_add_from_gallery"
+        android:visible="true">
+    </item>
+    <item
+        android:id="@+id/addNewShot"
+        android:showAsAction="never"
+        android:title="@string/menu_add_new_shot"
+        android:visible="true">
+    </item>
+    <item
+        android:id="@+id/delShot"
+        android:showAsAction="never"
+        android:title="@string/menu_del_shot"
+        android:visible="true">
+    </item>
+    <item
+        android:id="@+id/exportProjectFiles"
+        android:showAsAction="never"
+        android:title="@string/menu_export_project_files"
+        android:visible="true">
+    </item>
+
 </menu>

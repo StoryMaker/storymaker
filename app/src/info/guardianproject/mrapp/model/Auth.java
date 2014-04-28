@@ -1,6 +1,5 @@
 package info.guardianproject.mrapp.model;
 
-import info.guardianproject.mrapp.AppConstants;
 import info.guardianproject.mrapp.db.StoryMakerDB;
 import io.scal.secureshareui.model.PublishAccount;
 
@@ -12,7 +11,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.preference.PreferenceManager;
-import android.util.Log;
 
 public class Auth extends Model {
     private static final String TAG = "Auth";
@@ -24,7 +22,11 @@ public class Auth extends Model {
     protected Date expires; // long stored in database as 8-bit int; null or 0 means no expiration
     protected Date lastLogin; // long stored in database as 8-bit int; null or 0 means never logged in
     
-    public static final String STORYMAKER = "storymaker";
+    public static final String STORYMAKER = "storymaker"; // FIXME homogenize these and move them to a better place
+    public static final String SITE_YOUTUBE = "youtube";
+    public static final String SITE_SOUNDCLOUD = "soundcloud";
+    public static final String SITE_FACEBOOK = "facebook";
+    public static final String SITE_FLICKR = "flickr";
 
     /**
      * Create a new, blank record via the Content Provider interface
@@ -131,12 +133,18 @@ public class Auth extends Model {
     }
     
     /**
-     * @return true if credentials exist and are not passed their expiry date
+     * @return true if credentials exist
+     */
+    public boolean credentialsExist() {
+        return ((!(getUserName() == null) || getUserName() == "") 
+                && (!(getCredentials() == null) || getCredentials() == ""));
+    }
+    
+    /**
+     * @return true if credentials exist and are not passed their expire date
      */
     public boolean credentialsAreValid() {
-        return ((!(getUserName() == null) || getUserName() == "") 
-                && (!(getCredentials() == null) || getCredentials() == "") 
-                && !credentialsExpired());
+        return (credentialsExist() && !credentialsExpired());
     }
     
     /**
@@ -283,9 +291,9 @@ public class Auth extends Model {
         {
             Auth storymakerAuth = new Auth(db,
                                            context,
-                                           -1, // should be set to a real value by insert method
+                                           -1, // should be set to a real value by insert method // FIXME should make a second constructor to clean this up
                                            "StoryMaker.cc",
-                                           "storymaker",
+                                           Auth.STORYMAKER,
                                            user,
                                            pass,
                                            null,
@@ -298,7 +306,7 @@ public class Auth extends Model {
     }
     
     public PublishAccount convertToPublishAccountObject() {
-    	return new PublishAccount(Integer.toString(this.id), this.name, this.site, this.userName, this.credentials, false);
+    	return new PublishAccount(Integer.toString(this.id), this.name, this.site, this.userName, this.credentials, this.credentialsExist(), this.credentialsAreValid());
     }
 }
     
