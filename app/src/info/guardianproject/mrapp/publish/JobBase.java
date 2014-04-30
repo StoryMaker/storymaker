@@ -10,16 +10,16 @@ import info.guardianproject.mrapp.model.Job;
 public class JobBase {
     private final String TAG = "JobBase";
     
-    protected Activity mActivity;
+    protected Context mContext;
     protected ServiceBase mService;
     protected Job mJob;
     protected SharedPreferences mSettings; // FIXME rename to mPrefs
     
-    protected JobBase(Activity activity, ServiceBase service, Job job) {
-        mActivity = activity;
+    protected JobBase(Context context, ServiceBase service, Job job) {
+        mContext = context;
         mService = service; 
         mJob = job;
-        mSettings = PreferenceManager.getDefaultSharedPreferences(activity.getApplicationContext());
+        mSettings = PreferenceManager.getDefaultSharedPreferences(mContext);
     }
     
     public void start() {

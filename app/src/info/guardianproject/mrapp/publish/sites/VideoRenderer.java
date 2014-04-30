@@ -18,8 +18,8 @@ public class VideoRenderer extends RendererBase {
 	public static String SPEC_KEY = "video";
 	private MediaProjectManager mMPM;
 	
-	public VideoRenderer(Activity activity, RenderService service, Job job) {
-		super(activity, service, job);
+	public VideoRenderer(Context context, RenderService service, Job job) {
+		super(context, service, job);
         Handler handler = new Handler() {
 
             @Override
@@ -48,7 +48,7 @@ public class VideoRenderer extends RendererBase {
 
             
         }; // FIXME we need to use this to communicate back with the activity
-        mMPM = new MediaProjectManager(mActivity, mActivity.getBaseContext(), handler, mJob.getProjectId());
+        mMPM = new MediaProjectManager(null, mContext, handler, mJob.getProjectId());
 	}
 
     @Override
