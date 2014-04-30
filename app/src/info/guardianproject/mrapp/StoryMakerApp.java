@@ -85,7 +85,7 @@ public class StoryMakerApp extends Application {
 			
 			initServerUrls(this);
 	
-			killZombieProcs ();
+			Utils.Proc.killZombieProcs(this);
 			
 		    SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 		    String customLessonLoc = settings.getString("plessonloc", null);
@@ -132,28 +132,6 @@ public class StoryMakerApp extends Application {
             getResources().updateConfiguration(config, getResources().getDisplayMetrics());
         }
     }
-	
-	public void killZombieProcs () throws Exception
-	{
-		int killDelayMs = 300;
-    	
-		int procId = -1;
-		
-		File fileCmd = new File(getDir("bin", Context.MODE_WORLD_READABLE),"ffmpeg");
-		
-		while ((procId = findProcessId(fileCmd.getAbsolutePath())) != -1)
-		{
-			
-			Log.w(AppConstants.TAG,"Found Tor PID=" + procId + " - killing now...");
-			
-			String[] cmd = { SHELL_CMD_KILL + ' ' + procId + "" };
-			StringBuilder log = new StringBuilder();
-			doShellCommand(cmd,log, false, false);
-			try { Thread.sleep(killDelayMs); }
-			catch (Exception e){}
-		}
-
-	}
 
 	public void updateLocale (String newLocale)
 	{
@@ -166,28 +144,6 @@ public class StoryMakerApp extends Application {
         //need to reload lesson manager for new locale
         initServerUrls(this);
 
-	}
-	
-	public boolean isExternalStorageReady ()
-	{
-		boolean mExternalStorageAvailable = false;
-		boolean mExternalStorageWriteable = false;
-		String state = Environment.getExternalStorageState();
-
-		if (Environment.MEDIA_MOUNTED.equals(state)) {
-		    // We can read and write the media
-		    mExternalStorageAvailable = mExternalStorageWriteable = true;
-		} else if (Environment.MEDIA_MOUNTED_READ_ONLY.equals(state)) {
-		    // We can only read the media
-		    mExternalStorageAvailable = true;
-		    mExternalStorageWriteable = false;
-		} else {
-		    // Something else is wrong. It may be one of many other states, but all we need
-		    //  to know is we can neither read nor write
-		    mExternalStorageAvailable = mExternalStorageWriteable = false;
-		}
-		
-		return mExternalStorageAvailable && mExternalStorageWriteable;
 	}
 	
 	public static Locale getCurrentLocale ()
@@ -270,7 +226,7 @@ public class StoryMakerApp extends Application {
 			if (fileSU.exists())
 			{
 				String[] cmd = {"su"};
-				int exitCode = doShellCommand(cmd, log, false, true);
+				int exitCode = Utils.Proc.doShellCommand(cmd, log, false, true);
 				if (exitCode != 0)
 					return false;
 				else
@@ -279,7 +235,7 @@ public class StoryMakerApp extends Application {
 			
 			//Check for 'su' binary 
 			String[] cmd = {"which su"};
-			int exitCode = doShellCommand(cmd, log, false, true);
+			int exitCode = Utils.Proc.doShellCommand(cmd, log, false, true);
 			
 			if (exitCode == 0) {
 				Log.d(AppConstants.TAG,"root exists, but not sure about permissions");
@@ -304,158 +260,7 @@ public class StoryMakerApp extends Application {
 	}
 	
 	
-	public static int findProcessId(String command) 
-	{
-		int procId = -1;
-		
-		try
-		{
-			procId = findProcessIdWithPidOf(command);
-			
-			if (procId == -1)
-				procId = findProcessIdWithPS(command);
-		}
-		catch (Exception e)
-		{
-			try
-			{
-				procId = findProcessIdWithPS(command);
-			}
-			catch (Exception e2)
-			{
-				Log.w(AppConstants.TAG,"Unable to get proc id for: " + command,e2);
-			}
-		}
-		
-		return procId;
-	}
 	
-	//use 'pidof' command
-	public static int findProcessIdWithPidOf(String command) throws Exception
-	{
-		
-		int procId = -1;
-		
-		Runtime r = Runtime.getRuntime();
-		    	
-		Process procPs = null;
-		
-		String baseName = new File(command).getName();
-		//fix contributed my mikos on 2010.12.10
-		procPs = r.exec(new String[] {SHELL_CMD_PIDOF, baseName});
-        //procPs = r.exec(SHELL_CMD_PIDOF);
-            
-        BufferedReader reader = new BufferedReader(new InputStreamReader(procPs.getInputStream()));
-        String line = null;
-
-        while ((line = reader.readLine())!=null)
-        {
-        
-        	try
-        	{
-        		//this line should just be the process id
-        		procId = Integer.parseInt(line.trim());
-        		break;
-        	}
-        	catch (NumberFormatException e)
-        	{
-        		Log.e("TorServiceUtils","unable to parse process pid: " + line,e);
-        	}
-        }
-            
-       
-        return procId;
-
-	}
-	
-	//use 'ps' command
-	public static int findProcessIdWithPS(String command) throws Exception
-	{
-		
-		int procId = -1;
-		
-		Runtime r = Runtime.getRuntime();
-		    	
-		Process procPs = null;
-		
-        procPs = r.exec(SHELL_CMD_PS);
-            
-        BufferedReader reader = new BufferedReader(new InputStreamReader(procPs.getInputStream()));
-        String line = null;
-        
-        while ((line = reader.readLine())!=null)
-        {
-        	if (line.indexOf(' ' + command)!=-1)
-        	{
-        		
-        		StringTokenizer st = new StringTokenizer(line," ");
-        		st.nextToken(); //proc owner
-        		
-        		procId = Integer.parseInt(st.nextToken().trim());
-        		
-        		break;
-        	}
-        }
-        
-       
-        
-        return procId;
-
-	}
-	
-	
-	public static int doShellCommand(String[] cmds, StringBuilder log, boolean runAsRoot, boolean waitFor) throws Exception
-	{
-		
-		Process proc = null;
-		int exitCode = -1;
-		
-    	if (runAsRoot)
-    		proc = Runtime.getRuntime().exec("su");
-    	else
-    		proc = Runtime.getRuntime().exec("sh");
-    
-    	OutputStreamWriter out = new OutputStreamWriter(proc.getOutputStream());
-        
-        for (int i = 0; i < cmds.length; i++)
-        {
-        //	TorService.logMessage("executing shell cmd: " + cmds[i] + "; runAsRoot=" + runAsRoot + ";waitFor=" + waitFor);
-    		
-        	out.write(cmds[i]);
-        	out.write("\n");
-        }
-        
-        out.flush();
-		out.write("exit\n");
-		out.flush();
-	
-		if (waitFor)
-		{
-			
-			final char buf[] = new char[10];
-			
-			// Consume the "stdout"
-			InputStreamReader reader = new InputStreamReader(proc.getInputStream());
-			int read=0;
-			while ((read=reader.read(buf)) != -1) {
-				if (log != null) log.append(buf, 0, read);
-			}
-			
-			// Consume the "stderr"
-			reader = new InputStreamReader(proc.getErrorStream());
-			read=0;
-			while ((read=reader.read(buf)) != -1) {
-				if (log != null) log.append(buf, 0, read);
-			}
-			
-			exitCode = proc.waitFor();
-			
-		}
-        
-        
-        return exitCode;
-
-	}
 	
 	@Override
 	public void onLowMemory() {
@@ -470,44 +275,36 @@ public class StoryMakerApp extends Application {
 		
 	}
 
-	@Override
-	public void onTerminate() {
-		super.onTerminate();
-		
-		clearRenderTmpFolders(getApplicationContext());
-	}
+    @Override
+    public void onTerminate() {
+        super.onTerminate();
 
-	public void clearRenderTmpFolders (Context context)
-	{
-		try
-		{
-		 File fileRenderTmpDir = MediaProjectManager.getRenderPath(context);
-		// deleteRecursive(fileRenderTmpDir,false);
-		 Runtime.getRuntime().exec("rm -rf " + fileRenderTmpDir.getCanonicalPath());
-		}
-		catch (IOException ioe)
-		{
-			Log.w(AppConstants.TAG,"error deleting render tmp on exit",ioe);
-		}
-	}
+        clearRenderTmpFolders(getApplicationContext());
+    }
+
+    public void clearRenderTmpFolders(Context context) {
+        try {
+            File fileRenderTmpDir = MediaProjectManager.getRenderPath(context);
+            // deleteRecursive(fileRenderTmpDir,false);
+            Runtime.getRuntime().exec("rm -rf " + fileRenderTmpDir.getCanonicalPath());
+        } catch (IOException ioe) {
+            Log.w(AppConstants.TAG, "error deleting render tmp on exit", ioe);
+        }
+    }
 	
-	 void deleteRecursive(File fileOrDirectory, boolean onExit) throws IOException {
-	        if (fileOrDirectory.isDirectory())
-	            for (File child : fileOrDirectory.listFiles())
-	            	deleteRecursive(child, onExit);
+    void deleteRecursive(File fileOrDirectory, boolean onExit) throws IOException {
+        if (fileOrDirectory.isDirectory()) {
+            for (File child : fileOrDirectory.listFiles()) {
+                deleteRecursive(child, onExit);
+            }
+        }
 
-	        if (!onExit)
-	        {
-	        	fileOrDirectory.delete();
-	        }
-	        else
-	        	fileOrDirectory.deleteOnExit();
-	    }
+        if (!onExit) {
+            fileOrDirectory.delete();
+        }
+        else {
+            fileOrDirectory.deleteOnExit();
+        }
+    }
 
-	//various console cmds
-	public final static String SHELL_CMD_CHMOD = "chmod";
-	public final static String SHELL_CMD_KILL = "kill -9";
-	public final static String SHELL_CMD_RM = "rm";
-	public final static String SHELL_CMD_PS = "ps";
-	public final static String SHELL_CMD_PIDOF = "pidof";
 }

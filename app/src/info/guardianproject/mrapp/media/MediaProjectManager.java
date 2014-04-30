@@ -296,9 +296,7 @@ public class MediaProjectManager implements MediaManager {
          ArrayList<Media> mList = mProject.getMediaAsList();
          ArrayList<MediaDesc> alMediaIn = new ArrayList<MediaDesc>();
 
-         //is storage ready
-         ((StoryMakerApp)mActivity.getApplication()).isExternalStorageReady();
-         ((StoryMakerApp)mActivity.getApplication()).killZombieProcs();
+         Utils.Proc.killZombieProcs(mContext);
 
          //if not enough space
          if(!checkStorageSpace())

@@ -99,7 +99,7 @@ public class HomeActivity extends BaseActivity {
 		
 		new getAsynctask().execute("");
 		
-		boolean isExternalStorageReady = ((StoryMakerApp)getApplication()).isExternalStorageReady();
+		boolean isExternalStorageReady = Utils.Files.isExternalStorageReady();
 		
 		if (!isExternalStorageReady)
 		{
