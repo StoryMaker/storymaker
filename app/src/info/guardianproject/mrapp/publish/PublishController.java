@@ -9,6 +9,8 @@ import info.guardianproject.mrapp.model.Project;
 import info.guardianproject.mrapp.model.PublishJob;
 import info.guardianproject.mrapp.publish.sites.StoryMakerPublisher;
 import org.holoeverywhere.app.Activity;
+
+import android.content.Context;
 import android.util.Log;
 
 // TODO we need to make sure this will be thread safe since upload and render jobs are on separate threads and could callback in a race here
@@ -22,15 +24,15 @@ public class PublishController {
     private final String TAG = "PublishController";
     
 	private static PublishController publishController = null;
-	private Activity mActivity;
+	private Context mContext;
 	UploadService uploadService;
 	RenderService renderService;
 	PublisherBase publisher;
 	PublishJob publishJob;
 	PublishListener mListener;
 	
-	public PublishController(Activity activity, PublishListener listener) {
-	    mActivity = activity;
+	public PublishController(Context context, PublishListener listener) {
+	    mContext = context;
 	    mListener = listener;
 	}
 
@@ -47,7 +49,7 @@ public class PublishController {
 		String[] keys = publishJob.getSiteKeys();
 		List<String> ks = Arrays.asList(keys);
 		if (ks.contains("storymaker")) {
-			publisher = new StoryMakerPublisher(mActivity, this, publishJob);
+			publisher = new StoryMakerPublisher(mContext, this, publishJob);
 		}
 		// TODO add others
 		
@@ -55,7 +57,7 @@ public class PublishController {
 	}
 	
 	public void startPublish(Project project, String[] siteKeys) {
-		publishJob = new PublishJob(mActivity, -1, project.getId(), siteKeys);
+		publishJob = new PublishJob(mContext, -1, project.getId(), siteKeys);
 		publishJob.save();
 		getPublisher(publishJob).start();
 		startRenderService();
@@ -79,12 +81,12 @@ public class PublishController {
 	}
 	
 	private void startUploadService() {
-		uploadService = UploadService.getInstance(mActivity, this);
+		uploadService = UploadService.getInstance(mContext, this);
 		uploadService.start();
 	}
 	
 	private void startRenderService() {
-		renderService = RenderService.getInstance(mActivity, this);
+		renderService = RenderService.getInstance(mContext, this);
 		renderService.start();
 	}
 	

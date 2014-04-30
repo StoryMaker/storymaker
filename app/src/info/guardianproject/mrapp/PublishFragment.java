@@ -659,8 +659,8 @@ public class PublishFragment extends Fragment implements PublishListener {
         handlerTimer.postDelayed(new Runnable(){
             public void run() {
                 showPlayAndUpload(true);
-            }}, 200);
-        
+            }
+        }, 200);
     }
 
 //    @Override

@@ -13,18 +13,17 @@ import android.util.Log;
 public  class UploadService extends ServiceBase {
     private final String TAG = "UploadService";
     
-	private Activity mActivity;
 	private PublishController controller;
 	private static UploadService instance = null;
 	
-	private UploadService(Activity activity, PublishController controller) {
-        mActivity = activity;
+	private UploadService(Context context, PublishController controller) {
+	    mContext = context;
         this.controller = controller;
     }
 	
-	public static UploadService getInstance(Activity activity, PublishController controller) {
+	public static UploadService getInstance(Context context, PublishController controller) {
 		if (instance == null) {
-			instance = new UploadService(activity, controller);
+			instance = new UploadService(context, controller);
 		}
 		return instance;
 	}
@@ -32,13 +31,13 @@ public  class UploadService extends ServiceBase {
 	public void start() {
 		// TODO guard against multiple calls if we are running already
 //		ArrayList<Job> jobs = (ArrayList<Job>) (new JobTable(db)).getUnfinishedAsList(context, JobTable.TYPE_UPLOAD);
-		Job job = (new JobTable(null)).getNextUnfinished(mActivity, JobTable.TYPE_UPLOAD);
+		Job job = (new JobTable(null)).getNextUnfinished(mContext, JobTable.TYPE_UPLOAD);
 		UploaderBase uploader = null;
 		if (job != null) {
     		if (job.isSite(Auth.SITE_YOUTUBE)) {
-    			uploader = new YoutubeUploader(mActivity, this, job);
+    			uploader = new YoutubeUploader(mContext, this, job);
     		} else if (job.isSite(Auth.STORYMAKER)) {
-    			uploader = new StoryMakerUploader(mActivity, this, job);
+    			uploader = new StoryMakerUploader(mContext, this, job);
     		} 
     		uploader.start();
 		}
