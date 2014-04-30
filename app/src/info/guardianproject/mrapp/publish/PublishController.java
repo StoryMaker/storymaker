@@ -25,8 +25,8 @@ public class PublishController {
     
 	private static PublishController publishController = null;
 	private Context mContext;
-	UploadService uploadService;
-	RenderService renderService;
+	UploadWorker uploadService;
+	RenderWorker renderService;
 	PublisherBase publisher;
 	PublishJob publishJob;
 	PublishListener mListener;
@@ -59,9 +59,13 @@ public class PublishController {
 	public void startPublish(Project project, String[] siteKeys) {
 		publishJob = new PublishJob(mContext, -1, project.getId(), siteKeys);
 		publishJob.save();
-		getPublisher(publishJob).start();
-		startRenderService();
-		startUploadService();
+		PublisherBase publisher = getPublisher(publishJob);
+		// TODO this needs to loop a few times until publisher start returns false or something to tell us that the publish job is totally finished
+		if (publisher != null) {
+    		publisher.start();
+    		startRenderService();
+    		startUploadService();
+		}
 	}
 	
 	public void publishJobSucceeded(PublishJob publishJob) {
@@ -81,12 +85,12 @@ public class PublishController {
 	}
 	
 	private void startUploadService() {
-		uploadService = UploadService.getInstance(mContext, this);
+		uploadService = UploadWorker.getInstance(mContext, this);
 		uploadService.start();
 	}
 	
 	private void startRenderService() {
-		renderService = RenderService.getInstance(mContext, this);
+		renderService = RenderWorker.getInstance(mContext, this);
 		renderService.start();
 	}
 	

@@ -9,7 +9,7 @@ import android.content.Context;
 public class RendererBase extends JobBase {
     private final String TAG = "RendererBase";
     
-    protected RendererBase(Context context, ServiceBase service, Job job) {
+    protected RendererBase(Context context, WorkerBase service, Job job) {
         super(context, service, job);
         // TODO Auto-generated constructor stub
     }

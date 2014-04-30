@@ -9,20 +9,20 @@ import org.holoeverywhere.app.Activity;
 import android.content.Context;
 import android.util.Log;
 
-public class RenderService extends ServiceBase {
+public class RenderWorker extends WorkerBase {
     private final String TAG = "RenderService";
     
 	private PublishController mController;
-	private static RenderService instance = null;
+	private static RenderWorker instance = null;
 	
-	private RenderService(Context context, PublishController controller) {
+	private RenderWorker(Context context, PublishController controller) {
 	    mContext = context;
         mController = controller; // FIXME move to base class
     }
 	
-	public static RenderService getInstance(Context context, PublishController controller) {
+	public static RenderWorker getInstance(Context context, PublishController controller) {
 		if (instance == null) {
-			instance = new RenderService(context, controller);
+			instance = new RenderWorker(context, controller);
 		}
 		return instance;
 	}

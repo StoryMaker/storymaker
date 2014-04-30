@@ -3,7 +3,7 @@ package info.guardianproject.mrapp.publish;
 import android.content.Context;
 import info.guardianproject.mrapp.model.Job;
 
-public abstract class ServiceBase {
+public abstract class WorkerBase {
     private final String TAG = "ServiceBase";
 
     protected Context mContext;

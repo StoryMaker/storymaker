@@ -4,7 +4,7 @@ import java.io.File;
 
 import info.guardianproject.mrapp.media.MediaProjectManager;
 import info.guardianproject.mrapp.model.Job;
-import info.guardianproject.mrapp.publish.RenderService;
+import info.guardianproject.mrapp.publish.RenderWorker;
 import info.guardianproject.mrapp.publish.RendererBase;
 
 import org.ffmpeg.android.MediaDesc;
@@ -18,7 +18,7 @@ public class VideoRenderer extends RendererBase {
 	public static String SPEC_KEY = "video";
 	private MediaProjectManager mMPM;
 	
-	public VideoRenderer(Context context, RenderService service, Job job) {
+	public VideoRenderer(Context context, RenderWorker service, Job job) {
 		super(context, service, job);
         Handler handler = new Handler() {
 

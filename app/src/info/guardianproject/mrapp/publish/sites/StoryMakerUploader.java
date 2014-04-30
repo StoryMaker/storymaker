@@ -4,13 +4,13 @@ import org.holoeverywhere.app.Activity;
 
 import android.content.Context;
 import info.guardianproject.mrapp.model.Job;
-import info.guardianproject.mrapp.publish.UploadService;
+import info.guardianproject.mrapp.publish.UploadWorker;
 import info.guardianproject.mrapp.publish.UploaderBase;
 
 public class StoryMakerUploader extends UploaderBase {
     private final String TAG = "StoryMakerUploader";
 
-	public StoryMakerUploader(Context context, UploadService service, Job job) {
+	public StoryMakerUploader(Context context, UploadWorker service, Job job) {
 		super(context, service, job);
 		// TODO Auto-generated constructor stub
 		

@@ -6,6 +6,7 @@ import info.guardianproject.mrapp.model.Project;
 import info.guardianproject.mrapp.model.PublishJob;
 import info.guardianproject.mrapp.publish.PublishController;
 import info.guardianproject.mrapp.publish.PublishController.PublishListener;
+import info.guardianproject.mrapp.publish.PublishService;
 import info.guardianproject.mrapp.server.LoginActivity;
 import info.guardianproject.mrapp.server.OAuthAccessTokenActivity;
 import info.guardianproject.mrapp.server.ServerManager;
@@ -639,17 +640,22 @@ public class PublishFragment extends Fragment implements PublishListener {
 			if (intent.hasExtra(ChooseAccountFragment.EXTRAS_ACCOUNT_KEYS)) {
 				ArrayList<String> siteKeys = intent.getStringArrayListExtra(ChooseAccountFragment.EXTRAS_ACCOUNT_KEYS);
 				Utils.toastOnUiThread(mActivity, "selected sites: " + siteKeys);
+	            startPublish(mActivity.mMPM.mProject, siteKeys.toArray(new String[siteKeys.size()]));
 			}
-			startPublish(mActivity.mMPM.mProject);
 		} else {
 			Log.d("PublishFragment", "Choose Accounts dialog canceled");
 			Utils.toastOnUiThread(mActivity, "Choose Accounts dialog canceled");
 		}
 	}
 	
-	private void startPublish(Project project) {
+	private void startPublish(Project project, String[] siteKeys) {
+        Intent i = new Intent(getActivity(), PublishService.class);
         
+        i.putExtra(PublishService.INTENT_PROJECT_ID, project.getId());
+        i.putExtra(PublishService.INTENT_SITE_KEYS, siteKeys);
+        getActivity().startService(i);
 	}
+	
 
     @Override
     public void publishSucceeded(PublishJob publishJob) {

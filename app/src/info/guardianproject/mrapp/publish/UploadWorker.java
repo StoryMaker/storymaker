@@ -10,20 +10,20 @@ import org.holoeverywhere.app.Activity;
 import android.content.Context;
 import android.util.Log;
 
-public  class UploadService extends ServiceBase {
+public  class UploadWorker extends WorkerBase {
     private final String TAG = "UploadService";
     
 	private PublishController controller;
-	private static UploadService instance = null;
+	private static UploadWorker instance = null;
 	
-	private UploadService(Context context, PublishController controller) {
+	private UploadWorker(Context context, PublishController controller) {
 	    mContext = context;
         this.controller = controller;
     }
 	
-	public static UploadService getInstance(Context context, PublishController controller) {
+	public static UploadWorker getInstance(Context context, PublishController controller) {
 		if (instance == null) {
-			instance = new UploadService(context, controller);
+			instance = new UploadWorker(context, controller);
 		}
 		return instance;
 	}

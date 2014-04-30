@@ -11,11 +11,11 @@ public class JobBase {
     private final String TAG = "JobBase";
     
     protected Context mContext;
-    protected ServiceBase mService;
+    protected WorkerBase mService;
     protected Job mJob;
     protected SharedPreferences mSettings; // FIXME rename to mPrefs
     
-    protected JobBase(Context context, ServiceBase service, Job job) {
+    protected JobBase(Context context, WorkerBase service, Job job) {
         mContext = context;
         mService = service; 
         mJob = job;
