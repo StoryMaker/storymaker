@@ -8,6 +8,7 @@ import org.holoeverywhere.widget.Toast;
 
 import com.actionbarsherlock.view.MenuItem;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.support.v4.app.FragmentActivity;
@@ -43,6 +44,10 @@ public class Utils {
                 		Toast.makeText(_activity.getApplicationContext(), _msg, isLongToast ? Toast.LENGTH_LONG : Toast.LENGTH_SHORT).show();
                 }
         });
+    }
+    
+    public static boolean isActivity(Context context) {
+        return (context instanceof Activity);
     }
     
     /**

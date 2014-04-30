@@ -431,10 +431,9 @@ public class PublishFragment extends Fragment implements PublishListener {
 
                     boolean compress = mSettings.getBoolean("pcompress",false);//compress video?
                     
-                    mActivity.mMPM.doExportMedia(mFileLastExport, compress, doOverwrite);
-                    
-                    mActivity.mdExported = mActivity.mMPM.getExportMedia();
-                    
+                    mActivity.mdExported = mActivity.mMPM.doExportMedia(mFileLastExport, compress, doOverwrite);
+
+                    // FIXME NPE if we ran out of space and Exported is null
                     File mediaFile = new File(mActivity.mdExported.path);
 
                     if (mediaFile.exists()) {
@@ -641,18 +640,27 @@ public class PublishFragment extends Fragment implements PublishListener {
 				ArrayList<String> siteKeys = intent.getStringArrayListExtra(ChooseAccountFragment.EXTRAS_ACCOUNT_KEYS);
 				Utils.toastOnUiThread(mActivity, "selected sites: " + siteKeys);
 			}
-			(new PublishController(mActivity, this)).startPublish(mActivity.mMPM.mProject, new String[] { Auth.STORYMAKER });
+			startPublish(mActivity.mMPM.mProject);
 		} else {
 			Log.d("PublishFragment", "Choose Accounts dialog canceled");
 			Utils.toastOnUiThread(mActivity, "Choose Accounts dialog canceled");
 		}
+	}
+	
+	private void startPublish(Project project) {
+        
 	}
 
     @Override
     public void publishSucceeded(PublishJob publishJob) {
         String path = publishJob.getRenderedFilePaths()[0];
         mFileLastExport = new File(path);
-        showPlayAndUpload(true);
+        Handler handlerTimer = new Handler();
+        handlerTimer.postDelayed(new Runnable(){
+            public void run() {
+                showPlayAndUpload(true);
+            }}, 200);
+        
     }
 
 //    @Override

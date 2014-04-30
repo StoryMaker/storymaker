@@ -49,7 +49,6 @@ public class MediaProjectManager implements MediaManager {
 	
 	private static File sFileExternDir; //where working files go
 	//private File mMediaTmp;
-	private MediaDesc mOut;
 	
 	//private MediaHelper.MediaResult mMediaResult;
 	public MediaHelper mMediaHelper;
@@ -59,7 +58,8 @@ public class MediaProjectManager implements MediaManager {
 	
 	private Context mContext = null;
 
-	private Activity mActivity;
+	 private Activity mActivity;  // check for nulls, if called from the service this will be null
+	
 	private Handler mHandler;
 	
 	public int mClipIndex;  // FIXME hack to get clip we are adding media too into intent handler
@@ -125,12 +125,6 @@ public class MediaProjectManager implements MediaManager {
         
     }
     
-
-    public MediaDesc getExportMedia ()
-    {
-    	return mOut;
-    }
-    
     public void handleResponse (Intent intent, File fileCapturePath) throws IOException
     {                
         MediaDesc result = mMediaHelper.handleIntentLaunch(intent);
@@ -150,7 +144,7 @@ public class MediaProjectManager implements MediaManager {
     			// FIXME use media type as definied in json
     			mScene.setMedia(mClipIndex, "FIXME", result.path, result.mimeType);
     			mScene.save();
-    			((SceneEditorActivity)mActivity).refreshClipPager();
+    			if (mActivity != null) ((SceneEditorActivity)mActivity).refreshClipPager();
     		}
 			catch (IOException ioe)
 			{
@@ -166,7 +160,7 @@ public class MediaProjectManager implements MediaManager {
     //	mScene.setMedia(mClipIndex, "FIXME", null, null);
     	Media media = mScene.getMediaAsList().get(mClipIndex);
     	media.delete();
-    	((SceneEditorActivity)mActivity).refreshClipPager();
+    	if (mActivity != null) ((SceneEditorActivity)mActivity).refreshClipPager();
     }
 
    
@@ -294,8 +288,9 @@ public class MediaProjectManager implements MediaManager {
     	return fileExport;
     }
     
-    public void doExportMedia (File fileExport, boolean doCompress, boolean doOverwrite) throws Exception
+    public MediaDesc doExportMedia (File fileExport, boolean doCompress, boolean doOverwrite) throws Exception
     {    	
+        MediaDesc mMediaDescOut = null;
     	 Message msg = mHandler.obtainMessage(0);
          msg.getData().putString("status","cancelled");
          ArrayList<Media> mList = mProject.getMediaAsList();
@@ -308,7 +303,7 @@ public class MediaProjectManager implements MediaManager {
          //if not enough space
          if(!checkStorageSpace())
          {
-        	 return;
+        	 return null;
          }
          
 		 File fileRenderTmpDir = getRenderPath(mContext);
@@ -324,43 +319,43 @@ public class MediaProjectManager implements MediaManager {
 	    	{
 	    	    if (media != null)
 	    	    {
-    	    		MediaDesc mDesc = new MediaDesc();
-    	    		mDesc.mimeType = media.getMimeType();
-    	    		mDesc.path = new File(media.getPath()).getCanonicalPath();
+    	    		MediaDesc mediaDesc = new MediaDesc();
+    	    		mediaDesc.mimeType = media.getMimeType();
+    	    		mediaDesc.path = new File(media.getPath()).getCanonicalPath();
     	    		
     	    		if (media.getTrimStart() > 0) {
-    	    		    mDesc.startTime = "" + media.getTrimmedStartTimeFloat() / 1000F;
-                        mDesc.duration = "" + media.getTrimmedDuration() / 1000F;
+    	    		    mediaDesc.startTime = "" + media.getTrimmedStartTimeFloat() / 1000F;
+                        mediaDesc.duration = "" + media.getTrimmedDuration() / 1000F;
     	    		} else if ((media.getTrimEnd() < 99) && media.getTrimEnd() > 0) {
-    	    		    mDesc.duration = "" + media.getTrimmedDuration() / 1000F;
+    	    		    mediaDesc.duration = "" + media.getTrimmedDuration() / 1000F;
     	    		}
     	    		
     	    		if (doCompress)
-    	    			applyExportSettings(mDesc);
+    	    			applyExportSettings(mediaDesc);
     	    		
-    	    		applyExportSettingsResolution(mDesc);
+    	    		applyExportSettingsResolution(mediaDesc);
     	    		
-    	    		alMediaIn.add(mIdx, mDesc);
+    	    		alMediaIn.add(mIdx, mediaDesc);
     	    		mIdx++;
 	    	    }
 	    	}
 	
-		    mOut = new MediaDesc ();
+		    mMediaDescOut = new MediaDesc();
 	    	
 	    	if (doCompress)	
-	    		applyExportSettings(mOut);
+	    		applyExportSettings(mMediaDescOut);
 	    	else //this is the default audio codec settings
 	    	{
-	    		mOut.audioCodec = "aac";
-		    	mOut.audioBitrate = 64;
+	    		mMediaDescOut.audioCodec = "aac";
+		    	mMediaDescOut.audioBitrate = 64;
 	    	}
 	    	
-	    	applyExportSettingsResolution(mOut);
+	    	applyExportSettingsResolution(mMediaDescOut);
 	    	
 	    	//override for now
-	    	mOut.mimeType = AppConstants.MimeTypes.MP4;
+	    	mMediaDescOut.mimeType = AppConstants.MimeTypes.MP4;
 
-		    mOut.path = fileExport.getCanonicalPath();
+		    mMediaDescOut.path = fileExport.getCanonicalPath();
 		    
 		    String audioPath = null;
 		    
@@ -383,7 +378,7 @@ public class MediaProjectManager implements MediaManager {
 		    	fileExport.getParentFile().mkdirs();
 			    	
 			    //there can be only one renderer now - MP4Stream !!
-			    	MediaVideoExporter mEx = new MediaVideoExporter(mContext, mHandler, alMediaIn, fileRenderTmp, mOut);
+			    	MediaVideoExporter mEx = new MediaVideoExporter(mContext, mHandler, alMediaIn, fileRenderTmp, mMediaDescOut);
 			    	
 			    	if (audioPath != null)
 			    	{
@@ -425,17 +420,17 @@ public class MediaProjectManager implements MediaManager {
         	    }
  	    	}
  	
- 		    mOut = new MediaDesc ();
+ 		    mMediaDescOut = new MediaDesc ();
 // 		    mOut.mimeType = AppConstants.MimeTypes.OGG;
  //		    mOut.mimeType = AppConstants.MimeTypes.MP4_AUDIO;
-		    mOut.mimeType = AppConstants.MimeTypes.THREEGPP_AUDIO;
+		    mMediaDescOut.mimeType = AppConstants.MimeTypes.THREEGPP_AUDIO;
  		    
  		   // if (doCompress)
- 		   applyExportSettingsAudio(mOut);
+ 		   applyExportSettingsAudio(mMediaDescOut);
  		   
- 		   applyExportSettingsResolution(mOut);
+ 		   applyExportSettingsResolution(mMediaDescOut);
  		    
- 		    mOut.path = fileExport.getCanonicalPath();
+ 		    mMediaDescOut.path = fileExport.getCanonicalPath();
  		    
  		   if ((!fileExport.exists()) || doOverwrite)
 		    {
@@ -445,7 +440,7 @@ public class MediaProjectManager implements MediaManager {
 		    	
 		    	fileExport.getParentFile().mkdirs();
 
- 	 		    MediaAudioExporter mEx = new MediaAudioExporter(mContext, mHandler, alMediaIn, fileRenderTmp, mOut);
+ 	 		    MediaAudioExporter mEx = new MediaAudioExporter(mContext, mHandler, alMediaIn, fileRenderTmp, mMediaDescOut);
  	 		    mEx.export();
 		    }
          }
@@ -472,11 +467,11 @@ public class MediaProjectManager implements MediaManager {
   	  			    
   	    				fileExport.createNewFile();
   	    				IOUtils.copy(new FileInputStream(fileSrc),new FileOutputStream(fileExport));
-  	    				 mOut = new MediaDesc ();
-  	    				mOut.path = fileExport.getCanonicalPath();
-  	    				mOut.mimeType = AppConstants.MimeTypes.JPEG;
+  	    				 mMediaDescOut = new MediaDesc ();
+  	    				mMediaDescOut.path = fileExport.getCanonicalPath();
+  	    				mMediaDescOut.mimeType = AppConstants.MimeTypes.JPEG;
   	    				
-  	    				applyExportSettingsResolution(mOut);
+  	    				applyExportSettingsResolution(mMediaDescOut);
   	    				
   	    				break;
   	    			}
@@ -517,15 +512,15 @@ public class MediaProjectManager implements MediaManager {
 	    	    }
 	    	}
 	
-		    mOut = new MediaDesc ();
+		    mMediaDescOut = new MediaDesc ();
 		    
 		    if (doCompress)
-		    applyExportSettings(mOut);
+		    applyExportSettings(mMediaDescOut);
 		    
-		    applyExportSettingsResolution(mOut);
+		    applyExportSettingsResolution(mMediaDescOut);
 		   
-		    mOut.path = fileExport.getCanonicalPath();
-		    mOut.mimeType = AppConstants.MimeTypes.MP4;
+		    mMediaDescOut.path = fileExport.getCanonicalPath();
+		    mMediaDescOut.mimeType = AppConstants.MimeTypes.MP4;
 		    
 
 		    int slideDuration = Integer.parseInt(mSettings.getString("pslideduration", AppConstants.DEFAULT_SLIDE_DURATION+""));
@@ -551,13 +546,14 @@ public class MediaProjectManager implements MediaManager {
 		    	
 		    	fileExport.getParentFile().mkdirs();
 			    
-			    MediaSlideshowExporter mEx = new MediaSlideshowExporter(mContext, mHandler, alMediaIn, fileRenderTmp, audioPath, slideDuration, mOut);
+			    MediaSlideshowExporter mEx = new MediaSlideshowExporter(mContext, mHandler, alMediaIn, fileRenderTmp, audioPath, slideDuration, mMediaDescOut);
 			    
 			    mEx.export();
    		    }
          }
          
-         deleteRecursive(fileRenderTmp, true);      
+         deleteRecursive(fileRenderTmp, true);
+         return mMediaDescOut;
     }
     
     void deleteRecursive(File fileOrDirectory, boolean onExit) throws IOException {
@@ -670,12 +666,10 @@ public class MediaProjectManager implements MediaManager {
 			
 			mMediaList.set(clipIndex, mClip);
 			
-			((SceneEditorActivity)mActivity).refreshClipPager(); // FIXME we should handle this by emitting a change event directly
+			if (mActivity != null) ((SceneEditorActivity)mActivity).refreshClipPager(); // FIXME we should handle this by emitting a change event directly
 
 		//}
 		
-		mOut = null;
-    	
 //		if (mimeType.startsWith("audio") && mediaList.size() > 0 && (!mediaList.get(mediaList.size()-1).mMediaDescOriginal.mimeType.equals(mimeType)))
 //		{
 //			MediaClip mClipVideo =  mediaList.get(mediaList.size()-1);
@@ -769,6 +763,7 @@ public class MediaProjectManager implements MediaManager {
  		{
  			double totalMBRequired = totalBytesRequired /(double)(1024*1024);
  			
+ 			// FIXME we need to warn the user here via a message sent to the current activity since this could be called from a service now
  			Utils.toastOnUiThread(mActivity, String.format(mContext.getString(R.string.error_storage_space), totalMBRequired), true);
  			return false;
  		}

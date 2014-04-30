@@ -62,14 +62,12 @@ public class VideoRenderer extends RendererBase {
         boolean compress = mSettings.getBoolean("pcompress", false);// compress
         boolean doOverwrite = true;
         try {
-            mMPM.doExportMedia(mFileLastExport, compress, doOverwrite);
+            MediaDesc mdExported = mMPM.doExportMedia(mFileLastExport, compress, doOverwrite);
+            jobSucceeded(mdExported.path);
         } catch (Exception e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
             jobFailed(0, e.getMessage());
         }
-        MediaDesc mdExported = mMPM.getExportMedia();
-//        File mediaFile = new File(mdExported.path);
-        jobSucceeded(mdExported.path);
     }
 }
