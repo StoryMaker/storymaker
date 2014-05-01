@@ -12,4 +12,6 @@ public abstract class WorkerBase {
 	
 	public abstract void jobFailed(Job job, int errorCode, String errorMessage);
 	
+	public abstract void jobProgress(Job job, int progress, String message);
+	
 }

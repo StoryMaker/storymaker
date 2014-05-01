@@ -53,6 +53,7 @@ public class StoryMakerPublisher extends PublisherBase {
 			controller.enqueueJob(newJob);
 		} else {
 		    publishJob.setFinishedAtNow();
+		    publishJob.save();
 		    controller.publishJobSucceeded(publishJob);
 		}
 	}
@@ -60,5 +61,9 @@ public class StoryMakerPublisher extends PublisherBase {
 	public void jobFailed(Job job) {
         Log.d(TAG, "jobFailed: " + job);
 		// nop
+	}
+	
+	public void jobProgress(Job job, int progress, String message) {
+	    controller.publishJobProgress(publishJob, progress, message);
 	}
 }

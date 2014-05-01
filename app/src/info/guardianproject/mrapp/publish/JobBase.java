@@ -11,13 +11,13 @@ public class JobBase {
     private final String TAG = "JobBase";
     
     protected Context mContext;
-    protected WorkerBase mService;
+    protected WorkerBase mWorker;
     protected Job mJob;
     protected SharedPreferences mSettings; // FIXME rename to mPrefs
     
-    protected JobBase(Context context, WorkerBase service, Job job) {
+    protected JobBase(Context context, WorkerBase worker, Job job) {
         mContext = context;
-        mService = service; 
+        mWorker = worker; 
         mJob = job;
         mSettings = PreferenceManager.getDefaultSharedPreferences(mContext);
     }
@@ -32,7 +32,7 @@ public class JobBase {
         mJob.setResult(result);
         mJob.setFinishedAtNow();
         mJob.save();
-        mService.jobSucceeded(mJob, result);
+        mWorker.jobSucceeded(mJob, result);
     }
 
     public void jobFailed(int errorCode, String errorMessage) {
@@ -41,6 +41,10 @@ public class JobBase {
         mJob.setErrorCode(errorCode);
         mJob.setErrorMessage(errorMessage);
         mJob.save();
-        mService.jobFailed(mJob, errorCode, errorMessage);
+        mWorker.jobFailed(mJob, errorCode, errorMessage);
+    }
+    
+    public void jobProgress(Job job, int progress, String message) {
+        mWorker.jobProgress(job, progress, message);
     }
 }

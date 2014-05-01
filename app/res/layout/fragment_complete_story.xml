@@ -81,6 +81,19 @@
             android:textAppearance="?android:attr/textAppearanceSmall" 
             android:visibility="gone" />
 
+        <TextView
+            android:id="@+id/textViewProgress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/storyThumb"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="16dp"
+            android:fontFamily="sans-serif-condensed"
+            android:text="Small Text"
+            android:textColor="#dddddd"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
     </RelativeLayout>
 
     <LinearLayout

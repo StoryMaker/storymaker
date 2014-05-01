@@ -23,7 +23,7 @@
     </EditText>
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/textViewProgress"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
@@ -37,7 +37,7 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-                android:layout_below="@+id/textView2"
+                android:layout_below="@+id/textViewProgress"
         android:orientation="vertical"
         android:background="#ffffff"
         android:padding="6sp"
@@ -46,8 +46,8 @@
         android:id="@+id/textViewChooseAMedium"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/textView2"
-        android:layout_below="@+id/textView2"
+        android:layout_alignLeft="@+id/textViewProgress"
+        android:layout_below="@+id/textViewProgress"
         android:layout_marginTop="10dp"
         android:text="@string/new_story_choose_a_medium"
         android:textAppearance="?android:attr/textAppearanceLarge" />

@@ -71,6 +71,14 @@ public class PublishController {
 	public void publishJobSucceeded(PublishJob publishJob) {
 		mListener.publishSucceeded(publishJob);
 	}
+    
+    public void publishJobFailed(PublishJob publishJob) {
+        mListener.publishFailed(publishJob);
+    }
+	
+	public void publishJobProgress(PublishJob publishJob, int progress, String message) {
+	    mListener.publishProgress(publishJob, progress, message);
+	}
 	
 	public void jobSucceeded(Job job, String code) {
         Log.d(TAG, "jobSucceeded: " + job + ", with code: " + code);
@@ -82,6 +90,10 @@ public class PublishController {
         Log.d(TAG, "jobFailed: " + job + ", with errorCode: " + errorCode + ", and errorMessage: " + errorMessage);
 		// TODO need to raise this to the interested activities here
 		getPublisher(job.getPublishJob()).jobFailed(job);
+	}
+	
+	public void jobProgress(Job job, int progress, String message) {
+	       getPublisher(job.getPublishJob()).jobProgress(job, progress, message);
 	}
 	
 	private void startUploadService() {
@@ -106,8 +118,10 @@ public class PublishController {
 	
 	public static interface PublishListener {
 	    public void publishSucceeded(PublishJob publishJob);
-	    
-//	    public void publishFailed(PublishJob publishJob);
+
+        public void publishFailed(PublishJob publishJob);
+        
+        public void publishProgress(PublishJob publishJob, int progress, String message);
 	}
 
 }

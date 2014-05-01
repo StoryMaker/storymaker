@@ -54,6 +54,12 @@ public class RenderWorker extends WorkerBase {
 		// TODO start the next job
 		mController.jobFailed(job, errorCode, errorMessage);
 	}
+
+    @Override
+    public void jobProgress(Job job, int progress, String message) {
+        mController.jobProgress(job, progress, message);
+        
+    }
 	
 //	public void jobFinished() {
 //		// TODO check if jobs are all done, if so let's die

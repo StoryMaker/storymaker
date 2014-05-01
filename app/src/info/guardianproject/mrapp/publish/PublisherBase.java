@@ -10,4 +10,6 @@ public abstract class PublisherBase {
 	public abstract void jobSucceeded(Job job);
 
 	public abstract void jobFailed(Job job);
+	
+	public abstract void jobProgress(Job job, int progress, String message);
 }

@@ -4,6 +4,7 @@ import info.guardianproject.mrapp.model.Auth;
 import info.guardianproject.mrapp.model.Media;
 import info.guardianproject.mrapp.model.Project;
 import info.guardianproject.mrapp.model.PublishJob;
+import info.guardianproject.mrapp.model.PublishJobTable;
 import info.guardianproject.mrapp.publish.PublishController;
 import info.guardianproject.mrapp.publish.PublishController.PublishListener;
 import info.guardianproject.mrapp.publish.PublishService;
@@ -32,8 +33,12 @@ import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.content.ReceiverCallNotAllowedException;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.graphics.Bitmap;
@@ -69,26 +74,27 @@ public class PublishFragment extends Fragment implements PublishListener {
     
     public ViewPager mAddClipsViewPager;
     View mView = null;
- 
+
     private EditorBaseActivity mActivity;
     private Handler mHandlerPub;
-    
+
     private String mMediaUploadAccount = null;
     private String mMediaUploadAccountKey = null;
-    
+
 //    EditText mTitle;
 //    EditText mDescription;
     TextView mTitle;
     TextView mDescription;
+    TextView mProgress;
     
     private YouTubeSubmit mYouTubeClient = null;
 
-     private Thread mThreadYouTubeAuth;
-     private Thread mThreadPublish;
-     private boolean mUseOAuthWeb = true;
-     
+    private Thread mThreadYouTubeAuth;
+    private Thread mThreadPublish;
+    private boolean mUseOAuthWeb = true;
+
     private SharedPreferences mSettings = null;
-    
+
     private File mFileLastExport = null;
 
     /**
@@ -130,12 +136,11 @@ public class PublishFragment extends Fragment implements PublishListener {
 				}
 			}
 
-//          mTitle = (EditText) mView.findViewById(R.id.etStoryTitle);
-//          mDescription = (EditText) mView.findViewById(R.id.editTextDescribe);
             mTitle = (TextView) mView.findViewById(R.id.textTitle);
-//          mDescription = (TextView) mView.findViewById(R.id.textDescription);
-
             mTitle.setText(mActivity.mMPM.mProject.getTitle());
+
+            mProgress = (TextView) mView.findViewById(R.id.textViewProgress);
+            mProgress.setText("");
             
             ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
             		  mActivity, R.array.story_sections, android.R.layout.simple_spinner_item );
@@ -149,8 +154,7 @@ public class PublishFragment extends Fragment implements PublishListener {
 				@Override
 				public void onClick(View arg0) {
 					launchChooseAccountsDialog();
-					showRender(false);
-					startFakeRender();
+					showRenderingSpinner();
 				}
 			});
 
@@ -207,8 +211,49 @@ public class PublishFragment extends Fragment implements PublishListener {
         }
         return mView;
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        IntentFilter f = new IntentFilter();
+        f.addAction(PublishService.ACTION_SUCCESS);
+        f.addAction(PublishService.ACTION_FAILURE);
+        f.addAction(PublishService.ACTION_PROGRESS);
+        getActivity().registerReceiver(publishReceiver, f);
+    }
     
-	Handler handlerUI = new Handler() {
+    @Override
+    public void onPause() {
+        super.onPause();
+        getActivity().unregisterReceiver(publishReceiver);
+    }
+
+    private BroadcastReceiver publishReceiver = new BroadcastReceiver() {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+
+            if (intent.hasExtra(PublishService.INTENT_EXTRA_PUBLISH_JOB_ID)) {
+                int publishJobId = intent.getIntExtra(PublishService.INTENT_EXTRA_PUBLISH_JOB_ID, -1);
+                if (publishJobId != -1) {
+                    PublishJob publishJob = (PublishJob) (new PublishJobTable()).get(getActivity().getApplicationContext(), publishJobId);
+            
+            
+                    if (intent.getAction().equals(PublishService.ACTION_SUCCESS)) {
+                        publishSucceeded(publishJob);
+                    } else if (intent.getAction().equals(PublishService.ACTION_FAILURE)) {
+                        // TODO deal with failure
+                    } else if (intent.getAction().equals(PublishService.ACTION_PROGRESS)) {
+                        int progress = intent.getIntExtra(PublishService.INTENT_EXTRA_PROGRESS, -1);
+                        String message = intent.getStringExtra(PublishService.INTENT_EXTRA_PROGRESS_MESSAGE);
+                        publishProgress(publishJob, progress, message);
+                    }
+                }
+            }
+        }
+    };
+
+    Handler handlerUI = new Handler() {
 		@Override
 		public void handleMessage(Message msg) {
 			super.handleMessage(msg);
@@ -236,13 +281,10 @@ public class PublishFragment extends Fragment implements PublishListener {
         mActivity.startActivity(new Intent(mActivity, LoginActivity.class));
     }
 
-    private void startFakeRender() {
-        showRenderingSpinner(true);
-    }
-    
     private void showRenderingSpinner(boolean vis) {
         ((ImageButton) mView.findViewById(R.id.btnRenderingSpinner)).setVisibility(vis ? View.VISIBLE : View.GONE);
-        ((TextView) mView.findViewById(R.id.textRendering)).setVisibility(vis ? View.VISIBLE : View.GONE);
+//        ((TextView) mView.findViewById(R.id.textRendering)).setVisibility(vis ? View.VISIBLE : View.GONE);
+        mProgress.setVisibility(vis ? View.VISIBLE : View.GONE);
     }
     
     private void showPlayAndUpload(boolean vis) {
@@ -253,6 +295,24 @@ public class PublishFragment extends Fragment implements PublishListener {
 
     private void showRender(boolean vis) {
         ((ImageButton) mView.findViewById(R.id.btnRender)).setVisibility(vis ? View.VISIBLE : View.GONE);
+    }
+
+    private void showRenderingSpinner() {
+        showRenderingSpinner(true);
+        showPlayAndUpload(false);
+        showRender(false);
+    }
+    
+    private void showPlayAndUpload() {
+        showRenderingSpinner(false);
+        showPlayAndUpload(true);
+        showRender(false);
+    }
+
+    private void showRender() {
+        showRenderingSpinner(false);
+        showPlayAndUpload(false);
+        showRender(true);
     }
     
     private String setUploadAccount() {
@@ -651,27 +711,34 @@ public class PublishFragment extends Fragment implements PublishListener {
 	private void startPublish(Project project, String[] siteKeys) {
         Intent i = new Intent(getActivity(), PublishService.class);
         
-        i.putExtra(PublishService.INTENT_PROJECT_ID, project.getId());
-        i.putExtra(PublishService.INTENT_SITE_KEYS, siteKeys);
+        i.putExtra(PublishService.INTENT_EXTRA_PROJECT_ID, project.getId());
+        i.putExtra(PublishService.INTENT_EXTRA_SITE_KEYS, siteKeys);
         getActivity().startService(i);
 	}
 	
 
     @Override
     public void publishSucceeded(PublishJob publishJob) {
-        String path = publishJob.getRenderedFilePaths()[0];
+        String path = publishJob.getRenderedFilePaths()[0]; // FIXME this can be null
         mFileLastExport = new File(path);
         Handler handlerTimer = new Handler();
+        mProgress.setText("Complete!");
         handlerTimer.postDelayed(new Runnable(){
             public void run() {
-                showPlayAndUpload(true);
+                showPlayAndUpload();
             }
         }, 200);
     }
+    
+    @Override
+    public void publishFailed(PublishJob publishJob) {
+        Utils.toastOnUiThread(getActivity(), "Publish failed :'( ... " + publishJob);
+        showRender();
+    }
 
-//    @Override
-//    public void publishFailed(PublishJob publishJob) {
-//        // TODO Auto-generated method stub
-//        
-//    }
+    @Override
+    public void publishProgress(PublishJob publishJob, int progress, String message) {
+//        Utils.toastOnUiThread(getActivity(), "Progress at " + (progress / 10000) + "%: " + message);
+        mProgress.setText(message);
+    }
 }

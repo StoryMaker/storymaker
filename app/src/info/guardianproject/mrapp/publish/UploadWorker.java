@@ -13,12 +13,12 @@ import android.util.Log;
 public  class UploadWorker extends WorkerBase {
     private final String TAG = "UploadService";
     
-	private PublishController controller;
+	private PublishController mController;
 	private static UploadWorker instance = null;
 	
 	private UploadWorker(Context context, PublishController controller) {
 	    mContext = context;
-        this.controller = controller;
+        this.mController = controller;
     }
 	
 	public static UploadWorker getInstance(Context context, PublishController controller) {
@@ -42,18 +42,25 @@ public  class UploadWorker extends WorkerBase {
     		uploader.start();
 		}
 	}
-	
+
+    @Override
 	public void jobSucceeded(Job job, String code) {
         Log.d(TAG, "jobSucceeded: " + job + ", with code: " + code);
 		// TODO start the next job
-		controller.jobSucceeded(job, code);
+		mController.jobSucceeded(job, code);
 	}
-	
+
+    @Override
 	public void jobFailed(Job job, int errorCode, String errorMessage) {
         Log.d(TAG, "jobFailed: " + job + ", with errorCode: " + errorCode + ", and errorMessage: " + errorMessage);
 		// TODO start the next job
-		controller.jobFailed(job, errorCode, errorMessage);
+		mController.jobFailed(job, errorCode, errorMessage);
 	}
+
+    @Override
+    public void jobProgress(Job job, int progress, String message) {
+        mController.jobProgress(job, progress, message);
+    }
 	
 //	public void jobFinished() {
 //		// TODO check if jobs are all done, if so let's die
