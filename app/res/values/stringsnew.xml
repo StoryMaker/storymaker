@@ -223,6 +223,9 @@
 <string name="prefs_use_download_manager_title">Use Download Manager</string>
 <string name="prefs_use_download_manager_summary">Download lesson archives with the Android DownloadManager service</string>
 
+<string name="prefs_use_upload_manager_title">Use Upload Manager</string>
+<string name="prefs_use_upload_manager_summary">Upload story content with the Android UploadManager service</string>
+
 <string name="prefs_youtube_acccount_title">YouTube Account</string>
 <string name="prefs_youtube_acccount_summary">The YouTube account to use for video uploads. This MUST be registered on your device.</string>
 
