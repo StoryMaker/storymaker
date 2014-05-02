@@ -3,6 +3,7 @@ package info.guardianproject.mrapp.publish.sites;
 import org.holoeverywhere.app.Activity;
 
 import android.content.Context;
+import android.os.Handler;
 import android.util.Log;
 import info.guardianproject.mrapp.model.Job;
 import info.guardianproject.mrapp.model.Project;
@@ -22,14 +23,22 @@ public class FacebookUploader extends UploaderBase {
     @Override
     public void start() {
         // TODO Auto-generated constructor stub
-        io.scal.secureshareui.controller.PublishController controller;
-        controller = io.scal.secureshareui.controller.PublishController.getPublishController(FacebookPublishController.SITE_KEY);
+        final io.scal.secureshareui.controller.PublishController controller = io.scal.secureshareui.controller.PublishController.getPublishController(FacebookPublishController.SITE_KEY);
         controller.setContext(mContext);
-        Project project = mJob.getProject();
-        PublishJob publishJob = mJob.getPublishJob();
-        String path = publishJob.getLastRenderFilePath();
+        final Project project = mJob.getProject();
+        final PublishJob publishJob = mJob.getPublishJob();
+        final String path = publishJob.getLastRenderFilePath();
         if (path != null) {
-            controller.upload(project.getTitle(), project.getDescription(), path);
+            Handler mainHandler = new Handler(mContext.getMainLooper());
+            Runnable myRunnable = new Runnable() {
+                // facebook seems to freak out if our service's looper is dead when it tries to send message back 
+                @Override
+                public void run() {
+                    controller.upload(project.getTitle(), project.getDescription(), path);
+                }
+                
+            };
+            mainHandler.post(myRunnable);
         } else {
             Log.d(TAG, "Can't upload to facebook, last rendered file path is null");
         }
