@@ -18,6 +18,7 @@ import io.scal.secureshareui.lib.ChooseAccountFragment;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -42,6 +43,8 @@ import android.content.ReceiverCallNotAllowedException;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.graphics.Bitmap;
+import android.graphics.drawable.AnimationDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -53,12 +56,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
+import android.widget.ViewAnimator;
+//import com.hipmob.gifanimationdrawable.GifAnimationDrawable;
 
 import com.animoto.android.views.DraggableGridView;
 
@@ -85,8 +92,16 @@ public class PublishFragment extends Fragment implements PublishListener {
     TextView mDescription;
     TextView mProgress;
     ImageButton mButtonRender;
+    ImageButton mButtonRenderSpinner;
     ImageButton mButtonUpload;
     ImageButton mButtonPlay;
+
+    Animation mFadeIn;
+    Animation mFadeOut;
+    Animation mHorizExpand;
+    Animation mExpandingFade;
+    Animation mSpinConstant;
+    ViewAnimator mRenderStateWidget;
     
     String[] mSiteKeys = null;
     
@@ -145,6 +160,16 @@ public class PublishFragment extends Fragment implements PublishListener {
             mProgress = (TextView) mView.findViewById(R.id.textViewProgress);
             mProgress.setText("");
             
+//            Context context = getActivity();
+//            mFadeIn = AnimationUtils.loadAnimation(context, R.anim.fadein);
+//            mFadeOut = AnimationUtils.loadAnimation(context, R.anim.fadeout);
+//            mHorizExpand = AnimationUtils.loadAnimation(context, R.anim.horiz_expand);
+//            mExpandingFade = AnimationUtils.loadAnimation(context, R.anim.expandingfade);
+//            mSpinConstant = AnimationUtils.loadAnimation(context, R.anim.spinconstant);
+//            mRenderStateWidget = (ViewAnimator) mView.findViewById(R.id.renderStateWidget);
+//            mRenderStateWidget.setInAnimation(mFadeIn);
+//            mRenderStateWidget.setOutAnimation(mFadeOut);
+            
             ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
             		  mActivity, R.array.story_sections, android.R.layout.simple_spinner_item );
             		adapter.setDropDownViewResource( android.R.layout.simple_spinner_dropdown_item );
@@ -156,8 +181,8 @@ public class PublishFragment extends Fragment implements PublishListener {
 			mButtonRender.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View arg0) {
+                    showRenderingSpinner();
 					launchChooseAccountsDialog();
-					showRenderingSpinner();
 				}
 			});
             
@@ -278,7 +303,17 @@ public class PublishFragment extends Fragment implements PublishListener {
     }
 
     private void showRenderingSpinner(boolean vis) {
-        ((ImageButton) mView.findViewById(R.id.btnRenderingSpinner)).setVisibility(vis ? View.VISIBLE : View.GONE);
+        mButtonRenderSpinner = ((ImageButton) mView.findViewById(R.id.btnRenderingSpinner));
+//      Drawable spinner = getResources().getDrawable(R.drawable.render_spinner);
+//        InputStream is = getResources().openRawResource(R.drawable.render_spinner);
+//        try {
+//            AnimationDrawable drawable = new GifAnimationDrawable(is);
+//            mButtonRenderSpinner.setImageDrawable(drawable);
+//        } catch (IOException e) {
+//            // TODO Auto-generated catch block
+//            e.printStackTrace();
+//        }
+        mButtonRenderSpinner.setVisibility(vis ? View.VISIBLE : View.GONE);
 //        ((TextView) mView.findViewById(R.id.textRendering)).setVisibility(vis ? View.VISIBLE : View.GONE);
         mProgress.setVisibility(vis ? View.VISIBLE : View.GONE);
     }
@@ -294,6 +329,9 @@ public class PublishFragment extends Fragment implements PublishListener {
     }
 
     private void showRenderingSpinner() {
+//        mRenderStateWidget.showNext();
+//        mRenderStateWidget.setInAnimation(mHorizExpand);
+//        mRenderStateWidget.setOutAnimation(mFadeOut);
         showRenderingSpinner(true);
         showPlayAndUpload(false);
         showRender(false);
@@ -697,7 +735,7 @@ public class PublishFragment extends Fragment implements PublishListener {
 				ArrayList<String> siteKeys = intent.getStringArrayListExtra(ChooseAccountFragment.EXTRAS_ACCOUNT_KEYS);
 				Utils.toastOnUiThread(mActivity, "selected sites: " + siteKeys);
 				mSiteKeys = siteKeys.toArray(new String[siteKeys.size()]);
-	            startPublish(mActivity.mMPM.mProject, mSiteKeys);
+	            startRender(mActivity.mMPM.mProject, mSiteKeys);
 			}
 		} else {
 			Log.d("PublishFragment", "Choose Accounts dialog canceled");
@@ -705,7 +743,7 @@ public class PublishFragment extends Fragment implements PublishListener {
 		}
 	}
     
-    private void startPublish(Project project, String[] siteKeys) {
+    private void startRender(Project project, String[] siteKeys) {
         Intent i = new Intent(getActivity(), PublishService.class);
         i.setAction(PublishService.ACTION_RENDER);
         i.putExtra(PublishService.INTENT_EXTRA_PROJECT_ID, project.getId());
