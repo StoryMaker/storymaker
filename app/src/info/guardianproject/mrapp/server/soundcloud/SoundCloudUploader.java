@@ -52,9 +52,10 @@ public class SoundCloudUploader {
 	
 
 	private long mFileSize = -1;
-	
+
 	public String uploadSound (File audioFile, String title, String desc, int REQCODE, Activity activity, Handler handler) throws OperationCanceledException, AuthenticatorException, IOException
 	{
+		/*
 		mHandler = handler;
 		mAudioFile = audioFile;
 		mContext = activity.getBaseContext();
@@ -81,7 +82,7 @@ public class SoundCloudUploader {
 						
 					}}, handler);
 
-	          	/*
+	          	
 		    	AccountManagerFuture<Bundle> bundleFuture = accountManager.getAuthToken(acc[0], "access_token", options, false, new AccountManagerCallback<Bundle>() {
 
 					@Override
@@ -89,7 +90,7 @@ public class SoundCloudUploader {
 						// TODO Auto-generated method stub
 						
 					}}, mHandler);
-				*/
+				
 	          	
 		    	throw new IOException ("Please press 'Publish' again once you have authorized SoundCloud access");
 		    }
@@ -134,7 +135,7 @@ public class SoundCloudUploader {
 		    
 		    
 		    // do something with resp
-		} 
+		} */
 		
 		return null;
 		/*

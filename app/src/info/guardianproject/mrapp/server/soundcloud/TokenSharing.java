@@ -111,7 +111,7 @@ public class TokenSharing extends Activity {
 
     private void success(Token token) {
         // create the API wrapper with the token
-        Api.wrapper = new ApiWrapper(null, null, null, token, Env.LIVE);
+        //Api.wrapper = new ApiWrapper(null, null, null, token, Env.LIVE);
 
         // and launch our main activity
      //   startActivity(new Intent(this, UploadFile.class));
