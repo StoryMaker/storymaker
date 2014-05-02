@@ -10,8 +10,8 @@ import android.content.Context;
 public class YoutubeUploader extends UploaderBase {
     private final String TAG = "YoutubeUploader";
 
-	public YoutubeUploader(Context context, UploadWorker service, Job job) {
-		super(context, service, job);
+	public YoutubeUploader(Context context, UploadWorker worker, Job job) {
+		super(context, worker, job);
 	}
 	
 }

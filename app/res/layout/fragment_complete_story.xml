@@ -62,7 +62,7 @@
             android:visibility="gone"/>
 
         <ImageButton
-            android:id="@+id/btnPublish"
+            android:id="@+id/btnUpload"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
@@ -88,7 +88,7 @@
             android:layout_alignBottom="@+id/storyThumb"
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="16dp"
-            android:fontFamily="sans-serif-condensed"
+            android:fontFamily="sans-serif-light"
             android:text="Small Text"
             android:textColor="#dddddd"
             android:textSize="14sp"

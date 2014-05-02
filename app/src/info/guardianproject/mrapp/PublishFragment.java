@@ -81,11 +81,14 @@ public class PublishFragment extends Fragment implements PublishListener {
     private String mMediaUploadAccount = null;
     private String mMediaUploadAccountKey = null;
 
-//    EditText mTitle;
-//    EditText mDescription;
     TextView mTitle;
     TextView mDescription;
     TextView mProgress;
+    ImageButton mButtonRender;
+    ImageButton mButtonUpload;
+    ImageButton mButtonPlay;
+    
+    String[] mSiteKeys = null;
     
     private YouTubeSubmit mYouTubeClient = null;
 
@@ -149,14 +152,26 @@ public class PublishFragment extends Fragment implements PublishListener {
 //			Spinner s = (Spinner) mView.findViewById( R.id.spinnerSections );
 //			s.setAdapter( adapter );
 			
-			ImageButton btnRender = (ImageButton) mView.findViewById(R.id.btnRender);
-			btnRender.setOnClickListener(new OnClickListener() {
+			mButtonRender = (ImageButton) mView.findViewById(R.id.btnRender);
+			mButtonRender.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View arg0) {
 					launchChooseAccountsDialog();
 					showRenderingSpinner();
 				}
 			});
+            
+            mButtonUpload = (ImageButton) mView.findViewById(R.id.btnUpload);
+            // btnShare.setEnabled(fileExport.exists());
+            mButtonUpload.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View arg0) {
+                    if (mFileLastExport != null && mFileLastExport.exists()) {
+//                        mActivity.mMPM.mMediaHelper.shareMedia(mFileLastExport, null);
+                        startUpload(mActivity.mMPM.mProject, mSiteKeys);
+                    }
+                }
+            });
 
 //			ImageButton btnRenderingSpinner = (ImageButton) mView.findViewById(R.id.btnRenderingSpinner);
 //			btnRenderingSpinner.setOnClickListener(new OnClickListener() {
@@ -167,36 +182,17 @@ public class PublishFragment extends Fragment implements PublishListener {
 //				}
 //			});
             
-            ImageButton btnPlay = (ImageButton) mView.findViewById(R.id.btnPlay);
-        	//File fileExport = mActivity.mMPM.getExportMediaFile();
-        	//btnPlay.setEnabled(fileExport.exists());
-            
-			btnPlay.setOnClickListener(new OnClickListener() {
-				@Override
-				public void onClick(View arg0) {
-					if (mFileLastExport != null && mFileLastExport.exists()) {
-						mActivity.mMPM.mMediaHelper.playMedia(mFileLastExport, null);
-					}
-				}
-			});
-            
-//            Button btnShare = (Button) mView.findViewById(R.id.btnShare);
-//          //  btnShare.setEnabled(fileExport.exists());
-//        	
-//            btnShare.setOnClickListener(new OnClickListener()
-//            {
-//
-//                @Override
-//                public void onClick(View arg0) {
-//                    
-//                	if (mFileLastExport != null && mFileLastExport.exists())
-//                	{
-//                		
-//                		mActivity.mMPM.mMediaHelper.shareMedia(mFileLastExport, null);
-//                	}
-//                }
-//                
-//            });
+            mButtonPlay = (ImageButton) mView.findViewById(R.id.btnPlay);
+            // File fileExport = mActivity.mMPM.getExportMediaFile();
+            // btnPlay.setEnabled(fileExport.exists());
+            mButtonPlay.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View arg0) {
+                    if (mFileLastExport != null && mFileLastExport.exists()) {
+                        mActivity.mMPM.mMediaHelper.playMedia(mFileLastExport, null);
+                    }
+                }
+            });
             
             
 //            Button btn = (Button) mView.findViewById(R.id.btnPublish);
@@ -288,13 +284,13 @@ public class PublishFragment extends Fragment implements PublishListener {
     }
     
     private void showPlayAndUpload(boolean vis) {
-        ((ImageButton) mView.findViewById(R.id.btnPlay)).setVisibility(vis ? View.VISIBLE : View.GONE);
-        ((ImageButton) mView.findViewById(R.id.btnPublish)).setVisibility(vis ? View.VISIBLE : View.GONE);
+        mButtonPlay.setVisibility(vis ? View.VISIBLE : View.GONE);
+        mButtonUpload.setVisibility(vis ? View.VISIBLE : View.GONE);
         ((ImageView) mView.findViewById(R.id.imageSeparator)).setVisibility(vis ? View.VISIBLE : View.GONE);
     }
 
     private void showRender(boolean vis) {
-        ((ImageButton) mView.findViewById(R.id.btnRender)).setVisibility(vis ? View.VISIBLE : View.GONE);
+        mButtonRender.setVisibility(vis ? View.VISIBLE : View.GONE);
     }
 
     private void showRenderingSpinner() {
@@ -700,34 +696,49 @@ public class PublishFragment extends Fragment implements PublishListener {
 			if (intent.hasExtra(ChooseAccountFragment.EXTRAS_ACCOUNT_KEYS)) {
 				ArrayList<String> siteKeys = intent.getStringArrayListExtra(ChooseAccountFragment.EXTRAS_ACCOUNT_KEYS);
 				Utils.toastOnUiThread(mActivity, "selected sites: " + siteKeys);
-	            startPublish(mActivity.mMPM.mProject, siteKeys.toArray(new String[siteKeys.size()]));
+				mSiteKeys = siteKeys.toArray(new String[siteKeys.size()]);
+	            startPublish(mActivity.mMPM.mProject, mSiteKeys);
 			}
 		} else {
 			Log.d("PublishFragment", "Choose Accounts dialog canceled");
 			Utils.toastOnUiThread(mActivity, "Choose Accounts dialog canceled");
 		}
 	}
-	
-	private void startPublish(Project project, String[] siteKeys) {
+    
+    private void startPublish(Project project, String[] siteKeys) {
         Intent i = new Intent(getActivity(), PublishService.class);
-        
+        i.setAction(PublishService.ACTION_RENDER);
         i.putExtra(PublishService.INTENT_EXTRA_PROJECT_ID, project.getId());
         i.putExtra(PublishService.INTENT_EXTRA_SITE_KEYS, siteKeys);
         getActivity().startService(i);
-	}
+    }
+    
+    private void startUpload(Project project, String[] siteKeys) {
+        Intent i = new Intent(getActivity(), PublishService.class);
+        i.setAction(PublishService.ACTION_UPLOAD);
+        i.putExtra(PublishService.INTENT_EXTRA_PROJECT_ID, project.getId());
+        i.putExtra(PublishService.INTENT_EXTRA_SITE_KEYS, siteKeys);
+        getActivity().startService(i);
+    }
 	
 
     @Override
     public void publishSucceeded(PublishJob publishJob) {
-        String path = publishJob.getRenderedFilePaths()[0]; // FIXME this can be null
-        mFileLastExport = new File(path);
-        Handler handlerTimer = new Handler();
-        mProgress.setText("Complete!");
-        handlerTimer.postDelayed(new Runnable(){
-            public void run() {
-                showPlayAndUpload();
+//        if (publishJob.isFinished()) {
+            String path = publishJob.getLastRenderFilePath(); // FIXME this can be null
+            if (path != null) {
+                mFileLastExport = new File(path);
+                Handler handlerTimer = new Handler();
+                mProgress.setText("Complete!");
+                handlerTimer.postDelayed(new Runnable(){
+                    public void run() {
+                        showPlayAndUpload();
+                    }
+                }, 200);
+            } else {
+                Log.d(TAG, "last rendered path is empty!");
             }
-        }, 200);
+//        }
     }
     
     @Override

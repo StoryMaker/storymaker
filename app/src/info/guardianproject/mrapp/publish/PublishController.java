@@ -3,11 +3,22 @@ package info.guardianproject.mrapp.publish;
 import java.util.Arrays;
 import java.util.List;
 
+import info.guardianproject.mrapp.model.Auth;
 import info.guardianproject.mrapp.model.Job;
 import info.guardianproject.mrapp.model.JobTable;
 import info.guardianproject.mrapp.model.Project;
 import info.guardianproject.mrapp.model.PublishJob;
+import info.guardianproject.mrapp.model.PublishJobTable;
+import info.guardianproject.mrapp.publish.sites.FacebookPublisher;
+import info.guardianproject.mrapp.publish.sites.FlickrPublisher;
+import info.guardianproject.mrapp.publish.sites.SoundCloudPublisher;
 import info.guardianproject.mrapp.publish.sites.StoryMakerPublisher;
+import info.guardianproject.mrapp.publish.sites.YoutubePublisher;
+import io.scal.secureshareui.controller.FacebookPublishController;
+import io.scal.secureshareui.controller.FlickrPublishController;
+import io.scal.secureshareui.controller.SoundCloudPublishController;
+import io.scal.secureshareui.controller.YoutubePublishController;
+
 import org.holoeverywhere.app.Activity;
 
 import android.content.Context;
@@ -28,7 +39,7 @@ public class PublishController {
 	UploadWorker uploadService;
 	RenderWorker renderService;
 	PublisherBase publisher;
-	PublishJob publishJob;
+	PublishJob publishJob = null;
 	PublishListener mListener;
 	
 	public PublishController(Context context, PublishListener listener) {
@@ -48,25 +59,53 @@ public class PublishController {
 	public PublisherBase getPublisher(PublishJob publishJob) {
 		String[] keys = publishJob.getSiteKeys();
 		List<String> ks = Arrays.asList(keys);
-		if (ks.contains("storymaker")) {
+		if (ks.contains(Auth.STORYMAKER)) {
 			publisher = new StoryMakerPublisher(mContext, this, publishJob);
-		}
+		} else if (ks.contains(FacebookPublishController.SITE_KEY)) {
+            publisher = new FacebookPublisher(mContext, this, publishJob);
+        } else if (ks.contains(YoutubePublishController.SITE_KEY)) {
+            publisher = new YoutubePublisher(mContext, this, publishJob);
+        }  else if (ks.contains(FlickrPublishController.SITE_KEY)) {
+            publisher = new FlickrPublisher(mContext, this, publishJob);
+        }  else if (ks.contains(SoundCloudPublishController.SITE_KEY)) {
+            publisher = new SoundCloudPublisher(mContext, this, publishJob);
+        } 
 		// TODO add others
 		
 		return publisher;
 	}
-	
-	public void startPublish(Project project, String[] siteKeys) {
-		publishJob = new PublishJob(mContext, -1, project.getId(), siteKeys);
-		publishJob.save();
-		PublisherBase publisher = getPublisher(publishJob);
-		// TODO this needs to loop a few times until publisher start returns false or something to tell us that the publish job is totally finished
-		if (publisher != null) {
-    		publisher.start();
-    		startRenderService();
-    		startUploadService();
-		}
-	}
+    
+    public void startRender(Project project, String[] siteKeys) {
+        fetchPublishJob(project, siteKeys);
+        PublisherBase publisher = getPublisher(publishJob);
+        // TODO this needs to loop a few times until publisher start returns false or something to tell us that the publish job is totally finished
+        if (publisher != null) {
+            publisher.startRender();
+        }
+    }
+    
+    public void startUpload(Project project, String[] siteKeys) {
+        fetchPublishJob(project, siteKeys);
+        // check if there is a rendered, unfinished job already matching these params
+//        publishJob(new PublishJobTable()).getNextUnfinished(mContext, project.getId(), siteKeys);
+//        publishJob = new PublishJob(mContext, -1, project.getId(), siteKeys);
+//        publishJob.save();
+        PublisherBase publisher = getPublisher(publishJob);
+        // TODO this needs to loop a few times until publisher start returns false or something to tell us that the publish job is totally finished
+        if (publisher != null) {
+            publisher.startUpload();
+        }
+    }
+    
+    private void fetchPublishJob(Project project, String[] siteKeys) {
+        if (publishJob == null) {
+            publishJob = (new PublishJobTable()).getNextUnfinished(mContext, project.getId(), siteKeys);
+            if (publishJob == null) {
+                publishJob = new PublishJob(mContext, -1, project.getId(), siteKeys);
+                publishJob.save();
+            }
+        }
+    }
 	
 	public void publishJobSucceeded(PublishJob publishJob) {
 		mListener.publishSucceeded(publishJob);

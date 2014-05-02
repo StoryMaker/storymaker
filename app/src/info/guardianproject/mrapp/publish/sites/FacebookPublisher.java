@@ -13,24 +13,24 @@ import java.util.Date;
 import android.content.Context;
 import android.util.Log;
 
-public class StoryMakerPublisher extends PublisherBase {
-    private final String TAG = "StoryMakerPublisher";
+public class FacebookPublisher extends PublisherBase {
+    private final String TAG = "FacebookPublisher";
 	
-	public StoryMakerPublisher(Context context, PublishController publishController, PublishJob publishJob) {
+	public FacebookPublisher(Context context, PublishController publishController, PublishJob publishJob) {
 	    super(context, publishController, publishJob);
 	}
 	
 	public void startRender() {
         Log.d(TAG, "startRender");
-		// TODO should detect if user is directly publishing to youtube so we don't double publish to there
 		
+        
 		Job videoRenderJob = new Job(mContext, -1, mPublishJob.getProjectId(), mPublishJob.getId(), JobTable.TYPE_RENDER, null, VideoRenderer.SPEC_KEY);
 		mController.enqueueJob(videoRenderJob);
 	}
 	
 	public void startUpload() {
         Log.d(TAG, "startUpload");
-        Job newJob = new Job(mContext, -1, mPublishJob.getProjectId(), mPublishJob.getId(), JobTable.TYPE_UPLOAD, Auth.SITE_YOUTUBE, null);
+        Job newJob = new Job(mContext, -1, mPublishJob.getProjectId(), mPublishJob.getId(), JobTable.TYPE_UPLOAD, Auth.SITE_FACEBOOK, null);
         mController.enqueueJob(newJob);
 	}
 	
@@ -40,10 +40,7 @@ public class StoryMakerPublisher extends PublisherBase {
             // since the user must now initiate upload, we just stop this publishjob now and wait
             mController.publishJobSucceeded(mPublishJob);
         } else if (job.isType(JobTable.TYPE_UPLOAD)) {
-            if (job.isSite(Auth.SITE_YOUTUBE)) {
-                Job newJob = new Job(mContext, -1, mPublishJob.getProjectId(), mPublishJob.getId(), JobTable.TYPE_UPLOAD, Auth.STORYMAKER, null);
-                mController.enqueueJob(newJob);
-            } else if (job.isSite(Auth.STORYMAKER)) {
+            if (job.isSite(Auth.SITE_FACEBOOK)) {
                 mPublishJob.setFinishedAtNow();
                 mPublishJob.save();
                 mController.publishJobSucceeded(mPublishJob);

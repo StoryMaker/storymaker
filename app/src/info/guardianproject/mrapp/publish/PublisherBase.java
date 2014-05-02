@@ -1,11 +1,23 @@
 package info.guardianproject.mrapp.publish;
 
+import android.content.Context;
 import info.guardianproject.mrapp.model.Job;
+import info.guardianproject.mrapp.model.PublishJob;
 
 public abstract class PublisherBase {
-    private final String TAG = "PublisherBase";
+    protected PublishController mController;
+    protected PublishJob mPublishJob;
+    protected Context mContext;
     
-	public abstract void start();
+    public PublisherBase(Context context, PublishController publishController, PublishJob publishJob) {
+        mContext = context;
+        mController = publishController;
+        mPublishJob = publishJob;
+    }
+
+    public abstract void startRender();
+    
+    public abstract void startUpload();
 	
 	public abstract void jobSucceeded(Job job);
 

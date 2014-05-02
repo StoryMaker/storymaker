@@ -3,6 +3,9 @@ package info.guardianproject.mrapp.publish;
 import info.guardianproject.mrapp.model.Auth;
 import info.guardianproject.mrapp.model.Job;
 import info.guardianproject.mrapp.model.JobTable;
+import info.guardianproject.mrapp.publish.sites.FacebookUploader;
+import info.guardianproject.mrapp.publish.sites.FlickrUploader;
+import info.guardianproject.mrapp.publish.sites.SoundCloudUploader;
 import info.guardianproject.mrapp.publish.sites.StoryMakerUploader;
 import info.guardianproject.mrapp.publish.sites.YoutubeUploader;
 
@@ -37,8 +40,14 @@ public  class UploadWorker extends WorkerBase {
     		if (job.isSite(Auth.SITE_YOUTUBE)) {
     			uploader = new YoutubeUploader(mContext, this, job);
     		} else if (job.isSite(Auth.STORYMAKER)) {
-    			uploader = new StoryMakerUploader(mContext, this, job);
-    		} 
+                uploader = new StoryMakerUploader(mContext, this, job);
+            } else if (job.isSite(Auth.SITE_FACEBOOK)) {
+                uploader = new FacebookUploader(mContext, this, job);
+            } else if (job.isSite(Auth.SITE_FLICKR)) {
+                uploader = new FlickrUploader(mContext, this, job);
+            } else if (job.isSite(Auth.SITE_SOUNDCLOUD)) {
+                uploader = new SoundCloudUploader(mContext, this, job);
+            } 
     		uploader.start();
 		}
 	}

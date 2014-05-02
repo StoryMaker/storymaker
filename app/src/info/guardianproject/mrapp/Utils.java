@@ -334,6 +334,30 @@ public class Utils {
     public static boolean stringNotBlank(String string) {
         return (string != null) && !string.equals("");
     }
+    
+    public static String stringArrayToCommaString(String[] strings) {
+        if (strings.length > 0) {
+            StringBuilder nameBuilder = new StringBuilder();
+
+            for (String n : strings) {
+                nameBuilder.append(n.replaceAll("'", "\\\\'")).append(",");
+            }
+
+            nameBuilder.deleteCharAt(nameBuilder.length() - 1);
+
+            return nameBuilder.toString();
+        } else {
+            return "";
+        }
+    }
+    
+    public static String[] commaStringToStringArray(String string) {
+        if (string != null) {
+            return string.split(",");
+        } else {
+            return null;
+        }
+    }
 
     public static class Proc {
         // various console cmds

@@ -88,7 +88,7 @@ public class PublishJob extends Model {
         this(context,
             cursor.getInt(cursor.getColumnIndex(StoryMakerDB.Schema.PublishJobs.ID)),
             cursor.getInt(cursor.getColumnIndex(StoryMakerDB.Schema.PublishJobs.COL_PROJECT_ID)),
-            commaStringToStringArray(cursor.getString(cursor.getColumnIndex(StoryMakerDB.Schema.PublishJobs.COL_SITE_KEYS))),
+            Utils.commaStringToStringArray(cursor.getString(cursor.getColumnIndex(StoryMakerDB.Schema.PublishJobs.COL_SITE_KEYS))),
             (!cursor.isNull(cursor.getColumnIndex(StoryMakerDB.Schema.PublishJobs.COL_QUEUED_AT)) ?
                 new Date(cursor.getLong(cursor.getColumnIndex(StoryMakerDB.Schema.PublishJobs.COL_QUEUED_AT))) : null),
             (!cursor.isNull(cursor.getColumnIndex(StoryMakerDB.Schema.PublishJobs.COL_FINISHED_AT)) ?
@@ -99,7 +99,7 @@ public class PublishJob extends Model {
     protected ContentValues getValues() {
         ContentValues values = new ContentValues();
         values.put(StoryMakerDB.Schema.PublishJobs.COL_PROJECT_ID, projectId);
-        values.put(StoryMakerDB.Schema.PublishJobs.COL_SITE_KEYS, stringArrayToCommaString(siteKeys));
+        values.put(StoryMakerDB.Schema.PublishJobs.COL_SITE_KEYS, Utils.stringArrayToCommaString(siteKeys));
         if (queuedAt != null) {
             values.put(StoryMakerDB.Schema.PublishJobs.COL_QUEUED_AT, queuedAt.getTime());
         }
@@ -110,30 +110,6 @@ public class PublishJob extends Model {
         // can't put null in values set, so only add entry if non-null
         
         return values;
-    }
-    
-    private static String stringArrayToCommaString(String[] strings) {
-        if (strings.length > 0) {
-            StringBuilder nameBuilder = new StringBuilder();
-
-            for (String n : strings) {
-                nameBuilder.append("'").append(n.replaceAll("'", "\\\\'")).append("',");
-            }
-
-            nameBuilder.deleteCharAt(nameBuilder.length() - 1);
-
-            return nameBuilder.toString();
-        } else {
-            return "";
-        }
-    }
-    
-    private static String[] commaStringToStringArray(String string) {
-        if (string != null) {
-            return string.split(",");
-        } else {
-            return null;
-        }
     }
     
 	// FIXME this isn't thread safe
@@ -204,7 +180,7 @@ public class PublishJob extends Model {
     }
     
     public String[] getRenderedFilePaths() {
-        if (isFinished()) {
+//        if (isFinished()) {
             // FIXME probably should only return finished jobs
             ArrayList<Job> jobs = getJobsAsList(JobTable.TYPE_RENDER, null, null);
             String[] paths = new String[jobs.size()];
@@ -212,9 +188,18 @@ public class PublishJob extends Model {
                 paths[i] = jobs.get(i).getResult();
             }
             return paths;
-        } else {
-            return null;
+//        } else {
+//            return null;
+//        }
+    }
+    
+    // FIXME getLastRenderFilePath needs to not just assume the 0th is the last?
+    public String getLastRenderFilePath() {
+        String[] paths = getRenderedFilePaths();
+        if (paths.length > 0) {
+            return paths[0];
         }
+        return null;
     }
 	
 	// GETTERS AND SETTERS //////

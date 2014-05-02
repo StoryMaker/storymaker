@@ -8,8 +8,8 @@ import android.content.Context;
 public abstract class UploaderBase extends JobBase {
     private final String TAG = "UploaderBase";
     
-    protected UploaderBase(Context context, WorkerBase service, Job job) {
-        super(context, service, job);
+    protected UploaderBase(Context context, WorkerBase worker, Job job) {
+        super(context, worker, job);
         // TODO Auto-generated constructor stub
     }
 }

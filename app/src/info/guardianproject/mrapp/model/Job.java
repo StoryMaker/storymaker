@@ -170,10 +170,14 @@ public class Job extends Model {
 	}
 	
 	// HELPER METHODS //////
-	
-	public PublishJob getPublishJob() {
-		return (PublishJob) (new PublishJobTable(mDB)).get(context, publishJobId);
-	}
+
+    public PublishJob getPublishJob() {
+        return (PublishJob) (new PublishJobTable(mDB)).get(context, publishJobId);
+    }
+    
+    public Project getProject() {
+        return (Project) (new ProjectTable(mDB)).get(context, projectId);
+    }
 	
 	// GETTERS AND SETTERS //////////////
 	

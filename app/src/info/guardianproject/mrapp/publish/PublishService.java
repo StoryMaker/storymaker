@@ -16,6 +16,8 @@ public class PublishService extends IntentService implements PublishListener {
     public static final String INTENT_EXTRA_SITE_KEYS = "site_keys";
     public static final String INTENT_EXTRA_PROGRESS = "progress_percent";
     public static final String INTENT_EXTRA_PROGRESS_MESSAGE = "progress_message";
+    public static final String ACTION_RENDER = "info.guardianproject.mrapp.publish.action.RENDER";
+    public static final String ACTION_UPLOAD = "info.guardianproject.mrapp.publish.action.UPLOAD";
     public static final String ACTION_SUCCESS = "info.guardianproject.mrapp.publish.action.SUCCESS";
     public static final String ACTION_FAILURE = "info.guardianproject.mrapp.publish.action.FAILURE";
     public static final String ACTION_PROGRESS = "info.guardianproject.mrapp.publish.action.PROGRESS";
@@ -28,11 +30,16 @@ public class PublishService extends IntentService implements PublishListener {
     protected void onHandleIntent(Intent intent) {
         if (intent.hasExtra(INTENT_EXTRA_PROJECT_ID) && intent.hasExtra(INTENT_EXTRA_SITE_KEYS)) {
             int id = intent.getIntExtra(INTENT_EXTRA_PROJECT_ID, -1);
-            String[] siteKeys = new String[] { Auth.STORYMAKER }; // FIXME testing hard coded to storymaker only
-//            String[] siteKeys = intent.getStringArrayExtra(INTENT_SITE_KEYS);
             if (id != -1) {
+//                String[] siteKeys = new String[] { Auth.STORYMAKER }; // FIXME testing hard coded to storymaker only
+                String[] siteKeys = intent.getStringArrayExtra(INTENT_EXTRA_SITE_KEYS);
+                PublishController controller = (new PublishController(getApplicationContext(), this));
                 Project project = (Project) (new ProjectTable()).get(getApplicationContext(), id);
-                (new PublishController(getApplicationContext(), this)).startPublish(project, siteKeys);
+                if (intent.getAction().equals(ACTION_RENDER)) {
+                    controller.startRender(project, siteKeys);
+                } else if (intent.getAction().equals(ACTION_UPLOAD)) {
+                    controller.startUpload(project, siteKeys);
+                }
             } else {
                 Log.d(TAG, "invalid publish id passed: " + id);
             }

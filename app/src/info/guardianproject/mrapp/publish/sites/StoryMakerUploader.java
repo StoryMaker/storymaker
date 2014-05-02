@@ -10,8 +10,8 @@ import info.guardianproject.mrapp.publish.UploaderBase;
 public class StoryMakerUploader extends UploaderBase {
     private final String TAG = "StoryMakerUploader";
 
-	public StoryMakerUploader(Context context, UploadWorker service, Job job) {
-		super(context, service, job);
+	public StoryMakerUploader(Context context, UploadWorker worker, Job job) {
+		super(context, worker, job);
 		// TODO Auto-generated constructor stub
 		
 		// grab the youtube id from the job.result, create the embed wrapper and post it to wordpress
