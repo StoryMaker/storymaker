@@ -194,6 +194,11 @@
             android:exported="false" >
         </service>
 
+        <service
+            android:name="info.guardianproject.mrapp.publish.PublishService"
+            android:exported="false" >
+        </service>
+
         <receiver
             android:name="info.guardianproject.mrapp.QuickStoryWidgetProvider"
             android:icon="@drawable/ic_launcher"

@@ -8,6 +8,8 @@ import info.guardianproject.mrapp.model.template.Template;
 import info.guardianproject.mrapp.model.Project;
 import info.guardianproject.mrapp.model.ProjectTable;
 import info.guardianproject.mrapp.model.Scene;
+import io.scal.secureshareui.lib.ChooseAccountFragment;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -71,7 +73,7 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
             if ((mSceneIndex != -1) && (mSceneIndex < mProject.getScenesAsArray().length)) {
                 scene = mProject.getScenesAsArray()[mSceneIndex];
             }
-            mMPM = new MediaProjectManager(this, getApplicationContext(), getIntent(), mHandlerPub, mProject, scene);
+            mMPM = new MediaProjectManager(this, getApplicationContext(), mHandlerPub, mProject, scene);
             mMPM.initProject();
             mMPM.addAllProjectMediaToEditor();
         }
@@ -84,7 +86,7 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
             mProject = new Project(getApplicationContext(), clipCount);
             mProject.setTitle(title);
             mProject.save();
-            mMPM = new MediaProjectManager(this, getApplicationContext(), getIntent(), mHandlerPub, mProject);
+            mMPM = new MediaProjectManager(this, getApplicationContext(), mHandlerPub, mProject);
             mMPM.initProject();
         }
         
@@ -594,57 +596,34 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
     private File mCapturePath;
 
     @Override
-    protected void onActivityResult(int reqCode, int resCode, Intent intent) {
-
-    	
-        if (resCode == RESULT_OK)
-        {
-            if (reqCode == REQ_OVERLAY_CAM)
-            {
+    protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
+        if (resultCode == RESULT_OK) {
+            if (requestCode == REQ_OVERLAY_CAM) {
                 File fileMediaFolder = mMPM.getExternalProjectFolder(mProject, getBaseContext());
 
-                if (mProject.getStoryType() == Project.STORY_TYPE_VIDEO)
-                {
+                if (mProject.getStoryType() == Project.STORY_TYPE_VIDEO) {
                     mCapturePath = mMPM.mMediaHelper.captureVideo(fileMediaFolder);
-
-                }
-                else if (mProject.getStoryType() == Project.STORY_TYPE_PHOTO)
-                {
+                } else if (mProject.getStoryType() == Project.STORY_TYPE_PHOTO) {
+                    mCapturePath = mMPM.mMediaHelper.capturePhoto(fileMediaFolder);
+                } else if (mProject.getStoryType() == Project.STORY_TYPE_ESSAY) {
                     mCapturePath = mMPM.mMediaHelper.capturePhoto(fileMediaFolder);
                 }
-                else if (mProject.getStoryType() == Project.STORY_TYPE_ESSAY)
-                {
-                    mCapturePath = mMPM.mMediaHelper.capturePhoto(fileMediaFolder);
+            } else if (requestCode == REQ_YOUTUBE_AUTH) {
+                if (resultCode == RESULT_OK) {
+                    String oauthToken = intent.getStringExtra("token");
+                    Log.d("OAuth", "got token: " + oauthToken);
+                    mPublishFragment.setYouTubeAuth(oauthToken);
                 }
-
+            } else if (requestCode == ChooseAccountFragment.ACCOUNT_REQUEST_CODE) {
+                mPublishFragment.chooseAccountDialogResult(resultCode, intent);
+            } else {
+                try {
+                    mMPM.handleResponse(intent, mCapturePath);
+                    refreshClipPager();
+                } catch (IOException e) {
+                    Log.e(AppConstants.TAG, "error handling capture response: " + mCapturePath, e);
+                }
             }
-            else if (reqCode == REQ_YOUTUBE_AUTH)
-            {
-            	if (resCode == RESULT_OK)
-            	{
-            		
-            		String oauthToken = intent.getStringExtra("token");
-            		Log.d("OAuth","got token: " + oauthToken);
-            		mPublishFragment.setYouTubeAuth(oauthToken);
-            	}
-            }
-            else
-            {
-            	try
-            	{
-            		mMPM.handleResponse(intent, mCapturePath);
-
-            		refreshClipPager();
-            	}
-            	catch (IOException e)
-            	{
-            		Log.e(AppConstants.TAG,"error handling capture response: " + mCapturePath,e);
-            	}
-            }
-
         }
     }
-
-  
-    
 }

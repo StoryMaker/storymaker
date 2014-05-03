@@ -4,7 +4,14 @@
     android:layout_height="match_parent"
     android:layout_gravity="center_vertical"
     android:orientation="vertical" >
-
+    
+    <!-- 
+    <ViewAnimator
+        android:id="@+id/renderStateWidget"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+         -->
+        
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
@@ -30,7 +37,8 @@
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
             android:scaleType="centerInside"
-            android:src="@drawable/render" />
+            android:src="@drawable/render"
+            android:background="#0000" />
 
         <ImageButton
             android:id="@+id/btnRenderingSpinner"
@@ -39,7 +47,8 @@
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
             android:scaleType="centerInside"
-            android:src="@drawable/render_spinner" 
+            android:src="@drawable/render_spinner"
+            android:background="#0000"
             android:visibility="gone" />
 
         <ImageView
@@ -58,17 +67,19 @@
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:layout_marginLeft="26dp"
-            android:src="@drawable/circle_play"  
+            android:src="@drawable/circle_play" 
+            android:background="#0000" 
             android:visibility="gone"/>
 
         <ImageButton
-            android:id="@+id/btnPublish"
+            android:id="@+id/btnUpload"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="26dp"
-            android:src="@drawable/circle_upload"  
+            android:src="@drawable/circle_upload" 
+            android:background="#0000" 
             android:visibility="gone"/>
 
         <TextView
@@ -81,7 +92,22 @@
             android:textAppearance="?android:attr/textAppearanceSmall" 
             android:visibility="gone" />
 
+        <TextView
+            android:id="@+id/textViewProgress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/storyThumb"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="16dp"
+            android:fontFamily="sans-serif-condensed"
+            android:text="Small Text"
+            android:textColor="#dddddd"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
     </RelativeLayout>
+    
+    <!-- </ViewAnimator>  -->
 
     <LinearLayout
         android:id="@+id/llControlBar"

@@ -1,16 +1,24 @@
 package info.guardianproject.mrapp;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.StringTokenizer;
 
 import org.holoeverywhere.app.Activity;
 import org.holoeverywhere.widget.Toast;
 
 import com.actionbarsherlock.view.MenuItem;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.os.Environment;
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 import android.view.ActionProvider;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.SubMenu;
@@ -43,6 +51,10 @@ public class Utils {
                 		Toast.makeText(_activity.getApplicationContext(), _msg, isLongToast ? Toast.LENGTH_LONG : Toast.LENGTH_SHORT).show();
                 }
         });
+    }
+    
+    public static boolean isActivity(Context context) {
+        return (context instanceof Activity);
     }
     
     /**
@@ -318,4 +330,203 @@ public class Utils {
 			}
 		};
 	}
+    
+    public static boolean stringNotBlank(String string) {
+        return (string != null) && !string.equals("");
+    }
+    
+    public static String stringArrayToCommaString(String[] strings) {
+        if (strings.length > 0) {
+            StringBuilder nameBuilder = new StringBuilder();
+
+            for (String n : strings) {
+                nameBuilder.append(n.replaceAll("'", "\\\\'")).append(",");
+            }
+
+            nameBuilder.deleteCharAt(nameBuilder.length() - 1);
+
+            return nameBuilder.toString();
+        } else {
+            return "";
+        }
+    }
+    
+    public static String[] commaStringToStringArray(String string) {
+        if (string != null) {
+            return string.split(",");
+        } else {
+            return null;
+        }
+    }
+
+    public static class Proc {
+        // various console cmds
+        public final static String SHELL_CMD_CHMOD = "chmod";
+        public final static String SHELL_CMD_KILL = "kill -9";
+        public final static String SHELL_CMD_RM = "rm";
+        public final static String SHELL_CMD_PS = "ps";
+        public final static String SHELL_CMD_PIDOF = "pidof";
+
+        public static void killZombieProcs(Context context) throws Exception {
+            int killDelayMs = 300;
+            int procId = -1;
+            File fileCmd = new File(context.getDir("bin", Context.MODE_WORLD_READABLE), "ffmpeg");
+
+            while ((procId = findProcessId(fileCmd.getAbsolutePath())) != -1) {
+                Log.w(AppConstants.TAG, "Found Tor PID=" + procId + " - killing now...");
+
+                String[] cmd = {
+                    SHELL_CMD_KILL + ' ' + procId + ""
+                };
+
+                StringBuilder log = new StringBuilder();
+                doShellCommand(cmd, log, false, false);
+                try {
+                    Thread.sleep(killDelayMs);
+                } catch (Exception e) {
+                }
+            }
+        }
+
+        public static int findProcessId(String command) {
+            int procId = -1;
+
+            try {
+                procId = findProcessIdWithPidOf(command);
+
+                if (procId == -1) {
+                    procId = findProcessIdWithPS(command);
+                }
+            } catch (Exception e) {
+                try {
+                    procId = findProcessIdWithPS(command);
+                } catch (Exception e2) {
+                    Log.w(AppConstants.TAG, "Unable to get proc id for: " + command, e2);
+                }
+            }
+
+            return procId;
+        }
+
+        // use 'pidof' command
+        public static int findProcessIdWithPidOf(String command) throws Exception {
+            int procId = -1;
+            Runtime r = Runtime.getRuntime();
+            Process procPs = null;
+            String baseName = new File(command).getName();
+            // fix contributed my mikos on 2010.12.10
+            procPs = r.exec(new String[] {
+                    SHELL_CMD_PIDOF, baseName
+            });
+            // procPs = r.exec(SHELL_CMD_PIDOF);
+
+            BufferedReader reader = new BufferedReader(new InputStreamReader(procPs.getInputStream()));
+            String line = null;
+
+            while ((line = reader.readLine()) != null) {
+                try {
+                    // this line should just be the process id
+                    procId = Integer.parseInt(line.trim());
+                    break;
+                } catch (NumberFormatException e) {
+                    Log.e("TorServiceUtils", "unable to parse process pid: " + line, e);
+                }
+            }
+
+            return procId;
+        }
+
+        // use 'ps' command
+        public static int findProcessIdWithPS(String command) throws Exception {
+            int procId = -1;
+            Runtime r = Runtime.getRuntime();
+            Process procPs = null;
+            procPs = r.exec(SHELL_CMD_PS);
+
+            BufferedReader reader = new BufferedReader(new InputStreamReader(procPs.getInputStream()));
+            String line = null;
+
+            while ((line = reader.readLine()) != null) {
+                if (line.indexOf(' ' + command) != -1) {
+                    StringTokenizer st = new StringTokenizer(line, " ");
+                    st.nextToken(); // proc owner
+                    procId = Integer.parseInt(st.nextToken().trim());
+                    break;
+                }
+            }
+
+            return procId;
+        }
+
+        public static int doShellCommand(String[] cmds, StringBuilder log, boolean runAsRoot, boolean waitFor) throws Exception {
+            Process proc = null;
+            int exitCode = -1;
+
+            if (runAsRoot) {
+                proc = Runtime.getRuntime().exec("su");
+            } else {
+                proc = Runtime.getRuntime().exec("sh");
+            }
+
+            OutputStreamWriter out = new OutputStreamWriter(proc.getOutputStream());
+
+            for (int i = 0; i < cmds.length; i++) {
+                out.write(cmds[i]);
+                out.write("\n");
+            }
+
+            out.flush();
+            out.write("exit\n");
+            out.flush();
+
+            if (waitFor) {
+                final char buf[] = new char[10];
+
+                // Consume the "stdout"
+                InputStreamReader reader = new InputStreamReader(proc.getInputStream());
+                int read = 0;
+                while ((read = reader.read(buf)) != -1) {
+                    if (log != null) {
+                        log.append(buf, 0, read);
+                    }
+                }
+
+                // Consume the "stderr"
+                reader = new InputStreamReader(proc.getErrorStream());
+                read = 0;
+                while ((read = reader.read(buf)) != -1) {
+                    if (log != null) {
+                        log.append(buf, 0, read);
+                    }
+                }
+
+                exitCode = proc.waitFor();
+            }
+
+            return exitCode;
+        }
+    }
+
+    public static class Files {
+        public static boolean isExternalStorageReady() {
+            boolean mExternalStorageAvailable = false;
+            boolean mExternalStorageWriteable = false;
+            String state = Environment.getExternalStorageState();
+
+            if (Environment.MEDIA_MOUNTED.equals(state)) {
+                // We can read and write the media
+                mExternalStorageAvailable = mExternalStorageWriteable = true;
+            } else if (Environment.MEDIA_MOUNTED_READ_ONLY.equals(state)) {
+                // We can only read the media
+                mExternalStorageAvailable = true;
+                mExternalStorageWriteable = false;
+            } else {
+                // Something else is wrong. It may be one of many other states,
+                // but all we need to know is we can neither read nor write
+                mExternalStorageAvailable = mExternalStorageWriteable = false;
+            }
+
+            return mExternalStorageAvailable && mExternalStorageWriteable;
+        }
+    }
 }

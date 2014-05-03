@@ -177,7 +177,8 @@ public class Auth extends Model {
      * @return true if credentials exist
      */
     public boolean credentialsExist() {
-        return ((!(getUserName() == null) || getUserName() == "") 
+        // TODO this needs to defer to the site package authenication validator method (TBD)
+        return (!((getUserName() == null) || getUserName() == "") 
                 && (!(getCredentials() == null) || getCredentials() == ""));
     }
     
