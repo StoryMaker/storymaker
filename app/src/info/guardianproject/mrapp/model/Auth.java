@@ -74,6 +74,28 @@ public class Auth extends Model {
     }
     
     /**
+     * Create a Model object via direct params, except for auto-incremented primary key, using Content Provider interface.
+     * 
+     * @param context
+     * @param name
+     * @param site
+     * @param userName
+     * @param credentials
+     * @param expires
+     * @param lastLogin
+     */
+    public Auth(Context context, String name, String site, String userName, String credentials, Date expires, Date lastLogin ) {
+        super(context);
+        this.context = context;
+        this.name = name;
+        this.site = site;
+        this.userName = userName;
+        this.credentials = credentials;
+        this.expires = expires;
+        this.lastLogin = lastLogin;
+    }
+    
+    /**
      * Create a Model object via direct params via direct db access.
      * 
      * This should be used within DB Migrations and Model or Table classes
@@ -90,6 +112,25 @@ public class Auth extends Model {
      */
     public Auth(SQLiteDatabase db, Context context, int id, String name, String site, String userName, String credentials, Date expires, Date lastLogin ) {
         this(context, id, name, site, userName, credentials, expires, lastLogin);
+        this.mDB = db;
+    }
+    
+    /**
+     * Create a Model object via direct params, except for auto-incremented primary key, via direct db access.
+     * 
+     * This should be used within DB Migrations and Model or Table classes
+     * 
+     * @param db
+     * @param context
+     * @param name
+     * @param site
+     * @param userName
+     * @param credentials
+     * @param expires
+     * @param lastLogin
+     */
+    public Auth(SQLiteDatabase db, Context context, String name, String site, String userName, String credentials, Date expires, Date lastLogin ) {
+        this(context, name, site, userName, credentials, expires, lastLogin);
         this.mDB = db;
     }
 
@@ -143,7 +184,31 @@ public class Auth extends Model {
     /**
      * @return true if credentials exist and are not passed their expire date
      */
-    public boolean credentialsAreValid() {
+    public boolean credentialsAreValid() 
+    {
+        // validation may eventually be handled differently for each site
+        if (site.equals(STORYMAKER))
+        {
+            return (credentialsExist() && !credentialsExpired());
+        }
+        if (site.equals(SITE_YOUTUBE))
+        {
+            return (credentialsExist() && !credentialsExpired());
+        }
+        if (site.equals(SITE_SOUNDCLOUD))
+        {
+            return (credentialsExist() && !credentialsExpired());
+        }
+        if (site.equals(SITE_FACEBOOK))
+        {
+            return (credentialsExist() && !credentialsExpired());
+        }
+        if (site.equals(SITE_FLICKR))
+        {
+            return (credentialsExist() && !credentialsExpired());
+        }
+        
+        // default
         return (credentialsExist() && !credentialsExpired());
     }
     
@@ -291,7 +356,6 @@ public class Auth extends Model {
         {
             Auth storymakerAuth = new Auth(db,
                                            context,
-                                           -1, // should be set to a real value by insert method // FIXME should make a second constructor to clean this up
                                            "StoryMaker.cc",
                                            Auth.STORYMAKER,
                                            user,

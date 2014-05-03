@@ -71,6 +71,27 @@ public class Scene extends Model {
     }
     
     /**
+     * Create a Model object via direct params, except for auto-incremented primary key
+     * 
+     * @param context
+     * @param title
+     * @param thumbnailPath
+     * @param projectIndex
+     * @param projectId
+     * @param createdAt
+     * @param updatedAt
+     */
+    public Scene(Context context, String title, String thumbnailPath, int projectIndex, int projectId, Date createdAt, Date updatedAt) {
+        super(context);
+        this.title = title;
+        this.thumbnailPath = thumbnailPath;
+        this.projectIndex = projectIndex;
+        this.projectId = projectId;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+    }
+    
+    /**
      * Create a Model object via direct params via direct db access.
      * 
      * This should be used within DB Migrations and Model or Table classes
@@ -87,6 +108,25 @@ public class Scene extends Model {
      */
     public Scene(SQLiteDatabase db, Context context, int id, String title, String thumbnailPath, int projectIndex, int projectId, Date createdAt, Date updatedAt) {
         this(context, id, title, thumbnailPath, projectIndex, projectId, createdAt, updatedAt);
+        this.mDB = db;
+    }
+    
+    /**
+     * Create a Model object via direct params, except for auto-incremented primary key, via direct db access.
+     * 
+     * This should be used within DB Migrations and Model or Table classes
+     *
+     * @param db
+     * @param context
+     * @param title
+     * @param thumbnailPath
+     * @param projectIndex
+     * @param projectId
+     * @param createdAt
+     * @param updatedAt
+     */
+    public Scene(SQLiteDatabase db, Context context, String title, String thumbnailPath, int projectIndex, int projectId, Date createdAt, Date updatedAt) {
+        this(context, title, thumbnailPath, projectIndex, projectId, createdAt, updatedAt);
         this.mDB = db;
     }
 

@@ -104,7 +104,6 @@ public class LoginActivity extends BaseActivity implements Runnable
         }
 		
         Auth storymakerAuth = new Auth(getApplicationContext(),
-        		                       -1, // should be set to a real value by insert method
         		                       "StoryMaker.cc",
         		                       Auth.STORYMAKER,
         		                       user,

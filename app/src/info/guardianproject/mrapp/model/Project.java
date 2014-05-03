@@ -96,6 +96,33 @@ public class Project extends Model {
     }
     
     /**
+     * Create a Model object via direct params, except for auto-incremented primary key
+     * 
+     * @param context
+     * @param title
+     * @param description
+     * @param thumbnailPath
+     * @param storyType
+     * @param templatePath
+     * @param createdAt
+     * @param updatedAt
+     * @param section
+     * @param location
+     */
+    public Project(Context context, String title, String description, String thumbnailPath, int storyType, String templatePath, Date createdAt, Date updatedAt, String section, String location) {
+        super(context);
+        this.title = title;
+        this.description = description;
+        this.thumbnailPath = thumbnailPath;
+        this.storyType = storyType;
+        this.templatePath = templatePath;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+        this.section = section;
+        this.location = location;
+    }
+    
+    /**
      * Create a Model object via direct params via direct db access.
      * 
      * This should be used within DB Migrations and Model or Table classes
@@ -115,6 +142,28 @@ public class Project extends Model {
      */
     public Project(SQLiteDatabase db, Context context, int id, String title, String description, String thumbnailPath, int storyType, String templatePath, Date createdAt, Date updatedAt, String section, String location) {
         this(context, id, title, description, thumbnailPath, storyType, templatePath, createdAt, updatedAt, section, location);
+        this.mDB = db;
+    }
+    
+    /**
+     * Create a Model object via direct params, except for auto-incremented primary key, via direct db access.
+     * 
+     * This should be used within DB Migrations and Model or Table classes
+     *
+     * @param db
+     * @param context
+     * @param title
+     * @param description
+     * @param thumbnailPath
+     * @param storyType
+     * @param templatePath
+     * @param createdAt
+     * @param updatedAt
+     * @param section
+     * @param location
+     */
+    public Project(SQLiteDatabase db, Context context, String title, String description, String thumbnailPath, int storyType, String templatePath, Date createdAt, Date updatedAt, String section, String location) {
+        this(context, title, description, thumbnailPath, storyType, templatePath, createdAt, updatedAt, section, location);
         this.mDB = db;
     }
 

@@ -97,6 +97,37 @@ public class Media extends Model {
     }
     
     /**
+     * Create a Model object via direct params, except for auto-incremented primary key
+     * 
+     * @param context
+     * @param path
+     * @param mimeType
+     * @param clipType
+     * @param clipIndex
+     * @param sceneId
+     * @param trimStart
+     * @param trimEnd
+     * @param duration
+     * @param createdAt
+     * @param updatedAt
+     */
+    public Media(Context context, String path, String mimeType, String clipType, int clipIndex,
+            int sceneId, float trimStart, float trimEnd, float duration, Date createdAt, Date updatedAt) {
+        super(context);
+        this.context = context;
+        this.path = path;
+        this.mimeType = mimeType;
+        this.clipType = clipType;
+        this.clipIndex = clipIndex;
+        this.sceneId = sceneId;
+        this.trimStart = trimStart;
+        this.trimEnd = trimEnd;
+        this.duration = duration;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+    }
+    
+    /**
      * Create a Model object via direct params via direct db access.
      * 
      * This should be used within DB Migrations and Model or Table classes
@@ -118,6 +149,30 @@ public class Media extends Model {
     public Media(SQLiteDatabase db, Context context, int id, String path, String mimeType, String clipType, int clipIndex,
             int sceneId, float trimStart, float trimEnd, float duration, Date createdAt, Date updatedAt) {
         this(context, id, path, mimeType, clipType, clipIndex, sceneId, trimStart, trimEnd, duration, createdAt, updatedAt);
+        this.mDB = db;
+    }
+    
+    /**
+     * Create a Model object via direct params, except for auto-incremented primary key, via direct db access.
+     * 
+     * This should be used within DB Migrations and Model or Table classes
+     *
+     * @param db
+     * @param context
+     * @param path
+     * @param mimeType
+     * @param clipType
+     * @param clipIndex
+     * @param sceneId
+     * @param trimStart
+     * @param trimEnd
+     * @param duration
+     * @param createdAt
+     * @param updatedAt
+     */
+    public Media(SQLiteDatabase db, Context context, String path, String mimeType, String clipType, int clipIndex,
+            int sceneId, float trimStart, float trimEnd, float duration, Date createdAt, Date updatedAt) {
+        this(context, path, mimeType, clipType, clipIndex, sceneId, trimStart, trimEnd, duration, createdAt, updatedAt);
         this.mDB = db;
     }
 

@@ -232,8 +232,8 @@ public class StoryMakerDB extends SQLiteOpenHelper {
                     + ID + " integer primary key autoincrement, " 
                     + COL_NAME + " text not null, "
                     + COL_SITE + " text not null, "
-                    + COL_USER_NAME + " text not null, "
-                    + COL_CREDENTIALS + " text not null, "
+                    + COL_USER_NAME + " text, "
+                    + COL_CREDENTIALS + " text, "
                     + COL_EXPIRES + " integer, "
                     + COL_LAST_LOGIN + " integer "
                     + "); ";

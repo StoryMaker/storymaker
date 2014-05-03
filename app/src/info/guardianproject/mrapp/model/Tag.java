@@ -60,6 +60,23 @@ public class Tag extends Model
     }
     
     /**
+     * Create a Model object via direct params, except for auto-incremented primary key, using Content Provider interface.
+     * 
+     * @param context
+     * @param tag
+     * @param projectId
+     * @param createdAt
+     */
+    public Tag(Context context, String tag, int projectId, Date createdAt) 
+    {
+        super(context);
+        this.context = context;
+        this.tag = tag;
+        this.projectId = projectId;
+        this.createdAt = createdAt;
+    }
+    
+    /**
      * Create a Model object via direct params via direct db access.
      * 
      * This should be used within DB Migrations and Model or Table classes
@@ -74,6 +91,23 @@ public class Tag extends Model
     public Tag(SQLiteDatabase db, Context context, int id, String tag, int projectId, Date createdAt) 
     {
         this(context, id, tag, projectId, createdAt);
+        this.mDB = db;
+    }
+    
+    /**
+     * Create a Model object via direct params, except for auto-incremented primary key, via direct db access.
+     * 
+     * This should be used within DB Migrations and Model or Table classes
+     * 
+     * @param db
+     * @param context
+     * @param tag
+     * @param projectId
+     * @param createdAt
+     */
+    public Tag(SQLiteDatabase db, Context context, String tag, int projectId, Date createdAt) 
+    {
+        this(context, tag, projectId, createdAt);
         this.mDB = db;
     }
     
