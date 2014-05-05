@@ -13,7 +13,6 @@ import info.guardianproject.mrapp.server.OAuthAccessTokenActivity;
 import info.guardianproject.mrapp.server.ServerManager;
 import info.guardianproject.mrapp.server.YouTubeSubmit;
 import info.guardianproject.mrapp.server.Authorizer.AuthorizationListener;
-import info.guardianproject.mrapp.server.soundcloud.SoundCloudUploader;
 import io.scal.secureshareui.lib.ChooseAccountFragment;
 
 import java.io.File;
@@ -578,7 +577,7 @@ public class PublishFragment extends Fragment implements PublishListener {
                                 message.getData().putString("youtubeid", mYouTubeClient.videoId);
                             }
                             else if (mActivity.mMPM.mProject.getStoryType() == Project.STORY_TYPE_AUDIO) {
-                            	
+                            	/*
                             	medium = ServerManager.CUSTOM_FIELD_MEDIUM_AUDIO;
                             	
                                 boolean installed = SoundCloudUploader
@@ -609,7 +608,7 @@ public class PublishFragment extends Fragment implements PublishListener {
                                 }
                                 else {
                                     SoundCloudUploader.installSoundCloud(mActivity);
-                                }
+                                }*/
                             }
                             else if (mActivity.mMPM.mProject.getStoryType() == Project.STORY_TYPE_PHOTO)
                             {
