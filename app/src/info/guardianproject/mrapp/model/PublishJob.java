@@ -77,6 +77,32 @@ public class PublishJob extends Model {
 		this.queuedAt = queuedAt;
 		this.finishedAt = finishedAt;
 	}
+	
+	// additional constructors that do not require an id value:
+	
+    public PublishJob(Context context, int projectId, String[] siteKeys) {
+        this(context, projectId, siteKeys, null, null);
+    }
+    
+    public PublishJob(SQLiteDatabase db, Context context, int projectId, String[] siteKeys) {
+        this(db, context, projectId, siteKeys, null, null);
+    }
+    
+    public PublishJob(Context context, int projectId, String[] siteKeys, Date queuedAt, Date finishedAt) {
+        super(context);
+        this.projectId = projectId;
+        this.siteKeys = siteKeys;
+        this.queuedAt = queuedAt;
+        this.finishedAt = finishedAt;
+    }
+    
+    public PublishJob(SQLiteDatabase db, Context context, int projectId, String[] siteKeys, Date queuedAt, Date finishedAt) {
+        super(db, context);
+        this.projectId = projectId;
+        this.siteKeys = siteKeys;
+        this.queuedAt = queuedAt;
+        this.finishedAt = finishedAt;
+    }
     
     /**
      * Inflate record from a cursor

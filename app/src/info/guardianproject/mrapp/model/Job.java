@@ -103,6 +103,68 @@ public class Job extends Model {
 		this.finishedAt = null;
 	}
     
+    // additional constructors that do not require an id value:
+    
+    public Job(Context context, int projectId, int publishJobId, String type,
+            String site, String spec, String result, int errorCode,
+            String errorMessage, Date queuedAt, Date finishedAt) {
+        super(context);
+        this.projectId = projectId;
+        this.publishJobId = publishJobId;
+        this.type = type;
+        this.site = site;
+        this.spec = spec;
+        this.result = result;
+        this.errorCode = errorCode;
+        this.errorMessage = errorMessage;
+        this.queuedAt = queuedAt;
+        this.finishedAt = finishedAt;
+    }
+    
+    public Job(SQLiteDatabase db, Context context, int projectId, int publishJobId, String type,
+            String site, String spec, String result, int errorCode,
+            String errorMessage, Date queuedAt, Date finishedAt) {
+        super(db, context);
+        this.projectId = projectId;
+        this.publishJobId = publishJobId;
+        this.type = type;
+        this.site = site;
+        this.spec = spec;
+        this.result = result;
+        this.errorCode = errorCode;
+        this.errorMessage = errorMessage;
+        this.queuedAt = queuedAt;
+        this.finishedAt = finishedAt;
+    }
+    
+    public Job(Context context, int projectId, int publishJobId, String type, String site, String spec) {
+        super(context);
+        this.projectId = projectId;
+        this.publishJobId = publishJobId;
+        this.type = type;
+        this.site = site;
+        this.spec = spec;
+        this.result = null;
+        this.errorCode = -1;
+        this.errorMessage = null;
+        this.queuedAt = null;
+        this.finishedAt = null;
+    }
+    
+    public Job(SQLiteDatabase db, Context context, int projectId, int publishJobId, String type, String site, String spec) {
+        super(db, context);
+        this.projectId = projectId;
+        this.publishJobId = publishJobId;
+        this.type = type;
+        this.site = site;
+        this.spec = spec;
+        this.result = null;
+        this.errorCode = -1;
+        this.errorMessage = null;
+        this.queuedAt = null;
+        this.finishedAt = null;
+    }
+    
     /**
      * Inflate record from a cursor
      *  

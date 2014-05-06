@@ -24,13 +24,13 @@ public class FacebookPublisher extends PublisherBase {
         Log.d(TAG, "startRender");
 		
         
-		Job videoRenderJob = new Job(mContext, -1, mPublishJob.getProjectId(), mPublishJob.getId(), JobTable.TYPE_RENDER, null, VideoRenderer.SPEC_KEY);
+		Job videoRenderJob = new Job(mContext, mPublishJob.getProjectId(), mPublishJob.getId(), JobTable.TYPE_RENDER, null, VideoRenderer.SPEC_KEY);
 		mController.enqueueJob(videoRenderJob);
 	}
 	
 	public void startUpload() {
         Log.d(TAG, "startUpload");
-        Job newJob = new Job(mContext, -1, mPublishJob.getProjectId(), mPublishJob.getId(), JobTable.TYPE_UPLOAD, Auth.SITE_FACEBOOK, null);
+        Job newJob = new Job(mContext, mPublishJob.getProjectId(), mPublishJob.getId(), JobTable.TYPE_UPLOAD, Auth.SITE_FACEBOOK, null);
         mController.enqueueJob(newJob);
 	}
 	

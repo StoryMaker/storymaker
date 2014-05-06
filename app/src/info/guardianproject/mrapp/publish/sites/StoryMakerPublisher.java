@@ -24,13 +24,13 @@ public class StoryMakerPublisher extends PublisherBase {
         Log.d(TAG, "startRender");
 		// TODO should detect if user is directly publishing to youtube so we don't double publish to there
 		
-		Job videoRenderJob = new Job(mContext, -1, mPublishJob.getProjectId(), mPublishJob.getId(), JobTable.TYPE_RENDER, null, VideoRenderer.SPEC_KEY);
+		Job videoRenderJob = new Job(mContext, mPublishJob.getProjectId(), mPublishJob.getId(), JobTable.TYPE_RENDER, null, VideoRenderer.SPEC_KEY);
 		mController.enqueueJob(videoRenderJob);
 	}
 	
 	public void startUpload() {
         Log.d(TAG, "startUpload");
-        Job newJob = new Job(mContext, -1, mPublishJob.getProjectId(), mPublishJob.getId(), JobTable.TYPE_UPLOAD, Auth.SITE_YOUTUBE, null);
+        Job newJob = new Job(mContext, mPublishJob.getProjectId(), mPublishJob.getId(), JobTable.TYPE_UPLOAD, Auth.SITE_YOUTUBE, null);
         mController.enqueueJob(newJob);
 	}
 	
@@ -41,7 +41,7 @@ public class StoryMakerPublisher extends PublisherBase {
             mController.publishJobSucceeded(mPublishJob);
         } else if (job.isType(JobTable.TYPE_UPLOAD)) {
             if (job.isSite(Auth.SITE_YOUTUBE)) {
-                Job newJob = new Job(mContext, -1, mPublishJob.getProjectId(), mPublishJob.getId(), JobTable.TYPE_UPLOAD, Auth.STORYMAKER, null);
+                Job newJob = new Job(mContext, mPublishJob.getProjectId(), mPublishJob.getId(), JobTable.TYPE_UPLOAD, Auth.STORYMAKER, null);
                 mController.enqueueJob(newJob);
             } else if (job.isSite(Auth.STORYMAKER)) {
                 mPublishJob.setFinishedAtNow();

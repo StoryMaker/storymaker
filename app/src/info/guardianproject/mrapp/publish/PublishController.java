@@ -101,7 +101,7 @@ public class PublishController {
         if (publishJob == null) {
             publishJob = (new PublishJobTable()).getNextUnfinished(mContext, project.getId(), siteKeys);
             if (publishJob == null) {
-                publishJob = new PublishJob(mContext, -1, project.getId(), siteKeys);
+                publishJob = new PublishJob(mContext, project.getId(), siteKeys);
                 publishJob.save();
             }
         }
