@@ -13,7 +13,6 @@ import info.guardianproject.mrapp.server.OAuthAccessTokenActivity;
 import info.guardianproject.mrapp.server.ServerManager;
 import info.guardianproject.mrapp.server.YouTubeSubmit;
 import info.guardianproject.mrapp.server.Authorizer.AuthorizationListener;
-import info.guardianproject.mrapp.server.soundcloud.SoundCloudUploader;
 import io.scal.secureshareui.lib.ChooseAccountFragment;
 
 import java.io.File;
@@ -181,7 +180,6 @@ public class PublishFragment extends Fragment implements PublishListener {
 			mButtonRender.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View arg0) {
-                    showRenderingSpinner();
 					launchChooseAccountsDialog();
 				}
 			});
@@ -578,7 +576,7 @@ public class PublishFragment extends Fragment implements PublishListener {
                                 message.getData().putString("youtubeid", mYouTubeClient.videoId);
                             }
                             else if (mActivity.mMPM.mProject.getStoryType() == Project.STORY_TYPE_AUDIO) {
-                            	
+                            	/*
                             	medium = ServerManager.CUSTOM_FIELD_MEDIUM_AUDIO;
                             	
                                 boolean installed = SoundCloudUploader
@@ -609,7 +607,7 @@ public class PublishFragment extends Fragment implements PublishListener {
                                 }
                                 else {
                                     SoundCloudUploader.installSoundCloud(mActivity);
-                                }
+                                }*/
                             }
                             else if (mActivity.mMPM.mProject.getStoryType() == Project.STORY_TYPE_PHOTO)
                             {
@@ -728,20 +726,27 @@ public class PublishFragment extends Fragment implements PublishListener {
         getActivity().startActivityForResult(intent, ChooseAccountFragment.ACCOUNT_REQUEST_CODE);
     }
     
-	public void chooseAccountDialogResult(int resultCode, Intent intent) {
-		if (resultCode == Activity.RESULT_OK) {
-			Log.d("PublishFragment", "Choose Accounts dialog return ok");
-			if (intent.hasExtra(ChooseAccountFragment.EXTRAS_ACCOUNT_KEYS)) {
-				ArrayList<String> siteKeys = intent.getStringArrayListExtra(ChooseAccountFragment.EXTRAS_ACCOUNT_KEYS);
-				Utils.toastOnUiThread(mActivity, "selected sites: " + siteKeys);
-				mSiteKeys = siteKeys.toArray(new String[siteKeys.size()]);
-	            startRender(mActivity.mMPM.mProject, mSiteKeys);
-			}
-		} else {
-			Log.d("PublishFragment", "Choose Accounts dialog canceled");
-			Utils.toastOnUiThread(mActivity, "Choose Accounts dialog canceled");
-		}
-	}
+    public void chooseAccountDialogResult(int resultCode, Intent intent) {
+        if (resultCode == Activity.RESULT_OK) {
+            Log.d("PublishFragment", "Choose Accounts dialog return ok");
+            if (intent.hasExtra(ChooseAccountFragment.EXTRAS_ACCOUNT_KEYS)) {
+                ArrayList<String> siteKeys = intent.getStringArrayListExtra(ChooseAccountFragment.EXTRAS_ACCOUNT_KEYS);
+                if (!siteKeys.isEmpty()) {
+                    Log.d(TAG, "selected sites: " + siteKeys);
+                    mSiteKeys = siteKeys.toArray(new String[siteKeys.size()]);
+                    showRenderingSpinner();
+                    startRender(mActivity.mMPM.mProject, mSiteKeys);
+                } else {
+                    Utils.toastOnUiThread(mActivity, "No site selected."); // FIXME move to strings.xml
+                }
+            } else {
+                Utils.toastOnUiThread(mActivity, "No site selected."); // FIXME move to strings.xml
+            }
+        } else {
+            Log.d("PublishFragment", "Choose Accounts dialog canceled");
+            Utils.toastOnUiThread(mActivity, "Choose Accounts dialog canceled"); // FIXME move to strings.xml
+        }
+    }
     
     private void startRender(Project project, String[] siteKeys) {
         Intent i = new Intent(getActivity(), PublishService.class);
@@ -781,7 +786,7 @@ public class PublishFragment extends Fragment implements PublishListener {
     
     @Override
     public void publishFailed(PublishJob publishJob) {
-        Utils.toastOnUiThread(getActivity(), "Publish failed :'( ... " + publishJob);
+        Utils.toastOnUiThread(getActivity(), "Publish failed :'( ... " + publishJob); // FIXME move to strings.xml
         showRender();
     }
 
