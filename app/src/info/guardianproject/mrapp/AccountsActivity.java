@@ -90,7 +90,7 @@ public class AccountsActivity extends BaseActivity {
 					//TODO set variables here
 					auth.setCredentials(publishAccount.getCredentials());
 					auth.setUserName(publishAccount.getName());
-					auth.setExpires(new Date());
+					auth.setExpires(new Date()); // FIXME not sure hardcoding now() makes sense here for all sites?
 					auth.update();
 				}
 			}
