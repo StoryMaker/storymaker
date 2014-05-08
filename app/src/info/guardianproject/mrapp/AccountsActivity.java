@@ -76,9 +76,9 @@ public class AccountsActivity extends BaseActivity {
 				}
 
 				auth.setCredentials(publishAccount.getCredentials());			
-				auth.setUserName("TODO");
-				auth.setExpires(null);			
-				authTable.updateLastLogin(getApplicationContext(), publishAccount.getSite(), "TODO");	
+				auth.setUserName(publishAccount.getName());
+				auth.setExpires(null);
+				authTable.updateLastLogin(getApplicationContext(), publishAccount.getSite(), auth.getUserName());	
 				auth.update();
 			}
 
@@ -89,7 +89,7 @@ public class AccountsActivity extends BaseActivity {
 				if(auth != null) {
 					//TODO set variables here
 					auth.setCredentials(publishAccount.getCredentials());
-					auth.setUserName("");
+					auth.setUserName(publishAccount.getName());
 					auth.setExpires(new Date());
 					auth.update();
 				}

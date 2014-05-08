@@ -254,7 +254,19 @@
             android:screenOrientation="portrait">
         </activity>
         <activity
-            android:name="io.scal.secureshareui.lib.FacebookActivity" 
+            android:name="io.scal.secureshareui.login.FacebookLoginActivity" 
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name="io.scal.secureshareui.login.FlickrLoginActivity" 
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name="io.scal.secureshareui.login.SoundcloudLoginActivity" 
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name="io.scal.secureshareui.login.YoutubeLoginActivity" 
             android:screenOrientation="portrait">
         </activity>
        	<activity 
