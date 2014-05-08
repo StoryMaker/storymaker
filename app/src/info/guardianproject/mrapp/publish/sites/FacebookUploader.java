@@ -34,7 +34,7 @@ public class FacebookUploader extends UploaderBase {
                 // facebook seems to freak out if our service's looper is dead when it tries to send message back 
                 @Override
                 public void run() {
-                    controller.upload(project.getTitle(), project.getDescription(), path);
+                    controller.upload(project.getTitle(), project.getDescription(), path, null, null);
                 }
                 
             };
