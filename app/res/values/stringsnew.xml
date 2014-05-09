@@ -313,7 +313,7 @@
 <string name="my_account">MY STORYMAKER ACCOUNT</string>
 <string name="join_storymaker">Join the StoryMaker Community</string>
 <string name="create_account">CREATE MY ACCOUNT</string>
-<string name="sign_in">MEMBER SIGN IN</string>
+<string name="sign_in">SIGNUP / LOGIN</string>
 <string name="sign_out">SIGN OUT</string>
 
 </resources>
