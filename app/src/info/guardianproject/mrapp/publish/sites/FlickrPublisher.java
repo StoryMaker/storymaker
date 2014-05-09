@@ -1,45 +1,78 @@
 package info.guardianproject.mrapp.publish.sites;
 
 import android.content.Context;
+import android.util.Log;
+import info.guardianproject.mrapp.model.Auth;
 import info.guardianproject.mrapp.model.Job;
+import info.guardianproject.mrapp.model.JobTable;
 import info.guardianproject.mrapp.model.PublishJob;
 import info.guardianproject.mrapp.publish.PublishController;
 import info.guardianproject.mrapp.publish.PublisherBase;
 
-public class FlickrPublisher extends PublisherBase {
-
-    public FlickrPublisher(Context context, PublishController publishController, PublishJob publishJob) {
+public class FlickrPublisher extends PublisherBase 
+{
+    private final String TAG = "FlickrPublisher";
+    
+    public FlickrPublisher(Context context, PublishController publishController, PublishJob publishJob) 
+    {
         super(context, publishController, publishJob);
     }
 
     @Override
-    public void startRender() {
-        // TODO Auto-generated method stub
-
+    public void startRender() 
+    {
+        Log.d(TAG, "startRender()");
+        
+        Job videoRenderJob = new Job(mContext, mPublishJob.getProjectId(), mPublishJob.getId(), JobTable.TYPE_RENDER, null, VideoRenderer.SPEC_KEY);
+        mController.enqueueJob(videoRenderJob);
     }
 
     @Override
-    public void startUpload() {
-        // TODO Auto-generated method stub
-
+    public void startUpload() 
+    {
+        Log.d(TAG, "startUpload()");
+        
+        Job newJob = new Job(mContext, mPublishJob.getProjectId(), mPublishJob.getId(), JobTable.TYPE_UPLOAD, Auth.SITE_FLICKR, null);
+        mController.enqueueJob(newJob);
     }
 
     @Override
-    public void jobSucceeded(Job job) {
-        // TODO Auto-generated method stub
-
+    public void jobSucceeded(Job job) 
+    {
+        Log.d(TAG, "jobSucceeded() - " + job);
+        
+        if (job.isType(JobTable.TYPE_UPLOAD)) 
+        {
+            if (job.isSite(Auth.SITE_FLICKR)) 
+            {
+                Log.d(TAG, "successful upload");
+                
+                mPublishJob.setFinishedAtNow();
+                mPublishJob.save();
+                mController.publishJobSucceeded(mPublishJob);
+            }
+        } 
+        else if (job.isType(JobTable.TYPE_RENDER)) 
+        {
+            Log.d(TAG, "successful render");
+            
+            mController.publishJobSucceeded(mPublishJob);
+        } 
     }
 
     @Override
-    public void jobFailed(Job job) {
-        // TODO Auto-generated method stub
-
+    public void jobFailed(Job job) 
+    {
+        Log.d(TAG, "jobFailed()");
+        
+        // ???
     }
 
     @Override
-    public void jobProgress(Job job, int progress, String message) {
-        // TODO Auto-generated method stub
-
+    public void jobProgress(Job job, int progress, String message) 
+    {
+        Log.d(TAG, "jobProgress()");
+        
+        mController.publishJobProgress(mPublishJob, progress, message);
     }
-
 }

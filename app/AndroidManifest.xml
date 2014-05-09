@@ -261,6 +261,10 @@
             android:name="io.scal.secureshareui.login.FlickrLoginActivity" 
             android:screenOrientation="portrait">
         </activity>
+                <activity
+            android:name="io.scal.secureshareui.login.FlickrWebActivity" 
+            android:screenOrientation="portrait">
+        </activity>
         <activity
             android:name="io.scal.secureshareui.login.SoundcloudLoginActivity" 
             android:screenOrientation="portrait">
