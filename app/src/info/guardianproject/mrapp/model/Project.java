@@ -11,6 +11,7 @@ import info.guardianproject.mrapp.StoryMakerApp;
 import info.guardianproject.mrapp.db.ProjectsProvider;
 import info.guardianproject.mrapp.db.StoryMakerDB;
 import info.guardianproject.mrapp.media.MediaProjectManager;
+
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -362,6 +363,19 @@ public class Project extends Model {
             return mDB.query((new TagTable(mDB)).getTableName(), null, selection, selectionArgs, null, null, null);
     }
     
+    public void removeTag(String tag) {
+        Log.i(TAG, "pre removeTag tags: " + getTagsAsString());
+        String selection = StoryMakerDB.Schema.Tags.COL_PROJECT_ID + " =? AND " + StoryMakerDB.Schema.Tags.COL_TAG + "= ? ";
+        String[] selectionArgs = new String[] { "" + getId(), tag };
+
+        if (mDB == null) {
+            context.getContentResolver().delete(ProjectsProvider.TAGS_CONTENT_URI, selection, selectionArgs);
+        }
+        else 
+            mDB.delete((new TagTable(mDB)).getTableName(), selection, selectionArgs);
+        Log.i(TAG, "post removeTag tags: " + getTagsAsString());
+    }
+    
     public ArrayList<Tag> getTagsAsList() 
     {
         ArrayList<Tag> tagList = new ArrayList<Tag>();
@@ -407,6 +421,15 @@ public class Project extends Model {
         for (String tag: tags) {
             addTag(tag);
         }
+    }
+    
+    public String getTagsAsString() {
+        String[] tagList = getTagsAsStringArray();
+        String tags = "";
+        for (String tag : tagList) {
+            tags += tag + ", ";
+        }
+        return tags;
     }
 
     public boolean isTemplateStory() {

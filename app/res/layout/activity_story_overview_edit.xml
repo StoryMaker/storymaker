@@ -59,11 +59,11 @@
 		
 		</LinearLayout>	
 		
-		<LinearLayout android:id="@+id/story_tag_container"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:orientation="horizontal"
-            android:animateLayoutChanges="true"/>
+		 <FrameLayout
+		    android:id="@+id/fl_tag_container"
+		    android:layout_width="match_parent"
+		    android:layout_height="match_parent" />
+
 			
 		<TextView
 	        android:text="@string/label_section" 

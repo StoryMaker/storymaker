@@ -8,6 +8,7 @@ import org.holoeverywhere.widget.Toast;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
+import android.util.Log;
 import android.widget.TextView;
 
 import com.actionbarsherlock.app.ActionBar;
@@ -15,6 +16,12 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.actionbarsherlock.view.Window;
 
+/**
+ * Display Project metadata including tags
+ * 
+ * Used in conjunction with {@link StoryOverviewEditActivity}
+ *
+ */
 public class StoryOverviewActivity extends BaseActivity {
 
 	private Project mProject;
@@ -41,7 +48,7 @@ public class StoryOverviewActivity extends BaseActivity {
 	    actionBar.setDisplayHomeAsUpEnabled(true);
 
 	    Bundle bundle = new Bundle();
-	    bundle.putStringArray("tags", mProject.getTagsAsStringArray());
+	    bundle.putInt("pid", mProject.getId());
 	    
 	    ProjectTagFragment fragPT = new ProjectTagFragment();
 	    fragPT.setArguments(bundle);

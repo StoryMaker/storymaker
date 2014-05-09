@@ -65,7 +65,7 @@ public class TagTable extends Table
         else 
             return mDB.query(getTableName(), null, selection, selectionArgs, null, null, null, null);
     }
-
+    
     public Cursor getUniqueTagsAsCursor(Context context)
     {
         // we need to only return the tag column in order for DISTINCT to work
