@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/tv_story_title"
+        style="@style/CenterHeaderText"
+        android:padding="24dp" />
+
+    <TextView
+        android:id="@+id/tv_story_desciption"
+        style="@style/TextGeneral"
+        android:hint="@string/hint_no_description"
+        android:paddingLeft="24dp"
+        android:paddingRight="24dp" />
+
+    <LinearLayout
+        android:id="@+id/project_tag_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:animateLayoutChanges="true"
+        android:orientation="horizontal"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin" />
+
+    <RelativeLayout
+        android:id="@+id/locationAndSectionContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <TextView
+            android:id="@+id/tv_story_section_label"
+            style="@style/LabelGeneral"
+            android:layout_width="100dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:gravity="left"
+            android:paddingLeft="24dp"
+            android:paddingTop="8dp"
+            android:text="@string/label_section" />
+
+        <TextView
+            android:id="@+id/tv_story_section"
+            style="@style/TextGeneral"
+            android:layout_alignBottom="@id/tv_story_section_label"
+            android:layout_toRightOf="@id/tv_story_section_label"
+            android:gravity="left"
+            android:paddingTop="8dp" />
+
+        <TextView
+            android:id="@+id/tv_story_location_label"
+            style="@style/LabelGeneral"
+            android:layout_width="100dp"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@id/tv_story_section_label"
+            android:gravity="left"
+            android:paddingLeft="24dp"
+            android:paddingTop="8dp"
+            android:text="@string/label_location" />
+
+        <TextView
+            android:id="@+id/tv_story_location"
+            style="@style/TextGeneral"
+            android:layout_alignBottom="@id/tv_story_location_label"
+            android:layout_toRightOf="@id/tv_story_location_label"
+            android:gravity="left"
+            android:paddingTop="8dp" />
+    </RelativeLayout>
+
+</LinearLayout>

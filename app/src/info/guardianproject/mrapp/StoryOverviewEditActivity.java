@@ -63,13 +63,8 @@ public class StoryOverviewEditActivity extends BaseActivity {
 		String[] autocompleteTags = getResources().getStringArray(R.array.array_autocomplete_tags);
 		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, autocompleteTags);
 		tvStoryTag.setAdapter(adapter);
-		
-		Bundle bundle = new Bundle();
-        bundle.putInt("pid", mProject.getId());
-        bundle.putBoolean("allowTagRemoval", true);
-        
-        mTagFragment = new ProjectTagFragment();
-        mTagFragment.setArguments(bundle);
+
+        mTagFragment = ProjectTagFragment.newInstance(mProject.getId(), true);
         getSupportFragmentManager().beginTransaction().add(R.id.fl_tag_container, mTagFragment).commit();
 		
 		Button btnAddTag = (Button) findViewById(R.id.btn_add_tag);
@@ -98,16 +93,13 @@ public class StoryOverviewEditActivity extends BaseActivity {
 	}
 	
 	private void saveProjectInfo() {
-		
+	    // ProjectTagFragment manages Tags
 		mProject.setTitle(etStoryTitle.getText().toString());
 		mProject.setDescription(etStoryDesc.getText().toString());
 		mProject.setSection(spStorySection.getSelectedItem().toString());
 		mProject.setLocation(spStoryLocation.getSelectedItem().toString());
 		
 		mProject.save();
-		
-		// ProjectTagFragment manages these changes
-		//mProject.setTagsFromStringList(mTags);
 	}
 
 	
@@ -150,9 +142,11 @@ public class StoryOverviewEditActivity extends BaseActivity {
 	    		saveProjectInfo();
 	    	}
 
-            Intent intent = new Intent(StoryOverviewEditActivity.this, StoryOverviewActivity.class);
-            intent.putExtra("pid", mProject.getId());
-            startActivity(intent);
+	    	// StoryOverviewEditActivity now refreshes it's 
+	    	// project backed views onStart() instead of onCreate()
+	    	// so it will re-initialize it's Project-backed views
+	    	// without having to be explicitly re-started.
+	    	// Now we can start StoryOverviewEditActivity from any Activity
 	    	StoryOverviewEditActivity.this.finish();
 	    }
 	};

@@ -21,14 +21,19 @@ import info.guardianproject.mrapp.model.ProjectTable;
  */
 public class ProjectTagFragment extends Fragment {
     private static final String TAG = "ProjectTagFragment";
+    
+    // Fragment Initialization Bundle Keys
+    protected static final String ARG_PID = "pid";
+    protected static final String ARG_EDITABLE = "editable";
 
-    private Project mProject;
+    protected int mProjectId;
+    protected Project mProject;
 	private ViewGroup mContainerProjectTagsView;
 	private OnClickListener mInternalOnTagClickListener = new OnClickListener() {
 
         @Override
         public void onClick(View v) {
-            if (mAllowTagRemoval) {
+            if (mEditable) {
                 mContainerProjectTagsView.removeView(v);
                 mProject.removeTag(getStringTagFromTagButton(v));
             }
@@ -39,9 +44,20 @@ public class ProjectTagFragment extends Fragment {
 	    
 	};
 	private OnClickListener mUserOnTagClickListener;
-	private boolean mAllowTagRemoval;
+	protected boolean mEditable;
 	
 	 /** Public API **/
+	
+	/**
+	 * Preferred method of this Fragment's construction
+	 * 
+	 * @param pid the Id of the Project this Fragment represents
+	 */
+	public static ProjectTagFragment newInstance(int pid, boolean editable) {
+	    ProjectTagFragment fragment = new ProjectTagFragment();
+	    setFragmentTagArguments(fragment, pid, editable);
+        return fragment;
+    }
 	
 	 /**
      * Assign a {@link OnClickListener} to be notified when a tag is clicked
@@ -64,28 +80,62 @@ public class ProjectTagFragment extends Fragment {
     }
     
     /** End Public API **/
+    
+    protected static void setFragmentTagArguments(Fragment fragment, int pid, boolean editable) {
+        Bundle args = new Bundle();
+        args.putInt(ARG_PID, pid);
+        args.putBoolean(ARG_EDITABLE, editable);
+        fragment.setArguments(args);
+    }
+    
+    @Override
+    public void onCreate (Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        
+        Bundle bundle = getArguments();
+        mProjectId = bundle.getInt(ARG_PID);  
+        mEditable = bundle.getBoolean(ARG_EDITABLE, false);        
+    }
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		View view = inflater.inflate(R.layout.activity_project_tag_fragment, null);
-		
-		Bundle bundle = getArguments();
-		int projectId = bundle.getInt("pid");  
-		mAllowTagRemoval = bundle.getBoolean("allowTagRemoval", false);
-
-		mProject = (Project) (new ProjectTable()).get(getActivity().getApplicationContext(), projectId);
+		View view = inflater.inflate(R.layout.fragment_project_tags, null);
 		mContainerProjectTagsView = (ViewGroup) view.findViewById(R.id.project_tag_container);	
-		initialize();
-		
 		return view;
+	}
+	
+    @Override
+    public void onStart() {
+        super.onStart();
+        initialize();
+    }
+	
+	/**
+	 * Set the ViewGroup to be used as the tag container.
+	 * 
+	 * Useful for subclasses of this fragment that provide a different
+	 * layout xml in their {@link #onCreateView(LayoutInflater, ViewGroup, Bundle)
+	 * @param vg
+	 */
+	protected void setContainerProjectTagsView(ViewGroup vg) {
+	    mContainerProjectTagsView = vg;
 	}
 
 	
-	private void initialize() {
+	/**
+	 * Initialize the UI based on {@link mProject}
+	 * 
+	 * {@link mProjectId} must be set before this method is called
+	 * 
+	 * Subclasses must call super() in their implementations
+	 */
+	protected void initialize() {
+        mProject = (Project) (new ProjectTable()).get(getActivity().getApplicationContext(), mProjectId);
 	    if (mProject == null) {
 	        throw new IllegalStateException("No project specified by initialize(). Did you bundle a \"pid\" (Project Id) Integer argument?");
 	    }
 		String[] projectTags = mProject.getTagsAsStringArray();
+		mContainerProjectTagsView.removeAllViews();
 		for (String tag : projectTags) {
 			displayTag(tag);
 		}	
@@ -100,7 +150,7 @@ public class ProjectTagFragment extends Fragment {
 	private void displayTag(String tag) {
 		
 		Button btnTag = new Button(getActivity());
-		btnTag.setEnabled(mAllowTagRemoval);
+		btnTag.setEnabled(mEditable);
 		btnTag.setText("#" + tag);
 		btnTag.setTag(tag);
 		btnTag.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));

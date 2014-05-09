@@ -17,7 +17,8 @@ import com.actionbarsherlock.view.MenuItem;
 import com.actionbarsherlock.view.Window;
 
 /**
- * Display Project metadata including tags
+ * Display Project metadata including tags.
+ * 
  * 
  * Used in conjunction with {@link StoryOverviewEditActivity}
  *
@@ -38,8 +39,12 @@ public class StoryOverviewActivity extends BaseActivity {
 		}
 		mProject = (Project) (new ProjectTable()).get(getApplicationContext(), pid);
 		
+	}
+	
+	@Override
+	public void onStart() {
+	    super.onStart();
 	    initialize();
-		setStoryInfo();
 	}
 	
 	private void initialize() {
@@ -47,18 +52,14 @@ public class StoryOverviewActivity extends BaseActivity {
 		actionBar.setIcon(R.drawable.ic_action_info);
 	    actionBar.setDisplayHomeAsUpEnabled(true);
 
-	    Bundle bundle = new Bundle();
-	    bundle.putInt("pid", mProject.getId());
-	    
-	    ProjectTagFragment fragPT = new ProjectTagFragment();
-	    fragPT.setArguments(bundle);
-        getSupportFragmentManager().beginTransaction().add(R.id.fl_tag_container, fragPT).commit();
+	    ProjectInfoFragment infoFrag = ProjectInfoFragment.newInstance(mProject.getId(), false, true);
+	    getSupportFragmentManager().beginTransaction().replace(R.id.fl_info_container, infoFrag).commit();
 	}
 	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		
-		getSupportMenuInflater().inflate(R.menu.activity_story_overview, menu);
+	    getSupportMenuInflater().inflate(R.menu.activity_story_overview, menu);
 	    return super.onCreateOptionsMenu(menu);   
 	}
 	
@@ -70,7 +71,15 @@ public class StoryOverviewActivity extends BaseActivity {
             	Intent intent = new Intent(this, StoryOverviewEditActivity.class);
             	intent.putExtra("pid", mProject.getId());
             	startActivity(intent);
-            	finish();
+            	// To enhance flexibility of this Activity
+            	// don't finish it when moving to StoryOverviewEditActivity
+            	// and hardcode this activity as the return activity in StoryOverviewEditAtivity.
+            	// Instead, allow StoryOverviewEditActivity to finish() itself, presenting
+            	// the originating Activity. To adjust, the originating activity should
+            	// refresh it's UI with Project based data in onStart() instead of onCreate()
+            	// Some day, StoryOverviewActivity and StoryOverviewEditActivity should be Fragments
+            	// or DialogFragments
+            	//finish();
             	return true;
             case R.id.itemSendStory:
             	Toast.makeText(this, "Send", Toast.LENGTH_SHORT).show();
@@ -88,19 +97,5 @@ public class StoryOverviewActivity extends BaseActivity {
             default:
             	return super.onOptionsItemSelected(item);
         }
-    }
-	
-	private void setStoryInfo() { 
-    	
-    	TextView tvStoryTitle = (TextView) findViewById(R.id.tv_story_title);
-    	TextView tvStoryDesc = (TextView) findViewById(R.id.tv_story_desciption);
-    	TextView tvStorySection = (TextView) findViewById(R.id.tv_story_section);
-    	TextView tvStoryLocation = (TextView) findViewById(R.id.tv_story_location);
-    	
-    	tvStoryTitle.setText(mProject.getTitle());
-    	String desc = mProject.getDescription();
-    	if (desc != null && !desc.isEmpty()) tvStoryDesc.setText(desc);
-    	tvStorySection.setText(mProject.getSection());
-    	tvStoryLocation.setText(mProject.getLocation());
     }
 }
