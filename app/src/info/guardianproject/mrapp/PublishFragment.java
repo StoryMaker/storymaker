@@ -159,22 +159,9 @@ public class PublishFragment extends Fragment implements PublishListener {
             mProgress = (TextView) mView.findViewById(R.id.textViewProgress);
             mProgress.setText("");
             
-//            Context context = getActivity();
-//            mFadeIn = AnimationUtils.loadAnimation(context, R.anim.fadein);
-//            mFadeOut = AnimationUtils.loadAnimation(context, R.anim.fadeout);
-//            mHorizExpand = AnimationUtils.loadAnimation(context, R.anim.horiz_expand);
-//            mExpandingFade = AnimationUtils.loadAnimation(context, R.anim.expandingfade);
-//            mSpinConstant = AnimationUtils.loadAnimation(context, R.anim.spinconstant);
-//            mRenderStateWidget = (ViewAnimator) mView.findViewById(R.id.renderStateWidget);
-//            mRenderStateWidget.setInAnimation(mFadeIn);
-//            mRenderStateWidget.setOutAnimation(mFadeOut);
-            
             ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
             		  mActivity, R.array.story_sections, android.R.layout.simple_spinner_item );
             		adapter.setDropDownViewResource( android.R.layout.simple_spinner_dropdown_item );
-            		
-//			Spinner s = (Spinner) mView.findViewById( R.id.spinnerSections );
-//			s.setAdapter( adapter );
 			
 			mButtonRender = (ImageButton) mView.findViewById(R.id.btnRender);
 			mButtonRender.setOnClickListener(new OnClickListener() {
@@ -185,29 +172,17 @@ public class PublishFragment extends Fragment implements PublishListener {
 			});
             
             mButtonUpload = (ImageButton) mView.findViewById(R.id.btnUpload);
-            // btnShare.setEnabled(fileExport.exists());
             mButtonUpload.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View arg0) {
                     if (mFileLastExport != null && mFileLastExport.exists()) {
-//                        mActivity.mMPM.mMediaHelper.shareMedia(mFileLastExport, null);
                         startUpload(mActivity.mMPM.mProject, mSiteKeys);
+                        showRenderingSpinner();
                     }
                 }
             });
 
-//			ImageButton btnRenderingSpinner = (ImageButton) mView.findViewById(R.id.btnRenderingSpinner);
-//			btnRenderingSpinner.setOnClickListener(new OnClickListener() {
-//				@Override
-//				public void onClick(View arg0) {
-//					showRenderingSpinner(false);
-//					showPlayAndUpload(true);
-//				}
-//			});
-            
             mButtonPlay = (ImageButton) mView.findViewById(R.id.btnPlay);
-            // File fileExport = mActivity.mMPM.getExportMediaFile();
-            // btnPlay.setEnabled(fileExport.exists());
             mButtonPlay.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View arg0) {
@@ -217,16 +192,6 @@ public class PublishFragment extends Fragment implements PublishListener {
                 }
             });
             
-            
-//            Button btn = (Button) mView.findViewById(R.id.btnPublish);
-//            btn.setOnClickListener(new OnClickListener() {
-//
-//                @Override
-//                public void onClick(View v) {
-//                    saveForm();
-//                    setUploadAccount(); //triggers do publish! 
-//                }
-//            });
         }
         return mView;
     }
@@ -263,7 +228,7 @@ public class PublishFragment extends Fragment implements PublishListener {
                     } else if (intent.getAction().equals(PublishService.ACTION_FAILURE)) {
                         // TODO deal with failure
                     } else if (intent.getAction().equals(PublishService.ACTION_PROGRESS)) {
-                        int progress = intent.getIntExtra(PublishService.INTENT_EXTRA_PROGRESS, -1);
+                        float progress = intent.getFloatExtra(PublishService.INTENT_EXTRA_PROGRESS, -1);
                         String message = intent.getStringExtra(PublishService.INTENT_EXTRA_PROGRESS_MESSAGE);
                         publishProgress(publishJob, progress, message);
                     }
@@ -769,7 +734,7 @@ public class PublishFragment extends Fragment implements PublishListener {
     public void publishSucceeded(PublishJob publishJob) {
 //        if (publishJob.isFinished()) {
             String path = publishJob.getLastRenderFilePath(); // FIXME this can be null
-            if (path != null) {
+            if (path != null) { // FIXME this won't work when a upload job succeeds
                 mFileLastExport = new File(path);
                 Handler handlerTimer = new Handler();
                 mProgress.setText("Complete!");
@@ -791,8 +756,10 @@ public class PublishFragment extends Fragment implements PublishListener {
     }
 
     @Override
-    public void publishProgress(PublishJob publishJob, int progress, String message) {
+    public void publishProgress(PublishJob publishJob, float progress, String message) {
 //        Utils.toastOnUiThread(getActivity(), "Progress at " + (progress / 10000) + "%: " + message);
-        mProgress.setText(message);
+        String txt = message + " " + Math.round(progress * 100) + "%";
+        mProgress.setText(txt);
+        Log.d(TAG, txt);
     }
 }

@@ -14,10 +14,10 @@ import info.guardianproject.mrapp.publish.sites.FlickrPublisher;
 import info.guardianproject.mrapp.publish.sites.SoundCloudPublisher;
 import info.guardianproject.mrapp.publish.sites.StoryMakerPublisher;
 import info.guardianproject.mrapp.publish.sites.YoutubePublisher;
-import io.scal.secureshareui.controller.FacebookPublishController;
-import io.scal.secureshareui.controller.FlickrPublishController;
-import io.scal.secureshareui.controller.SoundCloudPublishController;
-import io.scal.secureshareui.controller.YoutubePublishController;
+import io.scal.secureshareui.controller.FacebookSiteController;
+import io.scal.secureshareui.controller.FlickrSiteController;
+import io.scal.secureshareui.controller.SoundCloudSiteController;
+import io.scal.secureshareui.controller.YoutubeSiteController;
 
 import org.holoeverywhere.app.Activity;
 
@@ -61,13 +61,13 @@ public class PublishController {
 		List<String> ks = Arrays.asList(keys);
 		if (ks.contains(Auth.STORYMAKER)) {
 			publisher = new StoryMakerPublisher(mContext, this, publishJob);
-		} else if (ks.contains(FacebookPublishController.SITE_KEY)) {
+		} else if (ks.contains(FacebookSiteController.SITE_KEY)) {
             publisher = new FacebookPublisher(mContext, this, publishJob);
-        } else if (ks.contains(YoutubePublishController.SITE_KEY)) {
+        } else if (ks.contains(YoutubeSiteController.SITE_KEY)) {
             publisher = new YoutubePublisher(mContext, this, publishJob);
-        }  else if (ks.contains(FlickrPublishController.SITE_KEY)) {
+        }  else if (ks.contains(FlickrSiteController.SITE_KEY)) {
             publisher = new FlickrPublisher(mContext, this, publishJob);
-        }  else if (ks.contains(SoundCloudPublishController.SITE_KEY)) {
+        }  else if (ks.contains(SoundCloudSiteController.SITE_KEY)) {
             publisher = new SoundCloudPublisher(mContext, this, publishJob);
         } 
 		// TODO add others
@@ -115,7 +115,13 @@ public class PublishController {
         mListener.publishFailed(publishJob);
     }
 	
-	public void publishJobProgress(PublishJob publishJob, int progress, String message) {
+    /**
+     * Aggregates and filters progress from each job associated with a publish job
+     * @param publishJob
+     * @param progress
+     * @param message
+     */
+	public void publishJobProgress(PublishJob publishJob, float progress, String message) {
 	    mListener.publishProgress(publishJob, progress, message);
 	}
 	
@@ -131,7 +137,7 @@ public class PublishController {
 		getPublisher(job.getPublishJob()).jobFailed(job);
 	}
 	
-	public void jobProgress(Job job, int progress, String message) {
+	public void jobProgress(Job job, float progress, String message) {
 	       getPublisher(job.getPublishJob()).jobProgress(job, progress, message);
 	}
 	
@@ -160,7 +166,7 @@ public class PublishController {
 
         public void publishFailed(PublishJob publishJob);
         
-        public void publishProgress(PublishJob publishJob, int progress, String message);
+        public void publishProgress(PublishJob publishJob, float progress, String message);
 	}
 
 }

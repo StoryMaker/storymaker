@@ -15,6 +15,7 @@ import org.holoeverywhere.app.AlertDialog;
 import org.holoeverywhere.app.ProgressDialog;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.Message;
@@ -38,16 +39,16 @@ public class VideoRenderer extends RendererBase {
 
     @Override
     public void start() {
-//        super.start();
+//        super.start(); // FIXME should we call the parent for any reason?
         renderVideo();
     }
 	
     private void renderVideo() {
-        File mFileLastExport = mMPM.getExportMediaFile();
+        File exportFile = mMPM.getExportMediaFile();
         boolean compress = mSettings.getBoolean("pcompress", false);// compress
         boolean doOverwrite = true;
         try {
-            MediaDesc mdExported = mMPM.doExportMedia(mFileLastExport, compress, doOverwrite);
+            MediaDesc mdExported = mMPM.doExportMedia(exportFile, compress, doOverwrite);
             jobSucceeded(mdExported.path);
         } catch (Exception e) {
             // TODO Auto-generated catch block
@@ -60,6 +61,8 @@ public class VideoRenderer extends RendererBase {
 
         @Override
         public void handleMessage(Message msg) {
+            // TODO move this to base class?
+            // TODO opt. don't call getData() every time:  Bundle data = msg.getData();
             String statusTitle = msg.getData().getString("statusTitle");
             String status = msg.getData().getString("status");
             if (status != null) {

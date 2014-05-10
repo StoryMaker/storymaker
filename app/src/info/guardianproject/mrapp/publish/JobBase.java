@@ -24,7 +24,6 @@ public class JobBase {
     
     public void start() {
         Log.d(TAG, "start");
-        jobSucceeded("foo"); // FIXME foo
     }
     
     public void jobSucceeded(String result) {
@@ -44,7 +43,8 @@ public class JobBase {
         mWorker.jobFailed(mJob, errorCode, errorMessage);
     }
     
-    public void jobProgress(Job job, int progress, String message) {
+    // FIXME why do we pass in job instead of using mJob?
+    public void jobProgress(Job job, float progress, String message) {
         mWorker.jobProgress(job, progress, message);
     }
 }

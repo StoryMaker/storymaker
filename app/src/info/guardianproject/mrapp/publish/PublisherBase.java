@@ -23,5 +23,5 @@ public abstract class PublisherBase {
 
 	public abstract void jobFailed(Job job);
 	
-	public abstract void jobProgress(Job job, int progress, String message);
+	public abstract void jobProgress(Job job, float progress, String message);
 }

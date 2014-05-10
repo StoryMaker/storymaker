@@ -1,7 +1,7 @@
 package info.guardianproject.mrapp.model;
 
 import info.guardianproject.mrapp.db.StoryMakerDB;
-import io.scal.secureshareui.model.PublishAccount;
+import io.scal.secureshareui.model.Account;
 
 import java.util.Date;
 
@@ -370,8 +370,8 @@ public class Auth extends Model {
         return false;
     }
     
-    public PublishAccount convertToPublishAccountObject() {
-    	return new PublishAccount(Integer.toString(this.id), this.name, this.site, this.userName, this.credentials, this.credentialsExist(), this.credentialsAreValid());
+    public Account convertToAccountObject() {
+    	return new Account(Integer.toString(this.id), this.name, this.site, this.userName, this.credentials, this.credentialsExist(), this.credentialsAreValid());
     }
 }
     

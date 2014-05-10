@@ -67,7 +67,7 @@ public  class UploadWorker extends WorkerBase {
 	}
 
     @Override
-    public void jobProgress(Job job, int progress, String message) {
+    public void jobProgress(Job job, float progress, String message) {
         mController.jobProgress(job, progress, message);
     }
 	

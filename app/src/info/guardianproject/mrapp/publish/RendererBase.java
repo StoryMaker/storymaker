@@ -5,12 +5,12 @@ import org.holoeverywhere.app.Activity;
 
 import android.content.Context;
 
-// TODO a lot of code shared between this and uploaderBase...
+// TODO should these vanish and have FacebookUploader et all just derive from JobBase directly?
 public class RendererBase extends JobBase {
     private final String TAG = "RendererBase";
     
-    protected RendererBase(Context context, WorkerBase service, Job job) {
-        super(context, service, job);
+    protected RendererBase(Context context, WorkerBase worker, Job job) {
+        super(context, worker, job);
         // TODO Auto-generated constructor stub
     }
 }

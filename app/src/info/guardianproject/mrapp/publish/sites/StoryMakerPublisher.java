@@ -56,7 +56,7 @@ public class StoryMakerPublisher extends PublisherBase {
 		// nop
 	}
 	
-	public void jobProgress(Job job, int progress, String message) {
+	public void jobProgress(Job job, float progress, String message) {
 	    mController.publishJobProgress(mPublishJob, progress, message);
 	}
 }

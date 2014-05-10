@@ -31,8 +31,8 @@ public class PublishService extends IntentService implements PublishListener {
         if (intent.hasExtra(INTENT_EXTRA_PROJECT_ID) && intent.hasExtra(INTENT_EXTRA_SITE_KEYS)) {
             int id = intent.getIntExtra(INTENT_EXTRA_PROJECT_ID, -1);
             if (id != -1) {
-//                String[] siteKeys = new String[] { Auth.STORYMAKER }; // FIXME testing hard coded to storymaker only
                 String[] siteKeys = intent.getStringArrayExtra(INTENT_EXTRA_SITE_KEYS);
+                // TODO need to trigger controllers for all selected sites
                 PublishController controller = (new PublishController(getApplicationContext(), this));
                 Project project = (Project) (new ProjectTable()).get(getApplicationContext(), id);
                 if (intent.getAction().equals(ACTION_RENDER)) {
@@ -63,7 +63,7 @@ public class PublishService extends IntentService implements PublishListener {
     }
 
     @Override
-    public void publishProgress(PublishJob publishJob, int progress, String message) {
+    public void publishProgress(PublishJob publishJob, float progress, String message) {
         Intent intent = new Intent(ACTION_PROGRESS);
         intent.putExtra(INTENT_EXTRA_PROJECT_ID, publishJob.getProjectId());
         intent.putExtra(INTENT_EXTRA_PUBLISH_JOB_ID, publishJob.getId());

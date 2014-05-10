@@ -8,9 +8,9 @@ import java.util.List;
 
 import info.guardianproject.mrapp.model.Auth;
 import info.guardianproject.mrapp.model.AuthTable;
-import io.scal.secureshareui.controller.PublishController.OnPublishEventListener;
+import io.scal.secureshareui.controller.SiteController.OnPublishEventListener;
 import io.scal.secureshareui.lib.ChooseAccountFragment;
-import io.scal.secureshareui.model.PublishAccount;
+import io.scal.secureshareui.model.Account;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -43,20 +43,20 @@ public class AccountsActivity extends BaseActivity {
 	    FragmentManager fragManager = getSupportFragmentManager();
 	    FragmentTransaction fragTrans = fragManager.beginTransaction();
 
-	    List<PublishAccount> accounts = new ArrayList<PublishAccount>();
+	    List<Account> accounts = new ArrayList<Account>();
 	    final AuthTable authTable = new AuthTable();
-	    String[] siteAvailableNames = PublishAccount.CONTROLLER_SITE_NAMES;
-	    String[] siteAvailableKeys = PublishAccount.CONTROLLER_SITE_KEYS;
+	    String[] siteAvailableNames = Account.CONTROLLER_SITE_NAMES;
+	    String[] siteAvailableKeys = Account.CONTROLLER_SITE_KEYS;
 	    Auth auth;
 		
 		for(int i = 0; i < siteAvailableKeys.length; i++) {
 			auth = authTable.getAuthDefault(this, siteAvailableKeys[i]);
 			
 			if(auth == null) {
-				accounts.add(new PublishAccount(null, siteAvailableNames[i], siteAvailableKeys[i], "", "", false, false));
+				accounts.add(new Account(null, siteAvailableNames[i], siteAvailableKeys[i], "", "", false, false));
 			}
 			else {
-				accounts.add(auth.convertToPublishAccountObject());
+				accounts.add(auth.convertToAccountObject());
 			}
 		}
 		
@@ -66,7 +66,7 @@ public class AccountsActivity extends BaseActivity {
 		caFragment.setOnPublishEventListener(new OnPublishEventListener() {
 
 			@Override
-			public void onSuccess(PublishAccount publishAccount) {
+			public void onSuccess(Account publishAccount) {
 				Auth auth = authTable.getAuthDefault(getApplicationContext(), publishAccount.getSite());
 				
 				//if auth doesn't exist in db
@@ -83,7 +83,7 @@ public class AccountsActivity extends BaseActivity {
 			}
 
 			@Override
-			public void onFailure(PublishAccount publishAccount, String failureMessage) {
+			public void onFailure(Account publishAccount, String failureMessage) {
 				Auth auth = authTable.getAuthDefault(getApplicationContext(), publishAccount.getSite());
 
 				if(auth != null) {

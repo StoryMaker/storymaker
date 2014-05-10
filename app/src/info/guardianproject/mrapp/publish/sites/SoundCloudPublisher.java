@@ -37,7 +37,7 @@ public class SoundCloudPublisher extends PublisherBase {
     }
 
     @Override
-    public void jobProgress(Job job, int progress, String message) {
+    public void jobProgress(Job job, float progress, String message) {
         // TODO Auto-generated method stub
 
     }
