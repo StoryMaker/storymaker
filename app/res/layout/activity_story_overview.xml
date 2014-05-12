@@ -15,12 +15,13 @@
 		    android:layout_width="match_parent"
 		    android:layout_height="wrap_content"
 		    android:layout_alignParentTop="true"
+		    android:paddingBottom="8dp"
 		    android:background="@android:color/white" />
 		
 
 		<View
 		    android:id="@+id/divider"
-		    android:layout_marginTop="8dp"
+		    android:padding="0dp"
 		    android:layout_below="@id/fl_info_container"
     		style="@style/DividerHorizontal"/>
 		
@@ -32,33 +33,12 @@
 			 white 
 		-->
 		<LinearLayout
+		    android:id="@+id/activityList"
+		    android:paddingTop="24dp"
+		    android:paddingLeft="24dp"
 		    android:layout_width="fill_parent"
-		    android:layout_height="match_parent"
+		    android:layout_height="wrap_content"
 		    android:layout_below="@id/divider"
-		    android:layout_alignParentBottom="true"
-		    android:orientation="vertical" >
-		
-		    <TextView
-		        style="@style/LabelHeader"
-		        android:paddingLeft="24dp"
-		        android:paddingRight="24dp"
-		        android:text="@string/label_activities"
-		        android:textSize="18sp" />
-				
-			<TextView
-			    style="@style/TextGeneral"
-			    android:paddingLeft="24dp"
-			    android:paddingRight="24dp"
-			    android:paddingTop="4dp"
-			    android:text="Story shared on Facebook" />
-
-			<TextView
-			    style="@style/TextGeneral"
-			    android:paddingLeft="24dp"
-			    android:paddingRight="24dp"
-			    android:paddingTop="4dp"
-			    android:text="Story Created" />
-	    
-    	</LinearLayout>		
+		    android:orientation="vertical" />
 	</RelativeLayout>
 </ScrollView>

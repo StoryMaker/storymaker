@@ -3,6 +3,7 @@ package info.guardianproject.mrapp;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -10,13 +11,22 @@ import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.Button;
 
+import org.holoeverywhere.widget.TextView;
+
 import info.guardianproject.mrapp.model.Project;
 import info.guardianproject.mrapp.model.ProjectTable;
 
 /**
- * Fragment for displaying a String[] of tags with 
- * optional parameters to specify whether tags may be removed from the pool
- * by clicking
+ * Fragment for displaying a Project's tags and optionally allowing
+ * tag removal based on configuration via {@link #newInstance(int, boolean)}
+ * 
+ * If this Fragment is displayed with editable set false in {@link #newInstance(int, boolean)}
+ * and the provided Project has no tags, R.string.no_tags.msg will be 
+ * displayed in the tag area.
+ * 
+ * This Fragment has a public API for interaction with it's host Activity:
+ * See {@link #setOnTagClickListener(OnClickListener)}
+ * See {@link #addTag(String)}
  *
  */
 public class ProjectTagFragment extends Fragment {
@@ -136,14 +146,18 @@ public class ProjectTagFragment extends Fragment {
 	    }
 		String[] projectTags = mProject.getTagsAsStringArray();
 		mContainerProjectTagsView.removeAllViews();
-		for (String tag : projectTags) {
-			displayTag(tag);
-		}	
+		if (projectTags.length == 0) {
+		    displayMessage(getActivity().getString(R.string.no_tags_msg));
+		} else {
+    		for (String tag : projectTags) {
+    			displayTag(tag);
+    		}	
+		}
 	}
 	
 	/**
-	 * Create a Button for each tag with text
-	 * equal to "#" + tag, and View tag equal to tag's String value.
+	 * Display a tag with text equal to "#" + tag, and View#tag equal 
+	 * to tag's String value.
 	 * 
 	 * Does not add tag to the Project represented by this Fragment
 	 */
@@ -158,6 +172,19 @@ public class ProjectTagFragment extends Fragment {
 		
 		mContainerProjectTagsView.addView(btnTag, 0);
     }
+	
+	/**
+	 * Display a message in a view that spans the entire
+	 * tag pool
+	 */
+	private void displayMessage(String message) {
+	    TextView textView = new TextView(getActivity());
+	    textView.setText(message);
+	    textView.setGravity(Gravity.CENTER);
+	    textView.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+	    
+	    mContainerProjectTagsView.addView(textView, 0);
+	}
 	
 	private String getStringTagFromTagButton(View v) {
 	    return (String) v.getTag();

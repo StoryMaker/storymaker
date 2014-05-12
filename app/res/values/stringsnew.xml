@@ -316,4 +316,8 @@
 <string name="sign_in">SIGNUP / LOGIN</string>
 <string name="sign_out">SIGN OUT</string>
 
+<!-- ProjectTagFragment -->
+
+<string name="no_tags_msg">No #tags added</string>
+
 </resources>
