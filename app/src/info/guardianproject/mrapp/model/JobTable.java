@@ -50,14 +50,16 @@ public class JobTable extends Table {
         return ProjectsProvider.JOBS_BASE_PATH;
     }
 
-    public ArrayList<Job> getUnfinishedAsList(Context context, String type) {
+    public ArrayList<Job> getUnfinishedAsList(Context context, String type, String site) {
         // FIXME this isn't very optimized
     	// type can be TYPE_UPLOAD or TYPE_RENDER
         ArrayList<Job> jobs = (ArrayList<Job>) getAllAsList(context); // TODO need to make this method for reals
         ArrayList<Job> purgedList = null;
         if (jobs != null) {
             for (Job job: jobs) {
-                if ((job.finishedAt == null) && job.getType().equals(type)) { // FIXME do we need to check something other than null?
+                if ((job.finishedAt == null) 
+                        && job.getType().equals(type) 
+                        && (site == null ? true : job.getSite().equals(site))) { // FIXME do we need to check something other than null?
 //                    jobs.remove(job); // it's finished.  purge it
                     if (purgedList == null) {
                         purgedList = new ArrayList<Job>();
@@ -70,8 +72,8 @@ public class JobTable extends Table {
     }
 	
     // job's are only ready to be run if they have a queuedAt time.  You can enter jobs in the table before they are ready to run
-    public Job getNextUnfinished(Context context, String type) {
-        ArrayList<Job> jobs = getUnfinishedAsList(context, type);
+    public Job getNextUnfinished(Context context, String type, String site) {
+        ArrayList<Job> jobs = getUnfinishedAsList(context, type, site);
         if (jobs != null) {
             return jobs.get(0); // FIXME is the 0th really the next in line ?  is the list sorted by id?
         } else {

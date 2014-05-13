@@ -31,7 +31,7 @@ public class RenderWorker extends WorkerBase {
 		// TODO guard against multiple calls if we are running already
 //		ArrayList<Job> jobs = (ArrayList<Job>) (new JobTable(db)).getUnfinishedAsList(context, JobTable.TYPE_UPLOAD);
 //	    SQLiteDatabase db = (new StoryMakerDB(context)).getWritableDatabase("foo");
-		Job job = (new JobTable(null)).getNextUnfinished(mContext, JobTable.TYPE_RENDER);
+		Job job = (new JobTable(null)).getNextUnfinished(mContext, JobTable.TYPE_RENDER, null);
 		RendererBase renderer = null;
 		if (job != null) {
     		if (job.isSpec(VideoRenderer.SPEC_KEY)) {

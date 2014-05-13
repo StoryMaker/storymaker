@@ -3,6 +3,8 @@ package info.guardianproject.mrapp.publish.sites;
 import android.content.Context;
 import android.os.Handler;
 import android.util.Log;
+import info.guardianproject.mrapp.model.Auth;
+import info.guardianproject.mrapp.model.AuthTable;
 import info.guardianproject.mrapp.model.Job;
 import info.guardianproject.mrapp.model.Project;
 import info.guardianproject.mrapp.model.PublishJob;
@@ -22,17 +24,19 @@ public class FlickrUploader extends UploaderBase {
     public void start() {
         Log.d(TAG, "start()");
         
-        final SiteController controller = SiteController.getPublishController(FlickrSiteController.SITE_KEY, mContext, null, ""+mJob.getId());
+        final SiteController controller = SiteController.getSiteController(FlickrSiteController.SITE_KEY, mContext, mHandler, ""+mJob.getId());
         final Project project = mJob.getProject();
         final PublishJob publishJob = mJob.getPublishJob();
         final String path = publishJob.getLastRenderFilePath();
+        final Auth auth = (new AuthTable()).getAuthDefault(mContext, Auth.SITE_FLICKR);
         if (path != null) {
             Handler mainHandler = new Handler(mContext.getMainLooper());
             Runnable myRunnable = new Runnable() {
                 @Override
                 public void run() {
                     Log.d(TAG, "run()");
-                    controller.upload(project.getTitle(), project.getDescription(), path, null, null); // FIXME, this might not be wise with flickr, does the flickr SDK automatically run itself on a backgroundthread?
+                 // FIXME, this might not be wise to run on the main thread flickr, does the flickr SDK automatically run itself on a backgroundthread?
+                    controller.upload(project.getTitle(), project.getDescription(), path, auth.getUserName(), auth.getCredentials()); 
                 }
             };
             mainHandler.post(myRunnable);

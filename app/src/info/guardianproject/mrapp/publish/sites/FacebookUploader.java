@@ -32,7 +32,7 @@ public class FacebookUploader extends UploaderBase {
     @Override
     public void start() {
         // TODO Auto-generated constructor stub
-        final SiteController controller = SiteController.getPublishController(FacebookSiteController.SITE_KEY, mContext, mHandler, ""+mJob.getId());
+        final SiteController controller = SiteController.getSiteController(FacebookSiteController.SITE_KEY, mContext, mHandler, ""+mJob.getId());
         final Project project = mJob.getProject();
         final PublishJob publishJob = mJob.getPublishJob();
         final String path = publishJob.getLastRenderFilePath();

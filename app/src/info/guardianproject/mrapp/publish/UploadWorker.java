@@ -34,7 +34,7 @@ public  class UploadWorker extends WorkerBase {
 	public void start() {
 		// TODO guard against multiple calls if we are running already
 //		ArrayList<Job> jobs = (ArrayList<Job>) (new JobTable(db)).getUnfinishedAsList(context, JobTable.TYPE_UPLOAD);
-		Job job = (new JobTable(null)).getNextUnfinished(mContext, JobTable.TYPE_UPLOAD);
+		Job job = (new JobTable(null)).getNextUnfinished(mContext, JobTable.TYPE_UPLOAD, null);
 		UploaderBase uploader = null;
 		if (job != null) {
     		if (job.isSite(Auth.SITE_YOUTUBE)) {
