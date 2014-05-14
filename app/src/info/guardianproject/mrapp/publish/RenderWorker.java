@@ -2,6 +2,7 @@ package info.guardianproject.mrapp.publish;
 
 import info.guardianproject.mrapp.model.Job;
 import info.guardianproject.mrapp.model.JobTable;
+import info.guardianproject.mrapp.publish.sites.AudioRenderer;
 import info.guardianproject.mrapp.publish.sites.VideoRenderer;
 
 import org.holoeverywhere.app.Activity;
@@ -34,9 +35,11 @@ public class RenderWorker extends WorkerBase {
 		Job job = (new JobTable(null)).getNextUnfinished(mContext, JobTable.TYPE_RENDER, null);
 		RendererBase renderer = null;
 		if (job != null) {
-    		if (job.isSpec(VideoRenderer.SPEC_KEY)) {
-    			renderer = new VideoRenderer(mContext, this, job);
-    		} //else if (job.isSpec(Auth.SITE_STORYMAKER)) {
+            if (job.isSpec(VideoRenderer.SPEC_KEY)) {
+                renderer = new VideoRenderer(mContext, this, job);
+            } else if (job.isSpec(AudioRenderer.SPEC_KEY)) {
+                renderer = new AudioRenderer(mContext, this, job);
+            } //else if (job.isSpec(Auth.SITE_STORYMAKER)) {
     //			renderer = new StoryMakerUploader(context, this, job);
     //		}
             renderer.start();
