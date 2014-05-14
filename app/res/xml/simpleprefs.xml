@@ -6,7 +6,7 @@
 		    
 		<CheckBoxPreference android:title="@string/prefs_use_tor_title" android:summary="@string/prefs_use_tor_summary" android:key="pusetor" android:defaultValue="false"/>
 		<CheckBoxPreference android:title="@string/prefs_use_download_manager_title" android:summary="@string/prefs_use_download_manager_summary" android:key="pusedownloadmanager" android:defaultValue="true"/>
-		<CheckBoxPreference android:title="@string/prefs_use_upload_manager_title" android:summary="@string/prefs_use_upload_manager_summary" android:key="puseuploadmanager" android:defaultValue="true"/>
+		<!-- <CheckBoxPreference android:title="@string/prefs_use_upload_manager_title" android:summary="@string/prefs_use_upload_manager_summary" android:key="puseuploadmanager" android:defaultValue="true"/> -->
 		
 		
 		<EditTextPreference android:title="@string/prefs_youtube_acccount_title" android:summary="@string/prefs_youtube_acccount_summary" android:key="youTubeUserName" android:enabled="true"/>
