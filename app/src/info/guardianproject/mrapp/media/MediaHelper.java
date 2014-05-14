@@ -30,7 +30,6 @@ import android.webkit.MimeTypeMap;
 public class MediaHelper implements MediaScannerConnectionClient {
 
 	private Activity mActivity;
-    private Context mContext;
 	private Handler mHandler;
 	private MediaScannerConnection mScanner;
 	
@@ -49,7 +48,7 @@ public class MediaHelper implements MediaScannerConnectionClient {
          values.put(MediaStore.Images.Media.TITLE, MediaConstants.CAMCORDER_TMP_FILE);
          values.put(MediaStore.Images.Media.DESCRIPTION,MediaConstants.CAMCORDER_TMP_FILE);
          
-         mContext.sendBroadcast(new Intent().setAction(AppConstants.Keys.Service.LOCK_LOGS));
+         mActivity.sendBroadcast(new Intent().setAction(AppConstants.Keys.Service.LOCK_LOGS));
          mMediaFileTmp = new File(fileExternDir, new Date().getTime() + '-' + MediaConstants.CAMCORDER_TMP_FILE);
          mMediaUriTmp = Uri.fromFile(mMediaFileTmp);
          
