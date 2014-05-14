@@ -758,7 +758,8 @@ public class PublishFragment extends Fragment implements PublishListener {
     @Override
     public void publishProgress(PublishJob publishJob, float progress, String message) {
 //        Utils.toastOnUiThread(getActivity(), "Progress at " + (progress / 10000) + "%: " + message);
-        String txt = message + " " + Math.round(progress * 100) + "%";
+        int prog = Math.round(progress * 100);
+        String txt = message + ((prog > 0) ? " " + prog + "%" : "");
         mProgress.setText(txt);
         Log.d(TAG, txt);
     }
