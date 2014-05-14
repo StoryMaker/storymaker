@@ -205,6 +205,7 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
                 JobTable foo;
                 (new PublishJobTable(db)).debugPurgeTable();
                 (new JobTable(db)).debugPurgeTable();
+                db.close();
                 return true;
                 
         }

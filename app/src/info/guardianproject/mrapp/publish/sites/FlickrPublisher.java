@@ -64,8 +64,7 @@ public class FlickrPublisher extends PublisherBase
     public void jobFailed(Job job) 
     {
         Log.d(TAG, "jobFailed()");
-        
-        // ???
+        mController.publishJobFailed(mPublishJob);
     }
 
     @Override

@@ -53,7 +53,7 @@ public class StoryMakerPublisher extends PublisherBase {
 	
 	public void jobFailed(Job job) {
         Log.d(TAG, "jobFailed: " + job);
-		// nop
+        mController.publishJobFailed(mPublishJob);
 	}
 	
 	public void jobProgress(Job job, float progress, String message) {
