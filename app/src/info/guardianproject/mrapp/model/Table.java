@@ -78,6 +78,14 @@ public abstract class Table {
         context.getContentResolver().notifyChange(uri, null);
         return count;
     }
+    
+    // FIXME we should probably strip this from non debug builds?
+    /**
+     * this exists fro debugging/testing, don't use it
+     */
+    public void debugPurgeTable() {
+        mDB.delete(getTableName(), null, null);
+    }
 
     public int update(Context context, Uri uri, ContentValues values, String selection, String[] selectionArgs) {
         int count;

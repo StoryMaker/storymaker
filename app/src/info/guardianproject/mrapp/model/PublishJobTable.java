@@ -28,7 +28,7 @@ public class PublishJobTable extends Table {
         super(db);
     }
     
-    @Override
+    @Override            
     protected String getTableName() {
         return StoryMakerDB.Schema.PublishJobs.NAME;
     }

@@ -1,12 +1,15 @@
 
 package info.guardianproject.mrapp;
 
+import info.guardianproject.mrapp.db.StoryMakerDB;
 import info.guardianproject.mrapp.media.MediaProjectManager;
 import info.guardianproject.mrapp.media.OverlayCameraActivity;
 import info.guardianproject.mrapp.model.template.Clip;
 import info.guardianproject.mrapp.model.template.Template;
+import info.guardianproject.mrapp.model.JobTable;
 import info.guardianproject.mrapp.model.Project;
 import info.guardianproject.mrapp.model.ProjectTable;
+import info.guardianproject.mrapp.model.PublishJobTable;
 import info.guardianproject.mrapp.model.Scene;
 import io.scal.secureshareui.lib.ChooseAccountFragment;
 
@@ -27,6 +30,7 @@ import org.holoeverywhere.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -195,6 +199,12 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
                 	
                 	return true;
                 }
+                return true;
+            case R.id.purgePublishTables:
+                net.sqlcipher.database.SQLiteDatabase db = new StoryMakerDB(getBaseContext()).getWritableDatabase("foo");
+                JobTable foo;
+                (new PublishJobTable(db)).debugPurgeTable();
+                (new JobTable(db)).debugPurgeTable();
                 return true;
                 
         }
