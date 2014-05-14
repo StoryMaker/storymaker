@@ -220,12 +220,14 @@
         <activity android:name="net.hockeyapp.android.UpdateActivity" />
         <activity
             android:name="info.guardianproject.mrapp.AccountsActivity"
-            android:label="@string/title_activity_accounts" >
+            android:label="@string/title_activity_accounts"
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name="info.guardianproject.mrapp.StoryOverviewActivity"
             android:label="@string/title_activity_story_overview"
-            android:theme="@style/PopupTheme" >
+            android:theme="@style/PopupTheme"
+            android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".SceneEditorActivity" />
@@ -233,7 +235,8 @@
         <activity
             android:name="info.guardianproject.mrapp.StoryOverviewEditActivity"
             android:label="@string/title_activity_story_overview_edit"
-            android:theme="@style/PopupTheme" >
+            android:theme="@style/PopupTheme"
+            android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".StoryOverviewActivity" />
@@ -241,24 +244,26 @@
         <activity
             android:name="info.guardianproject.mrapp.ProjectTagFragment"
             android:label="@string/title_activity_project_tag_fragment"
-            android:parentActivityName="android.support.v4.app.FragmentActivity" >
+            android:parentActivityName="android.support.v4.app.FragmentActivity"
+            android:screenOrientation="portrait" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="android.support.v4.app.FragmentActivity" />
         </activity>
         <activity 
-            android:name="info.guardianproject.mrapp.FirstStartActivity" >
+            android:name="info.guardianproject.mrapp.FirstStartActivity"
+            android:screenOrientation="portrait">
         </activity>
         <activity 
-            android:name="info.guardianproject.mrapp.server.WordPressAuthWebViewActivity"  
+            android:name="info.guardianproject.mrapp.server.WordPressAuthWebViewActivity"
             android:screenOrientation="portrait">
         </activity>
         <activity
-            android:name="io.scal.secureshareui.login.FacebookLoginActivity" 
+            android:name="io.scal.secureshareui.login.FacebookLoginActivity"
             android:screenOrientation="portrait">
         </activity>
         <activity
-            android:name="io.scal.secureshareui.login.FlickrLoginActivity" 
+            android:name="io.scal.secureshareui.login.FlickrLoginActivity"
             android:screenOrientation="portrait">
         </activity>
                 <activity
@@ -279,7 +284,8 @@
         </activity>
         <activity
             android:name="info.guardianproject.mrapp.ConnectAccountActivity"
-            android:label="@string/title_activity_connect_account" >
+            android:label="@string/title_activity_connect_account"
+            android:screenOrientation="portrait">
         </activity>
         
         <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/app_id"/>
