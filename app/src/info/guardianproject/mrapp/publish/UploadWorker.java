@@ -5,6 +5,7 @@ import info.guardianproject.mrapp.model.Job;
 import info.guardianproject.mrapp.model.JobTable;
 import info.guardianproject.mrapp.publish.sites.FacebookUploader;
 import info.guardianproject.mrapp.publish.sites.FlickrUploader;
+import info.guardianproject.mrapp.publish.sites.SSHUploader;
 import info.guardianproject.mrapp.publish.sites.SoundCloudUploader;
 import info.guardianproject.mrapp.publish.sites.StoryMakerUploader;
 import info.guardianproject.mrapp.publish.sites.YoutubeUploader;
@@ -47,6 +48,8 @@ public  class UploadWorker extends WorkerBase {
                 uploader = new FlickrUploader(mContext, this, job);
             } else if (job.isSite(Auth.SITE_SOUNDCLOUD)) {
                 uploader = new SoundCloudUploader(mContext, this, job);
+            } else if (job.isSite(Auth.SITE_SSH)) {
+                uploader = new SSHUploader(mContext, this, job);
             } 
     		uploader.start();
 		}

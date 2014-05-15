@@ -11,11 +11,13 @@ import info.guardianproject.mrapp.model.PublishJob;
 import info.guardianproject.mrapp.model.PublishJobTable;
 import info.guardianproject.mrapp.publish.sites.FacebookPublisher;
 import info.guardianproject.mrapp.publish.sites.FlickrPublisher;
+import info.guardianproject.mrapp.publish.sites.SSHPublisher;
 import info.guardianproject.mrapp.publish.sites.SoundCloudPublisher;
 import info.guardianproject.mrapp.publish.sites.StoryMakerPublisher;
 import info.guardianproject.mrapp.publish.sites.YoutubePublisher;
 import io.scal.secureshareui.controller.FacebookSiteController;
 import io.scal.secureshareui.controller.FlickrSiteController;
+import io.scal.secureshareui.controller.SSHSiteController;
 import io.scal.secureshareui.controller.SoundCloudSiteController;
 import io.scal.secureshareui.controller.YoutubeSiteController;
 
@@ -65,10 +67,12 @@ public class PublishController {
             publisher = new FacebookPublisher(mContext, this, publishJob);
         } else if (ks.contains(YoutubeSiteController.SITE_KEY)) {
             publisher = new YoutubePublisher(mContext, this, publishJob);
-        }  else if (ks.contains(FlickrSiteController.SITE_KEY)) {
+        } else if (ks.contains(FlickrSiteController.SITE_KEY)) {
             publisher = new FlickrPublisher(mContext, this, publishJob);
-        }  else if (ks.contains(SoundCloudSiteController.SITE_KEY)) {
+        } else if (ks.contains(SoundCloudSiteController.SITE_KEY)) {
             publisher = new SoundCloudPublisher(mContext, this, publishJob);
+        } else if (ks.contains(SSHSiteController.SITE_KEY)) {
+            publisher = new SSHPublisher(mContext, this, publishJob);
         } 
 		// TODO add others
 		

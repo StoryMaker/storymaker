@@ -271,7 +271,11 @@
             android:screenOrientation="portrait">
         </activity>
         <activity
-            android:name="io.scal.secureshareui.login.SoundcloudLoginActivity" 
+            android:name="io.scal.secureshareui.login.SoundCloudLoginActivity" 
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name="io.scal.secureshareui.login.SSHLoginActivity" 
             android:screenOrientation="portrait">
         </activity>
         <activity

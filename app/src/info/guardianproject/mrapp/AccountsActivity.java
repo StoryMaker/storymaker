@@ -8,7 +8,7 @@ import java.util.List;
 
 import info.guardianproject.mrapp.model.Auth;
 import info.guardianproject.mrapp.model.AuthTable;
-import io.scal.secureshareui.controller.SiteController.OnPublishEventListener;
+import io.scal.secureshareui.controller.SiteController.OnEventListener;
 import io.scal.secureshareui.lib.ChooseAccountFragment;
 import io.scal.secureshareui.model.Account;
 import android.content.Intent;
@@ -62,8 +62,8 @@ public class AccountsActivity extends BaseActivity {
 		
 		caFragment = new ChooseAccountFragment(); 
 		caFragment.setArguments(bundle);
-		caFragment.setPublishAccountsList(accounts);  // FIXME we should probably make AccountInfo parcelable and pass this through the bundle
-		caFragment.setOnPublishEventListener(new OnPublishEventListener() {
+		caFragment.setAccountsList(accounts);  // FIXME we should probably make Account object parcelable and pass this through the bundle
+		caFragment.setOnEventListener(new OnEventListener() {
 
 			@Override
 			public void onSuccess(Account publishAccount) {
@@ -76,7 +76,7 @@ public class AccountsActivity extends BaseActivity {
 				}
 
 				auth.setCredentials(publishAccount.getCredentials());			
-				auth.setUserName(publishAccount.getName());
+				auth.setUserName(publishAccount.getUserName());
 				auth.setExpires(null);
 				authTable.updateLastLogin(getApplicationContext(), publishAccount.getSite(), auth.getUserName());	
 				auth.update();
