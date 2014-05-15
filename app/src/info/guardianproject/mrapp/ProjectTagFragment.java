@@ -38,7 +38,10 @@ public class ProjectTagFragment extends Fragment {
 
     protected int mProjectId;
     protected Project mProject;
+    private TextView mSpecialMessageTv;
 	private ViewGroup mContainerProjectTagsView;
+	private OnClickListener mUserOnTagClickListener;
+	protected boolean mEditable;
 	private OnClickListener mInternalOnTagClickListener = new OnClickListener() {
 
         @Override
@@ -46,6 +49,9 @@ public class ProjectTagFragment extends Fragment {
             if (mEditable) {
                 mContainerProjectTagsView.removeView(v);
                 mProject.removeTag(getStringTagFromTagButton(v));
+                if (mContainerProjectTagsView.getChildCount() == 0) {
+                    displayMessage(getActivity().getString(R.string.no_tags_msg));
+                }
             }
             if (mUserOnTagClickListener != null) {
                 mUserOnTagClickListener.onClick(v);
@@ -53,8 +59,6 @@ public class ProjectTagFragment extends Fragment {
         }
 	    
 	};
-	private OnClickListener mUserOnTagClickListener;
-	protected boolean mEditable;
 	
 	 /** Public API **/
 	
@@ -170,6 +174,9 @@ public class ProjectTagFragment extends Fragment {
 		btnTag.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
 		btnTag.setOnClickListener(mInternalOnTagClickListener);
 		
+		if (mSpecialMessageTv != null) {
+		    mContainerProjectTagsView.removeView(mSpecialMessageTv);
+		}
 		mContainerProjectTagsView.addView(btnTag, 0);
     }
 	
@@ -182,7 +189,7 @@ public class ProjectTagFragment extends Fragment {
 	    textView.setText(message);
 	    textView.setGravity(Gravity.CENTER);
 	    textView.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
-	    
+	    mSpecialMessageTv = textView;
 	    mContainerProjectTagsView.addView(textView, 0);
 	}
 	
