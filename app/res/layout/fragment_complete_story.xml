@@ -4,14 +4,14 @@
     android:layout_height="match_parent"
     android:layout_gravity="center_vertical"
     android:orientation="vertical" >
-    
-    <!-- 
+
+    <!--
     <ViewAnimator
         android:id="@+id/renderStateWidget"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
-         -->
-        
+    -->
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
@@ -36,9 +36,9 @@
             android:layout_height="128dp"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
+            android:background="#0000"
             android:scaleType="centerInside"
-            android:src="@drawable/render"
-            android:background="#0000" />
+            android:src="@drawable/render" />
 
         <ImageButton
             android:id="@+id/btnRenderingSpinner"
@@ -46,9 +46,9 @@
             android:layout_height="128dp"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
+            android:background="#0000"
             android:scaleType="centerInside"
             android:src="@drawable/render_spinner"
-            android:background="#0000"
             android:visibility="gone" />
 
         <ImageView
@@ -57,8 +57,8 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
-            android:src="@drawable/separator" 
-            android:visibility="gone"/>
+            android:src="@drawable/separator"
+            android:visibility="gone" />
 
         <ImageButton
             android:id="@+id/btnPlay"
@@ -67,9 +67,9 @@
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:layout_marginLeft="26dp"
-            android:src="@drawable/circle_play" 
-            android:background="#0000" 
-            android:visibility="gone"/>
+            android:background="#0000"
+            android:src="@drawable/circle_play"
+            android:visibility="gone" />
 
         <ImageButton
             android:id="@+id/btnUpload"
@@ -78,9 +78,9 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="26dp"
-            android:src="@drawable/circle_upload" 
-            android:background="#0000" 
-            android:visibility="gone"/>
+            android:background="#0000"
+            android:src="@drawable/circle_upload"
+            android:visibility="gone" />
 
         <TextView
             android:id="@+id/textRendering"
@@ -89,7 +89,7 @@
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
             android:text="Rendering..."
-            android:textAppearance="?android:attr/textAppearanceSmall" 
+            android:textAppearance="?android:attr/textAppearanceSmall"
             android:visibility="gone" />
 
         <TextView
@@ -104,17 +104,16 @@
             android:textColor="#dddddd"
             android:textSize="18sp"
             android:textStyle="bold" />
-
     </RelativeLayout>
-    
-    <!-- </ViewAnimator>  -->
+
+    <!-- </ViewAnimator> -->
 
     <LinearLayout
         android:id="@+id/llControlBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#ffffff" 
-        android:visibility="gone">
+        android:background="#ffffff"
+        android:visibility="gone" >
 
         <Button
             android:id="@+id/buttonPlay"
@@ -129,34 +128,40 @@
             android:layout_height="wrap_content"
             android:layout_weight="1" />
     </LinearLayout>
-    
-     <LinearLayout
-         android:id="@+id/llRangeSeekBar"
-         android:layout_width="match_parent"
-         android:layout_height="wrap_content"
-         android:background="#ffffff"
-         android:visibility="gone"
-         android:orientation="vertical"
-          >
+
+    <LinearLayout
+        android:id="@+id/llRangeSeekBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#ffffff"
+        android:orientation="vertical"
+        android:visibility="gone" >
     </LinearLayout>
 
-     <TextView
-         android:id="@+id/textTitle"
-         android:layout_width="fill_parent"
-         android:layout_height="wrap_content"
-         android:layout_gravity="center_horizontal"
-         android:layout_marginBottom="16dp"
-         android:layout_marginTop="16dp"
-         android:text="Story Title Goes Here"
-         android:textAppearance="?android:attr/textAppearanceLarge" />
+    <!-- 
+    <TextView
+        android:id="@+id/textTitle"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="16dp"
+        android:layout_marginTop="16dp"
+        android:text="Story Title Goes Here"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
 
-     <TextView
-         android:id="@+id/textView1"
-         android:layout_width="fill_parent"
-         android:layout_height="wrap_content"
-         android:layout_marginBottom="16dp"
-         android:layout_marginTop="16dp"
-         android:text="Tags go here..."
-         android:textAppearance="?android:attr/textAppearanceLarge" />
-    
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:layout_marginTop="16dp"
+        android:text="Tags go here..."
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+ 	-->
+    <FrameLayout
+        android:id="@+id/fl_info_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
 </LinearLayout>
