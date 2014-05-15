@@ -10,7 +10,6 @@ import org.holoeverywhere.widget.EditText;
 import org.holoeverywhere.widget.Spinner;
 
 import android.view.ViewGroup.LayoutParams;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -24,19 +23,22 @@ import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 import com.actionbarsherlock.view.Window;
 
-
+/**
+ * Display editable Story metadata including tags.
+ * 
+ * Used in conjunction with {@link StoryOverviewActivity}
+ *
+ */
 public class StoryOverviewEditActivity extends BaseActivity {
 
 	private Project mProject;
-	private ViewGroup mContainerStoryTagsView;
+	private ProjectTagFragment mTagFragment;
 	
 	private EditText etStoryTitle;
 	private EditText etStoryDesc;
 	private Spinner spStorySection;
 	private Spinner spStoryLocation;
-	
-	private ArrayList<String> mTags;
-	
+		
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -44,19 +46,12 @@ public class StoryOverviewEditActivity extends BaseActivity {
 		setContentView(R.layout.activity_story_overview_edit);
 		
 		startActionMode(mActionModeCallback);
-
-        mContainerStoryTagsView = (ViewGroup) findViewById(R.id.story_tag_container);
         
-		int pid = getIntent().getIntExtra("pid", -1); //project i
+		int pid = getIntent().getIntExtra("pid", -1); //project id
 		if (pid < 0) {
 			return;
 		}
 		mProject = (Project) (new ProjectTable()).get(getApplicationContext(), pid);
-		
-		mTags = mProject.getTagsAsStringList();
-		for (String tag: mTags) {
-		    addProjectTag(tag);
-		}
 		
 		initialize();
 		setProjectInfo();
@@ -68,19 +63,16 @@ public class StoryOverviewEditActivity extends BaseActivity {
 		String[] autocompleteTags = getResources().getStringArray(R.array.array_autocomplete_tags);
 		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, autocompleteTags);
 		tvStoryTag.setAdapter(adapter);
+
+        mTagFragment = ProjectTagFragment.newInstance(mProject.getId(), true);
+        getSupportFragmentManager().beginTransaction().add(R.id.fl_tag_container, mTagFragment).commit();
 		
 		Button btnAddTag = (Button) findViewById(R.id.btn_add_tag);
 		btnAddTag.setOnClickListener(new View.OnClickListener() {
 		    public void onClick(View v) {
 		    	
 		    	String tagText = tvStoryTag.getText().toString();
-		    	
-		    	if (!tagText.equals("")) {
-//		    		mProject.addTag(tagText);
-                    addProjectTag(tagText);
-                    mTags.add(tagText);
-                }
-		    	
+		    	mTagFragment.addTag(tagText);
 		    	tvStoryTag.setText(null);
 		    }
 		});		
@@ -101,32 +93,15 @@ public class StoryOverviewEditActivity extends BaseActivity {
 	}
 	
 	private void saveProjectInfo() {
-		
+	    // ProjectTagFragment manages Tags
 		mProject.setTitle(etStoryTitle.getText().toString());
 		mProject.setDescription(etStoryDesc.getText().toString());
 		mProject.setSection(spStorySection.getSelectedItem().toString());
 		mProject.setLocation(spStoryLocation.getSelectedItem().toString());
 		
 		mProject.save();
-		
-		mProject.setTagsFromStringList(mTags);
 	}
-	
-	private void addProjectTag(String tag) {
-		
-		Button btnTag = new Button(this);
-		btnTag.setText(tag);
-		btnTag.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
-		
-		mContainerStoryTagsView.addView(btnTag, 0);
-		
-		//remove button when clicked
-		btnTag.setOnClickListener(new View.OnClickListener() {
-		    public void onClick(View v) { 	
-		    	mContainerStoryTagsView.removeView(v);
-		    }
-		});
-    }
+
 	
 	private boolean actionModeCancel = false;
 	private ActionMode.Callback mActionModeCallback = new ActionMode.Callback(){
@@ -167,9 +142,11 @@ public class StoryOverviewEditActivity extends BaseActivity {
 	    		saveProjectInfo();
 	    	}
 
-            Intent intent = new Intent(StoryOverviewEditActivity.this, StoryOverviewActivity.class);
-            intent.putExtra("pid", mProject.getId());
-            startActivity(intent);
+	    	// StoryOverviewEditActivity now refreshes it's 
+	    	// project backed views onStart() instead of onCreate()
+	    	// so it will re-initialize it's Project-backed views
+	    	// without having to be explicitly re-started.
+	    	// Now we can start StoryOverviewEditActivity from any Activity
 	    	StoryOverviewEditActivity.this.finish();
 	    }
 	};

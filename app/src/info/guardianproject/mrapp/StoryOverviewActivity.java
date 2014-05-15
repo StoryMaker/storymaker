@@ -3,11 +3,22 @@ package info.guardianproject.mrapp;
 import info.guardianproject.mrapp.model.Project;
 import info.guardianproject.mrapp.model.ProjectTable;
 
+import org.holoeverywhere.ArrayAdapter;
+import org.holoeverywhere.LayoutInflater;
+import org.holoeverywhere.widget.LinearLayout;
+import org.holoeverywhere.widget.ListView;
 import org.holoeverywhere.widget.Toast;
 
+import java.util.List;
+
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
+import android.util.Log;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.actionbarsherlock.app.ActionBar;
@@ -15,6 +26,13 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.actionbarsherlock.view.Window;
 
+/**
+ * Display Project metadata including tags.
+ * 
+ * 
+ * Used in conjunction with {@link StoryOverviewEditActivity}
+ *
+ */
 public class StoryOverviewActivity extends BaseActivity {
 
 	private Project mProject;
@@ -31,8 +49,12 @@ public class StoryOverviewActivity extends BaseActivity {
 		}
 		mProject = (Project) (new ProjectTable()).get(getApplicationContext(), pid);
 		
+	}
+	
+	@Override
+	public void onStart() {
+	    super.onStart();
 	    initialize();
-		setStoryInfo();
 	}
 	
 	private void initialize() {
@@ -40,18 +62,24 @@ public class StoryOverviewActivity extends BaseActivity {
 		actionBar.setIcon(R.drawable.ic_action_info);
 	    actionBar.setDisplayHomeAsUpEnabled(true);
 
-	    Bundle bundle = new Bundle();
-	    bundle.putStringArray("tags", mProject.getTagsAsStringArray());
+	    ProjectInfoFragment infoFrag = ProjectInfoFragment.newInstance(mProject.getId(), false, true);
+	    getSupportFragmentManager().beginTransaction().replace(R.id.fl_info_container, infoFrag).commit();
 	    
-	    ProjectTagFragment fragPT = new ProjectTagFragment();
-	    fragPT.setArguments(bundle);
-        getSupportFragmentManager().beginTransaction().add(R.id.fl_tag_container, fragPT).commit();
+	    LinearLayout activityList = (LinearLayout) findViewById(R.id.activityList);
+	    activityList.removeAllViews();
+	    TextView activityListHeader = new TextView(this);
+	    activityListHeader.setText(getString(R.string.label_activity_log));
+	    activityListHeader.setTextSize(20);
+	    activityListHeader.setTypeface(Typeface.create("sans-serif-black", Typeface.BOLD));
+	    activityList.addView(activityListHeader);
+	    new ProjectActivityAdapter(activityList,
+                new String[] {"Story Shared on Facebook", "Scene Added", "Story Created"}).addAllViews();
 	}
 	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		
-		getSupportMenuInflater().inflate(R.menu.activity_story_overview, menu);
+	    getSupportMenuInflater().inflate(R.menu.activity_story_overview, menu);
 	    return super.onCreateOptionsMenu(menu);   
 	}
 	
@@ -63,7 +91,15 @@ public class StoryOverviewActivity extends BaseActivity {
             	Intent intent = new Intent(this, StoryOverviewEditActivity.class);
             	intent.putExtra("pid", mProject.getId());
             	startActivity(intent);
-            	finish();
+            	// To enhance flexibility of this Activity
+            	// don't finish it when moving to StoryOverviewEditActivity
+            	// and hardcode this activity as the return activity in StoryOverviewEditAtivity.
+            	// Instead, allow StoryOverviewEditActivity to finish() itself, presenting
+            	// the originating Activity. To adjust, the originating activity should
+            	// refresh it's UI with Project based data in onStart() instead of onCreate()
+            	// Some day, StoryOverviewActivity and StoryOverviewEditActivity should be Fragments
+            	// or DialogFragments
+            	//finish();
             	return true;
             case R.id.itemSendStory:
             	Toast.makeText(this, "Send", Toast.LENGTH_SHORT).show();
@@ -83,17 +119,40 @@ public class StoryOverviewActivity extends BaseActivity {
         }
     }
 	
-	private void setStoryInfo() { 
-    	
-    	TextView tvStoryTitle = (TextView) findViewById(R.id.tv_story_title);
-    	TextView tvStoryDesc = (TextView) findViewById(R.id.tv_story_desciption);
-    	TextView tvStorySection = (TextView) findViewById(R.id.tv_story_section);
-    	TextView tvStoryLocation = (TextView) findViewById(R.id.tv_story_location);
-    	
-    	tvStoryTitle.setText(mProject.getTitle());
-    	String desc = mProject.getDescription();
-    	if (desc != null && !desc.isEmpty()) tvStoryDesc.setText(desc);
-    	tvStorySection.setText(mProject.getSection());
-    	tvStoryLocation.setText(mProject.getLocation());
-    }
+	/**
+	 * Dummy ArrayAdapter that adds views directly to the given
+	 * hostView. This is in place until the root ScrollView in
+	 * this Activity's layout is removed. We can't have a ListView
+	 * within a ScrollView.
+	 *
+	 */
+	class ProjectActivityAdapter extends ArrayAdapter<String>{
+	    private final static int sResourceLayoutId = android.R.layout.simple_list_item_1;
+	    private ViewGroup mHostView;
+	      
+        public ProjectActivityAdapter(ViewGroup hostView, String[] objects) {
+            super(hostView.getContext(), sResourceLayoutId, objects);
+            mHostView = hostView;
+        }
+        
+        public View getView (int position, View convertView, ViewGroup parent) {
+            if (convertView == null) {
+                convertView = ((LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(sResourceLayoutId, null);
+            }
+            ((TextView) convertView).setText(getItem(position));
+            ((TextView) convertView).setPadding(0, 10, 0, 0);
+            return convertView;
+        }
+        
+        /**
+         * Method to be removed when this is used with a proper
+         * ArrayAdapter compatible view.
+         */
+        public void addAllViews() {
+            for (int x = 0; x < this.getCount(); x++) {
+                mHostView.addView(getView(x, null, mHostView));
+            }
+            
+        }   
+	}
 }

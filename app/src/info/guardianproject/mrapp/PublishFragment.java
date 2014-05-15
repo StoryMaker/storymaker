@@ -1,11 +1,9 @@
 package info.guardianproject.mrapp;
 
-import info.guardianproject.mrapp.model.Auth;
 import info.guardianproject.mrapp.model.Media;
 import info.guardianproject.mrapp.model.Project;
 import info.guardianproject.mrapp.model.PublishJob;
 import info.guardianproject.mrapp.model.PublishJobTable;
-import info.guardianproject.mrapp.publish.PublishController;
 import info.guardianproject.mrapp.publish.PublishController.PublishListener;
 import info.guardianproject.mrapp.publish.PublishService;
 import info.guardianproject.mrapp.server.LoginActivity;
@@ -17,7 +15,6 @@ import io.scal.secureshareui.lib.ChooseAccountFragment;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -29,6 +26,7 @@ import org.holoeverywhere.widget.Spinner;
 import org.holoeverywhere.widget.TextView;
 
 import redstone.xmlrpc.XmlRpcFault;
+
 import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.annotation.SuppressLint;
@@ -38,12 +36,9 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.ReceiverCallNotAllowedException;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.graphics.Bitmap;
-import android.graphics.drawable.AnimationDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -56,7 +51,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -65,6 +59,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 import android.widget.ViewAnimator;
 //import com.hipmob.gifanimationdrawable.GifAnimationDrawable;
+
 
 import com.animoto.android.views.DraggableGridView;
 
@@ -87,8 +82,6 @@ public class PublishFragment extends Fragment implements PublishListener {
     private String mMediaUploadAccount = null;
     private String mMediaUploadAccountKey = null;
 
-    TextView mTitle;
-    TextView mDescription;
     TextView mProgress;
     ImageButton mButtonRender;
     ImageButton mButtonRenderSpinner;
@@ -143,6 +136,24 @@ public class PublishFragment extends Fragment implements PublishListener {
     	int layout = getArguments().getInt("layout");
         mView = inflater.inflate(layout, null);
         if (layout == R.layout.fragment_complete_story) {
+            
+            ProjectInfoFragment infoFrag = ProjectInfoFragment.newInstance(mActivity.getProject().getId(), false, false);
+            this.getChildFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fl_info_container, infoFrag)
+                .commit();
+            
+            mView.findViewById(R.id.fl_info_container).setOnClickListener(new OnClickListener() {
+
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(getActivity(), StoryOverviewEditActivity.class);
+                    intent.putExtra("pid", mActivity.getProject().getId());
+                    startActivity(intent);
+                }
+                
+            });
+            
         	ImageView ivThumb = (ImageView)mView.findViewById(R.id.storyThumb);
 
 			Media[] medias = mActivity.mMPM.mScene.getMediaAsArray();
@@ -152,9 +163,6 @@ public class PublishFragment extends Fragment implements PublishListener {
 					ivThumb.setImageBitmap(bitmap);
 				}
 			}
-
-            mTitle = (TextView) mView.findViewById(R.id.textTitle);
-            mTitle.setText(mActivity.mMPM.mProject.getTitle());
 
             mProgress = (TextView) mView.findViewById(R.id.textViewProgress);
             mProgress.setText("");

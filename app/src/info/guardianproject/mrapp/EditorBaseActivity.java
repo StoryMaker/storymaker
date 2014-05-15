@@ -36,6 +36,7 @@ public class EditorBaseActivity extends BaseActivity {
     public final static int REQ_OVERLAY_CAM = 888; // for resp handling from
                                                    // overlay cam launch
 
+    // TODO: Why do we have mProject as well as mMPM.mProject?
     public Project mProject = null;
     public Template mTemplate = null;
 
@@ -225,6 +226,16 @@ public class EditorBaseActivity extends BaseActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+    
+    /**
+     * Return the Project managed by this Activity.
+     * 
+     * Used by Fragments attached to this Activity.
+     * 
+     */
+    public Project getProject() {
+        return mMPM.mProject;
     }
 
 }
