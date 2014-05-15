@@ -147,7 +147,7 @@ public class PublishFragment extends Fragment implements PublishListener {
 
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(getActivity(), StoryOverviewEditActivity.class);
+                    Intent intent = new Intent(getActivity(), StoryInfoEditActivity.class);
                     intent.putExtra("pid", mActivity.getProject().getId());
                     startActivity(intent);
                 }

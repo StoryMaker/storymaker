@@ -185,7 +185,7 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
             
                 return true;
             case R.id.itemInfo:
-            	Intent intent = new Intent(this, StoryOverviewActivity.class);
+            	Intent intent = new Intent(this, StoryInfoActivity.class);
             	intent.putExtra("pid", mProject.getId());
             	startActivity(intent);
             	

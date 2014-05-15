@@ -26,10 +26,10 @@ import com.actionbarsherlock.view.Window;
 /**
  * Display editable Story metadata including tags.
  * 
- * Used in conjunction with {@link StoryOverviewActivity}
+ * Used in conjunction with {@link StoryInfoActivity}
  *
  */
-public class StoryOverviewEditActivity extends BaseActivity {
+public class StoryInfoEditActivity extends BaseActivity {
 
 	private Project mProject;
 	private ProjectTagFragment mTagFragment;
@@ -43,7 +43,7 @@ public class StoryOverviewEditActivity extends BaseActivity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
         this.requestWindowFeature(Window.FEATURE_ACTION_BAR);
-		setContentView(R.layout.activity_story_overview_edit);
+		setContentView(R.layout.activity_story_info_edit);
 		
 		startActionMode(mActionModeCallback);
         
@@ -142,12 +142,12 @@ public class StoryOverviewEditActivity extends BaseActivity {
 	    		saveProjectInfo();
 	    	}
 
-	    	// StoryOverviewEditActivity now refreshes it's 
+	    	// StoryInfoEditActivity now refreshes it's 
 	    	// project backed views onStart() instead of onCreate()
 	    	// so it will re-initialize it's Project-backed views
 	    	// without having to be explicitly re-started.
-	    	// Now we can start StoryOverviewEditActivity from any Activity
-	    	StoryOverviewEditActivity.this.finish();
+	    	// Now we can start StoryInfoEditActivity from any Activity
+	    	StoryInfoEditActivity.this.finish();
 	    }
 	};
 	

@@ -30,10 +30,10 @@ import com.actionbarsherlock.view.Window;
  * Display Project metadata including tags.
  * 
  * 
- * Used in conjunction with {@link StoryOverviewEditActivity}
+ * Used in conjunction with {@link StoryInfoEditActivity}
  *
  */
-public class StoryOverviewActivity extends BaseActivity {
+public class StoryInfoActivity extends BaseActivity {
 
 	private Project mProject;
 	
@@ -41,7 +41,7 @@ public class StoryOverviewActivity extends BaseActivity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
         this.requestWindowFeature(Window.FEATURE_ACTION_BAR);
-		setContentView(R.layout.activity_story_overview);
+		setContentView(R.layout.activity_story_info);
 			
 		int pid = getIntent().getIntExtra("pid", -1); //project i
 		if (pid < 0) {
@@ -79,7 +79,7 @@ public class StoryOverviewActivity extends BaseActivity {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		
-	    getSupportMenuInflater().inflate(R.menu.activity_story_overview, menu);
+	    getSupportMenuInflater().inflate(R.menu.activity_story_info, menu);
 	    return super.onCreateOptionsMenu(menu);   
 	}
 	
@@ -88,16 +88,16 @@ public class StoryOverviewActivity extends BaseActivity {
 		
         switch (item.getItemId()) {
             case R.id.itemEditStory:
-            	Intent intent = new Intent(this, StoryOverviewEditActivity.class);
+            	Intent intent = new Intent(this, StoryInfoEditActivity.class);
             	intent.putExtra("pid", mProject.getId());
             	startActivity(intent);
             	// To enhance flexibility of this Activity
-            	// don't finish it when moving to StoryOverviewEditActivity
-            	// and hardcode this activity as the return activity in StoryOverviewEditAtivity.
-            	// Instead, allow StoryOverviewEditActivity to finish() itself, presenting
+            	// don't finish it when moving to StoryInfoEditActivity
+            	// and hardcode this activity as the return activity in StoryInfoEditAtivity.
+            	// Instead, allow StoryInfoEditActivity to finish() itself, presenting
             	// the originating Activity. To adjust, the originating activity should
             	// refresh it's UI with Project based data in onStart() instead of onCreate()
-            	// Some day, StoryOverviewActivity and StoryOverviewEditActivity should be Fragments
+            	// Some day, StoryInfoActivity and StoryInfoEditActivity should be Fragments
             	// or DialogFragments
             	//finish();
             	return true;

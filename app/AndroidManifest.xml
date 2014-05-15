@@ -224,8 +224,8 @@
             android:screenOrientation="portrait">
         </activity>
         <activity
-            android:name="info.guardianproject.mrapp.StoryOverviewActivity"
-            android:label="@string/title_activity_story_overview"
+            android:name="info.guardianproject.mrapp.StoryInfoActivity"
+            android:label="@string/title_activity_story_info"
             android:theme="@style/PopupTheme"
             android:screenOrientation="portrait">
             <meta-data
@@ -233,13 +233,13 @@
                 android:value=".SceneEditorActivity" />
         </activity>
         <activity
-            android:name="info.guardianproject.mrapp.StoryOverviewEditActivity"
-            android:label="@string/title_activity_story_overview_edit"
+            android:name="info.guardianproject.mrapp.StoryInfoEditActivity"
+            android:label="@string/title_activity_story_info_edit"
             android:theme="@style/PopupTheme"
             android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".StoryOverviewActivity" />
+                android:value=".StoryInfoActivity" />
         </activity>
         <activity
             android:name="info.guardianproject.mrapp.ProjectTagFragment"
