@@ -93,6 +93,21 @@ public abstract class Table {
         context.getContentResolver().notifyChange(uri, null);
         return count;
     }
+    
+    // delete database row with current values
+    public void delete(Context context, int id) {
+        String selection = getIDColumnName() + "=?";
+        String[] selectionArgs = new String[] { "" + id };
+        
+        if (mDB == null) {
+            Uri uri = getURI().buildUpon().appendPath("" + id).build();
+            int count = context.getContentResolver().delete(uri, selection, selectionArgs);
+        } else {
+            int count = mDB.delete(getTableName(), selection, selectionArgs);
+        }
+        
+        // FIXME confirm delete?
+    }
 
     /** 
      * get inflated model object for specified row id 

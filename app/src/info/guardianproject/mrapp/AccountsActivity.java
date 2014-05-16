@@ -92,10 +92,16 @@ public class AccountsActivity extends BaseActivity {
 					auth.setCredentials(account.getCredentials());
 					auth.setUserName(account.getName());
 					auth.setData(account.getData());
-					auth.setExpires(new Date()); // FIXME not sure hardcoding now() makes sense here for all sites?
+					auth.setExpires(new Date()); // FIXME this is a hack to get isValid to fail, probably should be a setFailed() in auth that marks that we are busted
 					auth.update();
 				}
 			}
+
+            @Override
+            public void onRemove(Account account) {
+                authTable.delete(getApplicationContext(), Integer.parseInt(account.getId()));
+                // FIXME we need to purge caches from Flickr and Facebook here too. proably should delegate back to their SiteControllers?
+            }
 		});
 
 		fragTrans.add(R.id.fragmentLayout, caFragment);

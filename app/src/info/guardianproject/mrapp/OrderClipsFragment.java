@@ -37,7 +37,7 @@ import com.efor18.rangeseekbar.RangeSeekBar.OnRangeSeekBarChangeListener;
 /**
  * 
  */
-@SuppressLint("ValidFragment") // FIXME don't do this
+@SuppressLint("ValidFragment") // FIXME don't do this: @SuppressLint("ValidFragment")
 public class OrderClipsFragment extends Fragment {
     private final static String TAG = "OrderClipsFragment";
    
