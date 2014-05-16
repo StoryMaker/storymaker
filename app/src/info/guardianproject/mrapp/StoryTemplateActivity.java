@@ -2,6 +2,7 @@ package info.guardianproject.mrapp;
 
 import info.guardianproject.mrapp.media.MediaProjectManager;
 import info.guardianproject.mrapp.model.Project;
+import io.scal.secureshareui.lib.ChooseAccountFragment;
 
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -160,21 +161,20 @@ public class StoryTemplateActivity extends EditorBaseActivity implements ActionB
     @Override
     protected void onActivityResult(int reqCode, int resCode, Intent intent) {
 
-    	
         if (resCode == RESULT_OK)
         {
             if (reqCode == REQ_YOUTUBE_AUTH)
             {
-            	if (resCode == RESULT_OK)
-            	{
-            		String oauthToken = intent.getStringExtra("token");
-            		Log.d("OAuth","got token: " + oauthToken);
-            		mPublishFragment.setYouTubeAuth(oauthToken);
-            	}
+                if (resCode == RESULT_OK)
+                {
+                    String oauthToken = intent.getStringExtra("token");
+                    Log.d("OAuth", "got token: " + oauthToken);
+                    mPublishFragment.setYouTubeAuth(oauthToken);
+                }
+            } else if (reqCode == ChooseAccountFragment.ACCOUNT_REQUEST_CODE) {
+                mPublishFragment.chooseAccountDialogResult(resCode, intent);
             }
 
         }
     }
-
-    
 }
