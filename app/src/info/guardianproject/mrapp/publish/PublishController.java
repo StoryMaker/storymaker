@@ -61,7 +61,7 @@ public class PublishController {
 	public PublisherBase getPublisher(PublishJob publishJob) {
 		String[] keys = publishJob.getSiteKeys();
 		List<String> ks = Arrays.asList(keys);
-		if (ks.contains(Auth.STORYMAKER)) {
+		if (ks.contains(Auth.SITE_STORYMAKER)) {
 			publisher = new StoryMakerPublisher(mContext, this, publishJob);
 		} else if (ks.contains(FacebookSiteController.SITE_KEY)) {
             publisher = new FacebookPublisher(mContext, this, publishJob);

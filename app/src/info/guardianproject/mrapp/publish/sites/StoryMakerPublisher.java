@@ -41,9 +41,9 @@ public class StoryMakerPublisher extends PublisherBase {
             mController.publishJobSucceeded(mPublishJob);
         } else if (job.isType(JobTable.TYPE_UPLOAD)) {
             if (job.isSite(Auth.SITE_YOUTUBE)) {
-                Job newJob = new Job(mContext, mPublishJob.getProjectId(), mPublishJob.getId(), JobTable.TYPE_UPLOAD, Auth.STORYMAKER, null);
+                Job newJob = new Job(mContext, mPublishJob.getProjectId(), mPublishJob.getId(), JobTable.TYPE_UPLOAD, Auth.SITE_STORYMAKER, null);
                 mController.enqueueJob(newJob);
-            } else if (job.isSite(Auth.STORYMAKER)) {
+            } else if (job.isSite(Auth.SITE_STORYMAKER)) {
                 mPublishJob.setFinishedAtNow();
                 mPublishJob.save();
                 mController.publishJobSucceeded(mPublishJob);

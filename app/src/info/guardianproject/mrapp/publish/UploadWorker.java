@@ -40,7 +40,7 @@ public  class UploadWorker extends WorkerBase {
 		if (job != null) {
     		if (job.isSite(Auth.SITE_YOUTUBE)) {
     			uploader = new YoutubeUploader(mContext, this, job);
-    		} else if (job.isSite(Auth.STORYMAKER)) {
+    		} else if (job.isSite(Auth.SITE_STORYMAKER)) {
                 uploader = new StoryMakerUploader(mContext, this, job);
             } else if (job.isSite(Auth.SITE_FACEBOOK)) {
                 uploader = new FacebookUploader(mContext, this, job);

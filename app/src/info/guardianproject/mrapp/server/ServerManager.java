@@ -75,7 +75,7 @@ public class ServerManager {
 	//if the user hasn't logged in, show the login screen
     public boolean hasCreds ()
     {
-        Auth checkAuth = (new AuthTable()).getAuthDefault(mContext, Auth.STORYMAKER);
+        Auth checkAuth = (new AuthTable()).getAuthDefault(mContext, Auth.SITE_STORYMAKER);
         if (checkAuth == null) // added null check to prevent uncaught null pointer exception
             return false;
         else
@@ -88,7 +88,7 @@ public class ServerManager {
      * @return
      */
     public String getUserName() {
-        Auth checkAuth = (new AuthTable()).getAuthDefault(mContext, Auth.STORYMAKER);
+        Auth checkAuth = (new AuthTable()).getAuthDefault(mContext, Auth.SITE_STORYMAKER);
         if (checkAuth != null) {
             return checkAuth.getUserName();
         } else {
@@ -100,7 +100,7 @@ public class ServerManager {
      * Log a user out of their StoryMaker account
      */
     public void logOut() {
-        Auth checkAuth = (new AuthTable()).getAuthDefault(mContext, Auth.STORYMAKER);
+        Auth checkAuth = (new AuthTable()).getAuthDefault(mContext, Auth.SITE_STORYMAKER);
         Date expiryDate = new Date();
         expiryDate.setTime(0);
         checkAuth.setExpires(expiryDate);
@@ -111,7 +111,7 @@ public class ServerManager {
     {
         if (mWordpress == null)
         {
-            Auth auth = (new AuthTable()).getAuthDefault(mContext, Auth.STORYMAKER);
+            Auth auth = (new AuthTable()).getAuthDefault(mContext, Auth.SITE_STORYMAKER);
             if (auth != null) {
                 String user = auth.getUserName();
                 String pass = auth.getCredentials();

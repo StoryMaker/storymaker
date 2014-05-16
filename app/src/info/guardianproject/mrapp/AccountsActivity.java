@@ -53,7 +53,7 @@ public class AccountsActivity extends BaseActivity {
 			auth = authTable.getAuthDefault(this, siteAvailableKeys[i]);
 			
 			if(auth == null) {
-				accounts.add(new Account(null, siteAvailableNames[i], siteAvailableKeys[i], "", "", false, false));
+				accounts.add(new Account(null, siteAvailableNames[i], siteAvailableKeys[i], "", "", null, false, false));
 			}
 			else {
 				accounts.add(auth.convertToAccountObject());
@@ -66,30 +66,32 @@ public class AccountsActivity extends BaseActivity {
 		caFragment.setOnEventListener(new OnEventListener() {
 
 			@Override
-			public void onSuccess(Account publishAccount) {
-				Auth auth = authTable.getAuthDefault(getApplicationContext(), publishAccount.getSite());
+			public void onSuccess(Account account) {
+				Auth auth = authTable.getAuthDefault(getApplicationContext(), account.getSite());
 				
 				//if auth doesn't exist in db
 				if(auth == null) {
-					auth = new Auth(getApplicationContext(), -1, publishAccount.getName(), publishAccount.getSite(), "", "", null, null);
+					auth = new Auth(getApplicationContext(), -1, account.getName(), account.getSite(), null, null, null, null, null);
 					auth.insert();
 				}
 
-				auth.setCredentials(publishAccount.getCredentials());			
-				auth.setUserName(publishAccount.getUserName());
+				auth.setCredentials(account.getCredentials());
+				auth.setData(account.getData());
+				auth.setUserName(account.getUserName());
 				auth.setExpires(null);
-				authTable.updateLastLogin(getApplicationContext(), publishAccount.getSite(), auth.getUserName());	
+				authTable.updateLastLogin(getApplicationContext(), account.getSite(), auth.getUserName());	
 				auth.update();
 			}
 
 			@Override
-			public void onFailure(Account publishAccount, String failureMessage) {
-				Auth auth = authTable.getAuthDefault(getApplicationContext(), publishAccount.getSite());
+			public void onFailure(Account account, String failureMessage) {
+				Auth auth = authTable.getAuthDefault(getApplicationContext(), account.getSite());
 
 				if(auth != null) {
 					//TODO set variables here
-					auth.setCredentials(publishAccount.getCredentials());
-					auth.setUserName(publishAccount.getName());
+					auth.setCredentials(account.getCredentials());
+					auth.setUserName(account.getName());
+					auth.setData(account.getData());
 					auth.setExpires(new Date()); // FIXME not sure hardcoding now() makes sense here for all sites?
 					auth.update();
 				}

@@ -2,6 +2,7 @@ package info.guardianproject.mrapp;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.text.ParseException;
@@ -18,6 +19,7 @@ import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Environment;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.ShareCompat;
 import android.util.Log;
 import android.view.ActionProvider;
 import android.view.ContextMenu.ContextMenuInfo;
@@ -528,5 +530,37 @@ public class Utils {
 
             return mExternalStorageAvailable && mExternalStorageWriteable;
         }
+    }
+    
+    public static void sendLogcatToSupport(Activity activity) {
+        String logcat = Utils.getLogCat();
+        ShareCompat.IntentBuilder builder = ShareCompat.IntentBuilder.from(activity);
+        builder.setType("message/rfc822");
+        builder.addEmailTo("support@storymaker.cc");
+        builder.setSubject(activity.getString(R.string.app_name));
+        builder.setChooserTitle("logcat from StoryMaker");
+        builder.startChooser();
+    }
+
+    public static String getLogCat() {
+        String description = "";
+
+        try {
+            Process process = Runtime.getRuntime().exec("logcat");
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+
+            StringBuilder log = new StringBuilder();
+            String line;
+            while ((line = bufferedReader.readLine()) != null) {
+                log.append(line);
+                log.append(System.getProperty("line.separator"));
+            }
+            bufferedReader.close();
+
+            description = log.toString();
+        } catch (IOException e) {
+        }
+
+        return description;
     }
 }

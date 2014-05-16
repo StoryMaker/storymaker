@@ -46,7 +46,7 @@ public class StoryMakerDB extends SQLiteOpenHelper {
         if ((oldVersion < 4) && (newVersion >= 4)) {
             db.execSQL(StoryMakerDB.Schema.Auth.UPDATE_TABLE_AUTH);
             Auth.migrate(mContext, db); // migrates storymaker login credentials
-        } 
+        }
         if ((oldVersion < 5) && (newVersion >= 5)) {
             db.execSQL(StoryMakerDB.Schema.Projects.UPDATE_TABLE_PROJECTS_ADD_CREATED_AT);
             db.execSQL(StoryMakerDB.Schema.Projects.UPDATE_TABLE_PROJECTS_ADD_UPDATED_AT);
@@ -233,6 +233,7 @@ public class StoryMakerDB extends SQLiteOpenHelper {
             public static final String COL_SITE = "site";
             public static final String COL_USER_NAME = "user_name";
             public static final String COL_CREDENTIALS = "credentials";
+            public static final String COL_DATA = "data";
             public static final String COL_EXPIRES = "expires";
             public static final String COL_LAST_LOGIN = "last_login";
             
@@ -242,6 +243,7 @@ public class StoryMakerDB extends SQLiteOpenHelper {
                     + COL_SITE + " text not null, "
                     + COL_USER_NAME + " text, "
                     + COL_CREDENTIALS + " text, "
+                    + COL_DATA + " text, "
                     + COL_EXPIRES + " integer, "
                     + COL_LAST_LOGIN + " integer "
                     + "); ";

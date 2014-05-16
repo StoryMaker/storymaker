@@ -36,7 +36,7 @@ public class FlickrUploader extends UploaderBase {
                 public void run() {
                     Log.d(TAG, "run()");
                  // FIXME, this might not be wise to run on the main thread flickr, does the flickr SDK automatically run itself on a backgroundthread?
-                    controller.upload(project.getTitle(), project.getDescription(), path, auth.getUserName(), auth.getCredentials()); 
+                    controller.upload(project.getTitle(), project.getDescription(), path, auth.convertToAccountObject()); 
                 }
             };
             mainHandler.post(myRunnable);

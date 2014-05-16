@@ -13,35 +13,23 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission
-        android:name="android.permission.READ_MEDIA_STORAGE"
-        android:required="false" />
-    <uses-permission
-        android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"
-        android:required="false" />
+    <uses-permission android:name="android.permission.READ_MEDIA_STORAGE" android:required="false" />
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" android:required="false" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
-    <uses-permission
-        android:name="android.permission.WAKE_LOCK"
-        android:required="false" />
-
-    <uses-feature
-        android:name="android.hardware.camera"
-        android:required="false" />
-
-    <uses-permission android:name="android.permission.GET_ACCOUNTS" >
-    </uses-permission>
-    <uses-permission android:name="android.permission.MANAGE_ACCOUNTS" >
-    </uses-permission>
-    <uses-permission android:name="android.permission.USE_CREDENTIALS" >
-    </uses-permission>
-    <uses-permission
-        android:name="com.google.android.googleapps.permission.GOOGLE_AUTH"
-        android:required="false" />
-    <uses-permission
-        android:name="com.google.android.googleapps.permission.GOOGLE_AUTH.youtube"
-        android:required="false" />
-
+    <uses-permission android:name="android.permission.WAKE_LOCK" android:required="false" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" ></uses-permission>
+    <uses-permission android:name="android.permission.MANAGE_ACCOUNTS" ></uses-permission>
+    <uses-permission android:name="android.permission.USE_CREDENTIALS" ></uses-permission>
+    <uses-permission android:name="com.google.android.googleapps.permission.GOOGLE_AUTH" android:required="false" />
+    <uses-permission android:name="com.google.android.googleapps.permission.GOOGLE_AUTH.youtube" android:required="false" />
+    
+    <!-- FIXME remove in prod builds -->
+    <uses-permission android:name="android.permission.READ_LOGS" ></uses-permission>  
+    <!-- FIXME remove in prod builds -->
+    
+    <uses-feature android:name="android.hardware.camera" android:required="false" />
+    
     <supports-screens
         android:anyDensity="true"
         android:largeScreens="true"
@@ -272,6 +260,7 @@
         </activity>
         <activity
             android:name="io.scal.secureshareui.login.SoundCloudLoginActivity" 
+            android:theme="@style/PopupTheme"
             android:screenOrientation="portrait">
         </activity>
         <activity

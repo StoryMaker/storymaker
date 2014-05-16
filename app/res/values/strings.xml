@@ -311,5 +311,6 @@ Build number: <xliff:g id="build_number">%s</xliff:g>\n</string>
     <string name="hint_no_description">No description.</string>
     <string name="trim_clips">Trim Clips</string>
     <string name="info">Info</string>
+    <string name="send_logcat_to_support">Send Logcat To Support</string>
 
 </resources>
