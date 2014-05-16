@@ -306,6 +306,7 @@ public class Media extends Model {
         if (cursor.getCount() == 0) {
             cursor.close();
             setCreatedAt(new Date());
+            setUpdatedAt(new Date());
             insert();
         } else {
             cursor.close();

@@ -318,6 +318,7 @@ public class Project extends Model {
         if (cursor.getCount() == 0) {
             cursor.close();
             setCreatedAt(new Date());
+            setUpdatedAt(new Date());
             insert();
         } else {
             cursor.close();
@@ -572,6 +573,13 @@ public class Project extends Model {
      */
     public void setUpdatedAt(Date updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    /**
+     * @param updated 
+     */
+    public void setUpdatedAtNow() {
+        this.updatedAt = new Date();
     }
 
     /**
