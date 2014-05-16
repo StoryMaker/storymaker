@@ -253,7 +253,7 @@ public class HomeActivity extends BaseActivity {
 			if (img != null)
 			{
         		
-        		MyCard card = new MyCard(getString(R.string.title_activity_new_story),project.getTitle());
+        		MyCard card = new MyCard("Story: " + project.getTitle(), "Last updated: " + project.getUpdatedAt());
         		card.setImage(img);
         		card.setId(i);
         		card.setOnClickListener(new OnClickListener() {
@@ -299,7 +299,7 @@ public class HomeActivity extends BaseActivity {
 			else
 			{
         		
-        		MyCard card = new MyCard(getString(R.string.title_activity_new_story),project.getTitle());
+        		MyCard card = new MyCard("Story: " + project.getTitle(), "Last updated: " + project.getUpdatedAt());
         		card.setId(i);
         		
         		card.setOnClickListener(new OnClickListener() {
