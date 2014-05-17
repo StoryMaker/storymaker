@@ -234,7 +234,9 @@ public class PublishFragment extends Fragment implements PublishListener {
                     if (intent.getAction().equals(PublishService.ACTION_SUCCESS)) {
                         publishSucceeded(publishJob);
                     } else if (intent.getAction().equals(PublishService.ACTION_FAILURE)) {
-                        // TODO deal with failure
+                        int errorCode = intent.getIntExtra(PublishService.INTENT_EXTRA_ERROR_CODE, -1);
+                        String errorMessage = intent.getStringExtra(PublishService.INTENT_EXTRA_ERROR_MESSAGE);
+                        publishFailed(publishJob, errorCode, errorMessage);
                     } else if (intent.getAction().equals(PublishService.ACTION_PROGRESS)) {
                         float progress = intent.getFloatExtra(PublishService.INTENT_EXTRA_PROGRESS, -1);
                         String message = intent.getStringExtra(PublishService.INTENT_EXTRA_PROGRESS_MESSAGE);
@@ -287,6 +289,7 @@ public class PublishFragment extends Fragment implements PublishListener {
         mButtonRenderSpinner.setVisibility(vis ? View.VISIBLE : View.GONE);
 //        ((TextView) mView.findViewById(R.id.textRendering)).setVisibility(vis ? View.VISIBLE : View.GONE);
         mProgress.setVisibility(vis ? View.VISIBLE : View.GONE);
+        mProgress.setTextColor(getResources().getColor(android.R.color.white));
     }
     
     private void showPlayAndUpload(boolean vis) {
@@ -318,6 +321,12 @@ public class PublishFragment extends Fragment implements PublishListener {
         showRenderingSpinner(false);
         showPlayAndUpload(false);
         showRender(true);
+    }
+    
+    private void showError(int code, String message) {
+        mProgress.setVisibility(View.VISIBLE);
+        mProgress.setText("Error #" + code + ": " + message);
+        mProgress.setTextColor(getResources().getColor(R.color.red));
     }
     
     private String setUploadAccount() {
@@ -758,9 +767,10 @@ public class PublishFragment extends Fragment implements PublishListener {
     }
     
     @Override
-    public void publishFailed(PublishJob publishJob) {
+    public void publishFailed(PublishJob publishJob, int errorCode, String errorMessage) {
         Utils.toastOnUiThread(getActivity(), "Publish failed :'( ... " + publishJob); // FIXME move to strings.xml
         showRender();
+        showError(errorCode, errorMessage);
     }
 
     @Override

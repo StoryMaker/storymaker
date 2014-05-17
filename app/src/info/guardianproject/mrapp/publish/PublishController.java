@@ -115,8 +115,8 @@ public class PublishController {
 		mListener.publishSucceeded(publishJob);
 	}
     
-    public void publishJobFailed(PublishJob publishJob) {
-        mListener.publishFailed(publishJob);
+    public void publishJobFailed(PublishJob publishJob, int errorCode, String errorMessage) {
+        mListener.publishFailed(publishJob, errorCode, errorMessage);
     }
 	
     /**
@@ -138,7 +138,7 @@ public class PublishController {
 	public void jobFailed(Job job, int errorCode, String errorMessage) {
         Log.d(TAG, "jobFailed: " + job + ", with errorCode: " + errorCode + ", and errorMessage: " + errorMessage);
 		// TODO need to raise this to the interested activities here
-		getPublisher(job.getPublishJob()).jobFailed(job);
+		getPublisher(job.getPublishJob()).jobFailed(job, errorCode, errorMessage);
 	}
 	
 	public void jobProgress(Job job, float progress, String message) {
@@ -168,7 +168,7 @@ public class PublishController {
 	public static interface PublishListener {
 	    public void publishSucceeded(PublishJob publishJob);
 
-        public void publishFailed(PublishJob publishJob);
+        public void publishFailed(PublishJob publishJob, int errorCode, String errorMessage);
         
         public void publishProgress(PublishJob publishJob, float progress, String message);
 	}

@@ -13,6 +13,8 @@ public class PublishService extends IntentService implements PublishListener {
     public static final String TAG = "PublishService";
     public static final String INTENT_EXTRA_PROJECT_ID = "project_id";
     public static final String INTENT_EXTRA_PUBLISH_JOB_ID = "publish_job_id";
+    public static final String INTENT_EXTRA_ERROR_CODE = "error_code";
+    public static final String INTENT_EXTRA_ERROR_MESSAGE = "error_message";
     public static final String INTENT_EXTRA_SITE_KEYS = "site_keys";
     public static final String INTENT_EXTRA_PROGRESS = "progress_percent";
     public static final String INTENT_EXTRA_PROGRESS_MESSAGE = "progress_message";
@@ -55,10 +57,12 @@ public class PublishService extends IntentService implements PublishListener {
     }
 
     @Override
-    public void publishFailed(PublishJob publishJob) {
+    public void publishFailed(PublishJob publishJob, int errorCode, String errorMessage) {
         Intent intent = new Intent(ACTION_FAILURE);
         intent.putExtra(INTENT_EXTRA_PROJECT_ID, publishJob.getProjectId());
         intent.putExtra(INTENT_EXTRA_PUBLISH_JOB_ID, publishJob.getId());
+        intent.putExtra(INTENT_EXTRA_ERROR_CODE, errorCode);
+        intent.putExtra(INTENT_EXTRA_ERROR_MESSAGE, errorMessage);
         sendBroadcast(intent);
     }
 

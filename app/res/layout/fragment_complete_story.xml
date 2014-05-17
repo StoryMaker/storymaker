@@ -94,16 +94,20 @@
 
         <TextView
             android:id="@+id/textViewProgress"
-            android:layout_width="wrap_content"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_alignBottom="@+id/storyThumb"
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="16dp"
             android:fontFamily="sans-serif-condensed"
+            android:gravity="center"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
             android:text="Small Text"
             android:textColor="#dddddd"
             android:textSize="18sp"
             android:textStyle="bold" />
+
     </RelativeLayout>
 
     <!-- </ViewAnimator> -->

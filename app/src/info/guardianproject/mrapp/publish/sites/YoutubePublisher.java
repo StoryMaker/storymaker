@@ -31,7 +31,7 @@ public class YoutubePublisher extends PublisherBase {
     }
 
     @Override
-    public void jobFailed(Job job) {
+    public void jobFailed(Job job, int errorCode, String errorMessage) {
         // TODO Auto-generated method stub
 
     }

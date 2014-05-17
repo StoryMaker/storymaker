@@ -56,9 +56,9 @@ public class SSHPublisher extends PublisherBase {
         }
 	}
 	
-	public void jobFailed(Job job) {
+	public void jobFailed(Job job, int errorCode, String errorMessage) {
         Log.d(TAG, "jobFailed: " + job);
-        mController.publishJobFailed(mPublishJob);
+        mController.publishJobFailed(mPublishJob, errorCode, errorMessage);
 	}
 	
 	public void jobProgress(Job job, float progress, String message) {
