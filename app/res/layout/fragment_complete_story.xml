@@ -20,6 +20,7 @@
             android:id="@+id/storyThumb"
             android:layout_width="fill_parent"
             android:layout_height="200dip"
+            android:scaleType="fitXY"
             android:adjustViewBounds="true"
             android:src="@drawable/cliptype_long" />
 
@@ -27,6 +28,7 @@
             android:id="@+id/previewVideoView"
             android:layout_width="match_parent"
             android:layout_height="200dip"
+            android:scaleType="fitXY"
             android:adjustViewBounds="true"
             android:visibility="gone" />
 
