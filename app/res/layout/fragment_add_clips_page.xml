@@ -24,7 +24,8 @@
                 <ImageView
                     android:id="@+id/clipTypeImage"
                     android:layout_width="fill_parent"
-                    android:layout_height="200dp" />
+                    android:layout_height="200dp"
+                    android:scaleType="fitXY" />
 
                 <TextView
                     android:layout_width="fill_parent"
