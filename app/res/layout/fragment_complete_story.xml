@@ -32,27 +32,6 @@
             android:adjustViewBounds="true"
             android:visibility="gone" />
 
-        <ImageButton
-            android:id="@+id/btnRender"
-            android:layout_width="128dp"
-            android:layout_height="128dp"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:background="#0000"
-            android:scaleType="centerInside"
-            android:src="@drawable/render" />
-
-        <ImageButton
-            android:id="@+id/btnRenderingSpinner"
-            android:layout_width="128dp"
-            android:layout_height="128dp"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:background="#0000"
-            android:scaleType="centerInside"
-            android:src="@drawable/render_spinner"
-            android:visibility="gone" />
-
         <ImageView
             android:id="@+id/imageSeparator"
             android:layout_width="wrap_content"
@@ -68,10 +47,10 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="26dp"
+            android:layout_marginLeft="72dp"
             android:background="#0000"
-            android:src="@drawable/circle_play"
-            android:visibility="gone" />
+            android:scaleType="fitXY"
+            android:src="@drawable/ic_comp_pspin_00" />
 
         <ImageButton
             android:id="@+id/btnUpload"
@@ -79,10 +58,9 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_marginRight="26dp"
+            android:layout_marginRight="72dp"
             android:background="#0000"
-            android:src="@drawable/circle_upload"
-            android:visibility="gone" />
+            android:src="@drawable/ic_comp_upload" />
 
         <TextView
             android:id="@+id/textRendering"
