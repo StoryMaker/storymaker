@@ -135,11 +135,8 @@ public class StoryMakerApp extends Application {
         if (customLessonLoc == null) {
             // check for previous version settings, use if found
             customLessonLoc = settings.getString("plessonloc", null);
-            Log.e("STUFF", "found old settings(?): " + customLessonLoc);
-        }
-        
-        Log.e("STUFF", "custom: " + customLessonLoc);
-        
+        }  
+                
         String lessonUrlPath = mBaseUrl + URL_PATH_LESSONS + mLocale.getLanguage() + "/";
         String lessonLocalPath = "lessons/" + mLocale.getLanguage();
         
@@ -147,29 +144,21 @@ public class StoryMakerApp extends Application {
         {
             if (customLessonLoc.toLowerCase().startsWith("http"))
             {
-                Log.e("STUFF", "(1)");
                 lessonUrlPath = customLessonLoc;
                 lessonLocalPath = "lessons/" + lessonUrlPath.substring(lessonUrlPath.lastIndexOf('/')+1);
             }
             else
             {
-                Log.e("STUFF", "(2)");
                 lessonUrlPath = mBaseUrl + URL_PATH_LESSONS + customLessonLoc + "/";
                 lessonLocalPath = "lessons/" + customLessonLoc;
             }
         }
         
-        Log.e("STUFF", "ext: " + getExternalFilesDir(null) + " local: " + lessonLocalPath);
-
         File fileDirLessons = new File(getExternalFilesDir(null), lessonLocalPath);
         fileDirLessons.mkdirs();
-        
-        Log.e("STUFF", "url: " + lessonUrlPath + " dir: " + fileDirLessons);
-        
+                
         mLessonManager = new LessonManager (this, lessonUrlPath, fileDirLessons);
         mServerManager = new ServerManager (getApplicationContext());
-
-        Log.e("STUFF", "done");
 	}
 
 	public void updateLocale (String newLocale)
@@ -218,18 +207,18 @@ public class StoryMakerApp extends Application {
 
 	        Configuration config = getResources().getConfiguration();
 
+	        //String lang = settings.getString("pintlanguage", LOCALE_DEFAULT);
 	        String lang = settings.getString("pintlanguage", null);
 	        
 	        if (lang == null) {
 	            // check for previous version settings, use if found
 	            if (settings.getBoolean("plocalear", false)) {
-	                Log.e("STUFF", "found old settings: " + "TRUE");
 	                lang = LOCALE_ARABIC;
 	            }
 	            else {
 	                lang = LOCALE_DEFAULT;
 	            }
-	        }
+	        }  
 
 	        boolean updatedLocale = false;
 	        
