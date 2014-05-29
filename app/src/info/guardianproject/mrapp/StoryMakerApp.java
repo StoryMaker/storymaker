@@ -32,17 +32,14 @@ public class StoryMakerApp extends Application {
 	private static ServerManager mServerManager;
 	private static LessonManager mLessonManager;
 	
-	private final static String LOCALE_DEFAULT = "en";//need to force english for now as default
-	private final static String LANG_ARABIC = "ar";
-	
-	private static Locale mLocale = new Locale(LOCALE_DEFAULT);
-	
 	private final static String PREF_LOCALE = "plocale";
-	
-	private static String mBaseUrl = null;
-	
+	private final static String LOCALE_DEFAULT = "en";//need to force english for now as default
+	private final static String LOCALE_ARABIC = "ar";//need to carry over settings from previous installed version
+	private static Locale mLocale = new Locale(LOCALE_DEFAULT);
+		
 	private final static String URL_PATH_LESSONS = "/appdata/lessons/";
 	private final static String STORYMAKER_DEFAULT_SERVER_URL = "https://storymaker.cc";
+	private static String mBaseUrl = null;
 	
 	 public void InitializeSQLCipher(String dbName, String passphrase) {
 	        	      
@@ -87,32 +84,7 @@ public class StoryMakerApp extends Application {
 	
 			Utils.Proc.killZombieProcs(this);
 			
-		    SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-		    String customLessonLoc = settings.getString("plessonloc", null);
-		    
-		    String lessonUrlPath = mBaseUrl + URL_PATH_LESSONS + mLocale.getLanguage() + "/";
-		    String lessonLocalPath = "lessons/" + mLocale.getLanguage();
-		    
-		    if (customLessonLoc != null && customLessonLoc.length() > 0)
-		    {
-		    	if (customLessonLoc.toLowerCase().startsWith("http"))
-		    	{
-		    		lessonUrlPath = customLessonLoc;
-		    		lessonLocalPath = "lessons/" + lessonUrlPath.substring(lessonUrlPath.lastIndexOf('/')+1);
-		    	}
-		    	else
-		    	{
-		    		lessonUrlPath = mBaseUrl + URL_PATH_LESSONS + customLessonLoc + "/";
-		    		lessonLocalPath = "lessons/" + customLessonLoc;
-		    	}
-		    }
-	
-
-	    	File fileDirLessons = new File(getExternalFilesDir(null), lessonLocalPath);
-        	fileDirLessons.mkdirs();
-	    	
-	    	mLessonManager = new LessonManager (this, lessonUrlPath, fileDirLessons);
-		    mServerManager = new ServerManager (getApplicationContext());
+            updateLessonLocation();
 		}
 		catch (Exception e)
 		{
@@ -132,6 +104,40 @@ public class StoryMakerApp extends Application {
             getResources().updateConfiguration(config, getResources().getDisplayMetrics());
         }
     }
+	
+	public void updateLessonLocation ()
+	{
+        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        String customLessonLoc = settings.getString("pleslanguage", null);
+        
+        if (customLessonLoc == null) {
+            // check for previous version settings, use if found
+            customLessonLoc = settings.getString("plessonloc", null);
+        }  
+                
+        String lessonUrlPath = mBaseUrl + URL_PATH_LESSONS + mLocale.getLanguage() + "/";
+        String lessonLocalPath = "lessons/" + mLocale.getLanguage();
+        
+        if (customLessonLoc != null && customLessonLoc.length() > 0)
+        {
+            if (customLessonLoc.toLowerCase().startsWith("http"))
+            {
+                lessonUrlPath = customLessonLoc;
+                lessonLocalPath = "lessons/" + lessonUrlPath.substring(lessonUrlPath.lastIndexOf('/')+1);
+            }
+            else
+            {
+                lessonUrlPath = mBaseUrl + URL_PATH_LESSONS + customLessonLoc + "/";
+                lessonLocalPath = "lessons/" + customLessonLoc;
+            }
+        }
+        
+        File fileDirLessons = new File(getExternalFilesDir(null), lessonLocalPath);
+        fileDirLessons.mkdirs();
+                
+        mLessonManager = new LessonManager (this, lessonUrlPath, fileDirLessons);
+        mServerManager = new ServerManager (getApplicationContext());
+	}
 
 	public void updateLocale (String newLocale)
 	{
@@ -157,15 +163,24 @@ public class StoryMakerApp extends Application {
 
 	        Configuration config = getResources().getConfiguration();
 
-	        boolean useLangAr = settings.getBoolean("plocalear", false);
-	        String lang = settings.getString(PREF_LOCALE, LOCALE_DEFAULT);
+	        //String lang = settings.getString("pintlanguage", LOCALE_DEFAULT);
+	        String lang = settings.getString("pintlanguage", null);
 	        
-	        if (useLangAr)
-	        	lang = LANG_ARABIC;
-	        
+	        if (lang == null) {
+	            // check for previous version settings, use if found
+	            if (settings.getBoolean("plocalear", false)) {
+	                lang = LOCALE_ARABIC;
+	            }
+	            else {
+	                lang = LOCALE_DEFAULT;
+	            }
+	        }  
+
 	        boolean updatedLocale = false;
 	        
-	        //if we have an arabic preference stored, then use it
+	        // if the language string is not empty, 
+	        // and the current config/locale/language is not the selected language, 
+	        // set locale to selected language and update default
 	        if (!"".equals(lang) && !config.locale.getLanguage().equals(lang)) {
 	            mLocale = new Locale(lang);
 	    		Locale.setDefault(mLocale);
@@ -174,9 +189,10 @@ public class StoryMakerApp extends Application {
 	            updatedLocale = true;
 	            lang = config.locale.getLanguage();
 	        }
-	        else if (Locale.getDefault().getLanguage().equalsIgnoreCase(LANG_ARABIC))
+	        // otherwise, if the default locale/language is the selected language, 
+	        // set locale to default language (is this necessary?)
+	        else if (Locale.getDefault().getLanguage().equalsIgnoreCase(lang))
 	        {
-	        	//if device is default arabic, then switch the app to it
 	        	  mLocale = Locale.getDefault();         
 		            config.locale = mLocale;
 		            getResources().updateConfiguration(config, getResources().getDisplayMetrics());
@@ -275,36 +291,37 @@ public class StoryMakerApp extends Application {
 		
 	}
 
-    @Override
-    public void onTerminate() {
-        super.onTerminate();
+	@Override
+	public void onTerminate() {
+		super.onTerminate();
+		
+		clearRenderTmpFolders(getApplicationContext());
+	}
 
-        clearRenderTmpFolders(getApplicationContext());
-    }
-
-    public void clearRenderTmpFolders(Context context) {
-        try {
-            File fileRenderTmpDir = MediaProjectManager.getRenderPath(context);
-            // deleteRecursive(fileRenderTmpDir,false);
-            Runtime.getRuntime().exec("rm -rf " + fileRenderTmpDir.getCanonicalPath());
-        } catch (IOException ioe) {
-            Log.w(AppConstants.TAG, "error deleting render tmp on exit", ioe);
-        }
-    }
+	public void clearRenderTmpFolders (Context context)
+	{
+		try
+		{
+		 File fileRenderTmpDir = MediaProjectManager.getRenderPath(context);
+		// deleteRecursive(fileRenderTmpDir,false);
+		 Runtime.getRuntime().exec("rm -rf " + fileRenderTmpDir.getCanonicalPath());
+		}
+		catch (IOException ioe)
+		{
+			Log.w(AppConstants.TAG,"error deleting render tmp on exit",ioe);
+		}
+	}
 	
-    void deleteRecursive(File fileOrDirectory, boolean onExit) throws IOException {
-        if (fileOrDirectory.isDirectory()) {
-            for (File child : fileOrDirectory.listFiles()) {
-                deleteRecursive(child, onExit);
-            }
-        }
+	 void deleteRecursive(File fileOrDirectory, boolean onExit) throws IOException {
+	        if (fileOrDirectory.isDirectory())
+	            for (File child : fileOrDirectory.listFiles())
+	            	deleteRecursive(child, onExit);
 
-        if (!onExit) {
-            fileOrDirectory.delete();
-        }
-        else {
-            fileOrDirectory.deleteOnExit();
-        }
-    }
-
+	        if (!onExit)
+	        {
+	        	fileOrDirectory.delete();
+	        }
+	        else
+	        	fileOrDirectory.deleteOnExit();
+	    }
 }

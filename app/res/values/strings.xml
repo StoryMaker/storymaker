@@ -157,12 +157,12 @@ You also will have an opportunity to see and modify the data being sent."</strin
     <!-- acknowlegement button in a number of dialogs -->
     <string name="button_ok">OK</string>
     <!-- Do not translate. Format of the timer that shows how much has been recorded so far -->
-    <string name="timer_format"><xliff:g id="format">%02d</xliff:g>:<xliff:g id="format">%02d</xliff:g></string>
+    <string name="timer_format" translatable="false"><xliff:g id="format">%02d</xliff:g>:<xliff:g id="format">%02d</xliff:g></string>
     <!-- label shown before the user has recorded anything -->
 
 
     <!-- the name under which recordings will be visible in the media database is formatted like this -->
-    <string name="audio_db_title_format"><xliff:g id="format">yyyy-MM-dd HH:mm:ss</xliff:g></string>
+    <string name="audio_db_title_format" translatable="false"><xliff:g id="format">yyyy-MM-dd HH:mm:ss</xliff:g></string>
     <!-- all recordings will show up in the media database with this 'artist' name -->
     <string name="audio_db_artist_name">Your recordings</string>
     <!-- all recordings will show up in the media database with this 'album' name -->
@@ -198,15 +198,7 @@ You also will have an opportunity to see and modify the data being sent."</strin
     <string name="sd_card_not_available">SD card is not available</string>
     <string name="open_file_explorer">Open file explorer</string>
     <string name="alert_message_delete_record">Do you want to delete selected record?</string>
-
-    <string-array name="prefEntries_recordType">
-        <item>amr</item>
-        <item>3gpp</item>
-    </string-array>
-    <string-array name="prefValues_recordType" translatable="false">
-        <item>audio/amr</item>
-        <item>audio/3gpp</item>
-    </string-array>
+    
     <!-- add for libra end -->
     <string name="help_clip_select">Swipe to select a clip type, then tap the clip image to start video, photo or audio capture</string>
 
@@ -240,9 +232,9 @@ You also will have an opportunity to see and modify the data being sent."</strin
     <string name="eula_accept">Accept</string>
     <string name="eula_refuse">Refuse</string>
     <string name="privacy_policy">Privacy Policy</string>
-    <string name="privacy_policy_url"><a href="http://storymaker.cc/about/privacy/">http://storymaker.cc/about/privacy/</a></string>
+    <string name="privacy_policy_url" translatable="false"><a href="http://storymaker.cc/about/privacy/">http://storymaker.cc/about/privacy/</a></string>
     <string name="end_user_license_agreement">End User License Agreement</string>
-    <string name="end_user_license_agreement_url"><a href="http://storymaker.cc/about/eula/">http://storymaker.cc/about/eula/</a></string>
+    <string name="end_user_license_agreement_url" translatable="false"><a href="http://storymaker.cc/about/eula/">http://storymaker.cc/about/eula/</a></string>
     <string name="send_annonymous_data">Send anonymous usage data to help us improve StoryMaker.</string>
     <string name="by_clicking_accept">By clicking \'Accept\' you agree to our End User License Agreement and that you have read our Privacy Policy:</string>
     <string name="button_add_narration">Record Voiceover</string>
@@ -308,5 +300,6 @@ You also will have an opportunity to see and modify the data being sent."</strin
     <string name="trim_clips">Trim Clips</string>
     <string name="info">Info</string>
     <string name="send_logcat_to_support">Send Logcat To Support</string>
+    <string name="restarting_storymaker">Restarting StoryMaker...</string>
 
 </resources>

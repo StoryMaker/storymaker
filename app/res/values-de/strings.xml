@@ -1,0 +1,192 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+  <string name="app_name">StoryMaker</string>
+  <string name="title_projects">Geschichten</string>
+  <string name="title_lessons">Lektionen</string>
+  <string name="action_publish">Veröffentlichen</string>
+  <!--menus-->
+  <string name="menu_new_project">Neu</string>
+  <string name="menu_projects">Geschichten</string>
+  <string name="menu_lessons">Lektionen</string>
+  <string name="menu_glossary">Glossar</string>
+  <string name="menu_contacts">Kontakte</string>
+  <string name="menu_settings">Einstellungen</string>
+  <string name="menu_archive">Archiv</string>
+  <string name="drawer_profile">Anmelden</string>
+  <!--FIXME: rename-->
+  <string name="menu_add_media">Hinzufügen</string>
+  <string name="menu_capture_media">Aufnahme</string>
+  <string name="menu_share_media">Teilen</string>
+  <string name="menu_save_media">Speichern</string>
+  <string name="menu_play_media">Abspielen</string>
+  <string name="menu_bug_report">Fehlerbericht</string>
+  <string name="menu_login">Anmelden</string>
+  <string name="menu_logs">Protokoll senden</string>
+  <string name="menu_update">Aktualisieren</string>
+  <string name="menu_about">Info</string>
+  <string name="menu_save_project">Speichern</string>
+  <string name="menu_overlay_camera">Kamera</string>
+  <string name="menu_add_from_gallery">Aus Gallerie importieren</string>
+  <string name="menu_add_new_shot">Clip zur Szene hinzufügen</string>
+  <string name="menu_del_shot">Aktuellen Clip löschen</string>
+  <string name="menu_export_project_files">Projektdateien als Zip exportieren</string>
+  <string name="welcome_message">Hallo!\nWillkommen bei StoryMaker.</string>
+  <!--project list-->
+  <string name="default_project_list_view">Dies ist das erste Mal, dass Sie ein Projekt erzeugen.\n\n- berühren zum starten -</string>
+  <string name="default_project_view_message">Sie haben die Wahl:\nErzählen Sie ihre Geschichte mit Video, Audio oder Fotos.\n\n- berühren zum Hinzufügen -</string>
+  <!--video processing-->
+  <string name="pref_out_rate_title">Ausgabe-Bitrate (kbps)</string>
+  <string name="pref_out_rate_summary">Bitrate der Video-Ausgabe (300-1500)</string>
+  <string name="pref_out_format_title">Ausgabeformat</string>
+  <string name="pref_out_format_summary">Dateiformat (mp4, 3gp, ogg)</string>
+  <string name="pref_out_vcodec_title">Ausgabe-Videocodec</string>
+  <string name="pref_out_vcodec_summary">Videocodec (copy, libx264, etc.)</string>
+  <string name="pref_out_acodec_title">Ausgabe-Audiocodec</string>
+  <string name="pref_out_acodec_summary">Audiocodec (copy, aac, mp3, etc.)</string>
+  <string name="pref_out_vwidth_title">benutzerdefinierte Video-Breite (px)</string>
+  <string name="pref_out_vwidth_summary">benutzerdefinierte Breite für das Ausgabe-Video</string>
+  <string name="pref_out_vheight_title">benutzerdefinierte Video-Höhe (px)</string>
+  <string name="pref_out_vheight_summary">benutzerdefinierte Höhe für das Ausgabe-Video</string>
+  <string name="hintTitle">Titel</string>
+  <string name="hintStartTime">Start (00:00:00)</string>
+  <string name="start_recording">Aufnahme</string>
+  <string name="stop_recording">Stopp</string>
+  <string name="play_recording">Abspielen</string>
+  <string name="save_recording">Speichern</string>
+  <string name="downloading_lessons_from_server_">Lade Lektionen vom Server herunter...</string>
+  <string name="checking_for_updates_">Prüfe auf Aktualisierungen...</string>
+  <!--LOG COLLECTOR-->
+  <string name="message_subject">Android-Geräteprotokoll</string>
+  <string name="failed_to_get_log_message">Fehler beim Abrufen des Protokolls vom System.</string>
+  <string name="title_home_projects">Projekte</string>
+  <string name="title_home_activity">Aktivität</string>
+  <string name="title_lessons_lessons">Lektionen</string>
+  <string name="title_lessons_glossary">Glossar</string>
+  <string name="hello_world">Hallo Welt!</string>
+  <string name="title_activity_home">Zurück</string>
+  <string name="new_story_name_it">Benennen Sie es.</string>
+  <string name="new_story_working_title">Arbeitstitel...</string>
+  <string name="new_story_choose_a_medium">Wählen Sie ein Medium.</string>
+  <!--<string name="new_story_video">Video: Something here about why simple, short video is good! Ideally it should be about the same length as the other strings.</string>
+   	<string name="new_story_essay">Photo Essay: Tell a story about one character. Follow this template to produce a simple photo essay story about one character.</string>
+    <string name="new_story_photo">Single Photo: Telling a strong story with one image is a skill. To simplify, these templates explain some primary photo types.</string>
+    
+    <string name="new_story_audio">Audio: Something here about using audio to tell a story. Personally, I really like to listen to the radio and podcasts while I do housework!</string>-->
+  <string name="title_activity_lessons">Lektionen</string>
+  <string name="title_activity_scene_editor">Szenen-Editor</string>
+  <string name="title_activity_choose_template">Wählen Sie eine Vorlage</string>
+  <string name="title_activity_story_template">Geschichten-Vorlage</string>
+  <string name="tab_make">Erstellen</string>
+  <string name="tab_review">Überarbeiten</string>
+  <string name="tab_finish">Fertig</string>
+  <string name="tab_add_clips">Erstellen</string>
+  <string name="tab_order">Bearbeiten</string>
+  <string name="story_publish_section">Bereich</string>
+  <string name="story_publish_section_hint">Sport</string>
+  <string name="story_publish_topics">Themen</string>
+  <string name="story_publish_topics_hint">Geschlecht</string>
+  <string name="story_publish_location">Ort</string>
+  <string name="story_publish_share">Teilen</string>
+  <string name="story_publish_send_via">Senden via</string>
+  <string name="story_publish_status">Status</string>
+  <string name="story_publish_status_processing">Verarbeitung läuft</string>
+  <string name="story_publish_status_not">Nicht veröffentlicht</string>
+  <string name="story_publish_describe_hint">Beschreiben Sie Ihre Geschichte...</string>
+  <!--delete these below-->
+  <string name="title_section3">Bereich 3</string>
+  <string name="title_section2">Bereich 2</string>
+  <string name="title_section1">Bereich 1</string>
+  <!--Screen title before and during recording-->
+  <!--Screen title after recording-->
+  <!--Screen title while playing back a recording-->
+  <!--Label shown during recording-->
+  <string name="recording">Aufnahme</string>
+  <!--Label shown when the recording is stopped for a reason other than the user stopping it (e.g. the sd card was removed)-->
+  <string name="recording_stopped">Aufnahme gestoppt.</string>
+  <!--label shown when there is not enough space to record something-->
+  <string name="storage_is_full">Der Speicher ist voll.</string>
+  <!--label shown when the recording has reached maximum allowed file size-->
+  <string name="max_length_reached">Die maximale Länge wurde erreicht.</string>
+  <!--label shown when there is no sd card available to record to-->
+  <string name="insert_sd_card">Es wird eine SD-Karte benötigt.</string>
+  <!--label shown when there is more than 1 minute but less than 9 minutes of space left to record-->
+  <!--label shown when there is less than 1 minute of space left to record-->
+  <!--button to accept the current recording and return it to the caller-->
+  <!--button to discard the current recording and return to the caller-->
+  <!--acknowlegement button in a number of dialogs-->
+  <string name="button_ok">OK</string>
+  <!--Do not translate. Format of the timer that shows how much has been recorded so far-->
+  <!--label shown before the user has recorded anything-->
+  <!--the name under which recordings will be visible in the media database is formatted like this-->
+  <!--all recordings will show up in the media database with this 'artist' name-->
+  <string name="audio_db_artist_name">Ihre Aufnahmen</string>
+  <!--all recordings will show up in the media database with this 'album' name-->
+  <string name="audio_db_album_name">Audio-Aufnahmen</string>
+  <!--all recordings will show up in the media database in a playlist with this name-->
+  <string name="audio_db_playlist_name">Meine Aufnahmen</string>
+  <!--shown as the message in a dialog when an error occured because of an error accessing the sd card-->
+  <!--shown as the message in a dialog when the app encountered an unspecified internal error-->
+  <string name="error_app_internal">Interner Anwendungsfehler.</string>
+  <!--shown as the message in a dialog when the recording could not be added to the media database-->
+  <string name="error_mediadb_new_record">Konnte Audio-Aufnahme nicht speichern.</string>
+  <!--shown as the message in a dialog when an export will tak up too much space-->
+  <!--add for libra begin-->
+  <string name="default_record_name">Unbenannte Aufnahme</string>
+  <string name="menu_view_record_list">Aufnahmeliste anzeigen</string>
+  <string name="menu_setting">Einstellungen</string>
+  <string name="delete_dialog_title">Möchten Sie die aktuelle Aufnahme löschen?</string>
+  <string name="overwrite_dialog_title">%s ist bereits vorhanden. Soll die Datei überschrieben werden?</string>
+  <string name="preferences_title">Einstellungen</string>
+  <string name="pref_title_record_type">Aufnahme-Dateityp</string>
+  <string name="prefDialogTitle_recordType">Bitte wählen Sie einen Dateityp.</string>
+  <string name="prefDefault_recordType">audio/3gp</string>
+  <string name="pref_title_enable_sound_effect">Sound-Effekte aktivieren</string>
+  <string name="pref_summary_enable_sound_effect">Spiele Sound-Effekt beim Statuswechsel</string>
+  <string name="notification_recording">Aufnahme...</string>
+  <string name="notification_stopped">Aufnahme wurde angehalten.</string>
+  <string name="notification_warning">Wenig Speicherplatz (weniger als %d Minuten)...</string>
+  <string name="sd_card_not_available">SD-Karte ist nicht verfügbar</string>
+  <string name="open_file_explorer">Öffne Datei-Explorer</string>
+  <string name="alert_message_delete_record">Möchten Sie die ausgewählte Aufnahme löschen?</string>
+  <!--add for libra end-->
+  <!--youtube upload-->
+  <string name="lessons_congratulations_you_have_completed_the_lesson_">Sie haben eine Lektion vollständig bearbeitet!</string>
+  <string name="lesson_status_in_progress">In Bearbeitung</string>
+  <string name="lesson_status_complete">ERLEDIGT!</string>
+  <string name="no_lessons_available_tap_to_load_">Keine Lektionen verfügbar (berühren zum Laden)</string>
+  <string name="_lesson_complete">vollständig bearbeitet</string>
+  <string name="default_youtube_desc">Ein StoryMaker-Projekt</string>
+  <string name="view_published_media_online_or_local_copy_">Veröffentlichte Medien online anzeigen?</string>
+  <string name="delete_project_">Projekt löschen?</string>
+  <string name="add_new_clip_to_the_scene_">Neuen Clip zur Szene hinzufügen?</string>
+  <string name="video_project_project_type">Video-Projekt</string>
+  <string name="photo_project_project_type">Foto-Projekt</string>
+  <string name="audio_project_project_type">Audio-Projekt</string>
+  <string name="photo_essay_project_project_type">Bild-Bericht-Projekt</string>
+  <string name="eula_title">Sie stimmen zu:</string>
+  <string name="eula_accept">Akzeptieren</string>
+  <string name="eula_refuse">Ablehnen</string>
+  <string name="button_render_preview">Vorschau anzeigen</string>
+  <string name="publish_sm">Storymaker.cc</string>
+  <string name="publish_youtube">YouTube</string>
+  <string name="action_render">Exportieren</string>
+  <string name="action_play">Abspielen</string>
+  <string name="action_share">Teilen</string>
+  <string name="cbRenderTypeLabel">Schnellen Video-Renderer benutzen</string>
+  <string name="created_with_storymaker_tag">Erstellt mit StoryMaker - https://storymaker.cc/</string>
+  <string name="err_you_need_at_least_one_account_configured_on_your_device">Sie müssen mindestens ein Konto auf Ihrem Gerät konfiguriert haben</string>
+  <string name="you_began_a_new_lesson">Sie haben eine neue Lektion begonnen</string>
+  <string name="cancel">Abbrechen</string>
+  <string name="scene_s_">Szene(n)</string>
+  <string name="clip_s_">Clip(s)</string>
+  <string name="sc_app_not_found">SoundCloud App nicht gefunden!</string>
+  <string name="sc_app_not_found_message">Möchten Sie sie jetzt installieren?</string>
+  <string name="operation_canceled">Vorgang abgebrochen</string>
+  <string name="getting_details">Ermittle Benutzer-Details</string>
+  <string name="could_not_create_account">Konnte kein Benutzerkonto erstellen</string>
+  <string name="canceled">Upload abgebrocen</string>
+  <!--added for project export-->
+  <string name="export_dialog_close">Schließen</string>
+  <string name="export_dialog_share">Teilen</string>
+  <!--added for new UI-->
+</resources>

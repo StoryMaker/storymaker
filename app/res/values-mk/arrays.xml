@@ -1,14 +1,14 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
   <string-array name="story_sections">
-    <item>السياسات</item>
-    <item>الأعمال</item>
-    <item>الرياضات</item>
-    <item>الفنون</item>
-    <item>العلوم</item>
-    <item>الصحّة</item>
-    <item>التعليم</item>
-    <item>البيئة</item>
+    <item>Политика</item>
+    <item>Бизнис</item>
+    <item>Спорт</item>
+    <item>Култура и Уметност</item>
+    <item>Наука</item>
+    <item>Здравје</item>
+    <item>Образование</item>
+    <item>Животна Средина</item>
   </string-array>
   <integer-array name="vibration_button" translatable="false">&lt;item&gt;0&lt;/item&gt;&lt;item&gt;0&lt;/item&gt;&lt;item&gt;5&lt;/item&gt;&lt;item&gt;120&lt;/item&gt;&lt;item&gt;8&lt;/item&gt;&lt;item&gt;-5&lt;/item&gt;&lt;item&gt;5&lt;/item&gt;&lt;item&gt;0&lt;/item&gt;&lt;item&gt;5&lt;/item&gt;</integer-array>
   <integer-array name="vibration_center_button" translatable="false">&lt;item&gt;0&lt;/item&gt;&lt;item&gt;0&lt;/item&gt;&lt;item&gt;5&lt;/item&gt;&lt;item&gt;5&lt;/item&gt;&lt;item&gt;10&lt;/item&gt;&lt;item&gt;-3&lt;/item&gt;&lt;item&gt;10&lt;/item&gt;&lt;item&gt;15&lt;/item&gt;&lt;item&gt;10&lt;/item&gt;&lt;item&gt;-3&lt;/item&gt;&lt;item&gt;10&lt;/item&gt;&lt;item&gt;25&lt;/item&gt;&lt;item&gt;10&lt;/item&gt;&lt;item&gt;-3&lt;/item&gt;&lt;item&gt;10&lt;/item&gt;&lt;item&gt;35&lt;/item&gt;&lt;item&gt;10&lt;/item&gt;&lt;item&gt;-3&lt;/item&gt;&lt;item&gt;10&lt;/item&gt;&lt;item&gt;40&lt;/item&gt;&lt;item&gt;10&lt;/item&gt;&lt;item&gt;-3&lt;/item&gt;&lt;item&gt;30&lt;/item&gt;&lt;item&gt;120&lt;/item&gt;&lt;item&gt;8&lt;/item&gt;&lt;item&gt;-5&lt;/item&gt;&lt;item&gt;5&lt;/item&gt;&lt;item&gt;0&lt;/item&gt;&lt;item&gt;150&lt;/item&gt;&lt;item&gt;50&lt;/item&gt;&lt;item&gt;8&lt;/item&gt;&lt;item&gt;-5&lt;/item&gt;&lt;item&gt;5&lt;/item&gt;&lt;item&gt;0&lt;/item&gt;&lt;item&gt;5&lt;/item&gt;</integer-array>

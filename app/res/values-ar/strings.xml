@@ -1,24 +1,24 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<resources>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string name="app_name">StoryMaker</string>
-  <string name="title_projects">المشاريع</string>
   <string name="title_lessons">الدروس</string>
   <string name="action_publish">نشر</string>
   <!--menus-->
   <string name="menu_new_project">جديد</string>
-  <string name="menu_projects">المشاريع</string>
   <string name="menu_lessons">الدروس</string>
   <string name="menu_glossary">مسرد المصطلحات</string>
   <string name="menu_contacts">المعارف</string>
   <string name="menu_settings">إعدادات</string>
   <string name="menu_archive">الأرشيف</string>
+  <!--FIXME: rename-->
   <string name="menu_add_media">إضافة</string>
   <string name="menu_capture_media">تسجيل</string>
   <string name="menu_share_media">المشاركة</string>
   <string name="menu_save_media">حفظ</string>
   <string name="menu_play_media">تشغيل</string>
   <string name="menu_render_media">إظهار</string>
-  <string name="menu_settings">إعدادات</string>
+  <string name="menu_login">تسجيل الدخول</string>
+  <string name="menu_logs">إرسال السجل</string>
   <string name="menu_update">تحديث</string>
   <string name="menu_save_project">حفظ</string>
   <string name="menu_overlay_camera">كاميرا</string>
@@ -43,7 +43,6 @@
   <string name="pref_out_vheight_summary">طول الفيديو الطبيعي للفيديو المخرج</string>
   <string name="hintTitle">العنوان</string>
   <string name="hintStartTime">البداية (00:00:00)</string>
-  <string name="hintEndTime">المدة (00:00:00)</string>
   <string name="hintFadeIn">الإظهار التدريجي (الإطارات)</string>
   <string name="hintFadeOut">الإخفاء التدريجي (الإطارات)</string>
   <string name="start_recording">تسجيل</string>
@@ -58,7 +57,6 @@
   <string name="acquiring_log_progress_dialog_message">الحصول على السجل من النظام \u2026</string>
   <string name="chooser_title">اختر تطبيق لإرسال السجل</string>
   <string name="failed_to_get_log_message">فشل الحصول على السجل من النظام.</string>
-  <string name="main_dialog_text">\"سيحاول هذا التطبيق الحصول على سجل الجهاز.\nسيتم إرسال السجل باستخدام تطبيق من اختيارك.\nكما ستتاح لك الفرصة لمشاهدة وتعديل البيانات المرسلة\".\n»</string>
   <string name="title_home_projects">المشاريع</string>
   <string name="title_home_activity">النشاط</string>
   <string name="title_lessons_lessons">الدروس</string>
@@ -69,26 +67,18 @@
   <string name="new_story_working_title">جاري تشغيل العنوان...</string>
   <string name="new_story_choose_something">اختر شيئاً موجزاً يحدد الموضوع ويشد انتباه جمهورك.</string>
   <string name="new_story_choose_a_medium">اختر أحد الوسائط.</string>
- <!-- 
-  <string name="new_story_video">الفيديو: شيء ما هنا عن سبب جودة الفيديو البسيط القصير. بشكل عام، يجب أن تكون المدة مقاربة لمدة السلاسل الأخرى.</string>
-  <string name="new_story_essay">المقالة المصورة: قص قصة عن شخصية واحدة. اتبع هذا القالب لتحرير قصة مقالة مصورة بسيطة عن شخصية واحدة.</string>
-  <string name="new_story_photo">صورة واحدة: من المهارة إخبار قصة قوية بصورة واحدة فق. لتبسيط الأمر، توضح هذه القوالب بعض أنواع الصور الأساسية.</string>
-  <string name="new_story_audio">الصوت: شيء ما هنا عن استخدام الصوت لإخبار قصة. بشكل شخصي، أحب فعلاً الاستماع إلى المذياع أو البودكاست أثناء القيام بأعمال المنزل!</string>
- -->
+  <!--<string name="new_story_video">Video: Something here about why simple, short video is good! Ideally it should be about the same length as the other strings.</string>
+   	<string name="new_story_essay">Photo Essay: Tell a story about one character. Follow this template to produce a simple photo essay story about one character.</string>
+    <string name="new_story_photo">Single Photo: Telling a strong story with one image is a skill. To simplify, these templates explain some primary photo types.</string>
+    
+    <string name="new_story_audio">Audio: Something here about using audio to tell a story. Personally, I really like to listen to the radio and podcasts while I do housework!</string>-->
   <string name="new_story_simple_story">قصة بسيطة</string>
-  <string name="new_story_choose_template">اختر قالباً</string>
-  <string name="home_new_story">قصة جديدة</string>
-  <string name="home_start_a_lesson">ابدأ أحد الدروس</string>
-  <string name="title_activity_new_story">قصة جديدة</string>
   <string name="title_activity_lessons">الدروس</string>
   <string name="title_activity_scene_editor">محرر المشاهد</string>
   <string name="title_activity_choose_template">اختر قالباً</string>
   <string name="title_activity_story_template">قالب القصة</string>
   <string name="tab_make">تحرير</string>
   <string name="tab_review">استعراض</string>
-  <string name="tab_publish">نشر</string>
-  <string name="tab_add_clips">إضافة لقطات</string>
-  <string name="tab_order">ترتيب</string>
   <string name="story_publish_section">القسم</string>
   <string name="story_publish_section_hint">الرياضة</string>
   <string name="story_publish_topics">الموضوعات</string>
@@ -142,6 +132,7 @@
   <string name="error_app_internal">خطأ داخلي بالتطبيق </string>
   <!--shown as the message in a dialog when the recording could not be added to the media database-->
   <string name="error_mediadb_new_record">لم يتم التمكن من حفظ الصوت المسجل</string>
+  <!--shown as the message in a dialog when an export will tak up too much space-->
   <!--add for libra begin-->
   <string name="default_record_name">سجل بدون عنوان</string>
   <string name="menu_view_record_list">عرض قائمة السجلات</string>
@@ -162,30 +153,17 @@
   <string name="sd_card_not_available">بطاقة الذاكرة غير متاحة</string>
   <string name="open_file_explorer">افتح متصفح الملفات</string>
   <string name="alert_message_delete_record">هل تريد حذف هذا السجل؟</string>
-  <string-array name="prefEntries_recordType">
-    <item>amr</item>
-    <item>3gpp</item>
-  </string-array>
-  <string-array name="prefValues_recordType">
-    <item>audio/amr</item>
-    <item>audio/3gpp</item>
-  </string-array>
   <!--add for libra end-->
   <string name="help_clip_select">انتقل إلى اختيار نوع اللقطة، ثم انقر صورة اللقطة لبدء الفيديو أو الصورة أو اللقطة الصوتية</string>
   <!--youtube upload-->
-  <string name="yt_account_prompt">اختر حسابك على جوجل/يوتيوب</string>
   <string name="lesson_status_have_not_started">لم تبدأ</string>
-  <string name="lessons_congratulations_you_have_completed_the_lesson_">تهانينا. لقد أتممت الدرس!</string>
   <string name="lesson_status_in_progress">جاري التنفيذ</string>
   <string name="lesson_status_complete">تم!</string>
-  
-      <string name="no_lessons_available_tap_to_load_">لا تتوفر الدروس (اضغط لتحميل)</string>
-          <string name="_lesson_complete">الدرس الكامل</string>
-      
-  
-              <string name="drawer_profile">دخول</string>
-          
-    <string name="action_render">أصدر</string>
-    <string name="action_play">عزف</string>
-    <string name="action_share">شارك</string>
+  <string name="tap_to_start_capture">انقر لبدء اللقطة</string>
+  <string name="no_lessons_available_tap_to_load_">لا دروس متاحة (انقر للتحميل)</string>
+  <string name="_lesson_complete">تم الدرس</string>
+  <string name="_of_">من</string>
+  <string name="default_youtube_desc">مشروع StoryMaker</string>
+  <!--added for project export-->
+  <!--added for new UI-->
 </resources>
