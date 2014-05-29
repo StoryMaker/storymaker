@@ -215,10 +215,11 @@
         <item name="360">360</item>
     </string-array>
     
-    <string-array name="interface_language_options">
+    <string-array name="interface_language_options" translatable="false">
         <item name="english">English</item>
+        <item name="french">French</item>
         <item name="arabic">Arabic</item>
-        <item name="bosnian">Bosnian</item>
+        <item name="bosnian">Bosnian (B &amp; H)</item>
         <item name="serbian">Serbian</item>
         <item name="spanish">Spanish</item>
         <item name="persian">Persian</item>
@@ -229,8 +230,9 @@
     
     <string-array name="interface_language_options_values">
         <item name="english">en</item>
+        <item name="french">fr</item>
         <item name="arabic">ar</item>
-        <item name="bosnian">bs_rBA</item>
+        <item name="bosnian">bs</item>
         <item name="serbian">sr</item>
         <item name="spanish">es</item>
         <item name="persian">fa</item>

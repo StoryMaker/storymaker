@@ -300,5 +300,6 @@ You also will have an opportunity to see and modify the data being sent."</strin
     <string name="trim_clips">Trim Clips</string>
     <string name="info">Info</string>
     <string name="send_logcat_to_support">Send Logcat To Support</string>
+    <string name="restarting_storymaker">Restarting StoryMaker...</string>
 
 </resources>
