@@ -1,0 +1,249 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+  <string name="terms_title">Términos Storymaker</string>
+  <string name="terms_text_1">Usted mantiene todos los derechos de propiedad sobre su contenido, puede retirarlo en el momento que lo desee, y no venderemos ninguno de sus datos. Al acceder a compartir sus contenidos con StoryMaker.cc usted permite a Small Wolrd News y sus socios colocar sus historias junto a historias similares creadas con Storymaker. Las agrupamos basándonos en los tipos, temas y ubicaciones de las historias.</string>
+  <string name="terms_text_2">Su historia aún está publicada en el sitio de compartición de su elección. pero está referenciada en StoryMaker.cc a su vez. Título, descripción de la historia, y etiquetas serán publicados en StoryMaker.cc, todo resto de contenidos serán referencias a sus notificaciones de actualización (\'feed\') en su sitio de compartición.</string>
+  <!--tutorial_lessons-->
+  <string name="tutorial_title_1">Aprenda a relatar.</string>
+  <string name="tutorial_text_1">Aprenda a ser un periodista durante su estancia segura, produciendo un sonido excelente, fotos e historias en vídeo.</string>
+  <string name="tutorial_title_2">Sea preciso.</string>
+  <string name="tutorial_text_2">Desarrollado en colaboración con ICFJ, usted puede estar seguro que nuestras lecciones de periodismo le enseñaran a ser un mejor reportero.</string>
+  <string name="tutorial_title_3">Protejase a sí mismo.</string>
+  <string name="tutorial_text_3">Nuestras lecciones de seguridad digital le ayudará a usted y a sus fuentes a mantenerse a salvo. StoryMaker tiene como objetivo mantener a salvo sin importar donde su historia lo lleve.</string>
+  <string name="tutorial_title_4">Cuente mejor su historia .</string>
+  <string name="tutorial_text_4">Las historias  adecuadas para los diferentes medios ya sean de audio, fotos o video. Conozca cómo cada medio es diferente.</string>
+  <string name="tutorial_title_5">Pruebese a sí mismo.</string>
+  <string name="tutorial_text_5">Cada lección concluye con un exámen para probar su comprensión.</string>
+  <string name="tutorial_title_6">Continue aprendiendo.</string>
+  <string name="tutorial_text_6">Comparta sus historias con la comunidad de StoryMarker.cc, y aprende a ser un mejor realizador de historias con cada historia que comparta.</string>
+  <!--/tutorial_lessons-->
+  <!--tutorial_story-->
+  <string name="tutorial_title_7">Relate mejor su historia</string>
+  <string name="tutorial_text_7">Una buena historia tiene una introducción, un desarrollo y una conclusión. Entreviste a alguien para aportar más contenido a su historia. Muéstrenos dónde viven. Que sea personal.</string>
+  <string name="tutorial_title_8">Seleccione su desarrollo.</string>
+  <string name="tutorial_text_8">Audio, fotos y videos se adaptan a diferentes estilos de narración. Eche un vistazo a las lecciones para aprender más. Seleccione su desarrollo y aprenda sobre la marcha.</string>
+  <string name="tutorial_title_9">Cuente una historia en cinco.</string>
+  <string name="tutorial_text_9">Utilice cinco clips para contar su historia. Describa la ubicación de su historia. Presente  su tema principal. Los tres restantes contaran una historia con principio, medio y final.</string>
+  <string name="tutorial_title_10">Romper el molde.</string>
+  <string name="tutorial_text_10">Organice los clips en diferente órden para lograr un mayor impacto.</string>
+  <string name="tutorial_title_11">Cuente historias más largas.</string>
+  <string name="tutorial_text_11">El modelo de narración le indica cómo.</string>
+  <!--/tutorial_story-->
+  <!--template_description-->
+  <string name="template_audio_desc">Grabe los sonidos que cuentan su historia, quién, qué. Si usted no puede conseguir efectos visuales fuertes, el audio es una gran alternativa.</string>
+  <string name="template_photo_desc">Una imagen vale más que mil palabras. Muéstrenos qué o quién es importante en su historia, o cómo sucede.</string>
+  <string name="template_essay_desc">A veces se necesitan varias fotos. Muéstrenos cómo la historia pasa, contar una historia en una serie de imágenes relacionadas.</string>
+  <string name="template_video_desc">Capture imágenes cautivantes y acciones a medida que ocurren. Muéstrenos qué o quién es importante y por qué.</string>
+  <!--/template_description-->
+  <!--legacy_story_type-->
+  <!--once we refactor to keep this extra text fields in the db instead of referencing this strings file we can remove these (after doing a migration step)-->
+  <string name="story_type_event_title">Acontecimiento.</string>
+  <string name="story_type_issue_title">Problema.</string>
+  <string name="story_type_profile_title">Perfil</string>
+  <string name="story_type_news_title">Noticias de última hora.</string>
+  <string name="story_type_event_desc">Las historias de eventos tienen un calendario y lugar establecido. Concéntrese en lo que sucede en el evento. Organice su historia en torno a cuando ocurra el evento, dónde y por qué ocurre en este momento y lugar.</string>
+  <string name="story_type_issue_desc">Examinar los problemas de las historias es un tema amplio. Concéntrese en cómo el problema afecta a una comunidad o grupo de personas. Organice su historia en torno a quién afecta y qué se está haciendo en respuesta.</string>
+  <string name="story_type_profile_desc">Perfil de un personaje específico. Concentrese en quién es el personaje. Organice su historia en torno a la vida cotidiana del personaje, lo que pasa, y cómo el personaje negocia con los desafíos.</string>
+  <string name="story_type_news_desc">Las noticias de última hora son inmediatas  . Concentrese en un ángulo. Organice su historia en torno a la realidad inventada, quién, qué, dónde, cuándo.Debe ser usuario de narración para añadir contenido.</string>
+  <!--/ legacy_story_type-->
+  <!--story_type-->
+  <string name="story_type_event_news_title">Evento de noticias</string>
+  <string name="story_type_event_feature_title">Evento de característica</string>
+  <string name="story_type_event_breaking_title">Evento de noticias de última hora</string>
+  <string name="story_type_issue_social_title">Asunto social</string>
+  <string name="story_type_issue_political_title">Asunto político</string>
+  <string name="story_type_issue_economic_title">Asunto económico</string>
+  <string name="story_type_profile_public_title">Perfil público</string>
+  <string name="story_type_profile_professional_title">Perfil profesional</string>
+  <string name="story_type_profile_personal_title">Perfil personal</string>
+  <!--/story_type-->
+  <!--story_type_description-->
+  <string name="story_type_event_news_desc">Historias sobre eventos con importancia inmediata, que a menudo están programadas, y tienen un claro inicio y un final. Unas elecciones o una manifestación son buenos eventos de noticias.</string>
+  <string name="story_type_event_feature_desc">Historias sobre eventos que pueden no tener las implicaciones de noticias trascendentes. Un evento deportivo, un nuevo negocio en un vecindario, una tecnología emergente, son buenos eventos de características.</string>
+  <string name="story_type_event_breaking_desc">Eventos no programados con un valor importante como novedades. Un fuego, un anuncio oficial sorpresa de un Gobierno, o un desastre natural son buenos eventos de noticias de última hora.</string>
+  <string name="story_type_issue_social_desc">Historias sobre asuntos que afectan a comunidades. Un cambio en la regulación de un Gobierno local o una infraestructura son buenos asuntos sociales.</string>
+  <string name="story_type_issue_political_desc">Historias sobre el Gobierno y el trabajo de los funcionarios públicos. Una historia sobre nuevas leyes o cambios parlamentarios es un buen asunto político.</string>
+  <string name="story_type_issue_economic_desc">Historias sobre la economía en general o sobre finanzas personales de la gente. Una historia sobre el impacto de los cambios en los subsidios gubernamentales a los agricultores es un buen asunto económico</string>
+  <string name="story_type_profile_public_desc">Historias sobre el papel de cara al público de un personaje. Un perfil de un político que puja por una elección es un buen perfil público.</string>
+  <string name="story_type_profile_professional_desc">Historias sobre personajes y sus trabajos. Un perfil de un artista famoso o  de un atleta es un buen perfil profesional.</string>
+  <string name="story_type_profile_personal_desc">Historias sobre las experiencias de un personaje, a menudo relacionadas con eventos que de las noticias. Un perfil de un antiguo soldado en el aniversario de una guerra podría ser un buen perfil personal.</string>
+  <!--/story_type_description-->
+  <!--template_options-->
+  <string name="choose_level">Seleccione un Nivel.</string>
+  <string name="choose_level_basic">Básico</string>
+  <string name="choose_level_advanced">Avanzado</string>
+  <!--/template_options-->
+  <!--story_type_new-->
+  <string name="overview">Resumen</string>
+  <string name="activity">Actividad</string>
+  <string name="impact">Impacto</string>
+  <string name="background">Antecedentes</string>
+  <string name="involvement">Implicación</string>
+  <string name="motivation">Motivación</string>
+  <string name="location">Ubicación</string>
+  <string name="experience">Experiencia</string>
+  <string name="results">Resultados</string>
+  <string name="next_steps">Siguientes pasos</string>
+  <string name="moving_forward">Avanzando</string>
+  <string name="conclusion">Conclusión</string>
+  <string name="story_type_event_news_text1">¿Qué está sucediendo en este evento?</string>
+  <string name="story_type_event_news_text2">¿De qué forma se implicó?</string>
+  <string name="story_type_event_news_text3">¿Quién es el más afectado por este evento?</string>
+  <string name="story_type_event_news_text4">¿Cuál es la historia detrás de este evento?</string>
+  <string name="story_type_event_news_text5">¿Cuál es el impacto de este evento?</string>
+  <string name="story_type_event_feature_text1">¿Qué está sucediendo en este evento?</string>
+  <string name="story_type_event_feature_text2">¿Por qué se implicó con este evento?</string>
+  <string name="story_type_event_feature_text3">¿Dónde está ocurriendo este evento?</string>
+  <string name="story_type_event_feature_text4">¿De qué forma se implicó personalmente?</string>
+  <string name="story_type_event_feature_text5">¿Cuál es el impacto de este evento?</string>
+  <string name="story_type_event_breaking_text1">¿Qué está pasando?</string>
+  <string name="story_type_event_breaking_text2">¿Dónde está ocurriendo?</string>
+  <string name="story_type_event_breaking_text3">¿A quién afecta?</string>
+  <string name="story_type_event_breaking_text4">¿Hay algún peligro inmediato?</string>
+  <string name="story_type_event_breaking_text5">¿Cómo está respondiendo la gente?</string>
+  <string name="story_type_issue_social_text1">Por favor describa el asunto social.</string>
+  <string name="story_type_issue_social_text2">¿Cuándo y dónde comenzó este asunto?</string>
+  <string name="story_type_issue_social_text3">¿Cómo está impactando esto en la comunidad?</string>
+  <string name="story_type_issue_social_text4">Cuentenos una historia sobre como afecta eso a su vida.</string>
+  <string name="story_type_issue_social_text5">¿Qué puede hacerse para arreglar este asunto?</string>
+  <string name="story_type_issue_political_text1">Por favor describa el asunto político.</string>
+  <string name="story_type_issue_political_text2">¿Sobre quién impacta directamente?</string>
+  <string name="story_type_issue_political_text3">¿Cómo impacta sobre el Gobierno?</string>
+  <string name="story_type_issue_political_text4">¿Por qué esto es importante personalmente para usted?</string>
+  <string name="story_type_issue_political_text5">¿Qué puede hacerse para arreglar este asunto?</string>
+  <string name="story_type_issue_economic_text1">Por favor describa el asunto económico.</string>
+  <string name="story_type_issue_economic_text2">¿Cuál es su relación con este asunto?</string>
+  <string name="story_type_issue_economic_text3">¿Cómo afecta a la economía?</string>
+  <string name="story_type_issue_economic_text4">¿Quién será el más afectado por esto?</string>
+  <string name="story_type_issue_economic_text5">¿Qué puede hacerse para arreglar este asunto?</string>
+  <string name="story_type_profile_public_text1">Explique un poco sobre quién es usted.</string>
+  <string name="story_type_profile_public_text2">¿Cuándo fueron sus comienzos?</string>
+  <string name="story_type_profile_public_text3">¿A qué se dedica?</string>
+  <string name="story_type_profile_public_text4">Describa un momento en que se sintió orgulloso de su trabajo.</string>
+  <string name="story_type_profile_public_text5">¿Cómo ve su papel en el futuro?</string>
+  <string name="story_type_profile_professional_text1">¿Quién es usted y cuál es su trabajo?</string>
+  <string name="story_type_profile_professional_text2">Por favor explique cómo realiza su trabajo.</string>
+  <string name="story_type_profile_professional_text3">¿Por qué es importante para usted este trabajo?</string>
+  <string name="story_type_profile_professional_text4">¿Cómo provoca un impacto con este trabajo?</string>
+  <string name="story_type_profile_professional_text5">¿Qué es lo siguiente para usted en este trabajo?</string>
+  <string name="story_type_profile_personal_text1">Por favor explique un poco sobre quién es usted.</string>
+  <string name="story_type_profile_personal_text2">¿Cuál es para usted una experiencia importante entre las que le han sucedido?</string>
+  <string name="story_type_profile_personal_text3">¿Cómo le hizo sentir esta experiencia?</string>
+  <string name="story_type_profile_personal_text4">¿Qué es lo que hace de manera diferente ahora?</string>
+  <string name="story_type_profile_personal_text5">¿Qué le gustaría presenciar que ocurre en el futuro?</string>
+  <!--/story_type_new-->
+  <!--story_type_old-->
+  <string name="scene_number">Escena</string>
+  <string name="when">¿Cuándo?</string>
+  <string name="how">¿Cómo?</string>
+  <string name="what">¿Qué?</string>
+  <string name="where">¿Dónde?</string>
+  <string name="why">¿Por qué?</string>
+  <string name="story_type_event_text1">¿Cuándo sucede el evento?</string>
+  <string name="story_type_event_text2">¿Cuál es el propósito del evento?</string>
+  <string name="story_type_event_text3">¿Por qué  el evento es importante?</string>
+  <string name="story_type_event_text4">¿Cuándo sucede el evento?</string>
+  <string name="story_type_event_text5">¿Cómo es organizado el evento ?</string>
+  <string name="story_type_event_text6">¿Cuál es el propósito del evento?</string>
+  <string name="story_type_event_text7">¿Dónde sucede el evento? </string>
+  <string name="story_type_event_text8">¿Por qué  el evento es importante?</string>
+  <string name="story_type_issue_text1">¿Cómo impacta el problema en la comunidad?</string>
+  <string name="story_type_issue_text2">¿Quiénes son los más afectados?</string>
+  <string name="story_type_issue_text3">¿Qué se está haciendo al respecto?</string>
+  <string name="story_type_issue_text4">¿Cómo impacta el problema en la comunidad?</string>
+  <string name="story_type_issue_text5">¿Cuándo y dónde comienza el problema?</string>
+  <string name="story_type_issue_text6">¿Quiénes son los más afectados?</string>
+  <string name="story_type_issue_text7">¿Por qué son los más afectados?</string>
+  <string name="story_type_issue_text8">¿Qué se está haciendo al respecto?</string>
+  <string name="story_type_profile_text1">¿Quién es el personaje?</string>
+  <string name="story_type_profile_text2">¿Cuál es el desafío del personaje?</string>
+  <string name="story_type_profile_text3">¿Cómo maneja el personaje el desafío?</string>
+  <string name="story_type_profile_text4">¿Quién es el personaje?</string>
+  <string name="story_type_profile_text5">¿De dónde viene el personaje?</string>
+  <string name="story_type_profile_text6">¿Cuál es el reto del personaje?</string>
+  <string name="story_type_profile_text7">¿Por qué el personaje pelea con este desafío?</string>
+  <string name="story_type_profile_text8">¿Cómo maneja el personaje el reto?</string>
+  <string name="story_type_news_text1">¿Qué está pasando?</string>
+  <string name="story_type_news_text2">¿A quién afecta?</string>
+  <string name="story_type_news_text3">¿Cómo se está respondiendo?</string>
+  <string name="story_type_news_text4">¿Qué está pasando?</string>
+  <string name="story_type_news_text5">¿Dónde estan sucediendo noticias?</string>
+  <string name="story_type_news_text6">¿A quién afecta?</string>
+  <string name="story_type_news_text7">¿Por qué sucedió?</string>
+  <string name="story_type_news_text8">¿Cómo se está respondiendo?</string>
+  <!--/story_type_old-->
+  <!--prefs-->
+  <string name="prefs_category_networking_security_title">Redes y seguridad</string>
+  <string name="prefs_category_locales_title">Configuración regional</string>
+  <string name="prefs_category_media_title">Audiovisuales</string>
+  <string name="prefs_category_debug_title">Depurar</string>
+  <string name="prefs_storymaker_server_title">Servidor de StoryMaker</string>
+  <string name="prefs_storymaker_server_summary">Servidor para hospedar todo el contenido de lecciones e historias</string>
+  <string name="prefs_use_tor_title">Usar Orbot (Tor)</string>
+  <string name="prefs_use_tor_summary">Envía todo el tráfico de red a través de la red Tor usando la aplicación Orbot</string>
+  <string name="prefs_use_download_manager_title">Usar el Administrador de descargas</string>
+  <string name="prefs_use_download_manager_summary">Descarga archivos de lección con el servicio de Administrador de descargas de Android</string>
+  <string name="prefs_use_upload_manager_title">Usar administrador de subida</string>
+  <string name="prefs_use_upload_manager_summary">Suba el contenido de una historia con el servicio UploadManager (administrador de subida) de Android</string>
+  <string name="prefs_youtube_acccount_title">Cuenta de YouTube</string>
+  <string name="prefs_youtube_acccount_summary">La cuenta de YouTube a usar para subir vídeos. Esta DEBE estar registrada en su dispositivo.</string>
+  <string name="prefs_youtube_login_title">Inicio de sesión de YouTube</string>
+  <string name="prefs_youtube_login_summary">Usa autentificación web de YouTube</string>
+  <string name="prefs_soundcloud_account_title">Cuenta de SoundCloud</string>
+  <string name="prefs_soundcloud_account_summary">La cuenta de SoundCloud a usar para subir audio</string>
+  <string name="prefs_interface_language_summary"></string>
+  <string name="prefs_lesson_language_summary"></string>
+  <string name="prefs_slide_duration_title">Duración de diapositiva</string>
+  <string name="prefs_slide_duration_summary">Duración de cada diapositiva en una presentación fotográfica</string>
+  <string name="prefs_enable_compression_title">Habilitar compresión</string>
+  <string name="prefs_enable_compression_summary">Comprime todos los vídeos y audios usando las configuraciones de debajo</string>
+  <string name="prefs_preprocess_3gp_title">Preprocesar 3GP</string>
+  <string name="prefs_preprocess_3gp_summary">Convierte vídeos 3GP a MPEG-4</string>
+  <string name="prefs_use_cat_command_title">Usar el comando \'cat\'</string>
+  <string name="prefs_use_cat_command_summary">Usa el comando \'cat\' para fusionar vídeos</string>
+  <string name="prefs_video_codec_title">Codec de vídeo</string>
+  <string name="prefs_video_codec_summary">Exporta el códec de vídeo</string>
+  <string name="prefs_video_resolution_title">Resolución de vídeo</string>
+  <string name="prefs_video_resolution_summary">Exporta la resolución de vídeo</string>
+  <string name="prefs_video_width_title">Anchura de vídeo</string>
+  <string name="prefs_video_width_summary">Exporta la anchura de vídeo</string>
+  <string name="prefs_video_height_title">Altura de vídeo</string>
+  <string name="prefs_video_height_summary">Exporta la altura de vídeo</string>
+  <string name="prefs_video_bitrate_title">Ratio de bits de vídeo</string>
+  <string name="prefs_video_bitrate_summary">Exporta el ratio de bits de vídeo (kbps)</string>
+  <string name="prefs_video_framrate_title">Ratio de imágenes de vídeo</string>
+  <string name="prefs_video_framrate_summary">Exporta el ratio de imágenes (frames) por segundo (fps)</string>
+  <string name="prefs_audio_codec_title">Códec de audio</string>
+  <string name="prefs_audio_codec_summary">Exporta el códec de audio</string>
+  <string name="prefs_audio_bitrate_title">Ratio de bits de audio</string>
+  <string name="prefs_audio_bitrate_summary">Exporta el ratio de bits de audio (kbps)</string>
+  <string name="prefs_audio_samplerate_title">Frecuencia de muestreo de audio</string>
+  <string name="prefs_audio_samplerate_summary">Frecuencia de muestreo de grabación de audio (khz)</string>
+  <string name="prefs_audio_crossfade_title">Fundido cruzado de audio</string>
+  <string name="prefs_audio_crossfade_summary">Duración del fundido cruzado de audio</string>
+  <string name="prefs_internal_storage_title">Almacenamiento interno</string>
+  <string name="prefs_internal_storage_summary">Utiliza almacenamiento interno de proyecto</string>
+  <string name="prefs_disable_lesson_completion_title">Deshabilitar completado de lección</string>
+  <string name="prefs_disable_lesson_completion_summary"></string>
+  <string name="prefs_youtube_method_title">Método YouTube</string>
+  <string name="prefs_youtube_method_summary">Tipo de método de autorización de depuración</string>
+  <!--/prefs-->
+  <!--FirstStartActivity-->
+  <string name="sign_up_btn">REGISTRARSE PARA STORYMAKER</string>
+  <string name="no_thanks_btn">NO GRACIAS</string>
+  <string name="tos_btn">ESTOY DE ACUERDO CON LAS CONDICIONES DEL SERVICIO</string>
+  <string name="tos_dialog_title">Condiciones del servicio</string>
+  <string name="tos_dialog_msg">Por favor acepte nuestras Condiciones del Servicio antes de continuar</string>
+  <string name="tos_dialog_positive_button">Aceptar</string>
+  <string name="acct_created_dialog_title">Acceda a su cuenta</string>
+  <string name="acct_created_dialog_msg"><b>Se le enviará su contraseña de StoryMaker al correo electrónico en breve.</b> Tras obtener su contraseña puede iniciar sesión en cualquier momento a través del menú ocultable (drawer, al que se accede deslizándolo desde el borde izquierdo de la pantalla).</string>
+  <string name="acct_created_dialog_positive_button">¡Comencemos!</string>
+  <!--ConnectAccountActivity-->
+  <string name="my_account">MI CUENTA DE STORYMAKER</string>
+  <string name="join_storymaker">Únase a la comunidad de StoryMaker</string>
+  <string name="create_account">CREAR MI CUENTA</string>
+  <string name="sign_in">REGISTRARSE / INICIAR SESIÓN</string>
+  <string name="sign_out">SALIR</string>
+  <!--ProjectTagFragment-->
+  <string name="no_tags_msg">No se añadieron #etiquetas</string>
+</resources>

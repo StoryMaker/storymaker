@@ -1,0 +1,176 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+  <string name="terms_title">스토리메이커 조건</string>
+  <string name="terms_text_1">당신은 당신의 콘텐츠에 모든 소유권을 유지합니다. 언제든지 당신이 원하면 당신의 콘텐츠들을 없앨 수 있습니다. 우리는 당신의 어떤 데이터도 팔지 않을 것입니다. StoryMaker.cc에서 당신의 콘텐츠를 공유함에 동의하면서 당신은 Small World News와 파트너들이 당신의 스토리를 Storymaker에 만들어진 비슷한 이야기들과 함께 두는 것을 허가하는 것입니다.  우리는 그것들을 이야기 종류, 주제, 위치를 기반으로 묶을 것입니다.</string>
+  <string name="terms_text_2">당신의 이야기는 여전히 당신이 선택한 공유사이트에 게시되며 StoryMaker.cc에도 참조됩니다. 제목, 이야기 설명, 태그들이  StoryMaker.cc에 게시될 것입니다. 모든 다른 콘텐츠들은 당신의 공유사이트에서 당신의 개인적인 피드에 참조될 것입니다.</string>
+  <!--tutorial_lessons-->
+  <string name="tutorial_title_1">스토리텔링 배우기</string>
+  <string name="tutorial_text_1">안전하게 머물면서 훌륭한 오디오, 사진, 비디오 이야기를 제작하면서 기자가 되는 법을 배우기</string>
+  <string name="tutorial_title_2">정확해지기</string>
+  <string name="tutorial_text_2">ICFJ와 협력을 발전시키면서 당신은 우리의 저널리즘 레슨이 당신이 더 나은 기자가 되도록 가르쳐줄 것이라는 것을 확신할 것입니다.</string>
+  <string name="tutorial_title_3">당신을 보호하기</string>
+  <string name="tutorial_text_3">우리의 디지털 안전레슨은 당신과 당신의 자료가 안전하게 머물도록 도와줄 것입니다. 스토리메이커는 당신이 어떤얘기를 하더라도 당신을 안전하게 유지시키는 것에 초점을 맞추고 있습니다.</string>
+  <string name="tutorial_title_4">당신의 이야기를 더 잘 표현하기</string>
+  <string name="tutorial_text_4">오디오든 사진이든 비디오든 이야기들은 다른 매체들에 가장 알맞습니다. 어떻게 각각의 매체들이 다른지 배워봅시다.</string>
+  <string name="tutorial_title_5">당신을 테스트하기</string>
+  <string name="tutorial_text_5">각각의 레슨은 당신의 이해를 테스트할 퀴즈를 포함하고 있습니다.</string>
+  <string name="tutorial_title_6">계속해서 배우기</string>
+  <string name="tutorial_text_6">StoryMaker.cc 커뮤니티에 당신의 이야기를 공유하세요, 그리고 당신이 공유하는 각각의 스토리로 더 나은 스토리메이커가 되는 법을 배우세요.</string>
+  <!--/tutorial_lessons-->
+  <!--tutorial_story-->
+  <string name="tutorial_title_7">이야기를 더 잘 표현하기</string>
+  <string name="tutorial_text_7">좋은 이야기는 시작, 중간, 끝을 가지고 있습니다. 당신의 이야기에 더 많은 맥락을 제공하기 위해 누군가를 인터뷰하세요. 그들이 어디사는지 알려주세요. 개인적으로 유지하세요.</string>
+  <string name="tutorial_title_8">당신의 매체를 선택하기</string>
+  <string name="tutorial_text_8">오디오, 사진, 비디오는 다른 스토리텔링 스타일에 알맞습니다. 더 배울 수업들을 확인해보세요. 매체를 선택하고 배워나가세요.</string>
+  <string name="tutorial_title_9">당신의 이야기를 다섯가지로 표현하기</string>
+  <string name="tutorial_text_9">당신의 이야기를 이야기하기 위해 다섯개의 클립을 사용하세요. 당신의 이야기의 위치를 묘사하세요. 당신의 주된 주제를 소개하세요. 나머지 세가지인 처음, 중간, 끝과 함께 이야기를 표현하세요.</string>
+  <string name="tutorial_title_10">틀 깨기</string>
+  <string name="tutorial_text_10">당신의 클립들을 강한 충격을 주기위해 다른 순서대로 정리하세요.</string>
+  <string name="tutorial_title_11">더 긴 이야기를 표현하기</string>
+  <string name="tutorial_text_11">방법을 보여주기 위한 이야기 견본</string>
+  <!--/tutorial_story-->
+  <!--template_description-->
+  <string name="template_audio_desc">당신의 이야기를 표현하는 소리를 녹음하세요. 만약 당신이 강한 시각자료를 가지지 않았다면 오디오가 훌륭한 대안이 될 것입니다.</string>
+  <string name="template_photo_desc">천마디 말보다 한번 보는게 낫습니다. 우리에게 누가 또는 무엇이 당신의 이야기에서 중요한지 또는 어떻게 그 일이 일어났는지 보여주세요.</string>
+  <string name="template_essay_desc">때때로 몇장의 사진들이 필요합니다. 어떻게 이야기가 일어나는지 우리에게 보여주세요. 일련의 관련된 이미지로 이야기를 표현해주세요.</string>
+  <string name="template_video_desc">강력한 이미지와 액션들이 일어나는 것을 캡쳐하세요. 누가 또는 무엇이 중요한지 그리고 이유를 보여주세요.</string>
+  <!--/template_description-->
+  <!--legacy_story_type-->
+  <!--once we refactor to keep this extra text fields in the db instead of referencing this strings file we can remove these (after doing a migration step)-->
+  <string name="story_type_event_title">사건</string>
+  <string name="story_type_issue_title">쟁점</string>
+  <string name="story_type_profile_title">프로필</string>
+  <string name="story_type_news_title">뉴스 속보</string>
+  <string name="story_type_event_desc">사건 이야기는 정해진 시간 프레임과 장소를 가지고 있습니다. 그 사건에 무슨 일이 일어났는지에 중점을 두세요. 언제 어디서 왜 그 시간 그 장소에 그 일이 일어났는지에 대해 당신의 이야기를 준비하세요.</string>
+  <string name="story_type_issue_desc">쟁점적 이야기는 넓은 주제를 조사합니다. 어떻게 그 쟁점이 사람들의 커뮤니티 또는 공동체에게 영향을 끼치는지 중점을 두세요. 누가 영향을 끼치는지 무엇이 이에 대응하여 일어나는지에 당신의 이야기를 준비하세요.</string>
+  <string name="story_type_profile_desc">프로필에서 특정한 인물을 작성하세요. 그 인물이 누구인지 중점을 두세요. 그 인물의 일상적인 삶과 무슨 일이 일어났는지 그리고 어떻게 그 인물이 도전을 다루는지에 당신의 이야기를 준비하세요.</string>
+  <string name="story_type_news_desc">뉴스 속보는 즉각적입니다. 하나의 각도에 촛점을 맞추세요. 흥밋거리 기사를 누가, 무엇을, 어디서 언제인지에 당신의 이야기를 준비하세요. 문맥에 사용자 나레이션을 더하세요.</string>
+  <!--/ legacy_story_type-->
+  <!--story_type-->
+  <string name="story_type_event_news_title">뉴스 사건</string>
+  <string name="story_type_event_feature_title">특징적인 사건</string>
+  <string name="story_type_event_breaking_title">뉴스속보 사건</string>
+  <string name="story_type_issue_social_title">사회적 쟁점</string>
+  <string name="story_type_issue_political_title">정치적 쟁점</string>
+  <string name="story_type_issue_economic_title">경제적 쟁점</string>
+  <string name="story_type_profile_public_title">일반인의 프로필</string>
+  <string name="story_type_profile_professional_title">전문적인 프로필</string>
+  <string name="story_type_profile_personal_title">개인적인 프로필</string>
+  <!--/story_type-->
+  <!--story_type_description-->
+  <!--/story_type_description-->
+  <!--template_options-->
+  <string name="choose_level">단계 정하기</string>
+  <string name="choose_level_basic">기본</string>
+  <string name="choose_level_advanced">고급</string>
+  <!--/template_options-->
+  <!--story_type_new-->
+  <string name="overview">개요</string>
+  <string name="activity">활동</string>
+  <string name="impact">영향</string>
+  <string name="background">배경</string>
+  <string name="involvement">관련</string>
+  <string name="motivation">동기</string>
+  <string name="location">위치</string>
+  <string name="experience">경험</string>
+  <string name="results">결과</string>
+  <string name="next_steps">다음 단계</string>
+  <string name="moving_forward">빨리감기</string>
+  <string name="conclusion">결론</string>
+  <string name="story_type_event_news_text1">이 사건에서 무슨 일이 일어나고 있나요?</string>
+  <string name="story_type_event_news_text2">어떻게 당신은 관련되어있나요?</string>
+  <string name="story_type_event_news_text3">누가 가장 크게 이 일로 인해 영향을 받나요?</string>
+  <string name="story_type_event_news_text4">이 사건뒤에는 무슨 이야기가 있나요?</string>
+  <string name="story_type_event_news_text5">이 사건의 영향은 무엇인가요?</string>
+  <string name="story_type_event_feature_text1">이 사건에서 무슨 일이 일어나고 있나요?</string>
+  <string name="story_type_event_feature_text2">왜 당신은 이 일과 관련된 건가요?</string>
+  <string name="story_type_event_feature_text3">어디에서 이 일이 일어나고 있나요?</string>
+  <string name="story_type_event_feature_text4">당신은 개인적으로 어떻게 관련되었나요?</string>
+  <string name="story_type_event_feature_text5">이 사건의 영향은 무엇인가요?</string>
+  <string name="story_type_event_breaking_text1">무슨 일이 일어나고 있나요?</string>
+  <string name="story_type_event_breaking_text2">어디에서 이 일이 일어나고 있나요?</string>
+  <string name="story_type_event_breaking_text3">누가 영향을 받나요?</string>
+  <string name="story_type_event_breaking_text4">어떤 즉각적인 위험이 있나요?</string>
+  <string name="story_type_event_breaking_text5">사람들은 어떻게 반응하고 있나요?</string>
+  <string name="story_type_issue_social_text1">사회적인 쟁점을 묘사하세요</string>
+  <string name="story_type_issue_social_text2">언제 어디에서 이 쟁점이 시작되었나요?</string>
+  <string name="story_type_issue_social_text3">어떻게 이것이 지역사회에 영향을 끼치고 있나요?</string>
+  <string name="story_type_issue_social_text4">어떻게 이 것이 당신의 삶에 영향을 끼치는지에 대해 이야기 해주세요</string>
+  <string name="story_type_issue_social_text5">이 쟁점을 고치기 위해 무엇을 할 수 있을까요?</string>
+  <string name="story_type_issue_political_text1">정치적인 쟁점을 묘사하세요</string>
+  <string name="story_type_issue_political_text2">누가 직접적으로 영향을 끼치나요?</string>
+  <string name="story_type_issue_political_text3">어떻게 이것이 정부에 영향을 끼치나요?</string>
+  <string name="story_type_issue_political_text4">왜 이것이 당신에게 개인적으로 중요하나요?</string>
+  <string name="story_type_issue_political_text5">이 쟁점을 고치기 위해 무엇을 할 수 있을까요?</string>
+  <string name="story_type_issue_economic_text1">경제적인 쟁점을 묘사하세요</string>
+  <string name="story_type_issue_economic_text2">이 쟁점과 당신의 관계는 무엇인가요?</string>
+  <string name="story_type_issue_economic_text3">어떻게 이것이 경제에 영향을 끼치나요?</string>
+  <string name="story_type_issue_economic_text4">누가 가장 크게 이 일로 인해 영향을 받을 것인가요?</string>
+  <string name="story_type_issue_economic_text5">이 쟁점을 고치기 위해 무엇을 할 수 있을까요?</string>
+  <string name="story_type_profile_public_text1">당신이 누구인지에 대해 조금만 설명해주세요</string>
+  <string name="story_type_profile_public_text2">당신은 언제 시작했나요?</string>
+  <string name="story_type_profile_public_text3">당신의 직업은 무엇인가요?</string>
+  <string name="story_type_profile_public_text4">당신의 직업에 대해 자랑스러움을 느꼈던 순간을 표현해보세요</string>
+  <string name="story_type_profile_public_text5">미래에 당신의 역할을 어떻게 보나요?</string>
+  <string name="story_type_profile_professional_text1">당신은 누구이고 당신의 직업은 무엇인가요?</string>
+  <string name="story_type_profile_professional_text2">어떻게 당신이 직장에서 당신의 일을 하는지 설명해주세요</string>
+  <string name="story_type_profile_professional_text3">왜 이 일이 당신에게 중요한가요?</string>
+  <string name="story_type_profile_professional_text4">이 일에 당신이 어떻게 영향을 끼치는 가요?</string>
+  <string name="story_type_profile_professional_text5">이 일 다음으로 당신을 위한 것은 무엇인가요?</string>
+  <string name="story_type_profile_personal_text1">당신이 누구인지에 대해 조금만 설명해주세요</string>
+  <string name="story_type_profile_personal_text2">당신에게 일어난 중요한 경험은 무엇인가요?</string>
+  <!--/story_type_new-->
+  <!--story_type_old-->
+  <string name="scene_number">장면 &lt;xliff:g id="number"&gt;%1$d&lt;/xliff:g&gt;</string>
+  <string name="when">언제?</string>
+  <string name="how">어떻게?</string>
+  <string name="what">무엇을?</string>
+  <string name="where">어디에?</string>
+  <string name="why">왜?</string>
+  <string name="story_type_event_text1">언제 이 사건이 일어났나요?</string>
+  <string name="story_type_event_text2">이 사건의 목적은 무엇인가요?</string>
+  <string name="story_type_event_text3">왜 이 사건이 중요한가요?</string>
+  <string name="story_type_event_text4">언제 이 사건이 일어났나요?</string>
+  <string name="story_type_event_text5">어떻게 이 사건이 체계화되었나요?</string>
+  <string name="story_type_event_text6">이 사건의 목적이 무엇인가요?</string>
+  <string name="story_type_event_text7">어디서 이 사건이 일어났나요?</string>
+  <string name="story_type_event_text8">왜 이 사건이 중요한가요?</string>
+  <string name="story_type_issue_text1">어떻게 그 쟁점이 지역사회에 영향을 끼쳤나요?</string>
+  <string name="story_type_issue_text2">누가 가장 크게 영향을 받았나요?</string>
+  <string name="story_type_issue_text3">이에 대응하여 무슨 일이 일어났나요?</string>
+  <string name="story_type_issue_text4">어떻게 그 쟁점이 지역사회에 영향을 끼쳤나요?</string>
+  <string name="story_type_issue_text5">언제/어디서 그 쟁점이 시작됐나요?</string>
+  <string name="story_type_issue_text6">누가 가장 크게 영향을 받았나요?</string>
+  <string name="story_type_issue_text7">왜 그들이 가장 크게 영향을 받았나요?</string>
+  <string name="story_type_issue_text8">이에 대응하여 무슨 일이 일어났나요?</string>
+  <string name="story_type_profile_text1">인물이 누구인가요?</string>
+  <string name="story_type_profile_text2">그 인물의 도전은 무엇인가요?</string>
+  <string name="story_type_profile_text3">어떻게 그 인물이 도전을 다루는 가요?</string>
+  <string name="story_type_profile_text4">그 인물이 누구인가요?</string>
+  <string name="story_type_profile_text5">그 인물은 어디 출신인가요?</string>
+  <string name="story_type_profile_text6">그 인물의 도전은 무엇인가요?</string>
+  <string name="story_type_profile_text7">왜 그 인물이 이 도전으로 고심하나요?</string>
+  <string name="story_type_profile_text8">어떻게 그 인물이 그 도전을 다루는가요?</string>
+  <string name="story_type_news_text1">무슨 일이 일어나고 있나요?</string>
+  <string name="story_type_news_text2">누가 영향을 받나요?</string>
+  <string name="story_type_news_text3">어떻게 그것이 대응되고 있나요?</string>
+  <string name="story_type_news_text4">무슨 일이 일어나고 있나요?</string>
+  <string name="story_type_news_text5">어디에서 뉴스가 일어나고 있나요?</string>
+  <string name="story_type_news_text6">누가 영향을 받나요?</string>
+  <string name="story_type_news_text7">왜 그 일이 일어났나요?</string>
+  <string name="story_type_news_text8">어떻게 그것이 대응되고 있나요?</string>
+  <!--/story_type_old-->
+  <!--prefs-->
+  <string name="prefs_interface_language_summary"></string>
+  <string name="prefs_lesson_language_summary"></string>
+  <string name="prefs_disable_lesson_completion_summary"></string>
+  <!--/prefs-->
+  <!--FirstStartActivity-->
+  <!--ConnectAccountActivity-->
+  <string name="my_account">나의 스토리메이커 계정</string>
+  <string name="join_storymaker">스토리메이커 커뮤니티 가입하기</string>
+  <string name="create_account">내 계정 만들기</string>
+  <string name="sign_in">가입하기 / 로그인</string>
+  <string name="sign_out">탈퇴하기</string>
+  <!--ProjectTagFragment-->
+</resources>

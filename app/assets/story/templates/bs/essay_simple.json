@@ -1,0 +1,62 @@
+{"isječci":[
+{
+"Naziv": "Potpis"
+"Ilustracija": "vrsta isječka_detaljno",
+"Veličina Snimka": "Detaljno",
+"Namjena": "Sažmite cijeli problem, tako što ćete istaknuti bitne elemente priče.",
+"Dužina": "X sekundi",
+"Opis": "Snažan potpis fotografije će zaintrigirati publiku, i ohrabriti ih da traže dalje. Ovaj element bi trebao popuniti barem 50% kadra.",  
+"Savjet": "Podesite vašu kameru na Macro ako snimate na manjoj udaljenosti od dužine jedne ruke od vašeg subjekta.",
+"Obezbjeđivanje sigurnosti": "-"
+},
+{
+"Naziv": "Reakcija/Interakcija",
+"Ilustracija": "vrsta isječka_srednji",
+"Veličina Snimka": "Srednji",
+"Namjena": "Prikažite kako ljudi reaguju na neki događaj, ili njegove posljedice.",
+"Dužina": "X sekundi",
+"Opis": "Prikažite osobu u interakciji sa drugima. Napravite vezu između posmatrača i subjekta. Osoba bi trebala popuniti 20% vašeg kadra.",
+"Savjet": "Držite osobu na jednoj od vertikalnih linija kako biste prikladno uokvirli vaš snimak.",
+"Obezbjeđivanje sigurnosti": "-"
+},
+{
+"Naziv": "Otvoren",
+"Ilustracija": "vrsta isječka_dugačak",
+"Veličina Snimka": "Dugačak",
+"Namjena": "Prikažite kako je osoba uključena u svoje okruženje.",
+"Dužina": "X sekundi",
+"Opis": "Prikažite osobu kako se prirodno ponaša. Zašto je osoba vrijedna pažnje? Prikažite  publiku.",
+"Savjet": "Smjestite osobu na jednu stranu kadra, uokvirite vaš snimak kako biste prikazali sa druge strane i nešto bitno vezano za priču.",
+"Obezbjeđivanje sigurnosti": "-"
+},
+{
+"Naziv": "Portret",
+"Ilustracija": "vrsta isječka_zatvoreni",
+"Veličina Snimka": "Zatvoreni",
+"Namjena": "Predstavite osobu. Približite se.",
+"Dužina": "X sekundi",
+"Opis": "Vaš primarni fokus je glavni lik u vašoj priči. Istaknite emocije ili stanje uma osobe.",
+"Savjet": "Koristite očnu liniju kako biste prikladno uokvirili snimak.",
+"Obezbjeđivanje sigurnosti": "-"
+},
+{
+"Naziv": "Ekološki",
+"Ilustracija": "vrsta isječka_široki",
+"Veličina Snimka": "Široki",
+"Namjena": "Prikažite gdje se vaša priča odvija.",
+"Dužina": "X sekundi",
+"Opis": "Naznačite zemlju, ili etničke, ili vjerske elemente. Dodajte znamenitosti ili informacije o drugim specifičnim lokacijama.", 
+"Savjet": "Znamenitosti pomažu publici kako bi bolje shvatili lokaciju.",
+"Obezbjeđivanje sigurnosti": "-"
+},
+{
+"Naziv": "PRIPOVIJEDANJE",
+"Ilustracija": "vrsta isječka_srednji",
+"Veličina Snimka": "Srednji",
+"Namjena": "Dodajte glas preko",
+"Dužina": "X sekundi",
+"Opis": "Pričajte o foto eseju",
+"Savjet": "Govorite glasno i jasno!",
+"Obezbjeđivanje sigurnosti": "-"
+} 
+]} 

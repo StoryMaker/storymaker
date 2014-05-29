@@ -1,0 +1,127 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+  <string name="terms_title">Storymaker: Modalités</string>
+  <string name="terms_text_1">Vous conservez tous les droits de propriété sur votre contenu, vous pouvez le retirer  à chaque fois que vous le souhaitez, et nous ne vendra aucune de vos données. En acceptant de partager votre contenu avec StoryMaker.cc vous autorisez \"Small World News\" et des partenaires pour placer vos histoires avec des histoires similaires créés avec Storymaker. Nous les regroupons selon les types d\'articles, sujets et des lieux.</string>
+  <string name="terms_text_2">Votre  article reste posté et partagé dans un site web à votre choix, mais il sera aussi référencé  sur  \"alive.in/\" . Le titre, la description de l\'article et les mots clés seront aussi publiés sur \"alive.in/\" et tous le reste du contenu sera référencé à votre site de partage.</string>
+  <!--tutorial_lessons-->
+  <string name="tutorial_title_1">Apprends à raconter ton histoire.</string>
+  <string name="tutorial_text_1">Apprendre à être un journaliste en toute sécurité, produire de bonne qualité de son, photos et des articles en video</string>
+  <string name="tutorial_title_2">Etre Précis</string>
+  <string name="tutorial_text_2">Développées en partenariat avec \"ICFJ\", vous pouvez être sûr que nos leçons de journalisme vont vous apprendre à être un meilleur journaliste.</string>
+  <string name="tutorial_title_3">Protégez-vous</string>
+  <string name="tutorial_text_3">Nos leçons numériques de sécurité vous aideront, vous et vos sources à rester en sécurité. \"StoryMaker\" vise à vous garder en sécurité, peu importe où votre histoire vous prend.</string>
+  <string name="tutorial_title_4">Raconter votre histoire plus mieux</string>
+  <string name="tutorial_text_4">Les histoires sont mieux adaptés à différents supports, que ce soit audio, photo ou vidéo. Apprenez comment chaque support est différent.</string>
+  <string name="tutorial_title_5">Testez vos connaissances</string>
+  <string name="tutorial_text_5">Chaque leçon se termine par un quiz pour tester vos compréhensions.</string>
+  <string name="tutorial_title_6">Continuez à apprendre</string>
+  <string name="tutorial_text_6">Partagez vos histoires avec la communauté  \"Alive.in /\" , et apprendre à être un meilleur créateur d\'histoires avec chaque article que vous partagez.</string>
+  <!--/tutorial_lessons-->
+  <!--tutorial_story-->
+  <string name="tutorial_title_7">Mieux Raconter des histoires</string>
+  <string name="tutorial_text_7">Une bonne histoire a un début, un milieu et une fin. Interroger  quelqu\'un pour fournir plus de contexte à votre histoire. Montrez-nous où ils vivent.  </string>
+  <string name="tutorial_title_8">Choisir votre Support</string>
+  <string name="tutorial_text_8">Son, photo, et vidéo, sont des différents styles de raconter des histoires. Découvrez les leçons à en savoir plus. Choisir un support, et apprendre.</string>
+  <string name="tutorial_title_9">Raconter une histoire en Cinq</string>
+  <string name="tutorial_text_9">Utilisez cinq clips pour raconter votre histoire. Décrire l\'emplacement de votre histoire. Présentez votre sujet principal. Utiliser les trois autres pour raconter une histoire avec un début, un milieu et une fin.</string>
+  <string name="tutorial_title_10">Rompre avec les Traditions</string>
+  <string name="tutorial_text_10">Assemblez  vos clips en ordre différents pour plus d\'impact.</string>
+  <string name="tutorial_title_11">Dites des histoires plus longues.</string>
+  <string name="tutorial_text_11">Les modèles d\'histoires vous disent comment.</string>
+  <!--/tutorial_story-->
+  <!--template_description-->
+  <string name="template_audio_desc">Enregistrer les sons qui racontent votre histoire, qui, quoi. Si vous ne pouvez pas obtenir des visuels forts, l\'audio est une excellente alternative.</string>
+  <string name="template_photo_desc">Une image vaut mille mots. Montrez-nous qui ou ce qui est important dans votre histoire, ou comment ça se passe.</string>
+  <string name="template_essay_desc">Parfois, plusieurs photos sont nécessaires. Montrez-nous comment l\'histoire se passe, raconter une histoire dans une série d\'images liées.</string>
+  <string name="template_video_desc">Capturez des images et des actions convaincantes dès qu\'ils se produisent. Montrez-nous qui ou ce qui est important et pourquoi.</string>
+  <!--/template_description-->
+  <!--legacy_story_type-->
+  <!--once we refactor to keep this extra text fields in the db instead of referencing this strings file we can remove these (after doing a migration step)-->
+  <string name="story_type_event_title">Evènement </string>
+  <string name="story_type_issue_title">Problème</string>
+  <string name="story_type_profile_title">Profile</string>
+  <string name="story_type_news_title">fash infos</string>
+  <string name="story_type_event_desc">Les histoires d\'événements ont un calendrier établi et un endroit indiqué. Concentrez-vous sur ce qui se passe lors de l\'événement. Organisez votre histoire autour de laquelle l\'événement se produit, où et pourquoi cela arrive à ce moment et ce lieu là.</string>
+  <string name="story_type_issue_desc">Les histoires mettant un problème en question  examinent un vaste sujet. Elles concentrent sur la façon dont le problème affecte une communauté ou un groupe de personnes. Organisez votre histoire à propos de qui elle influe et ce qui est fait en réponse.</string>
+  <string name="story_type_profile_desc">Présentez un caractère spécifique. Concentrez-vous sur le personnage qui est. Organisez votre histoire autour de la vie quotidienne des personnages, ce qui se passe, et comment le personnage traite des défis.</string>
+  <string name="story_type_news_desc">Les flash infos sont immédiates. Concentrez-vous sur un angle. Organisez votre histoire autour d\'anecdotes, qui, quoi, où, quand. La narration de l\'utilisateur sert à ajouter du contexte</string>
+  <!--/ legacy_story_type-->
+  <!--story_type-->
+  <string name="story_type_event_news_title">Nouvelles</string>
+  <string name="story_type_event_feature_title">Actualités</string>
+  <string name="story_type_event_breaking_title">Flash d\'information</string>
+  <string name="story_type_issue_social_title">Problème Sociale</string>
+  <string name="story_type_issue_political_title">Problème Politique</string>
+  <string name="story_type_issue_economic_title">Problème économique</string>
+  <string name="story_type_profile_public_title">Profil Public</string>
+  <string name="story_type_profile_professional_title">Profil Professionnel</string>
+  <string name="story_type_profile_personal_title">Profil Personnel</string>
+  <!--/story_type-->
+  <!--story_type_description-->
+  <string name="story_type_event_news_desc">Histoires sur les événements ayant une importance immédiate, souvent prévu, et ont un début et une fin. Une élection ou d\'une manifestation sont de bons événements de l\'actualité.</string>
+  <string name="story_type_event_feature_desc">Histoires sur les événements qui peuvent ne pas avoir de nouvelles conséquences dures. Un événement sportif, une nouvelle entreprise dans un quartier, les technologies émergentes sont de bons sujets à traiter.</string>
+  <string name="story_type_event_breaking_desc">Des événements imprévus ayant une valeur de nouvelles importantes. Un feu, une annonce surprise par un fonctionnaire du gouvernement, ou d\'une catastrophe naturelle sont de bons événements des flash d\'information.</string>
+  <string name="story_type_issue_social_desc">Histoires sur les questions qui touchent les communautés. Un changement dans la réglementation du gouvernement local de l\'infrastructure est une bonne question sociale</string>
+  <string name="story_type_issue_political_desc">Histoires sur le gouvernement et le travail des fonctionnaires publics. Une histoire de nouvelles lois ou des modifications du Parlement est une bonne question politique.</string>
+  <!--/story_type_description-->
+  <!--template_options-->
+  <string name="choose_level">Choisissez un niveau</string>
+  <string name="choose_level_basic">Principal</string>
+  <string name="choose_level_advanced">avancé</string>
+  <!--/template_options-->
+  <!--story_type_new-->
+  <string name="activity">Activité</string>
+  <string name="location">Localisation</string>
+  <string name="story_type_event_breaking_text1">Qu\'est-ce qui se passe ?</string>
+  <string name="story_type_event_breaking_text3">Qui est concerné?</string>
+  <!--/story_type_new-->
+  <!--story_type_old-->
+  <string name="scene_number">Scene &lt;xliff:g id="number"&gt;%1$d&lt;/xliff:g&gt;</string>
+  <string name="when">Quand?</string>
+  <string name="how">Comment?</string>
+  <string name="what">Quoi?</string>
+  <string name="where">où?</string>
+  <string name="why">Pourquoi?</string>
+  <string name="story_type_event_text1">Quand est-ce que l’événement s\'est passé?</string>
+  <string name="story_type_event_text2">Quelle est la raison de cet événement?</string>
+  <string name="story_type_event_text3">Pourquoi l\'événement est important?</string>
+  <string name="story_type_event_text4">Quand est-ce que l’événement s\'est passé?</string>
+  <string name="story_type_event_text5">Comment l\'événement est organisé?</string>
+  <string name="story_type_event_text6">Quelle est la raison de cet événement?</string>
+  <string name="story_type_event_text7">Où s\'est passé l\'événement?</string>
+  <string name="story_type_event_text8">Pourquoi l\'événement est-il important?</string>
+  <string name="story_type_issue_text1">Comment la communauté est influencée par ce problème?</string>
+  <string name="story_type_issue_text2">Qui est le plus touché?</string>
+  <string name="story_type_issue_text3">Qu\'est ce qu\'on a fait en réponse?</string>
+  <string name="story_type_issue_text4">Comment la communauté est influencée par ce problème?</string>
+  <string name="story_type_issue_text5">Quand / Où le problème à commencé?</string>
+  <string name="story_type_issue_text6">Qui est le plus touché?</string>
+  <string name="story_type_issue_text7">Pourquoi sont-ils les plus touchés?</string>
+  <string name="story_type_issue_text8">Qu\'est-ce qu\'on a fait en réponse?</string>
+  <string name="story_type_profile_text1">Qui est le personnage?</string>
+  <string name="story_type_profile_text2">Quel est le défi du personnage?</string>
+  <string name="story_type_profile_text3">Comment agit le personnage avec le défi?</string>
+  <string name="story_type_profile_text4">Qui est le personnage?</string>
+  <string name="story_type_profile_text5">D\'où vient le personnage?</string>
+  <string name="story_type_profile_text6">Quel est le défi du personnage?</string>
+  <string name="story_type_profile_text7">Pourquoi le personnage affronte ce défi?</string>
+  <string name="story_type_profile_text8">Comment agit le personnage avec le défi?</string>
+  <string name="story_type_news_text1">Qu\'est-ce qui se passe?</string>
+  <string name="story_type_news_text2">Qui est concerné?</string>
+  <string name="story_type_news_text3">Comment on a répondu?</string>
+  <string name="story_type_news_text4">Qu\'est-ce qui se passe ?</string>
+  <string name="story_type_news_text5">Où se passe l\'info?</string>
+  <string name="story_type_news_text6">Qui est concerné?</string>
+  <string name="story_type_news_text7">Pourquoi s\'est-il passé?</string>
+  <string name="story_type_news_text8">Comment on a répondu?</string>
+  <!--/story_type_old-->
+  <!--prefs-->
+  <string name="prefs_interface_language_summary"></string>
+  <string name="prefs_lesson_language_summary"></string>
+  <string name="prefs_disable_lesson_completion_summary"></string>
+  <!--/prefs-->
+  <!--FirstStartActivity-->
+  <!--ConnectAccountActivity-->
+  <string name="join_storymaker">Joindre la Communauté StoryMaker</string>
+  <!--ProjectTagFragment-->
+</resources>

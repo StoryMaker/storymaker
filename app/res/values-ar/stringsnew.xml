@@ -29,6 +29,12 @@
   <string name="tutorial_title_11">قص قصصاً أطول.</string>
   <string name="tutorial_text_11">قوالب القصص تخبرك طريقة ذلك.</string>
   <!--/tutorial_story-->
+  <!--template_description-->
+  <string name="template_audio_desc">سجل الأصوات التي تحكي قصتك وعن الأشخاص والأشياء. وإذا لم تتمكن من الحصول على مواد بصرية قوية يعد الصوت بديلاً رائعاً.</string>
+  <string name="template_photo_desc">الصورة تعبر أفضل من ألف كلمة. وضح لنا الشخص أو الشيء المهم في قصتك، أو طريقة وقوع الحدث.</string>
+  <string name="template_essay_desc">يتطلب الأمر أحياناً عدة صور. وضح لنا كيف تحدث القصة وقص قصة في شكل سلسلة من الصور المترابطة.</string>
+  <string name="template_video_desc">التقط الصور والتصرفات المقنعة على نحو وقوعها. وضح لنا الشخص أو الشيء المهم وسبب ذلك.</string>
+  <!--/template_description-->
   <!--legacy_story_type-->
   <!--once we refactor to keep this extra text fields in the db instead of referencing this strings file we can remove these (after doing a migration step)-->
   <string name="story_type_event_title">الحدث</string>
@@ -39,10 +45,6 @@
   <string name="story_type_issue_desc">تتناول قصص المشاكل موضوعاً واسعاً. ركز على مدى تأثير المشكلة على مجتمع أو مجموعة من الناس. اجعل محور قصتك من تؤثر عليهم المشكلة وما يتم فعله استجابة للمشكلة.</string>
   <string name="story_type_profile_desc">قدم لمحة مختصرة عن شخصية محددة. ركز على داخلية الشخصية. اجعل محور قصتك الحياة اليومية للشخصية وما يحدث وكيف تتعامل الشخصية مع التحديات.</string>
   <string name="story_type_news_desc">الأخبار العاجلة طارئة. ركز على إحدى الزوايا. اجعل محور قصتك الحقائق ومن وماذا وأين ومتى. استخدم الرواية لإضافة سياق.</string>
-  <string name="template_audio_desc">سجل الأصوات التي تحكي قصتك وعن الأشخاص والأشياء. وإذا لم تتمكن من الحصول على مواد بصرية قوية يعد الصوت بديلاً رائعاً.</string>
-  <string name="template_photo_desc">الصورة تعبر أفضل من ألف كلمة. وضح لنا الشخص أو الشيء المهم في قصتك، أو طريقة وقوع الحدث.</string>
-  <string name="template_essay_desc">يتطلب الأمر أحياناً عدة صور. وضح لنا كيف تحدث القصة وقص قصة في شكل سلسلة من الصور المترابطة.</string>
-  <string name="template_video_desc">التقط الصور والتصرفات المقنعة على نحو وقوعها. وضح لنا الشخص أو الشيء المهم وسبب ذلك.</string>
   <!--/ legacy_story_type-->
   <!--story_type-->
   <string name="story_type_event_news_title">أخبار</string>
@@ -170,4 +172,12 @@
   <string name="story_type_news_text7">لماذا حدث؟</string>
   <string name="story_type_news_text8">كيف يتم الاستجابة للحدث؟</string>
   <!--/story_type_old-->
+  <!--prefs-->
+  <string name="prefs_interface_language_summary"></string>
+  <string name="prefs_lesson_language_summary"></string>
+  <string name="prefs_disable_lesson_completion_summary"></string>
+  <!--/prefs-->
+  <!--FirstStartActivity-->
+  <!--ConnectAccountActivity-->
+  <!--ProjectTagFragment-->
 </resources>

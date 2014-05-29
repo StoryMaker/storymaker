@@ -14,8 +14,8 @@
 	</PreferenceCategory>
 	
 	<PreferenceCategory android:title="@string/prefs_category_locales_title">	    
-		<CheckBoxPreference android:title="@string/prefs_enable_arabic_mode_title" android:summary="@string/prefs_enable_arabic_mode_summary" android:key="plocalear"/>
-		<EditTextPreference android:title="@string/prefs_custom_lesson_location_title" android:summary="@string/prefs_custom_lesson_location_summary" android:key="plessonloc" android:enabled="true"/>			
+		<ListPreference 	android:title="@string/prefs_interface_language_title" android:summary="@string/prefs_interface_language_summary" android:key="pintlanguage" android:defaultValue="english" android:entries="@array/interface_language_options" android:entryValues="@array/interface_language_options_values" android:enabled="true"/>
+		<ListPreference 	android:title="@string/prefs_lesson_language_title" android:summary="@string/prefs_lesson_language_summary" android:key="pleslanguage" android:defaultValue="english" android:entries="@array/lesson_language_options" android:entryValues="@array/lesson_language_options_values" android:enabled="true"/>			
 	</PreferenceCategory>
 	
 	<PreferenceCategory android:title="@string/prefs_category_media_title">	    
