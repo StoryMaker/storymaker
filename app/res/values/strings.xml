@@ -2,7 +2,7 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
 
     <string name="app_name">StoryMaker</string>
-    <string name="app_id">509922855786064</string>
+    <string name="app_id" translatable="false">509922855786064</string>
     <string name="title_projects">Stories</string>
     <string name="title_lessons">Lessons</string>
     <string name="action_publish">Publish</string>
@@ -59,7 +59,7 @@
     <string name="pref_out_vheight_summary">custom video height for outputed video</string>
     <string name="hintTitle">title</string>
     <string name="hintStartTime">start (00:00:00)</string>
-    <string name="hintEndTime">duratio (00:00:00)</string>
+    <string name="hintEndTime">duration (00:00:00)</string>
     <string name="hintFadeIn">fade in (frames)</string>
     <string name="hintFadeOut">fade out (frames)</string>
     <string name="start_recording">Record</string>
@@ -78,7 +78,7 @@
     <string name="main_dialog_text">"This application will attempt to collect the device log.
 The collected log will be sent using an application of your choice.
 You also will have an opportunity to see and modify the data being sent."</string>
-    <string name="device_info_fmt">Log Collector version: <xliff:g id="application_version">%s</xliff:g>\n
+    <string name="device_info_fmt" translatable="false">Log Collector version: <xliff:g id="application_version">%s</xliff:g>\n
 Device model: <xliff:g id="device_model">%s</xliff:g>\n
 Firmware version: <xliff:g id="firmware_revision">%s</xliff:g>\n
 Kernel version: <xliff:g id="kernel_version">%s</xliff:g>\n
