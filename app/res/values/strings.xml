@@ -78,11 +78,7 @@
     <string name="main_dialog_text">"This application will attempt to collect the device log.
 The collected log will be sent using an application of your choice.
 You also will have an opportunity to see and modify the data being sent."</string>
-    <string name="device_info_fmt" translatable="false">Log Collector version: <xliff:g id="application_version">%s</xliff:g>\n
-Device model: <xliff:g id="device_model">%s</xliff:g>\n
-Firmware version: <xliff:g id="firmware_revision">%s</xliff:g>\n
-Kernel version: <xliff:g id="kernel_version">%s</xliff:g>\n
-Build number: <xliff:g id="build_number">%s</xliff:g>\n</string>
+
     <string name="title_home_projects">Projects</string>
     <string name="title_home_activity">Activity</string>
     <string name="title_lessons_lessons">Lessons</string>
