@@ -11,6 +11,7 @@ import info.guardianproject.mrapp.server.OAuthAccessTokenActivity;
 import info.guardianproject.mrapp.server.ServerManager;
 import info.guardianproject.mrapp.server.YouTubeSubmit;
 import info.guardianproject.mrapp.server.Authorizer.AuthorizationListener;
+import info.guardianproject.mrapp.ui.ToggleImageButton;
 import io.scal.secureshareui.lib.ChooseAccountFragment;
 
 import java.io.File;
@@ -39,6 +40,7 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -82,11 +84,9 @@ public class PublishFragment extends Fragment implements PublishListener {
     private String mMediaUploadAccount = null;
     private String mMediaUploadAccountKey = null;
 
-    TextView mProgress;
-    ImageButton mButtonRender;
-    ImageButton mButtonRenderSpinner;
-    ImageButton mButtonUpload;
-    ImageButton mButtonPlay;
+    TextView mProgressText;
+    ToggleImageButton mButtonUpload;
+    ToggleImageButton mButtonPlay;
 
     Animation mFadeIn;
     Animation mFadeOut;
@@ -164,39 +164,40 @@ public class PublishFragment extends Fragment implements PublishListener {
 				}
 			}
 
-            mProgress = (TextView) mView.findViewById(R.id.textViewProgress);
-            mProgress.setText("");
+            mProgressText = (TextView) mView.findViewById(R.id.textViewProgress);
+            mProgressText.setText("");
             
             ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
             		  mActivity, R.array.story_sections, android.R.layout.simple_spinner_item );
             		adapter.setDropDownViewResource( android.R.layout.simple_spinner_dropdown_item );
 			
-			mButtonRender = (ImageButton) mView.findViewById(R.id.btnRender);
-			mButtonRender.setOnClickListener(new OnClickListener() {
-				@Override
-				public void onClick(View arg0) {
-					launchChooseAccountsDialog();
-				}
-			});
+//			mButtonRender = (ImageButton) mView.findViewById(R.id.btnRender);
+//			mButtonRender.setOnClickListener(new OnClickListener() {
+//				@Override
+//				public void onClick(View arg0) {
+//					launchChooseAccountsDialog();
+//				}
+//			});
             
-            mButtonUpload = (ImageButton) mView.findViewById(R.id.btnUpload);
+            mButtonUpload = (ToggleImageButton) mView.findViewById(R.id.btnUpload);
             mButtonUpload.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View arg0) {
-                    if (mFileLastExport != null && mFileLastExport.exists()) {
-                        startUpload(mActivity.mMPM.mProject, mSiteKeys);
-                        showRenderingSpinner();
-                    }
+//                    if (mFileLastExport != null && mFileLastExport.exists()) {
+//                        startUpload(mActivity.mMPM.mProject, mSiteKeys);
+                        showUploadRenderingSpinner(true);
+//                    }
                 }
             });
 
-            mButtonPlay = (ImageButton) mView.findViewById(R.id.btnPlay);
+            mButtonPlay = (ToggleImageButton) mView.findViewById(R.id.btnPlay);
             mButtonPlay.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View arg0) {
-                    if (mFileLastExport != null && mFileLastExport.exists()) {
-                        mActivity.mMPM.mMediaHelper.playMedia(mFileLastExport, null);
-                    }
+//                    if (mFileLastExport != null && mFileLastExport.exists()) {
+//                        mActivity.mMPM.mMediaHelper.playMedia(mFileLastExport, null);
+                        showPlayRenderingSpinner(true);
+//                    }
                 }
             });
             
@@ -275,58 +276,74 @@ public class PublishFragment extends Fragment implements PublishListener {
         mActivity.startActivity(new Intent(mActivity, LoginActivity.class));
     }
 
-    private void showRenderingSpinner(boolean vis) {
-        mButtonRenderSpinner = ((ImageButton) mView.findViewById(R.id.btnRenderingSpinner));
-//      Drawable spinner = getResources().getDrawable(R.drawable.render_spinner);
-//        InputStream is = getResources().openRawResource(R.drawable.render_spinner);
-//        try {
-//            AnimationDrawable drawable = new GifAnimationDrawable(is);
-//            mButtonRenderSpinner.setImageDrawable(drawable);
-//        } catch (IOException e) {
-//            // TODO Auto-generated catch block
-//            e.printStackTrace();
+//    private void showRenderingSpinner(boolean vis) {
+////        mButtonRenderSpinner = ((ImageButton) mView.findViewById(R.id.btnRenderingSpinner));
+////      Drawable spinner = getResources().getDrawable(R.drawable.render_spinner);
+////        InputStream is = getResources().openRawResource(R.drawable.render_spinner);
+////        try {
+////            AnimationDrawable drawable = new GifAnimationDrawable(is);
+////            mButtonRenderSpinner.setImageDrawable(drawable);
+////        } catch (IOException e) {
+////            // TODO Auto-generated catch block
+////            e.printStackTrace();
+////        }
+//        mButtonRenderSpinner.setVisibility(vis ? View.VISIBLE : View.GONE);
+////        ((TextView) mView.findViewById(R.id.textRendering)).setVisibility(vis ? View.VISIBLE : View.GONE);
+//        mProgress.setVisibility(vis ? View.VISIBLE : View.GONE);
+//        mProgress.setTextColor(getResources().getColor(android.R.color.white));
+//    }
+
+    private void showPlayRenderingSpinner(boolean vis) {
+        mButtonPlay.setEnabled(vis);
+        mButtonPlay.setChecked(vis);
+        mButtonPlay.setImageResource(R.drawable.spinner_play);
+        mButtonUpload.setEnabled(!vis);
+        mButtonUpload.setChecked(!vis);
+        mProgressText.setVisibility(vis ? View.VISIBLE : View.GONE);
+        mProgressText.setTextColor(getResources().getColor(android.R.color.white));
+    }
+
+    private void showUploadRenderingSpinner(boolean vis) {
+//        if (vis) { 
+//            mButtonPlay.setImageResource(R.drawable.spinner_play);
+//            mButtonUpload.setImageResource(R.drawable.ic_comp_upload);
+//        } else {
+//            mButtonPlay.setImageResource(R.drawable.ic_comp_play);
 //        }
-        mButtonRenderSpinner.setVisibility(vis ? View.VISIBLE : View.GONE);
-//        ((TextView) mView.findViewById(R.id.textRendering)).setVisibility(vis ? View.VISIBLE : View.GONE);
-        mProgress.setVisibility(vis ? View.VISIBLE : View.GONE);
-        mProgress.setTextColor(getResources().getColor(android.R.color.white));
+        mButtonUpload.setEnabled(vis);
+        mButtonUpload.setChecked(vis);
+        mButtonUpload.setImageResource(R.drawable.spinner_upload);
+        mButtonPlay.setEnabled(!vis);
+        mButtonPlay.setChecked(!vis);
+        mProgressText.setVisibility(vis ? View.VISIBLE : View.GONE);
+        mProgressText.setTextColor(getResources().getColor(android.R.color.white));
     }
     
     private void showPlayAndUpload(boolean vis) {
         mButtonPlay.setVisibility(vis ? View.VISIBLE : View.GONE);
+        mButtonPlay.setEnabled(true);
+        mButtonPlay.setChecked(false);
         mButtonUpload.setVisibility(vis ? View.VISIBLE : View.GONE);
-        ((ImageView) mView.findViewById(R.id.imageSeparator)).setVisibility(vis ? View.VISIBLE : View.GONE);
+        mButtonUpload.setEnabled(true);
+        mButtonPlay.setChecked(false);
+        mProgressText.setVisibility(View.GONE);
     }
 
-    private void showRender(boolean vis) {
-        mButtonRender.setVisibility(vis ? View.VISIBLE : View.GONE);
-    }
-
-    private void showRenderingSpinner() {
-//        mRenderStateWidget.showNext();
-//        mRenderStateWidget.setInAnimation(mHorizExpand);
-//        mRenderStateWidget.setOutAnimation(mFadeOut);
-        showRenderingSpinner(true);
-        showPlayAndUpload(false);
-        showRender(false);
-    }
-    
-    private void showPlayAndUpload() {
-        showRenderingSpinner(false);
-        showPlayAndUpload(true);
-        showRender(false);
-    }
-
-    private void showRender() {
-        showRenderingSpinner(false);
-        showPlayAndUpload(false);
-        showRender(true);
-    }
-    
+//    private void showRenderingSpinner() {
+////        mRenderStateWidget.showNext();
+////        mRenderStateWidget.setInAnimation(mHorizExpand);
+////        mRenderStateWidget.setOutAnimation(mFadeOut);
+//        showRenderingSpinner(true);
+//        showPlayAndUpload(false);
+//        showRender(false);
+//    }
+//    
     private void showError(int code, String message) {
-        mProgress.setVisibility(View.VISIBLE);
-        mProgress.setText("Error #" + code + ": " + message);
-        mProgress.setTextColor(getResources().getColor(R.color.red));
+        mButtonPlay.setEnabled(false);
+        mButtonUpload.setEnabled(false);
+        mProgressText.setVisibility(View.VISIBLE);
+        mProgressText.setText("Error #" + code + ": " + message);
+        mProgressText.setTextColor(getResources().getColor(R.color.red));
     }
     
     private String setUploadAccount() {
@@ -716,7 +733,7 @@ public class PublishFragment extends Fragment implements PublishListener {
                 if (!siteKeys.isEmpty()) {
                     Log.d(TAG, "selected sites: " + siteKeys);
                     mSiteKeys = siteKeys.toArray(new String[siteKeys.size()]);
-                    showRenderingSpinner();
+                    showPlayRenderingSpinner(true);
                     startRender(mActivity.mMPM.mProject, mSiteKeys);
                 } else {
                     Utils.toastOnUiThread(mActivity, "No site selected."); // FIXME move to strings.xml
@@ -754,10 +771,10 @@ public class PublishFragment extends Fragment implements PublishListener {
             if (path != null) { // FIXME this won't work when a upload job succeeds
                 mFileLastExport = new File(path);
                 Handler handlerTimer = new Handler();
-                mProgress.setText("Complete!");
+                mProgressText.setText("Complete!");
                 handlerTimer.postDelayed(new Runnable(){
                     public void run() {
-                        showPlayAndUpload();
+                        showPlayAndUpload(true);
                     }
                 }, 200);
             } else {
@@ -769,7 +786,6 @@ public class PublishFragment extends Fragment implements PublishListener {
     @Override
     public void publishFailed(PublishJob publishJob, int errorCode, String errorMessage) {
         Utils.toastOnUiThread(getActivity(), "Publish failed :'( ... " + publishJob); // FIXME move to strings.xml
-        showRender();
         showError(errorCode, errorMessage);
     }
 
@@ -778,7 +794,7 @@ public class PublishFragment extends Fragment implements PublishListener {
 //        Utils.toastOnUiThread(getActivity(), "Progress at " + (progress / 10000) + "%: " + message);
         int prog = Math.round(progress * 100);
         String txt = message + ((prog > 0) ? " " + prog + "%" : "");
-        mProgress.setText(txt);
+        mProgressText.setText(txt);
         Log.d(TAG, txt);
     }
 }

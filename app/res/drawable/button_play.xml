@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector android:constantSize="true" xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_pressed="true"
+          android:drawable="@drawable/ic_comp_play_pro_selected" /> <!-- pressed -->
+   
+    <item android:state_enabled="false"
+          android:drawable="@drawable/ic_comp_play_pro_unselected" /> <!-- disabled -->
+    
+    <item android:state_checked="true"
+          android:drawable="@drawable/spinner_play" />				<!-- checked -->
+          
+    <item android:drawable="@drawable/ic_comp_play" /> 				<!-- default -->
+</selector>

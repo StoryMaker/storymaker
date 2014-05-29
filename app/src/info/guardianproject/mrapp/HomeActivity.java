@@ -635,11 +635,6 @@ public class HomeActivity extends BaseActivity {
             mSlidingMenu.toggle();
             return true;
         }
-        else if (item.getItemId() == R.id.menu_settings)
-        {
-            showPreferences();
-            return true;
-        }
         else if (item.getItemId() == R.id.menu_logs)
         {
             collectAndSendLog();

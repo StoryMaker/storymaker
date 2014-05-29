@@ -20,7 +20,6 @@
             android:id="@+id/storyThumb"
             android:layout_width="fill_parent"
             android:layout_height="200dip"
-            android:scaleType="fitXY"
             android:adjustViewBounds="true"
             android:src="@drawable/cliptype_long" />
 
@@ -32,35 +31,28 @@
             android:adjustViewBounds="true"
             android:visibility="gone" />
 
-        <ImageView
-            android:id="@+id/imageSeparator"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:src="@drawable/separator"
-            android:visibility="gone" />
+            android:layout_centerVertical="true" >
 
-        <ImageButton
-            android:id="@+id/btnPlay"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="72dp"
-            android:background="#0000"
-            android:scaleType="fitXY"
-            android:src="@drawable/ic_comp_pspin_00" />
+            <info.guardianproject.mrapp.ui.ToggleImageButton
+                android:id="@+id/btnPlay"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:background="#0000"
+                android:layout_weight="1"
+                android:src="@drawable/button_play" />
 
-        <ImageButton
-            android:id="@+id/btnUpload"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="72dp"
-            android:background="#0000"
-            android:src="@drawable/ic_comp_upload" />
+            <info.guardianproject.mrapp.ui.ToggleImageButton
+                android:id="@+id/btnUpload"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#0000"
+                android:layout_weight="1"
+                android:src="@drawable/button_upload" />
+
+        </LinearLayout>
 
         <TextView
             android:id="@+id/textRendering"

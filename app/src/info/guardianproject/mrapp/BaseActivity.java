@@ -10,6 +10,7 @@ import java.util.Date;
 import org.holoeverywhere.app.Activity;
 import org.holoeverywhere.widget.LinearLayout;
 import org.holoeverywhere.widget.TextView;
+import org.holoeverywhere.widget.Toast;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -23,6 +24,8 @@ import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.PixelFormat;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.ScaleDrawable;
 import android.view.WindowManager;
 import android.widget.ImageView;
 
@@ -86,8 +89,9 @@ public class BaseActivity extends Activity {
         Button btnDrawerProjects = (Button) findViewById(R.id.btnDrawerProjects);
         Button btnDrawerLessons = (Button) findViewById(R.id.btnDrawerLessons);
         //Button btnDrawerAccount = (Button) findViewById(R.id.btnDrawerAccount);
-        //Button btnDrawerSettings = (Button) findViewById(R.id.btnDrawerSettings);
         Button btnDrawerAccounts = (Button) findViewById(R.id.btnDrawerAccounts);
+        Button btnDrawerUploadManager = (Button) findViewById(R.id.btnDrawerUploadManager);
+        Button btnDrawerSettings = (Button) findViewById(R.id.btnDrawerSettings);
         
         updateSlidingMenuWithUserState();
         
@@ -205,22 +209,32 @@ public class BaseActivity extends Activity {
             }
         });*/
         
-        /*btnDrawerSettings.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mSlidingMenu.showContent(true);
-
-                Intent i = new Intent(activity, SimplePreferences.class);
-                activity.startActivity(i);
-            }
-        });*/
-        
         btnDrawerAccounts.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 mSlidingMenu.showContent(true);
 
                 Intent i = new Intent(activity, AccountsActivity.class);
+                activity.startActivity(i);
+            }
+        });
+        
+        btnDrawerUploadManager.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mSlidingMenu.showContent(true);
+                Toast.makeText(getApplicationContext(), "Not yet implemented", Toast.LENGTH_LONG).show();
+//                Intent i = new Intent(activity, AccountsActivity.class);
+//                activity.startActivity(i);
+            }
+        });
+        
+        btnDrawerSettings.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mSlidingMenu.showContent(true);
+
+                Intent i = new Intent(activity, SimplePreferences.class);
                 activity.startActivity(i);
             }
         });

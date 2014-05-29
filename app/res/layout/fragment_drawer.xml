@@ -192,7 +192,7 @@
 	        android:layout_width="180dp"
 	        android:layout_height="wrap_content"
 	        android:background="@android:color/transparent"
-	        android:drawableLeft="@drawable/ic_nav_media_settings"
+	        android:drawableLeft="@drawable/ic_nav_upload"
 	        android:gravity="left|center_vertical"
 	        android:text="@string/menu_upload_manager"
 	        android:textColor="#dddddd" /> 
@@ -202,7 +202,7 @@
 	        android:layout_height="1dp"
 	        android:background="#33999999" />
 	    
-	    <!-- <Button
+	    <Button
 	        android:id="@+id/btnDrawerSettings"
 	        android:layout_width="180dp"
 	        android:layout_height="wrap_content"
@@ -215,7 +215,7 @@
 	    <View
 	        android:layout_width="fill_parent"
 	        android:layout_height="1dp"
-	        android:background="#33999999" />-->
+	        android:background="#33999999" />
 	
 	</LinearLayout>
 
