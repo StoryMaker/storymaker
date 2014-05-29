@@ -7,10 +7,17 @@ import org.holoeverywhere.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockPreferenceActivity;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.os.Handler;
 import android.preference.Preference;
+import android.util.Log;
 
 
 public class SimplePreferences extends SherlockPreferenceActivity implements OnSharedPreferenceChangeListener {
@@ -126,10 +133,61 @@ public class SimplePreferences extends SherlockPreferenceActivity implements OnS
         else if (key.equals(KEY_LANGUAGE))
         {
             ((StoryMakerApp)getApplication()).checkLocale();
+//            restartActivity();
+            restartApp(getApplicationContext());
         }
         else if (key.equals(KEY_LESSON))
         {
             ((StoryMakerApp)getApplication()).updateLessonLocation();
+            restartApp(getApplicationContext());
         }
 	}
+
+	public static void restartApp(final Context c) {
+        Toast.makeText(c, R.string.restarting_storymaker, Toast.LENGTH_LONG).show();
+        new Handler().postDelayed(new Runnable(){
+            public void run() {
+                doRestart(c);
+          }}, 500);
+	}
+
+	// from: http://stackoverflow.com/a/22345538/41694
+	public static void doRestart(Context c) {
+        try {
+            //check if the context is given
+            if (c != null) {
+                // fetch the packagemanager so we can get the default launch activity
+                // (you can replace this intent with any other activity if you want
+                PackageManager pm = c.getPackageManager();
+                //check if we got the PackageManager
+                if (pm != null) {
+                    //create the intent with the default start activity for your application
+                    Intent mStartActivity = pm.getLaunchIntentForPackage(
+                            c.getPackageName()
+                    );
+                    if (mStartActivity != null) {
+                        mStartActivity.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        //create a pending intent so the application is restarted after System.exit(0) was called.
+                        // We use an AlarmManager to call this intent in 100ms
+                        int mPendingIntentId = 223344;
+                        PendingIntent mPendingIntent = PendingIntent
+                                .getActivity(c, mPendingIntentId, mStartActivity,
+                                        PendingIntent.FLAG_CANCEL_CURRENT);
+                        AlarmManager mgr = (AlarmManager) c.getSystemService(Context.ALARM_SERVICE);
+                        mgr.set(AlarmManager.RTC, System.currentTimeMillis() + 500, mPendingIntent);
+                        //kill the application
+                        System.exit(0);
+                    } else {
+                        Log.e("SimplePreferences", "Was not able to restart application, mStartActivity null");
+                    }
+                } else {
+                    Log.e("SimplePreferences", "Was not able to restart application, PM null");
+                }
+            } else {
+                Log.e("SimplePreferences", "Was not able to restart application, Context null");
+            }
+        } catch (Exception ex) {
+            Log.e("SimplePreferences", "Was not able to restart application");
+        }
+    }
 }
