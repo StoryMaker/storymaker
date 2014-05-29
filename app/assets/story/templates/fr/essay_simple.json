@@ -1,0 +1,62 @@
+{"clipes":[
+{
+"Titre": "Signature",
+"Illustration": "type_détails",
+"Taille de Capture": "Détails",
+"But":"résumez le problème entier en illustrant un élément essentiel de l'histoire.",
+"Longueur": "X secondes",
+"Description":"Une forte photo de la signature va intriguer le public et les encourager à chercher plus loin. Cet élément doit remplir au moins 50% de la trame.", 
+"Astuce":"Réglez votre appareil photo en Macro si vous prenez moins que le bout de bras de votre sujet.",
+"Concerne de sécurité": "-"
+},
+{
+"Titre":"Réaction/Interaction",
+"Illustration": "type_moyen",
+"taille de Capture": "Moyenne",
+"But":"Montrer comment les gens réagissent avec l’événement ou ses conséquences.", 
+"Longueur": "X secondes",
+"Description":"Montrer le personnage interagir avec les autres. Construire un lien entre le spectateur et le sujet. Votre personnage doit remplir 20% de votre cadre.",
+"Astuce":"Gardez votre personnage sur une des lignes verticales pour cadrer votre capture proprement".
+"Concerne de sécurité": "-"
+},
+{
+"Titre":"franc",
+"Illustration":"Type_Longue"
+"Taille":"Longue",
+"But": "Montrer le Personnage engagé dans son environnement.",
+"Longueur": "X secondes",
+"Description":"Représenter le personnage se comporter naturellement. Pourquoi le personnage est remarquable? Montrer le public.",
+"Astuce": " Placez votre personnage sur un côté du cadre, cadrez votre capture à montrer quelque chose d'important à l'histoire sur l'autre côté.",
+"Concerne de sécurité": "-"
+},
+{
+"titre":"Portrait",
+"Illustration": "type_proche",
+"Taille de capture": "proche",
+"But":"Introduire le personnage. restez Proche.",
+"Longueur": "X secondes",
+Votre premier objectif est le personnage principal de votre histoire. Mettez en surbrillance les émotions du personnage ou l'état d'esprit.",
+"Astuce": " Utilisez la ligne de l'œil pour cadrer votre capture correctement.",
+"Concerne de sécurité": "-"
+},
+{
+"Titre": "Environnemental",
+"Illustration":"type_large",
+"Taille de Capture":"Large",
+"But":"Montrer où se passe votre histoire.",
+"Longueur": "X secondes",
+"Description":"indiquer le pays ou un élément ethnique ou religieux. Incluant les monuments ou autres informations spécifiques de localisation.", 
+"Astuce":"Les sites d'intérêt aident le public à comprendre leur emplacement.",
+"Concerne de sécurité": "-"
+},
+{
+"Titre":Narration",
+"Illustration": "type_moyen",
+"taille de Capture": "Moyenne",
+"But":"Ajouter un voix off",
+"Longueur": "X secondes",
+"Description":"Parler à propos de l'essaie photographique",
+"Astuce":"Parler fort et clair!",
+"Concerne de sécurité": "-"
+}
+]}

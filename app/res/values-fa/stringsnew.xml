@@ -1,0 +1,232 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+  <string name="terms_title">شرایط «خبرساز»</string>
+  <string name="terms_text_1">شما تمام حقوق مالکیت محتوی خود را نگه ‌میدارید، می‌توانید هر موقع که خواستید آن را از روی اینترنت حذف کنید و همچنین ما داده های شما را نمی فروشیم. با توافق کردن با انتشار محتوای خود در StoryMaker.cc   شما به  Small World News  و شراکایش اجازه میدهید که داستان های شما را در کنار داستان های دیگری که در سایت وجود دارد به اشتراک بگذارد. ما آنها را بر اساس نوع، عنوان و مکان طبقه بندی میکنیم.</string>
+  <string name="terms_text_2">داستان شما همچنان بر روی سایتی که شما انتخاب میکنید انتشار خواهد یافت، با این تفاوت که به StoryMaker.cc نیز ارجاع داده می‌شود. عنوان، دسته یندی ها و شرح داستان بر روی StoryMaker.cc انتشار خواهد یافت و سایر محتویات به سایتی که شما داستان خود را در آن آپلود کرده‌اید ارجاع می شود.</string>
+  <!--tutorial_lessons-->
+  <string name="tutorial_title_1">گزارش کردن را بیاموزید.</string>
+  <string name="tutorial_text_1">بیاموزید با ایمن ماندن یک خبرنگار باشید و گزارش‌های عالی صوتی٬ تصویری و ویدیویی بسازید. </string>
+  <string name="tutorial_title_2">درست و دقیق باشید.</string>
+  <string name="tutorial_text_2">این محصول با همکاری «مرکز بین‌المللی خبرنگاران» ICFJ تولید شده است. پس می‌تونید مطمئن باشید درس‌های خبرنگاری ما٬ شما را بهتر گزارش کردن را می‌آموزد.</string>
+  <string name="tutorial_title_3">از خود محافظت کنید.</string>
+  <string name="tutorial_text_3">درس‌های امنیت دیجیتالی ما در شما را تامین امنیت خود و منابع‌تان یاری خواهند کرد. ایمنی شما در هر مکانی مهمترین هدف خبرساز است.</string>
+  <string name="tutorial_title_4">بهتر گزارش کنید</string>
+  <string name="tutorial_text_4">هر داستان و روایت را می‌توان با استفاده از رسانه‌های گوناگون ارائه کرد. تفاوت این رسانه‌ها را بیاموزید. </string>
+  <string name="tutorial_title_5">خودآزمایی</string>
+  <string name="tutorial_text_5">برای سنجش درک شما هر درس با یک آزمون به پایان می‌رسد.</string>
+  <string name="tutorial_title_6">ادامه یادگیری</string>
+  <string name="tutorial_text_6">داستان خود را با کاربران StoryMaker.cc به اشتراک بگذارید و با هر بار در اشتراک گذاشتن یاد بگیرید که چگونه داستان بهتری بسازید.</string>
+  <!--/tutorial_lessons-->
+  <!--tutorial_story-->
+  <string name="tutorial_title_7">بهتر روایت کنید.</string>
+  <string name="tutorial_text_7">یک گزارش خوب آغاز٬ میانه و پایان دارد. مصاحبه کردن در روشن کردن بستر خبر راهگشا است. محل زندگی آنها را نشان و اشخاص را محور قرار دهید.</string>
+  <string name="tutorial_title_8">رسانه خود را انتخاب کنید.</string>
+  <string name="tutorial_text_8">صدا٬ عکس و ویدیو هر کدام مناسب روش‌های مختلف روایتگری‌ هستند. برای یادگیری بیشتر به بخش درس‌ها سر بزنید. یک رسانه را انتخاب کنید و همزمان بیاموزید. </string>
+  <string name="tutorial_title_9">گزارشگری در پنج قدم</string>
+  <string name="tutorial_text_9">از پنج کلیپ برای گزارش خود کنید. مکان واقعه را شرح دهید. سوژه اصلی خود را معرفی کنید. با سه کلیپ باقی مانده گزارشی با یک آغاز٬ میانه و پایان بسازید. </string>
+  <string name="tutorial_title_10">ساختارشکنی کنید.</string>
+  <string name="tutorial_text_10">تغییر ترتیب کلیپ‌ها تاثیرگذاری بیشتری در پی دارد.</string>
+  <string name="tutorial_title_11">گزارش‌های طولانی‌تری بسازید. </string>
+  <string name="tutorial_text_11">الگوها شما را راهنمایی خواهند کرد.</string>
+  <!--/tutorial_story-->
+  <!--template_description-->
+  <string name="template_audio_desc">صدایی را ضبط کنید که داستان را روایت می کنند: چه چیزی٬ چه کسی. اگر نمی‌توانید تصایر خوبی بگیرید٬ صدا جایگزین خوبی است.</string>
+  <string name="template_photo_desc">ارزش هر تصویر برابر است با هزار کلمه.  افراد و چبزهایی را که در گزارش شما اهمیت دارند را به تصویر بکشید. </string>
+  <string name="template_essay_desc">گاهی اوقات به بیشتر از یک عکس نیاز است. با استفاده از عکس‌های مرتبط به هم نحوه شکل گیری یک واقعه را به تصویر بکشید.</string>
+  <string name="template_video_desc">سعی کنید عکس‌های گیرا از هر واقعه تهیه کنید. نشان دهید چه کسی و چه چیزی اهمیت دارد و چرا.</string>
+  <!--/template_description-->
+  <!--legacy_story_type-->
+  <!--once we refactor to keep this extra text fields in the db instead of referencing this strings file we can remove these (after doing a migration step)-->
+  <string name="story_type_event_title">برنامه</string>
+  <string name="story_type_issue_title">موضوع</string>
+  <string name="story_type_profile_title">پروفایل</string>
+  <string name="story_type_news_title">خبر فوری</string>
+  <string name="story_type_event_desc">برنامه‌‌ها زمان و مکان مشخص دارند. به آنچه در برنامه اتفاق می‌افتد توجه کنید. گزارش خود حول محور زمان٬ مکان برنامه و علت برگزاری‌اش در این وقت و مکان بسازید.</string>
+  <string name="story_type_issue_desc">گزارش‌هایی هستند که به موضوع گسترده‌ای می‌پردازند. تاثیر آن موضوع مشخص بر جامعه یا گروهی از مردم را مورد توجه قرار دهید. گزارش خود را گرد افراد تحت تاثیر آن مسئله و اقداماتی که در واکنش به آن انجام شده تهیه کنید.</string>
+  <string name="story_type_profile_desc">به معرفی یک شخصیت بپردازید. تمرکز کنید. نشان دهید او چه کسی است . گزارش خود را حول زندگی و اتفاقات روزمره‌اش و نحوه مواجهه او با چالش‌ها تنظیم کنید.</string>
+  <string name="story_type_news_desc">خبر فوری خبری بی‌درنگ است. بر یک زاویه تمرکز کنید. گزارش خود را حول واقعیت‌ها٬ چه کسی٬ چه‌ چیزی٬ کجا٬ چه وقت تنظیم کنید. از گفتار برای روشن شدن بستر داستان استفاده کنید.</string>
+  <!--/ legacy_story_type-->
+  <!--story_type-->
+  <string name="story_type_event_news_title">رویدادهای خبری</string>
+  <string name="story_type_event_feature_title">رویداد های گزینش شده</string>
+  <string name="story_type_event_breaking_title">خبرهای داغ</string>
+  <string name="story_type_issue_social_title">مسائل اجتماعی</string>
+  <string name="story_type_issue_political_title">مسائل سیاسی</string>
+  <string name="story_type_issue_economic_title">مسائل اقتصادی</string>
+  <string name="story_type_profile_public_title">سرگذشت عمومی</string>
+  <string name="story_type_profile_professional_title">سرگذشت حرفه ای</string>
+  <string name="story_type_profile_personal_title">سرگذشت شخصی</string>
+  <!--/story_type-->
+  <!--story_type_description-->
+  <string name="story_type_event_news_desc">داستان در مورد رخدادهایی که اهمیت زیادی دارند. این رویدادهای اغلب برنامه مشخص و آغاز و پایانی معلوم و واضح دارند. انتخابات و یا تظاهرات مثال های خوبی برای رویدادهایی خبری هستند.</string>
+  <string name="story_type_event_feature_desc">داستانی که ممکن است خیلی مفهوم خبری نداشته باشند. یک رویداد ورزشی، تجارتی جدید در همسایگی شما و یا یک تکنولوژی جدید مثال های خوبی از رویداد های گزینش شده هستند.</string>
+  <string name="story_type_event_breaking_desc">رویدادهایی که بدون اطلاع و برنامه ریزی قبلی اتقاق افتاده اند و ارزش خبری دارند. آتش سوزی، یک اعلان ناگهانی از سوی دولتمردان و یا یک فاجعه طبیعی مانند زلزله میتوانند مثال های خوبی برای اخبار داغ باشند.</string>
+  <string name="story_type_issue_social_desc">داستاد در مورد مشکلاتی که جامعه را تحت تاثیر قرار می‌دهد. تغییر در قوانین و یا ساختار محلی میتواند یک مسئله اجتماعی باشد.</string>
+  <string name="story_type_issue_political_desc">داستان هایی در مورد دولت و دولتمردان. داستانی در مورد قوانین جدید و یا تغییر در مجلس میتواند مثال خوبی از مسائل سیاسی باشد.</string>
+  <string name="story_type_issue_economic_desc">داستانهایی در مورد اقتصاد و یا معشیت شخصی افراد در این گروه هستند. داستانی در مورد تاثیر یک قانون برای سوبسید دادن به کشاورزها میتواند مثال خوبی از یک مسئله اقتصادی باشد.</string>
+  <string name="story_type_profile_public_desc">داستان هایی در باره ي نقش افراد در نظر عموم در این دسته قرار می‌گیرند. به عنوان مثال، سرگذشت یک سیاست مدار که برای انتخاب شدن تلاش میکند در این قسمت قرار می‌گیرد.</string>
+  <string name="story_type_profile_professional_desc">داستان هایی در مورد افراد و شغل های آنها در این قسمت هستند. سرگذشت یک هنرمند و یا ورزشکار معروف مثال خوبی برای این قسمت هستند.</string>
+  <string name="story_type_profile_personal_desc">داستان هایی در مورد تجربیات اشخاص که معمولا به رخدادی در خبرها مربوط است جزیی از این دسته اند. سرگذشت یک نظامی قدیمی در سالروز جنگ یک مثال خوب در این دسته است.</string>
+  <!--/story_type_description-->
+  <!--template_options-->
+  <string name="choose_level">انتخاب سطح</string>
+  <string name="choose_level_basic">پایه</string>
+  <string name="choose_level_advanced">پیشرفته</string>
+  <!--/template_options-->
+  <!--story_type_new-->
+  <string name="overview">مرورکلی</string>
+  <string name="activity">فعالیت</string>
+  <string name="impact">تاثیرگذاری</string>
+  <string name="background">پیش زمینه</string>
+  <string name="involvement">در برگرفتگی</string>
+  <string name="motivation">انگیزه</string>
+  <string name="location">مکان</string>
+  <string name="experience">تجربه</string>
+  <string name="results">نتایج</string>
+  <string name="next_steps">قدم های بعدی</string>
+  <string name="moving_forward">حرکت رو به جلو</string>
+  <string name="conclusion">نتیجه گیری</string>
+  <string name="story_type_event_news_text1">در این رویداد چه اتفاقاتی می‌افتد.</string>
+  <string name="story_type_event_news_text2">نقش شما در این رویداد چیست؟</string>
+  <string name="story_type_event_news_text3">چه کسی بیشتر تحت تاثیر قرار می‌گیرد؟ </string>
+  <string name="story_type_event_news_text4">چه داستانی در پس پرده ی این رویداد است؟</string>
+  <string name="story_type_event_news_text5">تاثیر این رویداد چیست؟</string>
+  <string name="story_type_event_feature_text1">در این رویداد چه اتفاقاتی می‌افتد.</string>
+  <string name="story_type_event_feature_text2">چرا شما در این رویداد نقش دارید؟</string>
+  <string name="story_type_event_feature_text3">این رویداد در کجا اتفاق می‌افتد؟</string>
+  <string name="story_type_event_feature_text4">چرا شما شخصا در این رویداد نقش دارید؟</string>
+  <string name="story_type_event_feature_text5">تاثیر این رویداد چیست؟</string>
+  <string name="story_type_event_breaking_text1">چه اتفاقی می‌افتد؟ </string>
+  <string name="story_type_event_breaking_text2">این رویداد در کجا اتفاق می‌افتد؟</string>
+  <string name="story_type_event_breaking_text3">چه کسی تحت تاثیر قرار می‌گیرد؟ </string>
+  <string name="story_type_event_breaking_text4">آیا خطری فوری در کمین است؟</string>
+  <string name="story_type_event_breaking_text5">مردم چگونه واکنش می‌دهند؟</string>
+  <string name="story_type_issue_social_text1">لطفا مسئله اجتماعی را توضیح دهید.</string>
+  <string name="story_type_issue_social_text2">کجا و کی این مسئله پیش آمده است؟</string>
+  <string name="story_type_issue_social_text3">این مسئله چگونه جامعه را تحت تاثیر قرار می‌دهد؟</string>
+  <string name="story_type_issue_social_text4">برای ما داستانی بگویید که چگونه این زندگی شما را تحت تاثیر قرار داده است؟</string>
+  <string name="story_type_issue_social_text5">چه کاری می‌توان انجام داد تا این مشکل حل بشود؟</string>
+  <string name="story_type_issue_political_text1">لطفا مسئله اجتماعی را توضیح دهید.</string>
+  <string name="story_type_issue_political_text2">چه کسی را مستقیما تحت تاثیر قرار میدهد؟</string>
+  <string name="story_type_issue_political_text3">این مسئله چگونه دولت را تحت تاثیر قرار می‌دهد؟</string>
+  <string name="story_type_issue_political_text4">این مسئله چرا برای شخص شما مهم است؟</string>
+  <string name="story_type_issue_political_text5">چه کاری می‌توان انجام داد تا این مشکل حل بشود؟</string>
+  <string name="story_type_issue_economic_text1">لطفا مسئله اقتصادی را توضیح دهید.</string>
+  <string name="story_type_issue_economic_text2">رابطه ی شما با این مسئله چیست؟</string>
+  <string name="story_type_issue_economic_text3">این مسئله چگونه اقتصاد را تحت تاثیر قرار می‌دهد؟</string>
+  <string name="story_type_issue_economic_text4">چه کسی بیشتر تحت تاثیر این مشکل قرار می‌گیرد؟ </string>
+  <string name="story_type_issue_economic_text5">چه کاری می‌توان انجام داد تا این مشکل حل بشود؟</string>
+  <string name="story_type_profile_public_text1">کمی در مورد این که شما چه کسی هستید توضیح دهید.</string>
+  <string name="story_type_profile_public_text2">از چه زمانی شروع کرده اید؟</string>
+  <string name="story_type_profile_public_text3">شغل شما چیست؟</string>
+  <string name="story_type_profile_public_text4">زمانی را توضیح بدهید که از کاری که کرده اید احساس غرور کرده اید.</string>
+  <string name="story_type_profile_public_text5">شما خود را در آینده چگونه میبینید؟</string>
+  <string name="story_type_profile_professional_text1">شما چه کسی هستید و شغل شما چیست؟</string>
+  <string name="story_type_profile_professional_text2">لطفا توضیح دهید که چگونه این کار را انجا میدهید.</string>
+  <string name="story_type_profile_professional_text3">چرا این کار برای شما مهم است.</string>
+  <string name="story_type_profile_professional_text4">چگونه با این کار اثری را از خود به جای میگذارید؟</string>
+  <string name="story_type_profile_professional_text5">شما منتظر چه چیزی در آینده در این کار هستید؟</string>
+  <string name="story_type_profile_personal_text1">کمی در مورد این که شما چه کسی هستید توضیح دهید.</string>
+  <string name="story_type_profile_personal_text2">چه تچربه ی مهمی برای شما اتفاق افتاده است؟</string>
+  <string name="story_type_profile_personal_text3">این تجربه چه احساسی را در شما برانگیخت؟</string>
+  <string name="story_type_profile_personal_text4">شما چه کار متفاوتی در حال حاضر انجام می‌دهید؟</string>
+  <string name="story_type_profile_personal_text5">دوست دارید شاهد چه اتفاقی در آینده باشید؟</string>
+  <!--/story_type_new-->
+  <!--story_type_old-->
+  <string name="scene_number">چه وقت؟</string>
+  <string name="when">چه وقت؟</string>
+  <string name="how">چگونه؟</string>
+  <string name="what">چه؟</string>
+  <string name="where">کجا؟</string>
+  <string name="why">چرا؟</string>
+  <string name="story_type_event_text1">برنامه چه وقت اتفاق می‌افتد؟</string>
+  <string name="story_type_event_text2">علت برنامه چیست؟</string>
+  <string name="story_type_event_text3">اهمیت این برنامه در چیست؟</string>
+  <string name="story_type_event_text4">برنامه چه وقت اتفاق می‌افتد؟</string>
+  <string name="story_type_event_text5">برنامه چطور برنامه‌ریزی شده است؟</string>
+  <string name="story_type_event_text6">علت برنامه چیست؟</string>
+  <string name="story_type_event_text7">مکان برنامه کجاست؟</string>
+  <string name="story_type_event_text8">اهمیت این برنامه در چیست؟</string>
+  <string name="story_type_issue_text1">تاثیر این مسئله بر باهمستان چگونه است؟</string>
+  <string name="story_type_issue_text2">چه کسی بیش از همه تحت تاثیر قرار می‌گیرد؟</string>
+  <string name="story_type_issue_text3">چه اقداماتی در واکنش به این موضوع صورت گرفته است؟</string>
+  <string name="story_type_issue_text4">تاثیر این مسئله بر باهمستان چگونه است؟ </string>
+  <string name="story_type_issue_text5">چه وقت/ کجا این مسئله شروع شد؟ </string>
+  <string name="story_type_issue_text6">چه کسی بیش از همه تحت تاثیر قرار می‌گیرد؟ </string>
+  <string name="story_type_issue_text7">چرا بیش از همه تحت تاثیر می‌گیرند؟</string>
+  <string name="story_type_issue_text8">چه اقداماتی در واکنش به این موضوع صورت گرفته است؟ </string>
+  <string name="story_type_profile_text1">این شخصیت٬ کیست؟</string>
+  <string name="story_type_profile_text2">چالش پیش روی این شخصیت چیست؟</string>
+  <string name="story_type_profile_text3">این شخصیت چطور با این چالش‌ها روبرو می‌شود؟</string>
+  <string name="story_type_profile_text4">این شخصیت٬ کیست؟</string>
+  <string name="story_type_profile_text5">این شخصیت اهل کجاست؟</string>
+  <string name="story_type_profile_text6">چالش پیش روی این شخصیت چیست؟</string>
+  <string name="story_type_profile_text7">چرا این شخصیت با این چالش روبروست. </string>
+  <string name="story_type_profile_text8">این شخصیت چطور با این چالش‌ها روبرو می‌شود؟</string>
+  <string name="story_type_news_text1">چه اتفاقی می‌افتد؟</string>
+  <string name="story_type_news_text2">چه کسی تحت تاثیر قرار می‌گیرد؟</string>
+  <string name="story_type_news_text3">واکنش‌ها چگونه بوده است؟</string>
+  <string name="story_type_news_text4">چه اتفاقی می‌افتد؟ </string>
+  <string name="story_type_news_text5">خبر در کجا اتفاق می‌افتد؟</string>
+  <string name="story_type_news_text6">چه کسی تحت تاثیر قرار می‌گیرد؟ </string>
+  <string name="story_type_news_text7">چرا اتفاق افتاد؟</string>
+  <string name="story_type_news_text8">واکنش‌ها چگونه بوده است؟</string>
+  <!--/story_type_old-->
+  <!--prefs-->
+  <string name="prefs_category_networking_security_title">شبکه و امنیت</string>
+  <string name="prefs_category_locales_title">متغیر های محلی</string>
+  <string name="prefs_category_media_title">رسانه</string>
+  <string name="prefs_category_debug_title">خطا یابی</string>
+  <string name="prefs_storymaker_server_title">سرور StoryMaker </string>
+  <string name="prefs_storymaker_server_summary">سرور برای نگه داری محتویات درس و داستان</string>
+  <string name="prefs_use_tor_title">از اوربات (تور) استفاده کن</string>
+  <string name="prefs_use_tor_summary">تمام ترافیک اینترنتی را از طریق شکبه تور و برنامه ی اوربات بفرست</string>
+  <string name="prefs_use_download_manager_title">از برنامه ی مدیریت دانلود استفاده کن</string>
+  <string name="prefs_use_download_manager_summary">آرشیو درس ها را توسط مدیریت دانلود اندروید Android DownloadManager  دانلود کن</string>
+  <string name="prefs_youtube_acccount_title">حساب کاربری یوتیوب</string>
+  <string name="prefs_youtube_acccount_summary">حساب کاربری یوتیوب برای آپلود کردن ویدیو ها است. این حساب باید بر روی گوشی شما ثبت شده باشد.</string>
+  <string name="prefs_youtube_login_title">ورود به یوتیوب</string>
+  <string name="prefs_youtube_login_summary">استفاده از احراز هویت وب سایت یوتیوب</string>
+  <string name="prefs_soundcloud_account_title">حساب کاربری SoundCloud </string>
+  <string name="prefs_soundcloud_account_summary">حساب کاربری SoundCloud  برای آپلود کردن فایل های صوتی</string>
+  <string name="prefs_interface_language_summary"></string>
+  <string name="prefs_lesson_language_summary"></string>
+  <string name="prefs_slide_duration_title">مدت زمان اسلاید</string>
+  <string name="prefs_slide_duration_summary">مدت زمان هر اسلاید در سری عکس ها</string>
+  <string name="prefs_enable_compression_title">فعال کردن فشرده سازی</string>
+  <string name="prefs_enable_compression_summary">تمام فایل های ویدیویی و صوتی را طبق تنظیم زیر فشرده کن</string>
+  <string name="prefs_preprocess_3gp_title">فایل های  3GP  را از قبل پردازش کن</string>
+  <string name="prefs_preprocess_3gp_summary">فایل 3GP را به MPEG-4 تبدیل کن</string>
+  <string name="prefs_use_cat_command_title">از دستور \'Cat\' استفاده کن</string>
+  <string name="prefs_use_cat_command_summary">از دستور \'Cat\' برای چسباندن فایل های ویدیو به هم استفاده کن</string>
+  <string name="prefs_video_codec_title">کدک‌های ویدیو</string>
+  <string name="prefs_video_codec_summary">ذخیره کردن کدک ویدیویی</string>
+  <string name="prefs_video_resolution_title">رزولوشن ویدیویی</string>
+  <string name="prefs_video_resolution_summary">ذخیره رزولوشن ویدویی</string>
+  <string name="prefs_video_width_title">عرض ویدیو</string>
+  <string name="prefs_video_width_summary">ذخیره عرض ویدیو</string>
+  <string name="prefs_video_height_title">طول ویدیو</string>
+  <string name="prefs_video_height_summary">ذخیره طول ویدیو</string>
+  <string name="prefs_video_bitrate_title">بیتریت ویدیو</string>
+  <string name="prefs_video_bitrate_summary">ذخیره کردن بیتریت ویدیو (kbps)</string>
+  <string name="prefs_video_framrate_title">سرعت تعداد فریم ویدیو</string>
+  <string name="prefs_video_framrate_summary">ذخیر کردن تعداد فریم ویدیو(fps)</string>
+  <string name="prefs_audio_codec_title">کدک صوتی</string>
+  <string name="prefs_audio_codec_summary">ذخیره کردن کدک فایل صوتی</string>
+  <string name="prefs_audio_bitrate_title">بیتریت صدا</string>
+  <string name="prefs_audio_bitrate_summary">ذخیره کردن بیتریت صدا (kbps)</string>
+  <string name="prefs_audio_samplerate_title">بیتریت صدا</string>
+  <string name="prefs_audio_samplerate_summary">سرعت فرکانس صدای ضبط شده (khz)</string>
+  <string name="prefs_audio_crossfade_title">انتقال نرم بین دو صدا</string>
+  <string name="prefs_audio_crossfade_summary">مدت انتقال نرم بین دو فایل صوتی</string>
+  <string name="prefs_internal_storage_title">حافظه داخلی</string>
+  <string name="prefs_internal_storage_summary">از حافظه داخلی پروژه استفاده کن</string>
+  <string name="prefs_disable_lesson_completion_title">اصرار بر تمام کردن درس را غیر فعال کن</string>
+  <string name="prefs_disable_lesson_completion_summary"></string>
+  <string name="prefs_youtube_method_title">شیوه یوتیوب</string>
+  <string name="prefs_youtube_method_summary">شیوه خطایابی احراز هویت</string>
+  <!--/prefs-->
+  <!--FirstStartActivity-->
+  <!--ConnectAccountActivity-->
+  <!--ProjectTagFragment-->
+</resources>

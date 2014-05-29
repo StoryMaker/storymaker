@@ -1,0 +1,189 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+  <string name="terms_title">StoryMaker-Regeln</string>
+  <string name="terms_text_1">Sie behalten alle Urheberrechte an Ihren Inhalten und können diese herunterladen wann immer Sie wünschen. Wir werden Ihre Daten nicht verkaufen. Indem Sie Ihre Inhalte mit StoryMaker.cc teilen, erklären Sie sich einverstanden, dass Small World News und Partner Ihre Geschichten zusammen mit ähnlichen Artikeln, die mit StoryMaker erstellt wurden, darstellt. Die Gruppierung erfolgt anhand des Artikeltyps, der Themen und des Orts.</string>
+  <string name="terms_text_2">Ihr Artikel ist nach wie vor auf der Plattform Ihrer Wahl gepostet und wird zusätzlich auf StoryMaker.cc referenziert. Der Titel, die Beschreibung und Schlagworte werden auf StoryMaker.cc gepostet; jeglicher andere Inhalt sind Regerenzen auf Ihren persönlichen Kanal auf der von Ihnen gewählten Plattform.</string>
+  <!--tutorial_lessons-->
+  <string name="tutorial_title_1">Lernen Sie zu erzählen</string>
+  <string name="tutorial_text_1">Lernen Sie, Journalist zu sein, der Audio-, Foto- und Videostories produziert und gleichzeitig sicher zu bleiben.</string>
+  <string name="tutorial_title_2">Seien Sie genau.</string>
+  <string name="tutorial_text_2">Durch die Entwicklungskooperation mit ICFJ können Sie sicher sein, dass unsere Journalismus-Lektionen ihnen dabei helfen werden, ein besserer Reporter zu sein.</string>
+  <string name="tutorial_title_3">Schützen Sie sich.</string>
+  <string name="tutorial_title_4">Erzählen Sie Ihre Geschichte besser.</string>
+  <string name="tutorial_title_5">Prüfen Sie Ihr Wissen.</string>
+  <string name="tutorial_text_5">Jede Lektion endet mit einem Quiz, mit dem Sie Ihr Verständnis prüfen können.</string>
+  <string name="tutorial_title_6">Lernen Sie weiter.</string>
+  <string name="tutorial_text_6">Teilen Sie Ihre Geschichten mit der StoryMaker.cc-Gemeinde und lernen Sie mit jeder geteilten Geschichte, ein besserer Storymaker.</string>
+  <!--/tutorial_lessons-->
+  <!--tutorial_story-->
+  <string name="tutorial_title_7">Erzählen Sie Ihre Geschichten besser.</string>
+  <string name="tutorial_text_7">Eine gute Geschichte besteht aus einer Einleitung, einem Hauptteil und einem Abschluss. Befragen Sie jemanden, um Ihrer Geschichte mehr Inhalt zu verleihen. Zeigen Sie uns, wo die Betroffenen leben. Machen Sie es persönlich.</string>
+  <string name="tutorial_title_8">Wählen Sie Ihr Medium.</string>
+  <string name="tutorial_text_8">Audio, Foto und Video sind für verschiedene Erzählstile unterschiedlich gut geeignet. Schauen Sie sich die Lektionen an, um mehr zu erfahren. Wählen Sie ein Medium und lernen Sie beim Lesen.</string>
+  <string name="tutorial_title_9">Erzählen Sie eine Geschichte in fünf Clips.</string>
+  <string name="tutorial_text_9">Nutzen Sie fünf Clips, um Ihre Geschichte zu erzählen. Beschreiben Sie den Ort Ihrer Geschichte. Stellen Sie Ihr vordergründiges Thema vor. Die verbleibenden drei nutzen Sie zum Erzählen eine vollständigen Geschichte, bestehend aus Einleitung, Hauptteil und Schluss.</string>
+  <string name="tutorial_title_10">Brechen Sie mit Gewohnheiten.</string>
+  <string name="tutorial_text_10">Stellen Sie Ihre Clips in unterschiedlichen Anordnungen zusammen, um die beste Wirkung zu erreichen.</string>
+  <string name="tutorial_title_11">Erzählen Sie längere Geschichten.</string>
+  <string name="tutorial_text_11">Artikelvorlagen zeigen Ihnen, wie.</string>
+  <!--/tutorial_story-->
+  <!--template_description-->
+  <string name="template_audio_desc">Erstellen Sie Tonaufnahmen, die Ihre Geschichte erzählen. Wenn Sie keine überzeugenden Bilder machen können, stellt Audio eine gute Alternative dar.</string>
+  <string name="template_photo_desc">Ein Bild sagt mehr als tausend Worte. Zeigen Sie uns, wer oder was in Ihrer Geschichte wichtig ist, oder wie etwas geschieht.</string>
+  <string name="template_essay_desc">Manchmal benötigen Sie mehrere Fotos. Zeigen Sie uns mit einer Bilderserie, wie sich die Geschichte entwickelt.</string>
+  <string name="template_video_desc">Machen Sie fesselnde Fotos, die die Dinge genau im richtigen Moment zeigen. Zeigen Sie uns, wer oder was von Bedeutung ist - und warum.</string>
+  <!--/template_description-->
+  <!--legacy_story_type-->
+  <!--once we refactor to keep this extra text fields in the db instead of referencing this strings file we can remove these (after doing a migration step)-->
+  <string name="story_type_event_title">Ereignis</string>
+  <string name="story_type_issue_title">Thema</string>
+  <string name="story_type_profile_title">Profil</string>
+  <string name="story_type_news_title">Eilmeldungen</string>
+  <!--/ legacy_story_type-->
+  <!--story_type-->
+  <string name="story_type_event_breaking_title">Eilmeldung</string>
+  <string name="story_type_issue_social_title">Gesellschaftliches Thema</string>
+  <string name="story_type_issue_political_title">Politisches Thema</string>
+  <string name="story_type_issue_economic_title">Wirtschafts-Thema</string>
+  <string name="story_type_profile_public_title">Öffentliches Profil</string>
+  <string name="story_type_profile_professional_title">Berufliches Profil</string>
+  <string name="story_type_profile_personal_title">Persönliches Profil</string>
+  <!--/story_type-->
+  <!--story_type_description-->
+  <string name="story_type_event_news_desc">Geschichten über Ereignisse mit unmittelbarer Bedeutung; sie sind häufig geplant und haben einen definierten Beginn und ein definiertes Ende. Gute Beispiele hierfür sind Wahlen oder Demonstrationen.</string>
+  <!--/story_type_description-->
+  <!--template_options-->
+  <string name="choose_level">Wählen Sie eine Stufe</string>
+  <string name="choose_level_basic">Einfach</string>
+  <string name="choose_level_advanced">Erweitert</string>
+  <!--/template_options-->
+  <!--story_type_new-->
+  <string name="overview">Übersicht</string>
+  <string name="activity">Aktivität</string>
+  <string name="impact">Einfluss</string>
+  <string name="background">Hintergrund</string>
+  <string name="motivation">Motivation</string>
+  <string name="location">Ort</string>
+  <string name="experience">Erfahrung</string>
+  <string name="results">Ergebnisse</string>
+  <string name="next_steps">Nächste Schritte</string>
+  <string name="conclusion">Zusammenfassung</string>
+  <string name="story_type_event_news_text1">Was passiert bei diesem Ereignis?</string>
+  <string name="story_type_event_news_text2">Inwiefern sind Sie involviert?</string>
+  <string name="story_type_event_news_text3">Wer ist von diesem Ereignis am stärksten betroffen?</string>
+  <string name="story_type_event_news_text4">Welche Geschichte gehört zu diesem Ereignis?</string>
+  <string name="story_type_event_news_text5">Welchen Einfluss hat dieses Ereignis?</string>
+  <string name="story_type_event_feature_text1">Was geschieht bei diesem Ereignis?</string>
+  <string name="story_type_event_feature_text2">Warum sind Sie in dieses Ereignis involviert?</string>
+  <string name="story_type_event_feature_text3">Wo geschieht dieses Ereignis?</string>
+  <string name="story_type_event_feature_text5">Welchen Einfluss hat dieses Ereignis?</string>
+  <string name="story_type_event_breaking_text1">Was geschieht?</string>
+  <string name="story_type_event_breaking_text2">Wo geschieht es?</string>
+  <string name="story_type_event_breaking_text3">Wer ist betroffen?</string>
+  <string name="story_type_event_breaking_text4">Besteht eine unmittelbare Gefahr?</string>
+  <string name="story_type_event_breaking_text5">Wie reagieren die Leute darauf?</string>
+  <string name="story_type_issue_social_text1">Bitte beschreiben Sie das gesellschaftliche Problem.</string>
+  <string name="story_type_issue_social_text2">Wann und wo begann das Problem?</string>
+  <string name="story_type_issue_social_text3">Wie beeinflusst es die Gesellschaft?</string>
+  <string name="story_type_issue_social_text4">Erzählen Sie darüber, wie es Ihr Leben beeinflusst.</string>
+  <string name="story_type_issue_social_text5">Was kann getan werden, um das Problem zu lösen?</string>
+  <string name="story_type_issue_political_text1">Bitte beschreiben Sie das politische Problem.</string>
+  <string name="story_type_issue_political_text2">Wer ist davon direkt betroffen?</string>
+  <string name="story_type_issue_political_text3">Inwiefern beeinflusst es die Regierung?</string>
+  <string name="story_type_issue_political_text4">Warum ist es für Sie persönlich wichtig?</string>
+  <string name="story_type_issue_political_text5">Was kann getan werden, um das Problem zu beheben?</string>
+  <string name="story_type_issue_economic_text1">Bitte beschreiben Sie das wirtschaftliche Problem.</string>
+  <string name="story_type_issue_economic_text2">Was ist Ihre Beziehung zu diesem Thema?</string>
+  <string name="story_type_issue_economic_text3">Wie beeinflusst es die Regierung?</string>
+  <string name="story_type_issue_economic_text4">Wer ist davon am stärksten betroffen?</string>
+  <string name="story_type_issue_economic_text5">Was kann getan werden, um das Problem zu beheben?</string>
+  <string name="story_type_profile_public_text1">Erzählen Sie etwas über sich.</string>
+  <string name="story_type_profile_public_text2">Wann haben Sie angefangen?</string>
+  <string name="story_type_profile_public_text3">Was tun Sie?</string>
+  <string name="story_type_profile_public_text4">Beschreiben Sie eine Situation, in der Sie stolz auf Ihren Beruf waren.</string>
+  <string name="story_type_profile_public_text5">Wo sehen Sie sich selbst in der Zukunft?</string>
+  <string name="story_type_profile_professional_text1">Wer sind Sie und was ist Ihr Beruf?</string>
+  <string name="story_type_profile_professional_text2">Bitte beschreiben Sie, was Sie in Ihrem Beruf tun.</string>
+  <string name="story_type_profile_professional_text3">Warum ist dieser Beruf wichtig für Sie?</string>
+  <string name="story_type_profile_professional_text4">Was bewirken Sie mit diesem Beruf?</string>
+  <string name="story_type_profile_professional_text5">Was sind Ihre Pläne in diesem Beruf?</string>
+  <string name="story_type_profile_personal_text1">Bitte beschreiben Sie kurz, wer Sie sind.</string>
+  <string name="story_type_profile_personal_text2">Nennen Sie eine wichtige Erfahrung, die Sie gemacht haben.</string>
+  <string name="story_type_profile_personal_text3">Wie haben Sie sich bei dieser Erfahrung gefühlt?</string>
+  <string name="story_type_profile_personal_text4">Was machen Sie heute anders?</string>
+  <!--/story_type_new-->
+  <!--story_type_old-->
+  <string name="when">Wann?</string>
+  <string name="how">Wie?</string>
+  <string name="what">Was?</string>
+  <string name="where">Wo?</string>
+  <string name="why">Weswegen?</string>
+  <string name="story_type_event_text1">Wann findet das Ereignis statt?</string>
+  <string name="story_type_event_text2">Was ist der Zweck des Ereignisses?</string>
+  <string name="story_type_event_text3">Warum ist das Ereignis wichtig?</string>
+  <string name="story_type_event_text4">Wann findet das Ereignis statt?</string>
+  <string name="story_type_event_text5">Wie ist das Ereignis organisiert?</string>
+  <string name="story_type_event_text6">Was ist der Zweck des Ereignisses?</string>
+  <string name="story_type_event_text7">Wo findet das Ereignis statt?</string>
+  <string name="story_type_event_text8">Warum ist das Ereignis wichtig?</string>
+  <string name="story_type_issue_text1">Wie beeinflusst das Thema die Gesellschaft?</string>
+  <string name="story_type_issue_text2">Wer ist am stärksten betroffen?</string>
+  <string name="story_type_issue_text3">Wie wird darauf reagiert?</string>
+  <string name="story_type_issue_text4">Wie beeinflusst das Thema die Gesellschaft?</string>
+  <string name="story_type_issue_text5">Wann und wo trat das Thema zum ersten mal auf?</string>
+  <string name="story_type_issue_text6">Wer ist am stärksten betroffen?</string>
+  <string name="story_type_issue_text7">Warum ist/sind er/sie betroffen?</string>
+  <string name="story_type_issue_text8">Wie wird darauf reagiert?</string>
+  <string name="story_type_profile_text1">Wer ist die Person?</string>
+  <string name="story_type_profile_text2">Vor welcher Herausforderung steht die Person?</string>
+  <string name="story_type_profile_text3">Wie geht die Person mit der Herausforderung um?</string>
+  <string name="story_type_profile_text4">Wer ist die Person?</string>
+  <string name="story_type_profile_text5">Woher kommt die Person?</string>
+  <string name="story_type_profile_text6">Vor welcher Herausforderung steht die Person?</string>
+  <string name="story_type_profile_text7">Warum müht sich die Person mit dieser Herausforderung ab?</string>
+  <string name="story_type_profile_text8">Wie geht die Person mit der Herausforderung um?</string>
+  <string name="story_type_news_text1">Was geschieht?</string>
+  <string name="story_type_news_text2">Wer ist betroffen?</string>
+  <string name="story_type_news_text3">Wie wird darauf reagiert?</string>
+  <string name="story_type_news_text4">Was geschieht?</string>
+  <string name="story_type_news_text5">Wo geschieht die Neuigkeit?</string>
+  <string name="story_type_news_text6">Wer ist betroffen?</string>
+  <string name="story_type_news_text7">Warum ist das geschehen?</string>
+  <string name="story_type_news_text8">Wie wird darauf reagiert?</string>
+  <!--/story_type_old-->
+  <!--prefs-->
+  <string name="prefs_category_networking_security_title">Netzwerk &amp; Sicherheit</string>
+  <string name="prefs_category_media_title">Medien</string>
+  <string name="prefs_category_debug_title">Debuggen</string>
+  <string name="prefs_storymaker_server_title">StoryMaker-Server</string>
+  <string name="prefs_use_tor_title">Orbot (Tor) benutzen</string>
+  <string name="prefs_use_tor_summary">Sende den gesamten Netzwerk-Datenverkehr mit der Orbot-App durch das Tor-Netzwerk.</string>
+  <string name="prefs_use_download_manager_title">Download-Manager benutzen</string>
+  <string name="prefs_use_download_manager_summary">Lektionen mit dem Android Download-Manager-Service herunterladen</string>
+  <string name="prefs_youtube_acccount_title">YouTube-Konto</string>
+  <string name="prefs_youtube_acccount_summary">Das YouTube-Konto, welches zum Hochladen von Videos genutzt werden soll. Dieses Konto MUSS auf Ihrem Gerät eingebunden sein.</string>
+  <string name="prefs_youtube_login_title">YouTube-Benutzername</string>
+  <string name="prefs_youtube_login_summary">YouTube-Web-Authentifizierung benutzen</string>
+  <string name="prefs_soundcloud_account_title">SoundCloud-Benutzerkonto</string>
+  <string name="prefs_soundcloud_account_summary">Das SoundCloud-Benutzerkonto, welches zum Hochladen von Audio-Inhalten genutzt werden soll.</string>
+  <string name="prefs_interface_language_summary"></string>
+  <string name="prefs_lesson_language_summary"></string>
+  <string name="prefs_video_codec_title">Video-Codec</string>
+  <string name="prefs_video_resolution_title">Video-Auflösung</string>
+  <string name="prefs_video_width_title">Video-Breite</string>
+  <string name="prefs_video_height_title">Video-Höhe</string>
+  <string name="prefs_video_bitrate_title">Video-Bitrate</string>
+  <string name="prefs_video_framrate_title">Video-Framerate</string>
+  <string name="prefs_audio_codec_title">Audio-Codec</string>
+  <string name="prefs_audio_bitrate_title">Audio-Bitrate</string>
+  <string name="prefs_audio_samplerate_title">Audio-Samplerate</string>
+  <string name="prefs_audio_crossfade_title">Audio-Überblendung</string>
+  <string name="prefs_audio_crossfade_summary">Länge der Audio-Überblendung</string>
+  <string name="prefs_internal_storage_title">Interner Speicher</string>
+  <string name="prefs_internal_storage_summary">Internen Projekt-Speicher nutzen</string>
+  <string name="prefs_disable_lesson_completion_summary"></string>
+  <!--/prefs-->
+  <!--FirstStartActivity-->
+  <!--ConnectAccountActivity-->
+  <!--ProjectTagFragment-->
+</resources>

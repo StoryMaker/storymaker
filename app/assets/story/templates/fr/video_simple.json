@@ -1,0 +1,53 @@
+{"clipes":[
+{
+"Titre": "Signature",
+"Illustration": "type_détails",
+"Taille de Capture": "Détails",
+"But": " Représenter quelque chose de remarquable à propos le personnage.",
+"Longueur": "X secondes",
+"Description": " Qu'est-ce que le personnage fait dans la vie? Montrer au public l'élément le plus important du caractère. Cet élément doit remplir au moins 50% de la trame.",
+"Astuce": " Si vous êtes trop près de l'action, la caméra de votre téléphone peut ne pas être capable de se concentrer. Gardez l'appareil photo à bout de bras de votre sujet.",
+"Concerne de sécurité": "-"
+},
+{
+"Titre":"Action",
+"Illustration":"Type_Longue"
+"Taille":"Longue",
+"But": "Montrer le Personnage engagé dans son environnement.",
+"Longueur": "X secondes",
+"Description": "Cette Capture devra être aussi large pour représenter l’action complète du personnage. Cette dernière devra remplir 20% du cadre.",
+"Astuce":"Gardez votre personnage sur une des lignes verticales pour cadrer votre capture proprement".
+"Concerne de sécurité": "-"
+},
+{
+"Titre": "Personnage",
+"Illustration": "type_proche",
+"Taille de capture": "proche",
+"But": "Représenter l’émotion du personnage.",
+"Longueur": "X secondes",
+"Description": "Montrer au public qui est votre personnage, construire un lien
+entre le spectateur et le sujet. Le caractère doit remplir au moins 50% du cadre.",
+"Astuce": " Utilisez la ligne de l'œil pour cadrer votre capture correctement.",
+"Concerne de sécurité": "-"
+},
+{
+"Titre": "Interview",
+"Illustration": "type_moyen",
+"taille de Capture": "Moyenne",
+"But": "Demandez au personnage de vous raconteur une histoire.",
+"Longueur": "X secondes",
+"Description": "Posez des Questions ouvertes. Déterminez vos questions en fonction du type de source que vous interviewez. Le caractère doit remplir au moins 30% du cadre.",
+"Astuce": " Placez votre personnage sur un côté du cadre, cadrez votre capture à montrer quelque chose d'important à l'histoire sur l'autre côté.",
+"Concerne de sécurité": "-"
+},
+{
+"Titre": "Environnemental",
+"Illustration":"type_large",
+"Taille de Capture":"Large",
+"But": "Les clips environnementaux aident les auditeurs à savoir où se passe votre histoire  .", 
+"Longueur": "X secondes",
+"Description": " Vidéo environnementale peut indiquer le pays ou un élément ethnique ou religieux. Incluant les monuments ou autres informations spécifiques de localisation. Le caractère doit remplir pas  plus que 10% du cadre",
+Astuce": " Placez votre appareil photo directement en face de l'emplacement principal que vous filmez. Les sites d'intérêt aident le public à comprendre leur emplacement.",
+"Concerne de sécurité": "-"
+}]
+}

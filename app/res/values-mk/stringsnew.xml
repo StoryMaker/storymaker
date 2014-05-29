@@ -1,0 +1,37 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+  <string name="terms_title">StoryMaker услови</string>
+  <string name="terms_text_1">Ги задржувате сите права на сопственост на вашата содржина, можете да ја повлечете кога сакате, а ние нема да ги продаваме вашите податоци. Со вашата согласност да ги споделите вашите содржини со StoryMaker.cc и овозможивате на Small World News и партнерите да ги постават вашите приказни со слични приказни создадени со Storymaker. Ние ги групираме врз основа на типот на приказната, темите и локациите во неа.</string>
+  <string name="terms_text_2">Вашата приказна сеуште може да се објави на сајтови за споделување на содржини по ваш избор, но е исто така спомената и на StoryMaker.cc. Насловот, описот на приказната и таговите ќе бидат испратени на StoryMaker.cc сета останата содржина ќе содржи референца кон вашиот профил на вашите сајтови за споделување на содржини.</string>
+  <!--tutorial_lessons-->
+  <string name="tutorial_title_1">Научете раскажување.</string>
+  <!--/tutorial_lessons-->
+  <!--tutorial_story-->
+  <!--/tutorial_story-->
+  <!--template_description-->
+  <!--/template_description-->
+  <!--legacy_story_type-->
+  <!--once we refactor to keep this extra text fields in the db instead of referencing this strings file we can remove these (after doing a migration step)-->
+  <!--/ legacy_story_type-->
+  <!--story_type-->
+  <!--/story_type-->
+  <!--story_type_description-->
+  <!--/story_type_description-->
+  <!--template_options-->
+  <!--/template_options-->
+  <!--story_type_new-->
+  <string name="activity">Активност</string>
+  <string name="location">Локација</string>
+  <!--/story_type_new-->
+  <!--story_type_old-->
+  <!--/story_type_old-->
+  <!--prefs-->
+  <string name="prefs_interface_language_summary"></string>
+  <string name="prefs_lesson_language_summary"></string>
+  <string name="prefs_disable_lesson_completion_summary"></string>
+  <!--/prefs-->
+  <!--FirstStartActivity-->
+  <!--ConnectAccountActivity-->
+  <string name="join_storymaker">Приклучи се на StoryMaker заедницата</string>
+  <!--ProjectTagFragment-->
+</resources>
