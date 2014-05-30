@@ -135,9 +135,11 @@
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
  	-->
-    <FrameLayout
+
+    <info.guardianproject.mrapp.ui.TouchlessFrame
         android:id="@+id/fl_info_container"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="0dp"
+        android:layout_weight="1" />
 
 </LinearLayout>

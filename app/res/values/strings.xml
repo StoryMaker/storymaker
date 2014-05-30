@@ -279,13 +279,13 @@ You also will have an opportunity to see and modify the data being sent."</strin
     <string name="title_activity_accounts">Accounts</string>
     <string name="action_settings">Settings</string>
 
-    <!-- added for new UI -->
     <string name="label_activity_log">Activity Log</string>
     <string name="label_title">Title</string>
     <string name="label_description">Description</string>
     <string name="label_tags">Tags</string>
     <string name="label_add">Add</string>
     <string name="label_edit">Edit</string>
+    <string name="label_save">Save</string>
     <string name="label_activities">Activity log</string>
     <string name="hint_story_title">Enter a Title</string>
     <string name="hint_story_description">Describe your story&#8230;</string>
@@ -301,5 +301,6 @@ You also will have an opportunity to see and modify the data being sent."</strin
     <string name="info">Info</string>
     <string name="send_logcat_to_support">Send Logcat To Support</string>
     <string name="restarting_storymaker">Restarting StoryMaker...</string>
+    <string name="send">Send</string>
 
 </resources>

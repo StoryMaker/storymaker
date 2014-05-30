@@ -19,6 +19,7 @@ import android.support.v4.app.NavUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.View.OnClickListener;
 import android.widget.TextView;
 
 import com.actionbarsherlock.app.ActionBar;
@@ -65,6 +66,15 @@ public class StoryInfoActivity extends BaseActivity {
 	    ProjectInfoFragment infoFrag = ProjectInfoFragment.newInstance(mProject.getId(), false, true);
 	    getSupportFragmentManager().beginTransaction().replace(R.id.fl_info_container, infoFrag).commit();
 	    
+	    View view = findViewById(R.id.fl_info_container);
+        view.findViewById(R.id.fl_info_container).setOnClickListener(new OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                launchStoryInfoEditMode();
+            }
+        });
+	    
 	    LinearLayout activityList = (LinearLayout) findViewById(R.id.activityList);
 	    activityList.removeAllViews();
 	    TextView activityListHeader = new TextView(this);
@@ -75,6 +85,12 @@ public class StoryInfoActivity extends BaseActivity {
 	    new ProjectActivityAdapter(activityList,
                 new String[] {"Story Shared on Facebook", "Scene Added", "Story Created"}).addAllViews();
 	}
+    
+    private void launchStoryInfoEditMode() {
+        Intent intent = new Intent(this, StoryInfoEditActivity.class);
+        intent.putExtra("pid", mProject.getId());
+        startActivity(intent);
+    }
 	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {

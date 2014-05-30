@@ -3,18 +3,29 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
-
-    <TextView
-        android:id="@+id/tv_story_title"
-        style="@style/CenterHeaderText"
-        android:padding="24dp" />
-
-    <TextView
-        android:id="@+id/tv_story_desciption"
-        style="@style/TextGeneral"
-        android:hint="@string/hint_no_description"
-        android:paddingLeft="24dp"
-        android:paddingRight="24dp" />
+    
+    <EditText
+        android:id="@+id/etStoryTitle"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="10dp"
+        android:hint="@string/story_publish_story_title"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        />
+    
+    <EditText
+        android:id="@+id/etStoryDescription"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:hint="@string/story_publish_describe_hint"
+        android:inputType="textMultiLine"
+        android:lines="3" 
+        >
+    </EditText>
 
     <LinearLayout
         android:id="@+id/project_tag_container"

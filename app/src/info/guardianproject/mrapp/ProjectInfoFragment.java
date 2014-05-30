@@ -17,6 +17,8 @@ import android.widget.TextView;
 
 import java.util.Locale;
 
+import org.holoeverywhere.widget.EditText;
+
 import info.guardianproject.mrapp.model.Project;
 import info.guardianproject.mrapp.model.ProjectTable;
 
@@ -31,13 +33,15 @@ public class ProjectInfoFragment extends ProjectTagFragment {
     
     // Fragment Initialization Bundle Keys
     protected static final String ARG_SHOW_LOC_SEC= "showlocsec";
+    protected static final String ARG_EDITABLE= "editable";
 
-    TextView mTvStoryTitle;
-    TextView mTvStoryDesc;
+    EditText mStoryTitle;
+    EditText mStoryDesc;
     TextView mTvStorySection;
     TextView mTvStoryLocation;
     
     private boolean mShowLocationAndSection;
+    private boolean mEditable;
     
     /** Public API **/
     
@@ -49,8 +53,8 @@ public class ProjectInfoFragment extends ProjectTagFragment {
     public static ProjectInfoFragment newInstance(int pid, boolean editable, boolean showSectionAndLocation) {
         ProjectInfoFragment fragment = new ProjectInfoFragment();
         setFragmentTagArguments(fragment, pid, editable);
-        fragment.getArguments()
-            .putBoolean(ARG_SHOW_LOC_SEC, showSectionAndLocation);
+        fragment.getArguments().putBoolean(ARG_SHOW_LOC_SEC, showSectionAndLocation);
+        fragment.getArguments().putBoolean(ARG_EDITABLE, editable);
         return fragment;
     }
     
@@ -59,16 +63,22 @@ public class ProjectInfoFragment extends ProjectTagFragment {
     public void onCreate (Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mShowLocationAndSection = getArguments().getBoolean(ARG_SHOW_LOC_SEC, true);
+        mEditable = getArguments().getBoolean(ARG_EDITABLE, true);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_project_info, null);
-        mTvStoryTitle = (TextView) view.findViewById(R.id.tv_story_title);
-        mTvStoryDesc = (TextView) view.findViewById(R.id.tv_story_desciption);
+        mStoryTitle = (EditText) view.findViewById(R.id.etStoryTitle);
+        mStoryDesc = (EditText) view.findViewById(R.id.etStoryDescription);
         mTvStorySection = (TextView) view.findViewById(R.id.tv_story_section);
         mTvStoryLocation = (TextView) view.findViewById(R.id.tv_story_location);
         setContainerProjectTagsView((ViewGroup) view.findViewById(R.id.project_tag_container));
+        
+        if (!mEditable) {
+            mStoryTitle.setEnabled(false);
+            mStoryDesc.setEnabled(false);
+        }
 
         return view;
     }
@@ -82,10 +92,10 @@ public class ProjectInfoFragment extends ProjectTagFragment {
     protected void initialize() {
         super.initialize();
 
-        mTvStoryTitle.setText(mProject.getTitle());
+        mStoryTitle.setText(mProject.getTitle());
         String desc = mProject.getDescription();
         if (desc != null && !desc.isEmpty())
-            mTvStoryDesc.setText(desc);
+            mStoryDesc.setText(desc);
 
         if (mShowLocationAndSection) {
             mTvStorySection.setText(mProject.getSection());

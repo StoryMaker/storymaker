@@ -49,7 +49,9 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.view.animation.Animation;
@@ -115,16 +117,11 @@ public class PublishFragment extends Fragment implements PublishListener {
 
     
 
-    private void initFragment ()
+    private void initFragment()
     {
-    	mActivity = (EditorBaseActivity)getActivity();
-    	
+        mActivity = (EditorBaseActivity) getActivity();
         mHandlerPub = mActivity.mHandlerPub;
-        
-
-        mSettings = PreferenceManager
-        .getDefaultSharedPreferences(getActivity().getApplicationContext());
-	
+        mSettings = PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext());
     }
     
 
@@ -143,16 +140,23 @@ public class PublishFragment extends Fragment implements PublishListener {
                 .replace(R.id.fl_info_container, infoFrag)
                 .commit();
             
-            mView.findViewById(R.id.fl_info_container).setOnClickListener(new OnClickListener() {
+            View view = mView.findViewById(R.id.fl_info_container);
+            view.findViewById(R.id.fl_info_container).setOnClickListener(new OnClickListener() {
 
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(getActivity(), StoryInfoEditActivity.class);
-                    intent.putExtra("pid", mActivity.getProject().getId());
-                    startActivity(intent);
+                    launchStoryInfoEditMode();
                 }
-                
+
             });
+//            view.setOnTouchListener(new OnTouchListener() {
+//                
+//                @Override
+//                public boolean onTouch(View v, MotionEvent event) {
+//                    // TODO Auto-generated method stub
+//                    return true;
+//                }
+//            }) ;
             
         	ImageView ivThumb = (ImageView)mView.findViewById(R.id.storyThumb);
 
@@ -261,6 +265,12 @@ public class PublishFragment extends Fragment implements PublishListener {
 			}
 		}
 	};
+	
+	private void launchStoryInfoEditMode() {
+        Intent intent = new Intent(getActivity(), StoryInfoEditActivity.class);
+        intent.putExtra("pid", mActivity.getProject().getId());
+        startActivity(intent);
+	}
     
 	public void doPublish() {
 		ServerManager sm = StoryMakerApp.getServerManager();

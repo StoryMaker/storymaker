@@ -10,7 +10,7 @@
 	    android:layout_height="wrap_content" >
 	    
 		
-		<FrameLayout
+		<info.guardianproject.mrapp.ui.TouchlessFrame
 		    android:id="@+id/fl_info_container"
 		    android:layout_width="match_parent"
 		    android:layout_height="wrap_content"
