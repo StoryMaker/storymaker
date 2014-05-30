@@ -68,6 +68,7 @@ public class Utils {
         } catch (IOException e) {
             Log.d("Utils.assetExists", e.getLocalizedMessage());
             return false;
+        }
     }
     
     public static boolean isActivity(Context context) {

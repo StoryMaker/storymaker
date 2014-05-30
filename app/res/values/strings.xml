@@ -36,6 +36,7 @@
     <string name="menu_join_storymaker">Join the StoryMaker Community</string>
     <string name="menu_sign_up">Sign Up / Login</string>
     <string name="menu_upload_manager">Upload Manager</string>
+    <string name="menu_uploads">Uploads</string>
     <string name="welcome_message">Hey there!\nWelcome to StoryMaker</string>
 
     <!-- project list -->
