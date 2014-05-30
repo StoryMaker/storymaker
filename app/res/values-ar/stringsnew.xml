@@ -133,7 +133,7 @@
   <string name="story_type_profile_personal_text5">ماذا تريد أن يحدث في المستقبل؟</string>
   <!--/story_type_new-->
   <!--story_type_old-->
-  <string name="scene_number">Scene &lt;xliff:g id="number"&gt;%1$d&lt;/xliff:g&gt;</string>
+  <string name="scene_number">Scene &lt;xliff:g id=\"number\"&gt;%1$d&lt;/xliff:g&gt;</string>
   <string name="when">متى؟</string>
   <string name="how">كيف؟</string>
   <string name="what">ماذا؟</string>

@@ -1,13 +1,16 @@
 package info.guardianproject.mrapp.model;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 
 import net.sqlcipher.database.SQLiteDatabase;
 
 import info.guardianproject.mrapp.StoryMakerApp;
+import info.guardianproject.mrapp.Utils;
 import info.guardianproject.mrapp.db.ProjectsProvider;
 import info.guardianproject.mrapp.db.StoryMakerDB;
 import info.guardianproject.mrapp.media.MediaProjectManager;
@@ -626,11 +629,16 @@ public class Project extends Model {
         this.templatePath = template;
     }
     
-    public static String getSimpleTemplateForMode (int storyMode)
+    public static String getSimpleTemplateForMode (Context context, int storyMode)
     {
     	 String lang = StoryMakerApp.getCurrentLocale().getLanguage();
 
          String templateJsonPath = "story/templates/" + lang + "/simple/";
+         
+         // if templates folder for this lang don't exist, fallback to english
+         if (!Utils.assetExists(context, templateJsonPath + "audio_simple.json")) {
+             templateJsonPath = "story/templates/en/simple/";
+         }
          
          switch (storyMode)
          {

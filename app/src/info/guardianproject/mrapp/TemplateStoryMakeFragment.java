@@ -45,7 +45,7 @@ public class TemplateStoryMakeFragment extends Fragment {
         
         // FIXME fetch template from the Project db record
         try {
-            mTemplate = Template.parseAsset(getActivity(), mProject.getTemplatePath(), Project.getSimpleTemplateForMode(mProject.getStoryType()));
+            mTemplate = Template.parseAsset(getActivity(), mProject.getTemplatePath(), Project.getSimpleTemplateForMode(getActivity().getApplicationContext(), mProject.getStoryType()));
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();

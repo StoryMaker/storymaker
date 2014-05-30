@@ -8,6 +8,9 @@ import java.io.OutputStreamWriter;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.StringTokenizer;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import org.holoeverywhere.app.Activity;
 import org.holoeverywhere.widget.Toast;
@@ -16,6 +19,7 @@ import com.actionbarsherlock.view.MenuItem;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.AssetManager;
 import android.graphics.drawable.Drawable;
 import android.os.Environment;
 import android.support.v4.app.FragmentActivity;
@@ -53,6 +57,17 @@ public class Utils {
                 		Toast.makeText(_activity.getApplicationContext(), _msg, isLongToast ? Toast.LENGTH_LONG : Toast.LENGTH_SHORT).show();
                 }
         });
+    }
+    
+    public static boolean assetExists(Context context, String path) {
+        AssetManager mg = context.getResources().getAssets();
+
+        try {
+            mg.open(path);
+            return true;
+        } catch (IOException e) {
+            Log.d("Utils.assetExists", e.getLocalizedMessage());
+            return false;
     }
     
     public static boolean isActivity(Context context) {

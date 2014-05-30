@@ -119,6 +119,9 @@
   <string name="story_type_profile_professional_text5">이 일 다음으로 당신을 위한 것은 무엇인가요?</string>
   <string name="story_type_profile_personal_text1">당신이 누구인지에 대해 조금만 설명해주세요</string>
   <string name="story_type_profile_personal_text2">당신에게 일어난 중요한 경험은 무엇인가요?</string>
+  <string name="story_type_profile_personal_text3">이 경험은 당신이 어떤 기분이 들도록 했나요?</string>
+  <string name="story_type_profile_personal_text4">지금은 무엇을 다르게 하고 있나요?</string>
+  <string name="story_type_profile_personal_text5">미래에 어떤 일이 일어나기를 원하시나요?</string>
   <!--/story_type_new-->
   <!--story_type_old-->
   <string name="scene_number">장면 &lt;xliff:g id="number"&gt;%1$d&lt;/xliff:g&gt;</string>
@@ -161,6 +164,20 @@
   <string name="story_type_news_text8">어떻게 그것이 대응되고 있나요?</string>
   <!--/story_type_old-->
   <!--prefs-->
+  <string name="prefs_category_networking_security_title">Networking &amp; 보안</string>
+  <string name="prefs_category_locales_title">로컬</string>
+  <string name="prefs_category_media_title">매체</string>
+  <string name="prefs_category_debug_title">디버그</string>
+  <string name="prefs_storymaker_server_title">스토리메이커 서버</string>
+  <string name="prefs_use_tor_title">Orbot (Tor) 사용하기</string>
+  <string name="prefs_use_tor_summary">Orbot 어플리케이션을 이용해서 Tor 네트워크를 통해 모든 네트워크 트래픽을 보내기</string>
+  <string name="prefs_use_download_manager_title">다운로드 매니저 사용하기</string>
+  <string name="prefs_youtube_acccount_title">유투브 계정</string>
+  <string name="prefs_youtube_acccount_summary">유투브 개정은 비디오 업로드를 위해 사용됩니다. 이것은 여러분 장치에 꼭 등록되어야 합니다.</string>
+  <string name="prefs_youtube_login_title">유투브 로그인</string>
+  <string name="prefs_youtube_login_summary">유투브 웹 인증 사용하기</string>
+  <string name="prefs_soundcloud_account_title">SoundCloud 계정</string>
+  <string name="prefs_soundcloud_account_summary">오디오 업로드를 위해 SoundCloud 계정 사용하기</string>
   <string name="prefs_interface_language_summary"></string>
   <string name="prefs_lesson_language_summary"></string>
   <string name="prefs_disable_lesson_completion_summary"></string>

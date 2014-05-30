@@ -482,65 +482,26 @@ public class HomeActivity extends BaseActivity {
         	 
          });
     }
-    
-    
-    private void showProject (int id)
-    {
 
-    	if (id >= mListProjects.size())
-    		return; //sometimes we get a long random number here - n8fr8
-    	
-		Project project = mListProjects.get(id);
-		
-		Intent intent = new Intent(this, SceneEditorActivity.class);
-    	
-		if (project.getScenesAsArray().length > 1) {
-			
-		    intent = new Intent(this, StoryTemplateActivity.class);
-		    
-		    
-	    }
+    private void showProject(int id) {
+        if (id >= mListProjects.size()) {
+            return; // sometimes we get a long random number here - n8fr8
+        }
+        
+        Project project = mListProjects.get(id);
+        Intent intent = new Intent(this, SceneEditorActivity.class);
+        if (project.getScenesAsArray().length > 1) {
+            intent = new Intent(this, StoryTemplateActivity.class);
+        }
 
-    	intent.putExtra("story_mode", project.getStoryType());
-    	intent.putExtra("pid", project.getId());
-    	intent.putExtra("title", project.getTitle());
-    	
-    	String lang = StoryMakerApp.getCurrentLocale().getLanguage();
-    	String templateJsonPath = "story/templates/" + lang + "/simple/";
-    	
-    	if (project.getStoryType() == Project.STORY_TYPE_VIDEO)
-    	{
-    		//video
-    		templateJsonPath += "video_simple.json";
-    	}
-    	else if (project.getStoryType() == Project.STORY_TYPE_PHOTO)
-    	{
+        intent.putExtra("story_mode", project.getStoryType());
+        intent.putExtra("pid", project.getId());
+        intent.putExtra("title", project.getTitle());
+        String templateJsonPath = Project.getSimpleTemplateForMode(getApplicationContext(), project.getStoryType());
+        intent.putExtra("template_path", templateJsonPath);
 
-    		//photo
-    	
-    		templateJsonPath += "photo_simple.json";
-    	}
-    	else if (project.getStoryType() == Project.STORY_TYPE_AUDIO)
-    	{
-
-    		//audio
-    	
-    		templateJsonPath += "audio_simple.json";
-    	}
-    	else if (project.getStoryType() == Project.STORY_TYPE_ESSAY)
-    	{
-    		//essay
-    		templateJsonPath += "essay_simple.json";
-    		
-    	}
-    	
-    	intent.putExtra("template_path", templateJsonPath);
-    	
         startActivity(intent);
     }
-    
-    
-    
     
     private ArrayList<Lesson> getLessonsCompleted (Context context)
     {

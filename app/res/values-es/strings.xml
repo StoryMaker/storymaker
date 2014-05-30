@@ -56,6 +56,7 @@
   <string name="pref_out_vheight_summary">Altura de video personalizado para el vídeo emitido</string>
   <string name="hintTitle">Título</string>
   <string name="hintStartTime">Empezar (00:00:00)</string>
+  <string name="hintEndTime">duración (00:00:00)</string>
   <string name="hintFadeIn">Desvanecer en (el marco)</string>
   <string name="hintFadeOut">Desvanecer fuera (del marco)</string>
   <string name="start_recording">Grabar</string>

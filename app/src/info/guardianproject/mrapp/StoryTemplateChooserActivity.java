@@ -102,26 +102,25 @@ public class StoryTemplateChooserActivity extends BaseActivity {
        
     }
     
-    private void loadTemplateSummary (String name, String type, int mode) 
-    {
-    	try
-    	{	
-        
-        String lang = StoryMakerApp.getCurrentLocale().getLanguage();
-        mTemplatePath = "story/templates/" + lang + '/' + name + '/' + name + '_' + type + ".json";
-        
-    	if (mStoryModeTemplate != null)
-    		mTemplate = Template.parseAsset(this, mTemplatePath, mStoryModeTemplate);
-    	else
-    		mTemplate = Template.parseAsset(this, mTemplatePath);
-        	
-     	
+    private void loadTemplateSummary(String name, String type, int mode) {
+        try {
+            String lang = StoryMakerApp.getCurrentLocale().getLanguage();
+            mTemplatePath = "story/templates/" + lang + '/' + name + '/' + name + '_' + type + ".json";
+
+            // if templates folder for this lang don't exist, fallback to english
+            if (!Utils.assetExists(getApplicationContext(), mTemplatePath)) {
+                mTemplatePath = "story/templates/en/" + name + '/' + name + '_' + type + ".json";
+            }
+
+            if (mStoryModeTemplate != null) {
+                mTemplate = Template.parseAsset(this, mTemplatePath, mStoryModeTemplate);
+            } else {
+                mTemplate = Template.parseAsset(this, mTemplatePath);
+            }
+
+        } catch (Exception e) {
+            Log.e(AppConstants.TAG, "error loading template", e);
         }
-        catch (Exception e)
-        {
-        	Log.e(AppConstants.TAG,"error loading template",e);
-        }
-      
     }
     
     // FIXME display template's scenes in list

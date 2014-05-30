@@ -1,0 +1,55 @@
+{
+    "scenes": [
+        {
+            "clips": [
+                {
+                    "Illustration": "type_détails", 
+                    "Description":"Un bon clip audio prend le public et les intrigues à écouter davantage.", 
+                    "But":"Les séquences audio permettent de donner au public une compréhension immédiate de certains éléments de l'histoire.", 
+                    "Longueur": "X secondes", 
+                    "Security Concern": "-", 
+                    "Astuce":"Vous pouvez avoir besoin de garder votre micro très près d'enregistrer un clip audio. Vérifiez que votre source audio n'est pas trop fort.", 
+                    "Title": "Signature"
+                }, 
+                {
+                    "Illustration":"type_large", 
+                    "Description":"L'ambiance pour les Clips Audio aide le public à comprendre comment le sujet interagit avec l'environnement.", 
+                    "But":"Aider le public à comprendre l'espace où vit le sujet.", 
+                    "Longueur": "X secondes", 
+                    "Security Concern": "-", 
+                    "Astuce":"Vous voulez l'ambiance du clip contribue à raconter l'histoire. Si il y'a des sons sans rapport avec l'histoire ce qui peut distraire le public.", 
+                    "Title": "Ambient"
+                }, 
+                {
+                    "Illustration": "type_proche", 
+                    "Description":"Montrer au public qui le personnage important dans l'histoire.", 
+                    "But":"Enregistrez le personnage en train de faire une introduction, ou vous enregistrer en introduisant le personnage.", 
+                    "Longueur": "X secondes", 
+                    "Security Concern": "-", 
+                    "Astuce":"Gardez ce clip bref. Il suffit d'introduire le personnage au public, ou de permettre au personnage de se présenter. Enregistrer des informations supplémentaires pour l'entretien.", 
+                    "Title": "Narrative"
+                }, 
+                {
+                    "Illustration": "type_moyen", 
+                    "Description":"Rappelez-vous les principes fondamentaux d'une bonne interview. Posez des questions ouvertes. Décidez à vos questions en fonction du type de source que vous interviewez.", 
+                    "But": "Demandez au personnage de vous raconteur une histoire.", 
+                    "Longueur": "X secondes", 
+                    "Security Concern": "-", 
+                    "Tip": "If you want the audience to hear your questions and the subject\u2019s answers, be sure that you are both close enough to the mic to be heard clearly.", 
+                    "Title": "Interview"
+                }, 
+                {
+                    "Illustration":"type_large", 
+                    "Description":"L'audio environnementale peut indiquer le pays ou ajouter un élément culturel ou religieux à votre histoire.", 
+                    "But":"Les clips audio environnementales aident le public à comprendre où votre histoire se déroule.", 
+                    "Longueur": "X secondes", 
+                    "Security Concern": "-", 
+                    "Astuce":"Enregistrer le son d'ensemble de l'environnement. Soyez sûr de ne pas faire de bruit vous-même, cela va distraire l'auditoire de son naturel.", 
+                    "Title": "Environmental"
+                }
+            ], 
+            "title": "Scene 1"
+        }
+    ], 
+    "title": "Audio Simple"
+}
