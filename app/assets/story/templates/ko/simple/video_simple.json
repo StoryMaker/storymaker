@@ -8,8 +8,8 @@
                     "Goal": "Ask the character to tell you a story. Capture their emotion.",
                     "Length": "30-60 seconds", 
                     "Security Concern": "-", 
-                    "Shot Size": "مقربة"، 
-                    "Tip": "استخدم خط العين لإعداد لقطتك بصورة ملائمة".، 
+                    "Shot Size": "Close", 
+                    "Tip": "Use the eye-line to frame your shot properly.", 
                     "Title": "Interview"
                 },                 
                 {
@@ -18,7 +18,7 @@
                     "Goal": "Show an essential detail to the story.", 
                     "Length": "5 - 10 seconds", 
                     "Security Concern": "-", 
-                    "Shot Size": "مفصلة"، 
+                    "Shot Size": "Detail", 
                     "Tip": "The detail should fill at least 50% of the frame.", 
                     "Title": "Signature" 
                 },
@@ -28,7 +28,7 @@
                     "Goal": "Show an interaction between the character and their world.", 
                     "Length": "10 - 15 seconds",
                     "Security Concern": "-",
-                    "Shot Size": "متوسطة"،
+                    "Shot Size": "Medium",
                     "Tip": "The character should fill about 30% of the frame.",
                     "Title": "Interaction"
                 },
@@ -38,8 +38,8 @@
                     "Goal": "Capture the character in action.", 
                     "Length": "10 - 15 seconds", 
                     "Security Concern": "-", 
-                    "Shot Size": "طويلة"، 
-                    "Tip": "حافظ على شخصيتك في أحد الخطوط العرضية لإعداد لقطتك بصورة ملائمة".، 
+                    "Shot Size": "Long", 
+                    "Tip": "Keep your character on one of the vertical lines to frame your shot properly.", 
                     "Title": "Activity"
                 }, 
                 {
@@ -48,7 +48,7 @@
                     "Goal": "Show where your story takes place.",
                     "Length": "5 - 10 seconds",
                     "Security Concern": "-",
-                    "Shot Size": "عريضة"،
+                    "Shot Size": "Wide",
                     "Tip": "Place your camera directly in front of the primary location you are filming.", 
                     "Title": "Location"
                 }
