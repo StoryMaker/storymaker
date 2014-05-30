@@ -248,9 +248,9 @@
     </string-array>
     
     <string-array name="lesson_language_options_values">
-        <item name="english">https://storymaker.cc/appdata/lessons/en</item>
-        <item name="arabic">https://storymaker.cc/appdata/lessons/ar</item>
-        <item name="safrican">https://storymaker.cc/appdata/lessons/sa</item>
+        <item name="english">en</item>
+        <item name="arabic">ar</item>
+        <item name="safrican">sa</item>
     </string-array>
     
     <string-array name="array_story_locations">

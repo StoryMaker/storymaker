@@ -506,7 +506,7 @@ public class HomeActivity extends BaseActivity {
     	intent.putExtra("pid", project.getId());
     	intent.putExtra("title", project.getTitle());
     	
-    	String lang = StoryMakerApp.getCurrentLocale().getLanguage();
+    	String lang = StoryMakerApp.getCurrentLessonsLocale().getLanguage();
     	String templateJsonPath = "story/templates/" + lang + "/simple/";
     	
     	if (project.getStoryType() == Project.STORY_TYPE_VIDEO)
@@ -547,7 +547,7 @@ public class HomeActivity extends BaseActivity {
     {
     	ArrayList<Lesson> result = new ArrayList<Lesson>();
     	
-    	Locale locale = ((StoryMakerApp)getApplication()).getCurrentLocale();
+    	Locale locale = ((StoryMakerApp)getApplication()).getCurrentLessonsLocale();
     	
         LessonManager lessonManager = StoryMakerApp.getLessonManager();
         

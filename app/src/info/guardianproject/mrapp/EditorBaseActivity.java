@@ -211,7 +211,7 @@ public class EditorBaseActivity extends BaseActivity {
             case android.R.id.home:
                 if (mMPM.mProject.isTemplateStory()) {
                     Intent intent = new Intent(this, StoryTemplateActivity.class);
-                    String lang = StoryMakerApp.getCurrentLocale().getLanguage();
+                    String lang = StoryMakerApp.getCurrentLessonsLocale().getLanguage();
                     intent.putExtra("template_path", "story/templates/" + lang
                             + "/event/event_basic.json");
                     intent.putExtra("story_mode", mMPM.mProject.getStoryType());

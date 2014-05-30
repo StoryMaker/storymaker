@@ -98,7 +98,7 @@ public class StoryTemplateChooserActivity extends BaseActivity {
     	try
     	{	
         
-        String lang = StoryMakerApp.getCurrentLocale().getLanguage();
+        String lang = StoryMakerApp.getCurrentLessonsLocale().getLanguage();
         mTemplatePath = "story/templates/" + lang + '/' + name + '/' + name + '_' + type + ".json";
         
     	if (mStoryModeTemplate != null)

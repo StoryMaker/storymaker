@@ -36,6 +36,7 @@ public class StoryMakerApp extends Application {
 	private final static String LOCALE_DEFAULT = "en";//need to force english for now as default
 	private final static String LOCALE_ARABIC = "ar";//need to carry over settings from previous installed version
 	private static Locale mLocale = new Locale(LOCALE_DEFAULT);
+	private static Locale mLessonLocale = new Locale(LOCALE_DEFAULT);
 		
 	private final static String URL_PATH_LESSONS = "/appdata/lessons/";
 	private final static String STORYMAKER_DEFAULT_SERVER_URL = "https://storymaker.cc";
@@ -130,27 +131,31 @@ public class StoryMakerApp extends Application {
 	public void updateLessonLocation ()
 	{
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        String customLessonLoc = settings.getString("pleslanguage", null);
+        String customLessonLoc = settings.getString("pleslanguage", LOCALE_DEFAULT);
         
         if (customLessonLoc == null) {
             // check for previous version settings, use if found
-            customLessonLoc = settings.getString("plessonloc", null);
-        }  
-                
-        String lessonUrlPath = mBaseUrl + URL_PATH_LESSONS + mLocale.getLanguage() + "/";
-        String lessonLocalPath = "lessons/" + mLocale.getLanguage();
+        	customLessonLoc = settings.getString("plessonloc", null);
+        }
         
-        if (customLessonLoc != null && customLessonLoc.length() > 0)
+        mLessonLocale =  new Locale(customLessonLoc);
+        
+        String customLessonLocPath = STORYMAKER_DEFAULT_SERVER_URL + URL_PATH_LESSONS + customLessonLoc;
+                
+        String lessonUrlPath = mBaseUrl + URL_PATH_LESSONS + mLessonLocale.getLanguage() + "/";
+        String lessonLocalPath = "lessons/" + mLessonLocale.getLanguage();
+        
+        if (customLessonLocPath != null && customLessonLocPath.length() > 0)
         {
-            if (customLessonLoc.toLowerCase().startsWith("http"))
+            if (customLessonLocPath.toLowerCase().startsWith("http"))
             {
-                lessonUrlPath = customLessonLoc;
+                lessonUrlPath = customLessonLocPath;
                 lessonLocalPath = "lessons/" + lessonUrlPath.substring(lessonUrlPath.lastIndexOf('/')+1);
             }
             else
             {
-                lessonUrlPath = mBaseUrl + URL_PATH_LESSONS + customLessonLoc + "/";
-                lessonLocalPath = "lessons/" + customLessonLoc;
+                lessonUrlPath = mBaseUrl + URL_PATH_LESSONS + customLessonLocPath + "/";
+                lessonLocalPath = "lessons/" + customLessonLocPath;
             }
         }
         
@@ -201,6 +206,11 @@ public class StoryMakerApp extends Application {
 		return mLocale;
 	}
 	
+	public static Locale getCurrentLessonsLocale ()
+	{
+		return mLessonLocale;
+	}
+	
 	 public boolean checkLocale ()
 	    {
 	        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
@@ -244,6 +254,7 @@ public class StoryMakerApp extends Application {
 		            lang = config.locale.getLanguage();
 	        }
 	        
+	        /*
 	        if (updatedLocale)
 	        {
 	            //need to reload lesson manager for new locale
@@ -251,7 +262,7 @@ public class StoryMakerApp extends Application {
 	        	fileDirLessons.mkdirs();
 				mLessonManager = new LessonManager (this, mBaseUrl + URL_PATH_LESSONS+ lang + "/", fileDirLessons);
 
-	        }
+	        }*/
 	        
 	        return updatedLocale;
 	    }
