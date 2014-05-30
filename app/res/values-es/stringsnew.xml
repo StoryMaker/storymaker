@@ -191,7 +191,9 @@
   <string name="prefs_youtube_login_summary">Usa autentificación web de YouTube</string>
   <string name="prefs_soundcloud_account_title">Cuenta de SoundCloud</string>
   <string name="prefs_soundcloud_account_summary">La cuenta de SoundCloud a usar para subir audio</string>
+  <string name="prefs_interface_language_title">Seleccione idioma</string>
   <string name="prefs_interface_language_summary"></string>
+  <string name="prefs_lesson_language_title">Seleccione idioma de las lecciones</string>
   <string name="prefs_lesson_language_summary"></string>
   <string name="prefs_slide_duration_title">Duración de diapositiva</string>
   <string name="prefs_slide_duration_summary">Duración de cada diapositiva en una presentación fotográfica</string>
