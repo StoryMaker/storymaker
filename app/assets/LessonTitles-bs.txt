@@ -1,6 +1,6 @@
 Žurnalistika
 1.0 Uvod u Žurnalistiku
-1.1 Osnove Društvenih Medija 
+1.1 Osnove Društvenih Medija
 1.2 Osnove Izvještavanja
 1.3 Selekcija i provjera izvora
 1.4 Tehnike intervjuisanja 
@@ -24,7 +24,7 @@ Sigurnost
 2.10 Kako mogu obaviti siguran prijenos medija (trenutno na čekanju)
 
 
-Audio  
+Audio 
 3.0 Uvod u Audio
 3.1 Оsnove Audio
 3.2 Priprema
@@ -44,7 +44,7 @@ Foto
 4.7 Fotografiranje teških/neprijatnih situacija
 4.11 Foto esej
 4.5 Osnove ekspozicije
-4.6 Fotografiranje objekata koji se brzo kreću 
+4.6 Fotografiranje objekata koji se brzo kreću
 4.8 Podešavanje balansa bijele boje
 4.9 Organiziranje i uređivanje vaših fotografija
 4.10 Post produkcija
@@ -52,7 +52,7 @@ Foto
 
 Video
 5.0 Uvod u Video
-5.1 Оsnove Video 
+5.1 Оsnove Video
 5.2 Zvuk i svjetlo
 5.5 Hvatanje dobrih snimaka
 5.3 Vizualno pripovijedanje
