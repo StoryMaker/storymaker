@@ -158,7 +158,7 @@ public class StoryNewActivity extends BaseActivity {
     {
         int storyMode = getSelectedStoryMode();
 
-        String templateJsonPath = Project.getSimpleTemplateForMode(storyMode);
+        String templateJsonPath = Project.getSimpleTemplateForMode(getApplicationContext(), storyMode);
         
         Intent i = new Intent(getBaseContext(), StoryTemplateChooserActivity.class);
 
@@ -184,7 +184,7 @@ public class StoryNewActivity extends BaseActivity {
         scene.setProjectId(project.getId());
         scene.save();
     
-        String templateJsonPath = Project.getSimpleTemplateForMode(storyMode);
+        String templateJsonPath = Project.getSimpleTemplateForMode(getApplicationContext(), storyMode);
        
         project.setStoryType(storyMode);
         project.save();

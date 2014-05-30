@@ -92,12 +92,12 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
         {
 	        if (mProject.getScenesAsList().size() > 1)
 	        {
-	        	mTemplate = Template.parseAsset(this, mProject.getTemplatePath(),Project.getSimpleTemplateForMode(mProject.getStoryType()));
+	        	mTemplate = Template.parseAsset(this, mProject.getTemplatePath(),Project.getSimpleTemplateForMode(getApplicationContext(), mProject.getStoryType()));
 	        	
 	        }
 	        else
 	        {
-	        	mTemplate = Template.parseAsset(this, Project.getSimpleTemplateForMode(mProject.getStoryType()));
+	        	mTemplate = Template.parseAsset(this, Project.getSimpleTemplateForMode(getApplicationContext(), mProject.getStoryType()));
 	        	
 	        }
         }
