@@ -35,6 +35,7 @@ public class StoryMakerApp extends Application {
 	private final static String PREF_LOCALE = "plocale";
 	private final static String LOCALE_DEFAULT = "en";//need to force english for now as default
 	private final static String LOCALE_ARABIC = "ar";//need to carry over settings from previous installed version
+	private final static String LOCALE_SOUTH_AFRICAN = "sa";
 	private static Locale mLocale = new Locale(LOCALE_DEFAULT);
 	private static Locale mLessonLocale = new Locale(LOCALE_DEFAULT);
 		
@@ -133,15 +134,22 @@ public class StoryMakerApp extends Application {
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         String customLessonLoc = settings.getString("pleslanguage", LOCALE_DEFAULT);
         
-        if (customLessonLoc == null) {
-            // check for previous version settings, use if found
-        	customLessonLoc = settings.getString("plessonloc", null);
+        if (customLessonLoc.toLowerCase().startsWith("http")) {
+        	customLessonLoc = customLessonLoc.substring(customLessonLoc.lastIndexOf('/')+1);
+        	
+        	if(!isLocaleValid(customLessonLoc)) {
+        		customLessonLoc = "";
+        	}   	
+        	settings.edit().putString("pleslanguage", customLessonLoc).commit();
         }
         
-        mLessonLocale =  new Locale(customLessonLoc);
         
-        String customLessonLocPath = STORYMAKER_DEFAULT_SERVER_URL + URL_PATH_LESSONS + customLessonLoc;
-                
+        if(!isLocaleValid(customLessonLoc)) {
+        	customLessonLoc = LOCALE_DEFAULT;
+        }   
+        mLessonLocale = new Locale(customLessonLoc);
+        
+        String customLessonLocPath = STORYMAKER_DEFAULT_SERVER_URL + URL_PATH_LESSONS + customLessonLoc;       
         String lessonUrlPath = mBaseUrl + URL_PATH_LESSONS + mLessonLocale.getLanguage() + "/";
         String lessonLocalPath = "lessons/" + mLessonLocale.getLanguage();
         
@@ -177,6 +185,15 @@ public class StoryMakerApp extends Application {
         //need to reload lesson manager for new locale
         initServerUrls(this);
 
+	}
+	
+	private boolean isLocaleValid(String language) {
+		
+		if(!language.equals(LOCALE_DEFAULT) && !language.equals(LOCALE_ARABIC) && !language.equals(LOCALE_SOUTH_AFRICAN)) {
+    		return false;
+    	}
+		
+		return true;
 	}
 	
 	public boolean isExternalStorageReady ()
