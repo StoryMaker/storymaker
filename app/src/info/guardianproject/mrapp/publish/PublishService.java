@@ -13,6 +13,8 @@ public class PublishService extends IntentService implements PublishListener {
     public static final String TAG = "PublishService";
     public static final String INTENT_EXTRA_PROJECT_ID = "project_id";
     public static final String INTENT_EXTRA_PUBLISH_JOB_ID = "publish_job_id";
+    public static final String INTENT_EXTRA_USE_TOR = "use_tor";
+    public static final String INTENT_EXTRA_PUBLISH_TO_STORYMAKER = "publish_to_storymaker";
     public static final String INTENT_EXTRA_ERROR_CODE = "error_code";
     public static final String INTENT_EXTRA_ERROR_MESSAGE = "error_message";
     public static final String INTENT_EXTRA_SITE_KEYS = "site_keys";
@@ -34,13 +36,15 @@ public class PublishService extends IntentService implements PublishListener {
             int id = intent.getIntExtra(INTENT_EXTRA_PROJECT_ID, -1);
             if (id != -1) {
                 String[] siteKeys = intent.getStringArrayExtra(INTENT_EXTRA_SITE_KEYS);
+                boolean useTor = intent.getBooleanExtra(INTENT_EXTRA_USE_TOR, false);
+                boolean publishToStoryMaker = intent.getBooleanExtra(INTENT_EXTRA_PUBLISH_TO_STORYMAKER, false);
                 // TODO need to trigger controllers for all selected sites
                 PublishController controller = (new PublishController(getApplicationContext(), this));
                 Project project = (Project) (new ProjectTable()).get(getApplicationContext(), id);
                 if (intent.getAction().equals(ACTION_RENDER)) {
-                    controller.startRender(project, siteKeys);
+                    controller.startRender(project, siteKeys, useTor, publishToStoryMaker);
                 } else if (intent.getAction().equals(ACTION_UPLOAD)) {
-                    controller.startUpload(project, siteKeys);
+                    controller.startUpload(project, siteKeys, useTor, publishToStoryMaker);
                 }
             } else {
                 Log.d(TAG, "invalid publish id passed: " + id);

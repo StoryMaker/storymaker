@@ -79,8 +79,8 @@ public class PublishController {
 		return publisher;
 	}
     
-    public void startRender(Project project, String[] siteKeys) {
-        fetchPublishJob(project, siteKeys);
+    public void startRender(Project project, String[] siteKeys, boolean useTor, boolean publishToStoryMaker) {
+        fetchPublishJob(project, siteKeys, useTor, publishToStoryMaker);
         PublisherBase publisher = getPublisher(publishJob);
         // TODO this needs to loop a few times until publisher start returns false or something to tell us that the publish job is totally finished
         if (publisher != null) {
@@ -88,8 +88,8 @@ public class PublishController {
         }
     }
     
-    public void startUpload(Project project, String[] siteKeys) {
-        fetchPublishJob(project, siteKeys);
+    public void startUpload(Project project, String[] siteKeys, boolean useTor, boolean publishToStoryMaker) {
+        fetchPublishJob(project, siteKeys, useTor, publishToStoryMaker);
         // check if there is a rendered, unfinished job already matching these params
 //        publishJob(new PublishJobTable()).getNextUnfinished(mContext, project.getId(), siteKeys);
 //        publishJob = new PublishJob(mContext, -1, project.getId(), siteKeys);
@@ -101,13 +101,16 @@ public class PublishController {
         }
     }
     
-    private void fetchPublishJob(Project project, String[] siteKeys) {
+    private void fetchPublishJob(Project project, String[] siteKeys, boolean useTor, boolean publishToStoryMaker) {
         if (publishJob == null) {
             publishJob = (new PublishJobTable()).getNextUnfinished(mContext, project.getId(), siteKeys);
             if (publishJob == null) {
-                publishJob = new PublishJob(mContext, project.getId(), siteKeys);
+                publishJob = new PublishJob(mContext, project.getId(), siteKeys, useTor, publishToStoryMaker);
                 publishJob.save();
             }
+        } else {
+            publishJob.setUseTor(useTor);
+            publishJob.setPublishToStoryMaker(publishToStoryMaker);
         }
     }
 	

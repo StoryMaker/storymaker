@@ -626,7 +626,7 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
                     mPublishFragment.setYouTubeAuth(oauthToken);
                 }
             } else if (requestCode == ChooseAccountFragment.ACCOUNT_REQUEST_CODE) {
-                mPublishFragment.chooseAccountDialogResult(resultCode, intent);
+                mPublishFragment.onChooseAccountDialogResult(resultCode, intent);
             } else {
                 try {
                     mMPM.handleResponse(intent, mCapturePath);
@@ -634,6 +634,10 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
                 } catch (IOException e) {
                     Log.e(AppConstants.TAG, "error handling capture response: " + mCapturePath, e);
                 }
+            }
+        } else {
+            if (requestCode == ChooseAccountFragment.ACCOUNT_REQUEST_CODE) {
+                mPublishFragment.onChooseAccountDialogResult(resultCode, intent);
             }
         }
     }

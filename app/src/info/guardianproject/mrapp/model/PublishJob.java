@@ -31,7 +31,9 @@ public class PublishJob extends Model {
 	protected int projectId; 			// fk to the Project this job is connected to
 	protected String[] siteKeys = null; // TODO not sure how to store this.  comma separated string field probably
 	protected Date queuedAt = null; 	// long stored in database as 8-bit int.  
-    protected Date finishedAt = null; 	// long stored in database as 8-bit int
+    protected Date finishedAt = null; 	// long stored in database as 8-bit int.
+    protected boolean useTor = false;
+    protected boolean publishToStoryMaker = false;
 
     /**
      * Default constructor to inflate record from a cursor via direct db access.  This should be used within DB Migrations and within an Model or Tabel classes
@@ -44,12 +46,12 @@ public class PublishJob extends Model {
         this.mDB = db;
     }
     
-    public PublishJob(Context context, int id, int projectId, String[] siteKeys) {
-        this(context, id, projectId, siteKeys, null, null);
+    public PublishJob(Context context, int id, int projectId, String[] siteKeys, boolean useTor, boolean publishToStoryMaker) {
+        this(context, id, projectId, siteKeys, useTor, publishToStoryMaker, null, null);
     }
     
-    public PublishJob(SQLiteDatabase db, Context context, int id, int projectId, String[] siteKeys) {
-        this(db, context, id, projectId, siteKeys, null, null);
+    public PublishJob(SQLiteDatabase db, Context context, int id, int projectId, String[] siteKeys, boolean useTor, boolean publishToStoryMaker) {
+        this(db, context, id, projectId, siteKeys, useTor, publishToStoryMaker, null, null);
     }
 
     PublishJob(Context context) {
@@ -60,48 +62,56 @@ public class PublishJob extends Model {
         super(db, context);
     }
     
-	public PublishJob(Context context, int id, int projectId, String[] siteKeys, Date queuedAt, Date finishedAt) {
+	public PublishJob(Context context, int id, int projectId, String[] siteKeys, boolean useTor, boolean publishToStoryMaker, Date queuedAt, Date finishedAt) {
 		super(context);
 		this.id = id;
 		this.projectId = projectId;
 		this.siteKeys = siteKeys;
 		this.queuedAt = queuedAt;
 		this.finishedAt = finishedAt;
+		this.useTor = useTor;
+		this.publishToStoryMaker = publishToStoryMaker;
 	}
 	
-	public PublishJob(SQLiteDatabase db, Context context, int id, int projectId, String[] siteKeys, Date queuedAt, Date finishedAt) {
+	public PublishJob(SQLiteDatabase db, Context context, int id, int projectId, String[] siteKeys, boolean useTor, boolean publishToStoryMaker, Date queuedAt, Date finishedAt) {
 		super(db, context);
 		this.id = id;
 		this.projectId = projectId;
 		this.siteKeys = siteKeys;
 		this.queuedAt = queuedAt;
 		this.finishedAt = finishedAt;
+        this.useTor = useTor;
+        this.publishToStoryMaker = publishToStoryMaker;
 	}
 	
 	// additional constructors that do not require an id value:
 	
-    public PublishJob(Context context, int projectId, String[] siteKeys) {
-        this(context, projectId, siteKeys, null, null);
+    public PublishJob(Context context, int projectId, String[] siteKeys, boolean useTor, boolean publishToStoryMaker) {
+        this(context, projectId, siteKeys, useTor, publishToStoryMaker, null, null);
     }
     
-    public PublishJob(SQLiteDatabase db, Context context, int projectId, String[] siteKeys) {
-        this(db, context, projectId, siteKeys, null, null);
+    public PublishJob(SQLiteDatabase db, Context context, int projectId, String[] siteKeys, boolean useTor, boolean publishToStoryMaker) {
+        this(db, context, projectId, siteKeys, useTor, publishToStoryMaker, null, null);
     }
     
-    public PublishJob(Context context, int projectId, String[] siteKeys, Date queuedAt, Date finishedAt) {
+    public PublishJob(Context context, int projectId, String[] siteKeys, boolean useTor, boolean publishToStoryMaker, Date queuedAt, Date finishedAt) {
         super(context);
         this.projectId = projectId;
         this.siteKeys = siteKeys;
         this.queuedAt = queuedAt;
         this.finishedAt = finishedAt;
+        this.useTor = useTor;
+        this.publishToStoryMaker = publishToStoryMaker;
     }
     
-    public PublishJob(SQLiteDatabase db, Context context, int projectId, String[] siteKeys, Date queuedAt, Date finishedAt) {
+    public PublishJob(SQLiteDatabase db, Context context, int projectId, String[] siteKeys, boolean useTor, boolean publishToStoryMaker, Date queuedAt, Date finishedAt) {
         super(db, context);
         this.projectId = projectId;
         this.siteKeys = siteKeys;
         this.queuedAt = queuedAt;
         this.finishedAt = finishedAt;
+        this.useTor = useTor;
+        this.publishToStoryMaker = publishToStoryMaker;
     }
     
     /**
@@ -115,6 +125,8 @@ public class PublishJob extends Model {
             cursor.getInt(cursor.getColumnIndex(StoryMakerDB.Schema.PublishJobs.ID)),
             cursor.getInt(cursor.getColumnIndex(StoryMakerDB.Schema.PublishJobs.COL_PROJECT_ID)),
             Utils.commaStringToStringArray(cursor.getString(cursor.getColumnIndex(StoryMakerDB.Schema.PublishJobs.COL_SITE_KEYS))),
+            cursor.getInt(cursor.getColumnIndex(StoryMakerDB.Schema.PublishJobs.COL_USE_TOR)) > 0,
+            cursor.getInt(cursor.getColumnIndex(StoryMakerDB.Schema.PublishJobs.COL_PUBLISH_TO_STORYMAKER)) > 0,
             (!cursor.isNull(cursor.getColumnIndex(StoryMakerDB.Schema.PublishJobs.COL_QUEUED_AT)) ?
                 new Date(cursor.getLong(cursor.getColumnIndex(StoryMakerDB.Schema.PublishJobs.COL_QUEUED_AT))) : null),
             (!cursor.isNull(cursor.getColumnIndex(StoryMakerDB.Schema.PublishJobs.COL_FINISHED_AT)) ?
@@ -126,6 +138,8 @@ public class PublishJob extends Model {
         ContentValues values = new ContentValues();
         values.put(StoryMakerDB.Schema.PublishJobs.COL_PROJECT_ID, projectId);
         values.put(StoryMakerDB.Schema.PublishJobs.COL_SITE_KEYS, Utils.stringArrayToCommaString(siteKeys));
+        values.put(StoryMakerDB.Schema.PublishJobs.COL_USE_TOR, useTor);
+        values.put(StoryMakerDB.Schema.PublishJobs.COL_PUBLISH_TO_STORYMAKER, publishToStoryMaker);        
         if (queuedAt != null) {
             values.put(StoryMakerDB.Schema.PublishJobs.COL_QUEUED_AT, queuedAt.getTime());
         }
@@ -277,5 +291,21 @@ public class PublishJob extends Model {
     
     public boolean isFinished() {
         return finishedAt != null;
+    }
+    
+    public boolean getUseTor() {
+        return useTor;
+    }
+    
+    public void setUseTor(boolean useTor) {
+        this.useTor = useTor;
+    }
+    
+    public boolean getPublishToStoryMaker() {
+        return publishToStoryMaker;
+    }
+    
+    public void setPublishToStoryMaker(boolean val) {
+        publishToStoryMaker = val;
     }
 }

@@ -1,5 +1,8 @@
 package info.guardianproject.mrapp;
 
+import info.guardianproject.mrapp.db.StoryMakerDB;
+import info.guardianproject.mrapp.model.Job;
+import info.guardianproject.mrapp.model.JobTable;
 import info.guardianproject.mrapp.model.Media;
 import info.guardianproject.mrapp.model.Project;
 import info.guardianproject.mrapp.model.PublishJob;
@@ -41,6 +44,7 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
+import android.graphics.drawable.TransitionDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -89,6 +93,8 @@ public class PublishFragment extends Fragment implements PublishListener {
     TextView mProgressText;
     ToggleImageButton mButtonUpload;
     ToggleImageButton mButtonPlay;
+    boolean mPlaying = false; // spnning after user pressed play... we may be rendering
+    boolean mUploading = false; // spinning after user pressed upload... we may be rendering or uploading
 
     Animation mFadeIn;
     Animation mFadeOut;
@@ -167,6 +173,12 @@ public class PublishFragment extends Fragment implements PublishListener {
 					ivThumb.setImageBitmap(bitmap);
 				}
 			}
+			
+			// FIXME figure out what spec we need to try to fetch for preview... could be audio or video
+			Job job = (new JobTable()).getMatchingFinishdJob(getActivity(), "render", "video", mActivity.mMPM.mProject.getUpdatedAt());
+			if (job != null) {
+			    mFileLastExport = new File(job.getResult());
+			}
 
             mProgressText = (TextView) mView.findViewById(R.id.textViewProgress);
             mProgressText.setText("");
@@ -182,29 +194,37 @@ public class PublishFragment extends Fragment implements PublishListener {
 //					launchChooseAccountsDialog();
 //				}
 //			});
+
+            mButtonPlay = (ToggleImageButton) mView.findViewById(R.id.btnPlay);
+            mButtonPlay.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View arg0) {
+                    if (mFileLastExport != null && mFileLastExport.exists()) {
+                        mActivity.mMPM.mMediaHelper.playMedia(mFileLastExport, null);
+                    } else {
+                        mUploading = false;
+                        mPlaying = true;
+//                        purgePublishTables(); // FIXME DEBUG disable this once we fix the publish table bugs
+                        launchChooseAccountsDialog();
+                        showPlaySpinner(true);
+                    }
+                }
+            });
             
             mButtonUpload = (ToggleImageButton) mView.findViewById(R.id.btnUpload);
             mButtonUpload.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View arg0) {
 //                    if (mFileLastExport != null && mFileLastExport.exists()) {
-//                        startUpload(mActivity.mMPM.mProject, mSiteKeys);
-                        showUploadRenderingSpinner(true);
+                        startUpload(mActivity.mMPM.mProject, mSiteKeys);
+                        mUploading = true;
+                        mPlaying = false;
+//                        launchChooseAccountsDialog();
+                        // TODO check if this we have a publish job waiting for upload that has sites selected
+                        showUploadSpinner(true);
 //                    }
                 }
             });
-
-            mButtonPlay = (ToggleImageButton) mView.findViewById(R.id.btnPlay);
-            mButtonPlay.setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View arg0) {
-//                    if (mFileLastExport != null && mFileLastExport.exists()) {
-//                        mActivity.mMPM.mMediaHelper.playMedia(mFileLastExport, null);
-                        showPlayRenderingSpinner(true);
-//                    }
-                }
-            });
-            
         }
         return mView;
     }
@@ -303,17 +323,17 @@ public class PublishFragment extends Fragment implements PublishListener {
 //        mProgress.setTextColor(getResources().getColor(android.R.color.white));
 //    }
 
-    private void showPlayRenderingSpinner(boolean vis) {
+    private void showPlaySpinner(boolean vis) {
         mButtonPlay.setEnabled(vis);
         mButtonPlay.setChecked(vis);
-        mButtonPlay.setImageResource(R.drawable.spinner_play);
+        mButtonPlay.setImageResource(vis ? R.drawable.spinner_play : R.drawable.ic_comp_play);
         mButtonUpload.setEnabled(!vis);
         mButtonUpload.setChecked(!vis);
         mProgressText.setVisibility(vis ? View.VISIBLE : View.GONE);
         mProgressText.setTextColor(getResources().getColor(android.R.color.white));
     }
 
-    private void showUploadRenderingSpinner(boolean vis) {
+    private void showUploadSpinner(boolean vis) {
 //        if (vis) { 
 //            mButtonPlay.setImageResource(R.drawable.spinner_play);
 //            mButtonUpload.setImageResource(R.drawable.ic_comp_upload);
@@ -322,7 +342,7 @@ public class PublishFragment extends Fragment implements PublishListener {
 //        }
         mButtonUpload.setEnabled(vis);
         mButtonUpload.setChecked(vis);
-        mButtonUpload.setImageResource(R.drawable.spinner_upload);
+        mButtonUpload.setImageResource( vis ? R.drawable.spinner_upload : R.drawable.ic_comp_upload);
         mButtonPlay.setEnabled(!vis);
         mButtonPlay.setChecked(!vis);
         mProgressText.setVisibility(vis ? View.VISIBLE : View.GONE);
@@ -333,9 +353,13 @@ public class PublishFragment extends Fragment implements PublishListener {
         mButtonPlay.setVisibility(vis ? View.VISIBLE : View.GONE);
         mButtonPlay.setEnabled(true);
         mButtonPlay.setChecked(false);
+        mButtonPlay.setImageResource(R.drawable.ic_comp_play);
+        
         mButtonUpload.setVisibility(vis ? View.VISIBLE : View.GONE);
         mButtonUpload.setEnabled(true);
-        mButtonPlay.setChecked(false);
+        mButtonUpload.setChecked(false);
+        mButtonUpload.setImageResource(R.drawable.ic_comp_upload);
+        
         mProgressText.setVisibility(View.GONE);
     }
 
@@ -349,11 +373,25 @@ public class PublishFragment extends Fragment implements PublishListener {
 //    }
 //    
     private void showError(int code, String message) {
+        if (mPlaying) {
+            mButtonPlay.setImageResource(R.drawable.ic_comp_fail);
+            mButtonUpload.setImageResource(R.drawable.ic_comp_upload);
+        } else if (mUploading) {
+            mButtonUpload.setImageResource(R.drawable.ic_comp_fail);
+            mButtonPlay.setImageResource(R.drawable.ic_comp_play);
+        }
         mButtonPlay.setEnabled(false);
         mButtonUpload.setEnabled(false);
         mProgressText.setVisibility(View.VISIBLE);
         mProgressText.setText("Error #" + code + ": " + message);
         mProgressText.setTextColor(getResources().getColor(R.color.red));
+    }
+    
+    private void purgePublishTables() {
+        net.sqlcipher.database.SQLiteDatabase db = new StoryMakerDB(getActivity().getBaseContext()).getWritableDatabase("foo");
+        (new PublishJobTable(db)).debugPurgeTable();
+        (new JobTable(db)).debugPurgeTable();
+        db.close();
     }
     
     private String setUploadAccount() {
@@ -735,7 +773,7 @@ public class PublishFragment extends Fragment implements PublishListener {
         getActivity().startActivityForResult(intent, ChooseAccountFragment.ACCOUNT_REQUEST_CODE);
     }
     
-    public void chooseAccountDialogResult(int resultCode, Intent intent) {
+    public void onChooseAccountDialogResult(int resultCode, Intent intent) {
         if (resultCode == Activity.RESULT_OK) {
             Log.d("PublishFragment", "Choose Accounts dialog return ok");
             if (intent.hasExtra(ChooseAccountFragment.EXTRAS_ACCOUNT_KEYS)) {
@@ -743,8 +781,12 @@ public class PublishFragment extends Fragment implements PublishListener {
                 if (!siteKeys.isEmpty()) {
                     Log.d(TAG, "selected sites: " + siteKeys);
                     mSiteKeys = siteKeys.toArray(new String[siteKeys.size()]);
-                    showPlayRenderingSpinner(true);
-                    startRender(mActivity.mMPM.mProject, mSiteKeys);
+                    
+                    boolean useTor = intent.getBooleanExtra(ChooseAccountFragment.EXTRAS_USE_TOR, false);
+                    boolean publishToStoryMaker = intent.getBooleanExtra(ChooseAccountFragment.EXTRAS_PUBLISH_TO_STORYMAKER, false);
+
+                    showPlaySpinner(true);
+                    startRender(mActivity.mMPM.mProject, mSiteKeys, useTor, publishToStoryMaker);
                 } else {
                     Utils.toastOnUiThread(mActivity, "No site selected."); // FIXME move to strings.xml
                 }
@@ -754,15 +796,19 @@ public class PublishFragment extends Fragment implements PublishListener {
         } else {
             Log.d("PublishFragment", "Choose Accounts dialog canceled");
             Utils.toastOnUiThread(mActivity, "Choose Accounts dialog canceled"); // FIXME move to strings.xml
+            showPlayAndUpload(true);
         }
     }
     
-    private void startRender(Project project, String[] siteKeys) {
+    private void startRender(Project project, String[] siteKeys, boolean useTor, boolean publishToStoryMaker) {
         Intent i = new Intent(getActivity(), PublishService.class);
         i.setAction(PublishService.ACTION_RENDER);
         i.putExtra(PublishService.INTENT_EXTRA_PROJECT_ID, project.getId());
+        i.putExtra(PublishService.INTENT_EXTRA_USE_TOR, useTor);
+        i.putExtra(PublishService.INTENT_EXTRA_PUBLISH_TO_STORYMAKER, publishToStoryMaker);
         i.putExtra(PublishService.INTENT_EXTRA_SITE_KEYS, siteKeys);
         getActivity().startService(i);
+        mPlaying = true;
     }
     
     private void startUpload(Project project, String[] siteKeys) {
@@ -771,12 +817,16 @@ public class PublishFragment extends Fragment implements PublishListener {
         i.putExtra(PublishService.INTENT_EXTRA_PROJECT_ID, project.getId());
         i.putExtra(PublishService.INTENT_EXTRA_SITE_KEYS, siteKeys);
         getActivity().startService(i);
+        mUploading = true;
     }
 	
 
     @Override
     public void publishSucceeded(PublishJob publishJob) {
 //        if (publishJob.isFinished()) {
+            showUploadSpinner(false); // FIXME we should detect which stage of the job just finished
+            showPlaySpinner(false); // FIXME we should detect which stage of the job just finished
+            
             String path = publishJob.getLastRenderFilePath(); // FIXME this can be null
             if (path != null) { // FIXME this won't work when a upload job succeeds
                 mFileLastExport = new File(path);
@@ -789,6 +839,15 @@ public class PublishFragment extends Fragment implements PublishListener {
                 }, 200);
             } else {
                 Log.d(TAG, "last rendered path is empty!");
+            }
+            
+            if (mPlaying) {
+                if (mFileLastExport != null && mFileLastExport.exists()) {
+                    mActivity.mMPM.mMediaHelper.playMedia(mFileLastExport, null);
+                } 
+                mPlaying = false;
+            } else {
+                // ??
             }
 //        }
     }

@@ -46,7 +46,7 @@ public class SoundCloudUploader extends UploaderBase {
                 @Override
                 public void run() {
                     jobProgress(mJob, 0, "Uploading to SoundCloud..."); //  FIXME move to strings.xml
-                    controller.upload(project.getTitle(), project.getDescription(), path, auth.convertToAccountObject());
+                    controller.upload(project.getTitle(), project.getDescription(), path, auth.convertToAccountObject(), publishJob.getUseTor());
                 }
                 
             };

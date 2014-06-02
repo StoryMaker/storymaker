@@ -1,6 +1,7 @@
 package info.guardianproject.mrapp.model;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 import net.sqlcipher.database.SQLiteDatabase;
 import android.content.Context;
@@ -57,7 +58,7 @@ public class JobTable extends Table {
         ArrayList<Job> purgedList = null;
         if (jobs != null) {
             for (Job job: jobs) {
-                if ((job.finishedAt == null) 
+                if ((job.getFinishedAt() == null) 
                         && job.getType().equals(type) 
                         && (site == null ? true : job.getSite().equals(site))) { // FIXME do we need to check something other than null?
 //                    jobs.remove(job); // it's finished.  purge it
@@ -87,5 +88,27 @@ public class JobTable extends Table {
 //			newJob  = new Job(context, 1, 2, JobTable.TYPE_UPLOAD, Auth.STORYMAKER, null);
 //		}
 //    	return newJob;
+    }
+    
+    /**
+     * This will match any jobs that are finished that match the correct type and were finished after the passed date
+     * @param context
+     * @param type
+     * @param date
+     * @return
+     */
+    public Job getMatchingFinishdJob(Context context, String type, String spec, Date date) { // FIXME this isn't very optimized
+        ArrayList<Job> jobs = (ArrayList<Job>) getAllAsList(context); // TODO need to make this method for reals
+        if (jobs != null) {
+            for (Job job: jobs) {
+                if ((job.getFinishedAt() != null) 
+                        && job.getType().equals(type) 
+                        && job.getSpec().equals(spec) 
+                        && job.getFinishedAt().after(date)) {
+                    return job;
+                }
+            }
+        }
+        return null;
     }
 }

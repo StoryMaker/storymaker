@@ -172,7 +172,7 @@ public class StoryTemplateActivity extends EditorBaseActivity implements ActionB
                     mPublishFragment.setYouTubeAuth(oauthToken);
                 }
             } else if (reqCode == ChooseAccountFragment.ACCOUNT_REQUEST_CODE) {
-                mPublishFragment.chooseAccountDialogResult(resCode, intent);
+                mPublishFragment.onChooseAccountDialogResult(resCode, intent);
             }
 
         }

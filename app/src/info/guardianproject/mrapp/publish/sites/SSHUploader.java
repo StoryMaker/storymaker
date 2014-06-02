@@ -36,7 +36,7 @@ public class SSHUploader extends UploaderBase {
         final Auth auth = (new AuthTable()).getAuthDefault(mContext, SSHSiteController.SITE_KEY);
         if (Utils.stringNotBlank(path) && (new File(path)).exists()) {
             jobProgress(mJob, 0, "Uploading to SSH server..."); //  FIXME move to strings.xml
-            controller.upload(project.getTitle(), project.getDescription(), path, auth.convertToAccountObject());
+            controller.upload(project.getTitle(), project.getDescription(), path, auth.convertToAccountObject(), publishJob.getUseTor());
         } else {
             Log.d(TAG, "Can't upload to SSH, last rendered file doesn't exist.");
             // TODO get this error back to the activity for display 

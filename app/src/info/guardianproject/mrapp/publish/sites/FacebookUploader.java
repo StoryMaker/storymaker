@@ -43,7 +43,7 @@ public class FacebookUploader extends UploaderBase {
                 @Override
                 public void run() {
                     jobProgress(mJob, 0, "Uploading to Facebook..."); //  FIXME move to strings.xml
-                    controller.upload(project.getTitle(), project.getDescription(), path, null);
+                    controller.upload(project.getTitle(), project.getDescription(), path, null, publishJob.getUseTor());
                 }
                 
             };
