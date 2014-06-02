@@ -35,7 +35,9 @@ public class StoryMakerApp extends Application {
 	private final static String PREF_LOCALE = "plocale";
 	private final static String LOCALE_DEFAULT = "en";//need to force english for now as default
 	private final static String LOCALE_ARABIC = "ar";//need to carry over settings from previous installed version
+	private final static String LOCALE_SOUTH_AFRICAN = "sa";
 	private static Locale mLocale = new Locale(LOCALE_DEFAULT);
+	private static Locale mLessonLocale = new Locale(LOCALE_DEFAULT);
 		
 	private final static String URL_PATH_LESSONS = "/appdata/lessons/";
 	private final static String STORYMAKER_DEFAULT_SERVER_URL = "https://storymaker.cc";
@@ -108,27 +110,38 @@ public class StoryMakerApp extends Application {
 	public void updateLessonLocation ()
 	{
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        String customLessonLoc = settings.getString("pleslanguage", null);
+        String customLessonLoc = settings.getString("pleslanguage", LOCALE_DEFAULT);
         
-        if (customLessonLoc == null) {
-            // check for previous version settings, use if found
-            customLessonLoc = settings.getString("plessonloc", null);
-        }  
-                
-        String lessonUrlPath = mBaseUrl + URL_PATH_LESSONS + mLocale.getLanguage() + "/";
-        String lessonLocalPath = "lessons/" + mLocale.getLanguage();
+        if (customLessonLoc.toLowerCase().startsWith("http")) {
+        	customLessonLoc = customLessonLoc.substring(customLessonLoc.lastIndexOf('/')+1);
+        	
+        	if(!isLocaleValid(customLessonLoc)) {
+        		customLessonLoc = "";
+        	}   	
+        	settings.edit().putString("pleslanguage", customLessonLoc).commit();
+        }
         
-        if (customLessonLoc != null && customLessonLoc.length() > 0)
+        
+        if(!isLocaleValid(customLessonLoc)) {
+        	customLessonLoc = LOCALE_DEFAULT;
+        }   
+        mLessonLocale = new Locale(customLessonLoc);
+        
+        String customLessonLocPath = STORYMAKER_DEFAULT_SERVER_URL + URL_PATH_LESSONS + customLessonLoc;       
+        String lessonUrlPath = mBaseUrl + URL_PATH_LESSONS + mLessonLocale.getLanguage() + "/";
+        String lessonLocalPath = "lessons/" + mLessonLocale.getLanguage();
+        
+        if (customLessonLocPath != null && customLessonLocPath.length() > 0)
         {
-            if (customLessonLoc.toLowerCase().startsWith("http"))
+            if (customLessonLocPath.toLowerCase().startsWith("http"))
             {
-                lessonUrlPath = customLessonLoc;
+                lessonUrlPath = customLessonLocPath;
                 lessonLocalPath = "lessons/" + lessonUrlPath.substring(lessonUrlPath.lastIndexOf('/')+1);
             }
             else
             {
-                lessonUrlPath = mBaseUrl + URL_PATH_LESSONS + customLessonLoc + "/";
-                lessonLocalPath = "lessons/" + customLessonLoc;
+                lessonUrlPath = mBaseUrl + URL_PATH_LESSONS + customLessonLocPath + "/";
+                lessonLocalPath = "lessons/" + customLessonLocPath;
             }
         }
         
@@ -152,9 +165,45 @@ public class StoryMakerApp extends Application {
 
 	}
 	
+	private boolean isLocaleValid(String language) {
+		
+		if(!language.equals(LOCALE_DEFAULT) && !language.equals(LOCALE_ARABIC) && !language.equals(LOCALE_SOUTH_AFRICAN)) {
+    		return false;
+    	}
+		
+		return true;
+	}
+	
+	public boolean isExternalStorageReady ()
+	{
+		boolean mExternalStorageAvailable = false;
+		boolean mExternalStorageWriteable = false;
+		String state = Environment.getExternalStorageState();
+
+		if (Environment.MEDIA_MOUNTED.equals(state)) {
+		    // We can read and write the media
+		    mExternalStorageAvailable = mExternalStorageWriteable = true;
+		} else if (Environment.MEDIA_MOUNTED_READ_ONLY.equals(state)) {
+		    // We can only read the media
+		    mExternalStorageAvailable = true;
+		    mExternalStorageWriteable = false;
+		} else {
+		    // Something else is wrong. It may be one of many other states, but all we need
+		    //  to know is we can neither read nor write
+		    mExternalStorageAvailable = mExternalStorageWriteable = false;
+		}
+		
+		return mExternalStorageAvailable && mExternalStorageWriteable;
+	}
+	
 	public static Locale getCurrentLocale ()
 	{
 		return mLocale;
+	}
+	
+	public static Locale getCurrentLessonsLocale ()
+	{
+		return mLessonLocale;
 	}
 	
 	 public boolean checkLocale ()
@@ -200,6 +249,7 @@ public class StoryMakerApp extends Application {
 		            lang = config.locale.getLanguage();
 	        }
 	        
+	        /*
 	        if (updatedLocale)
 	        {
 	            //need to reload lesson manager for new locale
@@ -207,7 +257,7 @@ public class StoryMakerApp extends Application {
 	        	fileDirLessons.mkdirs();
 				mLessonManager = new LessonManager (this, mBaseUrl + URL_PATH_LESSONS+ lang + "/", fileDirLessons);
 
-	        }
+	        }*/
 	        
 	        return updatedLocale;
 	    }

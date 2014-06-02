@@ -104,7 +104,7 @@ public class StoryTemplateChooserActivity extends BaseActivity {
     
     private void loadTemplateSummary(String name, String type, int mode) {
         try {
-            String lang = StoryMakerApp.getCurrentLocale().getLanguage();
+            String lang = StoryMakerApp.getCurrentLessonsLocale().getLanguage();
             mTemplatePath = "story/templates/" + lang + '/' + name + '/' + name + '_' + type + ".json";
 
             // if templates folder for this lang don't exist, fallback to english
