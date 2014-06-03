@@ -219,7 +219,7 @@
         <item name="english">English</item>
         <item name="french">French</item>
         <item name="arabic">Arabic</item>
-        <item name="bosnian">Bosnian</item>
+        <item name="bosnian">Croatian/Bosnian</item>
         <item name="serbian">Serbian</item>
         <item name="spanish">Spanish</item>
         <item name="persian">Persian</item>
@@ -244,7 +244,7 @@
     <string-array name="lesson_language_options">
         <item name="english">English</item>
         <item name="arabic">Arabic</item>
-        <item name="safrican">Southern African</item>
+        <item name="safrican">Mobile Community Zimbabwe</item>
     </string-array>
     
     <string-array name="lesson_language_options_values">
