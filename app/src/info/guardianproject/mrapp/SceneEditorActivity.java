@@ -636,9 +636,9 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
             		mPublishFragment.setYouTubeAuth(oauthToken);
             	}
             }
-            else if (reqCode == REQ_GOOGLE_DRIVE)
+            else if (reqCode == REQ_SHARE)
             {
-            	//do nothing if google drive request
+            	//do nothing shared intent
             }
             else
             {

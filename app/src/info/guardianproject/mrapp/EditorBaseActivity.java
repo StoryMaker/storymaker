@@ -33,9 +33,8 @@ public class EditorBaseActivity extends BaseActivity {
 
     // sublaunch codes
     public final static int REQ_YOUTUBE_AUTH = 999;
-    public final static int REQ_OVERLAY_CAM = 888;
-    public final static int REQ_GOOGLE_DRIVE = 0; // for resp handling from
-                                                   // overlay cam launch
+    public final static int REQ_OVERLAY_CAM = 888;//overlay cam launch
+    public final static int REQ_SHARE = 666;//google==devil
 
     public Project mProject = null;
     public Template mTemplate = null;
