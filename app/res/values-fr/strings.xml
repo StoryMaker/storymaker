@@ -35,6 +35,7 @@
   <string name="menu_join_storymaker">Joindre la Communauté StoryMaker</string>
   <string name="menu_sign_up">s\'inscrire / se connecter</string>
   <string name="menu_upload_manager">Gestion du chargement</string>
+  <string name="menu_uploads">Chargements</string>
   <string name="welcome_message">salut\nBienvenu à StoryMaker </string>
   <!--project list-->
   <string name="default_project_list_view">C\'est votre première fois pour créer un projet!\n\n-taper pour commencer-</string>
@@ -56,7 +57,9 @@
   <string name="pref_out_vheight_summary">Hauteur personnalisée de la vidéo de sortie</string>
   <string name="hintTitle">titre</string>
   <string name="hintStartTime">début (00:00:00)</string>
+  <string name="hintEndTime">durée (00:00:00)</string>
   <string name="hintFadeIn">fondu (cadres)</string>
+  <string name="hintFadeOut">Cacher (Cadres)</string>
   <string name="start_recording">Enregistrer</string>
   <string name="stop_recording">Arrêter</string>
   <string name="play_recording">Lecture</string>
@@ -69,13 +72,14 @@
   <string name="acquiring_log_progress_dialog_message">Acquisition du Log de system\u2026</string>
   <string name="chooser_title">Sélectionnez une application pour envoyer le Log</string>
   <string name="failed_to_get_log_message">Avoir le Log du système a échoué.</string>
+  <string name="main_dialog_text">Cette application va essayer de collecter le log de votre appareil.\nLe Log collecté sera envoyé par l\'application de votre choix.\nVous aurez aussi l’opportunité de voir et modifier les données à envoyer. </string>
   <string name="title_home_projects">Projets</string>
   <string name="title_home_activity">Activité</string>
   <string name="title_lessons_lessons">Leçons</string>
   <string name="title_lessons_glossary">Lexique</string>
   <string name="hello_world">Bonjour tout le monde!</string>
   <string name="title_activity_home">Accueil</string>
-  <string name="new_story_name_it">Nommez-le</string>
+  <string name="new_story_name_it">Nommez-le.</string>
   <string name="new_story_working_title">Titre du Projet...</string>
   <string name="new_story_choose_something">Choisissez quelque chose de bref qui définit le sujet et les intrigues de votre auditoire.</string>
   <string name="new_story_choose_a_medium">Choisissez un média.</string>
@@ -95,6 +99,7 @@
   <string name="title_activity_story_template">Modèle d\'histoire</string>
   <string name="tab_make">Créer</string>
   <string name="tab_review">Revoir</string>
+  <string name="tab_publish">Completer</string>
   <string name="tab_finish">Terminer</string>
   <string name="tab_add_clips">Créer</string>
   <string name="tab_order">Editer</string>
@@ -199,6 +204,7 @@
   <string name="video_project_project_type">Projet Vidéo</string>
   <string name="photo_project_project_type">Projet Photo</string>
   <string name="audio_project_project_type">Projet Audio</string>
+  <string name="photo_essay_project_project_type">Présentation photographique</string>
   <string name="eula_title">Vous Accepter de:</string>
   <string name="eula_accept">Accepter</string>
   <string name="eula_refuse">Refuser</string>
@@ -246,13 +252,13 @@
   <string name="export_dialog_share">Partager</string>
   <string name="title_activity_accounts">Comptes</string>
   <string name="action_settings">Paramètres </string>
-  <!--added for new UI-->
   <string name="label_activity_log">Journal d\'activité</string>
   <string name="label_title">Titre</string>
   <string name="label_description">Description</string>
   <string name="label_tags">étiquettes</string>
   <string name="label_add">Ajouter</string>
   <string name="label_edit">Editer</string>
+  <string name="label_save">Enregistrer</string>
   <string name="label_activities">Journal d\'activité</string>
   <string name="hint_story_title">Entrer un Titre</string>
   <string name="hint_story_description">Décrire votre Histoire...</string>
@@ -261,9 +267,12 @@
   <string name="label_location">Localisation</string>
   <string name="title_activity_story_info">Infos</string>
   <string name="title_activity_story_info_edit">Editer Infos</string>
+  <string name="title_activity_project_tag_fragment">ProjectTagFragment</string>
   <string name="title_activity_connect_account">Compte StoryMaker</string>
   <string name="hint_no_description">Pas de Description.</string>
   <string name="trim_clips">Couper les Clips</string>
   <string name="info">Infos</string>
   <string name="send_logcat_to_support">Envoyer le Log au support</string>
+  <string name="restarting_storymaker">Redémarrer StoryMaker...</string>
+  <string name="send">envoyer</string>
 </resources>

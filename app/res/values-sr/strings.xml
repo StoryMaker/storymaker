@@ -250,7 +250,6 @@
   <string name="export_dialog_share">Делити </string>
   <string name="title_activity_accounts">Рачуни</string>
   <string name="action_settings">Подешавања </string>
-  <!--added for new UI-->
   <string name="label_activity_log">Запис активности</string>
   <string name="label_title">Наслов</string>
   <string name="label_description">Опис</string>
