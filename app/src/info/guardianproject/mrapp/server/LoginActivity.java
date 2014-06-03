@@ -21,9 +21,11 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.preference.PreferenceManager;
+import android.text.InputType;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.CheckBox;
 import android.widget.ImageView;
  
 public class LoginActivity extends BaseActivity implements Runnable 
@@ -75,6 +77,20 @@ public class LoginActivity extends BaseActivity implements Runnable
             }
         });
         
+        final CheckBox showPassword = (CheckBox)findViewById(R.id.showPassword);
+
+		showPassword.setOnClickListener(new View.OnClickListener() {
+					
+					@Override
+					public void onClick(View v) {
+						// TODO Auto-generated method stub
+						if(showPassword.isChecked()){
+							txtPass.setInputType(InputType.TYPE_CLASS_TEXT);
+				        }else{
+				        	txtPass.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+				        }
+					}
+				});
         TextView skipScreen = (TextView) findViewById(R.id.link_to_skip);
         
         // Listening to skip link

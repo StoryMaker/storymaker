@@ -76,6 +76,14 @@
                 android:hint="password"
                 android:password="true"/>
           <!-- Login button -->
+
+          <CheckBox
+              android:id="@+id/showPassword"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_marginTop="5dip"
+              android:text="@string/show_password" />
+          
           <Button android:id="@+id/btnLogin"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
