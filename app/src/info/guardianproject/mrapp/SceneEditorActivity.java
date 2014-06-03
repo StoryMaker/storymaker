@@ -619,12 +619,12 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
                 } else if (mProject.getStoryType() == Project.STORY_TYPE_ESSAY) {
                     mCapturePath = mMPM.mMediaHelper.capturePhoto(fileMediaFolder);
                 }
-            } else if (requestCode == REQ_YOUTUBE_AUTH) {
-                if (resultCode == RESULT_OK) {
-                    String oauthToken = intent.getStringExtra("token");
-                    Log.d("OAuth", "got token: " + oauthToken);
-                    mPublishFragment.setYouTubeAuth(oauthToken);
-                }
+//            } else if (requestCode == REQ_YOUTUBE_AUTH) {
+//                if (resultCode == RESULT_OK) {
+//                    String oauthToken = intent.getStringExtra("token");
+//                    Log.d("OAuth", "got token: " + oauthToken);
+//                    mPublishFragment.setYouTubeAuth(oauthToken);
+//                }
             } else if (requestCode == ChooseAccountFragment.ACCOUNT_REQUEST_CODE) {
                 mPublishFragment.onChooseAccountDialogResult(resultCode, intent);
             } else {

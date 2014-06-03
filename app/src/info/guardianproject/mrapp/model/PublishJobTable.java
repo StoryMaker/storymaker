@@ -72,6 +72,11 @@ public class PublishJobTable extends Table {
     
     // FIXME kaybe we need to trim the arrays to weed out dupes?
     private boolean keysMatch(String[] keys1, String[] keys2) {
+        if (keys1 == null && keys2 == null) {
+            return true;
+        } else if (keys1 == null || keys2 == null) {
+            return false;
+        }
         Arrays.sort(keys1);
         Arrays.sort(keys2);
         String keyString1 = Utils.stringArrayToCommaString(keys1);

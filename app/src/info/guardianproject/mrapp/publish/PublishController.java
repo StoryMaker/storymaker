@@ -11,9 +11,11 @@ import info.guardianproject.mrapp.model.PublishJob;
 import info.guardianproject.mrapp.model.PublishJobTable;
 import info.guardianproject.mrapp.publish.sites.FacebookPublisher;
 import info.guardianproject.mrapp.publish.sites.FlickrPublisher;
+import info.guardianproject.mrapp.publish.sites.PreviewPublisher;
 import info.guardianproject.mrapp.publish.sites.SSHPublisher;
 import info.guardianproject.mrapp.publish.sites.SoundCloudPublisher;
 import info.guardianproject.mrapp.publish.sites.StoryMakerPublisher;
+import info.guardianproject.mrapp.publish.sites.VideoRenderer;
 import info.guardianproject.mrapp.publish.sites.YoutubePublisher;
 import io.scal.secureshareui.controller.FacebookSiteController;
 import io.scal.secureshareui.controller.FlickrSiteController;
@@ -40,8 +42,8 @@ public class PublishController {
 	private Context mContext;
 	UploadWorker uploadService;
 	RenderWorker renderService;
-	PublisherBase publisher;
-	PublishJob publishJob = null;
+	PublisherBase publisher = null;
+	PublishJob mPublishJob = null;
 	PublishListener mListener;
 	
 	public PublishController(Context context, PublishListener listener) {
@@ -57,39 +59,44 @@ public class PublishController {
 		return publishController;
 	}
 	
-	// FIXME this won't help us get more than one publisher per run
-	public PublisherBase getPublisher(PublishJob publishJob) {
-		String[] keys = publishJob.getSiteKeys();
-		List<String> ks = Arrays.asList(keys);
-		if (ks.contains(Auth.SITE_STORYMAKER)) {
-			publisher = new StoryMakerPublisher(mContext, this, publishJob);
-		} else if (ks.contains(FacebookSiteController.SITE_KEY)) {
-            publisher = new FacebookPublisher(mContext, this, publishJob);
-        } else if (ks.contains(YoutubeSiteController.SITE_KEY)) {
-            publisher = new YoutubePublisher(mContext, this, publishJob);
-        } else if (ks.contains(FlickrSiteController.SITE_KEY)) {
-            publisher = new FlickrPublisher(mContext, this, publishJob);
-        } else if (ks.contains(SoundCloudSiteController.SITE_KEY)) {
-            publisher = new SoundCloudPublisher(mContext, this, publishJob);
-        } else if (ks.contains(SSHSiteController.SITE_KEY)) {
-            publisher = new SSHPublisher(mContext, this, publishJob);
-        } 
-		// TODO add others
-		
-		return publisher;
-	}
+    // FIXME this won't help us get more than one publisher per run
+    public PublisherBase getPublisher(PublishJob publishJob) {
+        String[] keys = publishJob.getSiteKeys();
+        if (keys == null) {
+            return null;
+        } else {
+            List<String> ks = Arrays.asList(keys);
+            if (ks.contains(Auth.SITE_STORYMAKER)) {
+                publisher = new StoryMakerPublisher(mContext, this, publishJob);
+            } else if (ks.contains(FacebookSiteController.SITE_KEY)) {
+                publisher = new FacebookPublisher(mContext, this, publishJob);
+            } else if (ks.contains(YoutubeSiteController.SITE_KEY)) {
+                publisher = new YoutubePublisher(mContext, this, publishJob);
+            } else if (ks.contains(FlickrSiteController.SITE_KEY)) {
+                publisher = new FlickrPublisher(mContext, this, publishJob);
+            } else if (ks.contains(SoundCloudSiteController.SITE_KEY)) {
+                publisher = new SoundCloudPublisher(mContext, this, publishJob);
+            } else if (ks.contains(SSHSiteController.SITE_KEY)) {
+                publisher = new SSHPublisher(mContext, this, publishJob);
+            } else if (ks.contains(PreviewPublisher.SITE_KEY)) {
+                publisher = new PreviewPublisher(mContext, this, publishJob);
+            }
+        }
+
+        return publisher;
+    }
     
     public void startRender(Project project, String[] siteKeys, boolean useTor, boolean publishToStoryMaker) {
-        fetchPublishJob(project, siteKeys, useTor, publishToStoryMaker);
+        PublishJob publishJob = getPublishJob(project, siteKeys, useTor, publishToStoryMaker);
         PublisherBase publisher = getPublisher(publishJob);
         // TODO this needs to loop a few times until publisher start returns false or something to tell us that the publish job is totally finished
         if (publisher != null) {
             publisher.startRender();
-        }
+        } 
     }
     
     public void startUpload(Project project, String[] siteKeys, boolean useTor, boolean publishToStoryMaker) {
-        fetchPublishJob(project, siteKeys, useTor, publishToStoryMaker);
+        PublishJob publishJob = getPublishJob(project, siteKeys, useTor, publishToStoryMaker);
         // check if there is a rendered, unfinished job already matching these params
 //        publishJob(new PublishJobTable()).getNextUnfinished(mContext, project.getId(), siteKeys);
 //        publishJob = new PublishJob(mContext, -1, project.getId(), siteKeys);
@@ -101,17 +108,18 @@ public class PublishController {
         }
     }
     
-    private void fetchPublishJob(Project project, String[] siteKeys, boolean useTor, boolean publishToStoryMaker) {
-        if (publishJob == null) {
-            publishJob = (new PublishJobTable()).getNextUnfinished(mContext, project.getId(), siteKeys);
-            if (publishJob == null) {
-                publishJob = new PublishJob(mContext, project.getId(), siteKeys, useTor, publishToStoryMaker);
-                publishJob.save();
+    private PublishJob getPublishJob(Project project, String[] siteKeys, boolean useTor, boolean publishToStoryMaker) {
+        if (mPublishJob == null) {
+            mPublishJob = (new PublishJobTable()).getNextUnfinished(mContext, project.getId(), siteKeys);
+            if (mPublishJob == null) {
+                mPublishJob = new PublishJob(mContext, project.getId(), siteKeys, useTor, publishToStoryMaker);
+                mPublishJob.save();
             }
         } else {
-            publishJob.setUseTor(useTor);
-            publishJob.setPublishToStoryMaker(publishToStoryMaker);
+            mPublishJob.setUseTor(useTor);
+            mPublishJob.setPublishToStoryMaker(publishToStoryMaker);
         }
+        return mPublishJob;
     }
 	
 	public void publishJobSucceeded(PublishJob publishJob) {
@@ -135,18 +143,36 @@ public class PublishController {
 	public void jobSucceeded(Job job, String code) {
         Log.d(TAG, "jobSucceeded: " + job + ", with code: " + code);
 		// TODO need to raise this to the interested activities here
-		getPublisher(job.getPublishJob()).jobSucceeded(job);
+        PublishJob publishJob = job.getPublishJob();
+        PublisherBase publisher = getPublisher(publishJob);
+        if (publisher != null) {
+            publisher.jobSucceeded(job);
+        } else {
+            // TODO how to handle null publisher?
+        }
 	}
 	
 	public void jobFailed(Job job, int errorCode, String errorMessage) {
         Log.d(TAG, "jobFailed: " + job + ", with errorCode: " + errorCode + ", and errorMessage: " + errorMessage);
 		// TODO need to raise this to the interested activities here
-		getPublisher(job.getPublishJob()).jobFailed(job, errorCode, errorMessage);
+        PublishJob publishJob = job.getPublishJob();
+        PublisherBase publisher = getPublisher(publishJob);
+        if (publisher != null) {
+            publisher.jobFailed(job, errorCode, errorMessage);
+        } else {
+            // TODO how to handle null publisher?
+        }
 	}
 	
-	public void jobProgress(Job job, float progress, String message) {
-	       getPublisher(job.getPublishJob()).jobProgress(job, progress, message);
-	}
+    public void jobProgress(Job job, float progress, String message) {
+        PublishJob publishJob = job.getPublishJob();
+        PublisherBase publisher = getPublisher(publishJob);
+        if (publisher != null) {
+            publisher.jobProgress(job, progress, message);
+        } else {
+            // TODO how to handle null publisher?
+        }
+    }
 	
 	private void startUploadService() {
 		uploadService = UploadWorker.getInstance(mContext, this);

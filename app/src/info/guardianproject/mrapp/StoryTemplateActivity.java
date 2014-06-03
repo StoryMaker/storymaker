@@ -165,12 +165,12 @@ public class StoryTemplateActivity extends EditorBaseActivity implements ActionB
         {
             if (reqCode == REQ_YOUTUBE_AUTH)
             {
-                if (resCode == RESULT_OK)
-                {
-                    String oauthToken = intent.getStringExtra("token");
-                    Log.d("OAuth", "got token: " + oauthToken);
-                    mPublishFragment.setYouTubeAuth(oauthToken);
-                }
+//                if (resCode == RESULT_OK)
+//                {
+//                    String oauthToken = intent.getStringExtra("token");
+//                    Log.d("OAuth", "got token: " + oauthToken);
+//                    mPublishFragment.setYouTubeAuth(oauthToken);
+//                }
             } else if (reqCode == ChooseAccountFragment.ACCOUNT_REQUEST_CODE) {
                 mPublishFragment.onChooseAccountDialogResult(resCode, intent);
             }

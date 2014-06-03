@@ -137,7 +137,7 @@ public class PublishJob extends Model {
     protected ContentValues getValues() {
         ContentValues values = new ContentValues();
         values.put(StoryMakerDB.Schema.PublishJobs.COL_PROJECT_ID, projectId);
-        values.put(StoryMakerDB.Schema.PublishJobs.COL_SITE_KEYS, Utils.stringArrayToCommaString(siteKeys));
+        values.put(StoryMakerDB.Schema.PublishJobs.COL_SITE_KEYS, (siteKeys != null) ? Utils.stringArrayToCommaString(siteKeys) : null);
         values.put(StoryMakerDB.Schema.PublishJobs.COL_USE_TOR, useTor);
         values.put(StoryMakerDB.Schema.PublishJobs.COL_PUBLISH_TO_STORYMAKER, publishToStoryMaker);        
         if (queuedAt != null) {
