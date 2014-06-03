@@ -761,6 +761,7 @@ public class PublishFragment extends Fragment implements PublishListener {
 //            purgePublishTables(); // FIXME DEBUG disable this once we fix the publish table bugs
             // TODO default to a video spec render and kick it off
             // create a dummy publishjob with no sites
+            showPlaySpinner(true);
             startRender(mActivity.mProject, new String[] {"preview"}, false, false);
         }
     }
@@ -852,7 +853,7 @@ public class PublishFragment extends Fragment implements PublishListener {
                 } 
                 mPlaying = false;
             } else {
-                // ??
+                // TODO kick off the upload
             }
 //        }
     }
