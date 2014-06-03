@@ -55,8 +55,6 @@ import com.animoto.android.views.DraggableGridView;
 public class PublishFragment extends Fragment {
     private final static String TAG = "PublishFragment";
     
-    private final static int REQ_SOUNDCLOUD = 777;
-    
     public ViewPager mAddClipsViewPager;
     View mView = null;
  
@@ -418,9 +416,9 @@ public class PublishFragment extends Fragment {
             public void run ()
             {
             	
-                mHandlerPub.sendEmptyMessage(999);
+                mHandlerPub.sendEmptyMessage(EditorBaseActivity.REQ_YOUTUBE_AUTH);
    
-                Message msg = mHandlerPub.obtainMessage(888);
+                Message msg = mHandlerPub.obtainMessage(EditorBaseActivity.REQ_OVERLAY_CAM);
                 msg.getData().putString("status",
                         getActivity().getString(R.string.rendering_clips_));
                 mHandlerPub.sendMessage(msg);
@@ -439,7 +437,7 @@ public class PublishFragment extends Fragment {
 
                     if (mediaFile.exists()) {
 
-                        Message message = mHandlerPub.obtainMessage(777);
+                        Message message = mHandlerPub.obtainMessage(EditorBaseActivity.REQ_SOUNDCLOUD);
                         message.getData().putString("fileMedia", mActivity.mdExported.path);
                         message.getData().putString("mime", mActivity.mdExported.mimeType);
 
@@ -459,7 +457,7 @@ public class PublishFragment extends Fragment {
                             	
                             	medium = ServerManager.CUSTOM_FIELD_MEDIUM_VIDEO;
                             	
-                                msg = mHandlerPub.obtainMessage(888);
+                                msg = mHandlerPub.obtainMessage(EditorBaseActivity.REQ_OVERLAY_CAM);
                                 msg.getData().putString("statusTitle",
                                         getActivity().getString(R.string.uploading));
                                 msg.getData().putString("status", getActivity().getString(
@@ -499,7 +497,7 @@ public class PublishFragment extends Fragment {
                                     SoundCloudUploader scu = new SoundCloudUploader();
                                     
                                     String scurl = scu.uploadSound(mediaFile, title, scDesc,
-                                            REQ_SOUNDCLOUD, mActivity, mHandlerPub);
+                                            EditorBaseActivity.REQ_SOUNDCLOUD, mActivity, mHandlerPub);
 
                                     if (scurl != null)
                                     {
@@ -607,7 +605,7 @@ public class PublishFragment extends Fragment {
         ServerManager sm = StoryMakerApp.getServerManager();
         sm.setContext(mActivity.getBaseContext());
 
-    	Message msgStatus = mHandlerPub.obtainMessage(888);
+    	Message msgStatus = mHandlerPub.obtainMessage(EditorBaseActivity.REQ_OVERLAY_CAM);
     	msgStatus.getData().putString("status",
                 getActivity().getString(R.string.uploading_to_storymaker));
         mHandlerPub.sendMessage(msgStatus);
