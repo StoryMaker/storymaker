@@ -211,7 +211,7 @@ public class EditorBaseActivity extends BaseActivity {
             case android.R.id.home:
                 if (mMPM.mProject.isTemplateStory()) {
                     Intent intent = new Intent(this, StoryTemplateActivity.class);
-                    String lang = StoryMakerApp.getCurrentLessonsLocale().getLanguage();
+                    String lang = StoryMakerApp.getCurrentLocale().getLanguage();
                     String templatePath = "story/templates/" + lang + "/event/event_basic.json"; // FIXME why is this hardcoding event_basic?
                     // if templates folder for this lang don't exist, fallback to english
                     if (!Utils.assetExists(getApplicationContext(), templatePath)) {

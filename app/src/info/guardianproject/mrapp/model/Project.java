@@ -490,7 +490,7 @@ public class Project extends Model {
     
     public static String getSimpleTemplateForMode (Context context, int storyMode)
     {
-    	 String lang = StoryMakerApp.getCurrentLessonsLocale().getLanguage();
+    	 String lang = StoryMakerApp.getCurrentLocale().getLanguage();
 
          String templateJsonPath = "story/templates/" + lang + "/simple/";
          
