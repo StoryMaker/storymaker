@@ -9,8 +9,8 @@
                     "Length": "X segundos", 
                     "Security Concern": "-", 
                     "Shot Size": "Detalle", 
-                    "Tip": "Set your camera to Macro if you are shooting less than arm\u2019s length from your subject.", 
-                    "Title": "Signature"
+                    "Tip": "Configure su cámara a Macro si está disparando a menos de un brazo de distancia de su sujeto.", 
+                    "Title": "Firma"
                 }, 
                 {
                     "Artwork": "cliptype_medium", 
@@ -20,17 +20,17 @@
                     "Security Concern": "-", 
                     "Shot Size": "Medio", 
                     "Tip": "Mantenga su personaje en una de las líneas verticales del marco para obtener la toma correctamente", 
-                    "Title": "Reaction/Interaction"
+                    "Title": "Reaccción/Interacción"
                 }, 
                 {
                     "Artwork": "cliptype_long", 
                     "Description": "Mostrar al personaje comportándose naturalmente y describir por qué tiene importancia en la historia.", 
-                    "Goal": "Mostrar el personaje involucrado en el lugar de la investigación." 
+                    "Goal": "Mostrar el personaje involucrado en el lugar de la investigación.", 
                     "Length": "X segundos", 
                     "Security Concern": "-", 
-                    "Shot Size": "Largo 
+                    "Shot Size": "Largo", 
                     "Tip": "Ubique a su personaje en un lado del marco. Coloque en el otro lado algo que sea importante para su investigación.", 
-                    "Title": "Candid"
+                    "Title": "Directo"
                 }, 
                 {
                     "Artwork": "cliptype_close", 
@@ -40,7 +40,7 @@
                     "Security Concern": "-", 
                     "Shot Size": "Cerca", 
                     "Tip": "Usar la vista de línea para encuadrar la toma correctamente.", 
-                    "Title": "Portrait"
+                    "Title": "Retrato"
                 }, 
                 {
                     "Artwork": "cliptype_wide", 
@@ -50,11 +50,11 @@
                     "Security Concern": "-", 
                     "Shot Size": "Ancho", 
                     "Tip": "Los puntos de referencia ayudan al público a entender donde se desarrolla la investigación.", 
-                    "Title": "Environmental"
+                    "Title": "Ambiental"
                 }
             ], 
-            "title": "Scene 1"
+            "title": "Escena 1"
         }
     ], 
-    "title": "Essay Simple"
+    "title": "Composición simple"
 }

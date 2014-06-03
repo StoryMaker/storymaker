@@ -10,7 +10,7 @@
                     "Security Concern": "-", 
                     "Shot Size": "Ancho", 
                     "Tip": "Los puntos de referencia ayudan al público a entender donde se desarrolla la investigación.", 
-                    "Title": "Environmental"
+                    "Title": "Ambiental"
                 }, 
                 {
                     "Artwork": "cliptype_medium", 
@@ -20,17 +20,17 @@
                     "Security Concern": "-", 
                     "Shot Size": "Medio", 
                     "Tip": "Mantenga a su personaje en una de las líneas verticales el marco para obtener una toma adecuada.", 
-                    "Title": "Reaction/Interaction"
+                    "Title": "Reaccción/Interacción"
                 }, 
                 {
                     "Artwork": "cliptype_long", 
                     "Description": "Muestre al personaje comportándose de manera natural. Muestre a la audiencia por qué el personaje es importante.", 
-                    "Goal": "Mostrar el personaje involucrado en el lugar de la investigación." 
+                    "Goal": "Mostrar el personaje involucrado en el lugar de la investigación.", 
                     "Length": "X segundos", 
                     "Security Concern": "-", 
-                    "Shot Size": "Largo 
+                    "Shot Size": "Largo", 
                     "Tip": "Ubique a su personaje en un lado del marco. Coloque en el otro lado algo que sea importante para su investigación.", 
-                    "Title": "Candid"
+                    "Title": "Natural"
                 }, 
                 {
                     "Artwork": "cliptype_close", 
@@ -40,7 +40,7 @@
                     "Security Concern": "-", 
                     "Shot Size": "Cerca", 
                     "Tip": "Utilce vista de línea para obtener una toma adecuada.", 
-                    "Title": "Portrait"
+                    "Title": "Retrato"
                 }, 
                 {
                     "Artwork": "cliptype_detail", 
@@ -49,12 +49,12 @@
                     "Length": "X segundos", 
                     "Security Concern": "-", 
                     "Shot Size": "Detalle", 
-                    "Tip": "Set your camera to Macro if you are shooting less than arm\u2019s length from your subject.", 
-                    "Title": "Signature"
+                    "Tip": "Configure su cámara a Macro si está disparando a menos del largo de un brazo de distancia de su sujeto.", 
+                    "Title": "Firma"
                 }
             ], 
-            "title": "Scene 1"
+            "title": "Escena 1"
         }
     ], 
-    "title": "Photo Simple"
+    "title": "Foto simple"
 }

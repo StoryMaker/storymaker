@@ -3,53 +3,53 @@
         {
             "clips": [
                 {
-                    "Illustration": "type_détails", 
-                    "Description":"Une forte photo de la signature va intriguer le public et les encourager à chercher plus loin. Cet élément doit remplir au moins 50% de la trame.", 
-                    "But":"résumez le problème entier en illustrant un élément essentiel de l'histoire.", 
-                    "Longueur": "X secondes", 
+                    "Artwork": "cliptype_detail", 
+                    "Description": "Une forte photo de la signature va intriguer le public et les encourager à chercher plus loin. Cet élément doit remplir au moins 50% de la trame.", 
+                    "Goal": "Résumez le problème entier en illustrant un élément essentiel de l'histoire.", 
+                    "Length": "X secondes", 
                     "Security Concern": "-", 
-                    "Taille de Capture": "Détails", 
+                    "Shot Size": "Détails", 
                     "Tip": "Set your camera to Macro if you are shooting less than arm\u2019s length from your subject.", 
                     "Title": "Signature"
                 }, 
                 {
-                    "Illustration": "type_moyen", 
-                    "Description":"Montrer le personnage interagir avec les autres. Construire un lien entre le spectateur et le sujet. Votre personnage doit remplir 20% de votre cadre.", 
-                    "But":"Montrer comment les gens réagissent avec l’événement ou ses conséquences.",  
-                    "Longueur": "X secondes", 
+                    "Artwork": "cliptype_medium", 
+                    "Description": "Montrer le personnage interagir avec les autres. Construire un lien entre le spectateur et le sujet. Votre personnage doit remplir 20% de votre cadre.", 
+                    "Goal": "Montrer comment les gens réagissent avec l’événement ou ses conséquences.",  
+                    "Length": "X secondes", 
                     "Security Concern": "-", 
-                    "taille de Capture": "Moyenne", 
-                    "Astuce":"Gardez votre personnage sur une des lignes verticales pour cadrer votre capture proprement". 
+                    "Shot Size": "Moyenne", 
+                    "tip": "Gardez votre personnage sur une des lignes verticales pour cadrer votre capture proprement", 
                     "Title": "Reaction/Interaction"
                 }, 
                 {
-                    "Illustration":"Type_Longue" 
-                    "Description":"Représenter le personnage se comporter naturellement. Pourquoi le personnage est remarquable? Montrer le public.", 
+                    "Artwork": "cliptype_long", 
+                    "Description": "Représenter le personnage se comporter naturellement. Pourquoi le personnage est remarquable? Montrer le public.", 
                     "But": "Montrer le Personnage engagé dans son environnement.", 
-                    "Longueur": "X secondes", 
+                    "Length": "X secondes", 
                     "Security Concern": "-", 
-                    "Taille":"Longue", 
-                    "Astuce": " Placez votre personnage sur un côté du cadre, cadrez votre capture à montrer quelque chose d'important à l'histoire sur l'autre côté.", 
+                    "Shot Size": "Longue", 
+                    "Tip": "Placez votre personnage sur un côté du cadre, cadrez votre capture à montrer quelque chose d'important à l'histoire sur l'autre côté.", 
                     "Title": "Candid"
                 }, 
                 {
-                    "Illustration": "type_proche", 
-                    Votre premier objectif est le personnage principal de votre histoire. Mettez en surbrillance les émotions du personnage ou l'état d'esprit.", 
-                    "But":"Introduire le personnage. restez Proche.", 
-                    "Longueur": "X secondes", 
+                    "Artwork": "cliptype_close", 
+                    "Description": "Votre premier objectif est le personnage principal de votre histoire. Mettez en surbrillance les émotions du personnage ou l'état d'esprit.", 
+                    "Goal": "Introduire le personnage. restez Proche.", 
+                    "Length": "X secondes", 
                     "Security Concern": "-", 
-                    "Taille de capture": "proche", 
-                    "Astuce": " Utilisez la ligne de l'œil pour cadrer votre capture correctement.", 
+                    "Shot Size": "proche", 
+                    "Tip": " Utilisez la ligne de l'œil pour cadrer votre capture correctement.", 
                     "Title": "Portrait"
                 }, 
                 {
-                    "Illustration":"type_large", 
-                    "Description":"indiquer le pays ou un élément ethnique ou religieux. Incluant les monuments ou autres informations spécifiques de localisation.", 
-                    "But":"Montrer où se passe votre histoire.", 
-                    "Longueur": "X secondes", 
+                    "Artwork": "cliptype_wide", 
+                    "Description": "indiquer le pays ou un élément ethnique ou religieux. Incluant les monuments ou autres informations spécifiques de localisation.", 
+                    "Goal": "Montrer où se passe votre histoire.", 
+                    "Length": "X secondes", 
                     "Security Concern": "-", 
-                    "Taille de Capture":"Large", 
-                    "Astuce":"Les sites d'intérêt aident le public à comprendre leur emplacement.", 
+                    "Shot Size": "Large", 
+                    "Tip": "Les sites d'intérêt aident le public à comprendre leur emplacement.", 
                     "Title": "Environmental"
                 }
             ], 

@@ -250,7 +250,6 @@
   <string name="export_dialog_share">Dijeliti </string>
   <string name="title_activity_accounts">Računi</string>
   <string name="action_settings">Postavke</string>
-  <!--added for new UI-->
   <string name="label_activity_log">Zapis aktivnosti</string>
   <string name="label_title">Naziv</string>
   <string name="label_description">Opis</string>
