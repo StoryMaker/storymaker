@@ -1,56 +1,18 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
-  <string-array name="cliptype_thumbnails">
-    <item>@drawable/cliptype_close</item>
-    <item>@drawable/cliptype_detail</item>
-    <item>@drawable/cliptype_long</item>
-    <item>@drawable/cliptype_medium</item>
-    <item>@drawable/cliptype_wide</item>
-  </string-array>
-  <string-array name="cliptypes">
-    <item>cliptype_close</item>
-    <item>cliptype_detail</item>
-    <item>cliptype_long</item>
-    <item>cliptype_medium</item>
-    <item>cliptype_wide</item>
-  </string-array>
-  
   <string-array name="story_sections">
-    <item>السياسة</item>
+    <item>السياسات</item>
     <item>الأعمال</item>
-    <item>الرياضة</item>
+    <item>الرياضات</item>
     <item>الفنون</item>
     <item>العلوم</item>
-    <item>الصحة</item>
+    <item>الصحّة</item>
     <item>التعليم</item>
     <item>البيئة</item>
-    <item>المقالات الرئيسية</item>
-    <item>تقارير خاصة</item>
   </string-array>
-  <string-array name="story_topics">
-    <item>النوع</item>
-    <item>الحرف النائب 1</item>
-    <item> الحرف النائب 2</item>
-    <item> الحرف النائب 3</item>
-    <item> الحرف النائب 4</item>
-    <item> الحرف النائب 5</item>
-    <item> الحرف النائب 6</item>
-    <item> الحرف النائب 7</item>
-  </string-array>
-  <string-array name="lesson_sections">
-    <item>الصحافة</item>
-    <item>الأمن</item>
-    <item>الصوت</item>
-    <item>التصوير الفوتوغرافي</item>
-    <item>تصوير الفيديو</item>
-    <item>Story</item>
-  </string-array>
-  <string-array name="lesson_sections_folder">
-    <item>1</item>
-    <item>2</item>
-    <item>3</item>
-    <item>4</item>
-    <item>5</item>
-    <item>6</item>
-  </string-array>
+  <integer-array name="vibration_button" translatable="false">&lt;item&gt;0&lt;/item&gt;&lt;item&gt;0&lt;/item&gt;&lt;item&gt;5&lt;/item&gt;&lt;item&gt;120&lt;/item&gt;&lt;item&gt;8&lt;/item&gt;&lt;item&gt;-5&lt;/item&gt;&lt;item&gt;5&lt;/item&gt;&lt;item&gt;0&lt;/item&gt;&lt;item&gt;5&lt;/item&gt;</integer-array>
+  <integer-array name="vibration_center_button" translatable="false">&lt;item&gt;0&lt;/item&gt;&lt;item&gt;0&lt;/item&gt;&lt;item&gt;5&lt;/item&gt;&lt;item&gt;5&lt;/item&gt;&lt;item&gt;10&lt;/item&gt;&lt;item&gt;-3&lt;/item&gt;&lt;item&gt;10&lt;/item&gt;&lt;item&gt;15&lt;/item&gt;&lt;item&gt;10&lt;/item&gt;&lt;item&gt;-3&lt;/item&gt;&lt;item&gt;10&lt;/item&gt;&lt;item&gt;25&lt;/item&gt;&lt;item&gt;10&lt;/item&gt;&lt;item&gt;-3&lt;/item&gt;&lt;item&gt;10&lt;/item&gt;&lt;item&gt;35&lt;/item&gt;&lt;item&gt;10&lt;/item&gt;&lt;item&gt;-3&lt;/item&gt;&lt;item&gt;10&lt;/item&gt;&lt;item&gt;40&lt;/item&gt;&lt;item&gt;10&lt;/item&gt;&lt;item&gt;-3&lt;/item&gt;&lt;item&gt;30&lt;/item&gt;&lt;item&gt;120&lt;/item&gt;&lt;item&gt;8&lt;/item&gt;&lt;item&gt;-5&lt;/item&gt;&lt;item&gt;5&lt;/item&gt;&lt;item&gt;0&lt;/item&gt;&lt;item&gt;150&lt;/item&gt;&lt;item&gt;50&lt;/item&gt;&lt;item&gt;8&lt;/item&gt;&lt;item&gt;-5&lt;/item&gt;&lt;item&gt;5&lt;/item&gt;&lt;item&gt;0&lt;/item&gt;&lt;item&gt;5&lt;/item&gt;</integer-array>
+  <integer-array name="vibration_record_play_end" translatable="false">&lt;item&gt;0&lt;/item&gt;&lt;item&gt;0&lt;/item&gt;&lt;item&gt;5&lt;/item&gt;&lt;item&gt;5&lt;/item&gt;&lt;item&gt;50&lt;/item&gt;&lt;item&gt;-3&lt;/item&gt;&lt;item&gt;5&lt;/item&gt;&lt;item&gt;10&lt;/item&gt;&lt;item&gt;50&lt;/item&gt;&lt;item&gt;-3&lt;/item&gt;&lt;item&gt;5&lt;/item&gt;&lt;item&gt;5&lt;/item&gt;&lt;item&gt;50&lt;/item&gt;&lt;item&gt;-3&lt;/item&gt;&lt;item&gt;5&lt;/item&gt;&lt;item&gt;10&lt;/item&gt;&lt;item&gt;50&lt;/item&gt;&lt;item&gt;-3&lt;/item&gt;&lt;item&gt;5&lt;/item&gt;&lt;item&gt;5&lt;/item&gt;&lt;item&gt;50&lt;/item&gt;&lt;item&gt;-3&lt;/item&gt;&lt;item&gt;5&lt;/item&gt;&lt;item&gt;10&lt;/item&gt;&lt;item&gt;50&lt;/item&gt;&lt;item&gt;-3&lt;/item&gt;&lt;item&gt;5&lt;/item&gt;&lt;item&gt;5&lt;/item&gt;&lt;item&gt;50&lt;/item&gt;&lt;item&gt;-3&lt;/item&gt;&lt;item&gt;5&lt;/item&gt;&lt;item&gt;10&lt;/item&gt;&lt;item&gt;50&lt;/item&gt;&lt;item&gt;-3&lt;/item&gt;&lt;item&gt;5&lt;/item&gt;&lt;item&gt;5&lt;/item&gt;&lt;item&gt;50&lt;/item&gt;&lt;item&gt;-3&lt;/item&gt;&lt;item&gt;5&lt;/item&gt;&lt;item&gt;10&lt;/item&gt;&lt;item&gt;50&lt;/item&gt;&lt;item&gt;-3&lt;/item&gt;&lt;item&gt;5&lt;/item&gt;&lt;item&gt;5&lt;/item&gt;&lt;item&gt;50&lt;/item&gt;&lt;item&gt;-3&lt;/item&gt;&lt;item&gt;5&lt;/item&gt;&lt;item&gt;10&lt;/item&gt;&lt;item&gt;50&lt;/item&gt;&lt;item&gt;-3&lt;/item&gt;&lt;item&gt;5&lt;/item&gt;&lt;item&gt;5&lt;/item&gt;&lt;item&gt;50&lt;/item&gt;&lt;item&gt;-3&lt;/item&gt;&lt;item&gt;5&lt;/item&gt;&lt;item&gt;10&lt;/item&gt;&lt;item&gt;50&lt;/item&gt;&lt;item&gt;-3&lt;/item&gt;&lt;item&gt;5&lt;/item&gt;&lt;item&gt;120&lt;/item&gt;&lt;item&gt;8&lt;/item&gt;&lt;item&gt;-5&lt;/item&gt;&lt;item&gt;5&lt;/item&gt;&lt;item&gt;0&lt;/item&gt;&lt;item&gt;150&lt;/item&gt;&lt;item&gt;60&lt;/item&gt;&lt;item&gt;8&lt;/item&gt;&lt;item&gt;-5&lt;/item&gt;&lt;item&gt;5&lt;/item&gt;&lt;item&gt;0&lt;/item&gt;&lt;item&gt;5&lt;/item&gt;&lt;item&gt;0&lt;/item&gt;&lt;item&gt;10&lt;/item&gt;</integer-array>
+  <integer-array name="vibration_seek_end" translatable="false">&lt;item&gt;0&lt;/item&gt;&lt;item&gt;0&lt;/item&gt;&lt;item&gt;5&lt;/item&gt;&lt;item&gt;120&lt;/item&gt;&lt;item&gt;8&lt;/item&gt;&lt;item&gt;-5&lt;/item&gt;&lt;item&gt;5&lt;/item&gt;&lt;item&gt;0&lt;/item&gt;&lt;item&gt;150&lt;/item&gt;&lt;item&gt;60&lt;/item&gt;&lt;item&gt;8&lt;/item&gt;&lt;item&gt;-5&lt;/item&gt;&lt;item&gt;5&lt;/item&gt;&lt;item&gt;0&lt;/item&gt;&lt;item&gt;5&lt;/item&gt;</integer-array>
+  <!--FIXME remove these, but they are referenced in code too...-->
 </resources>

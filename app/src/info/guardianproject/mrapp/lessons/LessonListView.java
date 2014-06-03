@@ -47,7 +47,7 @@ public class LessonListView extends ListView implements LessonManagerListener {
         setDividerHeight(0);
 
         mActivity = activity;
-        mLocale = StoryMakerApp.getCurrentLocale();
+        mLocale = StoryMakerApp.getCurrentLessonsLocale();
 
         mLessonManager = StoryMakerApp.getLessonManager();
         mLessonManager.setLessonManagerListener(this);

@@ -1,0 +1,275 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+  <string name="app_name">StoryMaker</string>
+  <string name="title_projects">Historias</string>
+  <string name="title_lessons">Lecciones</string>
+  <string name="action_publish">Publicar</string>
+  <!--menus-->
+  <string name="menu_new_project">Nuevo</string>
+  <string name="menu_projects">Historias</string>
+  <string name="menu_lessons">Lecciones</string>
+  <string name="menu_glossary">Glosario</string>
+  <string name="menu_contacts">Contactos</string>
+  <string name="menu_settings">Ajustes</string>
+  <string name="menu_accounts">Cuentas</string>
+  <string name="menu_archive">Archivo</string>
+  <string name="drawer_profile">Iniciar sesión</string>
+  <!--FIXME: rename-->
+  <string name="menu_add_media">Agregar</string>
+  <string name="menu_capture_media">Historial</string>
+  <string name="menu_share_media">Compartir</string>
+  <string name="menu_save_media">Guardar</string>
+  <string name="menu_play_media">Reproducir</string>
+  <string name="menu_render_media">Componer</string>
+  <string name="menu_bug_report">Informe de error</string>
+  <string name="menu_login">Iniciar sesión</string>
+  <string name="menu_logs">Enviar registro</string>
+  <string name="menu_update">Actualizar</string>
+  <string name="menu_about">Acerca de</string>
+  <string name="menu_save_project">Salvar</string>
+  <string name="menu_overlay_camera">Cámara </string>
+  <string name="menu_add_from_gallery">Importar desde la galería</string>
+  <string name="menu_add_new_shot">Añadir vídeo a la escena</string>
+  <string name="menu_del_shot">Borrar vídeo actual</string>
+  <string name="menu_export_project_files">Exportar ficheros de proyecto como zip</string>
+  <string name="menu_join_storymaker">Únase a la comunidad de StoryMaker</string>
+  <string name="menu_sign_up">Registrarse / Iniciar sesión</string>
+  <string name="menu_upload_manager">Gestor de subida</string>
+  <string name="welcome_message">Hola!\nBienvenido a StoryMaker</string>
+  <!--project list-->
+  <string name="default_project_list_view">Esta es su primera vez creando un proyecto! ⏎ \n⏎ \n- toque para empezar -</string>
+  <string name="default_project_view_message">Usted tiene opciones. ⏎\nCuente su historia con vídeo, audio o fotos. ⏎\n⏎\n- Toque para añadir -</string>
+  <!--video processing-->
+  <string name="pref_out_fps_title">Salida Framerate (fps)</string>
+  <string name="pref_out_fps_summary">Fotogramas por segundo para almacenar vídeo de salida en (15-30)</string>
+  <string name="pref_out_rate_title">Salida de Bitrate  (kbps)</string>
+  <string name="pref_out_rate_summary">Salida de video Bitrate (300-1500)</string>
+  <string name="pref_out_format_title">Formato de salida</string>
+  <string name="pref_out_format_summary">Formato de archivo contenedor (mp4, 3gp, ogg)</string>
+  <string name="pref_out_vcodec_title">Salida de Video Codec</string>
+  <string name="pref_out_vcodec_summary">Vídeo codec  (copiar, libx264, etc)</string>
+  <string name="pref_out_acodec_title">Salida de audio Codec</string>
+  <string name="pref_out_acodec_summary">Audio Codec</string>
+  <string name="pref_out_vwidth_title">Ancho del vídeo personalizado (px)</string>
+  <string name="pref_out_vwidth_summary">Altura de video personalizado para el vídeo emitido</string>
+  <string name="pref_out_vheight_title">Ancho del vídeo personalizado (px)</string>
+  <string name="pref_out_vheight_summary">Altura de video personalizado para el vídeo emitido</string>
+  <string name="hintTitle">Título</string>
+  <string name="hintStartTime">Empezar (00:00:00)</string>
+  <string name="hintEndTime">duración (00:00:00)</string>
+  <string name="hintFadeIn">Desvanecer en (el marco)</string>
+  <string name="hintFadeOut">Desvanecer fuera (del marco)</string>
+  <string name="start_recording">Grabar</string>
+  <string name="stop_recording">Detener</string>
+  <string name="play_recording">Reproducir</string>
+  <string name="save_recording">Salvar</string>
+  <string name="downloading_lessons_from_server_">Descarga de lecciones del servidor...</string>
+  <string name="checking_for_updates_">Comprobando actualizaciones...</string>
+  <!--LOG COLLECTOR-->
+  <string name="app_name_lc">Recopilador de registro</string>
+  <string name="message_subject">Registro de dispositivo Androide</string>
+  <string name="acquiring_log_progress_dialog_message">Registro de adquisición desde el sistema\u2026</string>
+  <string name="chooser_title">Seleccione una aplicación para enviar el registro</string>
+  <string name="failed_to_get_log_message">No se pudo obtener el registro desde el  sistema.</string>
+  <string name="main_dialog_text">Esta aplicación intentará recabar el registro (log) del dispositivo.\nEl registro recopilado se enviará usando una aplicación de su elección.\nTambién tendrá una oportunidad de ver y modificar los datos que se envían.</string>
+  <string name="title_home_projects">Proyectos</string>
+  <string name="title_home_activity">Actividad</string>
+  <string name="title_lessons_lessons">Lecciones</string>
+  <string name="title_lessons_glossary">Glosario</string>
+  <string name="hello_world">¡Hola, mundo!</string>
+  <string name="title_activity_home">Inicio</string>
+  <string name="new_story_name_it">Asignar un nombre</string>
+  <string name="new_story_working_title">Título de trabajo ...</string>
+  <string name="new_story_choose_something">Elige algo breve que defina el tema y las intrigas de su audiencia</string>
+  <string name="new_story_choose_a_medium">Seleccione su desarrollo</string>
+  <!--<string name="new_story_video">Video: Something here about why simple, short video is good! Ideally it should be about the same length as the other strings.</string>
+   	<string name="new_story_essay">Photo Essay: Tell a story about one character. Follow this template to produce a simple photo essay story about one character.</string>
+    <string name="new_story_photo">Single Photo: Telling a strong story with one image is a skill. To simplify, these templates explain some primary photo types.</string>
+    
+    <string name="new_story_audio">Audio: Something here about using audio to tell a story. Personally, I really like to listen to the radio and podcasts while I do housework!</string>-->
+  <string name="new_story_simple_story">Historia Simple</string>
+  <string name="new_story_choose_template">Plantilla de escena</string>
+  <string name="home_new_story">ELABORAR UNA HISTORIA</string>
+  <string name="home_start_a_lesson">EXPLORAR LECCIONES</string>
+  <string name="title_activity_new_story">¡Ha creado una historia!</string>
+  <string name="title_activity_lessons">Lecciones</string>
+  <string name="title_activity_scene_editor">Editor de Escena</string>
+  <string name="title_activity_choose_template">Elija Modelo</string>
+  <string name="title_activity_story_template">Modelo de Historia</string>
+  <string name="tab_make">Crear</string>
+  <string name="tab_review">Revisar</string>
+  <string name="tab_publish">Completo</string>
+  <string name="tab_finish">Finalizar</string>
+  <string name="tab_add_clips">Elaborar</string>
+  <string name="tab_order">Editar</string>
+  <string name="story_publish_section">Sección</string>
+  <string name="story_publish_section_hint">Deportes</string>
+  <string name="story_publish_topics">Temas</string>
+  <string name="story_publish_topics_hint">Género</string>
+  <string name="story_publish_location">Ubicación</string>
+  <string name="story_publish_location_hint">Introduzca el lugar correspondiente</string>
+  <string name="story_publish_share">Compartir</string>
+  <string name="story_publish_send_via">Enviar Vía</string>
+  <string name="story_publish_status">Estado</string>
+  <string name="story_publish_status_processing">Procesando</string>
+  <string name="story_publish_status_not">No Publicada</string>
+  <string name="story_publish_describe_hint">Describa su historia</string>
+  <string name="story_publish_story_title">Aquí Título de la historia</string>
+  <string name="story_publish_story_date">Aquí, fecha de la historia</string>
+  <!--delete these below-->
+  <string name="title_section3">Sección 3</string>
+  <string name="title_section2">Sección 2</string>
+  <string name="title_section1">Sección 1</string>
+  <string name="title_activity_test_drag">Prueba de arrastre</string>
+  <!--Screen title before and during recording-->
+  <!--Screen title after recording-->
+  <!--Screen title while playing back a recording-->
+  <!--Label shown during recording-->
+  <string name="recording">Grabando</string>
+  <!--Label shown when the recording is stopped for a reason other than the user stopping it (e.g. the sd card was removed)-->
+  <string name="recording_stopped">Grabación detenida</string>
+  <!--label shown when there is not enough space to record something-->
+  <string name="storage_is_full">El almacenamiento esta lleno</string>
+  <!--label shown when the recording has reached maximum allowed file size-->
+  <string name="max_length_reached">Longitud máxima alcanzada</string>
+  <!--label shown when there is no sd card available to record to-->
+  <string name="insert_sd_card">Tarjeta SD se requiere</string>
+  <!--label shown when there is more than 1 minute but less than 9 minutes of space left to record-->
+  <!--label shown when there is less than 1 minute of space left to record-->
+  <!--button to accept the current recording and return it to the caller-->
+  <!--button to discard the current recording and return to the caller-->
+  <!--acknowlegement button in a number of dialogs-->
+  <string name="button_ok">Aprobado</string>
+  <!--Do not translate. Format of the timer that shows how much has been recorded so far-->
+  <!--label shown before the user has recorded anything-->
+  <!--the name under which recordings will be visible in the media database is formatted like this-->
+  <!--all recordings will show up in the media database with this 'artist' name-->
+  <string name="audio_db_artist_name">Sus grabaciones</string>
+  <!--all recordings will show up in the media database with this 'album' name-->
+  <string name="audio_db_album_name">Grabaciones de audio</string>
+  <!--all recordings will show up in the media database in a playlist with this name-->
+  <string name="audio_db_playlist_name">Mis grabaciones</string>
+  <!--shown as the message in a dialog when an error occured because of an error accessing the sd card-->
+  <string name="error_sdcard_access">\nNo se puede acceder al almacenamiento externo o interno</string>
+  <!--shown as the message in a dialog when the app encountered an unspecified internal error-->
+  <string name="error_app_internal">Error interno de la aplicación</string>
+  <!--shown as the message in a dialog when the recording could not be added to the media database-->
+  <string name="error_mediadb_new_record">No se puede guardar el audio grabado</string>
+  <!--shown as the message in a dialog when an export will tak up too much space-->
+  <string name="error_storage_space" formatted="false">Uups, estamos sin espacio. Por favor, ¡libere aproximadamente %.2f%nMB e inténtelo de nuevo!</string>
+  <!--add for libra begin-->
+  <string name="default_record_name">Registro sin título</string>
+  <string name="menu_view_record_list">Ver lista de registros</string>
+  <string name="menu_setting">Configuración</string>
+  <string name="delete_dialog_title">¿Quieres eliminar el registro actual?</string>
+  <string name="overwrite_dialog_title">% s ya existe. ¿Desea re-escribirlo?</string>
+  <string name="preferences_title">Configuración</string>
+  <string name="pref_title_record_type"> Modelo de Registro del archivo</string>
+  <string name="prefDialogTitle_recordType">Por favor seleccione el tipo de archivo</string>
+  <string name="prefDefault_recordType">audio/3gpp</string>
+  <string name="pref_title_enable_high_quality">Activar alta calidad</string>
+  <string name="pref_summary_enable_high_quality">El archivo de audio con alta calidad puede ser mayor</string>
+  <string name="pref_title_enable_sound_effect">Activar efecto de sonido</string>
+  <string name="pref_summary_enable_sound_effect">Reproducir efecto de sonido cuando se cambia el estado</string>
+  <string name="notification_recording">Grabando</string>
+  <string name="notification_stopped">Grabación detenida</string>
+  <string name="notification_warning">Almacenamiento bajo (menos de% d minutos) ...</string>
+  <string name="sd_card_not_available">Tarjeta SD no está disponible</string>
+  <string name="open_file_explorer">Abra el explorador de archivos</string>
+  <string name="alert_message_delete_record">¿Quieres eliminar el registro actual?</string>
+  <!--add for libra end-->
+  <string name="help_clip_select">Desliza el dedo para seleccionar un tipo de clip, a continuación, toque la imagen para comenzar video, foto o captura de audio</string>
+  <!--youtube upload-->
+  <string name="lesson_status_have_not_started">¿No han comenzado?</string>
+  <string name="lessons_congratulations_you_have_completed_the_lesson_">¡Ha completado una lección!</string>
+  <string name="lesson_status_in_progress">En curso</string>
+  <string name="lesson_status_complete">Completar!</string>
+  <string name="tap_to_start_capture">toque para iniciar la captura</string>
+  <string name="no_lessons_available_tap_to_load_">No hay lecciones disponibles (pulsar para cargar)</string>
+  <string name="_lesson_complete">lección completa</string>
+  <string name="_of_">de</string>
+  <string name="default_youtube_desc">Un proyecto StoryMaker</string>
+  <string name="view_published_media_online_or_local_copy_">¿Ver audiovisuales publicados en línea?</string>
+  <string name="choose_account_for_youtube_upload">Elegir cuenta para las subidas</string>
+  <string name="rendering">Renderizado</string>
+  <string name="rendering_project_">Renderizando proyecto...</string>
+  <string name="publishing">Publicación</string>
+  <string name="connecting_to_youtube_">conectando a YouTube...</string>
+  <string name="uploading_to_storymaker">publicando en el sitio de StoryMarker...</string>
+  <string name="rendering_clips_">renderizando vídeos...</string>
+  <string name="you_must_enter_a_project_name">Por favor introduzca un título funcional de borrador. Puede cambiar esto más tarde.</string>
+  <string name="delete_project_">¿Borrar proyecto?</string>
+  <string name="add_new_clip_to_the_scene_">¿Añadir nuevo vídeo a la escena?</string>
+  <string name="video_project_project_type">Proyecto de vídeo</string>
+  <string name="photo_project_project_type">Proyecto de fotografía</string>
+  <string name="audio_project_project_type">Proyecto de audio</string>
+  <string name="photo_essay_project_project_type">Proyecto de ensayo fotográfico</string>
+  <string name="eula_title">Usted da su aceptación a:</string>
+  <string name="eula_accept">Aceptar</string>
+  <string name="eula_refuse">Rechazar</string>
+  <string name="privacy_policy">Política de privacidad</string>
+  <string name="end_user_license_agreement">Acuerdo de licencia de usuario final</string>
+  <string name="send_annonymous_data">Enviar datos de uso anónimos para ayudarnos a mejorar StoryMaker.</string>
+  <string name="by_clicking_accept">Al hacer clic en \'Aceptar\' usted declara su aceptación de nuestro Acuerdo de Licencia de Usuario Final, y que ha leído nuestra política de privacidad.</string>
+  <string name="button_add_narration">Grabar voz sobreimpresa</string>
+  <string name="button_play_narration">Reproducir voz sobreimpresa</string>
+  <string name="button_delete_narration">Borrar voz sobreimpresa</string>
+  <string name="button_render_preview">Renderizar previsualización</string>
+  <string name="publish_sm">StoryMaker.cc</string>
+  <string name="publish_youtube">YouTube</string>
+  <string name="action_render">Exportar</string>
+  <string name="action_play">Reproducir</string>
+  <string name="action_share">Compartir</string>
+  <string name="cbRenderTypeLabel">Usar renderizador rápido de vídeo</string>
+  <string name="drawer_quick_capture">Captura rápida</string>
+  <string name="select_story_type">Seleccionar tipo de historia</string>
+  <string name="button_start_my_story">INICIAR MI HISTORIA</string>
+  <string name="home_intro_button_lessons">EXPLORAR LECCIONES</string>
+  <string name="home_intro_button_projects">CONSTRUIR UNA HISTORIA</string>
+  <string name="created_with_storymaker_tag">Creado con StoryMaker - https://storymaker.cc/</string>
+  <string name="err_you_need_at_least_one_account_configured_on_your_device">Necesita al menos una cuenta configurada en su dispositivo</string>
+  <string name="you_began_a_new_lesson">Ha iniciado una nueva lección</string>
+  <string name="scene_editor_please_add_clips">Por favor añada vídeos en la pestaña \'Elaborar\' antes de seleccionar esta pestaña.</string>
+  <string name="scene_editor_trim_clip">Recortar vídeo</string>
+  <string name="cancel">Cancelar</string>
+  <string name="play_or_share_exported_media_">¿Reproducir o Compartir audiovisuales exportados?</string>
+  <string name="err_storage_not_ready">El almacenamiento externo (tarjeta SD) no parece estar disponible para lectura y escritura al mismo tiempo. StoryMaker requiere acceso a este para los datos de proyecto de lección e historia.</string>
+  <string name="scene_s_">escena(s)</string>
+  <string name="clip_s_">vídeo(s)</string>
+  <string name="sc_app_not_found">¡No se encontró la aplicación de SoundCloud!</string>
+  <string name="sc_app_not_found_message">¿Quiere instalarla ahora?</string>
+  <string name="no_active_sc_account">No se encontró cuenta de SoundCloud activa, por favor inicie_sesión/regístrese</string>
+  <string name="operation_canceled">Operación cancelada</string>
+  <string name="could_not_get_token">No se pudo obtener credencial (\'token\')</string>
+  <string name="getting_details">Obteniendo detalles de usuario</string>
+  <string name="could_not_create_account">No se pudo crear una cuenta</string>
+  <string name="uploading">Subiendo...</string>
+  <string name="canceled">Cancelar subida</string>
+  <!--added for project export-->
+  <string name="export_dialog_title">¿Le gustaría compartir este zip de proyecto?</string>
+  <string name="export_dialog_close">Cerrar</string>
+  <string name="export_dialog_share">Compartir</string>
+  <string name="title_activity_accounts">Cuentas</string>
+  <string name="action_settings">Configuraciones</string>
+  <!--added for new UI-->
+  <string name="label_activity_log">Registro (log) de actividad</string>
+  <string name="label_title">Título</string>
+  <string name="label_description">Descripción</string>
+  <string name="label_tags">Etiquetas</string>
+  <string name="label_add">Añadir</string>
+  <string name="label_edit">Editar</string>
+  <string name="label_activities">Registro (log) de actividad</string>
+  <string name="hint_story_title">Introduzca un título</string>
+  <string name="hint_story_description">Describa su historia...</string>
+  <string name="hint_story_tag">#añadaetiquetas</string>
+  <string name="label_section">Sección</string>
+  <string name="label_location">Ubicación</string>
+  <string name="title_activity_story_info">Información</string>
+  <string name="title_activity_story_info_edit">Editar información</string>
+  <string name="title_activity_project_tag_fragment">ProjectTagFragment</string>
+  <string name="title_activity_connect_account">Cuenta de StoryMaker</string>
+  <string name="hint_no_description">Sin descripción.</string>
+  <string name="trim_clips">Recortar vídeos</string>
+  <string name="info">Información</string>
+  <string name="send_logcat_to_support">Enviar Logcat al equipo de soporte</string>
+</resources>

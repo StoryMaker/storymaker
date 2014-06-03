@@ -1,0 +1,55 @@
+{
+    "scenes": [
+        {
+            "clips": [
+                {
+                    "Illustration": "cliptyp_detail" 
+                    "Beschreibung": "Gute Audio-Clips ziehen die Aufmerksamkeit der Zuhörer auf sich und machen sie neugierig auf mehr.", 
+                    "Ziel": Audio-Clips ermöglichen dem Zuhörer ein unmittelbares Verständnis ausgewählter Aspekte der Geschichte.", 
+                    "Dauer": "X Sekunden", 
+                    "Security Concern": "-", 
+                    "Tipp": "Sie müssen ggf. das Mikrofon sehr nah an den Sprecher heranführen. Stellen Sie dabei sicher, dass ihre Tonquelle nicht zu laut ist.", 
+                    "Title": "Signature"
+                }, 
+                {
+                    "Illustration": "cliptyp_weit" 
+                    "Description": "Ambient audio clips help the audience understand how your subject interacts with the surrounding environment.", 
+                    "Ziel": "Helfen Sie ihrem Publikum, die Umgebung zu verstehen, in der sich das Handlungssubjekt befindet.", 
+                    "Dauer": "X Sekunden", 
+                    "Security Concern": "-", 
+                    "Tip": "You want the ambient clip to contribute to telling the story. If there are irrelevant sounds to the story this may distract the audience.", 
+                    "Title": "Ambient"
+                }, 
+                {
+                    "Illustration": "cliptyp_nah", 
+                    "Beschreibung": "Erzählen Sie dem Zuhörer, wer die wichtigen Handlungsfiguren in ihrer Geschichte sind.",  
+                    "Goal": "Record the character making an introduction, or record yourself introducing the character.", 
+                    "Dauer": "X Sekunden", 
+                    "Security Concern": "-", 
+                    "Tipp": "Halten Sie diesen Clip kurz. Stellen Sie Ihren Zuhörern einfach kurz die Handelnden vor - oder ermöglichen Sie diesen, sich selbst vorzustellen. Sparen Sie sich zusätzliche Informationen für das eigentliche Interview auf.", 
+                    "Title": "Narrative"
+                }, 
+                {
+                    "Illustration": "cliptyp_mittel" 
+                    "Description": "Remember the fundamentals of a good interview. Ask open-ended questions. Decide your questions based on the type of source you are interviewing.", 
+                    "Ziel": "Bitten Sie die Person, Ihnen eine Geschichte zu erzählen.", 
+                    "Dauer": "X Sekunden", 
+                    "Security Concern": "-", 
+                    "Tip": "If you want the audience to hear your questions and the subject\u2019s answers, be sure that you are both close enough to the mic to be heard clearly.", 
+                    "Title": "Interview"
+                }, 
+                {
+                    "Illustration": "cliptyp_weit" 
+                    "Beschreibung": "Umwelt-Audioclips können das Land nennen, oder Ihre Geschichte um zusätzliche kulturelle oder religiöse Informationen ergänzen.", 
+                    "Ziel": "Umwelt-spezifische Audio-Clips ermöglichen dem Publikum, zu verstehen, wo ihre Geschichte handelt.", 
+                    "Dauer": "X Sekunden", 
+                    "Security Concern": "-", 
+                    "Tip": "Record the overall sound for the environment. Be sure not to make any noise yourself, this will distract the audience from the natural sound.", 
+                    "Title": "Environmental"
+                }
+            ], 
+            "title": "Scene 1"
+        }
+    ], 
+    "title": "Audio Simple"
+}

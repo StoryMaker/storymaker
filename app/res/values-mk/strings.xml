@@ -1,0 +1,276 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+  <string name="app_name">StoryMaker</string>
+  <string name="title_projects">Приказни</string>
+  <string name="title_lessons">Лекции</string>
+  <string name="action_publish">Издавање</string>
+  <!--menus-->
+  <string name="menu_new_project">Ново</string>
+  <string name="menu_projects">Приказни</string>
+  <string name="menu_lessons">Лекции</string>
+  <string name="menu_glossary">Речник</string>
+  <string name="menu_contacts">Контакти</string>
+  <string name="menu_settings">Нагодувања</string>
+  <string name="menu_accounts">Акаунти</string>
+  <string name="menu_archive">Архива</string>
+  <string name="drawer_profile">Најава</string>
+  <!--FIXME: rename-->
+  <string name="menu_add_media">Додади</string>
+  <string name="menu_capture_media">Снимање</string>
+  <string name="menu_share_media">Сподели</string>
+  <string name="menu_save_media">Зачувај</string>
+  <string name="menu_play_media">Пушти</string>
+  <string name="menu_render_media">Рендерирање</string>
+  <string name="menu_bug_report">Bug Report</string>
+  <string name="menu_login">Најава</string>
+  <string name="menu_logs">Испрати запис</string>
+  <string name="menu_update">Ажурирање</string>
+  <string name="menu_about">За</string>
+  <string name="menu_save_project">Зачувај</string>
+  <string name="menu_overlay_camera">Камера</string>
+  <string name="menu_add_from_gallery">Внеси од Галеријата</string>
+  <string name="menu_add_new_shot">Додади клип во сцената</string>
+  <string name="menu_del_shot">Избриши го Тековниот Клип</string>
+  <string name="menu_export_project_files">Извезување на Датотеките на Проектот како Zip</string>
+  <string name="menu_join_storymaker">Приклучи се на StoryMaker заедницата</string>
+  <string name="menu_sign_up">Регистрирај се / Влези</string>
+  <string name="menu_upload_manager">Испраќачки Менаџер</string>
+  <string name="welcome_message">Здраво!\nДобродојдовте во StoryMaker</string>
+  <!--project list-->
+  <string name="default_project_list_view">Ова е вашиот прв проект!\n\n- допрете за да почнете -</string>
+  <string name="default_project_view_message">Имате неколку избори.\nРаскажете ја вашата приказна со помош на видео, аудио или слики.\n\n- допрете за да додадете-</string>
+  <!--video processing-->
+  <string name="pref_out_fps_title">Излезен Framerate (fps)</string>
+  <string name="pref_out_fps_summary">Фрејмови по секунда на излезното видео (15-30)</string>
+  <string name="pref_out_rate_title">Излезен битрејт (kbps)</string>
+  <string name="pref_out_rate_summary">Битрејт на излезното видео (300-1500)</string>
+  <string name="pref_out_format_title">Излезен формат</string>
+  <string name="pref_out_format_summary">Контејнер на фајлот (mp4, 3gp, ogg)</string>
+  <string name="pref_out_vcodec_title">Излезен Видео Кодек</string>
+  <string name="pref_out_vcodec_summary">видео кодек (copy, libx264, итн)</string>
+  <string name="pref_out_acodec_title">Излезен Аудио Кодек</string>
+  <string name="pref_out_acodec_summary">аудио кодек (copy, aac, mp3, итн)</string>
+  <string name="pref_out_vwidth_title">Прилагодена Ширина на Видеото (px)</string>
+  <string name="pref_out_vwidth_summary">прилагодена ширина на видеото за излезното видео</string>
+  <string name="pref_out_vheight_title">Прилагодена Висина на Видеото (px)</string>
+  <string name="pref_out_vheight_summary">прилагодена висина на видеото за излезното видео</string>
+  <string name="hintTitle">наслов</string>
+  <string name="hintStartTime">почеток (00:00:00)</string>
+  <string name="hintEndTime">времетраење (00:00:00)</string>
+  <string name="hintFadeIn">fade in (фрејмови)</string>
+  <string name="hintFadeOut">fade out (фрејмови)</string>
+  <string name="start_recording">Снимање</string>
+  <string name="stop_recording">Стоп</string>
+  <string name="play_recording">Пушти</string>
+  <string name="save_recording">Зачувај</string>
+  <string name="downloading_lessons_from_server_">Симни лекции од серверот...</string>
+  <string name="checking_for_updates_">Проверка на ажурирања...</string>
+  <!--LOG COLLECTOR-->
+  <string name="app_name_lc">Колектор на записи</string>
+  <string name="message_subject">Записи на Андроид Уредот</string>
+  <string name="acquiring_log_progress_dialog_message">Превземање на записи од системот\u2026</string>
+  <string name="chooser_title">Одбери апликација за да го испратиш записот</string>
+  <string name="failed_to_get_log_message">Не успешно превземање на записот од системот.</string>
+  <string name="main_dialog_text">Апликацијата ќе се обиде да ги собере записите од уредот.\nСобраните записи ќе се пратат преку апликација по ваш избор.\nЌе имате можност да ги прегледате и модифицирате податоците пред да бидат пратени.</string>
+  <string name="title_home_projects">Проекти</string>
+  <string name="title_home_activity">Активност</string>
+  <string name="title_lessons_lessons">Лекции</string>
+  <string name="title_lessons_glossary">Речник</string>
+  <string name="hello_world">Здраво свету!</string>
+  <string name="title_activity_home">Дома</string>
+  <string name="new_story_name_it">Именувај.</string>
+  <string name="new_story_working_title">Работен наслов...</string>
+  <string name="new_story_choose_something">Одбери нешто кратко што ја дефинира темата и ќе ја заинтересира твојата публика.</string>
+  <string name="new_story_choose_a_medium">Одбери медиум.</string>
+  <!--<string name="new_story_video">Video: Something here about why simple, short video is good! Ideally it should be about the same length as the other strings.</string>
+   	<string name="new_story_essay">Photo Essay: Tell a story about one character. Follow this template to produce a simple photo essay story about one character.</string>
+    <string name="new_story_photo">Single Photo: Telling a strong story with one image is a skill. To simplify, these templates explain some primary photo types.</string>
+    
+    <string name="new_story_audio">Audio: Something here about using audio to tell a story. Personally, I really like to listen to the radio and podcasts while I do housework!</string>-->
+  <string name="new_story_simple_story">Едноставна Приказна</string>
+  <string name="new_story_choose_template">Сценски Шаблон</string>
+  <string name="home_new_story">НАПРАВИ ПРИКАЗНА</string>
+  <string name="home_start_a_lesson">ПРОУЧУВАЈ ГИ ЛЕКЦИИТЕ</string>
+  <string name="title_activity_new_story">Направивте приказна!</string>
+  <string name="title_activity_lessons">Лекции</string>
+  <string name="title_activity_scene_editor">Едитор на Сцени</string>
+  <string name="title_activity_choose_template">Одбери Шаблон</string>
+  <string name="title_activity_story_template">Шаблон на Приказни</string>
+  <string name="tab_make">Направи</string>
+  <string name="tab_review">Прегледај</string>
+  <string name="tab_publish">Комплетирај</string>
+  <string name="tab_finish">Крај</string>
+  <string name="tab_add_clips">Направи</string>
+  <string name="tab_order">Уреди</string>
+  <string name="story_publish_section">Секција</string>
+  <string name="story_publish_section_hint">Спорт</string>
+  <string name="story_publish_topics">Теми</string>
+  <string name="story_publish_topics_hint">Пол</string>
+  <string name="story_publish_location">Локација</string>
+  <string name="story_publish_location_hint">Внеси релевантна локација</string>
+  <string name="story_publish_share">Сподели</string>
+  <string name="story_publish_send_via">Сподели преку</string>
+  <string name="story_publish_status">Статус</string>
+  <string name="story_publish_status_processing">Процесирање</string>
+  <string name="story_publish_status_not">Не е Објавено</string>
+  <string name="story_publish_describe_hint">Опиши ја твојата приказна...</string>
+  <string name="story_publish_story_title">Наслов на Приказната тука</string>
+  <string name="story_publish_story_date">Датум на Приказната тука</string>
+  <!--delete these below-->
+  <string name="title_section3">Секција 3</string>
+  <string name="title_section2">Секција 2</string>
+  <string name="title_section1">Секција 1</string>
+  <string name="title_activity_test_drag">Тест на повлекување</string>
+  <!--Screen title before and during recording-->
+  <!--Screen title after recording-->
+  <!--Screen title while playing back a recording-->
+  <!--Label shown during recording-->
+  <string name="recording">Снимање</string>
+  <!--Label shown when the recording is stopped for a reason other than the user stopping it (e.g. the sd card was removed)-->
+  <string name="recording_stopped">Снимањето е запрено</string>
+  <!--label shown when there is not enough space to record something-->
+  <string name="storage_is_full">Нема повеќе простор</string>
+  <!--label shown when the recording has reached maximum allowed file size-->
+  <string name="max_length_reached">Достигната е максимална должина</string>
+  <!--label shown when there is no sd card available to record to-->
+  <string name="insert_sd_card">Потребна е СД картичка</string>
+  <!--label shown when there is more than 1 minute but less than 9 minutes of space left to record-->
+  <!--label shown when there is less than 1 minute of space left to record-->
+  <!--button to accept the current recording and return it to the caller-->
+  <!--button to discard the current recording and return to the caller-->
+  <!--acknowlegement button in a number of dialogs-->
+  <string name="button_ok">ОК</string>
+  <!--Do not translate. Format of the timer that shows how much has been recorded so far-->
+  <!--label shown before the user has recorded anything-->
+  <!--the name under which recordings will be visible in the media database is formatted like this-->
+  <!--all recordings will show up in the media database with this 'artist' name-->
+  <string name="audio_db_artist_name">Твои снимки</string>
+  <!--all recordings will show up in the media database with this 'album' name-->
+  <string name="audio_db_album_name">Аудио снимки</string>
+  <!--all recordings will show up in the media database in a playlist with this name-->
+  <string name="audio_db_playlist_name">Мои снимки</string>
+  <!--shown as the message in a dialog when an error occured because of an error accessing the sd card-->
+  <string name="error_sdcard_access">Невозможно е да се пристапи до надворешниот или внатрешниот уред за складирање</string>
+  <!--shown as the message in a dialog when the app encountered an unspecified internal error-->
+  <string name="error_app_internal">Внатрешна грешка во апликацијата</string>
+  <!--shown as the message in a dialog when the recording could not be added to the media database-->
+  <string name="error_mediadb_new_record">Невозможно е да се зачува снименото аудио</string>
+  <!--shown as the message in a dialog when an export will tak up too much space-->
+  <string name="error_storage_space" formatted="false">Упс, нема повеќе простор. Ослободете приближно %.2f%nMB и пробајте повторно.</string>
+  <!--add for libra begin-->
+  <string name="default_record_name">снимка без име</string>
+  <string name="menu_view_record_list">Види ја листата на снимки</string>
+  <string name="menu_setting">Нагодувања</string>
+  <string name="delete_dialog_title">Дали сакате да ја избришете оваа снимка?</string>
+  <string name="overwrite_dialog_title">%s веќе постои. Дали саката да го пребришете?</string>
+  <string name="preferences_title">Нагодувања</string>
+  <string name="pref_title_record_type">Тип на датотека за снимање</string>
+  <string name="prefDialogTitle_recordType">Ве молиме одберете тип на датотека</string>
+  <string name="prefDefault_recordType">аудио/3gpp</string>
+  <string name="pref_title_enable_high_quality">Уклучи висок квалитет</string>
+  <string name="pref_summary_enable_high_quality">Аудио датотеката со висок квалитет може да биде поголема</string>
+  <string name="pref_title_enable_sound_effect">Уклучи звучни ефекти</string>
+  <string name="pref_summary_enable_sound_effect">Репродукција на звучни ефекти кога состојбата ќе се промени</string>
+  <string name="notification_recording">Снимање...</string>
+  <string name="notification_stopped">Снимањето е запрено</string>
+  <string name="notification_warning">Малце меморија(помалце од %d минути)...</string>
+  <string name="sd_card_not_available">СД картичката не е достапна</string>
+  <string name="open_file_explorer">Отвори го file explorer</string>
+  <string name="alert_message_delete_record">Дали сакате да ја избришете селектираната снимка?</string>
+  <!--add for libra end-->
+  <string name="help_clip_select">Повлечете со прстот за да одберете тип на клипот, потоа допрете го исечокот за да го пуштите видеото, сликата или аудио записот</string>
+  <!--youtube upload-->
+  <string name="lesson_status_have_not_started">Не е започнато</string>
+  <string name="lessons_congratulations_you_have_completed_the_lesson_">Комплетиравте лекција!</string>
+  <string name="lesson_status_in_progress">Во тек</string>
+  <string name="lesson_status_complete">КОМПЛЕТИРАНО!</string>
+  <string name="tap_to_start_capture">допри за почеток на снимање</string>
+  <string name="no_lessons_available_tap_to_load_">Нема достапни лекции (допри за да вчиташ)</string>
+  <string name="_lesson_complete">лекцијата е завршена</string>
+  <string name="_of_">од</string>
+  <string name="default_youtube_desc">StoryMaker проект</string>
+  <string name="view_published_media_online_or_local_copy_">Прикажи ги објавените медиуми онлајн?</string>
+  <string name="choose_account_for_youtube_upload">Одбери налог за Upload.</string>
+  <string name="rendering">Рендирање</string>
+  <string name="rendering_project_">Рендирање на проектот...</string>
+  <string name="publishing">Објавување</string>
+  <string name="connecting_to_youtube_">конектирање кон YouTube...</string>
+  <string name="uploading_to_storymaker">објавување на StoryMaker сајтот...</string>
+  <string name="rendering_clips_">рендирање на клиповите...</string>
+  <string name="you_must_enter_a_project_name">Внесете работно име. Ова може да се промени подоцна.</string>
+  <string name="delete_project_">Избриши го проектот?</string>
+  <string name="add_new_clip_to_the_scene_">Додади нов клип во сцената?</string>
+  <string name="video_project_project_type">Видео Проект</string>
+  <string name="photo_project_project_type">Фото Проект</string>
+  <string name="audio_project_project_type">Аудио Проект</string>
+  <string name="photo_essay_project_project_type">Фото Есеј Проект</string>
+  <string name="eula_title">Се сложувам со:</string>
+  <string name="eula_accept">Прифаќам</string>
+  <string name="eula_refuse">Одбивам</string>
+  <string name="privacy_policy">Полиса на Приватност</string>
+  <string name="end_user_license_agreement">Договор за лиценца за крајниот корисник</string>
+  <string name="send_annonymous_data">Испратете анонимни податоци на користење како би ни помогнале да го подобриме StoryMaker.</string>
+  <string name="by_clicking_accept">Со допирање на копчето \'Прифаќам\' се согласувате со договорот за лиценца за крајниот корисник и потврдувате дека сте ја прочитале нашата Полиса на Приватност.</string>
+  <string name="button_add_narration">Сними Фон</string>
+  <string name="button_play_narration">Пушти Фон</string>
+  <string name="button_delete_narration">Избриши Фон</string>
+  <string name="button_render_preview">Преглед на Рендерот</string>
+  <string name="publish_sm">StoryMaker.cc</string>
+  <string name="publish_youtube">YouTube</string>
+  <string name="action_render">Извоз</string>
+  <string name="action_play">Пушти</string>
+  <string name="action_share">Сподели</string>
+  <string name="cbRenderTypeLabel">Користи го брзиот Видео Рендер</string>
+  <string name="drawer_quick_capture">Брзо Снимање</string>
+  <string name="select_story_type">Избери тип на приказна</string>
+  <string name="button_start_my_story">ЗАПОЧНИ ЈА МОЈАТА ПРИКАЗНА</string>
+  <string name="home_intro_button_lessons">ИСТРАЖИ ГИ ЛЕКЦИИТЕ</string>
+  <string name="home_intro_button_projects">НАПРАВИ ПРИКАЗНА</string>
+  <string name="created_with_storymaker_tag">Направено со StoryMaker - https://storymaker.cc/</string>
+  <string name="err_you_need_at_least_one_account_configured_on_your_device">Ви треба најмалце еден профил правилно подесен на вашиот уред</string>
+  <string name="you_began_a_new_lesson">Започнавте нова лекција</string>
+  <string name="scene_editor_please_add_clips">Додадете клипови во \'Направи\' јазичето пред да го одберете ова.</string>
+  <string name="scene_editor_trim_clip">Намали го клипот</string>
+  <string name="cancel">Откажи</string>
+  <string name="play_or_share_exported_media_">Пушти или Сподели го извезениот медиј?</string>
+  <string name="err_storage_not_ready">Екстерната картичка (СД картичка) не е достапна во моментов. StoryMaker бара пристап до неа за снимање на податоци од лекциите и проектите. Проверете го вашиот уред и рестартирајте ја апликацијата.</string>
+  <string name="scene_s_">Сцена(и)</string>
+  <string name="clip_s_">клип(ови)</string>
+  <string name="sc_app_not_found">SoundCloud апликацијата не е пронајдена!</string>
+  <string name="sc_app_not_found_message">Дали сакате да ја инсталирате сега?</string>
+  <string name="no_active_sc_account">Нема активен акаунт на SoundCloud, логирајте се или направете нов.</string>
+  <string name="operation_canceled">Операцијата е откажана</string>
+  <string name="could_not_get_token">Токен-от неможеше да биде превземен</string>
+  <string name="getting_details">Добивање на кориснички детали</string>
+  <string name="could_not_create_account">Неможеше да се креира нов акаунт</string>
+  <string name="uploading">Качување...</string>
+  <string name="canceled">Откажи качување</string>
+  <!--added for project export-->
+  <string name="export_dialog_title">Дали сакате да го споделите овој проект како zip?</string>
+  <string name="export_dialog_close">Затвори</string>
+  <string name="export_dialog_share">Сподели</string>
+  <string name="title_activity_accounts">Акаунти</string>
+  <string name="action_settings">Нагодувања</string>
+  <!--added for new UI-->
+  <string name="label_activity_log">Запис на Активности</string>
+  <string name="label_title">Наслов</string>
+  <string name="label_description">Опис</string>
+  <string name="label_tags">Тагови</string>
+  <string name="label_add">Додади</string>
+  <string name="label_edit">Едитирај</string>
+  <string name="label_activities">Запис на Активности</string>
+  <string name="hint_story_title">Внеси Наслов</string>
+  <string name="hint_story_description">Опиши ја твојата приказна...</string>
+  <string name="hint_story_tag">#addtags</string>
+  <string name="label_section">Секција</string>
+  <string name="label_location">Локација</string>
+  <string name="title_activity_story_info">Инфо</string>
+  <string name="title_activity_story_info_edit">Едитирај Инфо</string>
+  <string name="title_activity_project_tag_fragment">ProjectTagFragment</string>
+  <string name="title_activity_connect_account">StoryMaker Акаунт</string>
+  <string name="hint_no_description">Нема опис.</string>
+  <string name="trim_clips">Намали ги Клиповите</string>
+  <string name="info">Инфо</string>
+  <string name="send_logcat_to_support">Испрати Logcat до техничката подршка</string>
+  <string name="restarting_storymaker">StoryMaker се рестартира...</string>
+</resources>

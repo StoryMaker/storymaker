@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     
-    <string-array name="cliptype_thumbnails">
+    <string-array name="cliptype_thumbnails" translatable="false">
         <item>@drawable/cliptype_close</item>
         <item>@drawable/cliptype_detail</item>
         <item>@drawable/cliptype_long</item>
@@ -9,15 +9,24 @@
         <item>@drawable/cliptype_wide</item>
     </string-array>
 
-    <string-array name="cliptypes">
+    <string-array name="cliptypes" translatable="false">
         <item>cliptype_close</item>
         <item>cliptype_detail</item>
         <item>cliptype_long</item>
         <item>cliptype_medium</item>
         <item>cliptype_wide</item>
     </string-array>
+
+    <string-array name="prefEntries_recordType" translatable="false">
+        <item>amr</item>
+        <item>3gpp</item>
+    </string-array>
     
-   
+    <string-array name="prefValues_recordType" translatable="false">
+        <item>audio/amr</item>
+        <item>audio/3gpp</item>
+    </string-array>
+    
     <string-array name="story_sections">
         <item>Politics</item>
         <item>Business</item>
@@ -29,7 +38,7 @@
         <item>Environment</item>
     </string-array>
     
-     <integer-array name="vibration_button">
+     <integer-array name="vibration_button" translatable="false">
         <item>0</item>
         <item>0</item>
         <item>5</item>
@@ -41,7 +50,7 @@
         <item>5</item>
     </integer-array>
 
-    <integer-array name="vibration_center_button">
+    <integer-array name="vibration_center_button" translatable="false">
         <item>0</item>
         <item>0</item>
         <item>5</item>
@@ -79,7 +88,7 @@
         <item>5</item>
     </integer-array>
 
-    <integer-array name="vibration_record_play_end">
+    <integer-array name="vibration_record_play_end" translatable="false">
         <item>0</item>
         <item>0</item>
         <item>5</item>
@@ -155,7 +164,7 @@
         <item>10</item>
     </integer-array>
 
-    <integer-array name="vibration_seek_end">
+    <integer-array name="vibration_seek_end" translatable="false">
         <item>0</item>
         <item>0</item>
         <item>5</item>
@@ -183,7 +192,7 @@
         <item>Story</item>
     </string-array>
     
-     <string-array name="lesson_sections_folder">
+     <string-array name="lesson_sections_folder" translatable="false">
         <item>1</item>
         <item>2</item>
         <item>3</item>
@@ -192,18 +201,88 @@
         <item>6</item>
     </string-array>
     
-    <string-array name="resolution_options">
+    <string-array name="resolution_options" translatable="false">
         <item name="1080">1080p (1920 x 1080)</item>
         <item name="720">720p (1280 x 720)</item>
         <item name="480">480p (720 x 480)</item>
         <item name="360">360p (640 x 360)</item>
     </string-array>
     
-    <string-array name="resolution_options_values">
+    <string-array name="resolution_options_values" translatable="false">
         <item name="1080">1080</item>
         <item name="720">720</item>
         <item name="480">480</item>
         <item name="360">360</item>
+    </string-array>
+    
+    <string-array name="interface_language_options" translatable="false">
+        <item name="english">English</item>
+        <item name="french">French</item>
+        <item name="arabic">Arabic</item>
+        <item name="bosnian">Bosnian</item>
+        <item name="serbian">Serbian</item>
+        <item name="spanish">Spanish</item>
+        <item name="persian">Persian</item>
+        <item name="german">German</item>
+        <item name="macedonian">Macedonian</item>
+        <item name="korean">Korean</item>
+    </string-array>
+    
+    <string-array name="interface_language_options_values">
+        <item name="english">en</item>
+        <item name="french">fr</item>
+        <item name="arabic">ar</item>
+        <item name="bosnian">bs</item>
+        <item name="serbian">sr</item>
+        <item name="spanish">es</item>
+        <item name="persian">fa</item>
+        <item name="german">de</item>
+        <item name="macedonian">mk</item>
+        <item name="korean">ko</item>
+    </string-array>
+    
+    <string-array name="lesson_language_options">
+        <item name="english">English</item>
+        <item name="arabic">Arabic</item>
+        <item name="safrican">Southern African</item>
+    </string-array>
+    
+    <string-array name="lesson_language_options_values">
+        <item name="english">en</item>
+        <item name="arabic">ar</item>
+        <item name="safrican">sa</item>
+    </string-array>
+    
+    <string-array name="array_story_locations">
+        <item>Egypt</item>
+        <item>Iraq</item>
+        <item>Morocco</item>
+        <item>Tunisia</item>
+    </string-array>
+    
+    <!-- FIXME remove these, but they are referenced in code too... -->
+    <string-array name="array_autocomplete_tags">
+        <item>atesttag</item>
+        <item>btesttag</item>
+        <item>ctesttag</item>
+        <item>dtesttag</item>
+        <item>etesttag</item>
+        <item>ftesttag</item>
+        <item>gtesttag</item>
+        <item>htesttag</item>
+    </string-array>
+    
+    <string-array name="array_story_sections">
+        <item>Politics</item>
+        <item>Business</item>
+        <item>Sports</item>
+        <item>Arts</item>
+        <item>Science</item>
+        <item>Health</item>
+        <item>Education</item>
+        <item>Environment</item>
+        <item>Technology</item>
+        <item>Travel</item>
     </string-array>
     
 </resources>

@@ -1,0 +1,64 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <string-array name="story_sections">
+    <item>Política</item>
+    <item>Negocios</item>
+    <item>Deportes</item>
+    <item>Artes</item>
+    <item>Ciencia</item>
+    <item>Salud</item>
+    <item>Educación</item>
+    <item>Entorno</item>
+  </string-array>
+  <integer-array name="vibration_button" translatable="false">&lt;item&gt;0&lt;/item&gt;&lt;item&gt;0&lt;/item&gt;&lt;item&gt;5&lt;/item&gt;&lt;item&gt;120&lt;/item&gt;&lt;item&gt;8&lt;/item&gt;&lt;item&gt;-5&lt;/item&gt;&lt;item&gt;5&lt;/item&gt;&lt;item&gt;0&lt;/item&gt;&lt;item&gt;5&lt;/item&gt;</integer-array>
+  <integer-array name="vibration_center_button" translatable="false">&lt;item&gt;0&lt;/item&gt;&lt;item&gt;0&lt;/item&gt;&lt;item&gt;5&lt;/item&gt;&lt;item&gt;5&lt;/item&gt;&lt;item&gt;10&lt;/item&gt;&lt;item&gt;-3&lt;/item&gt;&lt;item&gt;10&lt;/item&gt;&lt;item&gt;15&lt;/item&gt;&lt;item&gt;10&lt;/item&gt;&lt;item&gt;-3&lt;/item&gt;&lt;item&gt;10&lt;/item&gt;&lt;item&gt;25&lt;/item&gt;&lt;item&gt;10&lt;/item&gt;&lt;item&gt;-3&lt;/item&gt;&lt;item&gt;10&lt;/item&gt;&lt;item&gt;35&lt;/item&gt;&lt;item&gt;10&lt;/item&gt;&lt;item&gt;-3&lt;/item&gt;&lt;item&gt;10&lt;/item&gt;&lt;item&gt;40&lt;/item&gt;&lt;item&gt;10&lt;/item&gt;&lt;item&gt;-3&lt;/item&gt;&lt;item&gt;30&lt;/item&gt;&lt;item&gt;120&lt;/item&gt;&lt;item&gt;8&lt;/item&gt;&lt;item&gt;-5&lt;/item&gt;&lt;item&gt;5&lt;/item&gt;&lt;item&gt;0&lt;/item&gt;&lt;item&gt;150&lt;/item&gt;&lt;item&gt;50&lt;/item&gt;&lt;item&gt;8&lt;/item&gt;&lt;item&gt;-5&lt;/item&gt;&lt;item&gt;5&lt;/item&gt;&lt;item&gt;0&lt;/item&gt;&lt;item&gt;5&lt;/item&gt;</integer-array>
+  <integer-array name="vibration_record_play_end" translatable="false">&lt;item&gt;0&lt;/item&gt;&lt;item&gt;0&lt;/item&gt;&lt;item&gt;5&lt;/item&gt;&lt;item&gt;5&lt;/item&gt;&lt;item&gt;50&lt;/item&gt;&lt;item&gt;-3&lt;/item&gt;&lt;item&gt;5&lt;/item&gt;&lt;item&gt;10&lt;/item&gt;&lt;item&gt;50&lt;/item&gt;&lt;item&gt;-3&lt;/item&gt;&lt;item&gt;5&lt;/item&gt;&lt;item&gt;5&lt;/item&gt;&lt;item&gt;50&lt;/item&gt;&lt;item&gt;-3&lt;/item&gt;&lt;item&gt;5&lt;/item&gt;&lt;item&gt;10&lt;/item&gt;&lt;item&gt;50&lt;/item&gt;&lt;item&gt;-3&lt;/item&gt;&lt;item&gt;5&lt;/item&gt;&lt;item&gt;5&lt;/item&gt;&lt;item&gt;50&lt;/item&gt;&lt;item&gt;-3&lt;/item&gt;&lt;item&gt;5&lt;/item&gt;&lt;item&gt;10&lt;/item&gt;&lt;item&gt;50&lt;/item&gt;&lt;item&gt;-3&lt;/item&gt;&lt;item&gt;5&lt;/item&gt;&lt;item&gt;5&lt;/item&gt;&lt;item&gt;50&lt;/item&gt;&lt;item&gt;-3&lt;/item&gt;&lt;item&gt;5&lt;/item&gt;&lt;item&gt;10&lt;/item&gt;&lt;item&gt;50&lt;/item&gt;&lt;item&gt;-3&lt;/item&gt;&lt;item&gt;5&lt;/item&gt;&lt;item&gt;5&lt;/item&gt;&lt;item&gt;50&lt;/item&gt;&lt;item&gt;-3&lt;/item&gt;&lt;item&gt;5&lt;/item&gt;&lt;item&gt;10&lt;/item&gt;&lt;item&gt;50&lt;/item&gt;&lt;item&gt;-3&lt;/item&gt;&lt;item&gt;5&lt;/item&gt;&lt;item&gt;5&lt;/item&gt;&lt;item&gt;50&lt;/item&gt;&lt;item&gt;-3&lt;/item&gt;&lt;item&gt;5&lt;/item&gt;&lt;item&gt;10&lt;/item&gt;&lt;item&gt;50&lt;/item&gt;&lt;item&gt;-3&lt;/item&gt;&lt;item&gt;5&lt;/item&gt;&lt;item&gt;5&lt;/item&gt;&lt;item&gt;50&lt;/item&gt;&lt;item&gt;-3&lt;/item&gt;&lt;item&gt;5&lt;/item&gt;&lt;item&gt;10&lt;/item&gt;&lt;item&gt;50&lt;/item&gt;&lt;item&gt;-3&lt;/item&gt;&lt;item&gt;5&lt;/item&gt;&lt;item&gt;120&lt;/item&gt;&lt;item&gt;8&lt;/item&gt;&lt;item&gt;-5&lt;/item&gt;&lt;item&gt;5&lt;/item&gt;&lt;item&gt;0&lt;/item&gt;&lt;item&gt;150&lt;/item&gt;&lt;item&gt;60&lt;/item&gt;&lt;item&gt;8&lt;/item&gt;&lt;item&gt;-5&lt;/item&gt;&lt;item&gt;5&lt;/item&gt;&lt;item&gt;0&lt;/item&gt;&lt;item&gt;5&lt;/item&gt;&lt;item&gt;0&lt;/item&gt;&lt;item&gt;10&lt;/item&gt;</integer-array>
+  <integer-array name="vibration_seek_end" translatable="false">&lt;item&gt;0&lt;/item&gt;&lt;item&gt;0&lt;/item&gt;&lt;item&gt;5&lt;/item&gt;&lt;item&gt;120&lt;/item&gt;&lt;item&gt;8&lt;/item&gt;&lt;item&gt;-5&lt;/item&gt;&lt;item&gt;5&lt;/item&gt;&lt;item&gt;0&lt;/item&gt;&lt;item&gt;150&lt;/item&gt;&lt;item&gt;60&lt;/item&gt;&lt;item&gt;8&lt;/item&gt;&lt;item&gt;-5&lt;/item&gt;&lt;item&gt;5&lt;/item&gt;&lt;item&gt;0&lt;/item&gt;&lt;item&gt;5&lt;/item&gt;</integer-array>
+  <string-array name="lesson_sections">
+    <item>Periodismo</item>
+    <item>Seguridad</item>
+    <item>Audio</item>
+    <item>Fotografía</item>
+    <item>Videografía</item>
+    <item>Historia</item>
+  </string-array>
+  <string-array name="lesson_language_options">
+    <item>Inglés</item>
+    <item>Árabe</item>
+    <item>Sudafricano</item>
+  </string-array>
+  <string-array name="lesson_language_options_values">
+    <item>https://storymaker.cc/appdata/lessons/en</item>
+    <item>https://storymaker.cc/appdata/lessons/ar</item>
+    <item>https://storymaker.cc/appdata/lessons/sa</item>
+  </string-array>
+  <string-array name="array_story_locations">
+    <item>Egipto</item>
+    <item>Irak</item>
+    <item>Marruecos</item>
+    <item>Tunez</item>
+  </string-array>
+  <!--FIXME remove these, but they are referenced in code too...-->
+  <string-array name="array_autocomplete_tags">
+    <item>etiquetadepruebaa</item>
+    <item>etiquetadepruebab</item>
+    <item>etiquetadepruebac</item>
+    <item>etiquetadepruebad</item>
+    <item>etiquetadepruebae</item>
+    <item>etiquetadepruebaf</item>
+    <item>etiquetadepruebag</item>
+    <item>etiquetadepruebah</item>
+  </string-array>
+  <string-array name="array_story_sections">
+    <item>Política</item>
+    <item>Negocios</item>
+    <item>Deportes</item>
+    <item>Artes</item>
+    <item>Ciencia</item>
+    <item>Salud</item>
+    <item>Educación</item>
+    <item>Medio ambiente</item>
+    <item>Tecnología</item>
+    <item>Viajes</item>
+  </string-array>
+</resources>

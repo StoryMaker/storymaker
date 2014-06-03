@@ -223,6 +223,9 @@
 <string name="prefs_use_download_manager_title">Use Download Manager</string>
 <string name="prefs_use_download_manager_summary">Download lesson archives with the Android DownloadManager service</string>
 
+<string name="prefs_use_upload_manager_title">Use Upload Manager</string>
+<string name="prefs_use_upload_manager_summary">Upload story content with the Android UploadManager service</string>
+
 <string name="prefs_youtube_acccount_title">YouTube Account</string>
 <string name="prefs_youtube_acccount_summary">The YouTube account to use for video uploads. This MUST be registered on your device.</string>
 
@@ -232,11 +235,11 @@
 <string name="prefs_soundcloud_account_title">SoundCloud Account</string>
 <string name="prefs_soundcloud_account_summary">The SoundCloud account to use for audio uploads</string>
 
-<string name="prefs_enable_arabic_mode_title">Enable Arabic mode</string>
-<string name="prefs_enable_arabic_mode_summary"></string>
+<string name="prefs_interface_language_title">Select Language</string>
+<string name="prefs_interface_language_summary"></string>
 
-<string name="prefs_custom_lesson_location_title">Custom Lesson Location</string>
-<string name="prefs_custom_lesson_location_summary">Shortcode or URL to custom lesson location</string>
+<string name="prefs_lesson_language_title">Select Lessons Language</string>
+<string name="prefs_lesson_language_summary"></string>
 
 <string name="prefs_slide_duration_title">Slide Duration</string>
 <string name="prefs_slide_duration_summary">Duration of each slide in a photo essay</string>
@@ -290,5 +293,31 @@
 <string name="prefs_youtube_method_summary">Debug authorization method type</string>
 
 <!-- /prefs -->
+
+<!-- FirstStartActivity -->
+
+<string name="sign_up_btn">SIGN UP FOR STORYMAKER</string>
+<string name="no_thanks_btn">NO THANKS</string>
+<string name="tos_btn">I AGREE TO THE TERMS OF SERVICE</string>
+
+<string name="tos_dialog_title">Terms of Service</string>
+<string name="tos_dialog_msg">Please Accept our Terms of Service before continuing</string>
+<string name="tos_dialog_positive_button">Got it</string>
+
+<string name="acct_created_dialog_title">Access your Account</string>
+<string name="acct_created_dialog_msg"><b>Your StoryMaker password will be emailed to you shortly.</b> After obtaining your password, you may login at any time via the drawer menu (Accessed by swiping from the left screen edge).</string>
+<string name="acct_created_dialog_positive_button">Get Started!</string>
+
+<!--  ConnectAccountActivity -->
+
+<string name="my_account">MY STORYMAKER ACCOUNT</string>
+<string name="join_storymaker">Join the StoryMaker Community</string>
+<string name="create_account">CREATE MY ACCOUNT</string>
+<string name="sign_in">SIGNUP / LOGIN</string>
+<string name="sign_out">SIGN OUT</string>
+
+<!-- ProjectTagFragment -->
+
+<string name="no_tags_msg">No #tags added</string>
 
 </resources>

@@ -1,0 +1,60 @@
+{
+    "scenes": [
+        {
+            "clips": [
+                {
+                    "Artwork": "cliptype_wide", 
+                    "Description": "Indique el país o añada un elemento étnico o religioso. También incluya puntos de referencia u otra información de localización", 
+                    "Goal": "Mostrar donde se desarrolla la investigación.", 
+                    "Length": "X segundos", 
+                    "Security Concern": "-", 
+                    "Shot Size": "Ancho", 
+                    "Tip": "Los puntos de referencia ayudan al público a entender donde se desarrolla la investigación.", 
+                    "Title": "Environmental"
+                }, 
+                {
+                    "Artwork": "cliptype_medium", 
+                    "Description": "Mostrar el personaje interactuando con otros.Construir una conexión entre el espectador y sujeto. Tu personaje debe cubrir el 20% de su marco.Bueno para las últimas Noticias", 
+                    "Goal": "Mostrar como la gente responde al evento.", 
+                    "Length": "X segundos", 
+                    "Security Concern": "-", 
+                    "Shot Size": "Medio", 
+                    "Tip": "Mantenga a su personaje en una de las líneas verticales el marco para obtener una toma adecuada.", 
+                    "Title": "Reaction/Interaction"
+                }, 
+                {
+                    "Artwork": "cliptype_long", 
+                    "Description": "Muestre al personaje comportándose de manera natural. Muestre a la audiencia por qué el personaje es importante.", 
+                    "Goal": "Mostrar el personaje involucrado en el lugar de la investigación." 
+                    "Length": "X segundos", 
+                    "Security Concern": "-", 
+                    "Shot Size": "Largo 
+                    "Tip": "Ubique a su personaje en un lado del marco. Coloque en el otro lado algo que sea importante para su investigación.", 
+                    "Title": "Candid"
+                }, 
+                {
+                    "Artwork": "cliptype_close", 
+                    "Description": "Fíjese en el personaje principal de su investigación. Destaque su estado emocional.", 
+                    "Goal": "Presente al personaje. Acérquese.", 
+                    "Length": "X segundos", 
+                    "Security Concern": "-", 
+                    "Shot Size": "Cerca", 
+                    "Tip": "Utilce vista de línea para obtener una toma adecuada.", 
+                    "Title": "Portrait"
+                }, 
+                {
+                    "Artwork": "cliptype_detail", 
+                    "Description": "Una fotografía impactante puede hacer que el público quiera saber más. Debe ocupar al menos el 50% del marco.", 
+                    "Goal": "Concluya la investigación mostrando el elemento principal de la historia.", 
+                    "Length": "X segundos", 
+                    "Security Concern": "-", 
+                    "Shot Size": "Detalle", 
+                    "Tip": "Set your camera to Macro if you are shooting less than arm\u2019s length from your subject.", 
+                    "Title": "Signature"
+                }
+            ], 
+            "title": "Scene 1"
+        }
+    ], 
+    "title": "Photo Simple"
+}

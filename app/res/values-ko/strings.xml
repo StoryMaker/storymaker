@@ -1,0 +1,274 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+  <string name="app_name">스토리메이커</string>
+  <string name="title_projects">이야기들</string>
+  <string name="title_lessons">레슨들</string>
+  <string name="action_publish">출판하기</string>
+  <!--menus-->
+  <string name="menu_new_project">새로하기</string>
+  <string name="menu_projects">이야기들</string>
+  <string name="menu_lessons">교훈들</string>
+  <string name="menu_glossary">용어 사전</string>
+  <string name="menu_contacts">연락처</string>
+  <string name="menu_settings">설정</string>
+  <string name="menu_accounts">계정</string>
+  <string name="menu_archive">기록 보관소</string>
+  <string name="drawer_profile">로그인</string>
+  <!--FIXME: rename-->
+  <string name="menu_add_media">추가하기</string>
+  <string name="menu_capture_media">촬영하기</string>
+  <string name="menu_share_media">공유하기</string>
+  <string name="menu_save_media">저장하기</string>
+  <string name="menu_play_media">놀기</string>
+  <string name="menu_render_media">렌더</string>
+  <string name="menu_bug_report">버그 리포트</string>
+  <string name="menu_login">로그인</string>
+  <string name="menu_logs">로그 보내기</string>
+  <string name="menu_update">업데이트</string>
+  <string name="menu_about">정보</string>
+  <string name="menu_save_project">저장하기</string>
+  <string name="menu_overlay_camera">카메라</string>
+  <string name="menu_add_from_gallery">갤러리에서 불러오기</string>
+  <string name="menu_add_new_shot">장면에 클립넣기</string>
+  <string name="menu_del_shot">최근의 클립 지우기</string>
+  <string name="menu_export_project_files">프로젝트 파일을 압축하여 보내기</string>
+  <string name="menu_join_storymaker">스토리메이커 커뮤니티 가입하기</string>
+  <string name="menu_sign_up">가입하기 / 로그인</string>
+  <string name="menu_upload_manager">업로드 매니저</string>
+  <string name="welcome_message">안녕하세요! 스토리메이커에 온 것을 환영합니다</string>
+  <!--project list-->
+  <string name="default_project_list_view">처음으로 프로젝트를 만드는 군요!\n\n- 시작 누르기-</string>
+  <string name="default_project_view_message">당신은 선택할 수 있습니다.\n카메라, 오디오 또는 사진으로 당신의 이야기를 하세요\n- 더하기 누르기 -</string>
+  <!--video processing-->
+  <string name="pref_out_fps_title">프레임률 산출량 (fps)</string>
+  <string name="pref_out_fps_summary">비디오 출력의 초당 프레임 (15-30)</string>
+  <string name="pref_out_rate_title">비트레이트 산출량 (kbps)</string>
+  <string name="pref_out_rate_summary">비디오 산출량의 비트레이트 (300-1500)</string>
+  <string name="pref_out_format_title">산출량 포맷</string>
+  <string name="pref_out_format_summary">파일 컨테이너 포맷 (mp4, 3gp, ogg)</string>
+  <string name="pref_out_vcodec_title">비디오 코덱 산출량</string>
+  <string name="pref_out_vcodec_summary">비디오 코덱 (copy, libx264, etc)</string>
+  <string name="pref_out_acodec_title">오디오 코덱 산출량</string>
+  <string name="pref_out_acodec_summary">오디오 코덱 (copy, aac, mp3, etc)</string>
+  <string name="pref_out_vwidth_title">비디오 너비 맞추기 (px)</string>
+  <string name="pref_out_vwidth_summary">산출된 비디오 너비 맞추기</string>
+  <string name="pref_out_vheight_title">비디오 높이 맞추기 (px)</string>
+  <string name="pref_out_vheight_summary">산출된 비디오 높이 맞추기</string>
+  <string name="hintTitle">제목</string>
+  <string name="hintStartTime">시작 (00:00:00)</string>
+  <string name="hintFadeIn">더 또렷하게 (frames)</string>
+  <string name="hintFadeOut">더 흐려지게 (frames)</string>
+  <string name="start_recording">촬영하기</string>
+  <string name="stop_recording">멈추기</string>
+  <string name="play_recording">재생하기</string>
+  <string name="save_recording">저장하기</string>
+  <string name="downloading_lessons_from_server_">서버에서 레슨 다운로드...</string>
+  <string name="checking_for_updates_">업데이트 확인중...</string>
+  <!--LOG COLLECTOR-->
+  <string name="app_name_lc">로그 수집</string>
+  <string name="message_subject">안드로이드 장치 로그</string>
+  <string name="acquiring_log_progress_dialog_message">시스템으로부터 로그 받기\u2026</string>
+  <string name="chooser_title">로그를 보내기 위해 어플리케이션 선택하기</string>
+  <string name="failed_to_get_log_message">시스템에서 로그를 가져오는데 실패했습니다.</string>
+  <string name="main_dialog_text">이 어플리케이션은 장치로그를 모으는 시도를 할 것입니다. 모아진로그는 당신이 선택한 어플리케이션을 사용하면서 보내질 것입니다. 당신은 또한 보내진 정보를 보고 수정된 시킬 기회를 가질 것입니다.</string>
+  <string name="title_home_projects">프로젝트들</string>
+  <string name="title_home_activity">활동</string>
+  <string name="title_lessons_lessons">레슨들</string>
+  <string name="title_lessons_glossary">용어 사전</string>
+  <string name="hello_world">안녕하세요!</string>
+  <string name="title_activity_home">집</string>
+  <string name="new_story_name_it">이름짓기</string>
+  <string name="new_story_working_title">가제...</string>
+  <string name="new_story_choose_something">간단히 주제를 정의하고 관객의 흥미를 유도하는 것을 선택하세요</string>
+  <string name="new_story_choose_a_medium">중간을 선택하세요</string>
+  <!--<string name="new_story_video">Video: Something here about why simple, short video is good! Ideally it should be about the same length as the other strings.</string>
+   	<string name="new_story_essay">Photo Essay: Tell a story about one character. Follow this template to produce a simple photo essay story about one character.</string>
+    <string name="new_story_photo">Single Photo: Telling a strong story with one image is a skill. To simplify, these templates explain some primary photo types.</string>
+    
+    <string name="new_story_audio">Audio: Something here about using audio to tell a story. Personally, I really like to listen to the radio and podcasts while I do housework!</string>-->
+  <string name="new_story_simple_story">단순한 이야기</string>
+  <string name="new_story_choose_template">템플릿 장면</string>
+  <string name="home_new_story">이야기 만들기</string>
+  <string name="home_start_a_lesson">레슨 둘러보기</string>
+  <string name="title_activity_new_story">이야기를 만들어보세요!</string>
+  <string name="title_activity_lessons">레슨들</string>
+  <string name="title_activity_scene_editor">장면 편집기</string>
+  <string name="title_activity_choose_template">템플릿 선택하기</string>
+  <string name="title_activity_story_template">템플릿 이야기</string>
+  <string name="tab_make">만들기</string>
+  <string name="tab_review">검토하기</string>
+  <string name="tab_publish">완성하기</string>
+  <string name="tab_finish">끝내기</string>
+  <string name="tab_add_clips">만들기</string>
+  <string name="tab_order">편집하기</string>
+  <string name="story_publish_section">부분</string>
+  <string name="story_publish_section_hint">스포츠</string>
+  <string name="story_publish_topics">주제</string>
+  <string name="story_publish_topics_hint">성별</string>
+  <string name="story_publish_location">위치</string>
+  <string name="story_publish_location_hint">적절한 위치 입력하기</string>
+  <string name="story_publish_share">공유하기</string>
+  <string name="story_publish_send_via">보내기</string>
+  <string name="story_publish_status">현황</string>
+  <string name="story_publish_status_processing">처리중</string>
+  <string name="story_publish_status_not">출판되지 않았습니다.</string>
+  <string name="story_publish_describe_hint">당신의 이야기를 표현하세요...</string>
+  <string name="story_publish_story_title">이야기 제목은 여기에</string>
+  <string name="story_publish_story_date">이야기 데이터는 여기에</string>
+  <!--delete these below-->
+  <string name="title_section3">부분 3</string>
+  <string name="title_section2">부분 2</string>
+  <string name="title_section1">부분 1</string>
+  <string name="title_activity_test_drag">테스트 드래그</string>
+  <!--Screen title before and during recording-->
+  <!--Screen title after recording-->
+  <!--Screen title while playing back a recording-->
+  <!--Label shown during recording-->
+  <string name="recording">촬영중</string>
+  <!--Label shown when the recording is stopped for a reason other than the user stopping it (e.g. the sd card was removed)-->
+  <string name="recording_stopped">촬영이 정지되었습니다.</string>
+  <!--label shown when there is not enough space to record something-->
+  <string name="storage_is_full">용량이 가득찼습니다.</string>
+  <!--label shown when the recording has reached maximum allowed file size-->
+  <string name="max_length_reached">최대길이에 다다랐습니다.</string>
+  <!--label shown when there is no sd card available to record to-->
+  <string name="insert_sd_card">SD 카드가 필요합니다.</string>
+  <!--label shown when there is more than 1 minute but less than 9 minutes of space left to record-->
+  <!--label shown when there is less than 1 minute of space left to record-->
+  <!--button to accept the current recording and return it to the caller-->
+  <!--button to discard the current recording and return to the caller-->
+  <!--acknowlegement button in a number of dialogs-->
+  <string name="button_ok">OK</string>
+  <!--Do not translate. Format of the timer that shows how much has been recorded so far-->
+  <!--label shown before the user has recorded anything-->
+  <!--the name under which recordings will be visible in the media database is formatted like this-->
+  <!--all recordings will show up in the media database with this 'artist' name-->
+  <string name="audio_db_artist_name">당신의 촬영들</string>
+  <!--all recordings will show up in the media database with this 'album' name-->
+  <string name="audio_db_album_name">오디오 녹음들</string>
+  <!--all recordings will show up in the media database in a playlist with this name-->
+  <string name="audio_db_playlist_name">나의 촬영들</string>
+  <!--shown as the message in a dialog when an error occured because of an error accessing the sd card-->
+  <string name="error_sdcard_access">외부의 또는 내부의 저장소에 연결할 수 없습니다.</string>
+  <!--shown as the message in a dialog when the app encountered an unspecified internal error-->
+  <string name="error_app_internal">내부 어플리케이션 에러</string>
+  <!--shown as the message in a dialog when the recording could not be added to the media database-->
+  <string name="error_mediadb_new_record">녹음된 오디오 저장을 할 수 없습니다.</string>
+  <!--shown as the message in a dialog when an export will tak up too much space-->
+  <string name="error_storage_space" formatted="false">이런, 공간이 없습니다. 대략 %.2f%nMB 공간을 만들어서 다시 시도해보세요!</string>
+  <!--add for libra begin-->
+  <string name="default_record_name">제목없는 촬영</string>
+  <string name="menu_view_record_list">촬영목록 보기</string>
+  <string name="menu_setting">설정</string>
+  <string name="delete_dialog_title">최근의 촬영을 삭제하시겠습니까?</string>
+  <string name="overwrite_dialog_title">%s가 이미 존재합니다. 덮어씌우시겠습니까?</string>
+  <string name="preferences_title">설정</string>
+  <string name="pref_title_record_type">파일종류 기록하기</string>
+  <string name="prefDialogTitle_recordType">파일종류를 선택하세요</string>
+  <string name="prefDefault_recordType">오디오/3gpp</string>
+  <string name="pref_title_enable_high_quality">고화질 활성화</string>
+  <string name="pref_summary_enable_high_quality">고화질 오디오파일은 용량이 늘어날 수 있습니다.</string>
+  <string name="pref_title_enable_sound_effect">음향효과 활성화</string>
+  <string name="pref_summary_enable_sound_effect">상태가 변할 때 음향효과 틀기</string>
+  <string name="notification_recording">녹음중...</string>
+  <string name="notification_stopped">녹음이 중지되었습니다</string>
+  <string name="notification_warning">저장공간 부족(%d 보다 적게 남았습니다)...</string>
+  <string name="sd_card_not_available">SD 카드를 이용할 수 없습니다.</string>
+  <string name="open_file_explorer">파일 관리자 열기</string>
+  <string name="alert_message_delete_record">선택된 촬영파일을 지우시겠습니까?</string>
+  <!--add for libra end-->
+  <string name="help_clip_select">클립종류를 밀어서 선택하고 클립 이미지를 눌러서 비디오, 사진 또는 오디오캡쳐를 시작하세요</string>
+  <!--youtube upload-->
+  <string name="lesson_status_have_not_started">시작하지 않았습니다.</string>
+  <string name="lessons_congratulations_you_have_completed_the_lesson_">레슨을 완료했습니다!</string>
+  <string name="lesson_status_in_progress">진행중</string>
+  <string name="lesson_status_complete">완료!</string>
+  <string name="tap_to_start_capture">탭해서 캡쳐시작하기</string>
+  <string name="no_lessons_available_tap_to_load_">레슨을 이용할 수 없습니다 (탭해서 부르기)</string>
+  <string name="_lesson_complete">레슨완료</string>
+  <string name="_of_">의</string>
+  <string name="default_youtube_desc">스토리메이커 프로젝트</string>
+  <string name="view_published_media_online_or_local_copy_">출판된 매체를 온라인으로 보시겠습니까?</string>
+  <string name="choose_account_for_youtube_upload">계정 선택해서 업로드하기</string>
+  <string name="rendering">렌더링</string>
+  <string name="rendering_project_">렌더링 프로젝트...</string>
+  <string name="publishing">출판하기</string>
+  <string name="connecting_to_youtube_">유투브에 연결중...</string>
+  <string name="uploading_to_storymaker">스토리메이커 사이트에 출판하기...</string>
+  <string name="rendering_clips_">클립 렌더링...</string>
+  <string name="you_must_enter_a_project_name">초안의 가제를 입력하세요. 나중에 바꿀 수도 있습니다.</string>
+  <string name="delete_project_">프로젝트를 지우시겠습니까?</string>
+  <string name="add_new_clip_to_the_scene_">장면에 새로운 클립을 넣으시겠습니까?</string>
+  <string name="video_project_project_type">비디오 프로젝트</string>
+  <string name="photo_project_project_type">사진 프로젝트</string>
+  <string name="audio_project_project_type">오디오 프로젝트</string>
+  <string name="photo_essay_project_project_type">사진 에세이 프로젝트</string>
+  <string name="eula_title">동의하기:</string>
+  <string name="eula_accept">받아들이기</string>
+  <string name="eula_refuse">거절하기</string>
+  <string name="privacy_policy">개인정보보호정책</string>
+  <string name="end_user_license_agreement">사용자 라이센스 계약서</string>
+  <string name="send_annonymous_data">익명의 사용정보를 보내 스토리메이커 개선시키는데 돕기</string>
+  <string name="by_clicking_accept">\'받아들이기\'를 누르고 사용자 라이센스 계약서와 개인정보보호정책에 동의하기 </string>
+  <string name="button_add_narration">보이스오버 녹음</string>
+  <string name="button_play_narration">보이스오버 재생하기</string>
+  <string name="button_delete_narration">보이스오버 제거하기</string>
+  <string name="button_render_preview">렌더 시사회</string>
+  <string name="publish_sm">StoryMaker.cc</string>
+  <string name="publish_youtube">유투브</string>
+  <string name="action_render">보내기</string>
+  <string name="action_play">재생하기</string>
+  <string name="action_share">공유하기</string>
+  <string name="cbRenderTypeLabel">빠른 비디오 렌더 사용하기</string>
+  <string name="drawer_quick_capture">빠른캡쳐</string>
+  <string name="select_story_type">이야기종류 선택하기</string>
+  <string name="button_start_my_story">나의 이야기 시작하기</string>
+  <string name="home_intro_button_lessons">레슨 둘러보기</string>
+  <string name="home_intro_button_projects">이야기 만들기</string>
+  <string name="created_with_storymaker_tag">스토리메이커 가입하기 - https://storymaker.cc/</string>
+  <string name="err_you_need_at_least_one_account_configured_on_your_device">하나의 계정을 만들어서 장치의 환경설정하기</string>
+  <string name="you_began_a_new_lesson">새로운 레슨을 시작합니다.</string>
+  <string name="scene_editor_please_add_clips">이 탭을 선택하기 전에 \'만들기\'탭을 선택해서 클립을 추가하세요.</string>
+  <string name="scene_editor_trim_clip">클립 다듬기</string>
+  <string name="cancel">취소하기</string>
+  <string name="play_or_share_exported_media_">보낸매체를 재생하거나 공유하시겠습니까?</string>
+  <string name="err_storage_not_ready">외부 저장소(SD카드)가 읽거나 쓰는데 이용할 수 없습니다.  이 레슨과 스토리 프로젝트 데이터를 위한 스토리메이커의 접근이 필요합니다. 장치를 확인하고 다시 시작해주십시오</string>
+  <string name="scene_s_">장면(들)</string>
+  <string name="clip_s_">클립(들)</string>
+  <string name="sc_app_not_found">SoundCloud 어플리케이션을 찾을 수 없습니다!</string>
+  <string name="sc_app_not_found_message">지금 설치하시겠습니까?</string>
+  <string name="no_active_sc_account">활성화된 SoundCloud 계정을 찾을 수 없습니다. 로그인/가입 해주세요.</string>
+  <string name="operation_canceled">실행이 취소되었습니다</string>
+  <string name="could_not_get_token">토큰을 얻을 수 없습니다</string>
+  <string name="getting_details">사용자정보</string>
+  <string name="could_not_create_account">가입할 수 없습니다</string>
+  <string name="uploading">업로드중...</string>
+  <string name="canceled">업로드 취소하기</string>
+  <!--added for project export-->
+  <string name="export_dialog_title">이 프로젝트를 압축하여 공유하시겠습니까?</string>
+  <string name="export_dialog_close">닫기</string>
+  <string name="export_dialog_share">공유하기</string>
+  <string name="title_activity_accounts">계정</string>
+  <string name="action_settings">설정</string>
+  <!--added for new UI-->
+  <string name="label_activity_log">활동로그</string>
+  <string name="label_title">제목</string>
+  <string name="label_description">묘사하기</string>
+  <string name="label_tags">태그</string>
+  <string name="label_add">추가하기</string>
+  <string name="label_edit">편집하기</string>
+  <string name="label_activities">활동로그</string>
+  <string name="hint_story_title">제목넣기</string>
+  <string name="hint_story_description">당신의 이야기를 묘사하기...</string>
+  <string name="hint_story_tag">#addtags</string>
+  <string name="label_section">부분</string>
+  <string name="label_location">위치</string>
+  <string name="title_activity_story_info">정보</string>
+  <string name="title_activity_story_info_edit">정보 편집하기</string>
+  <string name="title_activity_project_tag_fragment">ProjectTagFragment</string>
+  <string name="title_activity_connect_account">스토리메이커 계정</string>
+  <string name="hint_no_description">묘사없음</string>
+  <string name="trim_clips">클립 다듬기</string>
+  <string name="info">정보</string>
+  <string name="send_logcat_to_support">로크켓 보내기</string>
+</resources>

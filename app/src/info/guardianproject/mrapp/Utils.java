@@ -1,16 +1,23 @@
 package info.guardianproject.mrapp;
 
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import org.holoeverywhere.app.Activity;
 import org.holoeverywhere.widget.Toast;
 
 import com.actionbarsherlock.view.MenuItem;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.res.AssetManager;
 import android.graphics.drawable.Drawable;
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 import android.view.ActionProvider;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.SubMenu;
@@ -43,6 +50,18 @@ public class Utils {
                 		Toast.makeText(_activity.getApplicationContext(), _msg, isLongToast ? Toast.LENGTH_LONG : Toast.LENGTH_SHORT).show();
                 }
         });
+    }
+    
+    public static boolean assetExists(Context context, String path) {
+        AssetManager mg = context.getResources().getAssets();
+
+        try {
+            mg.open(path);
+            return true;
+        } catch (IOException e) {
+            Log.d("Utils.assetExists", e.getLocalizedMessage());
+            return false;
+        }
     }
     
     /**
