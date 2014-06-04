@@ -60,9 +60,9 @@ public class StoryInfoEditActivity extends BaseActivity {
 	private void initialize() {
 		
 		final AutoCompleteTextView tvStoryTag = (AutoCompleteTextView) findViewById(R.id.act_story_info_tag);
-		String[] autocompleteTags = getResources().getStringArray(R.array.array_autocomplete_tags);
-		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, autocompleteTags);
-		tvStoryTag.setAdapter(adapter);
+//		String[] autocompleteTags = getResources().getStringArray(R.array.array_autocomplete_tags);
+//		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, autocompleteTags);
+//		tvStoryTag.setAdapter(adapter);
 
         mTagFragment = ProjectTagFragment.newInstance(mProject.getId(), true);
         getSupportFragmentManager().beginTransaction().add(R.id.fl_tag_container, mTagFragment).commit();
