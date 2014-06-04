@@ -22,15 +22,27 @@
     <item>Videografía</item>
     <item>Historia</item>
   </string-array>
+  <string-array name="interface_language_options_values">
+    <item>en</item>
+    <item>fr</item>
+    <item>ar</item>
+    <item>bs</item>
+    <item>sr</item>
+    <item>es</item>
+    <item>fa</item>
+    <item>de</item>
+    <item>mk</item>
+    <item>ko</item>
+  </string-array>
   <string-array name="lesson_language_options">
     <item>Inglés</item>
     <item>Árabe</item>
     <item>Sudafricano</item>
   </string-array>
   <string-array name="lesson_language_options_values">
-    <item>https://storymaker.cc/appdata/lessons/en</item>
-    <item>https://storymaker.cc/appdata/lessons/ar</item>
-    <item>https://storymaker.cc/appdata/lessons/sa</item>
+    <item>en</item>
+    <item>ar</item>
+    <item>sa</item>
   </string-array>
   <string-array name="array_story_locations">
     <item>Egipto</item>

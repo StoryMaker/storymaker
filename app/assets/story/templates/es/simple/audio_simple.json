@@ -4,52 +4,52 @@
             "clips": [
                 {
                     "Artwork": "cliptype_detail", 
-                    "Description": "Una buena grabación de audio hace que la audencia sienta curiosidad por seguir escuchandola." 
-                    "Goal" Las grabaciones de sonido facilitan la comprensión  de los distintos elementos de la historia." 
+                    "Description": "Una buena grabación de audio hace que la audencia sienta curiosidad por seguir escuchandola.", 
+                    "Goal": "Las grabaciones de sonido facilitan la comprensión  de los distintos elementos de la historia.", 
                     "Length": "X segundos", 
                     "Security Concern": "-", 
                     "Tip": " Puede que tenga que mantener el micrófono muy cerca para hacer una grabación. Compruebe que el volumen de su fuente de sonido no esté demasiado alto", 
-                    "Title": "Signature"
+                    "Title": "Firma"
                 }, 
                 {
                     "Artwork": "cliptype_wide", 
                     "Description": " Las grabaciones de sonido ayudan a la audiencia a comprender como el sujeto interactúa con el entorno", 
-                    "Goal": "Ayudar al público a comprender el lugar donde se encuentra el sujeto." 
+                    "Goal": "Ayudar al público a comprender el lugar donde se encuentra el sujeto.", 
                     "Length": "X segundos", 
                     "Security Concern": "-", 
                     "Tip": "Se trata de que la grabación de sonido ambiente contribuya a contrar la historia. Los sonidos irrelevantes pueden distraer al público.", 
-                    "Title": "Ambient"
+                    "Title": "Ambiente"
                 }, 
                 {
                     "Artwork": "cliptype_close", 
-                    "Description": "Cuente a la audiencia quien es el personaje importante su historia." 
-                    "Goal": " Grabe al personaje haciendo una introducción, o grábese a sí mismo introduciendo al personaje." 
+                    "Description": "Cuente a la audiencia quien es el personaje importante su historia.", 
+                    "Goal": "Grabe al personaje haciendo una introducción, o grábese a sí mismo introduciendo al personaje.", 
                     "Length": "X segundos", 
                     "Security Concern": "-", 
                     "Tip": "Reduzca la longitud de esta grabación. Simplemente, introduzca al público el personaje, o permítale introducirse por sí mismo.", 
-                    "Title": "Narrative"
+                    "Title": "Narrativa"
                 }, 
                 {
                     "Artwork": "cliptype_medium", 
                     "Description": "Recuerde los fundamentos de una buena entrevista. Haga preguntas abiertas. Decida sus preguntas en función del tipo de fuente que se entrevista.", 
-                    "Goal": "Pida al personaje que le cuente una historia." 
+                    "Goal": "Pida al personaje que le cuente una historia.", 
                     "Length": "X segundos", 
                     "Security Concern": "-", 
-                    "Tip": "If you want the audience to hear your questions and the subject\u2019s answers, be sure that you are both close enough to the mic to be heard clearly.", 
-                    "Title": "Interview"
+                    "Tip": "Si quiere que la audiencia oiga sus preguntas y las respuestas del sujeto, asegúrese de que ambos están suficientemente próximos al micro para que se les oiga claramente", 
+                    "Title": "Entrevista"
                 }, 
                 {
                     "Artwork": "cliptype_wide", 
-                    "Description": "El sonido ambiental puede indicar el país o añadir un elemento cultural o religioso a su historia." 
+                    "Description": "El sonido ambiental puede indicar el país o añadir un elemento cultural o religioso a su historia.", 
                     "Goal": "El enlace de audio ambiental ayuda al público a comprender donde su  historia se desarrolla", 
                     "Length": "X segundos", 
                     "Security Concern": "-", 
                     "Tip": "Grabe el sonido ambiental. Tenga la precaución de no hacer ningún ruido que pudiese distraer a la audiencia del sonido natural del entorno", 
-                    "Title": "Environmental"
+                    "Title": "Ambiental"
                 }
             ], 
-            "title": "Scene 1"
+            "title": "Escena 1"
         }
     ], 
-    "title": "Audio Simple"
+    "title": "Audio simple"
 }

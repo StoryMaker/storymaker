@@ -188,5 +188,4 @@
   <!--added for project export-->
   <string name="export_dialog_close">Schließen</string>
   <string name="export_dialog_share">Teilen</string>
-  <!--added for new UI-->
 </resources>

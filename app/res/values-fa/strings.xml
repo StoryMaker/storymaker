@@ -241,5 +241,4 @@
   <string name="export_dialog_title">آیا مایلید فایل فشرده zip پروژه را به اشتراک بگذارید؟</string>
   <string name="export_dialog_close">بستن</string>
   <string name="export_dialog_share">به اشتراک گذاشتن</string>
-  <!--added for new UI-->
 </resources>

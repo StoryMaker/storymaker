@@ -9,7 +9,7 @@
                     "Length": "30-60 seconds", 
                     "Security Concern": "-", 
                     "Shot Size": "Proche", 
-                    "Astuce": " Utilisez la ligne de l'œil pour cadrer votre capture correctement.", 
+                    "Tip": "Utilisez la ligne de l'œil pour cadrer votre capture correctement.", 
                     "Title": "Interview"
                 },                 
                 {
@@ -18,17 +18,17 @@
                     "Goal": "Show an essential detail to the story.", 
                     "Length": "5 - 10 seconds", 
                     "Security Concern": "-", 
-                    "Taille de Capture": "Détails", 
+                    "Shot Size": "Détails", 
                     "Tip": "The detail should fill at least 50% of the frame.", 
                     "Title": "Signature" 
                 },
                 {
-                    "Illustration": "type_moyen", 
+                    "Artwork": "cliptype_medium", 
                     "Description": "Let the camera observe the character relating to friends, their work, demonstrating their knowledge, or completing an action.", 
                     "Goal": "Show an interaction between the character and their world.", 
                     "Length": "10 - 15 seconds",
                     "Security Concern": "-",
-                    "taille de Capture": "Moyenne",
+                    "Shot Size": "Moyenne",
                     "Tip": "The character should fill about 30% of the frame.",
                     "Title": "Interaction"
                 },
@@ -38,17 +38,17 @@
                     "Goal": "Capture the character in action.", 
                     "Length": "10 - 15 seconds", 
                     "Security Concern": "-", 
-                    "Taille":"Longue", 
-                    "Astuce":"Gardez votre personnage sur une des lignes verticales pour cadrer votre capture proprement". 
+                    "Shot Size": "Longue", 
+                    "Tip": "Gardez votre personnage sur une des lignes verticales pour cadrer votre capture proprement", 
                     "Title": "Activity"
                 }, 
                 {
-                    "Illustration":"type_large",
+                    "Artwork": "cliptype_wide",
                     "Description": "Landmarks or location specific are ideal to include. Environmental shots can help indicate the country, ethnicity, or religion of your character.",
-                    "Goal": "Show where your story takes place.",
+                    "Goal": "Montrer où se passe votre histoire.",
                     "Length": "5 - 10 seconds",
                     "Security Concern": "-",
-                    "Taille de Capture":"Large",
+                    "Shot Size": "Large",
                     "Tip": "Place your camera directly in front of the primary location you are filming.", 
                     "Title": "Location"
                 }

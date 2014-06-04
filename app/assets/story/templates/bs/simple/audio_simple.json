@@ -12,7 +12,7 @@
                     "Title": "Signature"
                 }, 
                 {
-                    "Artwork": "vrsta isječka_široki", 
+                    "Artwork": "cliptype_wide", 
                     "Description": "Ambijent audio isječci pomažu publici da razumije kako vaš subjekt komunicira sa okruženjem.", 
                     "Goal": "Pomozite publici da razumije prostor koji subjekt nastanjuje.", 
                     "Length": "X sekundi", 
@@ -21,7 +21,7 @@
                     "Title": "Ambient"
                 }, 
                 {
-                    "Artwork": "vrsta isječka_zatvoreni", 
+                    "Artwork": "cliptype_close", 
                     "Description": "Objasnite publici tko je važna osoba u priči.",  
                     "Goal": "Snimite osobu koja se predstavlja, ili snimite sebe kako predstavljate osobu.", 
                     "Length": "X sekundi", 
@@ -39,7 +39,7 @@
                     "Title": "Interview"
                 }, 
                 {
-                    "Artwork": "vrsta isječka_široki", 
+                    "Artwork": "cliptype_wide", 
                     "Description": "Ekološki audio zapis može ukazivati na zemlju, ili možete dodati kulturni ili religijski element vašoj priči.", 
                     "Goal": "Ekološki audio isječci pomažu publici da shvate gdje se vaša priča odvija.", 
                     "Length": "X sekundi", 
