@@ -129,17 +129,21 @@ public class MediaHelper implements MediaScannerConnectionClient {
 	 }
 	 
 	 public void shareMedia (File mediaFile, String mimeType)
-	 {
-			
-		 if (mimeType == null)
-			 mimeType = getMimeType(mediaFile.getAbsolutePath());
-	 	
-    	Intent intent = new Intent(Intent.ACTION_SEND);
-    	intent.setType(mimeType);
-    	intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(mediaFile));
-    	mActivity.startActivityForResult(Intent.createChooser(intent, "Share Media"), EditorBaseActivity.REQ_SHARE); 
-    	    
-		 
+	 {			
+		String filePath = mediaFile.getAbsolutePath();
+
+		if (mimeType == null)
+			mimeType = getMimeType(filePath);
+
+		final Intent intent = new Intent(Intent.ACTION_SEND);
+		intent.setType(mimeType);
+
+		MediaScannerConnection.scanFile(mActivity, new String[] { filePath }, null, new MediaScannerConnection.OnScanCompletedListener() {
+			public void onScanCompleted(String path, Uri uri) {
+				intent.putExtra(Intent.EXTRA_STREAM, uri);
+				mActivity.startActivityForResult(Intent.createChooser(intent, "Share Media"), EditorBaseActivity.REQ_SHARE);
+			}
+		});	 
 	 }
  
 	 public Bitmap getBitmapThumb (File file) throws IOException
