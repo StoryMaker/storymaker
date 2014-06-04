@@ -9,7 +9,7 @@ readarray <<END
 external/HoloEverywhere/contrib/ActionBarSherlock/library
 external/HoloEverywhere/library
 external/android-ffmpeg-java
-external/OnionKit/libonionkit
+external/NetCipher/libnetcipher
 external/WordpressJavaAndroid
 external/RangeSeekBar/library
 external/Android-ViewPagerIndicator/library
@@ -19,7 +19,7 @@ END
 
 
 for project in "${MAPFILE[@]}"; do
-        android update project --path $project -t "android-17"
+        android update project --path $project -t "android-19"
 done
 
 cp app/libs/android-support-v4.jar external/SlidingMenu/library/libs/android-support-v4.jar
