@@ -10,7 +10,7 @@
                     "Security Concern": "-", 
                     "Shot Size": "مقربة", 
                     "Tip": "استخدم خط العين لإعداد لقطتك بصورة ملائمة", 
-                    "Title": "Interview"
+                    "Title": "مقابلة شخصية"
                 },                 
                 {
                     "Artwork": "cliptype_detail", 
@@ -20,7 +20,7 @@
                     "Security Concern": "-", 
                     "Shot Size": "مفصلة", 
                     "Tip": "The detail should fill at least 50% of the frame.", 
-                    "Title": "Signature" 
+                    "Title": "التوقيع" 
                 },
                 {
                     "Artwork": "cliptype_medium", 

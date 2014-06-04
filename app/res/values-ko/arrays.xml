@@ -18,18 +18,6 @@
     <item>비디오그래피</item>
     <item>스토리</item>
   </string-array>
-  <string-array name="interface_language_options_values">
-    <item>영어</item>
-    <item>프랑스어</item>
-    <item>아라비아어</item>
-    <item>bs</item>
-    <item>세르비아어</item>
-    <item>스페인어</item>
-    <item>페르시아어</item>
-    <item>독일</item>
-    <item>마케도니아어</item>
-    <item>한국어</item>
-  </string-array>
   <string-array name="array_story_locations">
     <item>이집트</item>
     <item>이라크</item>
