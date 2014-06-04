@@ -80,7 +80,6 @@
 
         <requestFocus />
     </EditText>
-
     <View
         android:id="@+id/divider1"
         android:layout_width="fill_parent"
@@ -160,11 +159,32 @@
       android:orientation="horizontal" 
          android:layout_width="match_parent"
         android:layout_height="wrap_content">
+    <TableLayout
+        android:id="@+id/tableLayout1"
+        android:layout_width="fill_parent"
+        android:layout_height="70dp"
+        android:layout_weight="0.6"
+        android:background="#ffffff"
+        android:stretchColumns="*" >
+
+        <TableRow
+            android:id="@+id/tableRow3"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_weight="0.5" >
+      <ToggleButton
+          android:id="@+id/toggleButton1"
+          android:layout_width="wrap_content"
+          android:layout_height="fill_parent"
+          android:layout_weight="1"
+          android:layout_margin="5dp"
+          android:text="GPS" />
+      
 
     <EditText
         android:id="@+id/editTextLocation"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="fill_parent"
         android:layout_weight="1"
         android:ems="10"
         android:hint="@string/story_publish_location_hint"
@@ -172,6 +192,8 @@
         android:textColor="@color/soft_blue"
         android:layout_margin="5dp"
         android:padding="10dp" />
+    </TableRow>
+      </TableLayout>
  </LinearLayout>
     <View
         android:id="@+id/divider4"
