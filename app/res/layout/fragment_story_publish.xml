@@ -14,29 +14,30 @@
         >
         
   <LinearLayout 
-      android:orientation="horizontal" 
-         android:layout_width="wrap_content"
+      android:orientation="vertical" 
+         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
     <ImageView
         android:id="@+id/storyThumb"
-        android:layout_width="140sp"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="5dp"
         android:layout_weight="1"
         android:src="@drawable/cliptype_close" />
 
     <EditText
         android:id="@+id/etStoryTitle"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="false"
-        android:layout_alignTop="@+id/storyThumb"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginTop="10dp"
+        android:layout_margin="5dp"
         android:hint="@string/story_publish_story_title"
         android:textAppearance="?android:attr/textAppearanceMedium"
+        
+            android:background="@color/grey"
+            android:padding="15dp"
+            android:textColor="@color/soft_blue"
         />
     </LinearLayout>
 
@@ -65,16 +66,20 @@
         android:id="@+id/editTextDescribe"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/divider0"
         android:ems="10"
         android:hint="@string/story_publish_describe_hint"
         android:inputType="textMultiLine"
-        android:lines="3" 
+        android:background="@color/grey"
+        android:gravity="top"
+        android:padding="15dp"
+        style="@android:style/TextAppearance.Medium"
+        android:minLines="5"
+        android:textColor="@color/white"
+        android:layout_margin="5dp"
         >
 
         <requestFocus />
     </EditText>
-
     <View
         android:id="@+id/divider1"
         android:layout_width="fill_parent"
@@ -102,10 +107,8 @@
 
     <Spinner
         android:id="@+id/spinnerSections"
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/divider2"
-        android:layout_alignParentRight="true"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:paddingRight="10dp" />
 </LinearLayout>
@@ -154,29 +157,43 @@
  
   <LinearLayout 
       android:orientation="horizontal" 
-         android:layout_width="wrap_content"
+         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-    <TextView
-        android:id="@+id/textViewLocation"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/editTextLocation"
-        android:layout_alignTop="@+id/editTextLocation"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="5dp"
-        android:gravity="center_vertical"
-        android:text="@string/story_publish_location"
-        android:textAllCaps="true"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
+    <TableLayout
+        android:id="@+id/tableLayout1"
+        android:layout_width="fill_parent"
+        android:layout_height="70dp"
+        android:layout_weight="0.6"
+        android:background="#ffffff"
+        android:stretchColumns="*" >
+
+        <TableRow
+            android:id="@+id/tableRow3"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_weight="0.5" >
+      <ToggleButton
+          android:id="@+id/toggleButton1"
+          android:layout_width="wrap_content"
+          android:layout_height="fill_parent"
+          android:layout_weight="1"
+          android:layout_margin="5dp"
+          android:text="GPS" />
+      
 
     <EditText
         android:id="@+id/editTextLocation"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
         android:layout_weight="1"
         android:ems="10"
-        android:hint="@string/story_publish_location_hint" />
+        android:hint="@string/story_publish_location_hint"
+        android:background="@color/grey"
+        android:textColor="@color/soft_blue"
+        android:layout_margin="5dp"
+        android:padding="10dp" />
+    </TableRow>
+      </TableLayout>
  </LinearLayout>
     <View
         android:id="@+id/divider4"
@@ -363,47 +380,57 @@
         android:background="@android:color/darker_gray" />
 -->
   
-  <LinearLayout 
-      android:orientation="horizontal"
-        android:layout_below="@+id/divider4"    android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+  
+    <TableLayout
+        android:id="@+id/tableLayout1"
+        android:layout_width="fill_parent"
+        android:layout_height="70dp"
+        android:layout_weight="0.6"
+        android:background="#ffffff"
+        android:stretchColumns="*" >
+
+        <TableRow
+            android:id="@+id/tableRow3"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_weight="0.5" >
+      
      <Button
         android:id="@+id/btnRender"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="5dp"
         android:gravity="center_vertical"
-        android:text="@string/action_render" />
+        android:text="@string/action_render" 
+        android:layout_weight="0.5"/>
      
        <Button
         android:id="@+id/btnPlay"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="5dp"
         
         android:gravity="center_vertical"
         android:enabled="false"
-        android:text="@string/action_play" />
+        android:text="@string/action_play"
+        android:layout_weight="0.5" />
        
      <Button
         android:id="@+id/btnShare"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="5dp"
         android:gravity="center_vertical"
                 android:enabled="false"
         android:text="@string/action_share"
-         />
+        android:layout_weight="0.5" />
      
     <Button
         android:id="@+id/btnPublish"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="5dp"
         android:gravity="center_vertical"
-        android:text="@string/action_publish" />
-        
-    </LinearLayout>
+        android:text="@string/action_publish"
+        android:layout_weight="0.5"/>
+        </TableRow>
+    </TableLayout>
 
   </LinearLayout>
 </ScrollView>

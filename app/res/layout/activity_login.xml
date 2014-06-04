@@ -66,6 +66,9 @@
                 android:layout_marginBottom="20dip"
                 android:singleLine="true"
                 android:hint="username"
+                android:background="@color/grey"
+                android:textColor="@color/soft_blue"
+                android:padding="10dp"
                 />
           <!--  Password Label -->          
           <EditText android:layout_width="fill_parent"
@@ -74,13 +77,26 @@
                 android:layout_marginTop="5dip"
                 android:singleLine="true"
                 android:hint="password"
-                android:password="true"/>
+                android:password="true"
+                android:background="@color/grey"
+                android:textColor="@color/soft_blue"
+                android:padding="10dp"/>
           <!-- Login button -->
+
+          <CheckBox
+              android:id="@+id/showPassword"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_marginTop="5dip"
+              android:text="@string/show_password" />
+          
           <Button android:id="@+id/btnLogin"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dip"
-                android:text="Login"/>
+                android:text="Login"
+                style="@style/fancyButton"
+              android:background="@color/soft_red"/>
           
              <LinearLayout 
                 android:layout_width="fill_parent"

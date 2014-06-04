@@ -1,8 +1,10 @@
 package info.guardianproject.mrapp.server;
 
 
+import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import info.guardianproject.mrapp.AppConstants;
 import info.guardianproject.mrapp.BaseActivity;
@@ -10,21 +12,29 @@ import info.guardianproject.mrapp.R;
 import info.guardianproject.mrapp.StoryMakerApp;
 import info.guardianproject.mrapp.model.Auth;
 import info.guardianproject.mrapp.model.AuthTable;
+import net.bican.wordpress.Category;
 
 import org.holoeverywhere.widget.Button;
 import org.holoeverywhere.widget.EditText;
 import org.holoeverywhere.widget.TextView;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
+import redstone.xmlrpc.XmlRpcFault;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.preference.PreferenceManager;
+import android.text.InputType;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.CheckBox;
 import android.widget.ImageView;
+import android.widget.Toast;
  
 public class LoginActivity extends BaseActivity implements Runnable 
 {
@@ -33,7 +43,7 @@ public class LoginActivity extends BaseActivity implements Runnable
 	private TextView txtStatus;
 	private EditText txtUser;
 	private EditText txtPass;
-	
+	List<Category> categories;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,6 +85,20 @@ public class LoginActivity extends BaseActivity implements Runnable
             }
         });
         
+        final CheckBox showPassword = (CheckBox)findViewById(R.id.showPassword);
+
+		showPassword.setOnClickListener(new View.OnClickListener() {
+					
+					@Override
+					public void onClick(View v) {
+						// TODO Auto-generated method stub
+						if(showPassword.isChecked()){
+							txtPass.setInputType(InputType.TYPE_CLASS_TEXT);
+				        }else{
+				        	txtPass.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+				        }
+					}
+				});
         TextView skipScreen = (TextView) findViewById(R.id.link_to_skip);
         
         // Listening to skip link
@@ -122,7 +146,6 @@ public class LoginActivity extends BaseActivity implements Runnable
         	txtPass.setText(storymakerAuth.getCredentials());
         } 
     }
-    
     public void run ()
     {
     	String username = txtUser.getText().toString();
@@ -133,7 +156,9 @@ public class LoginActivity extends BaseActivity implements Runnable
 
 			// only store username/password for a successful login
 	    	saveCreds(username, password);
-			
+	    	
+	    	categories = StoryMakerApp.getServerManager().getCategories();
+	    	Log.d("cats", "cats:"+categories.toString());
 			mHandler.sendEmptyMessage(0);
 	         
 		} catch (Exception e) {
@@ -143,6 +168,8 @@ public class LoginActivity extends BaseActivity implements Runnable
 			mHandler.sendMessage(msgErr);
 			Log.e(AppConstants.TAG,"login err",e);
 		}
+
+          
     }
     
     private Handler mHandler = new Handler ()
@@ -174,6 +201,24 @@ public class LoginActivity extends BaseActivity implements Runnable
     
     private void loginSuccess ()
     {
+    	updateCategories();
     	finish();
+    }
+    private void updateCategories(){
+	
+    	SharedPreferences prefs = PreferenceManager
+		        .getDefaultSharedPreferences(getApplicationContext());
+		JSONArray catsList = new JSONArray();
+
+		for(int i=0;i<categories.size();i++){
+			Category cat = categories.get(i);
+
+			catsList.put(cat.getCategoryName());
+		}
+		
+		Editor editor = prefs.edit();
+		editor.putString("categories", catsList.toString());
+		
+		editor.commit();
     }
 }

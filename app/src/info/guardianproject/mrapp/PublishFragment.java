@@ -8,17 +8,23 @@ import info.guardianproject.mrapp.server.ServerManager;
 import info.guardianproject.mrapp.server.YouTubeSubmit;
 import info.guardianproject.mrapp.server.Authorizer.AuthorizationListener;
 import info.guardianproject.mrapp.server.soundcloud.SoundCloudUploader;
+import info.guardianproject.mrapp.location.GPSTracker;
 
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 import java.util.StringTokenizer;
 
+import net.bican.wordpress.Category;
+
 import org.holoeverywhere.app.AlertDialog;
 import org.holoeverywhere.widget.Spinner;
+import org.json.JSONArray;
+
 import redstone.xmlrpc.XmlRpcFault;
 import android.accounts.Account;
 import android.accounts.AccountManager;
@@ -44,9 +50,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 
 import com.animoto.android.views.DraggableGridView;
-
 /**
  * A dummy fragment representing a section of the app, but that simply
  * displays dummy text.
@@ -66,6 +72,10 @@ public class PublishFragment extends Fragment {
     
     EditText mTitle;
     EditText mDescription;
+   
+    EditText etLocation;
+	GPSTracker gpsT; 
+    private ToggleButton toggleGPS;
     
     private YouTubeSubmit mYouTubeClient = null;
 
@@ -97,7 +107,6 @@ public class PublishFragment extends Fragment {
 	
     }
     
-
     public static final String ARG_SECTION_NUMBER = "section_number";
 
     @Override
@@ -119,11 +128,16 @@ public class PublishFragment extends Fragment {
                 Bitmap bitmap = Media.getThumbnail(mActivity,medias[0],mActivity.mMPM.mProject);
             	if (bitmap != null) ivThumb.setImageBitmap(bitmap);
             }
-        	
+            
+           
             mTitle = (EditText) mView.findViewById(R.id.etStoryTitle);
             mDescription = (EditText) mView.findViewById(R.id.editTextDescribe);
+            etLocation = (EditText)  mView.findViewById(R.id.editTextLocation);
 
             mTitle.setText(mActivity.mMPM.mProject.getTitle());
+            
+            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mActivity.getApplicationContext());
+        	if(prefs.getString("categories", null)==null){
             
             ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
             		  mActivity, R.array.story_sections, android.R.layout.simple_spinner_item );
@@ -131,8 +145,10 @@ public class PublishFragment extends Fragment {
             		
 			Spinner s = (Spinner) mView.findViewById( R.id.spinnerSections );
 			s.setAdapter( adapter );
-			
-			
+        	}else{
+        		
+        		setCategories();
+        	}
             Button btnRender = (Button) mView.findViewById(R.id.btnRender);
             btnRender.setOnClickListener(new OnClickListener()
             {
@@ -196,6 +212,25 @@ public class PublishFragment extends Fragment {
                     setUploadAccount(); //triggers do publish! 
                 }
             });
+
+            toggleGPS = (ToggleButton) mView.findViewById(R.id.toggleButton1);
+            toggleGPS.setOnClickListener(new OnClickListener() {
+
+                @Override
+                public void onClick(View arg0) {
+                	                	
+                    if(toggleGPS.isChecked()){
+                    	etLocation.setEnabled(false);
+                    	setLocation();
+                    	
+                    }
+                    else{
+                    	etLocation.setEnabled(true);
+                    	etLocation.setText("");
+
+                    }
+                }
+            });
         }
         return mView;
     }
@@ -240,7 +275,27 @@ public class PublishFragment extends Fragment {
     	
         
     }
-    
+    public void setCategories(){
+		Spinner s = (Spinner) mView.findViewById( R.id.spinnerSections );
+
+        	SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mActivity.getApplicationContext());
+        	try {
+        	    JSONArray jsonArray2 = new JSONArray(prefs.getString("categories", "[]"));
+        	    ArrayList<String> list=new ArrayList<String>();
+        	
+    			for(int i=0;i<jsonArray2.length();i++)
+    			{
+    				list.add(jsonArray2.getString(i));
+    			}
+    			
+    			ArrayAdapter<String> spinnerMenu = new ArrayAdapter<String>(mActivity.getApplicationContext(),  R.layout.custom_spinner, list);
+    			s.setAdapter(spinnerMenu);
+    			
+        	}catch (Exception e) {
+        	    e.printStackTrace();
+        	}
+ 
+    }
     private void saveForm() {
         mActivity.mMPM.mProject.setTitle(mTitle.getText().toString());
         //commenting this out for now until merges are fixed
@@ -324,8 +379,7 @@ public class PublishFragment extends Fragment {
     	
         EditText etTitle = (EditText) mView.findViewById(R.id.etStoryTitle);
         EditText etDesc = (EditText) mView.findViewById(R.id.editTextDescribe);
-        EditText etLocation = (EditText)  mView.findViewById(R.id.editTextLocation);
-        
+
 		Spinner s = (Spinner) mView.findViewById( R.id.spinnerSections );
 
 		//only one item can be selected
@@ -623,5 +677,29 @@ public class PublishFragment extends Fragment {
     	mYouTubeClient.setAuthMode("Bearer");
     	mYouTubeClient.setClientLoginToken(token);
     	mThreadPublish.start();
+    }
+    public void setLocation(){
+		gpsT = new GPSTracker(mActivity); 
+		  
+        // check if GPS enabled 
+        if(gpsT.canGetLocation()){ 
+
+            double latitude = gpsT.getLatitude(); 
+            double longitude = gpsT.getLongitude(); 
+
+            etLocation.setText(latitude+", "+longitude); 
+
+            if((String.valueOf(latitude).equals("0"))&&(String.valueOf(longitude).equals("0"))){
+                gpsT.showSettingsAlert(); 
+                toggleGPS.setChecked(false);
+            }
+        }else{ 
+            // can't get location 
+            // GPS or Network is not enabled 
+            // Ask user to enable GPS/network in settings 
+            gpsT.showSettingsAlert(); 
+            toggleGPS.setChecked(false);
+
+        } 
     }
 }

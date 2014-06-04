@@ -9,6 +9,7 @@ import java.io.File;
 import java.net.MalformedURLException;
 import java.util.List;
 
+import net.bican.wordpress.Category;
 import net.bican.wordpress.Comment;
 import net.bican.wordpress.MediaObject;
 import net.bican.wordpress.Page;
@@ -139,7 +140,11 @@ public class ServerManager {
 		List<Page> rPosts = mWordpress.getRecentPosts(num);
 		return rPosts;
 	}
-	
+	public List<Category> getCategories () throws XmlRpcFault, MalformedURLException
+	{
+		connect();
+		return mWordpress.getCategories();
+	}
 	public List<Comment> getComments (Page page) throws XmlRpcFault, MalformedURLException
 	{
 		connect();
