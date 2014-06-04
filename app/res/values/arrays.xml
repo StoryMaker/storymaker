@@ -38,151 +38,6 @@
         <item>Environment</item>
     </string-array>
     
-     <integer-array name="vibration_button" translatable="false">
-        <item>0</item>
-        <item>0</item>
-        <item>5</item>
-        <item>120</item>
-        <item>8</item>
-        <item>-5</item>
-        <item>5</item>
-        <item>0</item>
-        <item>5</item>
-    </integer-array>
-
-    <integer-array name="vibration_center_button" translatable="false">
-        <item>0</item>
-        <item>0</item>
-        <item>5</item>
-        <item>5</item>
-        <item>10</item>
-        <item>-3</item>
-        <item>10</item>
-        <item>15</item>
-        <item>10</item>
-        <item>-3</item>
-        <item>10</item>
-        <item>25</item>
-        <item>10</item>
-        <item>-3</item>
-        <item>10</item>
-        <item>35</item>
-        <item>10</item>
-        <item>-3</item>
-        <item>10</item>
-        <item>40</item>
-        <item>10</item>
-        <item>-3</item>
-        <item>30</item>
-        <item>120</item>
-        <item>8</item>
-        <item>-5</item>
-        <item>5</item>
-        <item>0</item>
-        <item>150</item>
-        <item>50</item>
-        <item>8</item>
-        <item>-5</item>
-        <item>5</item>
-        <item>0</item>
-        <item>5</item>
-    </integer-array>
-
-    <integer-array name="vibration_record_play_end" translatable="false">
-        <item>0</item>
-        <item>0</item>
-        <item>5</item>
-        <item>5</item>
-        <item>50</item>
-        <item>-3</item>
-        <item>5</item>
-        <item>10</item>
-        <item>50</item>
-        <item>-3</item>
-        <item>5</item>
-        <item>5</item>
-        <item>50</item>
-        <item>-3</item>
-        <item>5</item>
-        <item>10</item>
-        <item>50</item>
-        <item>-3</item>
-        <item>5</item>
-        <item>5</item>
-        <item>50</item>
-        <item>-3</item>
-        <item>5</item>
-        <item>10</item>
-        <item>50</item>
-        <item>-3</item>
-        <item>5</item>
-        <item>5</item>
-        <item>50</item>
-        <item>-3</item>
-        <item>5</item>
-        <item>10</item>
-        <item>50</item>
-        <item>-3</item>
-        <item>5</item>
-        <item>5</item>
-        <item>50</item>
-        <item>-3</item>
-        <item>5</item>
-        <item>10</item>
-        <item>50</item>
-        <item>-3</item>
-        <item>5</item>
-        <item>5</item>
-        <item>50</item>
-        <item>-3</item>
-        <item>5</item>
-        <item>10</item>
-        <item>50</item>
-        <item>-3</item>
-        <item>5</item>
-        <item>5</item>
-        <item>50</item>
-        <item>-3</item>
-        <item>5</item>
-        <item>10</item>
-        <item>50</item>
-        <item>-3</item>
-        <item>5</item>
-        <item>120</item>
-        <item>8</item>
-        <item>-5</item>
-        <item>5</item>
-        <item>0</item>
-        <item>150</item>
-        <item>60</item>
-        <item>8</item>
-        <item>-5</item>
-        <item>5</item>
-        <item>0</item>
-        <item>5</item>
-        <item>0</item>
-        <item>10</item>
-    </integer-array>
-
-    <integer-array name="vibration_seek_end" translatable="false">
-        <item>0</item>
-        <item>0</item>
-        <item>5</item>
-        <item>120</item>
-        <item>8</item>
-        <item>-5</item>
-        <item>5</item>
-        <item>0</item>
-        <item>150</item>
-        <item>60</item>
-        <item>8</item>
-        <item>-5</item>
-        <item>5</item>
-        <item>0</item>
-        <item>5</item>
-    </integer-array>
-    
-    
      <string-array name="lesson_sections">
         <item>Journalism</item>
         <item>Security</item>
@@ -228,7 +83,7 @@
         <item name="korean">Korean</item>
     </string-array>
     
-    <string-array name="interface_language_options_values">
+    <string-array name="interface_language_options_values" translatable="false">
         <item name="english">en</item>
         <item name="french">fr</item>
         <item name="arabic">ar</item>
@@ -241,13 +96,13 @@
         <item name="korean">ko</item>
     </string-array>
     
-    <string-array name="lesson_language_options">
+    <string-array name="lesson_language_options" translatable="false">
         <item name="english">English</item>
         <item name="arabic">Arabic</item>
         <item name="safrican">Mobile Community Zimbabwe</item>
     </string-array>
     
-    <string-array name="lesson_language_options_values">
+    <string-array name="lesson_language_options_values" translatable="false">
         <item name="english">en</item>
         <item name="arabic">ar</item>
         <item name="safrican">sa</item>
@@ -258,18 +113,6 @@
         <item>Iraq</item>
         <item>Morocco</item>
         <item>Tunisia</item>
-    </string-array>
-    
-    <!-- FIXME remove these, but they are referenced in code too... -->
-    <string-array name="array_autocomplete_tags">
-        <item>atesttag</item>
-        <item>btesttag</item>
-        <item>ctesttag</item>
-        <item>dtesttag</item>
-        <item>etesttag</item>
-        <item>ftesttag</item>
-        <item>gtesttag</item>
-        <item>htesttag</item>
     </string-array>
     
     <string-array name="array_story_sections">
