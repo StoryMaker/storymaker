@@ -15,11 +15,15 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 import java.util.StringTokenizer;
 
+import net.bican.wordpress.Category;
+
 import org.holoeverywhere.app.AlertDialog;
 import org.holoeverywhere.widget.Spinner;
+import org.json.JSONArray;
 
 import redstone.xmlrpc.XmlRpcFault;
 import android.accounts.Account;
@@ -126,12 +130,16 @@ public class PublishFragment extends Fragment {
                 Bitmap bitmap = Media.getThumbnail(mActivity,medias[0],mActivity.mMPM.mProject);
             	if (bitmap != null) ivThumb.setImageBitmap(bitmap);
             }
-        	
+            
+           
             mTitle = (EditText) mView.findViewById(R.id.etStoryTitle);
             mDescription = (EditText) mView.findViewById(R.id.editTextDescribe);
             etLocation = (EditText)  mView.findViewById(R.id.editTextLocation);
 
             mTitle.setText(mActivity.mMPM.mProject.getTitle());
+            
+            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mActivity.getApplicationContext());
+        	if(prefs.getString("categories", null)==null){
             
             ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
             		  mActivity, R.array.story_sections, android.R.layout.simple_spinner_item );
@@ -139,8 +147,10 @@ public class PublishFragment extends Fragment {
             		
 			Spinner s = (Spinner) mView.findViewById( R.id.spinnerSections );
 			s.setAdapter( adapter );
-			
-			
+        	}else{
+        		
+        		setCategories();
+        	}
             Button btnRender = (Button) mView.findViewById(R.id.btnRender);
             btnRender.setOnClickListener(new OnClickListener()
             {
@@ -210,6 +220,7 @@ public class PublishFragment extends Fragment {
 
                 @Override
                 public void onClick(View arg0) {
+                	                	
                     if(toggleGPS.isChecked()){
                     	etLocation.setEnabled(false);
                     	setLocation();
@@ -266,7 +277,27 @@ public class PublishFragment extends Fragment {
     	
         
     }
-    
+    public void setCategories(){
+		Spinner s = (Spinner) mView.findViewById( R.id.spinnerSections );
+
+        	SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mActivity.getApplicationContext());
+        	try {
+        	    JSONArray jsonArray2 = new JSONArray(prefs.getString("categories", "[]"));
+        	    ArrayList<String> list=new ArrayList<String>();
+        	
+    			for(int i=0;i<jsonArray2.length();i++)
+    			{
+    				list.add(jsonArray2.getString(i));
+    			}
+    			
+    			ArrayAdapter<String> spinnerMenu = new ArrayAdapter<String>(mActivity.getApplicationContext(),  R.layout.custom_spinner, list);
+    			s.setAdapter(spinnerMenu);
+    			
+        	}catch (Exception e) {
+        	    e.printStackTrace();
+        	}
+ 
+    }
     private void saveForm() {
         mActivity.mMPM.mProject.setTitle(mTitle.getText().toString());
         //commenting this out for now until merges are fixed
