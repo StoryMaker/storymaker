@@ -250,6 +250,7 @@
   <string name="export_dialog_share">공유하기</string>
   <string name="title_activity_accounts">계정</string>
   <string name="action_settings">설정</string>
+  <!--added for new UI-->
   <string name="label_activity_log">활동로그</string>
   <string name="label_title">제목</string>
   <string name="label_description">묘사하기</string>

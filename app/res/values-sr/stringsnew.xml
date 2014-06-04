@@ -191,8 +191,6 @@
   <string name="prefs_youtube_login_summary">Користите YouTube веб одобрење</string>
   <string name="prefs_soundcloud_account_title">СоундЦлоуд Рачун</string>
   <string name="prefs_soundcloud_account_summary">СоундЦлоуд рачун користити за аудио учитавања</string>
-  <string name="prefs_interface_language_summary"></string>
-  <string name="prefs_lesson_language_summary"></string>
   <string name="prefs_slide_duration_title">Трајање слајда</string>
   <string name="prefs_slide_duration_summary">Трајање сваког слајда у фото есеју</string>
   <string name="prefs_enable_compression_title">Омогућити сажимање</string>

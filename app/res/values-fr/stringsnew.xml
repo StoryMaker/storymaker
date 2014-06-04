@@ -116,8 +116,6 @@
   <string name="story_type_news_text8">Comment on a répondu?</string>
   <!--/story_type_old-->
   <!--prefs-->
-  <string name="prefs_interface_language_summary"></string>
-  <string name="prefs_lesson_language_summary"></string>
   <string name="prefs_disable_lesson_completion_summary"></string>
   <!--/prefs-->
   <!--FirstStartActivity-->
