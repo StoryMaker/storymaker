@@ -8,6 +8,8 @@ else
     echo "No ~/.android/bashrc found, 'android' and 'ndk-build' must be in PATH"
 fi
 
+./git-submodule-sync.sh
+
 projectroot=`pwd`
 projectname=`sed -n 's,.*name="app_name">\(.*\)<.*,\1,p' app/res/values/strings.xml`
 
