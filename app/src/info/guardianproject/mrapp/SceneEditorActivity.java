@@ -636,6 +636,10 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
             		mPublishFragment.setYouTubeAuth(oauthToken);
             	}
             }
+            else if (reqCode == REQ_SHARE)
+            {
+            	//do nothing shared intent
+            }
             else
             {
             	try

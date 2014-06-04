@@ -1,6 +1,8 @@
 package info.guardianproject.mrapp.media;
 
 import info.guardianproject.mrapp.AppConstants;
+import info.guardianproject.mrapp.EditorBaseActivity;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -135,7 +137,7 @@ public class MediaHelper implements MediaScannerConnectionClient {
     	Intent intent = new Intent(Intent.ACTION_SEND);
     	intent.setType(mimeType);
     	intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(mediaFile));
-    	mActivity.startActivityForResult(Intent.createChooser(intent, "Share Media"),0); 
+    	mActivity.startActivityForResult(Intent.createChooser(intent, "Share Media"), EditorBaseActivity.REQ_SHARE); 
     	    
 		 
 	 }
