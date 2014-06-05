@@ -488,88 +488,83 @@ public class Project extends Model {
         this.templatePath = template;
     }
     
-    public static String getSimpleTemplateForMode (Context context, int storyMode)
-    {
-    	 String lang = StoryMakerApp.getCurrentLocale().getLanguage();
+    public static String getSimpleTemplateForMode(Context context, int storyMode) {
+        String lang = StoryMakerApp.getCurrentLocale().getLanguage();
 
-         String templateJsonPath = "story/templates/" + lang + "/simple/";
-         
-         // if templates folder for this lang don't exist, fallback to english
-         if (!Utils.assetExists(context, templateJsonPath + "audio_simple.json")) {
-             templateJsonPath = "story/templates/en/simple/";
-         }
-         
-         switch (storyMode)
-         {
-         
-         case Project.STORY_TYPE_VIDEO:
-             templateJsonPath += "video_simple.json";
-             break;
-         case Project.STORY_TYPE_AUDIO:
-             templateJsonPath += "audio_simple.json";
-             break;
-         case Project.STORY_TYPE_PHOTO:
-             templateJsonPath += "photo_simple.json";
-             break;
-         case Project.STORY_TYPE_ESSAY:
-             templateJsonPath += "essay_simple.json";
-             break;
-             
-         }
-         
-         return templateJsonPath;
+        String templateJsonPath = "story/templates/" + lang + "/simple/";
+
+        // if templates folder for this lang don't exist, fallback to english
+        if (!Utils.assetExists(context, templateJsonPath + "audio_simple.json")) {
+            templateJsonPath = "story/templates/en/simple/";
+        }
+
+        switch (storyMode) {
+            case Project.STORY_TYPE_VIDEO:
+                templateJsonPath += "video_simple.json";
+                break;
+            case Project.STORY_TYPE_AUDIO:
+                templateJsonPath += "audio_simple.json";
+                break;
+            case Project.STORY_TYPE_PHOTO:
+                templateJsonPath += "photo_simple.json";
+                break;
+            case Project.STORY_TYPE_ESSAY:
+                templateJsonPath += "essay_simple.json";
+                break;
+        }
+
+        return templateJsonPath;
     }
     
-    public static ArrayList<Project> migrate(Context context, SQLiteDatabase db) // returns array of records that could not be migrated
-    {
+    /**
+     *   
+     * @param context
+     * @param db
+     * @return array of records that could not be migrated
+     */
+    public static ArrayList<Project> migrate(Context context, SQLiteDatabase db) {
     	ArrayList<Project> projects = (ArrayList<Project>)(new ProjectTable(db)).getAllAsList(context); //cast necessary?
         ArrayList<Scene> allScenes = new ArrayList<Scene>();
     	ArrayList<Media> allMedia = new ArrayList<Media>();
     	ArrayList<Project> failed = new ArrayList<Project>();
     	boolean failure;
     	
-    	for (Project project : projects)
-    	{
+    	for (Project project : projects) {
     		failure = false;
     		
     		File projectDir = MediaProjectManager.getExternalProjectFolderOld(project, context);
-    		if (projectDir.exists())
-    		{
+    		if (projectDir.exists()) {
     			Date projectDate = new Date(projectDir.lastModified()); // creation time not stored with file
                 project.setCreatedAt(projectDate);
                 project.setUpdatedAt(projectDate);
     			
                 allScenes = project.getScenesAsList();
-                for (Scene scene : allScenes)
-                {
-                    if (!scene.migrate(project, projectDate))
-                    {
-                        Log.e("PROJECT MIGRATION", "failed to migrate scene " + scene.getId());
-                        failure = true;
+                for (Scene scene : allScenes) {
+                    if (scene != null) {
+                        if (!scene.migrate(project, projectDate)) {
+                            Log.e("PROJECT MIGRATION", "failed to migrate scene " + scene.getId());
+                            failure = true;
+                        }
                     }
                 }
                 
-    			allMedia = project.getMediaAsList();
-    		    for (Media media : allMedia)
-    		    {
-                    if (!media.migrate(project, projectDate))
-                    {
-                    	Log.e("PROJECT MIGRATION", "failed to migrate media " + media.getId());
-    			        failure = true;
+                allMedia = project.getMediaAsList();
+                for (Media media : allMedia) {
+                    if (media != null) {
+                        if (!media.migrate(project, projectDate)) {
+                            Log.e("PROJECT MIGRATION", "failed to migrate media " + media.getId());
+                            failure = true;
+                        }
                     }
-    		    }
+                }
     		    
-    		    if (!failure)
-    		    {
-   			        if (!MediaProjectManager.migrateProjectFiles(project, context))
-   			        {
+    		    if (!failure) {
+   			        if (!MediaProjectManager.migrateProjectFiles(project, context)) {
    			        	Log.e("PROJECT MIGRATION", "failed to migrate files");
    			    	    failure = true;
    			        }
     		    }
-    		}
-    		else
-    		{
+    		} else {
     			try {
     			    Log.e("PROJECT MIGRATION", projectDir.getCanonicalPath() + "does not exist");
     			} catch (Exception e) {
@@ -578,12 +573,9 @@ public class Project extends Model {
     			failure = true;
     		}
 
-    		if (!failure)
-    		{ 
+    		if (!failure) { 
     			project.update();
-    		}
-    		else
-    		{
+    		} else {
     			Log.e("PROJECT MIGRATION", "failed to migrate project " + project.getId());
     			// if migration failed in some way, add project to result list for error handling upstream
     			failed.add(project);

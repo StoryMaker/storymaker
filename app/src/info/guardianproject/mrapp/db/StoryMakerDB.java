@@ -39,23 +39,19 @@ public class StoryMakerDB extends SQLiteOpenHelper {
             db.execSQL(StoryMakerDB.Schema.Media.UPDATE_TABLE_MEDIA_ADD_TRIM_END);
             db.execSQL(StoryMakerDB.Schema.Media.UPDATE_TABLE_MEDIA_ADD_DURATION);
         } 
-        if ((oldVersion < 4) && (newVersion >= 4)) {
+        if ((oldVersion < 6) && (newVersion >= 6)) {
             db.execSQL(StoryMakerDB.Schema.Auth.UPDATE_TABLE_AUTH);
-            Auth.migrate(mContext, db); // migrates storymaker login credentials
-        } 
-        if ((oldVersion < 5) && (newVersion >= 5)) {
             db.execSQL(StoryMakerDB.Schema.Projects.UPDATE_TABLE_PROJECTS_ADD_CREATED_AT);
             db.execSQL(StoryMakerDB.Schema.Projects.UPDATE_TABLE_PROJECTS_ADD_UPDATED_AT);
             db.execSQL(StoryMakerDB.Schema.Scenes.UPDATE_TABLE_SCENES_ADD_CREATED_AT);
             db.execSQL(StoryMakerDB.Schema.Scenes.UPDATE_TABLE_SCENES_ADD_UPDATED_AT);
             db.execSQL(StoryMakerDB.Schema.Media.UPDATE_TABLE_MEDIA_ADD_CREATED_AT);
             db.execSQL(StoryMakerDB.Schema.Media.UPDATE_TABLE_MEDIA_ADD_UPDATED_AT);
-            Project.migrate(mContext, db); // migrates existing database records and associated files
-        }
-        if ((oldVersion < 6) && (newVersion >= 6)) {
             db.execSQL(StoryMakerDB.Schema.Projects.UPDATE_TABLE_PROJECTS_ADD_SECTION);
             db.execSQL(StoryMakerDB.Schema.Projects.UPDATE_TABLE_PROJECTS_ADD_LOCATION);
             db.execSQL(StoryMakerDB.Schema.Tags.UPDATE_TABLE_TAGS);
+            Auth.migrate(mContext, db); // migrates storymaker login credentials
+            Project.migrate(mContext, db); // migrates existing database records and associated files
         }
     }
     
