@@ -315,7 +315,7 @@ public class PublishFragment extends Fragment implements PublishListener {
         mButtonUpload.setEnabled(!vis);
         mButtonUpload.setChecked(!vis);
         mProgressText.setVisibility(vis ? View.VISIBLE : View.GONE);
-        mProgressText.setTextColor(getResources().getColor(android.R.color.white));
+        mProgressText.setTextColor(getResources().getColor(android.R.color.holo_blue_dark));
     }
 
     private void showUploadSpinner(boolean vis) {
@@ -331,7 +331,7 @@ public class PublishFragment extends Fragment implements PublishListener {
         mButtonPlay.setEnabled(!vis);
         mButtonPlay.setChecked(!vis);
         mProgressText.setVisibility(vis ? View.VISIBLE : View.GONE);
-        mProgressText.setTextColor(getResources().getColor(android.R.color.white));
+        mProgressText.setTextColor(getResources().getColor(android.R.color.holo_blue_dark));
     }
     
     private void showPlayAndUpload(boolean vis) {

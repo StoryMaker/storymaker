@@ -76,7 +76,7 @@
             android:paddingLeft="8dp"
             android:paddingRight="8dp"
             android:text="Small Text"
-            android:textColor="#dddddd"
+            android:textColor="@color/holo_blue_dark"
             android:textSize="18sp"
             android:textStyle="bold" />
 
