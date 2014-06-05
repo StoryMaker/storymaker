@@ -10,7 +10,7 @@
                     "Security Concern": "-", 
                     "Shot Size": "Широки", 
                     "Tip": "Знаменитости помажу публици како би боље схватили локацију.", 
-                    "Title": "Environmental"
+                    "Title": "Околишни" 
                 }, 
                 {
                     "Artwork": "cliptype_medium", 
@@ -20,7 +20,7 @@
                     "Security Concern": "-", 
                     "Shot Size": "Средњи", 
                     "Tip": "Држите особу на једној од вертикалних линија како бисте прикладно уоквирили ваш снимак.", 
-                    "Title": "Reaction/Interaction"
+                    "Title": "Реакција/Интеракција" 
                 }, 
                 {
                     "Artwork": "cliptype_long", 
@@ -30,7 +30,7 @@
                     "Security Concern": "-", 
                     "Shot Size": "Дугачак", 
                     "Tip": "Сместите особу на једну страну оквира, уоквирите ваш снимак како бисте приказали са друге стране и нешто битно везано за причу.", 
-                    "Title": "Candid"
+                    "Title": "Отворен" 
                 }, 
                 {
                     "Artwork": "cliptype_close", 
@@ -40,7 +40,7 @@
                     "Security Concern": "-", 
                     "Shot Size": "Близу", 
                     "Tip": "Користите очну линију како бисте прикладно уоквирили снимак.", 
-                    "Title": "Portrait"
+                    "Title": "Портрет" 
                 }, 
                 {
                     "Artwork": "cliptype_detail", 
@@ -49,12 +49,12 @@
                     "Length": "X секунди", 
                     "Security Concern": "-", 
                     "Shot Size": "Детаљно", 
-                    "Tip": "Set your camera to Macro if you are shooting less than arm\u2019s length from your subject.", 
-                    "Title": "Signature"
+                    "Tip": "Подесите камеру на Мацро ако снимате на удаљености краћој од дужине руке\u2019s од вашег субјекта.",  
+                    "Title": "Потпис" 
                 } 
             ], 
-            "title": "Scene 1"
+            "title": "Сцена 1"
         } 
     ], 
-    "title": "Photo Simple"
+    "title": "Фото Једноставан"
 } 

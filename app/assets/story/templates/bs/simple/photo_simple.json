@@ -10,7 +10,7 @@
                     "Security Concern": "-", 
                     "Shot Size": "Široki", 
                     "Tip": "Znamenitosti pomažu publici kako bi bolje shvatili lokaciju.", 
-                    "Title": "Environmental"
+                    "Title": "Okolišni"
                 }, 
                 {
                     "Artwork": "cliptype_medium", 
@@ -20,7 +20,7 @@
                     "Security Concern": "-", 
                     "Shot Size": "Srednji", 
                     "Tip": "Držite osobu na jednoj od vertikalnih linija kako biste prikladno uokvirli vaš snimak.", 
-                    "Title": "Reaction/Interaction"
+                    "Title": "Reakcija/Interakcija"
                 }, 
                 {
                     "Artwork": "cliptype_long", 
@@ -30,7 +30,7 @@
                     "Security Concern": "-", 
                     "Shot Size": "Dugačak", 
                     "Tip": "Smjestite osobu na jednu stranu kadra, uokvirite vaš snimak kako biste prikazali sa druge strane i nešto bitno vezano za priču.", 
-                    "Title": "Candid"
+                    "Title": "Otvoren"
                 }, 
                 {
                     "Artwork": "cliptype_close", 
@@ -40,7 +40,7 @@
                     "Security Concern": "-", 
                     "Shot Size": "Zatvoreni", 
                     "Tip": "Koristite očnu liniju kako biste prikladno uokvirili snimak.", 
-                    "Title": "Portrait"
+                    "Title": "Portret"
                 }, 
                 {
                     "Artwork": "cliptype_detail", 
@@ -49,12 +49,12 @@
                     "Length": "X sekundi", 
                     "Security Concern": "-", 
                     "Shot Size": "Detaljno", 
-                    "Tip": "Set your camera to Macro if you are shooting less than arm\u2019s length from your subject.", 
-                    "Title": "Signature"
+                    "Tip": "Podesite kameru na Macro ukoliko snimate na udaljenosti kraćoj od manjoj dužini ruke\u2019s od vašeg subjekta.", 
+                    "Title": "Potpis"
                 } 
             ], 
-            "title": "Scene 1"
+            "title": "Scena 1"
         } 
     ], 
-    "title": "Photo Simple"
+    "title": "Foto Jednostavan"
 } 

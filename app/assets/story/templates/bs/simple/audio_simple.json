@@ -9,7 +9,7 @@
                     "Length": "X sekundi", 
                     "Security Concern": "-", 
                     "Tip": "Možda ćete morati držati mikrofon vrlo blizu da snimite označeni isječak. Provjerite da vaš izvor zvuka nije previše glasan.", 
-                    "Title": "Signature"
+                    "Title": "Potpis"
                 }, 
                 {
                     "Artwork": "cliptype_wide", 
@@ -18,7 +18,7 @@
                     "Length": "X sekundi", 
                     "Security Concern": "-", 
                     "Tip": "Želite da ambijent isječak doprinese prepričavanju priče. Ukoliko postoje zvukovi nevezani za priču, to može da ometa publiku.", 
-                    "Title": "Ambient"
+                    "Title": "Ambijent"
                 }, 
                 {
                     "Artwork": "cliptype_close", 
@@ -27,7 +27,7 @@
                     "Length": "X sekundi", 
                     "Security Concern": "-", 
                     "Tip": "Zadržite ovaj isječak kratkim. Jednostavno predstavite publici osobu, ili dopustite osobi da se predstavi. Sačuvajte dodatne informacije za intervju.", 
-                    "Title": "Narrative"
+                    "Title": "Pripovjedački"
                 }, 
                 {
                     "Artwork": "cliptype_medium", 
@@ -35,8 +35,8 @@
                     "Goal": "Zamolite osobu da vam ispriča priču.", 
                     "Length": "X sekundi", 
                     "Security Concern": "-", 
-                    "Tip": "If you want the audience to hear your questions and the subject\u2019s answers, be sure that you are both close enough to the mic to be heard clearly.", 
-                    "Title": "Interview"
+                    "Tip": "Ukoliko želite da publika čuje vaša pitanja i odgovore subjekta \u2019s , provjerite da ste oboje dovoljno blizu mikrofona kako bi vas jasno čuli.", 
+                    "Title": "Intervju"
                 }, 
                 {
                     "Artwork": "cliptype_wide", 
@@ -45,11 +45,11 @@
                     "Length": "X sekundi", 
                     "Security Concern": "-", 
                     "Tip": "Snimite cjelokupni okolišni zvuk. Pazite da i vi ne pravite neke zvuke, to će odvratiti publiku od prirodnog zvuka.", 
-                    "Title": "Environmental"
+                    "Title": "Okolišni"
                 } 
             ], 
-            "title": "Scene 1"
+            "title": "Scena 1"
         } 
     ], 
-    "title": "Audio Simple"
+    "title": "Audio Jednostavan"
 } 

@@ -70,8 +70,15 @@
   <string name="choose_level_advanced">avancé</string>
   <!--/template_options-->
   <!--story_type_new-->
+  <string name="overview">à propos</string>
   <string name="activity">Activité</string>
+  <string name="impact">Imapcte</string>
+  <string name="motivation">Motivation</string>
   <string name="location">Localisation</string>
+  <string name="experience">Expérience</string>
+  <string name="results">Résultats</string>
+  <string name="next_steps">Étapes Suivantes</string>
+  <string name="conclusion">Conclusion</string>
   <string name="story_type_event_breaking_text1">Qu\'est-ce qui se passe ?</string>
   <string name="story_type_event_breaking_text3">Qui est concerné?</string>
   <!--/story_type_new-->
