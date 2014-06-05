@@ -18,4 +18,22 @@
     <item>تصوير الفيديو</item>
     <item>Story</item>
   </string-array>
+  <string-array name="array_story_locations">
+    <item>مصر</item>
+    <item>العراق</item>
+    <item>المغرب</item>
+    <item>تونس</item>
+  </string-array>
+  <string-array name="array_story_sections">
+    <item>سياسة</item>
+    <item>أعمال</item>
+    <item>رياضة</item>
+    <item>فنون</item>
+    <item>علوم</item>
+    <item>صحة</item>
+    <item>تعليم</item>
+    <item>بيئة</item>
+    <item>تكنولوجيا</item>
+    <item>سفر</item>
+  </string-array>
 </resources>

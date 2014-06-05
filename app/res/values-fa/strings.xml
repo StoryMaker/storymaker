@@ -241,5 +241,11 @@
   <string name="export_dialog_title">آیا مایلید فایل فشرده zip پروژه را به اشتراک بگذارید؟</string>
   <string name="export_dialog_close">بستن</string>
   <string name="export_dialog_share">به اشتراک گذاشتن</string>
+  <string name="action_settings">تنظیم‌ها </string>
   <!--added for new UI-->
+  <string name="label_add">اضافه</string>
+  <string name="label_edit">ویرایش </string>
+  <string name="hint_story_description">گزارش خود را شرح دهید...</string>
+  <string name="label_section">بخش</string>
+  <string name="label_location">مکان</string>
 </resources>

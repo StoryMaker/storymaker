@@ -10,6 +10,7 @@
   <string name="menu_contacts">المعارف</string>
   <string name="menu_settings">إعدادات</string>
   <string name="menu_archive">الأرشيف</string>
+  <string name="drawer_profile">تسجيل الدخول</string>
   <!--FIXME: rename-->
   <string name="menu_add_media">إضافة</string>
   <string name="menu_capture_media">تسجيل</string>
@@ -79,6 +80,7 @@
   <string name="title_activity_story_template">قالب القصة</string>
   <string name="tab_make">تحرير</string>
   <string name="tab_review">استعراض</string>
+  <string name="tab_add_clips">تحرير</string>
   <string name="story_publish_section">القسم</string>
   <string name="story_publish_section_hint">الرياضة</string>
   <string name="story_publish_topics">الموضوعات</string>
@@ -164,6 +166,15 @@
   <string name="_lesson_complete">تم الدرس</string>
   <string name="_of_">من</string>
   <string name="default_youtube_desc">مشروع StoryMaker</string>
+  <string name="publish_youtube">YouTube -- يوتيوب</string>
+  <string name="action_play">تشغيل</string>
+  <string name="action_share">المشاركة</string>
   <!--added for project export-->
+  <string name="export_dialog_share">المشاركة</string>
+  <string name="action_settings">إعدادات</string>
   <!--added for new UI-->
+  <string name="label_add">إضافة</string>
+  <string name="hint_story_description">صف قصتك...</string>
+  <string name="label_section">القسم</string>
+  <string name="label_location">الموقع</string>
 </resources>

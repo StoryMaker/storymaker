@@ -188,5 +188,11 @@
   <!--added for project export-->
   <string name="export_dialog_close">Schließen</string>
   <string name="export_dialog_share">Teilen</string>
+  <string name="action_settings">Einstellungen</string>
   <!--added for new UI-->
+  <string name="label_add">Hinzufügen</string>
+  <string name="label_edit">Bearbeiten</string>
+  <string name="hint_story_description">Beschreiben Sie Ihre Geschichte...</string>
+  <string name="label_section">Bereich</string>
+  <string name="label_location">Ort</string>
 </resources>
