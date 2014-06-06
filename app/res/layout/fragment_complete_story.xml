@@ -75,10 +75,13 @@
             android:gravity="center"
             android:paddingLeft="8dp"
             android:paddingRight="8dp"
+            android:shadowColor="@android:color/darker_gray"
+            android:shadowDx="1"
+            android:shadowDy="1"
+            android:shadowRadius="2"
             android:text="Small Text"
-            android:textColor="#dddddd"
-            android:textSize="18sp"
-            android:textStyle="bold" />
+            android:textColor="@android:color/white"
+            android:textSize="18sp" />
 
     </RelativeLayout>
 
