@@ -1,6 +1,6 @@
 #!/bin/sh
 
-git submodule sync --recursive
+git submodule foreach --recursive "git submodule sync"
 git submodule update --init --recursive
 
 . ~/.android/bashrc
