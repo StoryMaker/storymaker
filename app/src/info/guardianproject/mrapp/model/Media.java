@@ -285,7 +285,6 @@ public class Media extends Model {
         }
         
         cursorDupes.close();
-        super.insert();
     }
 
     
