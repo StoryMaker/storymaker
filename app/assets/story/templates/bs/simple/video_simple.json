@@ -4,57 +4,57 @@
             "clips": [
                 {
                     "Artwork": "cliptype_close", 
-                    "Description": "Get close enough to ensure you have good sound and can see their face clearly.",
-                    "Goal": "Ask the character to tell you a story. Capture their emotion.",
-                    "Length": "30-60 seconds", 
+                    "Description": "Približite se dovoljno kako biste bili sigurni da imate dobar zvuk i možete jasno vidjeti njihova lica.",
+                    "Goal": "Zamolite osobu da vam ispriča priču. Zabilježite njihovu emociju.",
+                    "Length": "30-60 sekundi", 
                     "Security Concern": "-", 
                     "Shot Size": "Blizu", 
                     "Tip": "Koristite očnu liniju kako biste prikladno uokvirili snimak.", 
-                    "Title": "Interview"
+                    "Title": "Intervju"
                 },                 
                 {
                     "Artwork": "cliptype_detail", 
-                    "Description": "Get close to an object, or person, and capture a memorable detail to summarize your story in one shot.", 
-                    "Goal": "Show an essential detail to the story.", 
-                    "Length": "5 - 10 seconds", 
+                    "Description": "Približite se objektu, ili osobi, i zabilježite upečatljiv detalj kako biste sumirali vašu priču u jednom snimku.", 
+                    "Goal": "Prikažite ključni detalj u priči.", 
+                    "Length": "5 - 10 sekundi", 
                     "Security Concern": "-", 
                     "Shot Size": "Detaljno", 
-                    "Tip": "The detail should fill at least 50% of the frame.", 
-                    "Title": "Signature" 
+                    "Tip": "Detalj bi trebao popuniti najmanje 50% kadra.", 
+                    "Title": "Potpis" 
                 },
                 {
                     "Artwork": "cliptype_medium", 
-                    "Description": "Let the camera observe the character relating to friends, their work, demonstrating their knowledge, or completing an action.", 
-                    "Goal": "Show an interaction between the character and their world.", 
-                    "Length": "10 - 15 seconds",
+                    "Description": "Dozvolite da kamera posmatra osobu u odnosu sa prijateljima, u njihovom poslu, prikazujući njihovo znanje, ili kako izvršava neku radnju.", 
+                    "Goal": "Prikažite interakciju između osobe i njihovog svijeta.", 
+                    "Length": "10 - 15 sekundi",
                     "Security Concern": "-",
                     "Shot Size": "Srednji",
-                    "Tip": "The character should fill about 30% of the frame.",
-                    "Title": "Interaction"
+                    "Tip": "Osoba bi trebala popuniti oko 30% kadra.",
+                    "Title": "Interakcija"
                 },
                 {
                     "Artwork": "cliptype_long", 
-                    "Description": "Step back. This shot should be wide enough to depict the character from head to toe in their location.", 
-                    "Goal": "Capture the character in action.", 
-                    "Length": "10 - 15 seconds", 
+                    "Description": "Korak unazad. Ovaj snimak bi trebao biti dovoljno širok da prikaže osobu od glave do pete na njihovoj lokaciji.", 
+                    "Goal": "Zabilježite osobu u akciji.", 
+                    "Length": "10 - 15 sekundi", 
                     "Security Concern": "-", 
                     "Shot Size": "Dugačak", 
                     "Tip": "Držite osobu na jednoj od vertikalnih linija kako biste prikladno uokvirili vaš snimak.", 
-                    "Title": "Activity"
+                    "Title": "Aktivnost"
                 }, 
                 {
                     "Artwork": "cliptype_wide",
-                    "Description": "Landmarks or location specific are ideal to include. Environmental shots can help indicate the country, ethnicity, or religion of your character.",
+                    "Description": "Znamenitost ili određena lokacija su idealne za prikazati. Okolišni snimci mogu pomoći kod isticanja zemlje, nacionalnosti ili vjeroispovijesti vaše osobe.",
                     "Goal": "Prikažite gdje se vaša priča odvija.",
-                    "Length": "5 - 10 seconds",
+                    "Length": "5 - 10 sekundi",
                     "Security Concern": "-",
                     "Shot Size": "Široki",
-                    "Tip": "Place your camera directly in front of the primary location you are filming.", 
-                    "Title": "Location"
+                    "Tip": "Smjestite kameru direktno ispred primarne lokacije koju snimate.", 
+                    "Title": "Lokacija"
                 }  
             ], 
-            "title": "Scene 1"
+            "title": "Scena 1"
         }  
     ], 
-    "title": "Simple Story - Video"
+    "title": "Jednostavan Priča - Video"
 }  

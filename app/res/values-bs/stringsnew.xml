@@ -191,8 +191,10 @@
   <string name="prefs_youtube_login_summary">Koristitie You Tube web odobrenje</string>
   <string name="prefs_soundcloud_account_title">SoundCloud račun</string>
   <string name="prefs_soundcloud_account_summary">SoundCloud račun koristiti za audio učitavanja</string>
-  <string name="prefs_interface_language_summary"></string>
-  <string name="prefs_lesson_language_summary"></string>
+  <string name="prefs_interface_language_title">Odaberite jezik</string>
+  <string name="prefs_interface_language_summary">Jezik Story Maker će se koristiti za korisničko sučelje.</string>
+  <string name="prefs_lesson_language_title">Odaberite lekcije</string>
+  <string name="prefs_lesson_language_summary">Modul lekcije za upotrebu.</string>
   <string name="prefs_slide_duration_title">Trajanje slajda</string>
   <string name="prefs_slide_duration_summary">Trajanje svakog slajda u foto eseju</string>
   <string name="prefs_enable_compression_title">Omogućite sažimanje</string>
