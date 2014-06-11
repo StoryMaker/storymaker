@@ -1,7 +1,11 @@
 package info.guardianproject.mrapp.db;
 
+import java.util.ArrayList;
+
 import info.guardianproject.mrapp.model.Auth;
 import info.guardianproject.mrapp.model.Project;
+import info.guardianproject.mrapp.model.Scene;
+import info.guardianproject.mrapp.model.SceneTable;
 import net.sqlcipher.database.SQLiteDatabase;
 import net.sqlcipher.database.SQLiteOpenHelper;
 import android.content.Context;
@@ -9,7 +13,7 @@ import android.util.Log;
 
 public class StoryMakerDB extends SQLiteOpenHelper {
     private static final String TAG = "StoryMakerDB";
-    private static final int DB_VERSION = 6;
+    private static final int DB_VERSION = 7;
     private static final String DB_NAME = "sm.db";
     private Context mContext;
     
@@ -31,14 +35,17 @@ public class StoryMakerDB extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         Log.d(TAG, "updating db from " + oldVersion + " to " + newVersion);
-        if ((oldVersion < 2) && (newVersion == 2)) {
+        
+        if ((oldVersion < 2) && (newVersion >= 2)) {
             db.execSQL(StoryMakerDB.Schema.Projects.UPDATE_TABLE_PROJECTS);
-        } 
-        if ((oldVersion < 3) && (newVersion == 3)) {
+        }
+        
+        if ((oldVersion < 3) && (newVersion >= 3)) {
             db.execSQL(StoryMakerDB.Schema.Media.UPDATE_TABLE_MEDIA_ADD_TRIM_START);
             db.execSQL(StoryMakerDB.Schema.Media.UPDATE_TABLE_MEDIA_ADD_TRIM_END);
             db.execSQL(StoryMakerDB.Schema.Media.UPDATE_TABLE_MEDIA_ADD_DURATION);
         } 
+        
         if ((oldVersion < 6) && (newVersion >= 6)) {
             db.execSQL(StoryMakerDB.Schema.Auth.UPDATE_TABLE_AUTH);
             db.execSQL(StoryMakerDB.Schema.Projects.UPDATE_TABLE_PROJECTS_ADD_CREATED_AT);
@@ -52,6 +59,14 @@ public class StoryMakerDB extends SQLiteOpenHelper {
             db.execSQL(StoryMakerDB.Schema.Tags.UPDATE_TABLE_TAGS);
             Auth.migrate(mContext, db); // migrates storymaker login credentials
             Project.migrate(mContext, db); // migrates existing database records and associated files
+        }
+        
+        if ((oldVersion < 7) && (newVersion >= 7)) {
+            @SuppressWarnings("unchecked")
+            ArrayList<Scene> scenes = (ArrayList<Scene>) (new SceneTable(db)).getAllAsList(mContext);
+            for (Scene scene: scenes) {
+                scene.migrateDeleteDupedMedia();
+            }
         }
     }
     
