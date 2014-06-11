@@ -8,7 +8,6 @@ import java.util.Collections;
 import java.util.Date;
 
 import net.sqlcipher.database.SQLiteDatabase;
-
 import info.guardianproject.mrapp.StoryMakerApp;
 import info.guardianproject.mrapp.Utils;
 import info.guardianproject.mrapp.db.ProjectsProvider;
@@ -29,7 +28,8 @@ public class Project extends Model {
     protected Date updatedAt; // long stored in database as 8-bit int
     protected String section;
     protected String location;
-    
+    protected int report_id;
+
     public final static int STORY_TYPE_VIDEO = 0;
     public final static int STORY_TYPE_AUDIO = 1;
     public final static int STORY_TYPE_PHOTO = 2;
@@ -464,7 +464,18 @@ public class Project extends Model {
     public String getLocation() {
         return location;
     }
-
+    /**
+     * @return report_id
+     */
+    public int getReport() {
+        return report_id;
+    }
+    /**
+     * @param report_id
+     */
+    public void setReport_Id(int report_id) {
+        this.report_id = report_id;
+    }
     /**
      * @param location
      */

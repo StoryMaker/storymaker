@@ -9,7 +9,7 @@ import android.util.Log;
 
 public class StoryMakerDB extends SQLiteOpenHelper {
     private static final String TAG = "StoryMakerDB";
-    private static final int DB_VERSION = 6;
+    private static final int DB_VERSION = 7;
     private static final String DB_NAME = "sm.db";
     private Context mContext;
     
@@ -20,6 +20,7 @@ public class StoryMakerDB extends SQLiteOpenHelper {
     
     @Override
     public void onCreate(SQLiteDatabase db) {
+    	db.execSQL(StoryMakerDB.Schema.Reports.CREATE_TABLE_REPORTS);
         db.execSQL(StoryMakerDB.Schema.Projects.CREATE_TABLE_PROJECTS);
         db.execSQL(StoryMakerDB.Schema.Scenes.CREATE_TABLE_SCENES);
 		db.execSQL(StoryMakerDB.Schema.Lessons.CREATE_TABLE_LESSONS);
@@ -76,7 +77,38 @@ public class StoryMakerDB extends SQLiteOpenHelper {
 	    			+ COL_URL + " text not null"
 	    			+ "); ";
     	}
-        
+    	 public class Reports
+         {
+             public static final String NAME = "reports";
+             
+             public static final String ID = "_id";
+             public static final String COL_TITLE = "title";
+             public static final String COL_SECTOR = "_sector";
+             public static final String COL_ENTITY = "_entity";
+             public static final String COL_DESCRIPTION = "_description";
+             public static final String COL_LOCATION = "_location";
+             public static final String COL_ISSUE = "_issue";
+             public static final String COL_SERVERID = "_serverid";
+             public static final String COL_DATE = "_date";
+             public static final String COL_EXPORTED = "_exported";
+             public static final String COL_SYNCED = "_synced";
+
+             private static final String CREATE_TABLE_REPORTS = "create table " + NAME + " (" 
+                     + ID + " integer primary key autoincrement, " 
+                     + COL_TITLE + " text not null, " 
+                     + COL_ISSUE + " text,"
+                     + COL_SECTOR + " text,"
+                     + COL_ENTITY + " text,"
+                     + COL_DESCRIPTION + " text,"
+                     + COL_LOCATION + " text,"
+                     + COL_SERVERID + " text default \'0\',"
+                     + COL_DATE + " text,"
+                     + COL_EXPORTED + " text default \'0\',"
+                     + COL_SYNCED + " text default \'0\'"
+                     + "); ";
+
+ 			
+        }
         public class Projects
         {
             public static final String NAME = "projects";
@@ -90,6 +122,7 @@ public class StoryMakerDB extends SQLiteOpenHelper {
             public static final String COL_UPDATED_AT = "updated_at";
             public static final String COL_SECTION = "section";
             public static final String COL_LOCATION = "location";
+            public static final String COL_REPORT_ID = "report_id";
             
             private static final String CREATE_TABLE_PROJECTS = "create table " + NAME + " (" 
                     + ID + " integer primary key autoincrement, " 
@@ -100,9 +133,10 @@ public class StoryMakerDB extends SQLiteOpenHelper {
                     + COL_CREATED_AT + " integer,"
                     + COL_UPDATED_AT + " integer,"
                     + COL_SECTION + " text,"
-                    + COL_LOCATION + " text"
+                    + COL_LOCATION + " text,"
+                    + COL_REPORT_ID + " integer"
                     + "); ";
-            
+            //TODO: update table with report id & object id on upgrade
             private static final String UPDATE_TABLE_PROJECTS = "alter table " + NAME + " " 
                     + "ADD COLUMN "
                     + COL_STORY_TYPE + " integer"
@@ -171,7 +205,8 @@ public class StoryMakerDB extends SQLiteOpenHelper {
             public static final String COL_DURATION = "duration";
             public static final String COL_CREATED_AT = "created_at";
             public static final String COL_UPDATED_AT = "updated_at";
-	    	
+            public static final String COL_OBJECT_ID = "object_id";
+            
 	    	private static final String CREATE_TABLE_MEDIA = "create table " + NAME + " ("
 	    			+ ID + " integer primary key autoincrement, "
 	    			+ COL_SCENE_ID + " text not null, "
@@ -183,7 +218,8 @@ public class StoryMakerDB extends SQLiteOpenHelper {
                     + COL_TRIM_END + " integer," 
                     + COL_DURATION + " integer,"
                     + COL_CREATED_AT + " integer,"
-                    + COL_UPDATED_AT + " integer" 
+                    + COL_UPDATED_AT + " integer," 
+                    + COL_OBJECT_ID + " integer"                    
 	    			+ "); ";
             
             private static final String UPDATE_TABLE_MEDIA_ADD_TRIM_START = "alter table " + NAME + " " 

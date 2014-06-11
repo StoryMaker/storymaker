@@ -38,7 +38,7 @@ public class Media extends Model {
     protected float duration;
     protected Date createdAt; // long stored in database as 8-bit int
     protected Date updatedAt; // long stored in database as 8-bit int
-
+    protected int object_id;
     public final static int IMAGE_SAMPLE_SIZE = 4;
 
     /**
@@ -414,7 +414,18 @@ public class Media extends Model {
     public float getDuration() {
         return duration;
     }
-
+    /**
+     * @return object_id
+     */
+    public int getObject() {
+        return object_id;
+    }
+    /**
+     * @param object_id
+     */
+    public void setObject_Id(int object_id) {
+        this.object_id = object_id;
+    }
     /**
      * @param duration the duration to set
      */

@@ -4,11 +4,22 @@
 <color name="soft_red">#d14236</color>
 <color name="green">#00ff00</color>
 <color name="blue">#0000ff</color>
- <color name="soft_blue">#006eb0</color>
 <color name="transparent_black">#33333333</color>
  <color name="white">#ffffff</color>
  <color name="brown">#c05f1d</color>
  <color name="yellow">#f9b233</color>
  <color name="grey">#e8e8e8</color>
  <color name="black">#000000</color>
+ <color name="menu_background">#c6c4c4</color>
+ <color name="background_light">#c6c4c4</color>
+ <color name="light_blue">#67b6dc</color>
+ <color name="soft_green">#029675</color>
+ <color name="soft_blue">#81C6DD</color>
+ <color name="soft_grey">#DCDDD8</color>
+ <color name="soft_orange">#ffad0f</color>
+ <color name="softer_orange">#ffad0f</color>
+ <color name="light_cream">#f0e4d4</color>
+ <color name="soft_purple">#033866</color>
+ <color name="dark_grey">#cac4ba</color>
+ <color name="darker_grey">#98948c</color>
 </resources>

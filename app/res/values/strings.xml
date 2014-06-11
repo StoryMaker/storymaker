@@ -6,6 +6,13 @@
     <string name="title_projects">Stories</string>
     <string name="title_lessons">Lessons</string>
     <string name="action_publish">Publish</string>
+    <!-- TIMBY -->
+    <string name="add">Add Report</string>
+    <string name="view">View Reports</string>
+    <string name="help">Help</string>
+    <string name="sync">Sync</string>
+    <string name="export_option">Include already exported/synced files?</string>
+    <string name="export">Export</string>
     <!-- menus -->
     <string name="menu_new_project">New</string>
     <string name="menu_projects">Stories</string>

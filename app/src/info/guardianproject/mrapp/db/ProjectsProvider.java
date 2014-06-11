@@ -6,6 +6,7 @@ import info.guardianproject.mrapp.model.LessonTable;
 import info.guardianproject.mrapp.model.MediaTable;
 import info.guardianproject.mrapp.model.Project;
 import info.guardianproject.mrapp.model.ProjectTable;
+import info.guardianproject.mrapp.model.ReportTable;
 import info.guardianproject.mrapp.model.Scene;
 import info.guardianproject.mrapp.model.Media;
 import info.guardianproject.mrapp.model.Lesson;
@@ -41,6 +42,9 @@ public class ProjectsProvider extends ContentProvider {
     public static final int TAG_ID = 116;
     public static final int DISTINCT_TAGS = 126;
     public static final int DISTINCT_TAG_ID = 136;
+    public static final int REPORTS = 147;    
+    public static final int REPORT_ID = 157;    
+    public static final String REPORTS_BASE_PATH = "reports";
     public static final String PROJECTS_BASE_PATH = "projects";
     public static final String SCENES_BASE_PATH = "scenes";
     public static final String LESSONS_BASE_PATH = "lessons";
@@ -48,6 +52,7 @@ public class ProjectsProvider extends ContentProvider {
     public static final String AUTH_BASE_PATH = "auth";
     public static final String TAGS_BASE_PATH = "tags";
     public static final String DISTINCT_TAGS_BASE_PATH = "distinct_tags";
+    public static final Uri REPORTS_CONTENT_URI = Uri.parse("content://" + AUTHORITY + "/" + REPORTS_BASE_PATH);
     public static final Uri PROJECTS_CONTENT_URI = Uri.parse("content://" + AUTHORITY + "/" + PROJECTS_BASE_PATH);
     public static final Uri SCENES_CONTENT_URI = Uri.parse("content://" + AUTHORITY + "/" + SCENES_BASE_PATH);
     public static final Uri LESSONS_CONTENT_URI = Uri.parse("content://" + AUTHORITY + "/" + LESSONS_BASE_PATH);
@@ -56,6 +61,10 @@ public class ProjectsProvider extends ContentProvider {
     public static final Uri TAGS_CONTENT_URI = Uri.parse("content://" + AUTHORITY + "/" + TAGS_BASE_PATH);
     public static final Uri DISTINCT_TAGS_CONTENT_URI = Uri.parse("content://" + AUTHORITY + "/" + DISTINCT_TAGS_BASE_PATH);
 
+    public static final String REPORTS_CONTENT_ITEM_TYPE = ContentResolver.CURSOR_ITEM_BASE_TYPE
+            + "/reports";
+    public static final String REPORTS_CONTENT_TYPE = ContentResolver.CURSOR_DIR_BASE_TYPE
+            + "/reports";
     public static final String PROJECTS_CONTENT_ITEM_TYPE = ContentResolver.CURSOR_ITEM_BASE_TYPE
             + "/projects";
     public static final String PROJECTS_CONTENT_TYPE = ContentResolver.CURSOR_DIR_BASE_TYPE
@@ -89,6 +98,8 @@ public class ProjectsProvider extends ContentProvider {
             UriMatcher.NO_MATCH);
     
     static {
+    	sURIMatcher.addURI(AUTHORITY, REPORTS_BASE_PATH, REPORTS);
+        sURIMatcher.addURI(AUTHORITY, REPORTS_BASE_PATH + "/#", REPORT_ID);
         sURIMatcher.addURI(AUTHORITY, PROJECTS_BASE_PATH, PROJECTS);
         sURIMatcher.addURI(AUTHORITY, PROJECTS_BASE_PATH + "/#", PROJECT_ID);
         sURIMatcher.addURI(AUTHORITY, SCENES_BASE_PATH, SCENES);
@@ -128,6 +139,8 @@ public class ProjectsProvider extends ContentProvider {
     public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
         int uriType = sURIMatcher.match(uri);
         switch (uriType) {
+        case REPORT_ID:
+            return (new ReportTable(getDB())).queryOne(getContext(), uri, projection, selection, selectionArgs, sortOrder);
         case PROJECT_ID:
             return (new ProjectTable(getDB())).queryOne(getContext(), uri, projection, selection, selectionArgs, sortOrder);
         case PROJECTS:
@@ -166,6 +179,8 @@ public class ProjectsProvider extends ContentProvider {
         long newId;
         int uriType = sURIMatcher.match(uri);
         switch (uriType) {
+        case REPORTS:
+            return (new ReportTable(getDB())).insert(getContext(), uri, values);
         case PROJECTS:
             return (new ProjectTable(getDB())).insert(getContext(), uri, values);
         case SCENES:
@@ -188,6 +203,9 @@ public class ProjectsProvider extends ContentProvider {
     public int delete(Uri uri, String selection, String[] selectionArgs) {
         int uriType = sURIMatcher.match(uri);
         switch (uriType) {
+        case REPORTS:
+        case REPORT_ID:
+            return (new ReportTable(getDB())).delete(getContext(), uri, selection, selectionArgs);
         case PROJECTS:
         case PROJECT_ID:
             return (new ProjectTable(getDB())).delete(getContext(), uri, selection, selectionArgs);
@@ -217,6 +235,9 @@ public class ProjectsProvider extends ContentProvider {
     public int update(Uri uri, ContentValues values, String selection, String[] selectionArgs) {
         int uriType = sURIMatcher.match(uri);
         switch (uriType) {
+        case REPORTS:
+        case REPORT_ID:
+            return (new ReportTable(getDB())).update(getContext(), uri, values, selection, selectionArgs);
         case PROJECTS:
         case PROJECT_ID:
             return (new ProjectTable(getDB())).update(getContext(), uri, values, selection, selectionArgs);
