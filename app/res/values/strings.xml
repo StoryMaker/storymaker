@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
 
-    <string name="app_name">StoryMaker</string>
+    <string name="app_name">Listening Post</string>
     <string name="app_id" translatable="false">509922855786064</string>
     <string name="title_projects">Stories</string>
     <string name="title_lessons">Lessons</string>
@@ -13,6 +13,22 @@
     <string name="sync">Sync</string>
     <string name="export_option">Include already exported/synced files?</string>
     <string name="export">Export</string>
+    <string name="add_caption">Add Caption</string>
+	<string name="skip">Skip</string>
+	<string name="add_caption_alert">Do you want to a caption?</string>
+	
+	<string name="add_picture">Image</string>
+	<string name="add_video">Video</string>
+	<string name="add_audio">Audio</string>
+	<string name="view_gallery">Gallery</string>
+	<string name="description_field">Description</string>
+	<string name="done">Done</string>
+	<string name="unsaved_changes_alert">You have unsaved changes!</string>
+	<string name="save">Save</string>
+	<string name="discard">Discard</string>
+    <string name="report_status">Status</string>
+    <string name="delete_report_confirmation">Are you sure you want to delete?</string>
+    <string name="reports_list">List of reports</string>
     <!-- menus -->
     <string name="menu_new_project">New</string>
     <string name="menu_projects">Stories</string>

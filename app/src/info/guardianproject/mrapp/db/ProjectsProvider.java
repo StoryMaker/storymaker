@@ -141,7 +141,9 @@ public class ProjectsProvider extends ContentProvider {
         switch (uriType) {
         case REPORT_ID:
             return (new ReportTable(getDB())).queryOne(getContext(), uri, projection, selection, selectionArgs, sortOrder);
-        case PROJECT_ID:
+        case REPORTS:
+            return (new ReportTable(getDB())).queryAll(getContext(), uri, projection, selection, selectionArgs, sortOrder);
+       case PROJECT_ID:
             return (new ProjectTable(getDB())).queryOne(getContext(), uri, projection, selection, selectionArgs, sortOrder);
         case PROJECTS:
             return (new ProjectTable(getDB())).queryAll(getContext(), uri, projection, selection, selectionArgs, sortOrder);

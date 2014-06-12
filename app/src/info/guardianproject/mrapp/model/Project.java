@@ -81,8 +81,9 @@ public class Project extends Model {
      * @param updatedAt
      * @param section
      * @param location
+     * @param report_id 
      */
-    public Project(Context context, int id, String title, String thumbnailPath, int storyType, String templatePath, Date createdAt, Date updatedAt, String section, String location) {
+    public Project(Context context, int id, String title, String thumbnailPath, int storyType, String templatePath, Date createdAt, Date updatedAt, String section, String location, int report_id) {
         super(context);
         this.id = id;
         this.title = title;
@@ -93,6 +94,7 @@ public class Project extends Model {
         this.updatedAt = updatedAt;
         this.section = section;
         this.location = location;
+        this.report_id = report_id;
     }
     
     /**
@@ -112,8 +114,8 @@ public class Project extends Model {
      * @param section
      * @param location
      */
-    public Project(SQLiteDatabase db, Context context, int id, String title, String thumbnailPath, int storyType, String templatePath, Date createdAt, Date updatedAt, String section, String location) {
-        this(context, id, title, thumbnailPath, storyType, templatePath, createdAt, updatedAt, section, location);
+    public Project(SQLiteDatabase db, Context context, int id, String title, String thumbnailPath, int storyType, String templatePath, Date createdAt, Date updatedAt, String section, String location, int report_id) {
+        this(context, id, title, thumbnailPath, storyType, templatePath, createdAt, updatedAt, section, location, report_id);
         this.mDB = db;
     }
 
@@ -144,7 +146,10 @@ public class Project extends Model {
                 cursor.getString(cursor
                         .getColumnIndex(StoryMakerDB.Schema.Projects.COL_SECTION)),
                 cursor.getString(cursor
-                        .getColumnIndex(StoryMakerDB.Schema.Projects.COL_LOCATION)));
+                        .getColumnIndex(StoryMakerDB.Schema.Projects.COL_LOCATION)),
+                 cursor.getInt(cursor
+                        .getColumnIndex(StoryMakerDB.Schema.Projects.COL_REPORT_ID)));
+                
 
         calculateMaxSceneCount();
 
@@ -180,7 +185,9 @@ public class Project extends Model {
                 cursor.getString(cursor
                         .getColumnIndex(StoryMakerDB.Schema.Projects.COL_SECTION)),
                 cursor.getString(cursor
-                        .getColumnIndex(StoryMakerDB.Schema.Projects.COL_LOCATION)));
+                        .getColumnIndex(StoryMakerDB.Schema.Projects.COL_LOCATION)),
+                cursor.getInt(cursor
+                        .getColumnIndex(StoryMakerDB.Schema.Projects.COL_REPORT_ID)));
         this.mDB = db;
         calculateMaxSceneCount(); // had to dupe the Project(context, cursor) constructor in here because of this call being fired before we set mDB 
     }
@@ -247,6 +254,7 @@ public class Project extends Model {
         }
         values.put(StoryMakerDB.Schema.Projects.COL_SECTION, section);
         values.put(StoryMakerDB.Schema.Projects.COL_LOCATION, location);
+        values.put(StoryMakerDB.Schema.Projects.COL_REPORT_ID, report_id);
         // store dates as longs(8-bit ints)
         // can't put null in values set, so only add entry if non-null
         
@@ -603,4 +611,28 @@ public class Project extends Model {
     	
     	return null;
     }			
+    //FIXME:use table instead
+    public static Cursor getAllAsCursor(Context context, int rid) {
+    	String selection = StoryMakerDB.Schema.Projects.COL_REPORT_ID + "=?";
+        String[] selectionArgs = new String[] { "" + rid };
+        return context.getContentResolver().query(
+                ProjectsProvider.PROJECTS_CONTENT_URI, null, selection,
+                selectionArgs, null);
+        /*
+        return context.getContentResolver().query(
+                ProjectsProvider.PROJECTS_CONTENT_URI, null, null, null, null);
+         */       
+    }
+
+    public static ArrayList<Project> getAllAsList(Context context, int rid) {
+        ArrayList<Project> projects = new ArrayList<Project>();
+        Cursor cursor = getAllAsCursor(context, rid);
+        if (cursor.moveToFirst()) {
+            do {
+                projects.add(new Project(context, cursor));
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        return projects;
+    }
 }

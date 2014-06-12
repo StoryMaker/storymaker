@@ -8,6 +8,7 @@ import info.guardianproject.mrapp.model.template.Template;
 import info.guardianproject.mrapp.model.Project;
 import info.guardianproject.mrapp.model.ProjectTable;
 import info.guardianproject.mrapp.model.Scene;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -22,6 +23,7 @@ import java.util.zip.ZipOutputStream;
 import net.micode.soundrecorder.SoundRecorder;
 
 import org.holoeverywhere.app.AlertDialog;
+
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -50,7 +52,6 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
     private final static String CAPTURE_MIMETYPE_AUDIO = "audio/3gpp";
     public Fragment mFragmentTab0, mFragmentTab1, mLastTabFrag;
     public PublishFragment mPublishFragment;
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,6 +75,7 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
             mMPM = new MediaProjectManager(this, getApplicationContext(), getIntent(), mHandlerPub, mProject, scene);
             mMPM.initProject();
             mMPM.addAllProjectMediaToEditor();
+
         }
         else
         {
@@ -87,7 +89,6 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
             mMPM = new MediaProjectManager(this, getApplicationContext(), getIntent(), mHandlerPub, mProject);
             mMPM.initProject();
         }
-        
         try
         {
 	        if (mProject.getScenesAsList().size() > 1)

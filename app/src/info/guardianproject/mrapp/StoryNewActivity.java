@@ -2,6 +2,7 @@ package info.guardianproject.mrapp;
 
 import java.util.Date;
 
+import org.holoeverywhere.widget.LinearLayout;
 import org.holoeverywhere.widget.Toast;
 
 import info.guardianproject.mrapp.R;
@@ -10,6 +11,7 @@ import info.guardianproject.mrapp.model.Scene;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -27,16 +29,29 @@ public class StoryNewActivity extends BaseActivity {
 	private TextView txtNewStoryDesc;
 	private EditText editTextStoryName;
 	
+	int rid;
+	int storymode;
+	int quickstory;
+	
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_story);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         
+        Intent intent = getIntent();
+        rid = intent.getIntExtra("rid", -1);
+        storymode = intent.getIntExtra("storymode", -1);
+        
         txtNewStoryDesc = (TextView)findViewById(R.id.txtNewStoryDesc);
         editTextStoryName = (EditText)findViewById(R.id.editTextStoryName);
-        
+        editTextStoryName.setHint("Quick caption(optional)");
         rGroup = (RadioGroup)findViewById(R.id.radioGroupStoryType);
+        
+        
+        //storymode is already chosen     
+        LinearLayout llMedium = (LinearLayout)findViewById(R.id.llMedium);
+        llMedium.setVisibility(View.GONE);
         
         rGroup.setOnCheckedChangeListener(new OnCheckedChangeListener()
         {
@@ -94,7 +109,6 @@ public class StoryNewActivity extends BaseActivity {
         });
         
         
-        Intent intent = getIntent();
         
         if (intent.hasExtra("story_name") && intent.hasExtra("story_type"))
         {
@@ -114,6 +128,9 @@ public class StoryNewActivity extends BaseActivity {
     
     private boolean formValid ()
     {
+    	//Caption is optional
+    	return true;
+    	/*
     	String pName = editTextStoryName.getText().toString();
     	    
     	if (pName == null || pName.length() == 0)
@@ -125,10 +142,16 @@ public class StoryNewActivity extends BaseActivity {
     	{
     		return true;
     	}
+    	*/
+    	
     }
     
     private int getSelectedStoryMode ()
-    {
+    {		
+    	
+    	   //storymode got from intent extras
+    	   return storymode;
+    	   /*
     	   int checkedId = rGroup.getCheckedRadioButtonId();
     	   int resultMode = -1;
     	   
@@ -152,6 +175,8 @@ public class StoryNewActivity extends BaseActivity {
     	   }
     	   
     	   return resultMode;
+    	   */
+    		
     }
     		
     private void launchTemplateChooser ()
@@ -164,6 +189,7 @@ public class StoryNewActivity extends BaseActivity {
 
         i.putExtra("project_title", editTextStoryName.getText().toString());
         i.putExtra("story_mode", storyMode);
+        i.putExtra("rid", rid);
         i.putExtra("story_mode_template", templateJsonPath);
         
         startActivity(i);
@@ -177,6 +203,7 @@ public class StoryNewActivity extends BaseActivity {
         
         Project project = new Project (getBaseContext(), clipCount);
         project.setTitle(pName);
+        project.setReport_Id(rid);
         project.save();
         
         Scene scene = new Scene(this, clipCount);

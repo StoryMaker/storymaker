@@ -72,8 +72,7 @@ public class LoginActivity extends BaseActivity implements Runnable
         	
         });
         
-        TextView registerScreen = (TextView) findViewById(R.id.link_to_register);
- 
+        Button registerScreen = (Button) findViewById(R.id.link_to_register);
         // Listening to register new account link
         registerScreen.setOnClickListener(new View.OnClickListener() {
  
@@ -99,7 +98,7 @@ public class LoginActivity extends BaseActivity implements Runnable
 				        }
 					}
 				});
-        TextView skipScreen = (TextView) findViewById(R.id.link_to_skip);
+        Button skipScreen = (Button) findViewById(R.id.link_to_skip);
         
         // Listening to skip link
         skipScreen.setOnClickListener(new View.OnClickListener() {

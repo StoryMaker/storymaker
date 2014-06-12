@@ -122,7 +122,7 @@ public class HomePanelsActivity extends BaseActivity implements OnClickListener{
         // action bar stuff
        
          
-        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#f0e4d4")));
+        //getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#f0e4d4")));
         getSupportActionBar().setTitle("");
         getSupportActionBar().setDisplayShowHomeEnabled(false);
        

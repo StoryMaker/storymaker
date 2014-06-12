@@ -1,0 +1,394 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"   
+     android:background="@color/white"
+    android:fillViewport="true" >
+    
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" >
+
+    <TableLayout
+        android:id="@+id/tableLayout1"
+        android:layout_width="fill_parent"
+        android:layout_height="70dp"
+        android:layout_weight="0.6"
+        android:background="#ffffff"
+        android:stretchColumns="*" >
+
+        <TableRow
+            android:id="@+id/tableRow3"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_weight="0.5" >
+
+            <RelativeLayout
+                android:id="@+id/images"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="0.50"
+                android:background="@color/lp_red"
+                android:clickable="true" >
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_centerHorizontal="true"
+		            android:layout_centerVertical="true">
+		            <ImageView
+		                android:id="@+id/ivButton1"
+		                android:layout_width="wrap_content"
+		                android:layout_height="20dp"
+		                android:layout_gravity="center"
+		                android:src="@drawable/camera" />
+					<TextView
+		                android:id="@+id/picture_label"
+		                android:layout_width="wrap_content"
+		                android:layout_height="wrap_content"
+		                android:layout_gravity="center"
+		                android:textColor="#ffffff"
+		                android:text="@string/add_picture" />
+				</LinearLayout>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/video"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="0.5"
+                android:background="@color/lp_yellow"
+                android:clickable="true" >
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_centerHorizontal="true"
+		            android:layout_centerVertical="true">
+				<ImageView
+	                android:id="@+id/ivButton2"
+	                android:layout_width="wrap_content"
+	                android:layout_height="20dp"
+	                 android:layout_gravity="center"
+	                android:src="@drawable/video" />
+				<TextView
+	                android:id="@+id/video_label"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                 android:layout_gravity="center"
+	                android:textColor="#ffffff"
+	                android:text="@string/add_video" />
+				</LinearLayout>
+            </RelativeLayout>
+ 			
+            <RelativeLayout
+                android:id="@+id/audio"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="0.5"
+                android:background="@color/lp_blue"
+                android:clickable="false" >
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_centerHorizontal="true"
+		            android:layout_centerVertical="true">
+					<ImageView
+		                android:id="@+id/ivButton3"
+		                android:layout_width="wrap_content"
+		                android:layout_height="20dp"
+		                android:layout_gravity="center"
+		                android:src="@drawable/audio" />
+					<TextView
+		                android:id="@+id/audio_label"
+		                android:layout_width="wrap_content"
+		                android:layout_height="wrap_content"
+		               	android:layout_gravity="center"
+		                android:layout_below="@+id/ivButton3"
+		                android:textColor="#ffffff"
+		                android:text="@string/add_audio" />
+				</LinearLayout>
+            </RelativeLayout>
+            
+            <RelativeLayout
+                android:id="@+id/gallery"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="0.5"
+                android:background="@color/lp_brown"
+                android:clickable="true" >
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_centerHorizontal="true"
+		            android:layout_centerVertical="true">
+					<ImageView
+		                android:id="@+id/ivButton4"
+		                android:layout_width="wrap_content"
+		                android:layout_height="20dp"
+		                android:src="@drawable/gallery"
+		                android:layout_gravity="center"
+		                />
+					<TextView
+		                android:id="@+id/gallery_label"
+		                android:layout_width="wrap_content"
+		                android:layout_height="wrap_content"
+		                android:layout_gravity="center"
+		                android:layout_below="@+id/ivButton4"
+		                android:textColor="#ffffff"
+		                android:text="@string/view_gallery" />
+				</LinearLayout>
+            </RelativeLayout>
+        </TableRow>
+    </TableLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" 
+        android:layout_below="@+id/tableLayout1">
+
+        <EditText
+            android:id="@+id/editTextStoryName"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@color/lp_grey"
+            android:capitalize="sentences"
+            android:ems="10"
+            android:hint="Title"
+            android:padding="15dp"
+            android:textColor="@color/lp_blue"
+            style="@android:style/TextAppearance.Medium"
+            />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="@string/new_story_choose_something"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:visibility="gone" />
+
+        <RelativeLayout
+            android:id="@+id/llMedium"
+            android:layout_width="fill_parent"
+            android:layout_height="60dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/lp_blue"
+            android:orientation="horizontal"
+            android:padding="3sp"
+            android:visibility="gone" >
+
+            <TextView
+                android:id="@+id/textViewChooseAMedium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="@string/new_story_choose_a_medium"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:visibility="gone" />
+
+            <RadioGroup
+                android:id="@+id/radioGroupStoryType"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/view"
+                android:layout_gravity="center_horizontal"
+                android:orientation="horizontal" >
+
+                <RadioButton
+                    android:id="@+id/radioStoryType0"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_marginRight="20dp"
+                    android:background="@drawable/btn_toggle_ic_list_video"
+                    android:button="@android:color/transparent" />
+
+                <RadioButton
+                    android:id="@+id/radioStoryType1"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_marginRight="20dp"
+                    android:background="@drawable/btn_toggle_ic_list_photo"
+                    android:button="@android:color/transparent"
+                    android:gravity="center" />
+
+                <RadioButton
+                    android:id="@+id/radioStoryType2"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_marginRight="20dp"
+                    android:background="@drawable/btn_toggle_ic_list_audio"
+                    android:button="@android:color/transparent" />
+            </RadioGroup>
+
+            <TextView
+                android:id="@+id/txtNewStoryDesc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@+id/radioGroupStoryType"
+                android:layout_marginTop="10dp"
+                android:text="@string/template_video_desc"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:visibility="gone" />
+
+            <ImageView
+                android:id="@+id/view"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/ic_media_list" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/llStoryType"
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="10dp"
+            android:gravity="left|center_vertical"
+            android:orientation="vertical" >
+
+            <RadioGroup
+                android:id="@+id/radioGroupStoryLevel"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:visibility="gone" >
+
+                <RadioButton
+                    android:id="@+id/radioStoryType0"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    android:text="@string/new_story_simple_story" />
+
+                <RadioButton
+                    android:id="@+id/radioStoryType1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/new_story_choose_template" />
+            </RadioGroup>
+
+            <Button
+                android:id="@+id/buttonStartStory"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/button_start_my_story"
+                android:visibility="gone" />
+
+            <Spinner
+                android:id="@+id/spinnerSector"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/background_cream_grey_border"
+                style="@android:style/TextAppearance.Medium"
+                android:visibility="gone" />
+
+            <Spinner
+                android:id="@+id/spinnerIssue"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/background_cream_grey_border"
+                style="@android:style/TextAppearance.Medium"
+                android:visibility="gone"/>
+
+            <Button
+                android:id="@+id/AddEntity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:background="@color/lp_grey"
+                android:text="Add Company/Person"
+                android:gravity="left"
+                android:padding="15dp"
+                style="@android:style/TextAppearance.Medium"
+                android:textColor="@color/lp_blue"
+                android:visibility="gone" />
+
+            <ListView
+                android:id="@+id/EntitiesList"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/fancyButton"
+                android:background="@drawable/purple_button"
+                android:visibility="gone" >
+            </ListView>
+
+            <EditText
+                android:id="@+id/editTextDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@color/lp_grey"
+                android:capitalize="sentences"
+                android:ems="10"
+                android:gravity="top"
+                android:padding="15dp"
+                android:hint="@string/description_field"
+                style="@android:style/TextAppearance.Medium"
+                android:inputType="textMultiLine"
+                android:minLines="5"
+                android:textColor="@color/white" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginTop="10dp"
+                android:padding="5dp" >
+
+                <TextView
+                    android:id="@+id/textViewLocation"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@+id/imageView4"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignTop="@+id/imageView4"
+                    android:layout_toRightOf="@+id/imageView4"
+                    android:text="Location not set"
+                    android:textColor="#686868"
+                    android:padding="10dp"
+                   	style="@android:style/TextAppearance.Medium"
+                    android:layout_marginLeft="2dp"
+                    android:layout_marginRight="2dp"
+                    android:background="@color/lp_grey"
+                    android:gravity="center" />
+
+                <ImageView
+                    android:id="@+id/imageView4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentLeft="true"
+                    android:padding="10dp"
+                    android:layout_marginLeft="2dp"
+                    android:background="@color/lp_grey"
+                    android:src="@drawable/compass_geo" />
+            </RelativeLayout>
+
+            <Button
+                android:id="@+id/done"
+                style="@style/fancyButton"
+                android:layout_width="fill_parent"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:background="@color/lp_red"
+                android:text="@string/done" />
+        </LinearLayout>
+
+    </LinearLayout>
+</RelativeLayout>
+
+</ScrollView>

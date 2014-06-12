@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="@color/light_cream"
+    android:background="@color/white"
     android:fillViewport="true"
     android:orientation="vertical" >
 
@@ -22,7 +22,7 @@
                 <ImageView
                     android:id="@+id/logo"
                     android:layout_width="wrap_content"
-                    android:layout_height="48dp"
+                    android:layout_height="88dp"
                     android:layout_gravity="center|center"
                     android:src="@drawable/logo" />
             </LinearLayout>
@@ -44,7 +44,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="0.50"
-            android:background="@color/soft_purple"
+            android:background="@color/lp_red"
             android:clickable="true" >
 
             
@@ -70,7 +70,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="0.5"
-            android:background="@color/soft_green"
+            android:background="@color/lp_brown"
             android:clickable="true" >
 
             <TextView
@@ -105,7 +105,7 @@
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
             android:layout_weight="0.50"
-            android:background="@color/red"
+            android:background="@color/lp_yellow"
             android:clickable="true" >
 
             <TextView
@@ -132,7 +132,7 @@
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
             android:layout_weight="0.39"
-            android:background="@color/soft_orange" 
+            android:background="@color/lp_blue" 
             android:clickable="true">
 
             <TextView

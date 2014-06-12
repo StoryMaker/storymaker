@@ -29,7 +29,7 @@ public class StoryTemplateChooserActivity extends BaseActivity {
     private String mProjectName;
     private int mStoryMode;
     private String mStoryModeTemplate;
-    
+    private int rid;
 
 	private ViewPager mPager = null;
 	private MyAdapter mAdapter = null;
@@ -44,6 +44,7 @@ public class StoryTemplateChooserActivity extends BaseActivity {
         mProjectName = intent.getStringExtra("project_title");
         mStoryMode = intent.getIntExtra("story_mode", Project.STORY_TYPE_VIDEO);
         mStoryModeTemplate = intent.getStringExtra("story_mode_template");
+        rid = intent.getIntExtra("rid", 0);
         
         int[] title = {
         	R.string.story_type_event_news_title,
@@ -187,6 +188,7 @@ public class StoryTemplateChooserActivity extends BaseActivity {
         project.setTitle(mProjectName);
         project.setTemplatePath(mTemplatePath);
         project.setStoryType(mStoryMode);
+        project.setReport_Id(rid);
         project.save();
         int i = 0;
         for (info.guardianproject.mrapp.model.template.Scene s : mTemplate.getScenes()) {
