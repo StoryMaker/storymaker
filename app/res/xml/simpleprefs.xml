@@ -10,6 +10,8 @@
 		<EditTextPreference android:title="@string/prefs_youtube_acccount_title" android:summary="@string/prefs_youtube_acccount_summary" android:key="youTubeUserName" android:enabled="true"/>
 		<CheckBoxPreference android:title="@string/prefs_youtube_login_title" android:summary="@string/prefs_youtube_login_summary" android:key="pyoutubewebauth"/>
 		
+		<CheckBoxPreference android:title="@string/prefs_encryption" android:summary="@string/prefs_encryption_summary" android:key="encryption" android:defaultValue="false"/>
+		
 		<EditTextPreference android:title="@string/prefs_soundcloud_account_title" android:summary="@string/prefs_soundcloud_account_summary" android:key="soundCloudUserName" android:enabled="true"/>		    
 	</PreferenceCategory>
 	

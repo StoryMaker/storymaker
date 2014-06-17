@@ -16,7 +16,6 @@
     <string name="add_caption">Add Caption</string>
 	<string name="skip">Skip</string>
 	<string name="add_caption_alert">Do you want to a caption?</string>
-	
 	<string name="add_picture">Image</string>
 	<string name="add_video">Video</string>
 	<string name="add_audio">Audio</string>
@@ -29,6 +28,8 @@
     <string name="report_status">Status</string>
     <string name="delete_report_confirmation">Are you sure you want to delete?</string>
     <string name="reports_list">List of reports</string>
+    <string name="prefs_encryption">Encrypt Media</string>
+    <string name="prefs_encryption_summary">Encrypted media will not be viewable outside of the application without decryption</string>
     <!-- menus -->
     <string name="menu_new_project">New</string>
     <string name="menu_projects">Stories</string>
