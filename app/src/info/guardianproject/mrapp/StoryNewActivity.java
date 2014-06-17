@@ -222,7 +222,7 @@ public class StoryNewActivity extends BaseActivity {
         intent.putExtra("title", project.getTitle());
         intent.putExtra("pid", project.getId());
         intent.putExtra("scene", 0);
-        intent.putExtra("auto_capture", autoCapture);
+        intent.putExtra("auto_capture", true);
         
         startActivity(intent);
         

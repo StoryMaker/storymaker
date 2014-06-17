@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import org.holoeverywhere.app.AlertDialog;
+import org.holoeverywhere.widget.Toast;
 import org.json.JSONException;
 
 import android.annotation.SuppressLint;
@@ -187,9 +188,6 @@ public class AddClipsFragment extends Fragment {
             }
         }            
         
-        
-
-    
         @Override
         public Fragment getItem(int i) {
             

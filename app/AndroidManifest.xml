@@ -237,7 +237,8 @@
             />
 
 <activity android:name="net.hockeyapp.android.UpdateActivity" />
-
+	<service android:name="info.guardianproject.mrapp.encryption.EncryptionService" />
+	<service android:name="info.guardianproject.mrapp.encryption.EncryptionBackground" />
     </application>
 
 </manifest>

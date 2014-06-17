@@ -1,13 +1,11 @@
 package info.guardianproject.mrapp;
 
 import info.guardianproject.mrapp.R;
-import info.guardianproject.mrapp.lessons.LessonManager;
+import info.guardianproject.mrapp.encryption.EncryptionService;
+import info.guardianproject.mrapp.encryption.EncryptionBackground;
 import info.guardianproject.mrapp.model.Lesson;
-import info.guardianproject.mrapp.model.LessonGroup;
-import info.guardianproject.mrapp.model.Media;
 import info.guardianproject.mrapp.model.Project;
 import info.guardianproject.mrapp.server.LoginActivity;
-import info.guardianproject.mrapp.ui.MyCard;
 import info.guardianproject.onionkit.ui.OrbotHelper;
 
 import java.io.BufferedReader;
@@ -17,66 +15,41 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
-import java.util.Iterator;
-import java.util.Locale;
 
-import net.hockeyapp.android.CrashManager;
-import net.hockeyapp.android.UpdateManager;
 import net.sqlcipher.database.SQLiteDatabase;
 
 import org.holoeverywhere.app.AlertDialog;
 import org.holoeverywhere.app.ProgressDialog;
 import org.holoeverywhere.widget.Toast;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
-import android.annotation.SuppressLint;
-import android.app.Activity;
+import com.actionbarsherlock.view.MenuItem;
+
 import android.app.ActivityManager;
 import android.app.ActivityManager.RunningServiceInfo;
 import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
 import android.content.pm.PackageManager.NameNotFoundException;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
-import android.os.Handler;
-import android.os.Looper;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.Window;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.CheckBox;
-import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.AdapterView.OnItemLongClickListener;
-import android.widget.LinearLayout.LayoutParams;
-
-import com.fima.cardsui.views.CardUI;
-import com.viewpagerindicator.CirclePageIndicator;
 
 public class HomePanelsActivity extends BaseActivity implements OnClickListener{
 
@@ -122,16 +95,21 @@ public class HomePanelsActivity extends BaseActivity implements OnClickListener{
         // action bar stuff
        
          
-        //getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#f0e4d4")));
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#ffffff")));
         getSupportActionBar().setTitle("");
         getSupportActionBar().setDisplayShowHomeEnabled(false);
        
+        initSlidingMenu();
         
         checkForTor();
-            
-        //if(!isServiceRunning(EncryptionBackground.class)){
-        //	startService(new Intent(HomePanelsActivity.this,EncryptionBackground.class));
-        //}
+        //check if relevant folders exist
+        
+        
+        //start encryption
+        if(!isServiceRunning(EncryptionBackground.class)){
+        	startService(new Intent(HomePanelsActivity.this, EncryptionBackground.class));
+        }
+        
         //checkForUpdates();
        	
         load_new_report = (RelativeLayout)findViewById(R.id.load_new_report);
@@ -218,6 +196,7 @@ public class HomePanelsActivity extends BaseActivity implements OnClickListener{
         }
         return false;
     }
+    
     public boolean isEncryptionRunning() {
 		SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 			       
@@ -371,7 +350,7 @@ public class HomePanelsActivity extends BaseActivity implements OnClickListener{
     
  
 
-/*
+
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 
@@ -410,7 +389,7 @@ public class HomePanelsActivity extends BaseActivity implements OnClickListener{
         
 		return true;
 	}
-    */
+    
 	void collectAndSendLog(){
 		
 		File fileLog = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS),"storymakerlog.txt");
