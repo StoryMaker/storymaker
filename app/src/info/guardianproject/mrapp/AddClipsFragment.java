@@ -9,11 +9,15 @@ import java.util.ArrayList;
 
 import org.holoeverywhere.app.AlertDialog;
 import org.holoeverywhere.widget.Toast;
+import org.json.JSONArray;
 import org.json.JSONException;
 
 import android.annotation.SuppressLint;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -200,6 +204,13 @@ public class AddClipsFragment extends Fragment {
             if (lMedia.size() > i)
             {
                 media = lMedia.get(i);
+                //add to queue for encryption if not added
+                try {
+					addToQ(media);
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
             }
             
             Fragment fragment = new AddClipsThumbnailFragment(clip, i, media, mActivity);
@@ -217,4 +228,99 @@ public class AddClipsFragment extends Fragment {
             return POSITION_NONE;
         }
     }
+    public void addToQ(Media media) throws JSONException{
+    	/*
+        //Create thumbnail
+        Bitmap videoThumb = null;
+        String filename=null;
+        if(mediaList.getMimeType().contains("video")){
+           try {
+        	   videoThumb = MediaUtils.getVideoFrame(new File(filepath).getCanonicalPath(), -1);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+           try {
+               filename = Environment.getExternalStorageDirectory()+"/"+AppConstants.TAG+"/thumbs/"+mediaList.getId()+".jpg";
+               FileOutputStream out = new FileOutputStream(filename);
+               videoThumb.compress(Bitmap.CompressFormat.JPEG, 5, out);
+               out.close();
+		       } catch (Exception e) {
+		               e.printStackTrace();
+		       }
+           
+        }else if(mediaList.getMimeType().contains("image")){
+        	try {
+        		Bitmap imagePath = BitmapFactory.decodeFile(filepath);
+        		//Bitmap imagePath2 = Bitmap.createScaledBitmap(imagePath, 100, 100, true);
+                filename = Environment.getExternalStorageDirectory()+"/"+AppConstants.TAG+"/thumbs/"+mediaList.getId()+".jpg";
+                FileOutputStream out = new FileOutputStream(filename);
+                imagePath.compress(Bitmap.CompressFormat.JPEG, 5, out);
+                out.close();
+ 		       } catch (Exception e) {
+ 		               e.printStackTrace();
+ 		       }
+        }
+        if((mediaList.getMimeType().contains("video"))||(mediaList.getMimeType().contains("image")))
+        {
+        	
+	        Cipher cipher;
+	        
+	        String file = filename;
+			try {
+				cipher = Encryption.createCipher(Cipher.ENCRYPT_MODE);
+				Encryption.applyCipher(file, file+"_", cipher);
+			}catch (Exception e) {
+				// TODO Auto-generated catch block
+				//Log.e("Encryption error", e.getLocalizedMessage());
+				e.printStackTrace();
+			}
+			//Then delete original file
+			File oldfile = new File(file);
+			oldfile.delete();
+			//Then remove _ on encrypted file
+			File newfile = new File(file+"_");
+			newfile.renameTo(new File(file));
+			
+        }
+		*/
+        //Add to Queue
+        
+        //First read all we have
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mActivity.getApplicationContext());
+        JSONArray jsonArray2 = null;
+        try {
+            jsonArray2 = new JSONArray(prefs.getString("eQ", "[]"));
+            
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+        
+        String media_id = String.valueOf(media.getId());
+        
+        boolean isAdded = false; 
+        
+        //Check if media is already encrypted
+        if(media.getEncrypted()==0){
+        	//Check if value is already added 
+        	
+        	//TODO: find faster way to do this
+        	for (int i = 0; i < jsonArray2.length(); i++) {
+                if(jsonArray2.getString(i).equals(media_id)){
+                	isAdded = true;
+                }
+           }
+        }
+        Editor editor = prefs.edit();
+        if(isAdded==false){
+	        //Then add new value
+	        jsonArray2.put(media_id);
+	        editor.putString("eQ", jsonArray2.toString());
+	        
+        }
+        System.out.println(jsonArray2.toString());
+        editor.commit();
+    }
+
+
 }

@@ -9,8 +9,8 @@ import android.util.Log;
 
 public class StoryMakerDB extends SQLiteOpenHelper {
     private static final String TAG = "StoryMakerDB";
-    private static final int DB_VERSION = 8;
-    private static final String DB_NAME = "sm.db1";
+    private static final int DB_VERSION = 9;
+    private static final String DB_NAME = "sm.db2";
     private Context mContext;
     
     public StoryMakerDB(Context context) {
@@ -206,6 +206,7 @@ public class StoryMakerDB extends SQLiteOpenHelper {
             public static final String COL_CREATED_AT = "created_at";
             public static final String COL_UPDATED_AT = "updated_at";
             public static final String COL_OBJECT_ID = "object_id";
+            public static final String COL_ENCRYPTED = "encrypted";
             
 	    	private static final String CREATE_TABLE_MEDIA = "create table " + NAME + " ("
 	    			+ ID + " integer primary key autoincrement, "
@@ -219,8 +220,10 @@ public class StoryMakerDB extends SQLiteOpenHelper {
                     + COL_DURATION + " integer,"
                     + COL_CREATED_AT + " integer,"
                     + COL_UPDATED_AT + " integer," 
-                    + COL_OBJECT_ID + " integer"                    
+                    + COL_OBJECT_ID + " integer,"                    
+                    + COL_ENCRYPTED + " integer default 0"                    
 	    			+ "); ";
+	    			
             
             private static final String UPDATE_TABLE_MEDIA_ADD_TRIM_START = "alter table " + NAME + " " 
                     + "ADD COLUMN "

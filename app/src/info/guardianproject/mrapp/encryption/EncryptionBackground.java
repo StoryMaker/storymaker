@@ -58,12 +58,18 @@ public class EncryptionBackground extends Service {
 				        		//Log.d("running", "not running"+jsonArray2.length());
 
 			                    if(jsonArray2.length()>0){
-				                    filepath = jsonArray2.getString(0);
+			                    	//Get relevant media
+			                    	media = Media.get(getApplicationContext(), Integer.parseInt(jsonArray2.getString(0)));
+			 
+				                    filepath = media.getPath();
+				                    
 				                  //Remove from list
 				                    
 				                    for (int i = 0; i < jsonArray2.length(); i++) {
 				                        if(i!=0){
 				                        	jsonArray3.put(jsonArray2.getString(i));
+				                        	media.setEncrypted(1);
+				                        	media.save();
 				                        }
 				                   }
 			                    }

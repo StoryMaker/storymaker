@@ -40,7 +40,7 @@ public class Media extends Model {
     protected Date updatedAt; // long stored in database as 8-bit int
     protected int object_id;
     public final static int IMAGE_SAMPLE_SIZE = 4;
-
+    public int encrypted;
     /**
      * Create a new, blank record via the Content Provider interface
      * 
@@ -78,9 +78,10 @@ public class Media extends Model {
      * @param duration
      * @param createdAt
      * @param updatedAt
+     * @param encrypted
      */
     public Media(Context context, int id, String path, String mimeType, String clipType, int clipIndex,
-            int sceneId, float trimStart, float trimEnd, float duration, Date createdAt, Date updatedAt) {
+            int sceneId, float trimStart, float trimEnd, float duration, Date createdAt, Date updatedAt, int encrypted) {
         super(context);
         this.context = context;
         this.id = id;
@@ -94,6 +95,7 @@ public class Media extends Model {
         this.duration = duration;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
+        this.encrypted = encrypted;
     }
     
     /**
@@ -116,8 +118,8 @@ public class Media extends Model {
      * @param updatedAt
      */
     public Media(SQLiteDatabase db, Context context, int id, String path, String mimeType, String clipType, int clipIndex,
-            int sceneId, float trimStart, float trimEnd, float duration, Date createdAt, Date updatedAt) {
-        this(context, id, path, mimeType, clipType, clipIndex, sceneId, trimStart, trimEnd, duration, createdAt, updatedAt);
+            int sceneId, float trimStart, float trimEnd, float duration, Date createdAt, Date updatedAt, int encrypted) {
+        this(context, id, path, mimeType, clipType, clipIndex, sceneId, trimStart, trimEnd, duration, createdAt, updatedAt, encrypted);
         this.mDB = db;
     }
 
@@ -152,7 +154,9 @@ public class Media extends Model {
                 (!cursor.isNull(cursor.getColumnIndex(StoryMakerDB.Schema.Media.COL_CREATED_AT)) ?
                         new Date(cursor.getLong(cursor.getColumnIndex(StoryMakerDB.Schema.Media.COL_CREATED_AT))) : null),
                 (!cursor.isNull(cursor.getColumnIndex(StoryMakerDB.Schema.Media.COL_UPDATED_AT)) ?
-                        new Date(cursor.getLong(cursor.getColumnIndex(StoryMakerDB.Schema.Media.COL_UPDATED_AT))) : null));
+                        new Date(cursor.getLong(cursor.getColumnIndex(StoryMakerDB.Schema.Media.COL_UPDATED_AT))) : null),
+                cursor.getInt(cursor
+                       .getColumnIndex(StoryMakerDB.Schema.Media.COL_ENCRYPTED)));
     }
 
     /**
@@ -239,7 +243,7 @@ public class Media extends Model {
         }
         // store dates as longs(8-bit ints)
         // can't put null in values set, so only add entry if non-null
-        
+        values.put(StoryMakerDB.Schema.Media.COL_ENCRYPTED, encrypted);
         return values;
     }
     
@@ -461,6 +465,20 @@ public class Media extends Model {
         this.updatedAt = updatedAt;
     }
     
+    /**
+     * @return encrypted
+     */
+    public float getEncrypted() {
+        return encrypted;
+    }
+
+    /**
+     * @param set encrypted
+     */
+    public void setEncrypted(int encrypted) {
+        this.encrypted = encrypted;
+    }
+
     // FIXME this should probably be refactored and split half into the media layer
     public static Bitmap getThumbnail(Context context, Media media, Project project) 
     {
@@ -606,4 +624,24 @@ public class Media extends Model {
     	update();
     	return true;
     }
+    //TODO: change this to new method of retrieving objects
+    public static Media get(Context context, int id) {
+        Cursor cursor = Media.getAsCursor(context, id);
+        Media media= null;
+        if (cursor.moveToFirst()) {
+            media = new Media(context, cursor);
+           
+        } 
+        cursor.close();
+        return media;
+    }
+    public static Cursor getAsCursor(Context context, int id) {
+        String selection = StoryMakerDB.Schema.Media.ID + "=?";
+        String[] selectionArgs = new String[] { "" + id };
+        
+        return context.getContentResolver().query(
+                ProjectsProvider.MEDIA_CONTENT_URI, null, selection,
+                selectionArgs, null);
+    }
+
 }

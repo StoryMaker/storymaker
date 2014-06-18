@@ -20,14 +20,17 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+
 import org.apache.commons.io.IOUtils;
 import org.ffmpeg.android.MediaDesc;
 import org.holoeverywhere.app.Activity;
+import org.json.JSONArray;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
@@ -159,9 +162,8 @@ public class MediaProjectManager implements MediaManager {
 				Log.e(AppConstants.TAG,"error adding media result",ioe);
 			}
         }
-        
+       
     }
-    
     public void deleteCurrentClip ()
     {
     	
@@ -170,7 +172,6 @@ public class MediaProjectManager implements MediaManager {
     	media.delete();
     	((SceneEditorActivity)mActivity).refreshClipPager();
     }
-
    
     @SuppressLint("NewApi")
 	private static synchronized void initExternalStorage (Context context)
@@ -642,7 +643,6 @@ public class MediaProjectManager implements MediaManager {
     	{
     	    mMediaList.add(null);
     	}
-    	
     	
 
     	/*

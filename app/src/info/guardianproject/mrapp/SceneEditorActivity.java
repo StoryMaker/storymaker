@@ -657,10 +657,6 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
             		mMPM.handleResponse(intent, mCapturePath);
             		
             		refreshClipPager();
-            		
-            		//Add to queue for encryption
-            		addToQ(mCapturePath.getAbsolutePath());
-            		
             	}
             	catch (IOException e)
             	{
@@ -671,83 +667,6 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
         }
     }
 
-    public void addToQ(String filepath){
-    	/*
-        //Create thumbnail
-        Bitmap videoThumb = null;
-        String filename=null;
-        if(mediaList.getMimeType().contains("video")){
-           try {
-        	   videoThumb = MediaUtils.getVideoFrame(new File(filepath).getCanonicalPath(), -1);
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-           try {
-               filename = Environment.getExternalStorageDirectory()+"/"+AppConstants.TAG+"/thumbs/"+mediaList.getId()+".jpg";
-               FileOutputStream out = new FileOutputStream(filename);
-               videoThumb.compress(Bitmap.CompressFormat.JPEG, 5, out);
-               out.close();
-		       } catch (Exception e) {
-		               e.printStackTrace();
-		       }
-           
-        }else if(mediaList.getMimeType().contains("image")){
-        	try {
-        		Bitmap imagePath = BitmapFactory.decodeFile(filepath);
-        		//Bitmap imagePath2 = Bitmap.createScaledBitmap(imagePath, 100, 100, true);
-                filename = Environment.getExternalStorageDirectory()+"/"+AppConstants.TAG+"/thumbs/"+mediaList.getId()+".jpg";
-                FileOutputStream out = new FileOutputStream(filename);
-                imagePath.compress(Bitmap.CompressFormat.JPEG, 5, out);
-                out.close();
- 		       } catch (Exception e) {
- 		               e.printStackTrace();
- 		       }
-        }
-        if((mediaList.getMimeType().contains("video"))||(mediaList.getMimeType().contains("image")))
-        {
-        	
-	        Cipher cipher;
-	        
-	        String file = filename;
-			try {
-				cipher = Encryption.createCipher(Cipher.ENCRYPT_MODE);
-				Encryption.applyCipher(file, file+"_", cipher);
-			}catch (Exception e) {
-				// TODO Auto-generated catch block
-				//Log.e("Encryption error", e.getLocalizedMessage());
-				e.printStackTrace();
-			}
-			//Then delete original file
-			File oldfile = new File(file);
-			oldfile.delete();
-			//Then remove _ on encrypted file
-			File newfile = new File(file+"_");
-			newfile.renameTo(new File(file));
-			
-        }
-		*/
-        //Add to Queue
-        
-        //First read all we have
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        JSONArray jsonArray2 = null;
-        try {
-            jsonArray2 = new JSONArray(prefs.getString("eQ", "[]"));
-            for (int i = 0; i < jsonArray2.length(); i++) {
-                 Log.d("your JSON Array", jsonArray2.getString(i)+"");
-            }
-        }catch (Exception e) {
-            e.printStackTrace();
-        }
-        
-        //Then add new value
-        jsonArray2.put(filepath);
-        Editor editor = prefs.edit();
-        editor.putString("eQ", jsonArray2.toString());
-        System.out.println(jsonArray2.toString());
-        editor.commit();
-        
-    }
+    
     
 }
