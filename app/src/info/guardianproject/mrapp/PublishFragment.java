@@ -611,7 +611,7 @@ public class PublishFragment extends Fragment {
         mHandlerPub.sendMessage(msgStatus);
     	
         String descWithMedia = desc + "\n\n" + mediaEmbed;
-        String postId = sm.post(title, descWithMedia, categories, medium, mediaService, mediaGuid);
+        String postId = sm.post(title, descWithMedia, categories, medium, mediaService, mediaGuid); // FIXME this is burying an exception if the user skipping creating a StoryMaker.cc account
         
         String urlPost = sm.getPostUrl(postId);
         return urlPost;
