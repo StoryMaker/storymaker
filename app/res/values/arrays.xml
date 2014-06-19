@@ -260,18 +260,6 @@
         <item>Tunisia</item>
     </string-array>
     
-    <!-- FIXME remove these, but they are referenced in code too... -->
-    <string-array name="array_autocomplete_tags">
-        <item>atesttag</item>
-        <item>btesttag</item>
-        <item>ctesttag</item>
-        <item>dtesttag</item>
-        <item>etesttag</item>
-        <item>ftesttag</item>
-        <item>gtesttag</item>
-        <item>htesttag</item>
-    </string-array>
-    
     <string-array name="array_story_sections">
         <item>Politics</item>
         <item>Business</item>
