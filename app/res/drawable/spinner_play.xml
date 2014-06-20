@@ -9,4 +9,8 @@
     <item android:drawable="@drawable/ic_comp_pspin_06" android:duration="100" />
     <item android:drawable="@drawable/ic_comp_pspin_07" android:duration="100" />
     <item android:drawable="@drawable/ic_comp_pspin_08" android:duration="100" />
+    <item android:drawable="@drawable/ic_comp_pspin_09" android:duration="100" />
+    <item android:drawable="@drawable/ic_comp_pspin_10" android:duration="100" />
+    <item android:drawable="@drawable/ic_comp_pspin_11" android:duration="100" />
+    <item android:drawable="@drawable/ic_comp_pspin_12" android:duration="100" />
 </animation-list>
