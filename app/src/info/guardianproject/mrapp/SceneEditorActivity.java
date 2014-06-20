@@ -167,19 +167,10 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.addFromGallery:
-                addMediaFromGallery();
-            
-                return true;
-            case R.id.addNewShot:
-             
+            case R.id.addNewShot:          
                 addShotToScene();
                 
                 return true;
-            case R.id.delShot:
-            	
-            	deleteCurrentShot();
-            	return true;
             case R.id.exportProjectFiles:
                 exportProjectFiles();
             
@@ -395,7 +386,7 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
     	return String.format("%sstorymaker_project_%s_%s.zip", filePath, mMPM.mProject.getId(), dateFormat.format(date));
     }
      
-    private void addMediaFromGallery()
+    void addMediaFromGallery()
     {
         mMPM.mMediaHelper.openGalleryChooser("*/*");
     }
@@ -560,9 +551,7 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
     
     private void setMenuItemsVisibility(boolean show) {
     	//hide irrelevant menu items
-        mMenu.findItem(R.id.addFromGallery).setVisible(show);
         mMenu.findItem(R.id.addNewShot).setVisible(show);
-        mMenu.findItem(R.id.delShot).setVisible(show);
     }
 
     public void refreshClipPager() {

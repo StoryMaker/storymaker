@@ -20,19 +20,36 @@
             <FrameLayout
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content" >
-
+                
                 <ImageView
                     android:id="@+id/clipTypeImage"
                     android:layout_width="fill_parent"
                     android:layout_height="200dp"
                     android:scaleType="fitXY" />
 
-                <TextView
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
-                    android:gravity="center_vertical|center_horizontal"
-                    android:text="@string/tap_to_start_capture"
-                    android:textAppearance="?android:attr/textAppearanceMedium" />
+                <ImageView
+                    android:id="@+id/ivRemoveClip"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:padding="16dp"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/button_cancel_temp" />
+                
+                <ImageView
+                    android:id="@+id/ivAddGalleryClip"
+                    android:layout_width="75dp"
+                    android:layout_height="75dp"
+                    android:padding="16dp"
+                    android:scaleType="fitXY"
+                    android:layout_gravity="right"
+                    android:src="@drawable/button_add_temp" />
+                
+                <ImageView
+                    android:id="@+id/ivRecordClip"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_gravity="center_vertical|center_horizontal"
+                    android:src="@drawable/button_record_temp" />
             </FrameLayout>
 
             <TextView
