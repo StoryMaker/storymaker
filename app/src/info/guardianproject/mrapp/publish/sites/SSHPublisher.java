@@ -32,7 +32,7 @@ public class SSHPublisher extends PublisherBase {
             Job videoRenderJob = new Job(mContext, mPublishJob.getProjectId(), mPublishJob.getId(), JobTable.TYPE_RENDER, null, AudioRenderer.SPEC_KEY);
             mController.enqueueJob(videoRenderJob);
         } else { 
-            mController.publishJobSucceeded(mPublishJob); // skip render, no point
+            mController.publishJobSucceeded(mPublishJob, null); // skip render, no point
         }
 	}
 	
@@ -46,22 +46,22 @@ public class SSHPublisher extends PublisherBase {
         Log.d(TAG, "jobSucceeded: " + job);
         if (job.isType(JobTable.TYPE_RENDER)) {
             // since the user must now initiate upload, we just stop this publishjob now and wait
-            mController.publishJobSucceeded(mPublishJob);
+            mController.publishJobSucceeded(mPublishJob, job);
         } else if (job.isType(JobTable.TYPE_UPLOAD)) {
             if (job.isSite(Auth.SITE_SSH)) {
                 mPublishJob.setFinishedAtNow();
                 mPublishJob.save();
-                mController.publishJobSucceeded(mPublishJob);
+                mController.publishJobSucceeded(mPublishJob, job);
             }
         }
 	}
 	
 	public void jobFailed(Job job, int errorCode, String errorMessage) {
         Log.d(TAG, "jobFailed: " + job);
-        mController.publishJobFailed(mPublishJob, errorCode, errorMessage);
+        mController.publishJobFailed(mPublishJob, job, errorCode, errorMessage);
 	}
 	
 	public void jobProgress(Job job, float progress, String message) {
-	    mController.publishJobProgress(mPublishJob, progress, message);
+	    mController.publishJobProgress(mPublishJob, job, progress, message);
 	}
 }

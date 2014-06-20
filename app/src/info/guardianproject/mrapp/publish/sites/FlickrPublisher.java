@@ -49,14 +49,14 @@ public class FlickrPublisher extends PublisherBase
                 
                 mPublishJob.setFinishedAtNow();
                 mPublishJob.save();
-                mController.publishJobSucceeded(mPublishJob);
+                mController.publishJobSucceeded(mPublishJob, job);
             }
         } 
         else if (job.isType(JobTable.TYPE_RENDER)) 
         {
             Log.d(TAG, "successful render");
             
-            mController.publishJobSucceeded(mPublishJob);
+            mController.publishJobSucceeded(mPublishJob, job);
         } 
     }
 
@@ -64,7 +64,7 @@ public class FlickrPublisher extends PublisherBase
     public void jobFailed(Job job, int errorCode, String errorMessage) 
     {
         Log.d(TAG, "jobFailed()");
-        mController.publishJobFailed(mPublishJob, errorCode, errorMessage);
+        mController.publishJobFailed(mPublishJob, job, errorCode, errorMessage);
     }
 
     @Override
@@ -72,6 +72,6 @@ public class FlickrPublisher extends PublisherBase
     {
         Log.d(TAG, "jobProgress()");
         
-        mController.publishJobProgress(mPublishJob, progress, message);
+        mController.publishJobProgress(mPublishJob, job, progress, message);
     }
 }

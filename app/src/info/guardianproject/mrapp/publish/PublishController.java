@@ -122,12 +122,12 @@ public class PublishController {
         return mPublishJob;
     }
 	
-	public void publishJobSucceeded(PublishJob publishJob) {
-		mListener.publishSucceeded(publishJob);
+	public void publishJobSucceeded(PublishJob publishJob, Job job) {
+		mListener.publishSucceeded(publishJob, job);
 	}
     
-    public void publishJobFailed(PublishJob publishJob, int errorCode, String errorMessage) {
-        mListener.publishFailed(publishJob, errorCode, errorMessage);
+    public void publishJobFailed(PublishJob publishJob, Job job, int errorCode, String errorMessage) {
+        mListener.publishFailed(publishJob, job, errorCode, errorMessage);
     }
 	
     /**
@@ -136,8 +136,8 @@ public class PublishController {
      * @param progress
      * @param message
      */
-	public void publishJobProgress(PublishJob publishJob, float progress, String message) {
-	    mListener.publishProgress(publishJob, progress, message);
+	public void publishJobProgress(PublishJob publishJob, Job job, float progress, String message) {
+	    mListener.publishProgress(publishJob, job, progress, message);
 	}
 	
 	public void jobSucceeded(Job job, String code) {
@@ -195,11 +195,11 @@ public class PublishController {
 	}
 	
 	public static interface PublishListener {
-	    public void publishSucceeded(PublishJob publishJob);
+	    public void publishSucceeded(PublishJob publishJob, Job job);
 
-        public void publishFailed(PublishJob publishJob, int errorCode, String errorMessage);
+        public void publishFailed(PublishJob publishJob, Job job, int errorCode, String errorMessage);
         
-        public void publishProgress(PublishJob publishJob, float progress, String message);
+        public void publishProgress(PublishJob publishJob, Job job, float progress, String message);
 	}
 
 }

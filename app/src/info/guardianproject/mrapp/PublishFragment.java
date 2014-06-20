@@ -90,8 +90,8 @@ public class PublishFragment extends Fragment implements PublishListener {
     private String mMediaUploadAccount = null;
     private String mMediaUploadAccountKey = null;
 
-    TextView mProgressText;
     ToggleImageButton mButtonUpload;
+    TextView mProgressText;
     ToggleImageButton mButtonPlay;
     boolean mPlaying = false; // spnning after user pressed play... we may be rendering
     boolean mUploading = false; // spinning after user pressed upload... we may be rendering or uploading
@@ -237,20 +237,21 @@ public class PublishFragment extends Fragment implements PublishListener {
 
             if (intent.hasExtra(PublishService.INTENT_EXTRA_PUBLISH_JOB_ID)) {
                 int publishJobId = intent.getIntExtra(PublishService.INTENT_EXTRA_PUBLISH_JOB_ID, -1);
+                int jobId = intent.getIntExtra(PublishService.INTENT_EXTRA_JOB_ID, -1);
                 if (publishJobId != -1) {
                     PublishJob publishJob = (PublishJob) (new PublishJobTable()).get(getActivity().getApplicationContext(), publishJobId);
-            
+                    Job job = (Job) (new JobTable()).get(getActivity().getApplicationContext(), jobId); // FIXME should we check for -1?
             
                     if (intent.getAction().equals(PublishService.ACTION_SUCCESS)) {
-                        publishSucceeded(publishJob);
+                        publishSucceeded(publishJob, job);
                     } else if (intent.getAction().equals(PublishService.ACTION_FAILURE)) {
                         int errorCode = intent.getIntExtra(PublishService.INTENT_EXTRA_ERROR_CODE, -1);
                         String errorMessage = intent.getStringExtra(PublishService.INTENT_EXTRA_ERROR_MESSAGE);
-                        publishFailed(publishJob, errorCode, errorMessage);
+                        publishFailed(publishJob, job, errorCode, errorMessage);
                     } else if (intent.getAction().equals(PublishService.ACTION_PROGRESS)) {
                         float progress = intent.getFloatExtra(PublishService.INTENT_EXTRA_PROGRESS, -1);
                         String message = intent.getStringExtra(PublishService.INTENT_EXTRA_PROGRESS_MESSAGE);
-                        publishProgress(publishJob, progress, message);
+                        publishProgress(publishJob, job, progress, message);
                     }
                 }
             }
@@ -262,7 +263,7 @@ public class PublishFragment extends Fragment implements PublishListener {
 		public void handleMessage(Message msg) {
 			super.handleMessage(msg);
 
-			if (mFileLastExport != null && mFileLastExport.exists()) {
+			if (mFileLastExport != null && mFileLastExport.exists()) { // FIXME replace this with a check to make sure render is suitable
 				Button btnPlay = (Button) mView.findViewById(R.id.btnPlay);
 				// Button btnShare = (Button)mView.findViewById(R.id.btnShare);
 				// btnShare.setEnabled(true);
@@ -753,7 +754,7 @@ public class PublishFragment extends Fragment implements PublishListener {
     
     private void playClicked() {
         // FIXME grab the last acceptable render and use it instead of this mFileLastExport junk
-        if (mFileLastExport != null && mFileLastExport.exists()) {
+        if (mFileLastExport != null && mFileLastExport.exists()) { // FIXME replace this with a check to make sure render is suitable
             mActivity.mMPM.mMediaHelper.playMedia(mFileLastExport, null);
         } else {
             mUploading = false;
@@ -792,7 +793,11 @@ public class PublishFragment extends Fragment implements PublishListener {
                     showUploadSpinner(true);        
                     mUploading = true;
                     mPlaying = false;
-                    startRender(mActivity.mMPM.mProject, mSiteKeys, useTor, publishToStoryMaker);
+                    if (mFileLastExport != null && mFileLastExport.exists()) { // FIXME replace this with a check to make sure render is suitable
+                        startUpload(mActivity.mMPM.mProject, mSiteKeys, useTor, publishToStoryMaker);
+                    } else {
+                        startRender(mActivity.mMPM.mProject, mSiteKeys, useTor, publishToStoryMaker);
+                    }
                 } else {
                     Utils.toastOnUiThread(mActivity, "No site selected."); // FIXME move to strings.xml
                 }
@@ -814,58 +819,103 @@ public class PublishFragment extends Fragment implements PublishListener {
         i.putExtra(PublishService.INTENT_EXTRA_PUBLISH_TO_STORYMAKER, publishToStoryMaker);
         i.putExtra(PublishService.INTENT_EXTRA_SITE_KEYS, siteKeys);
         getActivity().startService(i);
-        mPlaying = true;
     }
     
-    private void startUpload(Project project, String[] siteKeys) {
+    private void startUpload(Project project, String[] siteKeys, boolean useTor, boolean publishToStoryMaker) {
         Intent i = new Intent(getActivity(), PublishService.class);
         i.setAction(PublishService.ACTION_UPLOAD);
         i.putExtra(PublishService.INTENT_EXTRA_PROJECT_ID, project.getId());
+        i.putExtra(PublishService.INTENT_EXTRA_USE_TOR, useTor);
+        i.putExtra(PublishService.INTENT_EXTRA_PUBLISH_TO_STORYMAKER, publishToStoryMaker);
         i.putExtra(PublishService.INTENT_EXTRA_SITE_KEYS, siteKeys);
         getActivity().startService(i);
-        mUploading = true;
     }
 	
 
     @Override
-    public void publishSucceeded(PublishJob publishJob) {
-//        if (publishJob.isFinished()) {
-            showUploadSpinner(false); // FIXME we should detect which stage of the job just finished
-            showPlaySpinner(false); // FIXME we should detect which stage of the job just finished
-            
-            String path = publishJob.getLastRenderFilePath(); // FIXME this can be null
-            if (path != null) { // FIXME this won't work when a upload job succeeds
-                mFileLastExport = new File(path);
-                Handler handlerTimer = new Handler();
-                mProgressText.setText("Complete!");
-                handlerTimer.postDelayed(new Runnable(){
-                    public void run() {
-                        showPlayAndUpload(true);
-                    }
-                }, 200);
-            } else {
-                Log.d(TAG, "last rendered path is empty!");
-            }
-            
+    public void publishSucceeded(PublishJob publishJob, Job job) {
+        if (job.getType().equals(JobTable.TYPE_RENDER)) {
             if (mPlaying) {
-                if (mFileLastExport != null && mFileLastExport.exists()) {
+                showUploadSpinner(false); 
+                showPlaySpinner(false);
+                
+                String path = publishJob.getLastRenderFilePath(); // FIXME this can be null
+                if (path != null) { // FIXME this won't work when a upload job succeeds
+                    mFileLastExport = new File(path);
+                    Handler handlerTimer = new Handler();
+                    mProgressText.setText("Complete!");
+                    handlerTimer.postDelayed(new Runnable(){
+                        public void run() {
+                            showPlayAndUpload(true);
+                        }
+                    }, 200);
+                } else {
+                    Log.d(TAG, "last rendered path is empty!");
+                }                
+                
+                if (mFileLastExport != null && mFileLastExport.exists()) { // FIXME replace this with a check to make sure render is suitable
                     mActivity.mMPM.mMediaHelper.playMedia(mFileLastExport, null);
                 } 
                 mPlaying = false;
-            } else {
-                // TODO kick off the upload
+            } if (mUploading) { 
+                startUpload(mActivity.mMPM.mProject, mSiteKeys, publishJob.getUseTor(), publishJob.getPublishToStoryMaker());
             }
+        } else if (job.getType().equals(JobTable.TYPE_UPLOAD)) {
+            showUploadSpinner(false); 
+            showPlaySpinner(false);
+            Utils.toastOnUiThread(mActivity, "Publish succeeded!");
+        }
+
+        
+//        if (job != null) {
+//            
 //        }
+        if (mPlaying) {
+        } else if (mUploading) {
+            
+        }
+//    }
+        
+////        if (publishJob.isFinished()) {
+//            showUploadSpinner(false); // FIXME we should detect which stage of the job just finished
+//            showPlaySpinner(false); // FIXME we should detect which stage of the job just finished
+//            
+//            String path = publishJob.getLastRenderFilePath(); // FIXME this can be null
+//            if (path != null) { // FIXME this won't work when a upload job succeeds
+//                mFileLastExport = new File(path);
+//                Handler handlerTimer = new Handler();
+//                mProgressText.setText("Complete!");
+//                handlerTimer.postDelayed(new Runnable(){
+//                    public void run() {
+//                        showPlayAndUpload(true);
+//                    }
+//                }, 200);
+//            } else {
+//                Log.d(TAG, "last rendered path is empty!");
+//            }
+//            
+////            if (job != null) {
+////                
+////            }
+//            if (mPlaying) {
+//                if (mFileLastExport != null && mFileLastExport.exists()) { // FIXME replace this with a check to make sure render is suitable
+//                    mActivity.mMPM.mMediaHelper.playMedia(mFileLastExport, null);
+//                } 
+//                mPlaying = false;
+//            } else if (mUploading) {
+//                startUpload(mActivity.mMPM.mProject, mSiteKeys, publishJob.getUseTor(), publishJob.getPublishToStoryMaker());
+//            }
+////        }
     }
     
     @Override
-    public void publishFailed(PublishJob publishJob, int errorCode, String errorMessage) {
+    public void publishFailed(PublishJob publishJob, Job job, int errorCode, String errorMessage) {
         Utils.toastOnUiThread(getActivity(), "Publish failed :'( ... " + publishJob); // FIXME move to strings.xml
         showError(errorCode, errorMessage);
     }
 
     @Override
-    public void publishProgress(PublishJob publishJob, float progress, String message) {
+    public void publishProgress(PublishJob publishJob, Job job, float progress, String message) {
 //        Utils.toastOnUiThread(getActivity(), "Progress at " + (progress / 10000) + "%: " + message);
         int prog = Math.round(progress * 100);
         String txt = message + ((prog > 0) ? " " + prog + "%" : "");

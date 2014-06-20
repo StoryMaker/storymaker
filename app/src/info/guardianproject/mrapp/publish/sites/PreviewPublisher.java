@@ -31,22 +31,22 @@ public class PreviewPublisher extends PublisherBase {
 	
 	public void startUpload() {
         Log.d(TAG, "startUpload");
-        mController.publishJobFailed(mPublishJob, ERROR_CANT_UPLOAD_PREVIEW_JOB, "You cannot upload a preview job");
+        mController.publishJobFailed(mPublishJob, null, ERROR_CANT_UPLOAD_PREVIEW_JOB, "You cannot upload a preview job");
 	}
 	
 	public void jobSucceeded(Job job) {
         Log.d(TAG, "jobSucceeded: " + job);
         if (job.isType(JobTable.TYPE_RENDER)) {
-            mController.publishJobSucceeded(mPublishJob);
+            mController.publishJobSucceeded(mPublishJob, job);
         } 
 	}
 	
 	public void jobFailed(Job job, int errorCode, String errorMessage) {
         Log.d(TAG, "jobFailed: " + job);
-        mController.publishJobFailed(mPublishJob, errorCode, errorMessage);
+        mController.publishJobFailed(mPublishJob, job, errorCode, errorMessage);
 	}
 	
 	public void jobProgress(Job job, float progress, String message) {
-	    mController.publishJobProgress(mPublishJob, progress, message);
+	    mController.publishJobProgress(mPublishJob, job, progress, message);
 	}
 }

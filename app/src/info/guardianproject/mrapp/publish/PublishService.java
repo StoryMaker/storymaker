@@ -1,6 +1,7 @@
 package info.guardianproject.mrapp.publish;
 
 import info.guardianproject.mrapp.model.Auth;
+import info.guardianproject.mrapp.model.Job;
 import info.guardianproject.mrapp.model.Project;
 import info.guardianproject.mrapp.model.ProjectTable;
 import info.guardianproject.mrapp.model.PublishJob;
@@ -13,6 +14,7 @@ public class PublishService extends IntentService implements PublishListener {
     public static final String TAG = "PublishService";
     public static final String INTENT_EXTRA_PROJECT_ID = "project_id";
     public static final String INTENT_EXTRA_PUBLISH_JOB_ID = "publish_job_id";
+    public static final String INTENT_EXTRA_JOB_ID = "job_id";
     public static final String INTENT_EXTRA_USE_TOR = "use_tor";
     public static final String INTENT_EXTRA_PUBLISH_TO_STORYMAKER = "publish_to_storymaker";
     public static final String INTENT_EXTRA_ERROR_CODE = "error_code";
@@ -53,28 +55,31 @@ public class PublishService extends IntentService implements PublishListener {
     }
 
     @Override
-    public void publishSucceeded(PublishJob publishJob) {
+    public void publishSucceeded(PublishJob publishJob, Job job) {
         Intent intent = new Intent(ACTION_SUCCESS);
         intent.putExtra(INTENT_EXTRA_PROJECT_ID, publishJob.getProjectId());
         intent.putExtra(INTENT_EXTRA_PUBLISH_JOB_ID, publishJob.getId());
+        intent.putExtra(INTENT_EXTRA_JOB_ID, job.getId());
         sendBroadcast(intent);
     }
 
     @Override
-    public void publishFailed(PublishJob publishJob, int errorCode, String errorMessage) {
+    public void publishFailed(PublishJob publishJob, Job job, int errorCode, String errorMessage) {
         Intent intent = new Intent(ACTION_FAILURE);
         intent.putExtra(INTENT_EXTRA_PROJECT_ID, publishJob.getProjectId());
         intent.putExtra(INTENT_EXTRA_PUBLISH_JOB_ID, publishJob.getId());
+        intent.putExtra(INTENT_EXTRA_JOB_ID, job.getId());
         intent.putExtra(INTENT_EXTRA_ERROR_CODE, errorCode);
         intent.putExtra(INTENT_EXTRA_ERROR_MESSAGE, errorMessage);
         sendBroadcast(intent);
     }
 
     @Override
-    public void publishProgress(PublishJob publishJob, float progress, String message) {
+    public void publishProgress(PublishJob publishJob, Job job, float progress, String message) {
         Intent intent = new Intent(ACTION_PROGRESS);
         intent.putExtra(INTENT_EXTRA_PROJECT_ID, publishJob.getProjectId());
         intent.putExtra(INTENT_EXTRA_PUBLISH_JOB_ID, publishJob.getId());
+        intent.putExtra(INTENT_EXTRA_JOB_ID, job.getId());
         intent.putExtra(INTENT_EXTRA_PROGRESS, progress);
         intent.putExtra(INTENT_EXTRA_PROGRESS_MESSAGE, message);
         sendBroadcast(intent);
