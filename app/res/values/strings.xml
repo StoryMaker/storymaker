@@ -30,9 +30,7 @@
     <string name="menu_about">About</string>
     <string name="menu_save_project">Save</string>
     <string name="menu_overlay_camera">Camera</string>
-    <string name="menu_add_from_gallery">Import from Gallery</string>
     <string name="menu_add_new_shot">Add Clip to Scene</string>
-    <string name="menu_del_shot">Delete Current Clip</string>
     <string name="menu_export_project_files">Export Project Files as Zip</string>
     <string name="menu_join_storymaker">Join the StoryMaker Community</string>
     <string name="menu_sign_up">Sign Up / Login</string>
@@ -210,7 +208,6 @@ You also will have an opportunity to see and modify the data being sent."</strin
     <string name="lessons_congratulations_you_have_completed_the_lesson_">You completed a lesson!</string>
     <string name="lesson_status_in_progress">In progress</string>
     <string name="lesson_status_complete">COMPLETE!</string>
-    <string name="tap_to_start_capture">tap to start capture</string>
     <string name="no_lessons_available_tap_to_load_">No lessons available (tap to load)</string>
     <string name="_lesson_complete">" lesson complete"</string>
     <string name="_of_">" of "</string>
@@ -225,6 +222,7 @@ You also will have an opportunity to see and modify the data being sent."</strin
     <string name="rendering_clips_">rendering clips...</string>
     <string name="you_must_enter_a_project_name">Please enter a working draft title. You can change this later.</string>
     <string name="delete_project_">Delete project?</string>
+    <string name="delete_clip">Delete Clip?</string>
     <string name="add_new_clip_to_the_scene_">Add new clip to the scene?</string>
     <string name="video_project_project_type">Video Project</string>
     <string name="photo_project_project_type">Photo Project</string>
@@ -259,7 +257,9 @@ You also will have an opportunity to see and modify the data being sent."</strin
     <string name="you_began_a_new_lesson">You began a new lesson</string>
     <string name="scene_editor_please_add_clips">Please add clips on the \'Make\' tab before selecting this tab.</string>
     <string name="scene_editor_trim_clip">Trim clip</string>
+    <string name="delete_warning">This action cannot be undone!</string>
     <string name="cancel">Cancel</string>
+    <string name="delete">Delete</string>
     <string name="play_or_share_exported_media_">Play or Share exported media?</string>
     <string name="err_storage_not_ready">The external storage (SDCard) does not appear to be available for reading and writing at this time. StoryMaker requires access to this for lesson and story project data. Please check your device and restart the pp.</string>
     <string name="scene_s_">scene(s)</string>

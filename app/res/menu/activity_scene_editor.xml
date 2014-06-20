@@ -18,21 +18,9 @@
         android:visible="true">
     </item>
     <item
-        android:id="@+id/addFromGallery"
-        android:showAsAction="never"
-        android:title="@string/menu_add_from_gallery"
-        android:visible="true">
-    </item>
-    <item
         android:id="@+id/addNewShot"
         android:showAsAction="never"
         android:title="@string/menu_add_new_shot"
-        android:visible="true">
-    </item>
-    <item
-        android:id="@+id/delShot"
-        android:showAsAction="never"
-        android:title="@string/menu_del_shot"
         android:visible="true">
     </item>
     <item
