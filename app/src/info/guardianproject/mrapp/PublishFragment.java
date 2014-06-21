@@ -789,8 +789,19 @@ public class PublishFragment extends Fragment implements PublishListener {
                     
                     boolean useTor = intent.getBooleanExtra(ChooseAccountFragment.EXTRAS_USE_TOR, false);
                     boolean publishToStoryMaker = intent.getBooleanExtra(ChooseAccountFragment.EXTRAS_PUBLISH_TO_STORYMAKER, false);
+                    
+                    if(publishToStoryMaker) {
+                    	ServerManager sm = StoryMakerApp.getServerManager();
+                        sm.setContext(mActivity.getBaseContext());
+                        
+                        if(!sm.hasCreds()) {
+                        	Intent connectSMIntent = new Intent(mActivity, ConnectAccountActivity.class);
+                        	connectSMIntent.putExtra("isPublishPending", true); //TODO add logic to ConnectAccountActivity to return here and continue publish
+                        	getActivity().startActivity(connectSMIntent);
+                        }
+                    }
 
-                    showUploadSpinner(true);        
+                    showUploadSpinner(true);
                     mUploading = true;
                     mPlaying = false;
                     if (mFileLastExport != null && mFileLastExport.exists()) { // FIXME replace this with a check to make sure render is suitable
