@@ -22,6 +22,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import redstone.xmlrpc.XmlRpcFault;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
@@ -65,8 +66,9 @@ public class LoginActivity extends BaseActivity implements Runnable
 
 			@Override
 			public void onClick(View v) {
-				
-				handleLogin ();
+				Intent fl = new Intent(getApplicationContext(), FacebookLogin.class);
+				startActivity(fl);
+				//handleLogin ();
 				
 			}
         	
