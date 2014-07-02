@@ -237,7 +237,7 @@
             />
     <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/app_id"/>
     <activity android:name="com.facebook.LoginActivity"/>
-    <activity android:name="info.guardianproject.mrapp.server.FacebookLogin"/>  
+    <activity android:name="info.guardianproject.mrapp.facebook.FacebookLogin"/>  
 	<activity android:name="net.hockeyapp.android.UpdateActivity" />
 	<service android:name="info.guardianproject.mrapp.encryption.EncryptionService" />
 	<service android:name="info.guardianproject.mrapp.encryption.EncryptionBackground" />

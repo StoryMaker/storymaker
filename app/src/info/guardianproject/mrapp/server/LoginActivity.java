@@ -10,6 +10,7 @@ import info.guardianproject.mrapp.AppConstants;
 import info.guardianproject.mrapp.BaseActivity;
 import info.guardianproject.mrapp.R;
 import info.guardianproject.mrapp.StoryMakerApp;
+import info.guardianproject.mrapp.facebook.FacebookLogin;
 import info.guardianproject.mrapp.model.Auth;
 import info.guardianproject.mrapp.model.AuthTable;
 import net.bican.wordpress.Category;

@@ -4,77 +4,124 @@
   android:layout_width="fill_parent"
   android:layout_height="fill_parent"
   android:fillViewport="true">
+
   <RelativeLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content" android:background="#fff"> 
+      android:layout_width="fill_parent"
+      android:layout_height="wrap_content"
+      android:background="#fff"
+      android:gravity="center" >
+ 
+        <com.facebook.widget.LoginButton
+        android:id="@+id/authButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="30dp"
+        android:padding="5dp"
+        />
         <!-- Registration Form -->
         <LinearLayout
-          xmlns:android="http://schemas.android.com/apk/res/android"
           android:orientation="vertical"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:padding="10dip">
+          android:padding="10dip"
+          android:visibility="gone">
           <!-- Full Name Label -->
-          
-          <EditText android:id="@+id/reg_fullname"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dip"
-                android:singleLine="true"
-                android:layout_marginBottom="20dip"
-                android:hint="Display Name"
-                />
           <!--  Email Label -->
-          <EditText android:id="@+id/reg_email"
+          <EditText android:id="@+id/registerUsername"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dip"
                 android:singleLine="true"
-                android:layout_marginBottom="20dip"
-                android:hint="Your Email"
+                android:hint="Your Username"
+                android:textColor="@color/lp_blue"
+                android:background="@color/lp_grey"
+                android:padding="10dp"
+                android:layout_marginBottom="5dp"
                 />
-          <!-- Password Label -->
-        
-          <EditText android:id="@+id/reg_password"
+          <!-- Password Label --> 
+                
+          <EditText android:id="@+id/first_name"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:password="true"
-                android:hint="Password"
+                android:hint="First Name"
                 android:singleLine="true"
-                android:layout_marginTop="5dip"/>
-        
-          <EditText android:id="@+id/reg_password2"
+                android:layout_marginTop="5dip"
+                android:textColor="@color/lp_blue"
+                android:background="@color/lp_grey"
+                android:padding="10dp"
+                android:layout_marginBottom="5dp"/> 
+         
+         <EditText android:id="@+id/last_name"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:password="true"
-                android:hint="Confirm Password"
+                android:hint="Last Name"
                 android:singleLine="true"
-                android:layout_marginTop="5dip"/>   
-          
-          <CheckBox android:id="@+id/reg_checkbox"
+                android:layout_marginTop="5dip"
+                android:textColor="@color/lp_blue"
+                android:background="@color/lp_grey"
+                android:padding="10dp"
+                android:layout_marginBottom="5dp"/>        
+           <EditText android:id="@+id/email"
                 android:layout_width="fill_parent"
-                android:layout_height="wrap_content"                
-                android:text="Confirm you are okay with this"
+                android:layout_height="wrap_content"
+                android:hint="Email"
                 android:singleLine="true"
-                android:layout_marginTop="5dip"/>   
-           
-          
+                android:layout_marginTop="5dip"
+                android:textColor="@color/lp_blue"
+                android:background="@color/lp_grey"
+                android:padding="10dp"
+                android:layout_marginBottom="5dp"/>
+           <EditText android:id="@+id/phone_number"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:hint="Phone Number"
+                android:singleLine="true"
+                android:layout_marginTop="5dip"
+                android:textColor="@color/lp_blue"
+                android:background="@color/lp_grey"
+                android:padding="10dp"
+                android:layout_marginBottom="5dp"/>    
+         <EditText android:id="@+id/location"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:hint="Location"
+                android:singleLine="true"
+                android:layout_marginTop="5dip"
+                android:textColor="@color/lp_blue"
+                android:background="@color/lp_grey"
+                android:padding="10dp"
+                android:layout_marginBottom="5dp"/>   
           <!-- Register Button -->
           <Button android:id="@+id/btnRegister"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dip"
+                android:background="@color/lp_red"
+                android:textColor="@color/white"
                 android:text="Register New Account"/>
           <!-- Link to Login Screen -->
-          <TextView android:id="@+id/link_to_login"
+
+          <TextView
+              android:id="@+id/reg_error"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_gravity="center_horizontal"
+              android:text=""
+              android:textAppearance="?android:attr/textAppearanceSmall" />
+
+          <Button android:id="@+id/btnLogin"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="40dip"
-                android:layout_marginBottom="40dip"
-                android:text="Return to Login"
-                android:gravity="center"
-                android:textSize="20dip"
-                android:textColor="#025f7c"/>
+               android:gravity="center"
+               android:background="#FFFFFF"
+              android:paddingBottom="5dp"
+              android:paddingLeft="10dp"
+              android:paddingRight="10dp"
+              android:paddingTop="5dp"
+              android:text="Back to Login"
+              android:textColor="@color/lp_blue"
+              android:textSize="20dip"/>
  
         </LinearLayout>
         <!-- Registration Form Ends -->

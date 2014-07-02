@@ -13,7 +13,7 @@ public class RegisterActivity extends Activity {
         // Set View to register.xml
         setContentView(R.layout.activity_registration);
  
-        TextView loginScreen = (TextView) findViewById(R.id.link_to_login);
+       /* TextView loginScreen = (TextView) findViewById(R.id.link_to_login);
  
         // Listening to Login Screen link
         loginScreen.setOnClickListener(new View.OnClickListener() {
@@ -23,6 +23,6 @@ public class RegisterActivity extends Activity {
                 // Switching to Login Screen/closing register screen
                 finish();
             }
-        });
+        });*/
     }
 }
