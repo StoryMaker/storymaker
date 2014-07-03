@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/menu_new_form"
+          android:icon="@drawable/menu"
+          android:title="Menu"
+          android:showAsAction="always"
+          >
+        <menu>
+            <item android:id="@+id/home"
+                  android:icon="@drawable/home"
+                  android:title="Home"/>
+            
+            <item android:id="@+id/profile"
+                  android:icon="@drawable/profile"
+                  android:title="Edit Profile"/>
+           
+            <item android:id="@+id/logout"
+                  android:icon="@drawable/logout"
+                  android:title="Logout"/>
+        </menu>
+    </item>
+</menu>

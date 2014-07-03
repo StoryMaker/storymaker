@@ -1,11 +1,15 @@
 package info.guardianproject.mrapp;
+import info.guardianproject.mrapp.facebook.FacebookLogin;
 import info.guardianproject.mrapp.server.LoginActivity;
+import info.guardianproject.mrapp.server.RegisterActivity;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Date;
 
 import org.holoeverywhere.app.Activity;
+import org.holoeverywhere.preference.PreferenceManager;
+import org.holoeverywhere.preference.SharedPreferences;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,6 +17,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.content.SharedPreferences.Editor;
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -20,6 +25,8 @@ import android.graphics.PixelFormat;
 import android.view.WindowManager;
 import android.widget.ImageView;
 
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuItem;
 //import com.google.analytics.tracking.android.EasyTracker;
 import com.slidingmenu.lib.SlidingMenu;
 import com.slidingmenu.lib.SlidingMenu.OnClosedListener;
@@ -177,7 +184,44 @@ public class BaseActivity extends Activity {
         
         
     }
-    
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getSupportMenuInflater().inflate(R.menu.activity_actionbar_menu, menu);
+        
+        return true;
+    }
+    @Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+    	
+        if (item.getItemId() == R.id.home)
+        {
+        	Intent intent = new Intent(getBaseContext(), HomePanelsActivity.class);
+	        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+	        startActivity(intent);
+        }
+        if (item.getItemId() == R.id.profile)
+        {	
+        	   		
+        	Intent intent = new Intent(getBaseContext(), RegisterActivity.class);
+	        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+	        startActivity(intent);
+        }
+        if (item.getItemId() == R.id.logout)
+        {
+        	//nullify user
+        	SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+    		Editor editor = prefs.edit();
+    		editor.putString("logged_in", "0");
+        	editor.commit();
+        	
+        	Intent intent = new Intent(getBaseContext(), FacebookLogin.class);
+	        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+	        startActivity(intent);
+	        finish();
+        }
+       
+		return true;
+	}
     @Override
     public void onCreate(Bundle savedInstanceState) {
     

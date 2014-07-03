@@ -350,7 +350,7 @@ public class HomePanelsActivity extends BaseActivity implements OnClickListener{
     }
     
  
-
+    /*
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
@@ -390,7 +390,7 @@ public class HomePanelsActivity extends BaseActivity implements OnClickListener{
         
 		return true;
 	}
-    
+    */
 	void collectAndSendLog(){
 		
 		File fileLog = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS),"storymakerlog.txt");
