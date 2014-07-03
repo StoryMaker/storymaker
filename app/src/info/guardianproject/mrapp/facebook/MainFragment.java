@@ -1,22 +1,44 @@
 package info.guardianproject.mrapp.facebook;
 
+import java.util.Arrays;
+
+import android.widget.LinearLayout;
+
+import com.facebook.Request;
+import com.facebook.Response;
 import com.facebook.Session;
 import com.facebook.SessionState;
 import com.facebook.UiLifecycleHelper;
+import com.facebook.model.GraphLocation;
+import com.facebook.model.GraphUser;
 import com.facebook.widget.LoginButton;
 
+import info.guardianproject.mrapp.HomePanelsActivity;
 import info.guardianproject.mrapp.R;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
+import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 
 public class MainFragment extends Fragment {
 	private static final String TAG = "MainFragment";
 	private UiLifecycleHelper uiHelper;
+	String location = "";
+	String username = "";
+	String id = ""; 
+    String firstname = ""; 
+    String lastname = "";
+    String email = "";
+    View view;
+    LoginButton authButton;
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 	    super.onCreate(savedInstanceState);
@@ -27,15 +49,79 @@ public class MainFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, 
         ViewGroup container, 
         Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.activity_registration, container, false);
-        LoginButton authButton = (LoginButton) view.findViewById(R.id.authButton);
+        view = inflater.inflate(R.layout.activity_login_facebook, container, false);
+        authButton = (LoginButton) view.findViewById(R.id.authButton);
         authButton.setFragment(this);
+
+        authButton.setReadPermissions(Arrays.asList("email", "user_location")); 
+               
         return view;
     }
 	
 	private void onSessionStateChange(Session session, SessionState state, Exception exception) {
 	    if (state.isOpened()) {
 	        Log.i(TAG, "Logged in...");
+	        
+	        // make request to the /me API
+	          Request.newMeRequest(session, new Request.GraphUserCallback() {
+
+	            // callback after Graph API response with user object
+	           
+				@Override
+				public void onCompleted(GraphUser user, Response response) {
+					// TODO Auto-generated method stub
+					if(user!=null){
+						location = "";//null, Wait for FB approval: user.getLocation().getCountry();
+						firstname = user.getFirstName();
+						lastname = user.getLastName();		
+						username = user.getName().replace(" ", "").toLowerCase();
+						email = user.getProperty("email").toString();
+						
+						//if registered
+						//	continue to homescreen
+						//else
+						//	register
+						//store token and api key	
+						
+				        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getActivity());
+				        Editor editor = settings.edit();
+						editor.putString("logged_in", "1");
+						editor.commit();
+				        
+						Intent i = new Intent(getActivity(), HomePanelsActivity.class);
+						startActivity(i);
+					}
+				}
+	          }).executeAsync();
+	          
+	       //if registered
+	        	//redirect to home
+	        
+	       //else
+	        	//capture additional details
+			      //set values
+	          /*
+	          		EditText username_e = (EditText) view.findViewById(R.id.registerUsername);
+	          		username_e.setText(username);
+			        EditText email_e = (EditText) view.findViewById(R.id.email);
+			        email_e.setText(email);
+			        EditText first_name = (EditText) view.findViewById(R.id.first_name);
+			        first_name.setText(firstname);
+			        EditText last_name = (EditText) view.findViewById(R.id.last_name);
+			        last_name.setText(lastname);
+			        EditText e_location = (EditText) view.findViewById(R.id.location);
+				    e_location.setText(location);		
+			        EditText phone_number = (EditText) view.findViewById(R.id.phone_number);
+				    
+			        //Get phone number
+		    		TelephonyManager tMgr = (TelephonyManager)getActivity().getSystemService(getActivity().TELEPHONY_SERVICE);
+		    		String mPhoneNumber = tMgr.getLine1Number();
+		    		phone_number.setText(mPhoneNumber);
+		    		
+			        //authButton.setVisibility(View.GONE);
+			        LinearLayout regLayout = (LinearLayout)view.findViewById(R.id.regLayout);
+			        regLayout.setVisibility(View.VISIBLE);*/
+	        
 	    } else if (state.isClosed()) {
 	        Log.i(TAG, "Logged out...");
 	    }

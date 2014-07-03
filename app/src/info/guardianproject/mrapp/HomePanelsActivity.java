@@ -3,6 +3,7 @@ package info.guardianproject.mrapp;
 import info.guardianproject.mrapp.R;
 import info.guardianproject.mrapp.encryption.EncryptionService;
 import info.guardianproject.mrapp.encryption.EncryptionBackground;
+import info.guardianproject.mrapp.facebook.FacebookLogin;
 import info.guardianproject.mrapp.model.Lesson;
 import info.guardianproject.mrapp.model.Project;
 import info.guardianproject.mrapp.server.LoginActivity;
@@ -339,7 +340,7 @@ public class HomePanelsActivity extends BaseActivity implements OnClickListener{
         
         if ((user == null)||(user.equals("0")))
         {
-        	Intent intent = new Intent(this,LoginActivity.class);
+        	Intent intent = new Intent(this,FacebookLogin.class);
         	startActivity(intent);
         	//finish();
         }else{
