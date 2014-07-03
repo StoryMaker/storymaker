@@ -1,6 +1,5 @@
 package info.guardianproject.mrapp;
 
-import info.guardianproject.mrapp.server.LoginActivity;
 import info.guardianproject.mrapp.server.ServerManager;
 
 import java.io.IOException;
@@ -8,35 +7,26 @@ import java.io.InputStream;
 import java.util.Date;
 
 import org.holoeverywhere.app.Activity;
-import org.holoeverywhere.widget.LinearLayout;
 import org.holoeverywhere.widget.TextView;
 import org.holoeverywhere.widget.Toast;
 
 import android.content.Intent;
-import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.Button;
-import android.widget.ImageButton;
-import android.widget.RelativeLayout;
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.PixelFormat;
-import android.graphics.drawable.Drawable;
-import android.graphics.drawable.ScaleDrawable;
+import android.os.Bundle;
+import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 
-
-
-
-
-
-//import com.google.analytics.tracking.android.EasyTracker;
 import com.slidingmenu.lib.SlidingMenu;
 import com.slidingmenu.lib.SlidingMenu.OnClosedListener;
+//import com.google.analytics.tracking.android.EasyTracker;
 
 public class BaseActivity extends Activity {
 
