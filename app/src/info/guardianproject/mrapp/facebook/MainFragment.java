@@ -2,6 +2,9 @@ package info.guardianproject.mrapp.facebook;
 
 import java.util.Arrays;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import android.widget.LinearLayout;
 
 import com.facebook.Request;
@@ -14,8 +17,10 @@ import com.facebook.model.GraphUser;
 import com.facebook.widget.LoginButton;
 
 import info.guardianproject.mrapp.HomePanelsActivity;
+import info.guardianproject.mrapp.api.APIFunctions;
 import info.guardianproject.mrapp.R;
 import android.os.Bundle;
+import android.os.Message;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.telephony.TelephonyManager;
@@ -77,19 +82,46 @@ public class MainFragment extends Fragment {
 						username = user.getName().replace(" ", "").toLowerCase();
 						email = user.getProperty("email").toString();
 						
+						APIFunctions apiFunctions = new APIFunctions();
+						
+						
+	            		JSONObject json = apiFunctions.loginUser(firstname, lastname, username, email, location);
+	            		try {
+							String res = json.getString("success"); 
+							if(res.equals("OK")){
+								JSONObject json_user = json.getJSONObject("message");
+								
+								String user_id = json_user.getString("user_id");
+								String token = json_user.getString("token");
+								String api_key = json_user.getString("api_key");
+								
+								//login successfull
+								SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getActivity());
+						        Editor editor = settings.edit();
+								editor.putString("logged_in", "1");
+								editor.putString("api_key", api_key);
+								editor.putString("token", token);
+								editor.putString("user_id", user_id);
+								editor.commit();
+						        
+								Intent i = new Intent(getActivity(), HomePanelsActivity.class);
+								startActivity(i);
+								
+							}else{
+								//login not succesfull
+							}
+						
+					} catch (JSONException e) {
+						e.printStackTrace();
+					}
+						
 						//if registered
 						//	continue to homescreen
 						//else
 						//	register
 						//store token and api key	
 						
-				        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getActivity());
-				        Editor editor = settings.edit();
-						editor.putString("logged_in", "1");
-						editor.commit();
 				        
-						Intent i = new Intent(getActivity(), HomePanelsActivity.class);
-						startActivity(i);
 					}
 				}
 	          }).executeAsync();
