@@ -95,7 +95,7 @@ public class MainFragment extends Fragment {
 								String token = json_user.getString("token");
 								String api_key = json_user.getString("api_key");
 								
-								//login successfull
+								//login successful
 								SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getActivity());
 						        Editor editor = settings.edit();
 								editor.putString("logged_in", "1");
@@ -108,19 +108,13 @@ public class MainFragment extends Fragment {
 								startActivity(i);
 								
 							}else{
-								//login not succesfull
+								//login not successful: what to do?
+								
 							}
 						
 					} catch (JSONException e) {
 						e.printStackTrace();
-					}
-						
-						//if registered
-						//	continue to homescreen
-						//else
-						//	register
-						//store token and api key	
-						
+					}				
 				        
 					}
 				}
