@@ -143,7 +143,6 @@
             android:name="info.guardianproject.mrapp.media.OverlayCameraActivity"
             android:screenOrientation="landscape" />
         <activity android:name="info.guardianproject.mrapp.media.AudioRecorderActivity" />
-        <activity android:name="info.guardianproject.mrapp.server.OAuthAccessTokenActivity" />
 
         <provider
             android:name="info.guardianproject.mrapp.db.LessonsProvider"
