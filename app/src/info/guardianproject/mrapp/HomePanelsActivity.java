@@ -1,6 +1,7 @@
 package info.guardianproject.mrapp;
 
 import info.guardianproject.mrapp.R;
+import info.guardianproject.mrapp.api.SyncService;
 import info.guardianproject.mrapp.encryption.EncryptionService;
 import info.guardianproject.mrapp.encryption.EncryptionBackground;
 import info.guardianproject.mrapp.facebook.FacebookLogin;
@@ -225,13 +226,13 @@ public class HomePanelsActivity extends BaseActivity implements OnClickListener{
         	}else if(isServiceRunning(Export2SDService.class)){
   	          	Toast.makeText(getBaseContext(), "Please wait for exporting to finish!", Toast.LENGTH_LONG).show();
         	}else{
-	        	isInternetPresent = cd.isConnectingToInternet();
-	  	       	if(!isInternetPresent){
-	  	          	Toast.makeText(getBaseContext(), "You have no connection!", Toast.LENGTH_LONG).show();
-	  	        }else{
-	  	        	dialog.dismiss();
+	        	//isInternetPresent = cd.isConnectingToInternet();
+	  	       //	if(!isInternetPresent){
+	  	        //  	Toast.makeText(getBaseContext(), "You have no connection!", Toast.LENGTH_LONG).show();
+	  	       // }else{
+	  	       // 	dialog.dismiss();
 	  	        	startService(new Intent(HomePanelsActivity.this,SyncService.class));
-	  	        }   
+	  	       // }   
         	}
         	//Intent i = new Intent(getApplicationContext(),SyncActivity.class);
 			//i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
