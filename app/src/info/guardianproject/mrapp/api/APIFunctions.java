@@ -2,21 +2,29 @@ package info.guardianproject.mrapp.api;
 
 
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.http.NameValuePair;
+import org.apache.http.entity.mime.MultipartEntity;
+import org.apache.http.entity.mime.content.ContentBody;
+import org.apache.http.entity.mime.content.FileBody;
+import org.apache.http.entity.mime.content.StringBody;
 import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONObject;
 
 import android.content.Context;
+import android.util.Log;
 
 public class APIFunctions {
 	
 	private JSONParser jsonParser;
 	private static String loginURL = "login.php";
 	private static String reportURL = "article.php";
-	
+	private static String objectURL = "attachment.php";
+
 	private static String api_base_url = "http://listeningpost.codeforafrica.net/sm-api/";
 	private static String api_key = "2a80f2f6094f4e3d2e7b01ba21951f3720060454";
 	
@@ -54,6 +62,31 @@ public class APIFunctions {
 		params.add(new BasicNameValuePair("api_key", api_key));
 
 		JSONObject json = jsonParser.getJSONFromUrl(api_base_url + reportURL, params);
+		
+		// return json
+		return json;
+	}
+
+	public JSONObject newObject(String token, String user_id, String ptitle,
+			String preportid, String ptype, String optype, String pid,
+			String path) {
+		//add media
+		MultipartEntity mpEntity = new MultipartEntity();
+		try{				
+			ContentBody content = new FileBody(new File(path), ptype);
+			mpEntity.addPart("attachment", content);
+			mpEntity.addPart("token", new StringBody(token));
+			mpEntity.addPart("user_id", new StringBody(user_id));
+			mpEntity.addPart("title", new StringBody(ptitle));
+			mpEntity.addPart("id", new StringBody(preportid));
+			mpEntity.addPart("object_type", new StringBody(optype));
+			mpEntity.addPart("api_key", new StringBody( "api_key"));
+			mpEntity.addPart("content", new StringBody("(empty)"));
+		} catch (IOException e) {
+            Log.e("mpEntity Error", e.getMessage(), e);
+        }
+		// getting JSON Object
+		JSONObject json = jsonParser.getJSONFromUrl_Object(api_base_url + objectURL, mpEntity);
 		
 		// return json
 		return json;

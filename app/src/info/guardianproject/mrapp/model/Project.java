@@ -29,6 +29,8 @@ public class Project extends Model {
     protected String section;
     protected String location;
     protected int report_id;
+    protected int object_id;
+    
 
     public final static int STORY_TYPE_VIDEO = 0;
     public final static int STORY_TYPE_AUDIO = 1;
@@ -82,8 +84,9 @@ public class Project extends Model {
      * @param section
      * @param location
      * @param report_id 
+     * @param object_id 
      */
-    public Project(Context context, int id, String title, String thumbnailPath, int storyType, String templatePath, Date createdAt, Date updatedAt, String section, String location, int report_id) {
+    public Project(Context context, int id, String title, String thumbnailPath, int storyType, String templatePath, Date createdAt, Date updatedAt, String section, String location, int report_id, int object_id) {
         super(context);
         this.id = id;
         this.title = title;
@@ -95,6 +98,7 @@ public class Project extends Model {
         this.section = section;
         this.location = location;
         this.report_id = report_id;
+        this.object_id = object_id;
     }
     
     /**
@@ -114,8 +118,8 @@ public class Project extends Model {
      * @param section
      * @param location
      */
-    public Project(SQLiteDatabase db, Context context, int id, String title, String thumbnailPath, int storyType, String templatePath, Date createdAt, Date updatedAt, String section, String location, int report_id) {
-        this(context, id, title, thumbnailPath, storyType, templatePath, createdAt, updatedAt, section, location, report_id);
+    public Project(SQLiteDatabase db, Context context, int id, String title, String thumbnailPath, int storyType, String templatePath, Date createdAt, Date updatedAt, String section, String location, int report_id, int object_id) {
+        this(context, id, title, thumbnailPath, storyType, templatePath, createdAt, updatedAt, section, location, report_id, object_id);
         this.mDB = db;
     }
 
@@ -148,7 +152,9 @@ public class Project extends Model {
                 cursor.getString(cursor
                         .getColumnIndex(StoryMakerDB.Schema.Projects.COL_LOCATION)),
                  cursor.getInt(cursor
-                        .getColumnIndex(StoryMakerDB.Schema.Projects.COL_REPORT_ID)));
+                        .getColumnIndex(StoryMakerDB.Schema.Projects.COL_REPORT_ID)),
+                cursor.getInt(cursor
+                                .getColumnIndex(StoryMakerDB.Schema.Projects.COL_OBJECT_ID)));
                 
 
         calculateMaxSceneCount();
@@ -187,7 +193,9 @@ public class Project extends Model {
                 cursor.getString(cursor
                         .getColumnIndex(StoryMakerDB.Schema.Projects.COL_LOCATION)),
                 cursor.getInt(cursor
-                        .getColumnIndex(StoryMakerDB.Schema.Projects.COL_REPORT_ID)));
+                        .getColumnIndex(StoryMakerDB.Schema.Projects.COL_REPORT_ID)),
+                        cursor.getInt(cursor
+                                .getColumnIndex(StoryMakerDB.Schema.Projects.COL_OBJECT_ID)));
         this.mDB = db;
         calculateMaxSceneCount(); // had to dupe the Project(context, cursor) constructor in here because of this call being fired before we set mDB 
     }
@@ -255,6 +263,8 @@ public class Project extends Model {
         values.put(StoryMakerDB.Schema.Projects.COL_SECTION, section);
         values.put(StoryMakerDB.Schema.Projects.COL_LOCATION, location);
         values.put(StoryMakerDB.Schema.Projects.COL_REPORT_ID, report_id);
+        values.put(StoryMakerDB.Schema.Projects.COL_OBJECT_ID, object_id);
+
         // store dates as longs(8-bit ints)
         // can't put null in values set, so only add entry if non-null
         
@@ -409,6 +419,22 @@ public class Project extends Model {
         this.title = title;
     }
 
+    /**
+     * @return the title
+     */
+    public int getObjectID() {
+        return object_id;
+    }
+
+    /**
+     * @param title
+     *            the title to set
+     */
+    public void setObjectID(int object_id) {
+        this.object_id = object_id;
+    }
+
+    
     /**
      * @return the thumbnailPath
      */

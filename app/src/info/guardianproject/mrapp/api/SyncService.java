@@ -5,6 +5,7 @@ import info.guardianproject.mrapp.HomePanelsActivity;
 import info.guardianproject.mrapp.encryption.Encryption;
 import info.guardianproject.mrapp.model.Media;
 import info.guardianproject.mrapp.model.Project;
+import info.guardianproject.mrapp.model.ProjectTable;
 import info.guardianproject.mrapp.model.Report;
 
 import java.io.File;
@@ -43,8 +44,8 @@ public class SyncService extends Service {
 	createReport create_Report=null;
 	//updateReport update_Report=null;
 	
-	//createObject create_Object=null;
-	//updateObject update_Object=null;
+	createObject create_Object=null;
+	//updateObjet update_Object=null;
 	
 	private ArrayList<Report> mListReports;
 		
@@ -80,7 +81,7 @@ public class SyncService extends Service {
           	check_token = new checkToken().execute();
          // }
         prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-    	delete_after_sync = prefs.getString("delete_after_sync",null);
+    	delete_after_sync = prefs.getString("delete_after_sync","0");
 
   		int delay = 3000; // delay for 1 sec. 
   		int period = 1000; // repeat every 10 sec. 
@@ -221,7 +222,7 @@ public class SyncService extends Service {
 	        this.ptitle=ptitle;
 	    }
 	}
-	/*
+	
 	public void uploadMedia(int rid, int serverid){
 		ArrayList<Project> mListProjects;
 		mListProjects = Project.getAllAsList(this, rid);
@@ -268,6 +269,7 @@ public class SyncService extends Service {
 		 	create_Object.execute(params);	
 	 	}
 	}
+	/*
 	public void updateMedia(int rid, int serverid){
 		
 		ArrayList<Project> mListProjects;
@@ -364,9 +366,9 @@ public class SyncService extends Service {
         	String optype = params[0].optype;
         	String ptype = params[0].ptype;
     	    String ptitle = params[0].ptitle;;
-    	    String pdate = params[0].pdate;;
+
     	    String pid = params[0].pid;;
-    	    String psequence = params[0].psequence;;
+
     	    String preportid = params[0].preportid;;
     	    
         	APIFunctions apiFunction = new APIFunctions();
@@ -376,8 +378,8 @@ public class SyncService extends Service {
 			try {
 				String res = json.getString(KEY_SUCCESS); 
 					if(res.equals("OK")){
-						//JSONObject json_report = json.getJSONObject("message");
-						//String objectid = json_report.getString(KEY_ID);
+						JSONObject json_report = json.getJSONObject("message");
+						String objectid = json_report.getString(KEY_ID);
 						
 					}else{
 						//Some error message. Not sure what yet.
@@ -396,6 +398,7 @@ public class SyncService extends Service {
            checkTasks();
         }
 	}
+	*/
 	class createObject extends AsyncTask<MyTaskParams, String, String> {
 
         @Override
@@ -409,16 +412,16 @@ public class SyncService extends Service {
         	String optype = params[0].optype;
         	String ptype = params[0].ptype;
     	    String ptitle = params[0].ptitle;;
-    	    String pdate = params[0].pdate;;
+ 
     	    String pid = params[0].pid;;
-    	    String psequence = params[0].psequence;;
+
     	    String preportid = params[0].preportid;;
     	    
     	    Log.d("optype", optype);
     	    Log.d("ptype", ptype);
         	
     	    APIFunctions apiFunction = new APIFunctions();
-			JSONObject json = apiFunction.newObject(token, user_id, ptitle, psequence, preportid, ptype, optype, pid, pdate, ppath, getApplicationContext());
+			JSONObject json = apiFunction.newObject(token, user_id, ptitle, preportid, ptype, optype, pid, ppath);
 			
 			try {
 				String res = json.getString(KEY_SUCCESS); 
@@ -433,9 +436,8 @@ public class SyncService extends Service {
 						String sequence_id = "0";//String.valueOf(json_report.getString("sequence_id"));
 						
 						//Update object id and sequence id
-						Project project= Project.get(getApplicationContext(), Integer.parseInt(pid));
+						Project project= (Project)(new ProjectTable()).get(getApplicationContext(),Integer.parseInt(pid));
 						project.setObjectID(object_id);
-						project.setSequenceId(sequence_id);
 						project.save();
 						/*
 						//Re-encrypt
@@ -443,11 +445,11 @@ public class SyncService extends Service {
 				        startMyService.putExtra("filepath", ppath);
 				        startMyService.putExtra("mode", Cipher.ENCRYPT_MODE);
 				        startService(startMyService);
-				        
+				        */
 						String file = ppath;
 				 		Cipher cipher;
 						try {
-							cipher = Encryption.createCipher(Cipher.ENCRYPT_MODE, getApplicationContext());
+							cipher = Encryption.createCipher(Cipher.ENCRYPT_MODE);
 							Encryption.applyCipher(file, file+"_", cipher);
 						}catch (Exception e) {
 							// TODO Auto-generated catch block
@@ -476,7 +478,7 @@ public class SyncService extends Service {
         	checkTasks();
         }
 	}
-	*/
+	
 	class createReport extends AsyncTask<ReportTaskParams, String, String> {
 
         @Override
@@ -641,12 +643,13 @@ public class SyncService extends Service {
 				tasks++;
 			}
 		}
-		
+		*/
 		if(create_Object!=null){
 			if(create_Object.getStatus() == AsyncTask.Status.RUNNING){
 				tasks++;
 			}
 		}
+		/*
 		if(update_Object!=null){
 			if(update_Object.getStatus() == AsyncTask.Status.RUNNING){
 				tasks++;

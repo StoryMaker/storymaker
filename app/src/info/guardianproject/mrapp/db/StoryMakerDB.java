@@ -9,8 +9,8 @@ import android.util.Log;
 
 public class StoryMakerDB extends SQLiteOpenHelper {
     private static final String TAG = "StoryMakerDB";
-    private static final int DB_VERSION = 9;
-    private static final String DB_NAME = "sm.db2";
+    private static final int DB_VERSION = 10;
+    private static final String DB_NAME = "sm.db3";
     private Context mContext;
     
     public StoryMakerDB(Context context) {
@@ -123,7 +123,8 @@ public class StoryMakerDB extends SQLiteOpenHelper {
             public static final String COL_SECTION = "section";
             public static final String COL_LOCATION = "location";
             public static final String COL_REPORT_ID = "report_id";
-            
+            public static final String COL_OBJECT_ID = "object_id";
+
             private static final String CREATE_TABLE_PROJECTS = "create table " + NAME + " (" 
                     + ID + " integer primary key autoincrement, " 
                     + COL_TITLE + " text not null, " 
@@ -134,7 +135,8 @@ public class StoryMakerDB extends SQLiteOpenHelper {
                     + COL_UPDATED_AT + " integer,"
                     + COL_SECTION + " text,"
                     + COL_LOCATION + " text,"
-                    + COL_REPORT_ID + " integer"
+                    + COL_REPORT_ID + " integer,"
+                    + COL_OBJECT_ID + " integer"
                     + "); ";
             //TODO: update table with report id & object id on upgrade
             private static final String UPDATE_TABLE_PROJECTS = "alter table " + NAME + " " 
