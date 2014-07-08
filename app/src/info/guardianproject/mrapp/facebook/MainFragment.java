@@ -19,6 +19,7 @@ import com.facebook.widget.LoginButton;
 import info.guardianproject.mrapp.HomePanelsActivity;
 import info.guardianproject.mrapp.api.APIFunctions;
 import info.guardianproject.mrapp.R;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Message;
 import android.preference.PreferenceManager;
@@ -62,6 +63,60 @@ public class MainFragment extends Fragment {
                
         return view;
     }
+	class userRegister extends AsyncTask<String, String, String>{
+		@Override
+        protected void onPreExecute() {
+            super.onPreExecute(); 
+        }
+        protected String doInBackground(String... args) {
+        	APIFunctions apiFunctions = new APIFunctions();
+			
+			
+    		JSONObject json = apiFunctions.loginUser(firstname, lastname, username, email, location);
+    		try {
+				String res = json.getString("status"); 
+				if(res.equals("OK")){
+					JSONObject json_user = json.getJSONObject("message");
+					
+					String user_id = json_user.getString("user_id");
+					String token = json_user.getString("token");
+					String api_key = json_user.getString("api_key");
+					
+					//login successful
+					SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getActivity());
+			        Editor editor = settings.edit();
+					editor.putString("logged_in", "1");
+					editor.putString("api_key", api_key);
+					editor.putString("token", token);
+					editor.putString("user_id", user_id);
+					
+					//save profule information 
+					editor.putString("location", location);
+					editor.putString("username", username);
+					editor.putString("firstname", firstname);
+					editor.putString("lastname", lastname);
+					editor.putString("email", email);
+					
+					editor.commit();
+			        
+					Intent i = new Intent(getActivity(), HomePanelsActivity.class);
+					startActivity(i);
+					
+				}else{
+					//login not successful: what to do?
+					
+				}
+			
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}				
+	        
+        	return null;
+        }
+        protected void onPostExecute(String file_url) {
+            
+        }
+	}
 	
 	private void onSessionStateChange(Session session, SessionState state, Exception exception) {
 	    if (state.isOpened()) {
@@ -75,47 +130,14 @@ public class MainFragment extends Fragment {
 				@Override
 				public void onCompleted(GraphUser user, Response response) {
 					// TODO Auto-generated method stub
-					if(user!=null){
+					if(user.getProperty("email").toString()!=null){
 						location = "";//null, Wait for FB approval: user.getLocation().getCountry();
 						firstname = user.getFirstName();
 						lastname = user.getLastName();		
 						username = user.getName().replace(" ", "").toLowerCase();
 						email = user.getProperty("email").toString();
-						
-						APIFunctions apiFunctions = new APIFunctions();
-						
-						
-	            		JSONObject json = apiFunctions.loginUser(firstname, lastname, username, email, location);
-	            		try {
-							String res = json.getString("success"); 
-							if(res.equals("OK")){
-								JSONObject json_user = json.getJSONObject("message");
-								
-								String user_id = json_user.getString("user_id");
-								String token = json_user.getString("token");
-								String api_key = json_user.getString("api_key");
-								
-								//login successful
-								SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getActivity());
-						        Editor editor = settings.edit();
-								editor.putString("logged_in", "1");
-								editor.putString("api_key", api_key);
-								editor.putString("token", token);
-								editor.putString("user_id", user_id);
-								editor.commit();
-						        
-								Intent i = new Intent(getActivity(), HomePanelsActivity.class);
-								startActivity(i);
-								
-							}else{
-								//login not successful: what to do?
-								
-							}
-						
-					} catch (JSONException e) {
-						e.printStackTrace();
-					}				
-				        
+						Log.d("Email", "Email:" + email);
+						new userRegister().execute();
 					}
 				}
 	          }).executeAsync();

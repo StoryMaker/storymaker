@@ -74,11 +74,11 @@ public class APIFunctions {
 		MultipartEntity mpEntity = new MultipartEntity();
 		try{				
 			ContentBody content = new FileBody(new File(path), ptype);
-			mpEntity.addPart("attachment", content);
+			mpEntity.addPart("file", content);
 			mpEntity.addPart("token", new StringBody(token));
 			mpEntity.addPart("user_id", new StringBody(user_id));
 			mpEntity.addPart("title", new StringBody(ptitle));
-			mpEntity.addPart("id", new StringBody(preportid));
+			mpEntity.addPart("article", new StringBody(preportid));
 			mpEntity.addPart("object_type", new StringBody(optype));
 			mpEntity.addPart("api_key", new StringBody( "api_key"));
 			mpEntity.addPart("content", new StringBody("(empty)"));

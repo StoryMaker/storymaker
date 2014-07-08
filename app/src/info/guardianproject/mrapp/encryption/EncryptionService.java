@@ -90,7 +90,7 @@ public class EncryptionService extends Service{
 	private void showNotification(String message) {
 		
 	   	 CharSequence text = message;
-	   	 Notification notification = new Notification(R.drawable.gallery_thumb, text, System.currentTimeMillis());
+	   	 Notification notification = new Notification(R.drawable.ic_secure, text, System.currentTimeMillis());
 	   	 PendingIntent contentIntent = PendingIntent.getActivity(this, 0,
 	   	                new Intent(this, HomePanelsActivity.class), 0);
 	   	notification.setLatestEventInfo(this, "Encryption",

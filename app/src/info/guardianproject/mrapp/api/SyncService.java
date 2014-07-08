@@ -230,43 +230,51 @@ public class SyncService extends Service {
 	 		Project project = mListProjects.get(j);
 	 		
 	 		Media[] mediaList = project.getScenesAsArray()[0].getMediaAsArray();
-	 		Media media = mediaList[0];
-	 		String ppath = media.getPath();
-		 	String ptype = media.getMimeType();
-		 	
-		 	String optype = "video";
-		 	if(ptype.contains("image")){
-		 		optype = "image";
-		 	}else if(ptype.contains("video")){
-		 		optype = "video";
-		 	}else if(ptype.contains("audio")){
-		 		optype = "audio";
-		 	}
-		 	String file = ppath;
-	 		Cipher cipher;
-			try {				
-				cipher = Encryption.createCipher(Cipher.DECRYPT_MODE);
-				Encryption.applyCipher(file, file+"_", cipher);
-			}catch (Exception e) {
-				// TODO Auto-generated catch block
-				Log.e("Encryption error", e.getLocalizedMessage());
-				e.printStackTrace();
-			}
-			//Then delete original file
-			File oldfile = new File(file);
-			oldfile.delete();
-			//Then remove _ on encrypted file
-			File newfile = new File(file+"_");
-			newfile.renameTo(new File(file));
-			
-		 	String ptitle = project.getTitle();
-		 	String pid = String.valueOf(project.getId());
-		 	String preportid = String.valueOf(serverid);
-		 	
-		 	//new createObject().execute();		
-		 	MyTaskParams params = new MyTaskParams(ppath, ptype, optype, ptitle, pid, preportid);
-		 	create_Object = new createObject();
-		 	create_Object.execute(params);	
+	 	
+		 	for (Media media: mediaList){
+
+		 		String ppath = media.getPath();
+			 	String ptype = media.getMimeType();
+			 	
+			 	String optype = "video";
+			 	if(ptype.contains("image")){
+			 		optype = "image";
+			 	}else if(ptype.contains("video")){
+			 		optype = "video";
+			 	}else if(ptype.contains("audio")){
+			 		optype = "audio";
+			 	}
+			 	String file = ppath;
+			 	
+			 	//if encrypted, decrypt before upload
+			 	if(media.getEncrypted()!=0){
+			 	
+			 		Cipher cipher;
+					try {				
+						cipher = Encryption.createCipher(Cipher.DECRYPT_MODE);
+						Encryption.applyCipher(file, file+"_", cipher);
+					}catch (Exception e) {
+						// TODO Auto-generated catch block
+						Log.e("Encryption error", e.getLocalizedMessage());
+						e.printStackTrace();
+					}
+					//Then delete original file
+					File oldfile = new File(file);
+					oldfile.delete();
+					//Then remove _ on encrypted file
+					File newfile = new File(file+"_");
+					newfile.renameTo(new File(file));
+			 	}	
+			 	
+			 	String ptitle = project.getTitle();
+			 	String pid = String.valueOf(project.getId());
+			 	String preportid = String.valueOf(serverid);
+			 	
+			 	//new createObject().execute();		
+			 	MyTaskParams params = new MyTaskParams(ppath, ptype, optype, ptitle, pid, preportid);
+			 	create_Object = new createObject();
+			 	create_Object.execute(params);	
+	 		}
 	 	}
 	}
 	/*
@@ -445,7 +453,7 @@ public class SyncService extends Service {
 				        startMyService.putExtra("filepath", ppath);
 				        startMyService.putExtra("mode", Cipher.ENCRYPT_MODE);
 				        startService(startMyService);
-				        */
+				        
 						String file = ppath;
 				 		Cipher cipher;
 						try {
@@ -461,7 +469,7 @@ public class SyncService extends Service {
 						oldfile.delete();
 						//Then remove _ on encrypted file
 						File newfile = new File(file+"_");
-						newfile.renameTo(new File(file));
+						newfile.renameTo(new File(file));*/
 					}else{
 						//Some error message. Not sure what yet.
 					}
@@ -513,7 +521,7 @@ public class SyncService extends Service {
 				       // }else{
 							//Upload corresponding media files :O
 							//uploadEntities(report.getId(), Integer.parseInt(srid));
-							//uploadMedia(report.getId(), Integer.parseInt(srid));
+							uploadMedia(report.getId(), Integer.parseInt(srid));
 				        //}
 					}else{
 						//Some error message. Not sure what yet.
@@ -593,11 +601,11 @@ public class SyncService extends Service {
             
         }
         protected String doInBackground(String... args) {
-        	/*
+        	
 			SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 	        token = settings.getString("token",null);
 	        user_id = settings.getString("user_id",null);
-	        
+	        /*
 	        if(token==null){
 	        	showNotification("Token expired! Log in with internet and try again!");
 				//Toast.makeText(getApplicationContext(), "Token expired! Login and try syncing again.", Toast.LENGTH_LONG).show();

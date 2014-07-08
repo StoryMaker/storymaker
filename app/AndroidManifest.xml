@@ -3,7 +3,6 @@
     android:installLocation="auto"
     android:versionCode="111"
     android:versionName="0.0.9-build111" >
-   
     <uses-sdk
         android:minSdkVersion="10"
         android:targetSdkVersion="17" />
@@ -241,7 +240,10 @@
     <activity android:name="info.guardianproject.mrapp.facebook.FacebookLogin"/>  
 	<activity android:name="net.hockeyapp.android.UpdateActivity" />
 	
+	<activity android:name="info.guardianproject.mrapp.facebook.UpdateActivity" android:value="Update Profile"/>
+	
 	<service android:name="info.guardianproject.mrapp.api.SyncService" />
+	<service android:name="info.guardianproject.mrapp.export.Export2SDService" />
 	<service android:name="info.guardianproject.mrapp.encryption.EncryptionService" />
 	<service android:name="info.guardianproject.mrapp.encryption.EncryptionBackground" />
     

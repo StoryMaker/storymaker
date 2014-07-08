@@ -295,31 +295,32 @@ public class AddClipsFragment extends Fragment {
         }catch (Exception e) {
             e.printStackTrace();
         }
-        
-        String media_id = String.valueOf(media.getId());
-        
-        boolean isAdded = false; 
-        
-        //Check if media is already encrypted
-        if(media.getEncrypted()==0){
-        	//Check if value is already added 
-        	
-        	//TODO: find faster way to do this
-        	for (int i = 0; i < jsonArray2.length(); i++) {
-                if(jsonArray2.getString(i).equals(media_id)){
-                	isAdded = true;
-                }
-           }
-        }
-        Editor editor = prefs.edit();
-        if(isAdded==false){
-	        //Then add new value
-	        jsonArray2.put(media_id);
-	        editor.putString("eQ", jsonArray2.toString());
+        if(media!=null){
+	        String media_id = String.valueOf(media.getId());
 	        
+	        boolean isAdded = false; 
+	        
+	        //Check if media is already encrypted
+	        if(media.getEncrypted()==0){
+	        	//Check if value is already added 
+	        	
+	        	//TODO: find faster way to do this
+	        	for (int i = 0; i < jsonArray2.length(); i++) {
+	                if(jsonArray2.getString(i).equals(media_id)){
+	                	isAdded = true;
+	                }
+	           }
+	        }
+	        Editor editor = prefs.edit();
+	        if(isAdded==false){
+		        //Then add new value
+		        jsonArray2.put(media_id);
+		        editor.putString("eQ", jsonArray2.toString());
+		        
+	        }
+	        System.out.println(jsonArray2.toString());
+	        editor.commit();
         }
-        System.out.println(jsonArray2.toString());
-        editor.commit();
     }
 
 

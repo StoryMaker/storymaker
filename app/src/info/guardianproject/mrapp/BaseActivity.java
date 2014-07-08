@@ -1,7 +1,7 @@
 package info.guardianproject.mrapp;
 import info.guardianproject.mrapp.facebook.FacebookLogin;
 import info.guardianproject.mrapp.server.LoginActivity;
-import info.guardianproject.mrapp.server.RegisterActivity;
+import info.guardianproject.mrapp.facebook.UpdateActivity;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -202,7 +202,7 @@ public class BaseActivity extends Activity {
         if (item.getItemId() == R.id.profile)
         {	
         	   		
-        	Intent intent = new Intent(getBaseContext(), RegisterActivity.class);
+        	Intent intent = new Intent(getBaseContext(), UpdateActivity.class);
 	        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 	        startActivity(intent);
         }
