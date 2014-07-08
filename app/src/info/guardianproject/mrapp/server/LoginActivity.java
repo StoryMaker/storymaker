@@ -6,6 +6,7 @@ import java.util.Date;
 
 import info.guardianproject.mrapp.AppConstants;
 import info.guardianproject.mrapp.BaseActivity;
+import info.guardianproject.mrapp.PublishFragment;
 import info.guardianproject.mrapp.R;
 import info.guardianproject.mrapp.StoryMakerApp;
 import info.guardianproject.mrapp.model.Auth;
@@ -34,11 +35,18 @@ public class LoginActivity extends BaseActivity implements Runnable
 	private EditText txtUser;
 	private EditText txtPass;
 	
+	private boolean isPublishPending = false;
+	
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // setting default screen to login.xml
         setContentView(R.layout.activity_login);
+        
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+             isPublishPending = extras.getBoolean("isPublishPending");
+        }
         
         viewLogo = (ImageView)findViewById(R.id.logo);
         txtStatus = (TextView)findViewById(R.id.status);
@@ -174,6 +182,11 @@ public class LoginActivity extends BaseActivity implements Runnable
     
     private void loginSuccess ()
     {
+    	if(isPublishPending) {
+    		PublishFragment mPublishFragment = new PublishFragment();
+    		mPublishFragment.continuePublishService();
+    	}
+    	
     	finish();
     }
 }
