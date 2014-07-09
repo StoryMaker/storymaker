@@ -38,13 +38,14 @@ public class EncryptionService extends Service{
           
     }
 	  @Override
-	  public void onStart(Intent intent, int startId) {
-	      super.onStart(intent, startId);
+		public int onStartCommand(Intent intent, int flags, int startId){
+			super.onStartCommand(intent, flags, startId);
 	       Bundle extras = intent.getExtras(); 
 	       file = extras.getString("filepath");
 	       message = "Encryption started...";
 	       showNotification(message);
 	       new encryptFile().execute();
+		return startId;
 	       
 	  }
 	  class encryptFile extends AsyncTask<String, String, String> {
@@ -93,7 +94,7 @@ public class EncryptionService extends Service{
 	   	 Notification notification = new Notification(R.drawable.ic_secure, text, System.currentTimeMillis());
 	   	 PendingIntent contentIntent = PendingIntent.getActivity(this, 0,
 	   	                new Intent(this, HomePanelsActivity.class), 0);
-	   	notification.setLatestEventInfo(this, "Encryption",
+	   	notification.setLatestEventInfo(this, "LP: Encryption",
 	   	      text, contentIntent);
 	   	NotificationManager nm = (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
 			nm.notify("service started", 2, notification);

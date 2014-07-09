@@ -57,25 +57,28 @@ public class Export2SDService extends Service {
           super.onCreate();
           
 	}
-	@SuppressWarnings("deprecation")
-	
 	@Override
-	  public void onStart(Intent intent, int startId) {
-	      super.onStart(intent, startId);
+	public int onStartCommand(Intent intent, int flags, int startId){
+		super.onStartCommand(intent, flags, startId);
+
+		//@Override
+		//public void onStart(Intent intent, int startId) {
+		//super.onStart(intent, startId);
 	       Bundle extras = intent.getExtras(); 
 	       eI = extras.getString("includeExported");
-	       
 	       showNotification("Exporting to SD...");
 	       
 	        pref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-	      	delete_after_export = pref.getString("delete_after_export",null);
+	      	delete_after_export = pref.getString("delete_after_export","0");
 	      	new export2SD().execute();
+	      	
+			return startId;
 	}
 	private void showNotification(String message) {
    	 CharSequence text = message;
    	 Notification notification = new Notification(R.drawable.ic_menu_send, text, System.currentTimeMillis());
    	 PendingIntent contentIntent = PendingIntent.getActivity(this, 0, new Intent(this, HomePanelsActivity.class), 0);
-   	 notification.setLatestEventInfo(this, "Export to SD", text, contentIntent);
+   	 notification.setLatestEventInfo(this, "LP: Export to SD", text, contentIntent);
    	NotificationManager nm = (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
 		nm.notify("service started", 1, notification);
 		}
@@ -210,7 +213,7 @@ public class Export2SDService extends Service {
 											e.printStackTrace();
 										}
 									}
-								 	data += "<object_media>"+path+"</object_media>\n";
+								 	data += "<object_media>"+String.valueOf(report.getId())+"/"+filename+"</object_media>\n";
 									//}
 							 		data += "<object_type>"+media.getMimeType()+"</object_type>\n";
 							 		data += "</object>\n";

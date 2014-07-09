@@ -219,7 +219,7 @@ public class HomePanelsActivity extends BaseActivity implements OnClickListener{
 	    }
     public void onClick(View v) {
         switch (v.getId()) {
-        case R.id.button_sync:
+        case R.id.button_sync:            
         	//check if service is already running
         	//check if encryption is running
         	//check if export is running

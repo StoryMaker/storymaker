@@ -107,7 +107,7 @@ public class SyncService extends Service {
     	 Notification notification = new Notification(R.drawable.ic_menu_upload, text, System.currentTimeMillis());
     	 PendingIntent contentIntent = PendingIntent.getActivity(this, 0,
     	                new Intent(this, HomePanelsActivity.class), 0);
-    	notification.setLatestEventInfo(this, "Sync",
+    	notification.setLatestEventInfo(this, "LP: Sync",
     	      text, contentIntent);
     	NotificationManager nm = (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
 		nm.notify("service started", 0, notification);

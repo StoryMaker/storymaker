@@ -25,9 +25,17 @@
                     android:layout_width="wrap_content"
                     android:layout_height="88dp"
                     android:layout_gravity="center|center"
+                    android:layout_marginBottom="10dp"
                     android:focusable="true"
                     android:focusableInTouchMode="true"
                     android:src="@drawable/logo" />
+
+          <TextView
+              android:id="@+id/textView1"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_gravity="center_horizontal"
+              android:text="@string/strapline" />
           
           <com.facebook.widget.LoginButton
         android:id="@+id/authButton"
