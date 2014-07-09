@@ -7,6 +7,9 @@ import net.sqlcipher.database.SQLiteDatabase;
 import net.sqlcipher.database.SqliteWrapper;
 
 import info.guardianproject.mrapp.db.StoryMakerDB;
+import info.guardianproject.mrapp.publish.PublishController;
+import info.guardianproject.mrapp.publish.PublisherBase;
+import io.scal.secureshareui.controller.SiteController;
 
 import java.util.Date;
 
@@ -17,6 +20,9 @@ import java.util.Date;
  */
 public class Job extends Model {
     private final String TAG = "Job";
+
+    public static final String TYPE_UPLOAD = "upload";
+    public static final String TYPE_RENDER = "render";
     
 	protected int projectId; 			// fk to the Project this job is connected to
     protected int publishJobId; 		// fk to PublishJob, if it's -1, this is itself a PublishJob
@@ -351,6 +357,14 @@ public class Job extends Model {
 	public String getSite() {
 		return site;
 	}
+	
+	public PublisherBase getPublisher(PublishController pc) {
+	    return pc.getPublisher(getPublishJob());
+	}
+	
+	public Class getPublisherClass() {
+	    return PublishController.getPublisherClass(site);
+	}
 
 	public void setSite(String site) {
 		this.site = site;
@@ -368,14 +382,27 @@ public class Job extends Model {
 		this.spec = spec;
 	}
 	
+	/**
+	 * 
+	 * @param string, upload or render
+	 * @return
+	 */
 	public boolean isType(String string) {
 	    return type.equals(string);
 	}
 
+	/**
+	 * 
+	 * @return type is upload or render
+	 */
 	public String getType() {
 		return type;
 	}
 
+	/**
+	 * 
+	 * @param type is upload or render
+	 */
 	public void setType(String type) {
 		this.type = type;
 	}

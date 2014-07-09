@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
+import java.util.StringTokenizer;
 
 import net.sqlcipher.database.SQLiteDatabase;
 
@@ -488,6 +489,37 @@ public class Project extends Model {
     public boolean isTemplateStory() {
         return (templatePath != null) && !templatePath.equals(""); 
     }
+    
+    public String[] getCategories() {
+        // only one item can be selected
+        ArrayList<String> alCats = new ArrayList<String>();
+
+        alCats.add(getSection());
+        alCats.add(getLocation());
+        
+//        // now support location with comma in it and set each one as a place
+//        // category
+//        StringTokenizer st = new StringTokenizer(getLocation());
+//        while (st.hasMoreTokens()) {
+//            alCats.add(st.nextToken());
+//        }
+
+        // now add story type to categories: event, breaking-news, issue,
+        // feature.
+        String catTag = getTemplateTag();
+        if (catTag != null) {
+            alCats.add(catTag);
+        }
+
+        String[] cattmp = new String[alCats.size()];
+        int i = 0;
+        for (String catstring : alCats) {
+            cattmp[i++] = catstring;
+        }
+
+        return cattmp;
+    }
+    
     /***** getters and setters *****/
 
     /**

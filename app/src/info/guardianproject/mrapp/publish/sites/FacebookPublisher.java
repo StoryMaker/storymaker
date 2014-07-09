@@ -3,6 +3,7 @@ package info.guardianproject.mrapp.publish.sites;
 import info.guardianproject.mrapp.model.Auth;
 import info.guardianproject.mrapp.model.Job;
 import info.guardianproject.mrapp.model.JobTable;
+import info.guardianproject.mrapp.model.Project;
 import info.guardianproject.mrapp.model.PublishJob;
 import info.guardianproject.mrapp.publish.PublishController;
 import info.guardianproject.mrapp.publish.PublisherBase;
@@ -38,22 +39,20 @@ public class FacebookPublisher extends PublisherBase {
         Log.d(TAG, "jobSucceeded: " + job);
         if (job.isType(JobTable.TYPE_RENDER)) {
             // since the user must now initiate upload, we just stop this publishjob now and wait
-            mController.publishJobSucceeded(mPublishJob, job);
+//            mController.jobSucceeded(job, job.getResult());
         } else if (job.isType(JobTable.TYPE_UPLOAD)) {
             if (job.isSite(Auth.SITE_FACEBOOK)) {
-                mPublishJob.setFinishedAtNow();
-                mPublishJob.save();
-                mController.publishJobSucceeded(mPublishJob, job);
+                if (mPublishJob.getPublishToStoryMaker()) {
+                    publishToStoryMaker();
+                }
             }
         }
 	}
 	
-	public void jobFailed(Job job, int errorCode, String errorMessage) {
-        Log.d(TAG, "jobFailed: " + job);
-        mController.publishJobFailed(mPublishJob, job, errorCode, errorMessage);
-	}
-	
-	public void jobProgress(Job job, float progress, String message) {
-	    mController.publishJobProgress(mPublishJob, job, progress, message);
+	public String getEmbed(Job job) {
+	    return "[FB " + job.getResult() + "]";
+//	    return null; // 
+	    // https://developers.facebook.com/docs/wordpress/embedded-posts/
+//	    return "[facebook_embedded_post href=\"https://www.facebook.com/WordPress/posts/" + "10151630721717911" + "\"]";
 	}
 }

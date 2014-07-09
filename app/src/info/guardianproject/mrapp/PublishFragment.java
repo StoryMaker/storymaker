@@ -136,6 +136,7 @@ public class PublishFragment extends Fragment implements PublishListener {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     	initFragment ();
+//    	purgePublishTables(); // FIXME for debuging, don't purgePublishTables on load!
     	int layout = getArguments().getInt("layout");
         mView = inflater.inflate(layout, null);
         if (layout == R.layout.fragment_complete_story) {
@@ -218,8 +219,10 @@ public class PublishFragment extends Fragment implements PublishListener {
     public void onResume() {
         super.onResume();
         IntentFilter f = new IntentFilter();
-        f.addAction(PublishService.ACTION_SUCCESS);
-        f.addAction(PublishService.ACTION_FAILURE);
+        f.addAction(PublishService.ACTION_PUBLISH_SUCCESS);
+        f.addAction(PublishService.ACTION_PUBLISH_FAILURE);
+        f.addAction(PublishService.ACTION_JOB_SUCCESS);
+        f.addAction(PublishService.ACTION_JOB_FAILURE);
         f.addAction(PublishService.ACTION_PROGRESS);
         getActivity().registerReceiver(publishReceiver, f);
     }
@@ -237,21 +240,29 @@ public class PublishFragment extends Fragment implements PublishListener {
 
             if (intent.hasExtra(PublishService.INTENT_EXTRA_PUBLISH_JOB_ID)) {
                 int publishJobId = intent.getIntExtra(PublishService.INTENT_EXTRA_PUBLISH_JOB_ID, -1);
-                int jobId = intent.getIntExtra(PublishService.INTENT_EXTRA_JOB_ID, -1);
                 if (publishJobId != -1) {
                     PublishJob publishJob = (PublishJob) (new PublishJobTable()).get(getActivity().getApplicationContext(), publishJobId);
-                    Job job = (Job) (new JobTable()).get(getActivity().getApplicationContext(), jobId); // FIXME should we check for -1?
             
-                    if (intent.getAction().equals(PublishService.ACTION_SUCCESS)) {
-                        publishSucceeded(publishJob, job);
-                    } else if (intent.getAction().equals(PublishService.ACTION_FAILURE)) {
+                    if (intent.getAction().equals(PublishService.ACTION_PUBLISH_SUCCESS)) {
+                        publishSucceeded(publishJob);
+                    } else if (intent.getAction().equals(PublishService.ACTION_PUBLISH_FAILURE)) {
                         int errorCode = intent.getIntExtra(PublishService.INTENT_EXTRA_ERROR_CODE, -1);
                         String errorMessage = intent.getStringExtra(PublishService.INTENT_EXTRA_ERROR_MESSAGE);
-                        publishFailed(publishJob, job, errorCode, errorMessage);
+                        publishFailed(publishJob, errorCode, errorMessage);
+                    } else if (intent.getAction().equals(PublishService.ACTION_JOB_SUCCESS)) {
+                        int jobId = intent.getIntExtra(PublishService.INTENT_EXTRA_JOB_ID, -1);
+                        Job job = (Job) (new JobTable()).get(getActivity().getApplicationContext(), jobId); // FIXME should we check for -1?
+                        jobSucceeded(job);
+                    } else if (intent.getAction().equals(PublishService.ACTION_JOB_FAILURE)) {
+                        int jobId = intent.getIntExtra(PublishService.INTENT_EXTRA_JOB_ID, -1);
+                        Job job = (Job) (new JobTable()).get(getActivity().getApplicationContext(), jobId); // FIXME should we check for -1?
+                        int errorCode = intent.getIntExtra(PublishService.INTENT_EXTRA_ERROR_CODE, -1);
+                        String errorMessage = intent.getStringExtra(PublishService.INTENT_EXTRA_ERROR_MESSAGE);
+                        jobFailed(job, errorCode, errorMessage);
                     } else if (intent.getAction().equals(PublishService.ACTION_PROGRESS)) {
                         float progress = intent.getFloatExtra(PublishService.INTENT_EXTRA_PROGRESS, -1);
                         String message = intent.getStringExtra(PublishService.INTENT_EXTRA_PROGRESS_MESSAGE);
-                        publishProgress(publishJob, job, progress, message);
+                        publishProgress(publishJob, progress, message);
                     }
                 }
             }
@@ -806,7 +817,7 @@ public class PublishFragment extends Fragment implements PublishListener {
             }
         } else {
             Log.d("PublishFragment", "Choose Accounts dialog canceled");
-            Utils.toastOnUiThread(mActivity, "Choose Accounts dialog canceled!"); // FIXME move to strings.xml
+//            Utils.toastOnUiThread(mActivity, "Choose Accounts dialog canceled!"); // FIXME move to strings.xml
             showPlayAndUpload(true);
         }
     }
@@ -833,48 +844,10 @@ public class PublishFragment extends Fragment implements PublishListener {
 	
 
     @Override
-    public void publishSucceeded(PublishJob publishJob, Job job) {
-        if (job.getType().equals(JobTable.TYPE_RENDER)) {
-            if (mPlaying) {
-                showUploadSpinner(false); 
-                showPlaySpinner(false);
-                
-                String path = publishJob.getLastRenderFilePath(); // FIXME this can be null
-                if (path != null) { // FIXME this won't work when a upload job succeeds
-                    mFileLastExport = new File(path);
-                    Handler handlerTimer = new Handler();
-                    mProgressText.setText("Complete!");
-                    handlerTimer.postDelayed(new Runnable(){
-                        public void run() {
-                            showPlayAndUpload(true);
-                        }
-                    }, 200);
-                } else {
-                    Log.d(TAG, "last rendered path is empty!");
-                }                
-                
-                if (mFileLastExport != null && mFileLastExport.exists()) { // FIXME replace this with a check to make sure render is suitable
-                    mActivity.mMPM.mMediaHelper.playMedia(mFileLastExport, null);
-                } 
-                mPlaying = false;
-            } if (mUploading) { 
-                startUpload(mActivity.mMPM.mProject, mSiteKeys, publishJob.getUseTor(), publishJob.getPublishToStoryMaker());
-            }
-        } else if (job.getType().equals(JobTable.TYPE_UPLOAD)) {
+    public void publishSucceeded(PublishJob publishJob) {
             showUploadSpinner(false); 
             showPlaySpinner(false);
             Utils.toastOnUiThread(mActivity, "Publish succeeded!");
-        }
-
-        
-//        if (job != null) {
-//            
-//        }
-        if (mPlaying) {
-        } else if (mUploading) {
-            
-        }
-//    }
         
 ////        if (publishJob.isFinished()) {
 //            showUploadSpinner(false); // FIXME we should detect which stage of the job just finished
@@ -909,17 +882,57 @@ public class PublishFragment extends Fragment implements PublishListener {
     }
     
     @Override
-    public void publishFailed(PublishJob publishJob, Job job, int errorCode, String errorMessage) {
+    public void publishFailed(PublishJob publishJob, int errorCode, String errorMessage) {
         Utils.toastOnUiThread(getActivity(), "Publish failed :'( ... " + publishJob); // FIXME move to strings.xml
         showError(errorCode, errorMessage);
     }
 
     @Override
-    public void publishProgress(PublishJob publishJob, Job job, float progress, String message) {
+    public void publishProgress(PublishJob publishJob, float progress, String message) {
 //        Utils.toastOnUiThread(getActivity(), "Progress at " + (progress / 10000) + "%: " + message);
         int prog = Math.round(progress * 100);
         String txt = message + ((prog > 0) ? " " + prog + "%" : "");
         mProgressText.setText(txt);
         Log.d(TAG, txt);
+    }
+
+    @Override
+    public void jobSucceeded(Job job) {
+        PublishJob publishJob = job.getPublishJob();
+        if (job.getType().equals(JobTable.TYPE_RENDER)) {
+            if (mPlaying) {
+                showUploadSpinner(false); 
+                showPlaySpinner(false);
+                
+                String path = publishJob.getLastRenderFilePath(); // FIXME this can be null
+                if (path != null) { // FIXME this won't work when a upload job succeeds
+                    mFileLastExport = new File(path);
+                    Handler handlerTimer = new Handler();
+                    mProgressText.setText("Complete!");
+                    handlerTimer.postDelayed(new Runnable(){
+                        public void run() {
+                            showPlayAndUpload(true);
+                        }
+                    }, 200);
+                } else {
+                    Log.d(TAG, "last rendered path is empty!");
+                }                
+                
+                if (mFileLastExport != null && mFileLastExport.exists()) { // FIXME replace this with a check to make sure render is suitable
+                    mActivity.mMPM.mMediaHelper.playMedia(mFileLastExport, null);
+                } 
+                mPlaying = false;
+            } if (mUploading) { 
+                startUpload(mActivity.mMPM.mProject, mSiteKeys, publishJob.getUseTor(), publishJob.getPublishToStoryMaker());
+            }
+        } else if (job.getType().equals(JobTable.TYPE_UPLOAD)) {
+            // FIXME ???
+        }
+    }
+
+    @Override
+    public void jobFailed(Job job, int errorCode, String errorMessage) {
+        // TODO Auto-generated method stub
+        
     }
 }

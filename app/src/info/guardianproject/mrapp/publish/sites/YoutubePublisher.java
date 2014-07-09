@@ -41,5 +41,9 @@ public class YoutubePublisher extends PublisherBase {
         // TODO Auto-generated method stub
 
     }
+    
+    public String getEmbed(Job job) {
+        return null; // FIXME implement getEmbed
+    }
 
 }
