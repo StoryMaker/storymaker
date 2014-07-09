@@ -233,11 +233,11 @@ public class PublishJob extends Model {
 //        }
     }
     
-    // FIXME getLastRenderFilePath needs to not just assume the 0th is the last?
+    // FIXME getLastRenderFilePath
     public String getLastRenderFilePath() {
         String[] paths = getRenderedFilePaths();
         if (paths.length > 0) {
-            return paths[0];
+            return paths[paths.length-1];
         }
         return null;
     }

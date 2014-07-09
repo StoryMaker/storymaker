@@ -97,11 +97,12 @@ public class JobTable extends Table {
      * @param date
      * @return
      */
-    public Job getMatchingFinishdJob(Context context, String type, String spec, Date date) { // FIXME this isn't very optimized
+    public Job getMatchingFinishedJob(Context context, int projectId, String type, String spec, Date date) { // FIXME this isn't very optimized
         ArrayList<Job> jobs = (ArrayList<Job>) getAllAsList(context); // TODO need to make this method for reals
         if (jobs != null) {
             for (Job job: jobs) {
                 if ((job.getFinishedAt() != null) 
+                        && job.getProjectId() == projectId
                         && job.getType().equals(type) 
                         && job.getSpec().equals(spec) 
                         && job.getFinishedAt().after(date)) {

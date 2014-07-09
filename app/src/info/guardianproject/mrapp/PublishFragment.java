@@ -176,7 +176,7 @@ public class PublishFragment extends Fragment implements PublishListener {
 			}
 			
 			// FIXME figure out what spec we need to try to fetch for preview... could be audio or video
-			Job job = (new JobTable()).getMatchingFinishdJob(getActivity(), "render", "video", mActivity.mMPM.mProject.getUpdatedAt());
+			Job job = (new JobTable()).getMatchingFinishedJob(getActivity(), mActivity.mMPM.mProject.getId(), "render", "video", mActivity.mMPM.mProject.getUpdatedAt());
 			if (job != null) {
 			    mFileLastExport = new File(job.getResult());
 			}
@@ -384,12 +384,12 @@ public class PublishFragment extends Fragment implements PublishListener {
         mProgressText.setTextColor(getResources().getColor(R.color.red));
     }
     
-    private void purgePublishTables() {
-        net.sqlcipher.database.SQLiteDatabase db = new StoryMakerDB(getActivity().getBaseContext()).getWritableDatabase("foo");
-        (new PublishJobTable(db)).debugPurgeTable();
-        (new JobTable(db)).debugPurgeTable();
-        db.close();
-    }
+//    private void purgePublishTables() {
+//        net.sqlcipher.database.SQLiteDatabase db = new StoryMakerDB(getActivity().getBaseContext()).getWritableDatabase("foo");
+//        (new PublishJobTable(db)).debugPurgeTable();
+//        (new JobTable(db)).debugPurgeTable();
+//        db.close();
+//    }
     
 //    private String setUploadAccount() {
 //       
