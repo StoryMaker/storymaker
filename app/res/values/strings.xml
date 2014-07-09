@@ -31,6 +31,10 @@
     <string name="prefs_encryption">Encrypt Media</string>
     <string name="prefs_encryption_summary">Encrypted media will not be viewable outside of the application without decryption</string>
     <string name="strapline">Africa’s One-stop Social Publishing App</string>
+    <string name="publish_single">Publish</string>
+    <string name="publish_dialog_alert">Do you wish to publish this now?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
     <!-- menus -->
     <string name="menu_new_project">New</string>
     <string name="menu_projects">Stories</string>

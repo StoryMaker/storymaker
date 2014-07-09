@@ -27,6 +27,7 @@ import android.app.Service;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
+import android.os.Bundle;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
 import android.util.Log;
@@ -60,6 +61,7 @@ public class SyncService extends Service {
     Timer timer;
     SharedPreferences prefs;
     String delete_after_sync;
+    int rid;
     @Override
     public IBinder onBind(Intent arg0) {
           return null;
@@ -67,10 +69,22 @@ public class SyncService extends Service {
     @Override
     public void onCreate() {
           super.onCreate();
-  	    
-          showNotification("Syncing...");
-          cd = new ConnectionDetector(getApplicationContext());
-        	mListReports = Report.getAllAsList(getApplicationContext());
+    }
+    @Override
+	public int onStartCommand(Intent intent, int flags, int startId){
+		super.onStartCommand(intent, flags, startId);
+			
+			showNotification("Syncing...");
+			cd = new ConnectionDetector(getApplicationContext());
+        
+	       Bundle extras = intent.getExtras();
+	       if(intent.hasExtra("rid")){
+	    	   rid = extras.getInt("rid");
+	    	   mListReports.add(Report.get(getApplicationContext(), rid));
+	       }else{
+	    	   mListReports = Report.getAllAsList(getApplicationContext());
+	       }
+          
 
         //get Internet status
         //  isInternetPresent = cd.isConnectingToInternet();
@@ -93,7 +107,9 @@ public class SyncService extends Service {
   		        { 
   		        	checkTasks();
   		        } 
-  		    }, delay, period); 
+  		    }, delay, period);
+  		
+		return startId; 
           
     }
     

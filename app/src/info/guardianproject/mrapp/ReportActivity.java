@@ -1,5 +1,6 @@
 package info.guardianproject.mrapp;
 
+import info.guardianproject.mrapp.api.SyncService;
 import info.guardianproject.mrapp.location.GPSTracker;
 import info.guardianproject.mrapp.model.Media;
 import info.guardianproject.mrapp.model.Project;
@@ -100,6 +101,7 @@ OnItemLongClickListener{
     private MyAdapter adapter;
     private Dialog dialog;
     private Dialog dialog_save;
+    private Dialog dialog_publish;
     
     public boolean new_report = false;
     @Override
@@ -364,7 +366,32 @@ OnItemLongClickListener{
     	
     }
     public void report_close(){
-    	
+    	dialog_publish = new Dialog(ReportActivity.this);
+    	dialog_publish.requestWindowFeature(Window.FEATURE_NO_TITLE);
+    	dialog_publish.setContentView(R.layout.dialog_publish);
+    	dialog_publish.findViewById(R.id.button_publish).setOnClickListener(new OnClickListener(){
+			@Override
+			public void onClick(View v) {
+				//TODO: check if sync or encrypt is running
+				Intent i = new Intent(ReportActivity.this,SyncService.class);
+				i.putExtra("rid", rid);
+  	        	startService(i);
+  	        	
+            	do_report_close();
+				dialog_publish.dismiss();
+			}        	
+        });
+    	dialog_publish.findViewById(R.id.button_skip).setOnClickListener(new OnClickListener(){
+			@Override
+			public void onClick(View v) {
+            	do_report_close();
+				dialog_publish.dismiss();
+			}        	
+        });
+    	dialog_publish.show();
+    }
+
+   public void do_report_close(){ 	
     	//Hide keyboard
         InputMethodManager inputManager = (InputMethodManager)this.getSystemService(Context.INPUT_METHOD_SERVICE); 
         inputManager.hideSoftInputFromWindow(this.getCurrentFocus().getWindowToken(),      
@@ -413,16 +440,16 @@ OnItemLongClickListener{
 	}
     public void setSectors(){
     	SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-    	try {
-    	    JSONArray jsonArray2 = new JSONArray(prefs.getString("sectors", "[]"));
-    	    ArrayList<String> list=new ArrayList<String>();
-    	    list.add("Select Sector");
-			for(int i=0;i<jsonArray2.length();i++){
-				list.add(jsonArray2.getString(i));
-			}
-			ArrayAdapter<String> spinnerMenu = new ArrayAdapter<String>(getApplicationContext(),  R.layout.spinner_report_new, list);
-			spinnerSector.setAdapter(spinnerMenu);
-    	} catch (Exception e) {
+	    	try {
+	    	    JSONArray jsonArray2 = new JSONArray(prefs.getString("sectors", "[]"));
+	    	    ArrayList<String> list=new ArrayList<String>();
+	    	    list.add("Select Sector");
+				for(int i=0;i<jsonArray2.length();i++){
+					list.add(jsonArray2.getString(i));
+				}
+				ArrayAdapter<String> spinnerMenu = new ArrayAdapter<String>(getApplicationContext(),  R.layout.spinner_report_new, list);
+				spinnerSector.setAdapter(spinnerMenu);
+	    	} catch (Exception e) {
 	    	    e.printStackTrace();
 	    	}
     }
@@ -538,16 +565,9 @@ OnItemLongClickListener{
         	if(pLocation.equals("0, 0")){
         		Toast.makeText(getApplicationContext(), "Trouble finding location. Try again later!", Toast.LENGTH_LONG).show();
         	}else{
-	    		//Hide keyboard
-	            InputMethodManager inputManager = (InputMethodManager)this.getSystemService(Context.INPUT_METHOD_SERVICE); 
-	            inputManager.hideSoftInputFromWindow(this.getCurrentFocus().getWindowToken(),      
-	            		    InputMethodManager.HIDE_NOT_ALWAYS);
-	            
+	    		
 	        	Toast.makeText(getBaseContext(), String.valueOf(rid)+" Updated successfully!", Toast.LENGTH_LONG).show();
-	        	Intent i = new Intent(getApplicationContext(), HomePanelsActivity.class);
-	        	i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-	        	startActivity(i);
-	        	finish(); 
+	        	report_close();
         	}      	
         }
          
@@ -561,14 +581,14 @@ OnItemLongClickListener{
             		if(something_changed()){
             			showSaveAlert();
             		}else{
-            			report_close();
+            			do_report_close();
             		}
             	}else{
             		//old report
             		if(something_changed_db()){
             			showSaveAlert();
             		}else{
-            			report_close();
+            			do_report_close();
             		}
             	}
             	   
