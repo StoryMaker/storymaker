@@ -22,6 +22,8 @@ import java.util.zip.ZipOutputStream;
 
 import javax.crypto.Cipher;
 
+import com.google.common.io.Files;
+
 import android.R;
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -55,6 +57,8 @@ public class Export2SDService extends Service {
           super.onCreate();
           
 	}
+	@SuppressWarnings("deprecation")
+	
 	@Override
 	  public void onStart(Intent intent, int startId) {
 	      super.onStart(intent, startId);
@@ -70,10 +74,8 @@ public class Export2SDService extends Service {
 	private void showNotification(String message) {
    	 CharSequence text = message;
    	 Notification notification = new Notification(R.drawable.ic_menu_send, text, System.currentTimeMillis());
-   	 PendingIntent contentIntent = PendingIntent.getActivity(this, 0,
-   	                new Intent(this, HomePanelsActivity.class), 0);
-   	notification.setLatestEventInfo(this, "Export to SD",
-   	      text, contentIntent);
+   	 PendingIntent contentIntent = PendingIntent.getActivity(this, 0, new Intent(this, HomePanelsActivity.class), 0);
+   	 notification.setLatestEventInfo(this, "Export to SD", text, contentIntent);
    	NotificationManager nm = (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
 		nm.notify("service started", 1, notification);
 		}
@@ -116,7 +118,7 @@ public class Export2SDService extends Service {
 			newFolder.mkdirs();
 						
 			ext = String.valueOf(Environment.getExternalStorageDirectory());
-		 	ext += "/"+AppConstants.TAG;
+		 	//ext += "/"+AppConstants.TAG;
 		 	
 			//Begin "XML" file
 		 	data += "<?xml version='1.0' encoding='UTF-8'?>\n";
@@ -166,38 +168,55 @@ public class Export2SDService extends Service {
 					 	mListProjects = Project.getAllAsList(getApplicationContext(), report.getId());
 					 	for (int j = 0; j < mListProjects.size(); j++) {
 					 		Project project = mListProjects.get(j);
-						 	data += "<object>\n";
-						 	data += "<object_id>"+project.getId()+"</object_id>\n";
-						 	data += "<object_title>"+project.getTitle()+"</object_title>\n";
+						 	
 						 	
 						 	Log.d("I'm here", "I'm here - 1");
 						 	Media[] mediaList = project.getScenesAsArray()[0].getMediaAsArray();
 						 	for (Media media: mediaList){
-						 		String path = media.getPath();
-							 	Log.d("I'm here", "I'm here " + path);
-
-						 		String file = path;
 						 		
-						 		path = path.replace(ext, "");
-								String outfile = newFolder.getPath().toString()+path;
-								
-						 		//Decrypt file if encrypted
-								if(media.getEncrypted()!=0){
-							 		Cipher cipher;
-									try {
-										cipher = Encryption.createCipher(Cipher.DECRYPT_MODE);
-										Encryption.applyCipher(file, outfile, cipher);
-									}catch (Exception e) {
-										// TODO Auto-generated catch block
-										Log.e("Encryption error", e.getLocalizedMessage());
-										e.printStackTrace();
+						 		if(media!=null){
+							 		data += "<object>\n";
+								 	data += "<object_id>"+media.getId()+"</object_id>\n";
+								 	data += "<object_title>"+project.getTitle()+"</object_title>\n";
+								 	
+							 		String path = media.getPath();
+								 	Log.d("I'm here", "I'm here " + path);
+	
+							 		String file = path;
+							 		
+							 		String filename = (new File(path)).getName();
+							 		
+									String outfile = rFolder.getPath().toString()+ "/" +filename;
+									
+									Log.d("out, in", "out:" + outfile + " in: " + file);
+									
+							 		//Decrypt file if encrypted
+									if(media.getEncrypted()!=0){
+								 		Cipher cipher;
+										try {
+											cipher = Encryption.createCipher(Cipher.DECRYPT_MODE);
+											Encryption.applyCipher(file, outfile, cipher);
+										}catch (Exception e) {
+											// TODO Auto-generated catch block
+											Log.e("Encryption error", e.getLocalizedMessage());
+											e.printStackTrace();
+										}
+									}else{
+										//copy file to new destination
+										try {
+											Files.copy(new File(file), new File(outfile));
+										} catch (IOException e) {
+											// TODO Auto-generated catch block
+											e.printStackTrace();
+										}
 									}
-								}	
-							 	data += "<object_media>"+path+"</object_media>\n";
-								//}
-						 		data += "<object_type>"+media.getMimeType()+"</object_type>\n";
+								 	data += "<object_media>"+path+"</object_media>\n";
+									//}
+							 		data += "<object_type>"+media.getMimeType()+"</object_type>\n";
+							 		data += "</object>\n";
+						 		}
 						 	}
-							data += "</object>\n";
+							
 					 	}
 					 	data += "</report_objects>\n";
 					 	data += "</report>\n";
@@ -352,12 +371,16 @@ public class Export2SDService extends Service {
 	public File getSD(){
 		File extStorage = null;
 		
-		if((new File("/mnt/external_sd/")).exists()){
-			extStorage = new File("/mnt/external_sd/");
-		}else if((new File("/mnt/extSdCard/")).exists()){
-			extStorage = new File("/mnt/extSdCard/");
-		}else{
+		if(android.os.Build.VERSION.SDK_INT >= 19){
 			extStorage = Environment.getExternalStorageDirectory();
+		}else{
+			if((new File("/mnt/external_sd/")).exists()){
+				extStorage = new File("/mnt/external_sd/");
+			}else if((new File("/mnt/extSdCard/")).exists()){
+				extStorage = new File("/mnt/extSdCard/");
+			}else{
+				extStorage = Environment.getExternalStorageDirectory();
+			}
 		}
 		
 		return extStorage;
