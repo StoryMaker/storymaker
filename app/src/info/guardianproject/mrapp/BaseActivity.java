@@ -199,6 +199,13 @@ public class BaseActivity extends Activity {
 	        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 	        startActivity(intent);
         }
+        if (item.getItemId() == R.id.about)
+        {	
+        	   		
+        	Intent intent = new Intent(getBaseContext(), AboutActivity.class);
+	        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+	        startActivity(intent);
+        }
         if (item.getItemId() == R.id.profile)
         {	
         	   		

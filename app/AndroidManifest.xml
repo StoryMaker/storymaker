@@ -242,7 +242,7 @@
 	<activity android:name="net.hockeyapp.android.UpdateActivity" />
 	
 	<activity android:name="info.guardianproject.mrapp.facebook.UpdateActivity" android:value="Update Profile"/>
-	
+	<activity android:name="info.guardianproject.mrapp.AboutActivity" android:label="About" />
 	<service android:name="info.guardianproject.mrapp.api.SyncService" />
 	<service android:name="info.guardianproject.mrapp.export.Export2SDService" />
 	<service android:name="info.guardianproject.mrapp.encryption.EncryptionService" />

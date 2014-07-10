@@ -10,6 +10,10 @@
                   android:icon="@drawable/home"
                   android:title="Home"/>
             
+            <item android:id="@+id/about"
+                  android:icon="@drawable/profile"
+                  android:title="About"/>
+            
             <item android:id="@+id/profile"
                   android:icon="@drawable/profile"
                   android:title="Edit Profile"/>
