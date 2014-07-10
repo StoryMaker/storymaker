@@ -30,6 +30,10 @@ public class AboutActivity extends BaseActivity{
 			
 	        MyCard androidViewsCard = new MyCard(title, desc);
 			mCardView.addCard(androidViewsCard);
+			
+			MyCard androidViewsCard2 = new MyCard(title, desc);
+			mCardView.addCard(androidViewsCard2);
+			
 			mCardView.refresh();
 	  }
 

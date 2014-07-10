@@ -1,29 +1,29 @@
 package info.guardianproject.mrapp;
 
+import info.guardianproject.mrapp.api.SyncService;
+import info.guardianproject.mrapp.encryption.EncryptionService;
+import info.guardianproject.mrapp.export.Export2SDService;
 import info.guardianproject.mrapp.model.Media;
 import info.guardianproject.mrapp.model.Project;
 import info.guardianproject.mrapp.model.Report;
+import info.guardianproject.mrapp.ui.MyCard;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import javax.crypto.Cipher;
-
-import org.holoeverywhere.app.AlertDialog;
 import org.holoeverywhere.widget.Toast;
-import org.json.JSONArray;
 
-import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
+import com.fima.cardsui.views.CardUI;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.ActivityManager;
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.app.ActivityManager.RunningServiceInfo;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
@@ -35,8 +35,6 @@ import android.os.Environment;
 import android.os.Handler;
 import android.os.Looper;
 import android.preference.PreferenceManager;
-import android.support.v4.app.NavUtils;
-import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -45,23 +43,36 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 
-public class ReportsActivity extends BaseActivity {
-	ListView mListView;
+public class ReportsActivity extends BaseActivity implements OnClickListener{
 	private ArrayList<Report> mListReports;
 	private ReportArrayAdapter aaReports;
 	ProgressDialog pDialog;
 	getThumbnail get_thumbnail=null;
+    RelativeLayout load_new_report;
+    RelativeLayout load_sync;
+
+    private Dialog dialog;
+    
+    //Connection detector class
+    ConnectionDetector cd;
+    //flag for Internet connection status
+    Boolean isInternetPresent = false;
+    private CardUI mCardView;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_projects);
-        
+        setContentView(R.layout.activity_reports);
+        cd = new ConnectionDetector(getApplicationContext());
+
         // action bar stuff
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
          
@@ -70,15 +81,43 @@ public class ReportsActivity extends BaseActivity {
 
         //TextView title2 = (TextView) getWindow().getDecorView().findViewById(getResources().getIdentifier("action_bar_title", "id", "android"));
         //title2.setTextColor(getResources().getColor(R.color.soft_purple));
-	     
+        load_new_report = (RelativeLayout)findViewById(R.id.load_new_report);
+        load_new_report.setOnClickListener(new View.OnClickListener() {
+
+			public void onClick(View view) {
+				Intent i = new Intent(getApplicationContext(),ReportActivity.class);
+				i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+				startActivity(i);
+				
+			}
+		});  
         
-        mListView = (ListView)findViewById(R.id.projectslist);
-        /*pDialog = new ProgressDialog(ReportsActivity.this);
-		pDialog.setMessage("Getting thumbnails...");
-		pDialog.setCancelable(false);
-		pDialog.show(); 
+        load_sync = (RelativeLayout)findViewById(R.id.load_sync_r);
+        load_sync.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				
+	            dialog = new Dialog(ReportsActivity.this);
+	            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                dialog.setContentView(R.layout.dialog_sync);
+                dialog.findViewById(R.id.button_sync).setOnClickListener(
+                        ReportsActivity.this);
+                dialog.findViewById(R.id.button_export).setOnClickListener(
+                        ReportsActivity.this);
+                dialog.findViewById(R.id.checkBox1).setOnClickListener(
+                        ReportsActivity.this);
+                dialog.show();
+                
+			}
+		});
         
-        */
+        
+       //init CardView
+		mCardView = (CardUI) findViewById(R.id.cardsview);
+		mCardView.setSwipeable(false);
+        
+        
         //Create decryption folder
         File mThumbsDir = new File(Environment.getExternalStorageDirectory(), AppConstants.TAG+"/decrypts");
 	    if (!mThumbsDir.exists()) {
@@ -89,7 +128,7 @@ public class ReportsActivity extends BaseActivity {
 	    	DeleteRecursive(mThumbsDir);
 	    }
 	    
-        initListView(mListView);
+       
         
         Toast.makeText(getApplicationContext(), "Thumbnails might take a while to display", Toast.LENGTH_LONG).show();
         
@@ -113,7 +152,90 @@ public class ReportsActivity extends BaseActivity {
 		             }
 		        } 
 		    }, delay, period); 
-		
+				
+		refreshReports();
+    }
+    private boolean isServiceRunning(Class<?> cls) {
+        ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+        for (RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
+            if (cls.getName().equals(service.service.getClassName())) {
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    public boolean isEncryptionRunning() {
+		SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+			       
+        String encryption_running = settings.getString("encryption_running",null);
+        
+	        if (encryption_running == null){
+	        	return false;
+	        }else if(encryption_running.equals("end")){
+	        	return false;
+	        }else{
+	        	return true;
+	        }
+	      
+	    }
+    public void onClick(View v) {
+        switch (v.getId()) {
+        case R.id.button_sync:            
+        	//check if service is already running
+        	//check if encryption is running
+        	//check if export is running
+        	if(isServiceRunning(SyncService.class)){
+  	          	Toast.makeText(getBaseContext(), "Syncing is already started!", Toast.LENGTH_LONG).show();
+        	}else if (isServiceRunning(EncryptionService.class)){
+  	          	Toast.makeText(getBaseContext(), "Please wait for encryption to finish!", Toast.LENGTH_LONG).show();
+        	}else if(isServiceRunning(Export2SDService.class)){
+  	          	Toast.makeText(getBaseContext(), "Please wait for exporting to finish!", Toast.LENGTH_LONG).show();
+        	}else{
+	        	isInternetPresent = cd.isConnectingToInternet();
+	  	       	if(!isInternetPresent){
+	  	          	Toast.makeText(getBaseContext(), "You have no connection!", Toast.LENGTH_LONG).show();
+	  	        }else{
+	  	        	dialog.dismiss();
+	  	        	startService(new Intent(ReportsActivity.this,SyncService.class));
+	  	        }   
+        	}
+        	//Intent i = new Intent(getApplicationContext(),SyncActivity.class);
+			//i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+			//startActivity(i);
+			
+            break;
+            
+        case R.id.button_export:
+        	dialog.dismiss();
+        	
+        	CheckBox cB = (CheckBox)dialog.findViewById(R.id.checkBox1);
+        	
+        	String includeExported;
+        	if(cB.isChecked()){
+        		includeExported = "1";
+        	}else{
+        		includeExported = "0";
+        	}
+        	
+        	if(isServiceRunning(Export2SDService.class)){
+  	          	Toast.makeText(getBaseContext(), "Export to SD is already started!", Toast.LENGTH_LONG).show();
+        	}else if (isServiceRunning(EncryptionService.class)){
+  	          	Toast.makeText(getBaseContext(), "Please wait for encryption to finish!", Toast.LENGTH_LONG).show();
+        	}else if(isServiceRunning(SyncService.class)){
+  	          	Toast.makeText(getBaseContext(), "Please wait for sync to finish!", Toast.LENGTH_LONG).show();
+        	}else{
+        		Intent eS = new Intent(ReportsActivity.this,Export2SDService.class);
+        		eS.putExtra("includeExported", includeExported);
+	  	        startService(eS); 
+        	}
+        	/*
+        	Intent i2 = new Intent(getApplicationContext(), Export2SD.class);
+        	i2.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+			startActivity(i2);
+            break;
+            */
+        }
     }
     void DeleteRecursive(File fileOrDirectory) {
         if (fileOrDirectory.isDirectory())
@@ -140,6 +262,7 @@ public class ReportsActivity extends BaseActivity {
 		Log.d("Tasks", String.valueOf(tasks));
 		return tasks;
 	}
+    
     class showList extends AsyncTask<String, String, String> {
 		@Override
 		protected void onPreExecute() {
@@ -149,69 +272,30 @@ public class ReportsActivity extends BaseActivity {
 		protected String doInBackground(String... args) {
 			
 			mListReports = Report.getAllAsList(ReportsActivity.this);
-	        aaReports = new ReportArrayAdapter(ReportsActivity.this, R.layout.list_report_row, mListReports);
 	         
-	       //  mListView.setAdapter(aaReports);
+	       //mListView.setAdapter(aaReports);
 			return null;
 		}
 	protected void onPostExecute(String file_url) {
-			mListView.setAdapter(aaReports);
+			
+			createCards();
 			
 		}
 	}
-    /*
-    @Override
-	public void onResume() {
-		super.onResume();
-		refreshReports();
-	}
     
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getSupportMenuInflater().inflate(R.menu.activity_reports, menu);
-        return true;
+    public void createCards(){
+    	for(int i = 0; i<mListReports.size(); i++){
+    		
+    		Report r = mListReports.get(i);
+    		
+    		MyCard androidViewsCard2 = new MyCard(r.getTitle(), r.getDescription());
+			mCardView.addCard(androidViewsCard2);
+			mCardView.refresh();
+
+			Log.d("report id", "rid: " + r.getId());
+    	}
     }
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-
-		switch (item.getItemId()) {
-         case android.R.id.home:
-
-	        	NavUtils.navigateUpFromSameTask(this);
-	        	
-             return true;
-     }
- 		
-     return super.onOptionsItemSelected(item);
-  
-	}
     
-	*/
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                //NavUtils.navigateUpFromSameTask(this);
-                Intent i = new Intent(getBaseContext(), HomePanelsActivity.class);
-                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(i);
-                finish();
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-    private void showPreferences ()	{
-    	
-		Intent intent = new Intent(this,SimplePreferences.class);
-		this.startActivityForResult(intent, 9999);
-	
-    }
-
-    
-    
- 
-
 	@Override
 	protected void onActivityResult(int arg0, int arg1, Intent arg2) {
 		

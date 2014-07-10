@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+      android:background="#eaeae5"
+     android:id="@+id/base"
+     >
+  <TableLayout
+    android:id="@+id/tableLayout1"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:stretchColumns="*"
+    android:background="#ffffff" >
+    
+  <TableRow
+        android:id="@+id/tableRow3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+         >
+
+ 		<RelativeLayout
+ 		    android:id="@+id/load_new_report"
+ 		    android:layout_width="wrap_content"
+ 		    android:layout_height="60dp"
+ 		    android:background="@color/lp_red"
+ 		    android:layout_margin="5dp"
+ 		    android:clickable="true"
+ 		    android:paddingLeft="10dp" >
+
+			<ImageView
+			    android:id="@+id/imageView1"
+			    android:layout_width="20dp"
+			    android:layout_height="wrap_content"
+			    android:layout_alignParentTop="true"
+			    android:layout_centerHorizontal="true"
+			    android:src="@drawable/icon_new_report" />
+
+			<TextView
+			    android:id="@+id/textView1"
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:layout_centerVertical="true"
+			    android:layout_toRightOf="@+id/imageView1"
+			    android:text="@string/add"
+			    android:textColor="#ffffff" />
+            
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/load_sync_r"
+            android:layout_width="wrap_content"
+ 		    android:layout_height="60dp"
+ 		    android:background="@color/lp_blue"
+ 		    android:clickable="true"
+ 		    android:layout_margin="5dp"
+ 		    android:paddingLeft="10dp" >
+
+            <ImageView
+                android:id="@+id/imageView2"
+                android:layout_width="20dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:src="@drawable/icon_sync" />
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@+id/imageView2"
+                android:text="@string/sync"
+                android:textColor="#ffffff" />
+
+        </RelativeLayout>
+ 
+    </TableRow>
+ </TableLayout>
+ 
+ <com.fima.cardsui.views.CardUI
+        android:id="@+id/cardsview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+
+    
+</LinearLayout>
