@@ -351,20 +351,19 @@
 
                 <TextView
                     android:id="@+id/textViewLocation"
+                    style="@android:style/TextAppearance.Medium"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignBottom="@+id/imageView4"
+                    android:layout_alignParentBottom="true"
                     android:layout_alignParentRight="true"
-                    android:layout_alignTop="@+id/imageView4"
-                    android:layout_toRightOf="@+id/imageView4"
-                    android:text="Location not set"
-                    android:textColor="#686868"
-                    android:padding="10dp"
-                   	style="@android:style/TextAppearance.Medium"
-                    android:layout_marginLeft="2dp"
+                    android:layout_alignTop="@+id/toggleButton1"
                     android:layout_marginRight="2dp"
+                    android:layout_toRightOf="@+id/toggleButton1"
                     android:background="@color/lp_grey"
-                    android:gravity="center" />
+                    android:gravity="center"
+                    android:padding="10dp"
+                    android:text="Location not set"
+                    android:textColor="#686868" />
 
                 <ImageView
                     android:id="@+id/imageView4"
@@ -374,7 +373,17 @@
                     android:padding="10dp"
                     android:layout_marginLeft="2dp"
                     android:background="@color/lp_grey"
-                    android:src="@drawable/compass_geo" />
+                    android:src="@drawable/compass_geo"
+                    android:visibility="gone" />
+                
+                <ToggleButton
+          android:id="@+id/toggleButton1"
+          android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginLeft="2dp"
+          android:text="GPS" />
+                
             </RelativeLayout>
 
             <Button

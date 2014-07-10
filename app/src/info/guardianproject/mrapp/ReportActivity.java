@@ -40,6 +40,7 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ToggleButton;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.ListView;
 import android.widget.RadioGroup;
@@ -102,7 +103,8 @@ OnItemLongClickListener{
     private Dialog dialog;
     private Dialog dialog_save;
     private Dialog dialog_publish;
-    
+    private ToggleButton toggleGPS;
+
     public boolean new_report = false;
     @Override
     @SuppressLint("NewApi")
@@ -302,6 +304,21 @@ OnItemLongClickListener{
 				setLocation();
 			}
 		});
+		
+		toggleGPS = (ToggleButton) findViewById(R.id.toggleButton1);
+        toggleGPS.setOnClickListener(new OnClickListener() {
+
+            @Override
+            public void onClick(View arg0) {
+            	                	
+                if(toggleGPS.isChecked()){
+                	setLocation();
+                }
+                else{
+                	gpsInfo.setText("0, 0");
+                }
+            }
+        });
     }
     
     public void setMediaCount(){
