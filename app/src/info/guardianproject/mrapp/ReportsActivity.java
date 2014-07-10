@@ -6,7 +6,7 @@ import info.guardianproject.mrapp.export.Export2SDService;
 import info.guardianproject.mrapp.model.Media;
 import info.guardianproject.mrapp.model.Project;
 import info.guardianproject.mrapp.model.Report;
-import info.guardianproject.mrapp.ui.MyCard;
+import info.guardianproject.mrapp.ui.ReportCard;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -288,11 +288,58 @@ public class ReportsActivity extends BaseActivity implements OnClickListener{
     		
     		Report r = mListReports.get(i);
     		
-    		MyCard androidViewsCard2 = new MyCard(r.getTitle(), r.getDescription());
+    		//Get report status
+    		String synced = "";
+    		String exported = "";
+    		
+    		if(r.getServerId().equals("0")){
+            	synced = "Not synced";
+            }else{
+            	synced = "Synced";
+            }
+            
+            if(r.getExported().equals("0")){
+            	exported = "Not exported";
+            }else{
+            	exported = "Exported";
+            }
+            
+            String status = exported+" | "+synced;
+    		
+            //Get stats
+            int vids =0;
+            int pics =0;
+            int auds =0;
+            
+            ArrayList<Project> mListProjects;
+    		mListProjects = Project.getAllAsList(getApplicationContext(), r.getId());
+    	 
+            //Get MIME types
+        	for (int j = 0; j < mListProjects.size(); j++) {
+    	 		Project project2 = mListProjects.get(j);
+    	 		
+    	 		Media[] mediaList = project2.getScenesAsArray()[0].getMediaAsArray();
+    	 		
+    	 		for(int k = 0; k<mediaList.length; k++){
+	    	 		Media media = mediaList[k];
+	    	 		
+	    		 	String ptype = media.getMimeType();
+	    		 	if(ptype.contains("image")){
+	    		 		pics++;
+	    		 		
+	    		 	}else if(ptype.contains("video")){
+	    		 		vids++;
+	    		 		
+	    		 	}else if(ptype.contains("audio")){
+	    		 		auds++;
+	    		 	}
+    	 		}
+        	}
+    		ReportCard androidViewsCard2 = new ReportCard(r.getTitle(), r.getDescription(), status, r.getDate(), vids, pics, auds);
+
 			mCardView.addCard(androidViewsCard2);
 			mCardView.refresh();
 
-			Log.d("report id", "rid: " + r.getId());
     	}
     }
     
