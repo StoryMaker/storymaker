@@ -51,7 +51,7 @@ public class JobTable extends Table {
         return ProjectsProvider.JOBS_BASE_PATH;
     }
 
-    public ArrayList<Job> getUnfinishedAsList(Context context, String type, String site) {
+    public ArrayList<Job> getUnfinishedAsList(Context context, String type, PublishJob publishJob, String site) {
         // FIXME this isn't very optimized
     	// type can be TYPE_UPLOAD or TYPE_RENDER
         ArrayList<Job> jobs = (ArrayList<Job>) getAllAsList(context); // TODO need to make this method for reals
@@ -60,6 +60,7 @@ public class JobTable extends Table {
             for (Job job: jobs) {
                 if ((job.getFinishedAt() == null) 
                         && job.getType().equals(type) 
+                        && job.getPublishJobId() == publishJob.getId()
                         && (site == null ? true : job.getSite().equals(site))) { // FIXME do we need to check something other than null?
 //                    jobs.remove(job); // it's finished.  purge it
                     if (purgedList == null) {
@@ -73,8 +74,8 @@ public class JobTable extends Table {
     }
 	
     // job's are only ready to be run if they have a queuedAt time.  You can enter jobs in the table before they are ready to run
-    public Job getNextUnfinished(Context context, String type, String site) {
-        ArrayList<Job> jobs = getUnfinishedAsList(context, type, site);
+    public Job getNextUnfinished(Context context, String type, PublishJob publishJob, String site) {
+        ArrayList<Job> jobs = getUnfinishedAsList(context, type, publishJob, site);
         if (jobs != null) {
             return jobs.get(0); // FIXME is the 0th really the next in line ?  is the list sorted by id?
         } else {
@@ -111,5 +112,21 @@ public class JobTable extends Table {
             }
         }
         return null;
+    }
+    
+    public static Job cloneJob(Context context, Job job) {
+        Job newJob = new Job(context);
+        newJob.projectId = job.projectId;
+        newJob.publishJobId = job.publishJobId;
+        newJob.setType(job.getType());
+        newJob.setSite(job.getSite());
+        newJob.setSpec(job.getSpec());
+        newJob.setResult(job.getResult());
+        newJob.errorCode = job.errorCode;
+        newJob.errorMessage = job.errorMessage;
+        newJob.queuedAt = job.queuedAt;
+        newJob.finishedAt = job.finishedAt;
+        newJob.save();
+        return newJob;
     }
 }

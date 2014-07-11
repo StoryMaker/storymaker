@@ -2,6 +2,7 @@ package info.guardianproject.mrapp.publish;
 
 import info.guardianproject.mrapp.model.Job;
 import info.guardianproject.mrapp.model.JobTable;
+import info.guardianproject.mrapp.model.PublishJob;
 import info.guardianproject.mrapp.publish.sites.AudioRenderer;
 import info.guardianproject.mrapp.publish.sites.VideoRenderer;
 
@@ -28,11 +29,11 @@ public class RenderWorker extends WorkerBase {
 		return instance;
 	}
 	
-	public void start() {
+	public void start(PublishJob publishJob) {
 		// TODO guard against multiple calls if we are running already
 //		ArrayList<Job> jobs = (ArrayList<Job>) (new JobTable(db)).getUnfinishedAsList(context, JobTable.TYPE_UPLOAD);
 //	    SQLiteDatabase db = (new StoryMakerDB(context)).getWritableDatabase("foo");
-		Job job = (new JobTable(null)).getNextUnfinished(mContext, JobTable.TYPE_RENDER, null);
+		Job job = (new JobTable(null)).getNextUnfinished(mContext, JobTable.TYPE_RENDER, publishJob, null);
 		RendererBase renderer = null;
 		if (job != null) {
             if (job.isSpec(VideoRenderer.SPEC_KEY)) {

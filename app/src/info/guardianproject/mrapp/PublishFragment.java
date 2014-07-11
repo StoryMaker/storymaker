@@ -7,6 +7,7 @@ import info.guardianproject.mrapp.model.Media;
 import info.guardianproject.mrapp.model.Project;
 import info.guardianproject.mrapp.model.PublishJob;
 import info.guardianproject.mrapp.model.PublishJobTable;
+import info.guardianproject.mrapp.publish.PublishController;
 import info.guardianproject.mrapp.publish.PublishController.PublishListener;
 import info.guardianproject.mrapp.publish.PublishService;
 import info.guardianproject.mrapp.server.LoginActivity;
@@ -114,6 +115,7 @@ public class PublishFragment extends Fragment implements PublishListener {
     private SharedPreferences mSettings = null;
 
     private File mFileLastExport = null;
+    private Job mMatchingRenderJob = null;
 
     /**
      * The sortable grid view that contains the clips to reorder on the
@@ -176,9 +178,9 @@ public class PublishFragment extends Fragment implements PublishListener {
 			}
 			
 			// FIXME figure out what spec we need to try to fetch for preview... could be audio or video
-			Job job = (new JobTable()).getMatchingFinishedJob(getActivity(), mActivity.mMPM.mProject.getId(), "render", "video", mActivity.mMPM.mProject.getUpdatedAt());
-			if (job != null) {
-			    mFileLastExport = new File(job.getResult());
+			mMatchingRenderJob = (new JobTable()).getMatchingFinishedJob(getActivity(), mActivity.mMPM.mProject.getId(), "render", "video", mActivity.mMPM.mProject.getUpdatedAt());
+			if (mMatchingRenderJob != null) {
+			    mFileLastExport = new File(mMatchingRenderJob.getResult());
 			}
 
             mProgressText = (TextView) mView.findViewById(R.id.textViewProgress);
@@ -804,7 +806,14 @@ public class PublishFragment extends Fragment implements PublishListener {
                     showUploadSpinner(true);        
                     mUploading = true;
                     mPlaying = false;
-                    if (mFileLastExport != null && mFileLastExport.exists()) { // FIXME replace this with a check to make sure render is suitable
+//                    if (mFileLastExport != null && mFileLastExport.exists()) { // FIXME replace this with a check to make sure render is suitable
+                    if (mMatchingRenderJob != null) {
+                        // FIXME i think we need to add that render job to this publishJob here
+                        PublishJob publishJob = PublishController.getMatchingPublishJob(getActivity().getApplicationContext(), mActivity.mMPM.mProject, mSiteKeys, useTor, publishToStoryMaker);
+                        Job newJob = JobTable.cloneJob(getActivity().getApplicationContext(), mMatchingRenderJob);
+                        newJob.setPublishJobId(publishJob.getId());
+                        newJob.save();
+                        mMatchingRenderJob = newJob;
                         startUpload(mActivity.mMPM.mProject, mSiteKeys, useTor, publishToStoryMaker);
                     } else {
                         startRender(mActivity.mMPM.mProject, mSiteKeys, useTor, publishToStoryMaker);

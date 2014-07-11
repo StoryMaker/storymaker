@@ -129,13 +129,23 @@ public class PublishController {
         }
     }
     
+    public static PublishJob getMatchingPublishJob(Context context, Project project, String[] siteKeys, boolean useTor, boolean publishToStoryMaker) {
+        PublishJob publishJob = (new PublishJobTable()).getNextUnfinished(context, project.getId(), siteKeys);
+        if (publishJob == null) {
+            publishJob = new PublishJob(context, project.getId(), siteKeys, useTor, publishToStoryMaker);
+            publishJob.save();
+        }
+        return publishJob;
+    }
+    
     private PublishJob getPublishJob(Project project, String[] siteKeys, boolean useTor, boolean publishToStoryMaker) {
         if (mPublishJob == null) {
-            mPublishJob = (new PublishJobTable()).getNextUnfinished(mContext, project.getId(), siteKeys);
-            if (mPublishJob == null) {
-                mPublishJob = new PublishJob(mContext, project.getId(), siteKeys, useTor, publishToStoryMaker);
-                mPublishJob.save();
-            }
+            mPublishJob = getMatchingPublishJob(mContext, project, siteKeys, useTor, publishToStoryMaker);
+//            mPublishJob = (new PublishJobTable()).getNextUnfinished(mContext, project.getId(), siteKeys);
+//            if (mPublishJob == null) {
+//                mPublishJob = new PublishJob(mContext, project.getId(), siteKeys, useTor, publishToStoryMaker);
+//                mPublishJob.save();
+//            }
         } else {
             mPublishJob.setUseTor(useTor);
             mPublishJob.setPublishToStoryMaker(publishToStoryMaker);
@@ -201,12 +211,12 @@ public class PublishController {
 	
 	private void startUploadService() {
 		uploadService = UploadWorker.getInstance(mContext, this);
-		uploadService.start();
+		uploadService.start(mPublishJob);
 	}
 	
 	private void startRenderService() {
 		renderService = RenderWorker.getInstance(mContext, this);
-		renderService.start();
+		renderService.start(mPublishJob);
 	}
 	
 	public void enqueueJob(Job job) {
