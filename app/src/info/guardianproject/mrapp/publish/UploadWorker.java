@@ -3,6 +3,7 @@ package info.guardianproject.mrapp.publish;
 import info.guardianproject.mrapp.model.Auth;
 import info.guardianproject.mrapp.model.Job;
 import info.guardianproject.mrapp.model.JobTable;
+import info.guardianproject.mrapp.model.PublishJob;
 import info.guardianproject.mrapp.publish.sites.FacebookUploader;
 import info.guardianproject.mrapp.publish.sites.FlickrUploader;
 import info.guardianproject.mrapp.publish.sites.SSHUploader;
@@ -32,10 +33,10 @@ public  class UploadWorker extends WorkerBase {
 		return instance;
 	}
 	
-	public void start() {
+	public void start(PublishJob publishJob) {
 		// TODO guard against multiple calls if we are running already
 //		ArrayList<Job> jobs = (ArrayList<Job>) (new JobTable(db)).getUnfinishedAsList(context, JobTable.TYPE_UPLOAD);
-		Job job = (new JobTable(null)).getNextUnfinished(mContext, JobTable.TYPE_UPLOAD, null);
+		Job job = (new JobTable(null)).getNextUnfinished(mContext, JobTable.TYPE_UPLOAD, publishJob, null); // FIXME this is grabbing incomplete jobs from previous runs, we should only run the ones from our current publishJob
 		UploaderBase uploader = null;
 		if (job != null) {
     		if (job.isSite(Auth.SITE_YOUTUBE)) {

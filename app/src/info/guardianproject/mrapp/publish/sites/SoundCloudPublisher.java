@@ -34,26 +34,37 @@ public class SoundCloudPublisher extends PublisherBase {
         Log.d(TAG, "jobSucceeded: " + job);
         if (job.isType(JobTable.TYPE_RENDER)) {
             // since the user must now initiate upload, we just stop this publishjob now and wait
-            mController.publishJobSucceeded(mPublishJob, job);
+            mController.publishJobSucceeded(mPublishJob);
         } else if (job.isType(JobTable.TYPE_UPLOAD)) {
             if (job.isSite(Auth.SITE_SOUNDCLOUD)) {
 //                Job newJob = new Job(mContext, mPublishJob.getProjectId(), mPublishJob.getId(), JobTable.TYPE_UPLOAD, Auth.STORYMAKER, null);
 //                mController.enqueueJob(newJob);
 //            } else if (job.isSite(Auth.STORYMAKER)) {
-                mPublishJob.setFinishedAtNow();
-                mPublishJob.save();
-                mController.publishJobSucceeded(mPublishJob, job);
+
+//                mPublishJob.setFinishedAtNow();
+//                mPublishJob.save();
+//                mController.publishJobSucceeded(mPublishJob);
+                if (mPublishJob.getPublishToStoryMaker()) {
+                    publishToStoryMaker();
+                }
             }
         }
     }
     
     public void jobFailed(Job job, int errorCode, String errorMessage) {
         Log.d(TAG, "jobFailed: " + job);
-        mController.publishJobFailed(mPublishJob, job, errorCode, errorMessage);
+        mController.publishJobFailed(mPublishJob, errorCode, errorMessage);
     }
     
     public void jobProgress(Job job, float progress, String message) {
-        mController.publishJobProgress(mPublishJob, job, progress, message);
+        mController.publishJobProgress(mPublishJob, progress, message);
+    }
+    
+    public String getEmbed(Job job) {
+        return "[soundcloud url=\"https://api.soundcloud.com/tracks/" 
+                + job.getResult() + "\" params=\"color=00cc11&auto_play=false&hide_related=false&show_artwork=true\" width=\"100%\" height=\"166\" iframe=\"true\" /]";
+        
+        // [soundcloud url="https://api.soundcloud.com/tracks/156197566" params="auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&visual=true" width="100%" height="450" iframe="true" /]
     }
 
 }

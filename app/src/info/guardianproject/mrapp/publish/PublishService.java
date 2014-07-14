@@ -24,8 +24,10 @@ public class PublishService extends IntentService implements PublishListener {
     public static final String INTENT_EXTRA_PROGRESS_MESSAGE = "progress_message";
     public static final String ACTION_RENDER = "info.guardianproject.mrapp.publish.action.RENDER";
     public static final String ACTION_UPLOAD = "info.guardianproject.mrapp.publish.action.UPLOAD";
-    public static final String ACTION_SUCCESS = "info.guardianproject.mrapp.publish.action.SUCCESS";
-    public static final String ACTION_FAILURE = "info.guardianproject.mrapp.publish.action.FAILURE";
+    public static final String ACTION_PUBLISH_SUCCESS = "info.guardianproject.mrapp.publish.action.PUBLISH_SUCCESS";
+    public static final String ACTION_PUBLISH_FAILURE = "info.guardianproject.mrapp.publish.action.PUBLISH_FAILURE";
+    public static final String ACTION_JOB_SUCCESS = "info.guardianproject.mrapp.publish.action.JOB_SUCCESS";
+    public static final String ACTION_JOB_FAILURE = "info.guardianproject.mrapp.publish.action.JOB_FAILURE";
     public static final String ACTION_PROGRESS = "info.guardianproject.mrapp.publish.action.PROGRESS";
     
     public PublishService() {
@@ -55,33 +57,48 @@ public class PublishService extends IntentService implements PublishListener {
     }
 
     @Override
-    public void publishSucceeded(PublishJob publishJob, Job job) {
-        Intent intent = new Intent(ACTION_SUCCESS);
+    public void publishSucceeded(PublishJob publishJob) {
+        Intent intent = new Intent(ACTION_PUBLISH_SUCCESS);
         intent.putExtra(INTENT_EXTRA_PROJECT_ID, publishJob.getProjectId());
         intent.putExtra(INTENT_EXTRA_PUBLISH_JOB_ID, publishJob.getId());
-        intent.putExtra(INTENT_EXTRA_JOB_ID, job.getId());
         sendBroadcast(intent);
     }
 
     @Override
-    public void publishFailed(PublishJob publishJob, Job job, int errorCode, String errorMessage) {
-        Intent intent = new Intent(ACTION_FAILURE);
+    public void publishFailed(PublishJob publishJob, int errorCode, String errorMessage) {
+        Intent intent = new Intent(ACTION_PUBLISH_FAILURE);
         intent.putExtra(INTENT_EXTRA_PROJECT_ID, publishJob.getProjectId());
         intent.putExtra(INTENT_EXTRA_PUBLISH_JOB_ID, publishJob.getId());
-        intent.putExtra(INTENT_EXTRA_JOB_ID, job.getId());
         intent.putExtra(INTENT_EXTRA_ERROR_CODE, errorCode);
         intent.putExtra(INTENT_EXTRA_ERROR_MESSAGE, errorMessage);
         sendBroadcast(intent);
     }
 
     @Override
-    public void publishProgress(PublishJob publishJob, Job job, float progress, String message) {
+    public void publishProgress(PublishJob publishJob, float progress, String message) {
         Intent intent = new Intent(ACTION_PROGRESS);
         intent.putExtra(INTENT_EXTRA_PROJECT_ID, publishJob.getProjectId());
         intent.putExtra(INTENT_EXTRA_PUBLISH_JOB_ID, publishJob.getId());
-        intent.putExtra(INTENT_EXTRA_JOB_ID, job.getId());
         intent.putExtra(INTENT_EXTRA_PROGRESS, progress);
         intent.putExtra(INTENT_EXTRA_PROGRESS_MESSAGE, message);
+        sendBroadcast(intent);
+    }
+
+    @Override
+    public void jobSucceeded(Job job) {
+        Intent intent = new Intent(ACTION_JOB_SUCCESS);
+        intent.putExtra(INTENT_EXTRA_PROJECT_ID, job.getProjectId());
+        intent.putExtra(INTENT_EXTRA_PUBLISH_JOB_ID, job.getPublishJobId());
+        intent.putExtra(INTENT_EXTRA_JOB_ID, job.getId());
+        sendBroadcast(intent);
+    }
+
+    @Override
+    public void jobFailed(Job job, int errorCode, String errorMessage) {
+        Intent intent = new Intent(ACTION_JOB_FAILURE);
+        intent.putExtra(INTENT_EXTRA_PROJECT_ID, job.getProjectId());
+        intent.putExtra(INTENT_EXTRA_PUBLISH_JOB_ID, job.getPublishJobId());
+        intent.putExtra(INTENT_EXTRA_JOB_ID, job.getId());
         sendBroadcast(intent);
     }
 }

@@ -86,6 +86,27 @@ public class PublishController {
         return publisher;
     }
     
+    // FIXME this won't help us get more than one publisher per run
+    public static Class getPublisherClass(String site) {
+        if (site.equals(Auth.SITE_STORYMAKER)) {
+            return StoryMakerPublisher.class;
+        } else if (site.equals(FacebookSiteController.SITE_KEY)) {
+            return FacebookPublisher.class;
+        } else if (site.equals(YoutubeSiteController.SITE_KEY)) {
+            return YoutubePublisher.class;
+        } else if (site.equals(FlickrSiteController.SITE_KEY)) {
+            return FlickrPublisher.class;
+        } else if (site.equals(SoundCloudSiteController.SITE_KEY)) {
+            return SoundCloudPublisher.class;
+        } else if (site.equals(SSHSiteController.SITE_KEY)) {
+            return SSHPublisher.class;
+        } else if (site.equals(PreviewPublisher.SITE_KEY)) {
+            return PreviewPublisher.class;
+        }
+
+        return null;
+    }
+    
     public void startRender(Project project, String[] siteKeys, boolean useTor, boolean publishToStoryMaker) {
         PublishJob publishJob = getPublishJob(project, siteKeys, useTor, publishToStoryMaker);
         PublisherBase publisher = getPublisher(publishJob);
@@ -108,13 +129,23 @@ public class PublishController {
         }
     }
     
+    public static PublishJob getMatchingPublishJob(Context context, Project project, String[] siteKeys, boolean useTor, boolean publishToStoryMaker) {
+        PublishJob publishJob = (new PublishJobTable()).getNextUnfinished(context, project.getId(), siteKeys);
+        if (publishJob == null) {
+            publishJob = new PublishJob(context, project.getId(), siteKeys, useTor, publishToStoryMaker);
+            publishJob.save();
+        }
+        return publishJob;
+    }
+    
     private PublishJob getPublishJob(Project project, String[] siteKeys, boolean useTor, boolean publishToStoryMaker) {
         if (mPublishJob == null) {
-            mPublishJob = (new PublishJobTable()).getNextUnfinished(mContext, project.getId(), siteKeys);
-            if (mPublishJob == null) {
-                mPublishJob = new PublishJob(mContext, project.getId(), siteKeys, useTor, publishToStoryMaker);
-                mPublishJob.save();
-            }
+            mPublishJob = getMatchingPublishJob(mContext, project, siteKeys, useTor, publishToStoryMaker);
+//            mPublishJob = (new PublishJobTable()).getNextUnfinished(mContext, project.getId(), siteKeys);
+//            if (mPublishJob == null) {
+//                mPublishJob = new PublishJob(mContext, project.getId(), siteKeys, useTor, publishToStoryMaker);
+//                mPublishJob.save();
+//            }
         } else {
             mPublishJob.setUseTor(useTor);
             mPublishJob.setPublishToStoryMaker(publishToStoryMaker);
@@ -122,12 +153,14 @@ public class PublishController {
         return mPublishJob;
     }
 	
-	public void publishJobSucceeded(PublishJob publishJob, Job job) {
-		mListener.publishSucceeded(publishJob, job);
+	public void publishJobSucceeded(PublishJob publishJob) {
+	    // get a embedable publish
+	    
+		mListener.publishSucceeded(publishJob);
 	}
     
-    public void publishJobFailed(PublishJob publishJob, Job job, int errorCode, String errorMessage) {
-        mListener.publishFailed(publishJob, job, errorCode, errorMessage);
+    public void publishJobFailed(PublishJob publishJob, int errorCode, String errorMessage) {
+        mListener.publishFailed(publishJob, errorCode, errorMessage);
     }
 	
     /**
@@ -136,8 +169,8 @@ public class PublishController {
      * @param progress
      * @param message
      */
-	public void publishJobProgress(PublishJob publishJob, Job job, float progress, String message) {
-	    mListener.publishProgress(publishJob, job, progress, message);
+	public void publishJobProgress(PublishJob publishJob, float progress, String message) {
+	    mListener.publishProgress(publishJob, progress, message);
 	}
 	
 	public void jobSucceeded(Job job, String code) {
@@ -150,6 +183,7 @@ public class PublishController {
         } else {
             // TODO how to handle null publisher?
         }
+        mListener.jobSucceeded(job);
 	}
 	
 	public void jobFailed(Job job, int errorCode, String errorMessage) {
@@ -162,6 +196,7 @@ public class PublishController {
         } else {
             // TODO how to handle null publisher?
         }
+        mListener.jobFailed(job, errorCode, errorMessage);
 	}
 	
     public void jobProgress(Job job, float progress, String message) {
@@ -176,12 +211,12 @@ public class PublishController {
 	
 	private void startUploadService() {
 		uploadService = UploadWorker.getInstance(mContext, this);
-		uploadService.start();
+		uploadService.start(mPublishJob);
 	}
 	
 	private void startRenderService() {
 		renderService = RenderWorker.getInstance(mContext, this);
-		renderService.start();
+		renderService.start(mPublishJob);
 	}
 	
 	public void enqueueJob(Job job) {
@@ -195,11 +230,15 @@ public class PublishController {
 	}
 	
 	public static interface PublishListener {
-	    public void publishSucceeded(PublishJob publishJob, Job job);
+        public void publishSucceeded(PublishJob publishJob);
 
-        public void publishFailed(PublishJob publishJob, Job job, int errorCode, String errorMessage);
+        public void publishFailed(PublishJob publishJob, int errorCode, String errorMessage);
         
-        public void publishProgress(PublishJob publishJob, Job job, float progress, String message);
+        public void jobSucceeded(Job job);
+
+        public void jobFailed(Job job, int errorCode, String errorMessage);
+        
+        public void publishProgress(PublishJob publishJob, float progress, String message);
 	}
 
 }
