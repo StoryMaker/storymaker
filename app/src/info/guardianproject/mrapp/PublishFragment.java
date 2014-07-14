@@ -58,6 +58,8 @@ public class PublishFragment extends Fragment implements PublishListener {
     private final static String TAG = "PublishFragment";
     
     private final static int REQ_SOUNDCLOUD = 777;
+    private static Intent serviceIntent = null;
+    private static Activity attachedActivity = null;
     
     public ViewPager mAddClipsViewPager;
     View mView = null;
@@ -386,8 +388,8 @@ public class PublishFragment extends Fragment implements PublishListener {
                     
                     boolean useTor = intent.getBooleanExtra(ChooseAccountFragment.EXTRAS_USE_TOR, false);
                     boolean publishToStoryMaker = intent.getBooleanExtra(ChooseAccountFragment.EXTRAS_PUBLISH_TO_STORYMAKER, false);
-
-                    showUploadSpinner(true);        
+                    
+                    showUploadSpinner(true);
                     mUploading = true;
                     mPlaying = false;
 //                    if (mFileLastExport != null && mFileLastExport.exists()) { // FIXME replace this with a check to make sure render is suitable
@@ -422,7 +424,7 @@ public class PublishFragment extends Fragment implements PublishListener {
         i.putExtra(PublishService.INTENT_EXTRA_USE_TOR, useTor);
         i.putExtra(PublishService.INTENT_EXTRA_PUBLISH_TO_STORYMAKER, publishToStoryMaker);
         i.putExtra(PublishService.INTENT_EXTRA_SITE_KEYS, siteKeys);
-        getActivity().startService(i);
+        startService(i, publishToStoryMaker);
     }
     
     private void startUpload(Project project, String[] siteKeys, boolean useTor, boolean publishToStoryMaker) {
@@ -432,9 +434,32 @@ public class PublishFragment extends Fragment implements PublishListener {
         i.putExtra(PublishService.INTENT_EXTRA_USE_TOR, useTor);
         i.putExtra(PublishService.INTENT_EXTRA_PUBLISH_TO_STORYMAKER, publishToStoryMaker);
         i.putExtra(PublishService.INTENT_EXTRA_SITE_KEYS, siteKeys);
-        getActivity().startService(i);
+        startService(i, publishToStoryMaker);
     }
-	
+    
+    private void startService(Intent i, boolean publishToStoryMaker) {
+        if(publishToStoryMaker) {
+        	attachedActivity = getActivity();
+        	serviceIntent = i;
+        	
+        	ServerManager sm = StoryMakerApp.getServerManager();
+            sm.setContext(mActivity.getBaseContext());
+            
+            if(!sm.hasCreds()) {
+            	Intent connectSMIntent = new Intent(mActivity, ConnectAccountActivity.class);
+            	connectSMIntent.putExtra("isPublishPending", true);
+            	getActivity().startActivity(connectSMIntent);
+            }
+        }
+    	
+    	getActivity().startService(i);
+    }
+    
+    public void continuePublishService() {	
+    	if(null != serviceIntent) {
+    		attachedActivity.startService(serviceIntent);
+    	}    	
+    }
 
     @Override
     public void publishSucceeded(PublishJob publishJob) {
