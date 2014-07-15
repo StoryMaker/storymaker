@@ -21,7 +21,7 @@ END
 
 
 for project in "${MAPFILE[@]}"; do
-        android update project --path $project -t "android-17"
+        android update project --path $project -t "android-19"
 done
 
 sh scripts/copy-support-libs.sh

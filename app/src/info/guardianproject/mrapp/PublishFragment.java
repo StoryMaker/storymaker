@@ -681,13 +681,13 @@ public class PublishFragment extends Fragment implements PublishListener {
         ServerManager sm = StoryMakerApp.getServerManager();
         sm.setContext(mActivity.getBaseContext());
 
-    	Message msgStatus = mHandlerPub.obtainMessage(888);
+    	Message msgStatus = mHandlerPub.obtainMessage(EditorBaseActivity.REQ_OVERLAY_CAM);
     	msgStatus.getData().putString("status",
                 getActivity().getString(R.string.uploading_to_storymaker));
         mHandlerPub.sendMessage(msgStatus);
     	
         String descWithMedia = desc + "\n\n" + mediaEmbed;
-        String postId = sm.post(title, descWithMedia, categories, medium, mediaService, mediaGuid);
+        String postId = sm.post(title, descWithMedia, categories, medium, mediaService, mediaGuid); // FIXME this is burying an exception if the user skipping creating a StoryMaker.cc account
         
         String urlPost = sm.getPostUrl(postId);
         return urlPost;

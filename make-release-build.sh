@@ -8,6 +8,8 @@ else
     echo "No ~/.android/bashrc found, 'android' and 'ndk-build' must be in PATH"
 fi
 
+./git-submodule-sync.sh
+
 projectroot=`pwd`
 projectname=`sed -n 's,.*name="app_name">\(.*\)<.*,\1,p' app/res/values/strings.xml`
 
@@ -22,7 +24,9 @@ done
 cd $projectroot
 git reset --hard
 git clean -fdx
-
+git submodule foreach git reset --hard
+git submodule foreach git clean -fdx
+git submodule sync --recursive
 git submodule update --init --recursive
 
 cd external/android-ffmpeg-java/external/android-ffmpeg/ 

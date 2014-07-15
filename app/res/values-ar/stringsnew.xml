@@ -173,8 +173,9 @@
   <string name="story_type_news_text8">كيف يتم الاستجابة للحدث؟</string>
   <!--/story_type_old-->
   <!--prefs-->
-  <string name="prefs_interface_language_summary"></string>
-  <string name="prefs_lesson_language_summary"></string>
+  <string name="prefs_storymaker_server_title">سيرفر ستوري مايكر</string>
+  <string name="prefs_storymaker_server_summary">خادم استضافة جميع محتوى الدروس والقصص</string>
+  <string name="prefs_use_tor_title">استعمال أوربوت (متصفح تور)</string>
   <string name="prefs_disable_lesson_completion_summary"></string>
   <!--/prefs-->
   <!--FirstStartActivity-->

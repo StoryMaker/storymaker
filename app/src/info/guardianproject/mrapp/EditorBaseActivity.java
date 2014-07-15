@@ -33,8 +33,9 @@ public class EditorBaseActivity extends BaseActivity {
 
     // sublaunch codes
     public final static int REQ_YOUTUBE_AUTH = 999;
-    public final static int REQ_OVERLAY_CAM = 888; // for resp handling from
-                                                   // overlay cam launch
+    public final static int REQ_OVERLAY_CAM = 888;
+    public final static int REQ_SOUNDCLOUD = 777;
+    public final static int REQ_SHARE = 666;//share intent
 
     // TODO: Why do we have mProject as well as mMPM.mProject?
     public Project mProject = null;
@@ -85,7 +86,7 @@ public class EditorBaseActivity extends BaseActivity {
                     }
                     break;
 
-                case 999:
+                case REQ_YOUTUBE_AUTH:
                     mProgressDialog = new ProgressDialog(EditorBaseActivity.this);
                     mProgressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
                     mProgressDialog.setTitle(getString(R.string.rendering));
@@ -95,13 +96,13 @@ public class EditorBaseActivity extends BaseActivity {
 
                     break;
 
-                case 888:
+                case REQ_OVERLAY_CAM:
                     if (mProgressDialog != null) {
                         mProgressDialog.setMessage(status);
                     }
                     break;
                     
-                case 777:
+                case REQ_SOUNDCLOUD:
                     String videoId = msg.getData().getString("youtubeid");
                     String url = msg.getData().getString("urlPost");
                     String localPath = msg.getData().getString("fileMedia");
@@ -212,7 +213,7 @@ public class EditorBaseActivity extends BaseActivity {
             case android.R.id.home:
                 if (mMPM.mProject.isTemplateStory()) {
                     Intent intent = new Intent(this, StoryTemplateActivity.class);
-                    String lang = StoryMakerApp.getCurrentLessonsLocale().getLanguage();
+                    String lang = StoryMakerApp.getCurrentLocale().getLanguage();
                     String templatePath = "story/templates/" + lang + "/event/event_basic.json"; // FIXME why is this hardcoding event_basic?
                     // if templates folder for this lang don't exist, fallback to english
                     if (!Utils.assetExists(getApplicationContext(), templatePath)) {

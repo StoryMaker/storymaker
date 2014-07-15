@@ -1,9 +1,12 @@
 package info.guardianproject.mrapp.db;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 import info.guardianproject.mrapp.model.Auth;
 import info.guardianproject.mrapp.model.Project;
+import info.guardianproject.mrapp.model.Scene;
+import info.guardianproject.mrapp.model.SceneTable;
 import net.sqlcipher.database.SQLiteDatabase;
 import net.sqlcipher.database.SQLiteOpenHelper;
 import android.content.Context;
@@ -11,7 +14,7 @@ import android.util.Log;
 
 public class StoryMakerDB extends SQLiteOpenHelper {
     private static final String TAG = "StoryMakerDB";
-    private static final int DB_VERSION = 8;
+    private static final int DB_VERSION = 9;
     private static final String DB_NAME = "sm.db";
     private Context mContext;
     
@@ -62,9 +65,16 @@ public class StoryMakerDB extends SQLiteOpenHelper {
             db.execSQL(StoryMakerDB.Schema.Tags.UPDATE_TABLE_TAGS);
         }
         if ((oldVersion < 7) && (newVersion >= 7)) {
-            db.execSQL(StoryMakerDB.Schema.Projects.UPDATE_TABLE_PROJECTS_ADD_DESCRIPTION);
+            @SuppressWarnings("unchecked")
+            ArrayList<Scene> scenes = (ArrayList<Scene>) (new SceneTable(db)).getAllAsList(mContext);
+            for (Scene scene: scenes) {
+                scene.migrateDeleteDupedMedia();
+            }
         }
         if ((oldVersion < 8) && (newVersion >= 8)) {
+            db.execSQL(StoryMakerDB.Schema.Projects.UPDATE_TABLE_PROJECTS_ADD_DESCRIPTION);
+        }
+        if ((oldVersion < 9) && (newVersion >= 9)) {
             db.execSQL(StoryMakerDB.Schema.Jobs.CREATE_TABLE_JOBS);
             db.execSQL(StoryMakerDB.Schema.PublishJobs.CREATE_TABLE_PUBLISH_JOBS);
         }

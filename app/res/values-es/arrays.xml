@@ -39,6 +39,11 @@
     <item>Árabe</item>
     <item>Sudafricano</item>
   </string-array>
+  <string-array name="lesson_language_options_values">
+    <item>https://storymaker.cc/appdata/lessons/en</item>
+    <item>https://storymaker.cc/appdata/lessons/ar</item>
+    <item>https://storymaker.cc/appdata/lessons/sa</item>
+  </string-array>
   <string-array name="array_story_locations">
     <item>Egipto</item>
     <item>Irak</item>

@@ -189,8 +189,6 @@
   <string name="prefs_youtube_login_summary">استفاده از احراز هویت وب سایت یوتیوب</string>
   <string name="prefs_soundcloud_account_title">حساب کاربری SoundCloud </string>
   <string name="prefs_soundcloud_account_summary">حساب کاربری SoundCloud  برای آپلود کردن فایل های صوتی</string>
-  <string name="prefs_interface_language_summary"></string>
-  <string name="prefs_lesson_language_summary"></string>
   <string name="prefs_slide_duration_title">مدت زمان اسلاید</string>
   <string name="prefs_slide_duration_summary">مدت زمان هر اسلاید در سری عکس ها</string>
   <string name="prefs_enable_compression_title">فعال کردن فشرده سازی</string>
