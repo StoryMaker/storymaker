@@ -165,7 +165,7 @@ public class PublishJob extends Model {
         String selection = StoryMakerDB.Schema.Jobs.COL_PUBLISH_JOB_ID + "=?";
         String[] selectionArgs = new String[] { "" + id };
         if (mDB == null) {
-            return context.getContentResolver().query(mTable.getURI(), null, selection, selectionArgs, null);
+            return context.getContentResolver().query((new JobTable()).getURI(), null, selection, selectionArgs, null);
         } else {
             return mDB.query(mTable.getTableName(), null, selection, selectionArgs, null, null, null);
         }
@@ -233,11 +233,11 @@ public class PublishJob extends Model {
 //        }
     }
     
-    // FIXME getLastRenderFilePath needs to not just assume the 0th is the last?
+    // FIXME getLastRenderFilePath
     public String getLastRenderFilePath() {
         String[] paths = getRenderedFilePaths();
         if (paths.length > 0) {
-            return paths[0];
+            return paths[paths.length-1];
         }
         return null;
     }
@@ -252,9 +252,13 @@ public class PublishJob extends Model {
 		siteKeys = keys;
 	}
 
-	public int getProjectId() {
-		return projectId;
-	}
+    public int getProjectId() {
+        return projectId;
+    }
+
+    public Project getProject() {
+        return (Project) (new ProjectTable().get(context, projectId));
+    }
 
 	public void setProjectId(int projectId) {
 		this.projectId = projectId;

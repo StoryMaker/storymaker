@@ -7,6 +7,7 @@ import info.guardianproject.mrapp.model.Media;
 import info.guardianproject.mrapp.model.Project;
 import info.guardianproject.mrapp.model.PublishJob;
 import info.guardianproject.mrapp.model.PublishJobTable;
+import info.guardianproject.mrapp.publish.PublishController;
 import info.guardianproject.mrapp.publish.PublishController.PublishListener;
 import info.guardianproject.mrapp.publish.PublishService;
 import info.guardianproject.mrapp.server.ServerManager;
@@ -57,6 +58,8 @@ public class PublishFragment extends Fragment implements PublishListener {
     private final static String TAG = "PublishFragment";
     
     private final static int REQ_SOUNDCLOUD = 777;
+    private static Intent serviceIntent = null;
+    private static Activity attachedActivity = null;
     
     public ViewPager mAddClipsViewPager;
     View mView = null;
@@ -89,6 +92,7 @@ public class PublishFragment extends Fragment implements PublishListener {
     private SharedPreferences mSettings = null;
 
     private File mFileLastExport = null;
+    private Job mMatchingRenderJob = null;
 
     /**
      * The sortable grid view that contains the clips to reorder on the
@@ -111,6 +115,7 @@ public class PublishFragment extends Fragment implements PublishListener {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     	initFragment ();
+//    	purgePublishTables(); // FIXME for debuging, don't purgePublishTables on load!
     	int layout = getArguments().getInt("layout");
         mView = inflater.inflate(layout, null);
         if (layout == R.layout.fragment_complete_story) {
@@ -150,9 +155,9 @@ public class PublishFragment extends Fragment implements PublishListener {
 			}
 			
 			// FIXME figure out what spec we need to try to fetch for preview... could be audio or video
-			Job job = (new JobTable()).getMatchingFinishdJob(getActivity(), "render", "video", mActivity.mMPM.mProject.getUpdatedAt());
-			if (job != null) {
-			    mFileLastExport = new File(job.getResult());
+			mMatchingRenderJob = (new JobTable()).getMatchingFinishedJob(getActivity(), mActivity.mMPM.mProject.getId(), "render", "video", mActivity.mMPM.mProject.getUpdatedAt());
+			if (mMatchingRenderJob != null) {
+			    mFileLastExport = new File(mMatchingRenderJob.getResult());
 			}
 
             mProgressText = (TextView) mView.findViewById(R.id.textViewProgress);
@@ -185,8 +190,10 @@ public class PublishFragment extends Fragment implements PublishListener {
     public void onResume() {
         super.onResume();
         IntentFilter f = new IntentFilter();
-        f.addAction(PublishService.ACTION_SUCCESS);
-        f.addAction(PublishService.ACTION_FAILURE);
+        f.addAction(PublishService.ACTION_PUBLISH_SUCCESS);
+        f.addAction(PublishService.ACTION_PUBLISH_FAILURE);
+        f.addAction(PublishService.ACTION_JOB_SUCCESS);
+        f.addAction(PublishService.ACTION_JOB_FAILURE);
         f.addAction(PublishService.ACTION_PROGRESS);
         getActivity().registerReceiver(publishReceiver, f);
     }
@@ -204,21 +211,29 @@ public class PublishFragment extends Fragment implements PublishListener {
 
             if (intent.hasExtra(PublishService.INTENT_EXTRA_PUBLISH_JOB_ID)) {
                 int publishJobId = intent.getIntExtra(PublishService.INTENT_EXTRA_PUBLISH_JOB_ID, -1);
-                int jobId = intent.getIntExtra(PublishService.INTENT_EXTRA_JOB_ID, -1);
                 if (publishJobId != -1) {
                     PublishJob publishJob = (PublishJob) (new PublishJobTable()).get(getActivity().getApplicationContext(), publishJobId);
-                    Job job = (Job) (new JobTable()).get(getActivity().getApplicationContext(), jobId); // FIXME should we check for -1?
             
-                    if (intent.getAction().equals(PublishService.ACTION_SUCCESS)) {
-                        publishSucceeded(publishJob, job);
-                    } else if (intent.getAction().equals(PublishService.ACTION_FAILURE)) {
+                    if (intent.getAction().equals(PublishService.ACTION_PUBLISH_SUCCESS)) {
+                        publishSucceeded(publishJob);
+                    } else if (intent.getAction().equals(PublishService.ACTION_PUBLISH_FAILURE)) {
                         int errorCode = intent.getIntExtra(PublishService.INTENT_EXTRA_ERROR_CODE, -1);
                         String errorMessage = intent.getStringExtra(PublishService.INTENT_EXTRA_ERROR_MESSAGE);
-                        publishFailed(publishJob, job, errorCode, errorMessage);
+                        publishFailed(publishJob, errorCode, errorMessage);
+                    } else if (intent.getAction().equals(PublishService.ACTION_JOB_SUCCESS)) {
+                        int jobId = intent.getIntExtra(PublishService.INTENT_EXTRA_JOB_ID, -1);
+                        Job job = (Job) (new JobTable()).get(getActivity().getApplicationContext(), jobId); // FIXME should we check for -1?
+                        jobSucceeded(job);
+                    } else if (intent.getAction().equals(PublishService.ACTION_JOB_FAILURE)) {
+                        int jobId = intent.getIntExtra(PublishService.INTENT_EXTRA_JOB_ID, -1);
+                        Job job = (Job) (new JobTable()).get(getActivity().getApplicationContext(), jobId); // FIXME should we check for -1?
+                        int errorCode = intent.getIntExtra(PublishService.INTENT_EXTRA_ERROR_CODE, -1);
+                        String errorMessage = intent.getStringExtra(PublishService.INTENT_EXTRA_ERROR_MESSAGE);
+                        jobFailed(job, errorCode, errorMessage);
                     } else if (intent.getAction().equals(PublishService.ACTION_PROGRESS)) {
                         float progress = intent.getFloatExtra(PublishService.INTENT_EXTRA_PROGRESS, -1);
                         String message = intent.getStringExtra(PublishService.INTENT_EXTRA_PROGRESS_MESSAGE);
-                        publishProgress(publishJob, job, progress, message);
+                        publishProgress(publishJob, progress, message);
                     }
                 }
             }
@@ -316,6 +331,351 @@ public class PublishFragment extends Fragment implements PublishListener {
         db.close();
     }
     
+//    private String setUploadAccount() {
+//       
+//
+//        mMediaUploadAccountKey = null;
+//        
+//        if (mActivity.mMPM.mProject.getStoryType() == Project.STORY_TYPE_VIDEO
+//                || mActivity.mMPM.mProject.getStoryType() == Project.STORY_TYPE_ESSAY
+//                )
+//        {
+//        	mMediaUploadAccountKey = "youTubeUserName";
+//        	mMediaUploadAccount = mSettings.getString(mMediaUploadAccountKey, null);
+//        }
+//        else if (mActivity.mMPM.mProject.getStoryType() == Project.STORY_TYPE_AUDIO)
+//        {
+//        	mMediaUploadAccountKey = "soundCloudUserName";
+//        	mMediaUploadAccount = mSettings.getString(mMediaUploadAccountKey, null);
+//        }
+//         
+//
+//        if (mMediaUploadAccountKey != null && (mMediaUploadAccount == null || mMediaUploadAccount.length() == 0)) {
+//        
+//        	AccountManager accountManager = AccountManager.get(mActivity.getBaseContext());
+//            final Account[] accounts = accountManager.getAccounts();
+//
+//            if (accounts.length > 0) {
+//            	
+//                String[] accountNames = new String[accounts.length];
+//
+//                for (int i = 0; i < accounts.length; i++) {
+//                    accountNames[i] = accounts[i].name + " (" + accounts[i].type + ")";
+//                }
+//                
+//                AlertDialog.Builder builder = new AlertDialog.Builder(mActivity);
+//                builder.setTitle(R.string.choose_account_for_youtube_upload);
+//                builder.setItems(accountNames, new DialogInterface.OnClickListener() {
+//                    public void onClick(DialogInterface dialog, int item) {
+//                        mMediaUploadAccount = accounts[item].name;
+//                        
+//                        Editor editor = mSettings.edit();
+//                        
+//                        editor.putString(mMediaUploadAccountKey, mMediaUploadAccount);
+//                        editor.commit();
+//                        
+//                        doPublish();
+//                        
+//
+//                    }
+//                }).show();
+//                
+//              
+//            }
+//            else
+//            {
+//            	Toast.makeText(mActivity,R.string.err_you_need_at_least_one_account_configured_on_your_device,Toast.LENGTH_LONG).show();
+//            }
+//            
+//        }
+//        else
+//        {
+//        	 doPublish();
+//        }
+//        
+//        return mMediaUploadAccount;
+//    }
+
+    
+//    private void handlePublish(final boolean doYouTube, final boolean doStoryMaker, final boolean doOverwrite) {
+//        
+//    	initFragment();
+//    	
+//        EditText etTitle = (EditText) mView.findViewById(R.id.etStoryTitle);
+//        EditText etDesc = (EditText) mView.findViewById(R.id.editTextDescribe);
+//        EditText etLocation = (EditText)  mView.findViewById(R.id.editTextLocation);
+//        
+//		Spinner s = (Spinner) mView.findViewById( R.id.spinnerSections );
+//
+//		//only one item can be selected
+//		ArrayList<String> alCats = new ArrayList<String>();
+//		if (s.getSelectedItem() != null)
+//			alCats.add((String)s.getSelectedItem());
+//		
+//		//now support location with comma in it and set each one as a place category
+//		StringTokenizer st = new StringTokenizer(etLocation.getText().toString());
+//		while (st.hasMoreTokens())
+//		{
+//			alCats.add(st.nextToken());
+//		}
+//		
+//		//now add story type to categories: event, breaking-news, issue, feature.
+//		String catTag = mActivity.mMPM.mProject.getTemplateTag();
+//		if (catTag != null)
+//			alCats.add(catTag);
+//		
+//		String[] cattmp = new String[alCats.size()];
+//		int i = 0;
+//		for (String catstring: alCats)
+//			cattmp[i++] = catstring;
+//		
+//		final String[] categories = cattmp;
+//
+//        final String title = etTitle.getText().toString();
+//        final String desc = etDesc.getText().toString();
+//        
+//        String ytdesc = desc;
+//        if (ytdesc.length() == 0) {
+//            ytdesc = getString(R.string.default_youtube_desc); // can't
+//                                                                             // leave
+//                                                                             // the
+//                                                                             // description
+//                                                                             // blank
+//                                                                             // for
+//                                                                             // YouTube
+//        }
+//        
+//        ytdesc += "\n\n" + getString(R.string.created_with_storymaker_tag);
+//
+//        if (doYouTube)
+//        {
+//        	mYouTubeClient = new YouTubeSubmit(null, title, ytdesc, new Date(),
+//                mActivity, mHandlerPub, mActivity.getBaseContext());
+//			mYouTubeClient.setDeveloperKey(getString(R.string.dev_key,Locale.US));
+//        
+//	        mThreadYouTubeAuth = new Thread() {
+//	            public void run() {
+//	
+//	
+//	        		Account account = mYouTubeClient.setYouTubeAccount(mMediaUploadAccount);
+//	
+//		    			mYouTubeClient.getAuthTokenWithPermission(new AuthorizationListener<String>() {
+//		                    @Override
+//		                    public void onCanceled() {
+//		                    }
+//		
+//		                    @Override
+//		                    public void onError(Exception e) {
+//		                  	  Log.d("YouTube","error on auth",e);
+//		                  	 Message msgErr = new Message();
+//		                     msgErr.what = -1;
+//		                     msgErr.getData().putString("err", e.getLocalizedMessage());
+//		                     mHandlerPub.sendMessage(msgErr);
+//		                  	  
+//		                    }
+//		
+//		                    @Override
+//		                    public void onSuccess(String result) {
+//		                    	mYouTubeClient.setClientLoginToken(result);
+//		                      
+//		                      Log.d("YouTube","got client token: " + result);
+//		                      mThreadPublish.start();
+//		                      
+//	
+//		                    }});
+//	            	
+//	            	 
+//	            }
+//	            
+//	        	};
+//        }
+//            
+//        mThreadPublish = new Thread() {
+//
+//            public void run ()
+//            {
+//            	
+//                mHandlerPub.sendEmptyMessage(999);
+//   
+//                Message msg = mHandlerPub.obtainMessage(888);
+//                msg.getData().putString("status",
+//                        getActivity().getString(R.string.rendering_clips_));
+//                mHandlerPub.sendMessage(msg);
+//
+//                try {
+//                    
+//                	mFileLastExport = mActivity.mMPM.getExportMediaFile();
+//
+//                    boolean compress = mSettings.getBoolean("pcompress",false);//compress video?
+//                    
+//                    mActivity.mdExported = mActivity.mMPM.doExportMedia(mFileLastExport, compress, doOverwrite);
+//
+//                    // FIXME NPE if we ran out of space and Exported is null
+//                    File mediaFile = new File(mActivity.mdExported.path);
+//
+//                    if (mediaFile.exists()) {
+//
+//                        Message message = mHandlerPub.obtainMessage(777);
+//                        message.getData().putString("fileMedia", mActivity.mdExported.path);
+//                        message.getData().putString("mime", mActivity.mdExported.mimeType);
+//
+//                        if (doYouTube) {
+//
+//                            String mediaEmbed = "";
+//                            
+//                            String medium = null;
+//                            String mediaService = null;
+//                            String mediaGuid = null;
+//
+//                            if (mActivity.mMPM.mProject.getStoryType() == Project.STORY_TYPE_VIDEO
+//                                    || mActivity.mMPM.mProject.getStoryType() == Project.STORY_TYPE_ESSAY
+//                                    
+//                                    ) {
+//                            	
+//                            	
+//                            	medium = ServerManager.CUSTOM_FIELD_MEDIUM_VIDEO;
+//                            	
+//                                msg = mHandlerPub.obtainMessage(888);
+//                                msg.getData().putString("statusTitle",
+//                                        getActivity().getString(R.string.uploading));
+//                                msg.getData().putString("status", getActivity().getString(
+//                                        R.string.connecting_to_youtube_));
+//                                mHandlerPub.sendMessage(msg);
+//
+//                                mYouTubeClient.setVideoFile(mediaFile, mActivity.mdExported.mimeType);
+//                                mYouTubeClient.upload(YouTubeSubmit.RESUMABLE_UPLOAD_URL);
+//                                
+//                                while (mYouTubeClient.videoId == null) {
+//                                    try {
+//                                        Thread.sleep(1000);
+//                                    } catch (Exception e) {
+//                                    	Log.e(AppConstants.TAG,"unable to sleep during youtube upload",e);
+//                                    }
+//                                }
+//
+//                                mediaEmbed = "[youtube]" + mYouTubeClient.videoId + "[/youtube]";
+//                                mediaService = "youtube";
+//                                mediaGuid = mYouTubeClient.videoId;
+//                                
+//                                message.getData().putString("youtubeid", mYouTubeClient.videoId);
+//                            }
+//                            else if (mActivity.mMPM.mProject.getStoryType() == Project.STORY_TYPE_AUDIO) {
+//                            	/*
+//                            	medium = ServerManager.CUSTOM_FIELD_MEDIUM_AUDIO;
+//                            	
+//                                boolean installed = SoundCloudUploader
+//                                        .isCompatibleSoundCloudInstalled(mActivity.getBaseContext());
+//
+//                                if (installed) {
+//                                	
+//                                
+//                                
+//                                    String scDesc = desc + "\n\n" + getString(R.string.created_with_storymaker_tag);;
+//                                    
+//                                    SoundCloudUploader scu = new SoundCloudUploader();
+//                                    
+//                                    String scurl = scu.uploadSound(mediaFile, title, scDesc,
+//                                            REQ_SOUNDCLOUD, mActivity, mHandlerPub);
+//
+//                                    if (scurl != null)
+//                                    {
+//		                                mediaEmbed = "[soundcloud]" + scurl + "[/soundcloud]";
+//		
+//		                                mediaService = "soundcloud";
+//		                                mediaGuid = scurl;
+//                                    }
+//                                    else
+//                                    {
+//                                    	throw new IOException("SoundCloud upload failed");
+//                                    }
+//                                }
+//                                else {
+//                                    SoundCloudUploader.installSoundCloud(mActivity);
+//                                }*/
+//                            }
+//                            else if (mActivity.mMPM.mProject.getStoryType() == Project.STORY_TYPE_PHOTO)
+//                            {
+//                            	medium = ServerManager.CUSTOM_FIELD_MEDIUM_PHOTO;
+//
+//
+//                                ServerManager sm = StoryMakerApp.getServerManager();
+//                                sm.setContext(mActivity.getBaseContext());
+//                                
+//                                String murl = sm.addMedia(mActivity.mdExported.mimeType, mediaFile);
+//                                mediaEmbed = "<img src=\"" + murl + "\"/>";
+//                                
+//                            }
+//                            
+//
+//                            if (doStoryMaker) {
+//                            
+//                            	String postUrl = postToStoryMaker (title, desc, mediaEmbed, categories, medium, mediaService, mediaGuid);
+//
+//                                message.getData().putString("urlPost", postUrl);
+//
+//                            	
+//                            }
+//                            
+//                        }
+//                        
+//
+//                        handlerUI.sendEmptyMessage(0);
+//
+//                        mHandlerPub.sendMessage(message);
+//                        
+//                    }
+//                    else {
+//                        Message msgErr = new Message();
+//                        msgErr.what = -1;
+//                        msgErr.getData().putString("err", "Media export failed");
+//                        mHandlerPub.sendMessage(msgErr);
+//                    }
+//                        
+//                        
+//                } catch (XmlRpcFault e) {
+//                    Message msgErr = new Message();
+//                    msgErr.what = -1;
+//                    msgErr.getData().putString("err", e.getLocalizedMessage());
+//                    mHandlerPub.sendMessage(msgErr);
+//                    Log.e(AppConstants.TAG, "error posting", e);
+//                }
+//                catch (Exception e) {
+//                    Message msgErr = new Message();
+//                    msgErr.what = -1;
+//                    msgErr.getData().putString("err", e.getLocalizedMessage());
+//                    mHandlerPub.sendMessage(msgErr);
+//                    Log.e(AppConstants.TAG, "error posting", e);
+//                }
+//            }
+//        };
+//        
+//
+//	   	 if ((mActivity.mMPM.mProject.getStoryType() == Project.STORY_TYPE_VIDEO
+//	                || mActivity.mMPM.mProject.getStoryType() == Project.STORY_TYPE_ESSAY)
+//	               &&  doYouTube 
+//	                ) {
+//	   		
+//	   		 //if do youtube, get the auth token!
+//	   		 
+//	   		 mUseOAuthWeb = mSettings.getBoolean("pyoutubewebauth", false);
+//	   		 
+//	   		 if (mUseOAuthWeb)
+//	   		 {
+//	   			 Intent intent = new Intent(mActivity.getApplicationContext(),OAuthAccessTokenActivity.class);
+//	   		 
+//	   			 mActivity.startActivityForResult(intent,EditorBaseActivity.REQ_YOUTUBE_AUTH);
+//	   		 }
+//	   		 else
+//	   		 {
+//			 			mThreadYouTubeAuth.start();
+//	   		 }
+//	   	 }
+//	   	 else
+//	   	 {
+//	   		 mThreadPublish.start();
+//	   	 }
+//    }
+    
     public String postToStoryMaker (String title, String desc, String mediaEmbed, String[] categories, String medium, String mediaService, String mediaGuid) throws MalformedURLException, XmlRpcFault
     {
 
@@ -374,21 +734,17 @@ public class PublishFragment extends Fragment implements PublishListener {
                     boolean useTor = intent.getBooleanExtra(ChooseAccountFragment.EXTRAS_USE_TOR, false);
                     boolean publishToStoryMaker = intent.getBooleanExtra(ChooseAccountFragment.EXTRAS_PUBLISH_TO_STORYMAKER, false);
                     
-                    if(publishToStoryMaker) {
-                    	ServerManager sm = StoryMakerApp.getServerManager();
-                        sm.setContext(mActivity.getBaseContext());
-                        
-                        if(!sm.hasCreds()) {
-                        	Intent connectSMIntent = new Intent(mActivity, ConnectAccountActivity.class);
-                        	connectSMIntent.putExtra("isPublishPending", true); //TODO add logic to ConnectAccountActivity to return here and continue publish
-                        	getActivity().startActivity(connectSMIntent);
-                        }
-                    }
-
                     showUploadSpinner(true);
                     mUploading = true;
                     mPlaying = false;
-                    if (mFileLastExport != null && mFileLastExport.exists()) { // FIXME replace this with a check to make sure render is suitable
+//                    if (mFileLastExport != null && mFileLastExport.exists()) { // FIXME replace this with a check to make sure render is suitable
+                    if (mMatchingRenderJob != null) {
+                        // FIXME i think we need to add that render job to this publishJob here
+                        PublishJob publishJob = PublishController.getMatchingPublishJob(getActivity().getApplicationContext(), mActivity.mMPM.mProject, mSiteKeys, useTor, publishToStoryMaker);
+                        Job newJob = JobTable.cloneJob(getActivity().getApplicationContext(), mMatchingRenderJob);
+                        newJob.setPublishJobId(publishJob.getId());
+                        newJob.save();
+                        mMatchingRenderJob = newJob;
                         startUpload(mActivity.mMPM.mProject, mSiteKeys, useTor, publishToStoryMaker);
                     } else {
                         startRender(mActivity.mMPM.mProject, mSiteKeys, useTor, publishToStoryMaker);
@@ -401,7 +757,7 @@ public class PublishFragment extends Fragment implements PublishListener {
             }
         } else {
             Log.d("PublishFragment", "Choose Accounts dialog canceled");
-            Utils.toastOnUiThread(mActivity, "Choose Accounts dialog canceled!"); // FIXME move to strings.xml
+//            Utils.toastOnUiThread(mActivity, "Choose Accounts dialog canceled!"); // FIXME move to strings.xml
             showPlayAndUpload(true);
         }
     }
@@ -413,7 +769,7 @@ public class PublishFragment extends Fragment implements PublishListener {
         i.putExtra(PublishService.INTENT_EXTRA_USE_TOR, useTor);
         i.putExtra(PublishService.INTENT_EXTRA_PUBLISH_TO_STORYMAKER, publishToStoryMaker);
         i.putExtra(PublishService.INTENT_EXTRA_SITE_KEYS, siteKeys);
-        getActivity().startService(i);
+        startService(i, publishToStoryMaker);
     }
     
     private void startUpload(Project project, String[] siteKeys, boolean useTor, boolean publishToStoryMaker) {
@@ -423,53 +779,38 @@ public class PublishFragment extends Fragment implements PublishListener {
         i.putExtra(PublishService.INTENT_EXTRA_USE_TOR, useTor);
         i.putExtra(PublishService.INTENT_EXTRA_PUBLISH_TO_STORYMAKER, publishToStoryMaker);
         i.putExtra(PublishService.INTENT_EXTRA_SITE_KEYS, siteKeys);
-        getActivity().startService(i);
+        startService(i, publishToStoryMaker);
     }
-	
+    
+    private void startService(Intent i, boolean publishToStoryMaker) {
+        if(publishToStoryMaker) {
+        	attachedActivity = getActivity();
+        	serviceIntent = i;
+        	
+        	ServerManager sm = StoryMakerApp.getServerManager();
+            sm.setContext(mActivity.getBaseContext());
+            
+            if(!sm.hasCreds()) {
+            	Intent connectSMIntent = new Intent(mActivity, ConnectAccountActivity.class);
+            	connectSMIntent.putExtra("isPublishPending", true);
+            	getActivity().startActivity(connectSMIntent);
+            }
+        }
+    	
+    	getActivity().startService(i);
+    }
+    
+    public void continuePublishService() {	
+    	if(null != serviceIntent) {
+    		attachedActivity.startService(serviceIntent);
+    	}    	
+    }
 
     @Override
-    public void publishSucceeded(PublishJob publishJob, Job job) {
-        if (job.getType().equals(JobTable.TYPE_RENDER)) {
-            if (mPlaying) {
-                showUploadSpinner(false); 
-                showPlaySpinner(false);
-                
-                String path = publishJob.getLastRenderFilePath(); // FIXME this can be null
-                if (path != null) { // FIXME this won't work when a upload job succeeds
-                    mFileLastExport = new File(path);
-                    Handler handlerTimer = new Handler();
-                    mProgressText.setText("Complete!");
-                    handlerTimer.postDelayed(new Runnable(){
-                        public void run() {
-                            showPlayAndUpload(true);
-                        }
-                    }, 200);
-                } else {
-                    Log.d(TAG, "last rendered path is empty!");
-                }                
-                
-                if (mFileLastExport != null && mFileLastExport.exists()) { // FIXME replace this with a check to make sure render is suitable
-                    mActivity.mMPM.mMediaHelper.playMedia(mFileLastExport, null);
-                } 
-                mPlaying = false;
-            } if (mUploading) { 
-                startUpload(mActivity.mMPM.mProject, mSiteKeys, publishJob.getUseTor(), publishJob.getPublishToStoryMaker());
-            }
-        } else if (job.getType().equals(JobTable.TYPE_UPLOAD)) {
+    public void publishSucceeded(PublishJob publishJob) {
             showUploadSpinner(false); 
             showPlaySpinner(false);
             Utils.toastOnUiThread(mActivity, "Publish succeeded!");
-        }
-
-        
-//        if (job != null) {
-//            
-//        }
-        if (mPlaying) {
-        } else if (mUploading) {
-            
-        }
-//    }
         
 ////        if (publishJob.isFinished()) {
 //            showUploadSpinner(false); // FIXME we should detect which stage of the job just finished
@@ -504,17 +845,57 @@ public class PublishFragment extends Fragment implements PublishListener {
     }
     
     @Override
-    public void publishFailed(PublishJob publishJob, Job job, int errorCode, String errorMessage) {
+    public void publishFailed(PublishJob publishJob, int errorCode, String errorMessage) {
         Utils.toastOnUiThread(getActivity(), "Publish failed :'( ... " + publishJob); // FIXME move to strings.xml
         showError(errorCode, errorMessage);
     }
 
     @Override
-    public void publishProgress(PublishJob publishJob, Job job, float progress, String message) {
+    public void publishProgress(PublishJob publishJob, float progress, String message) {
 //        Utils.toastOnUiThread(getActivity(), "Progress at " + (progress / 10000) + "%: " + message);
         int prog = Math.round(progress * 100);
         String txt = message + ((prog > 0) ? " " + prog + "%" : "");
         mProgressText.setText(txt);
         Log.d(TAG, txt);
+    }
+
+    @Override
+    public void jobSucceeded(Job job) {
+        PublishJob publishJob = job.getPublishJob();
+        if (job.getType().equals(JobTable.TYPE_RENDER)) {
+            if (mPlaying) {
+                showUploadSpinner(false); 
+                showPlaySpinner(false);
+                
+                String path = publishJob.getLastRenderFilePath(); // FIXME this can be null
+                if (path != null) { // FIXME this won't work when a upload job succeeds
+                    mFileLastExport = new File(path);
+                    Handler handlerTimer = new Handler();
+                    mProgressText.setText("Complete!");
+                    handlerTimer.postDelayed(new Runnable(){
+                        public void run() {
+                            showPlayAndUpload(true);
+                        }
+                    }, 200);
+                } else {
+                    Log.d(TAG, "last rendered path is empty!");
+                }                
+                
+                if (mFileLastExport != null && mFileLastExport.exists()) { // FIXME replace this with a check to make sure render is suitable
+                    mActivity.mMPM.mMediaHelper.playMedia(mFileLastExport, null);
+                } 
+                mPlaying = false;
+            } if (mUploading) { 
+                startUpload(mActivity.mMPM.mProject, mSiteKeys, publishJob.getUseTor(), publishJob.getPublishToStoryMaker());
+            }
+        } else if (job.getType().equals(JobTable.TYPE_UPLOAD)) {
+            // FIXME ???
+        }
+    }
+
+    @Override
+    public void jobFailed(Job job, int errorCode, String errorMessage) {
+        // TODO Auto-generated method stub
+        
     }
 }

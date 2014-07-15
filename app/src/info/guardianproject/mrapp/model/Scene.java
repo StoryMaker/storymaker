@@ -446,6 +446,10 @@ public class Scene extends Model {
         return projectId;
     }
 
+    public Project getProject() {
+        return (Project) new ProjectTable().get(context, projectId);
+    }
+
     /**
      * @param projectId the projectId to set
      */
