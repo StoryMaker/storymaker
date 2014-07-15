@@ -62,9 +62,16 @@ public class StoryMakerDB extends SQLiteOpenHelper {
             db.execSQL(StoryMakerDB.Schema.Tags.UPDATE_TABLE_TAGS);
         }
         if ((oldVersion < 7) && (newVersion >= 7)) {
-            db.execSQL(StoryMakerDB.Schema.Projects.UPDATE_TABLE_PROJECTS_ADD_DESCRIPTION);
+            @SuppressWarnings("unchecked")
+            ArrayList<Scene> scenes = (ArrayList<Scene>) (new SceneTable(db)).getAllAsList(mContext);
+            for (Scene scene: scenes) {
+                scene.migrateDeleteDupedMedia();
+            }
         }
         if ((oldVersion < 8) && (newVersion >= 8)) {
+            db.execSQL(StoryMakerDB.Schema.Projects.UPDATE_TABLE_PROJECTS_ADD_DESCRIPTION);
+        }
+        if ((oldVersion < 9) && (newVersion >= 9)) {
             db.execSQL(StoryMakerDB.Schema.Jobs.CREATE_TABLE_JOBS);
             db.execSQL(StoryMakerDB.Schema.PublishJobs.CREATE_TABLE_PUBLISH_JOBS);
         }

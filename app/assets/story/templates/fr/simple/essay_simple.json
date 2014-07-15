@@ -8,7 +8,7 @@
                     "Goal": "Résumez le problème entier en illustrant un élément essentiel de l'histoire.", 
                     "Length": "X secondes", 
                     "Security Concern": "-", 
-                    "Shot Size": "Détails", 
+                    "Taille de Capture": "Détails", 
                     "Tip": "Set your camera to Macro if you are shooting less than arm\u2019s length from your subject.", 
                     "Title": "Signature"
                 }, 
@@ -18,15 +18,15 @@
                     "Goal": "Montrer comment les gens réagissent avec l’événement ou ses conséquences.",  
                     "Length": "X secondes", 
                     "Security Concern": "-", 
-                    "Shot Size": "Moyenne", 
-                    "tip": "Gardez votre personnage sur une des lignes verticales pour cadrer votre capture proprement", 
+                    "taille de Capture": "Moyenne", 
+                    "Astuce":"Gardez votre personnage sur une des lignes verticales pour cadrer votre capture proprement". 
                     "Title": "Reaction/Interaction"
                 }, 
                 {
-                    "Artwork": "cliptype_long", 
-                    "Description": "Représenter le personnage se comporter naturellement. Pourquoi le personnage est remarquable? Montrer le public.", 
+                    "Illustration":"Type_Longue" 
+                    "Description":"Représenter le personnage se comporter naturellement. Pourquoi le personnage est remarquable? Montrer le public.", 
                     "But": "Montrer le Personnage engagé dans son environnement.", 
-                    "Length": "X secondes", 
+                    "Longueur": "X secondes", 
                     "Security Concern": "-", 
                     "Shot Size": "Longue", 
                     "Tip": "Placez votre personnage sur un côté du cadre, cadrez votre capture à montrer quelque chose d'important à l'histoire sur l'autre côté.", 

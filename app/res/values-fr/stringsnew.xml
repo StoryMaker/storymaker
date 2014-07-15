@@ -4,18 +4,18 @@
   <string name="terms_text_1">Vous conservez tous les droits de propriété sur votre contenu, vous pouvez le retirer  à chaque fois que vous le souhaitez, et nous ne vendra aucune de vos données. En acceptant de partager votre contenu avec StoryMaker.cc vous autorisez \"Small World News\" et des partenaires pour placer vos histoires avec des histoires similaires créés avec Storymaker. Nous les regroupons selon les types d\'articles, sujets et des lieux.</string>
   <string name="terms_text_2">Votre  article reste posté et partagé dans un site web à votre choix, mais il sera aussi référencé  sur  \"alive.in/\" . Le titre, la description de l\'article et les mots clés seront aussi publiés sur \"alive.in/\" et tous le reste du contenu sera référencé à votre site de partage.</string>
   <!--tutorial_lessons-->
-  <string name="tutorial_title_1">Apprends à raconter ton histoire.</string>
+  <string name="tutorial_title_1">Apprendre à raconter votre histoire.</string>
   <string name="tutorial_text_1">Apprendre à être un journaliste en toute sécurité, produire de bonne qualité de son, photos et des articles en video</string>
   <string name="tutorial_title_2">Etre Précis</string>
   <string name="tutorial_text_2">Développées en partenariat avec \"ICFJ\", vous pouvez être sûr que nos leçons de journalisme vont vous apprendre à être un meilleur journaliste.</string>
-  <string name="tutorial_title_3">Protégez-vous</string>
+  <string name="tutorial_title_3">Protégez-vous.</string>
   <string name="tutorial_text_3">Nos leçons numériques de sécurité vous aideront, vous et vos sources à rester en sécurité. \"StoryMaker\" vise à vous garder en sécurité, peu importe où votre histoire vous prend.</string>
   <string name="tutorial_title_4">Raconter votre histoire plus mieux</string>
   <string name="tutorial_text_4">Les histoires sont mieux adaptés à différents supports, que ce soit audio, photo ou vidéo. Apprenez comment chaque support est différent.</string>
-  <string name="tutorial_title_5">Testez vos connaissances</string>
+  <string name="tutorial_title_5">Testez vos connaissances.</string>
   <string name="tutorial_text_5">Chaque leçon se termine par un quiz pour tester vos compréhensions.</string>
-  <string name="tutorial_title_6">Continuez à apprendre</string>
-  <string name="tutorial_text_6">Partagez vos histoires avec la communauté  \"Alive.in /\" , et apprendre à être un meilleur créateur d\'histoires avec chaque article que vous partagez.</string>
+  <string name="tutorial_title_6">Continuez à apprendre.</string>
+  <string name="tutorial_text_6">Partagez vos histoires avec la communauté StoryMaker.cc et apprendre à être un meilleur créateur d\'histoires avec chaque article que vous partagez.</string>
   <!--/tutorial_lessons-->
   <!--tutorial_story-->
   <string name="tutorial_title_7">Mieux Raconter des histoires</string>
@@ -70,8 +70,15 @@
   <string name="choose_level_advanced">avancé</string>
   <!--/template_options-->
   <!--story_type_new-->
+  <string name="overview">à propos</string>
   <string name="activity">Activité</string>
+  <string name="impact">Imapcte</string>
+  <string name="motivation">Motivation</string>
   <string name="location">Localisation</string>
+  <string name="experience">Expérience</string>
+  <string name="results">Résultats</string>
+  <string name="next_steps">Étapes Suivantes</string>
+  <string name="conclusion">Conclusion</string>
   <string name="story_type_event_breaking_text1">Qu\'est-ce qui se passe ?</string>
   <string name="story_type_event_breaking_text3">Qui est concerné?</string>
   <!--/story_type_new-->
@@ -94,7 +101,7 @@
   <string name="story_type_issue_text2">Qui est le plus touché?</string>
   <string name="story_type_issue_text3">Qu\'est ce qu\'on a fait en réponse?</string>
   <string name="story_type_issue_text4">Comment la communauté est influencée par ce problème?</string>
-  <string name="story_type_issue_text5">Quand / Où le problème à commencé?</string>
+  <string name="story_type_issue_text5">Quand / Où le problème a commencé?</string>
   <string name="story_type_issue_text6">Qui est le plus touché?</string>
   <string name="story_type_issue_text7">Pourquoi sont-ils les plus touchés?</string>
   <string name="story_type_issue_text8">Qu\'est-ce qu\'on a fait en réponse?</string>
@@ -116,8 +123,6 @@
   <string name="story_type_news_text8">Comment on a répondu?</string>
   <!--/story_type_old-->
   <!--prefs-->
-  <string name="prefs_interface_language_summary"></string>
-  <string name="prefs_lesson_language_summary"></string>
   <string name="prefs_disable_lesson_completion_summary"></string>
   <!--/prefs-->
   <!--FirstStartActivity-->

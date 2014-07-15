@@ -497,7 +497,7 @@ public class HomeActivity extends BaseActivity {
         intent.putExtra("story_mode", project.getStoryType());
         intent.putExtra("pid", project.getId());
         intent.putExtra("title", project.getTitle());
-        String templateJsonPath = Project.getSimpleTemplateForMode(getApplicationContext(), project.getStoryType());
+        String templateJsonPath = Project.getSimpleTemplateForMode(getApplicationContext(), project.getStoryType()); // FIXME opt: this is redundant as the  SceneEditorActivity does this again itself
         intent.putExtra("template_path", templateJsonPath);
 
         startActivity(intent);
@@ -507,7 +507,7 @@ public class HomeActivity extends BaseActivity {
     {
     	ArrayList<Lesson> result = new ArrayList<Lesson>();
     	
-    	Locale locale = ((StoryMakerApp)getApplication()).getCurrentLocale();
+    	Locale locale = StoryMakerApp.getCurrentLocale();
     	
         LessonManager lessonManager = StoryMakerApp.getLessonManager();
         

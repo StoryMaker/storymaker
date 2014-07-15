@@ -178,8 +178,6 @@
   <string name="prefs_youtube_login_summary">유투브 웹 인증 사용하기</string>
   <string name="prefs_soundcloud_account_title">SoundCloud 계정</string>
   <string name="prefs_soundcloud_account_summary">오디오 업로드를 위해 SoundCloud 계정 사용하기</string>
-  <string name="prefs_interface_language_summary"></string>
-  <string name="prefs_lesson_language_summary"></string>
   <string name="prefs_disable_lesson_completion_summary"></string>
   <!--/prefs-->
   <!--FirstStartActivity-->

@@ -9,7 +9,7 @@
                     "Length": "× ثوان", 
                     "Security Concern": "-", 
                     "Tip": "قد تحتاج إلى الاحتفاظ بميكروفونك مقرباً للغاية لتسجيل لقطة موقعة. تأكد من أن صوت مصدرك غير مرتفع بشكل زائد", 
-                    "Title": "Signature"
+                    "Title": "التوقيع"
                 }, 
                 {
                     "Artwork": "cliptype_wide", 
@@ -18,7 +18,7 @@
                     "Length": "× ثوان", 
                     "Security Concern": "-", 
                     "Tip": "تريد لقطة البيئة المحيطة المساهمة في رواية القصة. إذا كانت هناك أصوات غير ذات صلة بالقصة يمكن أن يؤدي هذا إلى تشتيت الجمهور", 
-                    "Title": "Ambient"
+                    "Title": "البيئة المحيطة"
                 }, 
                 {
                     "Artwork": "cliptype_close", 
@@ -27,7 +27,7 @@
                     "Length": "× ثوان", 
                     "Security Concern": "-", 
                     "Tip": "حافظ على اللقطة مختصرة. ببساطة قدم الجمهور للشخصية، أو اسمح للشخصية بتقديم نفسها. احتفظ بمعلومات إضافية للمقابلة الشخصية", 
-                    "Title": "Narrative"
+                    "Title": "الرواية"
                 }, 
                 {
                     "Artwork": "cliptype_medium", 
@@ -35,8 +35,8 @@
                     "Goal": "اطلب من الشخصية أن يقص قصة", 
                     "Length": "× ثوان", 
                     "Security Concern": "-", 
-                    "Tip": "If you want the audience to hear your questions and the subject\u2019s answers, be sure that you are both close enough to the mic to be heard clearly.", 
-                    "Title": "Interview"
+                    "Tip": "إذا أردت أن يسمع الجمهور أسئلتك وإجابات الموضوع، تأكد من أن كلاً منكما قريب بما يكفي للميكروفون للتمكن من الاستماع إليكما بصورة واضحة", 
+                    "Title": "مقابلة شخصية"
                 }, 
                 {
                     "Artwork": "cliptype_wide", 
@@ -45,11 +45,11 @@
                     "Length": "× ثوان", 
                     "Security Concern": "-", 
                     "Tip": "سجل الصوت العام للبيئة. تأكد من عدم إصدار أية ضوضاء من جانبك، حيث أن ذلك يؤدي إلى تشتيت الجمهور عن الصوت الطبيعي", 
-                    "Title": "Environmental"
+                    "Title": "للبيئة"
                 }
             ], 
-            "title": "Scene 1"
+            "title":"مشهد1"
         }
     ], 
-    "title": "Audio Simple"
+    "title":"مقطع صوت"
 }

@@ -236,10 +236,10 @@
 <string name="prefs_soundcloud_account_summary">The SoundCloud account to use for audio uploads</string>
 
 <string name="prefs_interface_language_title">Select Language</string>
-<string name="prefs_interface_language_summary"></string>
+<string name="prefs_interface_language_summary">The language StoryMaker will use for the user interface.</string>
 
-<string name="prefs_lesson_language_title">Select Lessons Language</string>
-<string name="prefs_lesson_language_summary"></string>
+<string name="prefs_lesson_language_title">Select Lessons</string>
+<string name="prefs_lesson_language_summary">The lesson module to use.</string>
 
 <string name="prefs_slide_duration_title">Slide Duration</string>
 <string name="prefs_slide_duration_summary">Duration of each slide in a photo essay</string>

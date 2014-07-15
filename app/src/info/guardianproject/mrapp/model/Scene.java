@@ -11,6 +11,7 @@ import info.guardianproject.mrapp.db.StoryMakerDB;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.util.Log;
 
 public class Scene extends Model {
 	final private String TAG = "Scene";
@@ -492,5 +493,43 @@ public class Scene extends Model {
         update();
         
         return true;
+    }    
+    
+    public void migrateDeleteDupedMedia() {
+        Log.d("Scene", "Migrating to delete duped Media records in scene: " + this.getId());
+        Cursor cursor = getMediaAsCursor();
+        ArrayList<Media> medias = new ArrayList<Media>(mClipCount);
+        
+        // prep the list
+        for (int i = 0; i < mClipCount; i++) {
+            medias.add(null);
+        }
+
+        // build a reduced array list
+        if (cursor.moveToFirst()) {
+            do {
+                Media media = new Media(mDB, context, cursor);
+                medias.set(media.clipIndex, media);
+            } while (cursor.moveToNext());
+        }
+        
+        if (cursor.moveToFirst()) {
+            do {
+                int id = cursor.getInt(cursor.getColumnIndex(StoryMakerDB.Schema.Media.ID));
+                boolean found = false;
+                for (Media m: medias) {
+                    if (m.getId() == id) {
+                        found = true;
+                    }
+                }
+                // if it's not found in the reduced arraylist, this means it was a dupe record that we can delete
+                if (!found) {
+                    Log.d("Scene", "found a deplicated media: " + id);
+                    (new MediaTable(mDB)).delete(context, id);
+                }
+            } while (cursor.moveToNext());
+        }
+        
+        cursor.close();
     }
 }
