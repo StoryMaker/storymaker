@@ -1,9 +1,12 @@
 package info.guardianproject.mrapp.db;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 import info.guardianproject.mrapp.model.Auth;
 import info.guardianproject.mrapp.model.Project;
+import info.guardianproject.mrapp.model.Scene;
+import info.guardianproject.mrapp.model.SceneTable;
 import net.sqlcipher.database.SQLiteDatabase;
 import net.sqlcipher.database.SQLiteOpenHelper;
 import android.content.Context;
@@ -11,7 +14,7 @@ import android.util.Log;
 
 public class StoryMakerDB extends SQLiteOpenHelper {
     private static final String TAG = "StoryMakerDB";
-    private static final int DB_VERSION = 8;
+    private static final int DB_VERSION = 9;
     private static final String DB_NAME = "sm.db";
     private Context mContext;
     
