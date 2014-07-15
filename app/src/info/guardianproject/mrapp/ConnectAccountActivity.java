@@ -21,7 +21,6 @@ public class ConnectAccountActivity extends BaseActivity {
     private Button mSignInOrOutBtn;
     
     private ServerManager mServerManager;
-    private boolean isPublishPending = false;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -29,11 +28,6 @@ public class ConnectAccountActivity extends BaseActivity {
         setContentView(R.layout.activity_connect_account);
         mServerManager = ((StoryMakerApp) this.getApplication()).getServerManager();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        
-        Bundle extras = getIntent().getExtras();
-        if (extras != null) {
-             isPublishPending = extras.getBoolean("isPublishPending");
-        }
         
         mActivityJustCreated = true;
         assignViewReferences();
@@ -69,10 +63,6 @@ public class ConnectAccountActivity extends BaseActivity {
     public void onSignInButtonClick(View v) {
         if (!mServerManager.hasCreds()) {
             Intent loginIntent = new Intent(this, LoginActivity.class);
-            
-            if(isPublishPending) {
-            	loginIntent.putExtra("isPublishPending", isPublishPending);
-            }
             
             startActivity(loginIntent);
         } else {
