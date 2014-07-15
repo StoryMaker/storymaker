@@ -227,6 +227,7 @@ public class StoryMakerDB extends SQLiteOpenHelper {
             public static final String COL_SITE = "site";
             public static final String COL_USER_NAME = "user_name";
             public static final String COL_CREDENTIALS = "credentials";
+            public static final String COL_DATA = "data";
             public static final String COL_EXPIRES = "expires";
             public static final String COL_LAST_LOGIN = "last_login";
             
@@ -234,8 +235,9 @@ public class StoryMakerDB extends SQLiteOpenHelper {
                     + ID + " integer primary key autoincrement, " 
                     + COL_NAME + " text not null, "
                     + COL_SITE + " text not null, "
-                    + COL_USER_NAME + " text not null, "
-                    + COL_CREDENTIALS + " text not null, "
+                    + COL_USER_NAME + " text, "
+                    + COL_CREDENTIALS + " text, "
+                    + COL_DATA + " text, "
                     + COL_EXPIRES + " integer, "
                     + COL_LAST_LOGIN + " integer "
                     + "); ";

@@ -21,10 +21,11 @@ public class Auth extends Model {
     protected String site;
     protected String userName;
     protected String credentials;
+    protected String data; // a string blob of whatever this service needs to store
     protected Date expires; // long stored in database as 8-bit int; null or 0 means no expiration
     protected Date lastLogin; // long stored in database as 8-bit int; null or 0 means never logged in
     
-    public static final String STORYMAKER = "storymaker";
+    public static final String SITE_STORYMAKER = "storymaker"; // FIXME move them to a better place
 
     /**
      * Create a new, blank record via the Content Provider interface
@@ -56,10 +57,11 @@ public class Auth extends Model {
      * @param site
      * @param userName
      * @param credentials
+     * @param data
      * @param expires
      * @param lastLogin
      */
-    public Auth(Context context, int id, String name, String site, String userName, String credentials, Date expires, Date lastLogin ) {
+    public Auth(Context context, int id, String name, String site, String userName, String credentials, String data, Date expires, Date lastLogin ) {
         super(context);
         this.context = context;
         this.id = id;
@@ -67,6 +69,31 @@ public class Auth extends Model {
         this.site = site;
         this.userName = userName;
         this.credentials = credentials;
+        this.data = data;
+        this.expires = expires;
+        this.lastLogin = lastLogin;
+    }
+    
+    /**
+     * Create a Model object via direct params, except for auto-incremented primary key, using Content Provider interface.
+     * 
+     * @param context
+     * @param name
+     * @param site
+     * @param userName
+     * @param credentials
+     * @param data
+     * @param expires
+     * @param lastLogin
+     */
+    public Auth(Context context, String name, String site, String userName, String credentials, String data, Date expires, Date lastLogin ) {
+        super(context);
+        this.context = context;
+        this.name = name;
+        this.site = site;
+        this.userName = userName;
+        this.credentials = credentials;
+        this.data = data;
         this.expires = expires;
         this.lastLogin = lastLogin;
     }
@@ -83,11 +110,31 @@ public class Auth extends Model {
      * @param site
      * @param userName
      * @param credentials
+     * @param data
      * @param expires
      * @param lastLogin
      */
-    public Auth(SQLiteDatabase db, Context context, int id, String name, String site, String userName, String credentials, Date expires, Date lastLogin ) {
-        this(context, id, name, site, userName, credentials, expires, lastLogin);
+    public Auth(SQLiteDatabase db, Context context, int id, String name, String site, String userName, String credentials, String data, Date expires, Date lastLogin ) {
+        this(context, id, name, site, userName, credentials, data, expires, lastLogin);
+        this.mDB = db;
+    }
+    
+    /**
+     * Create a Model object via direct params, except for auto-incremented primary key, via direct db access.
+     * 
+     * This should be used within DB Migrations and Model or Table classes
+     * 
+     * @param db
+     * @param context
+     * @param name
+     * @param site
+     * @param userName
+     * @param credentials
+     * @param expires
+     * @param lastLogin
+     */
+    public Auth(SQLiteDatabase db, Context context, String name, String site, String userName, String credentials, String data, Date expires, Date lastLogin ) {
+        this(context, name, site, userName, credentials, data, expires, lastLogin);
         this.mDB = db;
     }
 
@@ -104,6 +151,7 @@ public class Auth extends Model {
              cursor.getString(cursor.getColumnIndex(StoryMakerDB.Schema.Auth.COL_SITE)),
              cursor.getString(cursor.getColumnIndex(StoryMakerDB.Schema.Auth.COL_USER_NAME)),
              cursor.getString(cursor.getColumnIndex(StoryMakerDB.Schema.Auth.COL_CREDENTIALS)),
+             cursor.getString(cursor.getColumnIndex(StoryMakerDB.Schema.Auth.COL_DATA)),
              (!cursor.isNull(cursor.getColumnIndex(StoryMakerDB.Schema.Auth.COL_EXPIRES)) ?
                new Date(cursor.getLong(cursor.getColumnIndex(StoryMakerDB.Schema.Auth.COL_EXPIRES))) : null),
              (!cursor.isNull(cursor.getColumnIndex(StoryMakerDB.Schema.Auth.COL_LAST_LOGIN)) ?
@@ -158,6 +206,7 @@ public class Auth extends Model {
         values.put(StoryMakerDB.Schema.Auth.COL_SITE, site);
         values.put(StoryMakerDB.Schema.Auth.COL_USER_NAME, userName);
         values.put(StoryMakerDB.Schema.Auth.COL_CREDENTIALS, credentials);
+        values.put(StoryMakerDB.Schema.Auth.COL_DATA, data);
         if (expires != null) {
             values.put(StoryMakerDB.Schema.Auth.COL_EXPIRES, expires.getTime());
         }
@@ -185,6 +234,30 @@ public class Auth extends Model {
         }
         super.insert();
         dupCursor.close();
+    }
+	
+    public static boolean migrate(Context context, SQLiteDatabase db) // returns true/false
+    {
+        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context);
+        String user = settings.getString("user",null);
+        String pass = settings.getString("pass",null);
+        
+        if ((user != null) && (pass != null))
+        {
+            Auth storymakerAuth = new Auth(db,
+                                           context,
+                                           "StoryMaker.cc",
+                                           Auth.SITE_STORYMAKER,
+                                           user,
+                                           pass,
+                                           null,
+                                           null,
+                                           new Date());
+            storymakerAuth.insert();
+            return true;
+        }
+
+        return false;
     }
 
     // getters and setters
@@ -239,6 +312,20 @@ public class Auth extends Model {
     }
 
     /**
+     * @param data, a string blob that a site can store arbitrary data in 
+     */
+    public void setData(String data) {
+        this.data = data;
+    }
+
+    /**
+     * @return data, a string blob that a site can store arbitrary data in
+     */
+    public String getData() {
+        return data;
+    }
+
+    /**
      * @param credentials 
      */
     public void setCredentials(String credentials) {
@@ -271,30 +358,6 @@ public class Auth extends Model {
      */
     public void setLastLogin(Date lastLogin) {
         this.lastLogin = lastLogin;
-    }
-    
-    public static boolean migrate(Context context, SQLiteDatabase db) // returns true/false
-    {
-        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context);
-        String user = settings.getString("user",null);
-        String pass = settings.getString("pass",null);
-        
-        if ((user != null) && (pass != null))
-        {
-            Auth storymakerAuth = new Auth(db,
-                                           context,
-                                           -1, // should be set to a real value by insert method
-                                           "StoryMaker.cc",
-                                           "storymaker",
-                                           user,
-                                           pass,
-                                           null,
-                                           new Date());
-            storymakerAuth.insert();
-            return true;
-        }
-
-        return false;
     }
 }
     

@@ -70,7 +70,7 @@ public class ServerManager {
 	//if the user hasn't logged in, show the login screen
     public boolean hasCreds ()
     {
-        Auth checkAuth = (new AuthTable()).getAuthDefault(mContext, Auth.STORYMAKER);
+        Auth checkAuth = (new AuthTable()).getAuthDefault(mContext, Auth.SITE_STORYMAKER);
         if (checkAuth == null) // added null check to prevent uncaught null pointer exception
             return false;
         else
@@ -81,7 +81,7 @@ public class ServerManager {
     {
         if (mWordpress == null)
         {
-            Auth auth = (new AuthTable()).getAuthDefault(mContext, Auth.STORYMAKER);
+            Auth auth = (new AuthTable()).getAuthDefault(mContext, Auth.SITE_STORYMAKER);
             if (auth != null) {
                 String user = auth.getUserName();
                 String pass = auth.getCredentials();
