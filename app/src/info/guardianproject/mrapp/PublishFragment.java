@@ -386,8 +386,8 @@ public class PublishFragment extends Fragment implements PublishListener {
                     
                     boolean useTor = intent.getBooleanExtra(ChooseAccountFragment.EXTRAS_USE_TOR, false);
                     boolean publishToStoryMaker = intent.getBooleanExtra(ChooseAccountFragment.EXTRAS_PUBLISH_TO_STORYMAKER, false);
-
-                    showUploadSpinner(true);        
+                    
+                    showUploadSpinner(true);
                     mUploading = true;
                     mPlaying = false;
 //                    if (mFileLastExport != null && mFileLastExport.exists()) { // FIXME replace this with a check to make sure render is suitable

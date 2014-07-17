@@ -33,6 +33,7 @@ public class LoginActivity extends BaseActivity implements Runnable
 	private TextView txtStatus;
 	private EditText txtUser;
 	private EditText txtPass;
+
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {

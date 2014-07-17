@@ -28,6 +28,7 @@ public class ConnectAccountActivity extends BaseActivity {
         setContentView(R.layout.activity_connect_account);
         mServerManager = ((StoryMakerApp) this.getApplication()).getServerManager();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        
         mActivityJustCreated = true;
         assignViewReferences();
     }
@@ -62,6 +63,7 @@ public class ConnectAccountActivity extends BaseActivity {
     public void onSignInButtonClick(View v) {
         if (!mServerManager.hasCreds()) {
             Intent loginIntent = new Intent(this, LoginActivity.class);
+            
             startActivity(loginIntent);
         } else {
             mServerManager.logOut();
