@@ -37,8 +37,6 @@ public class YoutubePublisher extends PublisherBase {
 
     @Override
     public void jobSucceeded(Job job) {
-        // TODO Auto-generated method stub
-
         Log.d(TAG, "jobSucceeded: " + job);
         if (job.isType(JobTable.TYPE_RENDER)) {
             // since the user must now initiate upload, we just stop this publishjob now and wait
@@ -74,14 +72,17 @@ public class YoutubePublisher extends PublisherBase {
 
     @Override
     public void jobFailed(Job job, int errorCode, String errorMessage) {
-        // TODO Auto-generated method stub
-
+        Log.d(TAG, "jobFailed()");
+        mController.publishJobFailed(mPublishJob, errorCode, errorMessage);
     }
 
     @Override
     public void jobProgress(Job job, float progress, String message) {
-        // TODO Auto-generated method stub
-
+        Log.d(TAG, "jobProgress()");
+        mController.publishJobProgress(mPublishJob, progress, message);
     }
-
+    
+    public String getEmbed(Job job) {
+        return null; // FIXME implement getEmbed
+    }
 }
