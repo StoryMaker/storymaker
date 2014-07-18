@@ -44,6 +44,12 @@ public class JobBase {
     }
     
     // FIXME why do we pass in job instead of using mJob?
+    /**
+     * 
+     * @param job
+     * @param progress 0 to 1
+     * @param message message displayed to the user
+     */
     public void jobProgress(Job job, float progress, String message) {
         mWorker.jobProgress(job, progress, message);
     }

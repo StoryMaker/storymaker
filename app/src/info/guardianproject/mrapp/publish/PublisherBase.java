@@ -8,7 +8,9 @@ import android.os.Message;
 import android.util.Log;
 import info.guardianproject.mrapp.R;
 import info.guardianproject.mrapp.StoryMakerApp;
+import info.guardianproject.mrapp.model.Auth;
 import info.guardianproject.mrapp.model.Job;
+import info.guardianproject.mrapp.model.JobTable;
 import info.guardianproject.mrapp.model.Project;
 import info.guardianproject.mrapp.model.PublishJob;
 import info.guardianproject.mrapp.publish.sites.SoundCloudPublisher;
@@ -31,7 +33,7 @@ public abstract class PublisherBase {
     
     public abstract void startUpload();
 	
-	public abstract void jobSucceeded(Job job);
+//	public abstract void jobSucceeded(Job job);
     
 	public abstract String getEmbed(Job job);
 
@@ -92,34 +94,53 @@ public abstract class PublisherBase {
 //                getActivity().getString(R.string.uploading_to_storymaker));
 //        mHandlerPub.sendMessage(msgStatus);
         
+        mController.publishJobProgress(mPublishJob, 0, "Publishing to StoryMaker.cc...");
         String descWithMedia = desc + "\n\n" + mediaEmbed;
         String postId = sm.post(title, descWithMedia, categories, medium, mediaService, mediaGuid);
-        
+        mController.publishJobProgress(mPublishJob, 0.5f, "Publishing to StoryMaker.cc...");
         String urlPost = sm.getPostUrl(postId);
 
         // FIXME make this async and put this in the callback
         // FIXME store the final published url in the project table?
-        publishToStoryMakerSecceeded();
+        publishToStoryMakerSecceeded(urlPost);
         
         return urlPost;
     }
     
-    public void publishToStoryMakerSecceeded() {
-        publishSucceeded();
+    public void publishToStoryMakerSecceeded(String url) {
+        mController.publishJobProgress(mPublishJob, 1, "Published to StoryMaker.cc!");
+        publishSucceeded(url);
     }
     
     public void publishToStoryMakerFailed(int errorCode, String errorMessage) {
         publishFailed(errorCode, errorMessage);
     }
 	
-    public void publishSucceeded() {
+    public void publishSucceeded(String url) {
+//        mPublishJob.setResult(url); // FIXME implement this
         mPublishJob.setFinishedAtNow();
         mPublishJob.save();
-        mController.publishJobSucceeded(mPublishJob);
+        mController.publishJobSucceeded(mPublishJob, url);
     }
 
     public void publishFailed(int errorCode, String errorMessage) {
         mController.publishJobFailed(mPublishJob, errorCode, errorMessage);
+    }
+    
+    public void jobSucceeded(Job job) {
+        Log.d(TAG, "jobSucceeded: " + job);
+        if (job.isType(JobTable.TYPE_RENDER)) {
+            // since the user must now initiate upload, we just stop this publishjob now and wait
+//            mController.publishJobSucceeded(mPublishJob);
+        } else if (job.isType(JobTable.TYPE_UPLOAD)) {
+//            if (job.isSite(Auth.SITE_FACEBOOK)) {
+                if (mPublishJob.getPublishToStoryMaker()) {
+                    publishToStoryMaker();
+                } else {
+                    mController.publishJobSucceeded(mPublishJob, null);
+                }
+//            }
+        }
     }
     
     public void jobFailed(Job job, int errorCode, String errorMessage) {
@@ -127,6 +148,12 @@ public abstract class PublisherBase {
         mController.publishJobFailed(mPublishJob, errorCode, errorMessage);
     }
 
+    /**
+     * 
+     * @param job
+     * @param progress 0 to 1
+     * @param message Message displayed to user
+     */
     public void jobProgress(Job job, float progress, String message) {
         mController.publishJobProgress(mPublishJob, progress, message);
     }

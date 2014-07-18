@@ -18,6 +18,7 @@ import java.io.File;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
 
+import org.holoeverywhere.app.AlertDialog;
 import org.holoeverywhere.widget.TextView;
 
 import redstone.xmlrpc.XmlRpcFault;
@@ -25,10 +26,12 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -213,7 +216,8 @@ public class PublishFragment extends Fragment implements PublishListener {
                     PublishJob publishJob = (PublishJob) (new PublishJobTable()).get(getActivity().getApplicationContext(), publishJobId);
             
                     if (intent.getAction().equals(PublishService.ACTION_PUBLISH_SUCCESS)) {
-                        publishSucceeded(publishJob);
+                        String url = intent.getStringExtra(PublishService.INTENT_EXTRA_PUBLISH_URL);
+                        publishSucceeded(publishJob, url);
                     } else if (intent.getAction().equals(PublishService.ACTION_PUBLISH_FAILURE)) {
                         int errorCode = intent.getIntExtra(PublishService.INTENT_EXTRA_ERROR_CODE, -1);
                         String errorMessage = intent.getStringExtra(PublishService.INTENT_EXTRA_ERROR_MESSAGE);
@@ -329,25 +333,25 @@ public class PublishFragment extends Fragment implements PublishListener {
 //        db.close();
 //    }
     
-    public String postToStoryMaker (String title, String desc, String mediaEmbed, String[] categories, String medium, String mediaService, String mediaGuid) throws MalformedURLException, XmlRpcFault
-    {
-
-
-        ServerManager sm = StoryMakerApp.getServerManager();
-        sm.setContext(mActivity.getBaseContext());
-
-    	Message msgStatus = mHandlerPub.obtainMessage(EditorBaseActivity.REQ_OVERLAY_CAM);
-    	msgStatus.getData().putString("status",
-                getActivity().getString(R.string.uploading_to_storymaker));
-        mHandlerPub.sendMessage(msgStatus);
-    	
-        String descWithMedia = desc + "\n\n" + mediaEmbed;
-        String postId = sm.post(title, descWithMedia, categories, medium, mediaService, mediaGuid); // FIXME this is burying an exception if the user skipping creating a StoryMaker.cc account
-        
-        String urlPost = sm.getPostUrl(postId);
-        return urlPost;
-        
-    }
+//    public String postToStoryMaker (String title, String desc, String mediaEmbed, String[] categories, String medium, String mediaService, String mediaGuid) throws MalformedURLException, XmlRpcFault
+//    {
+//
+//
+//        ServerManager sm = StoryMakerApp.getServerManager();
+//        sm.setContext(mActivity.getBaseContext());
+//
+//    	Message msgStatus = mHandlerPub.obtainMessage(EditorBaseActivity.REQ_OVERLAY_CAM);
+//    	msgStatus.getData().putString("status",
+//                getActivity().getString(R.string.uploading_to_storymaker));
+//        mHandlerPub.sendMessage(msgStatus);
+//    	
+//        String descWithMedia = desc + "\n\n" + mediaEmbed;
+//        String postId = sm.post(title, descWithMedia, categories, medium, mediaService, mediaGuid); // FIXME this is burying an exception if the user skipping creating a StoryMaker.cc account
+//        
+//        String urlPost = sm.getPostUrl(postId);
+//        return urlPost;
+//        
+//    }
     
     private void playClicked() {
         // FIXME grab the last acceptable render and use it instead of this mFileLastExport junk
@@ -437,9 +441,10 @@ public class PublishFragment extends Fragment implements PublishListener {
 	
 
     @Override
-    public void publishSucceeded(PublishJob publishJob) {
+    public void publishSucceeded(PublishJob publishJob, String url) {
             showUploadSpinner(false); 
             showPlaySpinner(false);
+            showPublished(url);
             Utils.toastOnUiThread(mActivity, "Publish succeeded!");
         
 ////        if (publishJob.isFinished()) {
@@ -480,6 +485,12 @@ public class PublishFragment extends Fragment implements PublishListener {
         showError(errorCode, errorMessage);
     }
 
+    /**
+     * 
+     * @param publishJob
+     * @param progress 0 to 1
+     * @param message Message displayed to user
+     */
     @Override
     public void publishProgress(PublishJob publishJob, float progress, String message) {
 //        Utils.toastOnUiThread(getActivity(), "Progress at " + (progress / 10000) + "%: " + message);
@@ -527,5 +538,66 @@ public class PublishFragment extends Fragment implements PublishListener {
     public void jobFailed(Job job, int errorCode, String errorMessage) {
         // TODO Auto-generated method stub
         
+    }
+    
+//    public void sharePublished(final String postUrl) {
+//        DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialog, int which) {
+//
+//                switch (which) {
+//                    case DialogInterface.BUTTON_POSITIVE:
+//                        shareUrl(postUrl);
+//                        break;
+//
+//                    case DialogInterface.BUTTON_NEGATIVE:
+//                        break;
+//                }
+//            }
+//        };
+//
+//        if (mActivity.getWindow().isActive()) {
+//            AlertDialog.Builder builder = new AlertDialog.Builder(mActivity);
+//            builder.setMessage(R.string.share_published_story)
+//                    .setPositiveButton(R.string.menu_share_media, dialogClickListener)
+//                    .setNegativeButton(R.string.export_dialog_close, dialogClickListener).show();
+//        }
+//    }
+//    
+//    public void shareUrl(String url) {
+//        Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts("mailto","abc@gmail.com", null));
+//        emailIntent.putExtra(Intent.EXTRA_SUBJECT, "I want to share my StoryMaker story with you");
+//        startActivity(Intent.createChooser(emailIntent, "Send email..."));
+//
+////        Intent intent = new Intent(Intent.ACTION_SEND);
+////        intent.putExtra(Intent.EXTRA_TEXT, url);
+////        mActivity.startActivityForResult(Intent.createChooser(intent, "Share Story"), EditorBaseActivity.REQ_SHARE);
+//    }
+    
+    public void showPublished(final String postUrl) {
+        Log.d(TAG, "dialog for showing published url: " + postUrl);
+        DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                switch (which) {
+                    case DialogInterface.BUTTON_POSITIVE:
+
+                        Intent i = new Intent(Intent.ACTION_VIEW);
+                        i.setData(Uri.parse(postUrl));
+                        startActivity(i);
+                        break;
+
+                    case DialogInterface.BUTTON_NEGATIVE:
+
+                        break;
+                }
+            }
+        };
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(mActivity);
+        builder.setMessage(R.string.view_published_media_online_or_local_copy_)
+                .setPositiveButton(R.string.yes, dialogClickListener)
+                .setNegativeButton(R.string.no, dialogClickListener).show();
     }
 }

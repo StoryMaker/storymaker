@@ -120,11 +120,11 @@ public class EditorBaseActivity extends BaseActivity {
 
                     File fileMedia = new File(localPath);
 
-                    if (fileMedia.exists() && fileMedia.length() > 0) {
-                        showPublished(url, fileMedia, videoId, mimeType);
-                    } else {
-                        // show what?
-                    }
+//                    if (fileMedia.exists() && fileMedia.length() > 0) {
+//                        showPublished(url, fileMedia, videoId, mimeType);
+//                    } else {
+//                        // show what?
+//                    }
 
                     break;
                     
@@ -151,61 +151,61 @@ public class EditorBaseActivity extends BaseActivity {
 
     };
 
-    public void showPublished(final String postUrl, final File localMedia, final String youTubeId,
-            final String mimeType) {
-        if ((youTubeId != null || postUrl != null)) {
-            DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-
-                    switch (which) {
-                        case DialogInterface.BUTTON_POSITIVE:
-
-                            Intent i = new Intent(Intent.ACTION_VIEW);
-                            i.setData(Uri.parse(postUrl));
-                            startActivity(i);
-                            break;
-
-                        case DialogInterface.BUTTON_NEGATIVE:
-
-                            break;
-                    }
-                }
-            };
-
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setMessage(R.string.view_published_media_online_or_local_copy_)
-                    .setPositiveButton(R.string.yes, dialogClickListener)
-                    .setNegativeButton(R.string.no, dialogClickListener).show();
-        } else {
-
-            DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-
-                    switch (which) {
-                        case DialogInterface.BUTTON_POSITIVE:
-
-                            mMPM.mMediaHelper.playMedia(localMedia, mimeType);
-                            break;
-
-                        case DialogInterface.BUTTON_NEGATIVE:
-                            mMPM.mMediaHelper.shareMedia(localMedia, mimeType);
-
-                            break;
-                    }
-                }
-            };
-
-            if (this.getWindow().isActive()) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                builder.setMessage(R.string.play_or_share_exported_media_)
-                        .setPositiveButton(R.string.menu_play_media, dialogClickListener)
-                        .setNegativeButton(R.string.menu_share_media, dialogClickListener).show();
-            }
-        }
-
-    }
+//    public void showPublished(final String postUrl, final File localMedia, final String youTubeId,
+//            final String mimeType) {
+//        if ((youTubeId != null || postUrl != null)) {
+//            DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+//                @Override
+//                public void onClick(DialogInterface dialog, int which) {
+//
+//                    switch (which) {
+//                        case DialogInterface.BUTTON_POSITIVE:
+//
+//                            Intent i = new Intent(Intent.ACTION_VIEW);
+//                            i.setData(Uri.parse(postUrl));
+//                            startActivity(i);
+//                            break;
+//
+//                        case DialogInterface.BUTTON_NEGATIVE:
+//
+//                            break;
+//                    }
+//                }
+//            };
+//
+//            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+//            builder.setMessage(R.string.view_published_media_online_or_local_copy_)
+//                    .setPositiveButton(R.string.yes, dialogClickListener)
+//                    .setNegativeButton(R.string.no, dialogClickListener).show();
+//        } else {
+//
+//            DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+//                @Override
+//                public void onClick(DialogInterface dialog, int which) {
+//
+//                    switch (which) {
+//                        case DialogInterface.BUTTON_POSITIVE:
+//
+//                            mMPM.mMediaHelper.playMedia(localMedia, mimeType);
+//                            break;
+//
+//                        case DialogInterface.BUTTON_NEGATIVE:
+//                            mMPM.mMediaHelper.shareMedia(localMedia, mimeType);
+//
+//                            break;
+//                    }
+//                }
+//            };
+//
+//            if (this.getWindow().isActive()) {
+//                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+//                builder.setMessage(R.string.play_or_share_exported_media_)
+//                        .setPositiveButton(R.string.menu_play_media, dialogClickListener)
+//                        .setNegativeButton(R.string.menu_share_media, dialogClickListener).show();
+//            }
+//        }
+//
+//    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
