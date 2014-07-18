@@ -9,6 +9,7 @@ import android.util.Log;
 import info.guardianproject.mrapp.R;
 import info.guardianproject.mrapp.StoryMakerApp;
 import info.guardianproject.mrapp.model.Auth;
+import info.guardianproject.mrapp.model.AuthTable;
 import info.guardianproject.mrapp.model.Job;
 import info.guardianproject.mrapp.model.JobTable;
 import info.guardianproject.mrapp.model.Project;
@@ -135,7 +136,12 @@ public abstract class PublisherBase {
         } else if (job.isType(JobTable.TYPE_UPLOAD)) {
 //            if (job.isSite(Auth.SITE_FACEBOOK)) {
                 if (mPublishJob.getPublishToStoryMaker()) {
-                    publishToStoryMaker();
+                    Auth auth = (new AuthTable()).getAuthDefault(mContext, Auth.SITE_STORYMAKER);
+                    if (auth != null) {
+                        publishToStoryMaker();
+                    } else {
+                        mController.publishJobFailed(mPublishJob, 78268832, "You are not signed into StoryMaker.cc!"); // FIXME do this nicer
+                    }
                 } else {
                     mController.publishJobSucceeded(mPublishJob, null);
                 }
