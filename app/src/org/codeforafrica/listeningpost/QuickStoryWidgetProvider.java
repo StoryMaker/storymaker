@@ -28,7 +28,7 @@ public class QuickStoryWidgetProvider extends AppWidgetProvider {
       // Set the text
       //remoteViews.setTextViewText(R.id.update, String.valueOf(number));
 
-      Intent intentHome = new Intent(context, HomeActivity.class);
+      Intent intentHome = new Intent(context, HomePanelsActivity.class);
       PendingIntent pendingIntentHome = PendingIntent.getActivity(context,
     		  intentHome.hashCode(), intentHome, 0);
       remoteViews.setOnClickPendingIntent(R.id.btnWidgetHome, pendingIntentHome);
@@ -37,7 +37,8 @@ public class QuickStoryWidgetProvider extends AppWidgetProvider {
       
       Intent intentStoryAudio = new Intent(context, StoryNewActivity.class);
       intentStoryAudio.putExtra("story_name", "Quick Story");
-      intentStoryAudio.putExtra("story_type", 1);
+      intentStoryAudio.putExtra("storymode", 1);
+      intentStoryAudio.putExtra("quickstory", 1);
       intentStoryAudio.putExtra("auto_capture", true);
       
       remoteViews.setOnClickPendingIntent(R.id.btnWidgetAudio,  PendingIntent.getActivity(context, intentStoryAudio.hashCode(), intentStoryAudio, 0));
@@ -45,17 +46,19 @@ public class QuickStoryWidgetProvider extends AppWidgetProvider {
 
       Intent intentStoryPhoto = new Intent(context, StoryNewActivity.class);
       intentStoryPhoto.putExtra("story_name", "Quick Story");
-      intentStoryPhoto.putExtra("story_type", 2);
+      intentStoryPhoto.putExtra("storymode", 2);
       intentStoryPhoto.putExtra("auto_capture", true);
-      
+      intentStoryAudio.putExtra("quickstory", 1);
+
       remoteViews.setOnClickPendingIntent(R.id.btnWidgetPhoto, PendingIntent.getActivity(context, intentStoryPhoto.hashCode(), intentStoryPhoto, 0));
       
 
       Intent intentStoryVideo = new Intent(context, StoryNewActivity.class);
       intentStoryVideo.putExtra("story_name", "Quick Story");
-      intentStoryVideo.putExtra("story_type", 0);
+      intentStoryVideo.putExtra("storymode", 0);
       intentStoryVideo.putExtra("auto_capture", true);
-      
+      intentStoryAudio.putExtra("quickstory", 1);
+
       remoteViews.setOnClickPendingIntent(R.id.btnWidgetVideo, PendingIntent.getActivity(context, intentStoryVideo.hashCode(), intentStoryVideo, 0));
       
       appWidgetManager.updateAppWidget(widgetId, remoteViews);

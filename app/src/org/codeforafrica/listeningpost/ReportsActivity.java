@@ -82,7 +82,7 @@ public class ReportsActivity extends BaseActivity implements OnClickListener{
         // action bar stuff
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
          
-        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#FFFFFF")));
+        //getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#FFFFFF")));
         //getSupportActionBar().setTitle("View Reports");
 
         //TextView title2 = (TextView) getWindow().getDecorView().findViewById(getResources().getIdentifier("action_bar_title", "id", "android"));
@@ -136,7 +136,7 @@ public class ReportsActivity extends BaseActivity implements OnClickListener{
 	    
        
         
-        Toast.makeText(getApplicationContext(), "Thumbnails might take a while to display", Toast.LENGTH_LONG).show();
+        //Toast.makeText(getApplicationContext(), "Thumbnails might take a while to display", Toast.LENGTH_LONG).show();
         
         int delay = 3000; // delay for 1 sec. 
 		int period = 3000; // repeat every 10 sec. 

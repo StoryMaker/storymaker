@@ -1,17 +1,17 @@
 package org.codeforafrica.listeningpost;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import org.codeforafrica.listeningpost.R;
 import org.codeforafrica.listeningpost.model.Project;
 import org.codeforafrica.listeningpost.model.Scene;
+import org.codeforafrica.listeningpost.model.Report;
 import org.holoeverywhere.widget.LinearLayout;
-import org.holoeverywhere.widget.Toast;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -43,12 +43,14 @@ public class StoryNewActivity extends BaseActivity {
         rid = intent.getIntExtra("rid", -1);
         storymode = intent.getIntExtra("storymode", -1);
         
+        quickstory = intent.getIntExtra("quickstory", 0);
+
         txtNewStoryDesc = (TextView)findViewById(R.id.txtNewStoryDesc);
         editTextStoryName = (EditText)findViewById(R.id.editTextStoryName);
         editTextStoryName.setHint("Quick caption(optional)");
         rGroup = (RadioGroup)findViewById(R.id.radioGroupStoryType);
         
-		launchSimpleStory("caption", getSelectedStoryMode(), false);
+		launchSimpleStory("caption", getSelectedStoryMode(), false, quickstory);
 
         
         //storymode is already chosen     
@@ -102,7 +104,7 @@ public class StoryNewActivity extends BaseActivity {
 
                 	RadioGroup view = ((RadioGroup)findViewById(R.id.radioGroupStoryLevel));
                 	if (view.getCheckedRadioButtonId() == R.id.radioStoryType0)
-                		launchSimpleStory(editTextStoryName.getText().toString(), getSelectedStoryMode(), false);
+                		launchSimpleStory(editTextStoryName.getText().toString(), getSelectedStoryMode(), false, 0);
                 	else
                 		launchTemplateChooser();
             	}
@@ -123,7 +125,7 @@ public class StoryNewActivity extends BaseActivity {
         	
         	storyName += " " + new Date().toLocaleString();
         	
-        	launchSimpleStory(storyName, storyType, autoCapture);
+        	launchSimpleStory(storyName, storyType, autoCapture, 0);
         	
         }
     }
@@ -197,11 +199,32 @@ public class StoryNewActivity extends BaseActivity {
         startActivity(i);
         finish();
     }
-    
+private void createReport() {
+      	
+      	SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+      	String currentdate = dateFormat.format(new Date());
+      	
+      	String pLocation = "0, 0";
+      	
+      	String title = "Captured at "+currentdate;
+      	
+      	Report report = new Report (getApplicationContext(), 0, title, "0", "0", "", "", pLocation, "0", currentdate, "0", "0");
+
+        report.save();
+          
+        rid = report.getId();
+        
+       
+          
+        }
    
     
-    private void launchSimpleStory(String pName, int storyMode, boolean autoCapture) {
+    private void launchSimpleStory(String pName, int storyMode, boolean autoCapture, int quickstory) {
         int clipCount = AppConstants.DEFAULT_CLIP_COUNT;
+        
+        if(rid == -1){
+        	createReport();
+        }
         
         Project project = new Project (getBaseContext(), clipCount);
         project.setTitle(pName);
@@ -224,6 +247,7 @@ public class StoryNewActivity extends BaseActivity {
         intent.putExtra("title", project.getTitle());
         intent.putExtra("pid", project.getId());
         intent.putExtra("scene", 0);
+        intent.putExtra("quickstory", quickstory);
         intent.putExtra("auto_capture", true);
         startActivity(intent);
         

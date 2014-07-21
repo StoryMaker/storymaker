@@ -2,47 +2,93 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/widget_layout"
     android:layout_width="300dp"
-    android:layout_height="wrap_content"
+    android:layout_height="70dp"
+    android:padding="10dp"
     android:layout_margin="8dip"
     android:background="#66cccccc"
     android:gravity="center"
      >
      
-    
    <ImageButton
             android:id="@+id/btnWidgetHome"
+            android:layout_marginRight="10dp"
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:background="@android:color/transparent"
-            android:padding="5dp"
             android:scaleType="fitCenter"
-            android:src="@drawable/ic_launcher" />
+            android:src="@drawable/icon" />
+
+   <LinearLayout
+                         android:id="@+id/btnWidgetPhoto"
+                         android:clickable="true"
+                    android:layout_width="60dp"
+                    android:layout_height="fill_parent"
+                    android:orientation="vertical"
+                    android:background="@color/lp_red"
+                    android:layout_marginRight="10dp"
+                    android:paddingTop="10dp">
+		            <ImageView
+		                android:id="@+id/ivButton1"
+		                android:layout_width="wrap_content"
+		                android:layout_height="20dp"
+		                android:layout_gravity="center"
+		                android:src="@drawable/camera" />
+					<TextView
+		                android:id="@+id/textView1"
+		                android:layout_width="wrap_content"
+		                android:layout_height="wrap_content"
+		                android:layout_gravity="center"
+		                android:textColor="#ffffff"
+		                android:text="@string/add_picture" />
+				</LinearLayout>
     
-   <ImageButton
-            android:id="@+id/btnWidgetVideo"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:background="@android:color/transparent"
-            android:padding="5dp"
-            android:scaleType="fitCenter"
-            android:src="@drawable/quick_capture_video" />
-        
-           <ImageButton
-            android:id="@+id/btnWidgetPhoto"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:background="@android:color/transparent"
-            android:padding="5dp"
-            android:scaleType="fitCenter"
-            android:src="@drawable/quick_capture_photo" />
+   <LinearLayout
+                         android:id="@+id/btnWidgetVideo"
+                    android:clickable="true"
+                    android:layout_width="60dp"
+                    android:layout_height="fill_parent"
+                    android:orientation="vertical"
+                    android:layout_marginRight="10dp"
+                    android:background="@color/lp_yellow"
+                    android:paddingTop="10dp">
+				<ImageView
+	                android:id="@+id/ivButton2"
+	                android:layout_width="wrap_content"
+	                android:layout_height="20dp"
+	                 android:layout_gravity="center"
+	                android:src="@drawable/video" />
+				<TextView
+	                android:id="@+id/textView1"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                 android:layout_gravity="center"
+	                android:textColor="#ffffff"
+	                android:text="@string/add_video" />
+				</LinearLayout>
            
-              <ImageButton
-            android:id="@+id/btnWidgetAudio"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:background="@android:color/transparent"
-            android:padding="5dp"
-            android:scaleType="fitCenter"
-            android:src="@drawable/quick_capture_audio" />
+              <LinearLayout
+                  android:id="@+id/btnWidgetAudio"  
+                  android:clickable="true"
+                    android:layout_width="60dp"
+                    android:layout_height="fill_parent"
+                    android:orientation="vertical"
+                    android:layout_marginRight="10dp"
+                    android:background="@color/lp_blue"
+                    android:paddingTop="10dp">
+					<ImageView
+		                android:id="@+id/ivButton3"
+		                android:layout_width="wrap_content"
+		                android:layout_height="20dp"
+		                android:layout_gravity="center"
+		                android:src="@drawable/audio" />
+					<TextView
+		                android:id="@+id/textView1"
+		                android:layout_width="wrap_content"
+		                android:layout_height="wrap_content"
+		               	android:layout_gravity="center"
+		                android:layout_below="@+id/ivButton3"
+		                android:textColor="#ffffff"
+		                android:text="@string/add_audio" />
+				</LinearLayout>
 
 </LinearLayout> 

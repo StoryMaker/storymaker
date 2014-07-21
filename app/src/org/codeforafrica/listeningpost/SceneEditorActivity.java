@@ -64,6 +64,8 @@ import com.actionbarsherlock.view.MenuItem;
     private final static String CAPTURE_MIMETYPE_AUDIO = "audio/3gpp";
     public Fragment mFragmentTab0, mFragmentTab1, mLastTabFrag;
     public PublishFragment mPublishFragment;
+    public int quickstory;
+    
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,6 +76,7 @@ import com.actionbarsherlock.view.MenuItem;
  //       mStoryMode = getIntent().getIntExtra("story_mode", Project.STORY_TYPE_VIDEO);
 
         int pid = intent.getIntExtra("pid", -1); //project id
+        quickstory = intent.getIntExtra("quickstory", 0);
 
         mSceneIndex = getIntent().getIntExtra("scene", 0);
 

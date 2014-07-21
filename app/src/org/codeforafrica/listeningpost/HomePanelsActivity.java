@@ -97,8 +97,8 @@ public class HomePanelsActivity extends BaseActivity implements OnClickListener{
         // action bar stuff
        
          
-        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#ffffff")));
-        getSupportActionBar().setTitle("");
+        //getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#ffffff")));
+        //getSupportActionBar().setTitle("");
         getSupportActionBar().setDisplayShowHomeEnabled(false);
        
         
@@ -117,6 +117,7 @@ public class HomePanelsActivity extends BaseActivity implements OnClickListener{
 		if(mListReports.size()>0){
 			Intent i = new Intent(HomePanelsActivity.this, ReportsActivity.class);
 			startActivity(i);
+			
 		}else{
 	        setContentView(R.layout.activity_no_reports);
 	        

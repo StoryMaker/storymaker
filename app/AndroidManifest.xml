@@ -226,8 +226,8 @@
         </service>
         
         <receiver
-       android:icon="@drawable/ic_launcher"
-       android:label="StoryMaker QuickStory"
+       android:icon="@drawable/logo"
+       android:label="ListeningPost QuickStory"
        android:name="QuickStoryWidgetProvider" >
        <intent-filter >
             <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
