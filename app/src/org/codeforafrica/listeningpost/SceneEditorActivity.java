@@ -136,10 +136,10 @@ import com.actionbarsherlock.view.MenuItem;
         if (mMPM.mProject.isTemplateStory()) {
             actionBar.addTab(actionBar.newTab().setText(R.string.tab_finish).setTabListener(this));
 	    } else {
-	         actionBar.addTab(actionBar.newTab().setText(R.string.tab_publish).setTabListener(this));
+	         actionBar.addTab(actionBar.newTab().setText("Caption").setTabListener(this));
 	    }
         actionBar.addTab(actionBar.newTab().setText(R.string.tab_add_clips).setTabListener(this));
-        actionBar.addTab(actionBar.newTab().setText(R.string.tab_order).setTabListener(this));     
+        actionBar.addTab(actionBar.newTab().setText("Scene").setTabListener(this));     
         
         if (intent.hasExtra("auto_capture")	&& intent.getBooleanExtra("auto_capture", false))
         {

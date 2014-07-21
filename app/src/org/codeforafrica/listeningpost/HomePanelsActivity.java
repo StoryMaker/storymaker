@@ -69,6 +69,8 @@ public class HomePanelsActivity extends BaseActivity implements OnClickListener{
     //flag for Internet connection status
     Boolean isInternetPresent = false;
     
+   
+    
     @Override
     
     public void onCreate(Bundle savedInstanceState) {
@@ -117,7 +119,7 @@ public class HomePanelsActivity extends BaseActivity implements OnClickListener{
 		if(mListReports.size()>0){
 			Intent i = new Intent(HomePanelsActivity.this, ReportsActivity.class);
 			startActivity(i);
-			
+			finish();
 		}else{
 	        setContentView(R.layout.activity_no_reports);
 	        
@@ -134,7 +136,7 @@ public class HomePanelsActivity extends BaseActivity implements OnClickListener{
 				Intent i = new Intent(getApplicationContext(),ReportActivity.class);
 				i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 				startActivity(i);
-				
+				finish();
 			}
 		});
         /*
@@ -271,7 +273,7 @@ public class HomePanelsActivity extends BaseActivity implements OnClickListener{
             */
         }
     }
-
+   
     @Override
 	public void onResume() {
 		super.onResume();
@@ -291,9 +293,7 @@ public class HomePanelsActivity extends BaseActivity implements OnClickListener{
 			
 		}
 		
-	}
-
-    
+	}    
     
     @Override
     public void onSaveInstanceState(Bundle outState) {

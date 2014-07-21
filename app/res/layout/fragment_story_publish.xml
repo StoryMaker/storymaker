@@ -32,7 +32,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
-        android:hint="@string/story_publish_story_title"
+        android:hint="Add caption"
         android:textAppearance="?android:attr/textAppearanceMedium"
         
             android:background="@color/grey"
@@ -444,7 +444,7 @@
         android:id="@+id/addCaption"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Add Caption" />
+        android:text="Save" />
 
   </LinearLayout>
 </ScrollView>

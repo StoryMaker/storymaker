@@ -1,6 +1,7 @@
 package org.codeforafrica.listeningpost;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
@@ -18,9 +19,11 @@ import org.codeforafrica.listeningpost.server.ServerManager;
 import org.codeforafrica.listeningpost.server.YouTubeSubmit;
 import org.codeforafrica.listeningpost.server.Authorizer.AuthorizationListener;
 import org.codeforafrica.listeningpost.server.soundcloud.SoundCloudUploader;
+import org.ffmpeg.android.MediaUtils;
 import org.holoeverywhere.app.AlertDialog;
 import org.holoeverywhere.widget.Spinner;
 import org.json.JSONArray;
+import org.json.JSONException;
 
 import redstone.xmlrpc.XmlRpcFault;
 import android.accounts.Account;
@@ -31,7 +34,9 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.preference.PreferenceManager;
@@ -209,7 +214,6 @@ public class PublishFragment extends Fragment {
                 @Override
                 public void onClick(View v) {
                     saveForm();
-                    mActivity.finish(); //triggers do publish! 
                 }
             });
             
@@ -307,12 +311,104 @@ public class PublishFragment extends Fragment {
  
     }
     private void saveForm() {
-        mActivity.mMPM.mProject.setTitle(mTitle.getText().toString());
+    	String caption = mTitle.getText().toString();
+    	if(caption.equals("")){
+    		caption = "no caption";
+    	}
+    	
+        mActivity.mMPM.mProject.setTitle(caption);
         //commenting this out for now until merges are fixed
-      //  mActivity.mMPM.mProject.setDescription(mDescription.getText().toString());
+        //mActivity.mMPM.mProject.setDescription(mDescription.getText().toString());
         mActivity.mMPM.mProject.save();
+        
+        //add to Q
+        ArrayList<Media> lMedia = mActivity.mMPM.mProject.getMediaAsList();
+        
+        for(int i = 0; i<lMedia.size(); i++){
+        	
+        	Media m = lMedia.get(i);
+        	try {
+				addToQ(m);
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+        	
+        }
+        
+        //Load report screen
+        int reportid = mActivity.mMPM.mProject.getReport();
+        Intent i = new Intent(mActivity, ReportActivity.class);
+        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        i.putExtra("rid", reportid);
+        mActivity.startActivity(i);
+        
+        mActivity.finish();
     }
-    
+    public void addToQ(Media media) throws JSONException{
+    	//create and store thumbnails in hidden folder on sd
+    	
+    	File thumbDir = new File(Environment.getExternalStorageDirectory() + "/" + AppConstants.TAG + "/.thumbs");
+    	if(!thumbDir.exists()){
+    		thumbDir.mkdirs();
+    	}
+    	
+        //Create thumbnail
+        Bitmap bitThumb = null;
+        String filename=null;
+        
+        if(media.getMimeType().contains("video")){
+           bitThumb = MediaUtils.getVideoFrame(media.getPath(), -1);
+        }else if(media.getMimeType().contains("image")){
+        	bitThumb = BitmapFactory.decodeFile(media.getPath());
+        }
+        	try{
+        		filename = thumbDir + "/" + media.getId()+".jpg";
+        		FileOutputStream out = new FileOutputStream(filename);
+        		bitThumb.compress(Bitmap.CompressFormat.JPEG, 5, out);
+        		out.close();
+		       } catch (Exception e) {
+		               e.printStackTrace();
+		}
+        
+        //Add to Queue
+        
+        //First read all we have
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mActivity.getApplicationContext());
+        JSONArray jsonArray2 = null;
+        try {
+            jsonArray2 = new JSONArray(prefs.getString("eQ", "[]"));
+            
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+        if(media!=null){
+	        String media_id = String.valueOf(media.getId());
+	        
+	        boolean isAdded = false; 
+	        
+	        //Check if media is already encrypted
+	        if(media.getEncrypted()==0){
+	        	//Check if value is already added 
+	        	
+	        	//TODO: find faster way to do this
+	        	for (int i = 0; i < jsonArray2.length(); i++) {
+	                if(jsonArray2.getString(i).equals(media_id)){
+	                	isAdded = true;
+	                }
+	           }
+	        }
+	        Editor editor = prefs.edit();
+	        if(isAdded==false){
+		        //Then add new value
+		        jsonArray2.put(media_id);
+		        editor.putString("eQ", jsonArray2.toString());
+		        
+	        }
+	        System.out.println(jsonArray2.toString());
+	        editor.commit();
+        }
+    }
     private void showLogin() {
         mActivity.startActivity(new Intent(mActivity, LoginActivity.class));
     }

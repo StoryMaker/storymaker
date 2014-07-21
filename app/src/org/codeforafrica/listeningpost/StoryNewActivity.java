@@ -50,8 +50,7 @@ public class StoryNewActivity extends BaseActivity {
         editTextStoryName.setHint("Quick caption(optional)");
         rGroup = (RadioGroup)findViewById(R.id.radioGroupStoryType);
         
-		launchSimpleStory("caption", getSelectedStoryMode(), false, quickstory);
-
+		launchSimpleStory("", getSelectedStoryMode(), false, quickstory);
         
         //storymode is already chosen     
         LinearLayout llMedium = (LinearLayout)findViewById(R.id.llMedium);
