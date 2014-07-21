@@ -18,11 +18,11 @@
       android:background="#ffffff"
         />
    <com.viewpagerindicator.CirclePageIndicator
-            android:id="@+id/circles1"
-            android:layout_height="wrap_content"
-            android:layout_width="match_parent"
-      android:background="#ffffff"
-             />
+        android:id="@+id/circles1"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+  		android:background="#ffffff"
+        />
  <View
         android:layout_width="fill_parent"
         android:layout_height="1dp"

@@ -19,7 +19,7 @@
             android:adjustViewBounds="true"
             android:src="@drawable/cliptype_long" />
 
-        <info.guardianproject.mrapp.PreviewVideoView
+        <org.codeforafrica.listeningpost.PreviewVideoView
             android:id="@+id/previewVideoView"
             android:layout_width="match_parent"
             android:layout_height="200dip"

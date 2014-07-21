@@ -16,11 +16,11 @@
 
 package net.micode.soundrecorder;
 
-import info.guardianproject.mrapp.AppConstants;
-import info.guardianproject.mrapp.R;
-
 import java.io.File;
 import java.io.IOException;
+
+import org.codeforafrica.listeningpost.AppConstants;
+import org.codeforafrica.listeningpost.R;
 
 import android.app.KeyguardManager;
 import android.app.Notification;

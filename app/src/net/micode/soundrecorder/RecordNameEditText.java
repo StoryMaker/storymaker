@@ -16,11 +16,11 @@
 
 package net.micode.soundrecorder;
 
-import info.guardianproject.mrapp.R;
-
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+
+import org.codeforafrica.listeningpost.R;
 
 import android.content.Context;
 import android.graphics.Rect;

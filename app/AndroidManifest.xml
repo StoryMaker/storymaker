@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="info.guardianproject.mrapp"
+    package="org.codeforafrica.listeningpost"
     android:installLocation="auto"
     android:versionCode="111"
     android:versionName="0.0.9-build111" >
@@ -41,7 +41,7 @@
         android:resizeable="true"   />
 
     <application
-        android:name=".StoryMakerApp"
+        android:name="org.codeforafrica.listeningpost.StoryMakerApp"
         android:icon="@drawable/icon"
         android:label="@string/app_name"
         android:theme="@style/Theme.storymakerstyle"
@@ -63,7 +63,7 @@
             android:label="Register New Account" >
         </activity>
         <activity
-            android:name=".HomePanelsActivity"
+            android:name="org.codeforafrica.listeningpost.HomePanelsActivity"
             android:configChanges="locale"
             android:label="@string/app_name"
             android:launchMode="singleTop"
@@ -75,28 +75,35 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".StoryNewActivity"
+            android:name="org.codeforafrica.listeningpost.StoryNewActivity"
             android:label="@string/title_activity_new_story" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".HomePanelsActivity" />
         </activity>
         <activity
-            android:name=".ReportActivity"
+            android:name="org.codeforafrica.listeningpost.ReportActivity"
             android:label="@string/title_activity_new_story" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".HomePanelsActivity" />
         </activity>
         <activity
-            android:name=".ReportsActivity"
+            android:name="org.codeforafrica.listeningpost.ReportEditorActivity"
+            android:label="@string/title_activity_new_story" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ReportsActivity" />
+        </activity>
+        <activity
+            android:name="org.codeforafrica.listeningpost.ReportsActivity"
             android:label="@string/reports_list" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".HomePanelsActivity" />
         </activity>
               <activity
-            android:name=".ProjectsActivity"
+            android:name="org.codeforafrica.listeningpost.ProjectsActivity"
             android:configChanges="locale"
             android:label="@string/title_projects"
             android:launchMode="singleTop"
@@ -106,7 +113,7 @@
                 android:value=".HomePanelsActivity" />
         </activity>
         <activity
-            android:name=".LessonsActivity"
+            android:name="org.codeforafrica.listeningpost.LessonsActivity"
             android:configChanges="locale"
             android:label="@string/title_activity_lessons"
             android:launchMode="singleTop"
@@ -118,7 +125,7 @@
         </activity>
 
         <activity
-            android:name=".StoryTemplateChooserActivity"
+            android:name="org.codeforafrica.listeningpost.StoryTemplateChooserActivity"
             android:label="@string/title_activity_choose_template"
             >
             <meta-data
@@ -126,7 +133,7 @@
                 android:value=".ProjectsActivity" />
         </activity>
         <activity
-            android:name=".StoryTemplateActivity"
+            android:name="org.codeforafrica.listeningpost.StoryTemplateActivity"
             android:configChanges="orientation|screenSize"
             android:label="@string/title_activity_story_template" >
             <meta-data
@@ -134,7 +141,7 @@
                 android:value=".ProjectsActivity" />
         </activity>
         <activity
-            android:name=".SceneEditorActivity"
+            android:name="org.codeforafrica.listeningpost.SceneEditorActivity"
             android:configChanges="orientation|screenSize"
             android:label="@string/title_activity_scene_editor" >
             <meta-data
@@ -142,12 +149,12 @@
                 android:value=".ProjectsActivity" />
         </activity>
         <activity
-            android:name=".WelcomeActivity"
+            android:name="org.codeforafrica.listeningpost.WelcomeActivity"
             android:label="@string/app_name"            
              >
         </activity>  
          <activity
-            android:name=".ProjectListActivity">
+            android:name="org.codeforafrica.listeningpost.ProjectListActivity">
              <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".HomePanelsActivity" />
@@ -167,8 +174,8 @@
             android:configChanges="orientation|keyboardHidden|screenSize" >   
             	      
         </activity>
-        <activity android:name=".MediaOutputPreferences" />
-        <activity android:name=".SimplePreferences" />
+        <activity android:name="org.codeforafrica.listeningpost.MediaOutputPreferences" />
+        <activity android:name="org.codeforafrica.listeningpost.SimplePreferences" />
         
         <activity android:name=".media.OverlayCameraActivity" 
              android:screenOrientation="landscape"
@@ -181,16 +188,16 @@
        
        
         <provider
-		    android:authorities="info.guardianproject.mrapp.db.LessonsProvider"
+		    android:authorities="org.codeforafrica.listeningpost.db.LessonsProvider"
 		    android:multiprocess="true"
 		    android:exported="false"
-		    android:name="info.guardianproject.mrapp.db.LessonsProvider"></provider>
+		    android:name="org.codeforafrica.listeningpost.db.LessonsProvider"></provider>
         
         <provider
-		    android:authorities="info.guardianproject.mrapp.db.ProjectsProvider"
+		    android:authorities="org.codeforafrica.listeningpost.db.ProjectsProvider"
 		    android:multiprocess="true"
 		     android:exported="false"
-		    android:name="info.guardianproject.mrapp.db.ProjectsProvider"></provider>
+		    android:name="org.codeforafrica.listeningpost.db.ProjectsProvider"></provider>
 		      
         <activity
             android:configChanges="keyboardHidden"
@@ -238,15 +245,15 @@
             />
     <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/app_id"/>
     <activity android:name="com.facebook.LoginActivity"/>
-    <activity android:name="info.guardianproject.mrapp.facebook.FacebookLogin"/>  
+    <activity android:name="org.codeforafrica.listeningpost.facebook.FacebookLogin"/>  
 	<activity android:name="net.hockeyapp.android.UpdateActivity" />
 	
-	<activity android:name="info.guardianproject.mrapp.facebook.UpdateActivity" android:value="Update Profile"/>
-	<activity android:name="info.guardianproject.mrapp.AboutActivity" android:label="About" />
-	<service android:name="info.guardianproject.mrapp.api.SyncService" />
-	<service android:name="info.guardianproject.mrapp.export.Export2SDService" />
-	<service android:name="info.guardianproject.mrapp.encryption.EncryptionService" />
-	<service android:name="info.guardianproject.mrapp.encryption.EncryptionBackground" />
+	<activity android:name="org.codeforafrica.listeningpost.facebook.UpdateActivity" android:value="Update Profile"/>
+	<activity android:name="org.codeforafrica.listeningpost.AboutActivity" android:label="About" />
+	<service android:name="org.codeforafrica.listeningpost.api.SyncService" />
+	<service android:name="org.codeforafrica.listeningpost.export.Export2SDService" />
+	<service android:name="org.codeforafrica.listeningpost.encryption.EncryptionService" />
+	<service android:name="org.codeforafrica.listeningpost.encryption.EncryptionBackground" />
     
     </application>
 

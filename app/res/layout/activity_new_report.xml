@@ -391,10 +391,9 @@
                 style="@style/fancyButton"
                 android:layout_width="fill_parent"
                 android:layout_height="match_parent"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
                 android:background="@color/lp_red"
                 android:text="@string/done" />
+
         </LinearLayout>
 
     </LinearLayout>

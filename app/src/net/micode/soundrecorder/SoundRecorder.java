@@ -16,13 +16,13 @@
 
 package net.micode.soundrecorder;
 
-import info.guardianproject.mrapp.R;
-
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Locale;
+
+import org.codeforafrica.listeningpost.R;
 
 import android.app.Activity;
 import android.app.AlertDialog;

@@ -14,7 +14,7 @@
             android:layout_weight="0.00"
             android:orientation="vertical"
             android:paddingBottom="5dip"
-            android:paddingTop="70dip" >
+            android:paddingTop="50dip" >
 
                 <!-- Logo Start-->
 
@@ -25,7 +25,15 @@
                     android:layout_gravity="center|center"
                     android:src="@drawable/logo" />
 
-                
+                <TextView
+              android:id="@+id/textView1"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_gravity="center_horizontal"
+              android:text="@string/strapline" 
+              style="@style/CardTitle"
+              android:textSize="15sp"
+              android:textColor="@color/lp_blue"/>
 
             </LinearLayout>
 
@@ -35,14 +43,16 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_alignParentLeft="true"
-            android:layout_marginBottom="20dp"
+            android:layout_marginBottom="2dp"
             android:orientation="vertical" >
 
             <RelativeLayout
+                android:id="@+id/load_new_report"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.00"
-                android:padding="10dip" >
+                android:padding="10dip"
+                android:background="@color/grey" >
 
                 <ImageView
                     android:id="@+id/ImageView01"
@@ -59,20 +69,22 @@
                     android:layout_centerVertical="true"
                     android:padding="3sp"
                     android:text="Create first story"
-                    android:textSize="20sp" />
+                    android:textSize="20sp"
+                    android:textColor="@color/lp_brown" />
             </RelativeLayout>
 
             <View
                 android:id="@+id/view1"
                 android:layout_width="wrap_content"
                 android:layout_height="2dp"
-                android:layout_margin="1dp"
-                android:background="@color/grey" />
+                android:background="@color/white" />
 
             <RelativeLayout
+                android:id="@+id/load_lessons"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="10dip" >
+                android:padding="10dip"
+                android:background="@color/grey" >
 
                 <ImageView
                     android:id="@+id/imageView1"
@@ -89,8 +101,8 @@
                     android:layout_centerVertical="true"
                     android:padding="3sp"
                     android:text="How to use the app"
-                    android:textSize="20sp" />
+                    android:textSize="20sp"
+                    android:textColor="@color/lp_yellow"  />
             </RelativeLayout>
         </LinearLayout>
-
    </RelativeLayout>
