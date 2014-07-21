@@ -104,7 +104,7 @@ public class MainFragment extends Fragment {
 						startActivity(i);
 					}
 				}else{
-					//login not successful: what to do?
+					//TODO: login not successful: what to do?
 					
 				}
 			
