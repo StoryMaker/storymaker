@@ -60,7 +60,7 @@ import com.actionbarsherlock.view.MenuItem;
     
     //private String mTemplateJsonPath = null;
     private int mSceneIndex = 0;
-    
+    private int taken = 0;
     private final static String CAPTURE_MIMETYPE_AUDIO = "audio/3gpp";
     public Fragment mFragmentTab0, mFragmentTab1, mLastTabFrag;
     public PublishFragment mPublishFragment;
@@ -604,6 +604,12 @@ import com.actionbarsherlock.view.MenuItem;
             Intent i = new Intent(getApplicationContext(), OverlayCameraActivity.class);
             i.putExtra("group", shotType);
             i.putExtra("mode", mProject.getStoryType());
+            if(mProject.getMediaAsList().size()<2){
+            	if(taken<1){
+            		i.putExtra("take1", "1");
+            		taken++;
+            	}
+            }
             mMPM.mClipIndex = clipIndex;
             startActivityForResult(i, REQ_OVERLAY_CAM);
         }
