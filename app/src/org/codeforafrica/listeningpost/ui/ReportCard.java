@@ -31,7 +31,7 @@ public class ReportCard extends Card {
 	private int mIcon = -1;
 	private Drawable mImage = null;
 	
-	public ReportCard(String title, String desc, String status, String date, int vids, int pics, int auds){
+	public ReportCard(Drawable mImage, String title, String desc, String status, String date, int vids, int pics, int auds){
 		super(title);
 		mDesc = desc;
 		this.status = status;
@@ -39,6 +39,7 @@ public class ReportCard extends Card {
 		this.vids = vids;
 		this.pics = pics;
 		this.auds = auds;
+		this.mImage = mImage;
 	}
 
 	public void setIcon (int icon)

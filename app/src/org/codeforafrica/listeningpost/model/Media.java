@@ -23,6 +23,7 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Environment;
 import android.util.Log;
 
 public class Media extends Model {
@@ -485,27 +486,31 @@ public class Media extends Model {
     	if (media == null)
     		return null;
     	
-    	
+    	File thumbDir = new File(Environment.getExternalStorageDirectory() + "/" +AppConstants.TAG + "/.thumbs");
+    	if(!thumbDir.exists()){
+    		thumbDir.mkdirs();
+    	}
+        File fileThumb = new File(thumbDir + "/" + media.getId()+".jpg");
+
         if (media.getMimeType() == null)
         {
             return null;
         }
         else if (media.getMimeType().startsWith("video"))
         {
-            File fileThumb = new File(MediaProjectManager.getExternalProjectFolder(project, context), media.getId() + "_thumb.jpg");
             
-            if (fileThumb.exists())
-            {
+           // if (fileThumb.exists())
+           // {
 
                 final BitmapFactory.Options options = new BitmapFactory.Options();
                 options.inSampleSize = IMAGE_SAMPLE_SIZE;
                 return BitmapFactory.decodeFile(fileThumb.getAbsolutePath(), options);
-            }
-            else
+           // }
+           /* else
             {
             	try
             	{
-	                Bitmap bmp = MediaUtils.getVideoFrame(new File(media.getPath()).getCanonicalPath(), -1);
+            		Bitmap bmp = MediaUtils.getVideoFrame(new File(media.getPath()).getCanonicalPath(), -1);
 	                
 	                if (bmp != null)
 	                {
@@ -528,14 +533,14 @@ public class Media extends Model {
             		Log.e(AppConstants.TAG,"Could not generate thumbnail - OutofMemory!: " + media.getPath());
             		return null;
             	}
-            }
+            }*/
         }
         else if (media.getMimeType().startsWith("image"))
         {
             final BitmapFactory.Options options = new BitmapFactory.Options();
             options.inSampleSize = IMAGE_SAMPLE_SIZE * 2; //images will be bigger than video or audio
-        
-            return BitmapFactory.decodeFile(media.getPath(), options);
+            
+            return BitmapFactory.decodeFile(fileThumb.getPath(), options);
         }
         else if (media.getMimeType().startsWith("audio"))
         {

@@ -12,7 +12,7 @@ import android.widget.Toast;
 
 public class AppConstants {
 	
-public final static String TAG = "StoryMaker";
+public final static String TAG = "ListeningPost";
 	
 	public final static int IMAGE_EDITOR = 2;
 	public final static int VIDEO_EDITOR = 3;

@@ -5,8 +5,11 @@ import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import javax.crypto.Cipher;
+
 import org.codeforafrica.listeningpost.R;
 import org.codeforafrica.listeningpost.api.SyncService;
+import org.codeforafrica.listeningpost.encryption.Encryption;
 import org.codeforafrica.listeningpost.encryption.EncryptionService;
 import org.codeforafrica.listeningpost.export.Export2SDService;
 import org.codeforafrica.listeningpost.model.Media;
@@ -26,9 +29,12 @@ import android.app.ActivityManager.RunningServiceInfo;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
@@ -122,7 +128,7 @@ public class ReportsActivity extends BaseActivity implements OnClickListener{
         File mThumbsDir = new File(Environment.getExternalStorageDirectory(), AppConstants.TAG+"/decrypts");
 	    if (!mThumbsDir.exists()) {
 	        if (!mThumbsDir.mkdirs()) {
-	            Log.e("TIMBY: ", "Problem creating thumbnails folder");
+	            Log.e("ListeningPost: ", "Problem creating thumbnails folder");
 	        }
 	    }else{
 	    	DeleteRecursive(mThumbsDir);
@@ -335,7 +341,8 @@ public class ReportsActivity extends BaseActivity implements OnClickListener{
 	    		 	}
     	 		}
         	}
-    		ReportCard androidViewsCard2 = new ReportCard(r.getTitle(), r.getDescription(), status, r.getDate(), vids, pics, auds);
+    		Drawable reportThumb = getReportThumb(r.getId());
+			ReportCard androidViewsCard2 = new ReportCard(reportThumb , r.getTitle(), r.getDescription(), status, r.getDate(), vids, pics, auds);
     		final int rid = r.getId();
     		androidViewsCard2.setOnClickListener(new OnClickListener(){
     			@Override
@@ -350,6 +357,35 @@ public class ReportsActivity extends BaseActivity implements OnClickListener{
 			mCardView.refresh();
 
     	}
+    }
+    
+    public Drawable getReportThumb(int reportId){
+		
+    	//Thumbnail Business
+        ArrayList<Project> mListProjects;
+		mListProjects = Project.getAllAsList(getApplicationContext(), reportId);
+	 	Log.d("id", "Projects:"+mListProjects.size());
+
+		Bitmap bmp_= null;
+		if(mListProjects.size()>0){
+    		Project project = mListProjects.get(0);
+            // FIXME default to use first scene
+            Media[] mediaList = project.getScenesAsArray()[0].getMediaAsArray();
+            
+            if (mediaList != null && mediaList.length > 0)    
+            {
+            	for (Media media: mediaList)
+            		if (media != null)
+            		{
+            			
+            			Bitmap bmp = Media.getThumbnail(ReportsActivity.this,media,project);
+            			if (bmp != null)
+            				bmp_ = bmp;
+            			
+            		}
+            }
+		}
+		return new BitmapDrawable(getResources(), bmp_);
     }
     
 	@Override
@@ -531,7 +567,6 @@ public class ReportsActivity extends BaseActivity implements OnClickListener{
     		if(mListProjects.size()>0){
 	    		Project project = mListProjects.get(0);
 	    	 	ImageView ivIcon = (ImageView)row.findViewById(R.id.imageView1);
-	            
 	            // FIXME default to use first scene
 	            Media[] mediaList = project.getScenesAsArray()[0].getMediaAsArray();
 	            
@@ -540,12 +575,12 @@ public class ReportsActivity extends BaseActivity implements OnClickListener{
 	            	for (Media media: mediaList)
 	            		if (media != null)
 	            		{
-	            			GetThumbnailParams params = new GetThumbnailParams(ReportsActivity.this,media,project, ivIcon);
-	            		 	get_thumbnail = new getThumbnail();
-	            		 	get_thumbnail.execute(params);	
-	            			//Bitmap bmp = Media.getThumbnail(ProjectsActivity.this,media,project);
-	            			//if (bmp != null)
-	            			//	ivIcon.setImageBitmap(bmp);
+	            			//GetThumbnailParams params = new GetThumbnailParams(ReportsActivity.this,media,project,ivIcon);
+	            		 	//get_thumbnail = new getThumbnail();
+	            		 	//get_thumbnail.execute(params);	
+	            			Bitmap bmp = Media.getThumbnail(ReportsActivity.this,media,project);
+	            			if (bmp != null)
+	            				ivIcon.setImageBitmap(bmp);
 	            			break;
 	            		}
 	            }
@@ -611,6 +646,7 @@ public class ReportsActivity extends BaseActivity implements OnClickListener{
             super.onPreExecute();
 			
         }
+		
         protected String doInBackground(GetThumbnailParams... params) {
         	Context context = params[0].context;
         	final Media media = params[0].media;

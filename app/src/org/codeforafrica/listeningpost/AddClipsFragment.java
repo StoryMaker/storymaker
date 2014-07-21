@@ -1,5 +1,7 @@
 package org.codeforafrica.listeningpost;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -7,6 +9,7 @@ import org.codeforafrica.listeningpost.R;
 import org.codeforafrica.listeningpost.model.Media;
 import org.codeforafrica.listeningpost.model.template.Clip;
 import org.codeforafrica.listeningpost.model.template.Template;
+import org.ffmpeg.android.MediaUtils;
 import org.holoeverywhere.app.AlertDialog;
 import org.holoeverywhere.widget.Toast;
 import org.json.JSONArray;
@@ -16,7 +19,10 @@ import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -229,61 +235,31 @@ public class AddClipsFragment extends Fragment {
         }
     }
     public void addToQ(Media media) throws JSONException{
-    	/*
+    	//create and store thumbnails in hidden folder on sd
+    	
+    	File thumbDir = new File(Environment.getExternalStorageDirectory() + "/" + AppConstants.TAG + "/.thumbs");
+    	if(!thumbDir.exists()){
+    		thumbDir.mkdirs();
+    	}
+    	
         //Create thumbnail
-        Bitmap videoThumb = null;
+        Bitmap bitThumb = null;
         String filename=null;
-        if(mediaList.getMimeType().contains("video")){
-           try {
-        	   videoThumb = MediaUtils.getVideoFrame(new File(filepath).getCanonicalPath(), -1);
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-           try {
-               filename = Environment.getExternalStorageDirectory()+"/"+AppConstants.TAG+"/thumbs/"+mediaList.getId()+".jpg";
-               FileOutputStream out = new FileOutputStream(filename);
-               videoThumb.compress(Bitmap.CompressFormat.JPEG, 5, out);
-               out.close();
+        
+        if(media.getMimeType().contains("video")){
+           bitThumb = MediaUtils.getVideoFrame(media.getPath(), -1);
+        }else if(media.getMimeType().contains("image")){
+        	bitThumb = BitmapFactory.decodeFile(media.getPath());
+        }
+        	try{
+        		filename = thumbDir + "/" + media.getId()+".jpg";
+        		FileOutputStream out = new FileOutputStream(filename);
+        		bitThumb.compress(Bitmap.CompressFormat.JPEG, 5, out);
+        		out.close();
 		       } catch (Exception e) {
 		               e.printStackTrace();
-		       }
-           
-        }else if(mediaList.getMimeType().contains("image")){
-        	try {
-        		Bitmap imagePath = BitmapFactory.decodeFile(filepath);
-        		//Bitmap imagePath2 = Bitmap.createScaledBitmap(imagePath, 100, 100, true);
-                filename = Environment.getExternalStorageDirectory()+"/"+AppConstants.TAG+"/thumbs/"+mediaList.getId()+".jpg";
-                FileOutputStream out = new FileOutputStream(filename);
-                imagePath.compress(Bitmap.CompressFormat.JPEG, 5, out);
-                out.close();
- 		       } catch (Exception e) {
- 		               e.printStackTrace();
- 		       }
-        }
-        if((mediaList.getMimeType().contains("video"))||(mediaList.getMimeType().contains("image")))
-        {
-        	
-	        Cipher cipher;
-	        
-	        String file = filename;
-			try {
-				cipher = Encryption.createCipher(Cipher.ENCRYPT_MODE);
-				Encryption.applyCipher(file, file+"_", cipher);
-			}catch (Exception e) {
-				// TODO Auto-generated catch block
-				//Log.e("Encryption error", e.getLocalizedMessage());
-				e.printStackTrace();
-			}
-			//Then delete original file
-			File oldfile = new File(file);
-			oldfile.delete();
-			//Then remove _ on encrypted file
-			File newfile = new File(file+"_");
-			newfile.renameTo(new File(file));
-			
-        }
-		*/
+		}
+        
         //Add to Queue
         
         //First read all we have

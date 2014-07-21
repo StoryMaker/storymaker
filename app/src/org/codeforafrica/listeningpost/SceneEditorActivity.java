@@ -604,12 +604,14 @@ import com.actionbarsherlock.view.MenuItem;
             Intent i = new Intent(getApplicationContext(), OverlayCameraActivity.class);
             i.putExtra("group", shotType);
             i.putExtra("mode", mProject.getStoryType());
+            
             if(mProject.getMediaAsList().size()<2){
             	if(taken<1){
             		i.putExtra("take1", "1");
             		taken++;
             	}
             }
+            
             mMPM.mClipIndex = clipIndex;
             startActivityForResult(i, REQ_OVERLAY_CAM);
         }
