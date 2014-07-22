@@ -153,10 +153,10 @@ public class PublishController {
         return mPublishJob;
     }
 	
-	public void publishJobSucceeded(PublishJob publishJob) {
+	public void publishJobSucceeded(PublishJob publishJob, String url) {
 	    // get a embedable publish
 	    
-		mListener.publishSucceeded(publishJob);
+		mListener.publishSucceeded(publishJob, url);
 	}
     
     public void publishJobFailed(PublishJob publishJob, int errorCode, String errorMessage) {
@@ -165,9 +165,10 @@ public class PublishController {
 	
     /**
      * Aggregates and filters progress from each job associated with a publish job
-     * @param publishJob
-     * @param progress
-     * @param message
+     * 
+     * @param job
+     * @param progress 0 to 1
+     * @param message message displayed to the user
      */
 	public void publishJobProgress(PublishJob publishJob, float progress, String message) {
 	    mListener.publishProgress(publishJob, progress, message);
@@ -198,7 +199,14 @@ public class PublishController {
         }
         mListener.jobFailed(job, errorCode, errorMessage);
 	}
-	
+
+
+    /**
+     * 
+     * @param job
+     * @param progress 0 to 1
+     * @param message Message displayed to user
+     */
     public void jobProgress(Job job, float progress, String message) {
         PublishJob publishJob = job.getPublishJob();
         PublisherBase publisher = getPublisher(publishJob);
@@ -230,7 +238,7 @@ public class PublishController {
 	}
 	
 	public static interface PublishListener {
-        public void publishSucceeded(PublishJob publishJob);
+        public void publishSucceeded(PublishJob publishJob, String url);
 
         public void publishFailed(PublishJob publishJob, int errorCode, String errorMessage);
         

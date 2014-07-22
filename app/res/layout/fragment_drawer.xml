@@ -189,7 +189,8 @@
 	        android:drawableLeft="@drawable/ic_nav_upload"
 	        android:gravity="left|center_vertical"
 	        android:text="@string/menu_uploads"
-	        android:textColor="#dddddd" /> 
+	        android:textColor="#dddddd"
+	        android:visibility="gone" />
 	
 	    <View
 	        android:layout_width="fill_parent"

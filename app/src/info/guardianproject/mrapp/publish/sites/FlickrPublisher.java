@@ -32,40 +32,7 @@ public class FlickrPublisher extends PublisherBase {
         mController.enqueueJob(newJob);
     }
 
-    @Override
-    public void jobSucceeded(Job job) {
-        Log.d(TAG, "jobSucceeded() - " + job);
-
-        if (job.isType(JobTable.TYPE_RENDER)) {
-            Log.d(TAG, "successful render");
-            
-            mController.publishJobSucceeded(mPublishJob);
-        } else if (job.isType(JobTable.TYPE_UPLOAD)) {
-            if (job.isSite(Auth.SITE_FLICKR))  {
-                Log.d(TAG, "successful upload");
-                
-                if (mPublishJob.getPublishToStoryMaker()) {
-                    publishToStoryMaker();
-                }
-            }
-        } 
-    }
-
-    @Override
-    public void jobFailed(Job job, int errorCode, String errorMessage) {
-        Log.d(TAG, "jobFailed()");
-        mController.publishJobFailed(mPublishJob, errorCode, errorMessage);
-    }
-
-    @Override
-    public void jobProgress(Job job, float progress, String message) {
-        Log.d(TAG, "jobProgress()");
-        
-        mController.publishJobProgress(mPublishJob, progress, message);
-    }
-    
     public String getEmbed(Job job) {
-//        return "[flickr video=" + job.getResult() + "]";
         return "[flickr " + job.getResult() + "]";
     }
 }

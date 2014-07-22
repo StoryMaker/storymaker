@@ -13,6 +13,7 @@ import android.util.Log;
 public class PublishService extends IntentService implements PublishListener {
     public static final String TAG = "PublishService";
     public static final String INTENT_EXTRA_PROJECT_ID = "project_id";
+    public static final String INTENT_EXTRA_PUBLISH_URL = "publish_url";
     public static final String INTENT_EXTRA_PUBLISH_JOB_ID = "publish_job_id";
     public static final String INTENT_EXTRA_JOB_ID = "job_id";
     public static final String INTENT_EXTRA_USE_TOR = "use_tor";
@@ -57,9 +58,10 @@ public class PublishService extends IntentService implements PublishListener {
     }
 
     @Override
-    public void publishSucceeded(PublishJob publishJob) {
+    public void publishSucceeded(PublishJob publishJob, String url) {
         Intent intent = new Intent(ACTION_PUBLISH_SUCCESS);
         intent.putExtra(INTENT_EXTRA_PROJECT_ID, publishJob.getProjectId());
+        intent.putExtra(INTENT_EXTRA_PUBLISH_URL, url);
         intent.putExtra(INTENT_EXTRA_PUBLISH_JOB_ID, publishJob.getId());
         sendBroadcast(intent);
     }

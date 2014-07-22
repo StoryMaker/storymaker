@@ -35,20 +35,6 @@ public class FacebookPublisher extends PublisherBase {
         mController.enqueueJob(newJob);
 	}
 	
-	public void jobSucceeded(Job job) {
-        Log.d(TAG, "jobSucceeded: " + job);
-        if (job.isType(JobTable.TYPE_RENDER)) {
-            // since the user must now initiate upload, we just stop this publishjob now and wait
-//            mController.jobSucceeded(job, job.getResult());
-        } else if (job.isType(JobTable.TYPE_UPLOAD)) {
-            if (job.isSite(Auth.SITE_FACEBOOK)) {
-                if (mPublishJob.getPublishToStoryMaker()) {
-                    publishToStoryMaker();
-                }
-            }
-        }
-	}
-	
 	public String getEmbed(Job job) {
 	    return "[FB " + job.getResult() + "]";
 //	    return null; // 
