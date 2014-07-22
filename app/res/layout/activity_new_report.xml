@@ -149,7 +149,14 @@
         android:layout_height="wrap_content"
         android:orientation="vertical" 
         android:layout_below="@+id/tableLayout1">
-
+	<Button
+                android:id="@+id/buttonImport"
+                style="@style/fancyButton"
+                android:layout_width="fill_parent"
+                android:layout_height="match_parent"
+                android:background="@color/grey"
+                android:textColor="@color/lp_blue"
+                android:text="@string/menu_add_from_gallery" />
         <EditText
             android:id="@+id/editTextStoryName"
             android:layout_width="fill_parent"
@@ -326,6 +333,8 @@
                 android:background="@drawable/purple_button"
                 android:visibility="gone" >
             </ListView>
+
+           
 
             <EditText
                 android:id="@+id/editTextDescription"

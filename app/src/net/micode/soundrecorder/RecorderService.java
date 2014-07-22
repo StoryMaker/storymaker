@@ -19,8 +19,8 @@ package net.micode.soundrecorder;
 import java.io.File;
 import java.io.IOException;
 
-import org.codeforafrica.listeningpost.AppConstants;
-import org.codeforafrica.listeningpost.R;
+import org.codeforafrica.timby.listeningpost.AppConstants;
+import org.codeforafrica.timby.listeningpost.R;
 
 import android.app.KeyguardManager;
 import android.app.Notification;

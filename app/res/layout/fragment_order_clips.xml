@@ -20,7 +20,7 @@
             android:adjustViewBounds="true"
             android:src="@drawable/cliptype_long" />
 
-        <org.codeforafrica.listeningpost.PreviewVideoView
+        <org.codeforafrica.timby.listeningpost.PreviewVideoView
             android:id="@+id/previewVideoView"
             android:layout_width="match_parent"
             android:layout_height="200dip"

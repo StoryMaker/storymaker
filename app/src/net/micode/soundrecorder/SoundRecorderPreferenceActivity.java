@@ -16,7 +16,7 @@
 
 package net.micode.soundrecorder;
 
-import org.codeforafrica.listeningpost.R;
+import org.codeforafrica.timby.listeningpost.R;
 
 import android.content.Context;
 import android.content.SharedPreferences;
