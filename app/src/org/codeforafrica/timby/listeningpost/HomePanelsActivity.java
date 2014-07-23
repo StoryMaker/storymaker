@@ -339,11 +339,13 @@ public class HomePanelsActivity extends BaseActivity implements OnClickListener{
        
         String user = settings.getString("logged_in",null);
         
+        //Toast.makeText(getApplicationContext(), " " + user, Toast.LENGTH_LONG).show();
+        
         if ((user == null)||(user.equals("0")))
         {
         	Intent intent = new Intent(this,FacebookLogin.class);
         	startActivity(intent);
-        	//finish();
+        	finish();
         }else{
         	//Do nothing
         	

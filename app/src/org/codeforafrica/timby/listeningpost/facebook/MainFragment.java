@@ -5,6 +5,7 @@ import java.util.Arrays;
 import org.codeforafrica.timby.listeningpost.HomePanelsActivity;
 import org.codeforafrica.timby.listeningpost.R;
 import org.codeforafrica.timby.listeningpost.api.APIFunctions;
+import org.holoeverywhere.widget.Toast;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -130,7 +131,8 @@ public class MainFragment extends Fragment {
 	           
 				@Override
 				public void onCompleted(GraphUser user, Response response) {
-					// TODO Auto-generated method stub
+						
+						//TODO Auto-generated method stub
 					if(user.getProperty("email").toString()!=null){
 						location = "";//null, Wait for FB approval: user.getLocation().getCountry();
 						firstname = user.getFirstName();
@@ -139,6 +141,12 @@ public class MainFragment extends Fragment {
 						email = user.getProperty("email").toString();
 						Log.d("Email", "Email:" + email);
 						new userRegister().execute();
+					}else{
+						Toast.makeText(getActivity(), "Login unsuccessfull. Try again!", Toast.LENGTH_LONG).show();
+						//try again
+						Intent i = new Intent(getActivity(), FacebookLogin.class);
+						getActivity().startActivity(i);
+						getActivity().finish();
 					}
 				}
 	          }).executeAsync();

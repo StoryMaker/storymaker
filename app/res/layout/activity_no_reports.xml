@@ -100,7 +100,7 @@
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:padding="3sp"
-                    android:text="How to use the app"
+                    android:text="Tips for great content"
                     android:textSize="20sp"
                     android:textColor="@color/lp_yellow"  />
             </RelativeLayout>

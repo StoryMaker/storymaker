@@ -16,9 +16,11 @@ import org.codeforafrica.timby.listeningpost.model.Media;
 import org.codeforafrica.timby.listeningpost.model.Project;
 import org.codeforafrica.timby.listeningpost.model.Report;
 import org.codeforafrica.timby.listeningpost.ui.ReportCard;
+import org.holoeverywhere.app.AlertDialog;
 import org.holoeverywhere.widget.Toast;
 
 import com.actionbarsherlock.view.MenuItem;
+import com.fima.cardsui.objects.Card.OnCardSwiped;
 import com.fima.cardsui.views.CardUI;
 
 import android.app.Activity;
@@ -27,6 +29,7 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.app.ActivityManager.RunningServiceInfo;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
@@ -292,7 +295,7 @@ public class ReportsActivity extends BaseActivity implements OnClickListener{
     public void createCards(){
     	for(int i = 0; i<mListReports.size(); i++){
     		
-    		Report r = mListReports.get(i);
+    		final Report r = mListReports.get(i);
     		
     		//Get report status
     		String synced = "";
@@ -353,6 +356,7 @@ public class ReportsActivity extends BaseActivity implements OnClickListener{
     		        startActivity(intent);
     			}
     		});
+    		
 			mCardView.addCard(androidViewsCard2);
 			mCardView.refresh();
 

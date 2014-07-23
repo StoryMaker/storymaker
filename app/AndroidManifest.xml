@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="org.codeforafrica.timby.listeningpost"
     android:installLocation="auto"
-    android:versionCode="127"
+    android:versionCode="128"
     android:versionName="0.0.9-build112" >
     <uses-sdk
         android:minSdkVersion="10"

@@ -47,6 +47,7 @@ public class ProjectsActivity extends BaseActivity {
         
         // action bar stuff
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle("Media");
         
         mListView = (ListView)findViewById(R.id.projectslist);
         initListView(mListView);
@@ -134,7 +135,7 @@ public class ProjectsActivity extends BaseActivity {
 
 
             AlertDialog.Builder builder = new AlertDialog.Builder(ProjectsActivity.this);
-            builder.setMessage(R.string.delete_project_)
+            builder.setMessage("delete media")
                     .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener(){
 
                         @Override
