@@ -11,6 +11,7 @@ import org.holoeverywhere.app.Activity;
 import org.holoeverywhere.preference.PreferenceManager;
 import org.holoeverywhere.preference.SharedPreferences;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -27,6 +28,7 @@ import android.widget.ImageView;
 
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
+import com.facebook.Session;
 //import com.google.analytics.tracking.android.EasyTracker;
 import com.slidingmenu.lib.SlidingMenu;
 import com.slidingmenu.lib.SlidingMenu.OnClosedListener;
@@ -215,6 +217,10 @@ public class BaseActivity extends Activity {
         }
         if (item.getItemId() == R.id.logout)
         {
+        	//logout facebook
+        	
+        	callFacebookLogout(getApplicationContext());
+    			
         	//nullify user
         	SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
     		Editor editor = prefs.edit();
@@ -245,7 +251,25 @@ public class BaseActivity extends Activity {
 		//initSlidingMenu();
 	}
 
+    public static void callFacebookLogout(Context context) {
+        Session session = Session.getActiveSession();
+        if (session != null) {
 
+            if (!session.isClosed()) {
+                session.closeAndClearTokenInformation();
+                //clear your preferences if saved
+            }
+        } else {
+
+            session = new Session(context);
+            Session.setActiveSession(session);
+
+            session.closeAndClearTokenInformation();
+                //clear your preferences if saved
+
+        }
+
+    }
 
 	private void detectCoachOverlay ()
     {
