@@ -100,10 +100,9 @@ public class MainFragment extends Fragment {
 					
 					editor.commit();
 			        
-					if(!getActivity().getIntent().hasExtra("logout")){
-						Intent i = new Intent(getActivity(), HomePanelsActivity.class);
-						startActivity(i);
-					}
+					Intent i = new Intent(getActivity(), HomePanelsActivity.class);
+					startActivity(i);
+					
 				}else{
 					//TODO: login not successful: what to do?
 					
@@ -124,6 +123,8 @@ public class MainFragment extends Fragment {
 	    if (state.isOpened()) {
 	        Log.i(TAG, "Logged in...");
 	        
+	        //Retrieving profile information: might take a while
+	        authButton.setText("Logging in ...");
 	        // make request to the /me API
 	          Request.newMeRequest(session, new Request.GraphUserCallback() {
 
