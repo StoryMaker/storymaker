@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/widget_layout"
+    android:layout_width="300dp"
+    android:layout_height="wrap_content"
+    android:padding="10dp"
+    android:layout_margin="8dip"
+    android:background="#66cccccc"
+    android:gravity="center"
+    android:orientation="vertical"
+     >
+
+    <Button
+        android:id="@+id/video"
+        android:layout_width="188dp"
+        android:layout_height="wrap_content"
+        android:text="Button" />
+
+    <Button
+        android:id="@+id/camera"
+        android:layout_width="188dp"
+        android:layout_height="wrap_content"
+        android:text="Button" />
+
+    <Button
+        android:id="@+id/audio"
+        android:layout_width="188dp"
+        android:layout_height="wrap_content"
+        android:text="Button" />
+
+</LinearLayout> 

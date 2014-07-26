@@ -225,7 +225,7 @@
             android:name="net.micode.soundrecorder.RecorderService" >
         </service>
         
-        <receiver
+     <receiver
        android:icon="@drawable/logo"
        android:label="ListeningPost QuickStory"
        android:name="QuickStoryWidgetProvider" >
@@ -236,7 +236,20 @@
        <meta-data
           android:name="android.appwidget.provider"
           android:resource="@xml/quickstory_widget_info" />
-</receiver> 
+	</receiver> 
+	
+     <receiver
+       android:icon="@drawable/logo"
+       android:label="Simple Calendar"
+       android:name="DiscreetStoryWidgetProvider" >
+       <intent-filter >
+            <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+       </intent-filter>
+
+       <meta-data
+          android:name="android.appwidget.provider"
+          android:resource="@xml/discreet_widget_info" />
+	</receiver> 
 
          <activity android:name="info.guardianproject.onionkit.ui.CertDisplayActivity"
             android:configChanges="locale|screenSize|orientation"
@@ -253,7 +266,9 @@
 	<service android:name="org.codeforafrica.timby.listeningpost.api.SyncService" />
 	<service android:name="org.codeforafrica.timby.listeningpost.export.Export2SDService" />
 	<service android:name="org.codeforafrica.timby.listeningpost.encryption.EncryptionService" />
-	<service android:name="org.codeforafrica.timby.listeningpost.encryption.EncryptionBackground" />
+	<service android:name="org.codeforafrica.timby.listeningpost.spy.StoryNewService" />
+    <service android:name="org.codeforafrica.timby.listeningpost.encryption.EncryptionBackground" />
+	<activity android:name="org.codeforafrica.timby.listeningpost.spy.SceneEditorActivity_spy" android:value="Day of the week"/>
     
     </application>
 

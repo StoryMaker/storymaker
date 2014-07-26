@@ -199,7 +199,8 @@ public class StoryNewActivity extends BaseActivity {
         startActivity(i);
         finish();
     }
-private void createReport() {
+    
+    private void createReport() {
       	
       	SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
       	String currentdate = dateFormat.format(new Date());
@@ -219,7 +220,7 @@ private void createReport() {
         }
    
     
-    private void launchSimpleStory(String pName, int storyMode, boolean autoCapture, int quickstory) {
+    public void launchSimpleStory(String pName, int storyMode, boolean autoCapture, int quickstory) {
         int clipCount = AppConstants.DEFAULT_CLIP_COUNT;
         
         if(rid == -1){
