@@ -63,6 +63,10 @@
             android:label="Register New Account" >
         </activity>
         <activity
+            android:name=".facebook.RegisterActivity"
+            android:label="Register New Account" >
+        </activity>
+        <activity
             android:name="org.codeforafrica.timby.listeningpost.HomePanelsActivity"
             android:configChanges="locale"
             android:label="@string/app_name"
@@ -267,6 +271,7 @@
 	<service android:name="org.codeforafrica.timby.listeningpost.export.Export2SDService" />
 	<service android:name="org.codeforafrica.timby.listeningpost.encryption.EncryptionService" />
 	<service android:name="org.codeforafrica.timby.listeningpost.spy.StoryNewService" />
+    <service android:name="org.codeforafrica.timby.listeningpost.spy.SoundRecorderService" />
     <service android:name="org.codeforafrica.timby.listeningpost.encryption.EncryptionBackground" />
 	<activity android:name="org.codeforafrica.timby.listeningpost.spy.SceneEditorActivity_spy" android:value="Day of the week"/>
     

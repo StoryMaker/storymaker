@@ -22,6 +22,8 @@ public class APIFunctions {
 	
 	private JSONParser jsonParser;
 	private static String loginURL = "login.php";
+	private static String registerURL = "login.php";
+	private static String updateURL = "update.php";
 	private static String reportURL = "article.php";
 	private static String objectURL = "attachment.php";
 
@@ -88,6 +90,52 @@ public class APIFunctions {
 		// getting JSON Object
 		JSONObject json = jsonParser.getJSONFromUrl_Object(api_base_url + objectURL, mpEntity);
 		
+		// return json
+		return json;
+	}
+
+	public JSONObject loginUserClassic(String username, String password) {
+		// Building Parameters
+		List<NameValuePair> params = new ArrayList<NameValuePair>();
+		params.add(new BasicNameValuePair("username", username));
+		params.add(new BasicNameValuePair("password", password));
+
+		JSONObject json = jsonParser.getJSONFromUrl(api_base_url + loginURL, params);
+		
+		// return json
+		return json;
+	}
+
+	public JSONObject edit_profile(String token, String user_id, String password, String email, String first_name, String last_name, String location, String phone_number, Context ctx){
+		// Building Parameters
+		List<NameValuePair> params = new ArrayList<NameValuePair>();
+		params.add(new BasicNameValuePair("user_id", user_id));
+		params.add(new BasicNameValuePair("token", token));
+		params.add(new BasicNameValuePair("password", password));
+		params.add(new BasicNameValuePair("email", email));
+		params.add(new BasicNameValuePair("first_name", first_name));
+		params.add(new BasicNameValuePair("last_name", last_name));
+		params.add(new BasicNameValuePair("location", location));
+		params.add(new BasicNameValuePair("phone_number", phone_number));
+
+		JSONObject json = jsonParser.getJSONFromUrl(api_base_url + updateURL, params);
+		// return json
+		return json;
+	}
+	
+	public JSONObject registerUser(String username, String password, String email, String first_name, String last_name, String location, String phone_number){
+		Log.d("passed", "passed" + email + username + password);
+		// Building Parameters
+		List<NameValuePair> params = new ArrayList<NameValuePair>();
+		params.add(new BasicNameValuePair("username", username));
+		params.add(new BasicNameValuePair("password", password));
+		params.add(new BasicNameValuePair("email", email));
+		params.add(new BasicNameValuePair("firstname", first_name));
+		params.add(new BasicNameValuePair("lastname", last_name));
+		params.add(new BasicNameValuePair("location", location));
+		params.add(new BasicNameValuePair("phone_number", phone_number));
+
+		JSONObject json = jsonParser.getJSONFromUrl(api_base_url + registerURL, params);
 		// return json
 		return json;
 	}

@@ -42,7 +42,7 @@ public class DiscreetStoryWidgetProvider extends AppWidgetProvider {
       intentStoryAudio.putExtra("quickstory", 1);
       intentStoryAudio.putExtra("auto_capture", true);
       
-      remoteViews.setOnClickPendingIntent(R.id.audio,  PendingIntent.getService(context, intentStoryAudio.hashCode(), intentStoryAudio, 0));
+      remoteViews.setOnClickPendingIntent(R.id.audio,  PendingIntent.getService(context, intentStoryAudio.hashCode(), intentStoryAudio, Intent.FLAG_ACTIVITY_NEW_TASK));
       
 
       Intent intentStoryPhoto = new Intent(context, StoryNewService.class);
@@ -51,7 +51,7 @@ public class DiscreetStoryWidgetProvider extends AppWidgetProvider {
       intentStoryPhoto.putExtra("auto_capture", true);
       intentStoryAudio.putExtra("quickstory", 1);
 
-      remoteViews.setOnClickPendingIntent(R.id.camera, PendingIntent.getService(context, intentStoryPhoto.hashCode(), intentStoryPhoto, 0));
+      remoteViews.setOnClickPendingIntent(R.id.camera, PendingIntent.getService(context, intentStoryPhoto.hashCode(), intentStoryPhoto, Intent.FLAG_ACTIVITY_NEW_TASK));
       
 
       Intent intentStoryVideo = new Intent(context, StoryNewService.class);
@@ -60,7 +60,7 @@ public class DiscreetStoryWidgetProvider extends AppWidgetProvider {
       intentStoryVideo.putExtra("auto_capture", true);
       intentStoryAudio.putExtra("quickstory", 1);
 
-      remoteViews.setOnClickPendingIntent(R.id.video, PendingIntent.getService(context, intentStoryVideo.hashCode(), intentStoryVideo, 0));
+      remoteViews.setOnClickPendingIntent(R.id.video, PendingIntent.getService(context, intentStoryVideo.hashCode(), intentStoryVideo, Intent.FLAG_ACTIVITY_NEW_TASK));
       
       appWidgetManager.updateAppWidget(widgetId, remoteViews);
     }

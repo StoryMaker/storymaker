@@ -22,17 +22,52 @@
           >
           <!-- Full Name Label -->
           <!--  Email Label -->
-          <EditText android:id="@+id/registerUsername"
+
+            <EditText
+                android:id="@+id/registerUsername"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dip"
-                android:singleLine="true"
-                android:hint="Your Username"
-                android:textColor="@color/lp_blue"
-                android:background="@color/lp_grey"
-                android:padding="10dp"
                 android:layout_marginBottom="5dp"
-                />
+                android:layout_marginTop="5dip"
+                android:background="@color/lp_grey"
+                android:ems="10"
+                android:hint="Your Username"
+                android:padding="10dp"
+                android:singleLine="true"
+                android:textColor="@color/lp_blue" />
+
+            <EditText
+                android:id="@+id/registerPassword"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dip"
+                android:background="@color/lp_grey"
+                android:ems="10"
+                android:hint="Password"
+                android:inputType="textPassword"
+                android:padding="10dp"
+                android:singleLine="true"
+                android:textColor="@color/lp_blue" />
+
+          
+
+            <EditText
+                android:id="@+id/confirmPassword"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dip"
+                android:background="@color/lp_grey"
+                android:ems="10"
+                android:hint="Confirm Password"
+                android:inputType="textPassword"
+                android:padding="10dp"
+                android:singleLine="true"
+                android:textColor="@color/lp_blue" >
+
+         
+            </EditText>
           <!-- Password Label --> 
                 
           <EditText android:id="@+id/first_name"
