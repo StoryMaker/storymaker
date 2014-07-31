@@ -20,7 +20,7 @@ public class AboutActivity extends BaseActivity{
 	        setContentView(R.layout.activity_about);
 	        
 	        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-	        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#ffffff")));
+	        //getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#ffffff")));
 	      
 	        
 	        String title = "About ListeningPost";
@@ -33,8 +33,8 @@ public class AboutActivity extends BaseActivity{
 	        MyCard androidViewsCard = new MyCard(title, desc);
 			mCardView.addCard(androidViewsCard);
 			
-			MyCard androidViewsCard2 = new MyCard(title, desc);
-			mCardView.addCard(androidViewsCard2);
+			//MyCard androidViewsCard2 = new MyCard(title, desc);
+			//mCardView.addCard(androidViewsCard2);
 			
 			mCardView.refresh();
 	  }

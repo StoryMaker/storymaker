@@ -233,6 +233,8 @@ public class MainFragment extends Fragment implements Runnable{
     
     private void loginSuccess ()
     {
+    	Intent i = new Intent(getActivity(), HomePanelsActivity.class);
+    	startActivity(i);
     	getActivity().finish();
     }
 	class userRegister extends AsyncTask<String, String, String>{

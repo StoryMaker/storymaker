@@ -5,8 +5,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 
+import javax.crypto.Cipher;
+
 import org.codeforafrica.timby.listeningpost.R;
 import org.codeforafrica.timby.listeningpost.api.SyncService;
+import org.codeforafrica.timby.listeningpost.encryption.EncryptionService;
 import org.codeforafrica.timby.listeningpost.location.GPSTracker;
 import org.codeforafrica.timby.listeningpost.model.Media;
 import org.codeforafrica.timby.listeningpost.model.Project;
@@ -408,6 +411,7 @@ OnItemLongClickListener{
 				Intent i = new Intent(ReportActivity.this,SyncService.class);
 				i.putExtra("rid", rid);
   	        	startService(i);
+  	        	
   	        	
             	do_report_close();
 				dialog_publish.dismiss();
