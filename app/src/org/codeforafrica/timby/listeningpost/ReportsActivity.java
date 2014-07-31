@@ -83,7 +83,7 @@ public class ReportsActivity extends BaseActivity implements OnClickListener{
         cd = new ConnectionDetector(getApplicationContext());
 
         // action bar stuff
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
          
         //getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#FFFFFF")));
         //getSupportActionBar().setTitle("View Reports");
