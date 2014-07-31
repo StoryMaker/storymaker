@@ -330,18 +330,22 @@ public class ReportsActivity extends BaseActivity implements OnClickListener{
     	 		Media[] mediaList = project2.getScenesAsArray()[0].getMediaAsArray();
     	 		
     	 		for(int k = 0; k<mediaList.length; k++){
+    	 			
 	    	 		Media media = mediaList[k];
 	    	 		
-	    		 	String ptype = media.getMimeType();
-	    		 	if(ptype.contains("image")){
-	    		 		pics++;
-	    		 		
-	    		 	}else if(ptype.contains("video")){
-	    		 		vids++;
-	    		 		
-	    		 	}else if(ptype.contains("audio")){
-	    		 		auds++;
-	    		 	}
+	    	 		if(media!=null)
+	    	 		{
+		    		 	String ptype = media.getMimeType();
+		    		 	if(ptype.contains("image")){
+		    		 		pics++;
+		    		 		
+		    		 	}else if(ptype.contains("video")){
+		    		 		vids++;
+		    		 		
+		    		 	}else if(ptype.contains("audio")){
+		    		 		auds++;
+		    		 	}
+	    	 		}
     	 		}
         	}
     		Drawable reportThumb = getReportThumb(r.getId());

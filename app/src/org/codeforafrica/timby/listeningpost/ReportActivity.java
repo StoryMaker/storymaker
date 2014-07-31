@@ -350,14 +350,16 @@ OnItemLongClickListener{
 	 		Project project = mListProjects.get(j);
 	 		Media[] mediaList = project.getScenesAsArray()[0].getMediaAsArray();
 		 	for (Media media: mediaList){
-		 		String ptype = media.getMimeType();
-		 		if(ptype.contains("image")){
-			 		pics++;
-			 	}else if(ptype.contains("video")){
-			 		vids++;
-			 	}else if(ptype.contains("audio")){
-			 		auds++;
-			 	}
+		 		if(media!=null){
+			 		String ptype = media.getMimeType();
+			 		if(ptype.contains("image")){
+				 		pics++;
+				 	}else if(ptype.contains("video")){
+				 		vids++;
+				 	}else if(ptype.contains("audio")){
+				 		auds++;
+				 	}
+		 		}
 		 	}
 	 	}
 	 	

@@ -82,8 +82,8 @@ public class SyncService extends Service {
 	    	   rid = extras.getInt("rid");
 	    	   Log.d("rid", "rid : " + rid);
 	    	   mListReports.add(Report.get(getApplicationContext(), rid));
-	     //  }else{
-	    	//   mListReports = Report.getAllAsList(getApplicationContext());
+	       }else{
+	    	   mListReports = Report.getAllAsList(getApplicationContext());
 	       }
           
 
@@ -93,9 +93,9 @@ public class SyncService extends Service {
          // if(!isInternetPresent){
          // 	Toast.makeText(this, "You have no connection!", Toast.LENGTH_LONG).show();
           //}else{
-        //  	check_token = new checkToken().execute();
+          	check_token = new checkToken().execute();
          // }
-	       /*
+	       
         prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
     	delete_after_sync = prefs.getString("delete_after_sync","0");
 
@@ -110,7 +110,7 @@ public class SyncService extends Service {
   		        	checkTasks();
   		        } 
   		    }, delay, period);
-  		*/
+  		
 		return startId; 
           
     }
