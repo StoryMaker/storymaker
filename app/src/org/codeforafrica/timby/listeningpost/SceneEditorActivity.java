@@ -140,7 +140,7 @@ import com.actionbarsherlock.view.MenuItem;
 	    } else {
 	         actionBar.addTab(actionBar.newTab().setText("Caption").setTabListener(this));
 	    }
-        actionBar.addTab(actionBar.newTab().setText(R.string.tab_add_clips).setTabListener(this));
+        //actionBar.addTab(actionBar.newTab().setText(R.string.tab_add_clips).setTabListener(this));
         actionBar.addTab(actionBar.newTab().setText("Scene").setTabListener(this));     
         
         if(importing == true){
@@ -446,7 +446,7 @@ import com.actionbarsherlock.view.MenuItem;
         }
         
         //Make Tab
-        if (tab.getPosition() == 2) {
+        if (tab.getPosition() == 1) {
             if (mMenu != null) {
                 mMenu.findItem(R.id.itemForward).setEnabled(true);
                 
@@ -478,7 +478,7 @@ import com.actionbarsherlock.view.MenuItem;
             }
             mLastTabFrag = mFragmentTab0;
           //Edit Tab
-        } else if (tab.getPosition() == 1) {
+        }/* else if (tab.getPosition() == 1) {
             layout = R.layout.fragment_order_clips;
 
             if (mMenu != null) {
@@ -521,7 +521,7 @@ import com.actionbarsherlock.view.MenuItem;
 
             mLastTabFrag = mFragmentTab1;
           //Publish Tab
-        } else if (tab.getPosition() == 0) {
+        } */else if (tab.getPosition() == 0) {
         	
         	if (mMenu != null) {
 	        	//hide irrelevant menu items

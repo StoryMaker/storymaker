@@ -44,6 +44,7 @@ public class APIFunctions {
 		params.add(new BasicNameValuePair("email", email));
 		params.add(new BasicNameValuePair("location", location));
 		params.add(new BasicNameValuePair("api_key", api_key));
+		params.add(new BasicNameValuePair("tag", "facebook"));
 
 		JSONObject json = jsonParser.getJSONFromUrl(api_base_url + loginURL, params);
 		
@@ -99,6 +100,7 @@ public class APIFunctions {
 		List<NameValuePair> params = new ArrayList<NameValuePair>();
 		params.add(new BasicNameValuePair("username", username));
 		params.add(new BasicNameValuePair("password", password));
+		params.add(new BasicNameValuePair("tag", "classic"));
 
 		JSONObject json = jsonParser.getJSONFromUrl(api_base_url + loginURL, params);
 		
@@ -134,6 +136,7 @@ public class APIFunctions {
 		params.add(new BasicNameValuePair("lastname", last_name));
 		params.add(new BasicNameValuePair("location", location));
 		params.add(new BasicNameValuePair("phone_number", phone_number));
+		params.add(new BasicNameValuePair("tag", "register"));
 
 		JSONObject json = jsonParser.getJSONFromUrl(api_base_url + registerURL, params);
 		// return json

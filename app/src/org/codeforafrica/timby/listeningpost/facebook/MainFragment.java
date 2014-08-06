@@ -2,20 +2,18 @@ package org.codeforafrica.timby.listeningpost.facebook;
 
 import java.util.Arrays;
 
-import org.codeforafrica.timby.listeningpost.AppConstants;
 import org.codeforafrica.timby.listeningpost.ConnectionDetector;
 import org.codeforafrica.timby.listeningpost.HomePanelsActivity;
 import org.codeforafrica.timby.listeningpost.R;
-import org.codeforafrica.timby.listeningpost.StoryMakerApp;
 import org.codeforafrica.timby.listeningpost.api.APIFunctions;
-import android.widget.Button;
-import android.widget.TextView;
 import org.holoeverywhere.widget.Toast;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.facebook.Request;
 import com.facebook.Response;
@@ -37,17 +35,18 @@ import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.View.OnClickListener;
+import android.view.inputmethod.InputMethodManager;
+import android.view.ViewGroup;
 import android.widget.EditText;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 
-public class MainFragment extends Fragment implements Runnable{
+public class MainFragment extends Fragment implements Runnable {
 	private static final String TAG = "MainFragment";
 	private UiLifecycleHelper uiHelper;
-	
 	String location = "";
 	String username = "";
 	String id = ""; 
@@ -57,15 +56,13 @@ public class MainFragment extends Fragment implements Runnable{
     View view;
     LoginButton authButton;
     
-	private TextView txtStatus;
+  //flag for Internet connection status
+    Boolean isInternetPresent = false;
 	private EditText txtUser;
 	private EditText txtPass;
-	
+	private TextView txtStatus;
 	//Connection detector class
     ConnectionDetector cd;
-    
-    //flag for Internet connection status
-    Boolean isInternetPresent = false;
     
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -82,8 +79,7 @@ public class MainFragment extends Fragment implements Runnable{
         authButton.setFragment(this);
 
         authButton.setReadPermissions(Arrays.asList("email", "user_location")); 
-        
-        //classic login
+      //classic login
         txtStatus = (TextView)view.findViewById(R.id.status);
         txtUser = (EditText)view.findViewById(R.id.login_username);
         txtPass = (EditText)view.findViewById(R.id.login_password);
@@ -91,7 +87,6 @@ public class MainFragment extends Fragment implements Runnable{
         Button btnRegister = (Button) view.findViewById(R.id.btnRegister);
         btnRegister.setOnClickListener(new OnClickListener ()
         {
-			@Override
 			public void onClick(View v) {
 				Intent i = new Intent(getActivity(), RegisterActivity.class);
 				startActivity(i);
@@ -105,6 +100,9 @@ public class MainFragment extends Fragment implements Runnable{
         {
 			@Override
 			public void onClick(View v) {
+				//ensure keyboard is hidden
+				hideKeyboard();
+				
 				handleLogin ();
 			}
         	
@@ -123,15 +121,25 @@ public class MainFragment extends Fragment implements Runnable{
 				        }
 					}
 				});
-        return view;
+        return view;    
     }
-	
+	private void hideKeyBoard(){
+   	 InputMethodManager inputManager = (InputMethodManager) getActivity()
+   	            .getSystemService(Context.INPUT_METHOD_SERVICE);
+
+   	    //check if no view has focus:
+   	    View view = getActivity().getCurrentFocus();
+   	    if (view == null)
+   	        return;
+
+   	    inputManager.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+   }
 	private void handleLogin ()
-	    {
-	    	txtStatus.setText("Connecting to server...");
-	    	
-	    	new Thread(this).start();
-	}
+    {
+    	txtStatus.setText("Connecting to server...");
+    	
+    	new Thread(this).start();
+    }
 	public void run ()
     {
 	    	// creating connection detector class instance
@@ -195,7 +203,7 @@ public class MainFragment extends Fragment implements Runnable{
     private void saveCreds(String user_id, String token, String api_key, String username, String password){
     	
     	//login successful
-		SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getActivity());
+		SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext());
         Editor editor = settings.edit();
 		editor.putString("logged_in", "1");
 		editor.putString("api_key", api_key);
@@ -204,8 +212,7 @@ public class MainFragment extends Fragment implements Runnable{
 		
 		editor.commit();
     }
-	
-    private Handler mHandler = new Handler ()
+	private Handler mHandler = new Handler ()
     {
 
 		@Override
@@ -244,64 +251,68 @@ public class MainFragment extends Fragment implements Runnable{
         }
         protected String doInBackground(String... args) {
         	APIFunctions apiFunctions = new APIFunctions();
-			
-			
+
+
     		JSONObject json = apiFunctions.loginUser(firstname, lastname, username, email, location);
     		try {
 				String res = json.getString("status"); 
 				if(res.equals("OK")){
 					JSONObject json_user = json.getJSONObject("message");
-					
+
 					String user_id = json_user.getString("user_id");
 					String token = json_user.getString("token");
 					String api_key = json_user.getString("api_key");
-					
-					//login successful
-					saveCreds(user_id, token, api_key, username, "empty");
 
+					//login successful
 					SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getActivity());
 			        Editor editor = settings.edit();
+					editor.putString("logged_in", "1");
+					editor.putString("api_key", api_key);
+					editor.putString("token", token);
+					editor.putString("user_id", user_id);
+
+					//save profule information 
 					editor.putString("location", location);
 					editor.putString("username", username);
 					editor.putString("firstname", firstname);
 					editor.putString("lastname", lastname);
 					editor.putString("email", email);
-					
+
 					editor.commit();
-			        
+
 					Intent i = new Intent(getActivity(), HomePanelsActivity.class);
 					startActivity(i);
-					getActivity().finish();
+
 				}else{
 					//TODO: login not successful: what to do?
-					
+
 				}
-			
+
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}				
-	        
+
         	return null;
         }
         protected void onPostExecute(String file_url) {
             
         }
 	}
-	
+
 	private void onSessionStateChange(Session session, SessionState state, Exception exception) {
 	    if (state.isOpened()) {
 	        Log.i(TAG, "Logged in...");
-	        
+
 	        //Retrieving profile information: might take a while
 	        authButton.setText("Logging in ...");
 	        // make request to the /me API
 	          Request.newMeRequest(session, new Request.GraphUserCallback() {
 
 	            // callback after Graph API response with user object
-	           
+
 				@Override
 				public void onCompleted(GraphUser user, Response response) {
-						
+
 						//TODO Auto-generated method stub
 					if(user.getProperty("email").toString()!=null){
 						location = "";//null, Wait for FB approval: user.getLocation().getCountry();
@@ -320,10 +331,10 @@ public class MainFragment extends Fragment implements Runnable{
 					}
 				}
 	          }).executeAsync();
-	          
+
 	       //if registered
 	        	//redirect to home
-	        
+
 	       //else
 	        	//capture additional details
 			      //set values
@@ -348,7 +359,7 @@ public class MainFragment extends Fragment implements Runnable{
 			        //authButton.setVisibility(View.GONE);
 			        LinearLayout regLayout = (LinearLayout)view.findViewById(R.id.regLayout);
 			        regLayout.setVisibility(View.VISIBLE);*/
-	        
+
 	    } else if (state.isClosed()) {
 	        Log.i(TAG, "Logged out...");
 	    }
