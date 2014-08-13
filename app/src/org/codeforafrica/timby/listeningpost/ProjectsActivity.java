@@ -58,7 +58,6 @@ public class ProjectsActivity extends BaseActivity {
     @Override
 	protected void onResume() {
 		super.onResume();
-		
 
 		refreshProjects();
 

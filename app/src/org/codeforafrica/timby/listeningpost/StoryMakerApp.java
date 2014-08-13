@@ -12,6 +12,10 @@ import java.util.StringTokenizer;
 
 
 
+
+import org.codeforafrica.timby.listeningpost.api.SyncService;
+import org.codeforafrica.timby.listeningpost.encryption.EncryptionService;
+import org.codeforafrica.timby.listeningpost.export.Export2SDService;
 import org.codeforafrica.timby.listeningpost.lessons.LessonManager;
 import org.codeforafrica.timby.listeningpost.media.MediaProjectManager;
 import org.codeforafrica.timby.listeningpost.server.ServerManager;
@@ -20,16 +24,23 @@ import net.sqlcipher.database.SQLiteDatabase;
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.ActivityManager.MemoryInfo;
+import android.app.ActivityManager.RunningServiceInfo;
 import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.content.res.Configuration;
 import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
 public class StoryMakerApp extends Application {
-
+	private static final String TAG=StoryMakerApp.class.getName();
+    private Waiter waiter;  //Thread which controls idle time
+	public void touch()
+    {
+        waiter.touch();
+    }
 	
 	private static ServerManager mServerManager;
 	private static LessonManager mLessonManager;
@@ -74,9 +85,93 @@ public class StoryMakerApp extends Application {
 //		GoogleAnalytics.getInstance(this).setAppOptOut(optOut);
 		
 		initApp();
-		 
+		Log.d(TAG, "Starting application"+this.toString());
+        waiter=new Waiter(300000); //15 mins
+        waiter.start(); 
 	}
-	
+	private boolean isServiceRunning(Class<?> cls) {
+        ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+        for (RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
+            if (cls.getName().equals(service.service.getClassName())) {
+                return true;
+            }
+        }
+        return false;
+ }
+	 public class Waiter extends Thread
+	 {
+	     private final String TAG=Waiter.class.getName();
+	     private long lastUsed;
+	     private long period;
+	     private boolean stop;
+
+	     public Waiter(long period)
+	     {
+	         this.period=period;
+	         stop=false;
+	     }
+
+	     public void run()
+	     {
+	         long idle=0;
+	         this.touch();
+	         do
+	         {
+	             idle=System.currentTimeMillis()-lastUsed;
+	             Log.d(TAG, "Application is idle for "+idle +" ms");
+	             try
+	             {
+	                 Thread.sleep(5000); //check every 5 seconds
+	             }
+	             catch (InterruptedException e)
+	             {
+	                 Log.d(TAG, "Waiter interrupted!");
+	             }
+	             if(idle > period)
+	             {
+	            	//check if there's a service running. 
+	            	if((!isServiceRunning(SyncService.class))&&(!isServiceRunning(VideoTutorialsService.class))&&(!isServiceRunning(EncryptionService.class))&&(!isServiceRunning(Export2SDService.class)))
+	            	{ 
+	                idle=0;
+	                stop=true;
+	                
+	                //nullify user
+	             	SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+	         		Editor editor = prefs.edit();
+	         		editor.putString("logged_in", "0");
+	             	editor.commit();
+	             	
+	             	System.exit(0);
+	                // finish();
+	                 //do something here - e.g. call popup or so
+	            	}
+	             }
+	         }
+	         while(!stop);
+	         Log.d(TAG, "Finishing Waiter thread");
+	     }
+
+	     public synchronized void touch()
+	     {
+	         lastUsed=System.currentTimeMillis();
+	     }
+
+	     public synchronized void forceInterrupt()
+	     {
+	         this.interrupt();
+	     }
+	     /*
+	     //soft stopping of thread
+	     public synchronized void stop()
+	     {
+	         stop=true;
+	     }
+		*/
+	     public synchronized void setPeriod(long period)
+	     {
+	         this.period=period;
+	     }
+	 }
 	private void initApp ()
 	{
 		try

@@ -3,6 +3,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Date;
 
+
 import org.codeforafrica.timby.listeningpost.R;
 import org.codeforafrica.timby.listeningpost.facebook.FacebookLogin;
 import org.codeforafrica.timby.listeningpost.facebook.UpdateActivity;
@@ -14,6 +15,7 @@ import org.holoeverywhere.preference.SharedPreferences;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -36,7 +38,24 @@ import com.slidingmenu.lib.SlidingMenu.OnClosedListener;
 public class BaseActivity extends Activity {
 
 	public SlidingMenu mSlidingMenu;
+	private static final String TAG=BaseActivity.class.getName();
 
+    /**
+     * Gets reference to global Application
+     * @return must always be type of ControlApplication! See AndroidManifest.xml
+     */
+public StoryMakerApp getApp()
+{
+    return (StoryMakerApp )this.getApplication();
+}
+
+@Override
+public void onUserInteraction()
+{
+    super.onUserInteraction();
+    getApp().touch();
+    Log.d(TAG, "User interaction to "+this.toString());
+}
 	@Override
 	public void onStart() {
 		super.onStart();

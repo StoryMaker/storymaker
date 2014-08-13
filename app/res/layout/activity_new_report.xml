@@ -261,30 +261,7 @@
             android:gravity="left|center_vertical"
             android:orientation="vertical" >
 
-            <RadioGroup
-                android:id="@+id/radioGroupStoryLevel"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="10dp"
-                android:layout_marginTop="10dp"
-                android:gravity="center"
-                android:orientation="horizontal"
-                android:visibility="gone" >
-
-                <RadioButton
-                    android:id="@+id/radioStoryType0"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:checked="true"
-                    android:text="@string/new_story_simple_story" />
-
-                <RadioButton
-                    android:id="@+id/radioStoryType1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/new_story_choose_template" />
-            </RadioGroup>
+           
 
             <Button
                 android:id="@+id/buttonStartStory"

@@ -80,6 +80,7 @@ public class ReportsActivity extends BaseActivity implements OnClickListener{
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reports);
+        initSlidingMenu();
         cd = new ConnectionDetector(getApplicationContext());
 
         // action bar stuff

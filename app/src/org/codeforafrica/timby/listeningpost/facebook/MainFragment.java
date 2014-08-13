@@ -101,7 +101,7 @@ public class MainFragment extends Fragment implements Runnable {
 			@Override
 			public void onClick(View v) {
 				//ensure keyboard is hidden
-				hideKeyboard();
+				hideKeyBoard();
 				
 				handleLogin ();
 			}
