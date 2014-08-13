@@ -251,6 +251,8 @@ public class SyncService extends Service {
 	 	
 		 	for (Media media: mediaList){
 
+		 		if(media!=null){
+		 			
 		 		String ppath = media.getPath();
 			 	String ptype = media.getMimeType();
 			 	
@@ -292,6 +294,7 @@ public class SyncService extends Service {
 			 	MyTaskParams params = new MyTaskParams(ppath, ptype, optype, ptitle, pid, preportid);
 			 	create_Object = new createObject();
 			 	create_Object.execute(params);	
+		 		}
 	 		}
 	 	}
 	}
