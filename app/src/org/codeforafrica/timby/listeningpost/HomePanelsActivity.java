@@ -42,6 +42,7 @@ import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -59,7 +60,7 @@ public class HomePanelsActivity extends BaseActivity implements OnClickListener{
 
     RelativeLayout load_new_report_click;
     RelativeLayout load_lessons_click;
-    RelativeLayout load_reports;
+    RelativeLayout load_my_reports;
     RelativeLayout load_sync;
 
     private Dialog dialog;
@@ -113,15 +114,11 @@ public class HomePanelsActivity extends BaseActivity implements OnClickListener{
         if(!isServiceRunning(EncryptionBackground.class)){
         	startService(new Intent(HomePanelsActivity.this, EncryptionBackground.class));
         }
+        setContentView(R.layout.activity_no_reports);
         
-        //redirect in case no reports
-		ArrayList<Report> mListReports = Report.getAllAsList(HomePanelsActivity.this);
-		if(mListReports.size()>0){
-			Intent i = new Intent(HomePanelsActivity.this, ReportsActivity.class);
-			startActivity(i);
-			finish();
-		}else{
-	        setContentView(R.layout.activity_no_reports);
+        //show view reports if have reports
+			showReportsButton();
+	        
 	        
 	        initSlidingMenu();
 	        
@@ -137,22 +134,9 @@ public class HomePanelsActivity extends BaseActivity implements OnClickListener{
 				Intent i = new Intent(getApplicationContext(),ReportActivity.class);
 				i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 				startActivity(i);
-				finish();
 			}
 		});
-        /*
-        load_reports = (RelativeLayout)findViewById(R.id.load_reports);
-        load_reports.setOnClickListener(new View.OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				Intent i = new Intent(getApplicationContext(),ReportsActivity.class);
-				i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-				startActivity(i);
-			}
-		});
-        */
+        
         load_lessons_click = (RelativeLayout)findViewById(R.id.load_lessons);
         load_lessons_click.setOnClickListener(new View.OnClickListener() {
 			
@@ -182,6 +166,30 @@ public class HomePanelsActivity extends BaseActivity implements OnClickListener{
 			}
 		});
 		*/
+		}
+    public void showReportsButton(){
+    	ArrayList<Report> mListReports = Report.getAllAsList(HomePanelsActivity.this);
+		if(mListReports.size()>0){
+			
+			
+			
+	        load_my_reports = (RelativeLayout)findViewById(R.id.load_my_reports);
+	        load_my_reports.setVisibility(View.VISIBLE);
+	        
+	        ((View)findViewById(R.id.view_load_reports)).setVisibility(View.VISIBLE);
+	        
+	        load_my_reports.setOnClickListener(new View.OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					// TODO Auto-generated method stub
+					Intent i = new Intent(getApplicationContext(),ReportsActivity.class);
+					i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+					startActivity(i);
+				}
+			});
+	        
+			((TextView)findViewById(R.id.TVcreate_report)).setText("Create another report");; 
 		}
     }
     void DeleteRecursive(File fileOrDirectory) {
@@ -274,10 +282,25 @@ public class HomePanelsActivity extends BaseActivity implements OnClickListener{
             */
         }
     }
-   
+    @Override
+    public void onBackPressed() {
+        moveTaskToBack(true);
+    }
+
+    // Before 2.0
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            moveTaskToBack(true);
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
     @Override
 	public void onResume() {
 		super.onResume();
+		
+		showReportsButton();
 		
 		//new getAsynctask().execute("");
 		
@@ -347,9 +370,6 @@ public class HomePanelsActivity extends BaseActivity implements OnClickListener{
         	Intent intent = new Intent(this,FacebookLogin.class);
         	startActivity(intent);
         	finish();
-        }else{
-        	//Do nothing
-        	
         }
     }
     

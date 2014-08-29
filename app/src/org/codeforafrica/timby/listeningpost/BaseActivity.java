@@ -3,7 +3,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Date;
 
-
 import org.codeforafrica.timby.listeningpost.R;
 import org.codeforafrica.timby.listeningpost.facebook.FacebookLogin;
 import org.codeforafrica.timby.listeningpost.facebook.UpdateActivity;
@@ -14,6 +13,7 @@ import org.holoeverywhere.preference.SharedPreferences;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -227,6 +227,14 @@ public void onUserInteraction()
 	        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 	        startActivity(intent);
         }
+        if (item.getItemId() == R.id.contact)
+        {	
+        	   		
+        	Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts(
+                    "mailto","westcapenews@gmail.com", null));
+        	//emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Your subject");
+        	startActivity(Intent.createChooser(emailIntent, "Send us an email..."));
+        }
         if (item.getItemId() == R.id.profile)
         {	
         	   		
@@ -244,7 +252,7 @@ public void onUserInteraction()
         	SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
     		Editor editor = prefs.edit();
     		editor.putString("logged_in", "0");
-        	editor.commit();
+        	editor.apply();
         	
         	Intent intent = new Intent(getBaseContext(), FacebookLogin.class);
 	        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

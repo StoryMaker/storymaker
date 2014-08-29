@@ -23,7 +23,6 @@ public class ReportFragmentsActivity extends BaseActivity {
 	}
 	
 	public void initCaptureFragments(){
-      	initSlidingMenu();
       	
 		int[] titles1 =
 			{(R.string.tutorial_title_1),

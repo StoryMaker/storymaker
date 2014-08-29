@@ -14,6 +14,10 @@
                   android:icon="@drawable/about"
                   android:title="About"/>
             
+            <item android:id="@+id/contact"
+                  android:icon="@drawable/contact"
+                  android:title="Contact Us"/>
+            
             <item android:id="@+id/profile"
                   android:icon="@drawable/profile"
                   android:title="Edit Profile"/>

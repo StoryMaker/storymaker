@@ -56,12 +56,12 @@
 
                 <ImageView
                     android:id="@+id/ImageView01"
-                    android:layout_width="wrap_content"
+                    android:layout_width="50dp"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/icon_new_report_grey" />
+                    android:src="@drawable/icon_new_report_hp" />
 
                 <TextView
-                    android:id="@+id/TextView01"
+                    android:id="@+id/TVcreate_report"
                     style="@style/CardTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -70,7 +70,7 @@
                     android:padding="3sp"
                     android:text="Create first story"
                     android:textSize="20sp"
-                    android:textColor="@color/lp_brown" />
+                    android:textColor="@color/black" />
             </RelativeLayout>
 
             <View
@@ -78,7 +78,41 @@
                 android:layout_width="wrap_content"
                 android:layout_height="2dp"
                 android:background="@color/white" />
+			<RelativeLayout
+                android:id="@+id/load_my_reports"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.00"
+                android:padding="10dip"
+                android:background="@color/grey"
+                android:visibility="gone" >
 
+                <ImageView
+                    android:id="@+id/ImageView02"
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/icon_reports_hp" />
+
+                <TextView
+                    android:id="@+id/TextView02"
+                    style="@style/CardTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:padding="3sp"
+                    android:text="View my reports"
+                    android:textSize="20sp"
+                    android:textColor="@color/black" />
+            </RelativeLayout>
+           
+			<View
+                android:id="@+id/view_load_reports"
+                android:layout_width="wrap_content"
+                android:layout_height="2dp"
+                android:background="@color/white"
+                android:visibility="gone" />
+            
             <RelativeLayout
                 android:id="@+id/load_lessons"
                 android:layout_width="match_parent"
@@ -88,12 +122,12 @@
 
                 <ImageView
                     android:id="@+id/imageView1"
-                    android:layout_width="wrap_content"
+                    android:layout_width="50dp"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/icon_help_grey" />
+                    android:src="@drawable/icon_help_hp" />
 
                 <TextView
-                    android:id="@+id/textView1"
+                    android:id="@+id/textView2"
                     style="@style/CardTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -102,7 +136,7 @@
                     android:padding="3sp"
                     android:text="Tips for great content"
                     android:textSize="20sp"
-                    android:textColor="@color/lp_yellow"  />
+                    android:textColor="@color/black"  />
             </RelativeLayout>
         </LinearLayout>
    </RelativeLayout>

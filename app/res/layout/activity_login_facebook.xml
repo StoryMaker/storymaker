@@ -91,7 +91,8 @@
               android:layout_height="wrap_content"
               android:gravity="center"
               android:textColor="#555555"
-              android:textSize="18dip" />
+              style="@style/CardTitle"
+              android:textSize="13sp" />
 
           <Button
               android:id="@+id/btnLogin"
@@ -103,7 +104,7 @@
              <LinearLayout 
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-             	android:gravity="center"
+             	android:gravity="right"
                 android:orientation="horizontal"
                 >
                   
@@ -129,13 +130,10 @@
               android:layout_height="wrap_content"
                android:gravity="center"
                android:background="#FFFFFF"
-              android:paddingBottom="20dp"
-              android:paddingLeft="10dp"
-              android:paddingRight="10dp"
-              android:paddingTop="20dp"
               android:text="Register"
               android:textColor="@color/lp_blue"
-              android:textSize="20dip"/>
+              style="@style/CardTitle"
+              android:textSize="15sp"/>
 
  </LinearLayout>
  

@@ -77,7 +77,8 @@ public class MainFragment extends Fragment implements Runnable {
         view = inflater.inflate(R.layout.activity_login_facebook, container, false);
         authButton = (LoginButton) view.findViewById(R.id.authButton);
         authButton.setFragment(this);
-
+        
+        
         authButton.setReadPermissions(Arrays.asList("email", "user_location")); 
       //classic login
         txtStatus = (TextView)view.findViewById(R.id.status);
@@ -282,7 +283,7 @@ public class MainFragment extends Fragment implements Runnable {
 
 					Intent i = new Intent(getActivity(), HomePanelsActivity.class);
 					startActivity(i);
-
+					
 				}else{
 					//TODO: login not successful: what to do?
 
