@@ -280,6 +280,12 @@
             android:label="@string/title_activity_connect_account"
             android:screenOrientation="portrait">
         </activity>
+
+        <activity
+            android:name=".PressSecureActivity"
+            android:label="@string/title_activity_press_secure" 
+            android:theme="@style/PopupTheme" >
+        </activity>
         
         <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/app_id"/>
         

@@ -9,6 +9,7 @@ import info.guardianproject.mrapp.model.JobTable;
 import info.guardianproject.mrapp.model.Project;
 import info.guardianproject.mrapp.model.PublishJob;
 import info.guardianproject.mrapp.model.PublishJobTable;
+import info.guardianproject.mrapp.publish.sites.ArchivePublisher;
 import info.guardianproject.mrapp.publish.sites.FacebookPublisher;
 import info.guardianproject.mrapp.publish.sites.FlickrPublisher;
 import info.guardianproject.mrapp.publish.sites.PreviewPublisher;
@@ -22,6 +23,10 @@ import io.scal.secureshareui.controller.FlickrSiteController;
 import io.scal.secureshareui.controller.SSHSiteController;
 import io.scal.secureshareui.controller.SoundCloudSiteController;
 import io.scal.secureshareui.controller.YoutubeSiteController;
+import io.scal.secureshareui.controller.ArchiveSiteController;
+
+import java.util.Arrays;
+import java.util.List;
 
 import org.holoeverywhere.app.Activity;
 
@@ -68,6 +73,8 @@ public class PublishController {
             List<String> ks = Arrays.asList(keys);
             if (ks.contains(Auth.SITE_STORYMAKER)) {
                 publisher = new StoryMakerPublisher(mContext, this, publishJob);
+            } else if (ks.contains(ArchiveSiteController.SITE_KEY)) {
+                publisher = new ArchivePublisher(mContext, this, publishJob);
             } else if (ks.contains(FacebookSiteController.SITE_KEY)) {
                 publisher = new FacebookPublisher(mContext, this, publishJob);
             } else if (ks.contains(YoutubeSiteController.SITE_KEY)) {
@@ -90,6 +97,8 @@ public class PublishController {
     public static Class getPublisherClass(String site) {
         if (site.equals(Auth.SITE_STORYMAKER)) {
             return StoryMakerPublisher.class;
+        } else if (site.equals(ArchiveSiteController.SITE_KEY)) {
+            return ArchiveSiteController.class;
         } else if (site.equals(FacebookSiteController.SITE_KEY)) {
             return FacebookPublisher.class;
         } else if (site.equals(YoutubeSiteController.SITE_KEY)) {
