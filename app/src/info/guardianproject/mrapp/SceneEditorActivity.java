@@ -614,7 +614,12 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
 //                    Log.d("OAuth", "got token: " + oauthToken);
 //                    mPublishFragment.setYouTubeAuth(oauthToken);
 //                }
-            } else if (requestCode == ChooseAccountFragment.ACCOUNT_REQUEST_CODE) {
+            } else if (requestCode == ChooseAccountFragment.ACCOUNT_REQUEST_CODE) { // FIXME hard wireing archive.org in for now, baad
+//                mPublishFragment.onChooseAccountDialogResult(resultCode, intent);
+            	Intent i = new Intent(getBaseContext(), PressSecureActivity.class);
+            	i.putExtras(intent.getExtras());
+            	startActivityForResult(i, PressSecureActivity.PRESSSECURE_REQUEST_CODE);
+            } else if (requestCode == PressSecureActivity.PRESSSECURE_REQUEST_CODE) {
                 mPublishFragment.onChooseAccountDialogResult(resultCode, intent);
             } else {
                 try {

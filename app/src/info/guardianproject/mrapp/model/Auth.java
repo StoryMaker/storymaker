@@ -29,6 +29,7 @@ public class Auth extends Model {
     public static final String SITE_FACEBOOK = "facebook";
     public static final String SITE_FLICKR = "flickr";
     public static final String SITE_SSH = "ssh";
+    public static final String SITE_ARCHIVE = "archive";
 
     /**
      * Create a new, blank record via the Content Provider interface

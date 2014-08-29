@@ -13,10 +13,10 @@ import java.util.Date;
 import android.content.Context;
 import android.util.Log;
 
-public class StoryMakerPublisher extends PublisherBase {
-    private final String TAG = "StoryMakerPublisher";
+public class ArchivePublisher extends PublisherBase {
+    private final String TAG = "ArchivePublisher";
 	
-	public StoryMakerPublisher(Context context, PublishController publishController, PublishJob publishJob) {
+	public ArchivePublisher(Context context, PublishController publishController, PublishJob publishJob) {
 	    super(context, publishController, publishJob);
 	}
 	
@@ -30,7 +30,7 @@ public class StoryMakerPublisher extends PublisherBase {
 	
 	public void startUpload() {
         Log.d(TAG, "startUpload");
-        Job newJob = new Job(mContext, mPublishJob.getProjectId(), mPublishJob.getId(), JobTable.TYPE_UPLOAD, Auth.SITE_YOUTUBE, null); // FIXME hardcoded to youtube?
+        Job newJob = new Job(mContext, mPublishJob.getProjectId(), mPublishJob.getId(), JobTable.TYPE_UPLOAD, Auth.SITE_ARCHIVE, null); // FIXME hardcoded to youtube?
         mController.enqueueJob(newJob);
 	}
 	
