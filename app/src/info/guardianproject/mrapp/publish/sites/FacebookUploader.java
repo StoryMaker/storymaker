@@ -1,6 +1,7 @@
 package info.guardianproject.mrapp.publish.sites;
 
 import java.io.File;
+import java.util.HashMap;
 
 import org.holoeverywhere.app.Activity;
 
@@ -10,6 +11,8 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 import info.guardianproject.mrapp.Utils;
+import info.guardianproject.mrapp.model.Auth;
+import info.guardianproject.mrapp.model.AuthTable;
 import info.guardianproject.mrapp.model.Job;
 import info.guardianproject.mrapp.model.JobTable;
 import info.guardianproject.mrapp.model.Project;
@@ -19,6 +22,7 @@ import info.guardianproject.mrapp.publish.UploadWorker;
 import info.guardianproject.mrapp.publish.UploaderBase;
 import io.scal.secureshareui.controller.FacebookSiteController;
 import io.scal.secureshareui.controller.SiteController;
+import io.scal.secureshareui.controller.SoundCloudSiteController;
 
 public class FacebookUploader extends UploaderBase {
     private final String TAG = "FacebookUploader";
@@ -36,6 +40,7 @@ public class FacebookUploader extends UploaderBase {
         final Project project = mJob.getProject();
         final PublishJob publishJob = mJob.getPublishJob();
         final String path = publishJob.getLastRenderFilePath();
+        final Auth auth = (new AuthTable()).getAuthDefault(mContext, SoundCloudSiteController.SITE_KEY);
         if (Utils.stringNotBlank(path) && (new File(path)).exists()) {
             Handler mainHandler = new Handler(mContext.getMainLooper());
             Runnable myRunnable = new Runnable() {
@@ -43,9 +48,9 @@ public class FacebookUploader extends UploaderBase {
                 @Override
                 public void run() {
                     jobProgress(mJob, 0, "Uploading to Facebook..."); //  FIXME move to strings.xml
-                    controller.upload(project.getTitle(), project.getDescription(), path, null, publishJob.getUseTor());
+                    HashMap<String, String> valueMap = convertValuesToHashmap(project.getTitle(), project.getDescription(), path, publishJob.getUseTor());
+                    controller.upload(auth.convertToAccountObject(), valueMap);
                 }
-                
             };
             mainHandler.post(myRunnable);
         } else {

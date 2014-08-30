@@ -1,6 +1,7 @@
 package info.guardianproject.mrapp.publish.sites;
 
 import java.io.File;
+import java.util.HashMap;
 
 import android.content.Context;
 import android.os.Handler;
@@ -35,7 +36,8 @@ public class ArchiveUploader extends UploaderBase {
 //        final Auth auth = (new AuthTable()).getAuthDefault(mContext, ArchiveSiteController.SITE_KEY);
         if (Utils.stringNotBlank(path) && (new File(path)).exists()) {
             jobProgress(mJob, 0, "Uploading to Internet Archive..."); //  FIXME move to strings.xml
-            controller.upload(project.getTitle(), project.getDescription(), path, null, publishJob.getUseTor());
+            HashMap<String, String> valueMap = convertValuesToHashmap(project.getTitle(), project.getDescription(), path, publishJob.getUseTor());
+            controller.upload(null, valueMap);
         } else {
             Log.d(TAG, "Can't upload to Internet Archive server, last rendered file doesn't exist.");
             // TODO get this error back to the activity for display 
