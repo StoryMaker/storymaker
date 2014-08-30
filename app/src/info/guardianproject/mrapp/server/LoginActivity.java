@@ -174,7 +174,7 @@ public class LoginActivity extends BaseActivity implements Runnable
     }
     
     private void loginSuccess ()
-    {
+    {    	
     	finish();
     }
 }

@@ -1,5 +1,7 @@
 package info.guardianproject.mrapp.publish.sites;
 
+import java.util.HashMap;
+
 import android.content.Context;
 import android.os.Handler;
 import android.util.Log;
@@ -36,7 +38,8 @@ public class FlickrUploader extends UploaderBase {
                 public void run() {
                     Log.d(TAG, "run()");
                  // FIXME, this might not be wise to run on the main thread flickr, does the flickr SDK automatically run itself on a backgroundthread?
-                    controller.upload(project.getTitle(), project.getDescription(), path, auth.convertToAccountObject(), publishJob.getUseTor()); 
+                    HashMap<String, String> valueMap = convertValuesToHashmap(project.getTitle(), project.getDescription(), path, publishJob.getUseTor());
+                    controller.upload(auth.convertToAccountObject(), valueMap);
                 }
             };
             mainHandler.post(myRunnable);

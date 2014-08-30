@@ -1,6 +1,7 @@
 package info.guardianproject.mrapp.publish.sites;
 
 import java.io.File;
+import java.util.HashMap;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -46,7 +47,8 @@ public class SoundCloudUploader extends UploaderBase {
                 @Override
                 public void run() {
                     jobProgress(mJob, 0, "Uploading to SoundCloud..."); //  FIXME move to strings.xml
-                    controller.upload(project.getTitle(), project.getDescription(), path, auth.convertToAccountObject(), publishJob.getUseTor());
+                    HashMap<String, String> valueMap = convertValuesToHashmap(project.getTitle(), project.getDescription(), path, publishJob.getUseTor());
+                    controller.upload(auth.convertToAccountObject(), valueMap);
                 }
                 
             };

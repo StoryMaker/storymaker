@@ -1,6 +1,7 @@
 package info.guardianproject.mrapp.publish.sites;
 
 import java.io.File;
+import java.util.HashMap;
 
 import android.content.Context;
 import android.os.Handler;
@@ -36,7 +37,8 @@ public class SSHUploader extends UploaderBase {
         final Auth auth = (new AuthTable()).getAuthDefault(mContext, SSHSiteController.SITE_KEY);
         if (Utils.stringNotBlank(path) && (new File(path)).exists()) {
             jobProgress(mJob, 0, "Uploading to SSH server..."); //  FIXME move to strings.xml
-            controller.upload(project.getTitle(), project.getDescription(), path, auth.convertToAccountObject(), publishJob.getUseTor());
+            HashMap<String, String> valueMap = convertValuesToHashmap(project.getTitle(), project.getDescription(), path, publishJob.getUseTor());
+            controller.upload(auth.convertToAccountObject(), valueMap);
         } else {
             Log.d(TAG, "Can't upload to SSH, last rendered file doesn't exist.");
             // TODO get this error back to the activity for display 
