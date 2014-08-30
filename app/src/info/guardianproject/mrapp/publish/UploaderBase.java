@@ -1,5 +1,8 @@
 package info.guardianproject.mrapp.publish;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import info.guardianproject.mrapp.model.Job;
 import info.guardianproject.mrapp.model.JobTable;
 import io.scal.secureshareui.controller.SiteController;
@@ -11,6 +14,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.Message;
+import android.util.Log;
 
 // TODO should these vanish and have FacebookUploader et all just derive from JobBase directly?
 public abstract class UploaderBase extends JobBase {
@@ -25,7 +29,6 @@ public abstract class UploaderBase extends JobBase {
     static {
         bgThread.start();
     }
-    // TODO move to base class
     public Handler mHandler = new Handler(bgThread.getLooper()) {
         @Override
         public void handleMessage(Message msg) {
@@ -54,4 +57,14 @@ public abstract class UploaderBase extends JobBase {
             }
         }
     };
+    
+    protected HashMap<String, String> convertValuesToHashmap(String title, String body, String mediaPath, boolean useTor) {
+    	HashMap<String, String> valueMap = new HashMap<String, String>();	
+    	valueMap.put("title", title);
+    	valueMap.put("body", body);
+    	valueMap.put("mediaPath", mediaPath);
+    	valueMap.put("useTor", String.valueOf(useTor));
+		
+		return valueMap;
+    }
 }
