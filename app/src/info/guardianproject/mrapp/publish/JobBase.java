@@ -22,6 +22,10 @@ public class JobBase {
         mSettings = PreferenceManager.getDefaultSharedPreferences(mContext);
     }
     
+    /**
+     * 
+     * @param type upload or render
+     */
     public void start() {
         Log.d(TAG, "start");
     }

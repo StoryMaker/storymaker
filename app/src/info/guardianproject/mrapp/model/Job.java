@@ -21,9 +21,6 @@ import java.util.Date;
 public class Job extends Model {
     private final String TAG = "Job";
 
-    public static final String TYPE_UPLOAD = "upload";
-    public static final String TYPE_RENDER = "render";
-    
 	protected int projectId; 			// fk to the Project this job is connected to
     protected int publishJobId; 		// fk to PublishJob, if it's -1, this is itself a PublishJob
     private String type;				// type upload, render and maybe publish

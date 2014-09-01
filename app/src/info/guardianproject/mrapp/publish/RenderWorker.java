@@ -1,5 +1,7 @@
 package info.guardianproject.mrapp.publish;
 
+import java.util.ArrayList;
+
 import info.guardianproject.mrapp.model.Job;
 import info.guardianproject.mrapp.model.JobTable;
 import info.guardianproject.mrapp.model.PublishJob;
@@ -30,20 +32,44 @@ public class RenderWorker extends WorkerBase {
 	}
 	
 	public void start(PublishJob publishJob) {
+//		// TODO guard against multiple calls if we are running already
+////		ArrayList<Job> jobs = (ArrayList<Job>) (new JobTable(db)).getUnfinishedAsList(context, JobTable.TYPE_UPLOAD);
+////	    SQLiteDatabase db = (new StoryMakerDB(context)).getWritableDatabase("foo");
+//		Job job = (new JobTable(null)).getNextUnfinished(mContext, JobTable.TYPE_RENDER, publishJob, null);
+//		RendererBase renderer = null;
+//		if (job != null) {
+//            if (job.isSpec(VideoRenderer.SPEC_KEY)) {
+//                renderer = new VideoRenderer(mContext, this, job);
+//            } else if (job.isSpec(AudioRenderer.SPEC_KEY)) {
+//                renderer = new AudioRenderer(mContext, this, job);
+//            } //else if (job.isSpec(Auth.SITE_STORYMAKER)) {
+//    //			renderer = new StoryMakerUploader(context, this, job);
+//    //		}
+//            renderer.start();
+//		}
+		
+		
 		// TODO guard against multiple calls if we are running already
-//		ArrayList<Job> jobs = (ArrayList<Job>) (new JobTable(db)).getUnfinishedAsList(context, JobTable.TYPE_UPLOAD);
-//	    SQLiteDatabase db = (new StoryMakerDB(context)).getWritableDatabase("foo");
-		Job job = (new JobTable(null)).getNextUnfinished(mContext, JobTable.TYPE_RENDER, publishJob, null);
-		RendererBase renderer = null;
-		if (job != null) {
-            if (job.isSpec(VideoRenderer.SPEC_KEY)) {
-                renderer = new VideoRenderer(mContext, this, job);
-            } else if (job.isSpec(AudioRenderer.SPEC_KEY)) {
-                renderer = new AudioRenderer(mContext, this, job);
-            } //else if (job.isSpec(Auth.SITE_STORYMAKER)) {
-    //			renderer = new StoryMakerUploader(context, this, job);
-    //		}
-            renderer.start();
+//		Job job = (new JobTable(null)).getNextUnfinished(mContext, JobTable.TYPE_RENDER, publishJob, null);
+		
+		// this should just just grab the new job, ignore old ones for now 
+		
+		// FIXME extend this to multiple render jobs, for now its hard coded to 1 at a time
+		ArrayList<Job> jobs = publishJob.getRenderJobsAsList(); 
+		if (jobs != null && jobs.size() > 0) {
+			Job job = jobs.get(0);
+			RendererBase renderer = null;
+			if (job != null) {
+		        if (job.isSpec(VideoRenderer.SPEC_KEY)) {
+		            renderer = new VideoRenderer(mContext, this, job);
+		        } else if (job.isSpec(AudioRenderer.SPEC_KEY)) {
+		            renderer = new AudioRenderer(mContext, this, job);
+		        } 
+		        // FIXME need a slideshow renderer?
+		        renderer.start();
+			}
+		} else {
+			jobFailed(null, 98129129, "No render job in db");
 		}
 	}
 	

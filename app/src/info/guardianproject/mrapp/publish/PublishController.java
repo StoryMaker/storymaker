@@ -1,6 +1,7 @@
 package info.guardianproject.mrapp.publish;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 import info.guardianproject.mrapp.model.Auth;
@@ -30,6 +31,8 @@ import java.util.List;
 
 import org.holoeverywhere.app.Activity;
 
+import com.google.gson.Gson;
+
 import android.content.Context;
 import android.util.Log;
 
@@ -45,8 +48,8 @@ public class PublishController {
     
 	private static PublishController publishController = null;
 	private Context mContext;
-	UploadWorker uploadService;
-	RenderWorker renderService;
+	UploadWorker uploadWorker;
+	RenderWorker renderworker;
 	PublisherBase publisher = null;
 	PublishJob mPublishJob = null;
 	PublishListener mListener;
@@ -116,8 +119,8 @@ public class PublishController {
         return null;
     }
     
-    public void startRender(Project project, String[] siteKeys, boolean useTor, boolean publishToStoryMaker) {
-        PublishJob publishJob = getPublishJob(project, siteKeys, useTor, publishToStoryMaker);
+    public void startRender(int publishJobId) {
+        PublishJob publishJob = getPublishJob(publishJobId);
         PublisherBase publisher = getPublisher(publishJob);
         // TODO this needs to loop a few times until publisher start returns false or something to tell us that the publish job is totally finished
         if (publisher != null) {
@@ -125,12 +128,9 @@ public class PublishController {
         } 
     }
     
-    public void startUpload(Project project, String[] siteKeys, boolean useTor, boolean publishToStoryMaker) {
-        PublishJob publishJob = getPublishJob(project, siteKeys, useTor, publishToStoryMaker);
-        // check if there is a rendered, unfinished job already matching these params
-//        publishJob(new PublishJobTable()).getNextUnfinished(mContext, project.getId(), siteKeys);
-//        publishJob = new PublishJob(mContext, -1, project.getId(), siteKeys);
-//        publishJob.save();
+//    public void startUpload(Project project, String[] siteKeys, String metadataString) {
+    public void startUpload(int publishJobId) {
+        PublishJob publishJob = getPublishJob(publishJobId);
         PublisherBase publisher = getPublisher(publishJob);
         // TODO this needs to loop a few times until publisher start returns false or something to tell us that the publish job is totally finished
         if (publisher != null) {
@@ -138,32 +138,23 @@ public class PublishController {
         }
     }
     
-    public static PublishJob getMatchingPublishJob(Context context, Project project, String[] siteKeys, boolean useTor, boolean publishToStoryMaker) {
-        PublishJob publishJob = (new PublishJobTable()).getNextUnfinished(context, project.getId(), siteKeys);
-        if (publishJob == null) {
-            publishJob = new PublishJob(context, project.getId(), siteKeys, useTor, publishToStoryMaker);
-            publishJob.save();
-        }
-        return publishJob;
+//    public static PublishJob getMatchingPublishJob(Context context, Project project, String[] siteKeys, HashMap<String, String> metadata) {
+//        PublishJob publishJob = (new PublishJobTable()).getNextUnfinished(context, project.getId(), siteKeys);
+//        if (publishJob == null) {
+//            publishJob = new PublishJob(context, project.getId(), siteKeys, (new Gson()).toJson(metadata));
+//            publishJob.save();
+//        }
+//        return publishJob;
+//    }
+    
+    // FIXME we are sort of half caching here, either cache or don't and get rid of the mPublishJob, it's confusing
+    private PublishJob getPublishJob(int publishJobId) {
+    	mPublishJob = (PublishJob) (new PublishJobTable()).get(mContext, publishJobId);
+    	return mPublishJob;
     }
     
-    private PublishJob getPublishJob(Project project, String[] siteKeys, boolean useTor, boolean publishToStoryMaker) {
-        if (mPublishJob == null) {
-            mPublishJob = getMatchingPublishJob(mContext, project, siteKeys, useTor, publishToStoryMaker);
-//            mPublishJob = (new PublishJobTable()).getNextUnfinished(mContext, project.getId(), siteKeys);
-//            if (mPublishJob == null) {
-//                mPublishJob = new PublishJob(mContext, project.getId(), siteKeys, useTor, publishToStoryMaker);
-//                mPublishJob.save();
-//            }
-        } else {
-            mPublishJob.setUseTor(useTor);
-            mPublishJob.setPublishToStoryMaker(publishToStoryMaker);
-        }
-        return mPublishJob;
-    }
-	
 	public void publishJobSucceeded(PublishJob publishJob, String url) {
-	    // get a embedable publish
+	    // get an embeddable publish
 	    
 		mListener.publishSucceeded(publishJob, url);
 	}
@@ -227,13 +218,13 @@ public class PublishController {
     }
 	
 	private void startUploadService() {
-		uploadService = UploadWorker.getInstance(mContext, this);
-		uploadService.start(mPublishJob);
+		uploadWorker = UploadWorker.getInstance(mContext, this);
+		uploadWorker.start(mPublishJob);
 	}
 	
 	private void startRenderService() {
-		renderService = RenderWorker.getInstance(mContext, this);
-		renderService.start(mPublishJob);
+		renderworker = RenderWorker.getInstance(mContext, this);
+		renderworker.start(mPublishJob);
 	}
 	
 	public void enqueueJob(Job job) {

@@ -5,6 +5,7 @@ import info.guardianproject.mrapp.model.Job;
 import info.guardianproject.mrapp.model.Project;
 import info.guardianproject.mrapp.model.ProjectTable;
 import info.guardianproject.mrapp.model.PublishJob;
+import info.guardianproject.mrapp.model.PublishJobTable;
 import info.guardianproject.mrapp.publish.PublishController.PublishListener;
 import android.app.IntentService;
 import android.content.Intent;
@@ -12,12 +13,9 @@ import android.util.Log;
 
 public class PublishService extends IntentService implements PublishListener {
     public static final String TAG = "PublishService";
-    public static final String INTENT_EXTRA_PROJECT_ID = "project_id";
     public static final String INTENT_EXTRA_PUBLISH_URL = "publish_url";
     public static final String INTENT_EXTRA_PUBLISH_JOB_ID = "publish_job_id";
     public static final String INTENT_EXTRA_JOB_ID = "job_id";
-    public static final String INTENT_EXTRA_USE_TOR = "use_tor";
-    public static final String INTENT_EXTRA_PUBLISH_TO_STORYMAKER = "publish_to_storymaker";
     public static final String INTENT_EXTRA_ERROR_CODE = "error_code";
     public static final String INTENT_EXTRA_ERROR_MESSAGE = "error_message";
     public static final String INTENT_EXTRA_SITE_KEYS = "site_keys";
@@ -37,22 +35,18 @@ public class PublishService extends IntentService implements PublishListener {
 
     @Override
     protected void onHandleIntent(Intent intent) {
-        if (intent.hasExtra(INTENT_EXTRA_PROJECT_ID) && intent.hasExtra(INTENT_EXTRA_SITE_KEYS)) {
-            int id = intent.getIntExtra(INTENT_EXTRA_PROJECT_ID, -1);
+        if (intent.hasExtra(INTENT_EXTRA_PUBLISH_JOB_ID)) {
+            int id = intent.getIntExtra(INTENT_EXTRA_PUBLISH_JOB_ID, -1);
             if (id != -1) {
-                String[] siteKeys = intent.getStringArrayExtra(INTENT_EXTRA_SITE_KEYS);
-                boolean useTor = intent.getBooleanExtra(INTENT_EXTRA_USE_TOR, false);
-                boolean publishToStoryMaker = intent.getBooleanExtra(INTENT_EXTRA_PUBLISH_TO_STORYMAKER, false);
                 // TODO need to trigger controllers for all selected sites
                 PublishController controller = (new PublishController(getApplicationContext(), this));
-                Project project = (Project) (new ProjectTable()).get(getApplicationContext(), id);
                 if (intent.getAction().equals(ACTION_RENDER)) {
-                    controller.startRender(project, siteKeys, useTor, publishToStoryMaker);
+                    controller.startRender(id);
                 } else if (intent.getAction().equals(ACTION_UPLOAD)) {
-                    controller.startUpload(project, siteKeys, useTor, publishToStoryMaker);
+                    controller.startUpload(id);
                 }
             } else {
-                Log.d(TAG, "invalid publish id passed: " + id);
+                Log.d(TAG, "invalid publishJobId passed: " + id);
             }
         }
     }
@@ -60,7 +54,6 @@ public class PublishService extends IntentService implements PublishListener {
     @Override
     public void publishSucceeded(PublishJob publishJob, String url) {
         Intent intent = new Intent(ACTION_PUBLISH_SUCCESS);
-        intent.putExtra(INTENT_EXTRA_PROJECT_ID, publishJob.getProjectId());
         intent.putExtra(INTENT_EXTRA_PUBLISH_URL, url);
         intent.putExtra(INTENT_EXTRA_PUBLISH_JOB_ID, publishJob.getId());
         sendBroadcast(intent);
@@ -69,7 +62,6 @@ public class PublishService extends IntentService implements PublishListener {
     @Override
     public void publishFailed(PublishJob publishJob, int errorCode, String errorMessage) {
         Intent intent = new Intent(ACTION_PUBLISH_FAILURE);
-        intent.putExtra(INTENT_EXTRA_PROJECT_ID, publishJob.getProjectId());
         intent.putExtra(INTENT_EXTRA_PUBLISH_JOB_ID, publishJob.getId());
         intent.putExtra(INTENT_EXTRA_ERROR_CODE, errorCode);
         intent.putExtra(INTENT_EXTRA_ERROR_MESSAGE, errorMessage);
@@ -79,7 +71,6 @@ public class PublishService extends IntentService implements PublishListener {
     @Override
     public void publishProgress(PublishJob publishJob, float progress, String message) {
         Intent intent = new Intent(ACTION_PROGRESS);
-        intent.putExtra(INTENT_EXTRA_PROJECT_ID, publishJob.getProjectId());
         intent.putExtra(INTENT_EXTRA_PUBLISH_JOB_ID, publishJob.getId());
         intent.putExtra(INTENT_EXTRA_PROGRESS, progress);
         intent.putExtra(INTENT_EXTRA_PROGRESS_MESSAGE, message);
@@ -89,7 +80,6 @@ public class PublishService extends IntentService implements PublishListener {
     @Override
     public void jobSucceeded(Job job) {
         Intent intent = new Intent(ACTION_JOB_SUCCESS);
-        intent.putExtra(INTENT_EXTRA_PROJECT_ID, job.getProjectId());
         intent.putExtra(INTENT_EXTRA_PUBLISH_JOB_ID, job.getPublishJobId());
         intent.putExtra(INTENT_EXTRA_JOB_ID, job.getId());
         sendBroadcast(intent);
@@ -98,7 +88,6 @@ public class PublishService extends IntentService implements PublishListener {
     @Override
     public void jobFailed(Job job, int errorCode, String errorMessage) {
         Intent intent = new Intent(ACTION_JOB_FAILURE);
-        intent.putExtra(INTENT_EXTRA_PROJECT_ID, job.getProjectId());
         intent.putExtra(INTENT_EXTRA_PUBLISH_JOB_ID, job.getPublishJobId());
         intent.putExtra(INTENT_EXTRA_JOB_ID, job.getId());
         sendBroadcast(intent);

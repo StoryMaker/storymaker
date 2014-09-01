@@ -35,9 +35,30 @@ public  class UploadWorker extends WorkerBase {
 	}
 	
 	public void start(PublishJob publishJob) {
+//		// TODO guard against multiple calls if we are running already
+////		ArrayList<Job> jobs = (ArrayList<Job>) (new JobTable(db)).getUnfinishedAsList(context, JobTable.TYPE_UPLOAD);
+//		Job job = (new JobTable(null)).getNextUnfinished(mContext, JobTable.TYPE_UPLOAD, publishJob, null); // FIXME this is grabbing incomplete jobs from previous runs, we should only run the ones from our current publishJob
+//		UploaderBase uploader = null;
+//		if (job != null) {
+//    		if (job.isSite(Auth.SITE_YOUTUBE)) {
+//    			uploader = new YoutubeUploader(mContext, this, job);
+//    		} else if (job.isSite(Auth.SITE_STORYMAKER)) {
+//                uploader = new StoryMakerUploader(mContext, this, job);
+//            } else if (job.isSite(Auth.SITE_FACEBOOK)) {
+//                uploader = new FacebookUploader(mContext, this, job);
+//            } else if (job.isSite(Auth.SITE_FLICKR)) {
+//                uploader = new FlickrUploader(mContext, this, job);
+//            } else if (job.isSite(Auth.SITE_SOUNDCLOUD)) {
+//                uploader = new SoundCloudUploader(mContext, this, job);
+//            } else if (job.isSite(Auth.SITE_SSH)) {
+//                uploader = new SSHUploader(mContext, this, job);
+//            } else if (job.isSite(Auth.SITE_ARCHIVE)) {
+//                uploader = new ArchiveUploader(mContext, this, job);
+//            } 
+//    		uploader.start();
+//		}
 		// TODO guard against multiple calls if we are running already
-//		ArrayList<Job> jobs = (ArrayList<Job>) (new JobTable(db)).getUnfinishedAsList(context, JobTable.TYPE_UPLOAD);
-		Job job = (new JobTable(null)).getNextUnfinished(mContext, JobTable.TYPE_UPLOAD, publishJob, null); // FIXME this is grabbing incomplete jobs from previous runs, we should only run the ones from our current publishJob
+		Job job = publishJob.getUploadJobsAsList().get(0); // FIXME extend this to multiple render jobs, for now its hard coded to 1 at a time
 		UploaderBase uploader = null;
 		if (job != null) {
     		if (job.isSite(Auth.SITE_YOUTUBE)) {

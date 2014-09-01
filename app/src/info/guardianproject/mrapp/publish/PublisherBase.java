@@ -17,6 +17,7 @@ import info.guardianproject.mrapp.model.PublishJob;
 import info.guardianproject.mrapp.publish.sites.SoundCloudPublisher;
 import info.guardianproject.mrapp.server.ServerManager;
 import io.scal.secureshareui.controller.SiteController;
+import io.scal.secureshareui.lib.ChooseAccountFragment;
 
 public abstract class PublisherBase {
     private final static String TAG = "PublisherBase";
@@ -64,9 +65,9 @@ public abstract class PublisherBase {
 	}
 	
 	private Job getPreferredUploadJob() {
-	    // TODO this should chose from all the selected sites for this publish the preffered site from this list: youtube, facebook, ...
+	    // TODO this should chose from all the selected sites for this publish the preferred site from this list: youtube, facebook, ...
 	    for (Job job: mPublishJob.getJobsAsList()) {
-	        if (job.isType(Job.TYPE_UPLOAD)) {
+	        if (job.isType(JobTable.TYPE_UPLOAD)) {
 	            return job;
 	        }
 	    }
@@ -133,21 +134,20 @@ public abstract class PublisherBase {
         if (job.isType(JobTable.TYPE_RENDER)) {
             // since the user must now initiate upload, we just stop this publishjob now and wait
 //            mController.publishJobSucceeded(mPublishJob);
-        } else if (job.isType(JobTable.TYPE_UPLOAD)) {
-//            if (job.isSite(Auth.SITE_FACEBOOK)) {
-                if (mPublishJob.getPublishToStoryMaker()) {
-                    Auth auth = (new AuthTable()).getAuthDefault(mContext, Auth.SITE_STORYMAKER);
-                    if (auth != null) {
-                        publishToStoryMaker();
-                    } else {
-                        mController.publishJobFailed(mPublishJob, 78268832, "You are not signed into StoryMaker.cc!"); // FIXME do this nicer
-                    }
-                } else {
-                    mController.publishJobSucceeded(mPublishJob, null);
-                }
-//            }
-        }
-    }
+		} else if (job.isType(JobTable.TYPE_UPLOAD)) {
+			String publishToStoryMaker = mPublishJob.getMetadata().get("publish_to_storymaker");
+			if (publishToStoryMaker != null && publishToStoryMaker.equals("true")) {
+				Auth auth = (new AuthTable()).getAuthDefault(mContext, Auth.SITE_STORYMAKER);
+				if (auth != null) {
+					publishToStoryMaker();
+				} else {
+					mController.publishJobFailed(mPublishJob, 78268832, "You are not signed into StoryMaker.cc!"); // FIXME do this nicer!
+				}
+			} else {
+				mController.publishJobSucceeded(mPublishJob, null);
+			}
+		}
+	}
     
     public void jobFailed(Job job, int errorCode, String errorMessage) {
         Log.d(TAG, "jobFailed: " + job);

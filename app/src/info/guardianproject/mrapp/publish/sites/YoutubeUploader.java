@@ -38,7 +38,8 @@ public class YoutubeUploader extends UploaderBase {
                 public void run() {
                     Log.d(TAG, "run()");
                     // FIXME, this might not be wise to run on the main thread youtube, does the youtube SDK automatically run itself on a backgroundthread?
-                    HashMap<String, String> valueMap = convertValuesToHashmap(project.getTitle(), project.getDescription(), path, publishJob.getUseTor());
+                    HashMap<String, String> valueMap = publishJob.getMetadata();
+                    addValuesToHashmap(valueMap, project.getTitle(), project.getDescription(), path);
                     controller.upload(auth.convertToAccountObject(), valueMap); 
                 }
             };

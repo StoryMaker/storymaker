@@ -58,12 +58,11 @@ public abstract class UploaderBase extends JobBase {
         }
     };
     
-    protected HashMap<String, String> convertValuesToHashmap(String title, String body, String mediaPath, boolean useTor) {
-    	HashMap<String, String> valueMap = new HashMap<String, String>();	
+    protected static HashMap<String, String> addValuesToHashmap(HashMap<String, String> valueMap, String title, String body, String mediaPath) {
+//    	HashMap<String, String> valueMap = new HashMap<String, String>();	
     	valueMap.put("title", title);
     	valueMap.put("body", body);
     	valueMap.put("mediaPath", mediaPath);
-    	valueMap.put("useTor", String.valueOf(useTor));
 		
 		return valueMap;
     }

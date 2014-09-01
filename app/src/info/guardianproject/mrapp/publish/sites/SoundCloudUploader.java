@@ -47,7 +47,8 @@ public class SoundCloudUploader extends UploaderBase {
                 @Override
                 public void run() {
                     jobProgress(mJob, 0, "Uploading to SoundCloud..."); //  FIXME move to strings.xml
-                    HashMap<String, String> valueMap = convertValuesToHashmap(project.getTitle(), project.getDescription(), path, publishJob.getUseTor());
+                    HashMap<String, String> valueMap = publishJob.getMetadata();
+                    addValuesToHashmap(valueMap, project.getTitle(), project.getDescription(), path);
                     controller.upload(auth.convertToAccountObject(), valueMap);
                 }
                 

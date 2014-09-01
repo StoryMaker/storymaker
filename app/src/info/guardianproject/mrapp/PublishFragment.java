@@ -10,6 +10,7 @@ import info.guardianproject.mrapp.model.PublishJobTable;
 import info.guardianproject.mrapp.publish.PublishController;
 import info.guardianproject.mrapp.publish.PublishController.PublishListener;
 import info.guardianproject.mrapp.publish.PublishService;
+import info.guardianproject.mrapp.publish.sites.VideoRenderer;
 import info.guardianproject.mrapp.server.ServerManager;
 import info.guardianproject.mrapp.ui.ToggleImageButton;
 import io.scal.secureshareui.lib.ChooseAccountFragment;
@@ -17,6 +18,7 @@ import io.scal.secureshareui.lib.ChooseAccountFragment;
 import java.io.File;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.holoeverywhere.app.AlertDialog;
 import org.holoeverywhere.widget.TextView;
@@ -50,6 +52,7 @@ import android.widget.ImageView;
 import android.widget.ViewAnimator;
 
 import com.animoto.android.views.DraggableGridView;
+import com.google.gson.Gson;
 //import com.hipmob.gifanimationdrawable.GifAnimationDrawable;
 
 /**
@@ -156,7 +159,7 @@ public class PublishFragment extends Fragment implements PublishListener {
 			}
 			
 			// FIXME figure out what spec we need to try to fetch for preview... could be audio or video
-			mMatchingRenderJob = (new JobTable()).getMatchingFinishedJob(getActivity(), mActivity.mMPM.mProject.getId(), "render", "video", mActivity.mMPM.mProject.getUpdatedAt());
+			mMatchingRenderJob = (new JobTable()).getMatchingFinishedJob(getActivity(), mActivity.mMPM.mProject.getId(), JobTable.TYPE_RENDER, VideoRenderer.SPEC_KEY, mActivity.mMPM.mProject.getUpdatedAt());
 			if (mMatchingRenderJob != null) {
 			    mFileLastExport = new File(mMatchingRenderJob.getResult());
 			}
@@ -364,7 +367,9 @@ public class PublishFragment extends Fragment implements PublishListener {
             // TODO default to a video spec render and kick it off
             // create a dummy publishjob with no sites
             showPlaySpinner(true);
-            startRender(mActivity.mProject, new String[] {"preview"}, false, false);
+            PublishJob publishJob = new PublishJob(getActivity().getBaseContext(), mActivity.mProject.getId(), new String[] {"preview"}, null);
+            publishJob.save();
+            startRender(publishJob);
         }
     }
     
@@ -395,17 +400,23 @@ public class PublishFragment extends Fragment implements PublishListener {
                     mUploading = true;
                     mPlaying = false;
 //                    if (mFileLastExport != null && mFileLastExport.exists()) { // FIXME replace this with a check to make sure render is suitable
-                    if (mMatchingRenderJob != null) {
-                        // FIXME i think we need to add that render job to this publishJob here
-                        PublishJob publishJob = PublishController.getMatchingPublishJob(getActivity().getApplicationContext(), mActivity.mMPM.mProject, mSiteKeys, useTor, publishToStoryMaker);
-                        Job newJob = JobTable.cloneJob(getActivity().getApplicationContext(), mMatchingRenderJob);
-                        newJob.setPublishJobId(publishJob.getId());
-                        newJob.save();
-                        mMatchingRenderJob = newJob;
-                        startUpload(mActivity.mMPM.mProject, mSiteKeys, useTor, publishToStoryMaker);
-                    } else {
-                        startRender(mActivity.mMPM.mProject, mSiteKeys, useTor, publishToStoryMaker);
-                    }
+//                    if (mMatchingRenderJob != null) {
+//                        // FIXME i think we need to add that render job to this publishJob here
+//                        PublishJob publishJob = PublishController.getMatchingPublishJob(getActivity().getApplicationContext(), mActivity.mMPM.mProject, mSiteKeys, publishJob.getMetadataString());
+//                        Job newJob = JobTable.cloneJob(getActivity().getApplicationContext(), mMatchingRenderJob);
+//                        newJob.setPublishJobId(publishJob.getId());
+//                        newJob.save();
+//                        mMatchingRenderJob = newJob;
+//                        startUpload(mActivity.mMPM.mProject, mSiteKeys, useTor, publishToStoryMaker);
+//                    } else {
+//                        startRender(mActivity.mMPM.mProject, mSiteKeys, useTor, publishToStoryMaker);
+//                    }
+                    HashMap<String,String> metadata = new HashMap<String, String>();
+                    metadata.put("publish_to_storymaker", publishToStoryMaker ? "true" : "false");
+                    metadata.put("use_tor", useTor ? "true" : "false");
+                    PublishJob publishJob = new PublishJob(getActivity().getBaseContext(), mActivity.mProject.getId(), mSiteKeys, (new Gson()).toJson(metadata));
+                    publishJob.save();
+                    startRender(publishJob);
                 } else {
                     Utils.toastOnUiThread(mActivity, "No site selected."); // FIXME move to strings.xml
                 }
@@ -419,23 +430,19 @@ public class PublishFragment extends Fragment implements PublishListener {
         }
     }
     
-    private void startRender(Project project, String[] siteKeys, boolean useTor, boolean publishToStoryMaker) {
+    private void startRender(PublishJob publishJob) {
         Intent i = new Intent(getActivity(), PublishService.class);
         i.setAction(PublishService.ACTION_RENDER);
-        i.putExtra(PublishService.INTENT_EXTRA_PROJECT_ID, project.getId());
-        i.putExtra(PublishService.INTENT_EXTRA_USE_TOR, useTor);
-        i.putExtra(PublishService.INTENT_EXTRA_PUBLISH_TO_STORYMAKER, publishToStoryMaker);
-        i.putExtra(PublishService.INTENT_EXTRA_SITE_KEYS, siteKeys);
+        i.putExtra(PublishService.INTENT_EXTRA_PUBLISH_JOB_ID, publishJob.getId());
+        i.putExtra(PublishService.INTENT_EXTRA_SITE_KEYS, publishJob.getSiteKeys()); // FIXME probably can get rid of this
         getActivity().startService(i);
     }
     
-    private void startUpload(Project project, String[] siteKeys, boolean useTor, boolean publishToStoryMaker) {
+    private void startUpload(PublishJob publishJob) {
         Intent i = new Intent(getActivity(), PublishService.class);
         i.setAction(PublishService.ACTION_UPLOAD);
-        i.putExtra(PublishService.INTENT_EXTRA_PROJECT_ID, project.getId());
-        i.putExtra(PublishService.INTENT_EXTRA_USE_TOR, useTor);
-        i.putExtra(PublishService.INTENT_EXTRA_PUBLISH_TO_STORYMAKER, publishToStoryMaker);
-        i.putExtra(PublishService.INTENT_EXTRA_SITE_KEYS, siteKeys);
+        i.putExtra(PublishService.INTENT_EXTRA_PUBLISH_JOB_ID, publishJob.getId());
+        i.putExtra(PublishService.INTENT_EXTRA_SITE_KEYS, publishJob.getSiteKeys()); // FIXME probably can get rid of this
         getActivity().startService(i);
     }
 	
@@ -527,7 +534,7 @@ public class PublishFragment extends Fragment implements PublishListener {
                 } 
                 mPlaying = false;
             } if (mUploading) { 
-                startUpload(mActivity.mMPM.mProject, mSiteKeys, publishJob.getUseTor(), publishJob.getPublishToStoryMaker());
+                startUpload(publishJob);
             }
         } else if (job.getType().equals(JobTable.TYPE_UPLOAD)) {
             // FIXME ???

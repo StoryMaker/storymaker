@@ -320,8 +320,7 @@ public class StoryMakerDB extends SQLiteOpenHelper {
             public static final String ID = "_id";
             public static final String COL_PROJECT_ID = "project_id";
             public static final String COL_SITE_KEYS = "site_keys";
-            public static final String COL_USE_TOR = "use_tor";
-            public static final String COL_PUBLISH_TO_STORYMAKER = "publish_to_storymaker";
+            public static final String COL_METADATA = "metadata";
             public static final String COL_QUEUED_AT = "queued_at";
             public static final String COL_FINISHED_AT = "finished_at";
             
@@ -329,8 +328,7 @@ public class StoryMakerDB extends SQLiteOpenHelper {
                     + ID + " integer primary key autoincrement, " 
                     + COL_PROJECT_ID + " integer, "
                     + COL_SITE_KEYS + " text, "
-                    + COL_USE_TOR + " integer, "
-                    + COL_PUBLISH_TO_STORYMAKER + " integer, "
+                    + COL_METADATA + " text, "
                     + COL_QUEUED_AT + " integer, "
                     + COL_FINISHED_AT + " integer "
                     + "); ";
