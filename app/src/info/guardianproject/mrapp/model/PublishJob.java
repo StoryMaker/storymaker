@@ -180,13 +180,18 @@ public class PublishJob extends Model {
         if (Utils.stringNotBlank(type)) {
             selection += " and " + StoryMakerDB.Schema.Jobs.COL_TYPE + "=?";
             selArgs.add("" + type);
-        } else if (Utils.stringNotBlank(site)) {
+        } 
+        
+        if (Utils.stringNotBlank(site)) {
             selection += " and " + StoryMakerDB.Schema.Jobs.COL_SITE + "=?";
             selArgs.add("" + site);
-        } else if (Utils.stringNotBlank(spec)) {
+        } 
+        
+        if (Utils.stringNotBlank(spec)) {
             selection += " and " + StoryMakerDB.Schema.Jobs.COL_SPEC + "=?";
             selArgs.add("" + spec);
         }
+        
         String[] selectionArgs = selArgs.toArray(new String[] {});
         if (mDB == null) {
             return context.getContentResolver().query((new JobTable()).getURI(), null, selection, selectionArgs, null);
