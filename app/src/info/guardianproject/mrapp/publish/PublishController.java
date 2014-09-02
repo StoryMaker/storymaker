@@ -153,6 +153,7 @@ public class PublishController {
     	return mPublishJob;
     }
     
+    // FIXME url here should be grabbedfrom the publishJob, not passed
 	public void publishJobSucceeded(PublishJob publishJob, String url) {
 	    // get an embeddable publish
 	    

@@ -13,6 +13,7 @@ import info.guardianproject.mrapp.publish.PublishService;
 import info.guardianproject.mrapp.publish.sites.VideoRenderer;
 import info.guardianproject.mrapp.server.ServerManager;
 import info.guardianproject.mrapp.ui.ToggleImageButton;
+import io.scal.secureshareui.controller.SiteController;
 import io.scal.secureshareui.lib.ChooseAccountFragment;
 
 import java.io.File;
@@ -220,6 +221,8 @@ public class PublishFragment extends Fragment implements PublishListener {
             
                     if (intent.getAction().equals(PublishService.ACTION_PUBLISH_SUCCESS)) {
                         String url = intent.getStringExtra(PublishService.INTENT_EXTRA_PUBLISH_URL);
+//                        String url = intent.getStringExtra(SiteController.MESSAGE_KEY_RESULT);
+                        // FIXME need to set the publishUrl on the publishJob once we add that field to the db
                         publishSucceeded(publishJob, url);
                     } else if (intent.getAction().equals(PublishService.ACTION_PUBLISH_FAILURE)) {
                         int errorCode = intent.getIntExtra(PublishService.INTENT_EXTRA_ERROR_CODE, -1);
@@ -393,8 +396,8 @@ public class PublishFragment extends Fragment implements PublishListener {
                     Log.d(TAG, "selected sites: " + siteKeys);
                     mSiteKeys = siteKeys.toArray(new String[siteKeys.size()]);
                     
-                    boolean useTor = intent.getBooleanExtra(ChooseAccountFragment.EXTRAS_USE_TOR, false);
-                    boolean publishToStoryMaker = intent.getBooleanExtra(ChooseAccountFragment.EXTRAS_PUBLISH_TO_STORYMAKER, false);
+                    boolean useTor = intent.getBooleanExtra(SiteController.VALUE_KEY_USE_TOR, false);
+                    boolean publishToStoryMaker = intent.getBooleanExtra(SiteController.VALUE_KEY_PUBLISH_TO_STORYMAKER, false);
                     
                     showUploadSpinner(true);
                     mUploading = true;
@@ -412,8 +415,13 @@ public class PublishFragment extends Fragment implements PublishListener {
 //                        startRender(mActivity.mMPM.mProject, mSiteKeys, useTor, publishToStoryMaker);
 //                    }
                     HashMap<String,String> metadata = new HashMap<String, String>();
-                    metadata.put("publish_to_storymaker", publishToStoryMaker ? "true" : "false");
-                    metadata.put("use_tor", useTor ? "true" : "false");
+                    metadata.put(SiteController.VALUE_KEY_PUBLISH_TO_STORYMAKER, publishToStoryMaker ? "true" : "false");
+                    metadata.put(SiteController.VALUE_KEY_USE_TOR, useTor ? "true" : "false");
+                    metadata.put(SiteController.VALUE_KEY_SLUG, mActivity.mProject.getSlug());
+                    metadata.put(SiteController.VALUE_KEY_BODY, mActivity.mProject.getDescription());
+//                    metadata.put(SiteController.VALUE_KEY_AUTHOR, );
+//                    metadata.put(SiteController.VALUE_KEY_PROFILE_URL, );
+                    metadata.put(SiteController.VALUE_KEY_TAGS, mActivity.mProject.getTagsAsString());
                     PublishJob publishJob = new PublishJob(getActivity().getBaseContext(), mActivity.mProject.getId(), mSiteKeys, (new Gson()).toJson(metadata));
                     publishJob.save();
                     startRender(publishJob);

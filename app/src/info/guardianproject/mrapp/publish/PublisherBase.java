@@ -135,7 +135,7 @@ public abstract class PublisherBase {
             // since the user must now initiate upload, we just stop this publishjob now and wait
 //            mController.publishJobSucceeded(mPublishJob);
 		} else if (job.isType(JobTable.TYPE_UPLOAD)) {
-			String publishToStoryMaker = mPublishJob.getMetadata().get("publish_to_storymaker");
+			String publishToStoryMaker = mPublishJob.getMetadata().get(SiteController.VALUE_KEY_PUBLISH_TO_STORYMAKER);
 			if (publishToStoryMaker != null && publishToStoryMaker.equals("true")) {
 				Auth auth = (new AuthTable()).getAuthDefault(mContext, Auth.SITE_STORYMAKER);
 				if (auth != null) {
@@ -144,7 +144,7 @@ public abstract class PublisherBase {
 					mController.publishJobFailed(mPublishJob, 78268832, "You are not signed into StoryMaker.cc!"); // FIXME do this nicer!
 				}
 			} else {
-				mController.publishJobSucceeded(mPublishJob, null);
+				mController.publishJobSucceeded(mPublishJob, job.getResult());
 			}
 		}
 	}

@@ -757,4 +757,8 @@ public class Project extends Model {
     	
         return null;
     }
+    
+    public String getSlug() {
+        return title.replace(' ', '-'); // FIXME need a real, i18n aware slug algorithm -- http://docs.aws.amazon.com/AmazonS3/latest/UG/CreatingaBucket.html 
+    }
 }
