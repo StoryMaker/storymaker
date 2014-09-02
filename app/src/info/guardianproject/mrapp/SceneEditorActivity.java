@@ -11,7 +11,9 @@ import info.guardianproject.mrapp.model.Project;
 import info.guardianproject.mrapp.model.ProjectTable;
 import info.guardianproject.mrapp.model.PublishJobTable;
 import info.guardianproject.mrapp.model.Scene;
+import io.scal.secureshareui.controller.ArchiveSiteController;
 import io.scal.secureshareui.lib.ChooseAccountFragment;
+import io.scal.secureshareui.lib.ArchiveMetadataActivity;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -616,10 +618,16 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
 //                }
             } else if (requestCode == ChooseAccountFragment.ACCOUNT_REQUEST_CODE) { // FIXME hard wireing archive.org in for now, baad
 //                mPublishFragment.onChooseAccountDialogResult(resultCode, intent);
-            	Intent i = new Intent(getBaseContext(), PressSecureActivity.class);
-            	i.putExtras(intent.getExtras());
-            	startActivityForResult(i, PressSecureActivity.PRESSSECURE_REQUEST_CODE);
-            } else if (requestCode == PressSecureActivity.PRESSSECURE_REQUEST_CODE) {
+                // TODO if site is archive, do this
+                ArrayList<String> siteKeys = intent.getExtras().getStringArrayList(ChooseAccountFragment.EXTRAS_ACCOUNT_KEYS);
+                if (siteKeys.contains(ArchiveSiteController.SITE_KEY)) {
+                    Intent i = new Intent(getBaseContext(), ArchiveMetadataActivity.class);
+                    i.putExtras(intent.getExtras());
+                    startActivityForResult(i, ArchiveSiteController.METADATA_REQUEST_CODE);
+                } else {
+                    mPublishFragment.onChooseAccountDialogResult(resultCode, intent);
+                }
+            } else if (requestCode == ArchiveSiteController.METADATA_REQUEST_CODE) {
                 mPublishFragment.onChooseAccountDialogResult(resultCode, intent);
             } else {
                 try {

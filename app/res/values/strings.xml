@@ -306,6 +306,4 @@ You also will have an opportunity to see and modify the data being sent."</strin
     <string name="restarting_storymaker">Restarting StoryMaker...</string>
     <string name="send">Send</string>
     <string name="title_activity_press_secure">PressSecure</string>
-	<string name="lbl_no">off</string>
-	<string name="lbl_yes">on</string>
 </resources>

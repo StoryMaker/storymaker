@@ -286,7 +286,7 @@
         </activity>
 
         <activity
-            android:name=".PressSecureActivity"
+            android:name="io.scal.secureshareui.lib.ArchiveMetadataActivity"
             android:label="@string/title_activity_press_secure" 
             android:theme="@style/PopupTheme" >
         </activity>
