@@ -6,6 +6,7 @@ import info.guardianproject.mrapp.Globals;
 import info.guardianproject.mrapp.HomeActivity;
 import info.guardianproject.mrapp.R;
 
+import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,6 +15,7 @@ import android.util.Log;
 import android.view.View;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.webkit.WebSettings.PluginState;
 
 import org.holoeverywhere.LayoutInflater;
 import org.holoeverywhere.app.AlertDialog;
@@ -34,11 +36,17 @@ public class WordPressAuthWebViewActivity extends WebViewActivity {
 
     private String mFinishUrl = ServerManager.PATH_REGISTERED;
 
+    @SuppressLint("SetJavaScriptEnabled")
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        mWebView.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
+        mWebView.getSettings().setJavaScriptEnabled(true);
+        mWebView.getSettings().setPluginState(PluginState.ON);
+        mWebView.getSettings().setAllowFileAccess(true);
+        
         Intent intent = getIntent();
         if (intent != null)
         {

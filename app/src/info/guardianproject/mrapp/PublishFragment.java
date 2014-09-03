@@ -13,7 +13,9 @@ import info.guardianproject.mrapp.publish.PublishService;
 import info.guardianproject.mrapp.publish.sites.VideoRenderer;
 import info.guardianproject.mrapp.server.ServerManager;
 import info.guardianproject.mrapp.ui.ToggleImageButton;
+import io.scal.secureshareui.controller.ArchiveSiteController;
 import io.scal.secureshareui.controller.SiteController;
+import io.scal.secureshareui.lib.ArchiveMetadataActivity;
 import io.scal.secureshareui.lib.ChooseAccountFragment;
 
 import java.io.File;
@@ -422,6 +424,26 @@ public class PublishFragment extends Fragment implements PublishListener {
 //                    metadata.put(SiteController.VALUE_KEY_AUTHOR, );
 //                    metadata.put(SiteController.VALUE_KEY_PROFILE_URL, );
                     metadata.put(SiteController.VALUE_KEY_TAGS, mActivity.mProject.getTagsAsString());
+                    
+                    // FIXME this is "a bit" of a hack, we should write an automated way of converting Bundle to HashMap ... or maybe we should be passing a bundle?
+                    boolean shareAuthor = intent.getBooleanExtra(ArchiveMetadataActivity.INTENT_EXTRA_SHARE_AUTHOR, false);
+                    metadata.put(ArchiveMetadataActivity.INTENT_EXTRA_SHARE_AUTHOR, shareAuthor ? "true" : "false");
+                    
+                    boolean shareTitle = intent.getBooleanExtra(ArchiveMetadataActivity.INTENT_EXTRA_SHARE_TITLE, false);
+                    metadata.put(ArchiveMetadataActivity.INTENT_EXTRA_SHARE_TITLE, shareTitle ? "true" : "false");
+                    
+                    boolean shareTags = intent.getBooleanExtra(ArchiveMetadataActivity.INTENT_EXTRA_SHARE_TAGS, false);
+                    metadata.put(ArchiveMetadataActivity.INTENT_EXTRA_SHARE_TAGS, shareTags ? "true" : "false");
+                    
+                    boolean shareDescription = intent.getBooleanExtra(ArchiveMetadataActivity.INTENT_EXTRA_SHARE_DESCRIPTION, false);
+                    metadata.put(ArchiveMetadataActivity.INTENT_EXTRA_SHARE_DESCRIPTION, shareDescription ? "true" : "false");
+                    
+                    boolean shareLocation = intent.getBooleanExtra(ArchiveMetadataActivity.INTENT_EXTRA_SHARE_LOCATION, false);
+                    metadata.put(ArchiveMetadataActivity.INTENT_EXTRA_SHARE_LOCATION, shareLocation ? "true" : "false");
+
+                    String licenseUrl = intent.getStringExtra(ArchiveMetadataActivity.INTENT_EXTRA_LICENSE_URL);
+                    metadata.put(ArchiveSiteController.VALUE_KEY_LICENSE_URL, licenseUrl);
+                    
                     PublishJob publishJob = new PublishJob(getActivity().getBaseContext(), mActivity.mProject.getId(), mSiteKeys, (new Gson()).toJson(metadata));
                     publishJob.save();
                     startRender(publishJob);
