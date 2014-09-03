@@ -87,7 +87,8 @@ public class HomeActivity extends BaseActivity {
         
         checkForTor();
         
-        //checkForUpdates();
+        // FIXME remove this in play store builds!!
+        checkForUpdates();
         
     }
     

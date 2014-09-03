@@ -6,12 +6,16 @@ import info.guardianproject.mrapp.media.MediaProjectManager;
 import info.guardianproject.mrapp.media.OverlayCameraActivity;
 import info.guardianproject.mrapp.model.template.Clip;
 import info.guardianproject.mrapp.model.template.Template;
+import info.guardianproject.mrapp.model.Auth;
+import info.guardianproject.mrapp.model.AuthTable;
 import info.guardianproject.mrapp.model.JobTable;
 import info.guardianproject.mrapp.model.Project;
 import info.guardianproject.mrapp.model.ProjectTable;
 import info.guardianproject.mrapp.model.PublishJobTable;
 import info.guardianproject.mrapp.model.Scene;
+import info.guardianproject.mrapp.server.ServerManager;
 import io.scal.secureshareui.controller.ArchiveSiteController;
+import io.scal.secureshareui.controller.SiteController;
 import io.scal.secureshareui.lib.ChooseAccountFragment;
 import io.scal.secureshareui.lib.ArchiveMetadataActivity;
 
@@ -622,7 +626,16 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
                 ArrayList<String> siteKeys = intent.getExtras().getStringArrayList(ChooseAccountFragment.EXTRAS_ACCOUNT_KEYS);
                 if (siteKeys.contains(ArchiveSiteController.SITE_KEY)) {
                     Intent i = new Intent(getBaseContext(), ArchiveMetadataActivity.class);
-                    i.putExtras(intent.getExtras());
+                    Bundle extras = intent.getExtras();
+                    ServerManager serverManager = ((StoryMakerApp) this.getApplication()).getServerManager();
+                    if (serverManager.hasCreds()) {
+                        extras.putString(SiteController.VALUE_KEY_AUTHOR, serverManager.getUserName());
+                    }
+                    extras.putString(SiteController.VALUE_KEY_BODY, mMPM.mProject.getDescription());
+                    extras.putString(SiteController.VALUE_KEY_LOCATION_NAME, mMPM.mProject.getLocation());
+                    extras.putString(SiteController.VALUE_KEY_TAGS, mMPM.mProject.getTagsAsString());
+                    extras.putString(SiteController.VALUE_KEY_TITLE, mMPM.mProject.getTitle());
+                    i.putExtras(extras);
                     startActivityForResult(i, ArchiveSiteController.METADATA_REQUEST_CODE);
                 } else {
                     mPublishFragment.onChooseAccountDialogResult(resultCode, intent);
