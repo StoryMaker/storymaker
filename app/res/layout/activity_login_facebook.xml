@@ -145,6 +145,7 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="30dp"
         android:padding="5dp"
+        android:visibility="gone"
         />
           
  
