@@ -44,7 +44,7 @@ public class StoryMakerApp extends Application {
 	private static String mBaseUrl = null;
 	
 	 public void InitializeSQLCipher(String dbName, String passphrase) {
-	        	      
+
 		 File databaseFile = getDatabasePath(dbName);
 	     databaseFile.mkdirs();
 	     SQLiteDatabase database = SQLiteDatabase.openOrCreateDatabase(databaseFile, passphrase, null);
