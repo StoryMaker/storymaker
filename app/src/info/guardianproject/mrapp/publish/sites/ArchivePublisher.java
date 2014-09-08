@@ -9,6 +9,7 @@ import info.guardianproject.mrapp.publish.PublisherBase;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Locale;
 
 import android.content.Context;
 import android.util.Log;
@@ -35,6 +36,10 @@ public class ArchivePublisher extends PublisherBase {
 	}
 	
     public String getEmbed(Job job) {
-        return "fixme"; // FIXME implement getEmbed
+    	int width = 640;
+    	int height = 480;
+    	
+    	return String.format(Locale.US, "<iframe src='%s' width='%d' height='%d' frameborder='0' webkitallowfullscreen='true' " +
+    						 "mozallowfullscreen='true' allowfullscreen></iframe>", job.getResult(), width, height);
     }
 }
