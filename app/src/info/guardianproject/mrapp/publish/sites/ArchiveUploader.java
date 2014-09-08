@@ -32,12 +32,12 @@ public class ArchiveUploader extends UploaderBase {
         final Project project = mJob.getProject();
         final PublishJob publishJob = mJob.getPublishJob();
         final String path = publishJob.getLastRenderFilePath();
-//        final Auth auth = (new AuthTable()).getAuthDefault(mContext, ArchiveSiteController.SITE_KEY);
+        final Auth auth = (new AuthTable()).getAuthDefault(mContext, ArchiveSiteController.SITE_KEY);
         if (Utils.stringNotBlank(path) && (new File(path)).exists()) {
             jobProgress(mJob, 0, "Uploading to Internet Archive..."); //  FIXME move to strings.xml
             HashMap<String, String> valueMap = publishJob.getMetadata();
             addValuesToHashmap(valueMap, project.getTitle(), project.getDescription(), path);
-            controller.upload(null, valueMap); // FIXME need to hookup Account to this
+            controller.upload(auth.convertToAccountObject(), valueMap); // FIXME need to hookup Account to this
         } else {
             Log.d(TAG, "Can't upload to Internet Archive server, last rendered file doesn't exist.");
             // TODO get this error back to the activity for display 
