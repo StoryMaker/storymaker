@@ -1,10 +1,14 @@
 package org.codeforafrica.timby.listeningpost.facebook;
 
 import org.codeforafrica.timby.listeningpost.BaseActivity;
+import org.codeforafrica.timby.listeningpost.HomePanelsActivity;
 import org.codeforafrica.timby.listeningpost.R;
 import org.holoeverywhere.preference.PreferenceManager;
 import org.holoeverywhere.preference.SharedPreferences;
 
+import com.actionbarsherlock.view.MenuItem;
+
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.EditText;
  
@@ -21,6 +25,7 @@ public class UpdateActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         // Set View to register.xml
         setContentView(R.layout.activity_update_profile);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         registerUsername = (EditText)findViewById(R.id.registerUsername);
         first_name = (EditText)findViewById(R.id.first_name);
@@ -43,4 +48,18 @@ public class UpdateActivity extends BaseActivity {
 
     	
     }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        if (item.getItemId() == android.R.id.home)
+        {
+        	Intent fl = new Intent(getApplicationContext(), HomePanelsActivity.class);
+            fl.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        	startActivity(fl);
+            return true;
+        }
+        
+        return super.onOptionsItemSelected(item);
+
+  }
 }

@@ -86,7 +86,7 @@ public class ReportsActivity extends BaseActivity implements OnClickListener{
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
          
         //getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#FFFFFF")));
-        //getSupportActionBar().setTitle("View Reports");
+        getSupportActionBar().setTitle("View Media");
 
         //TextView title2 = (TextView) getWindow().getDecorView().findViewById(getResources().getIdentifier("action_bar_title", "id", "android"));
         //title2.setTextColor(getResources().getColor(R.color.soft_purple));

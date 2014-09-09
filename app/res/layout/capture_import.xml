@@ -12,21 +12,31 @@
     <TableLayout
         android:id="@+id/tableLayout1"
         android:layout_width="fill_parent"
-        android:layout_height="70dp"
-        android:layout_weight="0.6"
+        android:layout_height="wrap_content"
         android:background="#ffffff"
         android:stretchColumns="*" >
+
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Capture Now"
+            style="@style/CardTitle"
+            android:padding="15dp"
+            android:textSize="15sp"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
 
         <TableRow
             android:id="@+id/tableRow3"
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
-            android:layout_weight="0.5" >
+            android:layout_weight="0.5"
+            android:layout_marginBottom="10dp" >
 
             <RelativeLayout
                 android:id="@+id/images"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_height="50dp"
                 android:layout_weight="0.50"
                 android:background="@color/lp_red"
                 android:clickable="true" >
@@ -142,6 +152,142 @@
 				</LinearLayout>
             </RelativeLayout>
         </TableRow>
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Import existing media from phone"
+            style="@style/CardTitle"
+            android:padding="15dp"
+            android:textSize="15sp"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+
+        <TableRow
+            android:id="@+id/tRImport"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_weight="0.5" >
+
+            <RelativeLayout
+                android:id="@+id/imagesImport"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_weight="0.50"
+                android:background="@color/lp_red"
+                android:clickable="true" >
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_centerHorizontal="true"
+		            android:layout_centerVertical="true">
+		            <ImageView
+		                android:id="@+id/ivButton1Import"
+		                android:layout_width="wrap_content"
+		                android:layout_height="20dp"
+		                android:layout_gravity="center"
+		                android:src="@drawable/camera" />
+					<TextView
+		                android:id="@+id/picture_labelImport"
+		                android:layout_width="wrap_content"
+		                android:layout_height="wrap_content"
+		                android:layout_gravity="center"
+		                android:textColor="#ffffff"
+		                android:text="@string/add_picture" />
+				</LinearLayout>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/videoImport"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="0.5"
+                android:background="@color/lp_yellow"
+                android:clickable="true" >
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_centerHorizontal="true"
+		            android:layout_centerVertical="true">
+				<ImageView
+	                android:id="@+id/ivButton2Import"
+	                android:layout_width="wrap_content"
+	                android:layout_height="20dp"
+	                 android:layout_gravity="center"
+	                android:src="@drawable/video" />
+				<TextView
+	                android:id="@+id/video_labelImport"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                 android:layout_gravity="center"
+	                android:textColor="#ffffff"
+	                android:text="@string/add_video" />
+				</LinearLayout>
+            </RelativeLayout>
+ 			
+            <RelativeLayout
+                android:id="@+id/audioImport"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="0.5"
+                android:background="@color/lp_blue"
+                android:clickable="false" >
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_centerHorizontal="true"
+		            android:layout_centerVertical="true">
+					<ImageView
+		                android:id="@+id/ivButton3Import"
+		                android:layout_width="wrap_content"
+		                android:layout_height="20dp"
+		                android:layout_gravity="center"
+		                android:src="@drawable/audio" />
+					<TextView
+		                android:id="@+id/audio_labelImport"
+		                android:layout_width="wrap_content"
+		                android:layout_height="wrap_content"
+		               	android:layout_gravity="center"
+		                android:layout_below="@+id/ivButton3"
+		                android:textColor="#ffffff"
+		                android:text="@string/add_audio" />
+				</LinearLayout>
+            </RelativeLayout>
+            
+            <RelativeLayout
+                android:id="@+id/galleryImport"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="0.5"
+                android:background="@color/lp_brown"
+                android:clickable="true" >
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_centerHorizontal="true"
+		            android:layout_centerVertical="true">
+					<ImageView
+		                android:id="@+id/ivButton4Import"
+		                android:layout_width="wrap_content"
+		                android:layout_height="20dp"
+		                android:src="@drawable/gallery"
+		                android:layout_gravity="center"
+		                />
+					<TextView
+		                android:id="@+id/gallery_labelImport"
+		                android:layout_width="wrap_content"
+		                android:layout_height="wrap_content"
+		                android:layout_gravity="center"
+		                android:layout_below="@+id/ivButton4"
+		                android:textColor="#ffffff"
+		                android:text="@string/view_gallery" />
+				</LinearLayout>
+            </RelativeLayout>
+        </TableRow>
     </TableLayout>
 
     <LinearLayout
@@ -156,7 +302,8 @@
                 android:layout_height="match_parent"
                 android:background="@color/grey"
                 android:textColor="@color/lp_blue"
-                android:text="@string/menu_add_from_gallery" />
+                android:text="@string/menu_add_from_gallery"
+                android:visibility="gone" />
         <EditText
             android:id="@+id/editTextStoryName"
             android:layout_width="fill_parent"
@@ -349,7 +496,8 @@
                     android:gravity="center"
                     android:padding="10dp"
                     android:text="Location not set"
-                    android:textColor="#686868" />
+                    android:textColor="#686868"
+                    android:textSize="12dp" />
 
                 <ImageView
                     android:id="@+id/imageView4"

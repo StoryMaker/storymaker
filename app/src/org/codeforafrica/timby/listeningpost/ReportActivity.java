@@ -255,7 +255,7 @@ OnItemLongClickListener{
         gallery_label = (TextView)findViewById(R.id.gallery_label);
         
         if(rid!=-1){ 
-        	getSupportActionBar().setTitle("Edit Report");
+        	getSupportActionBar().setTitle("Edit");
         	Report r = Report.get(this, rid);
         	
         	location = r.getLocation();
@@ -292,7 +292,7 @@ OnItemLongClickListener{
         }else{
         	setLocation();
         	new_report = true;
-        	getSupportActionBar().setTitle("Add Report");
+        	getSupportActionBar().setTitle("Add Media");
         	
             picture_label.setText("Picture (0)");
         	video_label.setText("Video (0)");

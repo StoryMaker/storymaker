@@ -189,7 +189,7 @@ public class HomePanelsActivity extends BaseActivity implements OnClickListener{
 				}
 			});
 	        
-			((TextView)findViewById(R.id.TVcreate_report)).setText("Create another report");; 
+			((TextView)findViewById(R.id.TVcreate_report)).setText("Add Media");; 
 		}
     }
     void DeleteRecursive(File fileOrDirectory) {

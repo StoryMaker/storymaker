@@ -1,10 +1,13 @@
 package org.codeforafrica.timby.listeningpost;
 
 import org.codeforafrica.timby.listeningpost.R;
+import org.codeforafrica.timby.listeningpost.facebook.FacebookLogin;
 import org.codeforafrica.timby.listeningpost.ui.MyCard;
 
+import com.actionbarsherlock.view.MenuItem;
 import com.fima.cardsui.views.CardUI;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -37,6 +40,20 @@ public class AboutActivity extends BaseActivity{
 			//mCardView.addCard(androidViewsCard2);
 			
 			mCardView.refresh();
+	  }
+	  @Override
+	    public boolean onOptionsItemSelected(MenuItem item) {
+
+	        if (item.getItemId() == android.R.id.home)
+	        {
+	        	Intent fl = new Intent(getApplicationContext(), HomePanelsActivity.class);
+	            fl.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+	        	startActivity(fl);
+	            return true;
+	        }
+	        
+	        return super.onOptionsItemSelected(item);
+
 	  }
 
 }

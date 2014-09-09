@@ -68,7 +68,7 @@
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:padding="3sp"
-                    android:text="Create first story"
+                    android:text="Add Media"
                     android:textSize="20sp"
                     android:textColor="@color/black" />
             </RelativeLayout>
@@ -101,7 +101,7 @@
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:padding="3sp"
-                    android:text="View my reports"
+                    android:text="View my media"
                     android:textSize="20sp"
                     android:textColor="@color/black" />
             </RelativeLayout>
