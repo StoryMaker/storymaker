@@ -42,7 +42,7 @@
                     android:padding="16dp"
                     android:scaleType="fitXY"
                     android:layout_gravity="right"
-                    android:src="@drawable/button_add_temp" />
+                    android:src="@drawable/ic_context_import" />
                 
                 <ImageView
                     android:id="@+id/ivRecordClip"
