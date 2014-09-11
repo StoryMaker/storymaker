@@ -2,8 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="info.guardianproject.mrapp"
     android:installLocation="auto"
-    android:versionCode="124"
-    android:versionName="0.0.11-build124">
+    android:versionCode="125"
+    android:versionName="0.0.11-build125">
    
     <uses-sdk
         android:minSdkVersion="14"
