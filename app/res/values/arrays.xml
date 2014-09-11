@@ -109,10 +109,15 @@
     </string-array>
     
     <string-array name="array_story_locations">
+        <item>U.S.A.</item>
+        <item>California</item>
+        <item>Oakland</item>
         <item>Egypt</item>
         <item>Iraq</item>
         <item>Morocco</item>
         <item>Tunisia</item>
+        <item>Zimbabwe</item>
+        <item>Czech Republic</item>
     </string-array>
     
     <string-array name="array_story_sections">
