@@ -296,7 +296,7 @@ public class Auth extends Model {
     }
     
     public Account convertToAccountObject() {
-        return new Account(Integer.toString(this.id), this.name, this.site, this.userName, this.credentials, this.data, this.credentialsExist(), this.credentialsAreValid());
+        return new Account(this.id, this.name, this.site, this.userName, this.credentials, this.data, this.credentialsExist(), this.credentialsAreValid());
     }
 
     // getters and setters //////////////////////////

@@ -1,22 +1,20 @@
 
 package info.guardianproject.mrapp;
 
-//import io.scal.secureshareui.lib.ChooseAccountFragment;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
 import info.guardianproject.mrapp.model.Auth;
 import info.guardianproject.mrapp.model.AuthTable;
 import io.scal.secureshareui.controller.SiteController.OnEventListener;
 import io.scal.secureshareui.lib.ChooseAccountFragment;
 import io.scal.secureshareui.model.Account;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.widget.Toast;
 
 public class AccountsActivity extends BaseActivity {
 
@@ -53,7 +51,7 @@ public class AccountsActivity extends BaseActivity {
 			auth = authTable.getAuthDefault(this, siteAvailableKeys[i]);
 			
 			if(auth == null) {
-				accounts.add(new Account(null, siteAvailableNames[i], siteAvailableKeys[i], "", "", null, false, false));
+				accounts.add(new Account(-1, siteAvailableNames[i], siteAvailableKeys[i], "", "", null, false, false));
 			}
 			else {
 				accounts.add(auth.convertToAccountObject());
@@ -75,6 +73,9 @@ public class AccountsActivity extends BaseActivity {
 					auth.insert();
 				}
 
+				//set id of account based on returned id of auth insert
+				account.setId(auth.getId());
+				
 				auth.setCredentials(account.getCredentials());
 				auth.setData(account.getData());
 				auth.setUserName(account.getUserName());
@@ -99,8 +100,7 @@ public class AccountsActivity extends BaseActivity {
 
             @Override
             public void onRemove(Account account) {
-                authTable.delete(getApplicationContext(), Integer.parseInt(account.getId()));
-                // FIXME we need to purge caches from Flickr and Facebook here too. proably should delegate back to their SiteControllers?
+                authTable.delete(getApplicationContext(), account.getId());
             }
 		});
 
