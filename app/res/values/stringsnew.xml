@@ -220,6 +220,9 @@
 <string name="prefs_use_tor_title">Use Orbot (Tor)</string>
 <string name="prefs_use_tor_summary">Send all network traffic through the Tor network using the Orbot app</string>
 
+<string name="prefs_sm_upload_title">Upload to StoryMaker</string>
+<string name="prefs_sm_upload_summary">Upload to StoryMaker server by default</string>
+
 <string name="prefs_use_download_manager_title">Use Download Manager</string>
 <string name="prefs_use_download_manager_summary">Download lesson archives with the Android DownloadManager service</string>
 
