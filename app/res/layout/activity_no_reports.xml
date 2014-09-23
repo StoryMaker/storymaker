@@ -1,9 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="fill_parent"
-    android:background="@color/white"
     android:fillViewport="true">
+    
+<RelativeLayout
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical"
+    android:minHeight="480dp" >
 
         <!--  Header  Starts-->
 
@@ -11,10 +17,10 @@
             android:id="@+id/header"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="0.00"
             android:orientation="vertical"
             android:paddingBottom="5dip"
-            android:paddingTop="50dip" >
+            android:paddingTop="50dip"
+             >
 
                 <!-- Logo Start-->
 
@@ -32,7 +38,7 @@
               android:layout_gravity="center_horizontal"
               android:text="@string/strapline" 
               style="@style/CardTitle"
-              android:textSize="15sp"
+              android:textSize="18sp"
               android:textColor="@color/lp_blue"/>
 
             </LinearLayout>
@@ -51,12 +57,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.00"
-                android:padding="10dip"
+                android:padding="5dip"
                 android:background="@color/grey" >
 
                 <ImageView
                     android:id="@+id/ImageView01"
-                    android:layout_width="50dp"
+                    android:layout_width="30dp"
                     android:layout_height="wrap_content"
                     android:src="@drawable/icon_new_report_hp" />
 
@@ -69,7 +75,7 @@
                     android:layout_centerVertical="true"
                     android:padding="3sp"
                     android:text="Add Media"
-                    android:textSize="20sp"
+                    android:textSize="18sp"
                     android:textColor="@color/black" />
             </RelativeLayout>
 
@@ -83,13 +89,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.00"
-                android:padding="10dip"
+                android:padding="5dip"
                 android:background="@color/grey"
-                android:visibility="gone" >
+                 >
 
                 <ImageView
                     android:id="@+id/ImageView02"
-                    android:layout_width="50dp"
+                    android:layout_width="30dp"
                     android:layout_height="wrap_content"
                     android:src="@drawable/icon_reports_hp" />
 
@@ -102,7 +108,7 @@
                     android:layout_centerVertical="true"
                     android:padding="3sp"
                     android:text="View my media"
-                    android:textSize="20sp"
+                    android:textSize="18sp"
                     android:textColor="@color/black" />
             </RelativeLayout>
            
@@ -111,18 +117,48 @@
                 android:layout_width="wrap_content"
                 android:layout_height="2dp"
                 android:background="@color/white"
-                android:visibility="gone" />
-            
+                />
+			<RelativeLayout
+                android:id="@+id/load_how_app_works"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="5dip"
+                android:background="@color/grey" >
+
+                <ImageView
+                    android:id="@+id/imageView10"
+                    android:layout_width="30dp"
+                    android:layout_height="70dp"
+                    android:src="@drawable/tutorial" />
+
+                <TextView
+                    android:id="@+id/textView20"
+                    style="@style/CardTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:padding="3sp"
+                    android:text="‘How to use this app’"
+                    android:textSize="18sp"
+                    android:textColor="@color/black"  />
+            </RelativeLayout>
+            <View
+                android:id="@+id/view_how_app_works"
+                android:layout_width="wrap_content"
+                android:layout_height="2dp"
+                android:background="@color/white"
+                />
             <RelativeLayout
                 android:id="@+id/load_lessons"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="10dip"
+                android:padding="5dip"
                 android:background="@color/grey" >
 
                 <ImageView
                     android:id="@+id/imageView1"
-                    android:layout_width="50dp"
+                    android:layout_width="30dp"
                     android:layout_height="wrap_content"
                     android:src="@drawable/icon_help_hp" />
 
@@ -135,8 +171,9 @@
                     android:layout_centerVertical="true"
                     android:padding="3sp"
                     android:text="Tips for great content"
-                    android:textSize="20sp"
+                    android:textSize="18sp"
                     android:textColor="@color/black"  />
             </RelativeLayout>
         </LinearLayout>
    </RelativeLayout>
+   </ScrollView>

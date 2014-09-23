@@ -115,11 +115,7 @@ public class HomePanelsActivity extends BaseActivity implements OnClickListener{
         	startService(new Intent(HomePanelsActivity.this, EncryptionBackground.class));
         }
         setContentView(R.layout.activity_no_reports);
-        
-        //show view reports if have reports
-			showReportsButton();
-	        
-	        
+      	        
 	        initSlidingMenu();
 	        
 		/*
@@ -145,27 +141,18 @@ public class HomePanelsActivity extends BaseActivity implements OnClickListener{
 					Toast.makeText(getApplicationContext(), "Tutorials coming soon!", Toast.LENGTH_LONG).show();
 			}
 		});
-        /*
-        load_sync = (RelativeLayout)findViewById(R.id.load_sync);
-        load_sync.setOnClickListener(new OnClickListener() {
+        load_my_reports = (RelativeLayout)findViewById(R.id.load_my_reports);
+        load_my_reports.setOnClickListener(new View.OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
-				
-	            dialog = new Dialog(HomePanelsActivity.this);
-	            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                dialog.setContentView(R.layout.dialog_sync);
-                dialog.findViewById(R.id.button_sync).setOnClickListener(
-                        HomePanelsActivity.this);
-                dialog.findViewById(R.id.button_export).setOnClickListener(
-                        HomePanelsActivity.this);
-                dialog.findViewById(R.id.checkBox1).setOnClickListener(
-                        HomePanelsActivity.this);
-                dialog.show();
-                
+				// TODO Auto-generated method stub
+				Intent i = new Intent(getApplicationContext(),ReportsActivity.class);
+				i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+				startActivity(i);
 			}
 		});
-		*/
+        
 		}
     public void showReportsButton(){
     	ArrayList<Report> mListReports = Report.getAllAsList(HomePanelsActivity.this);
@@ -299,10 +286,6 @@ public class HomePanelsActivity extends BaseActivity implements OnClickListener{
     @Override
 	public void onResume() {
 		super.onResume();
-		
-		showReportsButton();
-		
-		//new getAsynctask().execute("");
 		
 		boolean isExternalStorageReady = ((StoryMakerApp)getApplication()).isExternalStorageReady();
 		

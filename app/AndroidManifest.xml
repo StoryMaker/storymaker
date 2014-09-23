@@ -1,8 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="org.codeforafrica.timby.listeningpost"
     android:installLocation="auto"
-    android:versionCode="136"
-    android:versionName="0.0.9-build116" >
+    android:versionCode="138"
+    android:versionName="0.0.9-build118" >
     <uses-sdk
         android:minSdkVersion="10"
         android:targetSdkVersion="17" />
