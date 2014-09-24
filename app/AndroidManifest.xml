@@ -2,8 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="info.guardianproject.mrapp"
     android:installLocation="auto"
-    android:versionCode="125"
-    android:versionName="0.0.11-build125">
+    android:versionCode="126"
+    android:versionName="0.0.11-build126">
    
     <uses-sdk
         android:minSdkVersion="14"
@@ -283,7 +283,8 @@
         <activity
             android:name="info.guardianproject.mrapp.ConnectAccountActivity"
             android:label="@string/title_activity_connect_account"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:theme="@style/PopupTheme">
         </activity>
 
         <activity
