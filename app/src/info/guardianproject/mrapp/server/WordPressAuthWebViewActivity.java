@@ -1,10 +1,11 @@
 
 package info.guardianproject.mrapp.server;
 
-import info.guardianproject.mrapp.FirstStartActivity;
 import info.guardianproject.mrapp.Globals;
-import info.guardianproject.mrapp.HomeActivity;
 import info.guardianproject.mrapp.R;
+
+import org.holoeverywhere.LayoutInflater;
+import org.holoeverywhere.app.AlertDialog;
 
 import android.annotation.SuppressLint;
 import android.content.DialogInterface;
@@ -13,12 +14,9 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
+import android.webkit.WebSettings.PluginState;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.webkit.WebSettings.PluginState;
-
-import org.holoeverywhere.LayoutInflater;
-import org.holoeverywhere.app.AlertDialog;
 
 /**
  * Hosts a WebView specifically for presenting
@@ -95,4 +93,9 @@ public class WordPressAuthWebViewActivity extends WebViewActivity {
             .setPositiveButton(getString(R.string.acct_created_dialog_positive_button), positiveBtnClickListener)
             .show();
     }
+    
+    @Override
+	public void finish() {		
+		super.finish();
+	}
 }
