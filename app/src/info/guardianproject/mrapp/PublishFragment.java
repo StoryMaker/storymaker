@@ -427,7 +427,7 @@ public class PublishFragment extends Fragment implements PublishListener {
                     
                     String userName = getStoryMakerUserName();
                     metadata.put(SiteController.VALUE_KEY_AUTHOR, userName);
-                    metadata.put(SiteController.VALUE_KEY_PROFILE_URL, "http://storymaker.cc//author/" + userName);
+                    metadata.put(SiteController.VALUE_KEY_PROFILE_URL, "http://storymaker.cc/author/" + userName);
                     
                     // FIXME this is "a bit" of a hack, we should write an automated way of converting Bundle to HashMap ... or maybe we should be passing a bundle?
                     boolean shareAuthor = intent.getBooleanExtra(ArchiveMetadataActivity.INTENT_EXTRA_SHARE_AUTHOR, false);
