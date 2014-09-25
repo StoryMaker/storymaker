@@ -1,6 +1,8 @@
 package info.guardianproject.mrapp;
 
 import info.guardianproject.mrapp.db.StoryMakerDB;
+import info.guardianproject.mrapp.model.Auth;
+import info.guardianproject.mrapp.model.AuthTable;
 import info.guardianproject.mrapp.model.Job;
 import info.guardianproject.mrapp.model.JobTable;
 import info.guardianproject.mrapp.model.Media;
@@ -421,9 +423,11 @@ public class PublishFragment extends Fragment implements PublishListener {
                     metadata.put(SiteController.VALUE_KEY_USE_TOR, useTor ? "true" : "false");
                     metadata.put(SiteController.VALUE_KEY_SLUG, mActivity.mProject.getSlug());
                     metadata.put(SiteController.VALUE_KEY_BODY, mActivity.mProject.getDescription());
-//                    metadata.put(SiteController.VALUE_KEY_AUTHOR, );
-//                    metadata.put(SiteController.VALUE_KEY_PROFILE_URL, );
                     metadata.put(SiteController.VALUE_KEY_TAGS, mActivity.mProject.getTagsAsString());
+                    
+                    String userName = getStoryMakerUserName();
+                    metadata.put(SiteController.VALUE_KEY_AUTHOR, userName);
+                    metadata.put(SiteController.VALUE_KEY_PROFILE_URL, "http://storymaker.cc/author/" + userName);
                     
                     // FIXME this is "a bit" of a hack, we should write an automated way of converting Bundle to HashMap ... or maybe we should be passing a bundle?
                     boolean shareAuthor = intent.getBooleanExtra(ArchiveMetadataActivity.INTENT_EXTRA_SHARE_AUTHOR, false);
@@ -636,5 +640,14 @@ public class PublishFragment extends Fragment implements PublishListener {
         builder.setMessage(R.string.view_published_media_online_or_local_copy_)
                 .setPositiveButton(R.string.yes, dialogClickListener)
                 .setNegativeButton(R.string.no, dialogClickListener).show();
+    }
+    
+    private String getStoryMakerUserName(){ 
+        Auth storymakerAuth = (new AuthTable()).getAuthDefault(mActivity.getBaseContext(), Auth.SITE_STORYMAKER);
+        if (storymakerAuth != null) {
+        	return storymakerAuth.getUserName();
+        } 
+        
+        return null;
     }
 }

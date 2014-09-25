@@ -2,6 +2,9 @@ package info.guardianproject.mrapp.server;
 
 import info.guardianproject.mrapp.R;
 import info.guardianproject.mrapp.media.MediaHelper;
+import io.scal.secureshareui.lib.Util;
+
+import org.holoeverywhere.app.Activity;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -13,8 +16,6 @@ import android.webkit.WebViewClient;
 
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
-
-import org.holoeverywhere.app.Activity;
 
 
 public class WebViewActivity extends Activity {
@@ -134,6 +135,9 @@ public class WebViewActivity extends Activity {
 		return super.onKeyUp(keyCode, event);
 	}
 	
-	
-
+	@Override
+	public void finish() {		
+		super.finish();		
+		Util.clearWebviewAndCookies(mWebView, this);
+	}
 }

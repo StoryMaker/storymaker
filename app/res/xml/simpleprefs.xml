@@ -5,6 +5,7 @@
 		<EditTextPreference android:title="@string/prefs_storymaker_server_title" android:summary="@string/prefs_storymaker_server_summary" android:key="pserver" android:defaultValue="https://storymaker.cc" android:enabled="true"/>
 		    
 		<CheckBoxPreference android:title="@string/prefs_use_tor_title" android:summary="@string/prefs_use_tor_summary" android:key="pusetor" android:defaultValue="false"/>
+		<CheckBoxPreference android:title="@string/prefs_sm_upload_title" android:summary="@string/prefs_sm_upload_summary" android:key="psmupload" android:defaultValue="false"/>
 		<CheckBoxPreference android:title="@string/prefs_use_download_manager_title" android:summary="@string/prefs_use_download_manager_summary" android:key="pusedownloadmanager" android:defaultValue="true"/>
 		<!-- <CheckBoxPreference android:title="@string/prefs_use_upload_manager_title" android:summary="@string/prefs_use_upload_manager_summary" android:key="puseuploadmanager" android:defaultValue="true"/> -->
 		
