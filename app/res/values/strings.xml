@@ -36,6 +36,8 @@
     <string name="yes">Yes</string>
     <string name="no">No</string>
     <string name="about">The Listening Post is a simple and easy-to-use experience for users, minimising barriers to submitting media and providing an intuitive experience.</string>
+    <string name="capture_now">Capture now</string>
+    <string name="import_gallery">Import from gallery</string>
     <!-- menus -->
     <string name="menu_new_project">New</string>
     <string name="menu_projects">Stories</string>

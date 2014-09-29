@@ -18,6 +18,7 @@ import net.micode.soundrecorder.SoundRecorder;
 
 import org.codeforafrica.timby.listeningpost.R;
 import org.codeforafrica.timby.listeningpost.encryption.Encryption;
+import org.codeforafrica.timby.listeningpost.media.MediaConstants;
 import org.codeforafrica.timby.listeningpost.media.MediaProjectManager;
 import org.codeforafrica.timby.listeningpost.media.OverlayCameraActivity;
 import org.codeforafrica.timby.listeningpost.model.Media;
@@ -67,6 +68,7 @@ import com.actionbarsherlock.view.MenuItem;
     public int quickstory;
     
     public boolean importing;
+    public String mimeType;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -143,8 +145,22 @@ import com.actionbarsherlock.view.MenuItem;
         //actionBar.addTab(actionBar.newTab().setText(R.string.tab_add_clips).setTabListener(this));
         actionBar.addTab(actionBar.newTab().setText("Scene").setTabListener(this));     
         
+        
+        
         if(importing == true){
-        	addMediaFromGallery();
+        		int req = 0;
+        	if(mMPM.mProject.getStoryType() == Project.STORY_TYPE_PHOTO){
+        		mimeType = "image/*";
+        		req = MediaConstants.GALLERY_RESULT;
+        	}else if(mMPM.mProject.getStoryType() == Project.STORY_TYPE_VIDEO){
+        		mimeType = "video/*";
+        		req = MediaConstants.GALLERY_RESULT;
+        	}else{
+        		mimeType = "audio/*";
+        		req = MediaConstants.AUDIO_RESULT;
+        	}
+        	
+        	addMediaFromGallery(req);
         }else if (intent.hasExtra("auto_capture")	&& intent.getBooleanExtra("auto_capture", false))
         {
         	openCaptureMode(0, 0);
@@ -187,7 +203,7 @@ import com.actionbarsherlock.view.MenuItem;
                 }
                 return true;
             case R.id.addFromGallery:
-                addMediaFromGallery();
+                addMediaFromGallery(0);
             
                 return true;
             case R.id.addNewShot:
@@ -401,9 +417,9 @@ import com.actionbarsherlock.view.MenuItem;
     	return String.format("%sstorymaker_project_%s_%s.zip", filePath, mMPM.mProject.getId(), dateFormat.format(date));
     }
      
-    private void addMediaFromGallery()
+    private void addMediaFromGallery(int req)
     {
-        mMPM.mMediaHelper.openGalleryChooser("*/*");
+        mMPM.mMediaHelper.openGalleryChooser(mimeType, req);
     }
 
     @Override

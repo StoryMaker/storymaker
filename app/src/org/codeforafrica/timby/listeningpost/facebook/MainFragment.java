@@ -165,8 +165,11 @@ public class MainFragment extends Fragment implements Runnable {
 	                    mHandler.sendMessage(msgErr);
 					}
 	            }else{
+	            	Message msgErr= mHandler.obtainMessage(1);
+                    msgErr.getData().putString("err","Username and/or password not set!");
+                    mHandler.sendMessage(msgErr);
 	            	//Username / Password not set
-	            	Toast.makeText(getActivity().getApplicationContext(), "Username and/or password not set!", Toast.LENGTH_LONG).show();
+	            	//Toast.makeText(getActivity().getApplicationContext(), "Username and/or password not set!", Toast.LENGTH_LONG).show();
 	            }
 	            
 	        }else{

@@ -37,7 +37,7 @@ public class ProjectsActivity extends BaseActivity {
 
 	private ArrayList<Project> mListProjects;
 	private ProjectArrayAdapter aaProjects;
-	
+	int rid;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,6 +50,9 @@ public class ProjectsActivity extends BaseActivity {
         getSupportActionBar().setTitle("Media");
         
         mListView = (ListView)findViewById(R.id.projectslist);
+        
+        Intent i = getIntent();
+        rid = i.getIntExtra("rid", -1);
         initListView(mListView);
     }
     
@@ -66,13 +69,6 @@ public class ProjectsActivity extends BaseActivity {
 
 
 	
-    
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getSupportMenuInflater().inflate(R.menu.activity_projects, menu);
-        return true;
-    }
-
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
@@ -83,11 +79,7 @@ public class ProjectsActivity extends BaseActivity {
 	        	NavUtils.navigateUpFromSameTask(this);
 	        	
              return true;
-         case R.id.menu_new_project:
- 		
-			 startActivity(new Intent(this, StoryNewActivity.class));
-
-             return true;
+         
      }
  		
      return super.onOptionsItemSelected(item);
@@ -187,7 +179,7 @@ public class ProjectsActivity extends BaseActivity {
     
     public void refreshProjects ()
     {
-    	 mListProjects = (ArrayList<Project>) (new ProjectTable()).getAllAsList(this); // FIXME ugly
+    	 mListProjects = Project.getAllAsList(ProjectsActivity.this, rid);//(ArrayList<Project>) (new ProjectTable()).getAllAsList(this); // FIXME ugly
          aaProjects = new ProjectArrayAdapter(this, 
            	   R.layout.list_project_row, mListProjects);
          

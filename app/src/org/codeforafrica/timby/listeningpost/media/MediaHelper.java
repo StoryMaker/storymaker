@@ -91,11 +91,15 @@ public class MediaHelper implements MediaScannerConnectionClient {
          return fileAudio;
 	}*/
 	
-	public void openGalleryChooser (String mimeType)
+	public void openGalleryChooser (String mimeType, int req)
     {
     	Intent intent = new Intent(Intent.ACTION_PICK);
-		intent.setType(mimeType); //limit to specific mimetype
-		mActivity.startActivityForResult(intent, MediaConstants.GALLERY_RESULT);
+    	
+    	if(req == MediaConstants.AUDIO_RESULT)
+    		intent = new Intent(Intent.ACTION_GET_CONTENT);
+		
+    	intent.setType(mimeType); //limit to specific mimetype
+		mActivity.startActivityForResult(intent, req);
 		
     }
 	

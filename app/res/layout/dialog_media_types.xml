@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:orientation="vertical">
+<RelativeLayout
+                android:id="@+id/add_picture"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.00"
+                android:padding="15dip"
+                android:background="@color/grey" >
+
+                <ImageView
+                    android:id="@+id/ImageView01"
+                    android:layout_width="30dp"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/camera"
+                    android:tint="@color/lp_red" />
+
+                <TextView
+                    android:id="@+id/TVcreate_report"
+                    style="@style/CardTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:padding="3sp"
+                    android:text="Picture"
+                    android:textSize="18sp"
+                    android:textColor="@color/black" />
+            </RelativeLayout>
+
+            <View
+                android:id="@+id/view1"
+                android:layout_width="wrap_content"
+                android:layout_height="2dp"
+                android:background="@color/white" />
+            
+<RelativeLayout
+                android:id="@+id/add_video"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.00"
+                android:padding="15dip"
+                android:background="@color/grey" >
+
+                <ImageView
+                    android:id="@+id/ImageView01"
+                    android:layout_width="30dp"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/video"
+                    android:tint="@color/lp_blue" />
+
+                <TextView
+                    android:id="@+id/TVcreate_report"
+                    style="@style/CardTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:padding="3sp"
+                    android:text="Video"
+                    android:textSize="18sp"
+                    android:textColor="@color/black" />
+            </RelativeLayout>
+
+            <View
+                android:id="@+id/view1"
+                android:layout_width="wrap_content"
+                android:layout_height="2dp"
+                android:background="@color/white" />
+
+<RelativeLayout
+                android:id="@+id/add_audio"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.00"
+                android:padding="15dip"
+                android:background="@color/grey" >
+
+                <ImageView
+                    android:id="@+id/ImageView01"
+                    android:layout_width="30dp"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/audio"
+                    android:tint="@color/lp_brown" />
+
+                <TextView
+                    android:id="@+id/TVcreate_report"
+                    style="@style/CardTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:padding="3sp"
+                    android:text="Audio"
+                    android:textSize="18sp"
+                    android:textColor="@color/black" />
+            </RelativeLayout>
+
+</LinearLayout>

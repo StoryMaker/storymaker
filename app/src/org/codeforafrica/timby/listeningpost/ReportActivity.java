@@ -110,20 +110,46 @@ OnItemLongClickListener{
     private Button btnImport;
 
     public boolean new_report = false;
+    
+    public RelativeLayout capture_now;
+    public RelativeLayout importfromgallery;
+    private boolean importing = false;
     @Override
     @SuppressLint("NewApi")
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         
-        setContentView(R.layout.activity_new_report);
+        setContentView(R.layout.activity_report_edit);
         
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         //getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#ffffff")));
       
+        capture_now = (RelativeLayout)findViewById(R.id.capturenow);
+        capture_now.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				importing = false;
+				captureDialog();
+				
+			}
+		});
+        importfromgallery = (RelativeLayout)findViewById(R.id.importfromgallery);
+        importfromgallery.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				importing = true;
+				captureDialog();
+				
+			}
+		});
+        
         //TextView title2 = (TextView) getWindow().getDecorView().findViewById(getResources().getIdentifier("action_bar_title", "id", "android"));
         //title2.setTextColor(getResources().getColor(R.color.soft_purple));
         
         //
+        /*
         images = (RelativeLayout)findViewById(R.id.images);
         video = (RelativeLayout)findViewById(R.id.video);
         audio = (RelativeLayout)findViewById(R.id.audio);
@@ -192,7 +218,7 @@ OnItemLongClickListener{
 	    		}
 			}
 		});
-        
+        */
         
         //txtNewStoryDesc = (TextView)findViewById(R.id.txtNewStoryDesc);
         editTextStoryName = (EditText)findViewById(R.id.editTextStoryName);
@@ -248,12 +274,13 @@ OnItemLongClickListener{
                 dialog.show();
             }
         });        
-        
+        /*
         picture_label = (TextView)findViewById(R.id.picture_label);
         video_label = (TextView)findViewById(R.id.video_label);
         audio_label = (TextView)findViewById(R.id.audio_label);
         gallery_label = (TextView)findViewById(R.id.gallery_label);
-        
+        */
+        done.setText("Submit");
         if(rid!=-1){ 
         	getSupportActionBar().setTitle("Edit");
         	Report r = Report.get(this, rid);
@@ -264,6 +291,10 @@ OnItemLongClickListener{
             issue = r.getIssue();
             entity = r.getEntity();
             description = r.getDescription();
+            
+            if(!r.getServerId().equals("0")){
+            	done.setText("Update");
+            }
             
             if(location.equals("0, 0")){
         		location = "Location not set";
@@ -284,21 +315,19 @@ OnItemLongClickListener{
     	 	entitiesLV.setAdapter(adapter);
             
             gpsInfo.setText(location);
-    
-            done.setText("Update");
             
-            setMediaCount();
+            //setMediaCount();
             
         }else{
         	setLocation();
         	new_report = true;
         	getSupportActionBar().setTitle("Add Media");
-        	
+        	/*
             picture_label.setText("Picture (0)");
         	video_label.setText("Video (0)");
         	audio_label.setText("Audio (0)");
         	gallery_label.setText("Gallery (0)");
-        	
+        	*/
         }
         
         if (datasource.size()==0){
@@ -337,8 +366,83 @@ OnItemLongClickListener{
                 }
             }
         });
+        
     }
-    
+
+
+    public void captureDialog(){
+    	dialog = new Dialog(ReportActivity.this);
+        //dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+	    dialog.setTitle("Choose Media Type");
+    	dialog.setContentView(R.layout.dialog_media_types);
+	    
+	    images = (RelativeLayout)dialog.findViewById(R.id.add_picture);
+        video = (RelativeLayout)dialog.findViewById(R.id.add_video);
+        audio = (RelativeLayout)dialog.findViewById(R.id.add_audio);
+        
+        
+        images.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				story_mode = 2;
+				resultMode = Project.STORY_TYPE_PHOTO;
+				launchProject(editTextStoryName.getText().toString(), spinnerIssue.getSelectedItemPosition(),spinnerSector.getSelectedItemPosition(),datasource.toString(),editTextDesc.getText().toString(),gpsInfo.getText().toString(), false, importing);		
+				
+			}
+		});
+        video.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				//TODO Auto-generated method stub
+				
+				story_mode = 2;
+				resultMode = Project.STORY_TYPE_VIDEO;
+				launchProject(editTextStoryName.getText().toString(), spinnerIssue.getSelectedItemPosition(),spinnerSector.getSelectedItemPosition(),datasource.toString(),editTextDesc.getText().toString(),gpsInfo.getText().toString(), false, importing);							
+				
+			}
+		});
+        audio.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				//TODO Auto-generated method stub
+				
+				story_mode = 2;
+				resultMode = Project.STORY_TYPE_AUDIO;
+				launchProject(editTextStoryName.getText().toString(), spinnerIssue.getSelectedItemPosition(),spinnerSector.getSelectedItemPosition(),datasource.toString(),editTextDesc.getText().toString(),gpsInfo.getText().toString(), false, importing);							
+				
+			}
+		});
+        
+	    dialog.show();
+    }
+public int getMediaCount(){
+    	
+    	pics = 0;
+    	vids = 0;
+    	auds = 0;
+    	
+    	ArrayList<Project> mListProjects = Project.getAllAsList(getApplicationContext(), rid);
+	 	for (int j = 0; j < mListProjects.size(); j++) {
+	 		Project project = mListProjects.get(j);
+	 		Media[] mediaList = project.getScenesAsArray()[0].getMediaAsArray();
+		 	for (Media media: mediaList){
+		 		if(media!=null){
+			 		String ptype = media.getMimeType();
+			 		if(ptype.contains("image")){
+				 		pics++;
+				 	}else if(ptype.contains("video")){
+				 		vids++;
+				 	}else if(ptype.contains("audio")){
+				 		auds++;
+				 	}
+		 		}
+		 	}
+	 	}
+	 	
+    	int total = pics + vids + auds;    	
+    	
+    	return total;
+    }
     public void setMediaCount(){
     	
     	pics = 0;
@@ -599,7 +703,7 @@ OnItemLongClickListener{
 	        intent.putExtra("rid", report.getId());
 	        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 	        startActivity(intent);
-	        setMediaCount();
+	        //setMediaCount();
         }else{
         	if(pLocation.equals("0, 0")){
         		Toast.makeText(getApplicationContext(), "Trouble finding location. Try again later!", Toast.LENGTH_LONG).show();
@@ -611,11 +715,17 @@ OnItemLongClickListener{
         }
          
     }
-    
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getSupportMenuInflater().inflate(R.menu.activity_report, menu);
+        //menu.getItem(0).setTitle("test").setShowAsAction(com.actionbarsherlock.view.MenuItem.SHOW_AS_ACTION_WITH_TEXT);
+        MenuItem galleryItem = menu.findItem(R.id.gallery);
+        galleryItem.setTitle("Gallery (" + getMediaCount() + ")");
+        return true;
+    }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
+    	if (item.getItemId() == android.R.id.home){
             	if(new_report){
             		if(something_changed()){
             			showSaveAlert();
@@ -630,10 +740,24 @@ OnItemLongClickListener{
             			do_report_close();
             		}
             	}
-            	   
             	
             return true;
+        }else if (item.getItemId() == R.id.gallery){
+	        	ArrayList<Project> mListProjects;
+	    		mListProjects = Project.getAllAsList(getApplicationContext(), rid);
+	    	 	
+	    		if(mListProjects.size()>0){
+					Intent p = new Intent(getBaseContext(), ProjectsActivity.class);
+	            	p.putExtra("rid", rid);
+	            	p.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+	            	startActivity(p);
+	    		}else{
+	    			Toast.makeText(getApplicationContext(), "No media added on this report yet!", Toast.LENGTH_LONG).show();
+	    		}
+	    		
+            return true;
         }
+    	
         return super.onOptionsItemSelected(item);
     }
     public void showSaveAlert(){
