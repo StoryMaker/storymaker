@@ -39,7 +39,7 @@ public class StoryMakerApp extends Application {
     private Waiter waiter;  //Thread which controls idle time
 	public void touch()
     {
-        waiter.touch();
+        //waiter.touch();
     }
 	
 	private static ServerManager mServerManager;
@@ -86,8 +86,8 @@ public class StoryMakerApp extends Application {
 		
 		initApp();
 		Log.d(TAG, "Starting application"+this.toString());
-        waiter=new Waiter(300000); //15 mins
-        waiter.start(); 
+        //waiter=new Waiter(300000); //15 mins
+       // waiter.start(); 
 	}
 	private boolean isServiceRunning(Class<?> cls) {
         ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
