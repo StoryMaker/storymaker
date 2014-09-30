@@ -6,40 +6,89 @@ import info.guardianproject.mrapp.model.JobTable;
 import info.guardianproject.mrapp.model.PublishJob;
 import info.guardianproject.mrapp.publish.PublishController;
 import info.guardianproject.mrapp.publish.PublisherBase;
+import info.guardianproject.mrapp.server.ServerManager;
 
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.Locale;
 
 import android.content.Context;
 import android.util.Log;
 
 public class ArchivePublisher extends PublisherBase {
-    private final String TAG = "ArchivePublisher";
-	
+	private final String TAG = "ArchivePublisher";
+
+	private static final String ARCHIVE_URL_DOWNLOAD = "https://archive.org/download/";
+	private static final String ARCHIVE_API_ENDPOINT = "http://s3.us.archive.org/";
+
 	public ArchivePublisher(Context context, PublishController publishController, PublishJob publishJob) {
-	    super(context, publishController, publishJob);
+		super(context, publishController, publishJob);
 	}
-	
+
 	public void startRender() {
-        Log.d(TAG, "startRender");
+		Log.d(TAG, "startRender");
 		// TODO should detect if user is directly publishing to youtube so we don't double publish to there
-		
-		Job videoRenderJob = new Job(mContext, mPublishJob.getProjectId(), mPublishJob.getId(), JobTable.TYPE_RENDER, null, VideoRenderer.SPEC_KEY);
+		Job videoRenderJob = new Job(mContext, mPublishJob.getProjectId(),mPublishJob.getId(), JobTable.TYPE_RENDER, null,VideoRenderer.SPEC_KEY);
 		mController.enqueueJob(videoRenderJob);
 	}
-	
+
 	public void startUpload() {
-        Log.d(TAG, "startUpload");
-        Job newJob = new Job(mContext, mPublishJob.getProjectId(), mPublishJob.getId(), JobTable.TYPE_UPLOAD, Auth.SITE_ARCHIVE, null); // FIXME hardcoded to youtube?
-        mController.enqueueJob(newJob);
+		Log.d(TAG, "startUpload");
+		 // FIXME hardcoded to youtube?
+		Job newJob = new Job(mContext, mPublishJob.getProjectId(),mPublishJob.getId(), JobTable.TYPE_UPLOAD, Auth.SITE_ARCHIVE,null);
+		mController.enqueueJob(newJob);
 	}
-	
-    public String getEmbed(Job job) {
-    	int width = 640;
-    	int height = 480;
-    	
-    	return String.format(Locale.US, "<iframe src='%s' width='%d' height='%d' frameborder='0' webkitallowfullscreen='true' " +
-    						 "mozallowfullscreen='true' allowfullscreen></iframe>", job.getResult(), width, height);
-    }
+
+	public String getEmbed(Job job) {
+		if(null == job) {
+			return null;
+		}
+		
+		boolean isMediumPhoto = false;
+		String medium = job.getSpec();
+		String fileURL = job.getResult();
+		String width = null;
+		String height = null;
+		String cleanFileURL = null;
+
+		if (medium != null) {
+			if (medium.equals(ServerManager.CUSTOM_FIELD_MEDIUM_PHOTO)) {
+				// keep default image size
+				width = "";
+				height = "";
+				isMediumPhoto = true;
+			} else if (medium.equals(ServerManager.CUSTOM_FIELD_MEDIUM_VIDEO)) {
+				width = "640";
+				height = "480";
+			} else if (medium.equals(ServerManager.CUSTOM_FIELD_MEDIUM_AUDIO)) {
+				width = "500";
+				height = "30";
+			}
+			
+			cleanFileURL = cleanFileURL(fileURL);
+		}
+
+		String embed  = null;
+		if (null != width && null != height && null != cleanFileURL) {
+			if(isMediumPhoto) {
+				embed = String.format(Locale.US, "<img src='%s' alt='Archive Embed'>" ,
+													ARCHIVE_URL_DOWNLOAD + cleanFileURL);
+			} else {
+				embed = String.format(Locale.US, "<iframe " +
+												"src='%s' " +
+												"width='%s' " +
+												"height='%s' " +
+												"frameborder='0' " +
+												"webkitallowfullscreen='true' " + 
+												"mozallowfullscreen='true' allowfullscreen>" +
+												"</iframe>",
+												ARCHIVE_URL_DOWNLOAD + cleanFileURL, width, height);
+			}
+		}
+
+		return embed;
+	}
+
+	private String cleanFileURL(String fileURL) {	
+		fileURL = fileURL.replace(ARCHIVE_API_ENDPOINT, "");
+		return fileURL;
+	}
 }
