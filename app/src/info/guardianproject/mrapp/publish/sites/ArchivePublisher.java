@@ -42,7 +42,6 @@ public class ArchivePublisher extends PublisherBase {
 			return null;
 		}
 		
-		boolean isMediumPhoto = false;
 		String medium = job.getSpec();
 		String fileURL = job.getResult();
 		String width = null;
@@ -54,9 +53,8 @@ public class ArchivePublisher extends PublisherBase {
 				// keep default image size
 				width = "";
 				height = "";
-				isMediumPhoto = true;
 			} else if (medium.equals(ServerManager.CUSTOM_FIELD_MEDIUM_VIDEO)) {
-				width = "640";
+				width = "600";
 				height = "480";
 			} else if (medium.equals(ServerManager.CUSTOM_FIELD_MEDIUM_AUDIO)) {
 				width = "500";
@@ -67,7 +65,10 @@ public class ArchivePublisher extends PublisherBase {
 		}
 
 		String embed  = null;
-		if (null != width && null != height && null != cleanFileURL) {
+		if (null != width && null != height && null != cleanFileURL) {	
+			embed = String.format(Locale.US, "[archive %s %s %s]", cleanFileURL, width, height);
+			
+			/*
 			if(isMediumPhoto) {
 				embed = String.format(Locale.US, "<img src='%s' alt='Archive Embed'>" ,
 													ARCHIVE_URL_DOWNLOAD + cleanFileURL);
@@ -82,6 +83,7 @@ public class ArchivePublisher extends PublisherBase {
 												"</iframe>",
 												ARCHIVE_URL_DOWNLOAD + cleanFileURL, width, height);
 			}
+			*/
 		}
 
 		return embed;

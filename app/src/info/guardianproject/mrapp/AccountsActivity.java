@@ -27,12 +27,19 @@ public class AccountsActivity extends BaseActivity {
             setTheme(android.R.style.Theme_Holo_Light_Dialog_NoActionBar_MinWidth);
 		}
 		setContentView(R.layout.activity_accounts);
+				
+		boolean isUserLoggedIntoSM = false;
+        Auth storymakerAuth = (new AuthTable()).getAuthDefault(getApplicationContext(), Auth.SITE_STORYMAKER);
+        if (storymakerAuth != null) {
+        	isUserLoggedIntoSM = true;
+        }
 		
 		Bundle bundle = null;
 		Intent intent = getIntent();
 		bundle = new Bundle();
 		bundle.putBoolean("isDialog", intent.getBooleanExtra("isDialog", false));
 		bundle.putBoolean("inSelectionMode", intent.getBooleanExtra("inSelectionMode", false));
+		bundle.putBoolean("isUserLoggedIntoSM", isUserLoggedIntoSM);
 		
 		addChooseAccountFragment(bundle);
 	}
