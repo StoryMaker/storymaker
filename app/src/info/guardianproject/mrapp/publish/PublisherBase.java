@@ -68,7 +68,8 @@ public abstract class PublisherBase {
 	    // TODO this should chose from all the selected sites for this publish the preferred site from this list: youtube, facebook, ...
 	    for (Job job: mPublishJob.getJobsAsList()) {
 	        if (job.isType(JobTable.TYPE_UPLOAD)) {
-	            return job;
+				job.setSpec(getMedium());
+				return job;
 	        }
 	    }
 	    return null;
