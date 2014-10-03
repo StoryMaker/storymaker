@@ -67,6 +67,7 @@ public class AccountsActivity extends BaseActivity {
 		
 		caFragment = new ChooseAccountFragment(); 
 		caFragment.setArguments(bundle);
+		caFragment.setLoginIntent(new Intent(this, ConnectAccountActivity.class));
 		caFragment.setAccountsList(accounts);  // FIXME we should probably make Account object parcelable and pass this through the bundle
 		caFragment.setOnEventListener(new OnEventListener() {
 
