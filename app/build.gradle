@@ -1,0 +1,86 @@
+apply plugin: 'android'
+
+android {
+    compileSdkVersion 19
+    buildToolsVersion "20.0.0"
+
+    sourceSets {
+        main {
+            manifest.srcFile 'AndroidManifest.xml'
+            java.srcDirs = ['src']
+            resources.srcDirs = ['src']
+            aidl.srcDirs = ['src']
+            renderscript.srcDirs = ['src']
+            res.srcDirs = ['res']
+            assets.srcDirs = ['assets']
+            jniLibs.srcDir file('libs/')
+        }
+
+        defaultConfig {
+            minSdkVersion 10
+            targetSdkVersion 19
+        }
+
+
+
+        // If you'd like to provide special files for the debug / release build variants
+        // you can do so by adding files to the directories defined below
+        //
+        // Move the build types to build-types/<type>
+        // For instance, build-types/debug/java, build-types/debug/AndroidManifest.xml, ...
+        // This moves them out of them default location under src/<type>/... which would
+        // conflict with src/ being used by the main source set.
+        // Adding new build types or product flavors should be accompanied
+        // by a similar customization.
+        debug.setRoot('build-types/debug')
+        release.setRoot('build-types/release')
+    }
+
+    // Temporarily ignore linter errors.
+    lintOptions {
+        abortOnError false
+    }
+
+    packagingOptions {
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/NOTICE.txt'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/NOTICE'
+    }
+
+}
+
+dependencies {
+    // We'd use the below line to import all jars
+    // but we're currently ignoring httpclientandroidlib-1.1.2.jar (provided by libonionkit),
+    // and android-support-v4 (provided by ActionBarSherlock)
+    //
+    //compile fileTree(dir: 'libs', include: '*.jar')
+
+    // .Jar imports
+    compile files('libs/apache-mime4j-0.6.jar')
+    compile files('libs/commons-io-2.4.jar')
+    compile files('libs/commons-lang3-3.1.jar')
+    compile files('libs/google-api-client-1.4.1-beta.jar')
+    compile files('libs/google-api-client-googleapis-1.4.1-beta.jar')
+    compile files('libs/google-api-services-latitude-v1-1.1.0-beta.jar')
+    compile files('libs/guava-r09.jar')
+    compile files('libs/HockeySDK.jar')
+    compile files('libs/httpmime-4.0.3.jar')
+    compile files('libs/soundcloud-api-1.0.1.jar')
+    compile files('libs/svg-android-1.1.jar')
+    compile files('libs/wordpressjavaandroid.jar')
+    compile files('libs/sqlcipher.jar')
+
+    // Project imports
+    compile project(':external:android-ffmpeg-java')
+    compile project(':external:WordpressJavaAndroid')
+    compile project(':external:HoloEverywhere:library')
+    compile project(':external:HoloEverywhere:contrib:ActionBarSherlock:library')
+    compile project(':external:SlidingMenu:library')
+    compile project(':external:cardsui-for-android:CardsUILib')
+    compile project(':external:Android-ViewPagerIndicator:library')
+    compile project(':external:RangeSeekBar:library')
+    compile project(':external:NetCipher:libnetcipher')
+
+}
