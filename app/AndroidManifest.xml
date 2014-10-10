@@ -1,8 +1,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          xmlns:tools="http://schemas.android.com/tools"
     package="info.guardianproject.mrapp"
     android:installLocation="auto"
     android:versionCode="118"
-    android:versionName="0.0.10-build118">
+    android:versionName="0.0.10-build118" >
    
     <uses-sdk
         android:minSdkVersion="10"
@@ -49,7 +50,7 @@
         android:largeHeap="true"
         android:configChanges="orientation|keyboardHidden|screenSize|locale"
 		android:supportsRtl="true"
-         >
+        tools:replace="android:theme" >
      
         <activity android:name=".server.LoginActivity"
             android:windowSoftInputMode="stateHidden"
