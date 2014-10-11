@@ -12,11 +12,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import org.holoeverywhere.app.Activity;
-import org.holoeverywhere.widget.Toast;
-
-import com.actionbarsherlock.view.MenuItem;
-
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.AssetManager;
@@ -27,8 +23,10 @@ import android.support.v4.app.ShareCompat;
 import android.util.Log;
 import android.view.ActionProvider;
 import android.view.ContextMenu.ContextMenuInfo;
+import android.view.MenuItem;
 import android.view.SubMenu;
 import android.view.View;
+import android.widget.Toast;
 
 public class Utils {
     public static void toastOnUiThread(Activity activity, String message) {

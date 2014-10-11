@@ -4,19 +4,16 @@ import info.guardianproject.mrapp.R;
 import info.guardianproject.mrapp.media.MediaHelper;
 import io.scal.secureshareui.lib.Util;
 
-import org.holoeverywhere.app.Activity;
-
+import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.KeyEvent;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.webkit.WebSettings.PluginState;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuItem;
-
 
 public class WebViewActivity extends Activity {
 
@@ -29,7 +26,7 @@ public class WebViewActivity extends Activity {
 
         setContentView(R.layout.activity_web_view);
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getActionBar().setDisplayHomeAsUpEnabled(true);
         
         Intent intent = getIntent();
         if (intent != null)

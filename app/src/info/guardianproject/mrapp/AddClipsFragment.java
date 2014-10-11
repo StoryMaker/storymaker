@@ -7,10 +7,10 @@ import info.guardianproject.mrapp.model.template.Template;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import org.holoeverywhere.app.AlertDialog;
 import org.json.JSONException;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;

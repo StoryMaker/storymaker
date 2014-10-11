@@ -32,7 +32,8 @@ import java.util.zip.ZipOutputStream;
 
 import net.micode.soundrecorder.SoundRecorder;
 
-import org.holoeverywhere.app.AlertDialog;
+import android.app.ActionBar;
+import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -43,12 +44,11 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
+import android.view.ActionMode;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 
-import com.actionbarsherlock.app.ActionBar;
-import com.actionbarsherlock.view.ActionMode;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuInflater;
-import com.actionbarsherlock.view.MenuItem;
 
 public class SceneEditorActivity extends EditorBaseActivity implements ActionBar.TabListener {
 	private static final String STATE_SELECTED_NAVIGATION_ITEM = "selected_navigation_item";
@@ -120,7 +120,7 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
         setContentView(R.layout.activity_scene_editor_no_swipe);
 
         // Set up the action bar.
-        final ActionBar actionBar = getSupportActionBar();
+        final ActionBar actionBar = getActionBar();
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
         actionBar.setDisplayHomeAsUpEnabled(true);
         if (mMPM.mScene != null) {
@@ -149,7 +149,7 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
     @Override
     public void onRestoreInstanceState(Bundle savedInstanceState) {
         if (savedInstanceState.containsKey(STATE_SELECTED_NAVIGATION_ITEM)) {
-            getSupportActionBar().setSelectedNavigationItem(
+            getActionBar().setSelectedNavigationItem(
                     savedInstanceState.getInt(STATE_SELECTED_NAVIGATION_ITEM));
         }
     }
@@ -157,14 +157,14 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
     @Override
     public void onSaveInstanceState(Bundle outState) {
         outState.putInt(STATE_SELECTED_NAVIGATION_ITEM,
-                getSupportActionBar().getSelectedNavigationIndex());
+                getActionBar().getSelectedNavigationIndex());
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
 
-        getSupportMenuInflater().inflate(R.menu.activity_scene_editor, menu);
+        getMenuInflater().inflate(R.menu.activity_scene_editor, menu);
         mMenu = menu;
         
         return true;
@@ -354,6 +354,7 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
 				Log.e(AppConstants.TAG, "Error creating zip file:", ioe);
 			}			
 		}
+
     }
     
     private void onExportProjectSuccess(final String zipFileName)
@@ -397,164 +398,6 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
         mMPM.mMediaHelper.openGalleryChooser("*/*");
     }
 
-    @Override
-    public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
-
-        FragmentManager fm = getSupportFragmentManager();
-        fm.beginTransaction().hide(mLastTabFrag).commit();
-    }
-
-    // protected void setupAddClipsFragment() {
-    // FragmentManager fm = getSupportFragmentManager();
-    //
-    // try {
-    // mFragmentTab0 = new SceneChooserFragment(R.layout.fragment_add_clips, fm,
-    // mTemplateJsonPath);
-    // } catch (IOException e) {
-    // // TODO Auto-generated catch block
-    // e.printStackTrace();
-    // } catch (JSONException e) {
-    // // TODO Auto-generated catch block
-    // e.printStackTrace();
-    // }
-    // }
-
-    @Override
-    public void onTabSelected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
-        // When the given tab is selected, show the tab contents in the
-        // container
-        int layout = R.layout.fragment_add_clips;
-        FragmentManager fm = getSupportFragmentManager();
-
-        if (mMenu != null) {
-            mMenu.findItem(R.id.itemTrim).setVisible(false);
-        }
-        
-        if(mLastTabFrag instanceof OrderClipsFragment)
-        {
-        	((OrderClipsFragment) mLastTabFrag).stopPlaybackOnTabChange();
-        }
-        
-        //Make Tab
-        if (tab.getPosition() == 0) {
-            if (mMenu != null) {
-                //show relevant menu items
-                setMenuItemsVisibility(true);
-            }
-            layout = R.layout.fragment_add_clips;
-
-            if (mFragmentTab0 == null)
-            {
-               
-            //    mFragmentTab0 = new AddClipsFragment(layout, fm, mTemplate, mSceneIndex, this);
-                mFragmentTab0 = new AddClipsFragment();
-
-                Bundle args = new Bundle();
-                args.putInt(AddClipsFragment.ARG_SECTION_NUMBER, tab.getPosition() + 1);
-                args.putInt("layout", layout);
-                args.putInt("scene",mSceneIndex);
-                mFragmentTab0.setArguments(args);
-             
-                fm.beginTransaction()
-                        .add(R.id.container, mFragmentTab0, layout + "")
-                        .commit();
-
-            } else {
-                fm.beginTransaction()
-                        .show(mFragmentTab0)
-                        .commit();
-            }
-            mLastTabFrag = mFragmentTab0;
-          //Edit Tab
-        } else if (tab.getPosition() == 1) {
-            layout = R.layout.fragment_order_clips;
-
-            if (mMenu != null) {      
-                //hide irrelevant menu items
-                setMenuItemsVisibility(false);
-                
-                //if only photos, no need to display trim option
-                if(!(mMPM.mProject.getStoryType() == Project.STORY_TYPE_ESSAY || mMPM.mProject.getStoryType() == Project.STORY_TYPE_PHOTO))
-                {
-                	mMenu.findItem(R.id.itemTrim).setVisible(true);
-                }             
-            }
-
-            if (mFragmentTab1 == null)
-            {
-                
-                mFragmentTab1 = new OrderClipsFragment();
-
-                Bundle args = new Bundle();
-                args.putInt(OrderClipsFragment.ARG_SECTION_NUMBER, tab.getPosition() + 1);
-                args.putInt("layout", layout);
-                mFragmentTab1.setArguments(args);
-
-
-                fm.beginTransaction()
-                        .add(R.id.container, mFragmentTab1, layout + "")
-                        .commit();
-
-            } else {
-
-                ((OrderClipsFragment)mFragmentTab1).loadMedia();
-                
-                fm.beginTransaction()
-                        .show(mFragmentTab1)
-                        .commit();
-            }
-
-            mLastTabFrag = mFragmentTab1;
-          //Publish Tab
-        } else if (tab.getPosition() == 2) {
-        	
-        	if (mMenu != null) {
-	        	//hide irrelevant menu items
-	            setMenuItemsVisibility(false);
-        	}
-        	
-            if (mMPM.mProject.isTemplateStory()) {
-                Intent intent = new Intent(getBaseContext(), StoryTemplateActivity.class);
-                intent.putExtra("template_path", mProject.getTemplatePath());
-                intent.putExtra("story_mode", mMPM.mProject.getStoryType());
-                intent.putExtra("pid", mMPM.mProject.getId());
-                intent.putExtra("title", mMPM.mProject.getTitle());
-                startActivity(intent);
-                finish();
-            } else {
-                layout = R.layout.fragment_complete_story;
-                
-                if (mPublishFragment == null)
-                {
-                    	
-
-                	mPublishFragment = new PublishFragment();
-                    Bundle args = new Bundle();
-                    args.putInt(PublishFragment.ARG_SECTION_NUMBER, tab.getPosition() + 1);
-                	args.putInt("layout",layout);
-                	mPublishFragment.setArguments(args);
-                        
-    
-                    fm.beginTransaction()
-                            .add(R.id.container, mPublishFragment, layout + "")
-                            .commit();
-    
-                } else {
-    
-                    fm.beginTransaction()
-                            .show(mPublishFragment)
-                            .commit();
-                }
-    
-                mLastTabFrag = mPublishFragment;
-            }
-        }
-    }
-
-    @Override
-    public void onTabReselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
-    }
-    
     private void setMenuItemsVisibility(boolean show) {
     	//hide irrelevant menu items
         mMenu.findItem(R.id.addNewShot).setVisible(show);
@@ -655,5 +498,148 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
                 mPublishFragment.onChooseAccountDialogResult(resultCode, intent);
             }
         }
+    }
+
+    @Override
+    public void onTabSelected(ActionBar.Tab tab, android.app.FragmentTransaction ft) {
+        // When the given tab is selected, show the tab contents in the
+        // container
+        int layout = R.layout.fragment_add_clips;
+        FragmentManager fm = getSupportFragmentManager();
+
+        if (mMenu != null) {
+            mMenu.findItem(R.id.itemTrim).setVisible(false);
+        }
+
+        if(mLastTabFrag instanceof OrderClipsFragment)
+        {
+            ((OrderClipsFragment) mLastTabFrag).stopPlaybackOnTabChange();
+        }
+
+        //Make Tab
+        if (tab.getPosition() == 0) {
+            if (mMenu != null) {
+                //show relevant menu items
+                setMenuItemsVisibility(true);
+            }
+            layout = R.layout.fragment_add_clips;
+
+            if (mFragmentTab0 == null)
+            {
+
+                //    mFragmentTab0 = new AddClipsFragment(layout, fm, mTemplate, mSceneIndex, this);
+                mFragmentTab0 = new AddClipsFragment();
+
+                Bundle args = new Bundle();
+                args.putInt(AddClipsFragment.ARG_SECTION_NUMBER, tab.getPosition() + 1);
+                args.putInt("layout", layout);
+                args.putInt("scene",mSceneIndex);
+                mFragmentTab0.setArguments(args);
+
+                fm.beginTransaction()
+                        .add(R.id.container, mFragmentTab0, layout + "")
+                        .commit();
+
+            } else {
+                fm.beginTransaction()
+                        .show(mFragmentTab0)
+                        .commit();
+            }
+            mLastTabFrag = mFragmentTab0;
+            //Edit Tab
+        } else if (tab.getPosition() == 1) {
+            layout = R.layout.fragment_order_clips;
+
+            if (mMenu != null) {
+                //hide irrelevant menu items
+                setMenuItemsVisibility(false);
+
+                //if only photos, no need to display trim option
+                if(!(mMPM.mProject.getStoryType() == Project.STORY_TYPE_ESSAY || mMPM.mProject.getStoryType() == Project.STORY_TYPE_PHOTO))
+                {
+                    mMenu.findItem(R.id.itemTrim).setVisible(true);
+                }
+            }
+
+            if (mFragmentTab1 == null)
+            {
+
+                mFragmentTab1 = new OrderClipsFragment();
+
+                Bundle args = new Bundle();
+                args.putInt(OrderClipsFragment.ARG_SECTION_NUMBER, tab.getPosition() + 1);
+                args.putInt("layout", layout);
+                mFragmentTab1.setArguments(args);
+
+
+                fm.beginTransaction()
+                        .add(R.id.container, mFragmentTab1, layout + "")
+                        .commit();
+
+            } else {
+
+                ((OrderClipsFragment)mFragmentTab1).loadMedia();
+
+                fm.beginTransaction()
+                        .show(mFragmentTab1)
+                        .commit();
+            }
+
+            mLastTabFrag = mFragmentTab1;
+            //Publish Tab
+        } else if (tab.getPosition() == 2) {
+
+            if (mMenu != null) {
+                //hide irrelevant menu items
+                setMenuItemsVisibility(false);
+            }
+
+            if (mMPM.mProject.isTemplateStory()) {
+                Intent intent = new Intent(getBaseContext(), StoryTemplateActivity.class);
+                intent.putExtra("template_path", mProject.getTemplatePath());
+                intent.putExtra("story_mode", mMPM.mProject.getStoryType());
+                intent.putExtra("pid", mMPM.mProject.getId());
+                intent.putExtra("title", mMPM.mProject.getTitle());
+                startActivity(intent);
+                finish();
+            } else {
+                layout = R.layout.fragment_complete_story;
+
+                if (mPublishFragment == null)
+                {
+
+
+                    mPublishFragment = new PublishFragment();
+                    Bundle args = new Bundle();
+                    args.putInt(PublishFragment.ARG_SECTION_NUMBER, tab.getPosition() + 1);
+                    args.putInt("layout",layout);
+                    mPublishFragment.setArguments(args);
+
+
+                    fm.beginTransaction()
+                            .add(R.id.container, mPublishFragment, layout + "")
+                            .commit();
+
+                } else {
+
+                    fm.beginTransaction()
+                            .show(mPublishFragment)
+                            .commit();
+                }
+
+                mLastTabFrag = mPublishFragment;
+            }
+        }
+    }
+
+    @Override
+    public void onTabUnselected(ActionBar.Tab tab, android.app.FragmentTransaction ft) {
+        FragmentManager fm = getSupportFragmentManager();
+        fm.beginTransaction().hide(mLastTabFrag).commit();
+    }
+
+    @Override
+    public void onTabReselected(ActionBar.Tab tab, android.app.FragmentTransaction ft) {
+
     }
 }

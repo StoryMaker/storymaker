@@ -9,8 +9,6 @@ import info.guardianproject.mrapp.model.Lesson;
 
 import java.io.IOException;
 
-import org.holoeverywhere.widget.Toast;
-
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.net.Uri;
@@ -18,14 +16,14 @@ import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.webkit.ConsoleMessage;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings.PluginState;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuItem;
+import android.widget.Toast;
 
 @SuppressLint("NewApi")
 public class LessonViewActivity extends BaseActivity {
@@ -42,7 +40,7 @@ public class LessonViewActivity extends BaseActivity {
 
         setContentView(R.layout.activity_web_view);
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getActionBar().setDisplayHomeAsUpEnabled(true);
 
         Intent intent = getIntent();
         if (intent != null) {

@@ -3,8 +3,6 @@ package info.guardianproject.mrapp.publish.sites;
 import java.io.File;
 import java.util.HashMap;
 
-import org.holoeverywhere.app.Activity;
-
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;

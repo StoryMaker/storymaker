@@ -25,12 +25,10 @@ import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import org.holoeverywhere.app.AlertDialog;
-import org.holoeverywhere.widget.TextView;
-
 import redstone.xmlrpc.XmlRpcFault;
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -54,6 +52,7 @@ import android.view.animation.Animation;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.ViewAnimator;
 
 import com.animoto.android.views.DraggableGridView;

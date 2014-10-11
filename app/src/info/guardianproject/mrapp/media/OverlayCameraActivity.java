@@ -6,6 +6,7 @@ import info.guardianproject.mrapp.ui.SwipeInterface;
 
 import java.io.IOException;
 
+import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Picture;
@@ -27,12 +28,11 @@ import android.view.WindowManager;
 import android.view.WindowManager.LayoutParams;
 import android.widget.ImageView;
 
-import com.actionbarsherlock.app.SherlockActivity;
 import com.larvalabs.svgandroid.SVG;
 import com.larvalabs.svgandroid.SVGParser;
 
 
-public class OverlayCameraActivity extends SherlockActivity implements Callback, SwipeInterface 
+public class OverlayCameraActivity extends Activity implements Callback, SwipeInterface
 {
    
 

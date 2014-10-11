@@ -18,19 +18,17 @@ package info.guardianproject.mrapp;
  */
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.view.LayoutInflater;
 import android.view.View;
 
 import java.io.IOException;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.Closeable;
-
-import org.holoeverywhere.LayoutInflater;
-import org.holoeverywhere.app.AlertDialog;
-import org.holoeverywhere.widget.CheckBox;
 
 //import com.google.analytics.tracking.android.GoogleAnalytics;
 

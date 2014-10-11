@@ -3,29 +3,26 @@ package info.guardianproject.mrapp;
 import info.guardianproject.mrapp.model.Project;
 import info.guardianproject.mrapp.model.ProjectTable;
 
-import org.holoeverywhere.ArrayAdapter;
-import org.holoeverywhere.LayoutInflater;
-import org.holoeverywhere.widget.LinearLayout;
-import org.holoeverywhere.widget.ListView;
-import org.holoeverywhere.widget.Toast;
-
 import java.util.List;
 
+import android.app.ActionBar;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
+import android.view.Window;
+import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
 import android.widget.TextView;
-
-import com.actionbarsherlock.app.ActionBar;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuItem;
-import com.actionbarsherlock.view.Window;
+import android.widget.Toast;
 
 /**
  * Display Project metadata including tags.
@@ -59,7 +56,7 @@ public class StoryInfoActivity extends BaseActivity {
 	}
 	
 	private void initialize() {
-		ActionBar actionBar = getSupportActionBar();
+		ActionBar actionBar = getActionBar();
 		actionBar.setIcon(R.drawable.ic_action_info);
 	    actionBar.setDisplayHomeAsUpEnabled(true);
 
@@ -95,7 +92,7 @@ public class StoryInfoActivity extends BaseActivity {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		
-	    getSupportMenuInflater().inflate(R.menu.activity_story_info, menu);
+	    getMenuInflater().inflate(R.menu.activity_story_info, menu);
 	    return super.onCreateOptionsMenu(menu);   
 	}
 	
@@ -142,7 +139,7 @@ public class StoryInfoActivity extends BaseActivity {
 	 * within a ScrollView.
 	 *
 	 */
-	class ProjectActivityAdapter extends ArrayAdapter<String>{
+	class ProjectActivityAdapter extends ArrayAdapter<String> {
 	    private final static int sResourceLayoutId = android.R.layout.simple_list_item_1;
 	    private ViewGroup mHostView;
 	      

@@ -5,23 +5,21 @@ import java.util.ArrayList;
 import info.guardianproject.mrapp.model.Project;
 import info.guardianproject.mrapp.model.ProjectTable;
 
-import org.holoeverywhere.widget.AutoCompleteTextView;
-import org.holoeverywhere.widget.EditText;
-import org.holoeverywhere.widget.Spinner;
-
+import android.view.ActionMode;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.ViewGroup.LayoutParams;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
-
-import com.actionbarsherlock.view.ActionMode;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuInflater;
-import com.actionbarsherlock.view.MenuItem;
-import com.actionbarsherlock.view.Window;
+import android.widget.EditText;
+import android.widget.Spinner;
 
 /**
  * Display editable Story metadata including tags.

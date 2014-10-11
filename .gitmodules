@@ -1,27 +1,24 @@
-[submodule "external/OnionKit"]
-	path = external/OnionKit
-	url = https://github.com/guardianproject/OnionKit.git
 [submodule "external/android-ffmpeg-java"]
 	path = external/android-ffmpeg-java
-	url = https://github.com/scalio/android-ffmpeg-java
+        url = https://github.com/scalio/android-ffmpeg-java
 [submodule "external/SlidingMenu"]
 	path = external/SlidingMenu
-	url = https://github.com/vitriolix/SlidingMenu.git
+	url = https://github.com/scalio/SlidingMenu.git
 [submodule "external/cardsui-for-android"]
 	path = external/cardsui-for-android
-	url = https://github.com/Androguide/cardsui-for-android.git
+	url = https://github.com/scalio/cardsui-for-android.git
 [submodule "external/Android-ViewPagerIndicator"]
 	path = external/Android-ViewPagerIndicator
-	url = https://github.com/JakeWharton/Android-ViewPagerIndicator.git
+	url = https://github.com/scalio/Android-ViewPagerIndicator.git
 [submodule "external/HoloEverywhere"]
 	path = external/HoloEverywhere
-	url = https://github.com/Prototik/HoloEverywhere.git
+	url = https://github.com/scalio/HoloEverywhere.git
 [submodule "external/RangeSeekBar"]
 	path = external/RangeSeekBar
-	url = https://github.com/vitriolix/RangeSeekBar.git
+	url = https://github.com/scalio/RangeSeekBar.git
 [submodule "external/NetCipher"]
 	path = external/NetCipher
-	url = https://github.com/guardianproject/NetCipher.git
+	url = https://github.com/scalio/NetCipher.git
 [submodule "external/SecureShareLib"]
 	path = external/SecureShareLib
 	url = https://github.com/scalio/SecureShareLib.git

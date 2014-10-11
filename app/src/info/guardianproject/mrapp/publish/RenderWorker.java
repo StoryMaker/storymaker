@@ -8,8 +8,6 @@ import info.guardianproject.mrapp.model.PublishJob;
 import info.guardianproject.mrapp.publish.sites.AudioRenderer;
 import info.guardianproject.mrapp.publish.sites.VideoRenderer;
 
-import org.holoeverywhere.app.Activity;
-
 import android.content.Context;
 import android.util.Log;
 

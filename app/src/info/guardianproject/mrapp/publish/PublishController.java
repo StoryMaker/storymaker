@@ -29,10 +29,9 @@ import io.scal.secureshareui.controller.ArchiveSiteController;
 import java.util.Arrays;
 import java.util.List;
 
-import org.holoeverywhere.app.Activity;
-
 import com.google.gson.Gson;
 
+import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
 

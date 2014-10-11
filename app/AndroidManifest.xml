@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="info.guardianproject.mrapp"
     android:installLocation="auto"
     android:versionCode="126"
@@ -47,7 +48,8 @@
         android:description="@string/app_description"
         android:largeHeap="true"
         android:supportsRtl="true"
-        android:theme="@style/Theme.storymakerstyle" >
+        android:theme="@style/Theme.storymakerstyle"
+        tools:replace="android:theme" >
         <activity
             android:name="info.guardianproject.mrapp.server.LoginActivity"
             android:configChanges="locale"

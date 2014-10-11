@@ -1,9 +1,10 @@
 package info.guardianproject.mrapp.publish.sites;
 
+import android.app.Activity;
+
 import info.guardianproject.mrapp.model.Job;
 import info.guardianproject.mrapp.publish.RenderWorker;
 import info.guardianproject.mrapp.publish.RendererBase;
-import org.holoeverywhere.app.Activity;
 
 public class StoryMakerRenderer extends RendererBase {
     private final String TAG = "StoryMakerRenderer";

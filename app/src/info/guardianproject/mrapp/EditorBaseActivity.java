@@ -8,11 +8,9 @@ import info.guardianproject.mrapp.model.Project;
 import info.guardianproject.mrapp.model.template.Template;
 
 import org.ffmpeg.android.MediaDesc;
-import org.holoeverywhere.app.AlertDialog;
-import org.holoeverywhere.app.ProgressDialog;
 
-import com.actionbarsherlock.view.MenuItem;
-
+import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
@@ -20,6 +18,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.NavUtils;
 import android.util.Log;
+import android.view.MenuItem;
 import android.widget.Toast;
 
 /*

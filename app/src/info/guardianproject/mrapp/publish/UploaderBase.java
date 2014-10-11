@@ -7,8 +7,6 @@ import info.guardianproject.mrapp.model.Job;
 import info.guardianproject.mrapp.model.JobTable;
 import io.scal.secureshareui.controller.SiteController;
 
-import org.holoeverywhere.app.Activity;
-
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
