@@ -19,20 +19,61 @@ Follow these steps to setup your dev environment:
 
 1. Init and update git submodules
 
-    git submodule update --init --recursive
+    ```
+    $ git submodule update --init --recursive
+    ```
 
 1. Ensure `NDK_BASE` env variable is set to the location of your NDK, example:
 
-    export NDK_BASE=/path/to/android-ndk
+    ```
+    $ export NDK_BASE=/path/to/android-ndk
+    ```
 
 1. Build android-ffmpeg
 
-    cd external/android-ffmpeg-java/external/android-ffmpeg/
-    ./configure_make_everything.sh
+    ```
+    $ cd external/android-ffmpeg-java/external/android-ffmpeg/
+    $ ./configure_make_everything.sh
+    ```
+
+1. Create flickr API credentials file
+
+    ```
+    vim ./external/SecureShareLib/SecureShareUILibrary/res/values/flickr.xml
+    ```
+
+    Add the following contents:
+
+    ```xml
+    <?xml version="1.0" encoding="utf-8"?>
+    <resources>
+        <!-- insert your own keys from: https://www.flickr.com/services/apps/create/apply/ -->
+        <string name="flickr_key">REPLACE_WITH_YOUR_KEY</string>
+        <string name="flickr_secret">REPLACE_WITH_YOUR_KEY</string>
+    </resources>
+    ```
+
+### Android Studio Specific Steps
+
+After completing all items under Prerequisites:
+
+1. File -> Import Project -> Point to the root project directory
+
+1. (optional) Build from the command line
+
+    ```
+    $ ./gradlew assembleDebug
+    ```
+
+### Eclipse Specific Steps
+
+After completing all items under Prerequisites:
 
 1. run script to update all libraries android support library.  from command line run in the top level of the repo:
 
-        $ scripts/copy-support-libs.sh
+    ```
+    $ scripts/copy-support-libs.sh
+    ```
 
 1. Import dependancies into Eclipse
 
@@ -54,6 +95,8 @@ Follow these steps to setup your dev environment:
 
 1. (optional) Build from the command line
 
-        $ cd app/
-        $ ./setup-ant.sh
-        $ ant clean debug
+    ```
+    $ cd app/
+    $ ./setup-ant.sh
+    $ ant clean debug
+    ```
