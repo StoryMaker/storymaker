@@ -152,12 +152,11 @@ public class LessonsActivity extends BaseActivity implements ActionBar.TabListen
     
     @Override
     public void onTabSelected(ActionBar.Tab tab, android.app.FragmentTransaction ft) {
-
+        mViewPager.setCurrentItem(tab.getPosition());
     }
 
     @Override
     public void onTabUnselected(ActionBar.Tab tab, android.app.FragmentTransaction ft) {
-        mViewPager.setCurrentItem(tab.getPosition());
 
     }
 
