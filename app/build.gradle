@@ -3,7 +3,7 @@ apply plugin: 'android'
 
 android {
     compileSdkVersion 19
-    buildToolsVersion "20.0.0"
+    buildToolsVersion "21"
 
     sourceSets {
         main {
@@ -11,7 +11,6 @@ android {
             java.srcDirs = ['src']
             resources.srcDirs = ['src']
             aidl.srcDirs = ['src']
-            renderscript.srcDirs = ['src']
             res.srcDirs = ['res']
             assets.srcDirs = ['assets']
             jniLibs.srcDir file('libs/')
@@ -90,6 +89,7 @@ dependencies {
     compile project(':external:NetCipher:libnetcipher')
     compile project(':external:SecureShareLib:SecureShareUILibrary')
     compile project(':external:SecureShareLib:SecureShareUILibrary:external:facebook-sdk:facebook')
+    compile project(':external:liger:lib')
 
 }
 
