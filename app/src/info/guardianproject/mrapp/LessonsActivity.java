@@ -3,13 +3,12 @@ package info.guardianproject.mrapp;
 import info.guardianproject.mrapp.lessons.LessonListView;
 import info.guardianproject.mrapp.lessons.WebViewSetupJB;
 
-import org.holoeverywhere.LayoutInflater;
-import org.holoeverywhere.app.Fragment;
-import org.holoeverywhere.app.ProgressDialog;
-
+import android.app.ActionBar;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentTransaction;
@@ -17,6 +16,9 @@ import android.support.v4.app.NavUtils;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.ConsoleMessage;
@@ -24,10 +26,6 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.webkit.WebSettings.PluginState;
-
-import com.actionbarsherlock.app.ActionBar;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuItem;
 
 public class LessonsActivity extends BaseActivity implements ActionBar.TabListener {
 
@@ -52,7 +50,7 @@ public class LessonsActivity extends BaseActivity implements ActionBar.TabListen
         super.onCreate(savedInstanceState);
            
         setContentView(R.layout.activity_lessons);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getActionBar().setDisplayHomeAsUpEnabled(true);
         
     	mListView = new LessonListView(this, this);
         
@@ -64,7 +62,7 @@ public class LessonsActivity extends BaseActivity implements ActionBar.TabListen
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager(),fLessons);
 
         // Set up the action bar.
-        final ActionBar actionBar = getSupportActionBar();
+        final ActionBar actionBar = getActionBar();
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
         // Set up the ViewPager with the sections adapter.
@@ -97,7 +95,7 @@ public class LessonsActivity extends BaseActivity implements ActionBar.TabListen
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getSupportMenuInflater().inflate(R.menu.activity_lessons, menu);
+        getMenuInflater().inflate(R.menu.activity_lessons, menu);
         return true;
     }
 
@@ -153,17 +151,18 @@ public class LessonsActivity extends BaseActivity implements ActionBar.TabListen
     }
     
     @Override
-    public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
-    }
-
-    @Override
-    public void onTabSelected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
-        // When the given tab is selected, switch to the corresponding page in the ViewPager.
+    public void onTabSelected(ActionBar.Tab tab, android.app.FragmentTransaction ft) {
         mViewPager.setCurrentItem(tab.getPosition());
     }
 
     @Override
-    public void onTabReselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
+    public void onTabUnselected(ActionBar.Tab tab, android.app.FragmentTransaction ft) {
+
+    }
+
+    @Override
+    public void onTabReselected(ActionBar.Tab tab, android.app.FragmentTransaction ft) {
+
     }
 
     /**

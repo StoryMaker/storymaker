@@ -1,10 +1,9 @@
 package info.guardianproject.mrapp.ui;
 
-import org.holoeverywhere.widget.FrameLayout;
-
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
+import android.widget.FrameLayout;
 
 public class TouchlessFrame extends FrameLayout {
     public TouchlessFrame(Context context) {

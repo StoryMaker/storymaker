@@ -1,6 +1,5 @@
 package info.guardianproject.mrapp.publish;
 
-import org.holoeverywhere.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;

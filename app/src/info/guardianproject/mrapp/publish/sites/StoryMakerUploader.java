@@ -1,7 +1,5 @@
 package info.guardianproject.mrapp.publish.sites;
 
-import org.holoeverywhere.app.Activity;
-
 import android.content.Context;
 import info.guardianproject.mrapp.model.Job;
 import info.guardianproject.mrapp.publish.UploadWorker;

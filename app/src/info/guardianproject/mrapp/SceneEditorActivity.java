@@ -32,7 +32,9 @@ import java.util.zip.ZipOutputStream;
 
 import net.micode.soundrecorder.SoundRecorder;
 
-import org.holoeverywhere.app.AlertDialog;
+import android.app.ActionBar;
+import android.app.AlertDialog;
+import android.app.FragmentTransaction;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -41,24 +43,21 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
-
-import com.actionbarsherlock.app.ActionBar;
-import com.actionbarsherlock.view.ActionMode;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuInflater;
-import com.actionbarsherlock.view.MenuItem;
+import android.view.ActionMode;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 
 public class SceneEditorActivity extends EditorBaseActivity implements ActionBar.TabListener {
-	private static final String STATE_SELECTED_NAVIGATION_ITEM = "selected_navigation_item";
-	
-	
+    private static final String STATE_SELECTED_NAVIGATION_ITEM = "selected_navigation_item";
+
+
     protected Menu mMenu = null;
-    
+
     //private String mTemplateJsonPath = null;
     private int mSceneIndex = 0;
-    
+
     private final static String CAPTURE_MIMETYPE_AUDIO = "audio/3gpp";
     public Fragment mFragmentTab0, mFragmentTab1, mLastTabFrag;
     public PublishFragment mPublishFragment;
@@ -66,11 +65,11 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        
+
         Intent intent = getIntent();
-        
+
 //        mTemplateJsonPath = getIntent().getStringExtra("template_path"); 
- //       mStoryMode = getIntent().getIntExtra("story_mode", Project.STORY_TYPE_VIDEO);
+        //       mStoryMode = getIntent().getIntExtra("story_mode", Project.STORY_TYPE_VIDEO);
 
         int pid = intent.getIntExtra("pid", -1); //project id
 
@@ -78,7 +77,7 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
 
         if (pid != -1)
         {
-        	mProject = (Project)(new ProjectTable()).get(getApplicationContext(), pid); // FIXME ugly
+            mProject = (Project)(new ProjectTable()).get(getApplicationContext(), pid); // FIXME ugly
             Scene scene = null;
             if ((mSceneIndex != -1) && (mSceneIndex < mProject.getScenesAsArray().length)) {
                 scene = mProject.getScenesAsArray()[mSceneIndex];
@@ -92,35 +91,35 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
             int clipCount = 5; // FIXME get rid of hardcoded clipCount = 5
 
             String title = intent.getStringExtra("title");
-        
+
             mProject = new Project(getApplicationContext(), clipCount);
             mProject.setTitle(title);
             mProject.save();
             mMPM = new MediaProjectManager(this, getApplicationContext(), mHandlerPub, mProject);
             mMPM.initProject();
         }
-        
+
         try
         {
-	        if (mProject.getScenesAsList().size() > 1)
-	        {
-	        	mTemplate = Template.parseAsset(this, mProject.getTemplatePath(),Project.getSimpleTemplateForMode(getApplicationContext(), mProject.getStoryType()));
-	        	
-	        }
-	        else
-	        {
-	        	mTemplate = Template.parseAsset(this, Project.getSimpleTemplateForMode(getApplicationContext(), mProject.getStoryType()));
-	        	
-	        }
+            if (mProject.getScenesAsList().size() > 1)
+            {
+                mTemplate = Template.parseAsset(this, mProject.getTemplatePath(),Project.getSimpleTemplateForMode(getApplicationContext(), mProject.getStoryType()));
+
+            }
+            else
+            {
+                mTemplate = Template.parseAsset(this, Project.getSimpleTemplateForMode(getApplicationContext(), mProject.getStoryType()));
+
+            }
         }
         catch (Exception e)
         {
-        	Log.e(AppConstants.TAG,"could not parse templates",e);
+            Log.e(AppConstants.TAG,"could not parse templates",e);
         }
         setContentView(R.layout.activity_scene_editor_no_swipe);
 
         // Set up the action bar.
-        final ActionBar actionBar = getSupportActionBar();
+        final ActionBar actionBar = getActionBar();
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
         actionBar.setDisplayHomeAsUpEnabled(true);
         if (mMPM.mScene != null) {
@@ -135,13 +134,13 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
         } else {
             actionBar.addTab(actionBar.newTab().setText(R.string.tab_publish).setTabListener(this));
         }
-        
-        
+
+
         if (intent.hasExtra("auto_capture")
-        		&& intent.getBooleanExtra("auto_capture", false))
+                && intent.getBooleanExtra("auto_capture", false))
         {
-        	openCaptureMode(0, 0);
-        	
+            openCaptureMode(0, 0);
+
         }
 
     }
@@ -149,7 +148,7 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
     @Override
     public void onRestoreInstanceState(Bundle savedInstanceState) {
         if (savedInstanceState.containsKey(STATE_SELECTED_NAVIGATION_ITEM)) {
-            getSupportActionBar().setSelectedNavigationItem(
+            getActionBar().setSelectedNavigationItem(
                     savedInstanceState.getInt(STATE_SELECTED_NAVIGATION_ITEM));
         }
     }
@@ -157,44 +156,44 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
     @Override
     public void onSaveInstanceState(Bundle outState) {
         outState.putInt(STATE_SELECTED_NAVIGATION_ITEM,
-                getSupportActionBar().getSelectedNavigationIndex());
+                getActionBar().getSelectedNavigationIndex());
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
 
-        getSupportMenuInflater().inflate(R.menu.activity_scene_editor, menu);
+        getMenuInflater().inflate(R.menu.activity_scene_editor, menu);
         mMenu = menu;
-        
+
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.addNewShot:          
+            case R.id.addNewShot:
                 addShotToScene();
-                
+
                 return true;
             case R.id.exportProjectFiles:
                 exportProjectFiles();
-            
+
                 return true;
             case R.id.itemInfo:
-            	Intent intent = new Intent(this, StoryInfoActivity.class);
-            	intent.putExtra("pid", mProject.getId());
-            	startActivity(intent);
-            	
-            	return true;
+                Intent intent = new Intent(this, StoryInfoActivity.class);
+                intent.putExtra("pid", mProject.getId());
+                startActivity(intent);
+
+                return true;
             case R.id.itemTrim:
                 if (mFragmentTab1 != null) {
-                	if(((OrderClipsFragment) mFragmentTab1).loadTrim()) {
+                    if(((OrderClipsFragment) mFragmentTab1).loadTrim()) {
                         ((OrderClipsFragment) mFragmentTab1).enableTrimUIMode();
                         startActionMode(mActionModeCallback);
-                	}
-                	
-                	return true;
+                    }
+
+                    return true;
                 }
                 return true;
             case R.id.purgePublishTables:
@@ -204,11 +203,11 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
                 (new JobTable(db)).debugPurgeTable();
                 db.close();
                 return true;
-                
+
         }
         return super.onOptionsItemSelected(item);
     }
-    
+
     private boolean actionModelCancel = false;
     private ActionMode.Callback mActionModeCallback = new ActionMode.Callback() {
 
@@ -254,11 +253,11 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
             } else {
                 ((OrderClipsFragment) mFragmentTab1).saveTrim();
             }
-            
+
             ((OrderClipsFragment) mFragmentTab1).enableTrimUIMode();
         }
     };
-    
+
     // FIXME move this into AddClipsFragment?
     public void addShotToScene ()
     {
@@ -277,85 +276,85 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
 
     public void deleteCurrentShot ()
     {
-		mMPM.deleteCurrentClip();
-    	
-    }
-    
-    private void exportProjectFiles()
-    {	
-		try 
-		{
-	    	File fileProjectSrc = MediaProjectManager.getExternalProjectFolder(mMPM.mProject, mMPM.getContext());	
-	    	ArrayList<File> fileList= new ArrayList<File>();
-	    	String mZipFileName = buildZipFilePath(fileProjectSrc.getAbsolutePath());
-	    	
-	    	//if not enough space
-	    	if(!mMPM.checkStorageSpace())
-	        {
-	    		return;
-	        }
-	         
-	    	String[] mMediaPaths = mMPM.mProject.getMediaAsPathArray();
-	    	
-	    	//add videos
-	    	for (String path : mMediaPaths)
-	    	{
-	    		fileList.add(new File(path));
-	    	}
-	    	
-	    	//add thumbnails
-	    	fileList.addAll(Arrays.asList(fileProjectSrc.listFiles()));
-	    	
-	    	//add database file
-	    	fileList.add(getDatabasePath("sm.db"));
-	    	    	
-			FileOutputStream fos = new FileOutputStream(mZipFileName);
-			ZipOutputStream zos = new ZipOutputStream(fos);
-			
-			exportProjectFiles(zos, fileList.toArray( new File[fileList.size()]));
+        mMPM.deleteCurrentClip();
 
-			zos.close();
-			
-			onExportProjectSuccess(mZipFileName);
-		}
-		catch (IOException ioe) 
-		{
-			Log.e(AppConstants.TAG, "Error creating zip file:", ioe);
-		} 	
     }
-    
-    
+
+    private void exportProjectFiles()
+    {
+        try
+        {
+            File fileProjectSrc = MediaProjectManager.getExternalProjectFolder(mMPM.mProject, mMPM.getContext());
+            ArrayList<File> fileList= new ArrayList<File>();
+            String mZipFileName = buildZipFilePath(fileProjectSrc.getAbsolutePath());
+
+            //if not enough space
+            if(!mMPM.checkStorageSpace())
+            {
+                return;
+            }
+
+            String[] mMediaPaths = mMPM.mProject.getMediaAsPathArray();
+
+            //add videos
+            for (String path : mMediaPaths)
+            {
+                fileList.add(new File(path));
+            }
+
+            //add thumbnails
+            fileList.addAll(Arrays.asList(fileProjectSrc.listFiles()));
+
+            //add database file
+            fileList.add(getDatabasePath("sm.db"));
+
+            FileOutputStream fos = new FileOutputStream(mZipFileName);
+            ZipOutputStream zos = new ZipOutputStream(fos);
+
+            exportProjectFiles(zos, fileList.toArray( new File[fileList.size()]));
+
+            zos.close();
+
+            onExportProjectSuccess(mZipFileName);
+        }
+        catch (IOException ioe)
+        {
+            Log.e(AppConstants.TAG, "Error creating zip file:", ioe);
+        }
+    }
+
+
     private void exportProjectFiles(ZipOutputStream zos, File[] fileList)
     {
-    	final int BUFFER = 2048;
-    	
-		for (int i = 0; i < fileList.length; i++) 
-		{		
-			try 
-			{
-				byte[] data = new byte[BUFFER];
+        final int BUFFER = 2048;
 
-				FileInputStream fis = new FileInputStream(fileList[i]);
-				zos.putNextEntry(new ZipEntry(fileList[i].getName()));
-				
-				int count;
-				while ((count = fis.read(data, 0, BUFFER)) != -1) 
-				{ 
-					zos.write(data, 0, count); 
-				} 
+        for (int i = 0; i < fileList.length; i++)
+        {
+            try
+            {
+                byte[] data = new byte[BUFFER];
 
-				//close steams
-				zos.closeEntry();
-				fis.close();
+                FileInputStream fis = new FileInputStream(fileList[i]);
+                zos.putNextEntry(new ZipEntry(fileList[i].getName()));
 
-			} 
-			catch (IOException ioe) 
-			{
-				Log.e(AppConstants.TAG, "Error creating zip file:", ioe);
-			}			
-		}
+                int count;
+                while ((count = fis.read(data, 0, BUFFER)) != -1)
+                {
+                    zos.write(data, 0, count);
+                }
+
+                //close steams
+                zos.closeEntry();
+                fis.close();
+
+            }
+            catch (IOException ioe)
+            {
+                Log.e(AppConstants.TAG, "Error creating zip file:", ioe);
+            }
+        }
     }
-    
+
     private void onExportProjectSuccess(final String zipFileName)
     {
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
@@ -363,35 +362,35 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
         dialogBuilder.setPositiveButton(R.string.export_dialog_share, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                
-            	Intent shareIntent = new Intent();
-            	shareIntent.setAction(Intent.ACTION_SEND);
-            	shareIntent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File(zipFileName)));
-            	shareIntent.setType("*/*");
-            	startActivity(shareIntent);  	
+
+                Intent shareIntent = new Intent();
+                shareIntent.setAction(Intent.ACTION_SEND);
+                shareIntent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File(zipFileName)));
+                shareIntent.setType("*/*");
+                startActivity(shareIntent);
             }
         });
         dialogBuilder.setNegativeButton(R.string.export_dialog_close,
-            new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                }
-            });
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                    }
+                });
         dialogBuilder.show();
     }
-    
+
     private String buildZipFilePath(String filePath)
     {
-    	//create datestamp
-    	Date date = new Date();
-    	SimpleDateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy");
-    	
-    	int index = filePath.lastIndexOf('/');
-    	filePath = filePath.substring(0, index + 1);
-    	
-    	return String.format("%sstorymaker_project_%s_%s.zip", filePath, mMPM.mProject.getId(), dateFormat.format(date));
+        //create datestamp
+        Date date = new Date();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy");
+
+        int index = filePath.lastIndexOf('/');
+        filePath = filePath.substring(0, index + 1);
+
+        return String.format("%sstorymaker_project_%s_%s.zip", filePath, mMPM.mProject.getId(), dateFormat.format(date));
     }
-     
+
     void addMediaFromGallery()
     {
         mMPM.mMediaHelper.openGalleryChooser("*/*");
@@ -429,12 +428,12 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
         if (mMenu != null) {
             mMenu.findItem(R.id.itemTrim).setVisible(false);
         }
-        
+
         if(mLastTabFrag instanceof OrderClipsFragment)
         {
-        	((OrderClipsFragment) mLastTabFrag).stopPlaybackOnTabChange();
+            ((OrderClipsFragment) mLastTabFrag).stopPlaybackOnTabChange();
         }
-        
+
         //Make Tab
         if (tab.getPosition() == 0) {
             if (mMenu != null) {
@@ -445,8 +444,8 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
 
             if (mFragmentTab0 == null)
             {
-               
-            //    mFragmentTab0 = new AddClipsFragment(layout, fm, mTemplate, mSceneIndex, this);
+
+                //    mFragmentTab0 = new AddClipsFragment(layout, fm, mTemplate, mSceneIndex, this);
                 mFragmentTab0 = new AddClipsFragment();
 
                 Bundle args = new Bundle();
@@ -454,7 +453,7 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
                 args.putInt("layout", layout);
                 args.putInt("scene",mSceneIndex);
                 mFragmentTab0.setArguments(args);
-             
+
                 fm.beginTransaction()
                         .add(R.id.container, mFragmentTab0, layout + "")
                         .commit();
@@ -465,24 +464,24 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
                         .commit();
             }
             mLastTabFrag = mFragmentTab0;
-          //Edit Tab
+            //Edit Tab
         } else if (tab.getPosition() == 1) {
             layout = R.layout.fragment_order_clips;
 
-            if (mMenu != null) {      
+            if (mMenu != null) {
                 //hide irrelevant menu items
                 setMenuItemsVisibility(false);
-                
+
                 //if only photos, no need to display trim option
                 if(!(mMPM.mProject.getStoryType() == Project.STORY_TYPE_ESSAY || mMPM.mProject.getStoryType() == Project.STORY_TYPE_PHOTO))
                 {
-                	mMenu.findItem(R.id.itemTrim).setVisible(true);
-                }             
+                    mMenu.findItem(R.id.itemTrim).setVisible(true);
+                }
             }
 
             if (mFragmentTab1 == null)
             {
-                
+
                 mFragmentTab1 = new OrderClipsFragment();
 
                 Bundle args = new Bundle();
@@ -498,21 +497,21 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
             } else {
 
                 ((OrderClipsFragment)mFragmentTab1).loadMedia();
-                
+
                 fm.beginTransaction()
                         .show(mFragmentTab1)
                         .commit();
             }
 
             mLastTabFrag = mFragmentTab1;
-          //Publish Tab
+            //Publish Tab
         } else if (tab.getPosition() == 2) {
-        	
-        	if (mMenu != null) {
-	        	//hide irrelevant menu items
-	            setMenuItemsVisibility(false);
-        	}
-        	
+
+            if (mMenu != null) {
+                //hide irrelevant menu items
+                setMenuItemsVisibility(false);
+            }
+
             if (mMPM.mProject.isTemplateStory()) {
                 Intent intent = new Intent(getBaseContext(), StoryTemplateActivity.class);
                 intent.putExtra("template_path", mProject.getTemplatePath());
@@ -523,29 +522,29 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
                 finish();
             } else {
                 layout = R.layout.fragment_complete_story;
-                
+
                 if (mPublishFragment == null)
                 {
-                    	
 
-                	mPublishFragment = new PublishFragment();
+
+                    mPublishFragment = new PublishFragment();
                     Bundle args = new Bundle();
                     args.putInt(PublishFragment.ARG_SECTION_NUMBER, tab.getPosition() + 1);
-                	args.putInt("layout",layout);
-                	mPublishFragment.setArguments(args);
-                        
-    
+                    args.putInt("layout",layout);
+                    mPublishFragment.setArguments(args);
+
+
                     fm.beginTransaction()
                             .add(R.id.container, mPublishFragment, layout + "")
                             .commit();
-    
+
                 } else {
-    
+
                     fm.beginTransaction()
                             .show(mPublishFragment)
                             .commit();
                 }
-    
+
                 mLastTabFrag = mPublishFragment;
             }
         }
@@ -554,9 +553,9 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
     @Override
     public void onTabReselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
     }
-    
+
     private void setMenuItemsVisibility(boolean show) {
-    	//hide irrelevant menu items
+        //hide irrelevant menu items
         mMenu.findItem(R.id.addNewShot).setVisible(show);
     }
 
@@ -564,7 +563,7 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
         if (mFragmentTab0 != null) {
             try {
                 ((AddClipsFragment) mFragmentTab0).reloadClips();
-            } 
+            }
             catch (Exception e) {
                 Log.e(AppConstants.TAG, "error reloading clips", e);
             }
@@ -576,17 +575,17 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
         super.onConfigurationChanged(newConfig);
     }
 
-	public void openCaptureMode (int shotType, int clipIndex)
-	{
-		
-		if (mProject.getStoryType() == Project.STORY_TYPE_AUDIO)
-		{
-			Intent i = new Intent(getApplicationContext(), SoundRecorder.class);
-			i.putExtra("dir", mMPM.getExternalProjectFolder(mProject, getBaseContext()));
-			i.setType(CAPTURE_MIMETYPE_AUDIO);
-			i.putExtra("mode", mProject.getStoryType());
-			mMPM.mClipIndex = clipIndex;
-			startActivityForResult(i,mProject.getStoryType());
+    public void openCaptureMode (int shotType, int clipIndex)
+    {
+
+        if (mProject.getStoryType() == Project.STORY_TYPE_AUDIO)
+        {
+            Intent i = new Intent(getApplicationContext(), SoundRecorder.class);
+            i.putExtra("dir", mMPM.getExternalProjectFolder(mProject, getBaseContext()));
+            i.setType(CAPTURE_MIMETYPE_AUDIO);
+            i.putExtra("mode", mProject.getStoryType());
+            mMPM.mClipIndex = clipIndex;
+            startActivityForResult(i,mProject.getStoryType());
 
         }
         else

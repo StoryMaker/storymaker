@@ -3,9 +3,8 @@ package info.guardianproject.mrapp;
 import info.guardianproject.mrapp.model.Media;
 import info.guardianproject.mrapp.model.template.Clip;
 
-import org.holoeverywhere.app.AlertDialog;
-
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;

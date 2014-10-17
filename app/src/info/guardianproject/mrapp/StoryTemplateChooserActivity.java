@@ -14,6 +14,8 @@ import android.support.v4.app.NavUtils;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -21,8 +23,6 @@ import android.widget.Button;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuItem;
 import com.viewpagerindicator.CirclePageIndicator;
 
 public class StoryTemplateChooserActivity extends BaseActivity {
@@ -40,7 +40,7 @@ public class StoryTemplateChooserActivity extends BaseActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_story_template_chooser);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getActionBar().setDisplayHomeAsUpEnabled(true);
         
         Intent intent = getIntent();
         mProjectName = intent.getStringExtra("project_title");
@@ -127,7 +127,7 @@ public class StoryTemplateChooserActivity extends BaseActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getSupportMenuInflater().inflate(R.menu.activity_choose_template, menu);
+        getMenuInflater().inflate(R.menu.activity_choose_template, menu);
         return true;
     }
 

@@ -10,9 +10,6 @@ import info.guardianproject.mrapp.publish.RenderWorker;
 import info.guardianproject.mrapp.publish.RendererBase;
 
 import org.ffmpeg.android.MediaDesc;
-import org.holoeverywhere.app.Activity;
-import org.holoeverywhere.app.AlertDialog;
-import org.holoeverywhere.app.ProgressDialog;
 
 import android.content.Context;
 import android.os.Bundle;

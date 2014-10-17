@@ -12,7 +12,6 @@ import info.guardianproject.mrapp.publish.sites.SoundCloudUploader;
 import info.guardianproject.mrapp.publish.sites.StoryMakerUploader;
 import info.guardianproject.mrapp.publish.sites.YoutubeUploader;
 
-import org.holoeverywhere.app.Activity;
 import android.content.Context;
 import android.util.Log;
 

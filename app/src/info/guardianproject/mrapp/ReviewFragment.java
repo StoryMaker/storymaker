@@ -8,9 +8,6 @@ import info.guardianproject.mrapp.model.Project;
 import java.io.File;
 import java.util.ArrayList;
 
-import org.holoeverywhere.widget.SeekBar;
-import org.holoeverywhere.widget.SeekBar.OnSeekBarChangeListener;
-
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -26,6 +23,7 @@ import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.SeekBar;
 
 /**
  * 
@@ -73,7 +71,7 @@ public class ReviewFragment extends Fragment {
         mImageViewMedia = (ImageView) view.findViewById(R.id.imageView1);
         mPreviewVideoView = (PreviewVideoView) view.findViewById(R.id.previewVideoView);
         mSeekBar = (SeekBar) view.findViewById(R.id.seekBar1);
-        mSeekBar.setOnSeekBarChangeListener(new OnSeekBarChangeListener(){
+        mSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener(){
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress,
                     boolean fromUser) {

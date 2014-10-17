@@ -1,26 +1,13 @@
 
+
 package info.guardianproject.mrapp;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.text.Spannable;
-import android.text.SpannableString;
-import android.text.style.TextAppearanceSpan;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.view.ViewGroup.LayoutParams;
-import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
-
-import java.util.Locale;
-
-import org.holoeverywhere.widget.EditText;
-
-import info.guardianproject.mrapp.model.Project;
-import info.guardianproject.mrapp.model.ProjectTable;
 
 /**
  * Fragment for displaying metadata of a Project. Includes Title, description,

@@ -4,6 +4,7 @@ import info.guardianproject.mrapp.media.MediaProjectManager;
 import info.guardianproject.mrapp.model.Project;
 import io.scal.secureshareui.lib.ChooseAccountFragment;
 
+import android.app.ActionBar;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -13,8 +14,6 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
-
-import com.actionbarsherlock.app.ActionBar;
 
 public class StoryTemplateActivity extends EditorBaseActivity implements ActionBar.TabListener {
 
@@ -38,7 +37,7 @@ public class StoryTemplateActivity extends EditorBaseActivity implements ActionB
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_story_template);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getActionBar().setDisplayHomeAsUpEnabled(true);
         
         Intent intent = getIntent();
         mTemplateJsonPath = getIntent().getStringExtra("template_path"); 
@@ -49,7 +48,7 @@ public class StoryTemplateActivity extends EditorBaseActivity implements ActionB
         // of the app.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
         // Set up the action bar.
-        final ActionBar actionBar = getSupportActionBar();
+        final ActionBar actionBar = getActionBar();
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
         actionBar.setDisplayHomeAsUpEnabled(true);
         if (mMPM.mScene != null) {
@@ -88,19 +87,21 @@ public class StoryTemplateActivity extends EditorBaseActivity implements ActionB
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
     }
-    
-    @Override
-    public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
-    }
 
     @Override
-    public void onTabSelected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
+    public void onTabSelected(ActionBar.Tab tab, android.app.FragmentTransaction ft) {
         // When the given tab is selected, switch to the corresponding page in the ViewPager.
         mViewPager.setCurrentItem(tab.getPosition());
     }
 
     @Override
-    public void onTabReselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
+    public void onTabUnselected(ActionBar.Tab tab, android.app.FragmentTransaction ft) {
+
+    }
+
+    @Override
+    public void onTabReselected(ActionBar.Tab tab, android.app.FragmentTransaction ft) {
+
     }
 
     /**

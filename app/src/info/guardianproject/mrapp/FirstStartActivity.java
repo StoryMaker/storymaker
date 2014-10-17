@@ -1,6 +1,8 @@
 
 package info.guardianproject.mrapp;
 
+import android.app.Activity;
+import android.app.AlertDialog;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.content.DialogInterface;
@@ -18,11 +20,6 @@ import android.widget.TextView;
 import info.guardianproject.mrapp.Eula.OnEulaAgreedTo;
 import info.guardianproject.mrapp.server.LoginActivity;
 import info.guardianproject.mrapp.server.RegisterActivity;
-
-import org.holoeverywhere.LayoutInflater;
-import org.holoeverywhere.app.Activity;
-import org.holoeverywhere.app.AlertDialog;
-import org.holoeverywhere.widget.Toast;
 
 /**
  * Prompt the user to view & agree to the StoryMaker TOS / EULA

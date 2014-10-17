@@ -12,10 +12,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Locale;
 
-import org.holoeverywhere.widget.ListAdapterWrapper;
-import org.holoeverywhere.widget.ListView;
-import org.holoeverywhere.widget.Toast;
-
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -24,6 +20,10 @@ import android.os.Message;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.Toast;
+
+import org.holoeverywhere.widget.ListAdapterWrapper;
 
 public class LessonListView extends ListView implements LessonManagerListener {
 

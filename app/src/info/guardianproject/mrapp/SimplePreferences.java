@@ -3,10 +3,6 @@
 
 package info.guardianproject.mrapp;
 
-import org.holoeverywhere.widget.Toast;
-
-import com.actionbarsherlock.app.SherlockPreferenceActivity;
-
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -17,10 +13,12 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.Preference;
+import android.preference.PreferenceActivity;
 import android.util.Log;
+import android.widget.Toast;
 
 
-public class SimplePreferences extends SherlockPreferenceActivity implements OnSharedPreferenceChangeListener {
+public class SimplePreferences extends PreferenceActivity implements OnSharedPreferenceChangeListener {
 
 	public static final String KEY_VIDEO_RESOLUTION = "p_video_resolution";
 	public static final String KEY_VIDEO_WIDTH = "p_video_width";

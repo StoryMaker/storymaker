@@ -22,9 +22,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import org.apache.commons.io.IOUtils;
 import org.ffmpeg.android.MediaDesc;
-import org.holoeverywhere.app.Activity;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;

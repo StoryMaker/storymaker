@@ -6,9 +6,8 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
-
-import org.holoeverywhere.widget.Button;
-import org.holoeverywhere.widget.TextView;
+import android.widget.Button;
+import android.widget.TextView;
 
 import info.guardianproject.mrapp.server.LoginActivity;
 import info.guardianproject.mrapp.server.ServerManager;
@@ -27,7 +26,7 @@ public class ConnectAccountActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_connect_account);
         mServerManager = ((StoryMakerApp) this.getApplication()).getServerManager();
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getActionBar().setDisplayHomeAsUpEnabled(true);
         
         mActivityJustCreated = true;
         assignViewReferences();

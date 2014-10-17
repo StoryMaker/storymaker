@@ -6,9 +6,6 @@ import info.guardianproject.mrapp.model.Media;
 import info.guardianproject.mrapp.model.Project;
 
 import java.io.File;
-import org.holoeverywhere.widget.LinearLayout;
-import org.holoeverywhere.widget.SeekBar;
-import org.holoeverywhere.widget.SeekBar.OnSeekBarChangeListener;
 import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
@@ -28,6 +25,8 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.LinearLayout;
+import android.widget.SeekBar;
 
 import com.animoto.android.views.DraggableGridView;
 import com.animoto.android.views.OnRearrangeListener;
@@ -100,7 +99,7 @@ public class OrderClipsFragment extends Fragment {
         
         mSeekBar = (SeekBar) view.findViewById(R.id.seekBar1);
        
-        mSeekBar.setOnSeekBarChangeListener(new OnSeekBarChangeListener(){
+        mSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener(){
 
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress,

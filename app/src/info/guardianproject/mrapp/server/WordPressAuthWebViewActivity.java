@@ -4,15 +4,14 @@ package info.guardianproject.mrapp.server;
 import info.guardianproject.mrapp.Globals;
 import info.guardianproject.mrapp.R;
 
-import org.holoeverywhere.LayoutInflater;
-import org.holoeverywhere.app.AlertDialog;
-
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.webkit.WebSettings.PluginState;
 import android.webkit.WebView;
@@ -38,7 +37,7 @@ public class WordPressAuthWebViewActivity extends WebViewActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getActionBar().setDisplayHomeAsUpEnabled(true);
 
         mWebView.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
         mWebView.getSettings().setJavaScriptEnabled(true);
@@ -86,7 +85,7 @@ public class WordPressAuthWebViewActivity extends WebViewActivity {
      */
     private void showAccountCreatedDialog(DialogInterface.OnClickListener positiveBtnClickListener) {
         LayoutInflater inflater = getLayoutInflater();
-        View dialogBody = inflater.inflate(R.layout.dialog_account_created);
+        View dialogBody = inflater.inflate(R.layout.dialog_account_created, null);
         new AlertDialog.Builder(this)
             .setTitle(getString(R.string.acct_created_dialog_title))
             .setView(dialogBody)
