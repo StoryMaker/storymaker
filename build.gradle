@@ -2,6 +2,11 @@
 buildscript {
     repositories {
         mavenCentral()
+        repositories {
+            maven {
+                url "https://repo.commonsware.com.s3.amazonaws.com"
+            }
+        }
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:0.12.2'
@@ -11,6 +16,11 @@ buildscript {
 
 allprojects {
 	repositories {
-	        mavenCentral()
+	    mavenCentral()
+        repositories {
+            maven {
+                url "https://repo.commonsware.com.s3.amazonaws.com"
+            }
+        }
 	}
 }

@@ -9,5 +9,3 @@ include ':external:NetCipher:libnetcipher'
 include ':external:SecureShareLib:SecureShareUILibrary'
 include ':external:SecureShareLib:SecureShareUILibrary:external:facebook-sdk:facebook'
 include ":external:liger:lib"
-include ":cardsuilib"
-project(':cardsuilib').projectDir = new File('external/liger/cardsuilib')
