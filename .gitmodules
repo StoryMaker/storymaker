@@ -22,3 +22,6 @@
 [submodule "external/SecureShareLib"]
 	path = external/SecureShareLib
 	url = https://github.com/scalio/SecureShareLib.git
+[submodule "external/liger"]
+	path = external/liger
+	url = https://github.com/scalio/liger-prototype
