@@ -1,6 +1,7 @@
 package info.guardianproject.mrapp;
 
 import info.guardianproject.mrapp.server.ServerManager;
+import scal.io.liger.MainActivity;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -254,11 +255,14 @@ public class BaseActivity extends FragmentActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
     	super.onCreate(savedInstanceState);
-    	if(!Eula.isAccepted(this)) {
-            Intent firstStartIntent = new Intent(this, FirstStartActivity.class);
-            firstStartIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(firstStartIntent);
-        }
+        Intent homeIntent = new Intent(this, MainActivity.class);
+        homeIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(homeIntent);
+//    	if(!Eula.isAccepted(this)) {
+//            Intent firstStartIntent = new Intent(this, FirstStartActivity.class);
+//            firstStartIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+//            startActivity(firstStartIntent);
+//        }
     }
     
     @Override
