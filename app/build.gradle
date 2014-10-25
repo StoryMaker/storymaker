@@ -2,7 +2,7 @@ apply plugin: 'holoeverywhere-app'
 apply plugin: 'android'
 
 android {
-    compileSdkVersion 19
+    compileSdkVersion 21
     buildToolsVersion "21"
 
     sourceSets {
