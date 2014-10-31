@@ -46,7 +46,12 @@ public class MyCard extends Card {
 		super.setOnClickListener(mListener);
 	}
 
-	@Override
+    @Override
+    public boolean convert(View convertCardView) {
+        return false;
+    }
+
+    @Override
 	public View getCardContent(Context context) {
 		
 		if (mImage == null)
