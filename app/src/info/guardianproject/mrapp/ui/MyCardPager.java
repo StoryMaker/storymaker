@@ -50,7 +50,12 @@ public class MyCardPager extends Card {
 		
 	}
 
-	@Override
+    @Override
+    public boolean convert(View convertCardView) {
+        return false;
+    }
+
+    @Override
 	public View getCardContent(Context context) {
 		
 		mView = LayoutInflater.from(context).inflate(R.layout.card_pager, null);
