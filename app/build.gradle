@@ -17,8 +17,8 @@ android {
         }
 
         defaultConfig {
-            minSdkVersion 17
-            targetSdkVersion 19
+            minSdkVersion 16
+            targetSdkVersion 21
         }
 
         dexOptions {
