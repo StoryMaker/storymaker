@@ -255,14 +255,11 @@ public class BaseActivity extends FragmentActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
     	super.onCreate(savedInstanceState);
-        Intent homeIntent = new Intent(this, MainActivity.class);
-        homeIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(homeIntent);
-//    	if(!Eula.isAccepted(this)) {
-//            Intent firstStartIntent = new Intent(this, FirstStartActivity.class);
-//            firstStartIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-//            startActivity(firstStartIntent);
-//        }
+    	if(!Eula.isAccepted(this)) {
+            Intent firstStartIntent = new Intent(this, FirstStartActivity.class);
+            firstStartIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(firstStartIntent);
+        }
     }
     
     @Override

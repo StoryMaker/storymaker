@@ -18,6 +18,7 @@ import io.scal.secureshareui.controller.ArchiveSiteController;
 import io.scal.secureshareui.controller.SiteController;
 import io.scal.secureshareui.lib.ChooseAccountFragment;
 import io.scal.secureshareui.lib.ArchiveMetadataActivity;
+import scal.io.liger.model.FullMetadata;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -41,6 +42,7 @@ import android.content.res.Configuration;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.util.Log;
@@ -72,11 +74,35 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
         //       mStoryMode = getIntent().getIntExtra("story_mode", Project.STORY_TYPE_VIDEO);
 
         int pid = intent.getIntExtra("pid", -1); //project id
+        ArrayList<Parcelable> parcelables = intent.getParcelableArrayListExtra("export_metadata");
 
         mSceneIndex = getIntent().getIntExtra("scene", 0);
 
-        if (pid != -1)
-        {
+        if (parcelables != null) {
+            // FIXME this should be split into a method, probably in the model.Project class?
+            mProject = new Project(this, 1);
+            mProject.setTitle("export from liger");
+            mProject.setTemplatePath("");
+            mProject.setStoryType(Project.STORY_TYPE_VIDEO);
+            mProject.save();
+            Scene scene = new Scene(this, parcelables.size());
+            scene.setTitle("ligerscene1");
+            scene.setProjectId(mProject.getId());
+            scene.setProjectIndex(0);
+            scene.save();
+
+            // FIXME convert export into project
+            int i = 0;
+            for (Parcelable p: parcelables) {
+                // index, cliptype, path, mimetype
+                FullMetadata m = ((FullMetadata) p);
+                scene.setMedia(i, m.getFilePath(), m.getFilePath(), "video/mp4");
+                i++;
+            }
+            scene.save();
+            // FIXME load project
+            mMPM = new MediaProjectManager(this, getApplicationContext(), mHandlerPub, mProject, scene);
+        } else if (pid != -1) {
             mProject = (Project)(new ProjectTable()).get(getApplicationContext(), pid); // FIXME ugly
             Scene scene = null;
             if ((mSceneIndex != -1) && (mSceneIndex < mProject.getScenesAsArray().length)) {
@@ -85,9 +111,7 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
             mMPM = new MediaProjectManager(this, getApplicationContext(), mHandlerPub, mProject, scene);
             mMPM.initProject();
             mMPM.addAllProjectMediaToEditor();
-        }
-        else
-        {
+        } else {
             int clipCount = 5; // FIXME get rid of hardcoded clipCount = 5
 
             String title = intent.getStringExtra("title");

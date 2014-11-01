@@ -3,11 +3,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="info.guardianproject.mrapp"
     android:installLocation="auto"
-    android:versionCode="126"
-    android:versionName="0.0.11-build126">
+    android:versionCode="1001"
+    android:versionName="2.0.0-build1001">
    
     <uses-sdk
-        android:minSdkVersion="14"
+        android:minSdkVersion="16"
         android:targetSdkVersion="21" />
 
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />

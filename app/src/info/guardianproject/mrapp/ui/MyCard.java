@@ -48,7 +48,7 @@ public class MyCard extends Card {
 
     @Override
     public boolean convert(View convertCardView) {
-        return false;
+        return false; // FIXME Default implementation, not sure what this should really be
     }
 
     @Override

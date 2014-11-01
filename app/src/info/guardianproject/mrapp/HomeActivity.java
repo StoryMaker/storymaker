@@ -9,6 +9,7 @@ import info.guardianproject.mrapp.model.ProjectTable;
 import info.guardianproject.mrapp.server.LoginActivity;
 import info.guardianproject.mrapp.ui.MyCard;
 import info.guardianproject.onionkit.ui.OrbotHelper;
+import scal.io.liger.MainActivity;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -603,7 +604,10 @@ public class HomeActivity extends BaseActivity {
         }
         else if (item.getItemId() == R.id.menu_new_project)
         {
-            startActivity(new Intent(this, StoryNewActivity.class));
+//            startActivity(new Intent(this, StoryNewActivity.class));
+            Intent homeIntent = new Intent(this, MainActivity.class);
+            homeIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(homeIntent);
             return true;
         }
         else if (item.getItemId() == R.id.menu_bug_report)
