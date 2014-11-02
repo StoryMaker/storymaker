@@ -89,7 +89,7 @@ dependencies {
     compile project(':external:NetCipher:libnetcipher')
     compile project(':external:SecureShareLib:SecureShareUILibrary')
     compile project(':external:SecureShareLib:SecureShareUILibrary:external:facebook-sdk:facebook')
-    compile project(':external:liger:android-iconify')
+    compile project(':android-iconify')
     compile project(':external:liger:lib')
 
 }
