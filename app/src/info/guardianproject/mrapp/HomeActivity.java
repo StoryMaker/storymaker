@@ -605,9 +605,12 @@ public class HomeActivity extends BaseActivity {
         else if (item.getItemId() == R.id.menu_new_project)
         {
 //            startActivity(new Intent(this, StoryNewActivity.class));
-            Intent homeIntent = new Intent(this, MainActivity.class);
-            homeIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(homeIntent);
+            Intent ligerIntent = new Intent(this, MainActivity.class);
+            ligerIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+
+            String lang = StoryMakerApp.getCurrentLessonsLocale().getLanguage();
+            ligerIntent.putExtra("lang", lang);
+            startActivity(ligerIntent);
             return true;
         }
         else if (item.getItemId() == R.id.menu_bug_report)
