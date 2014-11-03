@@ -117,9 +117,6 @@ public class PublishFragment extends Fragment implements PublishListener {
         mSettings = PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext());
     }
     
-
-    public static final String ARG_SECTION_NUMBER = "section_number";
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     	initFragment ();
