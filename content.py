@@ -29,23 +29,27 @@ def generate_json():
 @cli.command()    
 def push_strings():
     """First generates the content to extract the latest source strings, then pushes them to transifex"""
-    cli.echo("\n\nupdateing content...\n\n")
+
+    click.echo("\n\nupdateing content...\n\n")
     os.system("cd liger-content ; python generate_content.py")
-    cli.echo("\n\npushing strings to transifex\n\n")
+
+    click.echo("\n\npushing strings to transifex\n\n")
     os.system('cd liger-content ; tx push -s')
 
 @cli.command()
-def update_strings(foo):
+def update_strings():
     """pull down translated strings from transifex and generate localized json"""
-    cli.echo("\n\npulling translations from transifex...\n\n")
-    os.system('cd liger-content ; pull_translations.py')
 
-    cli.echo("\n\ngenerating localized content...\n\n")
+    click.echo("\n\npulling translations from transifex...\n\n")
+    os.system('cd liger-content ; python pull_translations.py')
+
+    click.echo("\n\ngenerating localized content...\n\n")
     os.system('cd liger-content ; python generate_localized_content.py ')
    
 @cli.command()  
 def zip_content():
     """this creates the zipped blob of content and copies it in to storymaker's assets folder as its .obb file"""
+
     os.system("mkdir liger-content/assets ; cd liger-content/assets ; zip -n .mp4 -r zipped . ; mv zipped.zip ../../app/assets/main.1.obb")
 
 
