@@ -33,3 +33,7 @@ local.properties
 
 # Gradle
 .gradle/
+
+#Bundled content
+app/assets/main.1.obb
+liger-content/
