@@ -607,9 +607,11 @@ public class HomeActivity extends BaseActivity {
 //            startActivity(new Intent(this, StoryNewActivity.class));
             Intent ligerIntent = new Intent(this, MainActivity.class);
             ligerIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-
+            ligerIntent.putExtra(MainActivity.INTENT_KEY_WINDOW_TITLE, getString(R.string.app_name));
             String lang = StoryMakerApp.getCurrentLessonsLocale().getLanguage();
             ligerIntent.putExtra("lang", lang);
+            ligerIntent.putExtra(MainActivity.INTENT_KEY_STORYPATH_LIBRARY_ID, "default_library");
+//            startActivityForResult(ligerIntent, MainActivity.INTENT_CODE);
             startActivity(ligerIntent);
             return true;
         }

@@ -297,6 +297,15 @@
         
         <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/app_id"/>
         
+
+        <activity
+            android:name="info.guardianproject.mrapp.PublishActivity"
+            android:label="@string/title_activity_publish" >
+            <intent-filter>
+                <action android:name="io.scal.liger.PUBLISH" />
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>
