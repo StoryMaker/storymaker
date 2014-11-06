@@ -1,6 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string name="app_name">StoryMaker</string>
+  <string name="app_description">Crear grandes historias es ahora más fácil que nunca con StoryMaker. Nuestras plantillas, diseños, y lecciones únicas le guían a través de todo el proceso de creación. StoryMaker le permite editar su contenido desde su mismo móvil, haciendo que sea incluso más fácil finalizar su historia. Una vez la ha terminado, StoryMaker le permite publicar su historia para todas sus plataformas favoritas.</string>
   <string name="title_projects">Historias</string>
   <string name="title_lessons">Lecciones</string>
   <string name="action_publish">Publicar</string>
@@ -28,18 +29,13 @@
   <string name="menu_about">Acerca de</string>
   <string name="menu_save_project">Salvar</string>
   <string name="menu_overlay_camera">Cámara </string>
-  <string name="menu_add_from_gallery">Importar desde la galería</string>
   <string name="menu_add_new_shot">Añadir vídeo a la escena</string>
-  <string name="menu_del_shot">Borrar vídeo actual</string>
   <string name="menu_export_project_files">Exportar ficheros de proyecto como zip</string>
   <string name="menu_join_storymaker">Únase a la comunidad de StoryMaker</string>
   <string name="menu_sign_up">Registrarse / Iniciar sesión</string>
   <string name="menu_upload_manager">Gestor de subida</string>
   <string name="menu_uploads">Subidas</string>
-  <string name="welcome_message">Hola!\nBienvenido a StoryMaker</string>
   <!--project list-->
-  <string name="default_project_list_view">Esta es su primera vez creando un proyecto! ⏎ \n⏎ \n- toque para empezar -</string>
-  <string name="default_project_view_message">Usted tiene opciones. ⏎\nCuente su historia con vídeo, audio o fotos. ⏎\n⏎\n- Toque para añadir -</string>
   <!--video processing-->
   <string name="pref_out_fps_title">Salida Framerate (fps)</string>
   <string name="pref_out_fps_summary">Fotogramas por segundo para almacenar vídeo de salida en (15-30)</string>
@@ -72,7 +68,9 @@
   <string name="acquiring_log_progress_dialog_message">Registro de adquisición desde el sistema\u2026</string>
   <string name="chooser_title">Seleccione una aplicación para enviar el registro</string>
   <string name="failed_to_get_log_message">No se pudo obtener el registro desde el  sistema.</string>
-  <string name="main_dialog_text">Esta aplicación intentará recabar el registro (log) del dispositivo.\nEl registro recopilado se enviará usando una aplicación de su elección.\nTambién tendrá una oportunidad de ver y modificar los datos que se envían.</string>
+  <string name="main_dialog_text">Esta aplicación intentará recabar el registro (log) del dispositivo.
+El registro recopilado se enviará usando una aplicación de su elección.
+También tendrá una oportunidad de ver y modificar los datos que se envían.</string>
   <string name="title_home_projects">Proyectos</string>
   <string name="title_home_activity">Actividad</string>
   <string name="title_lessons_lessons">Lecciones</string>
@@ -151,7 +149,8 @@
   <!--all recordings will show up in the media database in a playlist with this name-->
   <string name="audio_db_playlist_name">Mis grabaciones</string>
   <!--shown as the message in a dialog when an error occured because of an error accessing the sd card-->
-  <string name="error_sdcard_access">\nNo se puede acceder al almacenamiento externo o interno</string>
+  <string name="error_sdcard_access">
+No se puede acceder al almacenamiento externo o interno</string>
   <!--shown as the message in a dialog when the app encountered an unspecified internal error-->
   <string name="error_app_internal">Error interno de la aplicación</string>
   <!--shown as the message in a dialog when the recording could not be added to the media database-->
@@ -185,7 +184,6 @@
   <string name="lessons_congratulations_you_have_completed_the_lesson_">¡Ha completado una lección!</string>
   <string name="lesson_status_in_progress">En curso</string>
   <string name="lesson_status_complete">Completar!</string>
-  <string name="tap_to_start_capture">toque para iniciar la captura</string>
   <string name="no_lessons_available_tap_to_load_">No hay lecciones disponibles (pulsar para cargar)</string>
   <string name="_lesson_complete">lección completa</string>
   <string name="_of_">de</string>

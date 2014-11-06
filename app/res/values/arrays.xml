@@ -72,28 +72,30 @@
     
     <string-array name="interface_language_options" translatable="false">
         <item name="english">English</item>
-        <item name="french">French</item>
         <item name="arabic">Arabic</item>
         <item name="bosnian">Croatian/Bosnian</item>
+        <item name="french">French</item>
+        <item name="german">German</item>
+        <item name="korean">Korean</item>
+        <item name="macedonian">Macedonian</item>
+        <item name="persian">Persian</item>
+        <item name="russian">Russian</item>
         <item name="serbian">Serbian</item>
         <item name="spanish">Spanish</item>
-        <item name="persian">Persian</item>
-        <item name="german">German</item>
-        <item name="macedonian">Macedonian</item>
-        <item name="korean">Korean</item>
     </string-array>
     
     <string-array name="interface_language_options_values" translatable="false">
         <item name="english">en</item>
-        <item name="french">fr</item>
         <item name="arabic">ar</item>
         <item name="bosnian">bs</item>
+        <item name="french">fr</item>
+        <item name="german">de</item>
+        <item name="korean">ko</item>
+        <item name="macedonian">mk</item>
+        <item name="persian">fa</item>
+        <item name="russian">ru</item>
         <item name="serbian">sr</item>
         <item name="spanish">es</item>
-        <item name="persian">fa</item>
-        <item name="german">de</item>
-        <item name="macedonian">mk</item>
-        <item name="korean">ko</item>
     </string-array>
     
     <string-array name="lesson_language_options" translatable="false">

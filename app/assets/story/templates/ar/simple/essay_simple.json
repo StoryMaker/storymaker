@@ -8,9 +8,9 @@
                     "Goal": "لخص الموضوع برمته عن طريق توضيح أحد العناصر الجوهرية بالقصة", 
                     "Length": "× ثوان", 
                     "Security Concern": "-", 
-                    "Shot Size": "التفاصيل"، 
+                    "Shot Size": "التفاصيل", 
                     "Tip": "Set your camera to Macro if you are shooting less than arm\u2019s length from your subject.", 
-                    "Title": "Signature"
+                    "Title": "التوقيع"
                 }, 
                 {
                     "Artwork": "cliptype_medium", 
@@ -18,9 +18,9 @@
                     "Goal": "صور طريقة استجابة الناس للحدث أو عقب الحدث", 
                     "Length": "× ثوان", 
                     "Security Concern": "-", 
-                    "Shot Size": "الوسائط"، 
-                    "Tip": "حافظ على شخصيتك في أحد الخطوط العمودية لإعداد لقطتك بصورة ملائمة".، 
-                    "Title": "Reaction/Interaction"
+                    "Shot Size": "الوسائط", 
+                    "Tip": "حافظ على شخصيتك في أحد الخطوط العمودية لإعداد لقطتك بصورة ملائمة", 
+                    "Title": "ردة الفعل / التفاعل"
                 }, 
                 {
                     "Artwork": "cliptype_long", 
@@ -28,9 +28,9 @@
                     "Goal": "وضح مشاركة الشخصية في بيئتها", 
                     "Length": "× ثوان", 
                     "Security Concern": "-", 
-                    "Shot Size": "طويلة"، 
-                    "Tip": "حافظ على شخصيتك في أحد جوانب الإطار، واجعل لقطتك تظهر شيئاً آخر هاماً للقصة على الجانب الآخر".، 
-                    "Title": "Candid"
+                    "Shot Size": "طويلة", 
+                    "Tip": "حافظ على شخصيتك في أحد جوانب الإطار، واجعل لقطتك تظهر شيئاً آخر هاماً للقصة على الجانب الآخر", 
+                    "Title": "عفوية"
                 }, 
                 {
                     "Artwork": "cliptype_close", 
@@ -38,9 +38,9 @@
                     "Goal": "قدم الشخصية. صور لقطة مقربة", 
                     "Length": "× ثوان", 
                     "Security Concern": "-", 
-                    "Shot Size": "مقربة"، 
-                    "Tip": "استخدم خط العين لإعداد لقطتك بصورة ملائمة".، 
-                    "Title": "Portrait"
+                    "Shot Size": "مقربة", 
+                    "Tip": "استخدم خط العين لإعداد لقطتك بصورة ملائمة", 
+                    "Title": "الصور الشخصية"
                 }, 
                 {
                     "Artwork": "cliptype_wide", 
@@ -48,13 +48,13 @@
                     "Goal": "وضح مكان وقوع القصة", 
                     "Length": "× ثوان", 
                     "Security Concern": "-", 
-                    "Shot Size": "عريضة"، 
-                    "Tip": "المعالم الرئيسية تساعد الجمهور على فهم موقعه".، 
-                    "Title": "Environmental"
+                    "Shot Size": "عريضة", 
+                    "Tip": "المعالم الرئيسية تساعد الجمهور على فهم موقعه", 
+                    "Title": "للبيئة"
                 }
             ], 
             "title":"مشهد1"
         }
     ], 
-    "title": "Essay Simple"
+    "title":"مقال بسيط"
 }

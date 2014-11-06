@@ -1,0 +1,55 @@
+{
+    "scenes": [
+        {
+            "clips": [
+                {
+                    "Artwork": "cliptype_detail", 
+                    "Description": "Dobra oznaka audio isječka grabi publiku i intrigira ih da i dalje slušaju.", 
+                    "Goal": "Oznaka audio isječka daje publici neposredno razumijevanje nekih elemenata priče.", 
+                    "Length": "X sekundi", 
+                    "Security Concern": "-", 
+                    "Tip": "Možda ćete morati držati mikrofon vrlo blizu da snimite označeni isječak. Provjerite da vaš izvor zvuka nije previše glasan.", 
+                    "Title": "Potpis"
+                }, 
+                {
+                    "Artwork": "cliptype_wide", 
+                    "Description": "Ambijent audio isječci pomažu publici da razumije kako vaš subjekt komunicira sa okruženjem.", 
+                    "Goal": "Pomozite publici da razumije prostor koji subjekt nastanjuje.", 
+                    "Length": "X sekundi", 
+                    "Security Concern": "-", 
+                    "Tip": "Želite da ambijent isječak doprinese prepričavanju priče. Ukoliko postoje zvukovi nevezani za priču, to može da ometa publiku.", 
+                    "Title": "Ambijent"
+                }, 
+                {
+                    "Artwork": "cliptype_close", 
+                    "Description": "Objasnite publici tko je važna osoba u priči.",  
+                    "Goal": "Snimite osobu koja se predstavlja, ili snimite sebe kako predstavljate osobu.", 
+                    "Length": "X sekundi", 
+                    "Security Concern": "-", 
+                    "Tip": "Zadržite ovaj isječak kratkim. Jednostavno predstavite publici osobu, ili dopustite osobi da se predstavi. Sačuvajte dodatne informacije za intervju.", 
+                    "Title": "Pripovjedački"
+                }, 
+                {
+                    "Artwork": "cliptype_medium", 
+                    "Description": "Upamtite osnove dobrog intervjua. Postavljajte pitanja otvorenog tipa. Odredite vrstu postavljenih pitanja na osnovu izvora kojeg intervjuišete.", 
+                    "Goal": "Zamolite osobu da vam ispriča priču.", 
+                    "Length": "X sekundi", 
+                    "Security Concern": "-", 
+                    "Tip": "Ukoliko želite da publika čuje vaša pitanja i odgovore subjekta \u2019s , provjerite da ste oboje dovoljno blizu mikrofona kako bi vas jasno čuli.", 
+                    "Title": "Intervju"
+                }, 
+                {
+                    "Artwork": "cliptype_wide", 
+                    "Description": "Ekološki audio zapis može ukazivati na zemlju, ili možete dodati kulturni ili religijski element vašoj priči.", 
+                    "Goal": "Ekološki audio isječci pomažu publici da shvate gdje se vaša priča odvija.", 
+                    "Length": "X sekundi", 
+                    "Security Concern": "-", 
+                    "Tip": "Snimite cjelokupni okolišni zvuk. Pazite da i vi ne pravite neke zvuke, to će odvratiti publiku od prirodnog zvuka.", 
+                    "Title": "Okolišni"
+                } 
+            ], 
+            "title": "Scena 1"
+        } 
+    ], 
+    "title": "Audio Jednostavan"
+} 

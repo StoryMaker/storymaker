@@ -28,17 +28,12 @@
   <string name="menu_about">За</string>
   <string name="menu_save_project">Зачувај</string>
   <string name="menu_overlay_camera">Камера</string>
-  <string name="menu_add_from_gallery">Внеси од Галеријата</string>
   <string name="menu_add_new_shot">Додади клип во сцената</string>
-  <string name="menu_del_shot">Избриши го Тековниот Клип</string>
   <string name="menu_export_project_files">Извезување на Датотеките на Проектот како Zip</string>
   <string name="menu_join_storymaker">Приклучи се на StoryMaker заедницата</string>
   <string name="menu_sign_up">Регистрирај се / Влези</string>
   <string name="menu_upload_manager">Испраќачки Менаџер</string>
-  <string name="welcome_message">Здраво!\nДобродојдовте во StoryMaker</string>
   <!--project list-->
-  <string name="default_project_list_view">Ова е вашиот прв проект!\n\n- допрете за да почнете -</string>
-  <string name="default_project_view_message">Имате неколку избори.\nРаскажете ја вашата приказна со помош на видео, аудио или слики.\n\n- допрете за да додадете-</string>
   <!--video processing-->
   <string name="pref_out_fps_title">Излезен Framerate (fps)</string>
   <string name="pref_out_fps_summary">Фрејмови по секунда на излезното видео (15-30)</string>
@@ -71,7 +66,9 @@
   <string name="acquiring_log_progress_dialog_message">Превземање на записи од системот\u2026</string>
   <string name="chooser_title">Одбери апликација за да го испратиш записот</string>
   <string name="failed_to_get_log_message">Не успешно превземање на записот од системот.</string>
-  <string name="main_dialog_text">Апликацијата ќе се обиде да ги собере записите од уредот.\nСобраните записи ќе се пратат преку апликација по ваш избор.\nЌе имате можност да ги прегледате и модифицирате податоците пред да бидат пратени.</string>
+  <string name="main_dialog_text">Апликацијата ќе се обиде да ги собере записите од уредот.
+Собраните записи ќе се пратат преку апликација по ваш избор.
+Ќе имате можност да ги прегледате и модифицирате податоците пред да бидат пратени.</string>
   <string name="title_home_projects">Проекти</string>
   <string name="title_home_activity">Активност</string>
   <string name="title_lessons_lessons">Лекции</string>
@@ -184,7 +181,6 @@
   <string name="lessons_congratulations_you_have_completed_the_lesson_">Комплетиравте лекција!</string>
   <string name="lesson_status_in_progress">Во тек</string>
   <string name="lesson_status_complete">КОМПЛЕТИРАНО!</string>
-  <string name="tap_to_start_capture">допри за почеток на снимање</string>
   <string name="no_lessons_available_tap_to_load_">Нема достапни лекции (допри за да вчиташ)</string>
   <string name="_lesson_complete">лекцијата е завршена</string>
   <string name="_of_">од</string>
@@ -257,6 +253,7 @@
   <string name="label_tags">Тагови</string>
   <string name="label_add">Додади</string>
   <string name="label_edit">Едитирај</string>
+  <string name="label_save">Зачувај</string>
   <string name="label_activities">Запис на Активности</string>
   <string name="hint_story_title">Внеси Наслов</string>
   <string name="hint_story_description">Опиши ја твојата приказна...</string>
