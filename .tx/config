@@ -1,6 +1,12 @@
 [main]
 host = https://www.transifex.com
 
+[storymaker.liger_strings]
+file_filter = external/liger/lib/src/main/res/values-<lang>/strings.xml
+source_file = external/liger/lib/src/main/res/values/strings.xml
+source_lang = en
+type = ANDROID
+
 [storymaker.lesson_titles]
 file_filter = app/assets/LessonTitles-<lang>.txt
 source_file = app/assets/LessonTitles.txt
