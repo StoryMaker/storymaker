@@ -8,6 +8,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+
+import org.storymaker.app.R;
 import org.storymaker.app.Utils;
 import org.storymaker.app.model.Auth;
 import org.storymaker.app.model.AuthTable;
@@ -45,7 +47,7 @@ public class FacebookUploader extends UploaderBase {
                 // facebook seems to freak out if our service's looper is dead when it tries to send message back 
                 @Override
                 public void run() {
-                    jobProgress(mJob, 0, "Uploading to Facebook..."); //  FIXME move to strings.xml
+                    jobProgress(mJob, 0, mContext.getString(R.string.uploading_to_facebook));
                     HashMap<String, String> valueMap = publishJob.getMetadata();
                     addValuesToHashmap(valueMap, project.getTitle(), project.getDescription(), path);
                     controller.upload(auth.convertToAccountObject(), valueMap);

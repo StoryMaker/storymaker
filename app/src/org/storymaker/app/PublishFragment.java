@@ -448,14 +448,13 @@ public class PublishFragment extends Fragment implements PublishListener {
                     publishJob.save();
                     startRender(publishJob);
                 } else {
-                    Utils.toastOnUiThread(mActivity, "No site selected."); // FIXME move to strings.xml
+                    Utils.toastOnUiThread(mActivity, mActivity.getString(R.string.no_site_selected));
                 }
             } else {
-                Utils.toastOnUiThread(mActivity, "No site selected."); // FIXME move to strings.xml
+                Utils.toastOnUiThread(mActivity, mActivity.getString(R.string.no_site_selected));
             }
         } else {
             Log.d("PublishFragment", "Choose Accounts dialog canceled");
-//            Utils.toastOnUiThread(mActivity, "Choose Accounts dialog canceled!"); // FIXME move to strings.xml
             showPlayAndUpload(true);
         }
     }

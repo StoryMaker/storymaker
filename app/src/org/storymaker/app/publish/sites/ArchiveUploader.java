@@ -6,6 +6,8 @@ import java.util.HashMap;
 import android.content.Context;
 import android.os.Handler;
 import android.util.Log;
+
+import org.storymaker.app.R;
 import org.storymaker.app.Utils;
 import org.storymaker.app.model.Auth;
 import org.storymaker.app.model.AuthTable;
@@ -34,7 +36,7 @@ public class ArchiveUploader extends UploaderBase {
         final String path = publishJob.getLastRenderFilePath();
         final Auth auth = (new AuthTable()).getAuthDefault(mContext, ArchiveSiteController.SITE_KEY);
         if (Utils.stringNotBlank(path) && (new File(path)).exists()) {
-            jobProgress(mJob, 0, "Uploading to Internet Archive..."); //  FIXME move to strings.xml
+            jobProgress(mJob, 0, mContext.getString(R.string.uploading_to_internet_archive));
             HashMap<String, String> valueMap = publishJob.getMetadata();
             addValuesToHashmap(valueMap, project.getTitle(), project.getDescription(), path);
             controller.upload(auth.convertToAccountObject(), valueMap); // FIXME need to hookup Account to this

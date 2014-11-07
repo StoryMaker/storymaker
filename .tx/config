@@ -1,6 +1,12 @@
 [main]
 host = https://www.transifex.com
 
+[storymaker.secureshare_strings]
+file_filter = external/SecureShareLib/SecureShareUILibrary/res/values-<lang>/strings.xml
+source_file = external/SecureShareLib/SecureShareUILibrary/res/values/strings.xml
+source_lang = en
+type = ANDROID
+
 [storymaker.liger_strings]
 file_filter = external/liger/lib/src/main/res/values-<lang>/strings.xml
 source_file = external/liger/lib/src/main/res/values/strings.xml
