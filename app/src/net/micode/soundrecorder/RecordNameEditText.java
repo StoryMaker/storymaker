@@ -16,7 +16,7 @@
 
 package net.micode.soundrecorder;
 
-import info.guardianproject.mrapp.R;
+import org.storymaker.app.R;
 
 import java.io.File;
 import java.text.SimpleDateFormat;

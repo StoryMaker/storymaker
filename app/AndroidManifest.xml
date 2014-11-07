@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="info.guardianproject.mrapp"
+    package="org.storymaker.app"
     android:installLocation="auto"
-    android:versionCode="1001"
-    android:versionName="2.0.0-build1001">
+    android:versionCode="1002"
+    android:versionName="2.0.0-build1002">
    
     <uses-sdk
         android:minSdkVersion="16"
@@ -41,7 +41,7 @@
         android:xlargeScreens="true" />
 
     <application
-        android:name="info.guardianproject.mrapp.StoryMakerApp"
+        android:name="org.storymaker.app.StoryMakerApp"
         android:configChanges="orientation|keyboardHidden|screenSize|locale"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
@@ -51,18 +51,18 @@
         android:theme="@style/Theme.storymakerstyle"
         tools:replace="android:theme" >
         <activity
-            android:name="info.guardianproject.mrapp.server.LoginActivity"
+            android:name="org.storymaker.app.server.LoginActivity"
             android:configChanges="locale"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" >
         </activity>
         <!-- Entry for RegisterActivity.class -->
         <activity
-            android:name="info.guardianproject.mrapp.server.RegisterActivity"
+            android:name="org.storymaker.app.server.RegisterActivity"
             android:label="Register New Account" >
         </activity>
         <activity
-            android:name="info.guardianproject.mrapp.HomeActivity"
+            android:name="org.storymaker.app.HomeActivity"
             android:configChanges="locale"
             android:label="@string/app_name"
             android:launchMode="singleTop" >
@@ -73,14 +73,14 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="info.guardianproject.mrapp.StoryNewActivity"
+            android:name="org.storymaker.app.StoryNewActivity"
             android:label="@string/title_activity_new_story" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".HomeActivity" />
         </activity>
         <activity
-            android:name="info.guardianproject.mrapp.ProjectsActivity"
+            android:name="org.storymaker.app.ProjectsActivity"
             android:configChanges="locale"
             android:label="@string/title_projects"
             android:launchMode="singleTop" >
@@ -89,7 +89,7 @@
                 android:value=".HomeActivity" />
         </activity>
         <activity
-            android:name="info.guardianproject.mrapp.LessonsActivity"
+            android:name="org.storymaker.app.LessonsActivity"
             android:configChanges="locale"
             android:label="@string/title_activity_lessons"
             android:launchMode="singleTop"
@@ -99,14 +99,14 @@
                 android:value=".HomeActivity" />
         </activity>
         <activity
-            android:name="info.guardianproject.mrapp.StoryTemplateChooserActivity"
+            android:name="org.storymaker.app.StoryTemplateChooserActivity"
             android:label="@string/title_activity_choose_template" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ProjectsActivity" />
         </activity>
         <activity
-            android:name="info.guardianproject.mrapp.StoryTemplateActivity"
+            android:name="org.storymaker.app.StoryTemplateActivity"
             android:configChanges="orientation|screenSize"
             android:label="@string/title_activity_story_template" >
             <meta-data
@@ -114,7 +114,7 @@
                 android:value=".ProjectsActivity" />
         </activity>
         <activity
-            android:name="info.guardianproject.mrapp.SceneEditorActivity"
+            android:name="org.storymaker.app.SceneEditorActivity"
             android:configChanges="orientation|screenSize"
             android:label="@string/title_activity_scene_editor" >
             <meta-data
@@ -122,40 +122,40 @@
                 android:value=".ProjectsActivity" />
         </activity>
         <activity
-            android:name="info.guardianproject.mrapp.WelcomeActivity"
+            android:name="org.storymaker.app.WelcomeActivity"
             android:label="@string/app_name" >
         </activity>
-        <activity android:name="info.guardianproject.mrapp.ProjectListActivity" >
+        <activity android:name="org.storymaker.app.ProjectListActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".HomeActivity" />
         </activity>
-        <activity android:name="info.guardianproject.mrapp.lessons.LessonViewActivity" >
+        <activity android:name="org.storymaker.app.lessons.LessonViewActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".LessonsActivity" />
         </activity>
-        <activity android:name="info.guardianproject.mrapp.server.WebViewActivity" />
+        <activity android:name="org.storymaker.app.server.WebViewActivity" />
         <activity
-            android:name="info.guardianproject.mrapp.media.MediaProjectManager"
+            android:name="org.storymaker.app.media.MediaProjectManager"
             android:configChanges="orientation|keyboardHidden|screenSize" >
         </activity>
-        <activity android:name="info.guardianproject.mrapp.MediaOutputPreferences" />
-        <activity android:name="info.guardianproject.mrapp.SimplePreferences" />
+        <activity android:name="org.storymaker.app.MediaOutputPreferences" />
+        <activity android:name="org.storymaker.app.SimplePreferences" />
         <activity
-            android:name="info.guardianproject.mrapp.media.OverlayCameraActivity"
+            android:name="org.storymaker.app.media.OverlayCameraActivity"
             android:screenOrientation="landscape" />
-        <activity android:name="info.guardianproject.mrapp.media.AudioRecorderActivity" />
+        <activity android:name="org.storymaker.app.media.AudioRecorderActivity" />
 
         <provider
-            android:name="info.guardianproject.mrapp.db.LessonsProvider"
-            android:authorities="info.guardianproject.mrapp.db.LessonsProvider"
+            android:name="org.storymaker.app.db.LessonsProvider"
+            android:authorities="org.storymaker.app.db.LessonsProvider"
             android:exported="false"
             android:multiprocess="true" >
         </provider>
         <provider
-            android:name="info.guardianproject.mrapp.db.ProjectsProvider"
-            android:authorities="info.guardianproject.mrapp.db.ProjectsProvider"
+            android:name="org.storymaker.app.db.ProjectsProvider"
+            android:authorities="org.storymaker.app.db.ProjectsProvider"
             android:exported="false"
             android:multiprocess="true" >
         </provider>
@@ -186,12 +186,12 @@
         </service>
 
         <service
-            android:name="info.guardianproject.mrapp.publish.PublishService"
+            android:name="org.storymaker.app.publish.PublishService"
             android:exported="false" >
         </service>
 
         <receiver
-            android:name="info.guardianproject.mrapp.QuickStoryWidgetProvider"
+            android:name="org.storymaker.app.QuickStoryWidgetProvider"
             android:icon="@drawable/ic_launcher"
             android:label="StoryMaker QuickStory" >
             <intent-filter>
@@ -210,12 +210,12 @@
             android:theme="@android:style/Theme.Dialog" />
         <activity android:name="net.hockeyapp.android.UpdateActivity" />
         <activity
-            android:name="info.guardianproject.mrapp.AccountsActivity"
+            android:name="org.storymaker.app.AccountsActivity"
             android:label="@string/title_activity_accounts"
             android:screenOrientation="portrait">
         </activity>
         <activity
-            android:name="info.guardianproject.mrapp.StoryInfoActivity"
+            android:name="org.storymaker.app.StoryInfoActivity"
             android:label="@string/title_activity_story_info"
             android:theme="@style/PopupTheme"
             android:screenOrientation="portrait">
@@ -224,7 +224,7 @@
                 android:value=".SceneEditorActivity" />
         </activity>
         <activity
-            android:name="info.guardianproject.mrapp.StoryInfoEditActivity"
+            android:name="org.storymaker.app.StoryInfoEditActivity"
             android:label="@string/title_activity_story_info_edit"
             android:theme="@style/PopupTheme"
             android:screenOrientation="portrait">
@@ -233,7 +233,7 @@
                 android:value=".StoryInfoActivity" />
         </activity>
         <activity
-            android:name="info.guardianproject.mrapp.ProjectTagFragment"
+            android:name="org.storymaker.app.ProjectTagFragment"
             android:label="@string/title_activity_project_tag_fragment"
             android:parentActivityName="android.support.v4.app.FragmentActivity"
             android:screenOrientation="portrait" >
@@ -242,11 +242,11 @@
                 android:value="android.support.v4.app.FragmentActivity" />
         </activity>
         <activity 
-            android:name="info.guardianproject.mrapp.FirstStartActivity"
+            android:name="org.storymaker.app.FirstStartActivity"
             android:screenOrientation="portrait">
         </activity>
         <activity 
-            android:name="info.guardianproject.mrapp.server.WordPressAuthWebViewActivity"
+            android:name="org.storymaker.app.server.WordPressAuthWebViewActivity"
             android:screenOrientation="portrait">
         </activity>
         <activity
@@ -283,7 +283,7 @@
             android:screenOrientation="portrait">
         </activity>
         <activity
-            android:name="info.guardianproject.mrapp.ConnectAccountActivity"
+            android:name="org.storymaker.app.ConnectAccountActivity"
             android:label="@string/title_activity_connect_account"
             android:screenOrientation="portrait"
             android:theme="@style/PopupTheme">
@@ -299,7 +299,7 @@
         
 
         <activity
-            android:name="info.guardianproject.mrapp.PublishActivity"
+            android:name="org.storymaker.app.PublishActivity"
             android:label="@string/title_activity_publish" >
             <intent-filter>
                 <action android:name="io.scal.liger.PUBLISH" />

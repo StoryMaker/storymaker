@@ -1,2 +1,2 @@
-adb shell "run-as info.guardianproject.mrapp cat /data/data/info.guardianproject.mrapp/databases/sm.db > /sdcard/sm.db" 
+adb shell "run-as org.storymaker.app cat /data/data/org.storymaker.app/databases/sm.db > /sdcard/sm.db" 
 adb pull /sdcard/sm.db

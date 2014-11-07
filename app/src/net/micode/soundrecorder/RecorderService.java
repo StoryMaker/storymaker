@@ -16,8 +16,8 @@
 
 package net.micode.soundrecorder;
 
-import info.guardianproject.mrapp.AppConstants;
-import info.guardianproject.mrapp.R;
+import org.storymaker.app.AppConstants;
+import org.storymaker.app.R;
 
 import java.io.File;
 import java.io.IOException;

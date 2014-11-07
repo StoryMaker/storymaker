@@ -1,6 +1,6 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="info.guardianproject.mrapp.PressSecureActivity" >
+    tools:context="org.storymaker.app.PressSecureActivity" >
 
     <item
         android:id="@+id/action_settings"

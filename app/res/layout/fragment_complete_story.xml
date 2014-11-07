@@ -23,7 +23,7 @@
             android:adjustViewBounds="true"
             android:src="@drawable/cliptype_long" />
 
-        <info.guardianproject.mrapp.PreviewVideoView
+        <org.storymaker.app.PreviewVideoView
             android:id="@+id/previewVideoView"
             android:layout_width="match_parent"
             android:layout_height="200dip"
@@ -36,7 +36,7 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true" >
 
-            <info.guardianproject.mrapp.ui.ToggleImageButton
+            <org.storymaker.app.ui.ToggleImageButton
                 android:id="@+id/btnPlay"
                 android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
@@ -44,7 +44,7 @@
                 android:layout_weight="1"
                 android:src="@drawable/button_play" />
 
-            <info.guardianproject.mrapp.ui.ToggleImageButton
+            <org.storymaker.app.ui.ToggleImageButton
                 android:id="@+id/btnUpload"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -139,7 +139,7 @@
 
  	-->
 
-    <info.guardianproject.mrapp.ui.TouchlessFrame
+    <org.storymaker.app.ui.TouchlessFrame
         android:id="@+id/fl_info_container"
         android:layout_width="match_parent"
         android:layout_height="0dp"
