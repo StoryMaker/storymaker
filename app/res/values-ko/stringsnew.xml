@@ -172,12 +172,18 @@
   <string name="prefs_use_tor_title">Orbot (Tor) 사용하기</string>
   <string name="prefs_use_tor_summary">Orbot 어플리케이션을 이용해서 Tor 네트워크를 통해 모든 네트워크 트래픽을 보내기</string>
   <string name="prefs_use_download_manager_title">다운로드 매니저 사용하기</string>
+  <string name="prefs_use_upload_manager_title">다운로드 매니저 사용하기</string>
+  <string name="prefs_use_upload_manager_summary">안드로이드 업로드 매니저 서비스를 사용하여 스토리 컨텐츠 업로드하기</string>
   <string name="prefs_youtube_acccount_title">유투브 계정</string>
   <string name="prefs_youtube_acccount_summary">유투브 개정은 비디오 업로드를 위해 사용됩니다. 이것은 여러분 장치에 꼭 등록되어야 합니다.</string>
   <string name="prefs_youtube_login_title">유투브 로그인</string>
   <string name="prefs_youtube_login_summary">유투브 웹 인증 사용하기</string>
   <string name="prefs_soundcloud_account_title">SoundCloud 계정</string>
   <string name="prefs_soundcloud_account_summary">오디오 업로드를 위해 SoundCloud 계정 사용하기</string>
+  <string name="prefs_interface_language_title">언어 선택하기</string>
+  <string name="prefs_interface_language_summary">스토리메이커 언어는 사용자 인터페이스를 사용할 것입니다.</string>
+  <string name="prefs_slide_duration_title">슬라이드 지속시간</string>
+  <string name="prefs_slide_duration_summary">포토 에세이에서 각각의 슬라이드 지속시간</string>
   <string name="prefs_disable_lesson_completion_summary"></string>
   <!--/prefs-->
   <!--FirstStartActivity-->

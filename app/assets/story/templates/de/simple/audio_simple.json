@@ -9,7 +9,7 @@
                     "Length": "X Sekunden", 
                     "Security Concern": "-", 
                     "Tip": "Sie müssen ggf. das Mikrofon sehr nah an den Sprecher heranführen. Stellen Sie dabei sicher, dass ihre Tonquelle nicht zu laut ist.", 
-                    "Title": "Signature"
+                    "Titel": "Signatur"
                 }, 
                 {
                     "Artwork": "cliptype_wide", 
@@ -36,7 +36,7 @@
                     "Length": "X Sekunden", 
                     "Security Concern": "-", 
                     "Tip": "If you want the audience to hear your questions and the subject\u2019s answers, be sure that you are both close enough to the mic to be heard clearly.", 
-                    "Title": "Interview"
+                    "Titel": "Interview"
                 }, 
                 {
                     "Artwork": "cliptype_wide", 
@@ -48,7 +48,7 @@
                     "Title": "Environmental"
                 }
             ], 
-            "title": "Scene 1"
+            "Titel": "Szene 1"
         }
     ], 
     "title": "Audio Simple"

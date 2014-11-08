@@ -180,5 +180,6 @@
   <!--/prefs-->
   <!--FirstStartActivity-->
   <!--ConnectAccountActivity-->
+  <string name="join_storymaker">انظم إلى مجموعة StoryMaker</string>
   <!--ProjectTagFragment-->
 </resources>

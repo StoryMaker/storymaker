@@ -250,7 +250,6 @@
   <string name="label_tags">태그</string>
   <string name="label_add">추가하기</string>
   <string name="label_edit">편집하기</string>
-  <string name="label_save">저장하기</string>
   <string name="label_activities">활동로그</string>
   <string name="hint_story_title">제목넣기</string>
   <string name="hint_story_description">당신의 이야기를 묘사하기...</string>

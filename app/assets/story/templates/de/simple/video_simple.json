@@ -6,11 +6,11 @@
                     "Artwork": "cliptype_close", 
                     "Description": "Get close enough to ensure you have good sound and can see their face clearly.",
                     "Goal": "Ask the character to tell you a story. Capture their emotion.",
-                    "Length": "30-60 seconds", 
+                    "Länge": "30-60 Sekunden", 
                     "Security Concern": "-", 
                     "Shot Size": "Close", 
                     "Tip": "Use the eye-line to frame your shot properly.", 
-                    "Title": "Interview"
+                    "Titel": "Interview"
                 },                 
                 {
                     "Artwork": "cliptype_detail", 
@@ -20,7 +20,7 @@
                     "Security Concern": "-", 
                     "Shot Size": "Das", 
                     "Tip": "The detail should fill at least 50% of the frame.", 
-                    "Title": "Signature" 
+                    "Titel": "Signatur" 
                 },
                 {
                     "Artwork": "cliptype_medium", 
@@ -30,7 +30,7 @@
                     "Security Concern": "-",
                     "Shot Size": "Mitte",
                     "Tip": "The character should fill about 30% of the frame.",
-                    "Title": "Interaction"
+                    "Titel": "Interaktion"
                 },
                 {
                     "Artwork": "cliptype_long", 
@@ -40,7 +40,7 @@
                     "Security Concern": "-", 
                     "Shot Size": "Long", 
                     "Tip": "Keep your character on one of the vertical lines to frame your shot properly.", 
-                    "Title": "Activity"
+                    "Titel": "Aktivität"
                 }, 
                 {
                     "Artwork": "cliptype_wide",
@@ -50,10 +50,10 @@
                     "Security Concern": "-",
                     "Shot Size": "Wide",
                     "Tip": "Place your camera directly in front of the primary location you are filming.", 
-                    "Title": "Location"
+                    "Titel": "Ort"
                 }
             ], 
-            "title": "Scene 1"
+            "Titel": "Szene 1"
         }
     ], 
     "title": "Simple Story - Video"

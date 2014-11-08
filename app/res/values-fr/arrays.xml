@@ -1,2 +1,33 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<resources/>
+<resources>
+  <string-array name="story_sections">
+    <item>Politique</item>
+    <item>Economie</item>
+    <item>Sports</item>
+    <item>Arts</item>
+    <item>Science</item>
+    <item>Santé</item>
+    <item>Education</item>
+    <item>Environnement</item>
+  </string-array>
+  <string-array name="lesson_sections">
+    <item>Journalisme</item>
+    <item>Sécurité</item>
+    <item>Audio</item>
+    <item>Photographie</item>
+    <item>Vidéographie</item>
+    <item>Hidtoire</item>
+  </string-array>
+  <string-array name="array_story_sections">
+    <item>Politique</item>
+    <item>Economie</item>
+    <item>Sports</item>
+    <item>Arts</item>
+    <item>Science</item>
+    <item>Santé</item>
+    <item>Education</item>
+    <item>Environnement</item>
+    <item>Technologie</item>
+    <item>Voyage</item>
+  </string-array>
+</resources>

@@ -63,6 +63,10 @@
   <string name="story_type_event_breaking_desc">Des événements imprévus ayant une valeur de nouvelles importantes. Un feu, une annonce surprise par un fonctionnaire du gouvernement, ou d\'une catastrophe naturelle sont de bons événements des flash d\'information.</string>
   <string name="story_type_issue_social_desc">Histoires sur les questions qui touchent les communautés. Un changement dans la réglementation du gouvernement local de l\'infrastructure est une bonne question sociale</string>
   <string name="story_type_issue_political_desc">Histoires sur le gouvernement et le travail des fonctionnaires publics. Une histoire de nouvelles lois ou des modifications du Parlement est une bonne question politique.</string>
+  <string name="story_type_issue_economic_desc">Histoires à propos de l\'économie en général ou des finances personnelles. Un histoire à propos de l\'impact des changements dans les subventions gouvernementales pour les fermiers est une bon problème économique.</string>
+  <string name="story_type_profile_public_desc">Histoires à propos des sujets vus par l\'opinion publique. Le profil d\'un politicien courant à son travail ferait un bon profil public.</string>
+  <string name="story_type_profile_professional_desc">Histoires à propos du monde et du travail en général. Un artiste ou un athlète célèbre est un bon profile professionnel.</string>
+  <string name="story_type_profile_personal_desc">Histoires à propos d\'expériences, souvent liées aux événements d\'actualité. Le profil d\'un ancien militaire à l\'anniversaire de l\'armistice serait un bon profil personnel.</string>
   <!--/story_type_description-->
   <!--template_options-->
   <string name="choose_level">Choisissez un niveau</string>
@@ -73,14 +77,60 @@
   <string name="overview">à propos</string>
   <string name="activity">Activité</string>
   <string name="impact">Imapcte</string>
+  <string name="background">En fond</string>
+  <string name="involvement">Amélioration</string>
   <string name="motivation">Motivation</string>
   <string name="location">Localisation</string>
   <string name="experience">Expérience</string>
   <string name="results">Résultats</string>
   <string name="next_steps">Étapes Suivantes</string>
+  <string name="moving_forward">Avancer</string>
   <string name="conclusion">Conclusion</string>
+  <string name="story_type_event_news_text1">Qu\'est-ce qui se passe à cet événement?</string>
+  <string name="story_type_event_news_text2">Comment êtes-vous impliqué?</string>
+  <string name="story_type_event_news_text3">Qui est le plus touché par cet événement?</string>
+  <string name="story_type_event_news_text4">Quelle est l\'histoire derrière cet événement?</string>
+  <string name="story_type_event_news_text5">Quel est l\'impact de cet événement?</string>
+  <string name="story_type_event_feature_text1">Qu\'est-ce qui se passe à cet événement?</string>
+  <string name="story_type_event_feature_text2">Comment êtes-vous impliqué?</string>
+  <string name="story_type_event_feature_text3">Où se passe l\'évennement?</string>
+  <string name="story_type_event_feature_text4">Comment êtes - vous personnellement impliqués?</string>
+  <string name="story_type_event_feature_text5">Quel est l\'impact de cet événement?</string>
   <string name="story_type_event_breaking_text1">Qu\'est-ce qui se passe ?</string>
+  <string name="story_type_event_breaking_text2">Où est ce qu\'il se passe?</string>
   <string name="story_type_event_breaking_text3">Qui est concerné?</string>
+  <string name="story_type_event_breaking_text4">Y at-il un danger immédiat?</string>
+  <string name="story_type_event_breaking_text5">Comment les gens réagissent-ils?</string>
+  <string name="story_type_issue_social_text1">veuillez décrire le problème social.</string>
+  <string name="story_type_issue_social_text2">Quand et où a commencé ce problème?</string>
+  <string name="story_type_issue_social_text3">Comment est-ce un impact sur la communauté?</string>
+  <string name="story_type_issue_social_text4">Donnez-nous une histoire sur la façon dont cela affecte votre vie.</string>
+  <string name="story_type_issue_social_text5">Que peut-on faire pour résoudre ce problème?</string>
+  <string name="story_type_issue_political_text1">Veuillez décrire le problème politique.</string>
+  <string name="story_type_issue_political_text2">Qui est impacté directement ?</string>
+  <string name="story_type_issue_political_text3">Quel est son impact sur le gouvernement?</string>
+  <string name="story_type_issue_political_text4">Pourquoi cela est important pour vous?</string>
+  <string name="story_type_issue_political_text5">Que peut-on faire pour résoudre ce problème?</string>
+  <string name="story_type_issue_economic_text1">Veuillez décrire le problème économique.</string>
+  <string name="story_type_issue_economic_text2">Quelle est votre relation à ce problème?</string>
+  <string name="story_type_issue_economic_text3">Quel est son impact sur ​​l\'économie?</string>
+  <string name="story_type_issue_economic_text4">Qui sera le plus touché par ça?</string>
+  <string name="story_type_issue_economic_text5">Que peut-on faire pour résoudre ce problème?</string>
+  <string name="story_type_profile_public_text1">Expliquez un peu qui vous êtes.</string>
+  <string name="story_type_profile_public_text2">Quand est-ce que vous avez commencé?</string>
+  <string name="story_type_profile_public_text3">Que faites - vous?</string>
+  <string name="story_type_profile_public_text4">Décrivez un moment où vous avez senti fier de votre travail.</string>
+  <string name="story_type_profile_public_text5">Comment voyez-vous votre rôle dans l\'avenir?</string>
+  <string name="story_type_profile_professional_text1">Qui êtes - vous et c\'est quoi votre travail?</string>
+  <string name="story_type_profile_professional_text2">Veuillez expliquer comment faites - vous votre travail?</string>
+  <string name="story_type_profile_professional_text3">Pourquoi ce travail est important pour vous?</string>
+  <string name="story_type_profile_professional_text4">Comment faites-vous un impact avec votre emploi?</string>
+  <string name="story_type_profile_professional_text5">Quelle est la suite pour vous avec ce travail?</string>
+  <string name="story_type_profile_personal_text1">Veuillez expliquer un peu qui vous êtes.</string>
+  <string name="story_type_profile_personal_text2">c\'est quoi l\'importante histoire que vous avez vécu?</string>
+  <string name="story_type_profile_personal_text3">Comment vous faire sentir cette expérience?</string>
+  <string name="story_type_profile_personal_text4">Que faites-vous différemment aujourd\'hui?</string>
+  <string name="story_type_profile_personal_text5">Que voudriez-vous voir se produire dans l\'avenir?</string>
   <!--/story_type_new-->
   <!--story_type_old-->
   <string name="scene_number">Scene &lt;xliff:g id="number"&gt;%1$d&lt;/xliff:g&gt;</string>
@@ -123,10 +173,79 @@
   <string name="story_type_news_text8">Comment on a répondu?</string>
   <!--/story_type_old-->
   <!--prefs-->
+  <string name="prefs_category_networking_security_title">sécurité de réseau</string>
+  <string name="prefs_category_locales_title">Locaux</string>
+  <string name="prefs_category_media_title">Média</string>
+  <string name="prefs_category_debug_title">Débogage</string>
+  <string name="prefs_storymaker_server_title">Serveur StoryMaker</string>
+  <string name="prefs_storymaker_server_summary">Serveur pour héberger toutes les leçons et le contenu des histoires</string>
+  <string name="prefs_use_tor_title">Utiliser Orbot (Tor)</string>
+  <string name="prefs_use_tor_summary">Envoyer tout le trafic réseau à travers le réseau Tor en utilisant l\'application Orbot</string>
+  <string name="prefs_use_download_manager_title">Utiliser le gestionnaire de téléchargement</string>
+  <string name="prefs_use_download_manager_summary">Télécharger l\'archive des leçons par le service de Gestionnaire d\'upload pour Android</string>
+  <string name="prefs_use_upload_manager_title">Utiliser le Gestionnaire d\'upload</string>
+  <string name="prefs_use_upload_manager_summary">Uploader le contenu via le service de Gestionnaire d\'upload pour Android</string>
+  <string name="prefs_youtube_acccount_title">Compte YouTube</string>
+  <string name="prefs_youtube_acccount_summary">Le compte YouTube à utiliser pour l\'upload de la vidéo. il DOIT être enregistré sur l\'appareil</string>
+  <string name="prefs_youtube_login_title">Connexion Youtube</string>
+  <string name="prefs_youtube_login_summary">Utiliser l\'Authentification Web pour YouTube</string>
+  <string name="prefs_soundcloud_account_title">Compte SoundCloud</string>
+  <string name="prefs_soundcloud_account_summary">Le compte Soundcloud à utiliser pour l\'upload audio</string>
+  <string name="prefs_interface_language_title">Sélectionner la langue</string>
+  <string name="prefs_interface_language_summary">La Langue que StoryMaker va utiliser pour l\'Interface utilisateur.</string>
+  <string name="prefs_lesson_language_title">Sélectionner les Leçons</string>
+  <string name="prefs_lesson_language_summary">Le module de leçon à utiliser.</string>
+  <string name="prefs_slide_duration_title">Durée de Diapositive</string>
+  <string name="prefs_slide_duration_summary">Durée de chaque diapositive dans un reportage Photo</string>
+  <string name="prefs_enable_compression_title">Activer la Compression</string>
+  <string name="prefs_enable_compression_summary">Compresser tous les vidéos et l\'audio en utilisant les paramètres suivants</string>
+  <string name="prefs_preprocess_3gp_title">prétraitement 3GP</string>
+  <string name="prefs_preprocess_3gp_summary">Convertir les clips vidéo 3GP à MPEG-4</string>
+  <string name="prefs_use_cat_command_title">Utiliser la commande \'Cat\'</string>
+  <string name="prefs_use_cat_command_summary">Utiliser la commande \'cat\' pour fusionner les vidéos</string>
+  <string name="prefs_video_codec_title">Codec Vidéo</string>
+  <string name="prefs_video_codec_summary">Codec vidéo à l\'export</string>
+  <string name="prefs_video_resolution_title">Résolution de la vidéo</string>
+  <string name="prefs_video_resolution_summary">Résolution de vidéo à l\'export</string>
+  <string name="prefs_video_width_title">Largeur de vidéo</string>
+  <string name="prefs_video_width_summary">Largeur de vidéo à l\'export</string>
+  <string name="prefs_video_height_title">Hauteur de video</string>
+  <string name="prefs_video_height_summary">Hauteur de la vidéo à l\'Export</string>
+  <string name="prefs_video_bitrate_title">Débit de la vidéo</string>
+  <string name="prefs_video_bitrate_summary">Débit d\'exportation Audio (Kbps)</string>
+  <string name="prefs_video_framrate_title">Fréquences de trames vidéo</string>
+  <string name="prefs_video_framrate_summary">Taux de trame à l\'exportation par seconde (fps)</string>
+  <string name="prefs_audio_codec_title">Codec Audio</string>
+  <string name="prefs_audio_codec_summary">Codec d\'Export Audio</string>
+  <string name="prefs_audio_bitrate_title">Débit Audio</string>
+  <string name="prefs_audio_bitrate_summary">Le débit d\'exportation de l\'audio (kbps)</string>
+  <string name="prefs_audio_samplerate_title">Taux d\'échantillonnage Audio</string>
+  <string name="prefs_audio_samplerate_summary"> Fréquence d\'échantillonnage d\'enregistrement audio (Khz)</string>
+  <string name="prefs_audio_crossfade_title">Fondu Audio</string>
+  <string name="prefs_audio_crossfade_summary">Longueur du fondu Audio</string>
+  <string name="prefs_internal_storage_title">Stockage Interne</string>
+  <string name="prefs_internal_storage_summary">Utiliser le stockage interne du projet</string>
+  <string name="prefs_disable_lesson_completion_title">désactiver la fin des leçons</string>
   <string name="prefs_disable_lesson_completion_summary"></string>
+  <string name="prefs_youtube_method_title">Méthode YouTube</string>
+  <string name="prefs_youtube_method_summary">Type de débogage de la méthode d\'authorisation</string>
   <!--/prefs-->
   <!--FirstStartActivity-->
+  <string name="sign_up_btn">S\'INSCRIRE A STORYMAKER</string>
+  <string name="no_thanks_btn">NON MERCI</string>
+  <string name="tos_btn">J\'ACCEPTE LES TERMES DE SERVICE</string>
+  <string name="tos_dialog_title">Conditions d\'utilisation</string>
+  <string name="tos_dialog_msg">Veuillez accepter les termes de service avant de continuer</string>
+  <string name="tos_dialog_positive_button">Compris</string>
+  <string name="acct_created_dialog_title">Accéder à votre compte</string>
+  <string name="acct_created_dialog_msg"><b>Votre mot de passe StoryMaker vous sera envoyé par mail sous peu.</b> Après l\'avoir obtenu, vous pourrez vous connecter en même temps via le menu (Accessible en glissant votre doigt depuis le bord gauche de l\'écran).</string>
+  <string name="acct_created_dialog_positive_button">COMMENCEZ!</string>
   <!--ConnectAccountActivity-->
+  <string name="my_account">MON COMPTE STORYMAKER</string>
   <string name="join_storymaker">Joindre la Communauté StoryMaker</string>
+  <string name="create_account">CREER MON COMPTE</string>
+  <string name="sign_in">S\'INSCRIRE / SE CONNECTER</string>
+  <string name="sign_out">DECONNEXION</string>
   <!--ProjectTagFragment-->
+  <string name="no_tags_msg">Aucun #tag ajouté</string>
 </resources>
