@@ -81,6 +81,7 @@
         <item name="german">German</item>
         <item name="macedonian">Macedonian</item>
         <item name="korean">Korean</item>
+        <item name="russian">Russian</item>
     </string-array>
     
     <string-array name="interface_language_options_values" translatable="false">
@@ -94,6 +95,7 @@
         <item name="german">de</item>
         <item name="macedonian">mk</item>
         <item name="korean">ko</item>
+        <item name="russian">ru</item>
     </string-array>
     
     <string-array name="lesson_language_options" translatable="false">

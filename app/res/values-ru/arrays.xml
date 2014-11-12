@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <string-array name="story_sections">
+    <item>Политика</item>
+    <item>Бизнес</item>
+    <item>Спорт</item>
+    <item>Искусство</item>
+    <item>Наука</item>
+    <item>Здоровье</item>
+    <item>Образование</item>
+    <item>Окружающая среда</item>
+  </string-array>
+  <string-array name="lesson_sections">
+    <item>Журналистика</item>
+    <item>Безопасность</item>
+    <item>Аудио</item>
+    <item>Фото</item>
+    <item>Видео</item>
+    <item>Сюжет</item>
+  </string-array>
+  <string-array name="array_story_sections">
+    <item>Политика</item>
+    <item>Бизнес</item>
+    <item>Спорт</item>
+    <item>Искусство</item>
+    <item>Наука</item>
+    <item>Здоровье</item>
+    <item>Образование</item>
+    <item>Окружающая среда</item>
+    <item>Технологии</item>
+    <item>Путешествие</item>
+  </string-array>
+</resources>

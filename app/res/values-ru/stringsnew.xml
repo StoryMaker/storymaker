@@ -1,0 +1,251 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+  <string name="terms_title">Условия пользования Storymaker</string>
+  <string name="terms_text_1">Вы сохраняете все права владения вашим контентом, вы можете извлечь его в любое время, и мы не продадим никакие ваши данные. Соглашаясь поделиться своим контентом с StoryMaker.cc, вы разрешаете Small World News и его партнерам размещать ваши сюжеты и похожими сюжетами, созданными в Storymaker. Мы группируем их согласно типам, заголовкам и местоположению.</string>
+  <string name="terms_text_2">Ваш сюжет размещен на выбранном вами сайте, но он также имеет ссылку на StoryMaker.cc. Заголовок, описание сюжета и метки будут отправлены в StoryMaker.cc, все остальное содержимое будет ссылаться на вашу персональную ленту на вашем размещающем сайте.</string>
+  <!--tutorial_lessons-->
+  <string name="tutorial_title_1">Учитесь доносить истории.</string>
+  <string name="tutorial_text_1">Учитесь быть журналистом, обеспечивая свою безопасность и производя отличные аудио, фото и видео сюжеты.</string>
+  <string name="tutorial_title_2">Будьте точным.</string>
+  <string name="tutorial_text_2">Разработанные в партнерстве с ICFJ наши уроки журналистики сделают из вас лучшего репортера, будьте уверены.</string>
+  <string name="tutorial_title_3">Защищайте себя.</string>
+  <string name="tutorial_text_3">Наши уроки по цифровой безопасности помогут вам и вашим источникам оставаться в безопасности. Цель StoryMaker сохранить вас в безопасности, независимо от того, где происходит документируемая вами история.</string>
+  <string name="tutorial_title_4">Расскажите свою историю лучше.</string>
+  <string name="tutorial_text_4">Сюжеты наилучшим образом представляются различными методами, таким как аудио, фото или видео. Узнайте, в чём различие между этими методами.</string>
+  <string name="tutorial_title_5">Пройдите тест.</string>
+  <string name="tutorial_text_5">Каждый урок завершается квиц-опросом, чтобы проверить успеваемость.</string>
+  <string name="tutorial_title_6">Продолжить обучение.</string>
+  <string name="tutorial_text_6">Поделитесь своими сюжетами с сообществом StoryMaker.cc, и повышайте ваш уровень рассказчика с каждым сюжетом, которым вы делитесь.</string>
+  <!--/tutorial_lessons-->
+  <!--tutorial_story-->
+  <string name="tutorial_title_7">Доносите истории лучше.</string>
+  <string name="tutorial_text_7">Хороший сюжет состоит из вступления, основной и завершающей части. Возьмите интервью у кого-либо, чтобы добавить контекст к вашему сюжету. Покажите, где они живут. Привнесите личное отношение.</string>
+  <string name="tutorial_title_8">Выберите средство.</string>
+  <string name="tutorial_text_8">Аудио, фото и видео подходят для различных типов повествования. Ознакомьтесь с нашими уроками, чтобы узнать больше. Выберите средство и учитесь на ходу.</string>
+  <string name="tutorial_title_9">Расскажите историю в пяти клипах.</string>
+  <string name="tutorial_text_9">Используйте пять клипов, чтобы донести свою историю. Опишите географическое местоположение. Представьте своего главного героя. В остальных трех клипах расскажите историю, используя вступление, основную и завершающую части.</string>
+  <string name="tutorial_title_10">Рушьте стереотипы. Экспериментируйте.</string>
+  <string name="tutorial_text_10">Упорядочивайте ваши клипы в другой последовательности, чтобы произвести более сильное впечатление.</string>
+  <string name="tutorial_title_11">Рассказывайте более длинные истории.</string>
+  <string name="tutorial_text_11">Шаблоны сюжетов поведают вам как.</string>
+  <!--/tutorial_story-->
+  <!--template_description-->
+  <string name="template_audio_desc">Запишите звуки, рассказывающие вашу историю, кто, что. Если у вас нет возможности записать визуальные образы, аудио - это отличная альтернатива.</string>
+  <string name="template_photo_desc">Картинка стоит тысячи слов. Покажите, кто или что является важным в вашей истории, или как это произошло.</string>
+  <string name="template_essay_desc">Иногда нужно несколько фотографий. Покажите, как происходит история, расскажите историю в нескольких интересных фотографиях.</string>
+  <string name="template_video_desc">Записывайте убедительные кадры и действия, когда они происходят. Покажите зрителю, кто или что является важным и почему.</string>
+  <!--/template_description-->
+  <!--legacy_story_type-->
+  <!--once we refactor to keep this extra text fields in the db instead of referencing this strings file we can remove these (after doing a migration step)-->
+  <string name="story_type_event_title">Событие</string>
+  <string name="story_type_issue_title">Проблема</string>
+  <string name="story_type_profile_title">Профиль</string>
+  <string name="story_type_news_title">Горячие новости</string>
+  <string name="story_type_event_desc">Истории о событиях имеют строго определенные временные рамки и местоположения. Сфокусируйтесь на том, что происходит во время события. В сюжете расскажите, когда и где происходит событие, почему оно происходит в это время и в этом месте.</string>
+  <string name="story_type_issue_desc">Сюжеты о проблемах рассматривают обширную тему. Сделайте акцент на том, как эта проблема влияет на сообщество или группу людей. В сюжете расскажите, на кого оказывается влияние и что делается в ответ.</string>
+  <string name="story_type_profile_desc">Опишите определенного героя сюжета. Сфокусируйтесь на том, кем он является. В сюжете расскажите о повседневной жизни персонажа, что происходит в его жизни и как он справляется с вызовами.</string>
+  <string name="story_type_news_desc">Горячие новости безотлагательны. Сфокусируйтесь на одном угле обзора. Организуйте сюжет на основе простых фактов: кто, что, где, когда. Комментируйте, чтобы добавить контекст.</string>
+  <!--/ legacy_story_type-->
+  <!--story_type-->
+  <string name="story_type_event_news_title">Новостное Событие</string>
+  <string name="story_type_event_feature_title">Особенное Событие</string>
+  <string name="story_type_event_breaking_title">Экстренное Событие</string>
+  <string name="story_type_issue_social_title">Социальная Проблема</string>
+  <string name="story_type_issue_political_title">Политическая Проблема</string>
+  <string name="story_type_issue_economic_title">Экономическая Проблема</string>
+  <string name="story_type_profile_public_title">Общественная Проблема</string>
+  <string name="story_type_profile_professional_title">Профессиональный Профиль</string>
+  <string name="story_type_profile_personal_title">Личный Профиль</string>
+  <!--/story_type-->
+  <!--story_type_description-->
+  <string name="story_type_event_news_desc">Сюжеты о событиях неотложной важности, зачастую запланированных, и имеющих точное начало и конец. Выборы или демонстрация - хороший пример таких событий.</string>
+  <string name="story_type_event_feature_desc">Сюжеты о событиях, в которых нет экстренной составляющей. Спортивные события, новый бизнес по соседству, появление технологий - хорошие примеры таких событий.</string>
+  <string name="story_type_event_breaking_desc">Незапланированные события с важной составляющей. Пожар, неожиданное заявление представителей правительства или стихийное бедствие - примеры экстренных событий.</string>
+  <string name="story_type_issue_social_desc">Сюжеты о проблемах, влияющих на сообщества. Изменения в местном законодательстве или инфраструктуре - примеры таких событий.</string>
+  <string name="story_type_issue_political_desc">Сюжеты о правительстве и работе публичных представителей. Сюжет о новом законе или изменениях в парламенте - пример таких событий.</string>
+  <string name="story_type_issue_economic_desc">Сюжеты а экономические темы или о финансовом состоянии людей. Сюжет о влиянии изменения правительственных субсидий для фермеров - пример такого события.</string>
+  <string name="story_type_profile_public_desc">Сюжет о роли субъекта в публичной жизни. Биография политика кандидата на пост президента - хороший политический профиль.</string>
+  <string name="story_type_profile_professional_desc">Сюжеты о людях и их работе. Биография знаменитого артиста или атлета - хороший профессиональный профиль.</string>
+  <string name="story_type_profile_personal_desc">Сюжеты об опыте субъекта, часто связанного с событиями из новостей. Биография бывшего солдата на военной годовщине может быть хорошим личным профилем.</string>
+  <!--/story_type_description-->
+  <!--template_options-->
+  <string name="choose_level">Выберете уровень</string>
+  <string name="choose_level_basic">Базовый</string>
+  <string name="choose_level_advanced">Повышенный</string>
+  <!--/template_options-->
+  <!--story_type_new-->
+  <string name="overview">Обзор</string>
+  <string name="activity">Активность</string>
+  <string name="impact">Влияние</string>
+  <string name="background">Предпосылка</string>
+  <string name="involvement">Вовлечение</string>
+  <string name="motivation">Мотивация</string>
+  <string name="location">Местоположение</string>
+  <string name="experience">Опыт</string>
+  <string name="results">Результаты</string>
+  <string name="next_steps">Следующие Шаги</string>
+  <string name="moving_forward">Продвижение Вперед</string>
+  <string name="conclusion">Заключение</string>
+  <string name="story_type_event_news_text1">Что происходит в этом событии?</string>
+  <string name="story_type_event_news_text2">Каково ваше участие?</string>
+  <string name="story_type_event_news_text3">Кого сильнее всего затронуло это событие?</string>
+  <string name="story_type_event_news_text4">Какова подоплека этого события?</string>
+  <string name="story_type_event_news_text5">Каково влияние этого события?</string>
+  <string name="story_type_event_feature_text1">Что происходит в этом событии?</string>
+  <string name="story_type_event_feature_text2">Почему вы вовлечены в это событие?</string>
+  <string name="story_type_event_feature_text3">Где происходит событие?</string>
+  <string name="story_type_event_feature_text4">Как вы вовлечены персонально?</string>
+  <string name="story_type_event_feature_text5">Каково влияние этого события?</string>
+  <string name="story_type_event_breaking_text1">Что происходит?</string>
+  <string name="story_type_event_breaking_text2">Где это происходит?</string>
+  <string name="story_type_event_breaking_text3">Кто подвержен влиянию?</string>
+  <string name="story_type_event_breaking_text4">Есть ли непосредственная опасность?</string>
+  <string name="story_type_event_breaking_text5">Как реагируют люди?</string>
+  <string name="story_type_issue_social_text1">Пожалуйста, опишите социальную проблему.</string>
+  <string name="story_type_issue_social_text2">Когда &amp; где эта проблема началась?</string>
+  <string name="story_type_issue_social_text3">Как это влияет на сообщество?</string>
+  <string name="story_type_issue_social_text4">Расскажите как это затрагивает вашу жизнь.</string>
+  <string name="story_type_issue_social_text5">Что можно сделать, чтобы решить эту проблему?</string>
+  <string name="story_type_issue_political_text1">Пожалуйста, опишите политическую проблему.</string>
+  <string name="story_type_issue_political_text2">Кто непосредственно оказывает влияние?</string>
+  <string name="story_type_issue_political_text3">Как это влияет на правительство?</string>
+  <string name="story_type_issue_political_text4">Почему это важно лично вам?</string>
+  <string name="story_type_issue_political_text5">Что можно сделать, чтобы решить эту проблему?</string>
+  <string name="story_type_issue_economic_text1">Пожалуйста, опишите экономическую проблему.</string>
+  <string name="story_type_issue_economic_text2">Каково ваше отношение к этому вопросу?</string>
+  <string name="story_type_issue_economic_text3">Как это влияет на экономику?</string>
+  <string name="story_type_issue_economic_text4">Кого это более всего затронет?</string>
+  <string name="story_type_issue_economic_text5">Что можно сделать, чтобы решить эту проблему?</string>
+  <string name="story_type_profile_public_text1">Опишите вкратце кем вы являетесь.</string>
+  <string name="story_type_profile_public_text2">Когда вы начали?</string>
+  <string name="story_type_profile_public_text3">Что вы делали?</string>
+  <string name="story_type_profile_public_text4">Опишите случай, когда вы почувствовали гордость за вашу работу.</string>
+  <string name="story_type_profile_public_text5">Как вы видите свою роль в будущем?</string>
+  <string name="story_type_profile_professional_text1">Кто вы и в чем заключается ваша работа?</string>
+  <string name="story_type_profile_professional_text2">Пожалуйста, объясните как вы выполняете свою работу.</string>
+  <string name="story_type_profile_professional_text3">Почему эта работа важна для вас?</string>
+  <string name="story_type_profile_professional_text4">Как вы оказываете влияние на эту работу?</string>
+  <string name="story_type_profile_professional_text5">Чем вы собираетесь заниматься в дальнейшем на этом месте работы?</string>
+  <string name="story_type_profile_personal_text1">Расскажите немного о себе.</string>
+  <string name="story_type_profile_personal_text2">Какой важный опыт вы получили?</string>
+  <string name="story_type_profile_personal_text3">Что вы чувствовали во время этого события?</string>
+  <string name="story_type_profile_personal_text4">Чтобы вы сейчас сделали по-другому?</string>
+  <string name="story_type_profile_personal_text5">Какие изменения вы бы хотели увидеть в будущем?</string>
+  <!--/story_type_new-->
+  <!--story_type_old-->
+  <string name="scene_number">Эпизод &lt;xliff:g id="number"&gt;%1$d&lt;/xliff:g&gt;</string>
+  <string name="when">Когда?</string>
+  <string name="how">Как?</string>
+  <string name="what">Что?</string>
+  <string name="where">Где?</string>
+  <string name="why">Почему?</string>
+  <string name="story_type_event_text1">Когда произошло событие?</string>
+  <string name="story_type_event_text2">Какова цель события?</string>
+  <string name="story_type_event_text3">Почему событие является важным?</string>
+  <string name="story_type_event_text4">Когда произошло событие?</string>
+  <string name="story_type_event_text5">Как событие было организовано?</string>
+  <string name="story_type_event_text6">Какова цель события?</string>
+  <string name="story_type_event_text7">Где произошло событие?</string>
+  <string name="story_type_event_text8">Почему событие является важным?</string>
+  <string name="story_type_issue_text1">Как эта проблема повлияла на сообщество?</string>
+  <string name="story_type_issue_text2">Кто подвергся наиболее сильному влиянию?</string>
+  <string name="story_type_issue_text3">Что делается в ответ?</string>
+  <string name="story_type_issue_text4">Как эта проблема повлияла на сообщество?</string>
+  <string name="story_type_issue_text5">Когда / Где началась проблема?</string>
+  <string name="story_type_issue_text6">Кто подвергся наиболее сильному влиянию?</string>
+  <string name="story_type_issue_text7">Почему они подверглись наиболее сильному влиянию?</string>
+  <string name="story_type_issue_text8">Что делается в ответ?</string>
+  <string name="story_type_profile_text1">Кем является герой?</string>
+  <string name="story_type_profile_text2">С какими вызовами сталкивается герой?</string>
+  <string name="story_type_profile_text3">Как герой справляется с этими вызовами?</string>
+  <string name="story_type_profile_text4">Кем является герой?</string>
+  <string name="story_type_profile_text5">Откуда герой по происхождению?</string>
+  <string name="story_type_profile_text6">С какими вызовами сталкивается герой?</string>
+  <string name="story_type_profile_text7">Почему герой борется с этими вызовами?</string>
+  <string name="story_type_profile_text8">Как герой справляется с этими вызовами?</string>
+  <string name="story_type_news_text1">Что происходит?</string>
+  <string name="story_type_news_text2">Кто подвержен влиянию?</string>
+  <string name="story_type_news_text3">Что делается в ответ?</string>
+  <string name="story_type_news_text4">Что происходит?</string>
+  <string name="story_type_news_text5">Где происходят события?</string>
+  <string name="story_type_news_text6">Кто подвержен влиянию?</string>
+  <string name="story_type_news_text7">Почему это произошло?</string>
+  <string name="story_type_news_text8">Что делается в ответ?</string>
+  <!--/story_type_old-->
+  <!--prefs-->
+  <string name="prefs_category_networking_security_title">Работа в сети &amp; Безопасность</string>
+  <string name="prefs_category_locales_title">Место действия</string>
+  <string name="prefs_category_media_title">Средства информации</string>
+  <string name="prefs_category_debug_title">Отладка</string>
+  <string name="prefs_storymaker_server_title">Сервер StoryMaker</string>
+  <string name="prefs_storymaker_server_summary">Сервер для хранения всех уроков и содержимого сюжетов</string>
+  <string name="prefs_use_tor_title">Использовать Orbot (Tor)</string>
+  <string name="prefs_use_tor_summary">Отправлять весь сетевой трафик через сеть Tor, используя приложение Orbot</string>
+  <string name="prefs_use_download_manager_title">Использовать менеджер загрузок</string>
+  <string name="prefs_use_download_manager_summary">Загрузить архивы уроков при помощи сервиса Android DownloadManager</string>
+  <string name="prefs_use_upload_manager_title">Использовать менеджер загрузок</string>
+  <string name="prefs_use_upload_manager_summary">Загружать содержимое сюжета с помощью сервиса Android UploadManager</string>
+  <string name="prefs_youtube_acccount_title">Учетная запись YouTube</string>
+  <string name="prefs_youtube_acccount_summary">Учетная запись YouTube, используемая для загрузки видео. Она ДОЛЖНА быть зарегистрирована на вашем устройстве.</string>
+  <string name="prefs_youtube_login_title">Логин YouTube</string>
+  <string name="prefs_youtube_login_summary">Использовать web аутентификацию YouTube</string>
+  <string name="prefs_soundcloud_account_title">Учетная запись SoundCloud</string>
+  <string name="prefs_soundcloud_account_summary">Учетная запись SoundCloud, используемая для загрузки аудио</string>
+  <string name="prefs_interface_language_title">Выберите язык</string>
+  <string name="prefs_interface_language_summary">Язык, использующийся для интерфейса StoryMaker</string>
+  <string name="prefs_lesson_language_title">Выберите уроки</string>
+  <string name="prefs_lesson_language_summary">Используемый модуль уроков.</string>
+  <string name="prefs_slide_duration_title">Длительность слайда</string>
+  <string name="prefs_slide_duration_summary">Длительность каждого слайда в фото эссе</string>
+  <string name="prefs_enable_compression_title">Включить сжатие</string>
+  <string name="prefs_enable_compression_summary">Сжимать все видео и аудио, используя следующие настройки</string>
+  <string name="prefs_preprocess_3gp_title">Предобработка 3GP</string>
+  <string name="prefs_preprocess_3gp_summary">Преобразовать видео клипы 3GP в MPEG-4</string>
+  <string name="prefs_use_cat_command_title">Использовать команду \'Cat\'</string>
+  <string name="prefs_use_cat_command_summary">Использовать команду \'cat\' для слияния видео файлов</string>
+  <string name="prefs_video_codec_title">Видео кодек</string>
+  <string name="prefs_video_codec_summary">Видео кодек для экспорта</string>
+  <string name="prefs_video_resolution_title">Разрешение видео кадра</string>
+  <string name="prefs_video_resolution_summary">Разрешение видео кадра для экспорта</string>
+  <string name="prefs_video_width_title">Ширина видео кадра</string>
+  <string name="prefs_video_width_summary">Ширина видео кадра для экспорта</string>
+  <string name="prefs_video_height_title">Высота видео кадра</string>
+  <string name="prefs_video_height_summary">Высота видео кадра для экспорта</string>
+  <string name="prefs_video_bitrate_title">Скорость потока видео</string>
+  <string name="prefs_video_bitrate_summary">Скорость потока видео для экспорта (kbps)</string>
+  <string name="prefs_video_framrate_title">Частота кадров видео</string>
+  <string name="prefs_video_framrate_summary">Частота кадров в секунду для экспорта (fps)</string>
+  <string name="prefs_audio_codec_title">Аудио кодек</string>
+  <string name="prefs_audio_codec_summary">Аудио кодек для экспорта</string>
+  <string name="prefs_audio_bitrate_title">Скорость аудио потока</string>
+  <string name="prefs_audio_bitrate_summary">Скорость аудио потока для экспорта (kbps)</string>
+  <string name="prefs_audio_samplerate_title">Частота сэмплов аудио</string>
+  <string name="prefs_audio_samplerate_summary">Частота сэмплов для экспорта (kHz)</string>
+  <string name="prefs_audio_crossfade_title">Плавный переход в аудио</string>
+  <string name="prefs_audio_crossfade_summary">Длина плавного перехода в аудио</string>
+  <string name="prefs_internal_storage_title">Внутреннее хранилище</string>
+  <string name="prefs_internal_storage_summary">Использовать внутреннее хранилища проекта</string>
+  <string name="prefs_disable_lesson_completion_title">Отключить завершение урока</string>
+  <string name="prefs_disable_lesson_completion_summary"></string>
+  <string name="prefs_youtube_method_title">Метод YouTube</string>
+  <string name="prefs_youtube_method_summary">Тип метода отладки авторизации</string>
+  <!--/prefs-->
+  <!--FirstStartActivity-->
+  <string name="sign_up_btn">Записаться в STORYMAKER</string>
+  <string name="no_thanks_btn">НЕТ, СПАСИБО</string>
+  <string name="tos_btn">Я СОГЛАСЕН С УСЛОВИЯМИ ОБСЛУЖИВАНИЯ</string>
+  <string name="tos_dialog_title">Условия обслуживания</string>
+  <string name="tos_dialog_msg">Пожалуйста, примите наши правила обслуживания чтобы продолжить</string>
+  <string name="tos_dialog_positive_button">Есть</string>
+  <string name="acct_created_dialog_title">Получить доступ к учетной записи</string>
+  <string name="acct_created_dialog_msg"><b>Ваш пароль к StoryMaker будет скоро отправлен.</b> После получения пароля вы можете войти в любое время через всплывающее меню (Открывается сдвигом левой кромки экрана).</string>
+  <string name="acct_created_dialog_positive_button">Начни!</string>
+  <!--ConnectAccountActivity-->
+  <string name="my_account">МОЯ УЧЕТНАЯ ЗАПИСЬ STORYMAKER </string>
+  <string name="join_storymaker">Присоединиться к сообществу StoryMaker</string>
+  <string name="create_account">СОЗДАТЬ УЧЕТНУЮ ЗАПИСЬ</string>
+  <string name="sign_in">ЗАРЕГИСТРИРОВАТЬСЯ / ВОЙТИ</string>
+  <string name="sign_out">ВЫЙТИ</string>
+  <!--ProjectTagFragment-->
+  <string name="no_tags_msg">#tags не добавлены</string>
+</resources>
