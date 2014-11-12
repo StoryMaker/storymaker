@@ -610,6 +610,10 @@ public class HomeActivity extends BaseActivity {
             ligerIntent.putExtra(MainActivity.INTENT_KEY_WINDOW_TITLE, getString(R.string.app_name));
             String lang = StoryMakerApp.getCurrentLocale().getLanguage();
             ligerIntent.putExtra("lang", lang);
+
+            SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+            int pslideduration = settings.getInt("pslideduration", 5);
+            ligerIntent.putExtra("photo_essay_slide_duration", pslideduration * 1000);
 //            ligerIntent.putExtra(MainActivity.INTENT_KEY_STORYPATH_LIBRARY_ID, "learning_guide_3");
 //            ligerIntent.putExtra(MainActivity.INTENT_KEY_STORYPATH_LIBRARY_ID, "default_library");
 //            startActivityForResult(ligerIntent, MainActivity.INTENT_CODE);
