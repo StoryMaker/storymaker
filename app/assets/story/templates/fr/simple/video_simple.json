@@ -34,27 +34,27 @@
                 },
                 {
                     "Artwork": "cliptype_long", 
-                    "Description": "Step back. This shot should be wide enough to depict the character from head to toe in their location.", 
-                    "Goal": "Capture the character in action.", 
+                    "Description": "Un pas en arrière. Ce plan doit être suffisamment large pour décrire le caractère de la tête aux pieds dans leur emplacement.", 
+                    "Goal": "Capturer le personnage en action.", 
                     "Length": 10 - 15 secondes", 
                     "Security Concern": "-", 
                     "Shot Size": "Longue", 
                     "Tip": "Gardez votre personnage sur une des lignes verticales pour cadrer votre capture proprement", 
-                    "Title": "Activity"
+                    "Title": "Activité"
                 }, 
                 {
                     "Artwork": "cliptype_wide",
-                    "Description": "Landmarks or location specific are ideal to include. Environmental shots can help indicate the country, ethnicity, or religion of your character.",
+                    "Description": "Les sites d'intérêt ou un emplacement spécifique sont idéales pour les inclure. Les plans d'environnement peuvent aider à indiquer le pays, l'origine ethnique ou la religion de votre personnage.",
                     "Goal": "Montrer où se passe votre histoire.",
                     "Length": "5 - 10 secondes",
                     "Security Concern": "-",
                     "Shot Size": "Large",
-                    "Tip": "Place your camera directly in front of the primary location you are filming.", 
-                    "Title": "Location"
+                    "Tip": "Placez votre appareil photo directement en face de l'emplacement principal que vous filmez.", 
+                    "Title": "Endroit"
                 }
             ], 
             "title": "Scene 1"
         }
     ], 
-    "title": "Simple Story - Video"
+    "title": "Histoire simple - Vidéo"
 }

@@ -33,7 +33,10 @@
   <string name="menu_join_storymaker">Únase a la comunidad de StoryMaker</string>
   <string name="menu_sign_up">Registrarse / Iniciar sesión</string>
   <string name="menu_upload_manager">Gestor de subida</string>
+  <string name="welcome_message">¡Saludos!\nBienvenido a StoryMaker</string>
   <!--project list-->
+  <string name="default_project_list_view">¡Esta es la primera vez que crear un proyecto!\n\n- pulse para comenzar -</string>
+  <string name="default_project_view_message">Tiene elección.\nCuente su historia con vídeo, audio o fotos.\n\n- pulse para añadir -</string>
   <!--video processing-->
   <string name="pref_out_fps_title">Salida Framerate (fps)</string>
   <string name="pref_out_fps_summary">Fotogramas por segundo para almacenar vídeo de salida en (15-30)</string>

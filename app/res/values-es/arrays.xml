@@ -18,17 +18,6 @@
     <item>Videografía</item>
     <item>Historia</item>
   </string-array>
-  <string-array name="array_story_locations">
-    <item>EE.UU.</item>
-    <item>California</item>
-    <item>Oakland</item>
-    <item>Egipto</item>
-    <item>Irak</item>
-    <item>Marruecos</item>
-    <item>Túnez</item>
-    <item>Zimbabwe</item>
-    <item>República Checa</item>
-  </string-array>
   <string-array name="array_story_sections">
     <item>Política</item>
     <item>Negocios</item>

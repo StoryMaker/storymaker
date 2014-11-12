@@ -20,7 +20,7 @@
                     "Security Concern": "-", 
                     "Shot Size": "Mitte", 
                     "Tip": "Keep your character on one of the vertical lines to frame your shot properly.", 
-                    "Titel": "Reaktion/Interaktion"
+                    "Title": "Reaktion/Interaktion"
                 }, 
                 {
                     "Artwork": "cliptype_long", 
@@ -40,7 +40,7 @@
                     "Security Concern": "-", 
                     "Shot Size": "Close", 
                     "Tip": "Use the eye-line to frame your shot properly.", 
-                    "Titel": "Porträt"
+                    "Title": "Porträt"
                 }, 
                 {
                     "Artwork": "cliptype_detail", 
@@ -50,10 +50,10 @@
                     "Security Concern": "-", 
                     "Shot Size": "Das", 
                     "Tip": "Set your camera to Macro if you are shooting less than arm\u2019s length from your subject.", 
-                    "Titel": "Signatur"
+                    "Title": "Signatur"
                 }
             ], 
-            "Titel": "Szene 1"
+            "title": "Szene 1"
         }
     ], 
     "title": "Photo Simple"
