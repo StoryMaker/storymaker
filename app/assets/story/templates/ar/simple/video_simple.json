@@ -14,28 +14,28 @@
                 },                 
                 {
                     "Artwork": "cliptype_detail", 
-                    "Description": "Get close to an object, or person, and capture a memorable detail to summarize your story in one shot.", 
-                    "Goal": "Show an essential detail to the story.", 
+                    "Description": "ابق قريبا من شيء ما أو من شخص معين و التقط تفصيل لا يُنسى  لتلخيص القصة في مشهد واحد.", 
+                    "Goal": "أظهر تفصيلا أساسي للقصة.", 
                     "Length":"5-10 ثانية", 
                     "Security Concern": "-", 
                     "Shot Size": "مفصلة", 
-                    "Tip": "The detail should fill at least 50% of the frame.", 
+                    "Tip": "يجب على التفاصيل أن تملأ على الأقل 50% من الإطار.", 
                     "Title": "التوقيع" 
                 },
                 {
                     "Artwork": "cliptype_medium", 
-                    "Description": "Let the camera observe the character relating to friends, their work, demonstrating their knowledge, or completing an action.", 
-                    "Goal": "Show an interaction between the character and their world.", 
+                    "Description": "دع الكاميرا تشاهد الشخصية في تفاعل مع أصدقائه، عملهم، يعرضةن معرفتهم، او ينهون حركة.", 
+                    "Goal": "أظهر تفاعلا بين الشخصية و بيئته.", 
                     "Length":"10-15 ثانية",
                     "Security Concern": "-",
                     "Shot Size": "متوسطة",
-                    "Tip": "The character should fill about 30% of the frame.",
+                    "Tip": "الشخصية يجب أن تملأ حوالي 30% من الإطار.",
                     "Title": "التفاعل"
                 },
                 {
                     "Artwork": "cliptype_long", 
-                    "Description": "Step back. This shot should be wide enough to depict the character from head to toe in their location.", 
-                    "Goal": "Capture the character in action.", 
+                    "Description": "خطوة إلى الوراء. ينبغي أن يكون هذا وافيا بالغرض لتصوير الشخصية من الرأس إلى القدمين في موقعه.", 
+                    "Goal":"صوّر الشخصية في العمل.", 
                     "Length":"10-15 ثانية", 
                     "Security Concern": "-", 
                     "Shot Size": "طويلة", 
@@ -44,17 +44,17 @@
                 }, 
                 {
                     "Artwork": "cliptype_wide",
-                    "Description": "Landmarks or location specific are ideal to include. Environmental shots can help indicate the country, ethnicity, or religion of your character.",
+                    "Description": "تعتبر المعالم أو المواقع المحددة مثالية للإدراج، فهي تدل على البلد، العرق أو ديانة الشخصية.",
                     "Goal": "وضح مكان وقوع قصتك.",
                     "Length":"5-10 ثانية",
                     "Security Concern": "-",
                     "Shot Size": "عريضة",
-                    "Tip": "Place your camera directly in front of the primary location you are filming.", 
+                    "Tip": "ضع الكاميرا مباشرة أمام الموقع الذي تصوره.", 
                     "Title": "الموقع"
                 }
             ], 
             "title":"مشهد1"
         }
     ], 
-    "title": "Simple Story - Video"
+    "title": "قصة بسيطة - فيديو"
 }

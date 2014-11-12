@@ -28,16 +28,15 @@
   <string name="menu_about">لمحة</string>
   <string name="menu_save_project">حفظ</string>
   <string name="menu_overlay_camera">كاميرا</string>
-  <string name="menu_add_from_gallery">الإستراد من معرض الصور</string>
   <string name="menu_add_new_shot">إضافة كليب للمشهد</string>
-  <string name="menu_del_shot">فسخ الكليب الحالي</string>
   <string name="menu_export_project_files">حفظ المشروع مضغوط zip</string>
+  <string name="menu_join_storymaker">انظم إلى مجموعة StoryMaker</string>
   <string name="menu_sign_up">دخول / تسجيل</string>
   <string name="menu_upload_manager">إدارة التحميل</string>
-  <string name="welcome_message">أعزائي المشاهدين!\nمرحباً بكم في StoryMaker</string>
+  <string name="welcome_message">اهلا!\n مرحبا في StoryMaker</string>
   <!--project list-->
-  <string name="default_project_list_view">هذه أول مرة تقيمون فيها مشروعاً!\n- انقر للبدأ - </string>
-  <string name="default_project_view_message">لديك اختيارات.\nقص قصتك باستخدام الفيديو أو الصوت أو الصور الفوتوغرافية.\n- انقر للإضافة -</string>
+  <string name="default_project_list_view">هذه أول مرة لإنشاء مشروع!\n\n- انقر لتبدأ -</string>
+  <string name="default_project_view_message">لديك خيارات.\n اروي قصتك بالفيديو، بالصوت أو بالصور.\n\n- انقر للإضافة - </string>
   <!--video processing-->
   <string name="pref_out_fps_title">معدل إطار المخرج (إطار في الثانية)</string>
   <string name="pref_out_fps_summary">الإطارات في الثانية لحفظ فيديو مخرج بمعدل (15-30)</string>
@@ -70,7 +69,9 @@
   <string name="acquiring_log_progress_dialog_message">الحصول على السجل من النظام \u2026</string>
   <string name="chooser_title">اختر تطبيق لإرسال السجل</string>
   <string name="failed_to_get_log_message">فشل الحصول على السجل من النظام.</string>
-  <string name="main_dialog_text">سيحاول هذا التطبيق الحصول على سجل الجهاز.\nسيتم إرسال السجل باستخدام تطبيق من اختيارك. \nكما ستتاح لك الفرصة لمشاهدة وتعديل البيانات المرسلة.</string>
+  <string name="main_dialog_text">سيحاول هذا التطبيق الحصول على سجل الجهاز.
+سيتم إرسال السجل باستخدام تطبيق من اختيارك. 
+كما ستتاح لك الفرصة لمشاهدة وتعديل البيانات المرسلة.</string>
   <string name="title_home_projects">المشاريع</string>
   <string name="title_home_activity">النشاط</string>
   <string name="title_lessons_lessons">الدروس</string>
@@ -155,6 +156,7 @@
   <!--shown as the message in a dialog when the recording could not be added to the media database-->
   <string name="error_mediadb_new_record">لم يتم التمكن من حفظ الصوت المسجل</string>
   <!--shown as the message in a dialog when an export will tak up too much space-->
+  <string name="error_storage_space" formatted="false">عذرا، لا توجد مساحة كافية للتخزين. الرجاء التثبت من وجود على الإقل %.2f%nMB ثم حاول مجددا!</string>
   <!--add for libra begin-->
   <string name="default_record_name">سجل بدون عنوان</string>
   <string name="menu_view_record_list">عرض قائمة السجلات</string>
@@ -182,7 +184,6 @@
   <string name="lessons_congratulations_you_have_completed_the_lesson_">لقد أنهيت درس</string>
   <string name="lesson_status_in_progress">جاري التنفيذ</string>
   <string name="lesson_status_complete">تم!</string>
-  <string name="tap_to_start_capture">انقر لبدء اللقطة</string>
   <string name="no_lessons_available_tap_to_load_">لا دروس متاحة (انقر للتحميل)</string>
   <string name="_lesson_complete">تم الدرس</string>
   <string name="_of_">من</string>
@@ -201,19 +202,24 @@
   <string name="video_project_project_type">مشروع فيديو</string>
   <string name="photo_project_project_type">مشروع فوتوغرافي</string>
   <string name="audio_project_project_type">مشروع صوتي</string>
+  <string name="photo_essay_project_project_type">مشروع تقرير مصور</string>
   <string name="eula_title">توافق على:</string>
   <string name="eula_accept">موافقة</string>
   <string name="eula_refuse">رفض</string>
   <string name="privacy_policy">سياسة الخصوصية</string>
+  <string name="end_user_license_agreement">اتفاقية ترخيص المستخدم</string>
+  <string name="send_annonymous_data">أرسال معلومات الاستخدام بصفة مجهولة لمساعدتنا في تطوير StoryMaker.</string>
   <string name="by_clicking_accept">بالضغط على \'قبول\' أنت توافق على اتفاقية ترخيص المستخدم لدينا والتي كنت قد قرأت سياسة الخصوصية الخاصة بنا:</string>
   <string name="button_add_narration">تسجيل التعليق</string>
   <string name="button_play_narration">تشغيل التعليق</string>
   <string name="button_delete_narration">فسخ التعليق</string>
   <string name="button_render_preview">معاينة التحضير</string>
+  <string name="publish_sm">StoryMaker.cc</string>
   <string name="publish_youtube">YouTube -- يوتيوب</string>
   <string name="action_render">تصدير</string>
   <string name="action_play">تشغيل</string>
   <string name="action_share">المشاركة</string>
+  <string name="drawer_quick_capture">لقطة سريعة</string>
   <string name="select_story_type">اختيار نوع القصة</string>
   <string name="button_start_my_story">بدء القصة</string>
   <string name="home_intro_button_lessons">تصفح الدروس</string>
@@ -221,7 +227,11 @@
   <string name="created_with_storymaker_tag">انتجت بستوري مايكر - https://storymaker.cc</string>
   <string name="err_you_need_at_least_one_account_configured_on_your_device">تحتاج على الأقل لحساب لتحضير الجهاز</string>
   <string name="you_began_a_new_lesson">لقد بدأت درسا جديدا</string>
+  <string name="scene_editor_trim_clip">قص المقطع</string>
   <string name="cancel">إلغاء</string>
+  <string name="play_or_share_exported_media_">تشغيل أو مشاركة الميديا المصدّرة؟</string>
+  <string name="scene_s_">مش(ا)هد</string>
+  <string name="clip_s_">لقط(ا)ة</string>
   <string name="sc_app_not_found">تطبيق صاوندكلاود غير موجود!</string>
   <string name="sc_app_not_found_message">هل ترغب في تنصيبه الآن؟</string>
   <string name="no_active_sc_account">لا وجود لحساب صاوندكلاود، الرجاء التسجيل أو الدخول</string>
@@ -231,6 +241,7 @@
   <string name="uploading">تحميل...</string>
   <string name="canceled">ألغيَ التحميل</string>
   <!--added for project export-->
+  <string name="export_dialog_title">هل ترغب في مشاركة هذا المشروع zip؟</string>
   <string name="export_dialog_close">غلق</string>
   <string name="export_dialog_share">المشاركة</string>
   <string name="title_activity_accounts">حسابات</string>
@@ -245,12 +256,14 @@
   <string name="label_activities">سِجل الأنشطة</string>
   <string name="hint_story_title">أدخل عنوانا</string>
   <string name="hint_story_description">صف قصتك...</string>
+  <string name="hint_story_tag">#كلمات_مفاتيح</string>
   <string name="label_section">القسم</string>
   <string name="label_location">الموقع</string>
   <string name="title_activity_story_info">معلومات</string>
   <string name="title_activity_story_info_edit">تعدبل المعلومات</string>
   <string name="title_activity_connect_account">حساب ستوري مايكر</string>
   <string name="hint_no_description">بدون وصف</string>
+  <string name="trim_clips">اقطع اللقطات</string>
   <string name="info">معلومات</string>
   <string name="send_logcat_to_support">إرسال السجل إلى الدعم</string>
   <string name="restarting_storymaker">إعادة تشغيل ستوري مايكر</string>
