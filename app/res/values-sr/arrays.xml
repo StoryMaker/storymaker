@@ -2,6 +2,5 @@
 <resources>
   <string-array name="story_sections"/>
   <string-array name="lesson_sections"/>
-  <string-array name="array_story_locations"/>
   <string-array name="array_story_sections"/>
 </resources>

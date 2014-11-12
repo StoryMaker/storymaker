@@ -4,9 +4,9 @@
             "clips": [
                 {
                     "Artwork": "cliptype_close", 
-                    "Description": "Get close enough to ensure you have good sound and can see their face clearly.",
-                    "Goal": "Ask the character to tell you a story. Capture their emotion.",
-                    "Length": "30-60 seconds", 
+                    "Description": "S'approcher assez près pour vous assurer d'avoir un bon son et pouvez voir leur visage clairement.",
+                    "Goal": "Demandez le personnage de vous raconter une histoire. Capturer l'émotion.",
+                    "Length": "30-60 secondes", 
                     "Security Concern": "-", 
                     "Shot Size": "Proche", 
                     "Tip": "Utilisez la ligne de l'œil pour cadrer votre capture correctement.", 
@@ -14,47 +14,47 @@
                 },                 
                 {
                     "Artwork": "cliptype_detail", 
-                    "Description": "Get close to an object, or person, and capture a memorable detail to summarize your story in one shot.", 
-                    "Goal": "Show an essential detail to the story.", 
-                    "Length": "5 - 10 seconds", 
+                    "Description": Soyez près d'un objet ou d'une personne, et de capturer un détail mémorable pour résumer votre histoire en un seul coup.", 
+                    "Goal": "Montrer un détail essentiel à l'histoire.", 
+                    "Length": "5 - 10 secondes", 
                     "Security Concern": "-", 
-                    "Shot Size": "Détails", 
-                    "Tip": "The detail should fill at least 50% of the frame.", 
+                    "Shot Size": "Details", 
+                    "Tip": "Le détail doit remplir au moins 50% du cadre.", 
                     "Title": "Signature" 
                 },
                 {
                     "Artwork": "cliptype_medium", 
-                    "Description": "Let the camera observe the character relating to friends, their work, demonstrating their knowledge, or completing an action.", 
-                    "Goal": "Show an interaction between the character and their world.", 
-                    "Length": "10 - 15 seconds",
+                    "Description": "Laissez l'appareil observer le personnage relatif à des amis, leur travail, démontrant leurs connaissances, ou de compléter une action.", 
+                    "Goal": "Montrer une interaction entre le personnage et son entourage.", 
+                    "Length": 10 - 15 secondes",
                     "Security Concern": "-",
                     "Shot Size": "Moyenne",
-                    "Tip": "The character should fill about 30% of the frame.",
+                    "Tip": "Le personnage doit remplir environ 30% du cadre.",
                     "Title": "Interaction"
                 },
                 {
                     "Artwork": "cliptype_long", 
-                    "Description": "Step back. This shot should be wide enough to depict the character from head to toe in their location.", 
-                    "Goal": "Capture the character in action.", 
-                    "Length": "10 - 15 seconds", 
+                    "Description": "Un pas en arrière. Ce plan doit être suffisamment large pour décrire le caractère de la tête aux pieds dans leur emplacement.", 
+                    "Goal": "Capturer le personnage en action.", 
+                    "Length": 10 - 15 secondes", 
                     "Security Concern": "-", 
                     "Shot Size": "Longue", 
                     "Tip": "Gardez votre personnage sur une des lignes verticales pour cadrer votre capture proprement", 
-                    "Title": "Activity"
+                    "Title": "Activité"
                 }, 
                 {
                     "Artwork": "cliptype_wide",
-                    "Description": "Landmarks or location specific are ideal to include. Environmental shots can help indicate the country, ethnicity, or religion of your character.",
+                    "Description": "Les sites d'intérêt ou un emplacement spécifique sont idéales pour les inclure. Les plans d'environnement peuvent aider à indiquer le pays, l'origine ethnique ou la religion de votre personnage.",
                     "Goal": "Montrer où se passe votre histoire.",
-                    "Length": "5 - 10 seconds",
+                    "Length": "5 - 10 secondes",
                     "Security Concern": "-",
                     "Shot Size": "Large",
-                    "Tip": "Place your camera directly in front of the primary location you are filming.", 
-                    "Title": "Location"
+                    "Tip": "Placez votre appareil photo directement en face de l'emplacement principal que vous filmez.", 
+                    "Title": "Endroit"
                 }
             ], 
             "title": "Scene 1"
         }
     ], 
-    "title": "Simple Story - Video"
+    "title": "Histoire simple - Vidéo"
 }

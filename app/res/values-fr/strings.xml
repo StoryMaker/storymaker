@@ -28,17 +28,15 @@
   <string name="menu_about">A propos</string>
   <string name="menu_save_project">Sauvegarder</string>
   <string name="menu_overlay_camera">Caméra</string>
-  <string name="menu_add_from_gallery">Importer de la Galerie</string>
   <string name="menu_add_new_shot">Ajouter un Clip à la scène</string>
-  <string name="menu_del_shot">Effacer le Clip actuel</string>
   <string name="menu_export_project_files">Exporter le Projet en Zip</string>
   <string name="menu_join_storymaker">Joindre la Communauté StoryMaker</string>
   <string name="menu_sign_up">s\'inscrire / se connecter</string>
   <string name="menu_upload_manager">Gestion du chargement</string>
-  <string name="welcome_message">salut\nBienvenu à StoryMaker </string>
+  <string name="welcome_message">Salut!\nBienvenu à StoryMaker</string>
   <!--project list-->
-  <string name="default_project_list_view">C\'est votre première fois pour créer un projet!\n\n-taper pour commencer-</string>
-  <string name="default_project_view_message">Vous avez des choix\nRaconter votre histoire en vidéo, audio où en photos.\n\n-taper pour ajouter-</string>
+  <string name="default_project_list_view">C\'est la première fois que vous créez un projet!\n\n- Appuyez pour commencer -</string>
+  <string name="default_project_view_message">vous avez des choix.\nRaconter votre histoire en Vidéo, Audio, ou bien Photo.\n\n- Appuyez pour ajouter -</string>
   <!--video processing-->
   <string name="pref_out_fps_title">Débit de Sortie (fps)</string>
   <string name="pref_out_fps_summary">Images par seconde pour sauvegarder la vidéo de sortie à (15-30)</string>
@@ -71,7 +69,9 @@
   <string name="acquiring_log_progress_dialog_message">Acquisition du Log de system\u2026</string>
   <string name="chooser_title">Sélectionnez une application pour envoyer le Log</string>
   <string name="failed_to_get_log_message">Avoir le Log du système a échoué.</string>
-  <string name="main_dialog_text">Cette application va essayer de collecter le log de votre appareil.\nLe Log collecté sera envoyé par l\'application de votre choix.\nVous aurez aussi l’opportunité de voir et modifier les données à envoyer. </string>
+  <string name="main_dialog_text">Cette application va essayer de collecter le log de votre appareil.
+Le Log collecté sera envoyé par l\'application de votre choix.
+Vous aurez aussi l’opportunité de voir et modifier les données à envoyer. </string>
   <string name="title_home_projects">Projets</string>
   <string name="title_home_activity">Activité</string>
   <string name="title_lessons_lessons">Leçons</string>
@@ -184,7 +184,6 @@
   <string name="lessons_congratulations_you_have_completed_the_lesson_">vous avez terminé une leçon!</string>
   <string name="lesson_status_in_progress">En cours</string>
   <string name="lesson_status_complete">Complet!</string>
-  <string name="tap_to_start_capture">Taper pour commencer la capture</string>
   <string name="no_lessons_available_tap_to_load_">Pas de cours disponibles (taper pour télécharger)</string>
   <string name="_lesson_complete">Leçon complète</string>
   <string name="_of_">de</string>

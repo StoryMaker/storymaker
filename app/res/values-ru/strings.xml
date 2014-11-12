@@ -28,7 +28,9 @@
   <string name="menu_about">О программе</string>
   <string name="menu_save_project">Сохранить</string>
   <string name="menu_overlay_camera">Камера</string>
+  <string name="menu_add_from_gallery">Импортировать из Галереи</string>
   <string name="menu_add_new_shot">Добавить клип к эпизоду</string>
+  <string name="menu_del_shot">Удалить текущий клип</string>
   <string name="menu_export_project_files">Экспортировать файлы проекта в Zip</string>
   <string name="menu_join_storymaker">Присоединиться к сообществу StoryMaker</string>
   <string name="menu_sign_up">Зарегистрироваться / Войти</string>
@@ -184,6 +186,7 @@
   <string name="lessons_congratulations_you_have_completed_the_lesson_">Вы закончили урок!</string>
   <string name="lesson_status_in_progress">В процессе</string>
   <string name="lesson_status_complete">ЗАВЕРШЕНО!</string>
+  <string name="tap_to_start_capture">нажмите, чтобы начать съемку</string>
   <string name="no_lessons_available_tap_to_load_">Нет доступных уроков (нажмите, чтобы загрузить)</string>
   <string name="_lesson_complete">урок завершен</string>
   <string name="_of_">из</string>

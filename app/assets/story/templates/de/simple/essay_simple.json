@@ -9,8 +9,8 @@
                     "Length": "X Sekunden", 
                     "Security Concern": "-", 
                     "Shot Size": "Das", 
-                    "Tip": "Set your camera to Macro if you are shooting less than arm’s length from your subject.", 
-                    "Title": "Signature"
+                    "Tip": "Set your camera to Macro if you are shooting less than arm\u2019s length from your subject.", 
+                    "Title": "Signatur"
                 }, 
                 {
                     "Artwork": "cliptype_medium", 
@@ -20,7 +20,7 @@
                     "Security Concern": "-", 
                     "Shot Size": "Mitte", 
                     "Tip": "Keep your character on one of the vertical lines to frame your shot properly.", 
-                    "Title": "Reaction/Interaction"
+                    "Title": "Reaktion/Interaktion"
                 }, 
                 {
                     "Artwork": "cliptype_long", 
@@ -40,7 +40,7 @@
                     "Security Concern": "-", 
                     "Shot Size": "Close", 
                     "Tip": "Use the eye-line to frame your shot properly.", 
-                    "Title": "Portrait"
+                    "Title": "Porträt"
                 }, 
                 {
                     "Artwork": "cliptype_wide", 
@@ -53,7 +53,7 @@
                     "Title": "Environmental"
                 }
             ], 
-            "title": "Scene 1"
+            "title": "Szene 1"
         }
     ], 
     "title": "Essay Simple"

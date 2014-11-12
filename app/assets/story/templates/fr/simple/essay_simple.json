@@ -9,7 +9,7 @@
                     "Length": "X secondes", 
                     "Security Concern": "-", 
                     "Shot Size": "Détails", 
-                    "Tip":"Réglez votre appareil photo en Macro si vous prenez moins que le bout de bras de votre sujet.", 
+                    "Tip":"Paramètrez votre caméra en mode Macro si vous photographiez moins qu'une bras de longueur de votre sujet.", 
                     "Title": "Signature"
                 }, 
                 {
@@ -20,7 +20,7 @@
                     "Security Concern": "-", 
                     "Shot Size": "Moyenne", 
                     "Tip": "Gardez votre personnage sur une des lignes verticales pour cadrer votre capture proprement", 
-                    "Title": "Reaction/Interaction"
+                    "Title": "Réaction/Interaction"
                 }, 
                 {
                     "Artwork": "cliptype_long", 
@@ -28,7 +28,7 @@
                     "Goal": "Montrer le Personnage engagé dans son environnement.", 
                     "Length": "X secondes", 
                     "Security Concern": "-", 
-                    "Shot Size": "Longue", 
+                    "Shot Size": "Long", 
                     "Tip": "Placez votre personnage sur un côté du cadre, cadrez votre capture à montrer quelque chose d'important à l'histoire sur l'autre côté.", 
                     "Title": "Candid"
                 }, 
@@ -50,11 +50,11 @@
                     "Security Concern": "-", 
                     "Shot Size": "Large", 
                     "Tip": "Les sites d'intérêt aident le public à comprendre leur emplacement.", 
-                    "Title": "Environmental"
+                    "Title": "Environmentale"
                 }
             ], 
             "title": "Scene 1"
         }
     ], 
-    "title": "Essay Simple"
+    "title": "Essai Simple"
 }

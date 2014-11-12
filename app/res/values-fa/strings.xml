@@ -27,14 +27,9 @@
   <string name="menu_about">درباره</string>
   <string name="menu_save_project">ذخیره</string>
   <string name="menu_overlay_camera">دوربین</string>
-  <string name="menu_add_from_gallery">وارد کردن از گالری</string>
   <string name="menu_add_new_shot">اضافه کردن کلیپ به منظره</string>
-  <string name="menu_del_shot">پاک کردن کلیپ کنونی</string>
   <string name="menu_export_project_files">ذخیره کردن فایل های پروژه به صورت فشرده ZIP</string>
-  <string name="welcome_message">سلام! \nبه خبرساز خوش آمدید</string>
   <!--project list-->
-  <string name="default_project_list_view">ساخت پروژه برای نخستین بار\nبرای شروع لمس کنید</string>
-  <string name="default_project_view_message">می‌توانید انتخاب کنید\nخبرتان را با استفاده از ویدیو٬ صدا یا عکس بگویید\n\n-برای اضافه کردن لمس کنید-</string>
   <!--video processing-->
   <string name="pref_out_fps_title">برونداد  نرخ فریم (فریم در ثانیه)</string>
   <string name="pref_out_fps_summary">تعداد فریم در ثانیه برای ذخیره کردن ویدیو(15-30)</string>
@@ -177,7 +172,6 @@
   <string name="lessons_congratulations_you_have_completed_the_lesson_">شما یک درس را تمام کردید!</string>
   <string name="lesson_status_in_progress">در حال پیگیری</string>
   <string name="lesson_status_complete">کامل شد!</string>
-  <string name="tap_to_start_capture">برای آغاز کپچر لمس کنید</string>
   <string name="no_lessons_available_tap_to_load_">درس موجود نیست (برای بارگذاری لمس کنید)</string>
   <string name="_lesson_complete">درس کامل شد</string>
   <string name="_of_">از</string>

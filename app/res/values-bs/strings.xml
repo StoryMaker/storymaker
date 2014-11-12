@@ -28,17 +28,12 @@
   <string name="menu_about">O</string>
   <string name="menu_save_project">Pohraniti</string>
   <string name="menu_overlay_camera">Kamera</string>
-  <string name="menu_add_from_gallery">Uvezite iz Galerije</string>
   <string name="menu_add_new_shot">Dodaj isječak u događaj</string>
-  <string name="menu_del_shot">Izbrišite trenutni isječak</string>
   <string name="menu_export_project_files">Izvezite projekt datoteke kao Zip</string>
   <string name="menu_join_storymaker">Pridružite se StoryMaker zajednici</string>
   <string name="menu_sign_up">Prijavite se / Pristupite</string>
   <string name="menu_upload_manager">Upravitelj učitavanja</string>
-  <string name="welcome_message">Pozdrav\nDobro došao u StoryMaker</string>
   <!--project list-->
-  <string name="default_project_list_view">Prvi put kreirate projekt!\n\ndodirnite za pokretanje</string>
-  <string name="default_project_view_message">Imate izbore\nIspričajte svoju priču putem videa, audio ili fotografija\n\ndodirnite za dodavanje</string>
   <!--video processing-->
   <string name="pref_out_fps_title">Output Framerate (fps)</string>
   <string name="pref_out_fps_summary">Kadrovi po sekundama za pohranu izlaznog videa pri (15-30)</string>
@@ -71,7 +66,9 @@
   <string name="acquiring_log_progress_dialog_message">Zahtijev za zapisom iz sistema/u2026</string>
   <string name="chooser_title">Odaberite aplikaciju za slanje zapisa</string>
   <string name="failed_to_get_log_message">Neuspjeli prijem zapisa iz sistema</string>
-  <string name="main_dialog_text">Ova aplikacija će pokušati prikupiti zapise uređaja.\nPrikupljeni zapisi će biti poslani putem aplikacije po vašem izboru.\nVi ćete biti u mogućnosti da vidite i uredite podatke koji su za slanje.</string>
+  <string name="main_dialog_text">Ova aplikacija će pokušati prikupiti zapise uređaja.
+Prikupljeni zapisi će biti poslani putem aplikacije po vašem izboru.
+Vi ćete biti u mogućnosti da vidite i uredite podatke koji su za slanje.</string>
   <string name="title_home_projects">Projekti</string>
   <string name="title_home_activity">Aktivnost</string>
   <string name="title_lessons_lessons">Lekcije</string>
@@ -184,7 +181,6 @@
   <string name="lessons_congratulations_you_have_completed_the_lesson_">Dovršili ste lekciju!</string>
   <string name="lesson_status_in_progress">U tijeku</string>
   <string name="lesson_status_complete">DOVRŠENO!</string>
-  <string name="tap_to_start_capture">dodirnuti za početak snimanja</string>
   <string name="no_lessons_available_tap_to_load_">Nisu dostupne lekcije (dodirnite za učitavanje)</string>
   <string name="_lesson_complete">lekcija dovršena</string>
   <string name="_of_">od</string>

@@ -11,6 +11,7 @@
   <string name="menu_glossary">Glossar</string>
   <string name="menu_contacts">Kontakte</string>
   <string name="menu_settings">Einstellungen</string>
+  <string name="menu_accounts">Konten</string>
   <string name="menu_archive">Archiv</string>
   <string name="drawer_profile">Anmelden</string>
   <!--FIXME: rename-->
@@ -26,14 +27,10 @@
   <string name="menu_about">Info</string>
   <string name="menu_save_project">Speichern</string>
   <string name="menu_overlay_camera">Kamera</string>
-  <string name="menu_add_from_gallery">Aus Gallerie importieren</string>
   <string name="menu_add_new_shot">Clip zur Szene hinzufügen</string>
-  <string name="menu_del_shot">Aktuellen Clip löschen</string>
   <string name="menu_export_project_files">Projektdateien als Zip exportieren</string>
-  <string name="welcome_message">Hallo!\nWillkommen bei StoryMaker.</string>
+  <string name="menu_sign_up">Registrieren / Anmelden</string>
   <!--project list-->
-  <string name="default_project_list_view">Dies ist das erste Mal, dass Sie ein Projekt erzeugen.\n\n- berühren zum starten -</string>
-  <string name="default_project_view_message">Sie haben die Wahl:\nErzählen Sie ihre Geschichte mit Video, Audio oder Fotos.\n\n- berühren zum Hinzufügen -</string>
   <!--video processing-->
   <string name="pref_out_rate_title">Ausgabe-Bitrate (kbps)</string>
   <string name="pref_out_rate_summary">Bitrate der Video-Ausgabe (300-1500)</string>
@@ -49,6 +46,7 @@
   <string name="pref_out_vheight_summary">benutzerdefinierte Höhe für das Ausgabe-Video</string>
   <string name="hintTitle">Titel</string>
   <string name="hintStartTime">Start (00:00:00)</string>
+  <string name="hintEndTime">Laufzeit (00:00:00)</string>
   <string name="start_recording">Aufnahme</string>
   <string name="stop_recording">Stopp</string>
   <string name="play_recording">Abspielen</string>
@@ -78,6 +76,7 @@
   <string name="title_activity_story_template">Geschichten-Vorlage</string>
   <string name="tab_make">Erstellen</string>
   <string name="tab_review">Überarbeiten</string>
+  <string name="tab_publish">Vollständig</string>
   <string name="tab_finish">Fertig</string>
   <string name="tab_add_clips">Erstellen</string>
   <string name="tab_order">Bearbeiten</string>
@@ -140,6 +139,7 @@
   <string name="pref_title_record_type">Aufnahme-Dateityp</string>
   <string name="prefDialogTitle_recordType">Bitte wählen Sie einen Dateityp.</string>
   <string name="prefDefault_recordType">audio/3gp</string>
+  <string name="pref_title_enable_high_quality">Hohe Qualität aktivieren</string>
   <string name="pref_title_enable_sound_effect">Sound-Effekte aktivieren</string>
   <string name="pref_summary_enable_sound_effect">Spiele Sound-Effekt beim Statuswechsel</string>
   <string name="notification_recording">Aufnahme...</string>
@@ -166,6 +166,7 @@
   <string name="eula_title">Sie stimmen zu:</string>
   <string name="eula_accept">Akzeptieren</string>
   <string name="eula_refuse">Ablehnen</string>
+  <string name="privacy_policy">Datenschutzerklärung</string>
   <string name="button_render_preview">Vorschau anzeigen</string>
   <string name="publish_sm">Storymaker.cc</string>
   <string name="publish_youtube">YouTube</string>
@@ -184,15 +185,27 @@
   <string name="operation_canceled">Vorgang abgebrochen</string>
   <string name="getting_details">Ermittle Benutzer-Details</string>
   <string name="could_not_create_account">Konnte kein Benutzerkonto erstellen</string>
+  <string name="uploading">Hochladen…</string>
   <string name="canceled">Upload abgebrocen</string>
   <!--added for project export-->
   <string name="export_dialog_close">Schließen</string>
   <string name="export_dialog_share">Teilen</string>
+  <string name="title_activity_accounts">Konten</string>
   <string name="action_settings">Einstellungen</string>
   <!--added for new UI-->
+  <string name="label_title">Titel</string>
+  <string name="label_description">Beschreibung</string>
+  <string name="label_tags">Schlagwörter</string>
   <string name="label_add">Hinzufügen</string>
   <string name="label_edit">Bearbeiten</string>
+  <string name="hint_story_title">Geben Sie einen Titel ein</string>
   <string name="hint_story_description">Beschreiben Sie Ihre Geschichte...</string>
   <string name="label_section">Bereich</string>
   <string name="label_location">Ort</string>
+  <string name="title_activity_story_info">Info</string>
+  <string name="title_activity_story_info_edit">Info bearbeiten</string>
+  <string name="title_activity_connect_account">StoryMaker-Konto</string>
+  <string name="hint_no_description">Keine Beschreibung.</string>
+  <string name="info">Info</string>
+  <string name="restarting_storymaker">StoryMaker wird neu gestartet...</string>
 </resources>

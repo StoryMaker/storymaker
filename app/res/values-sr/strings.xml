@@ -28,17 +28,12 @@
   <string name="menu_about">О</string>
   <string name="menu_save_project">Сачувати</string>
   <string name="menu_overlay_camera">Камера</string>
-  <string name="menu_add_from_gallery">Увезите из Галерије</string>
   <string name="menu_add_new_shot">Додај клип у догађај</string>
-  <string name="menu_del_shot">Избришите тренутни клип</string>
   <string name="menu_export_project_files">Извезите пројект датотеке као Зип</string>
   <string name="menu_join_storymaker">Придружите се СториМакер заједници</string>
   <string name="menu_sign_up">Пријавите се / Приступите</string>
   <string name="menu_upload_manager">Управитељ учитавања</string>
-  <string name="welcome_message">Поздрав!\nДобро дошли у СториМакер</string>
   <!--project list-->
-  <string name="default_project_list_view">Први пут креирате пројект!\n\nдодирните за покретање</string>
-  <string name="default_project_view_message">Имате више избора.\nИспричајте своју причу путем видеа, аудио или фотографија.\n\nдодрините за додавање</string>
   <!--video processing-->
   <string name="pref_out_fps_title">Оутпут Фрамерате (fps)</string>
   <string name="pref_out_fps_summary">Кадрови по секундама да сачувате излазни видео при (15-30)</string>
@@ -71,7 +66,9 @@
   <string name="acquiring_log_progress_dialog_message">Захтев за записом из система\u2026</string>
   <string name="chooser_title">Одаберите апликацију за слање записа</string>
   <string name="failed_to_get_log_message">Неуспели пријем записа из система.</string>
-  <string name="main_dialog_text">Ова апликација ће покушати прикупити записе уређаја.\nПрикупљени записи ће бити послани путем апликације по вашем избору. \nВи ћете бити у могућности да видите и уредите податке који су за слање.</string>
+  <string name="main_dialog_text">Ова апликација ће покушати прикупити записе уређаја.
+Прикупљени записи ће бити послани путем апликације по вашем избору. 
+Ви ћете бити у могућности да видите и уредите податке који су за слање.</string>
   <string name="title_home_projects">Пројекти</string>
   <string name="title_home_activity">Активност</string>
   <string name="title_lessons_lessons">Лекције </string>
@@ -184,7 +181,6 @@
   <string name="lessons_congratulations_you_have_completed_the_lesson_">Довршили сте лекцију!</string>
   <string name="lesson_status_in_progress">У току</string>
   <string name="lesson_status_complete">ЗАВРШЕНО!</string>
-  <string name="tap_to_start_capture">додирнути за почетак снимања</string>
   <string name="no_lessons_available_tap_to_load_">Нису доступне лекције (додирните за учитавање)</string>
   <string name="_lesson_complete">лекција завршена</string>
   <string name="_of_">од</string>

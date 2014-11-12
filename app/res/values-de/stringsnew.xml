@@ -67,6 +67,7 @@
   <string name="experience">Erfahrung</string>
   <string name="results">Ergebnisse</string>
   <string name="next_steps">Nächste Schritte</string>
+  <string name="moving_forward">Vorwärts bewegen</string>
   <string name="conclusion">Zusammenfassung</string>
   <string name="story_type_event_news_text1">Was passiert bei diesem Ereignis?</string>
   <string name="story_type_event_news_text2">Inwiefern sind Sie involviert?</string>
@@ -166,10 +167,16 @@
   <string name="prefs_youtube_login_summary">YouTube-Web-Authentifizierung benutzen</string>
   <string name="prefs_soundcloud_account_title">SoundCloud-Benutzerkonto</string>
   <string name="prefs_soundcloud_account_summary">Das SoundCloud-Benutzerkonto, welches zum Hochladen von Audio-Inhalten genutzt werden soll.</string>
+  <string name="prefs_interface_language_title">Sprache auswählen</string>
+  <string name="prefs_lesson_language_title">Lektionen auswählen</string>
+  <string name="prefs_enable_compression_title">Komprimierung aktivieren</string>
   <string name="prefs_video_codec_title">Video-Codec</string>
+  <string name="prefs_video_codec_summary">Export-Videocodec</string>
   <string name="prefs_video_resolution_title">Video-Auflösung</string>
   <string name="prefs_video_width_title">Video-Breite</string>
+  <string name="prefs_video_width_summary">Export-Videobreite</string>
   <string name="prefs_video_height_title">Video-Höhe</string>
+  <string name="prefs_video_height_summary">Export-Videohöhe</string>
   <string name="prefs_video_bitrate_title">Video-Bitrate</string>
   <string name="prefs_video_framrate_title">Video-Framerate</string>
   <string name="prefs_audio_codec_title">Audio-Codec</string>
@@ -182,6 +189,13 @@
   <string name="prefs_disable_lesson_completion_summary"></string>
   <!--/prefs-->
   <!--FirstStartActivity-->
+  <string name="no_thanks_btn">NEIN, DANKE</string>
+  <string name="tos_btn">ICH STIMME DEN NUTZUNGSBEDINGUNGEN ZU</string>
+  <string name="tos_dialog_title">Nutzungsbedingungen</string>
   <!--ConnectAccountActivity-->
+  <string name="my_account">MEIN STORYMAKER-KONTO</string>
+  <string name="create_account">MEIN KONTO ERSTELLEN</string>
+  <string name="sign_in">REGISTRIEREN / ANMELDEN</string>
+  <string name="sign_out">ABMELDEN</string>
   <!--ProjectTagFragment-->
 </resources>

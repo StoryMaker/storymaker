@@ -18,12 +18,6 @@
     <item>Videografía</item>
     <item>Historia</item>
   </string-array>
-  <string-array name="array_story_locations">
-    <item>Egipto</item>
-    <item>Irak</item>
-    <item>Marruecos</item>
-    <item>Tunez</item>
-  </string-array>
   <string-array name="array_story_sections">
     <item>Política</item>
     <item>Negocios</item>

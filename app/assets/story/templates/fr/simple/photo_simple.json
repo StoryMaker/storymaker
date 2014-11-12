@@ -10,7 +10,7 @@
                     "Security Concern": "-", 
                     "Shot Size":"Large", 
                     "Tip": "Les sites d'intérêt aident le public à comprendre leur emplacement.", 
-                    "Title": "Environmental"
+                    "Title": "Environmentale"
                 }, 
                 {
                     "Artwork": "cliptype_medium", 
@@ -20,7 +20,7 @@
                     "Security Concern": "-", 
                     "Shot Size": "Moyenne", 
                     "Tip": "Gardez votre personnage sur une des lignes verticales pour cadrer votre capture proprement", 
-                    "Title": "Reaction/Interaction"
+                    "Title": "Réaction/Interaction"
                 }, 
                 {
                     "Artwork": "cliptype_long", 
@@ -28,7 +28,7 @@
                     "Goal": "Montrer le Personnage engagé dans son environnement.", 
                     "Length": "X secondes", 
                     "Security Concern": "-", 
-                    "Shot Size": "Longue", 
+                    "Shot Size": "Long", 
                     "Tip": "Placez votre personnage sur un côté du cadre, cadrez votre capture à montrer quelque chose d'important à l'histoire sur l'autre côté.", 
                     "Title": "Candid"
                 }, 
@@ -48,13 +48,13 @@
                     "Goal": "résumez le problème entier en illustrant un élément essentiel de l'histoire.", 
                     "Length": "X secondes", 
                     "Security Concern": "-", 
-                    "Shot Size": "Détails", 
-                    "Tip": "Set your camera to Macro if you are shooting less than arm\u2019s length from your subject.", 
+                    "Shot Size": "Details", 
+                    "Tip":"Paramètrez votre caméra en mode Macro si vous photographiez moins qu'une bras de longueur de votre sujet.", 
                     "Title": "Signature"
                 }
             ], 
             "title": "Scene 1"
         }
     ], 
-    "title": "Photo Simple"
+    "title": Photo Simple"
 }

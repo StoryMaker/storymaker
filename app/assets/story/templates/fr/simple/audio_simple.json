@@ -18,7 +18,7 @@
                     "Length": "X secondes", 
                     "Security Concern": "-", 
                     "Tip": "Vous voulez l'ambiance du clip contribue à raconter l'histoire. Si il y'a des sons sans rapport avec l'histoire ce qui peut distraire le public.", 
-                    "Title": "Ambient"
+                    "Title": "Ambiant"
                 }, 
                 {
                     "Artwork": "cliptype_close", 
@@ -27,7 +27,7 @@
                     "Length": "X secondes", 
                     "Security Concern": "-", 
                     "Tip": "Gardez ce clip bref. Il suffit d'introduire le personnage au public, ou de permettre au personnage de se présenter. Enregistrer des informations supplémentaires pour l'entretien.", 
-                    "Title": "Narrative"
+                    "Title": "Narratif"
                 }, 
                 {
                     "Artwork": "cliptype_medium", 
@@ -35,7 +35,7 @@
                     "Goal": "Demandez au personnage de vous raconteur une histoire.", 
                     "Length": "X secondes", 
                     "Security Concern": "-", 
-                    "Tip": "If you want the audience to hear your questions and the subject\u2019s answers, be sure that you are both close enough to the mic to be heard clearly.", 
+                    "Tip": "Si vous voulez que l'Audience écoute vos questions et la réponse de votre sujet, soyez sure d'être proche du micro pour que vous soyez clairement entendu.", 
                     "Title": "Interview"
                 }, 
                 {
@@ -45,7 +45,7 @@
                     "Length": "X secondes", 
                     "Security Concern": "-", 
                     "Tip": "Enregistrer le son d'ensemble de l'environnement. Soyez sûr de ne pas faire de bruit vous-même, cela va distraire l'auditoire de son naturel.", 
-                    "Title": "Environmental"
+                    "Title": "Environmentale"
                 }
             ], 
             "title": "Scene 1"

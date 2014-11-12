@@ -18,12 +18,6 @@
     <item>Видеографија</item>
     <item>Приказна</item>
   </string-array>
-  <string-array name="array_story_locations">
-    <item>Египет</item>
-    <item>Ирак</item>
-    <item>Мароко</item>
-    <item>Тунис</item>
-  </string-array>
   <string-array name="array_story_sections">
     <item>Политика</item>
     <item>Бизнис</item>
