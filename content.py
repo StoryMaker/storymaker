@@ -26,7 +26,7 @@ def pull():
 def generate_json():
     """generate json from yaml, also splits out strings into translation intermediates ready for pushing"""
 
-    os.system("cd liger-content ; python generate_content.py")
+    os.system("cd liger-content ; python generate_content.py ; python generate_localized_content.py")
 
 @cli.command()
 def push_strings():
@@ -53,7 +53,7 @@ def zip_content():
     """this creates the zipped blob of content and copies it in to storymaker's assets folder as its .obb file"""
 
     os.system("cd liger-content/assets ; zip -n .mp4 -r zipped .")
-    print "content gnerated at: liger-content.assets/zipped.zip"
+    print "content generated at: liger-content/assets/zipped.zip"
 
 @cli.command()
 def adb_push_obb():
