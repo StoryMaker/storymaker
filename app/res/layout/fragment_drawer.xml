@@ -62,17 +62,21 @@
 	        android:layout_margin="4sp"
 	        android:text="@string/drawer_quick_capture"
 	        android:textAppearance="?android:attr/textAppearanceSmall"
-	        android:textColor="#dddddd" />
+	        android:textColor="#dddddd"
+            android:visibility="gone"
+            />
 	
 	    <View
 	        android:layout_width="fill_parent"
 	        android:layout_height="1dp"
-	        android:background="#33999999" />
+	        android:background="#33999999"
+            android:visibility="gone"/>
 	
 	    <LinearLayout
 	        android:layout_width="match_parent"
 	        android:layout_height="wrap_content"
-	        android:layout_marginBottom="0sp" >
+	        android:layout_marginBottom="0sp"
+            android:visibility="gone" >
 	
 	        <ImageButton
 	            android:id="@+id/btnDrawerQuickCaptureVideo"
