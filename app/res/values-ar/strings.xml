@@ -1,6 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string name="app_name">StoryMaker</string>
+  <string name="app_description">إنتاج قصص عظيمة أصبح اليوم أمرا سهلا أكثر مما كان باستعمال StoryMaker. التراكيب و النماذج الفريدة من نوعها التي أضفناها و مجموعة الدروس كل هذا يرشدك طيلة عملية الأنتاج. StoryMaker تتيح لك الفرصة تحرير ما انتجته باستعمال الجوال، و جعله أكثر سهولة لإنهاء القصة. عند الإنتهاء، تتيح لك StoryMaker إمكانية نشر القصة على كل مواقعك المفضلة.</string>
   <string name="title_projects">قصص</string>
   <string name="title_lessons">الدروس</string>
   <string name="action_publish">نشر</string>
@@ -33,6 +34,7 @@
   <string name="menu_join_storymaker">انظم إلى مجموعة StoryMaker</string>
   <string name="menu_sign_up">دخول / تسجيل</string>
   <string name="menu_upload_manager">إدارة التحميل</string>
+  <string name="menu_uploads">الملفات المرفوعة</string>
   <string name="welcome_message">اهلا!\n مرحبا في StoryMaker</string>
   <!--project list-->
   <string name="default_project_list_view">هذه أول مرة لإنشاء مشروع!\n\n- انقر لتبدأ -</string>
@@ -198,6 +200,7 @@
   <string name="rendering_clips_">تحضير الكليبات</string>
   <string name="you_must_enter_a_project_name">الرجاء إدخال عنوان أولي, يمكنك تغييره لاحقا.</string>
   <string name="delete_project_">حذف المشروع؟</string>
+  <string name="delete_clip">فسخ اللقطة؟</string>
   <string name="add_new_clip_to_the_scene_">إضافة كليب للمشهد؟</string>
   <string name="video_project_project_type">مشروع فيديو</string>
   <string name="photo_project_project_type">مشروع فوتوغرافي</string>
@@ -228,8 +231,11 @@
   <string name="err_you_need_at_least_one_account_configured_on_your_device">تحتاج على الأقل لحساب لتحضير الجهاز</string>
   <string name="you_began_a_new_lesson">لقد بدأت درسا جديدا</string>
   <string name="scene_editor_trim_clip">قص المقطع</string>
+  <string name="delete_warning">لا يمكن التراجع بعد العملية!</string>
   <string name="cancel">إلغاء</string>
+  <string name="delete">فسخ</string>
   <string name="play_or_share_exported_media_">تشغيل أو مشاركة الميديا المصدّرة؟</string>
+  <string name="share_published_story">مشاركة القصة المنشورة؟</string>
   <string name="scene_s_">مش(ا)هد</string>
   <string name="clip_s_">لقط(ا)ة</string>
   <string name="sc_app_not_found">تطبيق صاوندكلاود غير موجود!</string>
@@ -246,13 +252,13 @@
   <string name="export_dialog_share">المشاركة</string>
   <string name="title_activity_accounts">حسابات</string>
   <string name="action_settings">إعدادات</string>
-  <!--added for new UI-->
   <string name="label_activity_log">سِجل الأنشطة</string>
   <string name="label_title">العنوان</string>
   <string name="label_description">الوصف</string>
   <string name="label_tags">العلامات</string>
   <string name="label_add">إضافة</string>
   <string name="label_edit">تعديل</string>
+  <string name="label_save">حفظ</string>
   <string name="label_activities">سِجل الأنشطة</string>
   <string name="hint_story_title">أدخل عنوانا</string>
   <string name="hint_story_description">صف قصتك...</string>
@@ -267,4 +273,5 @@
   <string name="info">معلومات</string>
   <string name="send_logcat_to_support">إرسال السجل إلى الدعم</string>
   <string name="restarting_storymaker">إعادة تشغيل ستوري مايكر</string>
+  <string name="send">ابعث</string>
 </resources>

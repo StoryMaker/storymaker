@@ -18,6 +18,17 @@
     <item>Vidéographie</item>
     <item>Hidtoire</item>
   </string-array>
+  <string-array name="array_story_locations">
+    <item>U.S.A</item>
+    <item>La Californie</item>
+    <item>Oakland</item>
+    <item>Egypte</item>
+    <item>L\'Irak</item>
+    <item>Maroc</item>
+    <item>Tunisie</item>
+    <item>Zimbabwe</item>
+    <item>République Tchèque</item>
+  </string-array>
   <string-array name="array_story_sections">
     <item>Politique</item>
     <item>Economie</item>

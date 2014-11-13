@@ -39,7 +39,7 @@
                     "Length": "X secondes", 
                     "Security Concern": "-", 
                     "Shot Size": "proche", 
-                    "Tip": " Utilisez la ligne de l'œil pour cadrer votre capture correctement.", 
+                    "Tip": "Utilisez la ligne de l'œil pour cadrer votre capture correctement.", 
                     "Title": "Portrait"
                 }, 
                 {
@@ -56,5 +56,5 @@
             "title": "Scene 1"
         }
     ], 
-    "title": Photo Simple"
+    "title": "Photo Simple"
 }

@@ -1,6 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string name="app_name">StoryMaker</string>
+  <string name="app_description">La création de belles histoires est maintenant plus facile que jamais avec StoryMaker. Nos modèles uniques, des superpositions et des leçons vous guident à travers l\'ensemble du processus créatif. StoryMaker vous permet de modifier votre bon contenu sur votre mobile, ce qui rend encore plus facile de terminer votre histoire. Une fois que vous avez terminé, StoryMaker vous permet de publier votre histoire à tous vos plateformes préférées.</string>
   <string name="title_projects">Histoires</string>
   <string name="title_lessons">Leçons</string>
   <string name="action_publish">Publier</string>
@@ -33,6 +34,7 @@
   <string name="menu_join_storymaker">Joindre la Communauté StoryMaker</string>
   <string name="menu_sign_up">s\'inscrire / se connecter</string>
   <string name="menu_upload_manager">Gestion du chargement</string>
+  <string name="menu_uploads">Chargements</string>
   <string name="welcome_message">Salut!\nBienvenu à StoryMaker</string>
   <!--project list-->
   <string name="default_project_list_view">C\'est la première fois que vous créez un projet!\n\n- Appuyez pour commencer -</string>
@@ -198,6 +200,7 @@ Vous aurez aussi l’opportunité de voir et modifier les données à envoyer. <
   <string name="rendering_clips_">Rendu des Clips </string>
   <string name="you_must_enter_a_project_name">Veuillez entrer un titre à votre travail. Vous pouvez le changer ultérieurement.</string>
   <string name="delete_project_">Effacer le Projet?</string>
+  <string name="delete_clip">Supprimer le Clip?</string>
   <string name="add_new_clip_to_the_scene_">Ajouter un Nouveau Clip à la Scène?</string>
   <string name="video_project_project_type">Projet Vidéo</string>
   <string name="photo_project_project_type">Projet Photo</string>
@@ -230,8 +233,11 @@ Vous aurez aussi l’opportunité de voir et modifier les données à envoyer. <
   <string name="you_began_a_new_lesson">Vous avez commencé une nouvelle leçon</string>
   <string name="scene_editor_please_add_clips">Veuillez ajouter des clips dans l\'onglet \"Créer\" avant de sélectionner cette onglet.</string>
   <string name="scene_editor_trim_clip">Couper le Clip</string>
+  <string name="delete_warning">Cette action ne peut être annulée!</string>
   <string name="cancel">Annuler</string>
+  <string name="delete">Supprimer</string>
   <string name="play_or_share_exported_media_">Lire ou Publier le média exporté?</string>
+  <string name="share_published_story">Partager l\'Histoire publiée?</string>
   <string name="err_storage_not_ready">Le stockage externe (CarteSD) ne semble pas être disponible pour la lecture et l\'écriture pour l\'instant. StoryMaker à besoin de ça pour les leçons et les données du projet. Veuillez vérifier votre appareil et redémarrer l\'application.</string>
   <string name="scene_s_">scène(s)</string>
   <string name="clip_s_">clip(s)</string>
@@ -250,13 +256,13 @@ Vous aurez aussi l’opportunité de voir et modifier les données à envoyer. <
   <string name="export_dialog_share">Partager</string>
   <string name="title_activity_accounts">Comptes</string>
   <string name="action_settings">Paramètres </string>
-  <!--added for new UI-->
   <string name="label_activity_log">Journal d\'activité</string>
   <string name="label_title">Titre</string>
   <string name="label_description">Description</string>
   <string name="label_tags">étiquettes</string>
   <string name="label_add">Ajouter</string>
   <string name="label_edit">Editer</string>
+  <string name="label_save">Enregistrer</string>
   <string name="label_activities">Journal d\'activité</string>
   <string name="hint_story_title">Entrer un Titre</string>
   <string name="hint_story_description">Décrire votre Histoire...</string>
@@ -272,4 +278,11 @@ Vous aurez aussi l’opportunité de voir et modifier les données à envoyer. <
   <string name="info">Infos</string>
   <string name="send_logcat_to_support">Envoyer le Log au support</string>
   <string name="restarting_storymaker">Redémarrer StoryMaker...</string>
+  <string name="send">envoyer</string>
+  <string name="title_activity_press_secure">PressSecure</string>
+  <string name="title_activity_publish">PublishActivity</string>
+  <string name="uploading_to_soundcloud">Chargement vers SoundCloud...</string>
+  <string name="uploading_to_facebook">Chargement vers Facebook...</string>
+  <string name="uploading_to_internet_archive">Chargement à L\'Archive Internet...</string>
+  <string name="no_site_selected">Aucun Site sélectionné.</string>
 </resources>

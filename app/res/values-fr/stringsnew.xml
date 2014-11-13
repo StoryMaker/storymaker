@@ -181,6 +181,8 @@
   <string name="prefs_storymaker_server_summary">Serveur pour héberger toutes les leçons et le contenu des histoires</string>
   <string name="prefs_use_tor_title">Utiliser Orbot (Tor)</string>
   <string name="prefs_use_tor_summary">Envoyer tout le trafic réseau à travers le réseau Tor en utilisant l\'application Orbot</string>
+  <string name="prefs_sm_upload_title">Charger à StoryMaker</string>
+  <string name="prefs_sm_upload_summary">Charger au serveur StoryMaker par défaut</string>
   <string name="prefs_use_download_manager_title">Utiliser le gestionnaire de téléchargement</string>
   <string name="prefs_use_download_manager_summary">Télécharger l\'archive des leçons par le service de Gestionnaire d\'upload pour Android</string>
   <string name="prefs_use_upload_manager_title">Utiliser le Gestionnaire d\'upload</string>
