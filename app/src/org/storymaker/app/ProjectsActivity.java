@@ -75,7 +75,8 @@ public class ProjectsActivity extends BaseActivity {
              return true;
          case R.id.menu_new_project:
  		
-			 startActivity(new Intent(this, StoryNewActivity.class));
+//			 startActivity(new Intent(this, StoryNewActivity.class));
+             HomeActivity.launchLiger(this, "default_library");
 
              return true;
      }
