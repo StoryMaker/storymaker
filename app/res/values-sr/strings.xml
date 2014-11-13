@@ -253,6 +253,7 @@
   <string name="label_tags">Ознаке</string>
   <string name="label_add">Додати </string>
   <string name="label_edit">Уредити </string>
+  <string name="label_save">Сачувати </string>
   <string name="label_activities">Запис активности</string>
   <string name="hint_story_title">Унесите наслов</string>
   <string name="hint_story_description">Опишите вашу причу... </string>

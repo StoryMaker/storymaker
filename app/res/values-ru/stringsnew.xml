@@ -181,6 +181,8 @@
   <string name="prefs_storymaker_server_summary">Сервер для хранения всех уроков и содержимого сюжетов</string>
   <string name="prefs_use_tor_title">Использовать Orbot (Tor)</string>
   <string name="prefs_use_tor_summary">Отправлять весь сетевой трафик через сеть Tor, используя приложение Orbot</string>
+  <string name="prefs_sm_upload_title">Загрузить в StoryMaker</string>
+  <string name="prefs_sm_upload_summary">Загружать на сервер StoryMaker по умолчанию</string>
   <string name="prefs_use_download_manager_title">Использовать менеджер загрузок</string>
   <string name="prefs_use_download_manager_summary">Загрузить архивы уроков при помощи сервиса Android DownloadManager</string>
   <string name="prefs_use_upload_manager_title">Использовать менеджер загрузок</string>

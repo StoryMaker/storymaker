@@ -1,6 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string name="app_name">StoryMaker</string>
+  <string name="app_description">Crear grandes historias es ahora más fácil que nunca con StoryMaker. Nuestras plantillas, diseños, y lecciones únicas le guían a través de todo el proceso de creación. StoryMaker le permite editar su contenido desde su mismo móvil, haciendo que sea incluso más fácil finalizar su historia. Una vez la ha terminado, StoryMaker le permite publicar su historia para todas sus plataformas favoritas.</string>
   <string name="title_projects">Historias</string>
   <string name="title_lessons">Lecciones</string>
   <string name="action_publish">Publicar</string>
@@ -33,6 +34,7 @@
   <string name="menu_join_storymaker">Únase a la comunidad de StoryMaker</string>
   <string name="menu_sign_up">Registrarse / Iniciar sesión</string>
   <string name="menu_upload_manager">Gestor de subida</string>
+  <string name="menu_uploads">Subidas</string>
   <string name="welcome_message">¡Saludos!\nBienvenido a StoryMaker</string>
   <!--project list-->
   <string name="default_project_list_view">¡Esta es la primera vez que crear un proyecto!\n\n- pulse para comenzar -</string>
@@ -257,6 +259,7 @@ No se puede acceder al almacenamiento externo o interno</string>
   <string name="label_tags">Etiquetas</string>
   <string name="label_add">Añadir</string>
   <string name="label_edit">Editar</string>
+  <string name="label_save">Guardar</string>
   <string name="label_activities">Registro (log) de actividad</string>
   <string name="hint_story_title">Introduzca un título</string>
   <string name="hint_story_description">Describa su historia...</string>
@@ -272,4 +275,5 @@ No se puede acceder al almacenamiento externo o interno</string>
   <string name="info">Información</string>
   <string name="send_logcat_to_support">Enviar Logcat al equipo de soporte</string>
   <string name="restarting_storymaker">Reiniciando StoryMaker...</string>
+  <string name="send">Enviar</string>
 </resources>

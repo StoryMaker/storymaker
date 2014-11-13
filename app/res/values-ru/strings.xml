@@ -1,6 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string name="app_name">StoryMaker</string>
+  <string name="app_description">Благодаря StoryMaker, процесс создание сюжетов стал еще проще. Наши оригинальные шаблоны, схемы и уроки будут служить вам ориентиром в творческом процессе. StoryMaker позволяет вам редактировать сюжет прямо на мобильном телефоне, что позволяет быстро закончить работу над ним. Когда вы завершили сюжет, StoryMaker позволяет вам опубликовать его на ваших любимых форумах. </string>
   <string name="title_projects">Сюжеты</string>
   <string name="title_lessons">Уроки</string>
   <string name="action_publish">Опубликовать</string>
@@ -33,6 +34,7 @@
   <string name="menu_join_storymaker">Присоединиться к сообществу StoryMaker</string>
   <string name="menu_sign_up">Зарегистрироваться / Войти</string>
   <string name="menu_upload_manager">Менеджер загрузок</string>
+  <string name="menu_uploads">Загруженная информация</string>
   <string name="welcome_message">Привет!\nДобро пожаловать в StoryMaker</string>
   <!--project list-->
   <string name="default_project_list_view">Это ваш первый проект!\n\n- нажмите, чтобы начать -</string>
@@ -198,6 +200,7 @@
   <string name="rendering_clips_">обработка клипов...</string>
   <string name="you_must_enter_a_project_name">Пожалуйста, введите заголовок для черновика. Вы можете изменить его позже.</string>
   <string name="delete_project_">Удалить проект?</string>
+  <string name="delete_clip">Удалить клип?</string>
   <string name="add_new_clip_to_the_scene_">Добавить новый клип к эпизоду?</string>
   <string name="video_project_project_type">Видео проект</string>
   <string name="photo_project_project_type">Фото проект</string>
@@ -230,8 +233,11 @@
   <string name="you_began_a_new_lesson">Вы начали новый урок</string>
   <string name="scene_editor_please_add_clips">Пожалуйста, добавьте клипы на закладке \"Создать\" перед выбором текущей закладки.</string>
   <string name="scene_editor_trim_clip">Обрезать клип</string>
+  <string name="delete_warning">Действие не может быть отменено!</string>
   <string name="cancel">Отмена</string>
+  <string name="delete">Удалить</string>
   <string name="play_or_share_exported_media_">Воспроизвести или поделиться экспортированным материалом?</string>
+  <string name="share_published_story">Поделиться опубликованным сюжетом?</string>
   <string name="err_storage_not_ready">Внешнее хранилище (SDCard) на данный момент не доступно для чтения и записи. StoryMaker необходим доступ к нему для уроков и проектных данных сюжета. Пожалуйста, проверьте ваше устройство и перезапустите приложение.</string>
   <string name="scene_s_">эпизод(ы)</string>
   <string name="clip_s_">клип(ы)</string>
@@ -256,6 +262,7 @@
   <string name="label_tags">Пометки</string>
   <string name="label_add">Добавить</string>
   <string name="label_edit">Редактировать</string>
+  <string name="label_save">Сохранить</string>
   <string name="label_activities">Журнал событий</string>
   <string name="hint_story_title">Введите название</string>
   <string name="hint_story_description">Опишите ваш сюжет...</string>
@@ -271,4 +278,6 @@
   <string name="info">Информация</string>
   <string name="send_logcat_to_support">Отправить Logcat в службу поддержки</string>
   <string name="restarting_storymaker">Перезапуск StoryMaker...</string>
+  <string name="send">Отослать</string>
+  <string name="title_activity_press_secure">PressSecure</string>
 </resources>

@@ -197,6 +197,7 @@
   <string name="label_tags">Schlagwörter</string>
   <string name="label_add">Hinzufügen</string>
   <string name="label_edit">Bearbeiten</string>
+  <string name="label_save">Speichern</string>
   <string name="hint_story_title">Geben Sie einen Titel ein</string>
   <string name="hint_story_description">Beschreiben Sie Ihre Geschichte...</string>
   <string name="label_section">Bereich</string>

@@ -253,6 +253,7 @@ Vi ćete biti u mogućnosti da vidite i uredite podatke koji su za slanje.</stri
   <string name="label_tags">Oznake</string>
   <string name="label_add">Dodati</string>
   <string name="label_edit">Urediti</string>
+  <string name="label_save">Pohraniti </string>
   <string name="label_activities">Zapis aktivnosti</string>
   <string name="hint_story_title">Unesite naziv</string>
   <string name="hint_story_description">Opišite vašu priču...</string>
