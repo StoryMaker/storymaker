@@ -26,6 +26,8 @@ import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
+import scal.io.liger.DownloadHelper;
+
 public class StoryMakerApp extends Application {
 
 	
@@ -87,6 +89,8 @@ public class StoryMakerApp extends Application {
 			Utils.Proc.killZombieProcs(this);
 			
             updateLessonLocation();
+
+            DownloadHelper.checkAndDownload(this);
 		}
 		catch (Exception e)
 		{

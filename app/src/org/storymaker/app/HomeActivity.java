@@ -9,6 +9,8 @@ import org.storymaker.app.model.ProjectTable;
 import org.storymaker.app.server.LoginActivity;
 import org.storymaker.app.ui.MyCard;
 import info.guardianproject.onionkit.ui.OrbotHelper;
+import scal.io.liger.Constants;
+import scal.io.liger.DownloadHelper;
 import scal.io.liger.MainActivity;
 
 import java.io.BufferedReader;
@@ -52,6 +54,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.fima.cardsui.views.CardUI;
 //import com.google.analytics.tracking.android.GoogleAnalytics;
@@ -630,7 +633,11 @@ public class HomeActivity extends BaseActivity {
     }
 
     public static void launchLiger(Context context, String spl) {
-//        startActivity(new Intent(this, StoryNewActivity.class));
+        if (!DownloadHelper.checkExpansionFiles(context, Constants.MAIN, Constants.MAIN_VERSION)) { // FIXME the app should define these, not the library
+            Toast.makeText(context, "Please wait for the content pack to finish downloading", Toast.LENGTH_LONG).show(); // FIXME move to strings.xml
+            return;
+        }
+        //        startActivity(new Intent(this, StoryNewActivity.class));
         Intent ligerIntent = new Intent(context, MainActivity.class);
         ligerIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         ligerIntent.putExtra(MainActivity.INTENT_KEY_WINDOW_TITLE, context.getString(R.string.app_name));
@@ -642,10 +649,10 @@ public class HomeActivity extends BaseActivity {
         ligerIntent.putExtra("photo_essay_slide_duration", pslideduration * 1000);
         if (spl != null && !spl.isEmpty()) {
             ligerIntent.putExtra(MainActivity.INTENT_KEY_STORYPATH_LIBRARY_ID, spl);
-//            ligerIntent.putExtra(MainActivity.INTENT_KEY_STORYPATH_LIBRARY_ID, "learning_guide_3");
-//        ligerIntent.putExtra(MainActivity.INTENT_KEY_STORYPATH_LIBRARY_ID, "default_library");
+            //            ligerIntent.putExtra(MainActivity.INTENT_KEY_STORYPATH_LIBRARY_ID, "learning_guide_3");
+            //        ligerIntent.putExtra(MainActivity.INTENT_KEY_STORYPATH_LIBRARY_ID, "default_library");
         }
-//        startActivityForResult(ligerIntent, MainActivity.INTENT_CODE);
+        //        startActivityForResult(ligerIntent, MainActivity.INTENT_CODE);
         context.startActivity(ligerIntent);
     }
     
