@@ -1,4 +1,5 @@
 --- build 1008
 
+- allow user to view their content after publishing to Facebook, Youtube and Flickr
 - fix when rendering for Facebook
 - fix publishing stories with media that was imported

@@ -44,6 +44,5 @@ public class FlickrPublisher extends PublisherBase {
         Long id = Long.valueOf(job.getResult());
         String base58 = FlickrBaseEncoder.encode(id);
         return "https://flic.kr/p/" + base58;
-//        return null; // FIXME implement getResultUrl
     }
 }
