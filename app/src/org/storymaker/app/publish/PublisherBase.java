@@ -4,9 +4,8 @@ import java.net.MalformedURLException;
 
 import redstone.xmlrpc.XmlRpcFault;
 import android.content.Context;
-import android.os.Message;
 import android.util.Log;
-import org.storymaker.app.R;
+
 import org.storymaker.app.StoryMakerApp;
 import org.storymaker.app.model.Auth;
 import org.storymaker.app.model.AuthTable;
@@ -14,10 +13,8 @@ import org.storymaker.app.model.Job;
 import org.storymaker.app.model.JobTable;
 import org.storymaker.app.model.Project;
 import org.storymaker.app.model.PublishJob;
-import org.storymaker.app.publish.sites.SoundCloudPublisher;
 import org.storymaker.app.server.ServerManager;
 import io.scal.secureshareui.controller.SiteController;
-import io.scal.secureshareui.lib.ChooseAccountFragment;
 
 public abstract class PublisherBase {
     private final static String TAG = "PublisherBase";
@@ -36,8 +33,10 @@ public abstract class PublisherBase {
     public abstract void startUpload();
 	
 //	public abstract void jobSucceeded(Job job);
-    
-	public abstract String getEmbed(Job job);
+
+    public abstract String getEmbed(Job job);
+
+    public abstract String getResultUrl(Job job);
 
 	public String publishToStoryMaker() {
 	    Job job = getPreferredUploadJob();
@@ -105,12 +104,12 @@ public abstract class PublisherBase {
 
         // FIXME make this async and put this in the callback
         // FIXME store the final published url in the project table?
-        publishToStoryMakerSecceeded(urlPost);
+        publishToStoryMakerSucceeded(urlPost);
         
         return urlPost;
     }
     
-    public void publishToStoryMakerSecceeded(String url) {
+    public void publishToStoryMakerSucceeded(String url) {
         mController.publishJobProgress(mPublishJob, 1, "Published to StoryMaker.cc!");
         publishSucceeded(url);
     }
@@ -145,7 +144,7 @@ public abstract class PublisherBase {
 					mController.publishJobFailed(mPublishJob, 78268832, "You are not signed into StoryMaker.cc!"); // FIXME do this nicer!
 				}
 			} else {
-				mController.publishJobSucceeded(mPublishJob, job.getResult());
+                publishSucceeded(getResultUrl(job));
 			}
 		}
 	}

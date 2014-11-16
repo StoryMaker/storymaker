@@ -1,3 +1,4 @@
 --- build 1008
 
+- fix when rendering for Facebook
 - fix publishing stories with media that was imported

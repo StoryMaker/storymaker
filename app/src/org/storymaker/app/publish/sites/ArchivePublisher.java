@@ -37,11 +37,12 @@ public class ArchivePublisher extends PublisherBase {
 		mController.enqueueJob(newJob);
 	}
 
+    @Override
 	public String getEmbed(Job job) {
 		if(null == job) {
 			return null;
 		}
-		
+
 		String medium = job.getSpec();
 		String fileURL = job.getResult();
 		String width = null;
@@ -60,14 +61,14 @@ public class ArchivePublisher extends PublisherBase {
 				width = "500";
 				height = "30";
 			}
-			
+
 			cleanFileURL = cleanFileURL(fileURL);
 		}
 
 		String embed  = null;
-		if (null != width && null != height && null != cleanFileURL) {	
+		if (null != width && null != height && null != cleanFileURL) {
 			embed = String.format(Locale.US, "[archive %s %s %s]", cleanFileURL, width, height);
-			
+
 			/*
 			if(isMediumPhoto) {
 				embed = String.format(Locale.US, "<img src='%s' alt='Archive Embed'>" ,
@@ -78,7 +79,7 @@ public class ArchivePublisher extends PublisherBase {
 												"width='%s' " +
 												"height='%s' " +
 												"frameborder='0' " +
-												"webkitallowfullscreen='true' " + 
+												"webkitallowfullscreen='true' " +
 												"mozallowfullscreen='true' allowfullscreen>" +
 												"</iframe>",
 												ARCHIVE_URL_DOWNLOAD + cleanFileURL, width, height);
@@ -89,7 +90,13 @@ public class ArchivePublisher extends PublisherBase {
 		return embed;
 	}
 
-	private String cleanFileURL(String fileURL) {	
+
+    @Override
+    public String getResultUrl(Job job) {
+        return null; // FIXME implement getResultUrl
+    }
+
+    private String cleanFileURL(String fileURL) {
 		fileURL = fileURL.replace(ARCHIVE_API_ENDPOINT, "");
 		return fileURL;
 	}

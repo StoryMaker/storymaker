@@ -14,6 +14,8 @@ import java.util.Date;
 import android.content.Context;
 import android.util.Log;
 
+import io.scal.secureshareui.controller.FacebookSiteController;
+
 public class FacebookPublisher extends PublisherBase {
     private final String TAG = "FacebookPublisher";
 	
@@ -36,9 +38,13 @@ public class FacebookPublisher extends PublisherBase {
 	}
 	
 	public String getEmbed(Job job) {
-	    return "[FB " + job.getResult() + "]";
+	    return "[FB " + job.getResult() + "]"; // FIXME we need full embeds
 //	    return null; // 
 	    // https://developers.facebook.com/docs/wordpress/embedded-posts/
 //	    return "[facebook_embedded_post href=\"https://www.facebook.com/WordPress/posts/" + "10151630721717911" + "\"]";
 	}
+
+    public String getResultUrl(Job job) {
+        return "https://facebook.com/" + FacebookSiteController.getUserId() + "/posts/" + job.getResult();
+    }
 }

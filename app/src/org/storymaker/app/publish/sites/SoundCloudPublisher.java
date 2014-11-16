@@ -29,7 +29,8 @@ public class SoundCloudPublisher extends PublisherBase {
         Job newJob = new Job(mContext, mPublishJob.getProjectId(), mPublishJob.getId(), JobTable.TYPE_UPLOAD, Auth.SITE_SOUNDCLOUD, null);
         mController.enqueueJob(newJob);
     }
-    
+
+    @Override
     public String getEmbed(Job job) {
         return "[soundcloud url=\"https://api.soundcloud.com/tracks/" 
                 + job.getResult() + "\" params=\"color=00cc11&auto_play=false&hide_related=false&show_artwork=true\" width=\"100%\" height=\"166\" iframe=\"true\" /]";
@@ -37,4 +38,10 @@ public class SoundCloudPublisher extends PublisherBase {
         // [soundcloud url="https://api.soundcloud.com/tracks/156197566" params="auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&visual=true" width="100%" height="450" iframe="true" /]
     }
 
+    @Override
+    public String getResultUrl(Job job) {
+
+        // permalink_url ?
+        return null; // FIXME implement getResultUrl
+    }
 }

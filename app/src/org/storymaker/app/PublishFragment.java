@@ -478,10 +478,12 @@ public class PublishFragment extends Fragment implements PublishListener {
 
     @Override
     public void publishSucceeded(PublishJob publishJob, String url) {
-            showUploadSpinner(false); 
-            showPlaySpinner(false);
+        showUploadSpinner(false);
+        showPlaySpinner(false);
+        if (url != null && !url.isEmpty()) {  // FIXME this fix prevent showing the popup if we dont publish to sm.o and hence have no url here, long term we should show a link to the upload site in this case
             showPublished(url);
-            Utils.toastOnUiThread(mActivity, "Publish succeeded!");
+        }
+        Utils.toastOnUiThread(mActivity, "Publish succeeded!");
         
 ////        if (publishJob.isFinished()) {
 //            showUploadSpinner(false); // FIXME we should detect which stage of the job just finished

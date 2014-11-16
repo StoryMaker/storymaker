@@ -33,8 +33,14 @@ public class PreviewPublisher extends PublisherBase {
         Log.d(TAG, "startUpload");
         mController.publishJobFailed(mPublishJob, ERROR_CANT_UPLOAD_PREVIEW_JOB, "You cannot upload a preview job");
 	}
-	
+
+    @Override
     public String getEmbed(Job job) {
         return null;
+    }
+
+    @Override
+    public String getResultUrl(Job job) {
+        return null; // FIXME implement getResultUrl
     }
 }

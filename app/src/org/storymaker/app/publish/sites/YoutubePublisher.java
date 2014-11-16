@@ -35,7 +35,13 @@ public class YoutubePublisher extends PublisherBase {
         mController.enqueueJob(newJob);
     }
 
+    @Override
     public String getEmbed(Job job) {
         return "[youtube " + job.getResult() + "]";
+    }
+
+    @Override
+    public String getResultUrl(Job job) {
+        return "http://www.youtube.com/watch?v=" + job.getResult();
     }
 }

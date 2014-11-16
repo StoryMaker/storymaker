@@ -9,6 +9,8 @@ import org.storymaker.app.model.PublishJob;
 import org.storymaker.app.publish.PublishController;
 import org.storymaker.app.publish.PublisherBase;
 
+import io.scal.secureshareui.lib.FlickrBaseEncoder;
+
 public class FlickrPublisher extends PublisherBase {
     private final String TAG = "FlickrPublisher";
     
@@ -32,7 +34,16 @@ public class FlickrPublisher extends PublisherBase {
         mController.enqueueJob(newJob);
     }
 
+    @Override
     public String getEmbed(Job job) {
         return "[flickr " + job.getResult() + "]";
+    }
+
+    @Override
+    public String getResultUrl(Job job) {
+        Long id = Long.valueOf(job.getResult());
+        String base58 = FlickrBaseEncoder.encode(id);
+        return "https://flic.kr/p/" + base58;
+//        return null; // FIXME implement getResultUrl
     }
 }

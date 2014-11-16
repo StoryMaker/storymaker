@@ -41,8 +41,14 @@ public class SSHPublisher extends PublisherBase {
         Job newJob = new Job(mContext, mPublishJob.getProjectId(), mPublishJob.getId(), JobTable.TYPE_UPLOAD, Auth.SITE_SSH, null);
         mController.enqueueJob(newJob);
 	}
-	
+
+    @Override
     public String getEmbed(Job job) {
+        return null;
+    }
+
+    @Override
+    public String getResultUrl(Job job) {
         return null;
     }
 }

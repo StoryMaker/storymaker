@@ -22,7 +22,6 @@ import org.storymaker.app.publish.UploadWorker;
 import org.storymaker.app.publish.UploaderBase;
 import io.scal.secureshareui.controller.FacebookSiteController;
 import io.scal.secureshareui.controller.SiteController;
-import io.scal.secureshareui.controller.SoundCloudSiteController;
 
 public class FacebookUploader extends UploaderBase {
     private final String TAG = "FacebookUploader";
@@ -40,7 +39,7 @@ public class FacebookUploader extends UploaderBase {
         final Project project = mJob.getProject();
         final PublishJob publishJob = mJob.getPublishJob();
         final String path = publishJob.getLastRenderFilePath();
-        final Auth auth = (new AuthTable()).getAuthDefault(mContext, SoundCloudSiteController.SITE_KEY);
+        final Auth auth = (new AuthTable()).getAuthDefault(mContext, FacebookSiteController.SITE_KEY);
         if (Utils.stringNotBlank(path) && (new File(path)).exists()) {
             Handler mainHandler = new Handler(mContext.getMainLooper());
             Runnable myRunnable = new Runnable() {

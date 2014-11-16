@@ -33,8 +33,14 @@ public class StoryMakerPublisher extends PublisherBase {
         Job newJob = new Job(mContext, mPublishJob.getProjectId(), mPublishJob.getId(), JobTable.TYPE_UPLOAD, Auth.SITE_YOUTUBE, null); // FIXME hardcoded to youtube?
         mController.enqueueJob(newJob);
 	}
-	
+
+    @Override
     public String getEmbed(Job job) {
-        return "fixme"; // FIXME implement getEmbed
+        return null; // FIXME implement getEmbed
+    }
+
+    @Override
+    public String getResultUrl(Job job) {
+        return null; // FIXME implement getResultUrl
     }
 }
