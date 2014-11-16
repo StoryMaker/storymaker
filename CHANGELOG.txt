@@ -1,0 +1,3 @@
+--- build 1008
+
+- fix publishing stories with media that was imported
