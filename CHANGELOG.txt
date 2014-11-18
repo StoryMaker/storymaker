@@ -1,3 +1,8 @@
+--- build 1009
+
+- fix issue blocking uploads until you closed and reopened app
+- fix uploads to Youtube
+
 --- build 1008
 
 - allow user to view their content after publishing to Facebook, Youtube and Flickr

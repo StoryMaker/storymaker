@@ -2,6 +2,7 @@ package org.storymaker.app;
 
 import android.app.Activity;
 import android.app.ActionBar;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v4.app.Fragment;
@@ -17,11 +18,13 @@ import java.util.ArrayList;
 import org.storymaker.app.media.MediaProjectManager;
 import org.storymaker.app.model.Project;
 import org.storymaker.app.model.Scene;
+
+import io.scal.secureshareui.lib.ChooseAccountFragment;
 import scal.io.liger.model.FullMetadata;
 
 
 public class PublishActivity extends EditorBaseActivity {
-
+    private PublishFragment mPublishFragment;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,15 +59,15 @@ public class PublishActivity extends EditorBaseActivity {
         mMPM.initProject();
 
         if (savedInstanceState == null) {
-            Fragment fragment = new PublishFragment();
+            mPublishFragment = new PublishFragment();
             Bundle args = new Bundle();
 //            args.putInt(AddClipsFragment.ARG_SECTION_NUMBER, tab.getPosition() + 1);
             args.putInt("layout", R.layout.fragment_complete_story);
             args.putInt("scene",0);
-            fragment.setArguments(args);
+            mPublishFragment.setArguments(args);
 
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container, fragment)
+                    .add(R.id.container, mPublishFragment)
                     .commit();
         }
     }
@@ -107,4 +110,11 @@ public class PublishActivity extends EditorBaseActivity {
 //            return rootView;
 //        }
 //    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
+        if (requestCode == ChooseAccountFragment.ACCOUNT_REQUEST_CODE) {
+            mPublishFragment.onChooseAccountDialogResult(resultCode, intent);
+        }
+    }
 }
