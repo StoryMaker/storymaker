@@ -645,7 +645,7 @@ public class HomeActivity extends BaseActivity {
         ligerIntent.putExtra("lang", lang);
 
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context.getApplicationContext());
-        int pslideduration = settings.getInt("pslideduration", 5);
+        int pslideduration = Integer.parseInt(settings.getString("pslideduration", "5"));
         ligerIntent.putExtra("photo_essay_slide_duration", pslideduration * 1000);
         if (spl != null && !spl.isEmpty()) {
             ligerIntent.putExtra(MainActivity.INTENT_KEY_STORYPATH_LIBRARY_ID, spl);

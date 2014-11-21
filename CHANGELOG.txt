@@ -1,3 +1,7 @@
+--- build 1010
+
+- fix Youssef's crash
+
 --- build 1009
 
 - fix issue blocking uploads until you closed and reopened app
