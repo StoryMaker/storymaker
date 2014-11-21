@@ -1,7 +1,8 @@
 --- build 1010
 
-- fix Youssef's crash
-- Audio and Photo stories are now much more functional
+- Fix Youssef's crash
+- ReviewCard now works for Audio and Photo stories
+- Many narration bugfixes
 
 --- build 1009
 
