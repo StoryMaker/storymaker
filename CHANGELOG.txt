@@ -1,6 +1,7 @@
 --- build 1010
 
 - fix Youssef's crash
+- Audio and Photo stories are now much more functional
 
 --- build 1009
 
