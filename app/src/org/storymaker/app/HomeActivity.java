@@ -1,5 +1,8 @@
 package org.storymaker.app;
 
+import org.apache.commons.io.FilenameUtils;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.storymaker.app.lessons.LessonManager;
 import org.storymaker.app.model.Lesson;
 import org.storymaker.app.model.LessonGroup;
@@ -11,7 +14,10 @@ import org.storymaker.app.ui.MyCard;
 import info.guardianproject.onionkit.ui.OrbotHelper;
 import scal.io.liger.Constants;
 import scal.io.liger.DownloadHelper;
+import scal.io.liger.JsonHelper;
 import scal.io.liger.MainActivity;
+import scal.io.liger.StoryPathLibraryDeserializer;
+import scal.io.liger.model.StoryPathLibrary;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -19,6 +25,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -58,11 +65,14 @@ import android.widget.Toast;
 
 import com.fima.cardsui.views.CardUI;
 //import com.google.analytics.tracking.android.GoogleAnalytics;
+import com.google.api.client.json.Json;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.viewpagerindicator.CirclePageIndicator;
 
 public class HomeActivity extends BaseActivity {
+    private final static String TAG = "HomeActivity";
 
-    
     private ProgressDialog mLoading;
     private ArrayList<Lesson> mLessonsCompleted;
     private ArrayList<Project> mListProjects;
@@ -160,208 +170,97 @@ public class HomeActivity extends BaseActivity {
             }
         }
     }
-	
-    private void initActivityList ()
-    {
 
-	
-    	mCardView = (CardUI) findViewById(R.id.cardsview);
-    	
-    	if (mCardView == null)
-    		return;
-    	
-    	mCardView.clearCards();
-		
-    	mCardView.setSwipeable(false);
-    	
-    	ArrayList<ActivityEntry> alActivity = new ArrayList<ActivityEntry>();
-    	
-    	for (int i = mLessonsCompleted.size()-1; i > mLessonsCompleted.size()-4 && i > -1; i--)
-        {
+    public static String parseInstanceDate(String filename) {
+//        String jsonFilePath = storyPath.buildTargetPath(storyPath.getId() + "-instance-" + timeStamp.getTime() + ".json");
+        String[] splits = FilenameUtils.removeExtension(filename).split("-");
+        return splits[splits.length-1]; // FIXME make more robust and move into liger
+    }
 
-    		Lesson lesson = mLessonsCompleted.get(i);
-    		
-    		MyCard card = null;
-    		
-    		if (lesson.mStatus == Lesson.STATUS_COMPLETE)
-    		{	
-    			card = new MyCard(getString(R.string.lessons_congratulations_you_have_completed_the_lesson_),lesson.mTitle);
-    		}
-    		else if (lesson.mStatus == Lesson.STATUS_IN_PROGRESS)
-    		{	
-    			card = new MyCard(getString(R.string.you_began_a_new_lesson),lesson.mTitle);
-    		}
-    		
-    		if (lesson.mImage != null)
-    		{
+    // copied this as a short term fix until we get loading cleanly split out from the liger sample app ui stuff
+    private StoryPathLibrary initSPLFromJson(String json, String jsonPath) {
+        if (json == null || json.equals("")) {
+            Toast.makeText(this, "Was not able to load this lesson, content was missing!", Toast.LENGTH_LONG).show();
+            finish();
+            return null;
+        }
+
+        ArrayList<String> referencedFiles = null;
+
+        // should not need to insert dependencies into a saved instance
+        if (jsonPath.contains("instance")) {
+            referencedFiles = new ArrayList<String>();
+        } else {
+            referencedFiles = JsonHelper.getInstancePaths();
+        }
+
+        StoryPathLibrary storyPathLibrary = JsonHelper.deserializeStoryPathLibrary(json, jsonPath, referencedFiles, this);
+
+        if ((storyPathLibrary != null) && (storyPathLibrary.getCurrentStoryPathFile() != null)) {
+            storyPathLibrary.loadStoryPathTemplate("CURRENT");
+        }
+
+        return storyPathLibrary;
+    }
+
+    private void initActivityList () {
+        mCardView = (CardUI) findViewById(R.id.cardsview);
+
+        if (mCardView == null) {
+            return;
+        }
+        mCardView.clearCards();
+        mCardView.setSwipeable(false);
+
+        ArrayList<ActivityEntry> alActivity = new ArrayList<ActivityEntry>();
+        JsonHelper.setupFileStructure(this);
+        ArrayList<File> instances = JsonHelper.getLibraryInstanceFiles();
+        for (final File f: instances) {
+            Log.d(TAG, "loading instance " + f);
+            String jsonString = JsonHelper.loadJSON(f, "en"); // FIXME don't hardcode "en"
+            MyCard card = null;
+                StoryPathLibrary spl = initSPLFromJson(jsonString, f.getAbsolutePath());
+
+                String title = "(no title)";
+                if (spl.getCurrentStoryPath() != null) {
+                    title = spl.getCurrentStoryPath().getTitle();
+                }
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm");
+                Date date = new Date(Long.parseLong(parseInstanceDate(f.getName())));
+                card = new MyCard(title + " " + sdf.format(date), "Last modified" + ": " + sdf.format(new Date(f.lastModified()))); // FIXME move into strings
+
+                Bitmap coverImageThumbnail = spl.getCoverImageThumbnail();
                 final BitmapFactory.Options options = new BitmapFactory.Options();
                 options.inSampleSize = 2;
-    			card.setImage(new BitmapDrawable(BitmapFactory.decodeFile(lesson.mImage, options)));
-    		}
-    		
-    		card.setIcon(R.drawable.ic_home_lesson);
-        		
-    		card.setOnClickListener(new OnClickListener() {
+                if (coverImageThumbnail != null) {
+                    card.setImage(new BitmapDrawable(coverImageThumbnail));//, options));
+                }
 
-    			@Override
-    			public void onClick(View v) {
-                    startActivity(new Intent(HomeActivity.this, LessonsActivity.class));
+            if (card != null) {
+                card.setIcon(R.drawable.ic_home_project);
 
+                card.setOnClickListener(new OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        launchLiger(HomeActivity.this, null, f.getAbsolutePath());
+                    }
+                });
 
-    			}
-    		});
-    		
-    		Date cardDate = new Date();
-    		if (lesson.mStatusModified != null)
-    			cardDate = lesson.mStatusModified;
-    		
-    		ActivityEntry ae = new ActivityEntry(card,cardDate);
-    		alActivity.add(ae);
-    		
-    		
-    	}
-    	
-    		
-    	for (int i = mListProjects.size()-1; i > mListProjects.size()-4 && i > -1; i--)
-    	{
-    		Project project = mListProjects.get(i);
-    		
-    		Drawable img = null;
-    		Date cardDate = new Date();
-    		
-    		for (int n = 0; n < project.getScenesAsArray().length && img == null; n++)
-    		{
-    		
-	    	    Media[] mediaList = project.getScenesAsArray()[n].getMediaAsArray();
-	            
-	            if (mediaList != null && mediaList.length > 0)    
-	            {
-	            	for (Media media: mediaList)
-	            		if (media != null)
-	            		{
-	            			Bitmap bmp = Media.getThumbnail(this, media, project);
-	            			 
-	            			if (bmp != null)
-	            			{
-	            				img = new BitmapDrawable(getResources(),bmp);
+                ActivityEntry ae = new ActivityEntry(card, new Date(f.lastModified()));
+                alActivity.add(ae);
+            }
+        }
 
-	                   		 	cardDate = new Date(new File(media.getPath()).getParentFile().lastModified());
-	                   		 
-	            				break;
-	            			}
-	            		}
-	            }
-    		}
-            
+        Collections.sort(alActivity);
 
-			if (img != null)
-			{
-        		
-        		MyCard card = new MyCard("Story: " + project.getTitle(), "Last updated: " + project.getUpdatedAt());
-        		card.setImage(img);
-        		card.setId(i);
-        		card.setOnClickListener(new OnClickListener() {
+        for (ActivityEntry ae : alActivity) {
+            mCardView.addCard(ae.card);
+        }
 
-        			@Override
-        			public void onClick(View v) {
-        				
-	                    showProject(v.getId());
-
-        			}
-        		});
-        		
-
-        		ActivityEntry ae = new ActivityEntry(card,cardDate);
-        		alActivity.add(ae);
-        		
-        		if (project.getStoryType() == Project.STORY_TYPE_VIDEO)
-    	    	{
-    	    		//video
-        			card.setIcon(R.drawable.btn_toggle_ic_list_video);
-    	    	}
-    	    	else if (project.getStoryType() == Project.STORY_TYPE_PHOTO)
-    	    	{	
-    	    		//photo	    	
-    	    		card.setIcon(R.drawable.btn_toggle_ic_list_photo);
-
-    	    	}
-    	    	else if (project.getStoryType() == Project.STORY_TYPE_AUDIO)
-    	    	{
-    	
-    	    		//audio	    	
-    	    		card.setIcon(R.drawable.btn_toggle_ic_list_audio);
-
-    	    	}
-    	    	else if (project.getStoryType() == Project.STORY_TYPE_ESSAY)
-    	    	{
-    	    		//essay
-    	    		card.setIcon(R.drawable.btn_toggle_ic_list_essay);
-    	
-    	    	}
-        		
-			}
-			else
-			{
-        		
-        		MyCard card = new MyCard("Story: " + project.getTitle(), "Last updated: " + project.getUpdatedAt());
-        		card.setId(i);
-        		
-        		card.setOnClickListener(new OnClickListener() {
-
-        			@Override
-        			public void onClick(View v) {
-	                    showProject(v.getId());
-
-        			}
-        		});
-        		
-        		if (project.getStoryType() == Project.STORY_TYPE_VIDEO)
-    	    	{
-    	    		//video
-        			card.setIcon(R.drawable.btn_toggle_ic_list_video);
-    	    	}
-    	    	else if (project.getStoryType() == Project.STORY_TYPE_PHOTO)
-    	    	{	
-    	    		//photo	    	
-    	    		card.setIcon(R.drawable.btn_toggle_ic_list_photo);
-
-    	    	}
-    	    	else if (project.getStoryType() == Project.STORY_TYPE_AUDIO)
-    	    	{
-    	
-    	    		//audio	    	
-    	    		card.setIcon(R.drawable.btn_toggle_ic_list_audio);
-
-    	    	}
-    	    	else if (project.getStoryType() == Project.STORY_TYPE_ESSAY)
-    	    	{
-    	    		//essay
-    	    		card.setIcon(R.drawable.btn_toggle_ic_list_essay);
-    	
-    	    	}
-        		
-        		
-        			
-        		ActivityEntry ae = new ActivityEntry(card,cardDate);
-        		alActivity.add(ae);
-        		
-        		
-			}
-                  
-    		
-    	}
-    	
-    	Collections.sort(alActivity);
-
-    	for (ActivityEntry ae : alActivity)
-    		mCardView.addCard(ae.card);
-    	
-		// draw cards
-		mCardView.refresh();
-		
-		
+        // draw cards
+        mCardView.refresh();
     }
-    
+
     public static class ActivityEntry implements Comparable<HomeActivity.ActivityEntry> {
 
     	  public Date dateTime;
@@ -481,7 +380,7 @@ public class HomeActivity extends BaseActivity {
 			public void onClick(View v) {
 				//Intent intent = new Intent(HomeActivity.this, StoryNewActivity.class);
 				//startActivity(intent);
-                launchLiger(HomeActivity.this, "learning_guide_1_library");
+                launchLiger(HomeActivity.this, "learning_guide_1_library", null);
 			}
         	 
          });
@@ -607,7 +506,7 @@ public class HomeActivity extends BaseActivity {
         }
         else if (item.getItemId() == R.id.menu_new_project)
         {
-            launchLiger(this, "default_library");
+            launchLiger(this, "default_library", null);
             return true;
         }
         else if (item.getItemId() == R.id.menu_bug_report)
@@ -632,7 +531,7 @@ public class HomeActivity extends BaseActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public static void launchLiger(Context context, String spl) {
+    public static void launchLiger(Context context, String splId, String instancePath) {
         if (!DownloadHelper.checkExpansionFiles(context, Constants.MAIN, Constants.MAIN_VERSION)) { // FIXME the app should define these, not the library
             Toast.makeText(context, "Please wait for the content pack to finish downloading", Toast.LENGTH_LONG).show(); // FIXME move to strings.xml
             return;
@@ -647,12 +546,11 @@ public class HomeActivity extends BaseActivity {
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context.getApplicationContext());
         int pslideduration = Integer.parseInt(settings.getString("pslideduration", "5"));
         ligerIntent.putExtra("photo_essay_slide_duration", pslideduration * 1000);
-        if (spl != null && !spl.isEmpty()) {
-            ligerIntent.putExtra(MainActivity.INTENT_KEY_STORYPATH_LIBRARY_ID, spl);
-            //            ligerIntent.putExtra(MainActivity.INTENT_KEY_STORYPATH_LIBRARY_ID, "learning_guide_3");
-            //        ligerIntent.putExtra(MainActivity.INTENT_KEY_STORYPATH_LIBRARY_ID, "default_library");
+        if (splId != null && !splId.isEmpty()) {
+            ligerIntent.putExtra(MainActivity.INTENT_KEY_STORYPATH_LIBRARY_ID, splId);
+        } else if (instancePath != null && !instancePath.isEmpty()) {
+            ligerIntent.putExtra(MainActivity.INTENT_KEY_STORYPATH_INSTANCE_PATH, instancePath);
         }
-        //        startActivityForResult(ligerIntent, MainActivity.INTENT_CODE);
         context.startActivity(ligerIntent);
     }
     
