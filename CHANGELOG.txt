@@ -1,3 +1,7 @@
+--- build 1011
+
+- Home screen now shows your saved stories
+
 --- build 1010
 
 - Fix Youssef's crash
