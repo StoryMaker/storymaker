@@ -17,6 +17,7 @@ import scal.io.liger.DownloadHelper;
 import scal.io.liger.JsonHelper;
 import scal.io.liger.MainActivity;
 import scal.io.liger.StoryPathLibraryDeserializer;
+import scal.io.liger.ZipHelper;
 import scal.io.liger.model.StoryPathLibrary;
 
 import java.io.BufferedReader;
@@ -111,7 +112,7 @@ public class HomeActivity extends BaseActivity {
 	public void onResume() {
 		super.onResume();
 		
-		new getAsynctask().execute("");
+        initActivityList(); // FIXME this needs to wait til download is complete, that should somehow trigger a refresh of this
 		
 		boolean isExternalStorageReady = Utils.Files.isExternalStorageReady();
 		
@@ -128,48 +129,6 @@ public class HomeActivity extends BaseActivity {
 		
 		 checkForCrashes();
 	}
-
-
-
-	class getAsynctask extends AsyncTask<String, Long, Integer> {
-
-        protected void onPreExecute() {
-            super.onPreExecute();
-            
-            if (mLoading == null || (!mLoading.isShowing()))
-            	mLoading = ProgressDialog.show(HomeActivity.this, null, "Please wait...", true, true);
-        }
-        
-        protected Integer doInBackground(String... params) {
-            try {
-            	mLessonsCompleted = getLessonsCompleted(HomeActivity.this);
-            	mListProjects = (ArrayList<Project>) (new ProjectTable()).getAllAsList(HomeActivity.this); // FIXME ugly
-            	
-                return null;
-            } catch (Exception e) {
-            	Log.e(AppConstants.TAG,"error loading home view",e);
-            	return null;
-            }
-        }
-
-        protected void onPostExecute(Integer result) {
-            super.onPostExecute(result);
-            if (mLoading != null && mLoading.isShowing()) {
-                try {
-                    mLoading.dismiss();
-                    mLoading = null;
-                } catch (Exception e) {
-                    // ignore: http://stackoverflow.com/questions/2745061/java-lang-illegalargumentexception-view-not-attached-to-window-manager
-                }
-            }
-
-            if (mLessonsCompleted.size() == 0 && mListProjects.size() == 0) {
-                initIntroActivityList();
-            } else {
-                initActivityList();
-            }
-        }
-    }
 
     public static String parseInstanceDate(String filename) {
 //        String jsonFilePath = storyPath.buildTargetPath(storyPath.getId() + "-instance-" + timeStamp.getTime() + ".json");
@@ -209,6 +168,12 @@ public class HomeActivity extends BaseActivity {
         if (mCardView == null) {
             return;
         }
+
+        if (!DownloadHelper.checkExpansionFiles(this, Constants.MAIN, Constants.MAIN_VERSION)) { // FIXME the app should define these, not the library
+            Toast.makeText(this, "Please wait for the content pack to finish downloading and reload the app", Toast.LENGTH_LONG).show(); // FIXME move to strings.xml
+            return;
+        }
+
         mCardView.clearCards();
         mCardView.setSwipeable(false);
 
@@ -256,6 +221,16 @@ public class HomeActivity extends BaseActivity {
         for (ActivityEntry ae : alActivity) {
             mCardView.addCard(ae.card);
         }
+
+        MyCard card = new MyCard("Learning Guide 1", "Build a compelling narrative."); // FIXME move into strings
+        card.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                launchLiger(HomeActivity.this, "learning_guide_1_library", null);
+            }
+        });
+        card.setIcon(R.drawable.ic_home_lesson);
+        mCardView.addCard(card);
 
         // draw cards
         mCardView.refresh();
