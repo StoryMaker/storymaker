@@ -66,7 +66,7 @@ dependencies {
 
     // .Jar imports
     compile files('libs/apache-mime4j-0.6.jar')
-    compile files('libs/commons-io-2.4.jar')
+    compile 'commons-io:commons-io:2.4'
     compile files('libs/commons-lang3-3.1.jar')
     compile files('libs/google-api-client-1.4.1-beta.jar')
     compile files('libs/google-api-client-googleapis-1.4.1-beta.jar')
