@@ -2,6 +2,7 @@
 
 - fix downloads failures on some devices
 - fix bug where incomplete previous download caused all future downloads to fail
+- add progress spinner dialog on home screen while we download content
 
 --- build 1011
 

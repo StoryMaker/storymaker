@@ -106,13 +106,16 @@ public class HomeActivity extends BaseActivity {
         
     }
     
-    
-    
     @Override
 	public void onResume() {
 		super.onResume();
-		
-        initActivityList(); // FIXME this needs to wait til download is complete, that should somehow trigger a refresh of this
+
+        if (!DownloadHelper.checkExpansionFiles(this, Constants.MAIN, Constants.MAIN_VERSION)) {
+            DownloadPoller poller = new DownloadPoller();
+            poller.execute("foo");
+        } else {
+            initActivityList();
+        }
 		
 		boolean isExternalStorageReady = Utils.Files.isExternalStorageReady();
 		
@@ -686,5 +689,38 @@ public class HomeActivity extends BaseActivity {
 
 		      writer.close();
 	 }
-    
+
+    public void downloadComplete() {
+        initActivityList();
+        mLoading.dismiss();
+        mLoading = null;
+    }
+
+    // FIXME once we have a patch as well as a main file this gets a little more complex
+    class DownloadPoller extends AsyncTask<String, Long, Integer> {
+
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+            if (mLoading == null || (!mLoading.isShowing()))
+                mLoading = ProgressDialog.show(HomeActivity.this, null, "Downloading content...", true, true);
+        }
+
+        protected Integer doInBackground(String... params) {
+            while (!DownloadHelper.checkExpansionFiles(HomeActivity.this, Constants.MAIN, Constants.MAIN_VERSION)) {
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+            return null;
+        }
+
+        protected void onPostExecute(Integer result) {
+            super.onPostExecute(result);
+
+            HomeActivity.this.downloadComplete();
+        }
+    }
 }
