@@ -3,8 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="org.storymaker.app"
     android:installLocation="auto"
-    android:versionCode="1011"
-    android:versionName="2.0.0-build1011">
+    android:versionCode="1012"
+    android:versionName="2.0.0-build1012">
    
     <uses-sdk
         android:minSdkVersion="16"
