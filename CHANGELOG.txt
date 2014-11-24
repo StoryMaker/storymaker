@@ -1,3 +1,8 @@
+--- build 1012
+
+- fix downloads failures on some devices
+- fix bug where incomplete previous download caused all future downloads to fail
+
 --- build 1011
 
 - Home screen now shows your saved stories
