@@ -692,8 +692,10 @@ public class HomeActivity extends BaseActivity {
 
     public void downloadComplete() {
         initActivityList();
-        mLoading.dismiss();
-        mLoading = null;
+        if (mLoading != null && mLoading.isShowing()){
+            mLoading.dismiss();
+            mLoading = null;
+        }
     }
 
     // FIXME once we have a patch as well as a main file this gets a little more complex
