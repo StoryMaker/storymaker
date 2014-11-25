@@ -1,5 +1,6 @@
 --- build 1013
 
+- reduce memory use and fix crashes in photo essay stories
 - publish now supports audio and photo essay stories
 - Properly show thumbnail on trim dialog
 - ClipCard properly displays selected clip
