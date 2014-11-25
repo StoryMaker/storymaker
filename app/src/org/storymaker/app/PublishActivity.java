@@ -61,6 +61,7 @@ public class PublishActivity extends EditorBaseActivity {
             i++;
         }
         scene.save();
+
         // FIXME load project
         mMPM = new MediaProjectManager(this, getApplicationContext(), mHandlerPub, mProject, null);
         mMPM.initProject();

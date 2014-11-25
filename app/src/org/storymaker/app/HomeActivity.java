@@ -18,6 +18,7 @@ import scal.io.liger.JsonHelper;
 import scal.io.liger.MainActivity;
 import scal.io.liger.StoryPathLibraryDeserializer;
 import scal.io.liger.ZipHelper;
+import scal.io.liger.model.ClipCard;
 import scal.io.liger.model.StoryPathLibrary;
 
 import java.io.BufferedReader;
@@ -190,12 +191,23 @@ public class HomeActivity extends BaseActivity {
                 StoryPathLibrary spl = initSPLFromJson(jsonString, f.getAbsolutePath());
 
                 String title = "(no title)";
+                String medium = spl.getCurrentStoryPath().getMedium();
+                if (medium == null) {
+                    medium = "No medium";
+                } else if (medium.equals("video")) {
+                    medium = getString(R.string.lbl_video);
+                } else if (medium.equals("audio")) {
+                    medium = getString(R.string.lbl_audio);
+                } else if (medium.equals("photo")) {
+                    medium = getString(R.string.lbl_photo);
+                }
+
                 if (spl.getCurrentStoryPath() != null) {
                     title = spl.getCurrentStoryPath().getTitle();
                 }
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm");
                 Date date = new Date(Long.parseLong(parseInstanceDate(f.getName())));
-                card = new MyCard(title + " " + sdf.format(date), "Last modified" + ": " + sdf.format(new Date(f.lastModified()))); // FIXME move into strings
+                card = new MyCard(title + " " + sdf.format(date), medium + ". Last modified" + ": " + sdf.format(new Date(f.lastModified()))); // FIXME move into strings
 
                 Bitmap coverImageThumbnail = spl.getCoverImageThumbnail();
                 final BitmapFactory.Options options = new BitmapFactory.Options();
@@ -255,12 +267,13 @@ public class HomeActivity extends BaseActivity {
     	    return dateTime.compareTo(o.dateTime)*-1;//let's flip the compare output around
     	  }
     	}
-    
-    private void initIntroActivityList ()
+
+    // TODO repurpose this to act as the download a content ui
+    private void initIntroActivityList()
     {
       	setContentView(R.layout.activity_home_intro);
       	initSlidingMenu();
-      	
+
 		int[] titles1 =
 			{(R.string.tutorial_title_1),
 				(R.string.tutorial_title_2),
@@ -275,47 +288,47 @@ public class HomeActivity extends BaseActivity {
 				(R.string.tutorial_text_4),
 				(R.string.tutorial_text_5)
 				};
-		
 
-    	
+
+
 
 		MyAdapter adapter = new MyAdapter(getSupportFragmentManager(), titles1,messages1);
 		ViewPager pager = ((ViewPager)findViewById(R.id.pager1));
-		
+
 		pager.setId((int)(Math.random()*10000));
 		pager.setOffscreenPageLimit(5);
-			
+
 		pager.setAdapter(adapter);
-			 
+
 		//Bind the title indicator to the adapter
          CirclePageIndicator indicator = (CirclePageIndicator)findViewById(R.id.circles1);
          indicator.setViewPager(pager);
          indicator.setSnap(true);
-         
-         
+
+
          final float density = getResources().getDisplayMetrics().density;
-         
+
          indicator.setRadius(5 * density);
          indicator.setFillColor(0xFFFF0000);
          indicator.setPageColor(0xFFaaaaaa);
          //indicator.setStrokeColor(0xFF000000);
          //indicator.setStrokeWidth(2 * density);
-		    		
-         
+
+
          View button = findViewById(R.id.cardButton1);
          button.setOnClickListener(new OnClickListener()
          {
 
 			@Override
 			public void onClick(View v) {
-				
+
 				Intent intent = new Intent(HomeActivity.this, LessonsActivity.class);
 				startActivity(intent);
 			}
-        	 
+
          });
-    	
-    		
+
+
     		int[] titles2 =
 			{(R.string.tutorial_title_7),
 				(R.string.tutorial_title_8),
@@ -330,26 +343,26 @@ public class HomeActivity extends BaseActivity {
 				(R.string.tutorial_text_10),
 				(R.string.tutorial_text_11)
 				};
-		
+
 		MyAdapter adapter2 = new MyAdapter(getSupportFragmentManager(), titles2,messages2);
 		ViewPager pager2 = ((ViewPager)findViewById(R.id.pager2));
-		
+
 		pager2.setId((int)(Math.random()*10000));
 		pager2.setOffscreenPageLimit(5);
-			
+
 		pager2.setAdapter(adapter2);
-			 
+
 		//Bind the title indicator to the adapter
          CirclePageIndicator indicator2 = (CirclePageIndicator)findViewById(R.id.circles2);
          indicator2.setViewPager(pager2);
          indicator2.setSnap(true);
-      
+
          indicator2.setRadius(5 * density);
          indicator2.setFillColor(0xFFFF0000);
          indicator2.setPageColor(0xFFaaaaaa);
          //indicator.setStrokeColor(0xFF000000);
          //indicator.setStrokeWidth(2 * density);
-	
+
          button = findViewById(R.id.cardButton2);
          button.setOnClickListener(new OnClickListener()
          {
@@ -360,7 +373,7 @@ public class HomeActivity extends BaseActivity {
 				//startActivity(intent);
                 launchLiger(HomeActivity.this, "learning_guide_1_library", null);
 			}
-        	 
+
          });
     }
 

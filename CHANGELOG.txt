@@ -1,3 +1,10 @@
+--- build 1013
+
+- publish now supports audio and photo essay stories
+- Properly show thumbnail on trim dialog
+- ClipCard properly displays selected clip
+- make it easier to tap to expand a folded up clipcard
+
 --- build 1012
 
 - fix downloads failures on some devices
