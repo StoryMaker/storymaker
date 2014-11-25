@@ -37,7 +37,14 @@ public class PublishActivity extends EditorBaseActivity {
         mProject = new Project(this, 1);
         mProject.setTitle("export from liger");
         mProject.setTemplatePath("");
-        mProject.setStoryType(Project.STORY_TYPE_VIDEO);
+        final String medium = ((FullMetadata) parcelables.get(0)).getMedium(); // until we iron out multi medium, we just tied export medium to the medium of the first clip
+        if (medium.equals("photo")) {
+            mProject.setStoryType(Project.STORY_TYPE_ESSAY);
+        } else if (medium.equals("audio")) {
+            mProject.setStoryType(Project.STORY_TYPE_AUDIO);
+        } else if (medium.equals("video")) {
+            mProject.setStoryType(Project.STORY_TYPE_VIDEO);
+        }
         mProject.save();
         Scene scene = new Scene(this, parcelables.size());
         scene.setTitle("ligerscene1");
