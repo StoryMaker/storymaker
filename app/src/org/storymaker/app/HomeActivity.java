@@ -212,9 +212,10 @@ public class HomeActivity extends BaseActivity {
                 Bitmap coverImageThumbnail = spl.getCoverImageThumbnail();
                 final BitmapFactory.Options options = new BitmapFactory.Options();
                 options.inSampleSize = 2;
-                if (coverImageThumbnail != null) {
-                    card.setImage(new BitmapDrawable(coverImageThumbnail));//, options));
+                if (coverImageThumbnail == null) {
+                    coverImageThumbnail = BitmapFactory.decodeResource(getResources(), scal.io.liger.R.drawable.no_thumbnail);
                 }
+                card.setImage(new BitmapDrawable(coverImageThumbnail));//, options));
 
             if (card != null) {
                 card.setIcon(R.drawable.ic_home_project);
@@ -245,6 +246,8 @@ public class HomeActivity extends BaseActivity {
             }
         });
         card.setIcon(R.drawable.ic_home_lesson);
+        Bitmap coverImageThumbnail = BitmapFactory.decodeResource(getResources(), scal.io.liger.R.drawable.no_thumbnail);
+        card.setImage(new BitmapDrawable(coverImageThumbnail));//, options));
         mCardView.addCard(card);
 
         // draw cards
