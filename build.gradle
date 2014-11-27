@@ -9,8 +9,7 @@ buildscript {
         }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:0.12.2'
-        classpath 'org.holoeverywhere:plugin:0.3.+' 
+        classpath 'com.android.tools.build:gradle:1.0.0-rc1'
     }
 }
 

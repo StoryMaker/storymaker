@@ -1,9 +1,8 @@
-apply plugin: 'holoeverywhere-app'
-apply plugin: 'android'
+apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 21
-    buildToolsVersion "21"
+    buildToolsVersion "21.1.1"
 
     sourceSets {
         main {
@@ -19,10 +18,6 @@ android {
         defaultConfig {
             minSdkVersion 16
             targetSdkVersion 21
-        }
-
-        dexOptions {
-            jumboMode = true
         }
 
         // If you'd like to provide special files for the debug / release build variants
@@ -49,6 +44,10 @@ android {
         exclude 'META-INF/LICENSE'
         exclude 'META-INF/NOTICE'
         exclude 'META-INF/DEPENDENCIES'
+    }
+
+    dexOptions {
+            jumboMode = true
     }
 
 }
@@ -82,7 +81,6 @@ dependencies {
     // Project imports
     compile project(':external:android-ffmpeg-java')
     compile project(':external:WordpressJavaAndroid')
-    compile project(':external:SlidingMenu:library')
     compile project(':external:cardsui-for-android:CardsUILib')
     compile project(':external:Android-ViewPagerIndicator:library')
     compile project(':external:RangeSeekBar:library')
@@ -93,10 +91,3 @@ dependencies {
     compile project(':external:liger:lib')
 
 }
-
-holoeverywhere {
-  library {
-    version = '2.1.0'
-  }
-}
-

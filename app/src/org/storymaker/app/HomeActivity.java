@@ -1,14 +1,10 @@
 package org.storymaker.app;
 
 import org.apache.commons.io.FilenameUtils;
-import org.json.JSONException;
-import org.json.JSONObject;
 import org.storymaker.app.lessons.LessonManager;
 import org.storymaker.app.model.Lesson;
 import org.storymaker.app.model.LessonGroup;
-import org.storymaker.app.model.Media;
 import org.storymaker.app.model.Project;
-import org.storymaker.app.model.ProjectTable;
 import org.storymaker.app.server.LoginActivity;
 import org.storymaker.app.ui.MyCard;
 import info.guardianproject.onionkit.ui.OrbotHelper;
@@ -16,9 +12,6 @@ import scal.io.liger.Constants;
 import scal.io.liger.DownloadHelper;
 import scal.io.liger.JsonHelper;
 import scal.io.liger.MainActivity;
-import scal.io.liger.StoryPathLibraryDeserializer;
-import scal.io.liger.ZipHelper;
-import scal.io.liger.model.ClipCard;
 import scal.io.liger.model.StoryPathLibrary;
 
 import java.io.BufferedReader;
@@ -45,7 +38,6 @@ import android.content.pm.PackageManager.NameNotFoundException;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -67,21 +59,15 @@ import android.widget.Toast;
 
 import com.fima.cardsui.views.CardUI;
 //import com.google.analytics.tracking.android.GoogleAnalytics;
-import com.google.api.client.json.Json;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.viewpagerindicator.CirclePageIndicator;
 
 public class HomeActivity extends BaseActivity {
     private final static String TAG = "HomeActivity";
 
     private ProgressDialog mLoading;
-    private ArrayList<Lesson> mLessonsCompleted;
     private ArrayList<Project> mListProjects;
 
-
 	CardUI mCardView;
-    
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -91,9 +77,7 @@ public class HomeActivity extends BaseActivity {
             String vers= getPackageManager().getPackageInfo(pkg, 0).versionName;
             setTitle(getTitle() + " v" + vers);
                     
-        } catch (NameNotFoundException e) {
-           
-        }
+        } catch (NameNotFoundException ignored) {}
         
         setContentView(R.layout.activity_home);
         
@@ -275,7 +259,7 @@ public class HomeActivity extends BaseActivity {
     private void initIntroActivityList()
     {
       	setContentView(R.layout.activity_home_intro);
-      	initSlidingMenu();
+      	setupDrawerLayout();
 
 		int[] titles1 =
 			{(R.string.tutorial_title_1),
@@ -490,7 +474,7 @@ public class HomeActivity extends BaseActivity {
 
         if (item.getItemId() == android.R.id.home)
         {
-            mSlidingMenu.toggle();
+            toggleDrawer();
             return true;
         }
         else if (item.getItemId() == R.id.menu_logs)

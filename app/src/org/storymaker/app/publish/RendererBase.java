@@ -1,7 +1,6 @@
 package org.storymaker.app.publish;
 
 import org.storymaker.app.model.Job;
-import org.holoeverywhere.app.Activity;
 
 import android.content.Context;
 
