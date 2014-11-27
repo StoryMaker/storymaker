@@ -1,10 +1,14 @@
 --- build 1013
 
+NOTE: you must uninstall your old build before installing this as your old photo stories are corruted by a bug in an earlier build.
+
+- fix issue causing photo imports to be treated as video
 - reduce memory use and fix crashes in photo essay stories
 - publish now supports audio and photo essay stories
 - Properly show thumbnail on trim dialog
 - ClipCard properly displays selected clip
 - make it easier to tap to expand a folded up clipcard
+- save when you change selected clip 
 
 --- build 1012
 
