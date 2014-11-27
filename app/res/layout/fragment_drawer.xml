@@ -5,8 +5,8 @@
     android:background="#000000" >
 
 	<LinearLayout
-	    android:layout_width="180dp"
-	    android:layout_height="match_parent"
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
 	    android:background="#000000"
 	    android:orientation="vertical" >
 	    
@@ -113,6 +113,8 @@
 	        android:layout_width="180dp"
 	        android:layout_height="wrap_content"
 	        android:background="@android:color/transparent"
+            android:padding="8dp"
+            android:drawablePadding="8dp"
 	        android:drawableLeft="@drawable/ic_nav_home"
 	        android:gravity="left|center_vertical"
 	        android:text="@string/title_activity_home"
@@ -128,7 +130,9 @@
 	        android:layout_width="180dp"
 	        android:layout_height="wrap_content"
 	        android:background="@android:color/transparent"
-	        android:drawableLeft="@drawable/ic_home_projects"
+            android:padding="8dp"
+            android:drawablePadding="8dp"
+            android:drawableLeft="@drawable/ic_home_projects"
 	        android:gravity="left|center_vertical"
 	        android:text="@string/menu_projects"
 	        android:textColor="#dddddd" />
@@ -143,6 +147,8 @@
 	        android:layout_width="180dp"
 	        android:layout_height="wrap_content"
 	        android:background="@android:color/transparent"
+            android:padding="8dp"
+            android:drawablePadding="8dp"
 	        android:drawableLeft="@drawable/ic_nav_lessons"
 	        android:gravity="left|center_vertical"
 	        android:text="@string/menu_lessons"
@@ -175,6 +181,8 @@
 	        android:layout_width="180dp"
 	        android:layout_height="wrap_content"
 	        android:background="@android:color/transparent"
+            android:padding="8dp"
+            android:drawablePadding="8dp"
 	        android:drawableLeft="@drawable/ic_nav_preferences"
 	        android:gravity="left|center_vertical"
 	        android:text="@string/menu_accounts"
@@ -190,6 +198,8 @@
 	        android:layout_width="180dp"
 	        android:layout_height="wrap_content"
 	        android:background="@android:color/transparent"
+            android:padding="8dp"
+            android:drawablePadding="8dp"
 	        android:drawableLeft="@drawable/ic_nav_upload"
 	        android:gravity="left|center_vertical"
 	        android:text="@string/menu_uploads"
@@ -206,6 +216,8 @@
 	        android:layout_width="180dp"
 	        android:layout_height="wrap_content"
 	        android:background="@android:color/transparent"
+            android:padding="8dp"
+            android:drawablePadding="8dp"
 	        android:drawableLeft="@drawable/ic_nav_media_settings"
 	        android:gravity="left|center_vertical"
 	        android:text="@string/menu_settings"

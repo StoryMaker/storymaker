@@ -3,6 +3,7 @@
 NOTE: you must uninstall your old build before installing this as your old photo stories are corruted by a bug in an earlier build.
 
 - fix issue causing photo imports to be treated as video
+- ditch flakey navigation drawer and move to standard one
 - reduce memory use and fix crashes in photo essay stories
 - publish now supports audio and photo essay stories
 - Properly show thumbnail on trim dialog

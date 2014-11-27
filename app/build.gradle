@@ -1,9 +1,8 @@
-apply plugin: 'holoeverywhere-app'
-apply plugin: 'android'
+apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 21
-    buildToolsVersion "21"
+    buildToolsVersion "21.1.1"
 
     sourceSets {
         main {
@@ -19,10 +18,6 @@ android {
         defaultConfig {
             minSdkVersion 16
             targetSdkVersion 21
-        }
-
-        dexOptions {
-            jumboMode = true
         }
 
         // If you'd like to provide special files for the debug / release build variants
@@ -51,6 +46,10 @@ android {
         exclude 'META-INF/DEPENDENCIES'
     }
 
+    dexOptions {
+            jumboMode = true
+    }
+
 }
 
 dependencies {
@@ -62,6 +61,8 @@ dependencies {
 
     // Maven imports
     compile 'com.google.code.gson:gson:2.3'
+    // Will use ActionBarDrawerToggle in BaseActivity once we migrate ActionBar -> ToolBar
+    //compile 'com.android.support:appcompat-v7:21.0.2'
 //    compile 'com.actionbarsherlock:actionbarsherlock:4.4.0@aar'
 
     // .Jar imports
@@ -82,7 +83,6 @@ dependencies {
     // Project imports
     compile project(':external:android-ffmpeg-java')
     compile project(':external:WordpressJavaAndroid')
-    compile project(':external:SlidingMenu:library')
     compile project(':external:cardsui-for-android:CardsUILib')
     compile project(':external:Android-ViewPagerIndicator:library')
     compile project(':external:RangeSeekBar:library')
@@ -93,10 +93,3 @@ dependencies {
     compile project(':external:liger:lib')
 
 }
-
-holoeverywhere {
-  library {
-    version = '2.1.0'
-  }
-}
-

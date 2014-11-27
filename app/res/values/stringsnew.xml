@@ -323,4 +323,9 @@
 
 <string name="no_tags_msg">No #tags added</string>
 
+<!-- BaesActivity Drawer  (For Accessibility Descriptions)-->
+<string name="open_drawer">Open Drawer</string>
+<string name="close_drawer">Open Drawer</string>
+
+
 </resources>
