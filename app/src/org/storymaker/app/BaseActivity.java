@@ -9,13 +9,16 @@ import java.util.Date;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.res.AssetManager;
+import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.PixelFormat;
 import android.os.Bundle;
+import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.widget.DrawerLayout;
 import android.view.Gravity;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -32,7 +35,10 @@ import android.widget.Toast;
 
 public class BaseActivity extends FragmentActivity {
 
+    protected ActionBarDrawerToggle mDrawerToggle;
     protected DrawerLayout mDrawerLayout;
+    protected ViewGroup mDrawerContainer;
+    protected boolean mDrawerOpen;
 
 	@Override
 	public void onStart() {
@@ -49,8 +55,26 @@ public class BaseActivity extends FragmentActivity {
     public void setupDrawerLayout() {
 
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        // TODO : Call DrawerLayout#setDrawerListener and modify ActionBar when drawer open
-        // see guidelines: https://developer.android.com/training/implementing-navigation/nav-drawer.html#DrawerLayout
+        mDrawerContainer = (ViewGroup) findViewById(R.id.left_drawer);
+        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,
+                R.drawable.ic_drawer_white, R.string.open_drawer, R.string.close_drawer) {
+
+            /** Called when a drawer has settled in a completely closed state. */
+            public void onDrawerClosed(View view) {
+                super.onDrawerClosed(view);
+                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
+                mDrawerOpen = false;
+            }
+
+            /** Called when a drawer has settled in a completely open state. */
+            public void onDrawerOpened(View drawerView) {
+                super.onDrawerOpened(drawerView);
+                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
+                mDrawerOpen = true;
+            }
+        };
+
+        mDrawerLayout.setDrawerListener(mDrawerToggle);
 
         final Activity activity = this;
         
@@ -246,13 +270,41 @@ public class BaseActivity extends FragmentActivity {
         }
 
         setContentView(R.layout.activity_base);
-        setupDrawerLayout();
+
+        getActionBar().setDisplayHomeAsUpEnabled(true);
+        getActionBar().setHomeButtonEnabled(true);
+    }
+
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        // Sync the toggle state after onRestoreInstanceState has occurred.
+        mDrawerToggle.syncState();
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        mDrawerToggle.onConfigurationChanged(newConfig);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (mDrawerToggle.onOptionsItemSelected(item)) {
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     public void setContentView(int resId) {
         if (!getClass().getSimpleName().equals("BaseActivity")) {
+
             super.setContentView(R.layout.activity_base);
-            setContentViewWithinDrawerLayout(resId);
+            if (resId != R.layout.activity_base) {
+                setContentViewWithinDrawerLayout(resId);
+                setupDrawerLayout();
+            }
+
         } else {
             super.setContentView(resId);
         }
@@ -347,12 +399,8 @@ public class BaseActivity extends FragmentActivity {
     public void toggleDrawer() {
         if (mDrawerLayout == null) return;
 
-        int drawerGravity = ((FrameLayout.LayoutParams) mDrawerLayout.getLayoutParams()).gravity;
+        if (mDrawerOpen) mDrawerLayout.closeDrawer(mDrawerContainer);
+        else mDrawerLayout.openDrawer(mDrawerContainer);
 
-        if (mDrawerLayout.isDrawerOpen(drawerGravity)) {
-            mDrawerLayout.closeDrawer(drawerGravity);
-        } else {
-            mDrawerLayout.openDrawer(drawerGravity);
-        }
     }
 }

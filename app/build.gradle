@@ -61,6 +61,8 @@ dependencies {
 
     // Maven imports
     compile 'com.google.code.gson:gson:2.3'
+    // Will use ActionBarDrawerToggle in BaseActivity once we migrate ActionBar -> ToolBar
+    //compile 'com.android.support:appcompat-v7:21.0.2'
 //    compile 'com.actionbarsherlock:actionbarsherlock:4.4.0@aar'
 
     // .Jar imports
