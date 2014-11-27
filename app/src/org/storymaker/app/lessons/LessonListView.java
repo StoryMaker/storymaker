@@ -23,8 +23,6 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import org.holoeverywhere.widget.ListAdapterWrapper;
-
 public class LessonListView extends ListView implements LessonManagerListener {
 
     private LessonManager mLessonManager;
@@ -203,8 +201,6 @@ public class LessonListView extends ListView implements LessonManagerListener {
                     if (adapter != null) {
                         if (adapter instanceof ArrayAdapter) {
                             ((ArrayAdapter) adapter).notifyDataSetChanged();
-                        } else if (adapter instanceof ListAdapterWrapper) {
-                            ((ListAdapterWrapper) adapter).notifyDataSetChanged();
                         }
                     }
                     break;

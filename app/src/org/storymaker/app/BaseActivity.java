@@ -1,7 +1,6 @@
 package org.storymaker.app;
 
 import org.storymaker.app.server.ServerManager;
-import scal.io.liger.MainActivity;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -10,28 +9,36 @@ import java.util.Date;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.res.AssetManager;
+import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.PixelFormat;
 import android.os.Bundle;
+import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.widget.DrawerLayout;
+import android.view.Gravity;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.slidingmenu.lib.SlidingMenu;
-import com.slidingmenu.lib.SlidingMenu.OnClosedListener;
 //import com.google.analytics.tracking.android.EasyTracker;
 
 public class BaseActivity extends FragmentActivity {
 
-	public SlidingMenu mSlidingMenu;
+    protected ActionBarDrawerToggle mDrawerToggle;
+    protected DrawerLayout mDrawerLayout;
+    protected ViewGroup mDrawerContainer;
+    protected boolean mDrawerOpen;
 
 	@Override
 	public void onStart() {
@@ -45,29 +52,30 @@ public class BaseActivity extends FragmentActivity {
 //		EasyTracker.getInstance(this).activityStop(this);
 	}
 
-    public void initSlidingMenu ()
-    {
+    public void setupDrawerLayout() {
 
-        mSlidingMenu = new SlidingMenu(this);
-        mSlidingMenu.setShadowWidthRes(R.dimen.shadow_width);
-        mSlidingMenu.setShadowDrawable(R.drawable.shadow);
-        mSlidingMenu.setTouchModeAbove(SlidingMenu.TOUCHMODE_MARGIN);
-        
-        mSlidingMenu.setBehindWidthRes(R.dimen.slidingmenu_offset);
-        mSlidingMenu.setFadeDegree(0.35f);
-        mSlidingMenu.setMenu(R.layout.fragment_drawer);
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        mDrawerContainer = (ViewGroup) findViewById(R.id.left_drawer);
+        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,
+                R.drawable.ic_drawer_white, R.string.open_drawer, R.string.close_drawer) {
 
-		mSlidingMenu.attachToActivity(this, SlidingMenu.SLIDING_CONTENT);
-		
-        mSlidingMenu.setOnClosedListener(new OnClosedListener() {
-
-            @Override
-            public void onClosed() {
-                mSlidingMenu.requestLayout();
-
+            /** Called when a drawer has settled in a completely closed state. */
+            public void onDrawerClosed(View view) {
+                super.onDrawerClosed(view);
+                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
+                mDrawerOpen = false;
             }
-        });
-        
+
+            /** Called when a drawer has settled in a completely open state. */
+            public void onDrawerOpened(View drawerView) {
+                super.onDrawerOpened(drawerView);
+                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
+                mDrawerOpen = true;
+            }
+        };
+
+        mDrawerLayout.setDrawerListener(mDrawerToggle);
+
         final Activity activity = this;
         
         RelativeLayout llDrawerLogin = (RelativeLayout) findViewById(R.id.llLogin);
@@ -76,13 +84,13 @@ public class BaseActivity extends FragmentActivity {
         ImageButton btnDrawerQuickCapturePhoto = (ImageButton) findViewById(R.id.btnDrawerQuickCapturePhoto);
         ImageButton btnDrawerQuickCaptureAudio = (ImageButton) findViewById(R.id.btnDrawerQuickCaptureAudio);
         
-        Button btnDrawerHome = (Button) findViewById(R.id.btnDrawerHome);
-        Button btnDrawerProjects = (Button) findViewById(R.id.btnDrawerProjects);
-        Button btnDrawerLessons = (Button) findViewById(R.id.btnDrawerLessons);
+        Button btnDrawerHome =          (Button) findViewById(R.id.btnDrawerHome);
+        Button btnDrawerProjects =      (Button) findViewById(R.id.btnDrawerProjects);
+        Button btnDrawerLessons =       (Button) findViewById(R.id.btnDrawerLessons);
         //Button btnDrawerAccount = (Button) findViewById(R.id.btnDrawerAccount);
-        Button btnDrawerAccounts = (Button) findViewById(R.id.btnDrawerAccounts);
+        Button btnDrawerAccounts =      (Button) findViewById(R.id.btnDrawerAccounts);
         Button btnDrawerUploadManager = (Button) findViewById(R.id.btnDrawerUploadManager);
-        Button btnDrawerSettings = (Button) findViewById(R.id.btnDrawerSettings);
+        Button btnDrawerSettings =      (Button) findViewById(R.id.btnDrawerSettings);
         
         updateSlidingMenuWithUserState();
         
@@ -104,8 +112,8 @@ public class BaseActivity extends FragmentActivity {
         llDrawerLogin.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-            	
-            	mSlidingMenu.showContent(true);
+
+                mDrawerLayout.closeDrawers();
                 
 	        	Intent i = new Intent(activity, ConnectAccountActivity.class);
 	            activity.startActivity(i);
@@ -163,8 +171,8 @@ public class BaseActivity extends FragmentActivity {
         btnDrawerHome.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-            	
-            	mSlidingMenu.showContent(true);
+
+                mDrawerLayout.closeDrawers();
                 
             	 Intent i = new Intent(activity, HomeActivity.class);
                  activity.startActivity(i);
@@ -174,7 +182,7 @@ public class BaseActivity extends FragmentActivity {
             @Override
             public void onClick(View v) {
 
-            	mSlidingMenu.showContent(true);
+                mDrawerLayout.closeDrawers();
             	  Intent i = new Intent(activity, ProjectsActivity.class);
                   activity.startActivity(i);
             }
@@ -183,7 +191,7 @@ public class BaseActivity extends FragmentActivity {
             @Override
             public void onClick(View v) {
 
-            	mSlidingMenu.showContent(true);
+                mDrawerLayout.closeDrawers();
             	
                 Intent i = new Intent(activity, LessonsActivity.class);
                 activity.startActivity(i);
@@ -203,7 +211,7 @@ public class BaseActivity extends FragmentActivity {
         btnDrawerAccounts.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                mSlidingMenu.showContent(true);
+                mDrawerLayout.closeDrawers();
 
                 Intent i = new Intent(activity, AccountsActivity.class);
                 activity.startActivity(i);
@@ -213,7 +221,7 @@ public class BaseActivity extends FragmentActivity {
         btnDrawerUploadManager.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                mSlidingMenu.showContent(true);
+                mDrawerLayout.closeDrawers();
                 Toast.makeText(getApplicationContext(), "Not yet implemented", Toast.LENGTH_LONG).show();
 //                Intent i = new Intent(activity, AccountsActivity.class);
 //                activity.startActivity(i);
@@ -223,7 +231,7 @@ public class BaseActivity extends FragmentActivity {
         btnDrawerSettings.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                mSlidingMenu.showContent(true);
+                mDrawerLayout.closeDrawers();
 
                 Intent i = new Intent(activity, SimplePreferences.class);
                 activity.startActivity(i);
@@ -239,7 +247,7 @@ public class BaseActivity extends FragmentActivity {
      * e.g: Show username if logged in, prompt to sign up or sign in if not.
      */
     private void updateSlidingMenuWithUserState() {
-        ServerManager serverManager = ((StoryMakerApp) this.getApplication()).getServerManager();
+        ServerManager serverManager = StoryMakerApp.getServerManager();
         TextView textViewSignIn = (TextView) findViewById(R.id.textViewSignIn);
         TextView textViewJoinStorymaker = (TextView) findViewById(R.id.textViewJoinStorymaker);
         if (serverManager.hasCreds()) {
@@ -260,6 +268,56 @@ public class BaseActivity extends FragmentActivity {
             firstStartIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(firstStartIntent);
         }
+
+        setContentView(R.layout.activity_base);
+
+        getActionBar().setDisplayHomeAsUpEnabled(true);
+        getActionBar().setHomeButtonEnabled(true);
+    }
+
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        // Sync the toggle state after onRestoreInstanceState has occurred.
+        mDrawerToggle.syncState();
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        mDrawerToggle.onConfigurationChanged(newConfig);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (mDrawerToggle.onOptionsItemSelected(item)) {
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    public void setContentView(int resId) {
+        if (!getClass().getSimpleName().equals("BaseActivity")) {
+
+            super.setContentView(R.layout.activity_base);
+            if (resId != R.layout.activity_base) {
+                setContentViewWithinDrawerLayout(resId);
+                setupDrawerLayout();
+            }
+
+        } else {
+            super.setContentView(resId);
+        }
+    }
+
+    /**
+     * Inflate the given layout into this Activity's DrawerLayout
+     *
+     * @param resId the layout resource to inflate
+     */
+    public void setContentViewWithinDrawerLayout(int resId) {
+        ViewGroup content = (ViewGroup) findViewById(R.id.content_frame);
+        getLayoutInflater().inflate(resId, content, true);
     }
     
     @Override
@@ -267,17 +325,6 @@ public class BaseActivity extends FragmentActivity {
         super.onResume();
         updateSlidingMenuWithUserState();
     }
-    
-    @Override
-	public void onPostCreate(Bundle savedInstanceState) {
-		
-		super.onPostCreate(savedInstanceState);
-	
-
-        initSlidingMenu();
-	}
-
-
 
 	private void detectCoachOverlay ()
     {
@@ -347,5 +394,13 @@ public class BaseActivity extends FragmentActivity {
     	        PixelFormat.TRANSLUCENT);
 
     	getWindowManager().addView(overlayView, params);
+    }
+
+    public void toggleDrawer() {
+        if (mDrawerLayout == null) return;
+
+        if (mDrawerOpen) mDrawerLayout.closeDrawer(mDrawerContainer);
+        else mDrawerLayout.openDrawer(mDrawerContainer);
+
     }
 }

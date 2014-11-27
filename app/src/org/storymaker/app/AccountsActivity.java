@@ -26,9 +26,9 @@ public class AccountsActivity extends BaseActivity {
 		if (getIntent().getBooleanExtra("isDialog", false)) {
             setTheme(android.R.style.Theme_Holo_Light_Dialog_NoActionBar_MinWidth);
 		}
-		setContentView(R.layout.activity_accounts);
-				
-		boolean isUserLoggedIntoSM = false;
+        setContentView(R.layout.activity_accounts);
+
+        boolean isUserLoggedIntoSM = false;
         Auth storymakerAuth = (new AuthTable()).getAuthDefault(getApplicationContext(), Auth.SITE_STORYMAKER);
         if (storymakerAuth != null) {
         	isUserLoggedIntoSM = true;
@@ -48,7 +48,7 @@ public class AccountsActivity extends BaseActivity {
 	    FragmentManager fragManager = getSupportFragmentManager();
 	    FragmentTransaction fragTrans = fragManager.beginTransaction();
 
-	    List<Account> accounts = new ArrayList<Account>();
+	    List<Account> accounts = new ArrayList<>();
 	    final AuthTable authTable = new AuthTable();
 	    String[] siteAvailableNames = Account.CONTROLLER_SITE_NAMES;
 	    String[] siteAvailableKeys = Account.CONTROLLER_SITE_KEYS;

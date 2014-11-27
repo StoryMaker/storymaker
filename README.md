@@ -53,6 +53,37 @@ Follow these steps to setup your dev environment:
     </resources>
     ```
 
+1. Create Google API credentials file
+
+    ```
+    vim ./external/SecureShareLib/SecureShareUILibrary/res/values/google.xml
+    ```
+
+    Add the following contents:
+
+    ```xml
+    <?xml version="1.0" encoding="utf-8"?>
+    <resources>
+        <!-- insert your own keys from: https://www.flickr.com/services/apps/create/apply/ -->
+        <string name="google_client_id">REPLACE_WITH_YOUR_ID</string>
+        <string name="google_client_secret">REPLACE_WITH_YOUR_SECRET</string>
+        <string name="google_app_name">REPLACE_WITH_YOUR_APP_NAME</string>
+    </resources>
+    ```
+1. Create Google Play Developer Account credentials file
+
+    ```
+    vim ./external/liger/lib/src/main/res/google_play.xml
+    ```
+
+    ```
+    <?xml version="1.0" encoding="utf-8"?>
+    <resources>
+        <string name="base64_public_key">REPLACE WITH YOUR PUBLIC KEY</string>
+        <string name="liger_salt">REPLACE WITH A STRING OF BYTES</string>
+    </resources>
+    ```
+
 ### Android Studio Specific Steps
 
 After completing all items under Prerequisites:

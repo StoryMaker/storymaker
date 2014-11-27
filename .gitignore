@@ -36,3 +36,6 @@ local.properties
 
 # Gradle
 .gradle/
+
+#Liger content
+liger-content/
