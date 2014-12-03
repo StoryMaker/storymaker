@@ -85,10 +85,11 @@ public class BaseActivity extends FragmentActivity {
         ImageButton btnDrawerQuickCaptureAudio = (ImageButton) findViewById(R.id.btnDrawerQuickCaptureAudio);
         
         Button btnDrawerHome =          (Button) findViewById(R.id.btnDrawerHome);
-        Button btnDrawerProjects =      (Button) findViewById(R.id.btnDrawerProjects);
+//        Button btnDrawerProjects =      (Button) findViewById(R.id.btnDrawerProjects);
         Button btnDrawerLessons =       (Button) findViewById(R.id.btnDrawerLessons);
         //Button btnDrawerAccount = (Button) findViewById(R.id.btnDrawerAccount);
         Button btnDrawerAccounts =      (Button) findViewById(R.id.btnDrawerAccounts);
+        Button btnDrawerExports =      (Button) findViewById(R.id.btnDrawerExports);
         Button btnDrawerUploadManager = (Button) findViewById(R.id.btnDrawerUploadManager);
         Button btnDrawerSettings =      (Button) findViewById(R.id.btnDrawerSettings);
         
@@ -178,13 +179,22 @@ public class BaseActivity extends FragmentActivity {
                  activity.startActivity(i);
             }
         });
-        btnDrawerProjects.setOnClickListener(new OnClickListener() {
+//        btnDrawerProjects.setOnClickListener(new OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//                mDrawerLayout.closeDrawers();
+//                Intent i = new Intent(activity, ProjectsActivity.class);
+//                activity.startActivity(i);
+//            }
+//        });
+        btnDrawerExports.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 mDrawerLayout.closeDrawers();
-            	  Intent i = new Intent(activity, ProjectsActivity.class);
-                  activity.startActivity(i);
+                Intent i = new Intent(activity, ProjectsActivity.class);
+                activity.startActivity(i);
             }
         });
         btnDrawerLessons.setOnClickListener(new OnClickListener() {
@@ -271,7 +281,6 @@ public class BaseActivity extends FragmentActivity {
 
         setContentView(R.layout.activity_base);
 
-        getActionBar().setDisplayHomeAsUpEnabled(true);
         getActionBar().setHomeButtonEnabled(true);
     }
 
