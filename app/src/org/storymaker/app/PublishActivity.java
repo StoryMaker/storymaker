@@ -20,6 +20,7 @@ import org.storymaker.app.model.Project;
 import org.storymaker.app.model.Scene;
 
 import io.scal.secureshareui.lib.ChooseAccountFragment;
+import scal.io.liger.Constants;
 import scal.io.liger.model.FullMetadata;
 
 
@@ -30,13 +31,17 @@ public class PublishActivity extends EditorBaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_publish);
 
-        ArrayList<Parcelable> parcelables = getIntent().getParcelableArrayListExtra("export_metadata");
+        Intent intent = getIntent();
+        String title = intent.getStringExtra(Constants.EXTRA_STORY_TITLE);
+        if (title == null) title = getString(R.string.no_title);
+
+        ArrayList<Parcelable> parcelables = intent.getParcelableArrayListExtra(Constants.EXTRA_EXPORT_CLIPS);
         mProject = new Project(this, 1);
 
         // FIXME this should be split into a method, probably in the model.Project class?
         mProject = new Project(this, 1);
-        mProject.setTitle("export from liger");
-        mProject.setTemplatePath("");
+        mProject.setTitle(title);
+        mProject.setTemplatePath(""); // FIXME can we leverage this for the story path file?
         final String medium = ((FullMetadata) parcelables.get(0)).getMedium(); // until we iron out multi medium, we just tied export medium to the medium of the first clip
         if (medium.equals("photo")) {
             mProject.setStoryType(Project.STORY_TYPE_ESSAY);

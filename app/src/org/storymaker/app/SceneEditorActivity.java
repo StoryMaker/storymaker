@@ -18,6 +18,7 @@ import io.scal.secureshareui.controller.ArchiveSiteController;
 import io.scal.secureshareui.controller.SiteController;
 import io.scal.secureshareui.lib.ChooseAccountFragment;
 import io.scal.secureshareui.lib.ArchiveMetadataActivity;
+import scal.io.liger.Constants;
 import scal.io.liger.model.FullMetadata;
 
 import java.io.File;
@@ -74,7 +75,7 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
         //       mStoryMode = getIntent().getIntExtra("story_mode", Project.STORY_TYPE_VIDEO);
 
         int pid = intent.getIntExtra("pid", -1); //project id
-        ArrayList<Parcelable> parcelables = intent.getParcelableArrayListExtra("export_metadata");
+        ArrayList<Parcelable> parcelables = intent.getParcelableArrayListExtra(Constants.EXTRA_EXPORT_CLIPS);
 
         mSceneIndex = getIntent().getIntExtra("scene", 0);
 
