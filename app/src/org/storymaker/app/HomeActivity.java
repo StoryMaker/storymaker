@@ -12,6 +12,7 @@ import scal.io.liger.Constants;
 import scal.io.liger.DownloadHelper;
 import scal.io.liger.JsonHelper;
 import scal.io.liger.MainActivity;
+import scal.io.liger.model.StoryPath;
 import scal.io.liger.model.StoryPathLibrary;
 
 import java.io.BufferedReader;
@@ -175,19 +176,21 @@ public class HomeActivity extends BaseActivity {
                 StoryPathLibrary spl = initSPLFromJson(jsonString, f.getAbsolutePath());
 
                 String title = "(no title)";
-                String medium = spl.getCurrentStoryPath().getMedium();
-                if (medium == null) {
-                    medium = "No medium";
-                } else if (medium.equals("video")) {
-                    medium = getString(R.string.lbl_video);
-                } else if (medium.equals("audio")) {
-                    medium = getString(R.string.lbl_audio);
-                } else if (medium.equals("photo")) {
-                    medium = getString(R.string.lbl_photo);
-                }
+                StoryPath currentStoryPath = spl.getCurrentStoryPath();
+                String medium = "No medium"; // FIXME move to strings
 
-                if (spl.getCurrentStoryPath() != null) {
-                    title = spl.getCurrentStoryPath().getTitle();
+                if (currentStoryPath != null) {
+                    title = currentStoryPath.getTitle();
+                    medium = currentStoryPath.getMedium();
+                    if (medium == null) {
+                        medium = "No medium"; // FIXME move to strings
+                    } else if (medium.equals("video")) {
+                        medium = getString(R.string.lbl_video);
+                    } else if (medium.equals("audio")) {
+                        medium = getString(R.string.lbl_audio);
+                    } else if (medium.equals("photo")) {
+                        medium = getString(R.string.lbl_photo);
+                    }
                 }
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm");
                 Date date = new Date(Long.parseLong(parseInstanceDate(f.getName())));
