@@ -1,3 +1,7 @@
+--- build 1015
+
+- many crash fixes
+
 --- build 1014
 
 - fix crash on launch
