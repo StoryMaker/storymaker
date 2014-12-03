@@ -173,36 +173,36 @@ public class HomeActivity extends BaseActivity {
             Log.d(TAG, "loading instance " + f);
             String jsonString = JsonHelper.loadJSON(f, "en"); // FIXME don't hardcode "en"
             MyCard card = null;
-                StoryPathLibrary spl = initSPLFromJson(jsonString, f.getAbsolutePath());
+            StoryPathLibrary spl = initSPLFromJson(jsonString, f.getAbsolutePath());
 
-                String title = "(no title)";
-                StoryPath currentStoryPath = spl.getCurrentStoryPath();
-                String medium = "No medium"; // FIXME move to strings
+            String title = "(no title)";
+            StoryPath currentStoryPath = spl.getCurrentStoryPath();
+            String medium = "No medium"; // FIXME move to strings
 
-                if (currentStoryPath != null) {
-                    title = currentStoryPath.getTitle();
-                    medium = currentStoryPath.getMedium();
-                    if (medium == null) {
-                        medium = "No medium"; // FIXME move to strings
-                    } else if (medium.equals("video")) {
-                        medium = getString(R.string.lbl_video);
-                    } else if (medium.equals("audio")) {
-                        medium = getString(R.string.lbl_audio);
-                    } else if (medium.equals("photo")) {
-                        medium = getString(R.string.lbl_photo);
-                    }
+            if (currentStoryPath != null) {
+                title = currentStoryPath.getTitle();
+                medium = currentStoryPath.getMedium();
+                if (medium == null) {
+                    medium = "No medium"; // FIXME move to strings
+                } else if (medium.equals("video")) {
+                    medium = getString(R.string.lbl_video);
+                } else if (medium.equals("audio")) {
+                    medium = getString(R.string.lbl_audio);
+                } else if (medium.equals("photo")) {
+                    medium = getString(R.string.lbl_photo);
                 }
-                SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm");
-                Date date = new Date(Long.parseLong(parseInstanceDate(f.getName())));
-                card = new MyCard(title + " " + sdf.format(date), medium + ". Last modified" + ": " + sdf.format(new Date(f.lastModified()))); // FIXME move into strings
+            }
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm");
+            Date date = new Date(Long.parseLong(parseInstanceDate(f.getName())));
+            card = new MyCard(title + " " + sdf.format(date), medium + ". Last modified" + ": " + sdf.format(new Date(f.lastModified()))); // FIXME move into strings
 
-                Bitmap coverImageThumbnail = spl.getCoverImageThumbnail();
-                final BitmapFactory.Options options = new BitmapFactory.Options();
-                options.inSampleSize = 2;
-                if (coverImageThumbnail == null) {
-                    coverImageThumbnail = BitmapFactory.decodeResource(getResources(), scal.io.liger.R.drawable.no_thumbnail);
-                }
-                card.setImage(new BitmapDrawable(coverImageThumbnail));//, options));
+            Bitmap coverImageThumbnail = spl.getCoverImageThumbnail();
+            final BitmapFactory.Options options = new BitmapFactory.Options();
+            options.inSampleSize = 2;
+            if (coverImageThumbnail == null) {
+                coverImageThumbnail = BitmapFactory.decodeResource(getResources(), scal.io.liger.R.drawable.no_thumbnail);
+            }
+            card.setImage(new BitmapDrawable(coverImageThumbnail));//, options));
 
             if (card != null) {
                 card.setIcon(R.drawable.ic_home_project);
