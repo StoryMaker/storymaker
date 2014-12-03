@@ -39,8 +39,8 @@ public class StoryInfoEditActivity extends BaseActivity {
 		
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
         this.requestWindowFeature(Window.FEATURE_ACTION_BAR);
+		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_story_info_edit);
 		
 		startActionMode(mActionModeCallback);
