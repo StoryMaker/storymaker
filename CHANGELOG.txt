@@ -1,3 +1,9 @@
+--- build 1014
+
+- fix crash on launch
+- fix crash when opening publish info editor
+- pass story title through to publish
+
 --- build 1013
 
 NOTE: you must uninstall your old build before installing this as your old photo stories are corruted by a bug in an earlier build.
