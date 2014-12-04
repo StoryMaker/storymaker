@@ -128,7 +128,7 @@ public class HomeActivity extends BaseActivity {
     // copied this as a short term fix until we get loading cleanly split out from the liger sample app ui stuff
     private StoryPathLibrary initSPLFromJson(String json, String jsonPath) {
         if (json == null || json.equals("")) {
-            Toast.makeText(this, "Was not able to load this lesson, content was missing!", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Was not able to load this path, content is missing!", Toast.LENGTH_LONG).show();
             finish();
             return null;
         }
