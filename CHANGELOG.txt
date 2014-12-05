@@ -1,3 +1,11 @@
+--- build 1016
+
+- record audio directly in card
+- show audio recording levels during audio clip and narration recording
+- fix for issue when app is unresponsive after coming back from the camera
+- show thumbnails and clip goals in order screen
+- reduce download size by 20%
+
 --- build 1015
 
 - many crash fixes
