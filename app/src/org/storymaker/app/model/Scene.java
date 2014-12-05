@@ -333,7 +333,6 @@ public class Scene extends Model {
         media.setClipIndex(clipIndex);
         media.setSceneId(getId()); // need created/updated?
         media.save();
-        
         mClipCount = Math.max((clipIndex+1), mClipCount);
                 
     }

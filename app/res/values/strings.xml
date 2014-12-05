@@ -313,5 +313,6 @@ You also will have an opportunity to see and modify the data being sent."</strin
     <string name="no_site_selected">No site selected.</string>
     <string name="exported_stories">Exports</string>
     <string name="no_title">No Title.</string>
+    <string name="title_exports">Published Stories</string>
 
 </resources>

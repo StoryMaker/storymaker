@@ -91,5 +91,5 @@ dependencies {
     compile project(':external:SecureShareLib:SecureShareUILibrary:external:facebook-sdk:facebook')
     compile project(':android-iconify')
     compile project(':external:liger:lib')
-
+    androidTestCompile 'com.jakewharton.espresso:espresso:1.1-r3'
 }
