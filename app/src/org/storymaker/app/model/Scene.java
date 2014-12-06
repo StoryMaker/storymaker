@@ -324,8 +324,8 @@ public class Scene extends Model {
     /**
      * @param media append this media to the back of the scene's media list
      */
- // FIXME make provider free version
-    public void setMedia(int clipIndex, String clipType, String path, String mimeType) {
+    // FIXME make provider free version
+    public Media setMedia(int clipIndex, String clipType, String path, String mimeType) {
         Media media = new Media(mDB, context);
         media.setPath(path);
         media.setMimeType(mimeType);
@@ -334,7 +334,26 @@ public class Scene extends Model {
         media.setSceneId(getId()); // need created/updated?
         media.save();
         mClipCount = Math.max((clipIndex+1), mClipCount);
-                
+        return media;
+    }
+
+    /**
+     * @param media append this media to the back of the scene's media list
+     */
+    // FIXME make provider free version
+    public Media setMedia(int clipIndex, String clipType, String path, String mimeType, int trimStart, int trimEnd, int duration) {
+        Media media = new Media(mDB, context);
+        media.setPath(path);
+        media.setMimeType(mimeType);
+        media.setClipType(clipType);
+        media.setClipIndex(clipIndex);
+        media.setTrimStart(trimStart);
+        media.setTrimEnd(trimEnd);
+        media.setSceneId(getId()); // need created/updated?
+        media.setDuration(duration);
+        media.save();
+        mClipCount = Math.max((clipIndex+1), mClipCount);
+        return media;
     }
     
 

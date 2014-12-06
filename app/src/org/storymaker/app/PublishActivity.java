@@ -62,7 +62,11 @@ public class PublishActivity extends EditorBaseActivity {
         for (Parcelable p: parcelables) {
             // index, cliptype, path, mimetype
             FullMetadata m = ((FullMetadata) p);
-            scene.setMedia(i, m.getFilePath(), m.getFilePath(), "video/mp4");
+            float trimStartRatio = ((float)m.getStartTime()) / m.getDuration();
+            int trimStart = (int) (trimStartRatio * 100) - 1;
+            float trimEndRatio = ((float)m.getStopTime()) / m.getDuration();
+            int trimEnd = (int) (trimEndRatio * 100) - 1;
+            scene.setMedia(i, m.getFilePath(), m.getFilePath(), "video/mp4", trimStart, trimEnd, m.getDuration());
             i++;
         }
         scene.save();

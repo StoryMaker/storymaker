@@ -1,3 +1,11 @@
+--- build 1017
+
+- trim works in final render
+- fix long lines of text being truncated
+- fix crash opening info viewer
+- update app icon to be StoryMaker instead of Liger
+
+
 --- build 1016
 
 - record audio directly in card
