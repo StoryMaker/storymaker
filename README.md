@@ -73,7 +73,7 @@ Follow these steps to setup your dev environment:
 1. Create Google Play Developer Account credentials file
 
     ```
-    vim ./external/liger/lib/src/main/res/google_play.xml
+    vim ./external/liger/lib/src/main/res/values/google_play.xml
     ```
 
     ```
