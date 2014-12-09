@@ -695,9 +695,17 @@ public class HomeActivity extends BaseActivity {
 
     public void downloadComplete() {
         initActivityList();
-        if (mLoading != null && mLoading.isShowing()){
-            mLoading.dismiss();
-            mLoading = null;
+        // http://stackoverflow.com/questions/2745061/java-lang-illegalargumentexception-view-not-attached-to-window-manager
+        try {
+            if ((this.mLoading != null) && this.mLoading.isShowing()) {
+                this.mLoading.dismiss();
+            }
+        } catch (final IllegalArgumentException e) {
+            // Handle or log or ignore
+        } catch (final Exception e) {
+            // Handle or log or ignore
+        } finally {
+            this.mLoading = null;
         }
     }
 
