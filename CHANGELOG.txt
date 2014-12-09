@@ -1,3 +1,10 @@
+--- build 1018
+
+- fix crash when scrolling to ReviewCard with empty story
+- fix crash when phone runs our of space while recording video
+- fix crash after content file downloads
+- fix missing icons
+
 --- build 1017
 
 - trim works in final render
