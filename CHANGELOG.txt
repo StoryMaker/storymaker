@@ -5,6 +5,8 @@
 - fix crash when phone runs our of space while recording video
 - fix crash after content file downloads
 - fix missing icons
+- fix photo capture on devices with SD Cards
+- fix crash importing facebook photos
 
 --- build 1017
 
