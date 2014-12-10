@@ -202,21 +202,20 @@ public class HomeActivity extends BaseActivity {
             if (coverImageThumbnail == null) {
                 coverImageThumbnail = BitmapFactory.decodeResource(getResources(), scal.io.liger.R.drawable.no_thumbnail);
             }
+
             card.setImage(new BitmapDrawable(coverImageThumbnail));//, options));
 
-            if (card != null) {
-                card.setIcon(R.drawable.ic_home_project);
+            card.setIcon(R.drawable.ic_home_project);
 
-                card.setOnClickListener(new OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        launchLiger(HomeActivity.this, null, f.getAbsolutePath());
-                    }
-                });
+            card.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    launchLiger(HomeActivity.this, null, f.getAbsolutePath());
+                }
+            });
 
-                ActivityEntry ae = new ActivityEntry(card, new Date(f.lastModified()));
-                alActivity.add(ae);
-            }
+            ActivityEntry ae = new ActivityEntry(card, new Date(f.lastModified()));
+            alActivity.add(ae);
         }
 
         Collections.sort(alActivity);
