@@ -10,8 +10,10 @@ import org.storymaker.app.ui.MyCard;
 import info.guardianproject.onionkit.ui.OrbotHelper;
 import scal.io.liger.Constants;
 import scal.io.liger.DownloadHelper;
+import scal.io.liger.IndexManager;
 import scal.io.liger.JsonHelper;
 import scal.io.liger.MainActivity;
+import scal.io.liger.model.InstanceIndexItem;
 import scal.io.liger.model.StoryPath;
 import scal.io.liger.model.StoryPathLibrary;
 
@@ -25,6 +27,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Locale;
 
 import net.hockeyapp.android.CrashManager;
@@ -168,37 +171,48 @@ public class HomeActivity extends BaseActivity {
 
         ArrayList<ActivityEntry> alActivity = new ArrayList<ActivityEntry>();
         JsonHelper.setupFileStructure(this);
-        ArrayList<File> instances = JsonHelper.getLibraryInstanceFiles();
-        for (final File f: instances) {
-            Log.d(TAG, "loading instance " + f);
-            String jsonString = JsonHelper.loadJSON(f, "en"); // FIXME don't hardcode "en"
+
+        // NEW: load instance index
+        HashMap<String, InstanceIndexItem> instanceIndex = IndexManager.fillInstanceIndex(HomeActivity.this, IndexManager.loadInstanceIndex(HomeActivity.this));
+
+        // TEMP
+        if (instanceIndex.size() > 0) {
+            Log.d(TAG, "INITACTIVITYLIST - FOUND INSTANCE INDEX WITH " + instanceIndex.size() + " ITEMS");
+        } else {
+            Log.d(TAG, "INITACTIVITYLIST - FOUND INSTANCE INDEX WITH NO ITEMS");
+        }
+
+        ArrayList<InstanceIndexItem> instances = new ArrayList<InstanceIndexItem>(instanceIndex.values());
+        for (final InstanceIndexItem i : instances) {
+            Log.d(TAG, "loading instance " + i.getInstanceFilePath());
+            final File f = new File(i.getInstanceFilePath());
+
             MyCard card = null;
-            StoryPathLibrary spl = initSPLFromJson(jsonString, f.getAbsolutePath());
 
-            String title = "(no title)";
-            StoryPath currentStoryPath = spl.getCurrentStoryPath();
-            String medium = "No medium"; // FIXME move to strings
-
-            if (currentStoryPath != null) {
-                title = currentStoryPath.getTitle();
-                medium = currentStoryPath.getMedium();
-                if (medium == null) {
-                    medium = "No medium"; // FIXME move to strings
-                } else if (medium.equals("video")) {
-                    medium = getString(R.string.lbl_video);
-                } else if (medium.equals("audio")) {
-                    medium = getString(R.string.lbl_audio);
-                } else if (medium.equals("photo")) {
-                    medium = getString(R.string.lbl_photo);
-                }
+            String title = i.getStoryTitle();
+            if (title == null) {
+                title = "(no title)"; // FIXME move to strings
             }
+
+            String medium = i.getStoryType();
+            if (medium == null) {
+                medium = "(no medium)"; // FIXME move to strings
+            } else if (medium.equals("video")) {
+                medium = getString(R.string.lbl_video);
+            } else if (medium.equals("audio")) {
+                medium = getString(R.string.lbl_audio);
+            } else if (medium.equals("photo")) {
+                medium = getString(R.string.lbl_photo);
+            }
+
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm");
-            Date date = new Date(Long.parseLong(parseInstanceDate(f.getName())));
+            Date date = new Date(i.getStoryCreationDate());
+
             card = new MyCard(title + " " + sdf.format(date), medium + ". Last modified" + ": " + sdf.format(new Date(f.lastModified()))); // FIXME move into strings
 
-            Bitmap coverImageThumbnail = spl.getCoverImageThumbnail();
             final BitmapFactory.Options options = new BitmapFactory.Options();
             options.inSampleSize = 2;
+            Bitmap coverImageThumbnail = BitmapFactory.decodeFile(i.getStoryThumbnailPath(), options);
             if (coverImageThumbnail == null) {
                 coverImageThumbnail = BitmapFactory.decodeResource(getResources(), scal.io.liger.R.drawable.no_thumbnail);
             }
