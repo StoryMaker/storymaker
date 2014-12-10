@@ -1,5 +1,6 @@
 --- build 1018
 
+- fix crash importing/capturing on 4.0, 4.1, 4.2 and 4.3 devices
 - fix crash when scrolling to ReviewCard with empty story
 - fix crash when phone runs our of space while recording video
 - fix crash after content file downloads
