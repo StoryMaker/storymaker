@@ -60,10 +60,10 @@ dependencies {
     //compile fileTree(dir: 'libs', include: '*.jar')
 
     // Maven imports
+    androidTestCompile 'com.jakewharton.espresso:espresso:1.1-r3'
     compile 'com.google.code.gson:gson:2.3'
     // Will use ActionBarDrawerToggle in BaseActivity once we migrate ActionBar -> ToolBar
     //compile 'com.android.support:appcompat-v7:21.0.2'
-//    compile 'com.actionbarsherlock:actionbarsherlock:4.4.0@aar'
 
     // .Jar imports
     compile files('libs/apache-mime4j-0.6.jar')
@@ -91,5 +91,4 @@ dependencies {
     compile project(':external:SecureShareLib:SecureShareUILibrary:external:facebook-sdk:facebook')
     compile project(':android-iconify')
     compile project(':external:liger:lib')
-    androidTestCompile 'com.jakewharton.espresso:espresso:1.1-r3'
 }
