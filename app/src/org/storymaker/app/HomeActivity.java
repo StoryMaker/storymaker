@@ -208,7 +208,7 @@ public class HomeActivity extends BaseActivity {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm");
             Date date = new Date(i.getStoryCreationDate());
 
-            card = new MyCard(title + " " + sdf.format(date), medium + ". Last modified" + ": " + sdf.format(new Date(f.lastModified()))); // FIXME move into strings
+            card = new MyCard(title + " " + sdf.format(date), medium + ". " + getString(R.string.last_modified) + ": " + sdf.format(new Date(f.lastModified()))); // FIXME move into strings
 
             final BitmapFactory.Options options = new BitmapFactory.Options();
             options.inSampleSize = 2;
