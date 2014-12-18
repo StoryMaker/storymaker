@@ -206,7 +206,7 @@ You also will have an opportunity to see and modify the data being sent."</strin
 
     <string name="lesson_status_have_not_started">Have not started</string>
     <string name="lessons_congratulations_you_have_completed_the_lesson_">You completed a lesson!</string>
-    <string name="strings">In progress</string>
+    <string name="lesson_status_in_progress">In progress</string>
     <string name="lesson_status_complete">COMPLETE!</string>
     <string name="no_lessons_available_tap_to_load_">No lessons available (tap to load)</string>
     <string name="_lesson_complete">" lesson complete"</string>

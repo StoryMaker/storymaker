@@ -1,6 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="app_name">StoryMaker</string>
   <string name="app_description">La création de belles histoires est maintenant plus facile que jamais avec StoryMaker. Nos modèles uniques, des superpositions et des leçons vous guident à travers l\'ensemble du processus créatif. StoryMaker vous permet de modifier votre bon contenu sur votre mobile, ce qui rend encore plus facile de terminer votre histoire. Une fois que vous avez terminé, StoryMaker vous permet de publier votre histoire à tous vos plateformes préférées.</string>
   <string name="title_projects">Histoires</string>
   <string name="title_lessons">Leçons</string>

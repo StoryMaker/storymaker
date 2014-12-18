@@ -250,4 +250,5 @@
   <string name="sign_out">SALIR</string>
   <!--ProjectTagFragment-->
   <string name="no_tags_msg">No se añadieron #etiquetas</string>
+  <!--BaesActivity Drawer  (For Accessibility Descriptions)-->
 </resources>

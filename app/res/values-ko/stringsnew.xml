@@ -194,4 +194,5 @@
   <string name="sign_in">가입하기 / 로그인</string>
   <string name="sign_out">탈퇴하기</string>
   <!--ProjectTagFragment-->
+  <!--BaesActivity Drawer  (For Accessibility Descriptions)-->
 </resources>
