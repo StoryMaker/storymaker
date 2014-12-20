@@ -24,11 +24,12 @@ import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Environment;
 import android.preference.PreferenceManager;
+import android.support.multidex.MultiDexApplication;
 import android.util.Log;
 
 import scal.io.liger.DownloadHelper;
 
-public class StoryMakerApp extends Application {
+public class StoryMakerApp extends MultiDexApplication {
 
 	
 	private static ServerManager mServerManager;

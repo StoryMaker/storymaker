@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 21
-    buildToolsVersion "21.1.1"
+    buildToolsVersion "21.1.2"
 
     sourceSets {
         main {
@@ -15,10 +15,7 @@ android {
             jniLibs.srcDir file('libs/')
         }
 
-        defaultConfig {
-            minSdkVersion 16
-            targetSdkVersion 21
-        }
+        androidTest.setRoot('tests')
 
         // If you'd like to provide special files for the debug / release build variants
         // you can do so by adding files to the directories defined below
@@ -31,6 +28,14 @@ android {
         // by a similar customization.
         debug.setRoot('build-types/debug')
         release.setRoot('build-types/release')
+    }
+
+    defaultConfig {
+        minSdkVersion 16
+        targetSdkVersion 21
+        multiDexEnabled true
+        testInstrumentationRunner "com.google.android.apps.common.testing.testrunner.GoogleInstrumentationTestRunner"
+//        testInstrumentationRunner "android.support.multidex.MultiDexTestRunner"
     }
 
     // Temporarily ignore linter errors.
@@ -48,7 +53,8 @@ android {
     }
 
     dexOptions {
-            jumboMode = true
+        jumboMode = true
+        javaMaxHeapSize "4g"
     }
 
 }
@@ -62,18 +68,23 @@ dependencies {
 
     // Maven imports
     androidTestCompile 'com.jakewharton.espresso:espresso:1.1-r3'
+    androidTestCompile 'com.squareup.spoon:spoon-client:1.1.2'
+//    androidTestCompile 'com.android.support:multidex-instrumentation:1.0.1'
+    compile 'com.android.support:multidex:1.0.1'
     compile 'com.google.code.gson:gson:2.3'
+    compile 'com.google.guava:guava:18.0'
     // Will use ActionBarDrawerToggle in BaseActivity once we migrate ActionBar -> ToolBar
     //compile 'com.android.support:appcompat-v7:21.0.2'
 
     // .Jar imports
+    compile files('libs/apache-mime4j-0.6.jar')
     compile files('libs/apache-mime4j-0.6.jar')
     compile 'commons-io:commons-io:2.4'
     compile files('libs/commons-lang3-3.1.jar')
     compile files('libs/google-api-client-1.4.1-beta.jar')
     compile files('libs/google-api-client-googleapis-1.4.1-beta.jar')
     compile files('libs/google-api-services-latitude-v1-1.1.0-beta.jar')
-    compile files('libs/guava-r09.jar')
+    //compile files('libs/guava-r09.jar')
     compile files('libs/HockeySDK.jar')
     compile files('libs/httpmime-4.0.3.jar')
     compile files('libs/soundcloud-api-1.0.1.jar')
