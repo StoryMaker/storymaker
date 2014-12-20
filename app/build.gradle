@@ -15,16 +15,13 @@ android {
             jniLibs.srcDir file('libs/')
         }
 
+        mainSqlite.setRoot('mainSqlite')
+
+        mainSqlCipher.setRoot('mainSqlCipher')
+
+
         androidTest {
             java.srcDirs = ['tests/src']
-        }
-
-        defaultConfig {
-            minSdkVersion 16
-            targetSdkVersion 21
-
-            //testPackageName "org.storymaker.app.tests"
-            testInstrumentationRunner "com.google.android.apps.common.testing.testrunner.GoogleInstrumentationTestRunner"
         }
 
         // If you'd like to provide special files for the debug / release build variants
@@ -38,6 +35,19 @@ android {
         // by a similar customization.
         debug.setRoot('build-types/debug')
         release.setRoot('build-types/release')
+    }
+
+    productFlavors {
+        mainSqlite {}
+        mainSqlCipher {}
+    }
+
+    defaultConfig {
+        minSdkVersion 16
+        targetSdkVersion 21
+
+        //testPackageName "org.storymaker.app.tests"
+        testInstrumentationRunner "com.google.android.apps.common.testing.testrunner.GoogleInstrumentationTestRunner"
     }
 
     // Temporarily ignore linter errors.
