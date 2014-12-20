@@ -250,4 +250,5 @@
   <string name="sign_out">DECONNEXION</string>
   <!--ProjectTagFragment-->
   <string name="no_tags_msg">Aucun #tag ajouté</string>
+  <!--BaesActivity Drawer  (For Accessibility Descriptions)-->
 </resources>

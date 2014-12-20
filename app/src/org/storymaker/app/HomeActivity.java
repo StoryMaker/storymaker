@@ -145,7 +145,7 @@ public class HomeActivity extends BaseActivity {
             referencedFiles = JsonHelper.getInstancePaths();
         }
 
-        StoryPathLibrary storyPathLibrary = JsonHelper.deserializeStoryPathLibrary(json, jsonPath, referencedFiles, this);
+        StoryPathLibrary storyPathLibrary = JsonHelper.deserializeStoryPathLibrary(json, jsonPath, referencedFiles, this, StoryMakerApp.getCurrentLocale().getLanguage());
 
         if ((storyPathLibrary != null) && (storyPathLibrary.getCurrentStoryPathFile() != null)) {
             storyPathLibrary.loadStoryPathTemplate("CURRENT");
@@ -173,7 +173,7 @@ public class HomeActivity extends BaseActivity {
         JsonHelper.setupFileStructure(this);
 
         // NEW: load instance index
-        HashMap<String, InstanceIndexItem> instanceIndex = IndexManager.fillInstanceIndex(HomeActivity.this, IndexManager.loadInstanceIndex(HomeActivity.this));
+        HashMap<String, InstanceIndexItem> instanceIndex = IndexManager.fillInstanceIndex(HomeActivity.this, IndexManager.loadInstanceIndex(HomeActivity.this),StoryMakerApp.getCurrentLocale().getLanguage());
 
         // TEMP
         if (instanceIndex.size() > 0) {
@@ -208,7 +208,7 @@ public class HomeActivity extends BaseActivity {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm");
             Date date = new Date(i.getStoryCreationDate());
 
-            card = new MyCard(title + " " + sdf.format(date), medium + ". Last modified" + ": " + sdf.format(new Date(f.lastModified()))); // FIXME move into strings
+            card = new MyCard(title + " " + sdf.format(date), medium + ". " + getString(R.string.last_modified) + ": " + sdf.format(new Date(f.lastModified()))); // FIXME move into strings
 
             final BitmapFactory.Options options = new BitmapFactory.Options();
             options.inSampleSize = 2;

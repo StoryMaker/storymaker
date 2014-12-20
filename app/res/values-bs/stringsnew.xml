@@ -248,4 +248,5 @@
   <string name="sign_out">ODJAVITE SE</string>
   <!--ProjectTagFragment-->
   <string name="no_tags_msg">Nema # dodanih oznaka</string>
+  <!--BaesActivity Drawer  (For Accessibility Descriptions)-->
 </resources>

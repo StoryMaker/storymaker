@@ -1,5 +1,7 @@
 --- build 1019
 
+- fix photo story export
+- speed up home screen load a ton
 - increase content download stability
 - crash fixes
 

@@ -1,6 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="app_name">StoryMaker</string>
   <string name="app_description">Благодаря StoryMaker, процесс создание сюжетов стал еще проще. Наши оригинальные шаблоны, схемы и уроки будут служить вам ориентиром в творческом процессе. StoryMaker позволяет вам редактировать сюжет прямо на мобильном телефоне, что позволяет быстро закончить работу над ним. Когда вы завершили сюжет, StoryMaker позволяет вам опубликовать его на ваших любимых форумах. </string>
   <string name="title_projects">Сюжеты</string>
   <string name="title_lessons">Уроки</string>

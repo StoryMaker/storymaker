@@ -248,4 +248,5 @@
   <string name="sign_out">ОДЈАВИТЕ СЕ</string>
   <!--ProjectTagFragment-->
   <string name="no_tags_msg">Нема # доданих ознака</string>
+  <!--BaesActivity Drawer  (For Accessibility Descriptions)-->
 </resources>
