@@ -1,6 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="app_name">СторiMaker</string>
   <string name="title_projects">Приче</string>
   <string name="title_lessons">Лекције</string>
   <string name="action_publish">Објавити</string>

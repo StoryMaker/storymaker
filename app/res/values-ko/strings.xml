@@ -1,6 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="app_name">스토리메이커</string>
   <string name="title_projects">이야기들</string>
   <string name="title_lessons">레슨들</string>
   <string name="action_publish">출판하기</string>

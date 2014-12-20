@@ -1,6 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="app_name">StoryMaker</string>
   <string name="app_description">Crear grandes historias es ahora más fácil que nunca con StoryMaker. Nuestras plantillas, diseños, y lecciones únicas le guían a través de todo el proceso de creación. StoryMaker le permite editar su contenido desde su mismo móvil, haciendo que sea incluso más fácil finalizar su historia. Una vez la ha terminado, StoryMaker le permite publicar su historia para todas sus plataformas favoritas.</string>
   <string name="title_projects">Historias</string>
   <string name="title_lessons">Lecciones</string>
@@ -201,6 +200,7 @@ No se puede acceder al almacenamiento externo o interno</string>
   <string name="rendering_clips_">renderizando vídeos...</string>
   <string name="you_must_enter_a_project_name">Por favor introduzca un título funcional de borrador. Puede cambiar esto más tarde.</string>
   <string name="delete_project_">¿Borrar proyecto?</string>
+  <string name="delete_clip">¿Borrar corte de vídeo?</string>
   <string name="add_new_clip_to_the_scene_">¿Añadir nuevo vídeo a la escena?</string>
   <string name="video_project_project_type">Proyecto de vídeo</string>
   <string name="photo_project_project_type">Proyecto de fotografía</string>
@@ -233,8 +233,11 @@ No se puede acceder al almacenamiento externo o interno</string>
   <string name="you_began_a_new_lesson">Ha iniciado una nueva lección</string>
   <string name="scene_editor_please_add_clips">Por favor añada vídeos en la pestaña \'Elaborar\' antes de seleccionar esta pestaña.</string>
   <string name="scene_editor_trim_clip">Recortar vídeo</string>
+  <string name="delete_warning">¡Esta acción no puede deshacerse!</string>
   <string name="cancel">Cancelar</string>
+  <string name="delete">Borrar</string>
   <string name="play_or_share_exported_media_">¿Reproducir o Compartir audiovisuales exportados?</string>
+  <string name="share_published_story">¿Compartir historia publicada?</string>
   <string name="err_storage_not_ready">El almacenamiento externo (tarjeta SD) no parece estar disponible para lectura y escritura al mismo tiempo. StoryMaker requiere acceso a este para los datos de proyecto de lección e historia.</string>
   <string name="scene_s_">escena(s)</string>
   <string name="clip_s_">vídeo(s)</string>
@@ -273,7 +276,13 @@ No se puede acceder al almacenamiento externo o interno</string>
   <string name="hint_no_description">Sin descripción.</string>
   <string name="trim_clips">Recortar vídeos</string>
   <string name="info">Información</string>
-  <string name="send_logcat_to_support">Enviar Logcat al equipo de soporte</string>
+  <string name="send_logcat_to_support">Enviar un logcat al equipo de soporte</string>
   <string name="restarting_storymaker">Reiniciando StoryMaker...</string>
   <string name="send">Enviar</string>
+  <string name="title_activity_press_secure">PressSecure</string>
+  <string name="title_activity_publish">PublishActivity</string>
+  <string name="uploading_to_soundcloud">Subiendo a SoundCloud...</string>
+  <string name="uploading_to_facebook">Subiendo a Facebook...</string>
+  <string name="uploading_to_internet_archive">Subiendo a Internet Archive...</string>
+  <string name="no_site_selected">No se seleccionó ningun sitio.</string>
 </resources>

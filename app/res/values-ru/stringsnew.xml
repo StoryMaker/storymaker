@@ -250,4 +250,5 @@
   <string name="sign_out">ВЫЙТИ</string>
   <!--ProjectTagFragment-->
   <string name="no_tags_msg">#tags не добавлены</string>
+  <!--BaesActivity Drawer  (For Accessibility Descriptions)-->
 </resources>

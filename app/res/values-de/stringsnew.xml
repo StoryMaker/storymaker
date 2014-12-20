@@ -9,6 +9,7 @@
   <string name="tutorial_title_2">Seien Sie genau.</string>
   <string name="tutorial_text_2">Durch die Entwicklungskooperation mit ICFJ können Sie sicher sein, dass unsere Journalismus-Lektionen ihnen dabei helfen werden, ein besserer Reporter zu sein.</string>
   <string name="tutorial_title_3">Schützen Sie sich.</string>
+  <string name="tutorial_text_3">Unsere digitalen Sicherheitsübungen werden Ihnen und Ihren Quellen helfen in Sicherheit zu bleiben. StoryMaker zielt darauf ab, Sie abzusichern ganz egal wo auf der Welt Sie sind.</string>
   <string name="tutorial_title_4">Erzählen Sie Ihre Geschichte besser.</string>
   <string name="tutorial_title_5">Prüfen Sie Ihr Wissen.</string>
   <string name="tutorial_text_5">Jede Lektion endet mit einem Quiz, mit dem Sie Ihr Verständnis prüfen können.</string>
@@ -41,6 +42,7 @@
   <string name="story_type_news_title">Eilmeldungen</string>
   <!--/ legacy_story_type-->
   <!--story_type-->
+  <string name="story_type_event_feature_title">zukünftiges Event</string>
   <string name="story_type_event_breaking_title">Eilmeldung</string>
   <string name="story_type_issue_social_title">Gesellschaftliches Thema</string>
   <string name="story_type_issue_political_title">Politisches Thema</string>
@@ -198,4 +200,5 @@
   <string name="sign_in">REGISTRIEREN / ANMELDEN</string>
   <string name="sign_out">ABMELDEN</string>
   <!--ProjectTagFragment-->
+  <!--BaesActivity Drawer  (For Accessibility Descriptions)-->
 </resources>
