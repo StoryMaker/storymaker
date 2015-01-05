@@ -15,7 +15,14 @@ android {
             jniLibs.srcDir file('libs/')
         }
 
-        androidTest.setRoot('tests')
+        mainSqlite.setRoot('mainSqlite')
+
+        mainSqlCipher.setRoot('mainSqlCipher')
+
+
+        androidTest {
+            java.srcDirs = ['tests/src']
+        }
 
         // If you'd like to provide special files for the debug / release build variants
         // you can do so by adding files to the directories defined below
@@ -30,12 +37,17 @@ android {
         release.setRoot('build-types/release')
     }
 
+    productFlavors {
+        mainSqlite {}
+        mainSqlCipher {}
+    }
+
     defaultConfig {
         minSdkVersion 16
         targetSdkVersion 21
-        multiDexEnabled true
+
+        //testPackageName "org.storymaker.app.tests"
         testInstrumentationRunner "com.google.android.apps.common.testing.testrunner.GoogleInstrumentationTestRunner"
-//        testInstrumentationRunner "android.support.multidex.MultiDexTestRunner"
     }
 
     // Temporarily ignore linter errors.
