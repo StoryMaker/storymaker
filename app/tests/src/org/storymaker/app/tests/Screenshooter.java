@@ -1,4 +1,4 @@
-package org.storymaker.app;
+package org.storymaker.app.tests;
 
 import android.annotation.TargetApi;
 import android.app.Instrumentation;
