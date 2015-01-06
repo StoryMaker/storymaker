@@ -148,7 +148,7 @@ public class HomeActivity extends BaseActivity {
         StoryPathLibrary storyPathLibrary = JsonHelper.deserializeStoryPathLibrary(json, jsonPath, referencedFiles, this, StoryMakerApp.getCurrentLocale().getLanguage());
 
         if ((storyPathLibrary != null) && (storyPathLibrary.getCurrentStoryPathFile() != null)) {
-            storyPathLibrary.loadStoryPathTemplate("CURRENT");
+            storyPathLibrary.loadStoryPathTemplate("CURRENT", false);
         }
 
         return storyPathLibrary;
