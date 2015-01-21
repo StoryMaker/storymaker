@@ -678,11 +678,11 @@ public class HomeActivity extends BaseActivity {
 	   CrashManager.register(this, AppConstants.HOCKEY_APP_ID);
 	 }
 
-	 private void checkForUpdates() {
-       if (BuildConfig.DEBUG) {
-           UpdateManager.register(this, AppConstants.HOCKEY_APP_ID);
-       }
-	 }
+    private void checkForUpdates() {
+        if (BuildConfig.DEBUG) {
+            UpdateManager.register(this, AppConstants.HOCKEY_APP_ID);
+        }
+    }
 
     
 	 private void writeLogToDisk (String tag, File fileLog) throws IOException
