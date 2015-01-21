@@ -21,11 +21,7 @@
     <uses-permission android:name="android.permission.USE_CREDENTIALS" />
     <uses-permission android:name="com.google.android.googleapps.permission.GOOGLE_AUTH" android:required="false" />
     <uses-permission android:name="com.google.android.googleapps.permission.GOOGLE_AUTH.youtube" android:required="false" />
-    
-    <!-- FIXME remove in prod builds -->
-    <uses-permission android:name="android.permission.READ_LOGS" />
-    <!-- FIXME remove in prod builds -->
-    
+
     <uses-feature android:name="android.hardware.camera" android:required="false" />
     
     <supports-screens
