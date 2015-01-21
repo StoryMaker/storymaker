@@ -679,8 +679,9 @@ public class HomeActivity extends BaseActivity {
 	 }
 
 	 private void checkForUpdates() {
-	   // Remove this for store builds!
-	   UpdateManager.register(this, AppConstants.HOCKEY_APP_ID);
+       if (BuildConfig.DEBUG) {
+           UpdateManager.register(this, AppConstants.HOCKEY_APP_ID);
+       }
 	 }
 
     
