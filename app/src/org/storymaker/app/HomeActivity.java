@@ -148,7 +148,7 @@ public class HomeActivity extends BaseActivity {
         StoryPathLibrary storyPathLibrary = JsonHelper.deserializeStoryPathLibrary(json, jsonPath, referencedFiles, this, StoryMakerApp.getCurrentLocale().getLanguage());
 
         if ((storyPathLibrary != null) && (storyPathLibrary.getCurrentStoryPathFile() != null)) {
-            storyPathLibrary.loadStoryPathTemplate("CURRENT");
+            storyPathLibrary.loadStoryPathTemplate("CURRENT", false);
         }
 
         return storyPathLibrary;
@@ -216,21 +216,20 @@ public class HomeActivity extends BaseActivity {
             if (coverImageThumbnail == null) {
                 coverImageThumbnail = BitmapFactory.decodeResource(getResources(), scal.io.liger.R.drawable.no_thumbnail);
             }
+
             card.setImage(new BitmapDrawable(coverImageThumbnail));//, options));
 
-            if (card != null) {
-                card.setIcon(R.drawable.ic_home_project);
+            card.setIcon(R.drawable.ic_home_project);
 
-                card.setOnClickListener(new OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        launchLiger(HomeActivity.this, null, f.getAbsolutePath());
-                    }
-                });
+            card.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    launchLiger(HomeActivity.this, null, f.getAbsolutePath());
+                }
+            });
 
-                ActivityEntry ae = new ActivityEntry(card, new Date(f.lastModified()));
-                alActivity.add(ae);
-            }
+            ActivityEntry ae = new ActivityEntry(card, new Date(f.lastModified()));
+            alActivity.add(ae);
         }
 
         Collections.sort(alActivity);
@@ -533,7 +532,6 @@ public class HomeActivity extends BaseActivity {
         }
         //        startActivity(new Intent(this, StoryNewActivity.class));
         Intent ligerIntent = new Intent(context, MainActivity.class);
-        ligerIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         ligerIntent.putExtra(MainActivity.INTENT_KEY_WINDOW_TITLE, context.getString(R.string.app_name));
         String lang = StoryMakerApp.getCurrentLocale().getLanguage();
         ligerIntent.putExtra("lang", lang);
@@ -679,10 +677,11 @@ public class HomeActivity extends BaseActivity {
 	   CrashManager.register(this, AppConstants.HOCKEY_APP_ID);
 	 }
 
-	 private void checkForUpdates() {
-	   // Remove this for store builds!
-	   UpdateManager.register(this, AppConstants.HOCKEY_APP_ID);
-	 }
+    private void checkForUpdates() {
+        if (BuildConfig.DEBUG) {
+            UpdateManager.register(this, AppConstants.HOCKEY_APP_ID);
+        }
+    }
 
     
 	 private void writeLogToDisk (String tag, File fileLog) throws IOException
