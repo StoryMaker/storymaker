@@ -5,6 +5,14 @@
 - Update translations
 - Fix weird spacing on tip cards
 - Bugfixes!
+- Delete clips from clipcard
+- Fix back button exiting app
+- Keep screen on while narrating
+- Pause playing videos when opening order/narration
+- fix: Scrolling from bottom of screen is tricky
+- fix: Preview player on review card doesn't update after editing order
+- fix: crash second time you try to record a narration
+- fix: Video Dimensions Incorrect in Playback
 
 --- build 1019
 
