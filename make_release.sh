@@ -2,7 +2,7 @@
 
 # from:  http://developer.android.com/tools/publishing/app-signing.html
 
-#./gradlew assembleRelease
+./gradlew assembleRelease
 
 jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore storymaker-release.key app/build/outputs/apk/app-mainSqlCipher-release-unsigned.apk release
 
