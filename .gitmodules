@@ -18,4 +18,4 @@
 	url = https://github.com/scalio/SecureShareLib.git
 [submodule "external/liger"]
 	path = external/liger
-	url = https://github.com/scalio/liger-prototype
+	url = git@github.com:scalio/storypath.git
