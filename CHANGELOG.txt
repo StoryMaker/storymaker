@@ -1,3 +1,7 @@
+--- build 1021
+- Thumbnails won't clutter system gallery or cause scrolling hiccups
+- Reduce memory usage due to thumbnail improvements
+
 --- build 1020
 
 - Add French translation!
