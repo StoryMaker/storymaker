@@ -51,6 +51,9 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -70,8 +73,7 @@ public class HomeActivity extends BaseActivity {
 
     private ProgressDialog mLoading;
     private ArrayList<Project> mListProjects;
-
-	CardUI mCardView;
+    private RecyclerView mRecyclerView;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -90,7 +92,6 @@ public class HomeActivity extends BaseActivity {
         
         checkForTor();
         
-        // FIXME remove this in play store builds!!
         checkForUpdates();
         
     }
@@ -155,21 +156,14 @@ public class HomeActivity extends BaseActivity {
     }
 
     private void initActivityList () {
-        mCardView = (CardUI) findViewById(R.id.cardsview);
-
-        if (mCardView == null) {
-            return;
-        }
+        mRecyclerView = (RecyclerView) findViewById(scal.io.liger.R.id.recyclerView);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         if (!DownloadHelper.checkExpansionFiles(this, Constants.MAIN, Constants.MAIN_VERSION)) { // FIXME the app should define these, not the library
             Toast.makeText(this, "Please wait for the content pack to finish downloading and reload the app", Toast.LENGTH_LONG).show(); // FIXME move to strings.xml
             return;
         }
 
-        mCardView.clearCards();
-        mCardView.setSwipeable(false);
-
-        ArrayList<ActivityEntry> alActivity = new ArrayList<ActivityEntry>();
         JsonHelper.setupFileStructure(this);
 
         // NEW: load instance index
@@ -183,75 +177,25 @@ public class HomeActivity extends BaseActivity {
         }
 
         ArrayList<InstanceIndexItem> instances = new ArrayList<InstanceIndexItem>(instanceIndex.values());
-        for (final InstanceIndexItem i : instances) {
-            Log.d(TAG, "loading instance " + i.getInstanceFilePath());
-            final File f = new File(i.getInstanceFilePath());
 
-            MyCard card = null;
+        InstanceIndexItem learningGuide = new InstanceIndexItem(null, 0);
+        learningGuide.setStoryTitle("Learning Guide 1");
+        learningGuide.setStoryType("learningGuide");
+        learningGuide.setStoryCreationDate(0); // Show at end of list
+        instances.add(learningGuide);
 
-            String title = i.getStoryTitle();
-            if (title == null) {
-                title = "(no title)"; // FIXME move to strings
-            }
+        Collections.sort(instances, Collections.reverseOrder());
 
-            String medium = i.getStoryType();
-            if (medium == null) {
-                medium = "(no medium)"; // FIXME move to strings
-            } else if (medium.equals("video")) {
-                medium = getString(R.string.lbl_video);
-            } else if (medium.equals("audio")) {
-                medium = getString(R.string.lbl_audio);
-            } else if (medium.equals("photo")) {
-                medium = getString(R.string.lbl_photo);
-            }
-
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm");
-            Date date = new Date(i.getStoryCreationDate());
-
-            card = new MyCard(title + " " + sdf.format(date), medium + ". " + getString(R.string.last_modified) + ": " + sdf.format(new Date(f.lastModified()))); // FIXME move into strings
-
-            final BitmapFactory.Options options = new BitmapFactory.Options();
-            options.inSampleSize = 2;
-            Bitmap coverImageThumbnail = BitmapFactory.decodeFile(i.getStoryThumbnailPath(), options);
-            if (coverImageThumbnail == null) {
-                coverImageThumbnail = BitmapFactory.decodeResource(getResources(), scal.io.liger.R.drawable.no_thumbnail);
-            }
-
-            card.setImage(new BitmapDrawable(coverImageThumbnail));//, options));
-
-            card.setIcon(R.drawable.ic_home_project);
-
-            card.setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    launchLiger(HomeActivity.this, null, f.getAbsolutePath());
-                }
-            });
-
-            ActivityEntry ae = new ActivityEntry(card, new Date(f.lastModified()));
-            alActivity.add(ae);
-        }
-
-        Collections.sort(alActivity);
-
-        for (ActivityEntry ae : alActivity) {
-            mCardView.addCard(ae.card);
-        }
-
-        MyCard card = new MyCard("Learning Guide 1", "Build a compelling narrative."); // FIXME move into strings
-        card.setOnClickListener(new OnClickListener() {
+        mRecyclerView.setAdapter(new InstanceIndexItemAdapter(instances, new InstanceIndexItemAdapter.InstanceIndexItemSelectedListener() {
             @Override
-            public void onClick(View v) {
-                launchLiger(HomeActivity.this, "learning_guide_1_library", null);
+            public void onStorySelected(InstanceIndexItem selectedItem) {
+                if (!TextUtils.isEmpty(selectedItem.getStoryType()) &&
+                    selectedItem.getStoryType().equals("learningGuide")) {
+                    launchLiger(HomeActivity.this, "learning_guide_1_library", null);
+                } else
+                    launchLiger(HomeActivity.this, null, selectedItem.getInstanceFilePath());
             }
-        });
-        card.setIcon(R.drawable.ic_home_lesson);
-        Bitmap coverImageThumbnail = BitmapFactory.decodeResource(getResources(), scal.io.liger.R.drawable.no_thumbnail);
-        card.setImage(new BitmapDrawable(coverImageThumbnail));//, options));
-        mCardView.addCard(card);
-
-        // draw cards
-        mCardView.refresh();
+        }));
     }
 
     public static class ActivityEntry implements Comparable<HomeActivity.ActivityEntry> {

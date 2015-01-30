@@ -315,5 +315,7 @@ You also will have an opportunity to see and modify the data being sent."</strin
     <string name="no_title">No Title.</string>
     <string name="title_exports">Published Stories</string>
     <string name="last_modified">Last Modified</string>
+    <string name="no_medium">(no medium)</string>
+    <string name="learning_guide_description">Build a compelling narrative.</string>
 
 </resources>
