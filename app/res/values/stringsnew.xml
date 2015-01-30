@@ -319,6 +319,15 @@
 <string name="sign_in">SIGNUP / LOGIN</string>
 <string name="sign_out">SIGN OUT</string>
 
+<!--  RegisterActivity -->
+
+<string name="hint_firstname">First Name</string>
+<string name="hint_lastname">Last Name</string>
+<string name="hint_email">Email</string>
+<string name="hint_username">Username</string>
+<string name="hint_password">Password</string>
+<string name="hint_password_confirm">Confirm Password</string>
+
 <!-- ProjectTagFragment -->
 
 <string name="no_tags_msg">No #tags added</string>

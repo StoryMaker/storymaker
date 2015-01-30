@@ -11,6 +11,7 @@ import org.storymaker.app.StoryMakerApp;
 import org.storymaker.app.model.Auth;
 import org.storymaker.app.model.AuthTable;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
@@ -69,9 +70,9 @@ public class LoginActivity extends BaseActivity implements Runnable
  
             public void onClick(View v) {
                 // Switching to Register screen
-               // Intent i = new Intent(getApplicationContext(), RegisterActivity.class);
-                //startActivity(i);
-            	StoryMakerApp.getServerManager().createAccount(LoginActivity.this);
+                Intent i = new Intent(getApplicationContext(), RegisterActivity.class);
+                startActivity(i);
+            	//StoryMakerApp.getServerManager().createAccount(LoginActivity.this);
             }
         });
         

@@ -272,7 +272,7 @@ public class ServerManager {
 	public void createAccount (Activity activity)
 	{
 		//open web view here to reg form
-		Intent intent = new Intent(mContext,WordPressAuthWebViewActivity.class);
+		Intent intent = new Intent(mContext,RegisterActivity.class);
 		intent.putExtra("title", "New Account");
 		intent.putExtra("url", mServerUrl + PATH_REGISTER);
 		

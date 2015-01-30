@@ -66,6 +66,16 @@
 
     <!-- Liger styles -->
 
+    <style name="EditTextBase" parent="android:Widget.EditText">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="EditTextLogin" parent="@style/EditTextBase">
+        <item name="android:singleLine">true</item>
+        <item name="android:layout_marginBottom">8dp</item>
+    </style>
+
 
     <style name="CardText">
         <item name="android:layout_width">wrap_content</item>

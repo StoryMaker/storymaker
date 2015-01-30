@@ -4,78 +4,71 @@
   android:layout_width="fill_parent"
   android:layout_height="fill_parent"
   android:fillViewport="true">
-  <RelativeLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content" android:background="#fff"> 
-        <!-- Registration Form -->
-        <LinearLayout
-          android:orientation="vertical"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:padding="10dip">
-          <!-- Full Name Label -->
-          
-          <EditText android:id="@+id/reg_fullname"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dip"
-                android:singleLine="true"
-                android:layout_marginBottom="20dip"
-                android:hint="Display Name"
-                />
-          <!--  Email Label -->
-          <EditText android:id="@+id/reg_email"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dip"
-                android:singleLine="true"
-                android:layout_marginBottom="20dip"
-                android:hint="Your Email"
-                />
-          <!-- Password Label -->
-        
-          <EditText android:id="@+id/reg_password"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:password="true"
-                android:hint="Password"
-                android:singleLine="true"
-                android:layout_marginTop="5dip"/>
-        
-          <EditText android:id="@+id/reg_password2"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:password="true"
-                android:hint="Confirm Password"
-                android:singleLine="true"
-                android:layout_marginTop="5dip"/>   
-          
-          <CheckBox android:id="@+id/reg_checkbox"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"                
-                android:text="Confirm you are okay with this"
-                android:singleLine="true"
-                android:layout_marginTop="5dip"/>   
-           
-          
-          <!-- Register Button -->
-          <Button android:id="@+id/btnRegister"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dip"
-                android:text="Register New Account"/>
-          <!-- Link to Login Screen -->
-          <TextView android:id="@+id/link_to_login"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="40dip"
-                android:layout_marginBottom="40dip"
-                android:text="Return to Login"
-                android:gravity="center"
-                android:textSize="20dip"
-                android:textColor="#025f7c"/>
- 
-        </LinearLayout>
-        <!-- Registration Form Ends -->
-  </RelativeLayout>
+
+    <LinearLayout
+      android:orientation="vertical"
+      android:layout_width="fill_parent"
+      android:layout_height="wrap_content">
+
+        <EditText
+            style="@style/EditTextLogin"
+            android:id="@+id/et_first_name"
+            android:hint="@string/hint_firstname"/>
+
+        <EditText
+            style="@style/EditTextLogin"
+            android:id="@+id/et_last_name"
+            android:hint="@string/hint_lastname"/>
+
+        <EditText
+            style="@style/EditTextLogin"
+            android:id="@+id/et_email"
+            android:hint="@string/hint_email"/>
+
+        <EditText
+            style="@style/EditTextLogin"
+            android:id="@+id/et_username"
+            android:hint="@string/hint_username"/>
+
+        <EditText
+            style="@style/EditTextLogin"
+            android:id="@+id/et_password"
+            android:layout_marginTop="12dp"
+            android:password="true"
+            android:hint="@string/hint_password"/>
+
+        <EditText
+            style="@style/EditTextLogin"
+            android:id="@+id/et_password_confirm"
+            android:password="true"
+            android:hint="@string/hint_password_confirm"/>
+
+        <CheckBox
+            android:id="@+id/reg_checkbox"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dip"
+            android:singleLine="true"
+            android:text="Confirm you are okay with this"/>
+
+
+        <!-- Register Button -->
+        <Button
+            android:id="@+id/btnRegister"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dip"
+            android:text="Register New Account"/>
+        <!-- Link to Login Screen -->
+        <TextView
+            android:id="@+id/link_to_login"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="40dip"
+            android:layout_marginTop="40dip"
+            android:gravity="center"
+            android:text="Return to Login"
+            android:textColor="#025f7c"
+            android:textSize="20dip"/>
+    </LinearLayout>
 </ScrollView>
