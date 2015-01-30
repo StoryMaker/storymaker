@@ -198,22 +198,6 @@ public class HomeActivity extends BaseActivity {
         }));
     }
 
-    public static class ActivityEntry implements Comparable<HomeActivity.ActivityEntry> {
-
-    	  public Date dateTime;
-    	  public MyCard card;
-    	  
-    	  public ActivityEntry (MyCard card, Date dateTime)
-    	  {
-    		  this.card = card;
-    		  this.dateTime = dateTime;
-    	  }
-
-    	  @Override
-    	  public int compareTo(ActivityEntry o) {
-    	    return dateTime.compareTo(o.dateTime)*-1;//let's flip the compare output around
-    	  }
-    	}
 
     // TODO repurpose this to act as the download a content ui
     private void initIntroActivityList()
