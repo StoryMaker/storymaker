@@ -320,13 +320,17 @@
 <string name="sign_out">SIGN OUT</string>
 
 <!--  RegisterActivity -->
+<string name="hint_email">email</string>
+<string name="hint_username">username</string>
+<string name="hint_password">password</string>
+<string name="hint_password_confirm">confirm password</string>
+<string name="lbl_register">Register</string>
+<string name="lbl_login_return">Return to Login</string>
 
-<string name="hint_firstname">First Name</string>
-<string name="hint_lastname">Last Name</string>
-<string name="hint_email">Email</string>
-<string name="hint_username">Username</string>
-<string name="hint_password">Password</string>
-<string name="hint_password_confirm">Confirm Password</string>
+<string name="error_passwords_not_matching">Passwords must match</string>
+<string name="error_password_length">Password must be at least 6 characters</string>
+<string name="error_email_not_valid">Invalid Email</string>
+<string name="error_lbl_required">Required</string>
 
 <!-- ProjectTagFragment -->
 

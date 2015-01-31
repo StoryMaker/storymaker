@@ -3,22 +3,47 @@
   xmlns:android="http://schemas.android.com/apk/res/android"
   android:layout_width="fill_parent"
   android:layout_height="fill_parent"
+  android:background="@android:color/transparent"
   android:fillViewport="true">
 
     <LinearLayout
       android:orientation="vertical"
       android:layout_width="fill_parent"
-      android:layout_height="wrap_content">
+      android:layout_height="wrap_content"
+      android:paddingBottom="@dimen/activity_vertical_margin"
+      android:paddingLeft="@dimen/activity_horizontal_margin"
+      android:paddingRight="@dimen/activity_horizontal_margin"
+      android:paddingTop="@dimen/activity_vertical_margin">
 
-        <EditText
-            style="@style/EditTextLogin"
-            android:id="@+id/et_first_name"
-            android:hint="@string/hint_firstname"/>
+        <LinearLayout android:id="@+id/header"
+                      android:layout_width="fill_parent"
+                      android:layout_height="wrap_content"
+                      android:paddingTop="10dip"
+                      android:paddingBottom="5dip"
+                      android:layout_marginBottom="40dp"
+                      android:orientation="vertical">
 
-        <EditText
-            style="@style/EditTextLogin"
-            android:id="@+id/et_last_name"
-            android:hint="@string/hint_lastname"/>
+            <ImageView android:src="@drawable/logo_large"
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:layout_gravity="center|center"
+                       android:id="@+id/logo"/>
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/app_name"
+                android:gravity="center"
+                android:textSize="24dip"
+                android:textColor="#333333"/>
+            <TextView
+                android:id="@+id/status"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="             "
+                android:gravity="center"
+                android:textSize="18dip"
+                android:textColor="#555555"/>
+        </LinearLayout>
 
         <EditText
             style="@style/EditTextLogin"
@@ -33,7 +58,6 @@
         <EditText
             style="@style/EditTextLogin"
             android:id="@+id/et_password"
-            android:layout_marginTop="12dp"
             android:password="true"
             android:hint="@string/hint_password"/>
 
@@ -43,23 +67,13 @@
             android:password="true"
             android:hint="@string/hint_password_confirm"/>
 
-        <CheckBox
-            android:id="@+id/reg_checkbox"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dip"
-            android:singleLine="true"
-            android:text="Confirm you are okay with this"/>
-
-
-        <!-- Register Button -->
         <Button
-            android:id="@+id/btnRegister"
+            android:id="@+id/btn_register"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dip"
-            android:text="Register New Account"/>
-        <!-- Link to Login Screen -->
+            android:layout_marginTop="10dp"
+            android:text="@string/lbl_register"/>
+
         <TextView
             android:id="@+id/link_to_login"
             android:layout_width="fill_parent"
@@ -67,7 +81,7 @@
             android:layout_marginBottom="40dip"
             android:layout_marginTop="40dip"
             android:gravity="center"
-            android:text="Return to Login"
+            android:text="@string/lbl_login_return"
             android:textColor="#025f7c"
             android:textSize="20dip"/>
     </LinearLayout>
