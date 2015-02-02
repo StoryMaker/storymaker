@@ -1,0 +1,151 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+  <string name="app_name">StoryMaker 2</string>
+  <string name="app_description">Gutegura (créer) inkuru zihambaye ubu biroroshe gusumba ukoreshejeje StoryMaker. Uburorero bwacu budansanzwe hamwe ninyigisho zitandukanye zirakwereka inzira ufata muruko gutegura inkuru. StoryMaker iragufasha gutunganya (mettre au point) ibiri munkuru ukoresheje terefone yawe, bigatuma woroherwa muguheza inkuru yawe. Igihe wahejeje, StoryMaker iragufasha kumenyekanisha inkuru yawe kubibuga (plate-forme) vyose wifuza.</string>
+  <string name="title_projects">Inkuru</string>
+  <string name="title_lessons">Inyigisho</string>
+  <string name="action_publish">Kumenyekanisha</string>
+  <!--menus-->
+  <string name="menu_new_project">Gishasha</string>
+  <string name="menu_projects">Inkuru</string>
+  <string name="menu_lessons">Inyigisho</string>
+  <string name="menu_glossary">Insiguro y\'amajambo akoreshwa (lexique)</string>
+  <string name="menu_contacts">Abomuzinanye (contacts)</string>
+  <string name="menu_settings">Ibikoze (paramètres)</string>
+  <string name="menu_accounts">Amakonti</string>
+  <string name="menu_archive">Ivyakera</string>
+  <string name="drawer_profile">Ibikenewe mukwinjira (identifiant)</string>
+  <!--FIXME: rename-->
+  <string name="menu_add_media">Kongerako</string>
+  <string name="menu_capture_media">Ifatwa ry\'ijwi canke isanamu (enregistrement)</string>
+  <string name="menu_share_media">Gusangira (partager)</string>
+  <string name="menu_save_media">Kuzigama (enregistrer)</string>
+  <string name="menu_play_media">Gukina</string>
+  <string name="menu_render_media">Guhindura (convertir)</string>
+  <string name="menu_bug_report">Kwerekana ibijanye na virus (rapport de bogue)</string>
+  <string name="menu_login">Ibikenewe mukwinjira (identifiant)</string>
+  <string name="menu_logs">kurungika urutonde (envoyer le journal)</string>
+  <string name="menu_update">Gushira kugihe (mettre à jour)</string>
+  <string name="menu_about">Vyerekeye</string>
+  <string name="menu_save_project">Kuzigama (enregistrer)</string>
+  <string name="menu_overlay_camera">Camera</string>
+  <string name="menu_add_new_shot">Ongerako isanamu (clip) kubiboneka (scéne)</string>
+  <string name="menu_export_project_files">Rungika amafiche yigikorwa (fichiers de projet) nka Zip</string>
+  <string name="menu_join_storymaker">Injira m\'umuryango wa StoryMaker</string>
+  <string name="menu_sign_up">Iyandikishe / ibikenewe mukwinjira</string>
+  <string name="menu_upload_manager">Igikoresho gitunganya (gestionnaire) iyugururwa rijana</string>
+  <string name="menu_uploads">Iyugururwa rijana</string>
+  <string name="welcome_message">Bite ngaho!\Kaze kuri StoryMaker</string>
+  <!--project list-->
+  <string name="default_project_list_view">Ubu nubwambere utegura igikorwa nkiki!\n\n-korako kugira utangure</string>
+  <string name="default_project_view_message">Urashobora gutora icushaka.\n Kuvuga inkuru yawe biciye mu masanamu, mu majwi canke mu mafoto.\n\n- korako kugira wongereko</string>
+  <!--video processing-->
+  <string name="pref_out_fps_title">Ubushobozi (puissance fournie) bw\'igipimo cuburinganire bw\'igicapo (framerate) (fps)</string>
+  <string name="pref_out_fps_summary">Uburinganire bw\'igicapo (photogramme) ku musegonda kugira uzigame ubushobozi bw\' amasanamu (sortie vidéo) kuri (15-30)</string>
+  <string name="pref_out_rate_title">Ubushobozi (puissance fournie) bw\'uburemere (bitrate) (kbps)</string>
+  <string name="pref_out_rate_summary">Uburemere bw\'amasanamu mugusohorwa (Débit de sortie vidéo) (300-1500)</string>
+  <string name="pref_out_format_title">Uburyo bw\'isohorwa (format de sortie)</string>
+  <string name="pref_out_format_summary">Ingene fiche ibikwamwo imeze (format conteneur de fichier) (mp4, 3gp, ogg)</string>
+  <string name="pref_out_vcodec_title">Codec isohorwamwo amasanamu (Codec de sortie vidéo)</string>
+  <string name="pref_out_vcodec_summary">Codec yamasanamu (copy, libx264, etc)</string>
+  <string name="pref_out_acodec_title">Codec isohorwamwo amajwi (Codec de sortie audio)</string>
+  <string name="pref_out_acodec_summary">Codec yamajwi (copy, aac, mp3, etc)</string>
+  <string name="pref_out_vwidth_title">Ubunini bw\'amasanamu wihitiyemwo (px)</string>
+  <string name="pref_out_vwidth_summary">Ubunini bw\'amasanamu wihitiyemwo kw\'isohorwa ry\'amasanamu </string>
+  <string name="pref_out_vheight_title">Uburebure bw\'amasanamu wihitiyemwo (px)</string>
+  <string name="pref_out_vheight_summary">Uburebure bw\'amasanamu wihitiyemwo kw\'isohorwa ry\'amasanamu </string>
+  <string name="hintTitle">Umutwe w\'ijambo (titre)</string>
+  <string name="hintStartTime">Gutangura (00:00:00)</string>
+  <string name="hintEndTime">Umwanya (00:00:00)</string>
+  <string name="start_recording">Ifatwa ry\'ijwi canke isanamu (enregistrement)</string>
+  <string name="stop_recording">Guhagarika</string>
+  <string name="play_recording">Gukina</string>
+  <string name="save_recording">Kuzigama (enregistrer)</string>
+  <!--LOG COLLECTOR-->
+  <string name="title_home_activity">Igikorwa </string>
+  <string name="title_lessons_lessons">Inyigisho</string>
+  <string name="title_lessons_glossary">Insiguro y\'amajambo akoreshwa (lexique)</string>
+  <string name="hello_world">Bite mwese</string>
+  <!--<string name="new_story_video">Video: Something here about why simple, short video is good! Ideally it should be about the same length as the other strings.</string>
+   	<string name="new_story_essay">Photo Essay: Tell a story about one character. Follow this template to produce a simple photo essay story about one character.</string>
+    <string name="new_story_photo">Single Photo: Telling a strong story with one image is a skill. To simplify, these templates explain some primary photo types.</string>
+    
+    <string name="new_story_audio">Audio: Something here about using audio to tell a story. Personally, I really like to listen to the radio and podcasts while I do housework!</string>-->
+  <string name="title_activity_lessons">Inyigisho</string>
+  <string name="tab_finish">Biraheze.</string>
+  <string name="story_publish_location">Ukugenekereza ikibanza</string>
+  <string name="story_publish_share">Gusangira (partager)</string>
+  <!--delete these below-->
+  <string name="title_section3">Igice ca 3</string>
+  <string name="title_section2">Igice ca 2</string>
+  <string name="title_section1">Igice ca 1</string>
+  <string name="title_activity_test_drag">Gerageza kunyereza (glisser)</string>
+  <!--Screen title before and during recording-->
+  <!--Screen title after recording-->
+  <!--Screen title while playing back a recording-->
+  <!--Label shown during recording-->
+  <string name="recording">Iriko irafata</string>
+  <!--Label shown when the recording is stopped for a reason other than the user stopping it (e.g. the sd card was removed)-->
+  <string name="recording_stopped">Gufata vyahagaze</string>
+  <!--label shown when there is not enough space to record something-->
+  <string name="storage_is_full">Ububiko (stockage) bwuzuye</string>
+  <!--label shown when the recording has reached maximum allowed file size-->
+  <string name="max_length_reached">Umwanya bikwiriye gufata (durée) washitse</string>
+  <!--label shown when there is no sd card available to record to-->
+  <string name="insert_sd_card">Ikarata SD irakenewe</string>
+  <!--label shown when there is more than 1 minute but less than 9 minutes of space left to record-->
+  <!--label shown when there is less than 1 minute of space left to record-->
+  <!--button to accept the current recording and return it to the caller-->
+  <!--button to discard the current recording and return to the caller-->
+  <!--acknowlegement button in a number of dialogs-->
+  <string name="button_ok">Ok</string>
+  <!--Do not translate. Format of the timer that shows how much has been recorded so far-->
+  <!--label shown before the user has recorded anything-->
+  <!--the name under which recordings will be visible in the media database is formatted like this-->
+  <!--all recordings will show up in the media database with this 'artist' name-->
+  <string name="audio_db_artist_name">Ivyo wafashe</string>
+  <!--all recordings will show up in the media database with this 'album' name-->
+  <string name="audio_db_album_name">Amajwi yafashwe</string>
+  <!--all recordings will show up in the media database in a playlist with this name-->
+  <string name="audio_db_playlist_name">Ivyo nafashe</string>
+  <!--shown as the message in a dialog when an error occured because of an error accessing the sd card-->
+  <string name="error_sdcard_access">Ntibikunda gushikira ububiko bwigenga (externe) canke butigenga (interne)</string>
+  <!--shown as the message in a dialog when the app encountered an unspecified internal error-->
+  <string name="error_app_internal">Hari ikosha rivuye kugikoresho (Erreur d\'application interne)</string>
+  <!--shown as the message in a dialog when the recording could not be added to the media database-->
+  <string name="error_mediadb_new_record">Ntibikunda kuzigama (enregistrer) amajwi mwafashe</string>
+  <!--shown as the message in a dialog when an export will tak up too much space-->
+  <string name="error_storage_space" formatted="false">Mpore, Ntakibanza (espace) kikiriho. Tubasavye gukurako ibingana na %.2f%nMB hanyuma mugerageze kandi</string>
+  <!--add for libra begin-->
+  <string name="default_record_name">Ivyafashwe atazina bifise</string>
+  <string name="menu_view_record_list">Kuraba urutonde (liste) rw\'ivyakozwe (enregistrement)</string>
+  <string name="menu_setting">Ibikoze (paramètres)</string>
+  <string name="delete_dialog_title">Mwifuza gufuta ibi biriko birakorwa</string>
+  <string name="overwrite_dialog_title">%s iramaze kubaho. Mwifuza kuyisubiriza?</string>
+  <string name="preferences_title">Ibikoze (paramètres)</string>
+  <string name="pref_title_record_type">Ubwoko bwa fiche yogukorerako (Type de fichier d\'enregistrement)</string>
+  <string name="prefDialogTitle_recordType">Tubasavye guhitamwo ubwoko bwa fiche</string>
+  <string name="prefDefault_recordType">amajwi/3gpp</string>
+  <string name="pref_title_enable_high_quality">Shoboza itunganywa ryiza (activer la haute qualité)</string>
+  <string name="pref_summary_enable_high_quality">Am</string>
+  <string name="pref_title_enable_sound_effect">Shoboza ihindurwa ry\'ivyamajwi (Activer l\'effet sonore)</string>
+  <string name="pref_summary_enable_sound_effect">Kuvuza ukoresheje ihindurwa ry\'ivyamajwi (effet sonore) iyo ukungene (état) bikozwe kwahidutse</string>
+  <string name="notification_recording">Gufata</string>
+  <string name="notification_stopped">Gufata vyahagaritswe</string>
+  <string name="notification_warning">Ububiko burihasi (musi y\'iminota %d)... </string>
+  <string name="sd_card_not_available">Ikarata SD ntayiriho</string>
+  <string name="open_file_explorer">Ugurura Explorateur de fichier</string>
+  <string name="alert_message_delete_record">Mwifuza gufuta ivyo mwahisemwo vyakozwe</string>
+  <!--add for libra end-->
+  <!--youtube upload-->
+  <string name="action_play">Gukina</string>
+  <string name="action_share">Gusangira (partager)</string>
+  <string name="cancel">Hagarika</string>
+  <!--added for project export-->
+  <string name="export_dialog_share">Gusangira (partager)</string>
+  <string name="title_activity_accounts">Amakonti</string>
+  <string name="action_settings">Ibikoze (paramètres)</string>
+  <string name="label_add">Kongerako</string>
+  <string name="label_save">Kuzigama (enregistrer)</string>
+  <string name="label_location">Ukugenekereza ikibanza</string>
+</resources>

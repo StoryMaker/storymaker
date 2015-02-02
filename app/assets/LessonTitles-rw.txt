@@ -1,0 +1,67 @@
+Umwuga wokumenyesha amakuru
+1.0 Intangamarara kumwuga wokumenyesha amakuru
+1.1 Inshingiro (notions de base) ryama médias sociaux
+1.2 Inshingiro (notions de base) ry'itunganywa ry'amakuru
+1.3 Guhitamwo no gusuzuma aho inkuru ivuye (sources)
+1.4 Ubuhinga bwokubaza ibibazo 
+1.6 Ingene inkuru igenda irakurikirana
+1.5 Intangamarara kurugezo (normes) ry'inyifato runtu (éthique) nu rw'akazi (professionnelsl)
+1.7 Ugukoresha icandikwa (texte)
+1.8 Amategeko agenga ibinyamakuru
+
+Umutekano
+2.0 Intangamarara kumutekano
+2.1 Nomenya gute ko jewe canke abampa inkuru dushobora kuba tubangamiwe
+2.2 Novugana gute nabampa inkuru ntabazi mu mutekano
+2.3 Ni gute ibiyago vyanje kuri terefone binshira mukibazo (risque)
+2.6 Ni gute terefone ngendanwa yanje yonshira mukibazo
+2.5 N'igiki gituma akanyegezabanga gakomera
+2.4 Ni gute nokoresha neza amatazirano
+2.7 Koresha Ruginka SMS mu mutekano
+2.8 Ni gute norungika Email mu mutekano
+2.9 Ni gute nokoresha Navigateur mu mutekano
+2.11 Ni gute nokoresha neza ama Données Mobile ata kibazo
+2.10 Ni gute norungika (transmettre) ivyo natunganije (media) mu mutekano (ubu birarorereye)
+
+
+Amajwi 
+3.0 Intangamarara ku majwi
+3.1 Inshingiro (notions de base) ry'amajwi
+3.2 Imyiteguro
+3.3 Ubwoko bw'inkuru
+3.4 Integuro y'ingene inkuru zitunganijwe (story boarding) gufatwa
+3.5 ibifasha mu kubaza ibibazo hafashwe amajwi
+3.6 Ibifasha hamwe n'ubuhinga bukoreshwa mu gufata ijwi canke isanamu
+3.7 Kumenyekanisha inkuru yawe
+3.8 Ukoresheje insobanuro
+
+Ifoto
+4.0 Intangamarara kw'ifoto
+4.1 Inshingiro (notions de base) rya Camera
+4.2 Inshingiro (notions de base) rya Composition
+4.3 Insobanuro n'amajambo nyamukuru
+4.4 Gufata amafoto yinkuru zitandukanye
+4.7 Gufata amafoto mubihe bigoye kandi bitorohejwe
+4.11 Igikorwa c'amafoto arihamwe
+4.5 Inshingiro ry'ivyerekanwa (exposition)
+4.6 Gufata amafoto y'ibintu bigenda binyaruka
+4.8 Ingene utomora urugezo rwera (réglage de la balance des blancs)
+4.9 Gusubira gusuzuma (retoucher) no gushira murutonde amafoto yawe
+4.10 Inyuma yoguheza igikorwa (post-production)
+
+
+Amasanamu (video)
+5.0 Intangamarara ku masanamu
+5.1 Inshingiro (notions de base) ry'amasanamu
+5.2 Ivyamajwi n'umuco
+5.5 Ukuronswa ifoto nziza
+5.3 Gutanga Inkuru biciye muvyubona (visuel)
+5.6 Kubazwa ibibazo
+5.4 Composition ya masanamu 
+5.10 Kubakira (encadrement) ifoto
+5.12 Ingene utomora urugezo rwera (réglage de la balance des blancs) mu masanamu
+5.8 Ikurikirana (Séquences)
+5.7 Gufotora urukurikirane rwibiriko biba (séquences d'action) (yari ifoto ucuritse)
+5.9 Gushira murutonde amafoto yawe (kwari gutangura intonde zifoto)
+5.11 Intumbero y'ifoto
+5.13 Ibiri muri site (Sites de contenu)
