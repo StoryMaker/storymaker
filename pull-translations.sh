@@ -1,6 +1,6 @@
 #!/bin/sh
 
-tx pull -f -l ru,ar,bs_BA,sr,es,fa,de,mk,ko,fr --minimum-perc=10
+tx pull -f -l ru,ar,bs_BA,sr,es,fa,de,mk,ko,fr,rw --minimum-perc=10
 
 rm app/assets/LessonTitles-bs.txt
 mv app/assets/LessonTitles-bs_BA.txt app/assets/LessonTitles-bs.txt
