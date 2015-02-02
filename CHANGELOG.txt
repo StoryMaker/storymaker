@@ -1,23 +1,30 @@
+--- build 1024
+
+- New language: Kinyarwanda
+- Fixes and refinements to narration
+- Optimize memory usage
+
+
 --- build 1021
 
-- improve audio thumbnail performance / design
-- bugfixes
+- Improve audio thumbnail performance / design
+- Bugfixes
 
 --- build 1020
 
 - Add French translation!
 - New narration UI!
 - Update translations
-- Fix weird spacing on tip cards
-- Bugfixes!
+- Fix: weird spacing on tip cards
 - Delete clips from clipcard
 - Fix back button exiting app
 - Keep screen on while narrating
 - Pause playing videos when opening order/narration
-- fix: Scrolling from bottom of screen is tricky
-- fix: Preview player on review card doesn't update after editing order
-- fix: crash second time you try to record a narration
-- fix: Video Dimensions Incorrect in Playback
+- Fix: Scrolling from bottom of screen is tricky
+- Fix: Preview player on review card doesn't update after editing order
+- Fix: crash second time you try to record a narration
+- Fix: Video Dimensions Incorrect in Playback
+- More Bugfixes!
 
 --- build 1019
 
