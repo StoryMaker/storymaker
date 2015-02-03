@@ -1,0 +1,256 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+  <string name="terms_title">Ingigo ngenderwako za Storymaker                        </string>
+  <string name="terms_text_1">Muragumya tous les droits de propriétés kugikorwa canyu, mushobora kubukuraho mumwnya mubishaka , kandi ntimuzogurisha nakimwe.  Mweye gusangira ibikorwa vyanyu kuri storymaker , mwemerey small workd News n’abandi mukorana kugira mushire inkuru zanyu hamwe nizi,di zisa zakozwe na Storymaker. Tubishira hamwe kumirwi y’ivyanditswe, ibintu nahantu.</string>
+  <string name="terms_text_2">Inkuru yanyu iguma isangiwe kjubuhinga ngurukana bumenyi mwitoreye, mugabo izoba yisunga site de partage.</string>
+  <!--tutorial_lessons-->
+  <string name="tutorial_title_1">Kwiga kuvuga inkuru.</string>
+  <string name="tutorial_text_1">Kwiga umwuga w’ubumenyesha makuru mu mutekano ntangere, gutanga amajwi  y’akanovera, amafoto, n’inkuru mu ma sanamu.</string>
+  <string name="tutorial_title_2">Etre Précis.</string>
+  <string name="tutorial_text_2">Développées en partenariat avec \"ICFJ\",murashobora kwizera ko ivyigwa vy’ubumenyshemakuru bizobafasha kuba abamenyeshamakur beza.</string>
+  <string name="tutorial_title_3">Mwikingire.</string>
+  <string name="tutorial_text_3">Ivyigwa vya none vy’umutekano bizobzfasha , mwebwe n’amasoko y’inkuru yanyu kuuma mumtekano. « storymaker yitaho kubagumiza mumtekano, aharihohose mukura inkuru yanyu. </string>
+  <string name="tutorial_title_4">Vuga inkuru yanyu neza. </string>
+  <string name="tutorial_text_4">Inkuru zanyu zirajanye nama suports atzndukanye yaba amajwi, amafoto canke amasanamu.</string>
+  <string name="tutorial_title_5">Geregeza ubumenyi bwawe.</string>
+  <string name="tutorial_text_5">Icirwa cose kirangizwa nakabazo mukuraba ugutahura kwanyu.</string>
+  <string name="tutorial_title_6">Bandanya kwiga.</string>
+  <string name="tutorial_text_6">Ni musangire inkuru zanyu nabo muri communauté storymaker. N’ukwiga kuba umuhanzi mwiza w’inkuru kunkuru yose musangiye.</string>
+  <!--/tutorial_lessons-->
+  <!--tutorial_story-->
+  <string name="tutorial_title_7">Musigure neza inkuru.</string>
+  <string name="tutorial_text_7">Inkuru nziza ifise intango nziza,hagati niherezo. Baza umuntu kugira mutange ibigize inkuru yanyu. twereke aho baba. Bigire rwawe.</string>
+  <string name="tutorial_title_8">Hitamwo ico mishirako inkuru yanyu.</string>
+  <string name="tutorial_text_8">Ijwi, ifoto, n’isanamu, nuburyo butandukanye bwo kuvuga inkuru. Tora ivyigwa bibamenyesha vyinsh. Hitamwo I support, mwige.</string>
+  <string name="tutorial_title_9">Vuga inkuru muntambwe  zitanu.</string>
+  <string name="tutorial_text_9">Koresha clips zitanu mukuvuga inkur yanyu. Musigure ikibanza c’inkuru yanyu. Tanga ikintu nyamukuru canyu. Mukoresha ibindi bitatu mukuvuga inkuru  yanyu ifise intango, hagati, niherezo.</string>
+  <string name="tutorial_title_10">Vavanura nimico.</string>
+  <string name="tutorial_text_10">Egeranya ama clips yanyu murutonde rutandukanye.</string>
+  <string name="tutorial_title_11">Muvuge inkuru ndende cane.</string>
+  <string name="tutorial_text_11">Uburorero bwinkuru bubabwira uburyo.</string>
+  <!--/tutorial_story-->
+  <!--template_description-->
+  <string name="template_audio_desc">Fata amajwi avuga inkuru yanyu, nde, iki. Iyo mudashobora kuronka ibiboneka bikomeye , ijwi nikintu cambere ushobora kwikorako.</string>
+  <string name="template_photo_desc">Isanamu imwe iruta amajambo igihumbi. Twereke iguhambaye munkur yanyu, canke uko bigenda.</string>
+  <string name="template_essay_desc">Rimwe narimwe amafoto menshi arakenewe. Twereke ingene inkuru yanyu igenda, uvuge inkuru muri série y’amasanamu afatanye. </string>
+  <string name="template_video_desc">Fata amasanamu n’ibikorwa binyura uwubiraba igihe bibonetse. Twereke igihambaye nigituma. </string>
+  <!--/template_description-->
+  <!--legacy_story_type-->
+  <!--once we refactor to keep this extra text fields in the db instead of referencing this strings file we can remove these (after doing a migration step)-->
+  <string name="story_type_event_title">Umusi mukuru.</string>
+  <string name="story_type_issue_title">Ingorane.</string>
+  <string name="story_type_profile_title">Ivyerekeye umuntu</string>
+  <string name="story_type_news_title">Incamake y’amakuru.</string>
+  <string name="story_type_event_desc">Inkuru z’imisi mikuru zifise ibiranga misi nibibanza bizwi. Tunganya inkuru yawe igize urubanza, hehe nigituma ivyo bishitse muruwo mwanya murico kibanza.  </string>
+  <string name="story_type_issue_desc">Inkuru zishira ingorane mukibazo ziga ikintu kinini. Zishira inguvu kukuntu iyo ngorane ibangamiura communauté canke umugwi w’abantu.  </string>
+  <string name="story_type_profile_desc">Shikiriza un caractère spécifique. Shira inguvu kumuntu.  </string>
+  <string name="story_type_news_desc">Les flash info zirihuta. Shira inguvu kukintu kimwe. Tunganya inkur yanyu autour d’anectdotes, ninde, iki, hehe,, ryari. La narration de l’utilisateur ifasha kwongerako du contexte. </string>
+  <!--/ legacy_story_type-->
+  <!--story_type-->
+  <string name="story_type_event_news_title">Inkuru z’umusi mikuru.</string>
+  <string name="story_type_event_feature_title">Amakuru</string>
+  <string name="story_type_event_breaking_title">Incamake y’amakuru.</string>
+  <string name="story_type_issue_social_title">Ingorane y’imibano.</string>
+  <string name="story_type_issue_political_title">Ingorane ya politike.</string>
+  <string name="story_type_issue_economic_title">Ingorane y’ubutunzi.</string>
+  <string name="story_type_profile_public_title">Ivyerekeye umuntu bimenywa na bose (profil public)</string>
+  <string name="story_type_profile_professional_title">Ivyerekeye umuntu bijanye nakazi kiwe</string>
+  <string name="story_type_profile_personal_title">Ivyerekeye umuntu bikuranga (profil personnel)</string>
+  <!--/story_type-->
+  <!--story_type_description-->
+  <string name="story_type_event_news_desc">Inkuru k’umisi mikuru zifise akamaro kihuta, kenshi vyateguwe, zifise intango n,iherezo. Amatora canke imyiyerekano n’bihe vyiza vy’inkuru. </string>
+  <string name="story_type_event_feature_desc">Inkuru k’ubihe bidashobora kugira ingarukazikomeye. Urubanza rwa sport, ishirahamwe rishasha mukarere, ubuhinga bwanone n’inkuru nziza ziryoshe gukora. </string>
+  <string name="story_type_event_breaking_desc">Ibihe bitateguwe bifise amateka nkinkuru ihambaye. Umuriro, ibimeneyeshejwe bitari vyitezwe numukozi wa leta, canke impanuka nibihe vyiza vy’incamake y’amakuru. </string>
+  <string name="story_type_issue_social_desc">Inkuru kubibazobikora ku ma communautés. Ihindagurika mumategeko ya leta kuvyinyubakwa nkibazo ciza cimibano. </string>
+  <string name="story_type_issue_political_desc">Inkuru kuri leta nakazi kabakozi ba leta. Inkuru y’mategeko mashasha canke ihinduka ry’imana nshingamateka nikibazo ca politike c’iza. </string>
+  <string name="story_type_issue_economic_desc">Inkuru kubutunzi muri rusangi canke unbutunzi bwumuntu. Inkuru ry’ingaruka y’ihindagurika kumfashanyo za leta kubarimyi nikibazo c’ubutunzi ciza.  </string>
+  <string name="story_type_profile_public_desc">Inkuru kubibazo bibonwa nabanyagihugu. Profil y’umu nyepolitike anyaruka kukazi kiwe vyogira i profil nziza. </string>
+  <string name="story_type_profile_professional_desc">Inkuru y’abantu nubuzi bwabo muri rusangi. Umuhanzi canke umu nonotsi azwi ni profil nziza.</string>
+  <string name="story_type_profile_personal_desc">Inkuru kuma expériences bifatanije nibihe vyamakuru agezweho. Profil y’umusirikare wa kera kumus wokwibuka amsezerano yo guhagarika intambara ni profil nziza.</string>
+  <!--/story_type_description-->
+  <!--template_options-->
+  <string name="choose_level">Hitamwo urugezo</string>
+  <string name="choose_level_basic">Nyamukuru </string>
+  <string name="choose_level_advanced">Bigeze imbere.</string>
+  <!--/template_options-->
+  <!--story_type_new-->
+  <string name="overview">Vyerekeye </string>
+  <string name="activity">Igikorwa </string>
+  <string name="impact">Ingaruka</string>
+  <string name="background">Ivyinyuma </string>
+  <string name="involvement">Ivyahindutse neza</string>
+  <string name="motivation">Ikibituma </string>
+  <string name="location">Ukugenekereza ikibanza</string>
+  <string name="experience"> Gukora ikintu imyaka myinshi (expérience)</string>
+  <string name="results">Icavuyemwo </string>
+  <string name="next_steps">Ibikurikira.</string>
+  <string name="moving_forward">Guterimbere </string>
+  <string name="conclusion">Iherezo </string>
+  <string name="story_type_event_news_text1">Habayiki kururwo rubanza ?</string>
+  <string name="story_type_event_news_text2">Mwagiyemwo gute ?</string>
+  <string name="story_type_event_news_text3">Ninde yakozweko cane n’ivyo bihe ?</string>
+  <string name="story_type_event_news_text4">Ninde yakozweko cane n’ivyo bihe ?</string>
+  <string name="story_type_event_news_text5">Nizihe ngaruka zivyo bihe ?</string>
+  <string name="story_type_event_feature_text1">Niki cabaye murivyo bihe ?</string>
+  <string name="story_type_event_feature_text2">Nigute ivyo bibaraba ?</string>
+  <string name="story_type_event_feature_text3">Nihehe biriko birabera ?</string>
+  <string name="story_type_event_feature_text4">Nigute mwebwe bibaraba ubwanyu ?</string>
+  <string name="story_type_event_feature_text5">Nizihe ngaruka z’ivyashitse ?</string>
+  <string name="story_type_event_breaking_text1">Habayiki ?</string>
+  <string name="story_type_event_breaking_text2">Biriko biberahe ?</string>
+  <string name="story_type_event_breaking_text3">Ninde biraba ?</string>
+  <string name="story_type_event_breaking_text4">Hari danger mumagur masha?</string>
+  <string name="story_type_event_breaking_text5">Nigute abantu bavyihashemwo ?</string>
+  <string name="story_type_issue_social_text1">Sigura ingorane y’imibano.</string>
+  <string name="story_type_issue_social_text2">Ryari nahehe iyo ngorane yatanguye ?</string>
+  <string name="story_type_issue_social_text3">Nigute bifise ingaruka kuri  communauté ?</string>
+  <string name="story_type_issue_social_text4">Duhe inkur y’ingene ivyo bikora kubuzima bwanyu.</string>
+  <string name="story_type_issue_social_text5">Niki cokorwa mukemura ico kibazo ?</string>
+  <string name="story_type_issue_political_text1">Sigura ikibazo ca politike.</string>
+  <string name="story_type_issue_political_text2">Ninde vyakozeko mumaguru masha ?</string>
+  <string name="story_type_issue_political_text3">Nizihe ngaruka kuri leta ?</string>
+  <string name="story_type_issue_political_text4">Kuberiki ivyo buhambaye kuri mwebwe ?</string>
+  <string name="story_type_issue_political_text5">Hokorwa iki mugukemura ico kibazo ?</string>
+  <string name="story_type_issue_economic_text1">Sigura ikibazo c’ubutunzi.</string>
+  <string name="story_type_issue_economic_text2">Nizihe relation ziri hagati yawe niyo ngorane ?</string>
+  <string name="story_type_issue_economic_text3">Nizhe ngaruka kubutunzi ?</string>
+  <string name="story_type_issue_economic_text4">Ninde bizokorako cane ?</string>
+  <string name="story_type_issue_economic_text5">Holorwa iki mugukemura ico kibazo ?</string>
+  <string name="story_type_profile_public_text1">Sigura gato uwo uriwe</string>
+  <string name="story_type_profile_public_text2">Kuva ryri mwatanguye ?</string>
+  <string name="story_type_profile_public_text3">Mikoriki ?</string>
+  <string name="story_type_profile_public_text4">Sigura ryari mwaryohewe nakzi kanyu ?</string>
+  <string name="story_type_profile_public_text5">Mubona gute uruhara rwanyu muri kazoza ?</string>
+  <string name="story_type_profile_professional_text1">Muri bande mukoriki ?</string>
+  <string name="story_type_profile_professional_text2">Sigura ingene mukora akazi kanyu.</string>
+  <string name="story_type_profile_professional_text3">Kuberiki ako kazi gahambaye kurimwebwe ?</string>
+  <string name="story_type_profile_professional_text4">Nigute mugira ingaruka nakazi kanyu ?</string>
+  <string name="story_type_profile_professional_text5">Nibihe bikurikira kukazi kanyu ?</string>
+  <string name="story_type_profile_personal_text1">Sigura gato uwo muriwe </string>
+  <string name="story_type_profile_personal_text2">Nikie gihambaye muvyabashikiye ?</string>
+  <string name="story_type_profile_personal_text3">Nigute mwumva iyo expérience ?</string>
+  <string name="story_type_profile_personal_text4">Nibihe mukora ukundi kunru uno musi ?</string>
+  <string name="story_type_profile_personal_text5">Nibhe mwifuza kubonabibaye muri kazoza ?</string>
+  <!--/story_type_new-->
+  <!--story_type_old-->
+  <string name="scene_number">Scène &lt;xliff:g id="number"&gt;%1$d&lt;/xliff:g&gt;</string>
+  <string name="when">Ryari ? </string>
+  <string name="how">Gute ?</string>
+  <string name="what">Nibiki ?</string>
+  <string name="where">Hehe ?</string>
+  <string name="why">Kuberiki ?</string>
+  <string name="story_type_event_text1">Ryari ivyo vyashitse ?</string>
+  <string name="story_type_event_text2">Nimvo nyabaki yivyo bihe ?</string>
+  <string name="story_type_event_text3">Kuberiki ivyo bihe bihambaye?</string>
+  <string name="story_type_event_text4">Ryari ivyo bihe vyashitse ?</string>
+  <string name="story_type_event_text5">Urwo rubanza rutungenijwe gute ?</string>
+  <string name="story_type_event_text6">Nimvo nyabaki yivyo bihe ? </string>
+  <string name="story_type_event_text7">Nihehe habereye urwo rubanza ?</string>
+  <string name="story_type_event_text8">Kuberiki urwo rubanza ruhambaye ?</string>
+  <string name="story_type_issue_text1">Nigute communauté ikorwako niyo ngorane ?</string>
+  <string name="story_type_issue_text2">Ninde yakozweko kurusha ?</string>
+  <string name="story_type_issue_text3">Nibihe vyakozwe mukubikemura ?</string>
+  <string name="story_type_issue_text4">Nigute communauté ikorwako niyo ngorane ? </string>
+  <string name="story_type_issue_text5">Ryari/ hehe iyo ngorane yatanguriye ? </string>
+  <string name="story_type_issue_text6">Ninde yakozweko kurusha ? </string>
+  <string name="story_type_issue_text7">Kuberikiaribo bakozweko cane ?</string>
+  <string name="story_type_issue_text8">Hakozwiki mukubikemura ? </string>
+  <string name="story_type_profile_text1">Ninde ari personnage ?</string>
+  <string name="story_type_profile_text2">Niyihe ngorane ya personnage ?</string>
+  <string name="story_type_profile_text3">Ni gute personnage akorana iyo ngorane.</string>
+  <string name="story_type_profile_text4">Ninde ari personnage ? </string>
+  <string name="story_type_profile_text5">Uwo muntu ava hehe ? </string>
+  <string name="story_type_profile_text6">Niyihe ngorane uwo muntu afise ?</string>
+  <string name="story_type_profile_text7">Kuberiki uwomuntu ahangana niyo ngorane?</string>
+  <string name="story_type_profile_text8">Nigute uwo muntu akorana iyo ngorane ?</string>
+  <string name="story_type_news_text1">Habayiki ? </string>
+  <string name="story_type_news_text2">Ninde biraba ? </string>
+  <string name="story_type_news_text3">Bishuye gute ?</string>
+  <string name="story_type_news_text4">Habayiki ? </string>
+  <string name="story_type_news_text5">Inkuru iriko ibera hehe ?</string>
+  <string name="story_type_news_text6">Ninde biraba ? </string>
+  <string name="story_type_news_text7">Kuberiki vyashitse ?</string>
+  <string name="story_type_news_text8">Comment on a répondu?bishuye ngwiki ? </string>
+  <!--/story_type_old-->
+  <!--prefs-->
+  <string name="prefs_category_networking_security_title">umutekano w’umuhora ? </string>
+  <string name="prefs_category_locales_title">Ahantu (lieux)</string>
+  <string name="prefs_category_media_title">Ibinyamakuru </string>
+  <string name="prefs_category_debug_title">Gukuramwo virus (déboguer)</string>
+  <string name="prefs_storymaker_server_title">Serveur ya StoryMaker</string>
+  <string name="prefs_storymaker_server_summary">Serveur yo kubika ivyirwa vuose nibigize inkuru.</string>
+  <string name="prefs_use_tor_title">Koresha Orbot(Tor)</string>
+  <string name="prefs_use_tor_summary">Rungika ibica mu muhora vyose uciye mu muhora wa Tor ukoresheje application ya Orbot</string>
+  <string name="prefs_sm_upload_title">Gira iyugururwa rijana (télécharger) muri StoryMaker</string>
+  <string name="prefs_sm_upload_summary">Gira iyugururwa rijana (télécharger) muri serveur ya StoryMaker atagenwa ribaye (par défaut)</string>
+  <string name="prefs_use_download_manager_title">Koresha Igikoresho gitunganya (gestionnaire) iyugururwa rizana (téléchargement)</string>
+  <string name="prefs_use_download_manager_summary">Gira iyugururwa rizana (téléchargement) ry\'inyigisho za kera bikozwe n\'Igikoresho gitunganya (gestionnaire) iyugururwa rizana ca Android</string>
+  <string name="prefs_use_upload_manager_title">Koresha Igikoresho gitunganya (gestionnaire) iyugururwa rijana</string>
+  <string name="prefs_use_upload_manager_summary">Gira iyugururwa rijana (télécharger) ryibiri mu nkuru bikozwe n\'Igikoresho gitunganya (gestionnaire) iyugururwa rijana ca Android</string>
+  <string name="prefs_youtube_acccount_title">Ikonti ya YouTube</string>
+  <string name="prefs_youtube_acccount_summary">Ikonti ya YouTube ikoreshwa mu kugira iyugururwa rijana (télécharger) ry\'amasanamu. Ibi bibwirizwa kuba vyamaze kwandikwa mu gikoresho canyu (dispositif)</string>
+  <string name="prefs_youtube_login_title">Ibikenewe mukwinjira muri YouTube</string>
+  <string name="prefs_youtube_login_summary">Koresha kwindondora vya Youtube (authentification web)</string>
+  <string name="prefs_soundcloud_account_title">Ikonti ya SoundCloud</string>
+  <string name="prefs_soundcloud_account_summary">Ikonti ya SoundCloud ikoreshwa mu kugira iyugururwa rijana (télécharger) ry\'amajwi</string>
+  <string name="prefs_interface_language_title">Hitamwo ururimi </string>
+  <string name="prefs_interface_language_summary">Imvugo StoryMaker izokoresha mugusobanurira uwuyikoresha (Interface utilisateur)</string>
+  <string name="prefs_lesson_language_title">Hitamwo inyigisho</string>
+  <string name="prefs_lesson_language_summary">Icirwa co gukoresha </string>
+  <string name="prefs_slide_duration_title">Umwanya  wa diapositive </string>
+  <string name="prefs_slide_duration_summary">Umwanya wadiapositive mugufata amafoto</string>
+  <string name="prefs_enable_compression_title">Shoboza iyegeranwa ry\'igikorwa (compression)</string>
+  <string name="prefs_enable_compression_summary">Kwegeranya ama sanamu nama jwiukoresheje les parametres zikurikira.</string>
+  <string name="prefs_preprocess_3gp_title">Tangura ikorwa (prétraiter) 3GP</string>
+  <string name="prefs_preprocess_3gp_summary">Guhindura ama clips yamasanamu 3GP ushira muri MPEG-4</string>
+  <string name="prefs_use_cat_command_title">Gukoresha commande « cat »</string>
+  <string name="prefs_use_cat_command_summary">Koresha commande « cat » mugushira hamwe ama sanamu</string>
+  <string name="prefs_video_codec_title">Codec y\'amasanamu </string>
+  <string name="prefs_video_codec_summary">Rungika (exporter) Codec y\'amasanamu</string>
+  <string name="prefs_video_resolution_title">Ingene ubona amasanamu asa (résolution)</string>
+  <string name="prefs_video_resolution_summary">Rungika (exporter) uko ubona amasanamu asa (résolution vidéo)</string>
+  <string name="prefs_video_width_title">Ubwaguke bw’isanamu</string>
+  <string name="prefs_video_width_summary">Rungika (exporter) ubwaguke bw\'amasanamu</string>
+  <string name="prefs_video_height_title">Uburebure bw\'amasanamu </string>
+  <string name="prefs_video_height_summary">Rungika (exporter) uburebure bw\'amasanamu</string>
+  <string name="prefs_video_bitrate_title">Uburemere (bitrate) bw\'amasanamu</string>
+  <string name="prefs_video_bitrate_summary">Rungika (exporter) uburemere (bitrate) bw\'amasanamu (kbps)</string>
+  <string name="prefs_video_framrate_title">Uburinganire (framerate) bw\'amasanamu</string>
+  <string name="prefs_video_framrate_summary">Rungika (exporter) uburinganire (framerate) ku musegonda (fps)</string>
+  <string name="prefs_audio_codec_title">Codec y\'amajwi</string>
+  <string name="prefs_audio_codec_summary">Rungika (exporter) Codec y\'amajwi</string>
+  <string name="prefs_audio_bitrate_title">Uburemere (bitrate) bw\'amajwi</string>
+  <string name="prefs_audio_bitrate_summary">Rungika (exporter) uburemere (bitrate) bw\'amajwi (kbps)</string>
+  <string name="prefs_audio_samplerate_title">Urugezo ukorerako amajwi (Taux d\'échantillonnage)</string>
+  <string name="prefs_audio_samplerate_summary">Urugezo ukorerako amajwi (Taux d\'échantillonnage) mukuyafata (enregistrement)</string>
+  <string name="prefs_audio_crossfade_title">Ikurikirana rifatanye ry\'amajwi (enchaîné des sons)</string>
+  <string name="prefs_audio_crossfade_summary">Umwanya (durée) ikurikirana rifatanye ry\'amajwi (enchaîné des sons) ungana</string>
+  <string name="prefs_internal_storage_title">Ububiko bwindani</string>
+  <string name="prefs_internal_storage_summary">Koresha ububiko bwindani bw’iyo pojet</string>
+  <string name="prefs_disable_lesson_completion_title">Ntushoboze (désactiver) imarirwa (achèvement) ry\'inyigisho</string>
+  <string name="prefs_disable_lesson_completion_summary"></string>
+  <string name="prefs_youtube_method_title">Ukungene Kwa YouTube (méthode YouTube)</string>
+  <string name="prefs_youtube_method_summary">Ubwoko bw\'ukungene urekuriwe gukuramwo virus (type de méthode d\'autorisation de déboguer)</string>
+  <!--/prefs-->
+  <!--FirstStartActivity-->
+  <string name="sign_up_btn">Kwiyandikisha kuri StoryMaker</string>
+  <string name="no_thanks_btn">Oya murakoze</string>
+  <string name="tos_btn">Ndemeye amategeko y’akazi</string>
+  <string name="tos_dialog_title">Ibisabwa </string>
+  <string name="tos_dialog_msg">Banza wemere ama tegeko y’akazi imbere yokubandanya.</string>
+  <string name="tos_dialog_positive_button">Nabitahuye</string>
+  <string name="acct_created_dialog_title">Kwinjira muri compte yanyu.</string>
+  <string name="acct_created_dialog_msg">Mot de passe yanyu tuzoyibarungikira muri mail yanyu vuba. Uhejeje kuyironka mushobora kwinjira mumuhora ukoresheje(Accessible en glissant votre doigt depuis le bord gauche de l\'écran).</string>
+  <string name="acct_created_dialog_positive_button">Tangura </string>
+  <!--ConnectAccountActivity-->
+  <string name="my_account">IKONTI YANJE YA STORYMAKER</string>
+  <string name="join_storymaker">Injira m\'umuryango wa StoryMaker</string>
+  <string name="create_account">GUTANGURA IKONTI YANJE</string>
+  <string name="sign_in">Kwiyandikisha/kwinjira mumuhora</string>
+  <string name="sign_out">Kuva mumuhora</string>
+  <!--ProjectTagFragment-->
+  <string name="no_tags_msg">Nta #bimenyetso  vyongeweko</string>
+  <!--BaesActivity Drawer  (For Accessibility Descriptions)-->
+  <string name="open_drawer">Ugurura Drawer</string>
+  <string name="close_drawer">Ugurura Drawer</string>
+</resources>

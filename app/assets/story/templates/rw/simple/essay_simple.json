@@ -1,0 +1,60 @@
+ 
+    scenes 
+         
+            cleps 
+                 
+                    "Artwork": "cliptype_detail", 
+                    "Description": "A strong signature photo will intrigue the audience and encourage them to look further. This element should fill at least 50% of the frame.", 
+                    "Goal": "Summarize the entire issue by illustrating an essential element of the story.", 
+                    Uburebure : amasegonda …… 
+                    "Security Concern": "-", 
+                    "Shot Size": "Detail", 
+                    "Tip": "Set your camera to Macro if you are shooting less than arm\u2019s length from your subject.", 
+                    Ijambo ry’umutwe : umukono 
+                }, 
+                 
+                    "Artwork": "cliptype_medium", 
+                    "Description": "Show the character interacting with others. Build a connection between the viewer and subject. Your character should fill 20% of your frame.", 
+                    "Goal": "Depict how people are responding to the event or its aftermath.", 
+                    Uburebure : amasegonda …… 
+                    "Security Concern": "-", 
+                    "Shot Size": "Medium", 
+                    "Tip": "Keep your character on one of the vertical lines to frame your shot properly.", 
+                    "Title": "Reaction/Interaction"
+                }, 
+                 
+                    "Artwork": "cliptype_long", 
+                    "Description": "Depict the character behaving naturally. Why is the character noteworthy? Show the audience.", 
+                    "Goal": "Show the character engaged in her environment.", 
+                    Uburebure : amasegonda …… 
+                    "Security Concern": "-", 
+                    "Shot Size": "Long", 
+                    "Tip": "Place your character on one side of the frame, frame your shot to show something else important to the story on the other side.", 
+                    "Title": "Candid"
+                }, 
+                 
+                    "Artwork": "cliptype_close", 
+                    "Description": "Your primary focus is the main character in your story. Highlight the characters emotions or state of mind.", 
+                    "Goal": "Introduce the character. Get close.", 
+                    Uburebure : amasegonda …… 
+                    "Security Concern": "-", 
+                    "Shot Size": "Close", 
+                    "Tip": "Use the eye-line to frame your shot properly.", 
+                    "Title": "Portrait"
+                }, 
+                 
+                    "Artwork": "cliptype_wide", 
+                    "Description": "Indicate the country or an ethnic or religious element. Include landmarks or other location specific information.", 
+                    "Goal": "Show where your story takes place.", 
+                    Uburebure : amasegonda …… 
+                    "Security Concern": "-", 
+                    "Shot Size": "Wide", 
+                    "Tip": "Landmarks help the audience understand their location.", 
+                    "Title": "Environmental"
+                }
+            ], 
+            "title": "Scene 1"
+        }
+    ], 
+    "title": "Essay Simple"
+}

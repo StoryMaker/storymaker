@@ -82,6 +82,7 @@
         <item name="russian">Russian</item>
         <item name="serbian">Serbian</item>
         <item name="spanish">Spanish</item>
+        <item name="kinyarwanda">Kinyarwanda</item>
     </string-array>
     
     <string-array name="interface_language_options_values" translatable="false">
@@ -96,6 +97,7 @@
         <item name="russian">ru</item>
         <item name="serbian">sr</item>
         <item name="spanish">es</item>
+        <item name="kinyarwanda">rw</item>
     </string-array>
     
     <string-array name="lesson_language_options" translatable="false">

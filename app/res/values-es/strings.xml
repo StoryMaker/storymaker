@@ -1,5 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+  <string name="app_name">StoryMaker 2</string>
   <string name="app_description">Crear grandes historias es ahora más fácil que nunca con StoryMaker. Nuestras plantillas, diseños, y lecciones únicas le guían a través de todo el proceso de creación. StoryMaker le permite editar su contenido desde su mismo móvil, haciendo que sea incluso más fácil finalizar su historia. Una vez la ha terminado, StoryMaker le permite publicar su historia para todas sus plataformas favoritas.</string>
   <string name="title_projects">Historias</string>
   <string name="title_lessons">Lecciones</string>
@@ -285,4 +286,8 @@ No se puede acceder al almacenamiento externo o interno</string>
   <string name="uploading_to_facebook">Subiendo a Facebook...</string>
   <string name="uploading_to_internet_archive">Subiendo a Internet Archive...</string>
   <string name="no_site_selected">No se seleccionó ningun sitio.</string>
+  <string name="exported_stories">Exportaciones</string>
+  <string name="no_title">Sin título.</string>
+  <string name="title_exports">Historias publicadas</string>
+  <string name="last_modified">Última modificación</string>
 </resources>

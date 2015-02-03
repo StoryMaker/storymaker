@@ -1,0 +1,55 @@
+ 
+    "scenes"
+         
+            "cleps "
+                 
+                    "Artwork": "cliptype_detail", 
+                    . Gusigura : clep nziza y’amajwi itasha abanyagihugu kuyumviriza cane  
+                    Ihangiro : amajwi apanze atanu abantu bategera ubwonyene bimwe mubigize inkuru  
+                    Uburebure : amasegonda …… 
+                    "Security Concern": "-", 
+                    Mushobora kuba mukeneye ko micro iguma hafi yo gufata amajwi.Suzuma aho mukura ijwi hafashe neza  
+                    Ijambo ry’umutwe : umukono 
+                }, 
+                 
+                    "Artwork": "cliptype_wide", 
+                    Insiguro : amajwi ankure ya clip y’amajwi afashe abayumva gutegera ukuntu umuntu n’ibidukikije bikorane, bihanahasa 
+                    Fasha abantu gutegera ahao wakuye ijwi ,aho abo mwayaze bari  
+                    Uburebure : amasegonda …… 
+                    "Security Concern": "-", 
+                    Amajwi ari ture ya clip araterera mu gushikiriza inkuru.Iyo hari amajwi atajanye n’inkuru ashobora gusamaza. 
+                    ijambo ry’umutima 
+                }, 
+                 
+                    "Artwork": "cliptype_close", 
+                    insiguro :Erega abantu umuntu inkuru yawe ihagazeko  
+                    Ihangiro : Muufata ariko arigira, aravuga intangamarara canke mumufate mukumusigura  
+                    Uburebure : amasegonda …… 
+                    "Security Concern": "-", 
+                    Gira iyo clip ngufi: gusa sigurira uyo muntu abakurikira canke umufashe yivuje.Fata n’ibirengako ukeneye  
+                    "Title": "Narrative"
+                }, 
+                 
+                    "Artwork": "cliptype_medium", 
+                    "Description": "Remember the fundamentals of a good interview. Ask open-ended questions. Decide your questions based on the type of source you are interviewing.", 
+                    "Goal": "Ask the character to tell you a story.", 
+                    Uburebure : amasegonda …… 
+                    "Security Concern": "-", 
+                    "Tip": "If you want the audience to hear your questions and the subject\u2019s answers, be sure that you are both close enough to the mic to be heard clearly.", 
+                    "Title": "Interview"
+                }, 
+                 
+                    "Artwork": "cliptype_wide", 
+                    "Description": "Environmental audio may indicate the country or add a cultural or religious element to your story.", 
+                    "Goal": "Environmental audio clips help the audience understand where your story takes place.", 
+                    Uburebure : amasegonda …… 
+                    "Security Concern": "-", 
+                    "Tip": "Record the overall sound for the environment. Be sure not to make any noise yourself, this will distract the audience from the natural sound.", 
+                    "Title": "Environmental"
+                }
+            ], 
+            "title": "Scene 1"
+        }
+    ], 
+    "title": "Audio Simple"
+}

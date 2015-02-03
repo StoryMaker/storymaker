@@ -43,7 +43,7 @@ def update_strings():
     """pull down translated strings from transifex and generate localized json"""
 
     click.echo("\n\npulling translations from transifex...\n\n")
-    os.system('cd liger-content ; python pull_translations.py')
+    os.system('cd liger-content ; python pull-translations.py')
 
     click.echo("\n\ngenerating localized content...\n\n")
     os.system('cd liger-content ; python generate_localized_content.py ')
