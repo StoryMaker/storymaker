@@ -86,6 +86,8 @@ public class HomeActivity extends BaseActivity {
         } catch (NameNotFoundException ignored) {}
         
         setContentView(R.layout.activity_home);
+        mRecyclerView = (RecyclerView) findViewById(scal.io.liger.R.id.recyclerView);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         
         // action bar stuff
         getActionBar().setDisplayHomeAsUpEnabled(true);
@@ -156,9 +158,6 @@ public class HomeActivity extends BaseActivity {
     }
 
     private void initActivityList () {
-        mRecyclerView = (RecyclerView) findViewById(scal.io.liger.R.id.recyclerView);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-
         if (!DownloadHelper.checkExpansionFiles(this, Constants.MAIN, Constants.MAIN_VERSION)) { // FIXME the app should define these, not the library
             Toast.makeText(this, "Please wait for the content pack to finish downloading and reload the app", Toast.LENGTH_LONG).show(); // FIXME move to strings.xml
             return;
