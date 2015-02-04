@@ -1,6 +1,7 @@
 --- build 1025
 
 - Fix: crash when publishing empty stories
+- Narration UI fixes
 
 --- build 1024
 
