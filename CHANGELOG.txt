@@ -1,3 +1,7 @@
+--- build 1025
+
+- Fix: crash when publishing empty stories
+
 --- build 1024
 
 - New language: Kinyarwanda
