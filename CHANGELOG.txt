@@ -2,6 +2,8 @@
 
 - Thumbnails won't clutter system gallery or cause scrolling hiccups
 - Reduce memory usage due to thumbnail improvements
+- Fix for repeated incomplete content downloads
+- Fix for order screen crashes
 
 --- build 1025
 
