@@ -1,3 +1,8 @@
+--- build 1026
+
+- Thumbnails won't clutter system gallery or cause scrolling hiccups
+- Reduce memory usage due to thumbnail improvements
+
 --- build 1025
 
 - Fix: crash when publishing empty stories
@@ -8,7 +13,6 @@
 - New language: Kinyarwanda
 - Fixes and refinements to narration
 - Optimize memory usage
-
 
 --- build 1021
 
