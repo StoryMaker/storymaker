@@ -1,3 +1,8 @@
+--- build 1027
+
+- Android 5 support!
+- use Tor to download content if it is enabled
+
 --- build 1026
 
 - Thumbnails won't clutter system gallery or cause scrolling hiccups
