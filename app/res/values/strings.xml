@@ -318,4 +318,19 @@ You also will have an opportunity to see and modify the data being sent."</strin
     <string name="no_medium">(no medium)</string>
     <string name="learning_guide_description">Build a compelling narrative.</string>
 
+    <string name="extracting_audio_multiple">Extracting audio track</string>
+    <string name="crossfading_audio">Crossfading audio...</string>
+    <string name="crossfading_audio_multiple">Crossfading audio track</string>
+    <string name="fade_audio">Fade full audio in and out...</string>
+    <string name="converting_audio">Converting to output audio...</string>
+    <string name="export_error_1">Something went wrong with media export</string>
+    <string name="export_error_2">Error</string>
+    <string name="processing_audio">Processing audio tracks...</string>
+    <string name="processing_audio_multiple">Processing audio track</string>
+    <string name="mixing_tracks">Mixing tracks</string>
+    <string name="trimming_merging">Trimming and merging videos</string>
+    <string name="merging_video_audio">Merging video and audio...</string>
+    <string name="export_error_3">Something went wrong with media export</string>
+    <string name="export_error_4">Error</string>
+
 </resources>

@@ -13,6 +13,8 @@ import org.ffmpeg.android.MediaDesc;
 import org.ffmpeg.android.ShellUtils.ShellCallback;
 
 import org.storymaker.app.AppConstants;
+import org.storymaker.app.R;
+
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.media.MediaScannerConnection;
@@ -110,7 +112,7 @@ public class MediaAudioExporter extends MediaExporter {
 	         else
 	         {
 	        		msg = mHandler.obtainMessage(0);
-		            msg.getData().putString("status","Something went wrong with media export");
+		            msg.getData().putString("status", mContext.getString(R.string.export_error_1));
 
 			        mHandler.sendMessage(msg);
 			         
@@ -119,7 +121,7 @@ public class MediaAudioExporter extends MediaExporter {
     	catch (Exception e)
     	{
     		Message msg = mHandler.obtainMessage(0);
-            msg.getData().putString("status","error: " + e.getMessage());
+            msg.getData().putString("status", mContext.getString(R.string.export_error_2) + ": " + e.getMessage());
 
 	         mHandler.sendMessage(msg);
     		Log.e(AppConstants.TAG, "error exporting",e);
@@ -151,7 +153,7 @@ public class MediaAudioExporter extends MediaExporter {
 			{
 
 	        	msg = mHandler.obtainMessage(0);
-	            msg.getData().putString("status",String.format("Extracting audio track %s of %s",(wavIdx+1),listMediaDesc.size()));
+	            msg.getData().putString("status",mContext.getString(R.string.extracting_audio_multiple) + " " + (wavIdx + 1) + "/" + listMediaDesc.size());
 		        mHandler.sendMessage(msg);
 		        
 		    	MediaDesc audioOut = ffmpegc.convertToWaveAudio(mediaIn, new File(mFileTemp, wavIdx+".wav").getCanonicalPath(),mAudioSampleRate,CHANNELS, sc);
@@ -181,7 +183,7 @@ public class MediaAudioExporter extends MediaExporter {
 		 String fileOut = alAudio.get(0).path;
 
 		 msg = mHandler.obtainMessage(0);
-         msg.getData().putString("status","Crossfading audio...");
+         msg.getData().putString("status", mContext.getString(R.string.crossfading_audio));
 	       mHandler.sendMessage(msg);
 	        
 		 for (int i = 1; i < alAudio.size(); i++)
@@ -191,14 +193,14 @@ public class MediaAudioExporter extends MediaExporter {
 			 xCat.start();
 			 
 			 msg = mHandler.obtainMessage(0);
-	         msg.getData().putString("status",String.format("Crossfading audio: %s of %s",(i+1),alAudio.size()));
+	         msg.getData().putString("status",mContext.getString(R.string.crossfading_audio_multiple) + " " + (i + 1) + "/" + alAudio.size());
 		       mHandler.sendMessage(msg);
 		 
 		 }
 		 
 
 		 msg = mHandler.obtainMessage(0);
-         msg.getData().putString("status","Fade full audio in and out...");
+         msg.getData().putString("status", mContext.getString(R.string.fade_audio));
 	       mHandler.sendMessage(msg);
 	       
 		 //1 second fade in and fade out, t = triangle or linear
@@ -217,7 +219,7 @@ public class MediaAudioExporter extends MediaExporter {
 		 
 
 		 msg = mHandler.obtainMessage(0);
-         msg.getData().putString("status","Converting to output audio...");
+         msg.getData().putString("status", mContext.getString(R.string.converting_audio));
 	       mHandler.sendMessage(msg);
 	     
 	       
