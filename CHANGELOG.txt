@@ -1,4 +1,4 @@
---- build 1027
+--- build 1028
 
 - Android 5 support!
 - use Tor to download content if it is enabled
