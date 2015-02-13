@@ -44,9 +44,7 @@ public class LoginActivity extends BaseActivity implements Runnable
         txtStatus = (TextView)findViewById(R.id.status);
         txtUser = (EditText)findViewById(R.id.login_username);
         txtPass = (EditText)findViewById(R.id.login_password);
-        
-        getCreds();
-        
+
         getActionBar().hide();
         
         Button btnLogin = (Button) findViewById(R.id.btnLogin);
@@ -112,15 +110,6 @@ public class LoginActivity extends BaseActivity implements Runnable
         		                       null,
         		                       new Date());
         storymakerAuth.save();
-    } 
-    
-    private void getCreds()
-    { 
-        Auth storymakerAuth = (new AuthTable()).getAuthDefault(getApplicationContext(), Auth.SITE_STORYMAKER);
-        if (storymakerAuth != null) {
-        	txtUser.setText(storymakerAuth.getUserName());
-        	txtPass.setText(storymakerAuth.getCredentials());
-        } 
     }
     
     public void run ()
