@@ -11,6 +11,8 @@ import org.ffmpeg.android.MediaDesc;
 import org.ffmpeg.android.ShellUtils.ShellCallback;
 
 import org.storymaker.app.AppConstants;
+import org.storymaker.app.R;
+
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.media.MediaScannerConnection;
@@ -94,7 +96,7 @@ public class MediaVideoExporter extends MediaExporter {
     		maOut.path = new File(mFileProject, "tmp.wav").getCanonicalPath();
     		
     		Message msg = mHandler.obtainMessage(0);
-            msg.getData().putString("status","Processing audio tracks...");
+            msg.getData().putString("status", mContext.getString(R.string.processing_audio));
 	        mHandler.sendMessage(msg);
     		
 	        //export video clips and crossfade
@@ -114,7 +116,7 @@ public class MediaVideoExporter extends MediaExporter {
 	    		{
 
 	        		msg = mHandler.obtainMessage(0);
-	                msg.getData().putString("status","Processing audio track " + (idxAudioTracks+1) + "/" + mAudioTracks.size());
+	                msg.getData().putString("status",mContext.getString(R.string.processing_audio_multiple) + " " + (idxAudioTracks+1) + "/" + mAudioTracks.size());
 	    	        mHandler.sendMessage(msg);
 	    	        
 	    			File fileAudioTrack = new File(mFileProject,idxAudioTracks + "-tmp.wav");
@@ -130,7 +132,7 @@ public class MediaVideoExporter extends MediaExporter {
 	    		String finalAudioMix = maOut.path + "-mix.wav";
 	
 	    		msg = mHandler.obtainMessage(0);
-                msg.getData().putString("status","Mixing tracks");
+                msg.getData().putString("status", mContext.getString(R.string.mixing_tracks));
     	        mHandler.sendMessage(msg);
     	        
 	    		sxCon.combineMix(mAudioTracksPaths, finalAudioMix);
@@ -185,13 +187,13 @@ public class MediaVideoExporter extends MediaExporter {
     		}
     		
     		msg = mHandler.obtainMessage(0);
-            msg.getData().putString("status","Trimming and merging videos");
+            msg.getData().putString("status", mContext.getString(R.string.trimming_merging));
 	        mHandler.sendMessage(msg);
 	        
         	ffmpegc.concatAndTrimFilesMP4Stream(mMediaList, mMerge, mPreconvertClipsToMP4, mUseCatCmd, sc);
         	
         	msg = mHandler.obtainMessage(0);
-            msg.getData().putString("status","Merging video and audio...");
+            msg.getData().putString("status", mContext.getString(R.string.merging_video_audio));
 	        mHandler.sendMessage(msg);
 	       
     		ffmpegc.combineAudioAndVideo(mMerge, maOut, mOut, sc);
@@ -227,7 +229,7 @@ public class MediaVideoExporter extends MediaExporter {
 	         else
 	         {
 	        		msg = mHandler.obtainMessage(0);
-		            msg.getData().putString("error","Something went wrong with media export");
+		            msg.getData().putString("error", mContext.getString(R.string.export_error_3));
 			        mHandler.sendMessage(msg);
 			         
 	         }
@@ -235,7 +237,7 @@ public class MediaVideoExporter extends MediaExporter {
     	catch (Exception e)
     	{
     		Message msg = mHandler.obtainMessage(0);
-            msg.getData().putString("status","error: " + e.getMessage());
+            msg.getData().putString("status", mContext.getString(R.string.export_error_4) + ": " + e.getMessage());
 
 	         mHandler.sendMessage(msg);
     		Log.e(AppConstants.TAG, "error exporting",e);
