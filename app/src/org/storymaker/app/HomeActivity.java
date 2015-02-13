@@ -145,7 +145,7 @@ public class HomeActivity extends BaseActivity {
         if (jsonPath.contains("instance")) {
             referencedFiles = new ArrayList<String>();
         } else {
-            referencedFiles = JsonHelper.getInstancePaths();
+            referencedFiles = JsonHelper.getInstancePaths(this);
         }
 
         StoryPathLibrary storyPathLibrary = JsonHelper.deserializeStoryPathLibrary(json, jsonPath, referencedFiles, this, StoryMakerApp.getCurrentLocale().getLanguage());
