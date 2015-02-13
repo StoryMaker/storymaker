@@ -101,10 +101,9 @@ public class ServerManager {
      */
     public void logOut() {
         Auth checkAuth = (new AuthTable()).getAuthDefault(mContext, Auth.SITE_STORYMAKER);
-        Date expiryDate = new Date();
-        expiryDate.setTime(0);
-        checkAuth.setExpires(expiryDate);
-        checkAuth.save();
+
+        // credentials should be deleted instead of expired
+        checkAuth.delete();
     }
     
     private void connect () throws MalformedURLException, XmlRpcFault
