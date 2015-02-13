@@ -239,7 +239,7 @@ public class LessonManager implements Runnable {
 
             boolean useTor = settings.getBoolean("pusetor", false);
             if (useTor) {
-                httpClient.useProxy(true, "SOCKS", AppConstants.TOR_PROXY_HOST, AppConstants.TOR_PROXY_PORT);
+                httpClient.useProxy(true, "HTTP", AppConstants.TOR_PROXY_HOST, AppConstants.TOR_PROXY_PORT);
             } else {
                 httpClient.useProxy(false, null, null, -1);
             }
@@ -295,7 +295,7 @@ public class LessonManager implements Runnable {
 
                         Log.d(TAG, "Loading lesson zip: " + sUrlLesson);
 
-                        if (useDownloadManager) {
+                        if (useDownloadManager && !useTor) { // downloading with manager bypasses tor
                             URI urlLesson = new URI(sUrlLesson);
                             String fileName = urlLesson.getPath();
                             fileName = fileName.substring(fileName.lastIndexOf('/') + 1);

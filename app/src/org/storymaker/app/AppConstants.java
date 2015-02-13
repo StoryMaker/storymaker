@@ -41,7 +41,7 @@ public final static String TAG = "StoryMaker";
 	
 	
 	public final static String TOR_PROXY_HOST = "localhost";
-	public final static int TOR_PROXY_PORT = 9050;
+	public final static int TOR_PROXY_PORT = 8118;
 	
 	
 	public final static class MimeTypes {
