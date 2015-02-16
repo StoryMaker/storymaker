@@ -47,6 +47,8 @@ public class ProjectsProvider extends ContentProvider {
     public static final int JOB_ID = 137;
     public static final int PUBLISH_JOBS = 128;
     public static final int PUBLISH_JOB_ID = 138;
+    public static final int AUDIO_CLIPS = 129;
+    public static final int AUDIO_CLIP_ID = 139;
     public static final String PROJECTS_BASE_PATH = "projects";
     public static final String SCENES_BASE_PATH = "scenes";
     public static final String LESSONS_BASE_PATH = "lessons";
@@ -56,6 +58,7 @@ public class ProjectsProvider extends ContentProvider {
     public static final String DISTINCT_TAGS_BASE_PATH = "distinct_tags";
     public static final String JOBS_BASE_PATH = "jobs";
     public static final String PUBLISH_JOBS_BASE_PATH = "publish_jobs";
+    public static final String AUDIO_CLIPS_BASE_PATH = "audio_clips";
     public static final Uri PROJECTS_CONTENT_URI = Uri.parse("content://" + AUTHORITY + "/" + PROJECTS_BASE_PATH);
     public static final Uri SCENES_CONTENT_URI = Uri.parse("content://" + AUTHORITY + "/" + SCENES_BASE_PATH);
     public static final Uri LESSONS_CONTENT_URI = Uri.parse("content://" + AUTHORITY + "/" + LESSONS_BASE_PATH);
@@ -65,6 +68,7 @@ public class ProjectsProvider extends ContentProvider {
     public static final Uri DISTINCT_TAGS_CONTENT_URI = Uri.parse("content://" + AUTHORITY + "/" + DISTINCT_TAGS_BASE_PATH);
     public static final Uri JOBS_CONTENT_URI = Uri.parse("content://" + AUTHORITY + "/" + JOBS_BASE_PATH);
     public static final Uri PUBLISH_JOBS_CONTENT_URI = Uri.parse("content://" + AUTHORITY + "/" + PUBLISH_JOBS_BASE_PATH);
+    public static final Uri AUDIO_CLIPS_CONTENT_URI = Uri.parse("content://" + AUTHORITY + "/" + AUDIO_CLIPS_BASE_PATH);
 
     public static final String PROJECTS_CONTENT_ITEM_TYPE = ContentResolver.CURSOR_ITEM_BASE_TYPE
             + "/projects";
@@ -102,6 +106,10 @@ public class ProjectsProvider extends ContentProvider {
             + "/publish_jobs";
     public static final String PUBLISH_JOBS_CONTENT_TYPE = ContentResolver.CURSOR_DIR_BASE_TYPE
             + "/publish_jobs";
+    public static final String AUDIO_CLIPS_CONTENT_ITEM_TYPE = ContentResolver.CURSOR_ITEM_BASE_TYPE
+            + "/audio_clips";
+    public static final String AUDIO_CLIPS_CONTENT_TYPE = ContentResolver.CURSOR_DIR_BASE_TYPE
+            + "/audio_clips";
     
     private static final UriMatcher sURIMatcher = new UriMatcher(
             UriMatcher.NO_MATCH);
@@ -125,6 +133,8 @@ public class ProjectsProvider extends ContentProvider {
         sURIMatcher.addURI(AUTHORITY, JOBS_BASE_PATH + "/#", JOB_ID);
         sURIMatcher.addURI(AUTHORITY, PUBLISH_JOBS_BASE_PATH, PUBLISH_JOBS);
         sURIMatcher.addURI(AUTHORITY, PUBLISH_JOBS_BASE_PATH + "/#", PUBLISH_JOB_ID);
+        sURIMatcher.addURI(AUTHORITY, AUDIO_CLIPS_BASE_PATH, AUDIO_CLIPS);
+        sURIMatcher.addURI(AUTHORITY, AUDIO_CLIPS_BASE_PATH + "/#", AUDIO_CLIP_ID);
     }
     
     @Override
@@ -186,6 +196,10 @@ public class ProjectsProvider extends ContentProvider {
             return (new PublishJobTable(getDB())).queryOne(getContext(), uri, projection, selection, selectionArgs, sortOrder);
         case PUBLISH_JOBS:
             return (new PublishJobTable(getDB())).queryAll(getContext(), uri, projection, selection, selectionArgs, sortOrder);
+        case AUDIO_CLIP_ID:
+            return (new AudioClipTable(getDB())).queryOne(getContext(), uri, projection, selection, selectionArgs, sortOrder);
+        case AUDIO_CLIPS:
+            return (new AudioClipTable(getDB())).queryAll(getContext(), uri, projection, selection, selectionArgs, sortOrder);
         default:
             throw new IllegalArgumentException("Unknown URI");
         }
@@ -213,6 +227,8 @@ public class ProjectsProvider extends ContentProvider {
             return (new JobTable(getDB())).insert(getContext(), uri, values);
         case PUBLISH_JOBS:
             return (new PublishJobTable(getDB())).insert(getContext(), uri, values);
+        case AUDIO_CLIPS:
+            return (new AudioClipTable(getDB())).insert(getContext(), uri, values);
         default:
             throw new IllegalArgumentException("Unknown URI");
         }
@@ -248,6 +264,9 @@ public class ProjectsProvider extends ContentProvider {
         case PUBLISH_JOBS:
         case PUBLISH_JOB_ID:
             return (new PublishJobTable(getDB())).delete(getContext(), uri, selection, selectionArgs);
+        case AUDIO_CLIPS:
+        case AUDIO_CLIP_ID:
+            return (new AudioClipTable(getDB())).delete(getContext(), uri, selection, selectionArgs);
         default:
             throw new IllegalArgumentException("Unknown URI");
         }
@@ -283,6 +302,9 @@ public class ProjectsProvider extends ContentProvider {
         case PUBLISH_JOBS:
         case PUBLISH_JOB_ID:
             return (new PublishJobTable(getDB())).update(getContext(), uri, values, selection, selectionArgs);
+        case AUDIO_CLIPS:
+        case AUDIO_CLIP_ID:
+            return (new AudioClipTable(getDB())).update(getContext(), uri, values, selection, selectionArgs);
         default:
             throw new IllegalArgumentException("Unknown URI");
         }

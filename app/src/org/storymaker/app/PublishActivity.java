@@ -21,6 +21,7 @@ import org.storymaker.app.model.Scene;
 
 import io.scal.secureshareui.lib.ChooseAccountFragment;
 import scal.io.liger.Constants;
+import scal.io.liger.model.AudioClip;
 import scal.io.liger.model.FullMetadata;
 
 
@@ -70,6 +71,14 @@ public class PublishActivity extends EditorBaseActivity {
             i++;
         }
         scene.save();
+
+
+        parcelables = intent.getParcelableArrayListExtra(Constants.EXTRA_EXPORT_AUDIOCLIPS);
+        i = 0;
+        ArrayList<AudioClip> audioClips = new ArrayList<AudioClip>();
+        for (Parcelable p: parcelables) {
+            audioClips.add(((AudioClip) p)); // TODO this needs to add AudioClip' models to this scene
+        }
 
         // FIXME load project
         mMPM = new MediaProjectManager(this, getApplicationContext(), mHandlerPub, mProject, null);
