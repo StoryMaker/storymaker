@@ -1,3 +1,15 @@
+--- build 1030
+
+- Multitrack audio / narration support
+- Bugfixes
+
+--- build 1029
+
+- Fix: no thumbnails on home screen
+- Fix: we shouldn’t cache username/password after storymaker logout
+- Fix: Many crashes
+- Allow content file download over Tor
+
 --- build 1028
 
 - Android 5 support!
