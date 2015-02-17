@@ -131,6 +131,8 @@ public abstract class Table {
                 model = new Job(context, cursor);
             } else if (name == (new PublishJobTable()).getTableName()) {
                 model = new PublishJob(context, cursor);
+            } else if (name == (new AudioClipTable()).getTableName()) {
+                model = new AudioClip(context, cursor);
             }
         } 
         cursor.close();
@@ -183,6 +185,8 @@ public abstract class Table {
             models = new ArrayList<Job>();
         } else if (name == (new PublishJobTable()).getTableName()) {
             models = new ArrayList<PublishJob>();
+        } else if (name == (new AudioClipTable()).getTableName()) {
+            models = new ArrayList<AudioClip>();
         }
         
         if (cursor.moveToFirst()) {
@@ -208,6 +212,9 @@ public abstract class Table {
                 } else if (name == (new PublishJobTable()).getTableName()) {
                     model = new PublishJob(mDB, context, cursor);
                     ((ArrayList<PublishJob>)models).add((PublishJob)model);
+                } else if (name == (new AudioClipTable()).getTableName()) {
+                    model = new AudioClip(mDB, context, cursor);
+                    ((ArrayList<AudioClip>)models).add((AudioClip)model);
                 }
             } while (cursor.moveToNext());
         }

@@ -14,7 +14,7 @@ import android.util.Log;
 
 public class StoryMakerDB extends SQLiteOpenHelper {
     private static final String TAG = "StoryMakerDB";
-    private static final int DB_VERSION = 9;
+    private static final int DB_VERSION = 10;
     private static final String DB_NAME = "sm.db";
     private Context mContext;
     
@@ -33,6 +33,7 @@ public class StoryMakerDB extends SQLiteOpenHelper {
         db.execSQL(StoryMakerDB.Schema.Tags.CREATE_TABLE_TAGS);
         db.execSQL(StoryMakerDB.Schema.Jobs.CREATE_TABLE_JOBS);
         db.execSQL(StoryMakerDB.Schema.PublishJobs.CREATE_TABLE_PUBLISH_JOBS);
+        db.execSQL(StoryMakerDB.Schema.AudioClip.CREATE_TABLE_AUDIO_CLIP);
     }
     
     @Override
@@ -77,6 +78,10 @@ public class StoryMakerDB extends SQLiteOpenHelper {
         if ((oldVersion < 9) && (newVersion >= 9)) {
             db.execSQL(StoryMakerDB.Schema.Jobs.CREATE_TABLE_JOBS);
             db.execSQL(StoryMakerDB.Schema.PublishJobs.CREATE_TABLE_PUBLISH_JOBS);
+        }
+        if ((oldVersion < 10) && (newVersion >= 10)) {
+            db.execSQL(StoryMakerDB.Schema.Media.UPDATE_TABLE_MEDIA_ADD_VOLUME);
+            db.execSQL(Schema.AudioClip.CREATE_TABLE_AUDIO_CLIP);
         }
     }
     
@@ -198,6 +203,7 @@ public class StoryMakerDB extends SQLiteOpenHelper {
             public static final String COL_DURATION = "duration";
             public static final String COL_CREATED_AT = "created_at";
             public static final String COL_UPDATED_AT = "updated_at";
+            public static final String COL_VOLUME = "volume";
 	    	
 	    	private static final String CREATE_TABLE_MEDIA = "create table " + NAME + " ("
 	    			+ ID + " integer primary key autoincrement, "
@@ -210,7 +216,8 @@ public class StoryMakerDB extends SQLiteOpenHelper {
                     + COL_TRIM_END + " integer," 
                     + COL_DURATION + " integer,"
                     + COL_CREATED_AT + " integer,"
-                    + COL_UPDATED_AT + " integer" 
+                    + COL_UPDATED_AT + " integer,"
+                    + COL_VOLUME + " real"
 	    			+ "); ";
             
             private static final String UPDATE_TABLE_MEDIA_ADD_TRIM_START = "alter table " + NAME + " " 
@@ -228,12 +235,46 @@ public class StoryMakerDB extends SQLiteOpenHelper {
             private static final String UPDATE_TABLE_MEDIA_ADD_CREATED_AT = "alter table " + NAME + " " 
                     + "ADD COLUMN "
                     + COL_CREATED_AT + " integer;";
-            
-            private static final String UPDATE_TABLE_MEDIA_ADD_UPDATED_AT = "alter table " + NAME + " " 
+
+            private static final String UPDATE_TABLE_MEDIA_ADD_UPDATED_AT = "alter table " + NAME + " "
                     + "ADD COLUMN "
-                    + COL_UPDATED_AT + " integer;"; 
-    	}
-    	
+                    + COL_UPDATED_AT + " integer;";
+
+            private static final String UPDATE_TABLE_MEDIA_ADD_VOLUME = "alter table " + NAME + " "
+                    + "ADD COLUMN "
+                    + COL_VOLUME + " real;";
+        }
+
+
+        public class AudioClip
+        {
+            public static final String NAME = "audioclip";
+
+            public static final String ID = "_id";
+            public static final String COL_SCENE_ID = "scene_id"; // foreign key
+            public static final String COL_PATH = "path";
+            public static final String COL_POSITION_CLIP_ID = "position_clip_id";
+            public static final String COL_POSITION_INDEX = "position_index";
+            public static final String COL_VOLUME = "volume";
+            public static final String COL_CLIP_SPAN = "slip_span";
+            public static final String COL_TRUNCATE= "truncate";
+            public static final String COL_OVERLAP = "overlap";
+            public static final String COL_FILL_REPEAT = "fill_repeat";
+
+            private static final String CREATE_TABLE_AUDIO_CLIP = "create table " + NAME + " ("
+                    + ID + " integer primary key autoincrement, "
+                    + COL_SCENE_ID + " text not null, "
+                    + COL_PATH + " text not null, "
+                    + COL_POSITION_CLIP_ID + " integer, "
+                    + COL_POSITION_INDEX + " integer, "
+                    + COL_VOLUME + " real,"
+                    + COL_CLIP_SPAN + " integer,"
+                    + COL_TRUNCATE + " integer,"
+                    + COL_OVERLAP + " integer,"
+                    + COL_FILL_REPEAT + " integer,"
+                    + "); ";
+        }
+
     	public class Auth
         {
             public static final String NAME = "auth";
