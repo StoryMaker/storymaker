@@ -1,5 +1,6 @@
 package org.storymaker.app.db;
 
+import org.storymaker.app.model.AudioClipTable;
 import org.storymaker.app.model.Auth;
 import org.storymaker.app.model.AuthTable;
 import org.storymaker.app.model.JobTable;

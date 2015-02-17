@@ -28,6 +28,7 @@ import android.util.Log;
 public class AudioClip extends Model {
 	private static final String TAG = "AudioClip";
 
+    protected int sceneId; // foreign key to the Scene which holds this media
     protected String path;
     protected String positionClipId; // can be null.  card id we are linked to either this or the next must have a value, but only one
     protected int positionIndex; // can null
@@ -68,6 +69,7 @@ public class AudioClip extends Model {
      * 
      * @param context
      * @param id
+     * @param sceneId
      * @param path
      * @param positionClipId
      * @param positionIndex
@@ -79,10 +81,11 @@ public class AudioClip extends Model {
      * @param createdAt
      * @param updatedAt
      */
-    public AudioClip(Context context, int id, String path, String positionClipId, int positionIndex, float volume,
+    public AudioClip(Context context, int id, int sceneId, String path, String positionClipId, int positionIndex, float volume,
             boolean clipSpan, boolean truncate, boolean overlap, boolean fillRepeat, Date createdAt, Date updatedAt) {
         super(context);
         this.context = context;
+        this.sceneId = sceneId;
         this.id = id;
         this.path = path;
         this.positionClipId = positionClipId;
@@ -100,6 +103,7 @@ public class AudioClip extends Model {
      * Create a Model object via direct params
      *
      * @param context
+     * @param sceneId
      * @param path
      * @param positionClipId
      * @param positionIndex
@@ -111,10 +115,11 @@ public class AudioClip extends Model {
      * @param createdAt
      * @param updatedAt
      */
-    public AudioClip(Context context, String path, String positionClipId, int positionIndex, float volume,
+    public AudioClip(Context context, int sceneId, String path, String positionClipId, int positionIndex, float volume,
                      boolean clipSpan, boolean truncate, boolean overlap, boolean fillRepeat, Date createdAt, Date updatedAt) {
         super(context);
         this.context = context;
+        this.sceneId = sceneId;
         this.path = path;
         this.positionClipId = positionClipId;
         this.positionIndex = positionIndex;
@@ -135,6 +140,7 @@ public class AudioClip extends Model {
      * @param db
      * @param context
      * @param id
+     * @param sceneId
      * @param path
      * @param positionClipId
      * @param positionIndex
@@ -146,9 +152,9 @@ public class AudioClip extends Model {
      * @param createdAt
      * @param updatedAt
      */
-    public AudioClip(SQLiteDatabase db, Context context, int id, String path, String positionClipId, int positionIndex, float volume,
+    public AudioClip(SQLiteDatabase db, Context context, int id, int sceneId, String path, String positionClipId, int positionIndex, float volume,
             boolean clipSpan, boolean truncate, boolean overlap, boolean fillRepeat, Date createdAt, Date updatedAt) {
-        this(context, id, path, positionClipId, positionIndex, volume, clipSpan, truncate, overlap, fillRepeat, createdAt, updatedAt);
+        this(context, id, sceneId, path, positionClipId, positionIndex, volume, clipSpan, truncate, overlap, fillRepeat, createdAt, updatedAt);
         this.mDB = db;
     }
     
@@ -159,6 +165,7 @@ public class AudioClip extends Model {
      *
      * @param db
      * @param context
+     * @param sceneId
      * @param path
      * @param positionClipId
      * @param positionIndex
@@ -170,9 +177,9 @@ public class AudioClip extends Model {
      * @param createdAt
      * @param updatedAt
      */
-    public AudioClip(SQLiteDatabase db, Context context, String path, String positionClipId, int positionIndex, float volume,
+    public AudioClip(SQLiteDatabase db, Context context, int sceneId, String path, String positionClipId, int positionIndex, float volume,
          boolean clipSpan, boolean truncate, boolean overlap, boolean fillRepeat, Date createdAt, Date updatedAt) {
-        this(context, path, positionClipId, positionIndex, volume, clipSpan, truncate, overlap, fillRepeat, createdAt, updatedAt);
+        this(context, sceneId, path, positionClipId, positionIndex, volume, clipSpan, truncate, overlap, fillRepeat, createdAt, updatedAt);
         this.mDB = db;
     }
 
@@ -187,6 +194,7 @@ public class AudioClip extends Model {
         this(
                 context,
                 cursor.getInt(cursor.getColumnIndex(StoryMakerDB.Schema.AudioClip.ID)),
+                cursor.getInt(cursor.getColumnIndex(StoryMakerDB.Schema.AudioClip.COL_SCENE_ID)),
                 cursor.getString(cursor.getColumnIndex(StoryMakerDB.Schema.AudioClip.COL_PATH)),
                 cursor.getString(cursor.getColumnIndex(StoryMakerDB.Schema.AudioClip.COL_POSITION_CLIP_ID)),
                 cursor.getInt(cursor.getColumnIndex(StoryMakerDB.Schema.AudioClip.COL_POSITION_INDEX)),
@@ -227,6 +235,7 @@ public class AudioClip extends Model {
 
     protected ContentValues getValues() {
         ContentValues values = new ContentValues();
+        values.put(StoryMakerDB.Schema.AudioClip.COL_SCENE_ID, sceneId);
         values.put(StoryMakerDB.Schema.AudioClip.COL_PATH, path);
         values.put(StoryMakerDB.Schema.AudioClip.COL_POSITION_CLIP_ID, positionClipId);
         values.put(StoryMakerDB.Schema.AudioClip.COL_POSITION_INDEX, positionIndex);
@@ -294,6 +303,14 @@ public class AudioClip extends Model {
 
     
     /***** getters and setters *****/
+
+    public int getSceneId() {
+        return sceneId;
+    }
+
+    public void setSceneId(int sceneId) {
+        this.sceneId = sceneId;
+    }
 
     public String getPath() {
         return path;
