@@ -256,7 +256,7 @@ public class StoryMakerDB extends SQLiteOpenHelper {
             public static final String COL_POSITION_CLIP_ID = "position_clip_id";
             public static final String COL_POSITION_INDEX = "position_index";
             public static final String COL_VOLUME = "volume";
-            public static final String COL_CLIP_SPAN = "slip_span";
+            public static final String COL_CLIP_SPAN = "clip_span";
             public static final String COL_TRUNCATE= "truncate";
             public static final String COL_OVERLAP = "overlap";
             public static final String COL_FILL_REPEAT = "fill_repeat";

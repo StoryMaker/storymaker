@@ -248,7 +248,7 @@ public class StoryMakerDB extends SQLiteOpenHelper {
 
         public class AudioClip
         {
-            public static final String NAME = "audioclip";
+            public static final String NAME = "audioclips";
 
             public static final String ID = "_id";
             public static final String COL_SCENE_ID = "scene_id"; // foreign key
@@ -256,10 +256,12 @@ public class StoryMakerDB extends SQLiteOpenHelper {
             public static final String COL_POSITION_CLIP_ID = "position_clip_id";
             public static final String COL_POSITION_INDEX = "position_index";
             public static final String COL_VOLUME = "volume";
-            public static final String COL_CLIP_SPAN = "slip_span";
+            public static final String COL_CLIP_SPAN = "clip_span";
             public static final String COL_TRUNCATE= "truncate";
             public static final String COL_OVERLAP = "overlap";
             public static final String COL_FILL_REPEAT = "fill_repeat";
+            public static final String COL_CREATED_AT = "created_at";
+            public static final String COL_UPDATED_AT = "updated_at";
 
             private static final String CREATE_TABLE_AUDIO_CLIP = "create table " + NAME + " ("
                     + ID + " integer primary key autoincrement, "
@@ -272,6 +274,8 @@ public class StoryMakerDB extends SQLiteOpenHelper {
                     + COL_TRUNCATE + " integer,"
                     + COL_OVERLAP + " integer,"
                     + COL_FILL_REPEAT + " integer,"
+                    + COL_CREATED_AT + " integer,"
+                    + COL_UPDATED_AT + " integer"
                     + "); ";
         }
 
