@@ -248,7 +248,7 @@ public class StoryMakerDB extends SQLiteOpenHelper {
 
         public class AudioClip
         {
-            public static final String NAME = "audioclip";
+            public static final String NAME = "audioclips";
 
             public static final String ID = "_id";
             public static final String COL_SCENE_ID = "scene_id"; // foreign key
