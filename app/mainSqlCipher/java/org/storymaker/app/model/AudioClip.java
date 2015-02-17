@@ -33,7 +33,7 @@ public class AudioClip extends Model {
     protected String positionClipId; // can be null.  card id we are linked to either this or the next must have a value, but only one
     protected int positionIndex; // can null
     protected float volume; // 1.0 is full volume
-    protected boolean clipSpan;  // how many clips it should try to span
+    protected int clipSpan;  // how many clips it should try to span
     protected boolean truncate; // should this play out past the clips its spans, or trim its end to match
     protected boolean overlap; // if overlap the next clip or push it out, can we
     protected boolean fillRepeat;  // repeat to fill if this audioclip is shorter than the clips it spans
@@ -82,7 +82,7 @@ public class AudioClip extends Model {
      * @param updatedAt
      */
     public AudioClip(Context context, int id, int sceneId, String path, String positionClipId, int positionIndex, float volume,
-            boolean clipSpan, boolean truncate, boolean overlap, boolean fillRepeat, Date createdAt, Date updatedAt) {
+                     int clipSpan, boolean truncate, boolean overlap, boolean fillRepeat, Date createdAt, Date updatedAt) {
         super(context);
         this.context = context;
         this.sceneId = sceneId;
@@ -116,7 +116,7 @@ public class AudioClip extends Model {
      * @param updatedAt
      */
     public AudioClip(Context context, int sceneId, String path, String positionClipId, int positionIndex, float volume,
-                     boolean clipSpan, boolean truncate, boolean overlap, boolean fillRepeat, Date createdAt, Date updatedAt) {
+                     int clipSpan, boolean truncate, boolean overlap, boolean fillRepeat, Date createdAt, Date updatedAt) {
         super(context);
         this.context = context;
         this.sceneId = sceneId;
@@ -153,7 +153,7 @@ public class AudioClip extends Model {
      * @param updatedAt
      */
     public AudioClip(SQLiteDatabase db, Context context, int id, int sceneId, String path, String positionClipId, int positionIndex, float volume,
-            boolean clipSpan, boolean truncate, boolean overlap, boolean fillRepeat, Date createdAt, Date updatedAt) {
+                     int clipSpan, boolean truncate, boolean overlap, boolean fillRepeat, Date createdAt, Date updatedAt) {
         this(context, id, sceneId, path, positionClipId, positionIndex, volume, clipSpan, truncate, overlap, fillRepeat, createdAt, updatedAt);
         this.mDB = db;
     }
@@ -178,7 +178,7 @@ public class AudioClip extends Model {
      * @param updatedAt
      */
     public AudioClip(SQLiteDatabase db, Context context, int sceneId, String path, String positionClipId, int positionIndex, float volume,
-         boolean clipSpan, boolean truncate, boolean overlap, boolean fillRepeat, Date createdAt, Date updatedAt) {
+                     int clipSpan, boolean truncate, boolean overlap, boolean fillRepeat, Date createdAt, Date updatedAt) {
         this(context, sceneId, path, positionClipId, positionIndex, volume, clipSpan, truncate, overlap, fillRepeat, createdAt, updatedAt);
         this.mDB = db;
     }
@@ -199,7 +199,7 @@ public class AudioClip extends Model {
                 cursor.getString(cursor.getColumnIndex(StoryMakerDB.Schema.AudioClip.COL_POSITION_CLIP_ID)),
                 cursor.getInt(cursor.getColumnIndex(StoryMakerDB.Schema.AudioClip.COL_POSITION_INDEX)),
                 cursor.getFloat(cursor.getColumnIndex(StoryMakerDB.Schema.AudioClip.COL_VOLUME)),
-                cursor.getInt(cursor.getColumnIndex(StoryMakerDB.Schema.AudioClip.COL_CLIP_SPAN)) == 1,
+                cursor.getInt(cursor.getColumnIndex(StoryMakerDB.Schema.AudioClip.COL_CLIP_SPAN)),
                 cursor.getInt(cursor.getColumnIndex(StoryMakerDB.Schema.AudioClip.COL_TRUNCATE)) == 1,
                 cursor.getInt(cursor.getColumnIndex(StoryMakerDB.Schema.AudioClip.COL_OVERLAP)) == 1,
                 cursor.getInt(cursor.getColumnIndex(StoryMakerDB.Schema.AudioClip.COL_FILL_REPEAT)) == 1,
@@ -221,6 +221,12 @@ public class AudioClip extends Model {
     public AudioClip(SQLiteDatabase db, Context context, Cursor cursor) {
         this(context, cursor);
         this.mDB = db;
+    }
+
+    public static AudioClip getInstanceFromLigerAudioClip(Context context, scal.io.liger.model.AudioClipFull ac, int sceneId, String path) {
+        AudioClip audioClip = new AudioClip(context, sceneId, ac.getPath(), ac.getPositionClipId(), ac.getPositionIndex(), ac.getVolume(), ac.getClipSpan(), ac.doTruncate(), ac.doOverlap(), ac.doFillRepeat(), new Date(), new Date());
+
+        return audioClip;
     }
 
     @Override
@@ -344,15 +350,15 @@ public class AudioClip extends Model {
         this.volume = volume;
     }
 
-    public boolean isClipSpan() {
+    public int getClipSpan() {
         return clipSpan;
     }
 
-    public void setClipSpan(boolean clipSpan) {
+    public void setClipSpan(int clipSpan) {
         this.clipSpan = clipSpan;
     }
 
-    public boolean isTruncate() {
+    public boolean doTruncate() {
         return truncate;
     }
 
@@ -360,7 +366,7 @@ public class AudioClip extends Model {
         this.truncate = truncate;
     }
 
-    public boolean isOverlap() {
+    public boolean doOverlap() {
         return overlap;
     }
 
@@ -368,7 +374,7 @@ public class AudioClip extends Model {
         this.overlap = overlap;
     }
 
-    public boolean isFillRepeat() {
+    public boolean doFillRepeat() {
         return fillRepeat;
     }
 

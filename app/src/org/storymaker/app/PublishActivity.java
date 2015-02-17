@@ -22,7 +22,9 @@ import org.storymaker.app.model.Scene;
 import io.scal.secureshareui.lib.ChooseAccountFragment;
 import scal.io.liger.Constants;
 import scal.io.liger.model.AudioClip;
+import scal.io.liger.model.AudioClipFull;
 import scal.io.liger.model.FullMetadata;
+import scal.io.liger.model.MediaFile;
 
 
 public class PublishActivity extends EditorBaseActivity {
@@ -72,12 +74,14 @@ public class PublishActivity extends EditorBaseActivity {
         }
         scene.save();
 
-
         parcelables = intent.getParcelableArrayListExtra(Constants.EXTRA_EXPORT_AUDIOCLIPS);
         i = 0;
-        ArrayList<AudioClip> audioClips = new ArrayList<AudioClip>();
+        ArrayList<org.storymaker.app.model.AudioClip> audioClipModels = new ArrayList<org.storymaker.app.model.AudioClip>();
         for (Parcelable p: parcelables) {
-            audioClips.add(((AudioClip) p)); // TODO this needs to add AudioClip' models to this scene
+            AudioClipFull audioClip = ((AudioClipFull) p);
+            org.storymaker.app.model.AudioClip ac = org.storymaker.app.model.AudioClip.getInstanceFromLigerAudioClip(this, audioClip, scene.getId(), audioClip.getPath());
+            ac.save();
+            audioClipModels.add(ac); // TODO this needs to add AudioClip' models to this scene
         }
 
         // FIXME load project
