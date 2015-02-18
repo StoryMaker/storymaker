@@ -365,7 +365,7 @@ public class Project extends Model {
             return mDB.query((new SceneTable(mDB)).getTableName(), null, selection, selectionArgs, null, null, orderBy);
         }
     }
-    
+
     public ArrayList<Media> getMediaAsList() {
         ArrayList<Media> mediaList = null;
         mediaList = new ArrayList<Media>();
@@ -374,16 +374,37 @@ public class Project extends Model {
         }
         return mediaList;
     }
-    
+
     public String[] getMediaAsPathArray() {
         ArrayList<Media> mediaList = getMediaAsList();
 
         // purge nulls
         mediaList.removeAll(Collections.singleton(null));
-        
+
         String[] pathArray = new String[mediaList.size()];
         for (int i = 0 ; i < mediaList.size() ; i++) {
             pathArray[i] = mediaList.get(i).getPath(); // how this makes me long for python
+        }
+        return pathArray;
+    }
+
+    public ArrayList<AudioClip> getAudioClipsAsList() {
+        ArrayList<AudioClip> audioClips = new ArrayList<AudioClip>();
+        for (Scene s : getScenesAsArray()) {
+            audioClips.addAll(s.getAudioClipsAsList());
+        }
+        return audioClips;
+    }
+
+    public String[] getAudiClipsAsPathArray() {
+        ArrayList<AudioClip> audioClips = getAudioClipsAsList();
+
+        // purge nulls
+        audioClips.removeAll(Collections.singleton(null));
+
+        String[] pathArray = new String[audioClips.size()];
+        for (int i = 0 ; i < audioClips.size() ; i++) {
+            pathArray[i] = audioClips.get(i).getPath(); // how this makes me long for python
         }
         return pathArray;
     }
