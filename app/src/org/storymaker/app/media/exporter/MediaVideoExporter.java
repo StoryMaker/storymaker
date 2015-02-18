@@ -121,10 +121,14 @@ public class MediaVideoExporter extends MediaExporter {
 	    	        
 	    			File fileAudioTrack = new File(mFileProject,idxAudioTracks + "-tmp.wav");
 	    			MediaDesc out = ffmpegc.convertToWaveAudio(audioTrack, fileAudioTrack.getCanonicalPath(), mAudioSampleRate, MediaAudioExporter.CHANNELS, sc);
+                    Double startTime = Double.parseDouble(audioTrack.startTime);
+                    Double length = Double.parseDouble(audioTrack.duration);
+                    if (startTime < 0) {
+                        startTime = -startTime; // negative start time means we need to push it over to the right
+                    }
+                    out.path = sxCon.delayAudio(out.path, startTime, length);
 	    			mAudioTracksPaths.add(out.path);
 	    			idxAudioTracks++;
-	    			
-
 	    		}
 	    		
 	    		mAudioTracksPaths.add(maOut.path);

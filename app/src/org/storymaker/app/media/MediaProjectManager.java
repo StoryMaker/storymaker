@@ -5,9 +5,11 @@ import org.storymaker.app.R;
 import org.storymaker.app.SceneEditorActivity;
 import org.storymaker.app.StoryMakerApp;
 import org.storymaker.app.Utils;
+import org.storymaker.app.db.StoryMakerDB;
 import org.storymaker.app.media.exporter.MediaAudioExporter;
 import org.storymaker.app.media.exporter.MediaVideoExporter;
 import org.storymaker.app.media.exporter.MediaSlideshowExporter;
+import org.storymaker.app.model.AudioClip;
 import org.storymaker.app.model.Media;
 import org.storymaker.app.model.Project;
 import org.storymaker.app.model.ProjectTable;
@@ -289,7 +291,7 @@ public class MediaProjectManager implements MediaManager {
     }
     
     public MediaDesc doExportMedia (File fileExport, boolean doCompress, boolean doOverwrite) throws Exception
-    {    	
+    {
         MediaDesc mMediaDescOut = null;
     	 Message msg = mHandler.obtainMessage(0);
          msg.getData().putString("status","cancelled");
@@ -308,7 +310,7 @@ public class MediaProjectManager implements MediaManager {
 
 		 File fileRenderTmp = new File(fileRenderTmpDir,new Date().getTime() + "");
 		 fileRenderTmp.mkdirs();
-		 
+
          //for video, render the sequence together
          if (mProject.getStoryType() == Project.STORY_TYPE_VIDEO)
          {
@@ -320,78 +322,66 @@ public class MediaProjectManager implements MediaManager {
     	    		MediaDesc mediaDesc = new MediaDesc();
     	    		mediaDesc.mimeType = media.getMimeType();
     	    		mediaDesc.path = new File(media.getPath()).getCanonicalPath();
-    	    		
+
     	    		if (media.getTrimStart() > 0) {
     	    		    mediaDesc.startTime = "" + media.getTrimmedStartTimeFloat() / 1000F;
                         mediaDesc.duration = "" + media.getTrimmedDuration() / 1000F;
     	    		} else if ((media.getTrimEnd() < 99) && media.getTrimEnd() > 0) {
     	    		    mediaDesc.duration = "" + media.getTrimmedDuration() / 1000F;
     	    		}
-    	    		
+
     	    		if (doCompress)
     	    			applyExportSettings(mediaDesc);
-    	    		
+
     	    		applyExportSettingsResolution(mediaDesc);
-    	    		
+
     	    		alMediaIn.add(mIdx, mediaDesc);
     	    		mIdx++;
 	    	    }
 	    	}
-	
+
 		    mMediaDescOut = new MediaDesc();
-	    	
-	    	if (doCompress)	
+
+	    	if (doCompress)
 	    		applyExportSettings(mMediaDescOut);
 	    	else //this is the default audio codec settings
 	    	{
 	    		mMediaDescOut.audioCodec = "aac";
 		    	mMediaDescOut.audioBitrate = 64;
 	    	}
-	    	
+
 	    	applyExportSettingsResolution(mMediaDescOut);
-	    	
+
 	    	//override for now
 	    	mMediaDescOut.mimeType = AppConstants.MimeTypes.MP4;
 
 		    mMediaDescOut.path = fileExport.getCanonicalPath();
-		    
-		    String audioPath = null;
-		    
-		    File fileAudio = new File(getExternalProjectFolder(mProject, mContext),"narration" + mScene.getId() + ".wav");
-    		
-    		if (fileAudio.exists())
-    			audioPath = fileAudio.getCanonicalPath();
-    		else
-    		{
-    			fileAudio = new File(mContext.getExternalFilesDir(null),"narration" + mScene.getId() + ".wav");
-    			if (fileAudio.exists())
-        			audioPath = fileAudio.getCanonicalPath();
-    		}
-		    
+
 		    if ((!fileExport.exists()) || doOverwrite)
 		    {
-		    	if (fileExport.exists())
-		    		fileExport.delete();
-		    	
+		    	if (fileExport.exists()) {
+                    fileExport.delete();
+                }
+
 		    	fileExport.getParentFile().mkdirs();
-			    	
+
 			    //there can be only one renderer now - MP4Stream !!
-			    	MediaVideoExporter mEx = new MediaVideoExporter(mContext, mHandler, alMediaIn, fileRenderTmp, mMediaDescOut);
-			    	
-			    	if (audioPath != null)
-			    	{
-			    		MediaDesc audioTrack = new MediaDesc();
-			    		audioTrack.path = audioPath;
-			    		mEx.addAudioTrack(audioTrack);
-			    	}
-			    	
-			    	mEx.export();
-			    
+                MediaVideoExporter mEx = new MediaVideoExporter(mContext, mHandler, alMediaIn, fileRenderTmp, mMediaDescOut);
+
+//			    	if (audioPath != null)
+                for (AudioClip audioClip: mProject.getAudioClipsAsList()) {
+                    // TODO truncate and pad the font of and set volume on this clip
+                    String tempPath = audioClip.getPath();
+                    MediaDesc audioTrack = new MediaDesc();
+                    audioTrack.path = tempPath;
+                    audioTrack.startTime = audioClip.getStartTime(); // negative time will be padded in export
+                    audioTrack.duration = audioClip.getDuration();
+                    // TODO put volume in here
+                    mEx.addAudioTrack(audioTrack);
+                }
+                mEx.export();
 		    }
-	   
-         }    
-         else if (mProject.getStoryType() == Project.STORY_TYPE_AUDIO)
-         {
+         } else if (mProject.getStoryType() == Project.STORY_TYPE_AUDIO) {
         	int mIdx = 0; 
         	for (Media media : mList)
  	    	{
