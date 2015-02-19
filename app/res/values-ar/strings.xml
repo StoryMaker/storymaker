@@ -273,4 +273,6 @@
   <string name="send_logcat_to_support">إرسال السجل إلى الدعم</string>
   <string name="restarting_storymaker">إعادة تشغيل ستوري مايكر</string>
   <string name="send">ابعث</string>
+  <string name="export_error_2">خطأ</string>
+  <string name="export_error_4">خطأ</string>
 </resources>

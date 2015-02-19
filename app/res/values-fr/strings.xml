@@ -284,4 +284,6 @@ Vous aurez aussi l’opportunité de voir et modifier les données à envoyer. <
   <string name="uploading_to_facebook">Chargement vers Facebook...</string>
   <string name="uploading_to_internet_archive">Chargement à L\'Archive Internet...</string>
   <string name="no_site_selected">Aucun Site sélectionné.</string>
+  <string name="export_error_2">Erreur</string>
+  <string name="export_error_4">Erreur</string>
 </resources>

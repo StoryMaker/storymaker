@@ -290,4 +290,6 @@ No se puede acceder al almacenamiento externo o interno</string>
   <string name="no_title">Sin título.</string>
   <string name="title_exports">Historias publicadas</string>
   <string name="last_modified">Última modificación</string>
+  <string name="export_error_2">Error</string>
+  <string name="export_error_4">Error</string>
 </resources>
