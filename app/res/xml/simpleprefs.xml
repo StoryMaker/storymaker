@@ -18,7 +18,6 @@
 	
 	<PreferenceCategory android:title="@string/prefs_category_locales_title">	    
 		<ListPreference 	android:title="@string/prefs_interface_language_title" android:summary="@string/prefs_interface_language_summary" android:key="pintlanguage" android:defaultValue="english" android:entries="@array/interface_language_options" android:entryValues="@array/interface_language_options_values" android:enabled="true"/>
-		<ListPreference 	android:title="@string/prefs_lesson_language_title" android:summary="@string/prefs_lesson_language_summary" android:key="pleslanguage" android:defaultValue="english" android:entries="@array/lesson_language_options" android:entryValues="@array/lesson_language_options_values" android:enabled="true"/>			
 	</PreferenceCategory>
 	
 	<PreferenceCategory android:title="@string/prefs_category_media_title">	    
@@ -47,8 +46,7 @@
 		
 	<PreferenceCategory android:title="@string/prefs_category_debug_title">	        
 		<CheckBoxPreference android:title="@string/prefs_internal_storage_title" android:summary="@string/prefs_internal_storage_summary" android:key="p_use_internal_storage" android:defaultValue="false"/>		   
-		<CheckBoxPreference android:title="@string/prefs_disable_lesson_completion_title" android:summary="@string/prefs_disable_lesson_completion_summary" android:key="plessondebug"/>	
-		<EditTextPreference android:title="@string/prefs_youtube_method_title" android:summary="@string/prefs_youtube_method_summary" android:key="glsauthmethod" android:defaultValue="0" android:enabled="true"/>	
+		<EditTextPreference android:title="@string/prefs_youtube_method_title" android:summary="@string/prefs_youtube_method_summary" android:key="glsauthmethod" android:defaultValue="0" android:enabled="true"/>
 	</PreferenceCategory>
 	
 </PreferenceScreen>

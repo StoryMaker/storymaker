@@ -1,6 +1,5 @@
 package org.storymaker.app;
 
-import org.storymaker.app.lessons.LessonManager;
 import org.storymaker.app.media.MediaProjectManager;
 import org.storymaker.app.server.ServerManager;
 
@@ -31,16 +30,13 @@ public class StoryMakerApp extends Application {
 
 	
 	private static ServerManager mServerManager;
-	private static LessonManager mLessonManager;
-	
+
 	private final static String PREF_LOCALE = "plocale";
 	private final static String LOCALE_DEFAULT = "en";//need to force english for now as default
 	private final static String LOCALE_ARABIC = "ar";//need to carry over settings from previous installed version
 	private final static String LOCALE_SOUTH_AFRICAN = "sa";
 	private static Locale mLocale = new Locale(LOCALE_DEFAULT);
-	private static Locale mLessonLocale = new Locale(LOCALE_DEFAULT);
-		
-	private final static String URL_PATH_LESSONS = "/appdata/lessons/";
+
 	private final static String STORYMAKER_DEFAULT_SERVER_URL = "https://storymaker.cc";
 	private static String mBaseUrl = null;
 	
@@ -86,8 +82,8 @@ public class StoryMakerApp extends Application {
 			initServerUrls(this);
 	
 			Utils.Proc.killZombieProcs(this);
-			
-            updateLessonLocation();
+
+            mServerManager = new ServerManager (getApplicationContext());
 
             DownloadHelper.checkAndDownload(this);
 		}
@@ -109,51 +105,6 @@ public class StoryMakerApp extends Application {
             getResources().updateConfiguration(config, getResources().getDisplayMetrics());
         }
     }
-	
-	public void updateLessonLocation ()
-	{
-        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        String customLessonLoc = settings.getString("pleslanguage", LOCALE_DEFAULT);
-        
-        if (customLessonLoc.toLowerCase().startsWith("http")) {
-        	customLessonLoc = customLessonLoc.substring(customLessonLoc.lastIndexOf('/')+1);
-        	
-        	if(!isLocaleValid(customLessonLoc)) {
-        		customLessonLoc = "";
-        	}   	
-        	settings.edit().putString("pleslanguage", customLessonLoc).commit();
-        }
-        
-        
-        if(!isLocaleValid(customLessonLoc)) {
-        	customLessonLoc = LOCALE_DEFAULT;
-        }   
-        mLessonLocale = new Locale(customLessonLoc);
-        
-        String customLessonLocPath = STORYMAKER_DEFAULT_SERVER_URL + URL_PATH_LESSONS + customLessonLoc;       
-        String lessonUrlPath = mBaseUrl + URL_PATH_LESSONS + mLessonLocale.getLanguage() + "/";
-        String lessonLocalPath = "lessons/" + mLessonLocale.getLanguage();
-        
-        if (customLessonLocPath != null && customLessonLocPath.length() > 0)
-        {
-            if (customLessonLocPath.toLowerCase().startsWith("http"))
-            {
-                lessonUrlPath = customLessonLocPath;
-                lessonLocalPath = "lessons/" + lessonUrlPath.substring(lessonUrlPath.lastIndexOf('/')+1);
-            }
-            else
-            {
-                lessonUrlPath = mBaseUrl + URL_PATH_LESSONS + customLessonLocPath + "/";
-                lessonLocalPath = "lessons/" + customLessonLocPath;
-            }
-        }
-        
-        File fileDirLessons = new File(getExternalFilesDir(null), lessonLocalPath);
-        fileDirLessons.mkdirs();
-                
-        mLessonManager = new LessonManager (this, lessonUrlPath, fileDirLessons);
-        mServerManager = new ServerManager (getApplicationContext());
-	}
 
 	public void updateLocale (String newLocale)
 	{
@@ -203,7 +154,7 @@ public class StoryMakerApp extends Application {
 	{
 		return mLocale;
 	}
-	
+
 	public static Locale getCurrentLessonsLocale ()
 	{
 		return mLessonLocale;
@@ -252,27 +203,12 @@ public class StoryMakerApp extends Application {
 		            lang = config.locale.getLanguage();
 	        }
 	        
-	        /*
-	        if (updatedLocale)
-	        {
-	            //need to reload lesson manager for new locale
-	        	File fileDirLessons = new File(getExternalFilesDir(null), "lessons/" + lang);
-	        	fileDirLessons.mkdirs();
-				mLessonManager = new LessonManager (this, mBaseUrl + URL_PATH_LESSONS+ lang + "/", fileDirLessons);
-
-	        }*/
-	        
 	        return updatedLocale;
 	    }
 	
 	public static ServerManager getServerManager ()
 	{
 		return mServerManager;
-	}
-	
-	public static LessonManager getLessonManager ()
-	{
-		return mLessonManager;
 	}
 	
 	public static boolean isRootPossible()

@@ -215,7 +215,7 @@
 <string name="prefs_category_debug_title">Debug</string>
 
 <string name="prefs_storymaker_server_title">StoryMaker Server</string>
-<string name="prefs_storymaker_server_summary">Server for hosting all lesson and story content</string>
+<string name="prefs_storymaker_server_summary">Server for hosting all StoryMaker content</string>
 
 <string name="prefs_use_tor_title">Use Orbot (Tor)</string>
 <string name="prefs_use_tor_summary">Send all network traffic through the Tor network using the Orbot app</string>
@@ -224,10 +224,10 @@
 <string name="prefs_sm_upload_summary">Upload to StoryMaker server by default</string>
 
 <string name="prefs_use_download_manager_title">Use Download Manager</string>
-<string name="prefs_use_download_manager_summary">Download lesson archives with the Android DownloadManager service</string>
+<string name="prefs_use_download_manager_summary">Download StoryMaker content with the Android DownloadManager service</string>
 
 <string name="prefs_use_upload_manager_title">Use Upload Manager</string>
-<string name="prefs_use_upload_manager_summary">Upload story content with the Android UploadManager service</string>
+<string name="prefs_use_upload_manager_summary">Upload StoryMaker content with the Android UploadManager service</string>
 
 <string name="prefs_youtube_acccount_title">YouTube Account</string>
 <string name="prefs_youtube_acccount_summary">The YouTube account to use for video uploads. This MUST be registered on your device.</string>
@@ -240,9 +240,6 @@
 
 <string name="prefs_interface_language_title">Select Language</string>
 <string name="prefs_interface_language_summary">The language StoryMaker will use for the user interface.</string>
-
-<string name="prefs_lesson_language_title">Select Lessons</string>
-<string name="prefs_lesson_language_summary">The lesson module to use.</string>
 
 <string name="prefs_slide_duration_title">Slide Duration</string>
 <string name="prefs_slide_duration_summary">Duration of each slide in a photo essay</string>
@@ -288,9 +285,6 @@
 
 <string name="prefs_internal_storage_title">Internal Storage</string>
 <string name="prefs_internal_storage_summary">Use internal project storage</string>
-
-<string name="prefs_disable_lesson_completion_title">Disable Lesson Completion</string>
-<string name="prefs_disable_lesson_completion_summary"></string>
 
 <string name="prefs_youtube_method_title">YouTube Method</string>
 <string name="prefs_youtube_method_summary">Debug authorization method type</string>

@@ -81,7 +81,6 @@ public class WebViewActivity extends Activity {
    
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-       // getSupportMenuInflater().inflate(R.menu.activity_lesson_list, menu);
         return true;
     }
     

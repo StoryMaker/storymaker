@@ -80,16 +80,6 @@
                 android:value=".HomeActivity" />
         </activity>
         <activity
-            android:name="org.storymaker.app.LessonsActivity"
-            android:configChanges="locale"
-            android:label="@string/title_activity_lessons"
-            android:launchMode="singleTop"
-            android:screenOrientation="portrait" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".HomeActivity" />
-        </activity>
-        <activity
             android:name="org.storymaker.app.StoryTemplateChooserActivity"
             android:label="@string/title_activity_choose_template" >
             <meta-data
@@ -121,11 +111,6 @@
                 <!--android:name="android.support.PARENT_ACTIVITY"-->
                 <!--android:value=".HomeActivity" />-->
         <!--</activity>-->
-        <activity android:name="org.storymaker.app.lessons.LessonViewActivity" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".LessonsActivity" />
-        </activity>
         <activity android:name="org.storymaker.app.server.WebViewActivity" />
         <activity
             android:name="org.storymaker.app.media.MediaProjectManager"

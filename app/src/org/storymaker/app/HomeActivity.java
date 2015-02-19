@@ -1,7 +1,6 @@
 package org.storymaker.app;
 
 import org.apache.commons.io.FilenameUtils;
-import org.storymaker.app.lessons.LessonManager;
 import org.storymaker.app.model.Lesson;
 import org.storymaker.app.model.LessonGroup;
 import org.storymaker.app.model.Project;
@@ -283,7 +282,6 @@ public class HomeActivity extends BaseActivity {
         alert.show();
     }
 
-
 //    // TODO repurpose this to act as the download a content ui
 //    private void initIntroActivityList()
 //    {
@@ -412,42 +410,7 @@ public class HomeActivity extends BaseActivity {
 
         startActivity(intent);
     }
-    
-    private ArrayList<Lesson> getLessonsCompleted (Context context)
-    {
-    	ArrayList<Lesson> result = new ArrayList<Lesson>();
-    	
-    	Locale locale = StoryMakerApp.getCurrentLocale();
-    	
-        LessonManager lessonManager = StoryMakerApp.getLessonManager();
-        
-    	//show lesson categories
-    	String[] lessonSections = getResources().getStringArray(R.array.lesson_sections);
-    	String[] lessonSectionsFolder = getResources().getStringArray(R.array.lesson_sections_folder);
 
-    	int idx = 0;
-    	
-    	for (String folder : lessonSections)
-    	{
-    		LessonGroup lg = new LessonGroup();
-    		lg.mTitle = folder;
-    		
-    		String subFolder = lessonSectionsFolder[idx++];
-    	
-    		ArrayList<Lesson> lessons = LessonManager.loadLessonList(context, lessonManager.getLessonRoot(), subFolder, locale.getLanguage(), Lesson.STATUS_COMPLETE);
-    		
-    		for (Lesson lesson : lessons)
-    			if (lesson.mStatus == Lesson.STATUS_COMPLETE)
-    				result.add(lesson);        		
-    			//else if (lesson.mStatus == Lesson.STATUS_IN_PROGRESS)
-    			//	result.add(lesson);        		
-			
-    	}
-    	
-    	return result;
-    	
-    }
-    
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);

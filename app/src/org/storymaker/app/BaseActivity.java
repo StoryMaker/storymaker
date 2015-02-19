@@ -86,7 +86,6 @@ public class BaseActivity extends FragmentActivity {
         
         Button btnDrawerHome =          (Button) findViewById(R.id.btnDrawerHome);
 //        Button btnDrawerProjects =      (Button) findViewById(R.id.btnDrawerProjects);
-        Button btnDrawerLessons =       (Button) findViewById(R.id.btnDrawerLessons);
         //Button btnDrawerAccount = (Button) findViewById(R.id.btnDrawerAccount);
         Button btnDrawerAccounts =      (Button) findViewById(R.id.btnDrawerAccounts);
         Button btnDrawerExports =      (Button) findViewById(R.id.btnDrawerExports);
@@ -197,17 +196,7 @@ public class BaseActivity extends FragmentActivity {
                 activity.startActivity(i);
             }
         });
-        btnDrawerLessons.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
-                mDrawerLayout.closeDrawers();
-            	
-                Intent i = new Intent(activity, LessonsActivity.class);
-                activity.startActivity(i);
-            }
-        });
-        
         /*btnDrawerAccount.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
