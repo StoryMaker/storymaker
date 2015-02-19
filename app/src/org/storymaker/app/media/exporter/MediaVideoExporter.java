@@ -126,7 +126,8 @@ public class MediaVideoExporter extends MediaExporter {
                     if (startTime < 0) {
                         startTime = -startTime; // negative start time means we need to push it over to the right
                     }
-                    out.path = sxCon.delayAudio(out.path, startTime, length);
+                    // FIXME temporarily disable narration delay to match position in story while we switch to fixing localization
+//                    out.path = sxCon.delayAudio(out.path, startTime, length);
 	    			mAudioTracksPaths.add(out.path);
 	    			idxAudioTracks++;
 	    		}
