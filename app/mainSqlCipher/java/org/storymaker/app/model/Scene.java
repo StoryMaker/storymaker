@@ -336,16 +336,13 @@ public class Scene extends Model {
     public ArrayList<AudioClip> getAudioClipsAsList() {
         Cursor cursor = getAudioClipsAsCursor();
 
-        ArrayList<AudioClip> audioClips = new ArrayList<AudioClip>(mClipCount);
-
-        for (int i = 0; i < mClipCount; i++) {
-            audioClips.add(null);
-        }
+        // FIXME this is using mClipCount, should be based on cursor length right?
+        ArrayList<AudioClip> audioClips = new ArrayList<AudioClip>();
 
         if (cursor.moveToFirst()) {
             do {
                 AudioClip audioClip = new AudioClip(mDB, context, cursor);
-                audioClips.set(audioClip.getPositionIndex(), audioClip);
+                audioClips.add(audioClip);
             } while (cursor.moveToNext());
         }
         cursor.close();

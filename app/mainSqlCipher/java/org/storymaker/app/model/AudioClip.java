@@ -425,8 +425,8 @@ public class AudioClip extends Model {
             for (int i = 0 ; i < index ; i++) {
                 length += media.get(i).getTrimmedDuration(); // FIXME does this factor in crossfades?
                 // FIXME handle case where index > media.size()
-                return "-" + length / 1000f; // negative time will be padded in export
             }
+            return "-" + length / 1000f; // negative time will be padded in export
         } else {
             // TODO handle error
         }
@@ -447,8 +447,8 @@ public class AudioClip extends Model {
         int length = 0;
         // clipspan is 1 if we should only span the clip we are indexed to, so subtract 1 to get the extra number of clips we should span
         int indexEnd = Math.min((index + clipSpan - 1), (media.size() - 1));
-        for (int i = index ; i < indexEnd; i++) {
-            // FIXME handle non-truncated, this is basically assumes truncate
+        for (int i = index ; i <= indexEnd; i++) {
+            // TODO handle non-truncated, this is basically assumes truncate
             length += media.get(i).getTrimmedDuration(); // FIXME does this factor in crossfades?
         }
         return "" + length;

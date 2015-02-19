@@ -397,4 +397,60 @@ public class AudioClip extends Model {
     public void setUpdatedAt(Date updatedAt) {
         this.updatedAt = updatedAt;
     }
+
+    public Scene getScene() {
+        // TODO opt caching
+        return (Scene) (new SceneTable()).get(context, sceneId);
+    }
+
+    /**
+     * this calculates a float time in seconds that this is supposed to start within the sample. if the start is trimmed it will be positive, if we need to pad the start it will be negative
+     * @return
+     */
+    public String getStartTime() {
+        Scene scene = getScene();
+        ArrayList<Media> media = scene.getMediaAsList();
+        int index = -1;
+        if (positionIndex > -1) {
+            index = positionIndex;
+        } else {
+            // TODO we need to handle positionClipId ... by the time we get here it should probably have been flatted down to just the index
+        }
+
+
+        if (index == 0) {
+            return "0"; // FIXME do we need to support trimming narration files?
+        } else if (index > 0) {
+            int length = 0;
+            for (int i = 0 ; i < index ; i++) {
+                length += media.get(i).getTrimmedDuration(); // FIXME does this factor in crossfades?
+                // FIXME handle case where index > media.size()
+            }
+            return "-" + length / 1000f; // negative time will be padded in export
+        } else {
+            // TODO handle error
+        }
+        return "0";
+    }
+
+    public String getDuration() {
+        Scene scene = getScene();
+        ArrayList<Media> media = scene.getMediaAsList();
+        int index = -1;
+        if (positionIndex > -1) {
+            index = positionIndex;
+        } else {
+            // TODO we need to handle positionClipId ... by the time we get here it should probably have been flatted down to just the index
+        }
+
+        // index, clipSpan and truncate
+        int length = 0;
+        // clipspan is 1 if we should only span the clip we are indexed to, so subtract 1 to get the extra number of clips we should span
+        int indexEnd = Math.min((index + clipSpan - 1), (media.size() - 1));
+        for (int i = index ; i <= indexEnd; i++) {
+            // TODO handle non-truncated, this is basically assumes truncate
+            length += media.get(i).getTrimmedDuration(); // FIXME does this factor in crossfades?
+        }
+        return "" + length;
+    }
 }

@@ -321,6 +321,66 @@ public class Scene extends Model {
         return paths.toArray(new String[] {});
     }
 
+
+    public Cursor getAudioClipsAsCursor() {
+        String selection = "scene_id=?";
+        String[] selectionArgs = new String[] {"" + getId()};
+        String orderBy = "position_index";
+        if (mDB == null) {
+            return context.getContentResolver().query(ProjectsProvider.AUDIO_CLIPS_CONTENT_URI, null, selection, selectionArgs, orderBy);
+        } else {
+            return mDB.query((new AudioClipTable(mDB)).getTableName(), null, selection, selectionArgs, null, null, orderBy);
+        }
+    }
+
+    public ArrayList<AudioClip> getAudioClipsAsList() {
+        Cursor cursor = getAudioClipsAsCursor();
+
+        // FIXME this is using mClipCount, should be based on cursor length right?
+        ArrayList<AudioClip> audioClips = new ArrayList<AudioClip>();
+
+        if (cursor.moveToFirst()) {
+            do {
+                AudioClip audioClip = new AudioClip(mDB, context, cursor);
+                audioClips.add(audioClip);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        return audioClips;
+    }
+
+    // FIXME make provider free version
+    public AudioClip[] getAudioClipsAsArray() {
+        ArrayList<AudioClip> audioClips = getAudioClipsAsList();
+        return audioClips.toArray(new AudioClip[] {});
+    }
+
+    // FIXME make provider free version
+    public ArrayList<String> getAudioClipsAsPathList() {
+        Cursor cursor = getAudioClipsAsCursor();
+        ArrayList<String> paths = new ArrayList<String>(mClipCount);
+
+        for (int i = 0; i < mClipCount; i++)
+            paths.add(null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                AudioClip audioClip = new AudioClip(mDB, context, cursor);
+                paths.set(audioClip.getPositionIndex(), audioClip.getPath());
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        return paths;
+    }
+
+    // FIXME make provider free version
+    public String[] getAudioClipsAsPathArray() {
+        ArrayList<String> paths = getAudioClipsAsPathList();
+        return paths.toArray(new String[] {});
+    }
+
+
+
     /**
      * @param media append this media to the back of the scene's media list
      */
