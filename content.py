@@ -52,9 +52,28 @@ def update_strings():
 def zip_content():
     """this creates the zipped blob of content and copies it in to storymaker's assets folder as its .obb file"""
 
-    os.system("cd liger-content/assets ; zip -n .mp4 -r zipped .")
-    print "content generated at: liger-content/assets/zipped.zip"
+    os.system("cd liger-content/assets ; zip -n .mp4 -r main.XXX.org.storymaker.app.obb default")
+    print "content generated at: liger-content/main.XXX.org.storymaker.app.obb"
+    
+    os.system("cd liger-content/assets ; zip -n .mp4 -r learning_guide.1.obb learning_guide")
+    print "content generated at: liger-content/learning_guide.1.obb"
+    
+    os.system("cd liger-content/assets ; zip -n .mp4 -r burundi.1.obb burundi")
+    print "content generated at: liger-content/burundi.1.obb"
 
+@cli.command()
+def scp_push():
+    """this pushes the zipped obb files to be hosted on storymaker.cc"""
+
+    os.system("cd liger-content/assets ; scp main.1031.org.storymaker.app.obb web414.webfaction.com:/home/swn/webapps/storymaker/appdata/obb/")
+    print "scp pushed main.1031.org.storymaker.app.obb"
+
+    os.system("cd liger-content/assets ; scp learning_guide.1.obb web414.webfaction.com:/home/swn/webapps/storymaker/appdata/obb/")
+    print "scp pushed learning_guide.1.obb"
+
+    os.system("cd liger-content/assets ; scp burundi.1.obb web414.webfaction.com:/home/swn/webapps/storymaker/appdata/obb/")
+    print "scp pushed burundi.1.obb"
+    
 @cli.command()
 def adb_push_obb():
     """adb push to /sdcard/Android/<package>/obb"""
@@ -86,6 +105,7 @@ cli.add_command(pull)
 cli.add_command(push_strings)
 cli.add_command(update_strings)
 cli.add_command(zip_content)
+cli.add_command(scp_push)
 cli.add_command(adb_push)
 cli.add_command(adb_push_obb)
 cli.add_command(adb_push_files)
