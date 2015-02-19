@@ -420,23 +420,9 @@ public class HomeActivity extends BaseActivity {
             toggleDrawer();
             return true;
         }
-        else if (item.getItemId() == R.id.menu_logs)
-        {
-            collectAndSendLog();
-            return true;
-        }
         else if (item.getItemId() == R.id.menu_new_project)
         {
             launchLiger(this, "default_library", null);
-            return true;
-        }
-        else if (item.getItemId() == R.id.menu_bug_report)
-        {
-            String url = "https://docs.google.com/forms/d/1KrsTg-NNr8gtQWTCjo-7Fv2L5cml84EcmIuGGNiC4fY/viewform";
-
-            Intent i = new Intent(Intent.ACTION_VIEW);
-            i.setData(Uri.parse(url));
-            startActivity(i);
             return true;
         }
         else if (item.getItemId() == R.id.menu_about)
@@ -473,59 +459,17 @@ public class HomeActivity extends BaseActivity {
         }
         context.startActivity(ligerIntent);
     }
-    
-	void collectAndSendLog(){
-		
-		File fileLog = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS),"storymakerlog.txt");
-		fileLog.getParentFile().mkdirs();
-		
-		try
-		{
-			writeLogToDisk("StoryMaker",fileLog);
-			writeLogToDisk("FFMPEG",fileLog);
-			writeLogToDisk("SOX",fileLog);
-			
-			Intent i = new Intent(Intent.ACTION_SEND);
-			i.putExtra(Intent.EXTRA_EMAIL, "help@guardianproject.info");
-			i.putExtra(Intent.EXTRA_SUBJECT, "StoryMaker Log");
-			i.putExtra(Intent.EXTRA_TEXT, "StoryMaker log email: " + new Date().toGMTString());
-			i.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(fileLog));
-			i.setType("text/plain");
-			startActivity(Intent.createChooser(i, "Send mail"));
-		}
-		catch (IOException e)
-		{
-			
-		}
-    }
-	
+
 	private void showPreferences ()
 	{
 		Intent intent = new Intent(this,SimplePreferences.class);
 		this.startActivityForResult(intent, 9999);
 	}
 
-
-    
-    
-
-    //for log sending
-    public static final String LOG_COLLECTOR_PACKAGE_NAME = "com.xtralogic.android.logcollector";//$NON-NLS-1$
-    public static final String ACTION_SEND_LOG = "com.xtralogic.logcollector.intent.action.SEND_LOG";//$NON-NLS-1$
-    public static final String EXTRA_SEND_INTENT_ACTION = "com.xtralogic.logcollector.intent.extra.SEND_INTENT_ACTION";//$NON-NLS-1$
-    public static final String EXTRA_DATA = "com.xtralogic.logcollector.intent.extra.DATA";//$NON-NLS-1$
-    public static final String EXTRA_ADDITIONAL_INFO = "com.xtralogic.logcollector.intent.extra.ADDITIONAL_INFO";//$NON-NLS-1$
-    public static final String EXTRA_SHOW_UI = "com.xtralogic.logcollector.intent.extra.SHOW_UI";//$NON-NLS-1$
-    public static final String EXTRA_FILTER_SPECS = "com.xtralogic.logcollector.intent.extra.FILTER_SPECS";//$NON-NLS-1$
-    public static final String EXTRA_FORMAT = "com.xtralogic.logcollector.intent.extra.FORMAT";//$NON-NLS-1$
-    public static final String EXTRA_BUFFER = "com.xtralogic.logcollector.intent.extra.BUFFER";//$NON-NLS-1$
-
-
 	@Override
 	protected void onActivityResult(int arg0, int arg1, Intent arg2) {
 		
 		super.onActivityResult(arg0, arg1, arg2);
-		
 
 		boolean changed = ((StoryMakerApp)getApplication()).checkLocale();
 		if (changed)
@@ -609,29 +553,6 @@ public class HomeActivity extends BaseActivity {
             UpdateManager.register(this, AppConstants.HOCKEY_APP_ID);
         }
     }
-
-    
-	 private void writeLogToDisk (String tag, File fileLog) throws IOException
-	 {
-		 
-		FileWriter fos = new FileWriter(fileLog,true);
-		BufferedWriter writer = new BufferedWriter(fos);
-
-		      Process process = Runtime.getRuntime().exec("logcat -d " + tag + ":D *:S");
-		      BufferedReader bufferedReader = 
-		        new BufferedReader(new InputStreamReader(process.getInputStream()));
-
-		     
-		      String line;
-		      while ((line = bufferedReader.readLine()) != null) {
-		    	  
-		    	  writer.write(line);
-		    	  writer.write('\n');
-		      }
-		      bufferedReader.close();
-
-		      writer.close();
-	 }
 
     public void downloadComplete() {
         initActivityList();

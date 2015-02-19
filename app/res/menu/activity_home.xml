@@ -5,21 +5,9 @@
         android:orderInCategory="1"
         android:showAsAction="always" />
         
-    <item android:id="@+id/menu_logs"
-        android:title="@string/menu_logs"
-        android:orderInCategory="3"
-        android:showAsAction="never" />
-    
     <item android:id="@+id/menu_about"
         android:title="@string/menu_about"
         android:orderInCategory="4"
-        android:showAsAction="never" />
-    
-    <item android:id="@+id/menu_bug_report"
-        android:title="@string/menu_bug_report"
-        android:icon="@drawable/ic_action_bugreport"
-        android:orderInCategory="5"
-        android:visible="false"
         android:showAsAction="never" />
     
 </menu>
