@@ -75,13 +75,15 @@ public class PublishActivity extends EditorBaseActivity {
         scene.save();
 
         parcelables = intent.getParcelableArrayListExtra(Constants.EXTRA_EXPORT_AUDIOCLIPS);
-        i = 0;
-        ArrayList<org.storymaker.app.model.AudioClip> audioClipModels = new ArrayList<org.storymaker.app.model.AudioClip>();
-        for (Parcelable p: parcelables) {
-            AudioClipFull audioClip = ((AudioClipFull) p);
-            org.storymaker.app.model.AudioClip ac = org.storymaker.app.model.AudioClip.getInstanceFromLigerAudioClip(this, audioClip, scene.getId(), audioClip.getPath());
-            ac.save();
-            audioClipModels.add(ac); // TODO this needs to add AudioClip' models to this scene
+        if (parcelables != null) {
+            i = 0;
+            ArrayList<org.storymaker.app.model.AudioClip> audioClipModels = new ArrayList<org.storymaker.app.model.AudioClip>();
+            for (Parcelable p : parcelables) {
+                AudioClipFull audioClip = ((AudioClipFull) p);
+                org.storymaker.app.model.AudioClip ac = org.storymaker.app.model.AudioClip.getInstanceFromLigerAudioClip(this, audioClip, scene.getId(), audioClip.getPath());
+                ac.save();
+                audioClipModels.add(ac); // TODO this needs to add AudioClip' models to this scene
+            }
         }
 
         // FIXME load project
