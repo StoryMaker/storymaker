@@ -13,6 +13,8 @@ import scal.io.liger.DownloadHelper;
 import scal.io.liger.IndexManager;
 import scal.io.liger.JsonHelper;
 import scal.io.liger.MainActivity;
+import scal.io.liger.model.BaseIndexItem;
+import scal.io.liger.model.ExpansionIndexItem;
 import scal.io.liger.model.InstanceIndexItem;
 import scal.io.liger.model.StoryPath;
 import scal.io.liger.model.StoryPathLibrary;
@@ -28,7 +30,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Locale;
+import java.util.Map;
 
 import net.hockeyapp.android.CrashManager;
 import net.hockeyapp.android.UpdateManager;
@@ -36,6 +40,7 @@ import net.hockeyapp.android.UpdateManager;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager.NameNotFoundException;
@@ -78,6 +83,11 @@ public class HomeActivity extends BaseActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
     	super.onCreate(savedInstanceState);
+
+        // copy index files
+        IndexManager.copyAvailableIndex(this);
+        IndexManager.copyInstalledIndex(this);
+
         try {
             String pkg = getPackageName();
             String vers= getPackageManager().getPackageInfo(pkg, 0).versionName;
@@ -175,137 +185,191 @@ public class HomeActivity extends BaseActivity {
             Log.d(TAG, "INITACTIVITYLIST - FOUND INSTANCE INDEX WITH NO ITEMS");
         }
 
-        ArrayList<InstanceIndexItem> instances = new ArrayList<InstanceIndexItem>(instanceIndex.values());
+        ArrayList<BaseIndexItem> instances = new ArrayList<BaseIndexItem>(instanceIndex.values());
 
-        InstanceIndexItem learningGuide = new InstanceIndexItem(null, 0);
-        learningGuide.setStoryTitle("Learning Guide 1");
-        learningGuide.setStoryType("learningGuide");
-        learningGuide.setStoryCreationDate(0); // Show at end of list
-        instances.add(learningGuide);
+//        InstanceIndexItem learningGuide = new InstanceIndexItem(null, 0);
+//        learningGuide.setStoryTitle("Learning Guide 1");
+//        learningGuide.setStoryType("learningGuide");
+//        learningGuide.setStoryCreationDate(0); // Show at end of list
+//        instances.add(learningGuide);
+
+        HashMap<String, ExpansionIndexItem> availableIds = IndexManager.loadAvailableIdIndex(this);
+//        HashMap<String, ExpansionIndexItem> installedIds = IndexManager.loadInstalledIdIndex(this);
+
+        Iterator it = availableIds.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry pair = (Map.Entry)it.next();
+            // TODO show the download upsell
+            ExpansionIndexItem eItem = (ExpansionIndexItem) pair.getValue();
+
+            instances.add(eItem);
+            // TODO show the launch content upsell
+            it.remove(); // avoids a ConcurrentModificationException
+        }
+
+
 
         Collections.sort(instances, Collections.reverseOrder());
 
-        mRecyclerView.setAdapter(new InstanceIndexItemAdapter(instances, new InstanceIndexItemAdapter.InstanceIndexItemSelectedListener() {
+        mRecyclerView.setAdapter(new InstanceIndexItemAdapter(instances, new InstanceIndexItemAdapter.BaseIndexItemSelectedListener() {
             @Override
-            public void onStorySelected(InstanceIndexItem selectedItem) {
-                if (!TextUtils.isEmpty(selectedItem.getStoryType()) &&
-                    selectedItem.getStoryType().equals("learningGuide")) {
-                    launchLiger(HomeActivity.this, "learning_guide_1_library", null);
-                } else
-                    launchLiger(HomeActivity.this, null, selectedItem.getInstanceFilePath());
+            public void onStorySelected(BaseIndexItem selectedItem) {
+//                if (!TextUtils.isEmpty(selectedItem.getStoryType()) &&
+//                    selectedItem.getStoryType().equals("learningGuide")) {
+                if (selectedItem instanceof InstanceIndexItem) {
+                    launchLiger(HomeActivity.this, null, ((InstanceIndexItem) selectedItem).getInstanceFilePath(), null);
+                } else {
+                    ExpansionIndexItem eItem = ((ExpansionIndexItem)selectedItem);
+
+                    HashMap<String, ExpansionIndexItem> installedIds = IndexManager.loadInstalledIdIndex(HomeActivity.this);
+                    if (installedIds.containsKey(eItem.getExpansionId())) {
+                        HashMap<String, InstanceIndexItem> contentIndex = IndexManager.loadContentIndex(HomeActivity.this, eItem.getPackageName(), eItem.getExpansionId());
+                        String[] names = new String[contentIndex.size()];
+                        String[] paths = new String[contentIndex.size()];
+                        Iterator it = contentIndex.entrySet().iterator();
+                        int i = 0;
+                        while (it.hasNext()) {
+                            Map.Entry pair = (Map.Entry) it.next();
+                            InstanceIndexItem item = (InstanceIndexItem) pair.getValue();
+                            names[i] = item.getTitle();
+                            paths[i] = item.getInstanceFilePath();
+                            i++;
+                        }
+                        showSPLSelectorPopup(names, paths);
+                        // TODO prompt user with all the SPLs within this content pack, then open by passing the path from the content index as the 3rd param to launchLiger
+                        //                    launchLiger(HomeActivity.this, null, null, .getExpansionFilePath());
+                        // TODO check if this is installed already, if not trigger a download. if it is, launch the spl selection ui
+                    } else {
+                        IndexManager.registerInstalledIndexItem(HomeActivity.this, eItem);
+                        DownloadHelper.checkAndDownload(HomeActivity.this);
+                    }
+                }
             }
         }));
     }
 
+    private void showSPLSelectorPopup(final String[] names, final String[] paths) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
-    // TODO repurpose this to act as the download a content ui
-    private void initIntroActivityList()
-    {
-      	setContentView(R.layout.activity_home_intro);
-      	setupDrawerLayout();
+        builder.setTitle("Choose Story File(SdCard/Liger/)").setItems(names, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int index) {
+                launchLiger(HomeActivity.this, null, null, paths[index]);
+            }
+        });
 
-		int[] titles1 =
-			{(R.string.tutorial_title_1),
-				(R.string.tutorial_title_2),
-				(R.string.tutorial_title_3),
-				(R.string.tutorial_title_4),
-				(R.string.tutorial_title_5)
-				};
-		int[] messages1 =
-			{(R.string.tutorial_text_1),
-				(R.string.tutorial_text_2),
-				(R.string.tutorial_text_3),
-				(R.string.tutorial_text_4),
-				(R.string.tutorial_text_5)
-				};
-
-
-
-
-		MyAdapter adapter = new MyAdapter(getSupportFragmentManager(), titles1,messages1);
-		ViewPager pager = ((ViewPager)findViewById(R.id.pager1));
-
-		pager.setId((int)(Math.random()*10000));
-		pager.setOffscreenPageLimit(5);
-
-		pager.setAdapter(adapter);
-
-		//Bind the title indicator to the adapter
-         CirclePageIndicator indicator = (CirclePageIndicator)findViewById(R.id.circles1);
-         indicator.setViewPager(pager);
-         indicator.setSnap(true);
-
-
-         final float density = getResources().getDisplayMetrics().density;
-
-         indicator.setRadius(5 * density);
-         indicator.setFillColor(0xFFFF0000);
-         indicator.setPageColor(0xFFaaaaaa);
-         //indicator.setStrokeColor(0xFF000000);
-         //indicator.setStrokeWidth(2 * density);
-
-
-         View button = findViewById(R.id.cardButton1);
-         button.setOnClickListener(new OnClickListener()
-         {
-
-			@Override
-			public void onClick(View v) {
-
-				Intent intent = new Intent(HomeActivity.this, LessonsActivity.class);
-				startActivity(intent);
-			}
-
-         });
-
-
-    		int[] titles2 =
-			{(R.string.tutorial_title_7),
-				(R.string.tutorial_title_8),
-				(R.string.tutorial_title_9),
-				(R.string.tutorial_title_10),
-				(R.string.tutorial_title_11)
-				};
-		int[] messages2 =
-			{(R.string.tutorial_text_7),
-				(R.string.tutorial_text_8),
-				(R.string.tutorial_text_9),
-				(R.string.tutorial_text_10),
-				(R.string.tutorial_text_11)
-				};
-
-		MyAdapter adapter2 = new MyAdapter(getSupportFragmentManager(), titles2,messages2);
-		ViewPager pager2 = ((ViewPager)findViewById(R.id.pager2));
-
-		pager2.setId((int)(Math.random()*10000));
-		pager2.setOffscreenPageLimit(5);
-
-		pager2.setAdapter(adapter2);
-
-		//Bind the title indicator to the adapter
-         CirclePageIndicator indicator2 = (CirclePageIndicator)findViewById(R.id.circles2);
-         indicator2.setViewPager(pager2);
-         indicator2.setSnap(true);
-
-         indicator2.setRadius(5 * density);
-         indicator2.setFillColor(0xFFFF0000);
-         indicator2.setPageColor(0xFFaaaaaa);
-         //indicator.setStrokeColor(0xFF000000);
-         //indicator.setStrokeWidth(2 * density);
-
-         button = findViewById(R.id.cardButton2);
-         button.setOnClickListener(new OnClickListener()
-         {
-
-			@Override
-			public void onClick(View v) {
-				//Intent intent = new Intent(HomeActivity.this, StoryNewActivity.class);
-				//startActivity(intent);
-                launchLiger(HomeActivity.this, "learning_guide_1_library", null);
-			}
-
-         });
+        AlertDialog alert = builder.create();
+        alert.show();
     }
+
+
+//    // TODO repurpose this to act as the download a content ui
+//    private void initIntroActivityList()
+//    {
+//      	setContentView(R.layout.activity_home_intro);
+//      	setupDrawerLayout();
+//
+//		int[] titles1 =
+//			{(R.string.tutorial_title_1),
+//				(R.string.tutorial_title_2),
+//				(R.string.tutorial_title_3),
+//				(R.string.tutorial_title_4),
+//				(R.string.tutorial_title_5)
+//				};
+//		int[] messages1 =
+//			{(R.string.tutorial_text_1),
+//				(R.string.tutorial_text_2),
+//				(R.string.tutorial_text_3),
+//				(R.string.tutorial_text_4),
+//				(R.string.tutorial_text_5)
+//				};
+//
+//
+//
+//
+//		MyAdapter adapter = new MyAdapter(getSupportFragmentManager(), titles1,messages1);
+//		ViewPager pager = ((ViewPager)findViewById(R.id.pager1));
+//
+//		pager.setId((int)(Math.random()*10000));
+//		pager.setOffscreenPageLimit(5);
+//
+//		pager.setAdapter(adapter);
+//
+//		//Bind the title indicator to the adapter
+//         CirclePageIndicator indicator = (CirclePageIndicator)findViewById(R.id.circles1);
+//         indicator.setViewPager(pager);
+//         indicator.setSnap(true);
+//
+//
+//         final float density = getResources().getDisplayMetrics().density;
+//
+//         indicator.setRadius(5 * density);
+//         indicator.setFillColor(0xFFFF0000);
+//         indicator.setPageColor(0xFFaaaaaa);
+//         //indicator.setStrokeColor(0xFF000000);
+//         //indicator.setStrokeWidth(2 * density);
+//
+//
+//         View button = findViewById(R.id.cardButton1);
+//         button.setOnClickListener(new OnClickListener()
+//         {
+//
+//			@Override
+//			public void onClick(View v) {
+//
+//				Intent intent = new Intent(HomeActivity.this, LessonsActivity.class);
+//				startActivity(intent);
+//			}
+//
+//         });
+//
+//
+//    		int[] titles2 =
+//			{(R.string.tutorial_title_7),
+//				(R.string.tutorial_title_8),
+//				(R.string.tutorial_title_9),
+//				(R.string.tutorial_title_10),
+//				(R.string.tutorial_title_11)
+//				};
+//		int[] messages2 =
+//			{(R.string.tutorial_text_7),
+//				(R.string.tutorial_text_8),
+//				(R.string.tutorial_text_9),
+//				(R.string.tutorial_text_10),
+//				(R.string.tutorial_text_11)
+//				};
+//
+//		MyAdapter adapter2 = new MyAdapter(getSupportFragmentManager(), titles2,messages2);
+//		ViewPager pager2 = ((ViewPager)findViewById(R.id.pager2));
+//
+//		pager2.setId((int)(Math.random()*10000));
+//		pager2.setOffscreenPageLimit(5);
+//
+//		pager2.setAdapter(adapter2);
+//
+//		//Bind the title indicator to the adapter
+//         CirclePageIndicator indicator2 = (CirclePageIndicator)findViewById(R.id.circles2);
+//         indicator2.setViewPager(pager2);
+//         indicator2.setSnap(true);
+//
+//         indicator2.setRadius(5 * density);
+//         indicator2.setFillColor(0xFFFF0000);
+//         indicator2.setPageColor(0xFFaaaaaa);
+//         //indicator.setStrokeColor(0xFF000000);
+//         //indicator.setStrokeWidth(2 * density);
+//
+//         button = findViewById(R.id.cardButton2);
+//         button.setOnClickListener(new OnClickListener()
+//         {
+//
+//			@Override
+//			public void onClick(View v) {
+//				//Intent intent = new Intent(HomeActivity.this, StoryNewActivity.class);
+//				//startActivity(intent);
+//                launchLiger(HomeActivity.this, "learning_guide_1_library", null, null);
+//			}
+//
+//         });
+//    }
 
     private void showProject(int id) {
         if (id >= mListProjects.size()) {
@@ -396,7 +460,7 @@ public class HomeActivity extends BaseActivity {
     	
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
        
-        String user = settings.getString("user",null);
+        String user = settings.getString("user", null);
         
         if (user == null)
         {
@@ -422,7 +486,7 @@ public class HomeActivity extends BaseActivity {
         }
         else if (item.getItemId() == R.id.menu_new_project)
         {
-            launchLiger(this, "default_library", null);
+            launchLiger(this, "default_library", null, null);
             return true;
         }
         else if (item.getItemId() == R.id.menu_about)
@@ -438,7 +502,7 @@ public class HomeActivity extends BaseActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public static void launchLiger(Context context, String splId, String instancePath) {
+    public static void launchLiger(Context context, String splId, String instancePath, String splPath) {
         if (!DownloadHelper.checkExpansionFiles(context, Constants.MAIN, Constants.MAIN_VERSION)) { // FIXME the app should define these, not the library
             Toast.makeText(context, "Please wait for the content pack to finish downloading", Toast.LENGTH_LONG).show(); // FIXME move to strings.xml
             return;
@@ -454,6 +518,8 @@ public class HomeActivity extends BaseActivity {
         ligerIntent.putExtra("photo_essay_slide_duration", pslideduration * 1000);
         if (splId != null && !splId.isEmpty()) {
             ligerIntent.putExtra(MainActivity.INTENT_KEY_STORYPATH_LIBRARY_ID, splId);
+        } else if (splPath != null && !splPath.isEmpty()) {
+            ligerIntent.putExtra(MainActivity.INTENT_KEY_STORYPATH_LIBRARY_PATH, splPath);
         } else if (instancePath != null && !instancePath.isEmpty()) {
             ligerIntent.putExtra(MainActivity.INTENT_KEY_STORYPATH_INSTANCE_PATH, instancePath);
         }

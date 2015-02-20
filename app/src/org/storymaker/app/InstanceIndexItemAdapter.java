@@ -1,6 +1,7 @@
 package org.storymaker.app;
 
 import android.content.Context;
+import android.graphics.BitmapFactory;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.CardView;
@@ -17,8 +18,13 @@ import com.squareup.picasso.Picasso;
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
+import scal.io.liger.IndexManager;
+import scal.io.liger.ZipHelper;
+import scal.io.liger.model.BaseIndexItem;
+import scal.io.liger.model.ExpansionIndexItem;
 import scal.io.liger.model.InstanceIndexItem;
 
 /**
@@ -26,13 +32,13 @@ import scal.io.liger.model.InstanceIndexItem;
  */
 public class InstanceIndexItemAdapter extends RecyclerView.Adapter<InstanceIndexItemAdapter.ViewHolder> {
 
-    public List<InstanceIndexItem> mDataset;
-    private InstanceIndexItemSelectedListener mListener;
+    public List<BaseIndexItem> mDataset;
+    private BaseIndexItemSelectedListener mListener;
 
     private static final SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm");
 
-    public static interface InstanceIndexItemSelectedListener {
-        public void onStorySelected(InstanceIndexItem selectedItem);
+    public static interface BaseIndexItemSelectedListener {
+        public void onStorySelected(BaseIndexItem selectedItem);
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
@@ -51,8 +57,8 @@ public class InstanceIndexItemAdapter extends RecyclerView.Adapter<InstanceIndex
         }
     }
 
-    public InstanceIndexItemAdapter(@NonNull List<InstanceIndexItem> myDataset,
-                                    @Nullable InstanceIndexItemSelectedListener listener) {
+    public InstanceIndexItemAdapter(@NonNull List<BaseIndexItem> myDataset,
+                                    @Nullable BaseIndexItemSelectedListener listener) {
         mDataset = myDataset;
         mListener = listener;
     }
@@ -70,25 +76,24 @@ public class InstanceIndexItemAdapter extends RecyclerView.Adapter<InstanceIndex
 
         Context context = holder.card.getContext();
 
-        final InstanceIndexItem instance = mDataset.get(position);
+        final BaseIndexItem baseItem = mDataset.get(position);
+        String description = baseItem.getDescription();
+        if (baseItem instanceof InstanceIndexItem) {
+            final InstanceIndexItem instanceItem = (InstanceIndexItem) baseItem;
+            holder.title.setText(String.format("%s %s",
+                    !TextUtils.isEmpty(instanceItem.getTitle()) ?
+                            instanceItem.getTitle() :
+                            context.getString(R.string.no_title),
+                    instanceItem.getStoryCreationDate() == 0 ?
+                            "" :
+                            sdf.format(new Date(instanceItem.getStoryCreationDate()))));
 
-        holder.title.setText(String.format("%s %s",
-                !TextUtils.isEmpty(instance.getStoryTitle()) ?
-                        instance.getStoryTitle() :
-                        context.getString(R.string.no_title),
-                instance.getStoryCreationDate() == 0 ?
-                        "" :
-                        sdf.format(new Date(instance.getStoryCreationDate()))));
+            int mediumStringResId;
+            String storyType = TextUtils.isEmpty(instanceItem.getStoryType()) ?
+                    "?" : instanceItem.getStoryType();
 
-        int mediumStringResId;
-        String storyType = TextUtils.isEmpty(instance.getStoryType()) ?
-                           "?" : instance.getStoryType();
 
-        String description;
 
-        if (storyType.equals("learningGuide")) {
-            description = context.getString(R.string.learning_guide_description);
-        } else {
             switch (storyType) {
                 case "video":
                     mediumStringResId = R.string.lbl_video;
@@ -110,29 +115,56 @@ public class InstanceIndexItemAdapter extends RecyclerView.Adapter<InstanceIndex
                     + context.getString(org.storymaker.app.R.string.last_modified)
                     + ": ";
 
-            if (!TextUtils.isEmpty(instance.getInstanceFilePath()))
-                description += sdf.format(new Date(new File(instance.getInstanceFilePath()).lastModified()));
-        }
+            if (!TextUtils.isEmpty(instanceItem.getInstanceFilePath())) {
+                description += sdf.format(new Date(new File(instanceItem.getInstanceFilePath()).lastModified()));
+            }
 
-        holder.description.setText(description);
+            holder.card.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (mListener != null) {
+                        mListener.onStorySelected(instanceItem);
+                    }
+                }
+            });
 
-        if (!TextUtils.isEmpty(instance.getStoryThumbnailPath())) {
-            Picasso.with(context)
-                    .load(new File(instance.getStoryThumbnailPath()))
-                    .into(holder.thumb);
+            if (!TextUtils.isEmpty(baseItem.getThumbnailPath())) {
+                Picasso.with(context)
+                        .load(new File(baseItem.getThumbnailPath()))
+                        .into(holder.thumb);
+            } else {
+                Picasso.with(context)
+                        .load(R.drawable.no_thumbnail)
+                        .into(holder.thumb);
+            }
         } else {
-            Picasso.with(context)
-                    .load(R.drawable.no_thumbnail)
-                    .into(holder.thumb);
+            ExpansionIndexItem expansionIndexItem = (ExpansionIndexItem) baseItem;
+            // check if this is already installed or waiting to be downloaded to change which picture we show
+            HashMap<String, ExpansionIndexItem> installedIds = IndexManager.loadInstalledIdIndex(context);
+            holder.title.setText(baseItem.getTitle());
+            if (installedIds.containsKey(expansionIndexItem.getExpansionId())) {
+//              ZipHelper.getTempFile((baseItem.getThumbnailPath(), "/sdcard/"
+                holder.thumb.setImageBitmap(BitmapFactory.decodeStream(ZipHelper.getFileInputStream(baseItem.getThumbnailPath(), context)));
+            } else {
+                File file = IndexManager.copyThumbnail(context, expansionIndexItem.getThumbnailPath());
+                Picasso.with(context)
+                        .load(file)
+//                        .load("file:///android_assets/" + expansionIndexItem.getThumbnailPath())
+                        .into(holder.thumb);
+            }
         }
 
         holder.card.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mListener != null)
-                    mListener.onStorySelected(instance);
+                if (mListener != null) {
+                    mListener.onStorySelected(baseItem);
+                }
             }
         });
+
+        holder.description.setText(description);
+
     }
 
     @Override

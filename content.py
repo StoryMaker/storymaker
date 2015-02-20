@@ -52,14 +52,14 @@ def update_strings():
 def zip_content():
     """this creates the zipped blob of content and copies it in to storymaker's assets folder as its .obb file"""
 
-    os.system("cd liger-content/assets ; zip -n .mp4 -r main.XXX.org.storymaker.app.obb default")
-    print "content generated at: liger-content/main.XXX.org.storymaker.app.obb"
+    os.system("rm liger-content/assets/main.1031.org.storymaker.app.obb ; cd liger-content/assets ; zip -n .mp4 -r main.1031.org.storymaker.app.obb org.storymaker.app/default")
+    print "content generated at: liger-content/assets/main.1031.org.storymaker.app.obb"
     
-    os.system("cd liger-content/assets ; zip -n .mp4 -r learning_guide.1.obb learning_guide")
-    print "content generated at: liger-content/learning_guide.1.obb"
+    os.system("rm liger-content/assets/learning_guide.1.obb; cd liger-content/assets ; zip -n .mp4 -r learning_guide.1.obb org.storymaker.app/learning_guide")
+    print "content generated at: liger-content/assets/learning_guide.1.obb"
     
-    os.system("cd liger-content/assets ; zip -n .mp4 -r burundi.1.obb burundi")
-    print "content generated at: liger-content/burundi.1.obb"
+    os.system("rm liger-content/assets/burundi.1.obb; cd liger-content/assets ; zip -n .mp4 -r burundi.1.obb org.storymaker.app/burundi")
+    print "content generated at: liger-content/assets/burundi.1.obb"
 
 @cli.command()
 def scp_push():
