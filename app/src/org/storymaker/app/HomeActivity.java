@@ -14,6 +14,7 @@ import scal.io.liger.IndexManager;
 import scal.io.liger.JsonHelper;
 import scal.io.liger.MainActivity;
 import scal.io.liger.model.BaseIndexItem;
+import scal.io.liger.model.ContentPackMetadata;
 import scal.io.liger.model.ExpansionIndexItem;
 import scal.io.liger.model.InstanceIndexItem;
 import scal.io.liger.model.StoryPath;
@@ -223,6 +224,19 @@ public class HomeActivity extends BaseActivity {
 
                     HashMap<String, ExpansionIndexItem> installedIds = IndexManager.loadInstalledIdIndex(HomeActivity.this);
                     if (installedIds.containsKey(eItem.getExpansionId())) {
+
+                        // update with new thumbnail path
+                        ContentPackMetadata metadata = IndexManager.loadContentMetadata(HomeActivity.this, eItem.getPackageName(), eItem.getExpansionId());
+                        eItem.setThumbnailPath(metadata.getContentPackThumbnailPath());
+                        IndexManager.registerInstalledIndexItem(HomeActivity.this, eItem);
+                        try {
+                            synchronized (this) {
+                                wait(1000);
+                            }
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+
                         HashMap<String, InstanceIndexItem> contentIndex = IndexManager.loadContentIndex(HomeActivity.this, eItem.getPackageName(), eItem.getExpansionId());
                         String[] names = new String[contentIndex.size()];
                         String[] paths = new String[contentIndex.size()];
@@ -241,6 +255,13 @@ public class HomeActivity extends BaseActivity {
                         // TODO check if this is installed already, if not trigger a download. if it is, launch the spl selection ui
                     } else {
                         IndexManager.registerInstalledIndexItem(HomeActivity.this, eItem);
+                        try {
+                            synchronized (this) {
+                                wait(1000);
+                            }
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
                         DownloadHelper.checkAndDownload(HomeActivity.this);
                     }
                 }
