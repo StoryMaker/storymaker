@@ -188,27 +188,18 @@ public class HomeActivity extends BaseActivity {
 
         ArrayList<BaseIndexItem> instances = new ArrayList<BaseIndexItem>(instanceIndex.values());
 
-//        InstanceIndexItem learningGuide = new InstanceIndexItem(null, 0);
-//        learningGuide.setStoryTitle("Learning Guide 1");
-//        learningGuide.setStoryType("learningGuide");
-//        learningGuide.setStoryCreationDate(0); // Show at end of list
-//        instances.add(learningGuide);
-
         HashMap<String, ExpansionIndexItem> availableIds = IndexManager.loadAvailableIdIndex(this);
-//        HashMap<String, ExpansionIndexItem> installedIds = IndexManager.loadInstalledIdIndex(this);
+        HashMap<String, ExpansionIndexItem> installedIds = IndexManager.loadInstalledIdIndex(this);
 
-        Iterator it = availableIds.entrySet().iterator();
-        while (it.hasNext()) {
-            Map.Entry pair = (Map.Entry)it.next();
-            // TODO show the download upsell
-            ExpansionIndexItem eItem = (ExpansionIndexItem) pair.getValue();
-
-            instances.add(eItem);
-            // TODO show the launch content upsell
-            it.remove(); // avoids a ConcurrentModificationException
+        for (String id : availableIds.keySet()) {
+            if (installedIds.keySet().contains(id)) {
+                // if the available item has been installed, add the corresponding item from the installed index
+                instances.add(installedIds.get(id));
+            } else {
+                // if the available item has not been installed, add the item from the available index
+                instances.add(availableIds.get(id));
+            }
         }
-
-
 
         Collections.sort(instances, Collections.reverseOrder());
 
@@ -223,36 +214,46 @@ public class HomeActivity extends BaseActivity {
                     ExpansionIndexItem eItem = ((ExpansionIndexItem)selectedItem);
 
                     HashMap<String, ExpansionIndexItem> installedIds = IndexManager.loadInstalledIdIndex(HomeActivity.this);
+
                     if (installedIds.containsKey(eItem.getExpansionId())) {
 
-                        // update with new thumbnail path
-                        ContentPackMetadata metadata = IndexManager.loadContentMetadata(HomeActivity.this, eItem.getPackageName(), eItem.getExpansionId());
-                        eItem.setThumbnailPath(metadata.getContentPackThumbnailPath());
-                        IndexManager.registerInstalledIndexItem(HomeActivity.this, eItem);
-                        try {
-                            synchronized (this) {
-                                wait(1000);
-                            }
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
+                        // fall through if file has not yet been downloaded
+                        File checkFile = new File(Environment.getExternalStorageDirectory() + File.separator + eItem.getExpansionFilePath() + eItem.getExpansionFileName());
+                        if (!checkFile.exists()) {
+                            Log.d("CHECKING FILE", "FILE " + checkFile.getPath() + " WAS NOT FOUND (NO-OP)");
+                        } else {
+                            Log.d("CHECKING FILE", "FILE " + checkFile.getPath() + " WAS FOUND");
 
-                        HashMap<String, InstanceIndexItem> contentIndex = IndexManager.loadContentIndex(HomeActivity.this, eItem.getPackageName(), eItem.getExpansionId());
-                        String[] names = new String[contentIndex.size()];
-                        String[] paths = new String[contentIndex.size()];
-                        Iterator it = contentIndex.entrySet().iterator();
-                        int i = 0;
-                        while (it.hasNext()) {
-                            Map.Entry pair = (Map.Entry) it.next();
-                            InstanceIndexItem item = (InstanceIndexItem) pair.getValue();
-                            names[i] = item.getTitle();
-                            paths[i] = item.getInstanceFilePath();
-                            i++;
+                            // update with new thumbnail path
+                            // move this somewhere that it can be triggered by completed download?
+                            ContentPackMetadata metadata = IndexManager.loadContentMetadata(HomeActivity.this, eItem.getPackageName(), eItem.getExpansionId());
+                            eItem.setThumbnailPath(metadata.getContentPackThumbnailPath());
+                            IndexManager.registerInstalledIndexItem(HomeActivity.this, eItem);
+                            try {
+                                synchronized (this) {
+                                    wait(1000);
+                                }
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+
+                            HashMap<String, InstanceIndexItem> contentIndex = IndexManager.loadContentIndex(HomeActivity.this, eItem.getPackageName(), eItem.getExpansionId());
+                            String[] names = new String[contentIndex.size()];
+                            String[] paths = new String[contentIndex.size()];
+                            Iterator it = contentIndex.entrySet().iterator();
+                            int i = 0;
+                            while (it.hasNext()) {
+                                Map.Entry pair = (Map.Entry) it.next();
+                                InstanceIndexItem item = (InstanceIndexItem) pair.getValue();
+                                names[i] = item.getTitle();
+                                paths[i] = item.getInstanceFilePath();
+                                i++;
+                            }
+                            showSPLSelectorPopup(names, paths);
+                            // TODO prompt user with all the SPLs within this content pack, then open by passing the path from the content index as the 3rd param to launchLiger
+                            //                    launchLiger(HomeActivity.this, null, null, .getExpansionFilePath());
+                            // TODO check if this is installed already, if not trigger a download. if it is, launch the spl selection ui
                         }
-                        showSPLSelectorPopup(names, paths);
-                        // TODO prompt user with all the SPLs within this content pack, then open by passing the path from the content index as the 3rd param to launchLiger
-                        //                    launchLiger(HomeActivity.this, null, null, .getExpansionFilePath());
-                        // TODO check if this is installed already, if not trigger a download. if it is, launch the spl selection ui
                     } else {
                         IndexManager.registerInstalledIndexItem(HomeActivity.this, eItem);
                         try {
