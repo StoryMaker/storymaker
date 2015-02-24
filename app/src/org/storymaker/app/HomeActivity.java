@@ -226,7 +226,10 @@ public class HomeActivity extends BaseActivity {
 
                             // update with new thumbnail path
                             // move this somewhere that it can be triggered by completed download?
-                            ContentPackMetadata metadata = IndexManager.loadContentMetadata(HomeActivity.this, eItem.getPackageName(), eItem.getExpansionId());
+                            ContentPackMetadata metadata = IndexManager.loadContentMetadata(HomeActivity.this,
+                                                                                            eItem.getPackageName(),
+                                                                                            eItem.getExpansionId(),
+                                                                                            StoryMakerApp.getCurrentLocale().getLanguage());
                             eItem.setThumbnailPath(metadata.getContentPackThumbnailPath());
                             IndexManager.registerInstalledIndexItem(HomeActivity.this, eItem);
                             try {
@@ -237,7 +240,10 @@ public class HomeActivity extends BaseActivity {
                                 e.printStackTrace();
                             }
 
-                            HashMap<String, InstanceIndexItem> contentIndex = IndexManager.loadContentIndex(HomeActivity.this, eItem.getPackageName(), eItem.getExpansionId());
+                            HashMap<String, InstanceIndexItem> contentIndex = IndexManager.loadContentIndex(HomeActivity.this,
+                                                                                                            eItem.getPackageName(),
+                                                                                                            eItem.getExpansionId(),
+                                                                                                            StoryMakerApp.getCurrentLocale().getLanguage());
                             String[] names = new String[contentIndex.size()];
                             String[] paths = new String[contentIndex.size()];
                             Iterator it = contentIndex.entrySet().iterator();
