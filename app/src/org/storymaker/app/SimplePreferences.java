@@ -25,8 +25,7 @@ public class SimplePreferences extends PreferenceActivity implements OnSharedPre
 	public static final String KEY_VIDEO_HEIGHT = "p_video_height";
 
     public static final String KEY_LANGUAGE = "pintlanguage";
-    public static final String KEY_LESSON = "pleslanguage";
-	
+
 	public static final int MAX_VIDEO_WIDTH = 1920;
 	public static final int MAX_VIDEO_HEIGHT = 1080;
 	
@@ -132,11 +131,6 @@ public class SimplePreferences extends PreferenceActivity implements OnSharedPre
         {
             ((StoryMakerApp)getApplication()).checkLocale();
 //            restartActivity();
-            restartApp(getApplicationContext());
-        }
-        else if (key.equals(KEY_LESSON))
-        {
-            ((StoryMakerApp)getApplication()).updateLessonLocation();
             restartApp(getApplicationContext());
         }
 	}

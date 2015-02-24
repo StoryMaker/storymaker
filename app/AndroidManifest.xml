@@ -3,8 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="org.storymaker.app"
     android:installLocation="auto"
-    android:versionCode="1031"
-    android:versionName="2.0.0-build1031">
+    android:versionCode="1032"
+    android:versionName="2.0.0-build1032">
    
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -80,16 +80,6 @@
                 android:value=".HomeActivity" />
         </activity>
         <activity
-            android:name="org.storymaker.app.LessonsActivity"
-            android:configChanges="locale"
-            android:label="@string/title_activity_lessons"
-            android:launchMode="singleTop"
-            android:screenOrientation="portrait" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".HomeActivity" />
-        </activity>
-        <activity
             android:name="org.storymaker.app.StoryTemplateChooserActivity"
             android:label="@string/title_activity_choose_template" >
             <meta-data
@@ -121,11 +111,6 @@
                 <!--android:name="android.support.PARENT_ACTIVITY"-->
                 <!--android:value=".HomeActivity" />-->
         <!--</activity>-->
-        <activity android:name="org.storymaker.app.lessons.LessonViewActivity" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".LessonsActivity" />
-        </activity>
         <activity android:name="org.storymaker.app.server.WebViewActivity" />
         <activity
             android:name="org.storymaker.app.media.MediaProjectManager"

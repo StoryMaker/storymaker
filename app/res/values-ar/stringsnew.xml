@@ -173,14 +173,66 @@
   <string name="story_type_news_text8">كيف يتم الاستجابة للحدث؟</string>
   <!--/story_type_old-->
   <!--prefs-->
+  <string name="prefs_category_networking_security_title">الشبكات والحماية</string>
+  <string name="prefs_category_locales_title">محليا</string>
+  <string name="prefs_category_media_title">ميديا</string>
+  <string name="prefs_category_debug_title">التصحيح</string>
   <string name="prefs_storymaker_server_title">سيرفر ستوري مايكر</string>
   <string name="prefs_storymaker_server_summary">خادم استضافة جميع محتوى الدروس والقصص</string>
   <string name="prefs_use_tor_title">استعمال أوربوت (متصفح تور)</string>
+  <string name="prefs_use_tor_summary">تحويل التصفح عبر شبكة تور عبر تطبيق أوربوت</string>
+  <string name="prefs_sm_upload_title">التحميل لستوري مايكر</string>
+  <string name="prefs_sm_upload_summary">التحميل لسيرفر ستوري مايكر آليا</string>
+  <string name="prefs_use_download_manager_title">استعمال مدير تحميل</string>
+  <string name="prefs_use_download_manager_summary">تحميل أرسيف الدروس عبر مدير التحميل الخاص بأندرويد</string>
+  <string name="prefs_use_upload_manager_title">استعمال مدير تنزيل</string>
+  <string name="prefs_use_upload_manager_summary">تنزيل محتوى القصة عبر مدير التنزيل الخاص بأندرويد</string>
+  <string name="prefs_youtube_acccount_title">حساب اليوتيوب</string>
+  <string name="prefs_youtube_acccount_summary">حساب اليوتيوب يستعمل لتنزيل الفيديو. يجب أن يكون الحساب مسجلا في الهاتف.</string>
+  <string name="prefs_youtube_login_title">الدخول لليوتيوب</string>
+  <string name="prefs_youtube_login_summary">الدخول لليتيوب عن طريق الواب</string>
+  <string name="prefs_soundcloud_account_title">حساب الساوند كلاود</string>
+  <string name="prefs_soundcloud_account_summary">حساب الساوند كلاود يستعمل لتنزيل الصوت</string>
+  <string name="prefs_interface_language_title">اختر اللغة</string>
+  <string name="prefs_interface_language_summary">لغة عرض الواجهة الرئيسية لستوري مايكر</string>
+  <string name="prefs_lesson_language_title">اختر الدروس</string>
+  <string name="prefs_lesson_language_summary">وحدة الدرس للاستخدام.</string>
+  <string name="prefs_slide_duration_title">مدة العرض</string>
+  <string name="prefs_slide_duration_summary">مدة عرض كل شريحة في المقال المصور</string>
+  <string name="prefs_enable_compression_title">تفعيل الضغط</string>
+  <string name="prefs_enable_compression_summary">ضغط جميع الفيديوهات والصوت باستخدام الإعدادات أدناه</string>
+  <string name="prefs_preprocess_3gp_title">عملية 3GP</string>
+  <string name="prefs_preprocess_3gp_summary">تحويل كليبات الفيديو 3GP إلى MPEG-4</string>
+  <string name="prefs_use_cat_command_title">استعمال أمر \'Cat\'</string>
+  <string name="prefs_use_cat_command_summary">استعمال أمر \'Cat\' لدمج مقاطع الفيدو</string>
+  <string name="prefs_video_codec_title">كوديك الفيديو</string>
+  <string name="prefs_video_codec_summary">كوديك الفيديو عند التصدير</string>
+  <string name="prefs_video_resolution_title">دقة الفيديو</string>
+  <string name="prefs_video_resolution_summary">دقة الفيديو عند التصدير</string>
+  <string name="prefs_video_width_title">عرض الفيديو</string>
+  <string name="prefs_video_width_summary">عرض الفيديو عند التصدير</string>
+  <string name="prefs_video_height_title">ارتفاع الفيديو</string>
+  <string name="prefs_video_height_summary">ارتفاع الفيديو عند التصدير</string>
+  <string name="prefs_internal_storage_title">الذاكرة الداخلية</string>
+  <string name="prefs_internal_storage_summary">استعمال الذاكرة الداخلية</string>
   <string name="prefs_disable_lesson_completion_summary"></string>
   <!--/prefs-->
   <!--FirstStartActivity-->
+  <string name="sign_up_btn">تسجيل الدخول لـستوري مـايكر</string>
+  <string name="no_thanks_btn">لا، شكرا</string>
+  <string name="tos_btn">أوافق على شروط الخدمة</string>
+  <string name="tos_dialog_title">شروط الخدمة</string>
+  <string name="tos_dialog_msg">يرجى قبول شروط الخدمة قبل المتابعة</string>
+  <string name="tos_dialog_positive_button">فهمت ذلك</string>
+  <string name="acct_created_dialog_title">الدخول لحسابك</string>
+  <string name="acct_created_dialog_positive_button">البداية!</string>
   <!--ConnectAccountActivity-->
+  <string name="my_account">حسابي على ستوري مايكر</string>
   <string name="join_storymaker">انظم إلى مجموعة StoryMaker</string>
+  <string name="create_account">إنشاء حسابي</string>
+  <string name="sign_in">التسجيل/ الدخول</string>
+  <string name="sign_out">الخروج</string>
   <!--ProjectTagFragment-->
+  <string name="no_tags_msg">لم تُضف أيُ #كلمات مفاتيح</string>
   <!--BaesActivity Drawer  (For Accessibility Descriptions)-->
 </resources>

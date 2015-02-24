@@ -63,8 +63,8 @@
   <string name="story_type_event_breaking_desc">Des événements imprévus ayant une valeur de nouvelles importantes. Un feu, une annonce surprise par un fonctionnaire du gouvernement, ou d\'une catastrophe naturelle sont de bons événements des flash d\'information.</string>
   <string name="story_type_issue_social_desc">Histoires sur les questions qui touchent les communautés. Un changement dans la réglementation du gouvernement local de l\'infrastructure est une bonne question sociale</string>
   <string name="story_type_issue_political_desc">Histoires sur le gouvernement et le travail des fonctionnaires publics. Une histoire de nouvelles lois ou des modifications du Parlement est une bonne question politique.</string>
-  <string name="story_type_issue_economic_desc">Histoires à propos de l\'économie en général ou des finances personnelles. Un histoire à propos de l\'impact des changements dans les subventions gouvernementales pour les fermiers est une bon problème économique.</string>
-  <string name="story_type_profile_public_desc">Histoires à propos des sujets vus par l\'opinion publique. Le profil d\'un politicien courant à son travail ferait un bon profil public.</string>
+  <string name="story_type_issue_economic_desc">Histoires à propos de l\'économie étrangère ou des finances personnelles. Une histoire à propos de l\'impact des changements dans les subventions gouvernementales pour les fermiers est un enjeu économique important.</string>
+  <string name="story_type_profile_public_desc">Des histoires à propos du rôle d\'un sujet dans l\'optique publique. Le profil d\'un politicien en campagne électorale est un bon profil public.</string>
   <string name="story_type_profile_professional_desc">Histoires à propos du monde et du travail en général. Un artiste ou un athlète célèbre est un bon profile professionnel.</string>
   <string name="story_type_profile_personal_desc">Histoires à propos d\'expériences, souvent liées aux événements d\'actualité. Le profil d\'un ancien militaire à l\'anniversaire de l\'armistice serait un bon profil personnel.</string>
   <!--/story_type_description-->
@@ -251,4 +251,6 @@
   <!--ProjectTagFragment-->
   <string name="no_tags_msg">Aucun #tag ajouté</string>
   <!--BaesActivity Drawer  (For Accessibility Descriptions)-->
+  <string name="open_drawer">Menu ouvert</string>
+  <string name="close_drawer">Menu ouvert</string>
 </resources>
