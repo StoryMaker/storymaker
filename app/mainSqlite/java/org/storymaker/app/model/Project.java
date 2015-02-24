@@ -387,6 +387,27 @@ public class Project extends Model {
         return pathArray;
     }
 
+    public ArrayList<AudioClip> getAudioClipsAsList() {
+        ArrayList<AudioClip> audioClips = new ArrayList<AudioClip>();
+        for (Scene s : getScenesAsArray()) {
+            audioClips.addAll(s.getAudioClipsAsList());
+        }
+        return audioClips;
+    }
+
+    public String[] getAudiClipsAsPathArray() {
+        ArrayList<AudioClip> audioClips = getAudioClipsAsList();
+
+        // purge nulls
+        audioClips.removeAll(Collections.singleton(null));
+
+        String[] pathArray = new String[audioClips.size()];
+        for (int i = 0 ; i < audioClips.size() ; i++) {
+            pathArray[i] = audioClips.get(i).getPath(); // how this makes me long for python
+        }
+        return pathArray;
+    }
+
     /**
      * @param media insert this scene into the projects scene list at index 
      */

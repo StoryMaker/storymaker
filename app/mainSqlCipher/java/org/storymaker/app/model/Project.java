@@ -396,7 +396,7 @@ public class Project extends Model {
         return audioClips;
     }
 
-    public String[] getAudiClipsAsPathArray() {
+    public String[] getAudioClipsAsPathArray() {
         ArrayList<AudioClip> audioClips = getAudioClipsAsList();
 
         // purge nulls
