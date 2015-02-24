@@ -1,3 +1,13 @@
+--- build 1032
+
+- Content pack download bugfixes
+- Translation updates
+- Graphics updates
+
+--- build 1031
+
+- New Content Pack Download system
+
 --- build 1030
 
 - Multitrack audio / narration support
