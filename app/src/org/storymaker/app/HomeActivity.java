@@ -12,6 +12,7 @@ import scal.io.liger.DownloadHelper;
 import scal.io.liger.IndexManager;
 import scal.io.liger.JsonHelper;
 import scal.io.liger.MainActivity;
+import scal.io.liger.QueueManager;
 import scal.io.liger.model.BaseIndexItem;
 import scal.io.liger.model.ContentPackMetadata;
 import scal.io.liger.model.ExpansionIndexItem;
@@ -216,21 +217,25 @@ public class HomeActivity extends BaseActivity {
 
                     if (installedIds.containsKey(eItem.getExpansionId())) {
 
+                        ExpansionIndexItem installedItem = installedIds.get(eItem.getExpansionId());
+
                         // fall through if file has not yet been downloaded
-                        File checkFile = new File(Environment.getExternalStorageDirectory() + File.separator + eItem.getExpansionFilePath() + eItem.getExpansionFileName());
-                        if (!checkFile.exists()) {
-                            Log.d("CHECKING FILE", "FILE " + checkFile.getPath() + " WAS NOT FOUND (NO-OP)");
+                        String fileName = installedItem.getExpansionId() + "." + Constants.MAIN + "." + installedItem.getExpansionFileVersion() + ".obb";
+                        File checkFile = new File(Environment.getExternalStorageDirectory() + File.separator + installedItem.getExpansionFilePath() + fileName);
+
+                        if ((installedItem.getExtras() != null) && (installedItem.getExtras().get(IndexManager.pendingDownloadKey) != null)) {
+                            Log.d("CHECKING FILE", "FILE " + checkFile.getPath() + " IS STILL DOWNLOADING (" + installedItem.getExtras().get(IndexManager.pendingDownloadKey) + " -> NO-OP)");
                         } else {
-                            Log.d("CHECKING FILE", "FILE " + checkFile.getPath() + " WAS FOUND");
+                            Log.d("CHECKING FILE", "FILE " + checkFile.getPath() + " HAS FINISHED DOWNLOADING");
 
                             // update with new thumbnail path
                             // move this somewhere that it can be triggered by completed download?
                             ContentPackMetadata metadata = IndexManager.loadContentMetadata(HomeActivity.this,
-                                                                                            eItem.getPackageName(),
-                                                                                            eItem.getExpansionId(),
+                                                                                            installedItem.getPackageName(),
+                                                                                            installedItem.getExpansionId(),
                                                                                             StoryMakerApp.getCurrentLocale().getLanguage());
-                            eItem.setThumbnailPath(metadata.getContentPackThumbnailPath());
-                            IndexManager.registerInstalledIndexItem(HomeActivity.this, eItem);
+                            installedItem.setThumbnailPath(metadata.getContentPackThumbnailPath());
+                            IndexManager.registerInstalledIndexItem(HomeActivity.this, installedItem);
                             try {
                                 synchronized (this) {
                                     wait(1000);
@@ -240,8 +245,8 @@ public class HomeActivity extends BaseActivity {
                             }
 
                             HashMap<String, InstanceIndexItem> contentIndex = IndexManager.loadContentIndex(HomeActivity.this,
-                                                                                                            eItem.getPackageName(),
-                                                                                                            eItem.getExpansionId(),
+                                                                                                            installedItem.getPackageName(),
+                                                                                                            installedItem.getExpansionId(),
                                                                                                             StoryMakerApp.getCurrentLocale().getLanguage());
                             String[] names = new String[contentIndex.size()];
                             String[] paths = new String[contentIndex.size()];
@@ -261,6 +266,7 @@ public class HomeActivity extends BaseActivity {
                         }
                     } else {
                         IndexManager.registerInstalledIndexItem(HomeActivity.this, eItem);
+
                         try {
                             synchronized (this) {
                                 wait(1000);
@@ -268,6 +274,7 @@ public class HomeActivity extends BaseActivity {
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
+
                         DownloadHelper.checkAndDownload(HomeActivity.this);
                     }
                 }
@@ -287,6 +294,7 @@ public class HomeActivity extends BaseActivity {
         AlertDialog alert = builder.create();
         alert.show();
     }
+
 
 //    // TODO repurpose this to act as the download a content ui
 //    private void initIntroActivityList()
