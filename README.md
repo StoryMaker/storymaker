@@ -64,7 +64,7 @@ Follow these steps to setup your dev environment:
     ```xml
     <?xml version="1.0" encoding="utf-8"?>
     <resources>
-        <!-- insert your own keys from: https://www.flickr.com/services/apps/create/apply/ -->
+        <!-- insert your own keys following: https://developers.google.com/accounts/docs/OAuth2 -->
         <string name="google_client_id">REPLACE_WITH_YOUR_ID</string>
         <string name="google_client_secret">REPLACE_WITH_YOUR_SECRET</string>
         <string name="google_app_name">REPLACE_WITH_YOUR_APP_NAME</string>
