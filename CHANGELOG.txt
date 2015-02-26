@@ -1,6 +1,11 @@
 --- build 1033
 
 - fix localization of content pack indexes
+- fix Tor support for content pack downloads
+- many small fixes in Burundi pack text
+- Download bugfixes
+- fix duplicate downloads issue
+- update Burundi content pack
 
 --- build 1032
 

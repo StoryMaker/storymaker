@@ -252,5 +252,4 @@
   <string name="no_tags_msg">Nta #bimenyetso  vyongeweko</string>
   <!--BaesActivity Drawer  (For Accessibility Descriptions)-->
   <string name="open_drawer">Ugurura Drawer</string>
-  <string name="close_drawer">Ugurura Drawer</string>
 </resources>

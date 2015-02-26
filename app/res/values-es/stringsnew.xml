@@ -252,5 +252,4 @@
   <string name="no_tags_msg">No se añadieron #etiquetas</string>
   <!--BaesActivity Drawer  (For Accessibility Descriptions)-->
   <string name="open_drawer">Abrir bandeja</string>
-  <string name="close_drawer">Abrir bandeja</string>
 </resources>

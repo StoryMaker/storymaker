@@ -55,11 +55,11 @@ def zip_content():
     os.system("rm liger-content/assets/main.1031.org.storymaker.app.obb ; cd liger-content/assets ; zip -n .mp4 -r main.1031.org.storymaker.app.obb org.storymaker.app/default")
     print "content generated at: liger-content/assets/main.1031.org.storymaker.app.obb"
     
-    os.system("rm liger-content/assets/learning_guide.1.obb; cd liger-content/assets ; zip -n .mp4 -r learning_guide.1.obb org.storymaker.app/learning_guide")
-    print "content generated at: liger-content/assets/learning_guide.1.obb"
+    os.system("rm liger-content/assets/learning_guide.main.1.obb; cd liger-content/assets ; zip -n .mp4 -r learning_guide.main.1.obb org.storymaker.app/learning_guide")
+    print "content generated at: liger-content/assets/learning_guide.main.1.obb"
     
-    os.system("rm liger-content/assets/burundi.1.obb; cd liger-content/assets ; zip -n .mp4 -r burundi.1.obb org.storymaker.app/burundi")
-    print "content generated at: liger-content/assets/burundi.1.obb"
+    os.system("rm liger-content/assets/burundi.main.1.obb; cd liger-content/assets ; zip -n .mp4 -r burundi.main.1.obb org.storymaker.app/burundi")
+    print "content generated at: liger-content/assets/burundi.main.1.obb"
 
 @cli.command()
 def scp_push():
@@ -68,11 +68,11 @@ def scp_push():
     os.system("cd liger-content/assets ; scp main.1031.org.storymaker.app.obb web414.webfaction.com:/home/swn/webapps/storymaker/appdata/obb/")
     print "scp pushed main.1031.org.storymaker.app.obb"
 
-    os.system("cd liger-content/assets ; scp learning_guide.1.obb web414.webfaction.com:/home/swn/webapps/storymaker/appdata/obb/")
-    print "scp pushed learning_guide.1.obb"
+    os.system("cd liger-content/assets ; scp learning_guide.main.1.obb web414.webfaction.com:/home/swn/webapps/storymaker/appdata/obb/")
+    print "scp pushed learning_guide.main.1.obb"
 
-    os.system("cd liger-content/assets ; scp burundi.1.obb web414.webfaction.com:/home/swn/webapps/storymaker/appdata/obb/")
-    print "scp pushed burundi.1.obb"
+    os.system("cd liger-content/assets ; scp burundi.main.1.obb web414.webfaction.com:/home/swn/webapps/storymaker/appdata/obb/")
+    print "scp pushed burundi.main.1.obb"
     
 @cli.command()
 def adb_push_obb():
