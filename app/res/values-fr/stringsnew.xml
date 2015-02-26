@@ -252,5 +252,4 @@
   <string name="no_tags_msg">Aucun #tag ajouté</string>
   <!--BaesActivity Drawer  (For Accessibility Descriptions)-->
   <string name="open_drawer">Menu ouvert</string>
-  <string name="close_drawer">Menu ouvert</string>
 </resources>
