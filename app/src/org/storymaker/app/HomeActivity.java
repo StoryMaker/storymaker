@@ -112,8 +112,6 @@ public class HomeActivity extends BaseActivity {
     @Override
 	public void onResume() {
 		super.onResume();
-        // revise to check for all installed content packs
-        // if (!DownloadHelper.checkExpansionFiles(this, Constants.MAIN, Constants.MAIN_VERSION)) {
         if (!DownloadHelper.checkAllFiles(this)) {
             DownloadPoller poller = new DownloadPoller();
             poller.execute("foo");
@@ -170,9 +168,7 @@ public class HomeActivity extends BaseActivity {
     }
 
     private void initActivityList () {
-        // revise to check for all installed content packs
-        // if (!DownloadHelper.checkExpansionFiles(this, Constants.MAIN, Constants.MAIN_VERSION)) { // FIXME the app should define these, not the library
-        if (!DownloadHelper.checkAllFiles(this)) {
+        if (!DownloadHelper.checkAllFiles(this)) { // FIXME the app should define these, not the library
             Toast.makeText(this, "Please wait for the content pack to finish downloading and reload the app", Toast.LENGTH_LONG).show(); // FIXME move to strings.xml
             return;
         }
@@ -270,51 +266,41 @@ public class HomeActivity extends BaseActivity {
 
                         ExpansionIndexItem installedItem = installedIds.get(eItem.getExpansionId());
 
-                        // fall through if file has not yet been downloaded
-                        String fileName = IndexManager.buildFileName(installedItem, Constants.MAIN);
-                        File checkFile = new File(Environment.getExternalStorageDirectory() + File.separator + installedItem.getExpansionFilePath() + fileName);
-
-                        if ((installedItem.getExtras() != null) && (installedItem.getExtras().get(IndexManager.pendingDownloadKey) != null)) {
-                            Log.d("CHECKING FILE", "FILE " + checkFile.getPath() + " IS STILL DOWNLOADING (" + installedItem.getExtras().get(IndexManager.pendingDownloadKey) + " -> NO-OP)");
-                        } else {
-                            Log.d("CHECKING FILE", "FILE " + checkFile.getPath() + " HAS FINISHED DOWNLOADING");
-
-                            // update with new thumbnail path
-                            // move this somewhere that it can be triggered by completed download?
-                            ContentPackMetadata metadata = IndexManager.loadContentMetadata(HomeActivity.this,
-                                                                                            installedItem.getPackageName(),
-                                                                                            installedItem.getExpansionId(),
-                                                                                            StoryMakerApp.getCurrentLocale().getLanguage());
-                            installedItem.setThumbnailPath(metadata.getContentPackThumbnailPath());
-                            IndexManager.registerInstalledIndexItem(HomeActivity.this, installedItem);
-                            try {
-                                synchronized (this) {
-                                    wait(1000);
-                                }
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
+                        // update with new thumbnail path
+                        // move this somewhere that it can be triggered by completed download?
+                        ContentPackMetadata metadata = IndexManager.loadContentMetadata(HomeActivity.this,
+                                installedItem.getPackageName(),
+                                installedItem.getExpansionId(),
+                                StoryMakerApp.getCurrentLocale().getLanguage());
+                        installedItem.setThumbnailPath(metadata.getContentPackThumbnailPath());
+                        IndexManager.registerInstalledIndexItem(HomeActivity.this, installedItem);
+                        try {
+                            synchronized (this) {
+                                wait(1000);
                             }
-
-                            HashMap<String, InstanceIndexItem> contentIndex = IndexManager.loadContentIndex(HomeActivity.this,
-                                                                                                            installedItem.getPackageName(),
-                                                                                                            installedItem.getExpansionId(),
-                                                                                                            StoryMakerApp.getCurrentLocale().getLanguage());
-                            String[] names = new String[contentIndex.size()];
-                            String[] paths = new String[contentIndex.size()];
-                            Iterator it = contentIndex.entrySet().iterator();
-                            int i = 0;
-                            while (it.hasNext()) {
-                                Map.Entry pair = (Map.Entry) it.next();
-                                InstanceIndexItem item = (InstanceIndexItem) pair.getValue();
-                                names[i] = item.getTitle();
-                                paths[i] = item.getInstanceFilePath();
-                                i++;
-                            }
-                            showSPLSelectorPopup(names, paths);
-                            // TODO prompt user with all the SPLs within this content pack, then open by passing the path from the content index as the 3rd param to launchLiger
-                            //                    launchLiger(HomeActivity.this, null, null, .getExpansionFilePath());
-                            // TODO check if this is installed already, if not trigger a download. if it is, launch the spl selection ui
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
                         }
+
+                        HashMap<String, InstanceIndexItem> contentIndex = IndexManager.loadContentIndex(HomeActivity.this,
+                                installedItem.getPackageName(),
+                                installedItem.getExpansionId(),
+                                StoryMakerApp.getCurrentLocale().getLanguage());
+                        String[] names = new String[contentIndex.size()];
+                        String[] paths = new String[contentIndex.size()];
+                        Iterator it = contentIndex.entrySet().iterator();
+                        int i = 0;
+                        while (it.hasNext()) {
+                            Map.Entry pair = (Map.Entry) it.next();
+                            InstanceIndexItem item = (InstanceIndexItem) pair.getValue();
+                            names[i] = item.getTitle();
+                            paths[i] = item.getInstanceFilePath();
+                            i++;
+                        }
+                        showSPLSelectorPopup(names, paths);
+                        // TODO prompt user with all the SPLs within this content pack, then open by passing the path from the content index as the 3rd param to launchLiger
+                        //                    launchLiger(HomeActivity.this, null, null, .getExpansionFilePath());
+                        // TODO check if this is installed already, if not trigger a download. if it is, launch the spl selection ui
                     } else {
                         IndexManager.registerInstalledIndexItem(HomeActivity.this, eItem);
 
@@ -553,9 +539,7 @@ public class HomeActivity extends BaseActivity {
     }
 
     public static void launchLiger(Context context, String splId, String instancePath, String splPath) {
-// revise to check for all installed content packs
-        // if (!DownloadHelper.checkExpansionFiles(context, Constants.MAIN, Constants.MAIN_VERSION)) { // FIXME the app should define these, not the library
-        if (!DownloadHelper.checkAllFiles(context)) {
+        if (!DownloadHelper.checkAllFiles(context)) { // FIXME the app should define these, not the library
             Toast.makeText(context, "Please wait for the content pack to finish downloading", Toast.LENGTH_LONG).show(); // FIXME move to strings.xml
             return;
         }
@@ -699,8 +683,6 @@ public class HomeActivity extends BaseActivity {
         }
 
         protected Integer doInBackground(String... params) {
-            // revise to check for all installed content packs
-            // while (!DownloadHelper.checkExpansionFiles(HomeActivity.this, Constants.MAIN, Constants.MAIN_VERSION)) {
             while (!DownloadHelper.checkAllFiles(HomeActivity.this)) {
                 try {
                     Thread.sleep(1000);
