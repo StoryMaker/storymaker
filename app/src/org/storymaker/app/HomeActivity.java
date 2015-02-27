@@ -80,6 +80,7 @@ public class HomeActivity extends BaseActivity {
     private ProgressDialog mLoading;
     private ArrayList<Project> mListProjects;
     private RecyclerView mRecyclerView;
+    private DownloadPoller downloadPoller = null;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -112,9 +113,9 @@ public class HomeActivity extends BaseActivity {
     @Override
 	public void onResume() {
 		super.onResume();
-        if (!DownloadHelper.checkAllFiles(this)) {
-            DownloadPoller poller = new DownloadPoller();
-            poller.execute("foo");
+        if (!DownloadHelper.checkAllFiles(this) && downloadPoller == null) {
+            downloadPoller = new DownloadPoller();
+            downloadPoller.execute("foo");
         } else {
             initActivityList();
         }
@@ -314,6 +315,10 @@ public class HomeActivity extends BaseActivity {
 
                         DownloadHelper.checkAndDownload(HomeActivity.this);
                     }
+                }
+                if (!DownloadHelper.checkAllFiles(HomeActivity.this) && downloadPoller == null) {
+                    downloadPoller = new DownloadPoller();
+                    downloadPoller.execute("foo");
                 }
             }
         }));
@@ -657,6 +662,7 @@ public class HomeActivity extends BaseActivity {
     }
 
     public void downloadComplete() {
+        this.downloadPoller = null;
         initActivityList();
         // http://stackoverflow.com/questions/2745061/java-lang-illegalargumentexception-view-not-attached-to-window-manager
         try {
@@ -678,12 +684,29 @@ public class HomeActivity extends BaseActivity {
         protected void onPreExecute() {
             super.onPreExecute();
 
-            if (mLoading == null || (!mLoading.isShowing()))
-                mLoading = ProgressDialog.show(HomeActivity.this, null, "Downloading content...", true, true);
+            if (mLoading == null || (!mLoading.isShowing())) {
+                boolean indeterminate= true;
+                float prog = DownloadHelper.getDownloadProgress(HomeActivity.this);
+                if (prog != -1.0) {
+                    indeterminate = false;
+                }
+                mLoading = ProgressDialog.show(HomeActivity.this, null, "Downloading content...", indeterminate, true);
+                mLoading.setIndeterminate(indeterminate);
+                mLoading.setCancelable(false);
+                mLoading.setCanceledOnTouchOutside(false);
+            }
         }
 
         protected Integer doInBackground(String... params) {
             while (!DownloadHelper.checkAllFiles(HomeActivity.this)) {
+                // TODO add progress
+                float prog = DownloadHelper.getDownloadProgress(HomeActivity.this);
+                boolean indeterminate = mLoading.isIndeterminate();
+                if (!indeterminate && prog >= 0f) {
+                    int dialogProg = Math.round(10000 * prog);
+                    mLoading.setProgress(dialogProg);
+                }
+
                 try {
                     Thread.sleep(1000);
                 } catch (InterruptedException e) {
