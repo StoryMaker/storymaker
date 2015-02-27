@@ -112,8 +112,6 @@ public class HomeActivity extends BaseActivity {
     @Override
 	public void onResume() {
 		super.onResume();
-        // revise to check for all installed content packs
-        // if (!DownloadHelper.checkExpansionFiles(this, Constants.MAIN, Constants.MAIN_VERSION)) {
         if (!DownloadHelper.checkAllFiles(this)) {
             DownloadPoller poller = new DownloadPoller();
             poller.execute("foo");
@@ -170,9 +168,7 @@ public class HomeActivity extends BaseActivity {
     }
 
     private void initActivityList () {
-        // revise to check for all installed content packs
-        // if (!DownloadHelper.checkExpansionFiles(this, Constants.MAIN, Constants.MAIN_VERSION)) { // FIXME the app should define these, not the library
-        if (!DownloadHelper.checkAllFiles(this)) {
+        if (!DownloadHelper.checkAllFiles(this)) { // FIXME the app should define these, not the library
             Toast.makeText(this, "Please wait for the content pack to finish downloading and reload the app", Toast.LENGTH_LONG).show(); // FIXME move to strings.xml
             return;
         }
@@ -543,9 +539,7 @@ public class HomeActivity extends BaseActivity {
     }
 
     public static void launchLiger(Context context, String splId, String instancePath, String splPath) {
-// revise to check for all installed content packs
-        // if (!DownloadHelper.checkExpansionFiles(context, Constants.MAIN, Constants.MAIN_VERSION)) { // FIXME the app should define these, not the library
-        if (!DownloadHelper.checkAllFiles(context)) {
+        if (!DownloadHelper.checkAllFiles(context)) { // FIXME the app should define these, not the library
             Toast.makeText(context, "Please wait for the content pack to finish downloading", Toast.LENGTH_LONG).show(); // FIXME move to strings.xml
             return;
         }
@@ -689,8 +683,6 @@ public class HomeActivity extends BaseActivity {
         }
 
         protected Integer doInBackground(String... params) {
-            // revise to check for all installed content packs
-            // while (!DownloadHelper.checkExpansionFiles(HomeActivity.this, Constants.MAIN, Constants.MAIN_VERSION)) {
             while (!DownloadHelper.checkAllFiles(HomeActivity.this)) {
                 try {
                     Thread.sleep(1000);
