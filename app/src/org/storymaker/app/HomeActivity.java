@@ -112,8 +112,9 @@ public class HomeActivity extends BaseActivity {
     @Override
 	public void onResume() {
 		super.onResume();
-
-        if (!DownloadHelper.checkExpansionFiles(this, Constants.MAIN, Constants.MAIN_VERSION)) {
+        // revise to check for all installed content packs
+        // if (!DownloadHelper.checkExpansionFiles(this, Constants.MAIN, Constants.MAIN_VERSION)) {
+        if (!DownloadHelper.checkAllFiles(this)) {
             DownloadPoller poller = new DownloadPoller();
             poller.execute("foo");
         } else {
@@ -169,7 +170,9 @@ public class HomeActivity extends BaseActivity {
     }
 
     private void initActivityList () {
-        if (!DownloadHelper.checkExpansionFiles(this, Constants.MAIN, Constants.MAIN_VERSION)) { // FIXME the app should define these, not the library
+        // revise to check for all installed content packs
+        // if (!DownloadHelper.checkExpansionFiles(this, Constants.MAIN, Constants.MAIN_VERSION)) { // FIXME the app should define these, not the library
+        if (!DownloadHelper.checkAllFiles(this)) {
             Toast.makeText(this, "Please wait for the content pack to finish downloading and reload the app", Toast.LENGTH_LONG).show(); // FIXME move to strings.xml
             return;
         }
@@ -215,12 +218,60 @@ public class HomeActivity extends BaseActivity {
 
                     HashMap<String, ExpansionIndexItem> installedIds = IndexManager.loadInstalledIdIndex(HomeActivity.this);
 
+                    // if file already exists, do some quick checks and add it to the installed index
+                    String existingName = IndexManager.buildFileName(eItem, Constants.MAIN);
+                    File existingFile = new File(Environment.getExternalStorageDirectory() + File.separator + eItem.getExpansionFilePath() + existingName);
+                    if (existingFile.exists() && (existingFile.length() > 0)) {
+
+                        // also need to check for patch
+                        existingName = IndexManager.buildFileName(eItem, Constants.PATCH);
+                        if (existingName.equals(IndexManager.noPatchFile)) {
+                            Log.d("CHECKING FILE", "FILE " + IndexManager.buildFileName(eItem, Constants.MAIN) + " FOUND AND NEEDS NO PATCH, WILL OPEN ON CLICK");
+
+                            IndexManager.registerInstalledIndexItem(HomeActivity.this, eItem);
+
+                            try {
+                                synchronized (this) {
+                                    wait(1000);
+                                }
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+
+                            // reload index
+                            installedIds = IndexManager.loadInstalledIdIndex(HomeActivity.this);
+                        } else {
+
+                            existingFile = new File(Environment.getExternalStorageDirectory() + File.separator + eItem.getExpansionFilePath() + existingName);
+                            if (existingFile.exists() && (existingFile.length() > 0)) {
+                                Log.d("CHECKING FILE", "FILE " + IndexManager.buildFileName(eItem, Constants.MAIN) + " FOUND AND PATCH " + IndexManager.buildFileName(eItem, Constants.PATCH) + " FOUND, WILL OPEN ON CLICK");
+
+                                IndexManager.registerInstalledIndexItem(HomeActivity.this, eItem);
+
+                                try {
+                                    synchronized (this) {
+                                        wait(1000);
+                                    }
+                                } catch (InterruptedException e) {
+                                    e.printStackTrace();
+                                }
+
+                                // reload index
+                                installedIds = IndexManager.loadInstalledIdIndex(HomeActivity.this);
+                            } else {
+                                Log.d("CHECKING FILE", "FILE " + IndexManager.buildFileName(eItem, Constants.MAIN) + " FOUND BUT PATCH " + IndexManager.buildFileName(eItem, Constants.PATCH) + " NOT FOUND, WILL DOWNLOAD ON CLICK");
+                            }
+                        }
+                    } else {
+                        Log.d("CHECKING FILE", "FILE " + IndexManager.buildFileName(eItem, Constants.MAIN) + " NOT FOUND, WILL DOWNLOAD ON CLICK");
+                    }
+
                     if (installedIds.containsKey(eItem.getExpansionId())) {
 
                         ExpansionIndexItem installedItem = installedIds.get(eItem.getExpansionId());
 
                         // fall through if file has not yet been downloaded
-                        String fileName = installedItem.getExpansionId() + "." + Constants.MAIN + "." + installedItem.getExpansionFileVersion() + ".obb";
+                        String fileName = IndexManager.buildFileName(installedItem, Constants.MAIN);
                         File checkFile = new File(Environment.getExternalStorageDirectory() + File.separator + installedItem.getExpansionFilePath() + fileName);
 
                         if ((installedItem.getExtras() != null) && (installedItem.getExtras().get(IndexManager.pendingDownloadKey) != null)) {
@@ -502,7 +553,9 @@ public class HomeActivity extends BaseActivity {
     }
 
     public static void launchLiger(Context context, String splId, String instancePath, String splPath) {
-        if (!DownloadHelper.checkExpansionFiles(context, Constants.MAIN, Constants.MAIN_VERSION)) { // FIXME the app should define these, not the library
+// revise to check for all installed content packs
+        // if (!DownloadHelper.checkExpansionFiles(context, Constants.MAIN, Constants.MAIN_VERSION)) { // FIXME the app should define these, not the library
+        if (!DownloadHelper.checkAllFiles(context)) {
             Toast.makeText(context, "Please wait for the content pack to finish downloading", Toast.LENGTH_LONG).show(); // FIXME move to strings.xml
             return;
         }
@@ -646,7 +699,9 @@ public class HomeActivity extends BaseActivity {
         }
 
         protected Integer doInBackground(String... params) {
-            while (!DownloadHelper.checkExpansionFiles(HomeActivity.this, Constants.MAIN, Constants.MAIN_VERSION)) {
+            // revise to check for all installed content packs
+            // while (!DownloadHelper.checkExpansionFiles(HomeActivity.this, Constants.MAIN, Constants.MAIN_VERSION)) {
+            while (!DownloadHelper.checkAllFiles(HomeActivity.this)) {
                 try {
                     Thread.sleep(1000);
                 } catch (InterruptedException e) {
