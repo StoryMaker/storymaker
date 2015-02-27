@@ -270,51 +270,41 @@ public class HomeActivity extends BaseActivity {
 
                         ExpansionIndexItem installedItem = installedIds.get(eItem.getExpansionId());
 
-                        // fall through if file has not yet been downloaded
-                        String fileName = IndexManager.buildFileName(installedItem, Constants.MAIN);
-                        File checkFile = new File(Environment.getExternalStorageDirectory() + File.separator + installedItem.getExpansionFilePath() + fileName);
-
-                        if ((installedItem.getExtras() != null) && (installedItem.getExtras().get(IndexManager.pendingDownloadKey) != null)) {
-                            Log.d("CHECKING FILE", "FILE " + checkFile.getPath() + " IS STILL DOWNLOADING (" + installedItem.getExtras().get(IndexManager.pendingDownloadKey) + " -> NO-OP)");
-                        } else {
-                            Log.d("CHECKING FILE", "FILE " + checkFile.getPath() + " HAS FINISHED DOWNLOADING");
-
-                            // update with new thumbnail path
-                            // move this somewhere that it can be triggered by completed download?
-                            ContentPackMetadata metadata = IndexManager.loadContentMetadata(HomeActivity.this,
-                                                                                            installedItem.getPackageName(),
-                                                                                            installedItem.getExpansionId(),
-                                                                                            StoryMakerApp.getCurrentLocale().getLanguage());
-                            installedItem.setThumbnailPath(metadata.getContentPackThumbnailPath());
-                            IndexManager.registerInstalledIndexItem(HomeActivity.this, installedItem);
-                            try {
-                                synchronized (this) {
-                                    wait(1000);
-                                }
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
+                        // update with new thumbnail path
+                        // move this somewhere that it can be triggered by completed download?
+                        ContentPackMetadata metadata = IndexManager.loadContentMetadata(HomeActivity.this,
+                                installedItem.getPackageName(),
+                                installedItem.getExpansionId(),
+                                StoryMakerApp.getCurrentLocale().getLanguage());
+                        installedItem.setThumbnailPath(metadata.getContentPackThumbnailPath());
+                        IndexManager.registerInstalledIndexItem(HomeActivity.this, installedItem);
+                        try {
+                            synchronized (this) {
+                                wait(1000);
                             }
-
-                            HashMap<String, InstanceIndexItem> contentIndex = IndexManager.loadContentIndex(HomeActivity.this,
-                                                                                                            installedItem.getPackageName(),
-                                                                                                            installedItem.getExpansionId(),
-                                                                                                            StoryMakerApp.getCurrentLocale().getLanguage());
-                            String[] names = new String[contentIndex.size()];
-                            String[] paths = new String[contentIndex.size()];
-                            Iterator it = contentIndex.entrySet().iterator();
-                            int i = 0;
-                            while (it.hasNext()) {
-                                Map.Entry pair = (Map.Entry) it.next();
-                                InstanceIndexItem item = (InstanceIndexItem) pair.getValue();
-                                names[i] = item.getTitle();
-                                paths[i] = item.getInstanceFilePath();
-                                i++;
-                            }
-                            showSPLSelectorPopup(names, paths);
-                            // TODO prompt user with all the SPLs within this content pack, then open by passing the path from the content index as the 3rd param to launchLiger
-                            //                    launchLiger(HomeActivity.this, null, null, .getExpansionFilePath());
-                            // TODO check if this is installed already, if not trigger a download. if it is, launch the spl selection ui
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
                         }
+
+                        HashMap<String, InstanceIndexItem> contentIndex = IndexManager.loadContentIndex(HomeActivity.this,
+                                installedItem.getPackageName(),
+                                installedItem.getExpansionId(),
+                                StoryMakerApp.getCurrentLocale().getLanguage());
+                        String[] names = new String[contentIndex.size()];
+                        String[] paths = new String[contentIndex.size()];
+                        Iterator it = contentIndex.entrySet().iterator();
+                        int i = 0;
+                        while (it.hasNext()) {
+                            Map.Entry pair = (Map.Entry) it.next();
+                            InstanceIndexItem item = (InstanceIndexItem) pair.getValue();
+                            names[i] = item.getTitle();
+                            paths[i] = item.getInstanceFilePath();
+                            i++;
+                        }
+                        showSPLSelectorPopup(names, paths);
+                        // TODO prompt user with all the SPLs within this content pack, then open by passing the path from the content index as the 3rd param to launchLiger
+                        //                    launchLiger(HomeActivity.this, null, null, .getExpansionFilePath());
+                        // TODO check if this is installed already, if not trigger a download. if it is, launch the spl selection ui
                     } else {
                         IndexManager.registerInstalledIndexItem(HomeActivity.this, eItem);
 
