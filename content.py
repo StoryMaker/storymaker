@@ -2,7 +2,39 @@
 
 import os
 import click
+import sys
 
+def query_yes_no(question, default="yes"):
+    """Ask a yes/no question via raw_input() and return their answer.
+
+    "question" is a string that is presented to the user.
+    "default" is the presumed answer if the user just hits <Enter>.
+        It must be "yes" (the default), "no" or None (meaning
+        an answer is required of the user).
+
+    The "answer" return value is True for "yes" or False for "no".
+    """
+    valid = {"yes": True, "y": True, "ye": True,
+             "no": False, "n": False}
+    if default is None:
+        prompt = " [y/n] "
+    elif default == "yes":
+        prompt = " [Y/n] "
+    elif default == "no":
+        prompt = " [y/N] "
+    else:
+        raise ValueError("invalid default answer: '%s'" % default)
+
+    while True:
+        sys.stdout.write(question + prompt)
+        choice = raw_input().lower()
+        if default is not None and choice == '':
+            return valid[default]
+        elif choice in valid:
+            return valid[choice]
+        else:
+            sys.stdout.write("Please respond with 'yes' or 'no' "
+                             "(or 'y' or 'n').\n")
 
 packagename = "org.storymaker.app"
 
@@ -65,26 +97,35 @@ def zip_content():
 def scp_push():
     """this pushes the zipped obb files to be hosted on storymaker.cc"""
 
-    os.system("cd liger-content/assets ; scp main.1031.org.storymaker.app.obb web414.webfaction.com:/home/swn/webapps/storymaker/appdata/obb/")
-    print "scp pushed main.1031.org.storymaker.app.obb"
+    if query_yes_no("scp main.1031.org.storymaker.app.obb to server?"):
+        os.system("cd liger-content/assets ; scp main.1031.org.storymaker.app.obb web414.webfaction.com:/home/swn/webapps/storymaker/appdata/obb/main.1031.org.storymaker.app.obb.tmp")
+        print "scp pushed main.1031.org.storymaker.app.obb"
 
-    os.system("cd liger-content/assets ; scp learning_guide.main.1.obb web414.webfaction.com:/home/swn/webapps/storymaker/appdata/obb/")
-    print "scp pushed learning_guide.main.1.obb"
+    if query_yes_no("scp learning_guide.main.1.obb to server?"):
+        os.system("cd liger-content/assets ; scp learning_guide.main.1.obb web414.webfaction.com:/home/swn/webapps/storymaker/appdata/obb/learning_guide.main.1.obb.tmp")
+        print "scp pushed learning_guide.main.1.obb"
 
-    os.system("cd liger-content/assets ; scp burundi.main.1.obb web414.webfaction.com:/home/swn/webapps/storymaker/appdata/obb/")
-    print "scp pushed burundi.main.1.obb"
+    if query_yes_no("scp burundi.main.1.obb to server?"):
+        os.system("cd liger-content/assets ; scp burundi.main.1.obb web414.webfaction.com:/home/swn/webapps/storymaker/appdata/obb/burundi.main.1.obb.tmp")
+        print "scp pushed burundi.main.1.obb"
     
 @cli.command()
 def adb_push_obb():
     """adb push to /sdcard/Android/<package>/obb"""
-
     os.system("cd liger-content/assets ; adb push zipped.zip /sdcard/Android/obb/%s/main.1.%s.obb" % (packagename, packagename))
 
 @cli.command()
 def adb_push_files():
     """adb push to /sdcard/Android/<package>/files"""
 
-    os.system("cd liger-content/assets ; adb push zipped.zip /sdcard/Android/data/%s/files/main.1.%s.obb" % (packagename, packagename))
+    if query_yes_no("adb push learning_guide.main.1.obb to device files/ folder?"):
+        os.system("cd liger-content/assets ; adb push learning_guide.main.1.obb /sdcard/Android/data/%s/files/learning_guide.main.1.obb" % (packagename))
+        
+    if query_yes_no("adb push burundi.main.1.obb to device files/ folder?"):
+        os.system("cd liger-content/assets ; adb push burundi.main.1.obb /sdcard/Android/data/%s/files/burundi.main.1.obb" % (packagename))
+        
+    if query_yes_no("adb push main.1031.org.storymaker.app.obb to device files/ folder?"):
+        os.system("cd liger-content/assets ; adb push main.1031.org.storymaker.app.obb /sdcard/Android/data/%s/files/main.1031.org.storymaker.app.obb" % (packagename))
 
 @cli.command()
 def adb_push():
