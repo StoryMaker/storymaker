@@ -312,7 +312,9 @@ public class HomeActivity extends BaseActivity {
                             e.printStackTrace();
                         }
 
-                        DownloadHelper.checkAndDownload(HomeActivity.this);
+                        // just download the single added item
+                        // DownloadHelper.checkAndDownload(HomeActivity.this);
+                        DownloadHelper.checkAndDownload(HomeActivity.this, eItem);
                     }
                 }
             }
