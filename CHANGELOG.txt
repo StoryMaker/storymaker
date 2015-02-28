@@ -1,3 +1,9 @@
+--- build 1034
+
+- Download progress spinner for content packs
+- Many download fixes
+- Huge update to Burundi pack
+
 --- build 1033
 
 - fix localization of content pack indexes
