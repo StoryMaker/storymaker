@@ -283,25 +283,20 @@ public class HomeActivity extends BaseActivity {
                             e.printStackTrace();
                         }
 
-                        HashMap<String, InstanceIndexItem> contentIndex = IndexManager.loadContentIndex(HomeActivity.this,
+                        ArrayList<InstanceIndexItem> contentIndex = IndexManager.loadContentIndexAsList(HomeActivity.this,
                                 installedItem.getPackageName(),
                                 installedItem.getExpansionId(),
                                 StoryMakerApp.getCurrentLocale().getLanguage());
                         String[] names = new String[contentIndex.size()];
                         String[] paths = new String[contentIndex.size()];
-                        Iterator it = contentIndex.entrySet().iterator();
                         int i = 0;
-                        while (it.hasNext()) {
-                            Map.Entry pair = (Map.Entry) it.next();
-                            InstanceIndexItem item = (InstanceIndexItem) pair.getValue();
+                        for (InstanceIndexItem item: contentIndex) {
                             names[i] = item.getTitle();
                             paths[i] = item.getInstanceFilePath();
                             i++;
                         }
+
                         showSPLSelectorPopup(names, paths);
-                        // TODO prompt user with all the SPLs within this content pack, then open by passing the path from the content index as the 3rd param to launchLiger
-                        //                    launchLiger(HomeActivity.this, null, null, .getExpansionFilePath());
-                        // TODO check if this is installed already, if not trigger a download. if it is, launch the spl selection ui
                     } else {
                         IndexManager.registerInstalledIndexItem(HomeActivity.this, eItem);
 
