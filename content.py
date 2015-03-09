@@ -90,8 +90,11 @@ def zip_content():
     os.system("rm liger-content/assets/learning_guide.main.1.obb; cd liger-content/assets ; zip -n .mp4 -r learning_guide.main.1.obb org.storymaker.app/learning_guide")
     print "content generated at: liger-content/assets/learning_guide.main.1.obb"
     
-    os.system("rm liger-content/assets/burundi.main.1.obb; cd liger-content/assets ; zip -n .mp4 -r burundi.main.1.obb org.storymaker.app/burundi")
-    print "content generated at: liger-content/assets/burundi.main.1.obb"
+    os.system("rm liger-content/assets/burundi.main.2.obb; cd liger-content/assets ; zip -n .mp4 -r burundi.main.2.obb org.storymaker.app/burundi")
+    print "content generated at: liger-content/assets/burundi.main.2.obb"
+    
+    os.system("rm liger-content/assets/dressgate.main.1.obb; cd liger-content/assets ; zip -n .mp4 -r dressgate.main.1.obb org.storymaker.app/dressgate")
+    print "content generated at: liger-content/assets/dressgate.main.1.obb"
 
 @cli.command()
 def scp_push():
@@ -99,15 +102,19 @@ def scp_push():
 
     if query_yes_no("scp main.1031.org.storymaker.app.obb to server?"):
         os.system("cd liger-content/assets ; scp main.1031.org.storymaker.app.obb web414.webfaction.com:/home/swn/webapps/storymaker/appdata/obb/main.1031.org.storymaker.app.obb.tmp")
-        print "scp pushed main.1031.org.storymaker.app.obb"
+        print "scp pushed main.1031.org.storymaker.app.obb.tmp"
 
     if query_yes_no("scp learning_guide.main.1.obb to server?"):
         os.system("cd liger-content/assets ; scp learning_guide.main.1.obb web414.webfaction.com:/home/swn/webapps/storymaker/appdata/obb/learning_guide.main.1.obb.tmp")
-        print "scp pushed learning_guide.main.1.obb"
+        print "scp pushed learning_guide.main.1.obb.tmp"
 
-    if query_yes_no("scp burundi.main.1.obb to server?"):
-        os.system("cd liger-content/assets ; scp burundi.main.1.obb web414.webfaction.com:/home/swn/webapps/storymaker/appdata/obb/burundi.main.1.obb.tmp")
-        print "scp pushed burundi.main.1.obb"
+    if query_yes_no("scp burundi.main.2.obb to server?"):
+        os.system("cd liger-content/assets ; scp burundi.main.2.obb web414.webfaction.com:/home/swn/webapps/storymaker/appdata/obb/burundi.main.2.obb.tmp")
+        print "scp pushed burundi.main.2.obb.tmp"
+
+    if query_yes_no("scp dressgate.main.1.obb to server?"):
+        os.system("cd liger-content/assets ; scp dressgate.main.1.obb web414.webfaction.com:/home/swn/webapps/storymaker/appdata/obb/dressgate.main.1.obb.tmp")
+        print "scp pushed dressgate.main.1.obb.tmp"
     
 @cli.command()
 def adb_push_obb():
@@ -121,11 +128,14 @@ def adb_push_files():
     if query_yes_no("adb push learning_guide.main.1.obb to device files/ folder?"):
         os.system("cd liger-content/assets ; adb push learning_guide.main.1.obb /sdcard/Android/data/%s/files/learning_guide.main.1.obb" % (packagename))
         
-    if query_yes_no("adb push burundi.main.1.obb to device files/ folder?"):
-        os.system("cd liger-content/assets ; adb push burundi.main.1.obb /sdcard/Android/data/%s/files/burundi.main.1.obb" % (packagename))
+    if query_yes_no("adb push burundi.main.2.obb to device files/ folder?"):
+        os.system("cd liger-content/assets ; adb push burundi.main.2.obb /sdcard/Android/data/%s/files/burundi.main.2.obb" % (packagename))
         
     if query_yes_no("adb push main.1031.org.storymaker.app.obb to device files/ folder?"):
         os.system("cd liger-content/assets ; adb push main.1031.org.storymaker.app.obb /sdcard/Android/data/%s/files/main.1031.org.storymaker.app.obb" % (packagename))
+        
+    if query_yes_no("adb push dressgate.main.1.obb to device files/ folder?"):
+        os.system("cd liger-content/assets ; adb push dressgate.main.1.obb /sdcard/Android/data/%s/files/dressgate.main.1.obb" % (packagename))
 
 @cli.command()
 def adb_push():
