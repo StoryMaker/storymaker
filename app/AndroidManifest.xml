@@ -277,7 +277,8 @@
 
         <activity
             android:name="org.storymaker.app.PublishActivity"
-            android:label="@string/title_activity_publish" >
+            android:label="@string/title_activity_publish"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="io.scal.liger.PUBLISH" />
                 <category android:name="android.intent.category.DEFAULT"/>
