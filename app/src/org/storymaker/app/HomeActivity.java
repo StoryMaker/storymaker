@@ -88,7 +88,12 @@ public class HomeActivity extends BaseActivity {
 
         // copy index files
         IndexManager.copyAvailableIndex(this);
-        IndexManager.copyInstalledIndex(this);
+
+        // we want to grab required updates without restarting the app
+        DownloadHelper.checkAndDownload(this);
+
+        // i don't think we ever want to do this
+        // IndexManager.copyInstalledIndex(this);
 
         try {
             String pkg = getPackageName();
@@ -206,45 +211,62 @@ public class HomeActivity extends BaseActivity {
         mRecyclerView.setAdapter(new InstanceIndexItemAdapter(instances, new InstanceIndexItemAdapter.BaseIndexItemSelectedListener() {
             @Override
             public void onStorySelected(BaseIndexItem selectedItem) {
-//                if (!TextUtils.isEmpty(selectedItem.getStoryType()) &&
-//                    selectedItem.getStoryType().equals("learningGuide")) {
+
                 if (selectedItem instanceof InstanceIndexItem) {
                     launchLiger(HomeActivity.this, null, ((InstanceIndexItem) selectedItem).getInstanceFilePath(), null);
                 } else {
+
+                    // get clicked item
                     ExpansionIndexItem eItem = ((ExpansionIndexItem)selectedItem);
 
+                    // get installed items
                     HashMap<String, ExpansionIndexItem> installedIds = IndexManager.loadInstalledIdIndex(HomeActivity.this);
 
-                    // if file already exists, do some quick checks and add it to the installed index
-                    String existingName = IndexManager.buildFileName(eItem, Constants.MAIN);
-                    File existingFile = new File(Environment.getExternalStorageDirectory() + File.separator + eItem.getExpansionFilePath() + existingName);
-                    if (existingFile.exists() && (existingFile.length() > 0)) {
+                    // initiate check/download whether installed or not
+                    boolean readyToOpen = DownloadHelper.checkAndDownload(HomeActivity.this, eItem); // <- THIS SHOULD PICK UP EXISTING PARTIAL FILES
+                                                                                                     // <- THIS ALSO NEEDS TO NOT INTERACT WITH THE INDEX
+                                                                                                     // <- METADATA UPDATE SHOULD HAPPEN WHEN APP IS INITIALIZED
 
-                        // also need to check for patch
-                        existingName = IndexManager.buildFileName(eItem, Constants.PATCH);
-                        if (existingName.equals(IndexManager.noPatchFile)) {
-                            Log.d("CHECKING FILE", "FILE " + IndexManager.buildFileName(eItem, Constants.MAIN) + " FOUND AND NEEDS NO PATCH, WILL OPEN ON CLICK");
+                    if (!installedIds.containsKey(eItem.getExpansionId())) {
 
-                            IndexManager.registerInstalledIndexItem(HomeActivity.this, eItem);
+                        // if clicked item is not installed, update index
+                        IndexManager.registerInstalledIndexItem(HomeActivity.this, eItem);
 
-                            try {
-                                synchronized (this) {
-                                    wait(1000);
-                                }
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
+                        Log.d("HOME MENU CLICK", eItem.getExpansionId() + " NOT INSTALLED, ADDING ITEM TO INDEX");
+
+                        // wait for index serialization
+                        try {
+                            synchronized (this) {
+                                wait(1000);
                             }
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    } else {
 
-                            // reload index
-                            installedIds = IndexManager.loadInstalledIdIndex(HomeActivity.this);
-                        } else {
+                        Log.d("HOME MENU CLICK", eItem.getExpansionId() + " INSTALLED, CHECKING FILE");
 
-                            existingFile = new File(Environment.getExternalStorageDirectory() + File.separator + eItem.getExpansionFilePath() + existingName);
-                            if (existingFile.exists() && (existingFile.length() > 0)) {
-                                Log.d("CHECKING FILE", "FILE " + IndexManager.buildFileName(eItem, Constants.MAIN) + " FOUND AND PATCH " + IndexManager.buildFileName(eItem, Constants.PATCH) + " FOUND, WILL OPEN ON CLICK");
+                        // if clicked item is installed, check state
+                        if (readyToOpen) {
 
+                            // if file has been downloaded, open file
+                            Log.d("HOME MENU CLICK", eItem.getExpansionId() + " INSTALLED, FILE OK");
+
+                            // update with new thumbnail path
+                            // move this somewhere that it can be triggered by completed download?
+                            ContentPackMetadata metadata = IndexManager.loadContentMetadata(HomeActivity.this,
+                                    eItem.getPackageName(),
+                                    eItem.getExpansionId(),
+                                    StoryMakerApp.getCurrentLocale().getLanguage());
+
+                            if ((eItem.getThumbnailPath() == null) || (!eItem.getThumbnailPath().equals(metadata.getContentPackThumbnailPath()))) {
+
+                                Log.d("HOME MENU CLICK", eItem.getExpansionId() + " FIRST OPEN, UPDATING THUMBNAIL PATH");
+
+                                eItem.setThumbnailPath(metadata.getContentPackThumbnailPath());
                                 IndexManager.registerInstalledIndexItem(HomeActivity.this, eItem);
 
+                                // wait for index serialization
                                 try {
                                     synchronized (this) {
                                         wait(1000);
@@ -252,68 +274,32 @@ public class HomeActivity extends BaseActivity {
                                 } catch (InterruptedException e) {
                                     e.printStackTrace();
                                 }
-
-                                // reload index
-                                installedIds = IndexManager.loadInstalledIdIndex(HomeActivity.this);
-                            } else {
-                                Log.d("CHECKING FILE", "FILE " + IndexManager.buildFileName(eItem, Constants.MAIN) + " FOUND BUT PATCH " + IndexManager.buildFileName(eItem, Constants.PATCH) + " NOT FOUND, WILL DOWNLOAD ON CLICK");
                             }
+
+                            HashMap<String, InstanceIndexItem> contentIndex = IndexManager.loadContentIndex(HomeActivity.this,
+                                    eItem.getPackageName(),
+                                    eItem.getExpansionId(),
+                                    StoryMakerApp.getCurrentLocale().getLanguage());
+                            String[] names = new String[contentIndex.size()];
+                            String[] paths = new String[contentIndex.size()];
+                            Iterator it = contentIndex.entrySet().iterator();
+                            int i = 0;
+                            while (it.hasNext()) {
+                                Map.Entry pair = (Map.Entry)it.next();
+                                InstanceIndexItem item = (InstanceIndexItem) pair.getValue();
+                                names[i] = item.getTitle();
+                                paths[i] = item.getInstanceFilePath();
+                                i++;
+                            }
+                            showSPLSelectorPopup(names, paths);
+                        } else {
+
+                            // if file is being downloaded, don't open
+                            Log.d("HOME MENU CLICK", eItem.getExpansionId() + " INSTALLED, CURRENTLY DOWNLOADING FILE");
+
+                            Toast.makeText(HomeActivity.this, "Please wait for this content pack to finish downloading", Toast.LENGTH_LONG).show(); // FIXME move to strings.xml
                         }
-                    } else {
-                        Log.d("CHECKING FILE", "FILE " + IndexManager.buildFileName(eItem, Constants.MAIN) + " NOT FOUND, WILL DOWNLOAD ON CLICK");
                     }
-
-                    if (installedIds.containsKey(eItem.getExpansionId())) {
-
-                        ExpansionIndexItem installedItem = installedIds.get(eItem.getExpansionId());
-
-                        // update with new thumbnail path
-                        // move this somewhere that it can be triggered by completed download?
-                        ContentPackMetadata metadata = IndexManager.loadContentMetadata(HomeActivity.this,
-                                installedItem.getPackageName(),
-                                installedItem.getExpansionId(),
-                                StoryMakerApp.getCurrentLocale().getLanguage());
-                        installedItem.setThumbnailPath(metadata.getContentPackThumbnailPath());
-                        IndexManager.registerInstalledIndexItem(HomeActivity.this, installedItem);
-                        try {
-                            synchronized (this) {
-                                wait(1000);
-                            }
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-
-                        ArrayList<InstanceIndexItem> contentIndex = IndexManager.loadContentIndexAsList(HomeActivity.this,
-                                installedItem.getPackageName(),
-                                installedItem.getExpansionId(),
-                                StoryMakerApp.getCurrentLocale().getLanguage());
-                        String[] names = new String[contentIndex.size()];
-                        String[] paths = new String[contentIndex.size()];
-                        int i = 0;
-                        for (InstanceIndexItem item: contentIndex) {
-                            names[i] = item.getTitle();
-                            paths[i] = item.getInstanceFilePath();
-                            i++;
-                        }
-
-                        showSPLSelectorPopup(names, paths);
-                    } else {
-                        IndexManager.registerInstalledIndexItem(HomeActivity.this, eItem);
-
-                        try {
-                            synchronized (this) {
-                                wait(1000);
-                            }
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-
-                        DownloadHelper.checkAndDownload(HomeActivity.this);
-                    }
-                }
-                if (!DownloadHelper.checkAllFiles(HomeActivity.this) && downloadPoller == null) {
-                    downloadPoller = new DownloadPoller();
-                    downloadPoller.execute("foo");
                 }
             }
         }));

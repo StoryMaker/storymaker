@@ -27,6 +27,7 @@ import android.support.multidex.MultiDexApplication;
 import android.util.Log;
 
 import scal.io.liger.DownloadHelper;
+import scal.io.liger.IndexManager;
 
 public class StoryMakerApp extends MultiDexApplication {
 
@@ -87,7 +88,8 @@ public class StoryMakerApp extends MultiDexApplication {
 
             mServerManager = new ServerManager (getApplicationContext());
 
-            DownloadHelper.checkAndDownload(this);
+            //moved this to HomeActivity.OnCreate() so it's redundant here
+            //DownloadHelper.checkAndDownload(this);
 		}
 		catch (Exception e)
 		{
