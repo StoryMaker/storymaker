@@ -88,7 +88,12 @@ public class HomeActivity extends BaseActivity {
 
         // copy index files
         IndexManager.copyAvailableIndex(this);
-        IndexManager.copyInstalledIndex(this);
+
+        // we want to grab required updates without restarting the app
+        DownloadHelper.checkAndDownload(this);
+
+        // i don't think we ever want to do this
+        // IndexManager.copyInstalledIndex(this);
 
         try {
             String pkg = getPackageName();
