@@ -1,3 +1,9 @@
+--- build 1037
+
+- Remove old references to 'Liger' codename
+- Fix: regression to title order
+- Fix: Content and Learning Guide thumbnails are blank after completed download
+- StoryPath performance improvements
 
 --- build 1036
 
