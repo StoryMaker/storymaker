@@ -146,9 +146,14 @@ public class InstanceIndexItemAdapter extends RecyclerView.Adapter<InstanceIndex
             holder.title.setText(baseItem.getTitle());
 
             // need to verify that content pack containing thumbnail actually exists
-            File thumbnailCheck = new File(IndexManager.buildFilePath(expansionIndexItem), IndexManager.buildFileName(expansionIndexItem, Constants.MAIN));
+            File contentCheck = new File(IndexManager.buildFilePath(expansionIndexItem), IndexManager.buildFileName(expansionIndexItem, Constants.MAIN));
 
-            if (installedIds.containsKey(expansionIndexItem.getExpansionId()) && thumbnailCheck.exists()) {
+            // need to verify that index item has been updated with content pack thumbnail path
+            String contentPath = expansionIndexItem.getPackageName() + File.separator + expansionIndexItem.getExpansionId();
+
+            if (installedIds.containsKey(expansionIndexItem.getExpansionId()) &&
+                    contentCheck.exists() &&
+                    baseItem.getThumbnailPath().startsWith(contentPath)) {
 //              ZipHelper.getTempFile((baseItem.getThumbnailPath(), "/sdcard/"
                 holder.thumb.setImageBitmap(BitmapFactory.decodeStream(ZipHelper.getFileInputStream(baseItem.getThumbnailPath(), context)));
             } else {
