@@ -39,6 +39,7 @@ import net.hockeyapp.android.CrashManager;
 import net.hockeyapp.android.UpdateManager;
 
 import android.app.AlertDialog;
+import android.app.DownloadManager;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -293,6 +294,9 @@ public class HomeActivity extends BaseActivity {
                             }
                             showSPLSelectorPopup(names, paths);
                         } else {
+
+                            // check progress (method will log status)
+                            DownloadHelper.getDownloadProgress(HomeActivity.this);
 
                             // if file is being downloaded, don't open
                             Log.d("HOME MENU CLICK", eItem.getExpansionId() + " INSTALLED, CURRENTLY DOWNLOADING FILE");
