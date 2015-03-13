@@ -215,7 +215,7 @@ public class HomeActivity extends BaseActivity {
             }
         }
 
-        Collections.sort(instances, Collections.reverseOrder());
+        Collections.sort(instances, Collections.reverseOrder()); // FIXME we should sort this down a layer, perhaps in loadInstanceIndexAsList
 
         mRecyclerView.setAdapter(new InstanceIndexItemAdapter(instances, new InstanceIndexItemAdapter.BaseIndexItemSelectedListener() {
             @Override
@@ -285,17 +285,14 @@ public class HomeActivity extends BaseActivity {
                                 }
                             }
 
-                            HashMap<String, InstanceIndexItem> contentIndex = IndexManager.loadContentIndex(HomeActivity.this,
+                            ArrayList<InstanceIndexItem> contentIndex = IndexManager.loadContentIndexAsList(HomeActivity.this,
                                     eItem.getPackageName(),
                                     eItem.getExpansionId(),
                                     StoryMakerApp.getCurrentLocale().getLanguage());
                             String[] names = new String[contentIndex.size()];
                             String[] paths = new String[contentIndex.size()];
-                            Iterator it = contentIndex.entrySet().iterator();
                             int i = 0;
-                            while (it.hasNext()) {
-                                Map.Entry pair = (Map.Entry)it.next();
-                                InstanceIndexItem item = (InstanceIndexItem) pair.getValue();
+                            for (InstanceIndexItem item: contentIndex) {
                                 names[i] = item.getTitle();
                                 paths[i] = item.getInstanceFilePath();
                                 i++;
