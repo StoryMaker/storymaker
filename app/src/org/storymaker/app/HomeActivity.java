@@ -539,7 +539,7 @@ public class HomeActivity extends BaseActivity {
         }
         */
 
-        if (splId.equals("default_library")) {
+        if ((splId != null) && (splId.equals("default_library"))) {
 
             // initiate check/download for main/patch expansion files
             boolean readyToOpen = DownloadHelper.checkAndDownloadNew(context);
