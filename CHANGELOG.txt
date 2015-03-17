@@ -1,9 +1,21 @@
+--- build 1037
+
+- Remove old references to 'Liger' codename
+- Fix: regression to title order
+- Fix: Content and Learning Guide thumbnails are blank after completed download
+- StoryPath performance improvements
+
+--- build 1036
+
+- Fix many content download issues
+- Fix crash on rotate on publish screen
+- Restore Internet Archive uploading
+
 --- build 1035
 
 - Fix: content pack table of contents out of order
-- Fix: double thum
-- Fix: Narration isn't saved unless added to first clip in a series
 - Fix: Clip Playback shows a double thumbnail
+- Fix: Narration isn't saved unless added to first clip in a series
 
 --- build 1034
 

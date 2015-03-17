@@ -93,6 +93,9 @@ def zip_content():
     os.system("rm liger-content/assets/burundi.main.2.obb; cd liger-content/assets ; zip -n .mp4 -r burundi.main.2.obb org.storymaker.app/burundi")
     print "content generated at: liger-content/assets/burundi.main.2.obb"
     
+    os.system("rm liger-content/assets/burundi.patch.3.obb; cd liger-content/assets/patch/ ; zip -n .mp4 -r burundi.patch.3.obb org.storymaker.app/burundi ; mv burundi.patch.3.obb ..")
+    print "content generated at: liger-content/assets/burundi.patch.3.obb"
+    
     os.system("rm liger-content/assets/dressgate.main.1.obb; cd liger-content/assets ; zip -n .mp4 -r dressgate.main.1.obb org.storymaker.app/dressgate")
     print "content generated at: liger-content/assets/dressgate.main.1.obb"
 
@@ -112,6 +115,10 @@ def scp_push():
         os.system("cd liger-content/assets ; scp burundi.main.2.obb web414.webfaction.com:/home/swn/webapps/storymaker/appdata/obb/burundi.main.2.obb.tmp")
         print "scp pushed burundi.main.2.obb.tmp"
 
+    if query_yes_no("scp burundi.patch.3.obb to server?"):
+        os.system("cd liger-content/assets ; scp burundi.patch.3.obb web414.webfaction.com:/home/swn/webapps/storymaker/appdata/obb/burundi.patch.3.obb.tmp")
+        print "scp pushing burundi.patch.3.obb.tmp"
+
     if query_yes_no("scp dressgate.main.1.obb to server?"):
         os.system("cd liger-content/assets ; scp dressgate.main.1.obb web414.webfaction.com:/home/swn/webapps/storymaker/appdata/obb/dressgate.main.1.obb.tmp")
         print "scp pushed dressgate.main.1.obb.tmp"
@@ -130,6 +137,9 @@ def adb_push_files():
         
     if query_yes_no("adb push burundi.main.2.obb to device files/ folder?"):
         os.system("cd liger-content/assets ; adb push burundi.main.2.obb /sdcard/Android/data/%s/files/burundi.main.2.obb" % (packagename))
+        
+    if query_yes_no("adb push burundi.patch.3.obb to device files/ folder?"):
+        os.system("cd liger-content/assets ; adb push burundi.patch.3.obb /sdcard/Android/data/%s/files/burundi.patch.3.obb" % (packagename))
         
     if query_yes_no("adb push main.1031.org.storymaker.app.obb to device files/ folder?"):
         os.system("cd liger-content/assets ; adb push main.1031.org.storymaker.app.obb /sdcard/Android/data/%s/files/main.1031.org.storymaker.app.obb" % (packagename))
