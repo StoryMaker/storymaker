@@ -39,6 +39,7 @@ import net.hockeyapp.android.CrashManager;
 import net.hockeyapp.android.UpdateManager;
 
 import android.app.AlertDialog;
+import android.app.DownloadManager;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -80,7 +81,7 @@ public class HomeActivity extends BaseActivity {
     private ProgressDialog mLoading;
     private ArrayList<Project> mListProjects;
     private RecyclerView mRecyclerView;
-    private DownloadPoller downloadPoller = null;
+    // private DownloadPoller downloadPoller = null;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -90,7 +91,9 @@ public class HomeActivity extends BaseActivity {
         IndexManager.copyAvailableIndex(this);
 
         // we want to grab required updates without restarting the app
-        DownloadHelper.checkAndDownload(this);
+        if (!DownloadHelper.checkAndDownload(this)) {
+            Toast.makeText(this, "Downloading content and/or updating installed files", Toast.LENGTH_LONG).show(); // FIXME move to strings.xml
+        }
 
         // i don't think we ever want to do this
         // IndexManager.copyInstalledIndex(this);
@@ -118,12 +121,15 @@ public class HomeActivity extends BaseActivity {
     @Override
 	public void onResume() {
 		super.onResume();
-        if (!DownloadHelper.checkAllFiles(this) && downloadPoller == null) {
-            downloadPoller = new DownloadPoller();
-            downloadPoller.execute("foo");
-        } else {
+        //if (!DownloadHelper.checkAllFiles(this) && downloadPoller == null) {
+        if (!DownloadHelper.checkAndDownload(this)) {
+            // don't poll, just pop up message if a download was initiated
+            //downloadPoller = new DownloadPoller();
+            //downloadPoller.execute("foo");
+            Toast.makeText(this, "Downloading content and/or updating installed files", Toast.LENGTH_LONG).show(); // FIXME move to strings.xml
+        } //else {
             initActivityList();
-        }
+        //}
 		
 		boolean isExternalStorageReady = Utils.Files.isExternalStorageReady();
 		
@@ -174,10 +180,13 @@ public class HomeActivity extends BaseActivity {
     }
 
     private void initActivityList () {
+        // menu items now locked during downloads, i think this can be removed
+        /*
         if (!DownloadHelper.checkAllFiles(this)) { // FIXME the app should define these, not the library
             Toast.makeText(this, "Please wait for the content pack to finish downloading and reload the app", Toast.LENGTH_LONG).show(); // FIXME move to strings.xml
             return;
         }
+        */
 
         JsonHelper.setupFileStructure(this);
 
@@ -290,7 +299,6 @@ public class HomeActivity extends BaseActivity {
                             }
                             showSPLSelectorPopup(names, paths);
                         } else {
-
                             // if file is being downloaded, don't open
                             Log.d("HOME MENU CLICK", eItem.getExpansionId() + " INSTALLED, CURRENTLY DOWNLOADING FILE");
 
@@ -522,10 +530,30 @@ public class HomeActivity extends BaseActivity {
     }
 
     public static void launchLiger(Context context, String splId, String instancePath, String splPath) {
+
+        // TEMP - do we need to check files for anything besides the default library?
+        /*
         if (!DownloadHelper.checkAllFiles(context)) { // FIXME the app should define these, not the library
             Toast.makeText(context, "Please wait for the content pack to finish downloading", Toast.LENGTH_LONG).show(); // FIXME move to strings.xml
             return;
         }
+        */
+
+        if ((splId != null) && (splId.equals("default_library"))) {
+
+            // initiate check/download for main/patch expansion files
+            boolean readyToOpen = DownloadHelper.checkAndDownloadNew(context);
+
+            if (!readyToOpen) {
+                // if file is being downloaded, don't open
+                Log.d("NEW ITEM CLICK", "CURRENTLY DOWNLOADING FILE");
+
+                Toast.makeText(context, "Please wait for this content pack to finish downloading", Toast.LENGTH_LONG).show(); // FIXME move to strings.xml
+                return;
+            }
+
+        }
+
         //        startActivity(new Intent(this, StoryNewActivity.class));
         Intent ligerIntent = new Intent(context, MainActivity.class);
         ligerIntent.putExtra(MainActivity.INTENT_KEY_WINDOW_TITLE, context.getString(R.string.app_name));
@@ -640,7 +668,7 @@ public class HomeActivity extends BaseActivity {
     }
 
     public void downloadComplete() {
-        this.downloadPoller = null;
+        //this.downloadPoller = null;
         initActivityList();
         // http://stackoverflow.com/questions/2745061/java-lang-illegalargumentexception-view-not-attached-to-window-manager
         try {
@@ -657,6 +685,8 @@ public class HomeActivity extends BaseActivity {
     }
 
     // FIXME once we have a patch as well as a main file this gets a little more complex
+    // i think this can be removed, individual menu items are now locked during downloads
+    /*
     class DownloadPoller extends AsyncTask<String, Long, Integer> {
 
         protected void onPreExecute() {
@@ -700,4 +730,5 @@ public class HomeActivity extends BaseActivity {
             HomeActivity.this.downloadComplete();
         }
     }
+    */
 }

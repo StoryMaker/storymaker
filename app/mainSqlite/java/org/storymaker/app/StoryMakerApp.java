@@ -86,7 +86,8 @@ public class StoryMakerApp extends MultiDexApplication {
 
             mServerManager = new ServerManager (getApplicationContext());
 
-            DownloadHelper.checkAndDownload(this);
+            // we have this in onCreate and onResume, remove from here?
+            //DownloadHelper.checkAndDownload(this);
 		}
 		catch (Exception e)
 		{

@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +22,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
+import scal.io.liger.Constants;
 import scal.io.liger.IndexManager;
 import scal.io.liger.ZipHelper;
 import scal.io.liger.model.BaseIndexItem;
@@ -142,7 +144,16 @@ public class InstanceIndexItemAdapter extends RecyclerView.Adapter<InstanceIndex
             // check if this is already installed or waiting to be downloaded to change which picture we show
             HashMap<String, ExpansionIndexItem> installedIds = IndexManager.loadInstalledIdIndex(context);
             holder.title.setText(baseItem.getTitle());
-            if (installedIds.containsKey(expansionIndexItem.getExpansionId())) {
+
+            // need to verify that content pack containing thumbnail actually exists
+            File contentCheck = new File(IndexManager.buildFilePath(expansionIndexItem), IndexManager.buildFileName(expansionIndexItem, Constants.MAIN));
+
+            // need to verify that index item has been updated with content pack thumbnail path
+            String contentPath = expansionIndexItem.getPackageName() + File.separator + expansionIndexItem.getExpansionId();
+
+            if (installedIds.containsKey(expansionIndexItem.getExpansionId()) &&
+                    contentCheck.exists() &&
+                    baseItem.getThumbnailPath().startsWith(contentPath)) {
 //              ZipHelper.getTempFile((baseItem.getThumbnailPath(), "/sdcard/"
                 holder.thumb.setImageBitmap(BitmapFactory.decodeStream(ZipHelper.getFileInputStream(baseItem.getThumbnailPath(), context)));
             } else {
