@@ -1,3 +1,15 @@
+--- build 1038
+
+- Fix: Many Right-to-left UI bugs
+- Added progress notification for tor downloads.
+- Fix: several states resulting in blank content pack thumbnails should now be caught
+- expansion file checking/blocking now happens when corresponding menu items are clicked
+- file/update downloads at app startup no longer lock ui (poller removed)
+- ClipCardView trim bar respects RTL layouts. 
+- Fix: scrolling away from ClipCardView during audio recording
+- Fix: crashes due to multiple simultaneous audio recordings
+- ClipCardsPlayer playback progress now respects clip trim points (affects ReviewCard, NarrationPopup)
+
 --- build 1037
 
 - Remove old references to 'Liger' codename
