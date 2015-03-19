@@ -58,7 +58,7 @@ import static org.hamcrest.Matchers.is;
 /**
  * Created by mnbogner on 1/15/15.
  */
-public class DefaultLibraryTest extends ActivityInstrumentationTestCase2<HomeActivity> {
+public class CompleteTest extends ActivityInstrumentationTestCase2<HomeActivity> {
 
     private HomeActivity mHomeActivity;
 
@@ -71,7 +71,7 @@ public class DefaultLibraryTest extends ActivityInstrumentationTestCase2<HomeAct
 
     private String testDirectory;
 
-    public DefaultLibraryTest() {
+    public CompleteTest() {
         super(HomeActivity.class);
     }
 
@@ -129,7 +129,26 @@ public class DefaultLibraryTest extends ActivityInstrumentationTestCase2<HomeAct
         cleanup(testDirectory);
     }
 
-    public void testEverything() {
+    public void testAaEula() {
+
+        stall(9000, "WAITING FOR STARTUP");
+
+        stall(500, "SELECT I AGREE");
+        onView(withId(R.id.btnTos)).perform(click());
+
+        stall(500, "SELECT I ACCEPT");
+        onView(withText("Accept")).perform(click());
+
+        stall(500, "SELECT NO THANKS");
+        onView(withId(R.id.btnNoThanks)).perform(click());
+
+        stall(2000, "WAITING FOR CONTENT DOWNLOAD");
+
+        // just pass, this is mostly for setting up the real test
+        assertTrue(true);
+    }
+
+    public void testBbEverything() {
 
         boolean testFlag = true;
 
@@ -176,16 +195,6 @@ public class DefaultLibraryTest extends ActivityInstrumentationTestCase2<HomeAct
 
         // obb file assumed to be present (copied by test setup script)
 
-        stall(2000, "FFFUUUUUUUUU");
-        
-        onView(withId(R.id.btnTos)).perform(click());
-        
-        onView(withText("Accept")).perform(click());
-
-        onView(withId(R.id.btnNoThanks)).perform(click());
-        
-        stall(2000, "WAITING FOR CONTENT DOWNLOAD");
-        
         // select "new" option
         stall(500, "SELECT NEW");
         onView(withText("New")).perform(click());
