@@ -1,5 +1,6 @@
 package org.storymaker.app.publish;
 
+import java.io.IOException;
 import java.net.MalformedURLException;
 
 import redstone.xmlrpc.XmlRpcFault;
@@ -53,12 +54,14 @@ public abstract class PublisherBase {
 	    try {
             String ret = publishToStoryMaker(title, desc, mediaEmbed, categories, medium, mediaService, mediaGuid);
             return ret;
-        } catch (MalformedURLException e) {
+        } /*catch (MalformedURLException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         } catch (XmlRpcFault e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
+        }*/ catch (IOException ioe) {
+            ioe.printStackTrace();
         }
 	    return null;
 	}
@@ -86,7 +89,7 @@ public abstract class PublisherBase {
         }
 	}
     
-    public String publishToStoryMaker(String title, String desc, String mediaEmbed, String[] categories, String medium, String mediaService, String mediaGuid) throws MalformedURLException, XmlRpcFault
+    public String publishToStoryMaker(String title, String desc, String mediaEmbed, String[] categories, String medium, String mediaService, String mediaGuid) throws IOException // MalformedURLException, XmlRpcFault
     {
         ServerManager sm = StoryMakerApp.getServerManager();
         sm.setContext(mContext);
