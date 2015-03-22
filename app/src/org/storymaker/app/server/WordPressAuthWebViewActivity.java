@@ -3,6 +3,7 @@ package org.storymaker.app.server;
 
 import org.storymaker.app.Globals;
 import org.storymaker.app.R;
+import org.storymaker.app.StoryMakerApp;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
@@ -31,7 +32,7 @@ import android.webkit.WebViewClient;
  */
 public class WordPressAuthWebViewActivity extends WebViewActivity {
 
-    private String mFinishUrl = ServerManager.PATH_REGISTERED;
+    //private String mFinishUrl = ServerManager.PATH_REGISTERED;
 
     @SuppressLint("SetJavaScriptEnabled")
     @Override
@@ -53,8 +54,8 @@ public class WordPressAuthWebViewActivity extends WebViewActivity {
 
                 @Override
                 public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                    Log.i("WEBVIEW", "redirect to " + url);
-                    if (url.contains(mFinishUrl)) {
+                    // new site redirects to https://storymaker.org/
+                    if (url.equals(StoryMakerApp.STORYMAKER_DEFAULT_SERVER_URL)) {
                         PreferenceManager.getDefaultSharedPreferences(getApplicationContext())
                                 .edit()
                                 .putBoolean(Globals.PREFERENCES_WP_REGISTERED, true)
