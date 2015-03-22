@@ -21,6 +21,7 @@ import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.os.Build;
 import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.support.multidex.MultiDexApplication;
@@ -188,6 +189,10 @@ public class StoryMakerApp extends MultiDexApplication {
 	    		Locale.setDefault(mLocale);
 	            config.locale = mLocale;
 	            getResources().updateConfiguration(config, getResources().getDisplayMetrics());
+
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1)
+                    getResources().getConfiguration().setLayoutDirection(mLocale);
+
 	            updatedLocale = true;
 	            lang = config.locale.getLanguage();
 	        }
