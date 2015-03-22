@@ -32,9 +32,19 @@ public class SoundCloudPublisher extends PublisherBase {
 
     @Override
     public String getEmbed(Job job) {
-        return "[soundcloud url=\"https://api.soundcloud.com/tracks/" 
-                + job.getResult() + "\" params=\"color=00cc11&auto_play=false&hide_related=false&show_artwork=true\" width=\"100%\" height=\"166\" iframe=\"true\" /]";
-        
+
+        String embed = "[soundcloud url=\\\"https://api.soundcloud.com/tracks/"
+                + job.getResult()
+                + "\\\" params=\\\"color=00cc11&auto_play=false&hide_related=false&show_artwork=true\\\" width=\\\"100%\\\" height=\\\"166\\\" iframe=\\\"true\\\" /]";
+
+        // without escape characters:
+        // [soundcloud url="https://api.soundcloud.com/tracks/<number>" params="color=00cc11&auto_play=false&hide_related=false&show_artwork=true" width="100%" height="166" iframe="true" /]
+
+        return embed;
+
+        //return "[soundcloud url=\"https://api.soundcloud.com/tracks/"
+        //        + job.getResult() + "\" params=\"color=00cc11&auto_play=false&hide_related=false&show_artwork=true\" width=\"100%\" height=\"166\" iframe=\"true\" /]";
+
         // [soundcloud url="https://api.soundcloud.com/tracks/156197566" params="auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&visual=true" width="100%" height="450" iframe="true" /]
     }
 

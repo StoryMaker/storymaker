@@ -1,9 +1,8 @@
 package org.storymaker.app.publish;
 
 import java.io.IOException;
-import java.net.MalformedURLException;
+import java.util.Arrays;
 
-import redstone.xmlrpc.XmlRpcFault;
 import android.content.Context;
 import android.util.Log;
 
@@ -50,6 +49,16 @@ public abstract class PublisherBase {
 	    String medium =  getMedium();
 	    String mediaService = job.getSite();
 	    String mediaGuid = job.getResult(); // TODO get the id from the preferred job to publish to facebook
+
+        /*
+        Log.d("PUBLISH", "TITLE: " + title);
+        Log.d("PUBLISH", "DESC: " + desc);
+        Log.d("PUBLISH", "EMBED: " + mediaEmbed);
+        Log.d("PUBLISH", "CATEGORIES: " + Arrays.toString(categories));
+        Log.d("PUBLISH", "MEDIUM: " + medium);
+        Log.d("PUBLISH", "SERVICE: " + mediaService);
+        Log.d("PUBLISH", "GUID: " + mediaGuid);
+        */
 
 	    try {
             String ret = publishToStoryMaker(title, desc, mediaEmbed, categories, medium, mediaService, mediaGuid);
@@ -100,8 +109,9 @@ public abstract class PublisherBase {
 //        mHandlerPub.sendMessage(msgStatus);
         
         mController.publishJobProgress(mPublishJob, 0, "Publishing to StoryMaker.cc...");
-        String descWithMedia = desc + "\n\n" + mediaEmbed;
-        String postId = sm.post(title, descWithMedia, categories, medium, mediaService, mediaGuid);
+        // split out embed
+        // String descWithMedia = desc + "\n\n" + mediaEmbed;
+        String postId = sm.post(title, desc, mediaEmbed, categories, medium, mediaService, mediaGuid);
         mController.publishJobProgress(mPublishJob, 0.5f, "Publishing to StoryMaker.cc...");
         String urlPost = sm.getPostUrl(postId);
 

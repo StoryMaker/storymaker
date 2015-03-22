@@ -1,26 +1,17 @@
 package org.storymaker.app.server;
 
-import org.storymaker.app.AppConstants;
 import org.storymaker.app.StoryMakerApp;
 import org.storymaker.app.model.Auth;
 import org.storymaker.app.model.AuthTable;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.MalformedURLException;
-import java.util.Date;
 import java.util.List;
 
 import net.bican.wordpress.Comment;
-import net.bican.wordpress.MediaObject;
 import net.bican.wordpress.Page;
-import net.bican.wordpress.Wordpress;
 
 import io.scal.secureshareui.lib.SMWrapper;
-import redstone.xmlrpc.XmlRpcArray;
-import redstone.xmlrpc.XmlRpcClient;
-import redstone.xmlrpc.XmlRpcFault;
-import redstone.xmlrpc.XmlRpcStruct;
 
 import android.app.Activity;
 import android.content.Context;
@@ -28,7 +19,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.util.Log;
-import android.webkit.WebView;
 
 public class ServerManager {
     private static final String TAG = "ServerManager";
@@ -36,21 +26,20 @@ public class ServerManager {
 	private String mServerUrl;
 	private Context mContext;
 	
-	private final static String PATH_XMLRPC = "/xmlrpc.php";
+	//private final static String PATH_XMLRPC = "/xmlrpc.php";
 	private final static String PATH_REGISTER = "/wp-login.php?action=register";
-	private final static String PATH_LOGIN = "/wp-admin";
+	//private final static String PATH_LOGIN = "/wp-admin";
 	public final static String PATH_REGISTERED = "/wp-login.php?checkemail=registered";
 	
-	public final static String CUSTOM_FIELD_MEDIUM = "medium"; //Text, Audio, Photo, Video
-	
-	public final static String CUSTOM_FIELD_MEDIUM_TEXT = "Text";
+	//public final static String CUSTOM_FIELD_MEDIUM = "medium"; //Text, Audio, Photo, Video
+	//public final static String CUSTOM_FIELD_MEDIUM_TEXT = "Text";
 	public final static String CUSTOM_FIELD_MEDIUM_AUDIO = "Audio";
 	public final static String CUSTOM_FIELD_MEDIUM_PHOTO = "Photo";
 	public final static String CUSTOM_FIELD_MEDIUM_VIDEO = "Video";
 	
-	public final static String CUSTOM_FIELD_MEDIA_HOST = "media_value"; //youtube or soundcloud
-	public final static String CUSTOM_FIELD_MEDIA_HOST_YOUTUBE = "youtube"; //youtube or soundcloud
-	public final static String CUSTOM_FIELD_MEDIA_HOST_SOUNDCLOUD = "soundcloud"; //youtube or soundcloud
+	//public final static String CUSTOM_FIELD_MEDIA_HOST = "media_value"; //youtube or soundcloud
+	//public final static String CUSTOM_FIELD_MEDIA_HOST_YOUTUBE = "youtube"; //youtube or soundcloud
+	//public final static String CUSTOM_FIELD_MEDIA_HOST_SOUNDCLOUD = "soundcloud"; //youtube or soundcloud
 
 	private SharedPreferences mSettings;
 
@@ -170,7 +159,7 @@ public class ServerManager {
 		connect();
 		//Page post = mWordpress.getPost(Integer.parseInt(postId));
 		//return post.getPermaLink();
-		return smWrapper.getPostUrl(postId);
+		return smWrapper.getPostUrl(postId); // TODO: implement method in wrapper
 	}
 	
 	public Page getPost (String postId) throws IOException // XmlRpcFault, MalformedURLException
@@ -178,7 +167,7 @@ public class ServerManager {
 		connect();
 		//Page post = mWordpress.getPost(Integer.parseInt(postId));
 		//return post;
-		return (Page)smWrapper.getPost(postId);
+		return (Page)smWrapper.getPost(postId); // TODO: implement method in wrapper
 	}
 	
 	public List<Page> getRecentPosts (int num) throws IOException // XmlRpcFault, MalformedURLException
@@ -186,19 +175,19 @@ public class ServerManager {
 		connect();
 		//List<Page> rPosts = mWordpress.getRecentPosts(num);
 		//return rPosts;
-        return null; // smWrapper.getRecentPosts(num);
+        return null; // smWrapper.getRecentPosts(num); // TODO: implement method in wrapper
 	}
 	
 	public List<Comment> getComments (Page page) throws IOException // XmlRpcFault, MalformedURLException
 	{
 		connect();
 		//return mWordpress.getComments(null, page.getPostid(), null, null);
-        return null; // smWrapper.getComments(page);
+        return null; // smWrapper.getComments(page); // TODO: implement method in wrapper
 	}
 
-	public String post (String title, String body, String[] cats, String medium, String mediaService, String mediaGuid) throws IOException // XmlRpcFault, MalformedURLException
+	public String post (String title, String body, String embed, String[] cats, String medium, String mediaService, String mediaGuid) throws IOException // XmlRpcFault, MalformedURLException
 	{
-		return post (title, body, cats, medium, mediaService, mediaGuid, null, null);
+		return post (title, body, embed, cats, medium, mediaService, mediaGuid, null, null);
 	}
 	
 	public String addMedia (String mimeType, File file) throws IOException // XmlRpcFault, MalformedURLException
@@ -211,10 +200,10 @@ public class ServerManager {
 		//	mObj = mWordpress.newMediaObject(mimeType, file, false);
 		
 		//return mObj.getUrl();
-        return smWrapper.addMedia(mimeType, file);
+        return smWrapper.addMedia(mimeType, file); // TODO: implement method in wrapper
 	}
 	
-	public String post (String title, String body, String[] catstrings, String medium, String mediaService, String mediaGuid, String mimeType, File file) throws IOException // XmlRpcFault, MalformedURLException
+	public String post (String title, String body, String embed, String[] catstrings, String medium, String mediaService, String mediaGuid, String mimeType, File file) throws IOException // XmlRpcFault, MalformedURLException
 	{
         // wrapper will build post
 
@@ -285,7 +274,7 @@ public class ServerManager {
         if (auth != null) {
             String user = auth.getUserName();
             if (user != null && user.length() > 0) {
-                return smWrapper.post(user, title, body, catstrings, medium, mediaService, mediaGuid, mimeType, file);
+                return smWrapper.post(user, title, body, embed, catstrings, medium, mediaService, mediaGuid, mimeType, file);
             }
         }
 
