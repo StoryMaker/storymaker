@@ -41,7 +41,7 @@ public class StoryMakerApp extends MultiDexApplication {
 	private final static String LOCALE_SOUTH_AFRICAN = "sa";
 	private static Locale mLocale = new Locale(LOCALE_DEFAULT);
 
-	private final static String STORYMAKER_DEFAULT_SERVER_URL = "https://storymaker.cc";
+	public final static String STORYMAKER_DEFAULT_SERVER_URL = "https://storymaker.org/";
 	private static String mBaseUrl = null;
 	
 	 public void InitializeSQLCipher(String dbName, String passphrase) {
