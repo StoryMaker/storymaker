@@ -9,7 +9,7 @@
                     "Length": "X ثانیه", 
                     "Security Concern": "-", 
                     "Tip": "ممکن هنگام ضبط کلیپ صوتی برجسته خود میکروفون را خیلی نزدیک بگیرید. ولی بررسی کنید که صدای ضبظ شده خیلی بلند نباشد.", 
-                    "Title": "Signature"
+                    "عنوان": "امضاء"
                 }, 
                 {
                     "Artwork": "cliptype_wide", 
@@ -18,7 +18,7 @@
                     "Length": "X ثانیه", 
                     "Security Concern": "-", 
                     "Tip": " شما از کلیپ محیطی برای گفتن داستان خود استفاده میکنید. اگر صداهای بی ربطی نسبت به اصل داستان در پس زمینه وجود داشته باشد ممکن است حواش شنوندگان شما را پرت کند", 
-                    "Title": "Ambient"
+                    "عنوان": "محیط"
                 }, 
                 {
                     "Artwork": "cliptype_close", 
@@ -27,7 +27,7 @@
                     "Length": "X ثانیه", 
                     "Security Concern": "-", 
                     "Tip": "  این کلیپ را خلاصه نگه دارید. کافی است شخصیت اصلی را به شنوندگان معرفی کنید و یا از خود او بخواهید این کار را برای شما بکند. اطلاعات بیشتر را برای قسمت مصاحبه نگه دارید.", 
-                    "Title": "Narrative"
+                    "عنوان": "روایت"
                 }, 
                 {
                     "Artwork": "cliptype_medium", 
@@ -36,7 +36,7 @@
                     "Length": "X ثانیه", 
                     "Security Concern": "-", 
                     "Tip": "If you want the audience to hear your questions and the subject\u2019s answers, be sure that you are both close enough to the mic to be heard clearly.", 
-                    "Title": "Interview"
+                    "عنوان": "مصاحبه"
                 }, 
                 {
                     "Artwork": "cliptype_wide", 
@@ -45,11 +45,11 @@
                     "Length": "X ثانیه", 
                     "Security Concern": "-", 
                     "Tip": "میتوانید صدای کلی محیط را ضبط کنید. اطمینان حاصل کنید که صدایی از خودتان ضبط نمیکنید چون این ممکن است حواس شنوندگانتان را پرت کند.", 
-                    "Title": "Environmental"
+                    "عنوان": "محیطی"
                 }
             ], 
-            "title": "Scene 1"
+            "عنوان": "صحنه 1"
         }
     ], 
-    "title": "Audio Simple"
+    "عنوان": "صوتی ساده"
 }

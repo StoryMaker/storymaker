@@ -28,6 +28,7 @@
   <string name="menu_overlay_camera">Kamera</string>
   <string name="menu_add_new_shot">Clip zur Szene hinzufügen</string>
   <string name="menu_export_project_files">Projektdateien als Zip exportieren</string>
+  <string name="menu_join_storymaker">Tritt der StoryMaker Community bei</string>
   <string name="menu_sign_up">Registrieren / Anmelden</string>
   <!--project list-->
   <!--video processing-->
