@@ -10,7 +10,7 @@
                     "Security Concern": "-", 
                     "Shot Size": "جزئیات", 
                     "Tip": "Set your camera to Macro if you are shooting less than arm\u2019s length from your subject.", 
-                    "Title": "Signature"
+                    "عنوان": "امضاء"
                 }, 
                 {
                     "Artwork": "cliptype_medium", 
@@ -50,10 +50,10 @@
                     "Security Concern": "-", 
                     "Shot Size": "عریض و یا واید", 
                     "Tip": "نشان های اختصاصی جغرافیایی به مخاطبین کمک میکند که مکان وقوع داستان را بهتر درک کنند.", 
-                    "Title": "Environmental"
+                    "عنوان": "محیطی"
                 }
             ], 
-            "title": "Scene 1"
+            "عنوان": "صحنه 1"
         }
     ], 
     "title": "Essay Simple"

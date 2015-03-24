@@ -1,5 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+  <string name="app_name">* ستوري مايكر 2</string>
   <string name="app_description">إنتاج قصص عظيمة أصبح اليوم أمرا سهلا أكثر مما كان باستعمال StoryMaker. التراكيب و النماذج الفريدة من نوعها التي أضفناها و مجموعة الدروس كل هذا يرشدك طيلة عملية الأنتاج. StoryMaker تتيح لك الفرصة تحرير ما انتجته باستعمال الجوال، و جعله أكثر سهولة لإنهاء القصة. عند الإنتهاء، تتيح لك StoryMaker إمكانية نشر القصة على كل مواقعك المفضلة.</string>
   <string name="title_projects">قصص</string>
   <string name="title_lessons">الدروس</string>
@@ -229,12 +230,14 @@
   <string name="created_with_storymaker_tag">انتجت بستوري مايكر - https://storymaker.cc</string>
   <string name="err_you_need_at_least_one_account_configured_on_your_device">تحتاج على الأقل لحساب لتحضير الجهاز</string>
   <string name="you_began_a_new_lesson">لقد بدأت درسا جديدا</string>
+  <string name="scene_editor_please_add_clips">يرجى إضافة كليبات في خانة \'اصنع\' قبل اختيار هذه الخانة.</string>
   <string name="scene_editor_trim_clip">قص المقطع</string>
   <string name="delete_warning">لا يمكن التراجع بعد العملية!</string>
   <string name="cancel">إلغاء</string>
   <string name="delete">فسخ</string>
   <string name="play_or_share_exported_media_">تشغيل أو مشاركة الميديا المصدّرة؟</string>
   <string name="share_published_story">مشاركة القصة المنشورة؟</string>
+  <string name="err_storage_not_ready">الظاهر أن  وحدة التخزين الخارجية (SDCARD) غير متاحة للقراءة والكتابة في هذا الوقت. ستوري مايكر تحتاج إلى الوصول إليها لغاية الدروس و معطيات المشاريع. الرجاء التثبت من الجهاز و إعادة تشغيل التطبيق.</string>
   <string name="scene_s_">مش(ا)هد</string>
   <string name="clip_s_">لقط(ا)ة</string>
   <string name="sc_app_not_found">تطبيق صاوندكلاود غير موجود!</string>
@@ -273,6 +276,9 @@
   <string name="send_logcat_to_support">إرسال السجل إلى الدعم</string>
   <string name="restarting_storymaker">إعادة تشغيل ستوري مايكر</string>
   <string name="send">ابعث</string>
+  <string name="uploading_to_soundcloud">جاري التحميل للساوند كلاود...</string>
+  <string name="uploading_to_facebook">جاري التحميل للفايسبوك...</string>
+  <string name="uploading_to_internet_archive">جاري التحميل لأرشيف الأنترنات...</string>
   <string name="export_error_2">خطأ</string>
   <string name="export_error_4">خطأ</string>
 </resources>

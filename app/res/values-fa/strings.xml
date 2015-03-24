@@ -1,5 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+  <string name="app_name">StoryMaker 2</string>
   <string name="title_projects">داستان ها</string>
   <string name="title_lessons">درس‌ها</string>
   <string name="action_publish">انتشار</string>
@@ -235,6 +236,7 @@
   <string name="export_dialog_close">بستن</string>
   <string name="export_dialog_share">به اشتراک گذاشتن</string>
   <string name="action_settings">تنظیم‌ها </string>
+  <string name="label_description">تعریف</string>
   <string name="label_add">اضافه</string>
   <string name="label_edit">ویرایش </string>
   <string name="label_save">ذخیره</string>
