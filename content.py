@@ -84,21 +84,34 @@ def update_strings():
 def zip_content():
     """this creates the zipped blob of content and copies it in to storymaker's assets folder as its .obb file"""
 
-    os.system("rm liger-content/assets/main.1031.org.storymaker.app.obb ; cd liger-content/assets ; zip -n .mp4 -r main.1031.org.storymaker.app.obb org.storymaker.app/default")
-    print "content generated at: liger-content/assets/main.1031.org.storymaker.app.obb"
+    if query_yes_no("zip main?"):
+        os.system("rm liger-content/assets/main.1031.org.storymaker.app.obb ; cd liger-content/assets ; zip -n .mp4 -r main.1031.org.storymaker.app.obb org.storymaker.app/default")
+        print "content generated at: liger-content/assets/main.1031.org.storymaker.app.obb"
     
-    os.system("rm liger-content/assets/learning_guide.main.1.obb; cd liger-content/assets ; zip -n .mp4 -r learning_guide.main.1.obb org.storymaker.app/learning_guide")
-    print "content generated at: liger-content/assets/learning_guide.main.1.obb"
-    
-    os.system("rm liger-content/assets/burundi.main.2.obb; cd liger-content/assets ; zip -n .mp4 -r burundi.main.2.obb org.storymaker.app/burundi")
-    print "content generated at: liger-content/assets/burundi.main.2.obb"
-    
-    os.system("rm liger-content/assets/burundi.patch.3.obb; cd liger-content/assets/patch/ ; zip -n .mp4 -r burundi.patch.3.obb org.storymaker.app/burundi ; mv burundi.patch.3.obb ..")
-    print "content generated at: liger-content/assets/burundi.patch.3.obb"
-    
-    os.system("rm liger-content/assets/dressgate.main.1.obb; cd liger-content/assets ; zip -n .mp4 -r dressgate.main.1.obb org.storymaker.app/dressgate")
-    print "content generated at: liger-content/assets/dressgate.main.1.obb"
+    if query_yes_no("zip learning guide?"):
+        os.system("rm liger-content/assets/learning_guide.main.1.obb; cd liger-content/assets ; zip -n .mp4 -r learning_guide.main.1.obb org.storymaker.app/learning_guide")
+        print "content generated at: liger-content/assets/learning_guide.main.1.obb"
+        
+    if query_yes_no("zip burundi?"):
+        os.system("rm liger-content/assets/burundi.main.2.obb; cd liger-content/assets ; zip -n .mp4 -r burundi.main.2.obb org.storymaker.app/burundi")
+        print "content generated at: liger-content/assets/burundi.main.2.obb"
+        
+    if query_yes_no("zip burundi patch?"):
+        os.system("rm liger-content/assets/burundi.patch.3.obb; cd liger-content/assets/patch/ ; zip -n .mp4 -r burundi.patch.3.obb org.storymaker.app/burundi ; mv burundi.patch.3.obb ..")
+        print "content generated at: liger-content/assets/burundi.patch.3.obb"
+        
+    if query_yes_no("zip dressgate?"):
+        os.system("rm liger-content/assets/dressgate.main.1.obb; cd liger-content/assets ; zip -n .mp4 -r dressgate.main.1.obb org.storymaker.app/dressgate")
+        print "content generated at: liger-content/assets/dressgate.main.1.obb"
+        
+    if query_yes_no("zip persian?"):
+        os.system("rm liger-content/assets/persian.main.1.obb; cd liger-content/assets ; zip -n .mp4 -r persian.main.1.obb org.storymaker.app/persian")
+        print "content generated at: liger-content/assets/persian.main.1.obb"
 
+    if query_yes_no("zip mena?"):
+        os.system("rm liger-content/assets/mena.main.1.obb; cd liger-content/assets ; zip -n .mp4 -r mena.main.1.obb org.storymaker.app/mena")
+        print "content generated at: liger-content/assets/mena.main.1.obb"
+        
 @cli.command()
 def scp_push():
     """this pushes the zipped obb files to be hosted on storymaker.cc"""
