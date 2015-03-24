@@ -54,7 +54,8 @@
         android:layout_marginTop="30dp"
         android:fontFamily="sans-serif-condensed"
         android:onClick="onSignupButtonClick"
-        android:text="@string/sign_up_btn"
+        android:text="@string/menu_sign_up"
+        android:textAllCaps="true"
         android:textSize="14sp" />
 
     <Button

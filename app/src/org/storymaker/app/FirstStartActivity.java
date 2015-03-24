@@ -84,7 +84,9 @@ public class FirstStartActivity extends Activity implements OnEulaAgreedTo {
 
     public void onSignupButtonClick(View v) {
         if (assertTosAccepted()) {
-            StoryMakerApp.getServerManager().createAccount(this);
+//            StoryMakerApp.getServerManager().createAccount(this);
+            Intent i = new Intent(this, ConnectAccountActivity.class);
+            this.startActivity(i);
         }
 
     }

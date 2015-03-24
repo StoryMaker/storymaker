@@ -5,10 +5,42 @@
     android:layout_height="match_parent"
     android:gravity="center|top"
     android:orientation="vertical"
+    android:background="@drawable/connect_account_background"
     tools:context="org.storymaker.app.ConnectAccountActivity" >
 
+    <LinearLayout android:id="@+id/header"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="24dip"
+        android:orientation="vertical"
+        >
+        <!-- Logo Start-->
+        <ImageView android:src="@drawable/logo_large"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center|center"
+            android:id="@+id/logo"
+            />
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/app_name"
+            android:gravity="center"
+            android:textSize="24dip"
+            android:textColor="#222222"/>
+        <TextView
+            android:id="@+id/status"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="             "
+            android:gravity="center"
+            android:textSize="18dip"
+            android:textColor="#555555"/>
+        <!-- Logo Ends -->
+    </LinearLayout>
+
     <TextView
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="8dp"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:fontFamily="sans-serif-condensed"
@@ -19,7 +51,7 @@
         android:layout_marginTop="16dp"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:fontFamily="sans-serif-light"
+        android:fontFamily="sans-serif-condensed"
         android:text="@string/join_storymaker"
         android:textSize="24sp" />
 
@@ -28,7 +60,8 @@
         android:onClick="onCreateAccountButtonClick"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="64dp"
+        android:fontFamily="sans-serif-condensed"
+        android:layout_marginTop="16dp"
         android:text="@string/create_account" />
 
     <Button
@@ -36,7 +69,9 @@
         android:onClick="onSignInButtonClick"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-condensed"
         android:layout_marginTop="8dp"
-        android:text="@string/sign_in" />
+        android:textAllCaps="true"
+        android:text="@string/menu_login" />
 
 </LinearLayout>

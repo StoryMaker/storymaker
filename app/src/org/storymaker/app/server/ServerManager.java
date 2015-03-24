@@ -27,7 +27,7 @@ public class ServerManager {
 	private Context mContext;
 	
 	//private final static String PATH_XMLRPC = "/xmlrpc.php";
-	private final static String PATH_REGISTER = "accounts/signup/";
+	private final static String PATH_REGISTER = "accounts/signup/?chrome=0";
 	//private final static String PATH_LOGIN = "/wp-admin";
 	//public final static String PATH_REGISTERED = "/wp-login.php?checkemail=registered";
 	
