@@ -1,9 +1,7 @@
 
---- build TBD
+--- build 1039
 
-- signup/login/publish now directed to new storymaker site
-- signup/login/publish now use a new wrapper class which should support oath and tor
-- external/SecureShareLib/SecureShareUILibrary/res/values/sm.xml must be populated with a client id and secret
+- Now integrated with the new StoryMaker.org!  Signup, login and publish!
 
 --- build 1038
 
