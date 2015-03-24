@@ -1,13 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
-  <string-array name="story_sections">
-    <item>سیاست</item>
-    <item>تجارت</item>
-    <item>ورزش</item>
-    <item>هنر</item>
-    <item>علم و فن آوری</item>
-    <item>سلامت</item>
-    <item>آموزش</item>
-    <item>محیط زیست</item>
-  </string-array>
+  <string-array name="story_sections"/>
+  <string-array name="lesson_sections"/>
+  <string-array name="array_story_locations"/>
+  <string-array name="array_story_sections"/>
 </resources>
