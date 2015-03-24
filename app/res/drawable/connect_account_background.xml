@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item android:drawable="@color/black"/>
+    <item>
+        <bitmap
+            android:gravity="center|top|fill_vertical|center_horizontal"
+            android:scaleType="center"
+            android:tileMode="disabled"
+            android:src="@drawable/cape_serrat"
+            android:alpha="1"
+            />
+    </item>
+
+</layer-list>
