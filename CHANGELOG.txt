@@ -1,3 +1,8 @@
+--- build 1042
+
+- fix Youtube and SoundCloud logins
+- Download manager fixes
+
 --- build 1041
 
 - fixed Login
