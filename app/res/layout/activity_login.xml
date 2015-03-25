@@ -2,19 +2,19 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="@android:color/transparent"
+    android:background="@drawable/connect_account_background"
     android:fillViewport="true" >
 
   <RelativeLayout
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content" android:background="#ffffff">
+        android:layout_height="wrap_content">
  
         <!--  Header  Starts-->
         <LinearLayout android:id="@+id/header"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:paddingTop="10dip"
-                android:paddingBottom="5dip"
+                android:paddingTop="48dip"
+                android:paddingBottom="8dip"
                      android:orientation="vertical"
                 >
                 <!-- Logo Start-->
@@ -30,7 +30,7 @@
                 android:text="@string/app_name"
                 android:gravity="center"
                 android:textSize="24dip"
-                android:textColor="#333333"/>          
+                android:textColor="#222222"/>
                  <TextView 
                 android:id="@+id/status"
                 android:layout_width="fill_parent"
@@ -38,7 +38,7 @@
                 android:text="             "
                 android:gravity="center"
                 android:textSize="18dip"
-                android:textColor="#555555"/>         
+                android:textColor="#555555"/>
                 <!-- Logo Ends -->
         </LinearLayout>
         <!--  Header Ends -->
@@ -90,19 +90,7 @@
                 >
                   <!-- Link to Registration Screen -->
 
-          <TextView
-              android:id="@+id/link_to_skip"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:gravity="center"
-              android:paddingBottom="20dp"
-              android:paddingLeft="10dp"
-              android:paddingRight="10dp"
-              android:paddingTop="20dp"
-              android:text="Skip Login"
-              android:textColor="#0b84aa"
-              android:textSize="20dip" />
-          
+
           <!-- Link to Registration Screen -->
 
           <TextView
@@ -115,8 +103,8 @@
               android:paddingRight="10dp"
               android:paddingTop="20dp"
               android:text="Create Account"
-              android:textColor="#0b84aa"
-              android:textSize="20dip" />
+              android:textSize="20dip"
+              android:textColor="#222222" />
 
  </LinearLayout>
         </LinearLayout>
