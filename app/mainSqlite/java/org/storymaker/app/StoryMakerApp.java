@@ -40,7 +40,8 @@ public class StoryMakerApp extends MultiDexApplication {
 	private final static String LOCALE_SOUTH_AFRICAN = "sa";
 	private static Locale mLocale = new Locale(LOCALE_DEFAULT);
 
-	public final static String STORYMAKER_DEFAULT_SERVER_URL = "https://storymaker.org/";
+    public final static String STORYMAKER_DEFAULT_SERVER_URL = "https://storymaker.org/";
+    public final static String STORYMAKER_SERVER_URL_PREFS_KEY = "pserver";
 	private static String mBaseUrl = null;
 	
 	 public void InitializeSQLCipher(String dbName, String passphrase) {
@@ -54,7 +55,7 @@ public class StoryMakerApp extends MultiDexApplication {
 	 public static String initServerUrls (Context context)
 	 {
 		 SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context.getApplicationContext());
-		 mBaseUrl = settings.getString("pserver", STORYMAKER_DEFAULT_SERVER_URL) ;
+		 mBaseUrl = settings.getString(STORYMAKER_SERVER_URL_PREFS_KEY, STORYMAKER_DEFAULT_SERVER_URL) ;
 		 return mBaseUrl;
 	 }
 	 
