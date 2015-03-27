@@ -8,6 +8,7 @@ import java.util.Date;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.content.res.AssetManager;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
@@ -91,7 +92,17 @@ public class BaseActivity extends FragmentActivity {
         Button btnDrawerExports =      (Button) findViewById(R.id.btnDrawerExports);
         Button btnDrawerUploadManager = (Button) findViewById(R.id.btnDrawerUploadManager);
         Button btnDrawerSettings =      (Button) findViewById(R.id.btnDrawerSettings);
-        
+        TextView textViewVersion =      (TextView) findViewById(R.id.textViewVersion);
+
+        String pkg = getPackageName();
+        String vers = null;
+        try {
+            vers = getPackageManager().getPackageInfo(pkg, 0).versionName;
+            textViewVersion.setText("v" + vers);
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+
         updateSlidingMenuWithUserState();
         
         // Set a random profile background

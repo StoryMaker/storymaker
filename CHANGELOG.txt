@@ -1,3 +1,13 @@
+--- build 1044
+
+- New Persian Content pack!
+- Clarify Tor/Download Manager settings for users
+- Move version number to bottom of drawer for clarity
+
+--- build 1043
+
+- Fix: login to StoryMaker.org accounts (SSL issue resolved)
+
 --- build 1042
 
 - fix Youtube and SoundCloud logins
