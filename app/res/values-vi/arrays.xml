@@ -1,0 +1,44 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <string-array name="story_sections">
+    <item>Chính Trị</item>
+    <item>Thương Mại</item>
+    <item>Thể Thao</item>
+    <item>Nghệ Thuật</item>
+    <item>Khoa Học</item>
+    <item>Y Tế</item>
+    <item>Giáo Dục</item>
+    <item>Môi Trường</item>
+  </string-array>
+  <string-array name="lesson_sections">
+    <item>Báo Chí</item>
+    <item>An Ninh</item>
+    <item>Âm Thanh</item>
+    <item>Nhiếp Ảnh</item>
+    <item>Quay Phim</item>
+    <item>Phóng Sự</item>
+  </string-array>
+  <string-array name="array_story_locations">
+    <item>U.S.A.</item>
+    <item>California</item>
+    <item>Oakland</item>
+    <item>Ai Cập</item>
+    <item>Iraq</item>
+    <item>Morocco</item>
+    <item>Tunisia</item>
+    <item>Zimbabwe</item>
+    <item>Cộng Hòa Tiệp</item>
+  </string-array>
+  <string-array name="array_story_sections">
+    <item>Chính Trị</item>
+    <item>Thương Mại</item>
+    <item>Thể Thao</item>
+    <item>Nghệ Thuật</item>
+    <item>Khoa Học</item>
+    <item>Y Tế</item>
+    <item>Giáo Dục</item>
+    <item>Môi Trường</item>
+    <item>Công Nghệ</item>
+    <item>Du Lịch</item>
+  </string-array>
+</resources>

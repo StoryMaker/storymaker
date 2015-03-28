@@ -1,0 +1,60 @@
+{
+    "cảnh": [
+        {
+            "clips": [
+                {
+                    "Artwork": "cliptype_close", 
+                    "Description": "Đến gần đủ để bảo đảm là âm thanh thâu được tốt và bạn thấy rõ khuôn mặt họ.",
+                    "Goal": "Yêu cầu nhân vật thuật chuyện. Ghi lại cảm xúc của họ.",
+                    "Length": "30-60 giây", 
+                    "Security Concern": "-", 
+                    "Shot Size": "Cận", 
+                    "Tip": "Dùng đường-mắt-nhìn để tạo khung hình thích đáng.", 
+                    "Title": "Phỏng vấn"
+                },                 
+                {
+                    "Artwork": "cliptype_detail", 
+                    "Description": "Đến gần một người hay vật, ghi lại một chi tiết đáng nhớ và dùng đó làm tóm lược câu chuyện trong một cảnh một.", 
+                    "Goal": "Cho thấy một chi tiết cốt yếu của câu chuyện.", 
+                    "Length": "5 - 10 giây", 
+                    "Security Concern": "-", 
+                    "Shot Size": "Chi tiết", 
+                    "Tip": "Chi tiết nên trám ít nhất 50% của khung hình.", 
+                    "Title": "Dấu ấn" 
+                },
+                {
+                    "Artwork": "cliptype_medium", 
+                    "Description": "Hãy để máy quay phim quan sát nhân vật đang sinh hoạt với bạn bè, công việc của họ, biểu lộ kiến thức, hoặc hoàn tất một hành động nào đó.", 
+                    "Goal": "Cho thấy nhân vật đang tương tác với thế giới xung quanh.", 
+                    "Length": "10 - 15 giây",
+                    "Security Concern": "-",
+                    "Shot Size": "Trung bình",
+                    "Tip": "Nhân vật nên trám khoảng 30% khung hình.",
+                    "Title": "Tương tác"
+                },
+                {
+                    "Artwork": "cliptype_long", 
+                    "Description": "Lùi lại. Cảnh này nên đủ rộng để mô tả trọn vẹn nhân vật từ đầu đến chân tại địa điểm của họ", 
+                    "Goal": "Ghi lại nhân vật đang hoạt động.", 
+                    "Length": "10 - 15 giây", 
+                    "Security Concern": "-", 
+                    "Shot Size": "Dài", 
+                    "Tip": "Giữ nhân vật dọc theo một trong các vạch đứng để tạo khung hình thích đáng.", 
+                    "Title": "Hoạt động"
+                }, 
+                {
+                    "Artwork": "cliptype_wide",
+                    "Description": "Có thêm các mốc điểm hay chi tiết địa dư thì rất tốt. Cảnh môi trường giúp cho biết quốc gia, sắc tộc, hay tôn giáo của nhân vật trong bản tin.",
+                    "Mục tiêu": "Cho thấy câu chuyện xảy ra nơi đâu.",
+                    "Length": "5 - 10 giây",
+                    "Security Concern": "-",
+                    "Shot Size": "Rộng",
+                    "Tip": "Đặt máy quay trực tiếp trước địa điểm chính bạn đang thu hình.", 
+                    "Title": "Địa điểm"
+                }
+            ], 
+            "title": "Cảnh 1"
+        }
+    ], 
+    "title": "Bản tin Đơn giản - Video"
+}
