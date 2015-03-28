@@ -133,7 +133,7 @@
   <string name="story_type_profile_personal_text5">دوست دارید در مورد این موضوع، چه اتفاقی بیفتد؟</string>
   <!--/story_type_new-->
   <!--story_type_old-->
-  <string name="scene_number">Scene &lt;xliff:g id="number"&gt;%1$d&lt;/xliff:g&gt;</string>
+  <string name="scene_number">Scene &lt;xliff:g id=\"number\"&gt;%1$d&lt;/xliff:g&gt;</string>
   <string name="when">کی؟</string>
   <string name="how">چگونه؟</string>
   <string name="what">چه؟</string>
@@ -195,8 +195,6 @@
   <string name="prefs_soundcloud_account_summary">حساب شخصی SoundCloud برای استفاده در بارگذاری صدا</string>
   <string name="prefs_interface_language_title">زبان خود را اتخاب کنید</string>
   <string name="prefs_interface_language_summary">زبانی که StoryMaker به عنوان رابط کاربر از آن استفاده خواهد کرد.</string>
-  <string name="prefs_lesson_language_title">درس‌ها را انتخاب کنید</string>
-  <string name="prefs_lesson_language_summary">واحد درسی برای استفاده</string>
   <string name="prefs_slide_duration_title">مدت زمان اسلاید</string>
   <string name="prefs_slide_duration_summary">مت زمان هر اسلاید در یک گزارش تصویری</string>
   <string name="prefs_enable_compression_title">قابلیت فشرده‌سازی را فعال کنید</string>
@@ -227,8 +225,6 @@
   <string name="prefs_audio_crossfade_summary">طول فید شدن صدا</string>
   <string name="prefs_internal_storage_title">مخزن داخلی</string>
   <string name="prefs_internal_storage_summary">استفاده از مخزن داخلی پروژه</string>
-  <string name="prefs_disable_lesson_completion_title">گزینه اتمام درس را غیرفعال کنید</string>
-  <string name="prefs_disable_lesson_completion_summary"></string>
   <string name="prefs_youtube_method_title"> روش کار با یوتیوب</string>
   <string name="prefs_youtube_method_summary">روش فعال کردن سیستم رفع اشکال </string>
   <!--/prefs-->

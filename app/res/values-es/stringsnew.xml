@@ -195,8 +195,6 @@
   <string name="prefs_soundcloud_account_summary">La cuenta de SoundCloud a usar para subir audio</string>
   <string name="prefs_interface_language_title">Seleccione idioma</string>
   <string name="prefs_interface_language_summary">El idioma que StoryMaker usará para la interfaz de usuario.</string>
-  <string name="prefs_lesson_language_title">Seleccionar lecciones</string>
-  <string name="prefs_lesson_language_summary">El módulo de lección a usar.</string>
   <string name="prefs_slide_duration_title">Duración de diapositiva</string>
   <string name="prefs_slide_duration_summary">Duración de cada diapositiva en una presentación fotográfica</string>
   <string name="prefs_enable_compression_title">Habilitar compresión</string>
@@ -227,8 +225,6 @@
   <string name="prefs_audio_crossfade_summary">Duración del fundido cruzado de audio</string>
   <string name="prefs_internal_storage_title">Almacenamiento interno</string>
   <string name="prefs_internal_storage_summary">Utiliza almacenamiento interno de proyecto</string>
-  <string name="prefs_disable_lesson_completion_title">Deshabilitar completado de lección</string>
-  <string name="prefs_disable_lesson_completion_summary"></string>
   <string name="prefs_youtube_method_title">Método YouTube</string>
   <string name="prefs_youtube_method_summary">Tipo de método de autorización de depuración</string>
   <!--/prefs-->

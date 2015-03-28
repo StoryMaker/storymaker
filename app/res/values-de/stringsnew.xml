@@ -179,7 +179,6 @@
   <string name="prefs_soundcloud_account_summary">Das SoundCloud-Benutzerkonto, welches zum Hochladen von Audio-Inhalten genutzt werden soll.</string>
   <string name="prefs_interface_language_title">Sprache auswählen</string>
   <string name="prefs_interface_language_summary">Die Sprache, welche StoryMaker für die Benutzeroberfläche benutzen wird</string>
-  <string name="prefs_lesson_language_title">Lektionen auswählen</string>
   <string name="prefs_slide_duration_title">Anzeigedauer</string>
   <string name="prefs_enable_compression_title">Komprimierung aktivieren</string>
   <string name="prefs_enable_compression_summary">Komprimiere alle Videos und Töne mit den untenstehenden Einstellungen</string>
@@ -209,7 +208,6 @@
   <string name="prefs_audio_crossfade_summary">Länge der Audio-Überblendung</string>
   <string name="prefs_internal_storage_title">Interner Speicher</string>
   <string name="prefs_internal_storage_summary">Internen Projekt-Speicher nutzen</string>
-  <string name="prefs_disable_lesson_completion_summary"></string>
   <string name="prefs_youtube_method_title">YouTube Methode</string>
   <!--/prefs-->
   <!--FirstStartActivity-->

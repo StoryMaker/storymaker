@@ -133,7 +133,7 @@
   <string name="story_type_profile_personal_text5">Шта бисте волели да се деси у будућности?</string>
   <!--/story_type_new-->
   <!--story_type_old-->
-  <string name="scene_number">Сцена &lt;xliff:g id="number"&gt;%1$d&lt;/xliff:g&gt;</string>
+  <string name="scene_number">Сцена &lt;xliff:g id=\"number\"&gt;%1$d&lt;/xliff:g&gt;</string>
   <string name="when">Када?</string>
   <string name="how">Како?</string>
   <string name="what">Шта?</string>
@@ -193,8 +193,6 @@
   <string name="prefs_soundcloud_account_summary">СоундЦлоуд рачун користити за аудио учитавања</string>
   <string name="prefs_interface_language_title">Одаберите Језик</string>
   <string name="prefs_interface_language_summary">Језик СториМакер ће се користити за кориснички интерфејс</string>
-  <string name="prefs_lesson_language_title">Одаберите Лекције</string>
-  <string name="prefs_lesson_language_summary">Модул лекције за употребу</string>
   <string name="prefs_slide_duration_title">Трајање слајда</string>
   <string name="prefs_slide_duration_summary">Трајање сваког слајда у фото есеју</string>
   <string name="prefs_enable_compression_title">Омогућити сажимање</string>
@@ -225,8 +223,6 @@
   <string name="prefs_audio_crossfade_summary">Дужина аудио цросс фаде</string>
   <string name="prefs_internal_storage_title">Интерна меморија</string>
   <string name="prefs_internal_storage_summary">Користите пројект интерне меморије</string>
-  <string name="prefs_disable_lesson_completion_title">Онемогућите завршетак лекције</string>
-  <string name="prefs_disable_lesson_completion_summary"></string>
   <string name="prefs_youtube_method_title">YouTube метод</string>
   <string name="prefs_youtube_method_summary">Врста методе ауторизације уклањања грешке</string>
   <!--/prefs-->

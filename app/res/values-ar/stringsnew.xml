@@ -195,8 +195,6 @@
   <string name="prefs_soundcloud_account_summary">حساب الساوند كلاود يستعمل لتنزيل الصوت</string>
   <string name="prefs_interface_language_title">اختر اللغة</string>
   <string name="prefs_interface_language_summary">لغة عرض الواجهة الرئيسية لستوري مايكر</string>
-  <string name="prefs_lesson_language_title">اختر الدروس</string>
-  <string name="prefs_lesson_language_summary">وحدة الدرس للاستخدام.</string>
   <string name="prefs_slide_duration_title">مدة العرض</string>
   <string name="prefs_slide_duration_summary">مدة عرض كل شريحة في المقال المصور</string>
   <string name="prefs_enable_compression_title">تفعيل الضغط</string>
@@ -215,7 +213,6 @@
   <string name="prefs_video_height_summary">ارتفاع الفيديو عند التصدير</string>
   <string name="prefs_internal_storage_title">الذاكرة الداخلية</string>
   <string name="prefs_internal_storage_summary">استعمال الذاكرة الداخلية</string>
-  <string name="prefs_disable_lesson_completion_summary"></string>
   <!--/prefs-->
   <!--FirstStartActivity-->
   <string name="sign_up_btn">تسجيل الدخول لـستوري مـايكر</string>
