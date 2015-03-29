@@ -129,59 +129,29 @@ public class ServerManager {
             // throw exception so LoginActivity doesn't save credentials
             throw new IOException("Login failed");
         }
-
-        // replace with oauth code
-        /*
-		XmlRpcClient.setContext(mContext);
-
-	    boolean useTor = mSettings.getBoolean("pusetor", false);
-	    
-		if (useTor)
-		{
-            // socks proxy scheme no longer supported by StrongHttpClient
-			// XmlRpcClient.setProxy(true, "SOCKS", AppConstants.TOR_PROXY_HOST, AppConstants.TOR_PROXY_PORT);
-            XmlRpcClient.setProxy(true, "http", AppConstants.TOR_PROXY_HOST, AppConstants.TOR_PROXY_PORT);
-        }
-		else
-		{
-			XmlRpcClient.setProxy(false, null, null, -1);
-		}
-		
-		Log.d(TAG, "Logging into Wordpress: " + username + '@' + mServerUrl + PATH_XMLRPC);
-		mWordpress = new Wordpress(username, password, mServerUrl + PATH_XMLRPC);	
-		
-		mWordpress.getRecentPosts(1); //need to do a test to force authentication
-		*/
 	}
 	
 	public String getPostUrl (String postId) throws IOException // XmlRpcFault, MalformedURLException
 	{
 		connect();
-		//Page post = mWordpress.getPost(Integer.parseInt(postId));
-		//return post.getPermaLink();
 		return smWrapper.getPostUrl(postId); // TODO: implement method in wrapper
 	}
 	
 	public Page getPost (String postId) throws IOException // XmlRpcFault, MalformedURLException
 	{
 		connect();
-		//Page post = mWordpress.getPost(Integer.parseInt(postId));
-		//return post;
 		return (Page)smWrapper.getPost(postId); // TODO: implement method in wrapper
 	}
 	
 	public List<Page> getRecentPosts (int num) throws IOException // XmlRpcFault, MalformedURLException
 	{
 		connect();
-		//List<Page> rPosts = mWordpress.getRecentPosts(num);
-		//return rPosts;
         return null; // smWrapper.getRecentPosts(num); // TODO: implement method in wrapper
 	}
 	
 	public List<Comment> getComments (Page page) throws IOException // XmlRpcFault, MalformedURLException
 	{
 		connect();
-		//return mWordpress.getComments(null, page.getPostid(), null, null);
         return null; // smWrapper.getComments(page); // TODO: implement method in wrapper
 	}
 
@@ -193,82 +163,13 @@ public class ServerManager {
 	public String addMedia (String mimeType, File file) throws IOException // XmlRpcFault, MalformedURLException
 	{
 		connect();
-		
-		//MediaObject mObj = null;
-		
-		//if (file != null)
-		//	mObj = mWordpress.newMediaObject(mimeType, file, false);
-		
-		//return mObj.getUrl();
         return smWrapper.addMedia(mimeType, file); // TODO: implement method in wrapper
 	}
 	
 	public String post (String title, String body, String embed, String[] catstrings, String medium, String mediaService, String mediaGuid, String mimeType, File file) throws IOException // XmlRpcFault, MalformedURLException
 	{
-        // wrapper will build post
-
 		connect();
 		
-		//MediaObject mObj = null;
-		
-		//if (file != null)
-		//	mObj = mWordpress.newMediaObject(mimeType, file, false);
-		
-		//Page page = new Page ();
-		//page.setTitle(title);
-		
-		//StringBuffer sbBody = new StringBuffer();
-		//sbBody.append(body);
-		
-		//if (mObj != null)
-		//{
-		//	sbBody.append("\n\n");
-		//	sbBody.append(mObj.getUrl());
-		//}
-		
-		//page.setDescription(sbBody.toString());
-		
-		//if (catstrings != null && catstrings.length > 0)
-		//{
-		//	XmlRpcArray cats = new XmlRpcArray();
-		//	for (String catstr : catstrings)
-		//		cats.add(catstr);
-		//	page.setCategories(cats);
-		//}
-		
-		//XmlRpcArray custom_fields = new XmlRpcArray();
-
-		//if (medium != null)
-		//{
-		//	XmlRpcStruct struct = new XmlRpcStruct();
-		//	struct.put("key","medium");
-		//	struct.put("value",medium);
-		//	custom_fields.add(struct);
-		//}
-
-		//if (mediaService != null)
-		//{
-		//	XmlRpcStruct struct = new XmlRpcStruct();
-		//	struct.put("key","media_value");
-		//	struct.put("value",mediaService);
-		//	custom_fields.add(struct);
-		//}
-		
-		//if (mediaGuid != null)
-		//{
-		//	XmlRpcStruct struct = new XmlRpcStruct();
-		//	struct.put("key","media_guid");
-		//	struct.put("value",mediaGuid);
-		//	custom_fields.add(struct);
-		//}
-
-		//page.setCustom_fields(custom_fields);
-		
-		//boolean publish = true; //let's push it out!
-		//String postId = mWordpress.newPost(page, publish);
-
-		//return postId;
-
         // need user name for group id
         Auth auth = (new AuthTable()).getAuthDefault(mContext, Auth.SITE_STORYMAKER);
         if (auth != null) {
@@ -291,14 +192,4 @@ public class ServerManager {
 		
 		activity.startActivity(intent);
 	}
-	
-	public void showPost (String title, String url)
-	{		
-		Intent intent = new Intent(mContext,WebViewActivity.class);
-		intent.putExtra("title", title);
-		intent.putExtra("url", url);
-		
-		mContext.startActivity(intent);
-	}
-	
 }

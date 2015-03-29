@@ -121,7 +121,7 @@ public class LoginActivity extends BaseActivity implements Runnable
     	try {
 			StoryMakerApp.getServerManager().connect(username, password);
 
-			// only store username/password for a successful login
+			// FIXME only store username/password for a successful login
 	    	saveCreds(username, password);
 			
 			mHandler.sendEmptyMessage(0);
