@@ -85,32 +85,32 @@ def zip_content():
     """this creates the zipped blob of content and copies it in to storymaker's assets folder as its .obb file"""
 
     if query_yes_no("zip main?"):
-        os.system("rm liger-content/assets/main.1031.org.storymaker.app.obb ; cd liger-content/assets ; zip -n .mp4 -r main.1031.org.storymaker.app.obb org.storymaker.app/default")
-        print "content generated at: liger-content/assets/main.1031.org.storymaker.app.obb"
+        os.system("rm liger-content/assets/main.1044.org.storymaker.app.obb ; cd liger-content/assets ; zip -n .mp4 -r main.1044.org.storymaker.app.obb org.storymaker.app/default")
+        print "content generated at: liger-content/assets/main.1044.org.storymaker.app.obb"
     
     if query_yes_no("zip learning guide?"):
-        os.system("rm liger-content/assets/learning_guide.main.1.obb; cd liger-content/assets ; zip -n .mp4 -r learning_guide.main.1.obb org.storymaker.app/learning_guide")
-        print "content generated at: liger-content/assets/learning_guide.main.1.obb"
+        os.system("rm liger-content/assets/learning_guide.main.2.obb; cd liger-content/assets ; zip -n .mp4 -r learning_guide.main.2.obb org.storymaker.app/learning_guide")
+        print "content generated at: liger-content/assets/learning_guide.main.2.obb"
         
     if query_yes_no("zip burundi?"):
-        os.system("rm liger-content/assets/burundi.main.3.obb; cd liger-content/assets ; zip -n .mp4 -r burundi.main.3.obb org.storymaker.app/burundi")
-        print "content generated at: liger-content/assets/burundi.main.3.obb"
+        os.system("rm liger-content/assets/burundi.main.4.obb; cd liger-content/assets ; zip -n .mp4 -r burundi.main.4.obb org.storymaker.app/burundi")
+        print "content generated at: liger-content/assets/burundi.main.4.obb"
         
     if query_yes_no("zip burundi patch?"):
-        os.system("rm liger-content/assets/burundi.patch.3.obb; cd liger-content/assets/patch/ ; zip -n .mp4 -r burundi.patch.3.obb org.storymaker.app/burundi ; mv burundi.patch.3.obb ..")
-        print "content generated at: liger-content/assets/burundi.patch.3.obb"
+        os.system("rm liger-content/assets/burundi.patch.4.obb; cd liger-content/assets/patch/ ; zip -n .mp4 -r burundi.patch.4.obb org.storymaker.app/burundi ; mv burundi.patch.4.obb ..")
+        print "content generated at: liger-content/assets/burundi.patch.4.obb"
         
-    if query_yes_no("zip dressgate?"):
-        os.system("rm liger-content/assets/dressgate.main.1.obb; cd liger-content/assets ; zip -n .mp4 -r dressgate.main.1.obb org.storymaker.app/dressgate")
-        print "content generated at: liger-content/assets/dressgate.main.1.obb"
+    #if query_yes_no("zip dressgate?"):
+    #    os.system("rm liger-content/assets/dressgate.main.1.obb; cd liger-content/assets ; zip -n .mp4 -r dressgate.main.1.obb org.storymaker.app/dressgate")
+    #    print "content generated at: liger-content/assets/dressgate.main.1.obb"
         
     if query_yes_no("zip persian?"):
-        os.system("rm liger-content/assets/persian.main.3.obb; cd liger-content/assets ; zip -n .mp4 -r persian.main.3.obb org.storymaker.app/persian")
-        print "content generated at: liger-content/assets/persian.main.3.obb"
+        os.system("rm liger-content/assets/persian.main.4.obb; cd liger-content/assets ; zip -n .mp4 -r persian.main.4.obb org.storymaker.app/persian")
+        print "content generated at: liger-content/assets/persian.main.4.obb"
 
     if query_yes_no("zip mena?"):
-        os.system("rm liger-content/assets/mena.main.3.obb; cd liger-content/assets ; zip -n .mp4 -r mena.main.3.obb org.storymaker.app/mena")
-        print "content generated at: liger-content/assets/mena.main.3.obb"
+        os.system("rm liger-content/assets/mena.main.4.obb; cd liger-content/assets ; zip -n .mp4 -r mena.main.4.obb org.storymaker.app/mena")
+        print "content generated at: liger-content/assets/mena.main.4.obb"
     
 @cli.command()
 def adb_push_obb():
@@ -121,26 +121,29 @@ def adb_push_obb():
 def adb_push_files():
     """adb push to /sdcard/Android/<package>/files"""
 
-    if query_yes_no("adb push learning_guide.main.1.obb to device files/ folder?"):
-        os.system("cd liger-content/assets ; adb push learning_guide.main.1.obb /sdcard/Android/data/%s/files/learning_guide.main.1.obb" % (packagename))
+    if query_yes_no("adb push learning_guide.main.2.obb to device files/ folder?"):
+        os.system("cd liger-content/zips ; adb push learning_guide.main.2.obb /sdcard/Android/data/%s/files/learning_guide.main.2.obb" % (packagename))
+    if query_yes_no("adb push learning_guide.patch.2.obb to device files/ folder?"):
+        os.system("cd liger-content/zips ; adb push learning_guide.patch.2.obb /sdcard/Android/data/%s/files/learning_guide.patch.2.obb" % (packagename))
         
-    if query_yes_no("adb push burundi.main.3.obb to device files/ folder?"):
-        os.system("cd liger-content/assets ; adb push burundi.main.3.obb /sdcard/Android/data/%s/files/burundi.main.3.obb" % (packagename))
+    if query_yes_no("adb push burundi.main.4.obb to device files/ folder?"):
+        os.system("cd liger-content/zips ; adb push burundi.main.4.obb /sdcard/Android/data/%s/files/burundi.main.4.obb" % (packagename))
+    if query_yes_no("adb push burundi.patch.4.obb to device files/ folder?"):
+        os.system("cd liger-content/zips ; adb push burundi.patch.4.obb /sdcard/Android/data/%s/files/burundi.patch.4.obb" % (packagename))
         
-    if query_yes_no("adb push burundi.patch.3.obb to device files/ folder?"):
-        os.system("cd liger-content/assets ; adb push burundi.patch.3.obb /sdcard/Android/data/%s/files/burundi.patch.3.obb" % (packagename))
+    if query_yes_no("adb push mena.main.4.obb to device files/ folder?"):
+        os.system("cd liger-content/zips ; adb push mena.main.4.obb /sdcard/Android/data/%s/files/mena.main.4.obb" % (packagename))
         
-    if query_yes_no("adb push mena.main.3.obb to device files/ folder?"):
-        os.system("cd liger-content/assets ; adb push mena.main.3.obb /sdcard/Android/data/%s/files/mena.main.3.obb" % (packagename))
+    if query_yes_no("adb push persian.main.4.obb to device files/ folder?"):
+        os.system("cd liger-content/zips ; adb push persian.main.4.obb /sdcard/Android/data/%s/files/persian.main.4.obb" % (packagename))
         
-    if query_yes_no("adb push persian.main.3.obb to device files/ folder?"):
-        os.system("cd liger-content/assets ; adb push persian.main.3.obb /sdcard/Android/data/%s/files/persian.main.3.obb" % (packagename))
+    if query_yes_no("adb push main.1044.org.storymaker.app.obb to device files/ folder?"):
+        os.system("cd liger-content/zips ; adb push main.1044.org.storymaker.app.obb /sdcard/Android/data/%s/files/main.1044.org.storymaker.app.obb" % (packagename))
+    if query_yes_no("adb push patch.1044.org.storymaker.app.obb to device files/ folder?"):
+        os.system("cd liger-content/zips ; adb push patch.1044.org.storymaker.app.obb /sdcard/Android/data/%s/files/patch.1044.org.storymaker.app.obb" % (packagename))
         
-    if query_yes_no("adb push main.1031.org.storymaker.app.obb to device files/ folder?"):
-        os.system("cd liger-content/assets ; adb push main.1031.org.storymaker.app.obb /sdcard/Android/data/%s/files/main.1031.org.storymaker.app.obb" % (packagename))
-        
-    if query_yes_no("adb push dressgate.main.1.obb to device files/ folder?"):
-        os.system("cd liger-content/assets ; adb push dressgate.main.1.obb /sdcard/Android/data/%s/files/dressgate.main.1.obb" % (packagename))
+    #if query_yes_no("adb push dressgate.main.1.obb to device files/ folder?"):
+    #    os.system("cd liger-content/assets ; adb push dressgate.main.1.obb /sdcard/Android/data/%s/files/dressgate.main.1.obb" % (packagename))
 
 @cli.command()
 def adb_push():
