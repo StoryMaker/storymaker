@@ -19,3 +19,6 @@
 [submodule "external/liger"]
 	path = external/liger
 	url = git@github.com:scalio/storypath.git
+[submodule "external/cacheword"]
+	path = external/cacheword
+	url = https://github.com/guardianproject/cacheword.git
