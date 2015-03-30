@@ -1,0 +1,120 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:id="@+id/llRoot"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:gravity="center"
+              android:padding="20dp"
+              android:orientation="vertical" >
+              
+    <ImageView android:id="@+id/imageView"
+               android:layout_width="162dp"
+               android:layout_height="162dp"
+               android:layout_gravity="center"
+               android:adjustViewBounds="true"
+               android:contentDescription="@string/app_name"
+               android:scaleType="centerCrop"
+               android:src="@drawable/logo_large" />
+
+    <TextView android:id="@+id/textView"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_gravity="center"
+              android:layout_marginBottom="40dp"
+              android:gravity="center"
+              android:text="@string/app_name"
+              android:textAppearance="?android:attr/textAppearanceLarge"
+              android:textColor="@color/cw_black" />
+
+    <FrameLayout android:layout_width="match_parent"
+                 android:layout_height="wrap_content" >
+
+        <LinearLayout android:id="@+id/llCreatePin"
+                      android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:orientation="vertical" >
+              
+            <ViewFlipper android:id="@+id/viewFlipper"
+                         android:layout_width="match_parent"
+                         android:layout_height="wrap_content"
+                         android:inAnimation="@anim/push_right_in" >
+
+                <LinearLayout android:id="@+id/flipView1"
+                              android:layout_width="match_parent"
+                              android:layout_height="wrap_content"
+                              android:layout_margin="5dp" >
+
+                    <EditText android:id="@+id/editCreatePin"
+                              android:layout_width="0dp"
+                              android:layout_height="wrap_content"
+                              android:layout_weight="1"
+                              android:ems="10"
+                              android:hint="@string/lock_screen_pin_create_text"
+                              android:inputType="textPassword" />
+                        
+                </LinearLayout>
+
+                <LinearLayout android:id="@+id/flipView2"
+                              android:layout_width="match_parent"
+                              android:layout_height="wrap_content"
+                              android:layout_margin="5dp" >
+
+                    <EditText android:id="@+id/editConfirmPin"
+                              android:layout_width="0dp"
+                              android:layout_height="wrap_content"
+                              android:layout_weight="1"
+                              android:ems="10"
+                              android:hint="@string/lock_screen_pin_confirm_text"
+                              android:inputType="textPassword" />
+                        
+                </LinearLayout>
+                    
+            </ViewFlipper>
+
+            <Button android:id="@+id/btnCreate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="15dp"
+                    style="@style/LockButtonText"
+		            android:background="@drawable/btn_gray" 
+                    android:text="@string/lock_screen_create_button_text" />
+
+        </LinearLayout>
+
+        <LinearLayout android:id="@+id/llEnterPin"
+                      android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:orientation="vertical"
+                      android:visibility="invisible" >
+
+            <LinearLayout android:id="@+id/llManualAdd"
+                          android:layout_width="match_parent"
+                          android:layout_height="wrap_content"
+                          android:layout_margin="5dp" >
+
+                <EditText android:id="@+id/editEnterPin"
+                          android:layout_width="match_parent"
+                          android:layout_height="wrap_content"
+                          android:ems="10"
+                          android:hint="@string/lock_screen_pin_enter_text"
+                          android:imeOptions="actionGo"
+                          android:inputType="textPassword" >
+
+                    <requestFocus />
+                        
+                </EditText>
+                   
+            </LinearLayout>
+
+            <Button android:id="@+id/btnOpen"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="15dp"
+                    style="@style/LockButtonText"
+	                android:background="@drawable/btn_gray"
+                    android:text="@string/lock_screen_open_button_text" />
+
+        </LinearLayout>
+            
+    </FrameLayout>
+
+</LinearLayout>

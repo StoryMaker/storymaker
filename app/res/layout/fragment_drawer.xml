@@ -243,6 +243,16 @@
             android:textColor="#ff555555"
             android:paddingTop="8dp"
             android:layout_weight="1" />
+
+        <!-- NEW/CACHEWORD -->
+        <Button android:id="@+id/btnDrawerLock"
+           android:layout_width="180dp"
+           android:layout_height="wrap_content"
+           android:background="@android:color/transparent"
+           android:drawableLeft="@drawable/ic_nav_media_settings"
+           android:gravity="left|center_vertical"
+           android:text="@string/menu_lock"
+           android:textColor="#dddddd"/>
 	
 	</LinearLayout>
 

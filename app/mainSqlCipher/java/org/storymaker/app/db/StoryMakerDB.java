@@ -15,14 +15,16 @@ import net.sqlcipher.database.SQLiteDatabase;
 import net.sqlcipher.database.SQLiteOpenHelper;
 import android.util.Log;
 
-public class StoryMakerDB extends SQLiteOpenHelper {
+import info.guardianproject.cacheword.CacheWordHandler;
+
+public class StoryMakerDB extends StoryMakerDBWrapper {
     private static final String TAG = "StoryMakerDB";
     private static final int DB_VERSION = 11;
     private static final String DB_NAME = "sm.db";
     private Context mContext;
     
-    public StoryMakerDB(Context context) {
-        super(context, DB_NAME, null, DB_VERSION);
+    public StoryMakerDB(CacheWordHandler cacheWord, Context context) {
+        super(cacheWord, context, DB_NAME, null, DB_VERSION);
         mContext = context;
     }
     
