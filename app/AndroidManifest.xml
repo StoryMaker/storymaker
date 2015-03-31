@@ -260,6 +260,14 @@
             android:screenOrientation="portrait">
         </activity>
         <activity
+            android:name="io.scal.secureshareui.login.ZTLoginActivity"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name="io.scal.secureshareui.login.ZTWebActivity"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
             android:name="org.storymaker.app.ConnectAccountActivity"
             android:label="@string/title_activity_connect_account"
             android:screenOrientation="portrait"

@@ -11,6 +11,8 @@ import java.util.List;
 import net.bican.wordpress.Comment;
 import net.bican.wordpress.Page;
 
+import io.scal.secureshareui.controller.SiteController;
+import io.scal.secureshareui.controller.ZTSiteController;
 import io.scal.secureshareui.lib.SMWrapper;
 
 import android.app.Activity;
@@ -27,7 +29,7 @@ public class ServerManager {
 	private Context mContext;
 	
 	//private final static String PATH_XMLRPC = "/xmlrpc.php";
-	private final static String PATH_REGISTER = "accounts/signup/?chrome=0";
+	private final static String PATH_REGISTER = "accounts/signup/";
 	//private final static String PATH_LOGIN = "/wp-admin";
 	//public final static String PATH_REGISTERED = "/wp-login.php?checkemail=registered";
 	
@@ -44,6 +46,9 @@ public class ServerManager {
 	private SharedPreferences mSettings;
 
     private SMWrapper smWrapper;
+
+    private ZTSiteController zt;
+    private String ztCredentials;
 	
 	public ServerManager (Context context)
 	{
@@ -102,6 +107,7 @@ public class ServerManager {
     private void connect () throws IOException // MalformedURLException, XmlRpcFault
     {
         //if (mWordpress == null)
+        /*
         if (smWrapper == null)
         {
             Auth auth = (new AuthTable()).getAuthDefault(mContext, Auth.SITE_STORYMAKER);
@@ -115,6 +121,29 @@ public class ServerManager {
             }
             Log.e(TAG, "connect() bailing out, user credentials are null or blank");
         }
+        */
+
+
+
+        // TEMP, FOR TESTING PUBLISHING TO ZT
+        if (zt == null) {
+            Auth auth = (new AuthTable()).getAuthDefault(mContext, ZTSiteController.SITE_KEY);
+            if (auth != null) {
+                ztCredentials = auth.getCredentials();
+                if ((ztCredentials == null) || (ztCredentials.length() == 0)) {
+                    Log.e("ZT TEMP", "ZT CREDENTIALS ARE BLANK");
+                } else {
+                    Log.d("ZT TEMP", "FOUND ZT CREDENTIALS");
+
+                    zt = (ZTSiteController)SiteController.getSiteController(ZTSiteController.SITE_KEY, mContext, null, null);
+                }
+            } else {
+                Log.e("ZT TEMP", "NO ZT CREDENTIALS FOUND");
+            }
+        }
+
+
+
     }
 	
 	public void connect (String username, String password) throws IOException // MalformedURLException, XmlRpcFault
@@ -129,29 +158,59 @@ public class ServerManager {
             // throw exception so LoginActivity doesn't save credentials
             throw new IOException("Login failed");
         }
+
+        // replace with oauth code
+        /*
+		XmlRpcClient.setContext(mContext);
+
+	    boolean useTor = mSettings.getBoolean("pusetor", false);
+	    
+		if (useTor)
+		{
+            // socks proxy scheme no longer supported by StrongHttpClient
+			// XmlRpcClient.setProxy(true, "SOCKS", AppConstants.TOR_PROXY_HOST, AppConstants.TOR_PROXY_PORT);
+            XmlRpcClient.setProxy(true, "http", AppConstants.TOR_PROXY_HOST, AppConstants.TOR_PROXY_PORT);
+        }
+		else
+		{
+			XmlRpcClient.setProxy(false, null, null, -1);
+		}
+		
+		Log.d(TAG, "Logging into Wordpress: " + username + '@' + mServerUrl + PATH_XMLRPC);
+		mWordpress = new Wordpress(username, password, mServerUrl + PATH_XMLRPC);	
+		
+		mWordpress.getRecentPosts(1); //need to do a test to force authentication
+		*/
 	}
 	
 	public String getPostUrl (String postId) throws IOException // XmlRpcFault, MalformedURLException
 	{
 		connect();
+		//Page post = mWordpress.getPost(Integer.parseInt(postId));
+		//return post.getPermaLink();
 		return smWrapper.getPostUrl(postId); // TODO: implement method in wrapper
 	}
 	
 	public Page getPost (String postId) throws IOException // XmlRpcFault, MalformedURLException
 	{
 		connect();
+		//Page post = mWordpress.getPost(Integer.parseInt(postId));
+		//return post;
 		return (Page)smWrapper.getPost(postId); // TODO: implement method in wrapper
 	}
 	
 	public List<Page> getRecentPosts (int num) throws IOException // XmlRpcFault, MalformedURLException
 	{
 		connect();
+		//List<Page> rPosts = mWordpress.getRecentPosts(num);
+		//return rPosts;
         return null; // smWrapper.getRecentPosts(num); // TODO: implement method in wrapper
 	}
 	
 	public List<Comment> getComments (Page page) throws IOException // XmlRpcFault, MalformedURLException
 	{
 		connect();
+		//return mWordpress.getComments(null, page.getPostid(), null, null);
         return null; // smWrapper.getComments(page); // TODO: implement method in wrapper
 	}
 
@@ -163,23 +222,108 @@ public class ServerManager {
 	public String addMedia (String mimeType, File file) throws IOException // XmlRpcFault, MalformedURLException
 	{
 		connect();
+		
+		//MediaObject mObj = null;
+		
+		//if (file != null)
+		//	mObj = mWordpress.newMediaObject(mimeType, file, false);
+		
+		//return mObj.getUrl();
         return smWrapper.addMedia(mimeType, file); // TODO: implement method in wrapper
 	}
 	
 	public String post (String title, String body, String embed, String[] catstrings, String medium, String mediaService, String mediaGuid, String mimeType, File file) throws IOException // XmlRpcFault, MalformedURLException
 	{
+        // wrapper will build post
+
 		connect();
 		
+		//MediaObject mObj = null;
+		
+		//if (file != null)
+		//	mObj = mWordpress.newMediaObject(mimeType, file, false);
+		
+		//Page page = new Page ();
+		//page.setTitle(title);
+		
+		//StringBuffer sbBody = new StringBuffer();
+		//sbBody.append(body);
+		
+		//if (mObj != null)
+		//{
+		//	sbBody.append("\n\n");
+		//	sbBody.append(mObj.getUrl());
+		//}
+		
+		//page.setDescription(sbBody.toString());
+		
+		//if (catstrings != null && catstrings.length > 0)
+		//{
+		//	XmlRpcArray cats = new XmlRpcArray();
+		//	for (String catstr : catstrings)
+		//		cats.add(catstr);
+		//	page.setCategories(cats);
+		//}
+		
+		//XmlRpcArray custom_fields = new XmlRpcArray();
+
+		//if (medium != null)
+		//{
+		//	XmlRpcStruct struct = new XmlRpcStruct();
+		//	struct.put("key","medium");
+		//	struct.put("value",medium);
+		//	custom_fields.add(struct);
+		//}
+
+		//if (mediaService != null)
+		//{
+		//	XmlRpcStruct struct = new XmlRpcStruct();
+		//	struct.put("key","media_value");
+		//	struct.put("value",mediaService);
+		//	custom_fields.add(struct);
+		//}
+		
+		//if (mediaGuid != null)
+		//{
+		//	XmlRpcStruct struct = new XmlRpcStruct();
+		//	struct.put("key","media_guid");
+		//	struct.put("value",mediaGuid);
+		//	custom_fields.add(struct);
+		//}
+
+		//page.setCustom_fields(custom_fields);
+		
+		//boolean publish = true; //let's push it out!
+		//String postId = mWordpress.newPost(page, publish);
+
+		//return postId;
+
+
+
+        // TEMP, FOR TESTING PUBLISHING TO ZT
+        if (zt != null) {
+            String result = zt.post(ztCredentials, title, body, embed);
+            Log.d("ZT TEMP", "ZT POST RESULT: " + result);
+        } else {
+            Log.e("ZT TEMP", "ZT POST SKIPPED");
+        }
+
+
+
         // need user name for group id
+        /*
         Auth auth = (new AuthTable()).getAuthDefault(mContext, Auth.SITE_STORYMAKER);
         if (auth != null) {
             String user = auth.getUserName();
             if (user != null && user.length() > 0) {
-                return smWrapper.post(user, title, body, embed, catstrings, medium, mediaService, mediaGuid, mimeType, file);
+                //return smWrapper.post(user, title, body, embed, catstrings, medium, mediaService, mediaGuid, mimeType, file);
+                // TEMP, DISABLED TO AVOID SPAMMING SM SITE
+                return null;
             }
         }
+        */
 
-        Log.e(TAG, "can't post, no user name found");
+        //Log.e(TAG, "can't post, no user name found");
         return null;
 	}
 	
@@ -192,4 +336,14 @@ public class ServerManager {
 		
 		activity.startActivity(intent);
 	}
+	
+	public void showPost (String title, String url)
+	{		
+		Intent intent = new Intent(mContext,WebViewActivity.class);
+		intent.putExtra("title", title);
+		intent.putExtra("url", url);
+		
+		mContext.startActivity(intent);
+	}
+	
 }

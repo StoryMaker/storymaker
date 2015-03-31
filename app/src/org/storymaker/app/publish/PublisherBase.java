@@ -15,6 +15,7 @@ import org.storymaker.app.model.Project;
 import org.storymaker.app.model.PublishJob;
 import org.storymaker.app.server.ServerManager;
 import io.scal.secureshareui.controller.SiteController;
+import io.scal.secureshareui.controller.ZTSiteController;
 
 public abstract class PublisherBase {
     private final static String TAG = "PublisherBase";
@@ -111,9 +112,11 @@ public abstract class PublisherBase {
         mController.publishJobProgress(mPublishJob, 0, "Publishing to StoryMaker.cc...");
         // split out embed
         // String descWithMedia = desc + "\n\n" + mediaEmbed;
-        String postId = sm.post(title, desc, mediaEmbed, categories, medium, mediaService, mediaGuid);
+        // now returning url directly
+        // String postId = sm.post(title, desc, mediaEmbed, categories, medium, mediaService, mediaGuid);
         mController.publishJobProgress(mPublishJob, 0.5f, "Publishing to StoryMaker.cc...");
-        String urlPost = sm.getPostUrl(postId);
+        // String urlPost = sm.getPostUrl(postId);
+        String urlPost = sm.post(title, desc, mediaEmbed, categories, medium, mediaService, mediaGuid);
 
         // FIXME make this async and put this in the callback
         // FIXME store the final published url in the project table?
@@ -150,9 +153,10 @@ public abstract class PublisherBase {
 		} else if (job.isType(JobTable.TYPE_UPLOAD)) {
 			String publishToStoryMaker = mPublishJob.getMetadata().get(SiteController.VALUE_KEY_PUBLISH_TO_STORYMAKER);
 			if (publishToStoryMaker != null && publishToStoryMaker.equals("true")) {
-				Auth auth = (new AuthTable()).getAuthDefault(mContext, Auth.SITE_STORYMAKER);
+				//Auth auth = (new AuthTable()).getAuthDefault(mContext, Auth.SITE_STORYMAKER);
+                Auth auth = (new AuthTable()).getAuthDefault(mContext, ZTSiteController.SITE_KEY);
 				if (auth != null) {
-					publishToStoryMaker();
+					publishToStoryMaker();  // fail on null result?
 				} else {
 					mController.publishJobFailed(mPublishJob, 78268832, "You are not signed into StoryMaker.cc!"); // FIXME do this nicer!
 				}

@@ -15,6 +15,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 
 public class AccountsActivity extends BaseActivity {
 
@@ -73,13 +74,24 @@ public class AccountsActivity extends BaseActivity {
 
 			@Override
 			public void onSuccess(Account account) {
-				Auth auth = authTable.getAuthDefault(getApplicationContext(), account.getSite());
-				
+				// Auth auth = authTable.getAuthDefault(getApplicationContext(), account.getSite());
+
+                ArrayList<Auth> results = authTable.getAuthsAsList(getApplicationContext(), account.getSite());
+
+                for (Auth deleteAuth : results) {
+                    // only a single username/password is stored at a time
+                    deleteAuth.delete();
+                    Log.d("AUTH", "DELETING AN EXISTING AUTH RECORD FOR " + account.getSite());
+                }
+
 				//if auth doesn't exist in db
-				if(auth == null) {
-					auth = new Auth(getApplicationContext(), -1, account.getName(), account.getSite(), null, null, null, null, null);
-					auth.insert();
-				}
+				//if(auth == null) {
+				//	auth = new Auth(getApplicationContext(), -1, account.getName(), account.getSite(), null, null, null, null, null);
+				//	auth.insert();
+				//}
+
+                Auth auth = new Auth(getApplicationContext(), -1, account.getName(), account.getSite(), null, null, null, null, null);
+                auth.insert();
 
 				//set id of account based on returned id of auth insert
 				account.setId(auth.getId());
