@@ -1,0 +1,308 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+  <string name="app_name">StoryMaker 2</string>
+  <string name="app_description">Thực hiện những cuộc phóng sự hay bây giờ dễ dàng hơn bao giờ hết với StoryMaker. Các khuôn mẫu, khuôn phủ chồng, và bài học sẽ chỉ dẫn bạn qua toàn bộ tiến trình sáng tạo. StoryMaker để bạn chỉnh sửa nội dung ngay trên thiết bị di động, giúp bạn hoàn tất phóng sự dễ dàng hơn. Một khi kết thúc, StoryMaker giúp bạn xuất bản phóng sự đến các nền bạn ưa thích</string>
+  <string name="title_projects">Phóng sự</string>
+  <string name="title_lessons">Bài học</string>
+  <string name="action_publish">Xuất bản</string>
+  <!--menus-->
+  <string name="menu_new_project">Mới</string>
+  <string name="menu_projects">Phóng sự</string>
+  <string name="menu_lessons">Bài học</string>
+  <string name="menu_glossary">Thuật Ngữ</string>
+  <string name="menu_contacts">Liên hệ</string>
+  <string name="menu_settings">Thiết đặt</string>
+  <string name="menu_accounts">Tài khoản</string>
+  <string name="menu_archive">Lưu trữ</string>
+  <string name="drawer_profile">Đăng nhập</string>
+  <!--FIXME: rename-->
+  <string name="menu_add_media">Thêm</string>
+  <string name="menu_capture_media">Thâu</string>
+  <string name="menu_share_media">Chia sẻ</string>
+  <string name="menu_save_media">Lưu</string>
+  <string name="menu_play_media">Phát</string>
+  <string name="menu_render_media">Kết xuất</string>
+  <string name="menu_bug_report">Báo cáo lỗi</string>
+  <string name="menu_login">Đăng nhập</string>
+  <string name="menu_logs">Gửi ký sự</string>
+  <string name="menu_update">Cập nhật</string>
+  <string name="menu_about">Về</string>
+  <string name="menu_save_project">Lưu</string>
+  <string name="menu_overlay_camera">Máy ảnh</string>
+  <string name="menu_add_new_shot">Thêm Clip vào Cảnh</string>
+  <string name="menu_export_project_files">Xuất Tập tin Đề án ra dưới dạng Zip</string>
+  <string name="menu_join_storymaker">Tham gia vào Cộng Đồng StoryMaker</string>
+  <string name="menu_sign_up">Đăng ký / Đăng nhập</string>
+  <string name="menu_upload_manager">Quản lý Tải lên</string>
+  <string name="menu_uploads">Tải lên</string>
+  <string name="welcome_message">Chào bạn!\nXin đón mừng bạn đến với StoryMaker</string>
+  <!--project list-->
+  <string name="default_project_list_view">Đây là lần đâu tiên bạn lập ra một đề án\n\n- nhấn để bắt đầu-</string>
+  <string name="default_project_view_message">Bạn có lựa chọn.\nTường thuật lại câu chuyện bằng video, ghi âm hoặc hình ảnh\n\n- nhấn để bắt đầu-</string>
+  <!--video processing-->
+  <string name="pref_out_fps_title">Tốc độ khung hình đầu ra (fps)</string>
+  <string name="pref_out_fps_summary">Lưu video đầu ra với tốc độ khung hình mỗi giây (15-30)</string>
+  <string name="pref_out_rate_title">Bitrate đầu ra (kbps)</string>
+  <string name="pref_out_rate_summary">Bitrate của video đầu ra (300-1500)</string>
+  <string name="pref_out_format_title">Định dạng đầu ra</string>
+  <string name="pref_out_format_summary">Định dạng tập tin chứa đựng (mp4, 3gp, ogg)</string>
+  <string name="pref_out_vcodec_title">Codec Video đầu ra</string>
+  <string name="pref_out_vcodec_summary">video codec (copy, libx264, v.v..)</string>
+  <string name="pref_out_acodec_title">Codec Âm thanh đầu ra</string>
+  <string name="pref_out_acodec_summary">codec âm thanh (copy, aac, mp3, v.v...)</string>
+  <string name="pref_out_vwidth_title">Bề ngang tùy chỉnh của Video (px)</string>
+  <string name="pref_out_vwidth_summary">bề ngang tùy chỉnh cho video đầu ra</string>
+  <string name="pref_out_vheight_title">Bề cao tùy chỉnh của Video (px)</string>
+  <string name="pref_out_vheight_summary">bề cao tùy chỉnh cho video đầu ra</string>
+  <string name="hintTitle">tựa đề</string>
+  <string name="hintStartTime">bắt đầu (00:00:00)</string>
+  <string name="hintEndTime">kéo dài (00:00:00)</string>
+  <string name="hintFadeIn">đưa vào dần (số khung)</string>
+  <string name="hintFadeOut">đưa ra dần (số khung)</string>
+  <string name="start_recording">Thâu</string>
+  <string name="stop_recording">Ngừng</string>
+  <string name="play_recording">Phát</string>
+  <string name="save_recording">Lưu</string>
+  <string name="downloading_lessons_from_server_">Tải xuống các bài học từ máy chủ...</string>
+  <string name="checking_for_updates_">Xem có cập nhật không...</string>
+  <!--LOG COLLECTOR-->
+  <string name="app_name_lc">Thu thập Ký sự</string>
+  <string name="message_subject">Ký sự thiết bị Android</string>
+  <string name="acquiring_log_progress_dialog_message">Thu nhận ký sự từ hệ thống\u2026</string>
+  <string name="chooser_title">Chọn ứng dụng để gửi ký sự đi</string>
+  <string name="failed_to_get_log_message">Không lấy được ký sự của hệ thống.</string>
+  <string name="main_dialog_text">Ứng dụng  này sẽ thử thu thập ký sự của thiết bị.
+Ký sự thu thập sẽ được gửi đi bằng ứng dụng bạn chọn.
+Bạn cũng có cơ hội để duyệt xem và điều chỉnh dữ liệu gửi đi.</string>
+  <string name="title_home_projects">Đề án</string>
+  <string name="title_home_activity">Hoạt động</string>
+  <string name="title_lessons_lessons">Bài học</string>
+  <string name="title_lessons_glossary">Thuật ngữ</string>
+  <string name="hello_world">Chào tất cả!</string>
+  <string name="title_activity_home">Nhà</string>
+  <string name="new_story_name_it">Đặt tên.</string>
+  <string name="new_story_working_title">Tựa đề đang soạn...</string>
+  <string name="new_story_choose_something">Chọn gì đó ngắn gọn định rõ đề tài và gợi thích thú cho độc giả.</string>
+  <string name="new_story_choose_a_medium">Chọn phương tiện truyền thông.</string>
+  <!--<string name="new_story_video">Video: Something here about why simple, short video is good! Ideally it should be about the same length as the other strings.</string>
+   	<string name="new_story_essay">Photo Essay: Tell a story about one character. Follow this template to produce a simple photo essay story about one character.</string>
+    <string name="new_story_photo">Single Photo: Telling a strong story with one image is a skill. To simplify, these templates explain some primary photo types.</string>
+    
+    <string name="new_story_audio">Audio: Something here about using audio to tell a story. Personally, I really like to listen to the radio and podcasts while I do housework!</string>-->
+  <string name="new_story_simple_story">Phóng sự đơn giản</string>
+  <string name="new_story_choose_template">Khuôn Cảnh</string>
+  <string name="home_new_story">LÀM MỘT PHÓNG SỰ</string>
+  <string name="home_start_a_lesson">XEM XÉT CÁC BÀI HỌC</string>
+  <string name="title_activity_new_story">Bạn tạo ra một phóng sự!</string>
+  <string name="title_activity_lessons">Bài học</string>
+  <string name="title_activity_scene_editor">Chỉnh sửa Cảnh</string>
+  <string name="title_activity_choose_template">Chọn Khuôn</string>
+  <string name="title_activity_story_template">Khuôn Phóng Sự</string>
+  <string name="tab_make">Làm</string>
+  <string name="tab_review">Duyệt xem</string>
+  <string name="tab_publish">Hoàn tất</string>
+  <string name="tab_finish">Kết thúc</string>
+  <string name="tab_add_clips">Làm</string>
+  <string name="tab_order">Chỉnh sửa</string>
+  <string name="story_publish_section">Đoạn</string>
+  <string name="story_publish_section_hint">Thể thao</string>
+  <string name="story_publish_topics">Đề tài</string>
+  <string name="story_publish_topics_hint">Phái tính</string>
+  <string name="story_publish_location">Địa điểm</string>
+  <string name="story_publish_location_hint">Điền vào địa điểm phù hợp</string>
+  <string name="story_publish_share">Chia sẻ</string>
+  <string name="story_publish_send_via">Gửi Bằng</string>
+  <string name="story_publish_status">Tình trạng</string>
+  <string name="story_publish_status_processing">Đang xử lý</string>
+  <string name="story_publish_status_not">Chưa Xuất Bản</string>
+  <string name="story_publish_describe_hint">Mô tả phóng sự của bạn...</string>
+  <string name="story_publish_story_title">Tựa đề Phóng sự nơi đây</string>
+  <string name="story_publish_story_date">Thời điểm Phóng sự nơi đây</string>
+  <!--delete these below-->
+  <string name="title_section3">Đoạn 3</string>
+  <string name="title_section2">Đoạn 2</string>
+  <string name="title_section1">Đoạn 1</string>
+  <string name="title_activity_test_drag">TestDrag</string>
+  <!--Screen title before and during recording-->
+  <!--Screen title after recording-->
+  <!--Screen title while playing back a recording-->
+  <!--Label shown during recording-->
+  <string name="recording">Đang thâu</string>
+  <!--Label shown when the recording is stopped for a reason other than the user stopping it (e.g. the sd card was removed)-->
+  <string name="recording_stopped">Ngừng thâu</string>
+  <!--label shown when there is not enough space to record something-->
+  <string name="storage_is_full">Chỗ chứa đã đầy</string>
+  <!--label shown when the recording has reached maximum allowed file size-->
+  <string name="max_length_reached">Đã đụng độ dài tối đa </string>
+  <!--label shown when there is no sd card available to record to-->
+  <string name="insert_sd_card">Cần có thẻ nhớ SD</string>
+  <!--label shown when there is more than 1 minute but less than 9 minutes of space left to record-->
+  <!--label shown when there is less than 1 minute of space left to record-->
+  <!--button to accept the current recording and return it to the caller-->
+  <!--button to discard the current recording and return to the caller-->
+  <!--acknowlegement button in a number of dialogs-->
+  <string name="button_ok">OK</string>
+  <!--Do not translate. Format of the timer that shows how much has been recorded so far-->
+  <!--label shown before the user has recorded anything-->
+  <!--the name under which recordings will be visible in the media database is formatted like this-->
+  <!--all recordings will show up in the media database with this 'artist' name-->
+  <string name="audio_db_artist_name">Băng thâu của bạn</string>
+  <!--all recordings will show up in the media database with this 'album' name-->
+  <string name="audio_db_album_name">Băng ghi âm</string>
+  <!--all recordings will show up in the media database in a playlist with this name-->
+  <string name="audio_db_playlist_name">Băng thâu của tôi</string>
+  <!--shown as the message in a dialog when an error occured because of an error accessing the sd card-->
+  <string name="error_sdcard_access">Không thể đọc được chỗ chứa trong hay ngoài</string>
+  <!--shown as the message in a dialog when the app encountered an unspecified internal error-->
+  <string name="error_app_internal">Có lỗi nội bộ của ứng dụng </string>
+  <!--shown as the message in a dialog when the recording could not be added to the media database-->
+  <string name="error_mediadb_new_record">Không thể lưu trữ âm thanh đã thâu</string>
+  <!--shown as the message in a dialog when an export will tak up too much space-->
+  <string name="error_storage_space" formatted="false">Ối chao, hết chỗ rồi. Xin vui lòng tìm thêm %.2f%nMB rồi thử lại!</string>
+  <!--add for libra begin-->
+  <string name="default_record_name">Băng thâu chưa đặt tên</string>
+  <string name="menu_view_record_list">Xem danh sách băng thâu</string>
+  <string name="menu_setting">Thiết đặt</string>
+  <string name="delete_dialog_title">Bạn có muốn xóa băng thâu hiện thời?</string>
+  <string name="overwrite_dialog_title">%s đã có. Bạn có muốn chép chồng lên nó?</string>
+  <string name="preferences_title">Thiết đặt</string>
+  <string name="pref_title_record_type">Dạng tập tin của băng thâu</string>
+  <string name="prefDialogTitle_recordType">Xin chọn dạng tập tin</string>
+  <string name="prefDefault_recordType">âm thanh/3gpp</string>
+  <string name="pref_title_enable_high_quality">Bật mở chất lượng cao</string>
+  <string name="pref_summary_enable_high_quality">Tập tin âm thanh với chất lượng cao có thể rất lớn</string>
+  <string name="pref_title_enable_sound_effect">Bật mở hiệu ứng âm thanh</string>
+  <string name="pref_summary_enable_sound_effect">Phát ra hiệu ứng âm thanh khi tình trạng có đổi </string>
+  <string name="notification_recording">Đang thâu...</string>
+  <string name="notification_stopped">Ngừng thâu</string>
+  <string name="notification_warning">Chỗ chứa gần hết (ít hơn %d phút)...</string>
+  <string name="sd_card_not_available">Thẻ nhớ SD không có</string>
+  <string name="open_file_explorer">Mở trình quản lý tập tin</string>
+  <string name="alert_message_delete_record">Bạn có muốn xóa băng thâu được chọn?</string>
+  <!--add for libra end-->
+  <string name="help_clip_select">Quẹt để chọn dạng clip, rồi nhấn vào hình clip để bắt đầu thâu hình, âm thanh hay video.</string>
+  <!--youtube upload-->
+  <string name="lesson_status_have_not_started">Chưa bắt đầu</string>
+  <string name="lessons_congratulations_you_have_completed_the_lesson_">Bạn đã hoàn tất một bài học!</string>
+  <string name="lesson_status_in_progress">Đang tiến hành</string>
+  <string name="lesson_status_complete">HOÀN TẤT</string>
+  <string name="no_lessons_available_tap_to_load_">Chưa có bài học nào (nhấn để nạp vào)</string>
+  <string name="_lesson_complete">bài học hoàn tất</string>
+  <string name="_of_">của</string>
+  <string name="default_youtube_desc">Một đề án StoryMaker</string>
+  <string name="view_published_media_online_or_local_copy_">Xem tác phẩm xuất bản trực tuyến?</string>
+  <string name="choose_account_for_youtube_upload">Chọn Tài khoản để Tải lên</string>
+  <string name="rendering">Đang kết xuất</string>
+  <string name="rendering_project_">Đang kết xuất đề án...</string>
+  <string name="publishing">Đang xuất bản</string>
+  <string name="connecting_to_youtube_">kết nối vào YouTube...</string>
+  <string name="uploading_to_storymaker">đưa vào trang của StoryMaker</string>
+  <string name="rendering_clips_">đang kết xuất clip...</string>
+  <string name="you_must_enter_a_project_name">Xin điền vào tựa đề làm việc tạm. Bạn có thể thay đổi sau.</string>
+  <string name="delete_project_">Xóa đề án?</string>
+  <string name="delete_clip">Xóa Clip?</string>
+  <string name="add_new_clip_to_the_scene_">Thêm clip mới vào cảnh?</string>
+  <string name="video_project_project_type">Đề án Video</string>
+  <string name="photo_project_project_type">Đề án Hình</string>
+  <string name="audio_project_project_type">Đề án Âm thanh</string>
+  <string name="photo_essay_project_project_type">Đề án Luận văn Hình</string>
+  <string name="eula_title">Bạn đồng ý:</string>
+  <string name="eula_accept">Chấp Nhận</string>
+  <string name="eula_refuse">Từ Chối</string>
+  <string name="privacy_policy">Chính Sách Quyền Riêng Tư</string>
+  <string name="end_user_license_agreement">Thỏa Thuận Giấy Phép Người Dùng Cuối</string>
+  <string name="send_annonymous_data">Gửi dữ liệu sử dụng ẩn danh để giúp chúng tôi cải thiện StoryMaker.</string>
+  <string name="by_clicking_accept">Khi bấm vào nút \"Chấp nhận\", bạn đồng ý với bản Thỏa Thuận Giấy Phép Người Dùng Cuối và đã đọc Chính Sách Quyền Riêng Tư của chúng tôi:</string>
+  <string name="button_add_narration">Thâu Giọng Thuyết Minh</string>
+  <string name="button_play_narration">Phát Giọng Thuyết Minh</string>
+  <string name="button_delete_narration">Xóa Giọng Thuyết Minh</string>
+  <string name="button_render_preview">Kết xuất Bản Xem Trước</string>
+  <string name="publish_sm">StoryMaker.cc</string>
+  <string name="publish_youtube">YouTube</string>
+  <string name="action_render">Xuất</string>
+  <string name="action_play">Phát</string>
+  <string name="action_share">Chia sẻ</string>
+  <string name="cbRenderTypeLabel">Dùng Trình Kết Xuất Video Nhanh</string>
+  <string name="drawer_quick_capture">Thâu Nhanh</string>
+  <string name="select_story_type">Chọn loại phóng sự</string>
+  <string name="button_start_my_story">BẮT ĐẦU PHÓNG SỰ CỦA TÔI</string>
+  <string name="home_intro_button_lessons">XEM XÉT CÁC BÀI HỌC</string>
+  <string name="home_intro_button_projects">LÀM MỘT PHÓNG SỰ</string>
+  <string name="created_with_storymaker_tag">Thực hiện bằng StoryMaker - https://storymaker.cc/</string>
+  <string name="err_you_need_at_least_one_account_configured_on_your_device">Bạn cần ít nhất một tài khoản cấu hình trong thiết bị</string>
+  <string name="you_began_a_new_lesson">Bạn bắt đầu một bài học mới</string>
+  <string name="scene_editor_please_add_clips">Xin thêm clips vào trang \"Làm\" trước khi chọn trang này</string>
+  <string name="scene_editor_trim_clip">Tỉa xén clip</string>
+  <string name="delete_warning">Việc này không thể lật ngược lại!</string>
+  <string name="cancel">Hủy</string>
+  <string name="delete">Xóa</string>
+  <string name="play_or_share_exported_media_">Phát hay Chia sẻ dữ liệu đã xuất</string>
+  <string name="share_published_story">Chia sẻ phóng sự đã xuất bản?</string>
+  <string name="err_storage_not_ready">Chỗ chứa bên ngoài (thẻ nhớ SD) dường như không có để sử dụng ngay lúc này. StoryMaker cần đọc nó để lấy dữ liệu cho đề án và bài học. Xin vui lòng xem lại thiết bị và khởi động lại ứng dụng.</string>
+  <string name="scene_s_">cảnh</string>
+  <string name="clip_s_">clip</string>
+  <string name="sc_app_not_found">Không tìm thấy ứng dụng SoundCloud!</string>
+  <string name="sc_app_not_found_message">Bạn muốn cài đặt nó bây giờ?</string>
+  <string name="no_active_sc_account">Không tìm thấy tài khoản SoundCloud có hiệu lực, xin vui lòng đăng nhập/đăng ký</string>
+  <string name="operation_canceled">Thao tác bị hủy</string>
+  <string name="could_not_get_token">Không thể lấy token</string>
+  <string name="getting_details">Lấy chi tiết của người dùng</string>
+  <string name="could_not_create_account">Không thể lập tài khoản</string>
+  <string name="uploading">Đang tải lên...</string>
+  <string name="canceled">Hủy bỏ tải lên</string>
+  <!--added for project export-->
+  <string name="export_dialog_title">Bạn có muốn chia sẻ bản zip của đề án?</string>
+  <string name="export_dialog_close">Đóng</string>
+  <string name="export_dialog_share">Chia sẻ</string>
+  <string name="title_activity_accounts">Tài khoản</string>
+  <string name="action_settings">Thiết đặt</string>
+  <string name="label_activity_log">Ký Sự Hoạt Động</string>
+  <string name="label_title">Tựa Đề</string>
+  <string name="label_description">Mô Tả</string>
+  <string name="label_tags">Thẻ tên</string>
+  <string name="label_add">Thêm</string>
+  <string name="label_edit">Chỉnh sửa</string>
+  <string name="label_save">Lưu</string>
+  <string name="label_activities">Ký sự hoạt động</string>
+  <string name="hint_story_title">Điền vào một Tựa Đề</string>
+  <string name="hint_story_description">Mô tả phóng sự của bạn...</string>
+  <string name="hint_story_tag">#addtags</string>
+  <string name="label_section">Đoạn</string>
+  <string name="label_location">Địa điểm</string>
+  <string name="title_activity_story_info">Thông tin</string>
+  <string name="title_activity_story_info_edit">Sửa Thông Tin</string>
+  <string name="title_activity_project_tag_fragment">ProjectTagFragment</string>
+  <string name="title_activity_connect_account">Tài khoản StoryMaker</string>
+  <string name="hint_no_description">Không có mô tả</string>
+  <string name="trim_clips">Tỉa xén Clip</string>
+  <string name="info">Thông tin</string>
+  <string name="send_logcat_to_support">Gửi Logcat đến Hỗ Trợ</string>
+  <string name="restarting_storymaker">Khởi động lại StoryMaker...</string>
+  <string name="send">Gửi</string>
+  <string name="title_activity_press_secure">PressSecure</string>
+  <string name="title_activity_publish">PublishActivity</string>
+  <string name="uploading_to_soundcloud">Tải lên SoundCloud...</string>
+  <string name="uploading_to_facebook">Tải lên Facebook...</string>
+  <string name="uploading_to_internet_archive">Tải lên Internet Archive...</string>
+  <string name="no_site_selected">Không kho nào được chọn.</string>
+  <string name="exported_stories">Xuất</string>
+  <string name="no_title">Không Tựa Đề</string>
+  <string name="title_exports">Phóng Sự Đã Xuất Bản</string>
+  <string name="last_modified">Sửa đổi lần cuối</string>
+  <string name="no_medium">(không có phương tiện truyền đạt nào)</string>
+  <string name="learning_guide_description">Xây dựng một câu chuyện lôi cuốn.</string>
+  <string name="extracting_audio_multiple">Trích track âm thanh ra</string>
+  <string name="crossfading_audio">Chuyển dần âm thanh...</string>
+  <string name="crossfading_audio_multiple">Chuyển dẫn track âm thanh</string>
+  <string name="fade_audio">Đưa toàn bộ âm thanh vào/ra dần...</string>
+  <string name="converting_audio">Đổi qua âm thanh đầu ra...</string>
+  <string name="export_error_1">Có lỗi khi xuất phương tiện dữ liệu </string>
+  <string name="export_error_2">Lỗi</string>
+  <string name="processing_audio">Đang xử lý track âm thanh...</string>
+  <string name="processing_audio_multiple">Xử lý track âm thanh</string>
+  <string name="mixing_tracks">Mix các track</string>
+  <string name="trimming_merging">Cắt xén và ghép nối video</string>
+  <string name="merging_video_audio">Ghép nối video và âm thanh...</string>
+  <string name="export_error_3">Có lỗi khi xuất phương tiện dữ liệu </string>
+  <string name="export_error_4">Lỗi</string>
+</resources>

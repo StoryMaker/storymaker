@@ -178,13 +178,10 @@
   <string name="prefs_category_media_title">Medij</string>
   <string name="prefs_category_debug_title">Uklanjanje grešaka</string>
   <string name="prefs_storymaker_server_title">StoryMaker Server </string>
-  <string name="prefs_storymaker_server_summary">Server za hosting svih vježbi i sadržaja priča</string>
   <string name="prefs_use_tor_title">Koristite Orbot (Tor) </string>
   <string name="prefs_use_tor_summary">Usmjerite sav mrežni saobraćaj kroz Tor mrežu koristeći Orbot aplikaciju</string>
   <string name="prefs_use_download_manager_title">Koristite Download Manager </string>
-  <string name="prefs_use_download_manager_summary">Učitajte arhivirane lekcije pomoću Android DownloadManager servisa </string>
   <string name="prefs_use_upload_manager_title">Koristite Upravitelj učitavanja </string>
-  <string name="prefs_use_upload_manager_summary">Učitajte sadržaj priče pomoću servisa Android Upravitelj učitavanja </string>
   <string name="prefs_youtube_acccount_title">YouTube račun</string>
   <string name="prefs_youtube_acccount_summary">You Tube račun je za učitavanje videa. Ovo MORA biti registrirano na vašem uređaju. </string>
   <string name="prefs_youtube_login_title">YouTube prijava</string>
@@ -193,8 +190,6 @@
   <string name="prefs_soundcloud_account_summary">SoundCloud račun koristiti za audio učitavanja</string>
   <string name="prefs_interface_language_title">Odaberite jezik</string>
   <string name="prefs_interface_language_summary">Jezik Story Maker će se koristiti za korisničko sučelje.</string>
-  <string name="prefs_lesson_language_title">Odaberite lekcije</string>
-  <string name="prefs_lesson_language_summary">Modul lekcije za upotrebu.</string>
   <string name="prefs_slide_duration_title">Trajanje slajda</string>
   <string name="prefs_slide_duration_summary">Trajanje svakog slajda u foto eseju</string>
   <string name="prefs_enable_compression_title">Omogućite sažimanje</string>
@@ -225,8 +220,6 @@
   <string name="prefs_audio_crossfade_summary">Duljina audio cross fade </string>
   <string name="prefs_internal_storage_title">Interna memorija</string>
   <string name="prefs_internal_storage_summary">Koristite projekt interne memorije</string>
-  <string name="prefs_disable_lesson_completion_title">Onemogućite dovršetak lekcije</string>
-  <string name="prefs_disable_lesson_completion_summary"></string>
   <string name="prefs_youtube_method_title">YouTube metod</string>
   <string name="prefs_youtube_method_summary">Vrsta metode autorizacije uklanjanja greške</string>
   <!--/prefs-->

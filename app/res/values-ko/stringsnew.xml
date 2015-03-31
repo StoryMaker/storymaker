@@ -124,7 +124,7 @@
   <string name="story_type_profile_personal_text5">미래에 어떤 일이 일어나기를 원하시나요?</string>
   <!--/story_type_new-->
   <!--story_type_old-->
-  <string name="scene_number">장면 &lt;xliff:g id="number"&gt;%1$d&lt;/xliff:g&gt;</string>
+  <string name="scene_number">장면 &lt;xliff:g id=\"number\"&gt;%1$d&lt;/xliff:g&gt;</string>
   <string name="when">언제?</string>
   <string name="how">어떻게?</string>
   <string name="what">무엇을?</string>
@@ -184,7 +184,6 @@
   <string name="prefs_interface_language_summary">스토리메이커 언어는 사용자 인터페이스를 사용할 것입니다.</string>
   <string name="prefs_slide_duration_title">슬라이드 지속시간</string>
   <string name="prefs_slide_duration_summary">포토 에세이에서 각각의 슬라이드 지속시간</string>
-  <string name="prefs_disable_lesson_completion_summary"></string>
   <!--/prefs-->
   <!--FirstStartActivity-->
   <!--ConnectAccountActivity-->

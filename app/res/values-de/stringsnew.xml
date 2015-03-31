@@ -64,6 +64,7 @@
   <string name="activity">Aktivität</string>
   <string name="impact">Einfluss</string>
   <string name="background">Hintergrund</string>
+  <string name="involvement">Beteiligung</string>
   <string name="motivation">Motivation</string>
   <string name="location">Ort</string>
   <string name="experience">Erfahrung</string>
@@ -79,6 +80,7 @@
   <string name="story_type_event_feature_text1">Was geschieht bei diesem Ereignis?</string>
   <string name="story_type_event_feature_text2">Warum sind Sie in dieses Ereignis involviert?</string>
   <string name="story_type_event_feature_text3">Wo geschieht dieses Ereignis?</string>
+  <string name="story_type_event_feature_text4">Inwiefern sind sie persönlich beteiligt?</string>
   <string name="story_type_event_feature_text5">Welchen Einfluss hat dieses Ereignis?</string>
   <string name="story_type_event_breaking_text1">Was geschieht?</string>
   <string name="story_type_event_breaking_text2">Wo geschieht es?</string>
@@ -114,6 +116,7 @@
   <string name="story_type_profile_personal_text2">Nennen Sie eine wichtige Erfahrung, die Sie gemacht haben.</string>
   <string name="story_type_profile_personal_text3">Wie haben Sie sich bei dieser Erfahrung gefühlt?</string>
   <string name="story_type_profile_personal_text4">Was machen Sie heute anders?</string>
+  <string name="story_type_profile_personal_text5">Was würden Sie gerne in der Zukunft passieren sehen?</string>
   <!--/story_type_new-->
   <!--story_type_old-->
   <string name="when">Wann?</string>
@@ -156,13 +159,18 @@
   <!--/story_type_old-->
   <!--prefs-->
   <string name="prefs_category_networking_security_title">Netzwerk &amp; Sicherheit</string>
+  <string name="prefs_category_locales_title">Orte</string>
   <string name="prefs_category_media_title">Medien</string>
   <string name="prefs_category_debug_title">Debuggen</string>
   <string name="prefs_storymaker_server_title">StoryMaker-Server</string>
   <string name="prefs_use_tor_title">Orbot (Tor) benutzen</string>
   <string name="prefs_use_tor_summary">Sende den gesamten Netzwerk-Datenverkehr mit der Orbot-App durch das Tor-Netzwerk.</string>
+  <string name="prefs_sm_upload_title">Upload zu StoryMaker</string>
+  <string name="prefs_sm_upload_summary">Upload zum StoryMaker-Server mit Standardeinstellungen</string>
   <string name="prefs_use_download_manager_title">Download-Manager benutzen</string>
   <string name="prefs_use_download_manager_summary">Lektionen mit dem Android Download-Manager-Service herunterladen</string>
+  <string name="prefs_use_upload_manager_title">Download-Manager benutzen</string>
+  <string name="prefs_use_upload_manager_summary">Upload der Story Daten mit dem Android UploadManager Service</string>
   <string name="prefs_youtube_acccount_title">YouTube-Konto</string>
   <string name="prefs_youtube_acccount_summary">Das YouTube-Konto, welches zum Hochladen von Videos genutzt werden soll. Dieses Konto MUSS auf Ihrem Gerät eingebunden sein.</string>
   <string name="prefs_youtube_login_title">YouTube-Benutzername</string>
@@ -170,35 +178,57 @@
   <string name="prefs_soundcloud_account_title">SoundCloud-Benutzerkonto</string>
   <string name="prefs_soundcloud_account_summary">Das SoundCloud-Benutzerkonto, welches zum Hochladen von Audio-Inhalten genutzt werden soll.</string>
   <string name="prefs_interface_language_title">Sprache auswählen</string>
-  <string name="prefs_lesson_language_title">Lektionen auswählen</string>
+  <string name="prefs_interface_language_summary">Die Sprache, welche StoryMaker für die Benutzeroberfläche benutzen wird</string>
+  <string name="prefs_slide_duration_title">Anzeigedauer</string>
   <string name="prefs_enable_compression_title">Komprimierung aktivieren</string>
+  <string name="prefs_enable_compression_summary">Komprimiere alle Videos und Töne mit den untenstehenden Einstellungen</string>
+  <string name="prefs_preprocess_3gp_title">Vorverarbeitung 3GP</string>
+  <string name="prefs_preprocess_3gp_summary">Konvertiere 3GP-Videoclip in MPEG-4</string>
+  <string name="prefs_use_cat_command_title">Benutze \'Cat\' Befehl</string>
+  <string name="prefs_use_cat_command_summary">Benutze \'cat\' Befehl um Videos zu vereinigen</string>
   <string name="prefs_video_codec_title">Video-Codec</string>
   <string name="prefs_video_codec_summary">Export-Videocodec</string>
   <string name="prefs_video_resolution_title">Video-Auflösung</string>
+  <string name="prefs_video_resolution_summary">Exportiere Video-Auflösung</string>
   <string name="prefs_video_width_title">Video-Breite</string>
   <string name="prefs_video_width_summary">Export-Videobreite</string>
   <string name="prefs_video_height_title">Video-Höhe</string>
   <string name="prefs_video_height_summary">Export-Videohöhe</string>
   <string name="prefs_video_bitrate_title">Video-Bitrate</string>
+  <string name="prefs_video_bitrate_summary">Exportiere Video-Bitrate (kbps)</string>
   <string name="prefs_video_framrate_title">Video-Framerate</string>
+  <string name="prefs_video_framrate_summary">Exportiere Framerate-Per-Second (FPS)</string>
   <string name="prefs_audio_codec_title">Audio-Codec</string>
+  <string name="prefs_audio_codec_summary">Exportiere Audio-Codec</string>
   <string name="prefs_audio_bitrate_title">Audio-Bitrate</string>
+  <string name="prefs_audio_bitrate_summary">Exportiere Audio-Bitrate (kbps)</string>
   <string name="prefs_audio_samplerate_title">Audio-Samplerate</string>
+  <string name="prefs_audio_samplerate_summary">Sprachaufnahmen Abtastrate (kHz)</string>
   <string name="prefs_audio_crossfade_title">Audio-Überblendung</string>
   <string name="prefs_audio_crossfade_summary">Länge der Audio-Überblendung</string>
   <string name="prefs_internal_storage_title">Interner Speicher</string>
   <string name="prefs_internal_storage_summary">Internen Projekt-Speicher nutzen</string>
-  <string name="prefs_disable_lesson_completion_summary"></string>
+  <string name="prefs_youtube_method_title">YouTube Methode</string>
   <!--/prefs-->
   <!--FirstStartActivity-->
+  <string name="sign_up_btn">Für StoryMaker registrieren</string>
   <string name="no_thanks_btn">NEIN, DANKE</string>
   <string name="tos_btn">ICH STIMME DEN NUTZUNGSBEDINGUNGEN ZU</string>
   <string name="tos_dialog_title">Nutzungsbedingungen</string>
+  <string name="tos_dialog_msg">Bitte akzeptieren Sie unsere Nutzungsbedingungen, bevor Sie fortfahren</string>
+  <string name="tos_dialog_positive_button">Verstanden</string>
+  <string name="acct_created_dialog_title">Zugang zu Ihrem Konto</string>
+  <string name="acct_created_dialog_msg">&lt;b&gt; Ihr StoryMaker Passwort wird Ihnen in Kürze zugesandt. &lt;/ b&gt; Nach dem Erhalten Ihres Passwortes, können Sie sich jederzeit über das Schubladenmenü (durch Streichen vom linken Bildschirmrand) anmelden.</string>
+  <string name="acct_created_dialog_positive_button">Loslegen!</string>
   <!--ConnectAccountActivity-->
   <string name="my_account">MEIN STORYMAKER-KONTO</string>
+  <string name="join_storymaker">Tritt der StoryMaker Community bei</string>
   <string name="create_account">MEIN KONTO ERSTELLEN</string>
   <string name="sign_in">REGISTRIEREN / ANMELDEN</string>
   <string name="sign_out">ABMELDEN</string>
   <!--ProjectTagFragment-->
+  <string name="no_tags_msg">Keine #tags hinzugefügt</string>
   <!--BaesActivity Drawer  (For Accessibility Descriptions)-->
+  <string name="open_drawer">Schublade öffnen</string>
+  <string name="close_drawer">Schublade schließen</string>
 </resources>

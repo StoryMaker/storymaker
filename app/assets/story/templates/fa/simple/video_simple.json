@@ -10,7 +10,7 @@
                     "Security Concern": "-", 
                     "Shot Size": "نزدیک یا همان کلوز", 
                     "Tip": "از خطوط چشم برای گنجاندن مناسب سوژه در فریم خود استفاده کنید.", 
-                    "Title": "Interview"
+                    "عنوان": "مصاحبه"
                 },                 
                 {
                     "Artwork": "cliptype_detail", 
@@ -20,7 +20,7 @@
                     "Security Concern": "-", 
                     "Shot Size": "جزئیات", 
                     "Tip": "The detail should fill at least 50% of the frame.", 
-                    "Title": "Signature" 
+                    "عنوان": "امضاء" 
                 },
                 {
                     "Artwork": "cliptype_medium", 
@@ -50,10 +50,10 @@
                     "Security Concern": "-",
                     "Shot Size": "عریض و یا واید",
                     "Tip": "Place your camera directly in front of the primary location you are filming.", 
-                    "Title": "Location"
+                    "عنوان": "محل سکونت"
                 }
             ], 
-            "title": "Scene 1"
+            "عنوان": "صحنه 1"
         }
     ], 
     "title": "Simple Story - Video"

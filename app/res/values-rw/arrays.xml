@@ -1,7 +1,44 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
-  <string-array name="story_sections"/>
-  <string-array name="lesson_sections"/>
-  <string-array name="array_story_locations"/>
-  <string-array name="array_story_sections"/>
+  <string-array name="story_sections">
+    <item>Politike</item>
+    <item>Urudandazwa</item>
+    <item>Inkino</item>
+    <item>Imicokama</item>
+    <item>Ubumenyi</item>
+    <item>Amagara</item>
+    <item>Inyigisho</item>
+    <item>Ibidukikije</item>
+  </string-array>
+  <string-array name="lesson_sections">
+    <item>Kumenyesha amakuru</item>
+    <item>Umutekano</item>
+    <item>Amajwi (audio)</item>
+    <item>Ubuhinga bwogufotora(photographie)</item>
+    <item>Ubuhinga bwogufata amasanamu(videographie)</item>
+    <item>Inkuru</item>
+  </string-array>
+  <string-array name="array_story_locations">
+    <item>America</item>
+    <item>California</item>
+    <item>Oaklande</item>
+    <item>Misiri(Egypt)</item>
+    <item>Iraki</item>
+    <item>Maroke</item>
+    <item>Tunizia</item>
+    <item>Zimbabwe</item>
+    <item>Repubulika ya cekoslovakia</item>
+  </string-array>
+  <string-array name="array_story_sections">
+    <item>Politike</item>
+    <item>Ubudandaza</item>
+    <item>inkino</item>
+    <item>Imicokama</item>
+    <item>Ubumenyi</item>
+    <item>Amagara</item>
+    <item>Inyigisho</item>
+    <item>Ibidukikije</item>
+    <item>Ubuhinga bwanone(technology)</item>
+    <item>Kugira urugendo(voyager)</item>
+  </string-array>
 </resources>

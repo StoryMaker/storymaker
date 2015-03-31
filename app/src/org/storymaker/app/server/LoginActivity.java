@@ -45,7 +45,8 @@ public class LoginActivity extends BaseActivity implements Runnable
         txtUser = (EditText)findViewById(R.id.login_username);
         txtPass = (EditText)findViewById(R.id.login_password);
 
-        getActionBar().hide();
+//        getActionBar().hide();
+        getActionBar().setDisplayHomeAsUpEnabled(true);
         
         Button btnLogin = (Button) findViewById(R.id.btnLogin);
         btnLogin.setOnClickListener(new OnClickListener ()
@@ -73,17 +74,17 @@ public class LoginActivity extends BaseActivity implements Runnable
             }
         });
         
-        TextView skipScreen = (TextView) findViewById(R.id.link_to_skip);
+//        TextView skipScreen = (TextView) findViewById(R.id.link_to_skip);
         
         // Listening to skip link
-        skipScreen.setOnClickListener(new View.OnClickListener() {
- 
-            public void onClick(View v) {
-              
-            	 saveCreds("","");//skip login
-            	 loginSuccess ();
-            }
-        });
+//        skipScreen.setOnClickListener(new View.OnClickListener() {
+//
+//            public void onClick(View v) {
+//
+//            	 saveCreds("","");//skip login
+//            	 loginSuccess ();
+//            }
+//        });
     }
     
     private void handleLogin ()
@@ -120,7 +121,7 @@ public class LoginActivity extends BaseActivity implements Runnable
     	try {
 			StoryMakerApp.getServerManager().connect(username, password);
 
-			// only store username/password for a successful login
+			// FIXME only store username/password for a successful login
 	    	saveCreds(username, password);
 			
 			mHandler.sendEmptyMessage(0);

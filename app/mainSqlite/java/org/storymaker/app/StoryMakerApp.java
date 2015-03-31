@@ -20,12 +20,14 @@ import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.os.Build;
 import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.support.multidex.MultiDexApplication;
 import android.util.Log;
 
 import scal.io.liger.DownloadHelper;
+import scal.io.liger.IndexManager;
 
 public class StoryMakerApp extends MultiDexApplication {
 
@@ -38,7 +40,8 @@ public class StoryMakerApp extends MultiDexApplication {
 	private final static String LOCALE_SOUTH_AFRICAN = "sa";
 	private static Locale mLocale = new Locale(LOCALE_DEFAULT);
 
-	private final static String STORYMAKER_DEFAULT_SERVER_URL = "https://storymaker.cc";
+    public final static String STORYMAKER_DEFAULT_SERVER_URL = "https://storymaker.org/";
+    public final static String STORYMAKER_SERVER_URL_PREFS_KEY = "pserver";
 	private static String mBaseUrl = null;
 	
 	 public void InitializeSQLCipher(String dbName, String passphrase) {
@@ -52,7 +55,7 @@ public class StoryMakerApp extends MultiDexApplication {
 	 public static String initServerUrls (Context context)
 	 {
 		 SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context.getApplicationContext());
-		 mBaseUrl = settings.getString("pserver", STORYMAKER_DEFAULT_SERVER_URL) ;
+		 mBaseUrl = settings.getString(STORYMAKER_SERVER_URL_PREFS_KEY, STORYMAKER_DEFAULT_SERVER_URL) ;
 		 return mBaseUrl;
 	 }
 	 
@@ -86,7 +89,7 @@ public class StoryMakerApp extends MultiDexApplication {
 
             mServerManager = new ServerManager (getApplicationContext());
 
-            // we have this in onCreate and onResume, remove from here?
+            //moved this to HomeActivity.OnCreate() so it's redundant here
             //DownloadHelper.checkAndDownload(this);
 		}
 		catch (Exception e)
@@ -186,6 +189,10 @@ public class StoryMakerApp extends MultiDexApplication {
 	    		Locale.setDefault(mLocale);
 	            config.locale = mLocale;
 	            getResources().updateConfiguration(config, getResources().getDisplayMetrics());
+
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1)
+                    getResources().getConfiguration().setLayoutDirection(mLocale);
+
 	            updatedLocale = true;
 	            lang = config.locale.getLanguage();
 	        }

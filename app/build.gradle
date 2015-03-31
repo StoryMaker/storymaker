@@ -48,6 +48,7 @@ android {
         multiDexEnabled true
         //testPackageName "org.storymaker.app.tests"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        //testInstrumentationRunner "com.google.android.apps.common.testing.testrunner.GoogleInstrumentationTestRunner"
     }
 
     // Temporarily ignore linter errors.
@@ -118,3 +119,5 @@ dependencies {
     compile project(':android-iconify')
     compile project(':external:liger:lib')
 }
+
+

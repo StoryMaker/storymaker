@@ -1,0 +1,249 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+  <string name="terms_title">Điều Kiện của StoryMaker</string>
+  <string name="terms_text_1">Bạn giữ toàn quyền sở hữu chủ về nội dung thực hiện, bạn có thể lấy xuống bất cứ lúc nào muốn, và chúng tôi sẽ không buôn bán gì với dữ liệu của bạn. Khi đồng ý chia sẽ nội dung với StoryMaker.cc bạn cho phép Small World News và đối tác sắp chung phóng sự của bạn với những phóng sự tương tự khác thực hiện bằng StoryMaker. Chúng tôi sắp xếp chúng theo loại phóng sự, đề tài, và địa điểm.</string>
+  <string name="terms_text_2">Phóng sự của bạn vẫn nằm trên những trang web bạn muốn, nhưng cũng được StoryMaker.cc tham chiếu. Tựa đề, mô tả, và các thẻ tên sẽ được đăng lên StoryMaker.cc. Những phần nội dung khác sẽ được tham chiếu qua kênh cá nhân của các trang bạn chia sẻ.</string>
+  <!--tutorial_lessons-->
+  <string name="tutorial_title_1">Học cách tường thuật</string>
+  <string name="tutorial_text_1">Học hỏi cách làm ký giả cùng lúc vẫn giữ được an toàn cá nhân và thực hiện các phóng sự thật hay bằng hình ảnh, âm thanh và video.</string>
+  <string name="tutorial_title_2">Phải chính xác.</string>
+  <string name="tutorial_text_2">Soạn thảo với sự hợp tác của ICFJ, bạn có thể chắc chắn là các bài học báo chí của chúng tôi sẽ dạy cho bạn trở thành một người ký giả tốt hơn.</string>
+  <string name="tutorial_title_3">Bảo vệ chính bạn.</string>
+  <string name="tutorial_text_3">Các bài học về an toàn số sẽ giúp bạn và các nguồn được an toàn. StoryMaker muốn giữ cho bạn an toàn ở bất cứ nơi nào bạn làm phóng sự.</string>
+  <string name="tutorial_title_4">Thuật lại phóng sự của bạn cho hay hơn.</string>
+  <string name="tutorial_text_4">Phóng sự thích hợp với nhiều loại phương tiện truyền thông khác nhau, dầu là âm thanh, hình ảnh hay video. Tìm hiểu sự khác biệt giữa các phương tiện này.</string>
+  <string name="tutorial_title_5">Thử nghiệm chính bạn.</string>
+  <string name="tutorial_text_5">Mỗi bài học kết thúc với một bài kiểm tra để thử nghiệm sự hiểu biết của bạn.</string>
+  <string name="tutorial_title_6">Tiếp tục Học hỏi.</string>
+  <string name="tutorial_text_6">Chia sẻ các phóng sự của bạn với cộng đồng StoryMaker.cc, và học hỏi trở thành người làm phóng sự giỏi hơn với mỗi phóng sự bạn chia sẻ.</string>
+  <!--/tutorial_lessons-->
+  <!--tutorial_story-->
+  <string name="tutorial_title_7">Thuật chuyện hay hơn.</string>
+  <string name="tutorial_text_7">Một phóng sự hay có khởi đầu, khúc giữa và kết thúc. Phỏng vấn ai đó để cung cấp thêm bối cảnh câu chuyện. Cho độc giả xem họ sống ở đâu. Làm cho gần gũi, thân mật.</string>
+  <string name="tutorial_title_8">Chọn phương tiện truyền thông.</string>
+  <string name="tutorial_text_8">Âm thanh, hình ảnh, và video thích hợp với các loại phóng sự khác nhau. Xem các bài học để biết thêm. Chọn một phương tiện và vừa học vừa làm. </string>
+  <string name="tutorial_title_9">Tường thuật câu chuyện qua 5 phần.</string>
+  <string name="tutorial_text_9">Dùng năm clip để kể lại câu chuyện. Mô tả địa điểm của câu chuyện. Giới thiệu nhân vật chính. Ba phần còn lại kể chuyện với phần đầu, giữa và kết.</string>
+  <string name="tutorial_title_10">Phá vở khuôn đúc.</string>
+  <string name="tutorial_text_10">Ráp các clip lại theo thứ tự khác nhau để tạo ấn tượng sâu sắc nhất.</string>
+  <string name="tutorial_title_11">Kể câu chuyện dài hơn.</string>
+  <string name="tutorial_text_11">Khuôn Phóng Sự sẽ chỉ cho bạn cách làm.</string>
+  <!--/tutorial_story-->
+  <!--template_description-->
+  <string name="template_audio_desc">Thâu âm thanh để kể lại câu chuyện, ai, cái gì. Nếu bạn không thể thâu được hình ảnh ấn tượng, thì âm thanh là một thay thế hay không kém.</string>
+  <string name="template_photo_desc">Một bức tranh đáng giá ngàn chữ. Cho mọi người xem ai hay cái gì quan trọng trong câu chuyện, hay sự việc xảy ra như thế nào.</string>
+  <string name="template_essay_desc">Đôi khi cần nhiều hình. Cho mọi người xem câu chuyện diễn ra như thế nào, kể câu chuyện qua một loạt hình liên hệ.</string>
+  <string name="template_video_desc">Chụp những sự việc và hình ảnh lôi cuốn khi đang xảy ra. Cho mọi người xem ai hay cái gì quan trọng và tại sao.</string>
+  <!--/template_description-->
+  <!--legacy_story_type-->
+  <!--once we refactor to keep this extra text fields in the db instead of referencing this strings file we can remove these (after doing a migration step)-->
+  <string name="story_type_event_title">Sự kiện</string>
+  <string name="story_type_issue_title">Vấn Đề</string>
+  <string name="story_type_profile_title">Tiểu Sử</string>
+  <string name="story_type_news_title">Tin Nóng</string>
+  <string name="story_type_event_desc">Phóng sự về sự kiện có một khung thời gian rõ rệt và nơi chốn cố định. Tập trung vào chuyện gì xảy ra ở sự kiện đó. Sắp xếp câu chuyện xoay quanh diễn tiến của sự kiện, nơi đâu, và tại sao xảy ra vào thời điểm và địa điểm này.</string>
+  <string name="story_type_issue_desc">Phóng sự về vấn đề xem xét một chủ đề rộng. Tập trung vào việc vấn đề ảnh hưởng đến một cộng đồng hay một nhóm người như thế nào. Sắp xếp câu chuyện xoay quanh những ai bị tác động và phản ứng ra sao.</string>
+  <string name="story_type_profile_desc">Xem xét một người nào đó. Tập trung vào nhân vật đó là ai. Sắp xếp câu chuyện xoay quanh đời sống hàng ngày của người đó, chuyện gì xảy ra, và người đó đối phó với những thử thách ra sao.</string>
+  <string name="story_type_news_desc">Tin nóng là ngay tức thì. Tập trung vào một góc cạnh. Sắp xếp câu chuyện xoay quanh các sự kiện nhỏ, ai, cái gì, ở đâu, khi nào. Dùng tường thuật để thêm bối cảnh.</string>
+  <!--/ legacy_story_type-->
+  <!--story_type-->
+  <string name="story_type_event_news_title">Sự Kiện Tin Tức</string>
+  <string name="story_type_event_feature_title">Sự Kiện Đặc Biệt</string>
+  <string name="story_type_event_breaking_title">Sự Kiện Tin Nóng</string>
+  <string name="story_type_issue_social_title">Vấn Đề Xã Hội</string>
+  <string name="story_type_issue_political_title">Vấn Đề Chính Trị</string>
+  <string name="story_type_issue_economic_title">Vấn Đề Kinh Tế</string>
+  <string name="story_type_profile_public_title">Thông tin Công Cộng</string>
+  <string name="story_type_profile_professional_title">Thông tin Chuyên Nghiệp</string>
+  <string name="story_type_profile_personal_title">Thông tin Cá Nhân</string>
+  <!--/story_type-->
+  <!--story_type_description-->
+  <string name="story_type_event_news_desc">Phóng sự về sự kiện có tầm quan trọng ngay lập tức, thường đã định trước, và có bắt đầu và kết thúc rõ rệt. Một cuộc bầu cử hay một cuộc biểu tình là một sự kiện tin tức hữu ích.</string>
+  <string name="story_type_event_feature_desc">Phóng sự về sự kiện có thể không có tác động tin tức mạnh. Một buổi thể thao, một cơ sở thương mại mới trong khu xóm, công nghệ mới hình thành là những sự kiện đặc biệt hữu ích.</string>
+  <string name="story_type_event_breaking_desc">Những sự kiện không định trước nhưng có giá trị thời sự quan trọng. Hỏa hoạn, thông báo bất ngờ của một viên chức chính quyền, hay thảm họa thiên nhiên là những sự kiện tin nóng hữu ích.</string>
+  <string name="story_type_issue_social_desc">Phóng sự về những vấn đề tác động vào cộng đồng. Thay đổi luật lệ địa phương hay hạ tầng cơ sở là một vấn đề xã hội đáng quan tâm.</string>
+  <string name="story_type_issue_political_desc">Phóng sự về chính quyền và công việc của các viên chức. Phóng sự về luật mới hay thay đổi của quốc hội là vấn đề chính trị đáng quan tâm.</string>
+  <string name="story_type_issue_economic_desc">Phóng sự về tình hình kinh tế tổng quát hoặc về tài chính cá nhân của quần chúng. Một phóng sự về tác động của việc thay đổi trợ cấp chính phủ cho nông dân là một vấn đề kinh tế đáng quan tâm.</string>
+  <string name="story_type_profile_public_desc">Phóng sự về vai trò của đối tượng ở ngoài công cộng. Thông tin về một chính trị gia đang tranh cử là một phóng sự công cộng hữu ích.</string>
+  <string name="story_type_profile_professional_desc">Phóng sự về con người và công việc của họ. Thông tin về một nghệ sĩ hay lực sĩ nổi tiếng là một phóng sự chuyên nghiệp hữu ích.</string>
+  <string name="story_type_profile_personal_desc">Phóng sự về kinh nghiệm của đối tượng, thường có liên hệ đến sự kiện tin tức. Thông tin về một cựu chiến binh nhân ngày kỷ niệm chiến tranh có thể là một phóng sự cá nhân hữu ích.</string>
+  <!--/story_type_description-->
+  <!--template_options-->
+  <string name="choose_level">Chọn một Tầng</string>
+  <string name="choose_level_basic">Căn bản</string>
+  <string name="choose_level_advanced">Cao cấp</string>
+  <!--/template_options-->
+  <!--story_type_new-->
+  <string name="overview">Tổng quan</string>
+  <string name="activity">Hoạt động</string>
+  <string name="impact">Tác động</string>
+  <string name="background">Nền</string>
+  <string name="involvement">Dính đến</string>
+  <string name="motivation">Động cơ</string>
+  <string name="location">Địa điểm</string>
+  <string name="experience">Kinh nghiệm</string>
+  <string name="results">Kết quả</string>
+  <string name="next_steps">Bước kế tiếp</string>
+  <string name="moving_forward">Đi Tiếp</string>
+  <string name="conclusion">Kết thúc</string>
+  <string name="story_type_event_news_text1">Chuyện gì diễn ra tại sự kiện này?</string>
+  <string name="story_type_event_news_text2">Bạn dính dáng đến ra sao?</string>
+  <string name="story_type_event_news_text3">Ai bị tác động nhiều nhất bởi sự kiện này?</string>
+  <string name="story_type_event_news_text4">Câu chuyện đằng sau sự kiện này là gì?</string>
+  <string name="story_type_event_news_text5">Tác động của sự kiện này là gì?</string>
+  <string name="story_type_event_feature_text1">Chuyện gì diễn ra tại sự kiện này?</string>
+  <string name="story_type_event_feature_text2">Tại sao bạn dính dáng đến sự kiện này?</string>
+  <string name="story_type_event_feature_text3">Sự kiện này diễn ra ở đâu?</string>
+  <string name="story_type_event_feature_text4">Bạn dính dáng trực tiếp đến như thế nào?</string>
+  <string name="story_type_event_feature_text5">Tác động của sự kiện này là gì?</string>
+  <string name="story_type_event_breaking_text1">Chuyện gì xảy ra?</string>
+  <string name="story_type_event_breaking_text2">Xảy ra nơi đâu?</string>
+  <string name="story_type_event_breaking_text3">Ai bị ảnh hưởng?</string>
+  <string name="story_type_event_breaking_text4">Có nguy hiểm nào ngay trước mắt?</string>
+  <string name="story_type_event_breaking_text5">Người ta phản ứng ra sao?</string>
+  <string name="story_type_issue_social_text1">Xin mô tả vấn đề xã hội.</string>
+  <string name="story_type_issue_social_text2">Khi nào &amp; nơi nào vấn đề này bắt đầu?</string>
+  <string name="story_type_issue_social_text3">Điều này tác động đến cộng đồng ra sao?</string>
+  <string name="story_type_issue_social_text4">Kể chúng tôi nghe một chuyện về việc này ảnh hưởng đến cuộc sống của bạn ra sao.</string>
+  <string name="story_type_issue_social_text5">Có thể làm gì để giải quyết vấn đề này?</string>
+  <string name="story_type_issue_political_text1">Xin mô tả vấn đề chính trị.</string>
+  <string name="story_type_issue_political_text2">Ai bị tác động trực tiếp?</string>
+  <string name="story_type_issue_political_text3">Điều này tác động vào chính quyền như thế nào?</string>
+  <string name="story_type_issue_political_text4">Tại sao điều này quan trọng đối với cá nhân bạn?</string>
+  <string name="story_type_issue_political_text5">Có thể làm gì để giải quyết vấn đề này?</string>
+  <string name="story_type_issue_economic_text1">Xin mô tả vấn đề kinh tế.</string>
+  <string name="story_type_issue_economic_text2">Mối liên hệ của bạn với vấn đề này là gì?</string>
+  <string name="story_type_issue_economic_text3">Điều này ảnh hưởng kinh tế như thế nào?</string>
+  <string name="story_type_issue_economic_text4">Ai bị ảnh hưởng nhiều nhất bởi điều này?</string>
+  <string name="story_type_issue_economic_text5">Có thể làm gì để giải quyết vấn đề này?</string>
+  <string name="story_type_profile_public_text1">Giải thích thêm một ít về bạn là ai.</string>
+  <string name="story_type_profile_public_text2">Bạn bắt đầu khi nào?</string>
+  <string name="story_type_profile_public_text3">Bạn làm gì?</string>
+  <string name="story_type_profile_public_text4">Mô tả một thời điểm mà bạn cảm thấy hãnh diện với công việc.</string>
+  <string name="story_type_profile_public_text5">Bạn thấy vai trò của mình trong tương lai ra sao?</string>
+  <string name="story_type_profile_professional_text1">Bạn là ai và công việc của bạn là gì?</string>
+  <string name="story_type_profile_professional_text2">Xin giải thích cách bạn làm việc như thế nào.</string>
+  <string name="story_type_profile_professional_text3">Tại sao công việc này quan trọng đối với bạn?</string>
+  <string name="story_type_profile_professional_text4">Công việc của bạn gây tác động ra sao?</string>
+  <string name="story_type_profile_professional_text5">Điều kế tiếp trong công việc của bạn là gì?</string>
+  <string name="story_type_profile_personal_text1">Xin giải thích thêm chút ít về bạn là ai.</string>
+  <string name="story_type_profile_personal_text2">Một kinh nghiệm quan trọng xảy ra cho bạn là gì?</string>
+  <string name="story_type_profile_personal_text3">Bạn có cảm nhận gì qua kinh nghiệm này?</string>
+  <string name="story_type_profile_personal_text4">Bạn làm gì khác biệt bây giờ?</string>
+  <string name="story_type_profile_personal_text5">Bạn muốn thấy gì xảy ra trong tương lai?</string>
+  <!--/story_type_new-->
+  <!--story_type_old-->
+  <string name="scene_number">Cảnh &lt;xliff:g id="number"&gt;%1$d&lt;/xliff:g&gt;</string>
+  <string name="when">Khi nào?</string>
+  <string name="how">Thế nào?</string>
+  <string name="what">Cái gì?</string>
+  <string name="where">Nơi đâu?</string>
+  <string name="why">Tại sao?</string>
+  <string name="story_type_event_text1">Sự kiện xảy ra khi nào?</string>
+  <string name="story_type_event_text2">Chủ đích của sự kiện là gì?</string>
+  <string name="story_type_event_text3">Tại sao sự kiện này quan trọng?</string>
+  <string name="story_type_event_text4">Sự kiện xảy ra khi nào?</string>
+  <string name="story_type_event_text5">Sự kiện được tổ chức như thế nào?</string>
+  <string name="story_type_event_text6">Chủ đích của sự kiện là gì?</string>
+  <string name="story_type_event_text7">Sự kiện xảy ra nơi đâu?</string>
+  <string name="story_type_event_text8">Tại sao sự kiện này quan trọng?</string>
+  <string name="story_type_issue_text1">Vấn đề tác động và cộng đồng như thế nào?</string>
+  <string name="story_type_issue_text2">Ai bị ảnh hưởng nhiều nhất?</string>
+  <string name="story_type_issue_text3">Có những phản ứng gì?</string>
+  <string name="story_type_issue_text4">Vấn đề tác động vào cộng đồng như thế nào?</string>
+  <string name="story_type_issue_text5">Vấn đề bắt đầu khi nào / ở đâu?</string>
+  <string name="story_type_issue_text6">Ai bị tác động nhiều nhất?</string>
+  <string name="story_type_issue_text7">Tại sao họ bị tác động nhiều nhất?</string>
+  <string name="story_type_issue_text8">Có những phản ứng gì?</string>
+  <string name="story_type_profile_text1">Nhân vật đó là ai?</string>
+  <string name="story_type_profile_text2">Thách đố của nhân vật là gì?</string>
+  <string name="story_type_profile_text3">Nhân vật này đối phó với thách đố như thế nào?</string>
+  <string name="story_type_profile_text4">Nhân vật đó là ai?</string>
+  <string name="story_type_profile_text5">Nhân vật đó từ đâu đến?</string>
+  <string name="story_type_profile_text6">Thách đố của nhân vật là gì?</string>
+  <string name="story_type_profile_text7">Tại sao nhân vật này vật lộn với thách thức này?</string>
+  <string name="story_type_profile_text8">Nhân vật này đối phó với thách đố như thế nào?</string>
+  <string name="story_type_news_text1">Chuyện gì xảy ra?</string>
+  <string name="story_type_news_text2">Ai bị ảnh hưởng?</string>
+  <string name="story_type_news_text3">Phản ứng của việc này như thế nào?</string>
+  <string name="story_type_news_text4">Chuyện gì xảy ra?</string>
+  <string name="story_type_news_text5">Tin tức xảy ra nơi đâu?</string>
+  <string name="story_type_news_text6">Ai bị ảnh hưởng?</string>
+  <string name="story_type_news_text7">Tại sao nó xảy ra?</string>
+  <string name="story_type_news_text8">Phản ứng của việc này như thế nào?</string>
+  <!--/story_type_old-->
+  <!--prefs-->
+  <string name="prefs_category_networking_security_title">Liên lạc &amp; An ninh</string>
+  <string name="prefs_category_locales_title">Nơi chốn</string>
+  <string name="prefs_category_media_title">Truyền thông</string>
+  <string name="prefs_category_debug_title">Tìm lỗi</string>
+  <string name="prefs_storymaker_server_title">Máy Chủ StoryMaker</string>
+  <string name="prefs_use_tor_title">Dùng Orbot (Tor)</string>
+  <string name="prefs_use_tor_summary">Gửi tất cả giao thông mạng xuyên qua mạng Tor với ứng dụng Orbot</string>
+  <string name="prefs_sm_upload_title">Tải lên StoryMaker</string>
+  <string name="prefs_sm_upload_summary">Tải lên máy chủ StoryMaker theo mặc định</string>
+  <string name="prefs_use_download_manager_title">Dùng Quản Lý Tải Xuống</string>
+  <string name="prefs_use_upload_manager_title">Dùng Quản Lý Tải Lên</string>
+  <string name="prefs_youtube_acccount_title">Tài khoản YouTube</string>
+  <string name="prefs_youtube_acccount_summary">Tài khoản YouTube dùng để tải video lên. Nó phải được đăng ký trên thiết bị của bạn.</string>
+  <string name="prefs_youtube_login_title">Đăng nhập YouTube</string>
+  <string name="prefs_youtube_login_summary">Dùng xác minh qua trang web của YouTube</string>
+  <string name="prefs_soundcloud_account_title">Tài Khoản SoundCloud</string>
+  <string name="prefs_soundcloud_account_summary">Tài khoản SoundCloud dùng để tải âm thanh lên</string>
+  <string name="prefs_interface_language_title">Chọn Ngôn Ngữ</string>
+  <string name="prefs_interface_language_summary">StoryMaker sẽ dùng ngôn ngữ này cho giao diện sử dụng</string>
+  <string name="prefs_slide_duration_title">Thời lượng Bản Chiếu</string>
+  <string name="prefs_slide_duration_summary">Thời lượng của mỗi bản chiếu trong một bản văn bằng hình</string>
+  <string name="prefs_enable_compression_title">Bật mở dạng Nén</string>
+  <string name="prefs_enable_compression_summary">Nén tất cả video và âm thanh dùng thiết đặt dưới đây</string>
+  <string name="prefs_preprocess_3gp_title">Tiền xử lý 3GP</string>
+  <string name="prefs_preprocess_3gp_summary">Hoán chuyển clip video 3GP thành MPEG-4</string>
+  <string name="prefs_use_cat_command_title">Dùng mệnh lệnh \'Cat\'</string>
+  <string name="prefs_use_cat_command_summary">Dùng mệnh lệnh \'cat\' để sát nhập video lại</string>
+  <string name="prefs_video_codec_title">Codec Video</string>
+  <string name="prefs_video_codec_summary">Codec video xuất ra</string>
+  <string name="prefs_video_resolution_title">Độ phân giải Video</string>
+  <string name="prefs_video_resolution_summary">Độ phân giải của video xuất ra</string>
+  <string name="prefs_video_width_title">Bề ngang Video</string>
+  <string name="prefs_video_width_summary">Bề ngang của video xuất ra</string>
+  <string name="prefs_video_height_title">Bề cao Video</string>
+  <string name="prefs_video_height_summary">Bề cao của video xuất ra</string>
+  <string name="prefs_video_bitrate_title">Tốc độ bit của Video</string>
+  <string name="prefs_video_bitrate_summary">Tốc độ bit của Video xuất ra (kbps)</string>
+  <string name="prefs_video_framrate_title">Tốc độ khung hình Video</string>
+  <string name="prefs_video_framrate_summary">Tốc độ khung hình xuất ra theo giây (fps)</string>
+  <string name="prefs_audio_codec_title">Codec Âm thanh</string>
+  <string name="prefs_audio_codec_summary">Codec âm thanh xuất ra</string>
+  <string name="prefs_audio_bitrate_title">Tốc độ bít Âm thanh</string>
+  <string name="prefs_audio_bitrate_summary">Tốc độ bít âm thanh xuất ra (kbps)</string>
+  <string name="prefs_audio_samplerate_title">Tốc độ lấy mẫu Âm thanh</string>
+  <string name="prefs_audio_samplerate_summary">Tốc độ lấy mẫu thâu âm thanh (khz)</string>
+  <string name="prefs_audio_crossfade_title">Chuyển dần Âm thanh</string>
+  <string name="prefs_audio_crossfade_summary">Độ dài chuyển dần âm thanh</string>
+  <string name="prefs_internal_storage_title">Chỗ Chứa Nội Bộ</string>
+  <string name="prefs_internal_storage_summary">Dùng chỗ chứa nội bộ của đề án</string>
+  <string name="prefs_youtube_method_title">Phương Thức YouTube</string>
+  <string name="prefs_youtube_method_summary">Debug loại phương thức cho phép</string>
+  <!--/prefs-->
+  <!--FirstStartActivity-->
+  <string name="sign_up_btn">ĐĂNG KÝ CHO STORYMAKER</string>
+  <string name="no_thanks_btn">XIN MIỄN</string>
+  <string name="tos_btn">TÔI ĐỒNG Ý VỚI ĐIỀU KHOẢN SỬ DỤNG</string>
+  <string name="tos_dialog_title">Điều Khoản Sử Dụng</string>
+  <string name="tos_dialog_msg">Xin Chấp Nhận Điều Khoản Sử Dụng của chúng tôi trước khi tiếp tục</string>
+  <string name="tos_dialog_positive_button">Hiểu rõ</string>
+  <string name="acct_created_dialog_title">Vào Tài Khoản của bạn</string>
+  <string name="acct_created_dialog_msg"><b>Mật khẩu StoryMaker sẽ được email tới bạn chút nữa</b> Sau khi có được mật khẩu, bạn có thể đăng nhập vào bất cứ lúc nào qua menu ngăn kéo (vào bằng cách quẹt từ lề trái của màn ảnh).</string>
+  <string name="acct_created_dialog_positive_button">Bắt Đầu!</string>
+  <!--ConnectAccountActivity-->
+  <string name="my_account">TÀI KHOẢN STORYMAKER CỦA TÔI</string>
+  <string name="join_storymaker">Tham gia vào Cộng Đồng StoryMaker</string>
+  <string name="create_account">TẠO TÀI KHOẢN CHO TÔI</string>
+  <string name="sign_in">ĐĂNG KÝ / ĐĂNG NHẬP</string>
+  <string name="sign_out">ĐĂNG XUẤT</string>
+  <!--ProjectTagFragment-->
+  <string name="no_tags_msg">Không thêm #tags nào</string>
+  <!--BaesActivity Drawer  (For Accessibility Descriptions)-->
+  <string name="open_drawer">Mở Ngăn Kéo</string>
+  <string name="close_drawer">Đóng Ngăn Kéo</string>
+</resources>

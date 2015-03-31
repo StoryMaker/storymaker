@@ -1,5 +1,8 @@
 #storymaker stuff
 storymaker-release.key
+app/assets/main.1.obb
+liger-content/
+storymaker-art/
 
 # built application files
 *.apk
@@ -37,6 +40,3 @@ local.properties
 # Gradle
 .gradle/
 
-#Bundled content
-app/assets/main.1.obb
-liger-content/

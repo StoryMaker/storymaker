@@ -133,7 +133,7 @@
   <string name="story_type_profile_personal_text5">Какие изменения вы бы хотели увидеть в будущем?</string>
   <!--/story_type_new-->
   <!--story_type_old-->
-  <string name="scene_number">Эпизод &lt;xliff:g id="number"&gt;%1$d&lt;/xliff:g&gt;</string>
+  <string name="scene_number">Эпизод &lt;xliff:g id=\"number\"&gt;%1$d&lt;/xliff:g&gt;</string>
   <string name="when">Когда?</string>
   <string name="how">Как?</string>
   <string name="what">Что?</string>
@@ -195,8 +195,6 @@
   <string name="prefs_soundcloud_account_summary">Учетная запись SoundCloud, используемая для загрузки аудио</string>
   <string name="prefs_interface_language_title">Выберите язык</string>
   <string name="prefs_interface_language_summary">Язык, использующийся для интерфейса StoryMaker</string>
-  <string name="prefs_lesson_language_title">Выберите уроки</string>
-  <string name="prefs_lesson_language_summary">Используемый модуль уроков.</string>
   <string name="prefs_slide_duration_title">Длительность слайда</string>
   <string name="prefs_slide_duration_summary">Длительность каждого слайда в фото эссе</string>
   <string name="prefs_enable_compression_title">Включить сжатие</string>
@@ -227,8 +225,6 @@
   <string name="prefs_audio_crossfade_summary">Длина плавного перехода в аудио</string>
   <string name="prefs_internal_storage_title">Внутреннее хранилище</string>
   <string name="prefs_internal_storage_summary">Использовать внутреннее хранилища проекта</string>
-  <string name="prefs_disable_lesson_completion_title">Отключить завершение урока</string>
-  <string name="prefs_disable_lesson_completion_summary"></string>
   <string name="prefs_youtube_method_title">Метод YouTube</string>
   <string name="prefs_youtube_method_summary">Тип метода отладки авторизации</string>
   <!--/prefs-->

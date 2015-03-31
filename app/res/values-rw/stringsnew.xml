@@ -133,7 +133,7 @@
   <string name="story_type_profile_personal_text5">Nibhe mwifuza kubonabibaye muri kazoza ?</string>
   <!--/story_type_new-->
   <!--story_type_old-->
-  <string name="scene_number">Scène &lt;xliff:g id="number"&gt;%1$d&lt;/xliff:g&gt;</string>
+  <string name="scene_number">Scène &lt;xliff:g id=\"number\"&gt;%1$d&lt;/xliff:g&gt;</string>
   <string name="when">Ryari ? </string>
   <string name="how">Gute ?</string>
   <string name="what">Nibiki ?</string>
@@ -195,8 +195,6 @@
   <string name="prefs_soundcloud_account_summary">Ikonti ya SoundCloud ikoreshwa mu kugira iyugururwa rijana (télécharger) ry\'amajwi</string>
   <string name="prefs_interface_language_title">Hitamwo ururimi </string>
   <string name="prefs_interface_language_summary">Imvugo StoryMaker izokoresha mugusobanurira uwuyikoresha (Interface utilisateur)</string>
-  <string name="prefs_lesson_language_title">Hitamwo inyigisho</string>
-  <string name="prefs_lesson_language_summary">Icirwa co gukoresha </string>
   <string name="prefs_slide_duration_title">Umwanya  wa diapositive </string>
   <string name="prefs_slide_duration_summary">Umwanya wadiapositive mugufata amafoto</string>
   <string name="prefs_enable_compression_title">Shoboza iyegeranwa ry\'igikorwa (compression)</string>
@@ -227,8 +225,6 @@
   <string name="prefs_audio_crossfade_summary">Umwanya (durée) ikurikirana rifatanye ry\'amajwi (enchaîné des sons) ungana</string>
   <string name="prefs_internal_storage_title">Ububiko bwindani</string>
   <string name="prefs_internal_storage_summary">Koresha ububiko bwindani bw’iyo pojet</string>
-  <string name="prefs_disable_lesson_completion_title">Ntushoboze (désactiver) imarirwa (achèvement) ry\'inyigisho</string>
-  <string name="prefs_disable_lesson_completion_summary"></string>
   <string name="prefs_youtube_method_title">Ukungene Kwa YouTube (méthode YouTube)</string>
   <string name="prefs_youtube_method_summary">Ubwoko bw\'ukungene urekuriwe gukuramwo virus (type de méthode d\'autorisation de déboguer)</string>
   <!--/prefs-->

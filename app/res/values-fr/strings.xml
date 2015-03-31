@@ -1,5 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+  <string name="app_name">StoryMaker 2</string>
   <string name="app_description">La création de belles histoires est maintenant plus facile que jamais avec StoryMaker. Nos modèles uniques, des superpositions et des leçons vous guident à travers l\'ensemble du processus créatif. StoryMaker vous permet de modifier votre bon contenu sur votre mobile, ce qui rend encore plus facile de terminer votre histoire. Une fois que vous avez terminé, StoryMaker vous permet de publier votre histoire à tous vos plateformes préférées.</string>
   <string name="title_projects">Histoires</string>
   <string name="title_lessons">Leçons</string>
@@ -284,6 +285,21 @@ Vous aurez aussi l’opportunité de voir et modifier les données à envoyer. <
   <string name="uploading_to_facebook">Chargement vers Facebook...</string>
   <string name="uploading_to_internet_archive">Chargement à L\'Archive Internet...</string>
   <string name="no_site_selected">Aucun Site sélectionné.</string>
+  <string name="exported_stories">Exports</string>
+  <string name="no_title">Sans Titre</string>
+  <string name="title_exports">Récits publiés</string>
+  <string name="last_modified">Modifiés récemment</string>
+  <string name="no_medium">(pas de support)</string>
+  <string name="learning_guide_description">Rédiger un récit convaincant</string>
+  <string name="extracting_audio_multiple">Extraction de piste audio</string>
+  <string name="converting_audio">Conversion vers sortie audio....</string>
+  <string name="export_error_1">Erreurs dans l\'exportation de médias</string>
   <string name="export_error_2">Erreur</string>
+  <string name="processing_audio">Traitement des pistes audio...</string>
+  <string name="processing_audio_multiple">Traitement de la piste audio</string>
+  <string name="mixing_tracks">Mélange des pistes</string>
+  <string name="trimming_merging">Rognage et fusion des vidéos</string>
+  <string name="merging_video_audio">Fusion vidéo et audio</string>
+  <string name="export_error_3">Erreurs lors de l\'export media</string>
   <string name="export_error_4">Erreur</string>
 </resources>

@@ -1,0 +1,60 @@
+{
+    "scenes": [
+        {
+            "clips": [
+                {
+                    "Artwork": "cliptype_wide", 
+                    "Description": "Cho biết quốc gia hoặc một yếu tố sắc tộc hay tôn giáo. Gồm có các mốc điểm hoặc những thông tin cụ thể về địa điểm.", 
+                    "Goal": "Cho thấy câu chuyện xảy ra nơi đâu.", 
+                    "Length": "X giây", 
+                    "Security Concern": "-", 
+                    "Shot Size": "Rộng", 
+                    "Tip": "Các mốc điểm địa dư giúp độc giả nhận ra được vị trí", 
+                    "Title": "Môi trường"
+                }, 
+                {
+                    "Artwork": "cliptype_medium", 
+                    "Description": "Cho thấy nhân vật đang tương tác với người khác. Tạo mối quan hệ giữa người xem và đối tượng. Nhân vật nên chiếm 20% của khung. Thích hợp cho loại Tin Nóng.", 
+                    "Goal": "Mô tả người ta phản ứng thế nào đối với sự kiện hoặc hậu quả.", 
+                    "Length": "X giây", 
+                    "Security Concern": "-", 
+                    "Shot Size": "Trung bình", 
+                    "Tip": "Giữ nhân vật dọc theo một trong các vạch đứng để tạo khung hình thích đáng.", 
+                    "Title": "Phản ứng/Tương tác"
+                }, 
+                {
+                    "Artwork": "cliptype_long", 
+                    "Description": "Mô tả nhân vật đang hành xử bình thường. Tại sao nhân vật lại đáng lưu ý? Cho khán giả thấy. Thích hợp cho bản tin Sự Kiện và Chủ Đề", 
+                    "Goal": "Cho thấy nhân vật đang sinh hoạt trong môi trường của họ.", 
+                    "Length": "X giây", 
+                    "Security Concern": "-", 
+                    "Shot Size": "Dài", 
+                    "Tip": "Đặt nhân vật qua một bên của khung, bố cục hình để cho thấy một điều quan trọng khác của bản tin ở bên kia khung.", 
+                    "Title": "Bộc trực"
+                }, 
+                {
+                    "Artwork": "cliptype_close", 
+                    "Description": "Trọng điểm là nhân vật chính trong câu chuyện. Làm nổi bật cảm xúc hoặc trạng thái tinh thần của nhân vật. Thích hợp cho loại tin Sự Kiện và Nhân Vật.", 
+                    "Goal": "Giới thiệu nhân vật. Đến gần.", 
+                    "Length": "X giây", 
+                    "Security Concern": "-", 
+                    "Shot Size": "Cận", 
+                    "Tip": "Dùng đường-mắt-nhìn để tạo khung hình thích đáng.", 
+                    "Title": "Chân dung"
+                }, 
+                {
+                    "Artwork": "cliptype_detail", 
+                    "Description": "Một tấm hình gây ấn tượng mạnh sẽ kích thích khán giả và thôi thúc họ xem tiếp. Yếu tố này nên trám đầy ít nhất 50% khung hình.", 
+                    "Goal": "Tóm lược toàn bộ sự việc bằng cách minh họa một yếu tố cốt yếu của câu chuyện.", 
+                    "Length": "X giây", 
+                    "Security Concern": "-", 
+                    "Shot Size": "Chi tiết", 
+                    "Tip": "Chỉnh máy hình sang Macro (cận cảnh) nếu khoảng cách chụp nhân vậ ngắn hơn một cánh tay.", 
+                    "Title": "Dấu ấn"
+                }
+            ], 
+            "title": "Cảnh 1"
+        }
+    ], 
+    "title": "Hình Đơn Giản"
+}

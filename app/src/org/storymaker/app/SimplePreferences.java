@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -23,6 +24,9 @@ public class SimplePreferences extends PreferenceActivity implements OnSharedPre
 	public static final String KEY_VIDEO_RESOLUTION = "p_video_resolution";
 	public static final String KEY_VIDEO_WIDTH = "p_video_width";
 	public static final String KEY_VIDEO_HEIGHT = "p_video_height";
+
+    public static final String KEY_USE_TOR = "pusetor";
+    public static final String KEY_USE_MANAGER = "pusedownloadmanager";
 
     public static final String KEY_LANGUAGE = "pintlanguage";
 
@@ -64,7 +68,7 @@ public class SimplePreferences extends PreferenceActivity implements OnSharedPre
 		    public boolean onPreferenceChange(Preference preference, Object newValue) 
 		    {
 		    	int vHeight = Integer.parseInt(newValue.toString());
-		    	
+
 		    	if(vHeight > MAX_VIDEO_HEIGHT)
 				{
 					Toast.makeText(getApplicationContext(), "Height must be less than 1080.", Toast.LENGTH_SHORT).show();
@@ -76,6 +80,48 @@ public class SimplePreferences extends PreferenceActivity implements OnSharedPre
 		    	}
 		    }
 		});
+
+        Preference prefUseTor = (Preference)getPreferenceScreen().findPreference(KEY_USE_TOR);
+        prefUseTor.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+            public boolean onPreferenceChange(Preference preference, Object newValue) {
+
+                boolean useTor = Boolean.parseBoolean(newValue.toString());
+
+                if(useTor) {
+                    //SharedPreferences settings = ((Preference)getPreferenceScreen().findPreference(KEY_USE_MANAGER)).getSharedPreferences();
+                    SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                    boolean useManager = settings.getBoolean(KEY_USE_MANAGER, false);
+
+                    if (useManager) {
+                        Toast.makeText(getApplicationContext(), "Can't select both \"Use Orbot\" and \"Use Download Manager\"", Toast.LENGTH_LONG).show();
+                        return false;
+                    }
+                }
+
+                return true;
+            }
+        });
+
+        Preference prefUseManager = (Preference)getPreferenceScreen().findPreference(KEY_USE_MANAGER);
+        prefUseManager.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+            public boolean onPreferenceChange(Preference preference, Object newValue) {
+
+                boolean useManager = Boolean.parseBoolean(newValue.toString());
+
+                if(useManager) {
+                    //SharedPreferences settings = ((Preference)getPreferenceScreen().findPreference(KEY_USE_MANAGER)).getSharedPreferences();
+                    SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                    boolean useTor = settings.getBoolean(KEY_USE_TOR, false);
+
+                    if (useTor) {
+                        Toast.makeText(getApplicationContext(), "Can't select both \"Use Orbot\" and \"Use Download Manager\"", Toast.LENGTH_LONG).show();
+                        return false;
+                    }
+                }
+
+                return true;
+            }
+        });
 	}
 	
 	@SuppressWarnings("deprecation")

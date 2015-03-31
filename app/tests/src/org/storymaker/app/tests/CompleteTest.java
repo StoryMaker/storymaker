@@ -196,14 +196,17 @@ public class CompleteTest extends ActivityInstrumentationTestCase2<HomeActivity>
         onView(withText("New")).perform(click());
 
         // first selection
+
         //stall(500, "FIRST SELECTION (" + "An Event" + ")");
         onView(withText("An Event")).perform(click());
 
         // second selection
+
         //stall(500, "SECOND SELECTION (" + "Show the best moments." + ")");
         onView(withText("Show the best moments.")).perform(click());
 
         // third selection
+
         //stall(500, "THIRD SELECTION (" + mediaString + ")");
         onView(withText(mediaString)).perform(click());
 

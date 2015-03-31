@@ -83,6 +83,7 @@
         <item name="serbian">Serbian</item>
         <item name="spanish">Spanish</item>
         <item name="kinyarwanda">Kinyarwanda</item>
+        <item name="vietnamese">Vietnamese</item>
     </string-array>
     
     <string-array name="interface_language_options_values" translatable="false">
@@ -98,6 +99,7 @@
         <item name="serbian">sr</item>
         <item name="spanish">es</item>
         <item name="kinyarwanda">rw</item>
+        <item name="vietnamese">vi</item>
     </string-array>
     
     <string-array name="lesson_language_options" translatable="false">
@@ -122,6 +124,7 @@
         <item>Tunisia</item>
         <item>Zimbabwe</item>
         <item>Czech Republic</item>
+        <item>Vietnam</item>
     </string-array>
     
     <string-array name="array_story_sections">

@@ -3,18 +3,21 @@ package org.storymaker.app.db;
 import java.util.ArrayList;
 import java.util.Date;
 
+import org.storymaker.app.StoryMakerApp;
 import org.storymaker.app.model.Auth;
 import org.storymaker.app.model.Project;
 import org.storymaker.app.model.Scene;
 import org.storymaker.app.model.SceneTable;
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 public class StoryMakerDB extends SQLiteOpenHelper {
     private static final String TAG = "StoryMakerDB";
-    private static final int DB_VERSION = 10;
+    private static final int DB_VERSION = 11;
     private static final String DB_NAME = "sm.db";
     private Context mContext;
     
@@ -82,6 +85,13 @@ public class StoryMakerDB extends SQLiteOpenHelper {
         if ((oldVersion < 10) && (newVersion >= 10)) {
             db.execSQL(StoryMakerDB.Schema.Media.UPDATE_TABLE_MEDIA_ADD_VOLUME);
             db.execSQL(Schema.AudioClip.CREATE_TABLE_AUDIO_CLIP);
+        }
+        if ((oldVersion < 11) && (newVersion >= 11)) {
+            // we need to force the server url to .org since beta users have .cc in their sharedprefs and are missing the update
+            SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(mContext.getApplicationContext());
+            SharedPreferences.Editor editor = settings.edit();
+            editor.putString(StoryMakerApp.STORYMAKER_SERVER_URL_PREFS_KEY, StoryMakerApp.STORYMAKER_DEFAULT_SERVER_URL);
+            editor.commit();
         }
     }
     

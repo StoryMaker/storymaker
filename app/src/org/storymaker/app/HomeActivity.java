@@ -98,13 +98,6 @@ public class HomeActivity extends BaseActivity {
         // i don't think we ever want to do this
         // IndexManager.copyInstalledIndex(this);
 
-        try {
-            String pkg = getPackageName();
-            String vers= getPackageManager().getPackageInfo(pkg, 0).versionName;
-            setTitle(getTitle() + " v" + vers);
-                    
-        } catch (NameNotFoundException ignored) {}
-        
         setContentView(R.layout.activity_home);
         mRecyclerView = (RecyclerView) findViewById(scal.io.liger.R.id.recyclerView);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
