@@ -332,5 +332,8 @@ You also will have an opportunity to see and modify the data being sent."</strin
     <string name="merging_video_audio">Merging video and audio...</string>
     <string name="export_error_3">Something went wrong with media export</string>
     <string name="export_error_4">Error</string>
+    <string name="publishing_to_storymakerorg">Publishing to StoryMaker.org...</string>
+    <string name="published_to_storymaker">Published to StoryMaker.org!</string>
+    <string name="you_are_not_signed_into_storymakerorg">You are not signed into StoryMaker.org!</string>
 
 </resources>
