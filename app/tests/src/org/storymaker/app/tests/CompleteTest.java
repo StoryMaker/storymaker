@@ -4,10 +4,15 @@ import android.app.Activity;
 import android.app.Instrumentation;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.res.AssetManager;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.test.espresso.NoMatchingViewException;
+import android.support.test.espresso.action.GeneralLocation;
+import android.support.test.espresso.action.GeneralSwipeAction;
+import android.support.test.espresso.action.Press;
+import android.support.test.espresso.action.Swipe;
 import android.support.v7.widget.RecyclerView;
 import android.test.ActivityInstrumentationTestCase2;
 import android.util.Log;
@@ -21,11 +26,17 @@ import org.apache.commons.io.filefilter.WildcardFileFilter;
 import org.storymaker.app.AccountsActivity;
 import org.storymaker.app.HomeActivity;
 import org.storymaker.app.R;
+import org.storymaker.app.SceneEditorActivity;
 import org.storymaker.app.StoryInfoEditActivity;
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 
+import io.scal.secureshareui.login.SoundCloudLoginActivity;
 import scal.io.liger.MainActivity;
 /*
 import static com.google.android.apps.common.testing.ui.espresso.Espresso.onView;
@@ -42,6 +53,7 @@ import static com.google.android.apps.common.testing.ui.espresso.matcher.ViewMat
 import static android.support.test.espresso.Espresso.onData;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
+import static android.support.test.espresso.action.ViewActions.scrollTo;
 import static android.support.test.espresso.action.ViewActions.clearText;
 import static android.support.test.espresso.action.ViewActions.typeText;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
@@ -68,6 +80,8 @@ public class CompleteTest extends ActivityInstrumentationTestCase2<HomeActivity>
     private Instrumentation.ActivityMonitor mPassThroughMonitor1;
     private Instrumentation.ActivityMonitor mPassThroughMonitor2;
     private Instrumentation.ActivityMonitor mPassThroughMonitor3;
+    private Instrumentation.ActivityMonitor mPassThroughMonitor4;
+    private Instrumentation.ActivityMonitor mPassThroughMonitor5;
 
     private String testDirectory;
 
@@ -80,15 +94,53 @@ public class CompleteTest extends ActivityInstrumentationTestCase2<HomeActivity>
 
         mHomeActivity = getActivity();
 
+        String sampleVideoName = "TEST_SAMPLE.mp4";
+        String sampleAudioName = "TEST_SAMPLE.mp3";
+        String samplePhotoName = "TEST_SAMPLE.jpg";
+
         // create references to sample files for dummy responses
         // sample files assumed to be present (copied by test setup script)
         // NOTE: can these be refactored into uri's like "content://media/external/video/media/1258"
         String packageName = mHomeActivity.getApplicationContext().getPackageName();
         File root = Environment.getExternalStorageDirectory();
         testDirectory = root.toString() + "/Android/data/" + packageName + "/files/";
-        String sampleVideo = testDirectory + "SAMPLE.mp4";
-        String sampleAudio = testDirectory + "SAMPLE.mp3";
-        String samplePhoto = testDirectory + "SAMPLE.jpg";
+        String sampleVideo = testDirectory + sampleVideoName;
+        String sampleAudio = testDirectory + sampleAudioName;
+        String samplePhoto = testDirectory + samplePhotoName;
+
+        // copy sample file from assets
+        InputStream assetIn = null;
+        OutputStream assetOut = null;
+
+        AssetManager assetManager = mHomeActivity.getApplicationContext().getAssets();
+
+        File sampleVideoFile = new File(sampleVideo);
+
+        try {
+            assetIn = assetManager.open(sampleVideoName);
+
+            assetOut = new FileOutputStream(sampleVideoFile);
+
+            byte[] buffer = new byte[1024];
+            int read;
+            while ((read = assetIn.read(buffer)) != -1) {
+                assetOut.write(buffer, 0, read);
+            }
+            assetIn.close();
+            assetIn = null;
+            assetOut.flush();
+            assetOut.close();
+            assetOut = null;
+        } catch (IOException ioe) {
+            Log.e("AUTOMATION", "COPYING SAMPLE FILE " + sampleVideoName + " FROM ASSETS TO " + testDirectory + " FAILED");
+            return;
+        }
+
+        // check for zero-byte files
+        if (sampleVideoFile.exists() && (sampleVideoFile.length() == 0)) {
+            Log.e("AUTOMATION", "COPYING SAMPLE FILE " + sampleVideoName + " FROM ASSETS TO " + testDirectory + " FAILED (FILE WAS ZERO BYTES)");
+            sampleVideoFile.delete();
+        }
 
         // seems necessary to create activity monitor to prevent activity from being caught by other monitors
         mPassThroughMonitor1 = new Instrumentation.ActivityMonitor(MainActivity.class.getCanonicalName(), null, false);
@@ -99,6 +151,12 @@ public class CompleteTest extends ActivityInstrumentationTestCase2<HomeActivity>
 
         mPassThroughMonitor3 = new Instrumentation.ActivityMonitor(StoryInfoEditActivity.class.getCanonicalName(), null, false);
         getInstrumentation().addMonitor(mPassThroughMonitor3);
+
+        mPassThroughMonitor4 = new Instrumentation.ActivityMonitor(SoundCloudLoginActivity.class.getCanonicalName(), null, false);
+        getInstrumentation().addMonitor(mPassThroughMonitor4);
+
+        mPassThroughMonitor5 = new Instrumentation.ActivityMonitor(SceneEditorActivity.class.getCanonicalName(), null, false);
+        getInstrumentation().addMonitor(mPassThroughMonitor5);
 
         // create activity monitors to intercept media capture requests
         IntentFilter videoFilter = new IntentFilter(MediaStore.ACTION_VIDEO_CAPTURE);
@@ -131,9 +189,6 @@ public class CompleteTest extends ActivityInstrumentationTestCase2<HomeActivity>
 
     public void testAaEula() {
 
-        // assert visibility of button?
-        onView(withId(R.id.btnTos)).check(matches(isDisplayed()));
-
         onView(withId(R.id.btnTos)).perform(click());
 
         onView(withText("Accept")).perform(click());
@@ -155,12 +210,13 @@ public class CompleteTest extends ActivityInstrumentationTestCase2<HomeActivity>
         };
 
         String[] secondOption = {
-                "Internet Archive",
-                "SoundCloud",
-                "YouTube",
-                "Flickr",
-                "Facebook",
-                "Private Server (SSH)"
+                "SoundCloud"
+                // don't know how to fake logins for these sites
+                //"Internet Archive",
+                //"YouTube",
+                //"Flickr",
+                //"Facebook",
+                //"Private Server (SSH)"
         };
 
         for (int i = 0; i < firstOption.length; i++) {
@@ -189,36 +245,33 @@ public class CompleteTest extends ActivityInstrumentationTestCase2<HomeActivity>
 
     public boolean doTest(String mediaString, String accountString) {
 
-        // obb file assumed to be present (copied by test setup script)
+        // obb file assumed to be present (test requires network access)
 
         // select "new" option
         stall(500, "SELECT NEW");
         onView(withText("New")).perform(click());
 
         // first selection
-
-        //stall(500, "FIRST SELECTION (" + "An Event" + ")");
+        stall(500, "FIRST SELECTION (" + "An Event" + ")");
         onView(withText("An Event")).perform(click());
 
         // second selection
-
-        //stall(500, "SECOND SELECTION (" + "Show the best moments." + ")");
+        stall(500, "SECOND SELECTION (" + "Show the best moments." + ")");
         onView(withText("Show the best moments.")).perform(click());
 
         // third selection
-
-        //stall(500, "THIRD SELECTION (" + mediaString + ")");
+        stall(500, "THIRD SELECTION (" + mediaString + ")");
         onView(withText(mediaString)).perform(click());
 
         // media capture
         stall(500, "MEDIA CAPTURE 1");
-        swipe(1);
+        swipe(2);
         stall(500, "WAIT FOR UPDATE");
         onView(allOf(withText("Capture"), withParent(withParent(withTagValue(is((Object) "clip_card_0")))))).perform(click());
 
         // scroll to bottom, check for publish button
         stall(500, "SWIPING");
-        swipe(15);
+        swipe(24);
 
         // begin publish/upload steps
         try {
@@ -234,50 +287,89 @@ public class CompleteTest extends ActivityInstrumentationTestCase2<HomeActivity>
         // enter metadata
         stall(500, "METADATA");
         onView(withId(R.id.fl_info_container)).perform(click());
-        Log.d("AUTOMATION", "CLICKED DESCRIPTION FIELD");
+        Log.d("AUTOMATION", "CLICKED METADATA FIELD");
+
         stall(500, "TITLE");
         onView(withId(R.id.et_story_info_title)).perform(clearText()).perform(typeText(mediaString.toUpperCase() + "/" + accountString.toUpperCase()));
         Log.d("AUTOMATION", "ENTERED TITLE TEXT");
+
         stall(500, "DESCRIPTION");
         onView(withId(R.id.et_story_info_description)).perform(clearText()).perform(typeText(mediaString + "/" + accountString));
         Log.d("AUTOMATION", "ENTERED DESCRIPTION TEXT");
+
         stall(500, "FIRST TAG");
         onView(withId(R.id.act_story_info_tag)).perform(clearText()).perform(typeText(mediaString.toLowerCase()));
         stall(500, "FIRST ADD");
         onView(withId(R.id.btn_add_tag)).perform(click());
         Log.d("AUTOMATION", "ENTERED FIRST TAG");
+
         stall(500, "SECOND TAG");
         onView(withId(R.id.act_story_info_tag)).perform(clearText()).perform(typeText(accountString.toLowerCase()));
         stall(500, "SECOND ADD");
         onView(withId(R.id.btn_add_tag)).perform(click());
         Log.d("AUTOMATION", "ENTERED SECOND TAG");
+
+        // these seem problematic, will troubleshoot later
+        /*
         stall(500, "SECTION LIST");
         onView(withId(R.id.sp_story_section)).perform(click());
         stall(500, "SECTION ITEM");
         onView(withText("Travel")).perform(click());
         Log.d("AUTOMATION", "SELECTED SECTION");
+
         stall(500, "LOCATION LIST");
         onView(withId(R.id.sp_story_location)).perform(click());
         stall(500, "LOCATION ITEM");
         onView(withText("Czech Republic")).perform(click());
         Log.d("AUTOMATION", "SELECTED LOCATION");
+        */
+
         stall(500, "SAVE");
         onView(withText("Save")).perform(click());
         Log.d("AUTOMATION", "SAVED INFO");
-
-
 
         // select account and upload
         stall(500, "UPLOAD BUTTON");
         onView(withId(R.id.btnUpload)).perform(click());
         Log.d("AUTOMATION", "CLICKED UPLOAD BUTTON");
-        stall(500, "ACCOUNT BUTTON");
+
+        // scroll to account
+        stall(500, "SCROLLING");
+        onView(withText(accountString)).perform(scrollTo(), click());
+        Log.d("AUTOMATION", "SCROLLED TO " + accountString + " BUTTON");
+
+        // get name/password from xml file (add more later)
+        String accountName = "";
+        String accountPass = "";
+
+        if (accountString.equals("SoundCloud")) {
+            accountName = mHomeActivity.getApplicationContext().getString(R.string.soundcloud_name);
+            accountPass = mHomeActivity.getApplicationContext().getString(R.string.soundcloud_pass);
+        }
+
+        // enter name/password
+        stall(500, "NAME");
+        onView(withId(R.id.etUsername)).perform(clearText()).perform(typeText(accountName));
+        Log.d("AUTOMATION", "ENTERED USER NAME");
+
+        stall(500, "PASSWORD");
+        onView(withId(R.id.etPassword)).perform(clearText()).perform(typeText(accountPass));
+        Log.d("AUTOMATION", "ENTERED USER PASSWORD");
+
+        stall(500, "SIGN IN BUTTON");
+        onView(withId(R.id.btnSignIn)).perform(click());
+        Log.d("AUTOMATION", "CLICKED SIGN IN BUTTON");
+
+        // after login, account is checked by default?
+        /*
+        stall(5000, "ACCOUNT BUTTON");
         onView(withText(accountString)).perform(click());
         Log.d("AUTOMATION", "CLICKED " + accountString + " BUTTON");
+        */
 
         try {
             stall(500, "CONTINUE BUTTON");
-            // CRASHES onView(withText("Continue")).perform(click());
+            onView(withText("Continue")).perform(click());
             Log.d("AUTOMATION", "CLICKED CONTINUE BUTTON");
         } catch (NoMatchingViewException nmve) {
             // implies no button was found (failure)
@@ -285,7 +377,8 @@ public class CompleteTest extends ActivityInstrumentationTestCase2<HomeActivity>
             return false;
         }
 
-        // test complete
+        // TODO: how to verify successful upload? (failure indicated by visible message)
+        stall(30000, "WAITING FOR UPLOAD");
         Log.d("AUTOMATION", "TEST RUN COMPLETE (PASS)");
         return true;
     }
