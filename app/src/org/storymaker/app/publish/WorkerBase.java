@@ -10,7 +10,7 @@ public abstract class WorkerBase {
     
 	public abstract void jobSucceeded(Job job, String code);
 	
-	public abstract void jobFailed(Job job, int errorCode, String errorMessage);
+	public abstract void jobFailed(Job job, Exception exception, int errorCode, String errorMessage);
 	
     /**
      * 
