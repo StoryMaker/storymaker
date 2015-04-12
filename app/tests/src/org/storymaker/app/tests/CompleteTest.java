@@ -9,17 +9,8 @@ import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.test.espresso.NoMatchingViewException;
-import android.support.test.espresso.action.GeneralLocation;
-import android.support.test.espresso.action.GeneralSwipeAction;
-import android.support.test.espresso.action.Press;
-import android.support.test.espresso.action.Swipe;
-import android.support.v7.widget.RecyclerView;
 import android.test.ActivityInstrumentationTestCase2;
 import android.util.Log;
-
-//import com.google.android.apps.common.testing.ui.espresso.NoMatchingViewException;
-
-import junit.framework.Assert;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.filefilter.WildcardFileFilter;
@@ -34,10 +25,25 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 import io.scal.secureshareui.login.SoundCloudLoginActivity;
 import scal.io.liger.MainActivity;
+
+import static android.support.test.espresso.Espresso.onView;
+import static android.support.test.espresso.action.ViewActions.clearText;
+import static android.support.test.espresso.action.ViewActions.click;
+import static android.support.test.espresso.action.ViewActions.scrollTo;
+import static android.support.test.espresso.action.ViewActions.typeText;
+import static android.support.test.espresso.matcher.ViewMatchers.withId;
+import static android.support.test.espresso.matcher.ViewMatchers.withParent;
+import static android.support.test.espresso.matcher.ViewMatchers.withTagValue;
+import static android.support.test.espresso.matcher.ViewMatchers.withText;
+import static org.hamcrest.Matchers.allOf;
+import static org.hamcrest.Matchers.is;
+
+//import com.google.android.apps.common.testing.ui.espresso.NoMatchingViewException;
 /*
 import static com.google.android.apps.common.testing.ui.espresso.Espresso.onView;
 import static com.google.android.apps.common.testing.ui.espresso.action.ViewActions.clearText;
@@ -50,22 +56,7 @@ import static com.google.android.apps.common.testing.ui.espresso.matcher.ViewMat
 import static com.google.android.apps.common.testing.ui.espresso.matcher.ViewMatchers.withTagValue;
 import static com.google.android.apps.common.testing.ui.espresso.matcher.ViewMatchers.withText;
 /*/
-import static android.support.test.espresso.Espresso.onData;
-import static android.support.test.espresso.Espresso.onView;
-import static android.support.test.espresso.action.ViewActions.click;
-import static android.support.test.espresso.action.ViewActions.scrollTo;
-import static android.support.test.espresso.action.ViewActions.clearText;
-import static android.support.test.espresso.action.ViewActions.typeText;
-import static android.support.test.espresso.assertion.ViewAssertions.matches;
-import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
-import static android.support.test.espresso.matcher.ViewMatchers.withId;
-import static android.support.test.espresso.matcher.ViewMatchers.withParent;
-import static android.support.test.espresso.matcher.ViewMatchers.withTagValue;
-import static android.support.test.espresso.matcher.ViewMatchers.withText;
 //*/
-import static android.test.ViewAsserts.assertOnScreen;
-import static org.hamcrest.Matchers.allOf;
-import static org.hamcrest.Matchers.is;
 
 /**
  * Created by mnbogner on 1/15/15.
@@ -248,34 +239,28 @@ public class CompleteTest extends ActivityInstrumentationTestCase2<HomeActivity>
         // obb file assumed to be present (test requires network access)
 
         // select "new" option
-        stall(500, "SELECT NEW");
         onView(withText("New")).perform(click());
 
         // first selection
-        stall(500, "FIRST SELECTION (" + "An Event" + ")");
         onView(withText("An Event")).perform(click());
 
         // second selection
-        stall(500, "SECOND SELECTION (" + "Show the best moments." + ")");
         onView(withText("Show the best moments.")).perform(click());
 
         // third selection
-        stall(500, "THIRD SELECTION (" + mediaString + ")");
         onView(withText(mediaString)).perform(click());
 
         // media capture
-        stall(500, "MEDIA CAPTURE 1");
         swipe(2);
-        stall(500, "WAIT FOR UPDATE");
+        stall(500, "WAIT FOR SCROLLING");
         onView(allOf(withText("Capture"), withParent(withParent(withTagValue(is((Object) "clip_card_0")))))).perform(click());
+        stall(500, "WAIT FOR MEDIA CAPTURE UPDATE");
 
         // scroll to bottom, check for publish button
-        stall(500, "SWIPING");
         swipe(24);
 
         // begin publish/upload steps
         try {
-            stall(500, "PUBLISH BUTTON");
             onView(allOf(withText("Publish"), withParent(withTagValue(is((Object) "publish_card_1"))))).perform(click());
             Log.d("AUTOMATION", "CLICKED PUBLISH BUTTON");
         } catch (NoMatchingViewException nmve) {
@@ -285,56 +270,45 @@ public class CompleteTest extends ActivityInstrumentationTestCase2<HomeActivity>
         }
 
         // enter metadata
-        stall(500, "METADATA");
         onView(withId(R.id.fl_info_container)).perform(click());
         Log.d("AUTOMATION", "CLICKED METADATA FIELD");
 
-        stall(500, "TITLE");
-        onView(withId(R.id.et_story_info_title)).perform(clearText()).perform(typeText(mediaString.toUpperCase() + "/" + accountString.toUpperCase()));
+        //get time for unique id
+        Calendar now = new GregorianCalendar();
+
+        onView(withId(R.id.et_story_info_title)).perform(clearText()).perform(typeText(mediaString.toUpperCase() + "/" + accountString.toUpperCase() + "/" + now.get(Calendar.HOUR) + ":" + now.get(Calendar.MINUTE)));
         Log.d("AUTOMATION", "ENTERED TITLE TEXT");
 
-        stall(500, "DESCRIPTION");
         onView(withId(R.id.et_story_info_description)).perform(clearText()).perform(typeText(mediaString + "/" + accountString));
         Log.d("AUTOMATION", "ENTERED DESCRIPTION TEXT");
 
-        stall(500, "FIRST TAG");
         onView(withId(R.id.act_story_info_tag)).perform(clearText()).perform(typeText(mediaString.toLowerCase()));
-        stall(500, "FIRST ADD");
         onView(withId(R.id.btn_add_tag)).perform(click());
         Log.d("AUTOMATION", "ENTERED FIRST TAG");
 
-        stall(500, "SECOND TAG");
         onView(withId(R.id.act_story_info_tag)).perform(clearText()).perform(typeText(accountString.toLowerCase()));
-        stall(500, "SECOND ADD");
         onView(withId(R.id.btn_add_tag)).perform(click());
         Log.d("AUTOMATION", "ENTERED SECOND TAG");
 
         // these seem problematic, will troubleshoot later
         /*
-        stall(500, "SECTION LIST");
         onView(withId(R.id.sp_story_section)).perform(click());
-        stall(500, "SECTION ITEM");
         onView(withText("Travel")).perform(click());
         Log.d("AUTOMATION", "SELECTED SECTION");
 
-        stall(500, "LOCATION LIST");
         onView(withId(R.id.sp_story_location)).perform(click());
-        stall(500, "LOCATION ITEM");
         onView(withText("Czech Republic")).perform(click());
         Log.d("AUTOMATION", "SELECTED LOCATION");
         */
 
-        stall(500, "SAVE");
         onView(withText("Save")).perform(click());
         Log.d("AUTOMATION", "SAVED INFO");
 
         // select account and upload
-        stall(500, "UPLOAD BUTTON");
         onView(withId(R.id.btnUpload)).perform(click());
         Log.d("AUTOMATION", "CLICKED UPLOAD BUTTON");
 
         // scroll to account
-        stall(500, "SCROLLING");
         onView(withText(accountString)).perform(scrollTo(), click());
         Log.d("AUTOMATION", "SCROLLED TO " + accountString + " BUTTON");
 
@@ -348,27 +322,22 @@ public class CompleteTest extends ActivityInstrumentationTestCase2<HomeActivity>
         }
 
         // enter name/password
-        stall(500, "NAME");
         onView(withId(R.id.etUsername)).perform(clearText()).perform(typeText(accountName));
         Log.d("AUTOMATION", "ENTERED USER NAME");
 
-        stall(500, "PASSWORD");
         onView(withId(R.id.etPassword)).perform(clearText()).perform(typeText(accountPass));
         Log.d("AUTOMATION", "ENTERED USER PASSWORD");
 
-        stall(500, "SIGN IN BUTTON");
         onView(withId(R.id.btnSignIn)).perform(click());
         Log.d("AUTOMATION", "CLICKED SIGN IN BUTTON");
 
         // after login, account is checked by default?
         /*
-        stall(5000, "ACCOUNT BUTTON");
         onView(withText(accountString)).perform(click());
         Log.d("AUTOMATION", "CLICKED " + accountString + " BUTTON");
         */
 
         try {
-            stall(500, "CONTINUE BUTTON");
             onView(withText("Continue")).perform(click());
             Log.d("AUTOMATION", "CLICKED CONTINUE BUTTON");
         } catch (NoMatchingViewException nmve) {
