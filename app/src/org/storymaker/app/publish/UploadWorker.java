@@ -87,10 +87,10 @@ public  class UploadWorker extends WorkerBase {
 	}
 
     @Override
-	public void jobFailed(Job job, int errorCode, String errorMessage) {
+	public void jobFailed(Job job, Exception exception, int errorCode, String errorMessage) {
         Log.d(TAG, "jobFailed: " + job + ", with errorCode: " + errorCode + ", and errorMessage: " + errorMessage);
 		// TODO start the next job
-		mController.jobFailed(job, errorCode, errorMessage);
+		mController.jobFailed(job, exception, errorCode, errorMessage);
 	}
 
     @Override

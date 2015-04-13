@@ -282,15 +282,19 @@ public class HomeActivity extends BaseActivity {
                                     eItem.getPackageName(),
                                     eItem.getExpansionId(),
                                     StoryMakerApp.getCurrentLocale().getLanguage());
-                            String[] names = new String[contentIndex.size()];
-                            String[] paths = new String[contentIndex.size()];
-                            int i = 0;
-                            for (InstanceIndexItem item: contentIndex) {
-                                names[i] = item.getTitle();
-                                paths[i] = item.getInstanceFilePath();
-                                i++;
+                            if (contentIndex.size() == 1) {
+                                launchLiger(HomeActivity.this, null, null, contentIndex.get(0).getInstanceFilePath());
+                            } else {
+                                String[] names = new String[contentIndex.size()];
+                                String[] paths = new String[contentIndex.size()];
+                                int i = 0;
+                                for (InstanceIndexItem item : contentIndex) {
+                                    names[i] = item.getTitle();
+                                    paths[i] = item.getInstanceFilePath();
+                                    i++;
+                                }
+                                showSPLSelectorPopup(names, paths);
                             }
-                            showSPLSelectorPopup(names, paths);
                         } else {
                             // if file is being downloaded, don't open
                             Log.d("HOME MENU CLICK", eItem.getExpansionId() + " INSTALLED, CURRENTLY DOWNLOADING FILE");

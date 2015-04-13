@@ -50,7 +50,7 @@ public class AudioRenderer extends RendererBase {
         } catch (Exception e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
-            jobFailed(0, e.getMessage());
+            jobFailed(e, 0, e.getMessage());
         }
     }
     

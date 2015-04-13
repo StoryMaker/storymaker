@@ -18,6 +18,7 @@ public class PublishService extends IntentService implements PublishListener {
     public static final String INTENT_EXTRA_JOB_ID = "job_id";
     public static final String INTENT_EXTRA_ERROR_CODE = "error_code";
     public static final String INTENT_EXTRA_ERROR_MESSAGE = "error_message";
+    public static final String INTENT_EXTRA_EXCEPTION = "exception";
     public static final String INTENT_EXTRA_SITE_KEYS = "site_keys";
     public static final String INTENT_EXTRA_PROGRESS = "progress_percent";
     public static final String INTENT_EXTRA_PROGRESS_MESSAGE = "progress_message";
@@ -39,7 +40,7 @@ public class PublishService extends IntentService implements PublishListener {
             int id = intent.getIntExtra(INTENT_EXTRA_PUBLISH_JOB_ID, -1);
             if (id != -1) {
                 // TODO need to trigger controllers for all selected sites
-                PublishController controller = (new PublishController(getApplicationContext(), this));
+                PublishController controller = (new PublishController(this, this));
                 if (intent.getAction().equals(ACTION_RENDER)) {
                     controller.startRender(id);
                 } else if (intent.getAction().equals(ACTION_UPLOAD)) {
@@ -60,11 +61,12 @@ public class PublishService extends IntentService implements PublishListener {
     }
 
     @Override
-    public void publishFailed(PublishJob publishJob, int errorCode, String errorMessage) {
+    public void publishFailed(PublishJob publishJob, Exception exception, int errorCode, String errorMessage) {
         Intent intent = new Intent(ACTION_PUBLISH_FAILURE);
         intent.putExtra(INTENT_EXTRA_PUBLISH_JOB_ID, publishJob.getId());
         intent.putExtra(INTENT_EXTRA_ERROR_CODE, errorCode);
         intent.putExtra(INTENT_EXTRA_ERROR_MESSAGE, errorMessage);
+        intent.putExtra(INTENT_EXTRA_EXCEPTION, exception);
         sendBroadcast(intent);
     }
 
