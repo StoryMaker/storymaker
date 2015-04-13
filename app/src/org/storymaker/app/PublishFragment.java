@@ -56,6 +56,7 @@ import android.widget.TextView;
 import android.widget.ViewAnimator;
 
 import com.animoto.android.views.DraggableGridView;
+import com.google.android.gms.auth.UserRecoverableAuthException;
 import com.google.gson.Gson;
 //import com.hipmob.gifanimationdrawable.GifAnimationDrawable;
 
@@ -227,7 +228,12 @@ public class PublishFragment extends Fragment implements PublishListener {
                     } else if (intent.getAction().equals(PublishService.ACTION_PUBLISH_FAILURE)) {
                         int errorCode = intent.getIntExtra(PublishService.INTENT_EXTRA_ERROR_CODE, -1);
                         String errorMessage = intent.getStringExtra(PublishService.INTENT_EXTRA_ERROR_MESSAGE);
-                        publishFailed(publishJob, errorCode, errorMessage);
+                        Exception exception = (Exception) intent.getSerializableExtra(PublishService.INTENT_EXTRA_EXCEPTION);
+                        if ((exception != null) && (exception.getClass().isInstance(UserRecoverableAuthException.class))) {
+                            UserRecoverableAuthException URAException = (UserRecoverableAuthException) exception;
+                            startActivityForResult(URAException.getIntent(), 1231233);
+                        }
+                        publishFailed(publishJob, exception, errorCode, errorMessage);
                     } else if (intent.getAction().equals(PublishService.ACTION_JOB_SUCCESS)) {
                         int jobId = intent.getIntExtra(PublishService.INTENT_EXTRA_JOB_ID, -1);
                         Job job = (Job) (new JobTable()).get(getActivity().getApplicationContext(), jobId); // FIXME should we check for -1?
@@ -518,7 +524,7 @@ public class PublishFragment extends Fragment implements PublishListener {
     }
     
     @Override
-    public void publishFailed(PublishJob publishJob, int errorCode, String errorMessage) {
+    public void publishFailed(PublishJob publishJob, Exception exception, int errorCode, String errorMessage) {
         Utils.toastOnUiThread(getActivity(), "Publish failed :'( ... " + publishJob); // FIXME move to strings.xml
         showError(errorCode, errorMessage);
     }

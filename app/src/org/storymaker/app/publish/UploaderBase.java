@@ -45,7 +45,8 @@ public abstract class UploaderBase extends JobBase {
                 case SiteController.MESSAGE_TYPE_FAILURE:
                     int errorCode = data.getInt(SiteController.MESSAGE_KEY_CODE);
                     String errorMessage = data.getString(SiteController.MESSAGE_KEY_MESSAGE);
-                    jobFailed(errorCode, errorMessage);
+                    Exception exception = (Exception) data.getSerializable(SiteController.MESSAGE_KEY_EXCEPTION);
+                    jobFailed(exception, errorCode, errorMessage);
                     break;
                 case SiteController.MESSAGE_TYPE_PROGRESS:
                     String message = data.getString(SiteController.MESSAGE_KEY_MESSAGE);

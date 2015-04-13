@@ -37,13 +37,13 @@ public class JobBase {
         mWorker.jobSucceeded(mJob, result);
     }
 
-    public void jobFailed(int errorCode, String errorMessage) {
+    public void jobFailed(Exception exception, int errorCode, String errorMessage) {
         Log.d(TAG, "onFailure: errorCode: " + errorCode + ", with message: " + errorCode);
         mJob.setResult(null);
         mJob.setErrorCode(errorCode);
         mJob.setErrorMessage(errorMessage);
         mJob.save();
-        mWorker.jobFailed(mJob, errorCode, errorMessage);
+        mWorker.jobFailed(mJob, exception, errorCode, errorMessage);
     }
     
     // FIXME why do we pass in job instead of using mJob?

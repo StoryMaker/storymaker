@@ -67,7 +67,7 @@ public class RenderWorker extends WorkerBase {
 		        renderer.start();
 			}
 		} else {
-			jobFailed(null, 98129129, "No render job in db");
+			jobFailed(null, null, 98129129, "No render job in db");
 		}
 	}
 	
@@ -77,10 +77,10 @@ public class RenderWorker extends WorkerBase {
 		mController.jobSucceeded(job, code);
 	}
 	
-	public void jobFailed(Job job, int errorCode, String errorMessage) {
+	public void jobFailed(Job job, Exception exception, int errorCode, String errorMessage) {
         Log.d(TAG, "jobFailed: " + job + ", with errorCode: " + errorCode + ", and errorMessage: " + errorMessage);
 		// TODO start the next job
-		mController.jobFailed(job, errorCode, errorMessage);
+		mController.jobFailed(job, exception, errorCode, errorMessage);
 	}
 
     @Override

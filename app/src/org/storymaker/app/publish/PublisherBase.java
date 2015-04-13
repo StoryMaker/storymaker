@@ -6,6 +6,7 @@ import java.util.Arrays;
 import android.content.Context;
 import android.util.Log;
 
+import org.storymaker.app.R;
 import org.storymaker.app.StoryMakerApp;
 import org.storymaker.app.model.Auth;
 import org.storymaker.app.model.AuthTable;
@@ -108,11 +109,11 @@ public abstract class PublisherBase {
 //                getActivity().getString(R.string.uploading_to_storymaker));
 //        mHandlerPub.sendMessage(msgStatus);
         
-        mController.publishJobProgress(mPublishJob, 0, "Publishing to StoryMaker.cc...");
+        mController.publishJobProgress(mPublishJob, 0, mContext.getString(R.string.publishing_to_storymakerorg));
         // split out embed
         // String descWithMedia = desc + "\n\n" + mediaEmbed;
         String postId = sm.post(title, desc, mediaEmbed, categories, medium, mediaService, mediaGuid);
-        mController.publishJobProgress(mPublishJob, 0.5f, "Publishing to StoryMaker.cc...");
+        mController.publishJobProgress(mPublishJob, 0.5f, mContext.getString(R.string.publishing_to_storymakerorg));
         String urlPost = sm.getPostUrl(postId);
 
         // FIXME make this async and put this in the callback
@@ -123,12 +124,12 @@ public abstract class PublisherBase {
     }
     
     public void publishToStoryMakerSucceeded(String url) {
-        mController.publishJobProgress(mPublishJob, 1, "Published to StoryMaker.cc!");
+        mController.publishJobProgress(mPublishJob, 1, mContext.getString(R.string.published_to_storymaker));
         publishSucceeded(url);
     }
     
-    public void publishToStoryMakerFailed(int errorCode, String errorMessage) {
-        publishFailed(errorCode, errorMessage);
+    public void publishToStoryMakerFailed(Exception exception, int errorCode, String errorMessage) {
+        publishFailed(exception, errorCode, errorMessage);
     }
 	
     public void publishSucceeded(String url) {
@@ -138,8 +139,8 @@ public abstract class PublisherBase {
         mController.publishJobSucceeded(mPublishJob, url);
     }
 
-    public void publishFailed(int errorCode, String errorMessage) {
-        mController.publishJobFailed(mPublishJob, errorCode, errorMessage);
+    public void publishFailed(Exception exception, int errorCode, String errorMessage) {
+        mController.publishJobFailed(mPublishJob, exception, errorCode, errorMessage);
     }
     
     public void jobSucceeded(Job job) {
@@ -154,7 +155,7 @@ public abstract class PublisherBase {
 				if (auth != null) {
 					publishToStoryMaker();
 				} else {
-					mController.publishJobFailed(mPublishJob, 78268832, "You are not signed into StoryMaker.cc!"); // FIXME do this nicer!
+					mController.publishJobFailed(mPublishJob, null, 78268832, mContext.getString(R.string.you_are_not_signed_into_storymakerorg)); // FIXME do this nicer!
 				}
 			} else {
                 publishSucceeded(getResultUrl(job));
@@ -162,9 +163,9 @@ public abstract class PublisherBase {
 		}
 	}
     
-    public void jobFailed(Job job, int errorCode, String errorMessage) {
+    public void jobFailed(Job job, Exception exception, int errorCode, String errorMessage) {
         Log.d(TAG, "jobFailed: " + job);
-        mController.publishJobFailed(mPublishJob, errorCode, errorMessage);
+        mController.publishJobFailed(mPublishJob, exception, errorCode, errorMessage);
     }
 
     /**
