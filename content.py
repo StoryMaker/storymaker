@@ -165,6 +165,15 @@ def build_zip_push():
     zip_content()
     adb_push()
 
+@cli.command()
+def build_zip_push_ijf15():
+    """build the json, zip it, push it to sd"""
+
+    os.system("cd liger-content ; python generate_content.py ; python generate_localized_content.py")
+    os.system("rm liger-content/zips/ijf15.main.2.obb; cd liger-content/assets ; zip -n .mp4 -r ../zips/ijf15.main.2.obb org.storymaker.app/ijf15")
+    print "content generated at: liger-content/zips/ijf15.main.2.obb"
+    os.system("cd liger-content/zips ; adb push ijf15.main.2.obb /sdcard/Android/data/%s/files/ijf15.main.2.obb" % (packagename))
+    adb_push()
 
 cli.add_command(clone)
 cli.add_command(pull)
@@ -175,5 +184,6 @@ cli.add_command(adb_push)
 cli.add_command(adb_push_obb)
 cli.add_command(adb_push_files)
 cli.add_command(build_zip_push)
+cli.add_command(build_zip_push_ijf15)
 
 cli()
