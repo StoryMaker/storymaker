@@ -336,4 +336,12 @@ You also will have an opportunity to see and modify the data being sent."</strin
     <string name="published_to_storymaker">Published to StoryMaker.org!</string>
     <string name="you_are_not_signed_into_storymakerorg">You are not signed into StoryMaker.org!</string>
 
+    <!-- NEW/CACHEWORD -->
+    <string name="lock_screen_open_button_text">UNLOCK APP</string>
+    <string name="lock_screen_pin_enter_text">Enter PIN to unlock app</string>
+    <string name="lock_screen_create_button_text">CREATE PIN</string>
+    <string name="lock_screen_pin_create_text">Enter new PIN to lock app</string>
+    <string name="lock_screen_pin_confirm_text">Enter PIN again to confirm</string>
+    <string name="menu_lock">LOCK</string>
+
 </resources>

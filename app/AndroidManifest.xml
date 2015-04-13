@@ -295,6 +295,14 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".HomeActivity" />
         </activity>
+
+        <!-- NEW/CACHEWORD -->
+        <service android:name="info.guardianproject.cacheword.CacheWordService"
+            android:enabled="true"
+            android:exported="false"/>
+
+        <activity android:name="org.storymaker.app.CacheWordActivity"/>
+
     </application>
 
 </manifest>

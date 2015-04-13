@@ -8,15 +8,26 @@ import android.content.UriMatcher;
 import android.database.Cursor;
 import android.net.Uri;
 
-public class LessonsProvider extends ContentProvider {
+import info.guardianproject.cacheword.CacheWordHandler;
+import info.guardianproject.cacheword.ICacheWordSubscriber;
+
+public class LessonsProvider extends ContentProvider implements ICacheWordSubscriber {
   
 	private StoryMakerDB mDB;
 	
     private String mPassphrase = null; //how and when do we set this??
-    		
+
+    // NEW/CACHEWORD
+    CacheWordHandler mCacheWordHandler;
+
     @Override
     public boolean onCreate() {
-        mDB = new StoryMakerDB(getContext());
+
+        // NEW/CACHEWORD
+        mCacheWordHandler = new CacheWordHandler(getContext(), this, -1); // TODO: timeout of -1 represents no timeout (revisit)
+        mCacheWordHandler.connectToService();
+        mDB = new StoryMakerDB(mCacheWordHandler, getContext());
+
         return true;
     }
     
@@ -86,4 +97,27 @@ public class LessonsProvider extends ContentProvider {
 		// TODO Auto-generated method stub
 		return 0;
 	}
+
+    // NEW/CACHEWORD
+    @Override
+    public void onCacheWordUninitialized() {
+        // prevent db access while cacheword is uninitialized
+        if (mDB != null)
+            mDB.close();
+        mDB = null;
+    }
+
+    @Override
+    public void onCacheWordLocked() {
+        // prevent db access when cacheword is locked
+        if (mDB != null)
+            mDB.close();
+        mDB = null;
+    }
+
+    @Override
+    public void onCacheWordOpened() {
+        // permit db access when cacheword is unlocked
+        mDB = new StoryMakerDB(mCacheWordHandler, getContext());
+    }
 }

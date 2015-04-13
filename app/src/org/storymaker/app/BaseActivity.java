@@ -4,10 +4,12 @@ import org.storymaker.app.server.ServerManager;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.security.GeneralSecurityException;
 import java.util.Date;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.AssetManager;
 import android.content.res.Configuration;
@@ -18,6 +20,7 @@ import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.widget.DrawerLayout;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
@@ -34,7 +37,17 @@ import android.widget.Toast;
 
 //import com.google.analytics.tracking.android.EasyTracker;
 
-public class BaseActivity extends FragmentActivity {
+// NEW/CACHEWORD
+import info.guardianproject.cacheword.CacheWordHandler;
+import info.guardianproject.cacheword.ICacheWordSubscriber;
+
+public class BaseActivity extends FragmentActivity implements ICacheWordSubscriber {
+
+    // NEW/CACHEWORD
+    protected CacheWordHandler mCacheWordHandler;
+    protected String CACHEWORD_UNSET;
+    protected String CACHEWORD_FIRST_LOCK;
+    protected String CACHEWORD_SET;
 
     protected ActionBarDrawerToggle mDrawerToggle;
     protected DrawerLayout mDrawerLayout;
@@ -52,6 +65,47 @@ public class BaseActivity extends FragmentActivity {
 		super.onStop();
 //		EasyTracker.getInstance(this).activityStop(this);
 	}
+
+    // NEW/CACHEWORD
+    @Override
+    protected void onPause() {
+        super.onPause();
+        mCacheWordHandler.disconnectFromService();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mCacheWordHandler.connectToService();
+        updateSlidingMenuWithUserState();
+    }
+
+    @Override
+    public void onCacheWordUninitialized() {
+
+        // if we're uninitialized, default behavior should be to stop
+        Log.d("CACHEWORD", "cacheword uninitialized, activity will not continue");
+        finish();
+
+    }
+
+    @Override
+    public void onCacheWordLocked() {
+
+        // if we're locked, default behavior should be to stop
+        Log.d("CACHEWORD", "cacheword locked, activity will not continue");
+        finish();
+
+    }
+
+    @Override
+    public void onCacheWordOpened() {
+
+        // if we're opened, check db and update menu status
+        Log.d("CACHEWORD", "cacheword opened, activity will continue");
+        updateSlidingMenuWithUserState();
+
+    }
 
     public void setupDrawerLayout() {
 
@@ -93,6 +147,9 @@ public class BaseActivity extends FragmentActivity {
         Button btnDrawerUploadManager = (Button) findViewById(R.id.btnDrawerUploadManager);
         Button btnDrawerSettings =      (Button) findViewById(R.id.btnDrawerSettings);
         TextView textViewVersion =      (TextView) findViewById(R.id.textViewVersion);
+
+        // NEW/CACHEWORD
+        Button btnDrawerLock = (Button) findViewById(R.id.btnDrawerLock);
 
         String pkg = getPackageName();
         String vers = null;
@@ -247,8 +304,24 @@ public class BaseActivity extends FragmentActivity {
                 activity.startActivity(i);
             }
         });
-        
-        
+
+        // NEW/CACHEWORD
+        btnDrawerLock.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // if there has been no first lock, set status so user will be prompted to create a pin
+                SharedPreferences sp = getSharedPreferences("appPrefs", MODE_PRIVATE);
+                String cachewordStatus = sp.getString("cacheword_status", "default");
+                if (cachewordStatus.equals(CACHEWORD_UNSET)) {
+                    SharedPreferences.Editor e = sp.edit();
+                    e.putString("cacheword_status", CACHEWORD_FIRST_LOCK);
+                    e.commit();
+                    Log.d("CACHEWORD", "set cacheword first lock status");
+                }
+                mCacheWordHandler.lock();
+            }
+        });
+
     }
     
     /**
@@ -260,7 +333,15 @@ public class BaseActivity extends FragmentActivity {
         ServerManager serverManager = StoryMakerApp.getServerManager();
         TextView textViewSignIn = (TextView) findViewById(R.id.textViewSignIn);
         TextView textViewJoinStorymaker = (TextView) findViewById(R.id.textViewJoinStorymaker);
-        if (serverManager.hasCreds()) {
+
+        if (mCacheWordHandler.isLocked()) {
+
+            // prevent credential check attempt if database is locked
+            Log.d("CACHEWORD", "cacheword locked, skipping credential check");
+            textViewSignIn.setText(R.string.sign_in);
+            textViewJoinStorymaker.setVisibility(View.VISIBLE);
+
+        } else if (serverManager.hasCreds()) {
             // The Storymaker user is logged in. Replace Sign/Up language with username
             textViewSignIn.setText(serverManager.getUserName());
             textViewJoinStorymaker.setVisibility(View.GONE);
@@ -273,7 +354,15 @@ public class BaseActivity extends FragmentActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
     	super.onCreate(savedInstanceState);
-    	if(!Eula.isAccepted(this)) {
+
+        // NEW/CACHEWORD
+        CACHEWORD_UNSET = getText(R.string.cacheword_state_unset).toString();
+        CACHEWORD_FIRST_LOCK = getText(R.string.cacheword_state_first_lock).toString();
+        CACHEWORD_SET = getText(R.string.cacheword_state_set).toString();
+
+        mCacheWordHandler = new CacheWordHandler(this, -1); // TODO: timeout of -1 represents no timeout (revisit)
+
+        if(!Eula.isAccepted(this)) {
             Intent firstStartIntent = new Intent(this, FirstStartActivity.class);
             firstStartIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(firstStartIntent);
@@ -328,12 +417,14 @@ public class BaseActivity extends FragmentActivity {
         ViewGroup content = (ViewGroup) findViewById(R.id.content_frame);
         getLayoutInflater().inflate(resId, content, true);
     }
-    
+
+    /*
     @Override
     protected void onResume() {
         super.onResume();
         updateSlidingMenuWithUserState();
     }
+    */
 
 	private void detectCoachOverlay ()
     {
