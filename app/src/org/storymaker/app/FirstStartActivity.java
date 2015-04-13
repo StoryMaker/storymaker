@@ -41,10 +41,22 @@ public class FirstStartActivity extends Activity implements OnEulaAgreedTo {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-        setContentView(R.layout.activity_first_start);
-        mTosAccepted = false;
-        mTosButton = (Button) findViewById(R.id.btnTos);
+
+        // this seems to be getting created after the user has already accepted the EULA
+        final SharedPreferences prefsEula = getSharedPreferences(Globals.PREFERENCES_EULA, Activity.MODE_PRIVATE);
+        boolean eulaAccepted = prefsEula.getBoolean(Globals.PREFERENCE_EULA_ACCEPTED, false);
+        if (eulaAccepted) {
+            // if the preferences show the EULA was already accepted, do not show the EULA screen again
+            Intent mainIntent = new Intent(this, HomeActivity.class);
+            startActivity(mainIntent);
+            finish();
+        } else {
+            // if the preferences show the EULA was not yet accepted, show the EULA screen
+            requestWindowFeature(Window.FEATURE_NO_TITLE);
+            setContentView(R.layout.activity_first_start);
+            mTosAccepted = false;
+            mTosButton = (Button) findViewById(R.id.btnTos);
+        }
     }
     
     @Override

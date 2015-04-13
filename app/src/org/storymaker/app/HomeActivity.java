@@ -26,6 +26,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.security.GeneralSecurityException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -724,4 +725,53 @@ public class HomeActivity extends BaseActivity {
         }
     }
     */
+
+    @Override
+    public void onCacheWordUninitialized() {
+        // set default pin, prompt for actual pin on first lock
+        try {
+            CharSequence defaultPinSequence = getText(R.string.cacheword_default_pin);
+            char[] defaultPin = defaultPinSequence.toString().toCharArray();
+            mCacheWordHandler.setPassphrase(defaultPin);
+            SharedPreferences sp = getSharedPreferences("appPrefs", MODE_PRIVATE);
+            SharedPreferences.Editor e = sp.edit();
+            e.putString("cacheword_status", CACHEWORD_UNSET);
+            e.commit();
+            Log.d("CACHEWORD", "set default cacheword pin");
+        } catch (GeneralSecurityException gse) {
+            Log.e("CACHEWORD", "failed to set default cacheword pin: " + gse.getMessage());
+            gse.printStackTrace();
+        }
+    }
+
+    @Override
+    public void onCacheWordLocked() {
+        // if there has been no first lock and pin prompt, use default pin to unlock
+        SharedPreferences sp = getSharedPreferences("appPrefs", MODE_PRIVATE);
+        String cachewordStatus = sp.getString("cacheword_status", "default");
+        if (cachewordStatus.equals(CACHEWORD_UNSET)) {
+            try {
+                CharSequence defaultPinSequence = getText(R.string.cacheword_default_pin);
+                char[] defaultPin = defaultPinSequence.toString().toCharArray();
+                mCacheWordHandler.setPassphrase(defaultPin);
+                Log.d("CACHEWORD", "used default cacheword pin");
+            } catch (GeneralSecurityException gse) {
+                Log.e("CACHEWORD", "failed to use default cacheword pin: " + gse.getMessage());
+                gse.printStackTrace();
+            }
+        } else {
+            Log.d("CACHEWORD", "prompt for cacheword pin");
+            showLockScreen();
+        }
+    }
+
+    // NEW/CACHEWORD
+    void showLockScreen() {
+        // set aside current activity and prompt for cacheword pin
+        Intent intent = new Intent(this, CacheWordActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        intent.putExtra("originalIntent", getIntent());
+        startActivity(intent);
+        finish();
+    }
 }

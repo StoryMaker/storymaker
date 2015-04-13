@@ -44,10 +44,10 @@ import info.guardianproject.cacheword.ICacheWordSubscriber;
 public class BaseActivity extends FragmentActivity implements ICacheWordSubscriber {
 
     // NEW/CACHEWORD
-    private CacheWordHandler mCacheWordHandler;
-    private String CACHEWORD_UNSET;
-    private String CACHEWORD_FIRST_LOCK;
-    private String CACHEWORD_SET;
+    protected CacheWordHandler mCacheWordHandler;
+    protected String CACHEWORD_UNSET;
+    protected String CACHEWORD_FIRST_LOCK;
+    protected String CACHEWORD_SET;
 
     protected ActionBarDrawerToggle mDrawerToggle;
     protected DrawerLayout mDrawerLayout;
@@ -82,56 +82,29 @@ public class BaseActivity extends FragmentActivity implements ICacheWordSubscrib
 
     @Override
     public void onCacheWordUninitialized() {
-        // set default pin, prompt for actual pin on first lock
-        try {
-            CharSequence defaultPinSequence = getText(R.string.cacheword_default_pin);
-            char[] defaultPin = defaultPinSequence.toString().toCharArray();
-            mCacheWordHandler.setPassphrase(defaultPin);
-            SharedPreferences sp = getSharedPreferences("appPrefs", MODE_PRIVATE);
-            SharedPreferences.Editor e = sp.edit();
-            e.putString("cacheword_status", CACHEWORD_UNSET);
-            e.commit();
-            Log.d("CACHEWORD", "set default cacheword pin");
-        } catch (GeneralSecurityException gse) {
-            Log.e("CACHEWORD", "failed to set default cacheword pin: " + gse.getMessage());
-            gse.printStackTrace();
-        }
+
+        // if we're uninitialized, default behavior should be to stop
+        Log.d("CACHEWORD", "cacheword uninitialized, activity will not continue");
+        finish();
+
     }
 
     @Override
     public void onCacheWordLocked() {
-        // if there has been no first lock and pin prompt, use default pin to unlock
-        SharedPreferences sp = getSharedPreferences("appPrefs", MODE_PRIVATE);
-        String cachewordStatus = sp.getString("cacheword_status", "default");
-        if (cachewordStatus.equals(CACHEWORD_UNSET)) {
-            try {
-                CharSequence defaultPinSequence = getText(R.string.cacheword_default_pin);
-                char[] defaultPin = defaultPinSequence.toString().toCharArray();
-                mCacheWordHandler.setPassphrase(defaultPin);
-                Log.d("CACHEWORD", "used default cacheword pin");
-            } catch (GeneralSecurityException gse) {
-                Log.e("CACHEWORD", "failed to use default cacheword pin: " + gse.getMessage());
-                gse.printStackTrace();
-            }
-        } else {
-            Log.d("CACHEWORD", "prompt for cacheword pin");
-            showLockScreen();
-        }
+
+        // if we're locked, default behavior should be to stop
+        Log.d("CACHEWORD", "cacheword locked, activity will not continue");
+        finish();
+
     }
 
     @Override
     public void onCacheWordOpened() {
-        // ???
-    }
 
-    // NEW/CACHEWORD
-    void showLockScreen() {
-        // set aside current activity and prompt for cacheword pin
-        Intent intent = new Intent(this, CacheWordActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-        intent.putExtra("originalIntent", getIntent());
-        startActivity(intent);
-        finish();
+        // if we're opened, check db and update menu status
+        Log.d("CACHEWORD", "cacheword opened, activity will continue");
+        updateSlidingMenuWithUserState();
+
     }
 
     public void setupDrawerLayout() {
@@ -360,7 +333,15 @@ public class BaseActivity extends FragmentActivity implements ICacheWordSubscrib
         ServerManager serverManager = StoryMakerApp.getServerManager();
         TextView textViewSignIn = (TextView) findViewById(R.id.textViewSignIn);
         TextView textViewJoinStorymaker = (TextView) findViewById(R.id.textViewJoinStorymaker);
-        if (serverManager.hasCreds()) {
+
+        if (mCacheWordHandler.isLocked()) {
+
+            // prevent credential check attempt if database is locked
+            Log.d("CACHEWORD", "cacheword locked, skipping credential check");
+            textViewSignIn.setText(R.string.sign_in);
+            textViewJoinStorymaker.setVisibility(View.VISIBLE);
+
+        } else if (serverManager.hasCreds()) {
             // The Storymaker user is logged in. Replace Sign/Up language with username
             textViewSignIn.setText(serverManager.getUserName());
             textViewJoinStorymaker.setVisibility(View.GONE);
