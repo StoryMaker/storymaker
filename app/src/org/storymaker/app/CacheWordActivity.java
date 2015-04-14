@@ -7,12 +7,14 @@ import info.guardianproject.cacheword.CacheWordHandler;
 import info.guardianproject.cacheword.ICacheWordSubscriber;
 import info.guardianproject.cacheword.PassphraseSecrets;
 import android.app.Activity;
+import android.app.Notification;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.ResultReceiver;
+import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -54,7 +56,6 @@ public class CacheWordActivity extends Activity implements ICacheWordSubscriber 
         CACHEWORD_SET = getText(R.string.cacheword_state_set).toString();
         
         setContentView(R.layout.activity_lock_screen);
-        
         mCacheWordHandler = new CacheWordHandler(this, -1); // TODO: timeout of -1 represents no timeout (revisit)
 
         mViewEnterPin = findViewById(R.id.llEnterPin);
@@ -229,11 +230,30 @@ public class CacheWordActivity extends Activity implements ICacheWordSubscriber 
                     return;
                 // Check passphrase
                 try {
+
+                    if (mCacheWordHandler.mNotification == null) {
+                        Log.d("CACHEWORD", "no handler notification");
+
+                        // only display notification if the user has set a pin
+                        SharedPreferences sp = getSharedPreferences("appPrefs", MODE_PRIVATE);
+                        String cachewordStatus = sp.getString("cacheword_status", "default");
+                        if (cachewordStatus.equals(CACHEWORD_SET)) {
+                            Log.d("CACHEWORD", "pin set, so display notification (cacheword)");
+                            mCacheWordHandler.setNotification(buildNotification(CacheWordActivity.this));
+                        } else {
+                            Log.d("CACHEWORD", "no pin set, so no notification (cacheword)");
+                        }
+
+                        Log.d("CACHEWORD", "set handler notification?");
+                    } else {
+                        Log.d("CACHEWORD", "handler has a notification");
+                    }
+
                     mCacheWordHandler.setPassphrase(mTextEnterPin.getText().toString().toCharArray());
-                    Log.d("CacheWordActivity", "created new pin (request)");
+                    Log.d("CacheWordActivity", "verified pin (request)");
                 } catch (GeneralSecurityException gse) {
                     mTextEnterPin.setText("");
-                    Log.e("CacheWordActivity", "failed to create new pin (request): " + gse.getMessage());
+                    Log.e("CacheWordActivity", "failed to verify pin (request): " + gse.getMessage());
                     return;
                 }
             }
@@ -318,5 +338,20 @@ public class CacheWordActivity extends Activity implements ICacheWordSubscriber 
             }
             flipper.showNext();
         }
+    }
+
+    private Notification buildNotification(Context c) {
+
+        Log.d("CACHEWORD", "buildNotification (cacheword)");
+
+        NotificationCompat.Builder b = new NotificationCompat.Builder(c);
+        b.setSmallIcon(R.drawable.ic_menu_key);
+        b.setContentTitle(c.getText(R.string.cacheword_notification_cached_title));
+        b.setContentText(c.getText(R.string.cacheword_notification_cached_message));
+        b.setTicker(c.getText(R.string.cacheword_notification_cached));
+        b.setWhen(System.currentTimeMillis());
+        b.setOngoing(true);
+        b.setContentIntent(CacheWordHandler.getPasswordLockPendingIntent(c));
+        return b.build();
     }
 }

@@ -19,7 +19,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 
-public class SimplePreferences extends PreferenceActivity implements OnSharedPreferenceChangeListener {
+public class SimplePreferences extends LockablePreferenceActivity implements OnSharedPreferenceChangeListener {
 
 	public static final String KEY_VIDEO_RESOLUTION = "p_video_resolution";
 	public static final String KEY_VIDEO_WIDTH = "p_video_width";

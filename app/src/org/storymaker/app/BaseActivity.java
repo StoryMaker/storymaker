@@ -8,6 +8,8 @@ import java.security.GeneralSecurityException;
 import java.util.Date;
 
 import android.app.Activity;
+import android.app.Notification;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -19,6 +21,7 @@ import android.graphics.PixelFormat;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.NotificationCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
 import android.view.Gravity;
@@ -76,8 +79,34 @@ public class BaseActivity extends FragmentActivity implements ICacheWordSubscrib
     @Override
     protected void onResume() {
         super.onResume();
+
+        // only display notification if the user has set a pin
+        SharedPreferences sp = getSharedPreferences("appPrefs", MODE_PRIVATE);
+        String cachewordStatus = sp.getString("cacheword_status", "default");
+        if (cachewordStatus.equals(CACHEWORD_SET)) {
+            Log.d("CACHEWORD", "pin set, so display notification (base)");
+            mCacheWordHandler.setNotification(buildNotification(this));
+        } else {
+            Log.d("CACHEWORD", "no pin set, so no notification (base)");
+        }
+
         mCacheWordHandler.connectToService();
         updateSlidingMenuWithUserState();
+    }
+
+    private Notification buildNotification(Context c) {
+
+        Log.d("CACHEWORD", "buildNotification (base)");
+
+        NotificationCompat.Builder b = new NotificationCompat.Builder(c);
+        b.setSmallIcon(R.drawable.ic_menu_key);
+        b.setContentTitle(c.getText(R.string.cacheword_notification_cached_title));
+        b.setContentText(c.getText(R.string.cacheword_notification_cached_message));
+        b.setTicker(c.getText(R.string.cacheword_notification_cached));
+        b.setWhen(System.currentTimeMillis());
+        b.setOngoing(true);
+        b.setContentIntent(CacheWordHandler.getPasswordLockPendingIntent(c));
+        return b.build();
     }
 
     @Override
@@ -150,6 +179,16 @@ public class BaseActivity extends FragmentActivity implements ICacheWordSubscrib
 
         // NEW/CACHEWORD
         Button btnDrawerLock = (Button) findViewById(R.id.btnDrawerLock);
+
+        // disable button if the user has set a pin
+        SharedPreferences sp = getSharedPreferences("appPrefs", MODE_PRIVATE);
+        String cachewordStatus = sp.getString("cacheword_status", "default");
+        if (cachewordStatus.equals(CACHEWORD_SET)) {
+            Log.d("CACHEWORD", "pin set, so remove button");
+            btnDrawerLock.setVisibility(View.GONE);
+        } else {
+            Log.d("CACHEWORD", "no pin set, so show button");
+        }
 
         String pkg = getPackageName();
         String vers = null;
