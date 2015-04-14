@@ -35,7 +35,7 @@ public class S3Publisher extends PublisherBase {
     @Override
     public String getEmbed(Job job) {
 
-        String embed = "[soundcloud url=\\\"\" /]"; // FIXME we need an embed code for s3
+        String embed = "[s3 " + job.getResult() + "]"; // FIXME we need an embed code for s3
 
         return embed;
     }
