@@ -507,10 +507,6 @@ public class Project extends Model {
         return tags;
     }
 
-    public boolean isTemplateStory() {
-        return (templatePath != null) && !templatePath.equals(""); 
-    }
-    
     public String[] getCategories() {
         // only one item can be selected
         ArrayList<String> alCats = new ArrayList<String>();

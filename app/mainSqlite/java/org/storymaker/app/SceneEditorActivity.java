@@ -555,34 +555,24 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
             setMenuItemsVisibility(false);
         }
 
-        if (mMPM.mProject.isTemplateStory()) {
-            Intent intent = new Intent(getBaseContext(), StoryTemplateActivity.class);
-            intent.putExtra("template_path", mProject.getTemplatePath());
-            intent.putExtra("story_mode", mMPM.mProject.getStoryType());
-            intent.putExtra("pid", mMPM.mProject.getId());
-            intent.putExtra("title", mMPM.mProject.getTitle());
-            startActivity(intent);
-            finish();
+        int layout = R.layout.fragment_complete_story;
+
+        if (mPublishFragment == null) {
+            mPublishFragment = new PublishFragment();
+            Bundle args = new Bundle();
+            args.putInt("layout",layout);
+            mPublishFragment.setArguments(args);
+
+
+            fm.beginTransaction()
+                    .add(R.id.container, mPublishFragment, layout + "")
+                    .commit();
+
         } else {
-            int layout = R.layout.fragment_complete_story;
-
-            if (mPublishFragment == null) {
-                mPublishFragment = new PublishFragment();
-                Bundle args = new Bundle();
-                args.putInt("layout",layout);
-                mPublishFragment.setArguments(args);
-
-
-                fm.beginTransaction()
-                        .add(R.id.container, mPublishFragment, layout + "")
-                        .commit();
-
-            } else {
-                fm.beginTransaction().show(mPublishFragment).commit();
-            }
-
-            mLastTabFrag = mPublishFragment;
+            fm.beginTransaction().show(mPublishFragment).commit();
         }
+
+        mLastTabFrag = mPublishFragment;
     }
 
     @Override
