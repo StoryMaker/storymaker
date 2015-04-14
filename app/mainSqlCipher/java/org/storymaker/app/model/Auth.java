@@ -30,6 +30,7 @@ public class Auth extends Model {
     public static final String SITE_FLICKR = "flickr";
     public static final String SITE_SSH = "ssh";
     public static final String SITE_ARCHIVE = "archive";
+    public static final String SITE_S3 = "s3";
 
     /**
      * Create a new, blank record via the Content Provider interface

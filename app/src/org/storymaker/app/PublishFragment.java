@@ -26,6 +26,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import redstone.xmlrpc.XmlRpcFault;
+import scal.io.liger.JsonHelper;
+import scal.io.liger.model.PublishProfile;
+import scal.io.liger.model.StoryPathLibrary;
+
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -103,6 +107,8 @@ public class PublishFragment extends Fragment implements PublishListener {
     private File mFileLastExport = null;
     private Job mMatchingRenderJob = null;
 
+    private StoryPathLibrary mStoryPathInstance = null;
+
     /**
      * The sortable grid view that contains the clips to reorder on the
      * Order tab
@@ -124,7 +130,17 @@ public class PublishFragment extends Fragment implements PublishListener {
 //    	purgePublishTables(); // FIXME for debuging, don't purgePublishTables on load!
     	int layout = getArguments().getInt("layout");
         mView = inflater.inflate(layout, null);
-        if (layout == R.layout.fragment_complete_story) {
+
+        String storyPathInstancePath = mActivity.getProject().getTemplatePath();
+        File f = new File(storyPathInstancePath);
+//        mStoryPathInstance = JsonHelper.deserializeStoryPathLibrary(
+        String jsonString = JsonHelper.loadJSON(f, "en"); // FIXME don't hardcode "en"
+        ArrayList<String> referencedFiles = new ArrayList<String>(); // should not need to insert dependencies to check metadata
+        String language = StoryMakerApp.getCurrentLocale().getLanguage();
+        mStoryPathInstance = JsonHelper.deserializeStoryPathLibrary(jsonString, f.getAbsolutePath(), referencedFiles, getActivity(), language);
+
+//        mStoryPathInstance = JsonHelper.deserializeStoryPathLibrary(json, storyPathInstancePath, referencedFiles, this, );
+        if (layout == R.layout.fragment_complete_story) { // FIXME not sure why this check exists
             
             ProjectInfoFragment infoFrag = ProjectInfoFragment.newInstance(mActivity.getProject().getId(), false, false);
             this.getChildFragmentManager()
@@ -383,7 +399,24 @@ public class PublishFragment extends Fragment implements PublishListener {
     }
     
     private void uploadClicked() {
-        launchChooseAccountsDialog();
+        PublishProfile pubProf = mStoryPathInstance.getPublishProfile();
+        if (pubProf != null && pubProf.getUploadSiteKeys() != null && pubProf.getUploadSiteKeys().size() > 0) { // FIXME we should do this more robustly
+            useTor = true; // FIXME in this case it should just use the sharedprefs value
+            // FIXME what if no uploadsitekeys are defined
+            mSiteKeys = pubProf.getUploadSiteKeys().toArray(new String[pubProf.getUploadSiteKeys().size()]);
+
+            publishToStoryMaker = (pubProf.getPublishSiteKeys().size() > 0 && pubProf.getPublishSiteKeys().get(0).equals("storymaker"));
+//            shareAuthor = intent.getBooleanExtra(ArchiveMetadataActivity.INTENT_EXTRA_SHARE_AUTHOR, false);
+//            shareTitle = intent.getBooleanExtra(ArchiveMetadataActivity.INTENT_EXTRA_SHARE_TITLE, false);
+//            shareTags = intent.getBooleanExtra(ArchiveMetadataActivity.INTENT_EXTRA_SHARE_TAGS, false);
+//            shareDescription = intent.getBooleanExtra(ArchiveMetadataActivity.INTENT_EXTRA_SHARE_DESCRIPTION, false);
+//            shareLocation = intent.getBooleanExtra(ArchiveMetadataActivity.INTENT_EXTRA_SHARE_LOCATION, false);
+//            licenseUrl = intent.getStringExtra(ArchiveMetadataActivity.INTENT_EXTRA_LICENSE_URL);
+
+            startPublish();
+        } else {
+            launchChooseAccountsDialog();
+        }
     }
 
     private void launchChooseAccountsDialog() {
@@ -392,7 +425,16 @@ public class PublishFragment extends Fragment implements PublishListener {
         intent.putExtra("inSelectionMode", true);
         getActivity().startActivityForResult(intent, ChooseAccountFragment.ACCOUNT_REQUEST_CODE);
     }
-    
+
+    boolean useTor;
+    boolean publishToStoryMaker;
+    boolean shareAuthor;
+    boolean shareTitle;
+    boolean shareTags;
+    boolean shareDescription;
+    boolean shareLocation;
+    String licenseUrl;
+
     public void onChooseAccountDialogResult(int resultCode, Intent intent) {
         if (resultCode == Activity.RESULT_OK) {
             Log.d("PublishFragment", "Choose Accounts dialog return ok");
@@ -402,12 +444,33 @@ public class PublishFragment extends Fragment implements PublishListener {
                     Log.d(TAG, "selected sites: " + siteKeys);
                     mSiteKeys = siteKeys.toArray(new String[siteKeys.size()]);
                     
-                    boolean useTor = intent.getBooleanExtra(SiteController.VALUE_KEY_USE_TOR, false);
-                    boolean publishToStoryMaker = intent.getBooleanExtra(SiteController.VALUE_KEY_PUBLISH_TO_STORYMAKER, false);
-                    
-                    showUploadSpinner(true);
-                    mUploading = true;
-                    mPlaying = false;
+                    useTor = intent.getBooleanExtra(SiteController.VALUE_KEY_USE_TOR, false);
+                    publishToStoryMaker = intent.getBooleanExtra(SiteController.VALUE_KEY_PUBLISH_TO_STORYMAKER, false);
+                    shareAuthor = intent.getBooleanExtra(ArchiveMetadataActivity.INTENT_EXTRA_SHARE_AUTHOR, false);
+                    shareTitle = intent.getBooleanExtra(ArchiveMetadataActivity.INTENT_EXTRA_SHARE_TITLE, false);
+                    shareTags = intent.getBooleanExtra(ArchiveMetadataActivity.INTENT_EXTRA_SHARE_TAGS, false);
+                    shareDescription = intent.getBooleanExtra(ArchiveMetadataActivity.INTENT_EXTRA_SHARE_DESCRIPTION, false);
+                    shareLocation = intent.getBooleanExtra(ArchiveMetadataActivity.INTENT_EXTRA_SHARE_LOCATION, false);
+                    licenseUrl = intent.getStringExtra(ArchiveMetadataActivity.INTENT_EXTRA_LICENSE_URL);
+
+                    startPublish();
+                } else {
+                    Utils.toastOnUiThread(mActivity, mActivity.getString(R.string.no_site_selected));
+                }
+            } else {
+                Utils.toastOnUiThread(mActivity, mActivity.getString(R.string.no_site_selected));
+            }
+        } else {
+            Log.d("PublishFragment", "Choose Accounts dialog canceled");
+            showPlayAndUpload(true);
+        }
+    }
+
+    // FIXME don't pass intent, this needs to be usable by storypaths with publishprofiles and hence which skip the accountlist activity
+    private void startPublish() {
+        showUploadSpinner(true);
+        mUploading = true;
+        mPlaying = false;
 //                    if (mFileLastExport != null && mFileLastExport.exists()) { // FIXME replace this with a check to make sure render is suitable
 //                    if (mMatchingRenderJob != null) {
 //                        // FIXME i think we need to add that render job to this publishJob here
@@ -420,49 +483,28 @@ public class PublishFragment extends Fragment implements PublishListener {
 //                    } else {
 //                        startRender(mActivity.mMPM.mProject, mSiteKeys, useTor, publishToStoryMaker);
 //                    }
-                    HashMap<String,String> metadata = new HashMap<String, String>();
-                    metadata.put(SiteController.VALUE_KEY_PUBLISH_TO_STORYMAKER, publishToStoryMaker ? "true" : "false");
-                    metadata.put(SiteController.VALUE_KEY_USE_TOR, useTor ? "true" : "false");
-                    metadata.put(SiteController.VALUE_KEY_SLUG, mActivity.mProject.getSlug());
-                    metadata.put(SiteController.VALUE_KEY_BODY, mActivity.mProject.getDescription());
-                    metadata.put(SiteController.VALUE_KEY_TAGS, mActivity.mProject.getTagsAsString());
-                    
-                    String userName = getStoryMakerUserName();
-                    metadata.put(SiteController.VALUE_KEY_AUTHOR, userName);
-                    metadata.put(SiteController.VALUE_KEY_PROFILE_URL, "http://storymaker.cc/author/" + userName);
-                    
-                    // FIXME this is "a bit" of a hack, we should write an automated way of converting Bundle to HashMap ... or maybe we should be passing a bundle?
-                    boolean shareAuthor = intent.getBooleanExtra(ArchiveMetadataActivity.INTENT_EXTRA_SHARE_AUTHOR, false);
-                    metadata.put(ArchiveMetadataActivity.INTENT_EXTRA_SHARE_AUTHOR, shareAuthor ? "true" : "false");
-                    
-                    boolean shareTitle = intent.getBooleanExtra(ArchiveMetadataActivity.INTENT_EXTRA_SHARE_TITLE, false);
-                    metadata.put(ArchiveMetadataActivity.INTENT_EXTRA_SHARE_TITLE, shareTitle ? "true" : "false");
-                    
-                    boolean shareTags = intent.getBooleanExtra(ArchiveMetadataActivity.INTENT_EXTRA_SHARE_TAGS, false);
-                    metadata.put(ArchiveMetadataActivity.INTENT_EXTRA_SHARE_TAGS, shareTags ? "true" : "false");
-                    
-                    boolean shareDescription = intent.getBooleanExtra(ArchiveMetadataActivity.INTENT_EXTRA_SHARE_DESCRIPTION, false);
-                    metadata.put(ArchiveMetadataActivity.INTENT_EXTRA_SHARE_DESCRIPTION, shareDescription ? "true" : "false");
-                    
-                    boolean shareLocation = intent.getBooleanExtra(ArchiveMetadataActivity.INTENT_EXTRA_SHARE_LOCATION, false);
-                    metadata.put(ArchiveMetadataActivity.INTENT_EXTRA_SHARE_LOCATION, shareLocation ? "true" : "false");
+        // FIXME this is "a bit" of a hack, we should write an automated way of converting Bundle to HashMap ... or maybe we should be passing a bundle?
+        HashMap<String,String> metadata = new HashMap<String, String>();
+        metadata.put(SiteController.VALUE_KEY_PUBLISH_TO_STORYMAKER, publishToStoryMaker ? "true" : "false");
+        metadata.put(SiteController.VALUE_KEY_USE_TOR, useTor ? "true" : "false");
+        metadata.put(SiteController.VALUE_KEY_SLUG, mActivity.mProject.getSlug());
+        metadata.put(SiteController.VALUE_KEY_BODY, mActivity.mProject.getDescription());
+        metadata.put(SiteController.VALUE_KEY_TAGS, mActivity.mProject.getTagsAsString());
 
-                    String licenseUrl = intent.getStringExtra(ArchiveMetadataActivity.INTENT_EXTRA_LICENSE_URL);
-                    metadata.put(ArchiveSiteController.VALUE_KEY_LICENSE_URL, licenseUrl);
-                    
-                    PublishJob publishJob = new PublishJob(getActivity().getBaseContext(), mActivity.mProject.getId(), mSiteKeys, (new Gson()).toJson(metadata));
-                    publishJob.save();
-                    startRender(publishJob);
-                } else {
-                    Utils.toastOnUiThread(mActivity, mActivity.getString(R.string.no_site_selected));
-                }
-            } else {
-                Utils.toastOnUiThread(mActivity, mActivity.getString(R.string.no_site_selected));
-            }
-        } else {
-            Log.d("PublishFragment", "Choose Accounts dialog canceled");
-            showPlayAndUpload(true);
-        }
+        String userName = getStoryMakerUserName();
+        metadata.put(SiteController.VALUE_KEY_AUTHOR, userName);
+        metadata.put(SiteController.VALUE_KEY_PROFILE_URL, "http://storymaker.org/" + userName);
+
+        metadata.put(ArchiveMetadataActivity.INTENT_EXTRA_SHARE_AUTHOR, shareAuthor ? "true" : "false");
+        metadata.put(ArchiveMetadataActivity.INTENT_EXTRA_SHARE_TITLE, shareTitle ? "true" : "false");
+        metadata.put(ArchiveMetadataActivity.INTENT_EXTRA_SHARE_TAGS, shareTags ? "true" : "false");
+        metadata.put(ArchiveMetadataActivity.INTENT_EXTRA_SHARE_DESCRIPTION, shareDescription ? "true" : "false");
+        metadata.put(ArchiveMetadataActivity.INTENT_EXTRA_SHARE_LOCATION, shareLocation ? "true" : "false");
+        metadata.put(ArchiveSiteController.VALUE_KEY_LICENSE_URL, licenseUrl);
+
+        PublishJob publishJob = new PublishJob(getActivity().getBaseContext(), mActivity.mProject.getId(), mSiteKeys, (new Gson()).toJson(metadata));
+        publishJob.save();
+        startRender(publishJob);
     }
     
     private void startRender(PublishJob publishJob) {
