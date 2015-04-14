@@ -14,6 +14,7 @@ import org.storymaker.app.publish.sites.ArchivePublisher;
 import org.storymaker.app.publish.sites.FacebookPublisher;
 import org.storymaker.app.publish.sites.FlickrPublisher;
 import org.storymaker.app.publish.sites.PreviewPublisher;
+import org.storymaker.app.publish.sites.S3Publisher;
 import org.storymaker.app.publish.sites.SSHPublisher;
 import org.storymaker.app.publish.sites.SoundCloudPublisher;
 import org.storymaker.app.publish.sites.StoryMakerPublisher;
@@ -89,6 +90,8 @@ public class PublishController {
                 publisher = new SSHPublisher(mContext, this, publishJob);
             } else if (ks.contains(PreviewPublisher.SITE_KEY)) {
                 publisher = new PreviewPublisher(mContext, this, publishJob);
+            } else if (ks.contains(S3Publisher.SITE_KEY)) {
+                publisher = new S3Publisher(mContext, this, publishJob);
             }
         }
 
@@ -113,6 +116,8 @@ public class PublishController {
             return SSHPublisher.class;
         } else if (site.equals(PreviewPublisher.SITE_KEY)) {
             return PreviewPublisher.class;
+        } else if (site.equals(S3Publisher.SITE_KEY)) {
+            return S3Publisher.class;
         }
 
         return null;

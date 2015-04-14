@@ -2,6 +2,7 @@ package org.storymaker.app;
 
 import android.app.Activity;
 import android.app.ActionBar;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
@@ -13,6 +14,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.os.Build;
 
+import com.google.gson.JsonObject;
+
+import java.io.File;
 import java.util.ArrayList;
 
 import org.storymaker.app.media.MediaProjectManager;
@@ -21,10 +25,12 @@ import org.storymaker.app.model.Scene;
 
 import io.scal.secureshareui.lib.ChooseAccountFragment;
 import scal.io.liger.Constants;
+import scal.io.liger.JsonHelper;
 import scal.io.liger.model.AudioClip;
 import scal.io.liger.model.AudioClipFull;
 import scal.io.liger.model.FullMetadata;
 import scal.io.liger.model.MediaFile;
+import scal.io.liger.model.StoryPathLibrary;
 
 
 public class PublishActivity extends EditorBaseActivity {
@@ -36,6 +42,8 @@ public class PublishActivity extends EditorBaseActivity {
 
         Intent intent = getIntent();
         String title = intent.getStringExtra(Constants.EXTRA_STORY_TITLE);
+        String storyPathInstancePath = intent.getStringExtra(Constants.EXTRA_STORY_INSTANCE_PATH);
+        StoryPathLibrary spl = getStoryPathLibrary(storyPathInstancePath);
         if (title == null) title = getString(R.string.no_title);
 
         ArrayList<Parcelable> parcelables = intent.getParcelableArrayListExtra(Constants.EXTRA_EXPORT_CLIPS);
@@ -52,6 +60,10 @@ public class PublishActivity extends EditorBaseActivity {
             mProject.setStoryType(Project.STORY_TYPE_AUDIO);
         } else if (medium.equals("video")) {
             mProject.setStoryType(Project.STORY_TYPE_VIDEO);
+        }
+        mProject.setTemplatePath(storyPathInstancePath);
+        if (spl.getPublishProfile() != null) {
+            mProject.setTagsFromStringList(spl.getPublishProfile().getTags()); // FIXME move this into the actual publish step so the user doesn't remove them in the publishfragment info editor
         }
         mProject.save();
         Scene scene = new Scene(this, parcelables.size());
@@ -102,6 +114,15 @@ public class PublishActivity extends EditorBaseActivity {
                     .add(R.id.container, mPublishFragment)
                     .commit();
         }
+    }
+
+    // FIXME move this helper to somewhere more sensible
+    StoryPathLibrary getStoryPathLibrary(String jsonFilePath) {
+        Context context = this;
+        String language = "en"; // FIXME don't hardcode "en"
+        String json = JsonHelper.loadJSON(new File(jsonFilePath), language);
+        ArrayList<String> referencedFiles = new ArrayList<String>();
+        return JsonHelper.deserializeStoryPathLibrary(json, jsonFilePath, referencedFiles, context, language);
     }
 
 

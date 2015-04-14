@@ -7,6 +7,7 @@ import org.storymaker.app.model.PublishJob;
 import org.storymaker.app.publish.sites.ArchiveUploader;
 import org.storymaker.app.publish.sites.FacebookUploader;
 import org.storymaker.app.publish.sites.FlickrUploader;
+import org.storymaker.app.publish.sites.S3Uploader;
 import org.storymaker.app.publish.sites.SSHUploader;
 import org.storymaker.app.publish.sites.SoundCloudUploader;
 import org.storymaker.app.publish.sites.StoryMakerUploader;
@@ -74,8 +75,10 @@ public  class UploadWorker extends WorkerBase {
                 uploader = new SSHUploader(mContext, this, job);
             } else if (job.isSite(Auth.SITE_ARCHIVE)) {
                 uploader = new ArchiveUploader(mContext, this, job);
-            } 
-    		uploader.start();
+            } else if (job.isSite(Auth.SITE_S3)) {
+                uploader = new S3Uploader(mContext, this, job);
+            }
+        uploader.start();
 		}
 	}
 
