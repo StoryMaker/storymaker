@@ -14,6 +14,7 @@ import org.storymaker.app.publish.sites.ArchivePublisher;
 import org.storymaker.app.publish.sites.FacebookPublisher;
 import org.storymaker.app.publish.sites.FlickrPublisher;
 import org.storymaker.app.publish.sites.PreviewPublisher;
+import org.storymaker.app.publish.sites.S3Publisher;
 import org.storymaker.app.publish.sites.SSHPublisher;
 import org.storymaker.app.publish.sites.SoundCloudPublisher;
 import org.storymaker.app.publish.sites.StoryMakerPublisher;
@@ -89,6 +90,8 @@ public class PublishController {
                 publisher = new SSHPublisher(mContext, this, publishJob);
             } else if (ks.contains(PreviewPublisher.SITE_KEY)) {
                 publisher = new PreviewPublisher(mContext, this, publishJob);
+            } else if (ks.contains(S3Publisher.SITE_KEY)) {
+                publisher = new S3Publisher(mContext, this, publishJob);
             }
         }
 
@@ -113,6 +116,8 @@ public class PublishController {
             return SSHPublisher.class;
         } else if (site.equals(PreviewPublisher.SITE_KEY)) {
             return PreviewPublisher.class;
+        } else if (site.equals(S3Publisher.SITE_KEY)) {
+            return S3Publisher.class;
         }
 
         return null;
@@ -159,8 +164,8 @@ public class PublishController {
 		mListener.publishSucceeded(publishJob, url);
 	}
     
-    public void publishJobFailed(PublishJob publishJob, int errorCode, String errorMessage) {
-        mListener.publishFailed(publishJob, errorCode, errorMessage);
+    public void publishJobFailed(PublishJob publishJob, Exception exception, int errorCode, String errorMessage) {
+        mListener.publishFailed(publishJob, exception, errorCode, errorMessage);
     }
 	
     /**
@@ -187,13 +192,13 @@ public class PublishController {
         mListener.jobSucceeded(job);
 	}
 	
-	public void jobFailed(Job job, int errorCode, String errorMessage) {
+	public void jobFailed(Job job, Exception exception, int errorCode, String errorMessage) {
         Log.d(TAG, "jobFailed: " + job + ", with errorCode: " + errorCode + ", and errorMessage: " + errorMessage);
 		// TODO need to raise this to the interested activities here
         PublishJob publishJob = job.getPublishJob();
         PublisherBase publisher = getPublisher(publishJob);
         if (publisher != null) {
-            publisher.jobFailed(job, errorCode, errorMessage);
+            publisher.jobFailed(job, exception, errorCode, errorMessage);
         } else {
             // TODO how to handle null publisher?
         }
@@ -240,7 +245,7 @@ public class PublishController {
 	public static interface PublishListener {
         public void publishSucceeded(PublishJob publishJob, String url);
 
-        public void publishFailed(PublishJob publishJob, int errorCode, String errorMessage);
+        public void publishFailed(PublishJob publishJob, Exception exception, int errorCode, String errorMessage);
         
         public void jobSucceeded(Job job);
 

@@ -43,7 +43,7 @@ public class ArchiveUploader extends UploaderBase {
         } else {
             Log.d(TAG, "Can't upload to Internet Archive server, last rendered file doesn't exist.");
             // TODO get this error back to the activity for display 
-            jobFailed(ERROR_NO_RENDER_FILE, "Can't upload to Internet Archive server, last rendered file doesn't exist."); // FIXME move to strings.xml
+            jobFailed(null, ERROR_NO_RENDER_FILE, "Can't upload to Internet Archive server, last rendered file doesn't exist."); // FIXME move to strings.xml
         }
     }
 }

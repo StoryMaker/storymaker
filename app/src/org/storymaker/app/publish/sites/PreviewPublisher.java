@@ -31,7 +31,7 @@ public class PreviewPublisher extends PublisherBase {
 	
 	public void startUpload() {
         Log.d(TAG, "startUpload");
-        mController.publishJobFailed(mPublishJob, ERROR_CANT_UPLOAD_PREVIEW_JOB, "You cannot upload a preview job");
+        mController.publishJobFailed(mPublishJob, null, ERROR_CANT_UPLOAD_PREVIEW_JOB, "You cannot upload a preview job");
 	}
 
     @Override
