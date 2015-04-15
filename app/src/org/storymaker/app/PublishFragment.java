@@ -401,6 +401,17 @@ public class PublishFragment extends Fragment implements PublishListener {
     private void uploadClicked() {
         PublishProfile pubProf = mStoryPathInstance.getPublishProfile();
         if (pubProf != null && pubProf.getUploadSiteKeys() != null && pubProf.getUploadSiteKeys().size() > 0) { // FIXME we should do this more robustly
+
+            boolean isUserLoggedIntoSM = false;
+            Auth storymakerAuth = (new AuthTable()).getAuthDefault(getActivity(), Auth.SITE_STORYMAKER);
+            if (storymakerAuth != null) { // FIXME we should check a little more carefully if the auth credentials are valid
+                isUserLoggedIntoSM = true;
+            }
+            if (!isUserLoggedIntoSM) {
+                Intent i = new Intent(getActivity(), ConnectAccountActivity.class);
+                getActivity().startActivity(i);
+            }
+
             useTor = true; // FIXME in this case it should just use the sharedprefs value
             // FIXME what if no uploadsitekeys are defined
             mSiteKeys = pubProf.getUploadSiteKeys().toArray(new String[pubProf.getUploadSiteKeys().size()]);
