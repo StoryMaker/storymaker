@@ -173,6 +173,8 @@ def build_zip_push_ijf15():
     os.system("rm liger-content/zips/ijf15.main.2.obb; cd liger-content/assets ; zip -n .mp4 -r ../zips/ijf15.main.2.obb org.storymaker.app/ijf15")
     print "content generated at: liger-content/zips/ijf15.main.2.obb"
     os.system("cd liger-content/zips ; adb push ijf15.main.2.obb /sdcard/Android/data/%s/files/ijf15.main.2.obb" % (packagename))
+    os.system("sha256sum liger-content/zips/ijf15.main.2.obb")
+    os.system("ls -l liger-content/zips/ijf15.main.2.obb")
     adb_push()
 
 cli.add_command(clone)
