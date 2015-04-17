@@ -29,7 +29,7 @@
 		    android:layout_width="fill_parent"
 		    android:layout_height="fill_parent"
 		    android:inputType="textMultiLine"
-		    android:minLines="2"
+		    android:minLines="6"
 		    android:hint="@string/hint_story_description"
 		    android:singleLine="false"/>
 		
@@ -67,7 +67,8 @@
 			
 		<TextView
 	        android:text="@string/label_section" 
-			style="@style/LabelGeneral" />
+			style="@style/LabelGeneral"
+            android:visibility="gone" />
 		
 		<Spinner
 		    android:id="@+id/sp_story_section"
@@ -75,11 +76,13 @@
 		    android:layout_height="wrap_content" 
 		    android:entries="@array/array_story_sections"
 		    android:prompt="@string/label_section"
-		    android:spinnerMode="dialog"/>
+		    android:spinnerMode="dialog"
+            android:visibility="gone" />
 		
 		<TextView
 	        android:text="@string/label_location" 
-			style="@style/LabelGeneral" />
+			style="@style/LabelGeneral"
+            android:visibility="gone"/>
 		
 		<Spinner
 		    android:id="@+id/sp_story_location"
@@ -87,7 +90,8 @@
 		    android:layout_height="wrap_content" 
 		    android:entries="@array/array_story_locations"
 		    android:prompt="@string/label_location"
-		    android:spinnerMode="dialog"/>
+		    android:spinnerMode="dialog"
+            android:visibility="gone" />
    		
 	</LinearLayout>
 </ScrollView>

@@ -132,12 +132,13 @@ public class PublishFragment extends Fragment implements PublishListener {
         mView = inflater.inflate(layout, null);
 
         String storyPathInstancePath = mActivity.getProject().getTemplatePath();
-        File f = new File(storyPathInstancePath);
-//        mStoryPathInstance = JsonHelper.deserializeStoryPathLibrary(
-        String jsonString = JsonHelper.loadJSON(f, "en"); // FIXME don't hardcode "en"
-        ArrayList<String> referencedFiles = new ArrayList<String>(); // should not need to insert dependencies to check metadata
-        String language = StoryMakerApp.getCurrentLocale().getLanguage();
-        mStoryPathInstance = JsonHelper.deserializeStoryPathLibrary(jsonString, f.getAbsolutePath(), referencedFiles, getActivity(), language);
+        if (storyPathInstancePath != null && !storyPathInstancePath.equals("")) {
+            File f = new File(storyPathInstancePath);
+            String jsonString = JsonHelper.loadJSON(f, "en"); // FIXME don't hardcode "en"
+            ArrayList<String> referencedFiles = new ArrayList<String>(); // should not need to insert dependencies to check metadata
+            String language = StoryMakerApp.getCurrentLocale().getLanguage();
+            mStoryPathInstance = JsonHelper.deserializeStoryPathLibrary(jsonString, f.getAbsolutePath(), referencedFiles, getActivity(), language);
+        }
 
 //        mStoryPathInstance = JsonHelper.deserializeStoryPathLibrary(json, storyPathInstancePath, referencedFiles, this, );
         if (layout == R.layout.fragment_complete_story) { // FIXME not sure why this check exists
@@ -399,8 +400,22 @@ public class PublishFragment extends Fragment implements PublishListener {
     }
     
     private void uploadClicked() {
-        PublishProfile pubProf = mStoryPathInstance.getPublishProfile();
+        PublishProfile pubProf = null;
+        if (mStoryPathInstance != null) {
+            pubProf = mStoryPathInstance.getPublishProfile();
+        }
         if (pubProf != null && pubProf.getUploadSiteKeys() != null && pubProf.getUploadSiteKeys().size() > 0) { // FIXME we should do this more robustly
+
+            boolean isUserLoggedIntoSM = false;
+            Auth storymakerAuth = (new AuthTable()).getAuthDefault(getActivity(), Auth.SITE_STORYMAKER);
+            if (storymakerAuth != null) { // FIXME we should check a little more carefully if the auth credentials are valid
+                isUserLoggedIntoSM = true;
+            }
+            if (!isUserLoggedIntoSM) {
+                Intent i = new Intent(getActivity(), ConnectAccountActivity.class);
+                getActivity().startActivity(i);
+            }
+
             useTor = true; // FIXME in this case it should just use the sharedprefs value
             // FIXME what if no uploadsitekeys are defined
             mSiteKeys = pubProf.getUploadSiteKeys().toArray(new String[pubProf.getUploadSiteKeys().size()]);

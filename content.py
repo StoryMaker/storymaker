@@ -109,8 +109,8 @@ def zip_content():
         print "content generated at: liger-content/assets/mena.main.4.obb"
         
     if query_yes_no("zip IJF15?"):
-        os.system("rm liger-content/assets/ijf15.main.2.obb; cd liger-content/assets ; zip -n .mp4 -r ../zips/ijf15.main.2.obb org.storymaker.app/ijf15")
-        print "content generated at: liger-content/zips/ijf15.main.2.obb"
+        os.system("rm liger-content/assets/ijf15.main.4.obb; cd liger-content/assets ; zip -n .mp4 -r ../zips/ijf15.main.4.obb org.storymaker.app/ijf15")
+        print "content generated at: liger-content/zips/ijf15.main.4.obb"
         
     #if query_yes_no("zip dressgate?"):
     #    os.system("rm liger-content/assets/dressgate.main.1.obb; cd liger-content/assets ; zip -n .mp4 -r dressgate.main.1.obb org.storymaker.app/dressgate")
@@ -146,8 +146,8 @@ def adb_push_files():
     if query_yes_no("adb push patch.1044.org.storymaker.app.obb to device files/ folder?"):
         os.system("cd liger-content/zips ; adb push patch.1044.org.storymaker.app.obb /sdcard/Android/data/%s/files/patch.1044.org.storymaker.app.obb" % (packagename))
         
-    if query_yes_no("adb push ijf15.main.2.obb to device files/ folder?"):
-        os.system("cd liger-content/zips ; adb push ijf15.main.2.obb /sdcard/Android/data/%s/files/ijf15.main.2.obb" % (packagename))
+    if query_yes_no("adb push ijf15.main.4.obb to device files/ folder?"):
+        os.system("cd liger-content/zips ; adb push ijf15.main.4.obb /sdcard/Android/data/%s/files/ijf15.main.4.obb" % (packagename))
         
     #if query_yes_no("adb push dressgate.main.1.obb to device files/ folder?"):
     #    os.system("cd liger-content/assets ; adb push dressgate.main.1.obb /sdcard/Android/data/%s/files/dressgate.main.1.obb" % (packagename))
@@ -170,9 +170,11 @@ def build_zip_push_ijf15():
     """build the json, zip it, push it to sd"""
 
     os.system("cd liger-content ; python generate_content.py ; python generate_localized_content.py")
-    os.system("rm liger-content/zips/ijf15.main.2.obb; cd liger-content/assets ; zip -n .mp4 -r ../zips/ijf15.main.2.obb org.storymaker.app/ijf15")
-    print "content generated at: liger-content/zips/ijf15.main.2.obb"
-    os.system("cd liger-content/zips ; adb push ijf15.main.2.obb /sdcard/Android/data/%s/files/ijf15.main.2.obb" % (packagename))
+    os.system("rm liger-content/zips/ijf15.main.4.obb; cd liger-content/assets ; zip -n .mp4 -r ../zips/ijf15.main.4.obb org.storymaker.app/ijf15")
+    print "content generated at: liger-content/zips/ijf15.main.4.obb"
+    os.system("cd liger-content/zips ; adb push ijf15.main.4.obb /sdcard/Android/data/%s/files/ijf15.main.4.obb" % (packagename))
+    os.system("sha256sum liger-content/zips/ijf15.main.4.obb")
+    os.system("ls -l liger-content/zips/ijf15.main.4.obb")
     adb_push()
 
 cli.add_command(clone)
