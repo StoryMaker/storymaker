@@ -30,7 +30,7 @@ public class AccountsActivity extends BaseActivity {
 
         boolean isUserLoggedIntoSM = false;
         Auth storymakerAuth = (new AuthTable()).getAuthDefault(getApplicationContext(), Auth.SITE_STORYMAKER);
-        if (storymakerAuth != null) {
+        if (storymakerAuth != null) { // FIXME we should check a little more carefully if the auth credentials are valid
         	isUserLoggedIntoSM = true;
         }
 		
