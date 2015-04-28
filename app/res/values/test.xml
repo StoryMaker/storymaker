@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+
+    <!-- add account names/passwords for testing -->
+    <string name="storymaker_name"></string>
+    <string name="storymaker_pass"></string>
+    <string name="soundcloud_name"></string>
+    <string name="soundcloud_pass"></string>
+
+</resources>
