@@ -5,7 +5,9 @@
     android:installLocation="auto"
     android:versionCode="1048"
     android:versionName="2.0.0-build1048">
-   
+
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
+
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
