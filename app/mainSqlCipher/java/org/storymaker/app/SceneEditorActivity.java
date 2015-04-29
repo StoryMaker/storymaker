@@ -232,7 +232,7 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
             case R.id.purgePublishTables:
 
                 // NEW/CACHEWORD
-                mCacheWordHandler = new CacheWordHandler(getBaseContext(), this, -1);
+                mCacheWordHandler = new CacheWordHandler(getBaseContext(), this, Integer.parseInt(getString(R.string.cacheword_timeout))); // TODO: timeout of -1 represents no timeout (revisit)
                 mCacheWordHandler.connectToService();
                 net.sqlcipher.database.SQLiteDatabase db = new StoryMakerDB(mCacheWordHandler, getBaseContext()).getWritableDatabase();
 

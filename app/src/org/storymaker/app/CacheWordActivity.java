@@ -56,7 +56,7 @@ public class CacheWordActivity extends Activity implements ICacheWordSubscriber 
         CACHEWORD_SET = getText(R.string.cacheword_state_set).toString();
         
         setContentView(R.layout.activity_lock_screen);
-        mCacheWordHandler = new CacheWordHandler(this, -1); // TODO: timeout of -1 represents no timeout (revisit)
+        mCacheWordHandler = new CacheWordHandler(this, Integer.parseInt(getString(R.string.cacheword_timeout))); // TODO: timeout of -1 represents no timeout (revisit)
 
         mViewEnterPin = findViewById(R.id.llEnterPin);
         mViewCreatePin = findViewById(R.id.llCreatePin);

@@ -1,5 +1,6 @@
 package org.storymaker.app.db;
 
+import org.storymaker.app.R;
 import org.storymaker.app.model.AudioClipTable;
 import org.storymaker.app.model.Auth;
 import org.storymaker.app.model.AuthTable;
@@ -22,6 +23,10 @@ import android.content.ContentValues;
 import android.content.UriMatcher;
 import android.database.Cursor;
 import android.net.Uri;
+import android.util.Log;
+
+import java.util.Timer;
+import java.util.TimerTask;
 
 import info.guardianproject.cacheword.CacheWordHandler;
 import info.guardianproject.cacheword.ICacheWordSubscriber;
@@ -143,13 +148,35 @@ public class ProjectsProvider extends ContentProvider implements ICacheWordSubsc
 
     // NEW/CACHEWORD
     CacheWordHandler mCacheWordHandler;
+
+    // NEED A WAY TO DISCONNECT FROM SERVICE WHEN IDLE
+    Timer dbTimer;
+
+    synchronized void setTimer(long delay) {
+        // if there is an existing timer, clear it
+        if(dbTimer != null) {
+            dbTimer.cancel();
+            dbTimer = null;
+        }
+
+        // set timer to disconnect from cacheword service so it can timeout
+        dbTimer = new Timer();
+        dbTimer.schedule(new TimerTask() {
+            public void run() {
+                mCacheWordHandler.disconnectFromService();
+                dbTimer.cancel();
+                dbTimer = null;
+            }
+        }, delay ); // 1 min delay
+    }
     
     @Override
     public boolean onCreate() {
 
         // NEW/CACHEWORD
-        mCacheWordHandler = new CacheWordHandler(getContext(), this, -1); // TODO: timeout of -1 represents no timeout (revisit)
+        mCacheWordHandler = new CacheWordHandler(getContext(), this, Integer.parseInt(getContext().getString(R.string.cacheword_timeout))); // TODO: timeout of -1 represents no timeout (revisit)
         mCacheWordHandler.connectToService();
+        setTimer(60000);
         mDBHelper = new StoryMakerDB(mCacheWordHandler, getContext());
 
         return true;
@@ -170,6 +197,10 @@ public class ProjectsProvider extends ContentProvider implements ICacheWordSubsc
     
     @Override
     public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
+
+        mCacheWordHandler.connectToService();
+        setTimer(60000);
+
         int uriType = sURIMatcher.match(uri);
         switch (uriType) {
         case PROJECT_ID:
@@ -219,6 +250,10 @@ public class ProjectsProvider extends ContentProvider implements ICacheWordSubsc
 
     @Override
     public Uri insert(Uri uri, ContentValues values) {
+
+        mCacheWordHandler.connectToService();
+        setTimer(60000);
+
         long newId;
         int uriType = sURIMatcher.match(uri);
         switch (uriType) {
@@ -248,6 +283,10 @@ public class ProjectsProvider extends ContentProvider implements ICacheWordSubsc
     
     @Override
     public int delete(Uri uri, String selection, String[] selectionArgs) {
+
+        mCacheWordHandler.connectToService();
+        setTimer(60000);
+
         int uriType = sURIMatcher.match(uri);
         switch (uriType) {
         case PROJECTS:
@@ -286,6 +325,10 @@ public class ProjectsProvider extends ContentProvider implements ICacheWordSubsc
 
     @Override
     public int update(Uri uri, ContentValues values, String selection, String[] selectionArgs) {
+
+        mCacheWordHandler.connectToService();
+        setTimer(60000);
+
         int uriType = sURIMatcher.match(uri);
         switch (uriType) {
         case PROJECTS:

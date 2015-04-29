@@ -399,7 +399,7 @@ public class BaseActivity extends FragmentActivity implements ICacheWordSubscrib
         CACHEWORD_FIRST_LOCK = getText(R.string.cacheword_state_first_lock).toString();
         CACHEWORD_SET = getText(R.string.cacheword_state_set).toString();
 
-        mCacheWordHandler = new CacheWordHandler(this, -1); // TODO: timeout of -1 represents no timeout (revisit)
+        mCacheWordHandler = new CacheWordHandler(this, Integer.parseInt(getString(R.string.cacheword_timeout))); // TODO: timeout of -1 represents no timeout (revisit)
 
         if(!Eula.isAccepted(this)) {
             Intent firstStartIntent = new Intent(this, FirstStartActivity.class);
