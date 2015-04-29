@@ -79,6 +79,16 @@ public class EulaTest extends ActivityInstrumentationTestCase2<FirstStartActivit
 
         onView(withId(R.id.btnNoThanks)).perform(click());
 
+        // select "new" option
+        onView(withText("New")).perform(click());
+
+        try {
+            Log.d("AUTOMATION", "SLEEP " + (5000 / 1000) + " (" + "foo" + ")");
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
         // just pass, this is mostly for setting up the real test
         assertTrue(true);
     }
