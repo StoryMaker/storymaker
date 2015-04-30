@@ -19,6 +19,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.PixelFormat;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.NotificationCompat;
@@ -399,7 +400,9 @@ public class BaseActivity extends FragmentActivity implements ICacheWordSubscrib
         CACHEWORD_FIRST_LOCK = getText(R.string.cacheword_state_first_lock).toString();
         CACHEWORD_SET = getText(R.string.cacheword_state_set).toString();
 
-        mCacheWordHandler = new CacheWordHandler(this, Integer.parseInt(getString(R.string.cacheword_timeout))); // TODO: timeout of -1 represents no timeout (revisit)
+        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        int timeout = Integer.parseInt(settings.getString("pcachewordtimeout", "600"));
+        mCacheWordHandler = new CacheWordHandler(this, timeout); // TODO: timeout of -1 represents no timeout (revisit)
 
         if(!Eula.isAccepted(this)) {
             Intent firstStartIntent = new Intent(this, FirstStartActivity.class);

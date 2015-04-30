@@ -4,9 +4,11 @@ import net.sqlcipher.database.SQLiteQueryBuilder;
 import android.content.ContentProvider;
 import android.content.ContentResolver;
 import android.content.ContentValues;
+import android.content.SharedPreferences;
 import android.content.UriMatcher;
 import android.database.Cursor;
 import android.net.Uri;
+import android.preference.PreferenceManager;
 import android.util.Log;
 
 import org.storymaker.app.R;
@@ -51,7 +53,9 @@ public class LessonsProvider extends ContentProvider implements ICacheWordSubscr
     public boolean onCreate() {
 
         // NEW/CACHEWORD
-        mCacheWordHandler = new CacheWordHandler(getContext(), this, Integer.parseInt(getContext().getString(R.string.cacheword_timeout))); // TODO: timeout of -1 represents no timeout (revisit)
+        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getContext().getApplicationContext());
+        int timeout = Integer.parseInt(settings.getString("pcachewordtimeout", "600"));
+        mCacheWordHandler = new CacheWordHandler(getContext(), this, timeout); // TODO: timeout of -1 represents no timeout (revisit)
         mCacheWordHandler.connectToService();
         setTimer(60000);
         mDB = new StoryMakerDB(mCacheWordHandler, getContext());

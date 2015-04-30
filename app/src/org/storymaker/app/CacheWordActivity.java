@@ -14,6 +14,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.ResultReceiver;
+import android.preference.PreferenceManager;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 import android.view.View;
@@ -56,7 +57,10 @@ public class CacheWordActivity extends Activity implements ICacheWordSubscriber 
         CACHEWORD_SET = getText(R.string.cacheword_state_set).toString();
         
         setContentView(R.layout.activity_lock_screen);
-        mCacheWordHandler = new CacheWordHandler(this, Integer.parseInt(getString(R.string.cacheword_timeout))); // TODO: timeout of -1 represents no timeout (revisit)
+
+        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        int timeout = Integer.parseInt(settings.getString("pcachewordtimeout", "600"));
+        mCacheWordHandler = new CacheWordHandler(this, timeout); // TODO: timeout of -1 represents no timeout (revisit)
 
         mViewEnterPin = findViewById(R.id.llEnterPin);
         mViewCreatePin = findViewById(R.id.llCreatePin);
