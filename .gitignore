@@ -3,6 +3,7 @@ storymaker-release.key
 app/assets/main.1.obb
 liger-content/
 storymaker-art/
+test.xml
 
 # built application files
 *.apk
