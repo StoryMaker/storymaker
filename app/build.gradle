@@ -22,6 +22,7 @@ android {
 
         androidTest {
             java.srcDirs = ['tests/src']
+            assets.srcDirs = ['tests/assets']
         }
 
         // If you'd like to provide special files for the debug / release build variants
