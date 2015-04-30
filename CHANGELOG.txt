@@ -1,3 +1,17 @@
+--- build 1049
+
+- Fix: crash casued by "Duplicate Card"
+- Fix: Content pack download notification weirdness
+- Removed unused Clip Card menu options
+
+--- build 1048
+
+- IJF15 Conference Story Path
+- Vietnamese translation
+- New Content packs
+- UI fixes
+- Crash fixes
+
 --- build 1044
 
 - New Persian Content pack!

@@ -30,7 +30,9 @@ public class SimplePreferences extends LockablePreferenceActivity implements OnS
 
     public static final String KEY_LANGUAGE = "pintlanguage";
 
-	public static final int MAX_VIDEO_WIDTH = 1920;
+    public static final String KEY_TIMEOUT = "pcachewordtimeout";
+
+    public static final int MAX_VIDEO_WIDTH = 1920;
 	public static final int MAX_VIDEO_HEIGHT = 1080;
 	
 	
@@ -177,6 +179,11 @@ public class SimplePreferences extends LockablePreferenceActivity implements OnS
         {
             ((StoryMakerApp)getApplication()).checkLocale();
 //            restartActivity();
+            restartApp(getApplicationContext());
+        }
+
+        // force update so cacheword handlers are re-created with updated timeout
+        else if (key.equals(KEY_TIMEOUT)) {
             restartApp(getApplicationContext());
         }
 	}

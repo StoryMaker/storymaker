@@ -185,7 +185,9 @@ public class HomeActivity extends BaseActivity {
         JsonHelper.setupFileStructure(this);
 
         // NEW: load instance index
-        HashMap<String, InstanceIndexItem> instanceIndex = IndexManager.fillInstanceIndex(HomeActivity.this, IndexManager.loadInstanceIndex(HomeActivity.this),StoryMakerApp.getCurrentLocale().getLanguage());
+        String lang = StoryMakerApp.getCurrentLocale().getLanguage();
+        Log.d(TAG, "lang returned from getCurrentLocale: " + lang);
+        HashMap<String, InstanceIndexItem> instanceIndex = IndexManager.fillInstanceIndex(HomeActivity.this, IndexManager.loadInstanceIndex(HomeActivity.this),lang);
 
         // TEMP
         if (instanceIndex.size() > 0) {

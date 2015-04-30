@@ -42,11 +42,13 @@ import android.app.AlertDialog;
 import android.app.FragmentTransaction;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.util.Log;
@@ -232,7 +234,9 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
             case R.id.purgePublishTables:
 
                 // NEW/CACHEWORD
-                mCacheWordHandler = new CacheWordHandler(getBaseContext(), this, -1);
+                SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                int timeout = Integer.parseInt(settings.getString("pcachewordtimeout", "600"));
+                mCacheWordHandler = new CacheWordHandler(getBaseContext(), this, timeout); // TODO: timeout of -1 represents no timeout (revisit)
                 mCacheWordHandler.connectToService();
                 net.sqlcipher.database.SQLiteDatabase db = new StoryMakerDB(mCacheWordHandler, getBaseContext()).getWritableDatabase();
 

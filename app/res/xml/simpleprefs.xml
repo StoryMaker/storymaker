@@ -13,8 +13,9 @@
 		<EditTextPreference android:title="@string/prefs_youtube_acccount_title" android:summary="@string/prefs_youtube_acccount_summary" android:key="youTubeUserName" android:enabled="true"/>
 		<CheckBoxPreference android:title="@string/prefs_youtube_login_title" android:summary="@string/prefs_youtube_login_summary" android:key="pyoutubewebauth"/>
 		
-		<EditTextPreference android:title="@string/prefs_soundcloud_account_title" android:summary="@string/prefs_soundcloud_account_summary" android:key="soundCloudUserName" android:enabled="true"/>		    
-	</PreferenceCategory>
+		<EditTextPreference android:title="@string/prefs_soundcloud_account_title" android:summary="@string/prefs_soundcloud_account_summary" android:key="soundCloudUserName" android:enabled="true"/>
+        <EditTextPreference android:title="@string/prefs_cacheword_timeout_title" android:summary="@string/prefs_cacheword_timeout_summary" android:key="pcachewordtimeout" android:defaultValue="600" android:enabled="true"/>
+    </PreferenceCategory>
 	
 	<PreferenceCategory android:title="@string/prefs_category_locales_title">	    
 		<ListPreference 	android:title="@string/prefs_interface_language_title" android:summary="@string/prefs_interface_language_summary" android:key="pintlanguage" android:defaultValue="english" android:entries="@array/interface_language_options" android:entryValues="@array/interface_language_options_values" android:enabled="true"/>
