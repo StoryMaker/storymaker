@@ -334,20 +334,11 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
         int layout = R.layout.fragment_add_clips;
         FragmentManager fm = getSupportFragmentManager();
 
-        if (mMenu != null) {
-            mMenu.findItem(R.id.itemTrim).setVisible(false);
-        }
-
         addPublishFragement();
     }
 
     private void addPublishFragement() {
         FragmentManager fm = getSupportFragmentManager();
-
-        if (mMenu != null) {
-            //hide irrelevant menu items
-            setMenuItemsVisibility(false);
-        }
 
         int layout = R.layout.fragment_complete_story;
 
@@ -371,11 +362,6 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
 
     @Override
     public void onTabReselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
-    }
-
-    private void setMenuItemsVisibility(boolean show) {
-        //hide irrelevant menu items
-        mMenu.findItem(R.id.addNewShot).setVisible(show);
     }
 
     @Override
