@@ -96,7 +96,27 @@ After completing all items under Prerequisites:
     $ ./gradlew assembleDebug
     ```
 
+### Testing
+
+We have a helper script "run-tests.sh" that should run the core tests
+
+There are several test classes you can also run manually:
+
+- CompleteTest.java - long test, accepts eula, creates and uploads a new story, checks hook paths, checks content pack downloads, checks settings and preferences
+
+- DefaultLibraryTest.java - old test class, probably no longer runs
+
+- EulaTest.java - old test class, incorporated into Complete/MinimumTest
+
+- LearningGuideTest.java - old test class, should revisit if learning guides need to be verified
+
+- MainTest.java - old test class, probably no longer runs
+
+- MinimumTest.java - short test, accepts eula, creates and uploads a new story
+
 ### Eclipse Specific Steps
+
+!! This is outdated and probably doesn't work anymore
 
 After completing all items under Prerequisites:
 

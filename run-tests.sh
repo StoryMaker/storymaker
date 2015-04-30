@@ -2,6 +2,8 @@
 
 set -e
 
+adb uninstall org.storymaker.app
+
 echo "checkout 'testing' branch in external/liger"
 cd external/liger
 git checkout testing
