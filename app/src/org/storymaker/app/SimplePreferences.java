@@ -28,6 +28,8 @@ public class SimplePreferences extends PreferenceActivity implements OnSharedPre
     public static final String KEY_USE_TOR = "pusetor";
     public static final String KEY_USE_MANAGER = "pusedownloadmanager";
 
+    public static final String KEY_SERVER = "pserver";
+
     public static final String KEY_LANGUAGE = "pintlanguage";
 
 	public static final int MAX_VIDEO_WIDTH = 1920;
@@ -38,6 +40,15 @@ public class SimplePreferences extends PreferenceActivity implements OnSharedPre
 	protected void onCreate(Bundle savedInstanceState)
 	{
         super.onCreate(savedInstanceState);
+
+        // set title bar as a reminder if test server is specified
+        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        String url = settings.getString("pserver", "https://storymaker.org/");
+        if(url.contains("beta")) {
+            getActionBar().setTitle(getString(R.string.beta_name));
+        } else {
+            getActionBar().setTitle(getString(R.string.app_name));
+        }
 
 		addPreferencesFromResource(R.xml.simpleprefs);
 		
@@ -117,6 +128,23 @@ public class SimplePreferences extends PreferenceActivity implements OnSharedPre
                         Toast.makeText(getApplicationContext(), "Can't select both \"Use Orbot\" and \"Use Download Manager\"", Toast.LENGTH_LONG).show();
                         return false;
                     }
+                }
+
+                return true;
+            }
+        });
+
+        Preference prefServer = (Preference)getPreferenceScreen().findPreference(KEY_SERVER);
+        prefServer.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+            public boolean onPreferenceChange(Preference preference, Object newValue) {
+
+                String newUrl = newValue.toString();
+
+                // set title bar as a reminder if test server is specified
+                if(newUrl.contains("beta")) {
+                    getActionBar().setTitle(getString(R.string.beta_name));
+                } else {
+                    getActionBar().setTitle(getString(R.string.app_name));
                 }
 
                 return true;
