@@ -36,10 +36,10 @@ Follow these steps to setup your dev environment:
     $ ./configure_make_everything.sh
     ```
 
-1. Create flickr API credentials file
+1. Create SecureSHaredLib third party credentials file
 
     ```
-    vim ./external/SecureShareLib/SecureShareUILibrary/res/values/flickr.xml
+    vim ./external/SecureShareLib/SecureShareUILibrary/res/values/credentials.xml
     ```
 
     Add the following contents:
@@ -50,24 +50,22 @@ Follow these steps to setup your dev environment:
         <!-- insert your own keys from: https://www.flickr.com/services/apps/create/apply/ -->
         <string name="flickr_key">REPLACE_WITH_YOUR_KEY</string>
         <string name="flickr_secret">REPLACE_WITH_YOUR_KEY</string>
-    </resources>
-    ```
 
-1. Create Google API credentials file
-
-    ```
-    vim ./external/SecureShareLib/SecureShareUILibrary/res/values/google.xml
-    ```
-
-    Add the following contents:
-
-    ```xml
-    <?xml version="1.0" encoding="utf-8"?>
-    <resources>
         <!-- insert your own keys following: https://developers.google.com/accounts/docs/OAuth2 -->
         <string name="google_client_id">REPLACE_WITH_YOUR_ID</string>
         <string name="google_client_secret">REPLACE_WITH_YOUR_SECRET</string>
         <string name="google_app_name">REPLACE_WITH_YOUR_APP_NAME</string>
+
+        <string name="s3_key">REPLACE_WITH_YOUR_APP_NAME</string>
+        <string name="s3_secret">REPLACE_WITH_YOUR_APP_NAME</string>
+        <string name="s3_bucket">REPLACE_WITH_YOUR_APP_NAME</string>
+        <string name="s3_path_prefix">REPLACE_WITH_YOUR_APP_NAME</string>
+
+        <string name="sm_key">REPLACE_WITH_YOUR_SM_KEY</string>
+        <string name="sm_secret">REPLACE_WITH_YOUR_SM_SECRET</string>
+
+        <string name="sm_tor_host">REPLACE_WITH_YOUR_TOR_HOST</string>
+        <string name="sm_tor_port">REPLACE_WITH_YOUR_TOR_PORT</string>
     </resources>
     ```
 1. Create Google Play Developer Account credentials file
