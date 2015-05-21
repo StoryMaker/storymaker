@@ -245,7 +245,8 @@ public class Media extends Model {
      * @return 0.0-1.0 percent into the clip to end play
      */
     public float getTrimmedEndPercent() {
-        return (trimEnd + 1) / 100F;
+        // If no trim is set (-1), treat as trimmed to media end
+        return trimEnd == -1f ? 1f : (trimEnd + 1) / 100F;
     }
 
     /** 
