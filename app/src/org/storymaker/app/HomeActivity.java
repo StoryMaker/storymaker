@@ -88,13 +88,7 @@ public class HomeActivity extends BaseActivity {
     	super.onCreate(savedInstanceState);
 
         // set title bar as a reminder if test server is specified
-        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        String url = settings.getString("pserver", "https://storymaker.org/");
-        if(url.contains("beta")) {
-            getActionBar().setTitle(getString(R.string.beta_name));
-        } else {
-            getActionBar().setTitle(getString(R.string.app_name));
-        }
+        getActionBar().setTitle(Utils.getAppName(this));
 
         // copy index files
         IndexManager.copyAvailableIndex(this);
@@ -124,14 +118,7 @@ public class HomeActivity extends BaseActivity {
 	public void onResume() {
 		super.onResume();
 
-        // set title bar as a reminder if test server is specified
-        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        String url = settings.getString("pserver", "https://storymaker.org/");
-        if(url.contains("beta")) {
-            getActionBar().setTitle(getString(R.string.beta_name));
-        } else {
-            getActionBar().setTitle(getString(R.string.app_name));
-        }
+        getActionBar().setTitle(Utils.getAppName(this));
 
         //if (!DownloadHelper.checkAllFiles(this) && downloadPoller == null) {
         if (!DownloadHelper.checkAndDownload(this)) {
@@ -149,7 +136,7 @@ public class HomeActivity extends BaseActivity {
 		{
 			//show storage error message
 			new AlertDialog.Builder(this)
-            .setTitle(getString(R.string.app_name))
+            .setTitle(Utils.getAppName(this))
             .setIcon(android.R.drawable.ic_dialog_info)
             .setMessage(R.string.err_storage_not_ready)
             .show();
@@ -444,7 +431,7 @@ public class HomeActivity extends BaseActivity {
 
         //        startActivity(new Intent(this, StoryNewActivity.class));
         Intent ligerIntent = new Intent(context, MainActivity.class);
-        ligerIntent.putExtra(MainActivity.INTENT_KEY_WINDOW_TITLE, context.getString(R.string.app_name));
+        ligerIntent.putExtra(MainActivity.INTENT_KEY_WINDOW_TITLE, Utils.getAppName(context));
         String lang = StoryMakerApp.getCurrentLocale().getLanguage();
         ligerIntent.putExtra("lang", lang);
 
