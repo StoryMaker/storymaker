@@ -87,6 +87,15 @@ public class HomeActivity extends BaseActivity {
     public void onCreate(Bundle savedInstanceState) {
     	super.onCreate(savedInstanceState);
 
+        // set title bar as a reminder if test server is specified
+        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        String url = settings.getString("pserver", "https://storymaker.org/");
+        if(url.contains("beta")) {
+            getActionBar().setTitle(getString(R.string.beta_name));
+        } else {
+            getActionBar().setTitle(getString(R.string.app_name));
+        }
+
         // copy index files
         IndexManager.copyAvailableIndex(this);
 
@@ -114,6 +123,16 @@ public class HomeActivity extends BaseActivity {
     @Override
 	public void onResume() {
 		super.onResume();
+
+        // set title bar as a reminder if test server is specified
+        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        String url = settings.getString("pserver", "https://storymaker.org/");
+        if(url.contains("beta")) {
+            getActionBar().setTitle(getString(R.string.beta_name));
+        } else {
+            getActionBar().setTitle(getString(R.string.app_name));
+        }
+
         //if (!DownloadHelper.checkAllFiles(this) && downloadPoller == null) {
         if (!DownloadHelper.checkAndDownload(this)) {
             // don't poll, just pop up message if a download was initiated
