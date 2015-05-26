@@ -1,3 +1,8 @@
+--- build 1052
+
+- Fix: crash on Galaxy Camera and other devices when importing media
+- Fix: failure to find default library when file is corrupt
+
 --- build 1051
 
 - Fix bug causing narration to not showup in export 
