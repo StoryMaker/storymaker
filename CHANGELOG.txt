@@ -1,3 +1,8 @@
+--- build 1053
+
+- Added Beta Content Pack
+- Fix several crashes in new StoryPaths
+
 --- build 1052
 
 - Fix: crash on Galaxy Camera and other devices when importing media
