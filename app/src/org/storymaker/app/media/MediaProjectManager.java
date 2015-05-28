@@ -604,7 +604,8 @@ public class MediaProjectManager implements MediaManager {
  		Long totalBytesAvailable = (long)stat.getAvailableBlocks() * (long)stat.getBlockSize();
 
     	//if not enough storage
- 		if(totalBytesRequired > totalBytesAvailable)
+		// FIXME we should raise this error via a intent, not a straight toast so it can be handled if the activity is hidden
+ 		if(totalBytesRequired > totalBytesAvailable && mActivity != null)
  		{
  			double totalMBRequired = totalBytesRequired /(double)(1024*1024);
  			
