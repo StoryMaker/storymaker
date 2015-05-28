@@ -15,9 +15,11 @@ import java.util.List;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.AssetManager;
 import android.graphics.drawable.Drawable;
 import android.os.Environment;
+import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.ShareCompat;
 import android.util.Log;
@@ -33,14 +35,15 @@ public class Utils {
     	toastOnUiThread(activity, message, false);
     }
     
-    public static void toastOnUiThread(Activity activity, String message, final boolean isLongToast) {
-        final Activity _activity = activity;
+    public static void toastOnUiThread(final Activity activity, String message, final boolean isLongToast) {
         final String _msg = message;
-        activity.runOnUiThread(new Runnable() {
-                public void run() {
-                    Toast.makeText(_activity.getApplicationContext(), _msg, isLongToast ? Toast.LENGTH_LONG : Toast.LENGTH_SHORT).show();
-                }
-        });
+		if (activity != null) {
+			activity.runOnUiThread(new Runnable() {
+				public void run() {
+					Toast.makeText(activity.getApplicationContext(), _msg, isLongToast ? Toast.LENGTH_LONG : Toast.LENGTH_SHORT).show();
+				}
+			});
+		}
     }
     
     public static void toastOnUiThread(FragmentActivity fragmentActivity, String message) {
@@ -51,12 +54,22 @@ public class Utils {
         final FragmentActivity _activity = fragmentActivity;
         final String _msg = message;
         fragmentActivity.runOnUiThread(new Runnable() {
-                public void run() {
-                		Toast.makeText(_activity.getApplicationContext(), _msg, isLongToast ? Toast.LENGTH_LONG : Toast.LENGTH_SHORT).show();
-                }
-        });
+			public void run() {
+				Toast.makeText(_activity.getApplicationContext(), _msg, isLongToast ? Toast.LENGTH_LONG : Toast.LENGTH_SHORT).show();
+			}
+		});
     }
-    
+
+	public static String getAppName(Context context) {
+		SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context);
+		String url = settings.getString("pserver", "https://storymaker.org/");
+		String appName = context.getString(R.string.app_name);
+		if(url.contains("beta")) {
+			appName = "BETA MODE: " + appName;
+		}
+		return appName;
+	}
+
     public static boolean assetExists(Context context, String path) {
         AssetManager mg = context.getResources().getAssets();
 
@@ -550,7 +563,7 @@ public class Utils {
         String logcat = Utils.getLogCat();
         ShareCompat.IntentBuilder builder = ShareCompat.IntentBuilder.from(activity);
         builder.setType("message/rfc822");
-        builder.addEmailTo("support@storymaker.cc");
+        builder.addEmailTo("support@storymaker.org");
         builder.setSubject(activity.getString(R.string.app_name));
         builder.setChooserTitle("logcat from StoryMaker");
         builder.startChooser();

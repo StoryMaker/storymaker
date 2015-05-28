@@ -41,14 +41,7 @@ public class SimplePreferences extends PreferenceActivity implements OnSharedPre
 	{
         super.onCreate(savedInstanceState);
 
-        // set title bar as a reminder if test server is specified
-        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        String url = settings.getString("pserver", "https://storymaker.org/");
-        if(url.contains("beta")) {
-            getActionBar().setTitle(getString(R.string.beta_name));
-        } else {
-            getActionBar().setTitle(getString(R.string.app_name));
-        }
+        getActionBar().setTitle(Utils.getAppName(this));
 
 		addPreferencesFromResource(R.xml.simpleprefs);
 		
@@ -140,12 +133,7 @@ public class SimplePreferences extends PreferenceActivity implements OnSharedPre
 
                 String newUrl = newValue.toString();
 
-                // set title bar as a reminder if test server is specified
-                if(newUrl.contains("beta")) {
-                    getActionBar().setTitle(getString(R.string.beta_name));
-                } else {
-                    getActionBar().setTitle(getString(R.string.app_name));
-                }
+                getActionBar().setTitle(Utils.getAppName(SimplePreferences.this));
 
                 return true;
             }
