@@ -5,6 +5,7 @@ import org.storymaker.app.model.Lesson;
 import org.storymaker.app.model.LessonGroup;
 import org.storymaker.app.model.Project;
 import org.storymaker.app.server.LoginActivity;
+import org.storymaker.app.server.ServerManager;
 import org.storymaker.app.ui.MyCard;
 import info.guardianproject.onionkit.ui.OrbotHelper;
 import scal.io.liger.Constants;
@@ -13,6 +14,7 @@ import scal.io.liger.IndexManager;
 import scal.io.liger.JsonHelper;
 import scal.io.liger.MainActivity;
 import scal.io.liger.QueueManager;
+import scal.io.liger.ZipHelper;
 import scal.io.liger.model.BaseIndexItem;
 import scal.io.liger.model.ContentPackMetadata;
 import scal.io.liger.model.ExpansionIndexItem;
@@ -97,7 +99,13 @@ public class HomeActivity extends BaseActivity {
         }
 
         // copy index files
-        IndexManager.copyAvailableIndex(this);
+        // IndexManager.copyAvailableIndex(this); // TODO: REPLACE THIS WITH INDEX DOWNLOAD (IF LOGGED IN)
+
+        // NEW/TEMP
+        // DOWNLOAD AVAILABE INDEX FOR CURRENT USER AND SAVE TO TARGET FILE
+        // NEED TO ACCOUNT FOR POSSIBLE MISSING INDEX
+        IndexTask iTask = new IndexTask(this);
+        iTask.execute();
 
         // we want to grab required updates without restarting the app
         if (!DownloadHelper.checkAndDownload(this)) {
@@ -118,6 +126,33 @@ public class HomeActivity extends BaseActivity {
         
         checkForUpdates();
         
+    }
+
+    private class IndexTask extends AsyncTask<Void, Void, Boolean> {
+
+        private Context mContext;
+
+        public IndexTask(Context context) {
+            this.mContext = context;
+        }
+
+        @Override
+        protected Boolean doInBackground(Void... params) {
+            ServerManager sm = StoryMakerApp.getServerManager();
+            return Boolean.valueOf(sm.index(ZipHelper.getFileFolderName(mContext), IndexManager.getAvailableVersionName()));
+        }
+
+        protected void onPostExecute(Boolean result) {
+            if (result.booleanValue()) {
+                Log.d(TAG, "DOWNLOADED CUSTOM AVAILABLE INDEX");
+
+                // REFRESH/INIT LIST?
+                initActivityList();
+
+            } else {
+                Log.d(TAG, "UNABLE TO DOWNLOAD CUSTOM AVAILABLE INDEX");
+            }
+        }
     }
     
     @Override

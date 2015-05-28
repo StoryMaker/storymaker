@@ -12,6 +12,7 @@ import net.bican.wordpress.Comment;
 import net.bican.wordpress.Page;
 
 import io.scal.secureshareui.lib.SMWrapper;
+import scal.io.liger.IndexManager;
 
 import android.app.Activity;
 import android.content.Context;
@@ -182,6 +183,37 @@ public class ServerManager {
         Log.e(TAG, "can't post, no user name found");
         return null;
 	}
+
+    // NEW/TEMP
+    // DOWNLOAD AVAILABE INDEX FOR CURRENT USER AND SAVE TO TARGET FILE
+    // RETURN TRUE IF SUCCESSFUL
+    public boolean index (String targetPath, String targetFile) {
+
+        // version in constants, or pass in?
+        // id value in auth table or use user name?
+
+        try {
+            connect();
+        } catch (IOException ioe) {
+            Log.e(TAG, "UNABLE TO CONNECT TO SERVER, CAN'T GET INDEX");
+            return false;
+        }
+
+        Auth auth = (new AuthTable()).getAuthDefault(mContext, Auth.SITE_STORYMAKER);
+        if (auth != null) {
+            String user = auth.getUserName();
+            if (user != null && user.length() > 0) {
+                // return smWrapper.index(123, 456, targetPath, targetFile);
+                // TEMP - FOR NOW, CONTINUE TO COPY FILE FROM OBB
+                IndexManager.copyAvailableIndex(mContext);
+                Log.d(TAG, "GOT CUSTOM INDEX: " + targetPath + targetFile);
+                return true;
+            }
+        }
+
+        Log.e(TAG, "NOT LOGGED IN OR NO USER NAME FOUND, CAN'T GET INDEX");
+        return false;
+    }
 	
 	public void createAccount (Activity activity)
 	{
