@@ -562,7 +562,7 @@ public class Utils {
         String logcat = Utils.getLogCat();
         ShareCompat.IntentBuilder builder = ShareCompat.IntentBuilder.from(activity);
         builder.setType("message/rfc822");
-        builder.addEmailTo("support@storymaker.cc");
+        builder.addEmailTo("support@storymaker.org");
         builder.setSubject(activity.getString(R.string.app_name));
         builder.setChooserTitle("logcat from StoryMaker");
         builder.startChooser();

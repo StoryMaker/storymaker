@@ -393,7 +393,7 @@ public class HomeActivity extends BaseActivity {
         }
         else if (item.getItemId() == R.id.menu_about)
         {
-            String url = "https://storymaker.cc";
+            String url = "https://storymaker.org";
 
             Intent i = new Intent(Intent.ACTION_VIEW);
             i.setData(Uri.parse(url));
