@@ -35,14 +35,15 @@ public class Utils {
     	toastOnUiThread(activity, message, false);
     }
     
-    public static void toastOnUiThread(Activity activity, String message, final boolean isLongToast) {
-        final Activity _activity = activity;
+    public static void toastOnUiThread(final Activity activity, String message, final boolean isLongToast) {
         final String _msg = message;
-        activity.runOnUiThread(new Runnable() {
-			public void run() {
-				Toast.makeText(_activity.getApplicationContext(), _msg, isLongToast ? Toast.LENGTH_LONG : Toast.LENGTH_SHORT).show();
-			}
-		});
+		if (activity != null) {
+			activity.runOnUiThread(new Runnable() {
+				public void run() {
+					Toast.makeText(activity.getApplicationContext(), _msg, isLongToast ? Toast.LENGTH_LONG : Toast.LENGTH_SHORT).show();
+				}
+			});
+		}
     }
     
     public static void toastOnUiThread(FragmentActivity fragmentActivity, String message) {
