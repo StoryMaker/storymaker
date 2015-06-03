@@ -85,8 +85,8 @@ def zip_content():
     """this creates the zipped blob of content and copies it in to storymaker's assets folder as its .obb file"""
 
     if query_yes_no("zip beta paths?"):
-        os.system("rm liger-content/assets/beta.main.1.obb ; cd liger-content/assets ; zip -n .mp4 -r ../zips/beta.main.1.obb org.storymaker.app/beta")
-        print "content generated at: liger-content/zips/beta.main.1.obb"
+        os.system("rm liger-content/assets/beta.main.2.obb ; cd liger-content/assets ; zip -n .mp4 -r ../zips/beta.main.2.obb org.storymaker.app/beta")
+        print "content generated at: liger-content/zips/beta.main.2.obb"
     
     if query_yes_no("zip main?"):
         os.system("rm liger-content/assets/main.1044.org.storymaker.app.obb ; cd liger-content/assets ; zip -n .mp4 -r main.1044.org.storymaker.app.obb org.storymaker.app/default")
@@ -132,8 +132,8 @@ def adb_push_obb():
 def adb_push_files():
     """adb push to /sdcard/Android/<package>/files"""
 
-    if query_yes_no("adb push beta.main.1.obb to device files/ folder?"):
-        os.system("cd liger-content/zips ; adb push beta.main.1.obb /sdcard/Android/data/%s/files/beta.main.1.obb" % (packagename))
+    if query_yes_no("adb push beta.main.2.obb to device files/ folder?"):
+        os.system("cd liger-content/zips ; adb push beta.main.2.obb /sdcard/Android/data/%s/files/beta.main.2.obb" % (packagename))
     if query_yes_no("adb push learning_guide.main.2.obb to device files/ folder?"):
         os.system("cd liger-content/zips ; adb push learning_guide.main.2.obb /sdcard/Android/data/%s/files/learning_guide.main.2.obb" % (packagename))
     if query_yes_no("adb push learning_guide.patch.2.obb to device files/ folder?"):
