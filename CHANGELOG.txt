@@ -1,3 +1,7 @@
+--- build 1054
+
+- bugfixes and new content for Beta pack
+
 --- build 1053
 
 - Added Beta Content Pack
