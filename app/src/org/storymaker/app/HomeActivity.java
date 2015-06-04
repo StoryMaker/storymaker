@@ -88,6 +88,9 @@ public class HomeActivity extends BaseActivity {
     public void onCreate(Bundle savedInstanceState) {
     	super.onCreate(savedInstanceState);
 
+        // set title bar as a reminder if test server is specified
+        getActionBar().setTitle(Utils.getAppName(this));
+
         // copy index files
         IndexManager.copyAvailableIndex(this);
 
@@ -115,6 +118,9 @@ public class HomeActivity extends BaseActivity {
     @Override
 	public void onResume() {
 		super.onResume();
+
+        getActionBar().setTitle(Utils.getAppName(this));
+
         //if (!DownloadHelper.checkAllFiles(this) && downloadPoller == null) {
         if (!DownloadHelper.checkAndDownload(this)) {
             // don't poll, just pop up message if a download was initiated
@@ -131,7 +137,7 @@ public class HomeActivity extends BaseActivity {
 		{
 			//show storage error message
 			new AlertDialog.Builder(this)
-            .setTitle(getString(R.string.app_name))
+            .setTitle(Utils.getAppName(this))
             .setIcon(android.R.drawable.ic_dialog_info)
             .setMessage(R.string.err_storage_not_ready)
             .show();
@@ -323,136 +329,6 @@ public class HomeActivity extends BaseActivity {
         alert.show();
     }
 
-
-//    // TODO repurpose this to act as the download a content ui
-//    private void initIntroActivityList()
-//    {
-//      	setContentView(R.layout.activity_home_intro);
-//      	setupDrawerLayout();
-//
-//		int[] titles1 =
-//			{(R.string.tutorial_title_1),
-//				(R.string.tutorial_title_2),
-//				(R.string.tutorial_title_3),
-//				(R.string.tutorial_title_4),
-//				(R.string.tutorial_title_5)
-//				};
-//		int[] messages1 =
-//			{(R.string.tutorial_text_1),
-//				(R.string.tutorial_text_2),
-//				(R.string.tutorial_text_3),
-//				(R.string.tutorial_text_4),
-//				(R.string.tutorial_text_5)
-//				};
-//
-//
-//
-//
-//		MyAdapter adapter = new MyAdapter(getSupportFragmentManager(), titles1,messages1);
-//		ViewPager pager = ((ViewPager)findViewById(R.id.pager1));
-//
-//		pager.setId((int)(Math.random()*10000));
-//		pager.setOffscreenPageLimit(5);
-//
-//		pager.setAdapter(adapter);
-//
-//		//Bind the title indicator to the adapter
-//         CirclePageIndicator indicator = (CirclePageIndicator)findViewById(R.id.circles1);
-//         indicator.setViewPager(pager);
-//         indicator.setSnap(true);
-//
-//
-//         final float density = getResources().getDisplayMetrics().density;
-//
-//         indicator.setRadius(5 * density);
-//         indicator.setFillColor(0xFFFF0000);
-//         indicator.setPageColor(0xFFaaaaaa);
-//         //indicator.setStrokeColor(0xFF000000);
-//         //indicator.setStrokeWidth(2 * density);
-//
-//
-//         View button = findViewById(R.id.cardButton1);
-//         button.setOnClickListener(new OnClickListener()
-//         {
-//
-//			@Override
-//			public void onClick(View v) {
-//
-//				Intent intent = new Intent(HomeActivity.this, LessonsActivity.class);
-//				startActivity(intent);
-//			}
-//
-//         });
-//
-//
-//    		int[] titles2 =
-//			{(R.string.tutorial_title_7),
-//				(R.string.tutorial_title_8),
-//				(R.string.tutorial_title_9),
-//				(R.string.tutorial_title_10),
-//				(R.string.tutorial_title_11)
-//				};
-//		int[] messages2 =
-//			{(R.string.tutorial_text_7),
-//				(R.string.tutorial_text_8),
-//				(R.string.tutorial_text_9),
-//				(R.string.tutorial_text_10),
-//				(R.string.tutorial_text_11)
-//				};
-//
-//		MyAdapter adapter2 = new MyAdapter(getSupportFragmentManager(), titles2,messages2);
-//		ViewPager pager2 = ((ViewPager)findViewById(R.id.pager2));
-//
-//		pager2.setId((int)(Math.random()*10000));
-//		pager2.setOffscreenPageLimit(5);
-//
-//		pager2.setAdapter(adapter2);
-//
-//		//Bind the title indicator to the adapter
-//         CirclePageIndicator indicator2 = (CirclePageIndicator)findViewById(R.id.circles2);
-//         indicator2.setViewPager(pager2);
-//         indicator2.setSnap(true);
-//
-//         indicator2.setRadius(5 * density);
-//         indicator2.setFillColor(0xFFFF0000);
-//         indicator2.setPageColor(0xFFaaaaaa);
-//         //indicator.setStrokeColor(0xFF000000);
-//         //indicator.setStrokeWidth(2 * density);
-//
-//         button = findViewById(R.id.cardButton2);
-//         button.setOnClickListener(new OnClickListener()
-//         {
-//
-//			@Override
-//			public void onClick(View v) {
-//				//Intent intent = new Intent(HomeActivity.this, StoryNewActivity.class);
-//				//startActivity(intent);
-//                launchLiger(HomeActivity.this, "learning_guide_1_library", null, null);
-//			}
-//
-//         });
-//    }
-
-    private void showProject(int id) {
-        if (id >= mListProjects.size()) {
-            return; // sometimes we get a long random number here - n8fr8
-        }
-        
-        Project project = mListProjects.get(id);
-        Intent intent = new Intent(this, SceneEditorActivity.class);
-        if (project.getScenesAsArray().length > 1) {
-            intent = new Intent(this, StoryTemplateActivity.class);
-        }
-
-        intent.putExtra("story_mode", project.getStoryType());
-        intent.putExtra("pid", project.getId());
-        intent.putExtra("title", project.getTitle());
-        String templateJsonPath = Project.getSimpleTemplateForMode(getApplicationContext(), project.getStoryType()); // FIXME opt: this is redundant as the  SceneEditorActivity does this again itself
-        intent.putExtra("template_path", templateJsonPath);
-
-        startActivity(intent);
-    }
-
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
@@ -518,7 +394,7 @@ public class HomeActivity extends BaseActivity {
         }
         else if (item.getItemId() == R.id.menu_about)
         {
-            String url = "https://storymaker.cc";
+            String url = "https://storymaker.org";
 
             Intent i = new Intent(Intent.ACTION_VIEW);
             i.setData(Uri.parse(url));
@@ -556,7 +432,7 @@ public class HomeActivity extends BaseActivity {
 
         //        startActivity(new Intent(this, StoryNewActivity.class));
         Intent ligerIntent = new Intent(context, MainActivity.class);
-        ligerIntent.putExtra(MainActivity.INTENT_KEY_WINDOW_TITLE, context.getString(R.string.app_name));
+        ligerIntent.putExtra(MainActivity.INTENT_KEY_WINDOW_TITLE, Utils.getAppName(context));
         String lang = StoryMakerApp.getCurrentLocale().getLanguage();
         ligerIntent.putExtra("lang", lang);
 

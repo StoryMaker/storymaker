@@ -2,7 +2,6 @@ package org.storymaker.app.media;
 
 import org.storymaker.app.AppConstants;
 import org.storymaker.app.R;
-import org.storymaker.app.SceneEditorActivity;
 import org.storymaker.app.StoryMakerApp;
 import org.storymaker.app.Utils;
 import org.storymaker.app.db.StoryMakerDB;
@@ -109,63 +108,6 @@ public class MediaProjectManager implements MediaManager {
         initExternalStorage(mContext);
     }
         
-    public void addAllProjectMediaToEditor() {
-        Media[] _medias = mScene.getMediaAsArray();
-        for (Media media: _medias) {
-        	if (media != null) {
-                try
-                {
-                    addMediaFile(media.getClipIndex(), media.getPath(), media.getMimeType());
-                }
-                catch (IOException ioe)
-                {
-                    Log.e(AppConstants.TAG,"error adding media from saved project", ioe);
-                }
-        	}
-        }
-    
-        
-    }
-    
-    public void handleResponse (Intent intent, File fileCapturePath) throws IOException
-    {                
-        MediaDesc result = mMediaHelper.handleIntentLaunch(intent);
-        
-        if (result == null && fileCapturePath != null)
-        {
-        	result = new MediaDesc();
-        	result.path = fileCapturePath.getCanonicalPath();
-        	result.mimeType = mMediaHelper.getMimeType(result.path);
-        }
-        
-    	if (result != null && result.path != null && result.mimeType != null)
-    	{
-    		try
-    		{
-    			addMediaFile(mClipIndex, result.path, result.mimeType);
-    			// FIXME use media type as definied in json
-    			mScene.setMedia(mClipIndex, "FIXME", result.path, result.mimeType);
-    			mScene.save();
-    			if (mActivity != null) ((SceneEditorActivity)mActivity).refreshClipPager();
-    		}
-			catch (IOException ioe)
-			{
-				Log.e(AppConstants.TAG,"error adding media result",ioe);
-			}
-        }
-        
-    }
-    
-    public void deleteCurrentClip ()
-    {
-    	
-    //	mScene.setMedia(mClipIndex, "FIXME", null, null);
-    	Media media = mScene.getMediaAsList().get(mClipIndex);
-    	media.delete();
-    	if (mActivity != null) ((SceneEditorActivity)mActivity).refreshClipPager();
-    }
-
-   
     @SuppressLint("NewApi")
 	private static synchronized void initExternalStorage (Context context)
     {   	
@@ -613,91 +555,6 @@ public class MediaProjectManager implements MediaManager {
     	}
     }
     
-    
-    private void addMediaFile (int clipIndex, String path, String mimeType) throws IOException
-    {
-    	MediaDesc mdesc = new MediaDesc ();
-    	mdesc.path = path;
-    	mdesc.mimeType = mimeType;
-    	
-    	while ((clipIndex+1) > mMediaList.size())
-    	{
-    	    mMediaList.add(null);
-    	}
-    	
-    	
-
-    	/*
-		if (mimeType.startsWith("audio") && mMediaList.get(clipIndex) != null 
-		        && (!mMediaList.get(mMediaList.size()-1).mMediaDescOriginal.mimeType.equals(mimeType)))
-		{
-			MediaClip mClipVideo =  mMediaList.get(clipIndex);
-			
-			MediaClip mClipAudio = new MediaClip();
-			mClipAudio.mMediaDescOriginal = mdesc;
-		
-				ShellCallback sc = null;
-	    		MediaMerger mm = new MediaMerger(mContext, (MediaManager)this, mHandler, mClipVideo, mClipAudio, mFileExternDir, sc);
-	    		// Convert to video
-	    		Thread thread = new Thread (mm);
-	    		thread.setPriority(Thread.NORM_PRIORITY);
-	    		thread.start();
-		
-			
-		}
-		else
-		{*/
-			//its the first clip and/or the previous item is the same type as this, or this is not an audio clip
-    		
-			MediaClip mClip = new MediaClip();
-			mClip.mMediaDescOriginal = mdesc;
-			
-			mMediaList.set(clipIndex, mClip);
-			
-			if (mActivity != null) ((SceneEditorActivity)mActivity).refreshClipPager(); // FIXME we should handle this by emitting a change event directly
-
-		//}
-		
-//		if (mimeType.startsWith("audio") && mediaList.size() > 0 && (!mediaList.get(mediaList.size()-1).mMediaDescOriginal.mimeType.equals(mimeType)))
-//		{
-//			MediaClip mClipVideo =  mediaList.get(mediaList.size()-1);
-//			
-//			MediaClip mClipAudio = new MediaClip();
-//			mClipAudio.mMediaDescOriginal = mdesc;
-//		
-//			try {
-//				ShellCallback sc = null;
-//	    		MediaMerger mm = new MediaMerger(mContext, (MediaManager)this, mHandler, mClipVideo, mClipAudio, fileExternDir, sc);
-//	    		// Convert to video
-//	    		Thread thread = new Thread (mm);
-//	    		thread.setPriority(Thread.NORM_PRIORITY);
-//	    		thread.start();
-//			} catch (Exception e) {
-//				updateStatus("error merging video and audio");
-//				Log.e(AppConstants.TAG,"error merging video and audio",e);
-//			}
-//			
-//			
-//		}
-//		else
-//		{
-//			//its the first clip and/or the previous item is the same type as this, or this is not an audio clip
-//    		
-//			MediaClip mClip = new MediaClip();
-//			mClip.mMediaDescOriginal = mdesc;
-//			mediaList.add(clipIndex, mClip);
-//			
-//			int mediaId = mediaList.size()-1;
-//			
-//			MediaView mView = addMediaView(mClip, mediaId);
-//			
-//			prerenderMedia (mClip, mView); 
-//		}
-//		
-//		mOut = null;
-    	
-    }
-    
     public Context getContext()
     {
     	return this.mContext;
@@ -747,7 +604,8 @@ public class MediaProjectManager implements MediaManager {
  		Long totalBytesAvailable = (long)stat.getAvailableBlocks() * (long)stat.getBlockSize();
 
     	//if not enough storage
- 		if(totalBytesRequired > totalBytesAvailable)
+		// FIXME we should raise this error via a intent, not a straight toast so it can be handled if the activity is hidden
+ 		if(totalBytesRequired > totalBytesAvailable && mActivity != null)
  		{
  			double totalMBRequired = totalBytesRequired /(double)(1024*1024);
  			

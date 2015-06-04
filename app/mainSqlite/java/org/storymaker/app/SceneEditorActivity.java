@@ -74,9 +74,6 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
 
         Intent intent = getIntent();
 
-//        mTemplateJsonPath = getIntent().getStringExtra("template_path"); 
-        //       mStoryMode = getIntent().getIntExtra("story_mode", Project.STORY_TYPE_VIDEO);
-
         int pid = intent.getIntExtra("pid", -1); //project id
         ArrayList<Parcelable> parcelables = intent.getParcelableArrayListExtra(Constants.EXTRA_EXPORT_CLIPS);
 
@@ -114,7 +111,6 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
             }
             mMPM = new MediaProjectManager(this, getApplicationContext(), mHandlerPub, mProject, scene);
             mMPM.initProject();
-            mMPM.addAllProjectMediaToEditor();
         } else {
             int clipCount = 5; // FIXME get rid of hardcoded clipCount = 5
 
@@ -148,20 +144,7 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
 
         // Set up the action bar.
         final ActionBar actionBar = getActionBar();
-//        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
         actionBar.setDisplayHomeAsUpEnabled(true);
-//        if (mMPM.mScene != null) {
-//            actionBar.setTitle(mMPM.mScene.getTitle());
-//        }
-
-        // For each of the sections in the app, add a tab to the action bar.
-//        actionBar.addTab(actionBar.newTab().setText(R.string.tab_add_clips).setTabListener(this));
-//        actionBar.addTab(actionBar.newTab().setText(R.string.tab_order).setTabListener(this));
-//        if (mMPM.mProject.isTemplateStory()) {
-//            actionBar.addTab(actionBar.newTab().setText(R.string.tab_finish).setTabListener(this));
-//        } else {
-//            actionBar.addTab(actionBar.newTab().setText(R.string.tab_publish).setTabListener(this));
-//        }
         addPublishFragement();
         actionBar.setTitle(getString(R.string.tab_publish));
 
@@ -202,10 +185,6 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.addNewShot:
-                addShotToScene();
-
-                return true;
             case R.id.exportProjectFiles:
                 exportProjectFiles();
 
@@ -215,16 +194,6 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
                 intent.putExtra("pid", mProject.getId());
                 startActivity(intent);
 
-                return true;
-            case R.id.itemTrim:
-                if (mFragmentTab1 != null) {
-                    if(((OrderClipsFragment) mFragmentTab1).loadTrim()) {
-                        ((OrderClipsFragment) mFragmentTab1).enableTrimUIMode();
-                        startActionMode(mActionModeCallback);
-                    }
-
-                    return true;
-                }
                 return true;
             case R.id.purgePublishTables:
 
@@ -241,78 +210,6 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
 
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    private boolean actionModelCancel = false;
-    private ActionMode.Callback mActionModeCallback = new ActionMode.Callback() {
-
-        // Called when the action mode is created; startActionMode() was called
-        @Override
-        public boolean onCreateActionMode(ActionMode mode, Menu menu) {
-            // Inflate a menu resource providing context menu items
-            MenuInflater inflater = mode.getMenuInflater();
-            inflater.inflate(R.menu.context_menu_trim, menu);
-            actionModelCancel = false;
-            return true;
-        }
-
-        // Called each time the action mode is shown. Always called after onCreateActionMode, but
-        // may be called multiple times if the mode is invalidated.
-        @Override
-        public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
-            return false; // Return false if nothing is done
-        }
-
-        // Called when the user selects a contextual menu item
-        @Override
-        public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
-            switch (item.getItemId()) {
-                case R.id.menu_cancel:
-                    actionModelCancel = true;
-                    mode.finish();
-                    return true;
-                case R.id.menu_trim_clip:
-                    mode.finish();
-                    return true;
-                default:
-                    return false;
-            }
-        }
-
-        // this has slightly odd save logic so that I can always save exit actionmode as 
-        // the checkmark button acts as a cancel but the users will treat it as an accept
-        @Override
-        public void onDestroyActionMode(ActionMode mode) {
-            if (actionModelCancel) {
-                ((OrderClipsFragment) mFragmentTab1).undoSaveTrim();
-            } else {
-                ((OrderClipsFragment) mFragmentTab1).saveTrim();
-            }
-
-            ((OrderClipsFragment) mFragmentTab1).enableTrimUIMode();
-        }
-    };
-
-    // FIXME move this into AddClipsFragment?
-    public void addShotToScene ()
-    {
-        try
-        {
-            Clip tClip = new Clip();
-            tClip.setDefaults();
-            AddClipsFragment acf = ((AddClipsFragment)mFragmentTab0);
-            acf.addTemplateClip(tClip);
-        }
-        catch (Exception e)
-        {
-            Log.e(AppConstants.TAG,"error adding new clip",e);
-        }
-    }
-
-    public void deleteCurrentShot ()
-    {
-        mMPM.deleteCurrentClip();
-
     }
 
     private void exportProjectFiles()
@@ -438,21 +335,6 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
         fm.beginTransaction().hide(mLastTabFrag).commit();
     }
 
-    // protected void setupAddClipsFragment() {
-    // FragmentManager fm = getSupportFragmentManager();
-    //
-    // try {
-    // mFragmentTab0 = new SceneChooserFragment(R.layout.fragment_add_clips, fm,
-    // mTemplateJsonPath);
-    // } catch (IOException e) {
-    // // TODO Auto-generated catch block
-    // e.printStackTrace();
-    // } catch (JSONException e) {
-    // // TODO Auto-generated catch block
-    // e.printStackTrace();
-    // }
-    // }
-
     @Override
     public void onTabSelected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
         // When the given tab is selected, show the tab contents in the
@@ -460,100 +342,11 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
         int layout = R.layout.fragment_add_clips;
         FragmentManager fm = getSupportFragmentManager();
 
-        if (mMenu != null) {
-            mMenu.findItem(R.id.itemTrim).setVisible(false);
-        }
-
-        if(mLastTabFrag instanceof OrderClipsFragment)
-        {
-            ((OrderClipsFragment) mLastTabFrag).stopPlaybackOnTabChange();
-        }
-
         addPublishFragement();
-
-        //Make Tab
-//        if (tab.getPosition() == 0) {
-//            if (mMenu != null) {
-//                //show relevant menu items
-//                setMenuItemsVisibility(true);
-//            }
-//            layout = R.layout.fragment_add_clips;
-//
-//            if (mFragmentTab0 == null)
-//            {
-//
-//                //    mFragmentTab0 = new AddClipsFragment(layout, fm, mTemplate, mSceneIndex, this);
-//                mFragmentTab0 = new AddClipsFragment();
-//
-//                Bundle args = new Bundle();
-//                args.putInt(AddClipsFragment.ARG_SECTION_NUMBER, tab.getPosition() + 1);
-//                args.putInt("layout", layout);
-//                args.putInt("scene",mSceneIndex);
-//                mFragmentTab0.setArguments(args);
-//
-//                fm.beginTransaction()
-//                        .add(R.id.container, mFragmentTab0, layout + "")
-//                        .commit();
-//
-//            } else {
-//                fm.beginTransaction()
-//                        .show(mFragmentTab0)
-//                        .commit();
-//            }
-//            mLastTabFrag = mFragmentTab0;
-//            //Edit Tab
-//        } else if (tab.getPosition() == 1) {
-//            layout = R.layout.fragment_order_clips;
-//
-//            if (mMenu != null) {
-//                //hide irrelevant menu items
-//                setMenuItemsVisibility(false);
-//
-//                //if only photos, no need to display trim option
-//                if(!(mMPM.mProject.getStoryType() == Project.STORY_TYPE_ESSAY || mMPM.mProject.getStoryType() == Project.STORY_TYPE_PHOTO))
-//                {
-//                    mMenu.findItem(R.id.itemTrim).setVisible(true);
-//                }
-//            }
-//
-//            if (mFragmentTab1 == null)
-//            {
-//
-//                mFragmentTab1 = new OrderClipsFragment();
-//
-//                Bundle args = new Bundle();
-//                args.putInt(OrderClipsFragment.ARG_SECTION_NUMBER, tab.getPosition() + 1);
-//                args.putInt("layout", layout);
-//                mFragmentTab1.setArguments(args);
-//
-//
-//                fm.beginTransaction()
-//                        .add(R.id.container, mFragmentTab1, layout + "")
-//                        .commit();
-//
-//            } else {
-//
-//                ((OrderClipsFragment)mFragmentTab1).loadMedia();
-//
-//                fm.beginTransaction()
-//                        .show(mFragmentTab1)
-//                        .commit();
-//            }
-//
-//            mLastTabFrag = mFragmentTab1;
-//            //Publish Tab
-//        } else if (tab.getPosition() == 2) {
-
-//        }
     }
 
     private void addPublishFragement() {
         FragmentManager fm = getSupportFragmentManager();
-
-        if (mMenu != null) {
-            //hide irrelevant menu items
-            setMenuItemsVisibility(false);
-        }
 
         int layout = R.layout.fragment_complete_story;
 
@@ -577,22 +370,6 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
 
     @Override
     public void onTabReselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
-    }
-
-    private void setMenuItemsVisibility(boolean show) {
-        //hide irrelevant menu items
-        mMenu.findItem(R.id.addNewShot).setVisible(show);
-    }
-
-    public void refreshClipPager() {
-        if (mFragmentTab0 != null) {
-            try {
-                ((AddClipsFragment) mFragmentTab0).reloadClips();
-            }
-            catch (Exception e) {
-                Log.e(AppConstants.TAG, "error reloading clips", e);
-            }
-        }
     }
 
     @Override
@@ -638,14 +415,7 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
                 } else if (mProject.getStoryType() == Project.STORY_TYPE_ESSAY) {
                     mCapturePath = mMPM.mMediaHelper.capturePhoto(fileMediaFolder);
                 }
-//            } else if (requestCode == REQ_YOUTUBE_AUTH) {
-//                if (resultCode == RESULT_OK) {
-//                    String oauthToken = intent.getStringExtra("token");
-//                    Log.d("OAuth", "got token: " + oauthToken);
-//                    mPublishFragment.setYouTubeAuth(oauthToken);
-//                }
             } else if (requestCode == ChooseAccountFragment.ACCOUNT_REQUEST_CODE) { // FIXME hard wireing archive.org in for now, baad
-//                mPublishFragment.onChooseAccountDialogResult(resultCode, intent);
                 // TODO if site is archive, do this
                 ArrayList<String> siteKeys = intent.getExtras().getStringArrayList(ChooseAccountFragment.EXTRAS_ACCOUNT_KEYS);
                 if (siteKeys.contains(ArchiveSiteController.SITE_KEY)) {
@@ -666,13 +436,6 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
                 }
             } else if (requestCode == ArchiveSiteController.METADATA_REQUEST_CODE) {
                 mPublishFragment.onChooseAccountDialogResult(resultCode, intent);
-            } else {
-                try {
-                    mMPM.handleResponse(intent, mCapturePath);
-                    refreshClipPager();
-                } catch (IOException e) {
-                    Log.e(AppConstants.TAG, "error handling capture response: " + mCapturePath, e);
-                }
             }
         } else {
             if (requestCode == ChooseAccountFragment.ACCOUNT_REQUEST_CODE) {

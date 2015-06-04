@@ -152,17 +152,7 @@ public class ProjectsActivity extends BaseActivity {
 			
 				Project project = mListProjects.get(position);
 				Intent intent = null;
-
-			    
-				if (project.getScenesAsArray().length > 1) {
-					
-				    intent = new Intent(ProjectsActivity.this, StoryTemplateActivity.class);
-				    
-				    
-			    }else {
-    				intent = new Intent(ProjectsActivity.this, SceneEditorActivity.class);
-    		    }
-				
+                intent = new Intent(ProjectsActivity.this, SceneEditorActivity.class);
 				intent.putExtra("template_path",project.getTemplatePath());
 				intent.putExtra("story_mode", project.getStoryType());
                 intent.putExtra("pid", project.getId());

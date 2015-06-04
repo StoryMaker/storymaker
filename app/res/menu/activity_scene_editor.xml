@@ -1,15 +1,6 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
 
     <item
-        android:id="@+id/itemTrim"
-        android:icon="@drawable/ic_action_trim"
-        android:orderInCategory="1"
-        android:showAsAction="always"
-        android:title="@string/trim_clips"
-        android:titleCondensed="Trim"
-        android:visible="false">
-    </item>
-    <item
         android:id="@+id/itemInfo"
         android:icon="@drawable/ic_action_info"
         android:orderInCategory="2"
@@ -18,28 +9,16 @@
         android:visible="true">
     </item>
     <item
-        android:id="@+id/addNewShot"
-        android:showAsAction="never"
-        android:title="@string/menu_add_new_shot"
-        android:visible="true">
-    </item>
-    <item
         android:id="@+id/exportProjectFiles"
         android:showAsAction="never"
         android:title="@string/menu_export_project_files"
         android:visible="true">
     </item>
-    <!-- <item
-        android:id="@+id/sendLogcatToSupport"
-        android:showAsAction="never"
-        android:title="@string/send_logcat_to_support"
-        android:visible="true">
-    </item>-->
     <item
         android:id="@+id/purgePublishTables"
         android:showAsAction="never"
         android:title="DEBUG purge publish"
-        android:visible="true">
+        android:visible="false">
     </item>
 
 </menu>

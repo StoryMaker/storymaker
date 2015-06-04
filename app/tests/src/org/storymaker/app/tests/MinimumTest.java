@@ -172,7 +172,7 @@ public class MinimumTest extends ActivityInstrumentationTestCase2<HomeActivity> 
         InputStream assetIn = null;
         OutputStream assetOut = null;
 
-        AssetManager assetManager = mHomeActivity.getApplicationContext().getAssets();
+        AssetManager assetManager = getInstrumentation().getContext().getAssets();
 
         File sampleVideoFile = new File(sampleVideo);
 

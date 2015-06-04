@@ -28,6 +28,8 @@ public class SimplePreferences extends LockablePreferenceActivity implements OnS
     public static final String KEY_USE_TOR = "pusetor";
     public static final String KEY_USE_MANAGER = "pusedownloadmanager";
 
+    public static final String KEY_SERVER = "pserver";
+
     public static final String KEY_LANGUAGE = "pintlanguage";
 
     public static final String KEY_TIMEOUT = "pcachewordtimeout";
@@ -40,6 +42,8 @@ public class SimplePreferences extends LockablePreferenceActivity implements OnS
 	protected void onCreate(Bundle savedInstanceState)
 	{
         super.onCreate(savedInstanceState);
+
+        getActionBar().setTitle(Utils.getAppName(this));
 
 		addPreferencesFromResource(R.xml.simpleprefs);
 		
@@ -120,6 +124,18 @@ public class SimplePreferences extends LockablePreferenceActivity implements OnS
                         return false;
                     }
                 }
+
+                return true;
+            }
+        });
+
+        Preference prefServer = (Preference)getPreferenceScreen().findPreference(KEY_SERVER);
+        prefServer.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+            public boolean onPreferenceChange(Preference preference, Object newValue) {
+
+                String newUrl = newValue.toString();
+
+                getActionBar().setTitle(Utils.getAppName(SimplePreferences.this));
 
                 return true;
             }

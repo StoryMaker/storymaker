@@ -1,3 +1,26 @@
+--- build 1054
+
+- bugfixes and new content for Beta pack
+
+--- build 1053
+
+- Added Beta Content Pack
+- Fix several crashes in new StoryPaths
+
+--- build 1052
+
+- Fix: crash on Galaxy Camera and other devices when importing media
+- Fix: failure to find default library when file is corrupt
+
+--- build 1051
+
+- Fix bug causing narration to not showup in export 
+
+--- build 1050
+- Fix: crash casued by "Duplicate Card"
+- Fix: Content pack download notification weirdness
+- Removed unused Clip Card menu options
+
 --- build 1049
 
 - Fix: crash casued by "Duplicate Card"

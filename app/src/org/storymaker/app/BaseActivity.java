@@ -228,54 +228,6 @@ public class BaseActivity extends FragmentActivity implements ICacheWordSubscrib
             }
         });
         
-        btnDrawerQuickCaptureVideo.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-            	
-            	String dateNowStr = new Date().toLocaleString();
-                
-            	Intent intent = new Intent(BaseActivity.this, StoryNewActivity.class);
-            	intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            	intent.putExtra("story_name", "Quick Story " + dateNowStr);
-            	intent.putExtra("story_type", 0);
-            	intent.putExtra("auto_capture", true);
-                
-                 activity.startActivity(intent);           
-                 }
-        });
-        
-        btnDrawerQuickCapturePhoto.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-            	
-            	String dateNowStr = new Date().toLocaleString();
-                
-            	Intent intent = new Intent(BaseActivity.this, StoryNewActivity.class);
-            	intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            	intent.putExtra("story_name", "Quick Story " + dateNowStr);
-            	intent.putExtra("story_type", 2);
-            	intent.putExtra("auto_capture", true);
-                
-                 activity.startActivity(intent);           
-                 }
-        });
-        
-        btnDrawerQuickCaptureAudio.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-            	
-            	String dateNowStr = new Date().toLocaleString();
-                
-            	Intent intent = new Intent(BaseActivity.this, StoryNewActivity.class);
-            	intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            	intent.putExtra("story_name", "Quick Story " + dateNowStr);
-            	intent.putExtra("story_type", 1);
-            	intent.putExtra("auto_capture", true);
-                
-                 activity.startActivity(intent);           
-                 }
-        });
-        
         btnDrawerHome.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -286,15 +238,6 @@ public class BaseActivity extends FragmentActivity implements ICacheWordSubscrib
                  activity.startActivity(i);
             }
         });
-//        btnDrawerProjects.setOnClickListener(new OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//                mDrawerLayout.closeDrawers();
-//                Intent i = new Intent(activity, ProjectsActivity.class);
-//                activity.startActivity(i);
-//            }
-//        });
         btnDrawerExports.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -305,16 +248,6 @@ public class BaseActivity extends FragmentActivity implements ICacheWordSubscrib
             }
         });
 
-        /*btnDrawerAccount.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            	mSlidingMenu.showContent(true);
-                Intent i = new Intent(activity, LoginActivity.class);
-                activity.startActivity(i);
-            }
-        });*/
-        
         btnDrawerAccounts.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
