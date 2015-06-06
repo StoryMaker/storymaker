@@ -1,3 +1,7 @@
+--- build 1057
+
+- UI fixes for small devices (Trim screen)
+
 --- build 1056
 
 - Arabic translation for beta pack

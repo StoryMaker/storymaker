@@ -3,8 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="org.storymaker.app"
     android:installLocation="auto"
-    android:versionCode="1056"
-    android:versionName="2.0.0-build1056">
+    android:versionCode="1057"
+    android:versionName="2.0.0-build1057">
    
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
