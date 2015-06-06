@@ -1,4 +1,8 @@
---- build 1054
+--- build 1056
+
+- Arabic translation for beta pack
+
+--- build 1055
 
 - bugfixes and new content for Beta pack
 

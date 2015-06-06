@@ -1,6 +1,7 @@
 package org.storymaker.app;
 
 import org.apache.commons.io.FilenameUtils;
+import org.storymaker.app.media.MediaProjectManager;
 import org.storymaker.app.model.Lesson;
 import org.storymaker.app.model.LessonGroup;
 import org.storymaker.app.model.Project;
@@ -23,17 +24,22 @@ import scal.io.liger.model.StoryPathLibrary;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Locale;
 import java.util.Map;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 
 import net.hockeyapp.android.CrashManager;
 import net.hockeyapp.android.UpdateManager;
@@ -314,6 +320,95 @@ public class HomeActivity extends BaseActivity {
             }
         }));
     }
+
+//
+//
+//    private String buildZipFilePath(String filePath)
+//    {
+//        //create datestamp
+//        Date date = new Date();
+//        SimpleDateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy");
+//
+//        int index = filePath.lastIndexOf('/');
+//        filePath = filePath.substring(0, index + 1);
+//
+//        return String.format("%sstorymaker_project_%s_%s.zip", filePath, mMPM.mProject.getId(), dateFormat.format(date));
+//    }
+//
+//    private void exportProjectFiles()
+//    {
+//        try
+//        {
+//            File fileProjectSrc = MediaProjectManager.getExternalProjectFolder(mMPM.mProject, mMPM.getContext());
+//            ArrayList<File> fileList= new ArrayList<File>();
+//            String mZipFileName = buildZipFilePath(fileProjectSrc.getAbsolutePath());
+//
+//            //if not enough space
+//            if(!mMPM.checkStorageSpace())
+//            {
+//                return;
+//            }
+//
+//            String[] mMediaPaths = mMPM.mProject.getMediaAsPathArray();
+//
+//            //add videos
+//            for (String path : mMediaPaths)
+//            {
+//                fileList.add(new File(path));
+//            }
+//
+//            //add thumbnails
+//            fileList.addAll(Arrays.asList(fileProjectSrc.listFiles()));
+//
+//            //add database file
+//            fileList.add(getDatabasePath("sm.db"));
+//
+//            FileOutputStream fos = new FileOutputStream(mZipFileName);
+//            ZipOutputStream zos = new ZipOutputStream(fos);
+//
+//            exportProjectFiles(zos, fileList.toArray(new File[fileList.size()]));
+//
+//            zos.close();
+//
+////            onExportProjectSuccess(mZipFileName); // FIXME TODO
+//        }
+//        catch (IOException ioe)
+//        {
+//            Log.e(AppConstants.TAG, "Error creating zip file:", ioe);
+//        }
+//    }
+//
+//
+//    private void exportProjectFiles(ZipOutputStream zos, File[] fileList)
+//    {
+//        final int BUFFER = 2048;
+//
+//        for (int i = 0; i < fileList.length; i++)
+//        {
+//            try
+//            {
+//                byte[] data = new byte[BUFFER];
+//
+//                FileInputStream fis = new FileInputStream(fileList[i]);
+//                zos.putNextEntry(new ZipEntry(fileList[i].getName()));
+//
+//                int count;
+//                while ((count = fis.read(data, 0, BUFFER)) != -1)
+//                {
+//                    zos.write(data, 0, count);
+//                }
+//
+//                //close steams
+//                zos.closeEntry();
+//                fis.close();
+//
+//            }
+//            catch (IOException ioe)
+//            {
+//                Log.e(AppConstants.TAG, "Error creating zip file:", ioe);
+//            }
+//        }
+//    }
 
     private void showSPLSelectorPopup(final String[] names, final String[] paths) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
