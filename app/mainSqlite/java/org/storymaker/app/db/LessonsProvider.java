@@ -8,6 +8,9 @@ import android.content.UriMatcher;
 import android.database.Cursor;
 import android.net.Uri;
 
+import info.guardianproject.cacheword.CacheWordHandler;
+import info.guardianproject.cacheword.ICacheWordSubscriber;
+
 public class LessonsProvider extends ContentProvider implements ICacheWordSubscriber {
   
 	private StoryMakerDB mDB;

@@ -22,6 +22,9 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 
+import info.guardianproject.cacheword.CacheWordHandler;
+import info.guardianproject.cacheword.ICacheWordSubscriber;
+
 // FIXME rename this to SMProvier and get rid of LessonsProvider
 public class ProjectsProvider extends ContentProvider implements ICacheWordSubscriber {
 	private StoryMakerDB mDBHelper;
@@ -345,6 +348,6 @@ public class ProjectsProvider extends ContentProvider implements ICacheWordSubsc
     public void onCacheWordOpened() {
         // permit db access when cacheword is unlocked
         mDBHelper = new StoryMakerDB(mCacheWordHandler, getContext());
-        mDB = mDBHelper.getWritableDatabase(mPassphrase);
+        mDB = mDBHelper.getWritableDatabase();
     }
 }
