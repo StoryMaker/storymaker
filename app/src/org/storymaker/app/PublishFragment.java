@@ -292,6 +292,7 @@ public class PublishFragment extends Fragment implements PublishListener {
 	}
 
     private void showPlaySpinner(boolean vis) {
+        mButtonPlay.setKeepScreenOn(vis);
         mButtonPlay.setEnabled(vis);
         mButtonPlay.setChecked(vis);
         mButtonPlay.setImageResource(vis ? R.drawable.spinner_play : R.drawable.ic_comp_play);
@@ -308,6 +309,7 @@ public class PublishFragment extends Fragment implements PublishListener {
 //        } else {
 //            mButtonPlay.setImageResource(R.drawable.ic_comp_play);
 //        }
+        mButtonUpload.setKeepScreenOn(vis);
         mButtonUpload.setEnabled(vis);
         mButtonUpload.setChecked(vis);
         mButtonUpload.setImageResource( vis ? R.drawable.spinner_upload : R.drawable.ic_comp_upload);
