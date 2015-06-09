@@ -524,7 +524,6 @@ public class HomeActivity extends BaseActivity {
 
         }
 
-        //        startActivity(new Intent(this, StoryNewActivity.class));
         Intent ligerIntent = new Intent(context, MainActivity.class);
         ligerIntent.putExtra(MainActivity.INTENT_KEY_WINDOW_TITLE, Utils.getAppName(context));
         String lang = StoryMakerApp.getCurrentLocale().getLanguage();

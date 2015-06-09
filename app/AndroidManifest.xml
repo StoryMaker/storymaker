@@ -65,13 +65,6 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="org.storymaker.app.StoryNewActivity"
-            android:label="@string/title_activity_new_story" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".HomeActivity" />
-        </activity>
-        <activity
             android:name="org.storymaker.app.ProjectsActivity"
             android:configChanges="locale"
             android:label="@string/title_exports"
@@ -79,21 +72,6 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".HomeActivity" />
-        </activity>
-        <activity
-            android:name="org.storymaker.app.StoryTemplateChooserActivity"
-            android:label="@string/title_activity_choose_template" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".ProjectsActivity" />
-        </activity>
-        <activity
-            android:name="org.storymaker.app.StoryTemplateActivity"
-            android:configChanges="orientation|screenSize"
-            android:label="@string/title_activity_story_template" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".ProjectsActivity" />
         </activity>
         <activity
             android:name="org.storymaker.app.SceneEditorActivity"

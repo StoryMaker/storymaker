@@ -22,7 +22,7 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 /*
- * EditorBaseActivity acts as the base class for StoryTemplateActivity and SceneEditorActivity
+ * EditorBaseActivity acts as the base class for SceneEditorActivity
  */
 public class EditorBaseActivity extends BaseActivity {
     protected static final String TAG = "EditorBaseActivity";
