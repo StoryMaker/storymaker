@@ -1,3 +1,15 @@
+--- build 1058
+
+New features to announce!
+
+- Access Edit/Trim mode directly from the Order popup
+- Duplicate clip cards
+
+Bugs:
+
+- Fix: screen turns off during publish, breaking it
+- Fix: alternate clips in clipcards ending up in final story
+
 --- build 1057
 
 - UI fixes for small devices (Trim screen)
