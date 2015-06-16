@@ -2,7 +2,7 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
     
 	<PreferenceCategory android:title="@string/prefs_category_networking_security_title">	
-		<EditTextPreference android:title="@string/prefs_storymaker_server_title" android:summary="@string/prefs_storymaker_server_summary" android:key="pserver" android:defaultValue="https://storymaker.org/" android:enabled="true"/>
+		<EditTextPreference android:title="@string/prefs_storymaker_server_title" android:summary="@string/prefs_storymaker_server_summary" android:key="pserver" android:defaultValue="https://api.storymaker.org/" android:enabled="true"/>
 		    
 		<CheckBoxPreference android:title="@string/prefs_use_tor_title" android:summary="@string/prefs_use_tor_summary" android:key="pusetor" android:defaultValue="false"/>
 		<CheckBoxPreference android:title="@string/prefs_sm_upload_title" android:summary="@string/prefs_sm_upload_summary" android:key="psmupload" android:defaultValue="false"/>
