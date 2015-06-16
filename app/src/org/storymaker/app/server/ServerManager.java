@@ -11,6 +11,7 @@ import java.util.List;
 import net.bican.wordpress.Comment;
 import net.bican.wordpress.Page;
 
+import io.scal.secureshareui.lib.CaptchaException;
 import io.scal.secureshareui.lib.SMWrapper;
 
 import android.app.Activity;
@@ -124,7 +125,11 @@ public class ServerManager {
         // wrapper now checks tor settings
         try {
             smWrapper.login(username, password);
-        } catch (IOException ioe) {
+        } catch (CaptchaException ce) {
+			Log.e(TAG, "connect() bailing out, server returned captcha challenge");
+			// throw exception so LoginActivity doesn't save credentials
+			throw new IOException("Some TOR IPs may be flagged as suspicious, try restarting TOR");
+		} catch (IOException ioe) {
             Log.e(TAG, "connect() bailing out, user credentials are not valid");
             // throw exception so LoginActivity doesn't save credentials
             throw new IOException("Login failed");
