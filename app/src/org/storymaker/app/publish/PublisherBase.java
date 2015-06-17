@@ -118,7 +118,13 @@ public abstract class PublisherBase {
 
         // FIXME make this async and put this in the callback
         // FIXME store the final published url in the project table?
-        publishToStoryMakerSucceeded(urlPost);
+        // FIXME urlPost is probably null
+        if (postId == null) {
+            publishToStoryMakerSucceeded(urlPost);
+        } else {
+            String[] parts = postId.split(":");
+            publishToStoryMakerFailed(null, Integer.parseInt(parts[0]), parts[1]);
+        }
         
         return urlPost;
     }

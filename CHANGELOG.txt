@@ -1,3 +1,32 @@
+--- build 1061
+
+- Fix memory leaks
+- Fix login and publish to StoryMaker.org over Tor
+
+--- build 1060
+
+New features to announce!
+
+- Access Edit/Trim mode directly from the Order popup
+- Duplicate clip cards
+
+Bugs:
+
+- Fix: screen turns off during publish, breaking it
+- Fix: alternate clips in clipcards ending up in final story
+
+--- build 1057
+
+- UI fixes for small devices (Trim screen)
+
+--- build 1056
+
+- Arabic translation for beta pack
+
+--- build 1055
+
+- bugfixes and new content for Beta pack
+
 --- build 1053
 
 - Added Beta Content Pack
