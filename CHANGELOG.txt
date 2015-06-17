@@ -1,3 +1,8 @@
+--- build 1061
+
+- Fix memory leaks
+- Fix login and publish to StoryMaker.org over Tor
+
 --- build 1060
 
 New features to announce!
