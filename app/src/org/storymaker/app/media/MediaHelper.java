@@ -55,7 +55,7 @@ public class MediaHelper implements MediaScannerConnectionClient {
          mMediaUriTmp = Uri.fromFile(mMediaFileTmp);
          
      	Intent intent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
-        intent.putExtra( MediaStore.EXTRA_OUTPUT, mMediaUriTmp);
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, mMediaUriTmp);
 
      	mActivity.startActivityForResult(intent, MediaConstants.CAMERA_RESULT);
          
@@ -73,7 +73,7 @@ public class MediaHelper implements MediaScannerConnectionClient {
         //uriCameraImage = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
 
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE );
-        intent.putExtra( MediaStore.EXTRA_OUTPUT, mMediaUriTmp);
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, mMediaUriTmp);
         
         mActivity.startActivityForResult(intent, MediaConstants.CAMERA_RESULT);
         
@@ -150,7 +150,7 @@ public class MediaHelper implements MediaScannerConnectionClient {
 	      InputStream in = cr.openInputStream(contentURI);
 	      BitmapFactory.Options options = new BitmapFactory.Options();
 	      options.inSampleSize=3;
-	      Bitmap thumb = BitmapFactory.decodeStream(in,null,options);
+	      Bitmap thumb = BitmapFactory.decodeStream(in, null, options);
 	      return thumb;
 	 }
 	 
@@ -201,20 +201,24 @@ public class MediaHelper implements MediaScannerConnectionClient {
 		 	MediaDesc result = null;
 		 	
 	    	String[] columnsToSelect = { MediaStore.Video.Media.DATA, MediaStore.Images.Media.MIME_TYPE };
-	    	Cursor videoCursor = mActivity.getContentResolver().query(originalUri, columnsToSelect, null, null, null );
-	    	if ( videoCursor != null && videoCursor.getCount() == 1 ) {
-		        if (videoCursor.moveToFirst())
-		        {
-		        	
-		        	int colIdx = videoCursor.getColumnIndex(MediaStore.Images.Media.DATA);
-		        	if (colIdx != -1)
-		        	{
-		        		result = new MediaDesc();
-		        		result.path = videoCursor.getString(colIdx);
-		        		result.mimeType = videoCursor.getString(videoCursor.getColumnIndex(MediaStore.Images.Media.MIME_TYPE));
-		        	}
-		        }
-	    	}
+	    	Cursor videoCursor = mActivity.getContentResolver().query(originalUri, columnsToSelect, null, null, null);
+		 	try {
+				if (videoCursor != null && videoCursor.getCount() == 1) {
+					if (videoCursor.moveToFirst()) {
+
+						int colIdx = videoCursor.getColumnIndex(MediaStore.Images.Media.DATA);
+						if (colIdx != -1) {
+							result = new MediaDesc();
+							result.path = videoCursor.getString(colIdx);
+							result.mimeType = videoCursor.getString(videoCursor.getColumnIndex(MediaStore.Images.Media.MIME_TYPE));
+						}
+					}
+				}
+			} finally {
+				if (videoCursor != null) {
+					videoCursor.close();
+				}
+			}
 
 	    	return result;
 	    }
@@ -242,20 +246,22 @@ public class MediaHelper implements MediaScannerConnectionClient {
 							{
 								
 								Cursor cursor = mActivity.managedQuery(uriGalleryFile, null, 
-		                                null, null, null); 
-								cursor.moveToNext();
-								
-								// Retrieve the path and the mime type
-								result = new MediaResult();
-								result.path = cursor.getString(cursor 
-								                .getColumnIndex(MediaStore.MediaColumns.DATA)); 
-								result.mimeType = cursor.getString(cursor 
-								                .getColumnIndex(MediaStore.MediaColumns.MIME_TYPE));
-								
-								
-								
+		                                null, null, null);
+								try {
+									cursor.moveToNext();
+
+									// Retrieve the path and the mime type
+									result = new MediaResult();
+									result.path = cursor.getString(cursor
+											.getColumnIndex(MediaStore.MediaColumns.DATA));
+									result.mimeType = cursor.getString(cursor
+											.getColumnIndex(MediaStore.MediaColumns.MIME_TYPE));
+								} finally {
+									if (cursor != null) {
+										cursor.close();
+									}
+								}
 							}
-							
 						}
 					catch (Exception e)
 					{
@@ -326,18 +332,20 @@ public class MediaHelper implements MediaScannerConnectionClient {
 					
 					if (uriMediaResult.getScheme().equalsIgnoreCase("content"))
 					{
-						Cursor cursor = mActivity.managedQuery(uriMediaResult, null, 
-	                            null, null, null); 
-						
-						if (cursor.moveToNext())
-						{
-						
-							// Retrieve the path and the mime type
-							result = new MediaResult();
-							result.path = cursor.getString(cursor 
-							                .getColumnIndex(MediaStore.MediaColumns.DATA)); 
-							result.mimeType = cursor.getString(cursor 
-							                .getColumnIndex(MediaStore.MediaColumns.MIME_TYPE));
+						Cursor cursor = mActivity.managedQuery(uriMediaResult, null,
+								null, null, null);
+						try {
+							if (cursor.moveToNext()) {
+
+								// Retrieve the path and the mime type
+								result = new MediaResult();
+								result.path = cursor.getString(cursor
+										.getColumnIndex(MediaStore.MediaColumns.DATA));
+								result.mimeType = cursor.getString(cursor
+										.getColumnIndex(MediaStore.MediaColumns.MIME_TYPE));
+							}
+						} finally {
+							cursor.close();
 						}
 					}
 					else

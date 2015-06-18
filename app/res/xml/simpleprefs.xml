@@ -2,18 +2,12 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
     
 	<PreferenceCategory android:title="@string/prefs_category_networking_security_title">	
-		<EditTextPreference android:title="@string/prefs_storymaker_server_title" android:summary="@string/prefs_storymaker_server_summary" android:key="pserver" android:defaultValue="https://storymaker.org/" android:enabled="true"/>
+		<EditTextPreference android:title="@string/prefs_storymaker_server_title" android:summary="@string/prefs_storymaker_server_summary" android:key="pserver" android:defaultValue="https://api.storymaker.org/" android:enabled="true"/>
 		    
 		<CheckBoxPreference android:title="@string/prefs_use_tor_title" android:summary="@string/prefs_use_tor_summary" android:key="pusetor" android:defaultValue="false"/>
 		<CheckBoxPreference android:title="@string/prefs_sm_upload_title" android:summary="@string/prefs_sm_upload_summary" android:key="psmupload" android:defaultValue="false"/>
 		<CheckBoxPreference android:title="@string/prefs_use_download_manager_title" android:summary="@string/prefs_use_download_manager_summary" android:key="pusedownloadmanager" android:defaultValue="false"/>
 		<!-- <CheckBoxPreference android:title="@string/prefs_use_upload_manager_title" android:summary="@string/prefs_use_upload_manager_summary" android:key="puseuploadmanager" android:defaultValue="true"/> -->
-		
-		
-		<EditTextPreference android:title="@string/prefs_youtube_acccount_title" android:summary="@string/prefs_youtube_acccount_summary" android:key="youTubeUserName" android:enabled="true"/>
-		<CheckBoxPreference android:title="@string/prefs_youtube_login_title" android:summary="@string/prefs_youtube_login_summary" android:key="pyoutubewebauth"/>
-		
-		<EditTextPreference android:title="@string/prefs_soundcloud_account_title" android:summary="@string/prefs_soundcloud_account_summary" android:key="soundCloudUserName" android:enabled="true"/>		    
 	</PreferenceCategory>
 	
 	<PreferenceCategory android:title="@string/prefs_category_locales_title">	    

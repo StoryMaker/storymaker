@@ -75,7 +75,6 @@ public class ProjectsActivity extends BaseActivity {
              return true;
          case R.id.menu_new_project:
  		
-//			 startActivity(new Intent(this, StoryNewActivity.class));
              HomeActivity.launchLiger(this, "default_library", null, null);
 
              return true;
@@ -277,9 +276,4 @@ public class ProjectsActivity extends BaseActivity {
         }
         
     }
-
-
-   
-    
-    
 }
