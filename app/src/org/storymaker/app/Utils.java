@@ -62,7 +62,7 @@ public class Utils {
 
 	public static String getAppName(Context context) {
 		SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context);
-		String url = settings.getString("pserver", "https://storymaker.org/");
+		String url = settings.getString("pserver", "https://lungcast.com/");
 		String appName = context.getString(R.string.app_name);
 		if(url.contains("beta")) {
 			appName = "BETA MODE: " + appName;
