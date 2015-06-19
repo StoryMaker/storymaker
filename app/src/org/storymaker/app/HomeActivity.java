@@ -99,7 +99,7 @@ public class HomeActivity extends BaseActivity {
         getActionBar().setTitle(Utils.getAppName(this));
 
         // copy index files
-        // IndexManager.copyAvailableIndex(this); // TODO: REPLACE THIS WITH INDEX DOWNLOAD (IF LOGGED IN)
+        IndexManager.copyAvailableIndex(this); // TODO: REPLACE THIS WITH INDEX DOWNLOAD (IF LOGGED IN) <- NEED TO COPY FILE FOR BASELINE CONTENT
 
         // NEW/TEMP
         // DOWNLOAD AVAILABE INDEX FOR CURRENT USER AND SAVE TO TARGET FILE
@@ -139,7 +139,7 @@ public class HomeActivity extends BaseActivity {
         @Override
         protected Boolean doInBackground(Void... params) {
             ServerManager sm = StoryMakerApp.getServerManager();
-            return Boolean.valueOf(sm.index(ZipHelper.getFileFolderName(mContext), IndexManager.getAvailableVersionName()));
+            return Boolean.valueOf(sm.index());
         }
 
         protected void onPostExecute(Boolean result) {
