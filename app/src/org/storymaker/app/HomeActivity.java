@@ -66,6 +66,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -89,11 +90,12 @@ public class HomeActivity extends BaseActivity {
     private ProgressDialog mLoading;
     private ArrayList<Project> mListProjects;
     private RecyclerView mRecyclerView;
+    private SwipeRefreshLayout mSwipeRefreshLayout;
     // private DownloadPoller downloadPoller = null;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-    	super.onCreate(savedInstanceState);
+        super.onCreate(savedInstanceState);
 
         // set title bar as a reminder if test server is specified
         getActionBar().setTitle(Utils.getAppName(this));
@@ -118,6 +120,16 @@ public class HomeActivity extends BaseActivity {
         setContentView(R.layout.activity_home);
         mRecyclerView = (RecyclerView) findViewById(scal.io.liger.R.id.recyclerView);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeRefreshLayout);
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+//                Utils.toastOnUiThread(HomeActivity.this, "refresh it!");
+                mSwipeRefreshLayout.setRefreshing(false); // FIXME this should be moved to the asynctask that is refreshing the avail index
+                initActivityList();
+            }
+        });
         
         // action bar stuff
         getActionBar().setDisplayHomeAsUpEnabled(true);
