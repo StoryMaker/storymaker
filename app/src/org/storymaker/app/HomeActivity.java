@@ -93,20 +93,25 @@ public class HomeActivity extends BaseActivity {
     private SwipeRefreshLayout mSwipeRefreshLayout;
     // private DownloadPoller downloadPoller = null;
 
+    private boolean loggedIn;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // default
+        loggedIn = false;
 
         // set title bar as a reminder if test server is specified
         getActionBar().setTitle(Utils.getAppName(this));
 
         // copy index files
-        IndexManager.copyAvailableIndex(this); // TODO: REPLACE THIS WITH INDEX DOWNLOAD (IF LOGGED IN) <- NEED TO COPY FILE FOR BASELINE CONTENT
+        IndexManager.copyAvailableIndex(this, false); // TODO: REPLACE THIS WITH INDEX DOWNLOAD (IF LOGGED IN) <- NEED TO COPY FILE FOR BASELINE CONTENT
 
         // NEW/TEMP
         // DOWNLOAD AVAILABE INDEX FOR CURRENT USER AND SAVE TO TARGET FILE
         // NEED TO ACCOUNT FOR POSSIBLE MISSING INDEX
-        IndexTask iTask = new IndexTask(this);
+        IndexTask iTask = new IndexTask(this, true); // force download at startup (maybe only force on a timetable?)
         iTask.execute();
 
         // we want to grab required updates without restarting the app
@@ -127,7 +132,9 @@ public class HomeActivity extends BaseActivity {
             public void onRefresh() {
 //                Utils.toastOnUiThread(HomeActivity.this, "refresh it!");
                 mSwipeRefreshLayout.setRefreshing(false); // FIXME this should be moved to the asynctask that is refreshing the avail index
-                initActivityList();
+                //initActivityList();
+                IndexTask iTask = new IndexTask(HomeActivity.this, true); // force download on manual refresh
+                iTask.execute();
             }
         });
         
@@ -143,27 +150,70 @@ public class HomeActivity extends BaseActivity {
     private class IndexTask extends AsyncTask<Void, Void, Boolean> {
 
         private Context mContext;
+        private boolean forceDownload;
 
-        public IndexTask(Context context) {
+        public IndexTask(Context context, boolean forceDownload) {
             this.mContext = context;
+            this.forceDownload = forceDownload;
         }
 
         @Override
         protected Boolean doInBackground(Void... params) {
+
+            Log.d(TAG, "IndexTask.doInBackground IS RUNNING");
+
+            boolean loginRequest = false;
+
             ServerManager sm = StoryMakerApp.getServerManager();
-            return Boolean.valueOf(sm.index());
+
+            if (sm.hasCreds()) {
+                // user is logged in, update status flag if necessary
+                if (!loggedIn) {
+                    loggedIn = true;
+                    loginRequest = true; // user just logged in, need to check server
+                }
+            } else {
+                // user is not logged in, update status flag if necessary
+                if (loggedIn) {
+                    loggedIn = false;
+                }
+            }
+
+            // check server if user just logged in
+            if (loginRequest) {
+                Log.d(TAG, "USER LOGGED IN, CHECK SERVER");
+
+                // reset available index
+                IndexManager.copyAvailableIndex(mContext, false);
+
+                // attempt to download new assignments
+                return Boolean.valueOf(sm.index());
+            }
+
+            // check server if user insists
+            if (forceDownload) {
+                Log.d(TAG, "UPDATE REQUIRED, CHECK SERVER");
+
+                // reset available index
+                IndexManager.copyAvailableIndex(mContext, false);
+
+                // attempt to download new assignments
+                return Boolean.valueOf(sm.index());
+            }
+
+            // no-op
+            return false;
         }
 
         protected void onPostExecute(Boolean result) {
             if (result.booleanValue()) {
-                Log.d(TAG, "DOWNLOADED CUSTOM AVAILABLE INDEX");
-
-                // REFRESH/INIT LIST?
-                initActivityList();
-
+                Log.d(TAG, "DOWNLOADED ASSIGNMENTS AND UPDATED AVAILABLE INDEX");
             } else {
-                Log.d(TAG, "UNABLE TO DOWNLOAD CUSTOM AVAILABLE INDEX");
+                Log.d(TAG, "DID NOT DOWNLOAD ASSIGNMENTS OR UPDATE AVAILABLE INDEX");
             }
+
+            // refresh regardless (called from onResume and OnRefreshListener)
+            initActivityList();
         }
     }
     
@@ -180,7 +230,10 @@ public class HomeActivity extends BaseActivity {
             //downloadPoller.execute("foo");
             Toast.makeText(this, "Downloading content and/or updating installed files", Toast.LENGTH_LONG).show(); // FIXME move to strings.xml
         } //else {
-            initActivityList();
+        // merge this with index task
+         //   initActivityList();
+        IndexTask iTask = new IndexTask(this, false); // don't force download on resume (currently triggers only on login)
+        iTask.execute();
         //}
 		
 		boolean isExternalStorageReady = Utils.Files.isExternalStorageReady();
