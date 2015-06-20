@@ -115,9 +115,10 @@ public class HomeActivity extends BaseActivity {
         iTask.execute();
 
         // we want to grab required updates without restarting the app
-        if (!DownloadHelper.checkAndDownload(this)) {
-            Toast.makeText(this, "Downloading content and/or updating installed files", Toast.LENGTH_LONG).show(); // FIXME move to strings.xml
-        }
+        // integrate with index task
+        // if (!DownloadHelper.checkAndDownload(this)) {
+        //     Toast.makeText(this, "Downloading content and/or updating installed files", Toast.LENGTH_LONG).show(); // FIXME move to strings.xml
+        // }
 
         // i don't think we ever want to do this
         // IndexManager.copyInstalledIndex(this);
@@ -212,6 +213,11 @@ public class HomeActivity extends BaseActivity {
                 Log.d(TAG, "DID NOT DOWNLOAD ASSIGNMENTS OR UPDATE AVAILABLE INDEX");
             }
 
+            // resolve available/installed conflicts and grab updates if needed
+            if (!DownloadHelper.checkAndDownload(mContext)) {
+                Toast.makeText(mContext, "Downloading content and/or updating installed files", Toast.LENGTH_LONG).show(); // FIXME move to strings.xml
+            }
+
             // refresh regardless (called from onResume and OnRefreshListener)
             initActivityList();
         }
@@ -224,12 +230,13 @@ public class HomeActivity extends BaseActivity {
         getActionBar().setTitle(Utils.getAppName(this));
 
         //if (!DownloadHelper.checkAllFiles(this) && downloadPoller == null) {
-        if (!DownloadHelper.checkAndDownload(this)) {
+        // integrate with index task
+        //if (!DownloadHelper.checkAndDownload(this)) {
             // don't poll, just pop up message if a download was initiated
             //downloadPoller = new DownloadPoller();
             //downloadPoller.execute("foo");
-            Toast.makeText(this, "Downloading content and/or updating installed files", Toast.LENGTH_LONG).show(); // FIXME move to strings.xml
-        } //else {
+        //    Toast.makeText(this, "Downloading content and/or updating installed files", Toast.LENGTH_LONG).show(); // FIXME move to strings.xml
+        //} //else {
         // merge this with index task
          //   initActivityList();
         IndexTask iTask = new IndexTask(this, false); // don't force download on resume (currently triggers only on login)
