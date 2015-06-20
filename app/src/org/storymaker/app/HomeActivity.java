@@ -130,9 +130,6 @@ public class HomeActivity extends BaseActivity {
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-//                Utils.toastOnUiThread(HomeActivity.this, "refresh it!");
-                mSwipeRefreshLayout.setRefreshing(false); // FIXME this should be moved to the asynctask that is refreshing the avail index
-                //initActivityList();
                 IndexTask iTask = new IndexTask(HomeActivity.this, true); // force download on manual refresh
                 iTask.execute();
             }
@@ -212,6 +209,7 @@ public class HomeActivity extends BaseActivity {
                 Log.d(TAG, "DID NOT DOWNLOAD ASSIGNMENTS OR UPDATE AVAILABLE INDEX");
             }
 
+            mSwipeRefreshLayout.setRefreshing(false);
             // refresh regardless (called from onResume and OnRefreshListener)
             initActivityList();
         }
