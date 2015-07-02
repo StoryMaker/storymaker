@@ -26,9 +26,17 @@ public class FacebookPublisher extends PublisherBase {
 	public void startRender() {
         Log.d(TAG, "startRender");
 		
-        
-		Job videoRenderJob = new Job(mContext, mPublishJob.getProjectId(), mPublishJob.getId(), JobTable.TYPE_RENDER, null, VideoRenderer.SPEC_KEY);
-		mController.enqueueJob(videoRenderJob);
+        if (mPublishJob.getProject().getStoryType() == Project.STORY_TYPE_VIDEO) {
+			Job videoRenderJob = new Job(mContext, mPublishJob.getProjectId(), mPublishJob.getId(), JobTable.TYPE_RENDER, null, VideoRenderer.SPEC_KEY);
+			mController.enqueueJob(videoRenderJob);
+		} else if (mPublishJob.getProject().getStoryType() == Project.STORY_TYPE_ESSAY) {
+			startUpload(); // FIXME won't this cause double uploads?
+		} else if (mPublishJob.getProject().getStoryType() == Project.STORY_TYPE_PHOTO) {
+			startUpload(); // FIXME won't this cause double uploads?
+		} else if (mPublishJob.getProject().getStoryType() == Project.STORY_TYPE_AUDIO) {
+			Job videoRenderJob = new Job(mContext, mPublishJob.getProjectId(), mPublishJob.getId(), JobTable.TYPE_RENDER, null, VideoRenderer.SPEC_KEY);
+			mController.enqueueJob(videoRenderJob); // FIXME video render job to render audio? i  think the MPM handles it correctly, but wtf
+		}
 	}
 	
 	public void startUpload() {
