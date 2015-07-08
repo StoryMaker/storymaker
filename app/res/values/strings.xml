@@ -335,5 +335,6 @@ You also will have an opportunity to see and modify the data being sent."</strin
     <string name="publishing_to_storymakerorg">Publishing to StoryMaker.org...</string>
     <string name="published_to_storymaker">Published to StoryMaker.org!</string>
     <string name="you_are_not_signed_into_storymakerorg">You are not signed into StoryMaker.org!</string>
+    <string name="fb_post_not_public">Only public Facebook posts can be published on StoryMaker.org!</string>
 
 </resources>
