@@ -130,10 +130,17 @@ public class InstanceIndexItemAdapter extends RecyclerView.Adapter<InstanceIndex
                 }
             });
 
-            if (!TextUtils.isEmpty(baseItem.getThumbnailPath())) {
-                Picasso.with(context)
-                        .load(new File(baseItem.getThumbnailPath()))
-                        .into(holder.thumb);
+            String thumbnailPath = baseItem.getThumbnailPath();
+            if (!TextUtils.isEmpty(thumbnailPath)) {
+                if (thumbnailPath.startsWith("http")) {
+                    Picasso.with(context)
+                            .load(thumbnailPath)
+                            .into(holder.thumb);
+                } else {
+                    Picasso.with(context)
+                            .load(new File(thumbnailPath)) // FIXME leaving for now, but doesnt picasso handle making teh File object iteself?
+                            .into(holder.thumb);
+                }
             } else {
                 Picasso.with(context)
                         .load(R.drawable.no_thumbnail)
@@ -157,11 +164,25 @@ public class InstanceIndexItemAdapter extends RecyclerView.Adapter<InstanceIndex
 //              ZipHelper.getTempFile((baseItem.getThumbnailPath(), "/sdcard/"
                 holder.thumb.setImageBitmap(BitmapFactory.decodeStream(ZipHelper.getFileInputStream(baseItem.getThumbnailPath(), context)));
             } else {
-                File file = IndexManager.copyThumbnail(context, expansionIndexItem.getThumbnailPath());
-                Picasso.with(context)
-                        .load(file)
+                String thumbnailPath = baseItem.getThumbnailPath();
+                if (!TextUtils.isEmpty(thumbnailPath)) {
+                    if (thumbnailPath.startsWith("http")) {
+                        Picasso.with(context)
+                                .load(thumbnailPath)
+                                .into(holder.thumb);
+                    } else {
+                        File file = IndexManager.copyThumbnail(context, expansionIndexItem.getThumbnailPath());
+                        Picasso.with(context)
+                                .load(file)
 //                        .load("file:///android_assets/" + expansionIndexItem.getThumbnailPath())
-                        .into(holder.thumb);
+                                .into(holder.thumb);
+                    }
+                } else {
+                    Picasso.with(context)
+                            .load(R.drawable.no_thumbnail)
+                            .into(holder.thumb);
+                }
+                // FIXME desaturate image and overlay the downarrow
             }
         }
 

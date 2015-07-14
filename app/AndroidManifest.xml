@@ -4,7 +4,7 @@
     package="org.storymaker.app"
     android:installLocation="auto"
     android:versionCode="1063"
-    android:versionName="2.0.0-build1063">
+    android:versionName="2.0.1-build1063">
    
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
