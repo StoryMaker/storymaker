@@ -15,6 +15,8 @@ import org.storymaker.app.model.JobTable;
 import org.storymaker.app.model.Project;
 import org.storymaker.app.model.PublishJob;
 import org.storymaker.app.server.ServerManager;
+
+import io.scal.secureshareui.controller.FacebookSiteController;
 import io.scal.secureshareui.controller.SiteController;
 
 public abstract class PublisherBase {
@@ -157,12 +159,26 @@ public abstract class PublisherBase {
 		} else if (job.isType(JobTable.TYPE_UPLOAD)) {
 			String publishToStoryMaker = mPublishJob.getMetadata().get(SiteController.VALUE_KEY_PUBLISH_TO_STORYMAKER);
 			if (publishToStoryMaker != null && publishToStoryMaker.equals("true")) {
-				Auth auth = (new AuthTable()).getAuthDefault(mContext, Auth.SITE_STORYMAKER);
-				if (auth != null) {
-					publishToStoryMaker();
-				} else {
-					mController.publishJobFailed(mPublishJob, null, 78268832, mContext.getString(R.string.you_are_not_signed_into_storymakerorg)); // FIXME do this nicer!
-				}
+
+                Auth auth = (new AuthTable()).getAuthDefault(mContext, Auth.SITE_STORYMAKER);
+                if (auth != null) {
+
+                    // check for facebook privacy issues
+                    if ((job.getResult() != null) && (job.getResult().equals(FacebookSiteController.POST_NOT_PUBLIC))) {
+                        Log.e(TAG, "CAN'T PUBLISH A FACEBOOK POST THAT ISN'T PUBLIC");
+
+                        // is this viable?
+                        mController.publishJobFailed(mPublishJob, null, 78268832, mContext.getString(R.string.fb_post_not_public));
+
+                    } else {
+
+                        publishToStoryMaker();
+
+                    }
+                } else {
+                    mController.publishJobFailed(mPublishJob, null, 78268832, mContext.getString(R.string.you_are_not_signed_into_storymakerorg)); // FIXME do this nicer!
+                }
+
 			} else {
                 publishSucceeded(getResultUrl(job));
 			}
