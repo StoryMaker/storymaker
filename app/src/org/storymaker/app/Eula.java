@@ -69,11 +69,11 @@ class Eula {
      * @return Whether the user has agreed already.
      */
     boolean show() {
-        final SharedPreferences prefsEula = mActivity.getSharedPreferences(Globals.PREFERENCES_EULA, Activity.MODE_PRIVATE);
-        final SharedPreferences prefsAnalytics = mActivity.getSharedPreferences(Globals.PREFERENCES_ANALYTICS, Activity.MODE_PRIVATE);
+        final SharedPreferences prefsEula = mActivity.getSharedPreferences(Constants.PREFERENCES_EULA, Activity.MODE_PRIVATE);
+        final SharedPreferences prefsAnalytics = mActivity.getSharedPreferences(Constants.PREFERENCES_ANALYTICS, Activity.MODE_PRIVATE);
         // boolean noOptIn =
-        // !prefsAnalytics.contains(Globals.PREFERENCE_ANALYTICS_OPTIN);
-        boolean noEula = !prefsEula.getBoolean(Globals.PREFERENCE_EULA_ACCEPTED, false);
+        // !prefsAnalytics.contains(Constants.PREFERENCE_ANALYTICS_OPTIN);
+        boolean noEula = !prefsEula.getBoolean(Constants.PREFERENCE_EULA_ACCEPTED, false);
 
         // if (noEula || noOptIn) {
         if (noEula) {
@@ -118,15 +118,15 @@ class Eula {
      */
     public static boolean isAccepted(Context context) {
         SharedPreferences prefsEula = context.getSharedPreferences(
-                Globals.PREFERENCES_EULA, Activity.MODE_PRIVATE);
-        return prefsEula.getBoolean(Globals.PREFERENCE_EULA_ACCEPTED, false);
+                Constants.PREFERENCES_EULA, Activity.MODE_PRIVATE);
+        return prefsEula.getBoolean(Constants.PREFERENCE_EULA_ACCEPTED, false);
     }
 
     private void accept(SharedPreferences preferences) {
-        preferences.edit().putBoolean(Globals.PREFERENCE_EULA_ACCEPTED, true).commit();
+        preferences.edit().putBoolean(Constants.PREFERENCE_EULA_ACCEPTED, true).commit();
 
-//     final SharedPreferences prefsAnalytics = mActivity.getSharedPreferences(Globals.PREFERENCES_ANALYTICS, Activity.MODE_PRIVATE);
-//        prefsAnalytics.edit().putBoolean(Globals.PREFERENCE_ANALYTICS_OPTIN, cb.isChecked()).commit();
+//     final SharedPreferences prefsAnalytics = mActivity.getSharedPreferences(Constants.PREFERENCES_ANALYTICS, Activity.MODE_PRIVATE);
+//        prefsAnalytics.edit().putBoolean(Constants.PREFERENCE_ANALYTICS_OPTIN, cb.isChecked()).commit();
 //        if (cb.isChecked()) {
 //             GoogleAnalytics.getInstance(mActivity).setAppOptOut(false);
 //        }
@@ -139,7 +139,7 @@ class Eula {
     private CharSequence readEula() {
         BufferedReader in = null;
         try {
-            in = new BufferedReader(new InputStreamReader(mActivity.getAssets().open(Globals.ASSET_EULA)));
+            in = new BufferedReader(new InputStreamReader(mActivity.getAssets().open(Constants.ASSET_EULA)));
             String line;
             StringBuilder buffer = new StringBuilder();
             while ((line = in.readLine()) != null) {
