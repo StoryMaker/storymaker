@@ -6,6 +6,7 @@ import org.storymaker.app.model.Lesson;
 import org.storymaker.app.model.LessonGroup;
 import org.storymaker.app.model.Project;
 import org.storymaker.app.server.LoginActivity;
+import org.storymaker.app.server.ServerManager;
 import org.storymaker.app.ui.MyCard;
 import info.guardianproject.onionkit.ui.OrbotHelper;
 import scal.io.liger.Constants;
@@ -14,6 +15,7 @@ import scal.io.liger.IndexManager;
 import scal.io.liger.JsonHelper;
 import scal.io.liger.MainActivity;
 import scal.io.liger.QueueManager;
+import scal.io.liger.ZipHelper;
 import scal.io.liger.model.BaseIndexItem;
 import scal.io.liger.model.ContentPackMetadata;
 import scal.io.liger.model.ExpansionIndexItem;
@@ -64,6 +66,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -87,22 +90,35 @@ public class HomeActivity extends BaseActivity {
     private ProgressDialog mLoading;
     private ArrayList<Project> mListProjects;
     private RecyclerView mRecyclerView;
+    private SwipeRefreshLayout mSwipeRefreshLayout;
     // private DownloadPoller downloadPoller = null;
+
+    private boolean loggedIn;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-    	super.onCreate(savedInstanceState);
+        super.onCreate(savedInstanceState);
+
+        // default
+        loggedIn = false;
 
         // set title bar as a reminder if test server is specified
         getActionBar().setTitle(Utils.getAppName(this));
 
         // copy index files
-        IndexManager.copyAvailableIndex(this);
+        IndexManager.copyAvailableIndex(this, false); // TODO: REPLACE THIS WITH INDEX DOWNLOAD (IF LOGGED IN) <- NEED TO COPY FILE FOR BASELINE CONTENT
+
+        // NEW/TEMP
+        // DOWNLOAD AVAILABE INDEX FOR CURRENT USER AND SAVE TO TARGET FILE
+        // NEED TO ACCOUNT FOR POSSIBLE MISSING INDEX
+        IndexTask iTask = new IndexTask(this, true); // force download at startup (maybe only force on a timetable?)
+        iTask.execute();
 
         // we want to grab required updates without restarting the app
-        if (!DownloadHelper.checkAndDownload(this)) {
-            Toast.makeText(this, "Downloading content and/or updating installed files", Toast.LENGTH_LONG).show(); // FIXME move to strings.xml
-        }
+        // integrate with index task
+        // if (!DownloadHelper.checkAndDownload(this)) {
+        //     Toast.makeText(this, "Downloading content and/or updating installed files", Toast.LENGTH_LONG).show(); // FIXME move to strings.xml
+        // }
 
         // i don't think we ever want to do this
         // IndexManager.copyInstalledIndex(this);
@@ -110,6 +126,15 @@ public class HomeActivity extends BaseActivity {
         setContentView(R.layout.activity_home);
         mRecyclerView = (RecyclerView) findViewById(scal.io.liger.R.id.recyclerView);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeRefreshLayout);
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                IndexTask iTask = new IndexTask(HomeActivity.this, true); // force download on manual refresh
+                iTask.execute();
+            }
+        });
         
         // action bar stuff
         getActionBar().setDisplayHomeAsUpEnabled(true);
@@ -119,6 +144,81 @@ public class HomeActivity extends BaseActivity {
         checkForUpdates();
         
     }
+
+    private class IndexTask extends AsyncTask<Void, Void, Boolean> {
+
+        private Context mContext;
+        private boolean forceDownload;
+
+        public IndexTask(Context context, boolean forceDownload) {
+            this.mContext = context;
+            this.forceDownload = forceDownload;
+        }
+
+        @Override
+        protected Boolean doInBackground(Void... params) {
+
+            Log.d(TAG, "IndexTask.doInBackground IS RUNNING");
+
+            boolean loginRequest = false;
+
+            ServerManager sm = StoryMakerApp.getServerManager();
+
+            if (sm.hasCreds()) {
+                // user is logged in, update status flag if necessary
+                if (!loggedIn) {
+                    loggedIn = true;
+                    loginRequest = true; // user just logged in, need to check server
+                }
+            } else {
+                // user is not logged in, update status flag if necessary
+                if (loggedIn) {
+                    loggedIn = false;
+                }
+            }
+
+            // check server if user just logged in
+            if (loginRequest) {
+                Log.d(TAG, "USER LOGGED IN, CHECK SERVER");
+
+                // reset available index
+                IndexManager.copyAvailableIndex(mContext, false);
+
+                // attempt to download new assignments
+                return Boolean.valueOf(sm.index());
+            }
+
+            // check server if user insists
+            if (forceDownload) {
+                Log.d(TAG, "UPDATE REQUIRED, CHECK SERVER");
+
+                // reset available index
+                IndexManager.copyAvailableIndex(mContext, false);
+
+                // attempt to download new assignments
+                return Boolean.valueOf(sm.index());
+            }
+
+            // no-op
+            return false;
+        }
+
+        protected void onPostExecute(Boolean result) {
+            if (result.booleanValue()) {
+                Log.d(TAG, "DOWNLOADED ASSIGNMENTS AND UPDATED AVAILABLE INDEX");
+            } else {
+                Log.d(TAG, "DID NOT DOWNLOAD ASSIGNMENTS OR UPDATE AVAILABLE INDEX");
+            }
+
+            mSwipeRefreshLayout.setRefreshing(false);
+            // resolve available/installed conflicts and grab updates if needed
+            if (!DownloadHelper.checkAndDownload(mContext)) {
+                Toast.makeText(mContext, "Downloading content and/or updating installed files", Toast.LENGTH_LONG).show(); // FIXME move to strings.xml
+            }
+            // refresh regardless (called from onResume and OnRefreshListener)
+            initActivityList();
+        }
+    }
     
     @Override
 	public void onResume() {
@@ -127,13 +227,17 @@ public class HomeActivity extends BaseActivity {
         getActionBar().setTitle(Utils.getAppName(this));
 
         //if (!DownloadHelper.checkAllFiles(this) && downloadPoller == null) {
-        if (!DownloadHelper.checkAndDownload(this)) {
+        // integrate with index task
+        //if (!DownloadHelper.checkAndDownload(this)) {
             // don't poll, just pop up message if a download was initiated
             //downloadPoller = new DownloadPoller();
             //downloadPoller.execute("foo");
-            Toast.makeText(this, "Downloading content and/or updating installed files", Toast.LENGTH_LONG).show(); // FIXME move to strings.xml
-        } //else {
-            initActivityList();
+        //    Toast.makeText(this, "Downloading content and/or updating installed files", Toast.LENGTH_LONG).show(); // FIXME move to strings.xml
+        //} //else {
+        // merge this with index task
+         //   initActivityList();
+        IndexTask iTask = new IndexTask(this, false); // don't force download on resume (currently triggers only on login)
+        iTask.execute();
         //}
 		
 		boolean isExternalStorageReady = Utils.Files.isExternalStorageReady();
