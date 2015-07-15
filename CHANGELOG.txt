@@ -1,3 +1,9 @@
+--- build 1063
+
+- New "Mobile Photo 101" content pack
+- Experimental Photo set upload support ("Photo Essay Format" option)
+- assignments desk code merged but active only if you change url to demo.storymaker.org
+
 --- build 1061
 
 - Fix memory leaks
