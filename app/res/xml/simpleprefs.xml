@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-    
     <PreferenceCategory android:title="@string/prefs_category_networking_security_title">
 		<EditTextPreference android:title="@string/prefs_storymaker_server_title" android:summary="@string/prefs_storymaker_server_summary" android:key="pserver" android:defaultValue="https://demo.storymaker.org/" android:enabled="true"/>
 
@@ -44,6 +43,5 @@
         <CheckBoxPreference android:title="@string/prefs_internal_storage_title" android:summary="@string/prefs_internal_storage_summary" android:key="p_use_internal_storage" android:defaultValue="false"/>
         <EditTextPreference android:title="@string/prefs_youtube_method_title" android:summary="@string/prefs_youtube_method_summary" android:key="glsauthmethod" android:defaultValue="0" android:enabled="true"/>
     </PreferenceCategory>
-
 </PreferenceScreen>
 

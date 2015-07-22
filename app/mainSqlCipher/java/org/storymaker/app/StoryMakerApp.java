@@ -69,8 +69,8 @@ public class StoryMakerApp extends MultiDexApplication {
 		SQLiteDatabase.loadLibs(this);
 
 //		boolean optOut = true;
-//		final SharedPreferences prefsAnalytics = getSharedPreferences(Globals.PREFERENCES_ANALYTICS, Activity.MODE_PRIVATE);
-//		optOut = !(prefsAnalytics.getBoolean(Globals.PREFERENCE_ANALYTICS_OPTIN, false));
+//		final SharedPreferences prefsAnalytics = getSharedPreferences(Constants.PREFERENCES_ANALYTICS, Activity.MODE_PRIVATE);
+//		optOut = !(prefsAnalytics.getBoolean(Constants.PREFERENCE_ANALYTICS_OPTIN, false));
 //		GoogleAnalytics.getInstance(this).setAppOptOut(optOut);
 		
 		initApp();
