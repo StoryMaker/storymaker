@@ -8,9 +8,6 @@ import java.io.OutputStreamWriter;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.StringTokenizer;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 import android.app.Activity;
 import android.content.Context;
@@ -62,7 +59,7 @@ public class Utils {
 
 	public static String getAppName(Context context) {
 		SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context);
-		String url = settings.getString("pserver", "https://storymaker.org/");
+		String url = settings.getString("pserver", Constants.DEFAULT_SERVER_URL);
 		String appName = context.getString(R.string.app_name);
 		if(url.contains("beta")) {
 			appName = "BETA MODE: " + appName;

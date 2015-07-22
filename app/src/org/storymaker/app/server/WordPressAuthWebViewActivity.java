@@ -1,7 +1,7 @@
 
 package org.storymaker.app.server;
 
-import org.storymaker.app.Globals;
+import org.storymaker.app.Constants;
 import org.storymaker.app.R;
 import org.storymaker.app.StoryMakerApp;
 
@@ -87,7 +87,7 @@ public class WordPressAuthWebViewActivity extends WebViewActivity {
                     if (url.equals(StoryMakerApp.STORYMAKER_DEFAULT_SERVER_URL)) {
                         PreferenceManager.getDefaultSharedPreferences(getApplicationContext())
                                 .edit()
-                                .putBoolean(Globals.PREFERENCES_WP_REGISTERED, true)
+                                .putBoolean(Constants.PREFERENCES_WP_REGISTERED, true)
                                 .apply();
                         showAccountCreatedDialog(new DialogInterface.OnClickListener() {
                             

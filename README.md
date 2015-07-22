@@ -1,9 +1,9 @@
 Story Maker - Make your story great.
 =====
 
-## [StoryMaker.cc](http://storymaker.cc/)
+## [StoryMaker.org](http://storymaker.org/)
 
-Download [StoryMaker - Video, Audio & Photo](https://play.google.com/store/apps/details?id=info.guardianproject.mrapp) in the the Google Play Store. 
+Download [StoryMaker - Video, Audio & Photo](https://play.google.com/store/apps/details?id=org.storymaker.app) in the the Google Play Store. 
 
 ## Setting up Development Environment
 
