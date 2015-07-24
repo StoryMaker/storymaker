@@ -98,7 +98,7 @@ After completing all items under Prerequisites:
 
 We have a helper script "run-tests.sh" that should run the core tests
 
-There are several test classes you can also run manually:
+There are several test classes you can also run manually: 
 
 - CompleteTest.java - long test, accepts eula, creates and uploads a new story, checks hook paths, checks content pack downloads, checks settings and preferences
 
@@ -111,6 +111,21 @@ There are several test classes you can also run manually:
 - MainTest.java - old test class, probably no longer runs
 
 - MinimumTest.java - short test, accepts eula, creates and uploads a new story
+
+Please note that you must build with the "testing" branch of the liger(storypath) submodule to run CompleteTest.  To do this, follow these steps:
+
+    ```
+    $ cd external/liger/
+    $ git fetch origin testing:testing
+    $ git checkout testing
+    ```
+
+To return to the "master" branch of liger(storypath) for a normal build, do the following:
+
+    ```
+    $ cd external/liger/
+    $ git checkout master
+    ```
 
 ### Eclipse Specific Steps
 
