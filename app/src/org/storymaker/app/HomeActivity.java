@@ -95,6 +95,12 @@ public class HomeActivity extends BaseActivity {
 
     private boolean loggedIn;
 
+    // added for testing
+    public void scroll(int position) {
+        Log.d("TEST", "Scrolling to index item " + position);
+        mRecyclerView.scrollToPosition(position);
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
