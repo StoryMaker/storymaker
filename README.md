@@ -100,19 +100,13 @@ We have a helper script "run-tests.sh" that should run the core tests
 
 There are several test classes you can also run manually: 
 
-- CompleteTest.java - long test, accepts eula, creates and uploads a new story, checks hook paths, checks content pack downloads, checks settings and preferences
+- DownloadAndPatchTest - downloads a content pack with a patch and verifies their content
 
-- DefaultLibraryTest.java - old test class, probably no longer runs
+- EndToEndTest.java - logs in before creating and uploading a new story
 
-- EulaTest.java - old test class, incorporated into Complete/MinimumTest
+- HookPathsTest.java - checks all possible hook paths for dead ends
 
-- LearningGuideTest.java - old test class, should revisit if learning guides need to be verified
-
-- MainTest.java - old test class, probably no longer runs
-
-- MinimumTest.java - short test, accepts eula, creates and uploads a new story
-
-Please note that you must build with the "testing" branch of the liger(storypath) submodule to run CompleteTest.  To do this, follow these steps:
+Please note that you must build with the "testing" branch of the liger(storypath) submodule to run DownloadAndPatchTest.  To do this, follow these steps:
 
     ```
     $ cd external/liger/
