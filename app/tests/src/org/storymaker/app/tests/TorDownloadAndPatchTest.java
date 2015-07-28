@@ -17,7 +17,7 @@ import static android.support.test.espresso.matcher.ViewMatchers.withText;
 /**
  * Created by mnbogner on 7/24/15.
  */
-public class DownloadAndPatchTest extends BaseTest {
+public class TorDownloadAndPatchTest extends BaseTest {
 
     public void testDownloadAndPatch() {
 
@@ -25,6 +25,12 @@ public class DownloadAndPatchTest extends BaseTest {
 
         // eula
         doEula();
+
+        // tor
+        if (!doTorToggle()) {
+            Log.e("AUTOMATION", "TOR TOGGLE FAILED, CAN'T CONTINUE");
+            assertTrue(false);
+        }
 
         // scroll to bottom
         // HomeActivityScroller as = new HomeActivityScroller(0);

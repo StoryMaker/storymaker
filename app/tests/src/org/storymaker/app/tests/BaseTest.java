@@ -31,10 +31,12 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Collection;
 
+import info.guardianproject.onionkit.ui.OrbotHelper;
 import io.scal.secureshareui.login.SoundCloudLoginActivity;
 import scal.io.liger.MainActivity;
 
 import static android.support.test.espresso.Espresso.onView;
+import static android.support.test.espresso.Espresso.pressBack;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
@@ -211,6 +213,44 @@ public class BaseTest extends ActivityInstrumentationTestCase2<HomeActivity> {
         Log.d("AUTOMATION", "CLICKED NO THANKS BUTTON");
 
         Log.d("AUTOMATION", "EULA COMPLETE");
+    }
+
+    public boolean doTorToggle() {
+
+        // assumes app is on home screen
+
+        Log.d("AUTOMATION", "BEGIN TOR TOGGLE");
+
+        // check for tor
+        OrbotHelper oh = new OrbotHelper(mHomeActivity);
+
+        if (!oh.isOrbotInstalled())
+        {
+            Log.e("AUTOMATION", "TOR TOGGLE FAILED, ORBOT NOT INSTALLED");
+            return false;
+        }
+        else if (!oh.isOrbotRunning())
+        {
+            Log.e("AUTOMATION", "TOR TOGGLE FAILED, ORBOT NOT RUNNING");
+            return false;
+        }
+
+        // go to tor settings
+        onView(withText(mHomeActivity.getApplicationContext().getString(R.string.app_name))).perform(click());
+        Log.d("AUTOMATION", "OPENED SIDE MENU");
+
+        onView(withText(mHomeActivity.getApplicationContext().getString(R.string.menu_settings))).perform(click());
+        Log.d("AUTOMATION", "SELECTED SETTINGS");
+
+        onView(withText(mHomeActivity.getApplicationContext().getString(R.string.prefs_use_tor_title))).perform(click());
+        Log.d("AUTOMATION", "SELECTED USE TOR");
+
+        pressBack();
+        stall(500, "PAUSE TO CLEAR MENU");
+
+        Log.d("AUTOMATION", "TOR TOGGLE COMPLETE");
+
+        return true;
     }
 
     public void stall(long milliseconds, String message) {
