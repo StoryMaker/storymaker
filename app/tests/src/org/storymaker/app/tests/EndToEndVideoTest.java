@@ -1,6 +1,5 @@
 package org.storymaker.app.tests;
 
-import android.support.test.espresso.AmbiguousViewMatcherException;
 import android.support.test.espresso.NoMatchingViewException;
 import android.util.Log;
 
@@ -25,9 +24,7 @@ import static org.hamcrest.Matchers.is;
 /**
  * Created by mnbogner on 7/24/15.
  */
-public class EndToEndTest extends BaseTest {
-
-    boolean soundcloudConnected = false;
+public class EndToEndVideoTest extends BaseTest {
 
     public void testEndToEnd() {
 
@@ -70,9 +67,9 @@ public class EndToEndTest extends BaseTest {
         boolean testFlag = true;
 
         String[] firstOption = {
-                "Video",
+                "Video" //,
                 // NEED TO DETERMINE FILE LOCATION "Photo",
-                "Audio"
+                // NO CAPTURE ACTIVITY TO INTERCEPT "Audio"
         };
 
         String[] secondOption = {
@@ -146,22 +143,10 @@ public class EndToEndTest extends BaseTest {
         mMainActivity.runOnUiThread(as1);
         stall(500, "WAIT FOR SCROLLING");
 
-        if (mediaString.equals("Video")) {
-            onView(allOf(withText("Capture"), withParent(withParent(withTagValue(is((Object) "clip_card_0")))))).perform(click());
-            Log.d("AUTOMATION", "CLICKED CAPTURE BUTTON");
-            stall(500, "WAIT FOR MEDIA CAPTURE UPDATE");
-        } else if (mediaString.equals("Audio")) {
-            // audio captured by the card itself, record a 10 second clip
-            onView(allOf(withText("Capture"), withParent(withParent(withTagValue(is((Object) "clip_card_0")))))).perform(click());
-            Log.d("AUTOMATION", "CLICKED CAPTURE BUTTON");
-            stall(10000, "WAIT FOR 10 SECONDS OF AUDIO");
-            onView(allOf(withText("STOP RECORDING"), withParent(withParent(withTagValue(is((Object) "clip_card_0")))))).perform(click());
-            Log.d("AUTOMATION", "CLICKED STOP BUTTON");
-            stall(500, "WAIT FOR MEDIA CAPTURE UPDATE");
-        } else {
-            Log.d("AUTOMATION", "TEST DOES NOT HANDLE MEDIA TYPE " + mediaString);
-            return false;
-        }
+        // media capture
+        onView(allOf(withText("Capture"), withParent(withParent(withTagValue(is((Object) "clip_card_0")))))).perform(click());
+        Log.d("AUTOMATION", "CLICKED CAPTURE BUTTON");
+        stall(500, "WAIT FOR MEDIA CAPTURE UPDATE");
 
         // scroll to bottom
         ActivityScroller as2 = new ActivityScroller(18); // UPDATE IF STORY PATH CHANGES
@@ -222,47 +207,39 @@ public class EndToEndTest extends BaseTest {
         onView(withId(R.id.btnUpload)).perform(click());
         Log.d("AUTOMATION", "CLICKED UPLOAD BUTTON");
 
+        // scroll to account
+        onView(withText(accountString)).perform(scrollTo(), click());
+        Log.d("AUTOMATION", "SCROLLED TO " + accountString + " BUTTON");
 
-            // scroll to account
-            onView(withText(accountString)).perform(scrollTo(), click());
-            Log.d("AUTOMATION", "SCROLLED TO " + accountString + " BUTTON");
+        // get name/password from xml file (add more later)
+        String accountName = "";
+        String accountPass = "";
 
-        // only login on the first time through the loop
-        if ((accountString.equals("SoundCloud")) && (!soundcloudConnected)) {
-            // get name/password from xml file (add more later)
-            String accountName = "";
-            String accountPass = "";
-
-            if (accountString.equals("SoundCloud")) {
-                accountName = mHomeActivity.getApplicationContext().getString(R.string.soundcloud_name);
-                accountPass = mHomeActivity.getApplicationContext().getString(R.string.soundcloud_pass);
-            }
-
-            // enter name/password
-            onView(withId(R.id.etUsername)).perform(clearText()).perform(typeText(accountName));
-            Log.d("AUTOMATION", "ENTERED USER NAME");
-            pressBack();
-            stall(500, "PAUSE TO CLEAR KEYBOARD");
-
-            onView(withId(R.id.etPassword)).perform(clearText()).perform(typeText(accountPass));
-            Log.d("AUTOMATION", "ENTERED USER PASSWORD");
-            pressBack();
-            stall(500, "PAUSE TO CLEAR KEYBOARD");
-
-            onView(withId(R.id.btnSignIn)).perform(click());
-            Log.d("AUTOMATION", "CLICKED SIGN IN BUTTON");
-
-            soundcloudConnected = true;
-        } else {
-            Log.d("AUTOMATION", "ALREADY LOGGED IN TO " + accountString);
+        if (accountString.equals("SoundCloud")) {
+            accountName = mHomeActivity.getApplicationContext().getString(R.string.soundcloud_name);
+            accountPass = mHomeActivity.getApplicationContext().getString(R.string.soundcloud_pass);
         }
 
-        //onView(withId(R.id.switchStoryMaker)).perform(click());
+        // enter name/password
+        onView(withId(R.id.etUsername)).perform(clearText()).perform(typeText(accountName));
+        Log.d("AUTOMATION", "ENTERED USER NAME");
+        pressBack();
+        stall(500, "PAUSE TO CLEAR KEYBOARD");
+
+        onView(withId(R.id.etPassword)).perform(clearText()).perform(typeText(accountPass));
+        Log.d("AUTOMATION", "ENTERED USER PASSWORD");
+        pressBack();
+        stall(500, "PAUSE TO CLEAR KEYBOARD");
+
+        onView(withId(R.id.btnSignIn)).perform(click());
+        Log.d("AUTOMATION", "CLICKED SIGN IN BUTTON");
+
+        onView(withId(R.id.switchStoryMaker)).perform(click());
         Log.d("AUTOMATION", "CLICKED STORYMAKER PUBLISH SWITCH");
 
         try {
             // TODO: re-enable once test points to beta server
-            onView(withText("Continue")).perform(click());
+            // onView(withText("Continue")).perform(click());
             Log.d("AUTOMATION", "CLICKED CONTINUE BUTTON");
         } catch (NoMatchingViewException nmve) {
             // implies no button was found (failure)
