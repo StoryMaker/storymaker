@@ -1,3 +1,7 @@
+--- build 1065
+
+- Fix StoryMaker.org login over Tor
+
 --- build 1063
 
 - New "Mobile Photo 101" content pack
