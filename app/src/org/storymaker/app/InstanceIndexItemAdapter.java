@@ -1,6 +1,8 @@
 package org.storymaker.app;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.BitmapFactory;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -121,6 +123,7 @@ public class InstanceIndexItemAdapter extends RecyclerView.Adapter<InstanceIndex
                 description += sdf.format(new Date(new File(instanceItem.getInstanceFilePath()).lastModified()));
             }
 
+            /*
             holder.card.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -129,6 +132,7 @@ public class InstanceIndexItemAdapter extends RecyclerView.Adapter<InstanceIndex
                     }
                 }
             });
+            */
 
             String thumbnailPath = baseItem.getThumbnailPath();
             if (!TextUtils.isEmpty(thumbnailPath)) {
@@ -195,6 +199,8 @@ public class InstanceIndexItemAdapter extends RecyclerView.Adapter<InstanceIndex
             }
         });
 
+        holder.card.setOnLongClickListener(new DeleteListener(context, baseItem, position));
+
         holder.description.setText(description);
 
     }
@@ -202,5 +208,50 @@ public class InstanceIndexItemAdapter extends RecyclerView.Adapter<InstanceIndex
     @Override
     public int getItemCount() {
         return mDataset.size();
+    }
+
+    private class DeleteListener implements View.OnLongClickListener {
+
+        Context context;
+        BaseIndexItem item;
+        int position;
+
+        public DeleteListener(Context context, BaseIndexItem item, int position) {
+            this.context = context;
+            this.item = item;
+            this.position = position;
+        }
+
+        @Override
+        public boolean onLongClick(View v) {
+
+            if (item instanceof InstanceIndexItem) {
+
+                new AlertDialog.Builder(context)
+                        .setTitle("Delete Story Path")
+                        .setMessage("Delete " + item.getTitle() + " " + sdf.format(new Date(((InstanceIndexItem) item).getStoryCreationDate())) + " ?")
+                        .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        Log.d("INDEX", "DELETING FILES FOR " + ((InstanceIndexItem)item).getTitle());
+                        ((InstanceIndexItem) item).deleteAssociatedFiles(context);
+
+                        mDataset.remove(position);
+                        notifyItemRemoved(position);
+
+                    }
+
+                })
+                        .setNegativeButton(R.string.no, null)
+                        .show();
+            } else {
+                // no op
+                Log.d("INDEX", "NO_OP");
+            }
+
+            return true;
+        }
     }
 }
