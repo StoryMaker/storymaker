@@ -213,7 +213,7 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
             String mZipFileName = buildZipFilePath(fileProjectSrc.getAbsolutePath());
 
             //if not enough space
-            if(!mMPM.checkStorageSpace())
+            if(mMPM.checkStorageSpace() > 0)
             {
                 return;
             }

@@ -242,10 +242,12 @@ public class MediaProjectManager implements MediaManager {
 
          Utils.Proc.killZombieProcs(mContext);
 
+		 double storageSpace = checkStorageSpace();
          //if not enough space
-         if(!checkStorageSpace())
+		 if (storageSpace > 0)
          {
-        	 return null;
+			 // throw exception to pass info up the stack
+			 throw new Exception(String.format(mContext.getString(R.string.error_storage_space), storageSpace));
          }
          
 		 File fileRenderTmpDir = getRenderPath(mContext);
@@ -559,8 +561,9 @@ public class MediaProjectManager implements MediaManager {
     {
     	return this.mContext;
     }
-    
-    public boolean checkStorageSpace()
+
+	// return space required to pass info up the stack
+	public double checkStorageSpace()
     {
     	ArrayList<Media> mList = this.mProject.getMediaAsList();
     	Long totalBytesRequired= 0l;
@@ -605,16 +608,16 @@ public class MediaProjectManager implements MediaManager {
 
     	//if not enough storage
 		// FIXME we should raise this error via a intent, not a straight toast so it can be handled if the activity is hidden
- 		if(totalBytesRequired > totalBytesAvailable && mActivity != null)
+ 		if(totalBytesRequired > totalBytesAvailable)
  		{
  			double totalMBRequired = totalBytesRequired /(double)(1024*1024);
  			
  			// FIXME we need to warn the user here via a message sent to the current activity since this could be called from a service now
- 			Utils.toastOnUiThread(mActivity, String.format(mContext.getString(R.string.error_storage_space), totalMBRequired), true);
- 			return false;
+			// can't create toast message here because instances created by renderer have a null value for activity
+ 			return totalMBRequired;
  		}
     	  	
-    	return true;
+    	return 0;
     }
     
     public static boolean migrateProjectFiles(Project project, Context context)
