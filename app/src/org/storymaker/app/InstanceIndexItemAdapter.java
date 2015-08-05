@@ -230,13 +230,14 @@ public class InstanceIndexItemAdapter extends RecyclerView.Adapter<InstanceIndex
                 new AlertDialog.Builder(context)
                         .setTitle("Delete Story Path")
                         .setMessage("Delete " + item.getTitle() + " " + sdf.format(new Date(((InstanceIndexItem) item).getStoryCreationDate())) + " ?")
-                        .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                        // using negative button to account for fixed order
+                        .setNegativeButton("Delete story", new DialogInterface.OnClickListener() {
 
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
                         Log.d("INDEX", "DELETING FILES FOR " + ((InstanceIndexItem)item).getTitle());
-                        ((InstanceIndexItem) item).deleteAssociatedFiles(context);
+                        ((InstanceIndexItem) item).deleteAssociatedFiles(context, false);
 
                         mDataset.remove(position);
                         notifyItemRemoved(position);
@@ -244,7 +245,22 @@ public class InstanceIndexItemAdapter extends RecyclerView.Adapter<InstanceIndex
                     }
 
                 })
-                        .setNegativeButton(R.string.no, null)
+                        .setNeutralButton("Delete story and media", new DialogInterface.OnClickListener() {
+
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                                Log.d("INDEX", "DELETING FILES AND MEDIA FOR " + ((InstanceIndexItem)item).getTitle());
+                                ((InstanceIndexItem) item).deleteAssociatedFiles(context, true);
+
+                                mDataset.remove(position);
+                                notifyItemRemoved(position);
+
+                            }
+
+                        })
+                        // using positive button to account for fixed order
+                        .setPositiveButton("Cancel", null)
                         .show();
             } else {
                 // no op
