@@ -199,7 +199,7 @@ public class InstanceIndexItemAdapter extends RecyclerView.Adapter<InstanceIndex
             }
         });
 
-        holder.card.setOnLongClickListener(new DeleteListener(context, baseItem, position));
+        holder.card.setOnLongClickListener(new DeleteListener(context, baseItem));
 
         holder.description.setText(description);
 
@@ -214,16 +214,17 @@ public class InstanceIndexItemAdapter extends RecyclerView.Adapter<InstanceIndex
 
         Context context;
         BaseIndexItem item;
-        int position;
+        int safePosition;
 
-        public DeleteListener(Context context, BaseIndexItem item, int position) {
+        public DeleteListener(Context context, BaseIndexItem item) {
             this.context = context;
             this.item = item;
-            this.position = position;
         }
 
         @Override
         public boolean onLongClick(View v) {
+
+            safePosition = InstanceIndexItemAdapter.this.mDataset.indexOf(item);
 
             if (item instanceof InstanceIndexItem) {
 
@@ -239,8 +240,8 @@ public class InstanceIndexItemAdapter extends RecyclerView.Adapter<InstanceIndex
                         Log.d("INDEX", "DELETING FILES FOR " + ((InstanceIndexItem)item).getTitle());
                         ((InstanceIndexItem) item).deleteAssociatedFiles(context, false);
 
-                        mDataset.remove(position);
-                        notifyItemRemoved(position);
+                        mDataset.remove(safePosition);
+                        notifyItemRemoved(safePosition);
 
                     }
 
@@ -253,8 +254,8 @@ public class InstanceIndexItemAdapter extends RecyclerView.Adapter<InstanceIndex
                                 Log.d("INDEX", "DELETING FILES AND MEDIA FOR " + ((InstanceIndexItem)item).getTitle());
                                 ((InstanceIndexItem) item).deleteAssociatedFiles(context, true);
 
-                                mDataset.remove(position);
-                                notifyItemRemoved(position);
+                                mDataset.remove(safePosition);
+                                notifyItemRemoved(safePosition);
 
                             }
 
