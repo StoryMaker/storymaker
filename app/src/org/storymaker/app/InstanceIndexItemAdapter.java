@@ -157,7 +157,7 @@ public class InstanceIndexItemAdapter extends RecyclerView.Adapter<InstanceIndex
             holder.title.setText(baseItem.getTitle());
 
             // need to verify that content pack containing thumbnail actually exists
-            File contentCheck = new File(IndexManager.buildFilePath(expansionIndexItem), IndexManager.buildFileName(expansionIndexItem, Constants.MAIN));
+            File contentCheck = new File(IndexManager.buildFilePath(expansionIndexItem, context), IndexManager.buildFileName(expansionIndexItem, Constants.MAIN));
 
             // need to verify that index item has been updated with content pack thumbnail path
             String contentPath = expansionIndexItem.getPackageName() + File.separator + expansionIndexItem.getExpansionId();
