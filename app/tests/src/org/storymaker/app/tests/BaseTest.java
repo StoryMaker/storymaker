@@ -34,6 +34,7 @@ import java.util.Collection;
 import info.guardianproject.onionkit.ui.OrbotHelper;
 import io.scal.secureshareui.login.SoundCloudLoginActivity;
 import scal.io.liger.MainActivity;
+import scal.io.liger.StorageHelper;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.Espresso.pressBack;
@@ -83,9 +84,12 @@ public class BaseTest extends ActivityInstrumentationTestCase2<HomeActivity> {
 
         // create references to sample files for dummy responses
         // NOTE: can these be refactored into uri's like "content://media/external/video/media/1258"
-        String packageName = mHomeActivity.getApplicationContext().getPackageName();
-        File root = Environment.getExternalStorageDirectory();
-        testDirectory = root.toString() + "/Android/data/" + packageName + "/files/";
+
+        // String packageName = mHomeActivity.getApplicationContext().getPackageName();
+        // File root = Environment.getExternalStorageDirectory();
+        // testDirectory = root.toString() + "/Android/data/" + packageName + "/files/";
+        testDirectory = StorageHelper.getActualStorageDirectory(mHomeActivity.getApplicationContext()).getPath() + "/";
+
         String sampleVideo = testDirectory + sampleVideoName;
         String sampleAudio = testDirectory + sampleAudioName;
         String samplePhoto = testDirectory + samplePhotoName;

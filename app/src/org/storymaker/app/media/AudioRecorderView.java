@@ -18,6 +18,8 @@ import android.media.MediaRecorder;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
+import scal.io.liger.StorageHelper;
+
 //http://stackoverflow.com/questions/5734332/vu-audio-meter-when-recording-audio-in-android
 
 public class AudioRecorderView {
@@ -64,8 +66,10 @@ public class AudioRecorderView {
 	public void startRecording(){
 		
 
-        mTempFile = new File(mContext.getExternalFilesDir(null),AUDIO_RECORDER_TEMP_FILE);
-        if (mTempFile.exists())
+        // mTempFile = new File(mContext.getExternalFilesDir(null),AUDIO_RECORDER_TEMP_FILE);
+		mTempFile = new File(StorageHelper.getActualStorageDirectory(mContext),AUDIO_RECORDER_TEMP_FILE);
+
+		if (mTempFile.exists())
         	mTempFile.delete();
 		
 		recorder = new AudioRecord(MediaRecorder.AudioSource.DEFAULT,

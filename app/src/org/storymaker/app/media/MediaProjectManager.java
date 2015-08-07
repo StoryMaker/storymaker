@@ -36,6 +36,8 @@ import android.os.StatFs;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
+import scal.io.liger.StorageHelper;
+
 public class MediaProjectManager implements MediaManager {
 	public final static String TAG = "MediaProjectManager";
 
@@ -147,9 +149,11 @@ public class MediaProjectManager implements MediaManager {
 		 if (mUseInternal)
 			 fileRenderTmpDir = context.getDir("render", Context.MODE_PRIVATE);
 		 else
-			 fileRenderTmpDir = new File(context.getExternalFilesDir(null),"render");
-		 
-		 return fileRenderTmpDir;
+
+			 // fileRenderTmpDir = new File(context.getExternalFilesDir(null),"render");
+			 fileRenderTmpDir = new File(StorageHelper.getActualStorageDirectory(context),"render");
+
+		return fileRenderTmpDir;
     }
     
     public static File getExternalProjectFolder (Project project, Context context)
@@ -465,8 +469,10 @@ public class MediaProjectManager implements MediaManager {
     			audioPath = fileAudio.getCanonicalPath();
     		else
     		{
-    			fileAudio = new File(mContext.getExternalFilesDir(null),"narration" + mScene.getId() + ".wav");
-    			if (fileAudio.exists())
+    			// fileAudio = new File(mContext.getExternalFilesDir(null),"narration" + mScene.getId() + ".wav");
+				fileAudio = new File(StorageHelper.getActualStorageDirectory(mContext),"narration" + mScene.getId() + ".wav");
+
+				if (fileAudio.exists())
         			audioPath = fileAudio.getCanonicalPath();
     		}
     		

@@ -37,6 +37,7 @@ import java.util.GregorianCalendar;
 
 import io.scal.secureshareui.login.SoundCloudLoginActivity;
 import scal.io.liger.MainActivity;
+import scal.io.liger.StorageHelper;
 import scal.io.liger.ZipHelper;
 
 import static android.support.test.espresso.Espresso.onView;
@@ -156,9 +157,12 @@ public class CompleteTest extends ActivityInstrumentationTestCase2<HomeActivity>
 
         // create references to sample files for dummy responses
         // NOTE: can these be refactored into uri's like "content://media/external/video/media/1258"
-        String packageName = mHomeActivity.getApplicationContext().getPackageName();
-        File root = Environment.getExternalStorageDirectory();
-        testDirectory = root.toString() + "/Android/data/" + packageName + "/files/";
+
+        // String packageName = mHomeActivity.getApplicationContext().getPackageName();
+        // File root = Environment.getExternalStorageDirectory();
+        // testDirectory = root.toString() + "/Android/data/" + packageName + "/files/";
+        testDirectory = StorageHelper.getActualStorageDirectory(mHomeActivity.getApplicationContext()).getPath() + "/";
+
         String sampleVideo = testDirectory + sampleVideoName;
         String sampleAudio = testDirectory + sampleAudioName;
         String samplePhoto = testDirectory + samplePhotoName;
