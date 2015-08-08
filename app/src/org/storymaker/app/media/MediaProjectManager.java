@@ -114,8 +114,11 @@ public class MediaProjectManager implements MediaManager {
 	private static synchronized void initExternalStorage (Context context)
     {   	
     	if (sFileExternDir == null){
-    	   	
-    		SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context.getApplicationContext());	 
+
+			// file location now handled by helper class
+
+			/*
+			SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context.getApplicationContext());
     		mUseInternal = settings.getBoolean("p_use_internal_storage",false);
 
     		boolean isStorageEmulated = false;
@@ -137,7 +140,13 @@ public class MediaProjectManager implements MediaManager {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             }
-    		sFileExternDir.mkdirs();
+            */
+
+			sFileExternDir = new File(StorageHelper.getActualStorageDirectory(context), AppConstants.FOLDER_PROJECTS_NAME);
+
+			Log.d(TAG, "sFileExternDir:" + sFileExternDir.getAbsolutePath());
+
+			sFileExternDir.mkdirs();
     	}
     }
     
