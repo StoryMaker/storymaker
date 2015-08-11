@@ -1,4 +1,15 @@
---- build 1065
+--- 2.0.2 build 1066
+
+- Added new "Send Feedback" to the navigation drawer.  Ask us anything, we can reply directly to you in app!
+- Delete stories from home screen by long pressing
+- Optionally delete media from a story when you delete a story
+- Warn if you don't have enough storage space to publish a story
+- Cleanup SD Card usage
+    - No more "Liger" or "Stories" folder
+    - Default to using SD on 4.4+ devices
+- Fix StoryMaker.org login over Tor
+
+--- 2.0.1 build 1065
 
 - Fix StoryMaker.org login over Tor
 
