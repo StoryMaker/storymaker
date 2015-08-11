@@ -164,6 +164,7 @@
             android:taskAffinity=""
             android:theme="@android:style/Theme.Dialog" />
         <activity android:name="net.hockeyapp.android.UpdateActivity" />
+        <activity android:name="net.hockeyapp.android.FeedbackActivity" />
         <activity
             android:name="org.storymaker.app.AccountsActivity"
             android:label="@string/title_activity_accounts"
