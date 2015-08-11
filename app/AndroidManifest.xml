@@ -81,33 +81,16 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ProjectsActivity" />
         </activity>
-        <!--<activity-->
-            <!--android:name="org.storymaker.app.WelcomeActivity"-->
-            <!--android:label="@string/app_name" >-->
-        <!--</activity>-->
-        <!--<activity android:name="org.storymaker.app.ProjectListActivity" >-->
-            <!--<meta-data-->
-                <!--android:name="android.support.PARENT_ACTIVITY"-->
-                <!--android:value=".HomeActivity" />-->
-        <!--</activity>-->
         <activity android:name="org.storymaker.app.server.WebViewActivity" />
         <activity
             android:name="org.storymaker.app.media.MediaProjectManager"
             android:configChanges="orientation|keyboardHidden|screenSize" >
         </activity>
-        <!--<activity android:name="org.storymaker.app.MediaOutputPreferences" />-->
         <activity android:name="org.storymaker.app.SimplePreferences" />
         <activity
             android:name="org.storymaker.app.media.OverlayCameraActivity"
             android:screenOrientation="landscape" />
-        <!--<activity android:name="org.storymaker.app.media.AudioRecorderActivity" />-->
 
-        <provider
-            android:name="org.storymaker.app.db.LessonsProvider"
-            android:authorities="org.storymaker.app.db.LessonsProvider"
-            android:exported="false"
-            android:multiprocess="true" >
-        </provider>
         <provider
             android:name="org.storymaker.app.db.ProjectsProvider"
             android:authorities="org.storymaker.app.db.ProjectsProvider"
@@ -144,19 +127,6 @@
             android:name="org.storymaker.app.publish.PublishService"
             android:exported="false" >
         </service>
-
-        <receiver
-            android:name="org.storymaker.app.QuickStoryWidgetProvider"
-            android:icon="@drawable/ic_launcher"
-            android:label="StoryMaker QuickStory" >
-            <intent-filter>
-                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
-            </intent-filter>
-
-            <meta-data
-                android:name="android.appwidget.provider"
-                android:resource="@xml/quickstory_widget_info" />
-        </receiver>
 
         <activity
             android:name="info.guardianproject.onionkit.ui.CertDisplayActivity"

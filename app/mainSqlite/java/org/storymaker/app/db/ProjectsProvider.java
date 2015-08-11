@@ -22,8 +22,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 
-// FIXME rename this to SMProvier and get rid of LessonsProvider
-public class ProjectsProvider extends ContentProvider {  
+public class ProjectsProvider extends ContentProvider {
 	private StoryMakerDB mDBHelper;
 	private SQLiteDatabase mDB = null;
     private String mPassphrase = "foo"; //how and when do we set this??
