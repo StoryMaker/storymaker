@@ -1,4 +1,8 @@
---- 2.0.2 build 1066
+--- build 1067
+
+- Crash fixes
+
+--- build 1066
 
 - Added new "Send Feedback" to the navigation drawer.  Ask us anything, we can reply directly to you in app!
 - Delete stories from home screen by long pressing

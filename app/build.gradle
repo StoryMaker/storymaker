@@ -16,9 +16,8 @@ android {
         }
 
         mainSqlite.setRoot('mainSqlite')
-
         mainSqlCipher.setRoot('mainSqlCipher')
-
+        mainBeta.setRoot('mainSqlCipher')
 
         androidTest {
             java.srcDirs = ['tests/src']
@@ -41,11 +40,12 @@ android {
     productFlavors {
         mainSqlite {}
         mainSqlCipher {}
+        mainBeta {}
     }
 
     defaultConfig {
         minSdkVersion 16
-        targetSdkVersion 21
+        targetSdkVersion 22
         multiDexEnabled true
         //testPackageName "org.storymaker.app.tests"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -53,9 +53,9 @@ android {
     }
 
     // Temporarily ignore linter errors.
-    lintOptions {
-        abortOnError false
-    }
+    //lintOptions {
+    //    abortOnError false
+    //}
 
     packagingOptions {
         exclude 'META-INF/LICENSE.txt'
