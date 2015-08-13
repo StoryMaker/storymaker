@@ -17,7 +17,8 @@ android {
 
         mainSqlite.setRoot('mainSqlite')
         mainSqlCipher.setRoot('mainSqlCipher')
-        mainBeta.setRoot('mainSqlCipher')
+
+        beta.setRoot("beta")
 
         androidTest {
             java.srcDirs = ['tests/src']
@@ -40,7 +41,11 @@ android {
     productFlavors {
         mainSqlite {}
         mainSqlCipher {}
-        mainBeta {}
+    }
+
+    buildTypes {
+        beta.initWith(buildTypes.debug)
+        beta {}
     }
 
     defaultConfig {
