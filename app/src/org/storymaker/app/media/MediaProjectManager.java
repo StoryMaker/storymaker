@@ -153,14 +153,10 @@ public class MediaProjectManager implements MediaManager {
     public static File getRenderPath (Context context)
     {
 
-		 File fileRenderTmpDir = null;
-		 
-		 if (mUseInternal)
-			 fileRenderTmpDir = context.getDir("render", Context.MODE_PRIVATE);
-		 else
+	    // simplifying this method to ensure cleanup happens as intended
+		// StorageHelper method should respect internal/external storage settings
 
-			 // fileRenderTmpDir = new File(context.getExternalFilesDir(null),"render");
-			 fileRenderTmpDir = new File(StorageHelper.getActualStorageDirectory(context),"render");
+		File fileRenderTmpDir = new File(StorageHelper.getActualStorageDirectory(context), "render");
 
 		return fileRenderTmpDir;
     }
