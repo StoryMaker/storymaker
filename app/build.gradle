@@ -16,9 +16,9 @@ android {
         }
 
         mainSqlite.setRoot('mainSqlite')
-
         mainSqlCipher.setRoot('mainSqlCipher')
 
+        beta.setRoot("beta")
 
         androidTest {
             java.srcDirs = ['tests/src']
@@ -43,9 +43,14 @@ android {
         mainSqlCipher {}
     }
 
+    buildTypes {
+        beta.initWith(buildTypes.debug)
+        beta {}
+    }
+
     defaultConfig {
         minSdkVersion 16
-        targetSdkVersion 21
+        targetSdkVersion 22
         multiDexEnabled true
         //testPackageName "org.storymaker.app.tests"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -53,9 +58,9 @@ android {
     }
 
     // Temporarily ignore linter errors.
-    lintOptions {
-        abortOnError false
-    }
+    //lintOptions {
+    //    abortOnError false
+    //}
 
     packagingOptions {
         exclude 'META-INF/LICENSE.txt'
@@ -101,7 +106,7 @@ dependencies {
     compile files('libs/google-api-client-googleapis-1.4.1-beta.jar')
     compile files('libs/google-api-services-latitude-v1-1.1.0-beta.jar')
     //compile files('libs/guava-r09.jar')
-    compile files('libs/HockeySDK.jar')
+    compile 'net.hockeyapp.android:HockeySDK:3.5.0'
     compile files('libs/httpmime-4.0.3.jar')
     compile files('libs/soundcloud-api-1.0.1.jar')
     compile files('libs/svg-android-1.1.jar')

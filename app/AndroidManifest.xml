@@ -3,8 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="org.storymaker.app"
     android:installLocation="auto"
-    android:versionCode="1065"
-    android:versionName="2.0.1-build1065">
+    android:versionCode="1066"
+    android:versionName="2.0.2-build1066">
    
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -21,6 +21,8 @@
     <uses-permission android:name="android.permission.USE_CREDENTIALS" />
     <uses-permission android:name="com.google.android.googleapps.permission.GOOGLE_AUTH" android:required="false" />
     <uses-permission android:name="com.google.android.googleapps.permission.GOOGLE_AUTH.youtube" android:required="false" />
+
+    <uses-permission android:name="android.permission.READ_LOGS" />
 
     <uses-feature android:name="android.hardware.camera" android:required="false" />
     
@@ -81,33 +83,16 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ProjectsActivity" />
         </activity>
-        <!--<activity-->
-            <!--android:name="org.storymaker.app.WelcomeActivity"-->
-            <!--android:label="@string/app_name" >-->
-        <!--</activity>-->
-        <!--<activity android:name="org.storymaker.app.ProjectListActivity" >-->
-            <!--<meta-data-->
-                <!--android:name="android.support.PARENT_ACTIVITY"-->
-                <!--android:value=".HomeActivity" />-->
-        <!--</activity>-->
         <activity android:name="org.storymaker.app.server.WebViewActivity" />
         <activity
             android:name="org.storymaker.app.media.MediaProjectManager"
             android:configChanges="orientation|keyboardHidden|screenSize" >
         </activity>
-        <!--<activity android:name="org.storymaker.app.MediaOutputPreferences" />-->
         <activity android:name="org.storymaker.app.SimplePreferences" />
         <activity
             android:name="org.storymaker.app.media.OverlayCameraActivity"
             android:screenOrientation="landscape" />
-        <!--<activity android:name="org.storymaker.app.media.AudioRecorderActivity" />-->
 
-        <provider
-            android:name="org.storymaker.app.db.LessonsProvider"
-            android:authorities="org.storymaker.app.db.LessonsProvider"
-            android:exported="false"
-            android:multiprocess="true" >
-        </provider>
         <provider
             android:name="org.storymaker.app.db.ProjectsProvider"
             android:authorities="org.storymaker.app.db.ProjectsProvider"
@@ -145,25 +130,13 @@
             android:exported="false" >
         </service>
 
-        <receiver
-            android:name="org.storymaker.app.QuickStoryWidgetProvider"
-            android:icon="@drawable/ic_launcher"
-            android:label="StoryMaker QuickStory" >
-            <intent-filter>
-                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
-            </intent-filter>
-
-            <meta-data
-                android:name="android.appwidget.provider"
-                android:resource="@xml/quickstory_widget_info" />
-        </receiver>
-
         <activity
             android:name="info.guardianproject.onionkit.ui.CertDisplayActivity"
             android:configChanges="locale|screenSize|orientation"
             android:taskAffinity=""
             android:theme="@android:style/Theme.Dialog" />
         <activity android:name="net.hockeyapp.android.UpdateActivity" />
+        <activity android:name="net.hockeyapp.android.FeedbackActivity" />
         <activity
             android:name="org.storymaker.app.AccountsActivity"
             android:label="@string/title_activity_accounts"

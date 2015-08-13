@@ -64,7 +64,9 @@ public class StoryMakerApp extends MultiDexApplication {
 	public void onCreate() {
 		super.onCreate();
 
-		checkLocale ();
+		checkLocale();
+
+		Log.d("TESTTESTTEST", CrashReportingConfig.foo);
 		
 		SQLiteDatabase.loadLibs(this);
 

@@ -44,6 +44,7 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
 import net.hockeyapp.android.CrashManager;
+import net.hockeyapp.android.CrashManagerListener;
 import net.hockeyapp.android.UpdateManager;
 
 import android.app.AlertDialog;
@@ -146,7 +147,7 @@ public class HomeActivity extends BaseActivity {
         getActionBar().setDisplayHomeAsUpEnabled(true);
         
         checkForTor();
-        
+
         checkForUpdates();
         
     }
@@ -232,6 +233,8 @@ public class HomeActivity extends BaseActivity {
 
         getActionBar().setTitle(Utils.getAppName(this));
 
+        checkForCrashes();
+
         //if (!DownloadHelper.checkAllFiles(this) && downloadPoller == null) {
         // integrate with index task
         //if (!DownloadHelper.checkAndDownload(this)) {
@@ -258,8 +261,6 @@ public class HomeActivity extends BaseActivity {
             .show();
 			
 		}
-		
-		 checkForCrashes();
 	}
 
     public static String parseInstanceDate(String filename) {
@@ -737,7 +738,33 @@ public class HomeActivity extends BaseActivity {
 	}
 	
 	private void checkForCrashes() {
-	   CrashManager.register(this, AppConstants.HOCKEY_APP_ID);
+	    //CrashManager.register(this, AppConstants.HOCKEY_APP_ID);
+        CrashManager.register(this, AppConstants.HOCKEY_APP_ID, new CrashManagerListener() {
+            public String getDescription() {
+                String description = "";
+
+                try {
+                    //Process process = Runtime.getRuntime().exec("logcat -d HockeyApp:D *:S");
+                    Process process = Runtime.getRuntime().exec("logcat -d");
+                    BufferedReader bufferedReader =
+                            new BufferedReader(new InputStreamReader(process.getInputStream()));
+
+                    StringBuilder log = new StringBuilder();
+                    String line;
+                    while ((line = bufferedReader.readLine()) != null) {
+                        log.append(line);
+                        log.append(System.getProperty("line.separator"));
+                    }
+                    bufferedReader.close();
+
+                    description = log.toString();
+                }
+                catch (IOException e) {
+                }
+
+                return description;
+            }
+        });
 	 }
 
     private void checkForUpdates() {

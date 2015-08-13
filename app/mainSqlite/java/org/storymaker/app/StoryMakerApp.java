@@ -1,5 +1,6 @@
 package org.storymaker.app;
 
+import org.storymaker.app.CrashReportingConfig;
 import org.storymaker.app.media.MediaProjectManager;
 import org.storymaker.app.server.ServerManager;
 
@@ -63,8 +64,10 @@ public class StoryMakerApp extends MultiDexApplication {
 	public void onCreate() {
 		super.onCreate();
 
-		checkLocale ();
-		
+		checkLocale();
+
+		Log.d("TESTTESTTEST", CrashReportingConfig.foo);
+
 //		SQLiteDatabase.loadLibs(this);
 
 //		boolean optOut = true;

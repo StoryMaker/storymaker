@@ -32,6 +32,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import net.hockeyapp.android.FeedbackManager;
+
 //import com.google.analytics.tracking.android.EasyTracker;
 
 public class BaseActivity extends FragmentActivity {
@@ -92,6 +94,7 @@ public class BaseActivity extends FragmentActivity {
         Button btnDrawerExports =      (Button) findViewById(R.id.btnDrawerExports);
         Button btnDrawerUploadManager = (Button) findViewById(R.id.btnDrawerUploadManager);
         Button btnDrawerSettings =      (Button) findViewById(R.id.btnDrawerSettings);
+        Button btnDrawerFeedback =      (Button) findViewById(R.id.btnDrawerFeedback);
         TextView textViewVersion =      (TextView) findViewById(R.id.textViewVersion);
 
         String pkg = getPackageName();
@@ -180,8 +183,16 @@ public class BaseActivity extends FragmentActivity {
                 activity.startActivity(i);
             }
         });
-        
-        
+
+        btnDrawerFeedback.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mDrawerLayout.closeDrawers();
+
+                FeedbackManager.register(activity, AppConstants.HOCKEY_APP_ID, null);
+                FeedbackManager.showFeedbackActivity(activity);
+            }
+        });
     }
     
     /**

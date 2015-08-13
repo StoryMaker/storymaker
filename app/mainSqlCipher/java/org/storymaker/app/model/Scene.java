@@ -11,6 +11,7 @@ import org.storymaker.app.db.StoryMakerDB;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.support.annotation.NonNull;
 import android.util.Log;
 
 public class Scene extends Model {
@@ -401,7 +402,7 @@ public class Scene extends Model {
      * @param media append this media to the back of the scene's media list
      */
     // FIXME make provider free version
-    public Media setMedia(int clipIndex, String clipType, String path, String mimeType, int trimStart, int trimEnd, int duration) {
+    public Media setMedia(@NonNull int clipIndex, @NonNull String clipType, @NonNull String path, @NonNull String mimeType, int trimStart, int trimEnd, int duration) {
         Media media = new Media(mDB, context);
         media.setPath(path);
         media.setMimeType(mimeType);

@@ -23,6 +23,7 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.support.annotation.NonNull;
 import android.util.Log;
 
 public class Media extends Model {
@@ -79,8 +80,8 @@ public class Media extends Model {
      * @param createdAt
      * @param updatedAt
      */
-    public Media(Context context, int id, String path, String mimeType, String clipType, int clipIndex,
-            int sceneId, float trimStart, float trimEnd, float duration, Date createdAt, Date updatedAt) {
+    public Media(Context context, int id, @NonNull String path, @NonNull String mimeType, @NonNull String clipType, int clipIndex,
+             @NonNull int sceneId, float trimStart, float trimEnd, float duration, Date createdAt, Date updatedAt) {
         super(context);
         this.context = context;
         this.id = id;
