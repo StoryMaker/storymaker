@@ -1,6 +1,7 @@
 package org.storymaker.app.publish.sites;
 
 import java.io.File;
+import java.io.IOException;
 
 import org.storymaker.app.EditorBaseActivity;
 import org.storymaker.app.R;
@@ -51,6 +52,15 @@ public class VideoRenderer extends RendererBase {
             // TODO Auto-generated catch block
             e.printStackTrace();
             jobFailed(e, 0, e.getMessage());
+        }
+    }
+
+    public static void clearRenderTempFolder (Context context) {
+        try {
+            File renderTempFolder = MediaProjectManager.getRenderPath(context);
+            Runtime.getRuntime().exec("rm -rf " + renderTempFolder.getCanonicalPath());
+        } catch (IOException ioe) {
+            Log.e("VideoRenderer", "Exception caught while clearing temporary folder: ", ioe);
         }
     }
     

@@ -2,6 +2,7 @@ package org.storymaker.app;
 
 import org.storymaker.app.CrashReportingConfig;
 import org.storymaker.app.media.MediaProjectManager;
+import org.storymaker.app.publish.sites.VideoRenderer;
 import org.storymaker.app.server.ServerManager;
 
 import java.io.BufferedReader;
@@ -84,7 +85,7 @@ public class StoryMakerApp extends MultiDexApplication {
 		try
 		{
 
-			clearRenderTmpFolders(getApplicationContext());
+			VideoRenderer.clearRenderTempFolder(getApplicationContext());
 			
 			initServerUrls(this);
 	
@@ -265,7 +266,7 @@ public class StoryMakerApp extends MultiDexApplication {
 			//this means that there is no root to be had (normally)
 		}
 		
-		Log.e(AppConstants.TAG,"Could not acquire root permissions");
+		Log.e(AppConstants.TAG, "Could not acquire root permissions");
 		
 		
 		return false;
@@ -291,33 +292,6 @@ public class StoryMakerApp extends MultiDexApplication {
 	public void onTerminate() {
 		super.onTerminate();
 		
-		clearRenderTmpFolders(getApplicationContext());
+		VideoRenderer.clearRenderTempFolder(getApplicationContext());
 	}
-
-	public void clearRenderTmpFolders (Context context)
-	{
-		try
-		{
-		 File fileRenderTmpDir = MediaProjectManager.getRenderPath(context);
-		// deleteRecursive(fileRenderTmpDir,false);
-		 Runtime.getRuntime().exec("rm -rf " + fileRenderTmpDir.getCanonicalPath());
-		}
-		catch (IOException ioe)
-		{
-			Log.w(AppConstants.TAG,"error deleting render tmp on exit",ioe);
-		}
-	}
-	
-	 void deleteRecursive(File fileOrDirectory, boolean onExit) throws IOException {
-	        if (fileOrDirectory.isDirectory())
-	            for (File child : fileOrDirectory.listFiles())
-	            	deleteRecursive(child, onExit);
-
-	        if (!onExit)
-	        {
-	        	fileOrDirectory.delete();
-	        }
-	        else
-	        	fileOrDirectory.deleteOnExit();
-	    }
 }
