@@ -14,6 +14,7 @@ import org.storymaker.app.model.Job;
 import org.storymaker.app.model.JobTable;
 import org.storymaker.app.model.Project;
 import org.storymaker.app.model.PublishJob;
+import org.storymaker.app.publish.sites.VideoRenderer;
 import org.storymaker.app.server.ServerManager;
 
 import io.scal.secureshareui.controller.FacebookSiteController;
@@ -155,8 +156,11 @@ public abstract class PublisherBase {
         Log.d(TAG, "jobSucceeded: " + job);
         if (job.isType(JobTable.TYPE_RENDER)) {
             // since the user must now initiate upload, we just stop this publishjob now and wait
-//            mController.publishJobSucceeded(mPublishJob);
-		} else if (job.isType(JobTable.TYPE_UPLOAD)) {
+            // mController.publishJobSucceeded(mPublishJob);
+
+            VideoRenderer.clearRenderTempFolder(mContext);
+
+        } else if (job.isType(JobTable.TYPE_UPLOAD)) {
 			String publishToStoryMaker = mPublishJob.getMetadata().get(SiteController.VALUE_KEY_PUBLISH_TO_STORYMAKER);
 			if (publishToStoryMaker != null && publishToStoryMaker.equals("true")) {
 
