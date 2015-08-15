@@ -1,5 +1,7 @@
 --- build 1067
 
+- Cleanup after publishing to prevent devices from filling up
+- Improved error reports
 - Crash fixes
 
 --- build 1066
