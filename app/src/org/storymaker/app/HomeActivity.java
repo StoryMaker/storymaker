@@ -1,89 +1,64 @@
 package org.storymaker.app;
 
 import org.apache.commons.io.FilenameUtils;
-import org.storymaker.app.media.MediaProjectManager;
-import org.storymaker.app.model.Lesson;
-import org.storymaker.app.model.LessonGroup;
+import org.storymaker.app.db.ExpansionIndexItemDao;
+import org.storymaker.app.db.InstanceIndexItemDao;
 import org.storymaker.app.model.Project;
 import org.storymaker.app.server.LoginActivity;
 import org.storymaker.app.server.ServerManager;
-import org.storymaker.app.ui.MyCard;
+
 import info.guardianproject.onionkit.ui.OrbotHelper;
-import scal.io.liger.Constants;
+import rx.functions.Action1;
 import scal.io.liger.DownloadHelper;
 import scal.io.liger.IndexManager;
 import scal.io.liger.JsonHelper;
 import scal.io.liger.MainActivity;
-import scal.io.liger.QueueManager;
-import scal.io.liger.ZipHelper;
 import scal.io.liger.model.BaseIndexItem;
 import scal.io.liger.model.ContentPackMetadata;
 import scal.io.liger.model.ExpansionIndexItem;
 import scal.io.liger.model.InstanceIndexItem;
-import scal.io.liger.model.StoryPath;
 import scal.io.liger.model.StoryPathLibrary;
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
-import java.util.Date;
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Locale;
-import java.util.Map;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipOutputStream;
+import java.util.List;
 
 import net.hockeyapp.android.CrashManager;
 import net.hockeyapp.android.CrashManagerListener;
 import net.hockeyapp.android.UpdateManager;
 
 import android.app.AlertDialog;
-import android.app.DownloadManager;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager.NameNotFoundException;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
+import android.database.sqlite.SQLiteConstraintException;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.fima.cardsui.views.CardUI;
 //import com.google.analytics.tracking.android.GoogleAnalytics;
-import com.viewpagerindicator.CirclePageIndicator;
+import com.hannesdorfmann.sqlbrite.dao.DaoManager;
 
 public class HomeActivity extends BaseActivity {
     private final static String TAG = "HomeActivity";
@@ -95,6 +70,27 @@ public class HomeActivity extends BaseActivity {
     // private DownloadPoller downloadPoller = null;
 
     private boolean loggedIn;
+
+
+
+    // new stuff
+    private InstanceIndexItemDao instanceIndexItemDao;
+    private ExpansionIndexItemDao expansionIndexItemDao;
+    private DaoManager daoManager;
+    private int dbVersion = 1;
+
+    // must set dao stuff in constructor?
+    public HomeActivity() {
+
+        instanceIndexItemDao = new InstanceIndexItemDao();
+        expansionIndexItemDao = new ExpansionIndexItemDao();
+
+        daoManager = new DaoManager(HomeActivity.this, "Storymaker.db", dbVersion, instanceIndexItemDao, expansionIndexItemDao);
+        daoManager.setLogging(true);
+
+    }
+
+
 
     // added for testing
     public void scroll(int position) {
@@ -314,6 +310,36 @@ public class HomeActivity extends BaseActivity {
         // TEMP
         if (instanceIndex.size() > 0) {
             Log.d(TAG, "INITACTIVITYLIST - FOUND INSTANCE INDEX WITH " + instanceIndex.size() + " ITEMS");
+
+
+
+            // dumb test
+
+            // put in values
+            for (InstanceIndexItem item : instanceIndex.values()) {
+                try {
+                    instanceIndexItemDao.addInstanceIndexItem(item);
+                } catch (SQLiteConstraintException sce) {
+                    //Log.d("RX_DB", "PROBABLY A DUPLICATE: " + sce.getMessage());
+                }
+            }
+
+            // read out values
+            instanceIndexItemDao.getInstanceIndexItems().subscribe(new Action1<List<org.storymaker.app.db.InstanceIndexItem>>() {
+
+                @Override
+                public void call(List<org.storymaker.app.db.InstanceIndexItem> instanceIndexItems) {
+
+                    // just process the list
+
+                    for (org.storymaker.app.db.InstanceIndexItem item : instanceIndexItems) {
+                        Log.d("RX_DB", "GOT ITEM " + item.getId() + ", TITLE: " + item.getTitle());
+                    }
+                }
+            });
+
+
+
         } else {
             Log.d(TAG, "INITACTIVITYLIST - FOUND INSTANCE INDEX WITH NO ITEMS");
         }
@@ -332,6 +358,43 @@ public class HomeActivity extends BaseActivity {
                 instances.add(availableIds.get(id));
             }
         }
+
+
+
+        // dumb test
+
+        // put in values
+        for (ExpansionIndexItem item : availableIds.values()) {
+            try {
+                expansionIndexItemDao.addExpansionIndexItem(item);
+            } catch (SQLiteConstraintException sce) {
+                //Log.d("RX_DB", "PROBABLY A DUPLICATE: " + sce.getMessage());
+            }
+        }
+
+        for (ExpansionIndexItem item : installedIds.values()) {
+            try {
+                expansionIndexItemDao.addExpansionIndexItem(item);
+            } catch (SQLiteConstraintException sce) {
+                //Log.d("RX_DB", "PROBABLY A DUPLICATE: " + sce.getMessage());
+            }
+        }
+
+        // read out values
+        expansionIndexItemDao.getExpansionIndexItems().subscribe(new Action1<List<org.storymaker.app.db.ExpansionIndexItem>>() {
+
+            @Override
+            public void call(List<org.storymaker.app.db.ExpansionIndexItem> expansionIndexItems) {
+
+                // just process the list
+
+                for (org.storymaker.app.db.ExpansionIndexItem item : expansionIndexItems) {
+                    Log.d("RX_DB", "GOT ITEM " + item.getId() + ", TITLE: " + item.getTitle());
+                }
+            }
+        });
+
+
 
         Collections.sort(instances, Collections.reverseOrder()); // FIXME we should sort this down a layer, perhaps in loadInstanceIndexAsList
 
