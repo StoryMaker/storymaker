@@ -46,6 +46,12 @@ android {
     buildTypes {
         beta.initWith(buildTypes.debug)
         beta {}
+
+        debuggableRelease.initWith(buildTypes.release)
+        debuggableRelease {
+            minifyEnabled false
+            debuggable true
+        }
     }
 
     defaultConfig {
@@ -58,9 +64,9 @@ android {
     }
 
     // Temporarily ignore linter errors.
-    //lintOptions {
-    //    abortOnError false
-    //}
+    lintOptions {
+        abortOnError false
+    }
 
     packagingOptions {
         exclude 'META-INF/LICENSE.txt'
