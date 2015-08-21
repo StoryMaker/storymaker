@@ -17,6 +17,7 @@ public class ExpansionIndexItem extends BaseIndexItem {
     public static final String COLUMN_PACKAGENAME = "packageName";
     public static final String COLUMN_EXPANSIONID = "expansionId";
     public static final String COLUMN_PATCHORDER = "patchOrder";
+    public static final String COLUMN_CONTENTTYPE = "contentType";
     public static final String COLUMN_EXPANSIONFILEURL = "expansionFileUrl";
     public static final String COLUMN_EXPANSIONFILEPATH = "expansionFilePath";
     public static final String COLUMN_EXPANSIONFILEVERSION = "expansionFileVersion";
@@ -36,6 +37,7 @@ public class ExpansionIndexItem extends BaseIndexItem {
     @Column(COLUMN_PACKAGENAME) public String packageName;
     @Column(COLUMN_EXPANSIONID) public String expansionId;
     @Column(COLUMN_PATCHORDER) public String patchOrder;
+    @Column(COLUMN_CONTENTTYPE) public String contentType;
     @Column(COLUMN_EXPANSIONFILEURL) public String expansionFileUrl;
     @Column(COLUMN_EXPANSIONFILEPATH) public String expansionFilePath; // relative to Context.getExternalFilesDirs()
 
@@ -64,11 +66,12 @@ public class ExpansionIndexItem extends BaseIndexItem {
 
     }
 
-    public ExpansionIndexItem(long id, String title, String description, String thumbnailPath, String packageName, String expansionId, String patchOrder, String expansionFileUrl, String expansionFilePath, String expansionFileVersion, long expansionFileSize, String expansionFileChecksum, String patchFileVersion, long patchFileSize, String patchFileChecksum, String author, String website, String dateUpdated, String languages, String tags) {
+    public ExpansionIndexItem(long id, String title, String description, String thumbnailPath, String packageName, String expansionId, String patchOrder, String contentType, String expansionFileUrl, String expansionFilePath, String expansionFileVersion, long expansionFileSize, String expansionFileChecksum, String patchFileVersion, long patchFileSize, String patchFileChecksum, String author, String website, String dateUpdated, String languages, String tags) {
         super(id, title, description, thumbnailPath);
         this.packageName = packageName;
         this.expansionId = expansionId;
         this.patchOrder = patchOrder;
+        this.contentType = contentType;
         this.expansionFileUrl = expansionFileUrl;
         this.expansionFilePath = expansionFilePath;
         this.expansionFileVersion = expansionFileVersion;
@@ -94,6 +97,10 @@ public class ExpansionIndexItem extends BaseIndexItem {
 
     public String getPatchOrder() {
         return patchOrder;
+    }
+
+    public String getContentType() {
+        return contentType;
     }
 
     public String getExpansionFileUrl() {

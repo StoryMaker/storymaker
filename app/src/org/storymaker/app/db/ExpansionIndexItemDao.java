@@ -32,6 +32,7 @@ public class ExpansionIndexItemDao extends Dao {
                 ExpansionIndexItem.COLUMN_PACKAGENAME + " TEXT",
                 ExpansionIndexItem.COLUMN_EXPANSIONID + " TEXT",
                 ExpansionIndexItem.COLUMN_PATCHORDER + " TEXT PRIMARY KEY NOT NULL",
+                ExpansionIndexItem.COLUMN_CONTENTTYPE + " TEXT",
                 ExpansionIndexItem.COLUMN_EXPANSIONFILEURL + " TEXT",
                 ExpansionIndexItem.COLUMN_EXPANSIONFILEPATH + " TEXT",
                 ExpansionIndexItem.COLUMN_EXPANSIONFILEVERSION + " TEXT",
@@ -67,6 +68,7 @@ public class ExpansionIndexItemDao extends Dao {
                 ExpansionIndexItem.COLUMN_PACKAGENAME,
                 ExpansionIndexItem.COLUMN_EXPANSIONID,
                 ExpansionIndexItem.COLUMN_PATCHORDER,
+                ExpansionIndexItem.COLUMN_CONTENTTYPE,
                 ExpansionIndexItem.COLUMN_EXPANSIONFILEURL,
                 ExpansionIndexItem.COLUMN_EXPANSIONFILEPATH,
                 ExpansionIndexItem.COLUMN_EXPANSIONFILEVERSION,
@@ -91,7 +93,44 @@ public class ExpansionIndexItemDao extends Dao {
                 });
     }
 
-    public Observable<Long> addExpansionIndexItem(long id, String title, String description, String thumbnailPath, String packageName, String expansionId, String patchOrder, String expansionFileUrl, String expansionFilePath, String expansionFileVersion, long expansionFileSize, String expansionFileChecksum, String patchFileVersion, long patchFileSize, String patchFileChecksum, String author, String website, String dateUpdated, String languages, String tags) {
+    public Observable<List<ExpansionIndexItem>> getExpansionIndexItemsByType(String contentType) {
+
+        // select all rows with matching content type
+
+        return query(SELECT(ExpansionIndexItem.COLUMN_ID,
+                ExpansionIndexItem.COLUMN_TITLE,
+                ExpansionIndexItem.COLUMN_DESCRIPTION,
+                ExpansionIndexItem.COLUMN_THUMBNAILPATH,
+                ExpansionIndexItem.COLUMN_PACKAGENAME,
+                ExpansionIndexItem.COLUMN_EXPANSIONID,
+                ExpansionIndexItem.COLUMN_PATCHORDER,
+                ExpansionIndexItem.COLUMN_CONTENTTYPE,
+                ExpansionIndexItem.COLUMN_EXPANSIONFILEURL,
+                ExpansionIndexItem.COLUMN_EXPANSIONFILEPATH,
+                ExpansionIndexItem.COLUMN_EXPANSIONFILEVERSION,
+                ExpansionIndexItem.COLUMN_EXPANSIONFILESIZE,
+                ExpansionIndexItem.COLUMN_EXPANSIONFILECHECKSUM,
+                ExpansionIndexItem.COLUMN_PATCHFILEVERSION,
+                ExpansionIndexItem.COLUMN_PATCHFILESIZE,
+                ExpansionIndexItem.COLUMN_PATCHFILECHECKSUM,
+                ExpansionIndexItem.COLUMN_AUTHOR,
+                ExpansionIndexItem.COLUMN_WEBSITE,
+                ExpansionIndexItem.COLUMN_DATEUPDATED,
+                ExpansionIndexItem.COLUMN_LANGUAGES,
+                ExpansionIndexItem.COLUMN_TAGS)
+                .FROM(ExpansionIndexItem.TABLE_NAME)
+                .WHERE(ExpansionIndexItem.COLUMN_CONTENTTYPE + " = ? "), contentType)
+                .map(new Func1<SqlBrite.Query, List<ExpansionIndexItem>>() {
+
+                    @Override
+                    public List<ExpansionIndexItem> call(SqlBrite.Query query) {
+                        Cursor cursor = query.run();
+                        return ExpansionIndexItemMapper.list(cursor);
+                    }
+                });
+    }
+
+    public Observable<Long> addExpansionIndexItem(long id, String title, String description, String thumbnailPath, String packageName, String expansionId, String patchOrder, String contentType, String expansionFileUrl, String expansionFilePath, String expansionFileVersion, long expansionFileSize, String expansionFileChecksum, String patchFileVersion, long patchFileSize, String patchFileChecksum, String author, String website, String dateUpdated, String languages, String tags) {
 
         ContentValues values = ExpansionIndexItemMapper.contentValues()
                 .id(r.nextLong())
@@ -101,6 +140,7 @@ public class ExpansionIndexItemDao extends Dao {
                 .packageName(packageName)
                 .expansionId(expansionId)
                 .patchOrder(patchOrder)
+                .contentType(contentType)
                 .expansionFileUrl(expansionFileUrl)
                 .expansionFilePath(expansionFilePath)
                 .expansionFileVersion(expansionFileVersion)
@@ -141,6 +181,7 @@ public class ExpansionIndexItemDao extends Dao {
                 .packageName(item.getPackageName())
                 .expansionId(item.getExpansionId())
                 .patchOrder(item.getPatchOrder())
+                .contentType(item.getContentType())
                 .expansionFileUrl(item.getExpansionFileUrl())
                 .expansionFilePath(item.getExpansionFilePath())
                 .expansionFileVersion(item.getExpansionFileVersion())

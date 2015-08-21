@@ -381,7 +381,7 @@ public class HomeActivity extends BaseActivity {
         }
 
         // read out values
-        expansionIndexItemDao.getExpansionIndexItems().subscribe(new Action1<List<org.storymaker.app.db.ExpansionIndexItem>>() {
+        expansionIndexItemDao.getExpansionIndexItemsByType("GUIDE").subscribe(new Action1<List<org.storymaker.app.db.ExpansionIndexItem>>() {
 
             @Override
             public void call(List<org.storymaker.app.db.ExpansionIndexItem> expansionIndexItems) {
@@ -389,7 +389,33 @@ public class HomeActivity extends BaseActivity {
                 // just process the list
 
                 for (org.storymaker.app.db.ExpansionIndexItem item : expansionIndexItems) {
-                    Log.d("RX_DB", "GOT ITEM " + item.getId() + ", TITLE: " + item.getTitle());
+                    Log.d("RX_DB", "GOT GUIDE " + item.getId() + ", TITLE: " + item.getTitle());
+                }
+            }
+        });
+
+        expansionIndexItemDao.getExpansionIndexItemsByType("LESSON").subscribe(new Action1<List<org.storymaker.app.db.ExpansionIndexItem>>() {
+
+            @Override
+            public void call(List<org.storymaker.app.db.ExpansionIndexItem> expansionIndexItems) {
+
+                // just process the list
+
+                for (org.storymaker.app.db.ExpansionIndexItem item : expansionIndexItems) {
+                    Log.d("RX_DB", "GOT LESSON " + item.getId() + ", TITLE: " + item.getTitle());
+                }
+            }
+        });
+
+        expansionIndexItemDao.getExpansionIndexItemsByType("TEMPLATE").subscribe(new Action1<List<org.storymaker.app.db.ExpansionIndexItem>>() {
+
+            @Override
+            public void call(List<org.storymaker.app.db.ExpansionIndexItem> expansionIndexItems) {
+
+                // just process the list
+
+                for (org.storymaker.app.db.ExpansionIndexItem item : expansionIndexItems) {
+                    Log.d("RX_DB", "GOT TEMPLATE " + item.getId() + ", TITLE: " + item.getTitle());
                 }
             }
         });

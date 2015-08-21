@@ -242,6 +242,7 @@ public class ServerManager {
                         ExpansionIndexItem contentItem = new ExpansionIndexItem(jObject.getString("organization"), // packageName
                                                                                 jObject.getString("uuid"), // expansionId
                                                                                 "" + (-1 - i), // patchOrder (using arbitrary negative value to avoid collisions with existing items
+                                                                                jObject.getString("contentType"),
                                                                                 "" + jObject.getInt("version"), // expansionFileVersion
                                                                                 filePath, // expansionFilePath
                                                                                 jObject.getString("obb_file").substring(0, jObject.getString("obb_file").lastIndexOf("/") + 1), // expansionFileUrl - obb filename
