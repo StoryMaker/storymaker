@@ -317,11 +317,7 @@ public class HomeActivity extends BaseActivity {
 
             // put in values
             for (InstanceIndexItem item : instanceIndex.values()) {
-                try {
-                    instanceIndexItemDao.addInstanceIndexItem(item);
-                } catch (SQLiteConstraintException sce) {
-                    //Log.d("RX_DB", "PROBABLY A DUPLICATE: " + sce.getMessage());
-                }
+                instanceIndexItemDao.addInstanceIndexItem(item);
             }
 
             // read out values
@@ -365,19 +361,11 @@ public class HomeActivity extends BaseActivity {
 
         // put in values
         for (ExpansionIndexItem item : availableIds.values()) {
-            try {
-                expansionIndexItemDao.addExpansionIndexItem(item);
-            } catch (SQLiteConstraintException sce) {
-                //Log.d("RX_DB", "PROBABLY A DUPLICATE: " + sce.getMessage());
-            }
+            expansionIndexItemDao.addExpansionIndexItem(item);
         }
 
         for (ExpansionIndexItem item : installedIds.values()) {
-            try {
-                expansionIndexItemDao.addExpansionIndexItem(item);
-            } catch (SQLiteConstraintException sce) {
-                //Log.d("RX_DB", "PROBABLY A DUPLICATE: " + sce.getMessage());
-            }
+            expansionIndexItemDao.addExpansionIndexItem(item);
         }
 
         // read out values
@@ -389,7 +377,7 @@ public class HomeActivity extends BaseActivity {
                 // just process the list
 
                 for (org.storymaker.app.db.ExpansionIndexItem item : expansionIndexItems) {
-                    Log.d("RX_DB", "GOT GUIDE " + item.getId() + ", TITLE: " + item.getTitle());
+                    Log.d("RX_DB", "GOT GUIDE " + item.getId() + ", TITLE: " + item.getTitle() + " DOWNLOADING? " + item.isDownloading());
                 }
             }
         });
@@ -402,7 +390,7 @@ public class HomeActivity extends BaseActivity {
                 // just process the list
 
                 for (org.storymaker.app.db.ExpansionIndexItem item : expansionIndexItems) {
-                    Log.d("RX_DB", "GOT LESSON " + item.getId() + ", TITLE: " + item.getTitle());
+                    Log.d("RX_DB", "GOT LESSON " + item.getId() + ", TITLE: " + item.getTitle() + " DOWNLOADING? " + item.isDownloading());
                 }
             }
         });
@@ -415,7 +403,7 @@ public class HomeActivity extends BaseActivity {
                 // just process the list
 
                 for (org.storymaker.app.db.ExpansionIndexItem item : expansionIndexItems) {
-                    Log.d("RX_DB", "GOT TEMPLATE " + item.getId() + ", TITLE: " + item.getTitle());
+                    Log.d("RX_DB", "GOT TEMPLATE " + item.getId() + ", TITLE: " + item.getTitle() + " DOWNLOADING? " + item.isDownloading());
                 }
             }
         });

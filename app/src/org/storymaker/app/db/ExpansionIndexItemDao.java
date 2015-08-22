@@ -2,6 +2,7 @@ package org.storymaker.app.db;
 
 import android.content.ContentValues;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteConstraintException;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
@@ -45,7 +46,8 @@ public class ExpansionIndexItemDao extends Dao {
                 ExpansionIndexItem.COLUMN_WEBSITE + " TEXT",
                 ExpansionIndexItem.COLUMN_DATEUPDATED + " TEXT",
                 ExpansionIndexItem.COLUMN_LANGUAGES + " TEXT",
-                ExpansionIndexItem.COLUMN_TAGS + " TEXT")
+                ExpansionIndexItem.COLUMN_TAGS + " TEXT",
+                ExpansionIndexItem.COLUMN_DOWNLOADFLAG + " INTEGER")
                 .execute(sqLiteDatabase);
 
     }
@@ -81,7 +83,8 @@ public class ExpansionIndexItemDao extends Dao {
                 ExpansionIndexItem.COLUMN_WEBSITE,
                 ExpansionIndexItem.COLUMN_DATEUPDATED,
                 ExpansionIndexItem.COLUMN_LANGUAGES,
-                ExpansionIndexItem.COLUMN_TAGS)
+                ExpansionIndexItem.COLUMN_TAGS,
+                ExpansionIndexItem.COLUMN_DOWNLOADFLAG)
                 .FROM(ExpansionIndexItem.TABLE_NAME))
                 .map(new Func1<SqlBrite.Query, List<ExpansionIndexItem>>() {
 
@@ -117,7 +120,8 @@ public class ExpansionIndexItemDao extends Dao {
                 ExpansionIndexItem.COLUMN_WEBSITE,
                 ExpansionIndexItem.COLUMN_DATEUPDATED,
                 ExpansionIndexItem.COLUMN_LANGUAGES,
-                ExpansionIndexItem.COLUMN_TAGS)
+                ExpansionIndexItem.COLUMN_TAGS,
+                ExpansionIndexItem.COLUMN_DOWNLOADFLAG)
                 .FROM(ExpansionIndexItem.TABLE_NAME)
                 .WHERE(ExpansionIndexItem.COLUMN_CONTENTTYPE + " = ? "), contentType)
                 .map(new Func1<SqlBrite.Query, List<ExpansionIndexItem>>() {
@@ -130,7 +134,9 @@ public class ExpansionIndexItemDao extends Dao {
                 });
     }
 
-    public Observable<Long> addExpansionIndexItem(long id, String title, String description, String thumbnailPath, String packageName, String expansionId, String patchOrder, String contentType, String expansionFileUrl, String expansionFilePath, String expansionFileVersion, long expansionFileSize, String expansionFileChecksum, String patchFileVersion, long patchFileSize, String patchFileChecksum, String author, String website, String dateUpdated, String languages, String tags) {
+    public Observable<Long> addExpansionIndexItem(long id, String title, String description, String thumbnailPath, String packageName, String expansionId, String patchOrder, String contentType, String expansionFileUrl, String expansionFilePath, String expansionFileVersion, long expansionFileSize, String expansionFileChecksum, String patchFileVersion, long patchFileSize, String patchFileChecksum, String author, String website, String dateUpdated, String languages, String tags, int downloadFlag) {
+
+        Observable<Long> rowId = null;
 
         ContentValues values = ExpansionIndexItemMapper.contentValues()
                 .id(r.nextLong())
@@ -154,9 +160,16 @@ public class ExpansionIndexItemDao extends Dao {
                 .dateUpdated(dateUpdated)
                 .languages(languages)
                 .tags(tags)
+                .downloadFlag(downloadFlag)
                 .build();
 
-        return insert(ExpansionIndexItem.TABLE_NAME, values);
+        try {
+            rowId = insert(ExpansionIndexItem.TABLE_NAME, values, SQLiteDatabase.CONFLICT_REPLACE);
+        } catch (SQLiteConstraintException sce) {
+            Log.d("RX_DB", "INSERT FAILED: " + sce.getMessage());
+        }
+
+        return rowId;
     }
 
     public Observable<Long> addExpansionIndexItem(scal.io.liger.model.ExpansionIndexItem item) {
@@ -173,30 +186,27 @@ public class ExpansionIndexItemDao extends Dao {
             Log.d("RX_DB", "WHAT DOES THIS LOOK LIKE? " + tagString);
         }
 
-        ContentValues values = ExpansionIndexItemMapper.contentValues()
-                .id(r.nextLong())
-                .title(item.getTitle())
-                .description(item.getDescription())
-                .thumbnailPath(item.getThumbnailPath())
-                .packageName(item.getPackageName())
-                .expansionId(item.getExpansionId())
-                .patchOrder(item.getPatchOrder())
-                .contentType(item.getContentType())
-                .expansionFileUrl(item.getExpansionFileUrl())
-                .expansionFilePath(item.getExpansionFilePath())
-                .expansionFileVersion(item.getExpansionFileVersion())
-                .expansionFileSize(item.getExpansionFileSize())
-                .expansionFileChecksum(item.getExpansionFileChecksum())
-                .patchFileVersion(item.getPatchFileVersion())
-                .patchFileSize(item.getPatchFileSize())
-                .patchFileChecksum(item.getPatchFileChecksum())
-                .author(item.getAuthor())
-                .website(item.getWebsite())
-                .dateUpdated(item.getDateUpdated())
-                .languages(langguageString)
-                .tags(tagString)
-                .build();
-
-        return insert(ExpansionIndexItem.TABLE_NAME, values);
+        return addExpansionIndexItem(r.nextLong(),
+                item.getTitle(),
+                item.getDescription(),
+                item.getThumbnailPath(),
+                item.getPackageName(),
+                item.getExpansionId(),
+                item.getPatchOrder(),
+                item.getContentType(),
+                item.getExpansionFileUrl(),
+                item.getExpansionFilePath(),
+                item.getExpansionFileVersion(),
+                item.getExpansionFileSize(),
+                item.getExpansionFileChecksum(),
+                item.getPatchFileVersion(),
+                item.getPatchFileSize(),
+                item.getPatchFileChecksum(),
+                item.getAuthor(),
+                item.getWebsite(),
+                item.getDateUpdated(),
+                langguageString,
+                tagString,
+                0); // default to false, no need to update liger ExpansionIndexItem class
     }
 }

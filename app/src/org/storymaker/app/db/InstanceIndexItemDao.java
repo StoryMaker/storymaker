@@ -2,6 +2,7 @@ package org.storymaker.app.db;
 
 import android.content.ContentValues;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteConstraintException;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
@@ -35,8 +36,8 @@ public class InstanceIndexItemDao extends Dao {
                 InstanceIndexItem.COLUMN_STORYTYPE + " TEXT",
                 InstanceIndexItem.COLUMN_LANGUAGE + " TEXT",
                 InstanceIndexItem.COLUMN_STORYPATHID + " TEXT",
-                InstanceIndexItem.COLUMN_STORYCOMPLETIONDATE + " INTEGER",
-                InstanceIndexItem.COLUMN_STORYPATHPREREQUISITES + " TEXT")
+                InstanceIndexItem.COLUMN_STORYPATHPREREQUISITES + " TEXT",
+                InstanceIndexItem.COLUMN_STORYCOMPLETIONDATE + " INTEGER")
                 .execute(sqLiteDatabase);
 
     }
@@ -62,8 +63,8 @@ public class InstanceIndexItemDao extends Dao {
                 InstanceIndexItem.COLUMN_STORYTYPE,
                 InstanceIndexItem.COLUMN_LANGUAGE,
                 InstanceIndexItem.COLUMN_STORYPATHID,
-                InstanceIndexItem.COLUMN_STORYCOMPLETIONDATE,
-                InstanceIndexItem.COLUMN_STORYPATHPREREQUISITES)
+                InstanceIndexItem.COLUMN_STORYPATHPREREQUISITES,
+                InstanceIndexItem.COLUMN_STORYCOMPLETIONDATE)
                 .FROM(InstanceIndexItem.TABLE_NAME))
                 .map(new Func1<SqlBrite.Query, List<InstanceIndexItem>>() {
 
@@ -77,6 +78,8 @@ public class InstanceIndexItemDao extends Dao {
 
     public Observable<Long> addInstanceIndexItem(long id, String title, String description, String thumbnailPath, String instanceFilePath, long storyCreationDate, long storySaveDate, String storyType, String language, String storyPathId, String storyPathPrerequisites, long storyCompletionDate) {
 
+        Observable<Long> rowId = null;
+
         ContentValues values = InstanceIndexItemMapper.contentValues()
                 .id(r.nextLong())
                 .title(title)
@@ -88,11 +91,17 @@ public class InstanceIndexItemDao extends Dao {
                 .storyType(storyType)
                 .language(language)
                 .storyPathId(storyPathId)
-                .storyCompletionDate(storyCompletionDate)
                 .storyPathPrerequisites(storyPathPrerequisites)
+                .storyCompletionDate(storyCompletionDate)
                 .build();
 
-        return insert(InstanceIndexItem.TABLE_NAME, values);
+        try {
+            rowId = insert(InstanceIndexItem.TABLE_NAME, values, SQLiteDatabase.CONFLICT_REPLACE);
+        } catch (SQLiteConstraintException sce) {
+            Log.d("RX_DB", "INSERT FAILED: " + sce.getMessage());
+        }
+
+        return rowId;
     }
 
     public Observable<Long> addInstanceIndexItem(scal.io.liger.model.InstanceIndexItem item) {
@@ -104,22 +113,17 @@ public class InstanceIndexItemDao extends Dao {
             Log.d("RX_DB", "WHAT DOES THIS LOOK LIKE? " + sppString);
         }
 
-        ContentValues values = InstanceIndexItemMapper.contentValues()
-                .id(r.nextLong())
-                .title(item.getTitle())
-                .description(item.getDescription())
-                .thumbnailPath(item.getThumbnailPath())
-                .instanceFilePath(item.getInstanceFilePath())
-                .storyCreationDate(item.getStoryCreationDate())
-                .storySaveDate(item.getStorySaveDate())
-                .storyType(item.getStoryType())
-                .language(item.getLanguage())
-                .storyPathId(item.getStoryPathId())
-                .storyCompletionDate(item.getStoryCompletionDate())
-                .storyPathPrerequisites(sppString)
-                .build();
-
-        return insert(InstanceIndexItem.TABLE_NAME, values);
-
+        return addInstanceIndexItem(r.nextLong(),
+                item.getTitle(),
+                item.getDescription(),
+                item.getThumbnailPath(),
+                item.getInstanceFilePath(),
+                item.getStoryCreationDate(),
+                item.getStorySaveDate(),
+                item.getStoryType(),
+                item.getLanguage(),
+                item.getStoryPathId(),
+                sppString,
+                item.getStoryCompletionDate());
     }
 }

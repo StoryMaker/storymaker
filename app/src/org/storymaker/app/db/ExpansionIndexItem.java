@@ -31,6 +31,7 @@ public class ExpansionIndexItem extends BaseIndexItem {
     public static final String COLUMN_DATEUPDATED = "dateUpdated";
     public static final String COLUMN_LANGUAGES = "languages";
     public static final String COLUMN_TAGS = "tags";
+    public static final String COLUMN_DOWNLOADFLAG = "downloadFlag";
 
 
     // required
@@ -60,13 +61,16 @@ public class ExpansionIndexItem extends BaseIndexItem {
 
     // HashMap<String, String> extras; <- dropping this, don't know a good way to handle hash maps
 
+    // for internal use
+    @Column(COLUMN_DOWNLOADFLAG) public int downloadFlag;
+
 
     public ExpansionIndexItem() {
         super();
 
     }
 
-    public ExpansionIndexItem(long id, String title, String description, String thumbnailPath, String packageName, String expansionId, String patchOrder, String contentType, String expansionFileUrl, String expansionFilePath, String expansionFileVersion, long expansionFileSize, String expansionFileChecksum, String patchFileVersion, long patchFileSize, String patchFileChecksum, String author, String website, String dateUpdated, String languages, String tags) {
+    public ExpansionIndexItem(long id, String title, String description, String thumbnailPath, String packageName, String expansionId, String patchOrder, String contentType, String expansionFileUrl, String expansionFilePath, String expansionFileVersion, long expansionFileSize, String expansionFileChecksum, String patchFileVersion, long patchFileSize, String patchFileChecksum, String author, String website, String dateUpdated, String languages, String tags, int downloadFlag) {
         super(id, title, description, thumbnailPath);
         this.packageName = packageName;
         this.expansionId = expansionId;
@@ -85,6 +89,7 @@ public class ExpansionIndexItem extends BaseIndexItem {
         this.dateUpdated = dateUpdated;
         this.languages = languages;
         this.tags = tags;
+        this.downloadFlag = downloadFlag;
     }
 
     public String getPackageName() {
@@ -153,5 +158,17 @@ public class ExpansionIndexItem extends BaseIndexItem {
 
     public String getTags() {
         return tags;
+    }
+
+    public int getDownloadFlag() {
+        return downloadFlag;
+    }
+
+    public boolean isDownloading() {
+        if (downloadFlag > 0) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }
