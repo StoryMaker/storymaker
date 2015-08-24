@@ -15,6 +15,7 @@ import scal.io.liger.IndexManager;
 import scal.io.liger.JsonHelper;
 import scal.io.liger.MainActivity;
 import scal.io.liger.QueueManager;
+import scal.io.liger.StorageHelper;
 import scal.io.liger.ZipHelper;
 import scal.io.liger.model.BaseIndexItem;
 import scal.io.liger.model.ContentPackMetadata;
@@ -105,6 +106,9 @@ public class HomeActivity extends BaseActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // file cleanup
+        JsonHelper.cleanup(StorageHelper.getActualStorageDirectory(this).getPath());
 
         // default
         loggedIn = false;
