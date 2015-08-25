@@ -84,48 +84,44 @@ def update_strings():
 def zip_content():
     """this creates the zipped blob of content and copies it in to storymaker's assets folder as its .obb file"""
 
-    if query_yes_no("zip mobile_photo_101 pack?"):
-        os.system("rm liger-content/assets/mobile_photo_101.main.1.obb ; cd liger-content/assets ; zip -n .mp4 -r ../zips/mobile_photo_101.main.1.obb org.storymaker.app/beta")
-        print "content generated at: liger-content/zips/mobile_photo_101.main.1.obb"
-
     if query_yes_no("zip beta paths?"):
-        os.system("rm liger-content/assets/beta.main.4.obb ; cd liger-content/assets ; zip -n .mp4;.ogg;.mov;.qt;.wav;.au;.aiff;.3gp;.avi -r ../zips/beta.main.4.obb org.storymaker.app/beta")
-        print "content generated at: liger-content/zips/beta.main.4.obb"
+        os.system("rm liger-content/assets/beta.main.5.obb ; cd liger-content/assets ; zip -n .mp4:.ogg:.mov:.qt:.wav:.au:.aiff:.3gp:.avi -r ../zips/beta.main.5.obb org.storymaker.app/beta")
+        print "content generated at: liger-content/zips/beta.main.5.obb"
         
     if query_yes_no("zip mobile_photo_101?"):
-        os.system("rm liger-content/assets/mobile_photo_101.main.1.obb ; cd liger-content/assets ; zip -n .mp4 -r ../zips/mobile_photo_101.main.1.obb org.storymaker.app/mobile_photo_101")
-        print "content generated at: liger-content/zips/mobile_photo_101.main.1.obb"
+        os.system("rm liger-content/assets/mobile_photo_101.main.2.obb ; cd liger-content/assets ; zip -n .mp4 -r ../zips/mobile_photo_101.main.2.obb org.storymaker.app/mobile_photo_101")
+        print "content generated at: liger-content/zips/mobile_photo_101.main.2.obb"
     
     if query_yes_no("zip main?"):
-        os.system("rm liger-content/assets/main.1044.org.storymaker.app.obb ; cd liger-content/assets ; zip -n .mp4;.ogg;.mov;.qt;.wav;.au;.aiff;.3gp;.avi -r main.1044.org.storymaker.app.obb org.storymaker.app/default")
+        os.system("rm liger-content/assets/main.1044.org.storymaker.app.obb ; cd liger-content/assets ; zip -n .mp4:.ogg:.mov:.qt:.wav:.au:.aiff:.3gp:.avi -r main.1044.org.storymaker.app.obb org.storymaker.app/default")
         print "content generated at: liger-content/assets/main.1044.org.storymaker.app.obb"
     
     if query_yes_no("zip learning guide?"):
-        os.system("rm liger-content/assets/learning_guide.main.2.obb; cd liger-content/assets ; zip -n .mp4;.ogg;.mov;.qt;.wav;.au;.aiff;.3gp;.avi -r learning_guide.main.2.obb org.storymaker.app/learning_guide")
+        os.system("rm liger-content/assets/learning_guide.main.2.obb; cd liger-content/assets ; zip -n .mp4:.ogg:.mov:.qt:.wav:.au:.aiff:.3gp:.avi -r learning_guide.main.2.obb org.storymaker.app/learning_guide")
         print "content generated at: liger-content/assets/learning_guide.main.2.obb"
         
     if query_yes_no("zip burundi?"):
-        os.system("rm liger-content/assets/burundi.main.4.obb; cd liger-content/assets ; zip -n .mp4;.ogg;.mov;.qt;.wav;.au;.aiff;.3gp;.avi -r burundi.main.4.obb org.storymaker.app/burundi")
+        os.system("rm liger-content/assets/burundi.main.4.obb; cd liger-content/assets ; zip -n .mp4:.ogg:.mov:.qt:.wav:.au:.aiff:.3gp:.avi -r burundi.main.4.obb org.storymaker.app/burundi")
         print "content generated at: liger-content/assets/burundi.main.4.obb"
         
     if query_yes_no("zip burundi patch?"):
-        os.system("rm liger-content/assets/burundi.patch.4.obb; cd liger-content/assets/patch/ ; zip -n .mp4;.ogg;.mov;.qt;.wav;.au;.aiff;.3gp;.avi -r burundi.patch.4.obb org.storymaker.app/burundi ; mv burundi.patch.4.obb ..")
+        os.system("rm liger-content/assets/burundi.patch.4.obb; cd liger-content/assets/patch/ ; zip -n .mp4:.ogg:.mov:.qt:.wav:.au:.aiff:.3gp:.avi -r burundi.patch.4.obb org.storymaker.app/burundi ; mv burundi.patch.4.obb ..")
         print "content generated at: liger-content/assets/burundi.patch.4.obb"
         
     if query_yes_no("zip persian?"):
-        os.system("rm liger-content/assets/persian.main.4.obb; cd liger-content/assets ; zip -n .mp4;.ogg;.mov;.qt;.wav;.au;.aiff;.3gp;.avi -r persian.main.4.obb org.storymaker.app/persian")
+        os.system("rm liger-content/assets/persian.main.4.obb; cd liger-content/assets ; zip -n .mp4:.ogg:.mov:.qt:.wav:.au:.aiff:.3gp:.avi -r persian.main.4.obb org.storymaker.app/persian")
         print "content generated at: liger-content/assets/persian.main.4.obb"
 
     if query_yes_no("zip mena?"):
-        os.system("rm liger-content/assets/mena.main.4.obb; cd liger-content/assets ; zip -n .mp4;.ogg;.mov;.qt;.wav;.au;.aiff;.3gp;.avi -r mena.main.4.obb org.storymaker.app/mena")
+        os.system("rm liger-content/assets/mena.main.4.obb; cd liger-content/assets ; zip -n .mp4:.ogg:.mov:.qt:.wav:.au:.aiff:.3gp:.avi -r mena.main.4.obb org.storymaker.app/mena")
         print "content generated at: liger-content/assets/mena.main.4.obb"
         
     if query_yes_no("zip IJF15?"):
-        os.system("rm liger-content/assets/ijf15.main.4.obb; cd liger-content/assets ; zip -n .mp4;.ogg;.mov;.qt;.wav;.au;.aiff;.3gp;.avi -r ../zips/ijf15.main.4.obb org.storymaker.app/ijf15")
+        os.system("rm liger-content/assets/ijf15.main.4.obb; cd liger-content/assets ; zip -n .mp4:.ogg:.mov:.qt:.wav:.au:.aiff:.3gp:.avi -r ../zips/ijf15.main.4.obb org.storymaker.app/ijf15")
         print "content generated at: liger-content/zips/ijf15.main.4.obb"
         
     #if query_yes_no("zip dressgate?"):
-    #    os.system("rm liger-content/assets/dressgate.main.1.obb; cd liger-content/assets ; zip -n .mp4;.ogg;.mov;.qt;.wav;.au;.aiff;.3gp;.avi -r dressgate.main.1.obb org.storymaker.app/dressgate")
+    #    os.system("rm liger-content/assets/dressgate.main.1.obb; cd liger-content/assets ; zip -n .mp4:.ogg:.mov:.qt:.wav:.au:.aiff:.3gp:.avi -r dressgate.main.1.obb org.storymaker.app/dressgate")
     #    print "content generated at: liger-content/assets/dressgate.main.1.obb"
     
     os.system("sha256sum liger-content/zips/*.obb")
@@ -140,11 +136,11 @@ def adb_push_obb():
 def adb_push_files():
     """adb push to /sdcard/Android/<package>/files"""
 
-    if query_yes_no("adb push beta.main.4.obb to device files/ folder?"):
-        os.system("cd liger-content/zips ; adb push beta.main.4.obb /sdcard/Android/data/%s/files/beta.main.4.obb" % (packagename))
+    if query_yes_no("adb push beta.main.5.obb to device files/ folder?"):
+        os.system("cd liger-content/zips ; adb push beta.main.5.obb /sdcard/Android/data/%s/files/beta.main.5.obb" % (packagename))
 
-    if query_yes_no("adb push mobile_photo_101.main.1.obb to device files/ folder?"):
-        os.system("cd liger-content/zips ; adb push mobile_photo_101.main.1.obb /sdcard/Android/data/%s/files/mobile_photo_101.main.1.obb" % (packagename))
+    if query_yes_no("adb push mobile_photo_101.main.2.obb to device files/ folder?"):
+        os.system("cd liger-content/zips ; adb push mobile_photo_101.main.2.obb /sdcard/Android/data/%s/files/mobile_photo_101.main.2.obb" % (packagename))
         
     if query_yes_no("adb push learning_guide.main.2.obb to device files/ folder?"):
         os.system("cd liger-content/zips ; adb push learning_guide.main.2.obb /sdcard/Android/data/%s/files/learning_guide.main.2.obb" % (packagename))
@@ -191,11 +187,11 @@ def build_zip_push_mobile_photo_101():
     """build the json, zip it, push it to sd"""
 
     os.system("cd liger-content ; python generate_content.py ; python generate_localized_content.py")
-    os.system("rm liger-content/zips/mobile_photo_101.main.1.obb; cd liger-content/assets ; zip -n .mp4 -r ../zips/mobile_photo_101.main.1.obb org.storymaker.app/mobile_photo_101")
-    print "content generated at: liger-content/zips/mobile_photo_101.main.1.obb"
-    os.system("cd liger-content/zips ; adb push mobile_photo_101.main.1.obb /sdcard/Android/data/%s/files/mobile_photo_101.main.1.obb" % (packagename))
-    os.system("sha256sum liger-content/zips/mobile_photo_101.main.1.obb")
-    os.system("ls -l liger-content/zips/mobile_photo_101.main.1.obb")
+    os.system("rm liger-content/zips/mobile_photo_101.main.2.obb; cd liger-content/assets ; zip -n .mp4 -r ../zips/mobile_photo_101.main.2.obb org.storymaker.app/mobile_photo_101")
+    print "content generated at: liger-content/zips/mobile_photo_101.main.2.obb"
+    os.system("cd liger-content/zips ; adb push mobile_photo_101.main.2.obb /sdcard/Android/data/%s/files/mobile_photo_101.main.2.obb" % (packagename))
+    os.system("sha256sum liger-content/zips/mobile_photo_101.main.2.obb")
+    os.system("ls -l liger-content/zips/mobile_photo_101.main.2.obb")
     adb_push()
 
 cli.add_command(clone)
