@@ -1,3 +1,8 @@
+--- build 1068
+
+- Bugfixes
+- Changes to content packs
+
 --- build 1067
 
 - Cleanup after publishing to prevent devices from filling up
