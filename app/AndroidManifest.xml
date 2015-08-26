@@ -100,31 +100,6 @@
             android:multiprocess="true" >
         </provider>
 
-        <activity
-            android:name="net.micode.soundrecorder.SoundRecorder"
-            android:configChanges="keyboardHidden"
-            android:screenOrientation="portrait" >
-            <intent-filter>
-                <action android:name="android.intent.action.GET_CONTENT" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.OPENABLE" />
-
-                <data android:mimeType="audio/amr" />
-                <data android:mimeType="audio/3gpp" />
-            </intent-filter>
-            <intent-filter>
-                <action android:name="android.provider.MediaStore.RECORD_SOUND" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
-
-        <service
-            android:name="net.micode.soundrecorder.RecorderService"
-            android:exported="false" >
-        </service>
-
         <service
             android:name="org.storymaker.app.publish.PublishService"
             android:exported="false" >
