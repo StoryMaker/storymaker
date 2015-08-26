@@ -552,6 +552,19 @@ public class Utils {
                 mExternalStorageAvailable = mExternalStorageWriteable = false;
             }
 
+			// adding logging to clarify errors
+			if (!mExternalStorageAvailable || !mExternalStorageWriteable) {
+				if (Environment.MEDIA_MOUNTED_READ_ONLY.equals(state)) {
+					Log.e("STORAGE_ERROR", "EXTERNAL STORAGE IS READ ONLY");
+				}
+				if (!mExternalStorageAvailable) {
+					Log.e("STORAGE_ERROR", "EXTERNAL STORAGE IS NOT AVAILABLE (STATE: " + state + ")");
+				}
+				if (!mExternalStorageWriteable) {
+					Log.e("STORAGE_ERROR", "EXTERNAL STORAGE IS NOT WRITEABLE (STATE: " + state + ")");
+				}
+			}
+
             return mExternalStorageAvailable && mExternalStorageWriteable;
         }
     }
