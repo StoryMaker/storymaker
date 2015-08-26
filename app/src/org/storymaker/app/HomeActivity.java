@@ -313,7 +313,7 @@ public class HomeActivity extends BaseActivity {
         Log.d(TAG, "lang returned from getCurrentLocale: " + lang);
         HashMap<String, InstanceIndexItem> instanceIndex = IndexManager.fillInstanceIndex(HomeActivity.this, IndexManager.loadInstanceIndex(HomeActivity.this),lang);
 
-        // TEMP
+        // FIXME --- this should only happen on app updates in a migration
         if (instanceIndex.size() > 0) {
             Log.d(TAG, "INITACTIVITYLIST - FOUND INSTANCE INDEX WITH " + instanceIndex.size() + " ITEMS");
 
