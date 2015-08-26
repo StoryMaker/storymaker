@@ -1,5 +1,7 @@
 package org.storymaker.app.db;
 
+import android.util.Log;
+
 import com.hannesdorfmann.sqlbrite.objectmapper.annotation.Column;
 import com.hannesdorfmann.sqlbrite.objectmapper.annotation.ObjectMappable;
 
@@ -31,6 +33,7 @@ public class ExpansionIndexItem extends BaseIndexItem {
     public static final String COLUMN_DATEUPDATED = "dateUpdated";
     public static final String COLUMN_LANGUAGES = "languages";
     public static final String COLUMN_TAGS = "tags";
+    public static final String COLUMN_INSTALLEDFLAG = "installedFlag";
     public static final String COLUMN_DOWNLOADFLAG = "downloadFlag";
 
 
@@ -62,6 +65,7 @@ public class ExpansionIndexItem extends BaseIndexItem {
     // HashMap<String, String> extras; <- dropping this, don't know a good way to handle hash maps
 
     // for internal use
+    @Column(COLUMN_INSTALLEDFLAG) public int installedFlag;
     @Column(COLUMN_DOWNLOADFLAG) public int downloadFlag;
 
 
@@ -70,7 +74,7 @@ public class ExpansionIndexItem extends BaseIndexItem {
 
     }
 
-    public ExpansionIndexItem(long id, String title, String description, String thumbnailPath, String packageName, String expansionId, String patchOrder, String contentType, String expansionFileUrl, String expansionFilePath, String expansionFileVersion, long expansionFileSize, String expansionFileChecksum, String patchFileVersion, long patchFileSize, String patchFileChecksum, String author, String website, String dateUpdated, String languages, String tags, int downloadFlag) {
+    public ExpansionIndexItem(long id, String title, String description, String thumbnailPath, String packageName, String expansionId, String patchOrder, String contentType, String expansionFileUrl, String expansionFilePath, String expansionFileVersion, long expansionFileSize, String expansionFileChecksum, String patchFileVersion, long patchFileSize, String patchFileChecksum, String author, String website, String dateUpdated, String languages, String tags, int installedFlag, int downloadFlag) {
         super(id, title, description, thumbnailPath);
         this.packageName = packageName;
         this.expansionId = expansionId;
@@ -89,6 +93,7 @@ public class ExpansionIndexItem extends BaseIndexItem {
         this.dateUpdated = dateUpdated;
         this.languages = languages;
         this.tags = tags;
+        this.installedFlag = installedFlag;
         this.downloadFlag = downloadFlag;
     }
 
@@ -160,8 +165,38 @@ public class ExpansionIndexItem extends BaseIndexItem {
         return tags;
     }
 
+    public int getInstalledFlag() {
+        return installedFlag;
+    }
+
     public int getDownloadFlag() {
         return downloadFlag;
+    }
+
+    // sqlite doesn't support boolean columns, so provide an interface to fake it
+
+    public void setInstalledFlag(boolean installedFlag) {
+        if (installedFlag) {
+            this.installedFlag = 1;
+        } else {
+            this.installedFlag = 0;
+        }
+    }
+
+    public boolean isInstalled() {
+        if (installedFlag > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public void setDownloadFlag(boolean downloadFlag) {
+        if (downloadFlag) {
+            this.downloadFlag = 1;
+        } else {
+            this.downloadFlag = 0;
+        }
     }
 
     public boolean isDownloading() {
@@ -170,5 +205,50 @@ public class ExpansionIndexItem extends BaseIndexItem {
         } else {
             return false;
         }
+    }
+
+    public void update(scal.io.liger.model.ExpansionIndexItem item) {
+
+        // update db item with values from available index item
+
+        // leave id alone
+
+        this.title = item.getTitle();
+        this.description = item.getDescription();
+        this.thumbnailPath = item.getThumbnailPath();
+        this.packageName = item.getPackageName();
+        this.expansionId = item.getExpansionId();
+        this.patchOrder = item.getPatchOrder();
+        this.contentType = item.getContentType();
+        this.expansionFileUrl = item.getExpansionFileUrl();
+        this.expansionFilePath = item.getExpansionFilePath();
+        this.expansionFileVersion = item.getExpansionFileVersion();
+        this.expansionFileSize = item.getExpansionFileSize();
+        this.expansionFileChecksum = item.getExpansionFileChecksum();
+        this.patchFileVersion = item.getPatchFileVersion();
+        this.patchFileSize = item.getPatchFileSize();
+        this.patchFileChecksum = item.getPatchFileChecksum();
+        this.author = item.getAuthor();
+        this.website = item.getWebsite();
+        this.dateUpdated = item.getDateUpdated();
+
+        String languageString = null;
+        String tagString = null;
+
+        if (item.getLanguages() != null) {
+            languageString = item.getLanguages().toString();
+            Log.d("RX_DB", "WHAT DOES THIS LOOK LIKE? " + languageString);
+        }
+        if (item.getTags() != null) {
+            tagString = item.getTags().toString();
+            Log.d("RX_DB", "WHAT DOES THIS LOOK LIKE? " + tagString);
+        }
+
+        this.languages = languageString;
+        this.tags = tagString;
+
+        // leave installed flag alone
+        // leave download flag alone
+
     }
 }

@@ -47,6 +47,7 @@ public class ExpansionIndexItemDao extends Dao {
                 ExpansionIndexItem.COLUMN_DATEUPDATED + " TEXT",
                 ExpansionIndexItem.COLUMN_LANGUAGES + " TEXT",
                 ExpansionIndexItem.COLUMN_TAGS + " TEXT",
+                ExpansionIndexItem.COLUMN_INSTALLEDFLAG + " INTEGER",
                 ExpansionIndexItem.COLUMN_DOWNLOADFLAG + " INTEGER")
                 .execute(sqLiteDatabase);
 
@@ -84,8 +85,99 @@ public class ExpansionIndexItemDao extends Dao {
                 ExpansionIndexItem.COLUMN_DATEUPDATED,
                 ExpansionIndexItem.COLUMN_LANGUAGES,
                 ExpansionIndexItem.COLUMN_TAGS,
+                ExpansionIndexItem.COLUMN_INSTALLEDFLAG,
                 ExpansionIndexItem.COLUMN_DOWNLOADFLAG)
                 .FROM(ExpansionIndexItem.TABLE_NAME))
+                .map(new Func1<SqlBrite.Query, List<ExpansionIndexItem>>() {
+
+                    @Override
+                    public List<ExpansionIndexItem> call(SqlBrite.Query query) {
+                        Cursor cursor = query.run();
+                        return ExpansionIndexItemMapper.list(cursor);
+                    }
+                });
+    }
+
+    public Observable<List<ExpansionIndexItem>> getExpansionIndexItemsByInstalledFlag(boolean installedFlag) {
+
+        int installedInt = 0;
+
+        if (installedFlag) {
+            installedInt = 1;
+        }
+
+        // select all rows with matching download flag
+
+        return query(SELECT(ExpansionIndexItem.COLUMN_ID,
+                ExpansionIndexItem.COLUMN_TITLE,
+                ExpansionIndexItem.COLUMN_DESCRIPTION,
+                ExpansionIndexItem.COLUMN_THUMBNAILPATH,
+                ExpansionIndexItem.COLUMN_PACKAGENAME,
+                ExpansionIndexItem.COLUMN_EXPANSIONID,
+                ExpansionIndexItem.COLUMN_PATCHORDER,
+                ExpansionIndexItem.COLUMN_CONTENTTYPE,
+                ExpansionIndexItem.COLUMN_EXPANSIONFILEURL,
+                ExpansionIndexItem.COLUMN_EXPANSIONFILEPATH,
+                ExpansionIndexItem.COLUMN_EXPANSIONFILEVERSION,
+                ExpansionIndexItem.COLUMN_EXPANSIONFILESIZE,
+                ExpansionIndexItem.COLUMN_EXPANSIONFILECHECKSUM,
+                ExpansionIndexItem.COLUMN_PATCHFILEVERSION,
+                ExpansionIndexItem.COLUMN_PATCHFILESIZE,
+                ExpansionIndexItem.COLUMN_PATCHFILECHECKSUM,
+                ExpansionIndexItem.COLUMN_AUTHOR,
+                ExpansionIndexItem.COLUMN_WEBSITE,
+                ExpansionIndexItem.COLUMN_DATEUPDATED,
+                ExpansionIndexItem.COLUMN_LANGUAGES,
+                ExpansionIndexItem.COLUMN_TAGS,
+                ExpansionIndexItem.COLUMN_INSTALLEDFLAG,
+                ExpansionIndexItem.COLUMN_DOWNLOADFLAG)
+                .FROM(ExpansionIndexItem.TABLE_NAME)
+                .WHERE(ExpansionIndexItem.COLUMN_INSTALLEDFLAG + " = ? "), Integer.toString(installedInt)) // query parameters must be strings?
+                .map(new Func1<SqlBrite.Query, List<ExpansionIndexItem>>() {
+
+                    @Override
+                    public List<ExpansionIndexItem> call(SqlBrite.Query query) {
+                        Cursor cursor = query.run();
+                        return ExpansionIndexItemMapper.list(cursor);
+                    }
+                });
+    }
+
+    public Observable<List<ExpansionIndexItem>> getExpansionIndexItemsByDownloadFlag(boolean downloadFlag) {
+
+        int downloadInt = 0;
+
+        if (downloadFlag) {
+            downloadInt = 1;
+        }
+
+        // select all rows with matching download flag
+
+        return query(SELECT(ExpansionIndexItem.COLUMN_ID,
+                ExpansionIndexItem.COLUMN_TITLE,
+                ExpansionIndexItem.COLUMN_DESCRIPTION,
+                ExpansionIndexItem.COLUMN_THUMBNAILPATH,
+                ExpansionIndexItem.COLUMN_PACKAGENAME,
+                ExpansionIndexItem.COLUMN_EXPANSIONID,
+                ExpansionIndexItem.COLUMN_PATCHORDER,
+                ExpansionIndexItem.COLUMN_CONTENTTYPE,
+                ExpansionIndexItem.COLUMN_EXPANSIONFILEURL,
+                ExpansionIndexItem.COLUMN_EXPANSIONFILEPATH,
+                ExpansionIndexItem.COLUMN_EXPANSIONFILEVERSION,
+                ExpansionIndexItem.COLUMN_EXPANSIONFILESIZE,
+                ExpansionIndexItem.COLUMN_EXPANSIONFILECHECKSUM,
+                ExpansionIndexItem.COLUMN_PATCHFILEVERSION,
+                ExpansionIndexItem.COLUMN_PATCHFILESIZE,
+                ExpansionIndexItem.COLUMN_PATCHFILECHECKSUM,
+                ExpansionIndexItem.COLUMN_AUTHOR,
+                ExpansionIndexItem.COLUMN_WEBSITE,
+                ExpansionIndexItem.COLUMN_DATEUPDATED,
+                ExpansionIndexItem.COLUMN_LANGUAGES,
+                ExpansionIndexItem.COLUMN_TAGS,
+                ExpansionIndexItem.COLUMN_INSTALLEDFLAG,
+                ExpansionIndexItem.COLUMN_DOWNLOADFLAG)
+                .FROM(ExpansionIndexItem.TABLE_NAME)
+                .WHERE(ExpansionIndexItem.COLUMN_DOWNLOADFLAG + " = ? "), Integer.toString(downloadInt)) // query parameters must be strings?
                 .map(new Func1<SqlBrite.Query, List<ExpansionIndexItem>>() {
 
                     @Override
@@ -121,6 +213,7 @@ public class ExpansionIndexItemDao extends Dao {
                 ExpansionIndexItem.COLUMN_DATEUPDATED,
                 ExpansionIndexItem.COLUMN_LANGUAGES,
                 ExpansionIndexItem.COLUMN_TAGS,
+                ExpansionIndexItem.COLUMN_INSTALLEDFLAG,
                 ExpansionIndexItem.COLUMN_DOWNLOADFLAG)
                 .FROM(ExpansionIndexItem.TABLE_NAME)
                 .WHERE(ExpansionIndexItem.COLUMN_CONTENTTYPE + " = ? "), contentType)
@@ -134,7 +227,7 @@ public class ExpansionIndexItemDao extends Dao {
                 });
     }
 
-    public Observable<Long> addExpansionIndexItem(long id, String title, String description, String thumbnailPath, String packageName, String expansionId, String patchOrder, String contentType, String expansionFileUrl, String expansionFilePath, String expansionFileVersion, long expansionFileSize, String expansionFileChecksum, String patchFileVersion, long patchFileSize, String patchFileChecksum, String author, String website, String dateUpdated, String languages, String tags, int downloadFlag) {
+    public Observable<Long> addExpansionIndexItem(long id, String title, String description, String thumbnailPath, String packageName, String expansionId, String patchOrder, String contentType, String expansionFileUrl, String expansionFilePath, String expansionFileVersion, long expansionFileSize, String expansionFileChecksum, String patchFileVersion, long patchFileSize, String patchFileChecksum, String author, String website, String dateUpdated, String languages, String tags, int installedFlag, int downloadFlag) {
 
         Observable<Long> rowId = null;
 
@@ -160,6 +253,7 @@ public class ExpansionIndexItemDao extends Dao {
                 .dateUpdated(dateUpdated)
                 .languages(languages)
                 .tags(tags)
+                .installedFlag(installedFlag)
                 .downloadFlag(downloadFlag)
                 .build();
 
@@ -174,12 +268,12 @@ public class ExpansionIndexItemDao extends Dao {
 
     public Observable<Long> addExpansionIndexItem(scal.io.liger.model.ExpansionIndexItem item) {
 
-        String langguageString = null;
+        String languageString = null;
         String tagString = null;
 
         if (item.getLanguages() != null) {
-            langguageString = item.getLanguages().toString();
-            Log.d("RX_DB", "WHAT DOES THIS LOOK LIKE? " + langguageString);
+            languageString = item.getLanguages().toString();
+            Log.d("RX_DB", "WHAT DOES THIS LOOK LIKE? " + languageString);
         }
         if (item.getTags() != null) {
             tagString = item.getTags().toString();
@@ -205,8 +299,98 @@ public class ExpansionIndexItemDao extends Dao {
                 item.getAuthor(),
                 item.getWebsite(),
                 item.getDateUpdated(),
-                langguageString,
+                languageString,
                 tagString,
-                0); // default to false, no need to update liger ExpansionIndexItem class
+                0,  // default to false (not installed), no need to update liger ExpansionIndexItem class
+                0); // default to false (not downloading), no need to update liger ExpansionIndexItem class
+    }
+
+    public Observable<Long> addExpansionIndexItem(ExpansionIndexItem item) {
+
+        return addExpansionIndexItem(item.getId(),
+                item.getTitle(),
+                item.getDescription(),
+                item.getThumbnailPath(),
+                item.getPackageName(),
+                item.getExpansionId(),
+                item.getPatchOrder(),
+                item.getContentType(),
+                item.getExpansionFileUrl(),
+                item.getExpansionFilePath(),
+                item.getExpansionFileVersion(),
+                item.getExpansionFileSize(),
+                item.getExpansionFileChecksum(),
+                item.getPatchFileVersion(),
+                item.getPatchFileSize(),
+                item.getPatchFileChecksum(),
+                item.getAuthor(),
+                item.getWebsite(),
+                item.getDateUpdated(),
+                item.getLanguages(),
+                item.getTags(),
+                item.getInstalledFlag(),
+                item.getDownloadFlag());
+    }
+
+    public Observable<Integer> removeExpansionIndexItem(ExpansionIndexItem item) {
+
+        // remove an existing record
+
+        return removeExpansionIndexItemByKey(item.getId());
+    }
+
+    public Observable<Integer> removeExpansionIndexItemByKey(long key) {
+
+        // remove an existing record with a matching key
+
+        return delete(ExpansionIndexItem.TABLE_NAME,
+                ExpansionIndexItem.COLUMN_ID + " = ? ",
+                Long.toString(key));
+    }
+
+    public Observable<List<ExpansionIndexItem>> getExpansionIndexItem(ExpansionIndexItem item) {
+
+        // check current state of an existing record
+
+        return getExpansionIndexItemByKey(item.getId());
+    }
+
+    public Observable<List<ExpansionIndexItem>> getExpansionIndexItemByKey(long key) {
+
+        // check current state of an existing record with a matching key
+
+        return query(SELECT(ExpansionIndexItem.COLUMN_ID,
+                ExpansionIndexItem.COLUMN_TITLE,
+                ExpansionIndexItem.COLUMN_DESCRIPTION,
+                ExpansionIndexItem.COLUMN_THUMBNAILPATH,
+                ExpansionIndexItem.COLUMN_PACKAGENAME,
+                ExpansionIndexItem.COLUMN_EXPANSIONID,
+                ExpansionIndexItem.COLUMN_PATCHORDER,
+                ExpansionIndexItem.COLUMN_CONTENTTYPE,
+                ExpansionIndexItem.COLUMN_EXPANSIONFILEURL,
+                ExpansionIndexItem.COLUMN_EXPANSIONFILEPATH,
+                ExpansionIndexItem.COLUMN_EXPANSIONFILEVERSION,
+                ExpansionIndexItem.COLUMN_EXPANSIONFILESIZE,
+                ExpansionIndexItem.COLUMN_EXPANSIONFILECHECKSUM,
+                ExpansionIndexItem.COLUMN_PATCHFILEVERSION,
+                ExpansionIndexItem.COLUMN_PATCHFILESIZE,
+                ExpansionIndexItem.COLUMN_PATCHFILECHECKSUM,
+                ExpansionIndexItem.COLUMN_AUTHOR,
+                ExpansionIndexItem.COLUMN_WEBSITE,
+                ExpansionIndexItem.COLUMN_DATEUPDATED,
+                ExpansionIndexItem.COLUMN_LANGUAGES,
+                ExpansionIndexItem.COLUMN_TAGS,
+                ExpansionIndexItem.COLUMN_INSTALLEDFLAG,
+                ExpansionIndexItem.COLUMN_DOWNLOADFLAG)
+                .FROM(ExpansionIndexItem.TABLE_NAME)
+                .WHERE(ExpansionIndexItem.COLUMN_ID + " = ? "), Long.toString(key))
+                .map(new Func1<SqlBrite.Query, List<ExpansionIndexItem>>() {
+
+                    @Override
+                    public List<ExpansionIndexItem> call(SqlBrite.Query query) {
+                        Cursor cursor = query.run();
+                        return ExpansionIndexItemMapper.list(cursor);
+                    }
+                });
     }
 }

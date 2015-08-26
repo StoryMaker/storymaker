@@ -9,7 +9,7 @@ import org.storymaker.app.server.ServerManager;
 
 import info.guardianproject.onionkit.ui.OrbotHelper;
 import rx.functions.Action1;
-import scal.io.liger.DownloadHelper;
+//import scal.io.liger.DownloadHelper;
 import scal.io.liger.IndexManager;
 import scal.io.liger.JsonHelper;
 import scal.io.liger.MainActivity;
@@ -79,6 +79,8 @@ public class HomeActivity extends BaseActivity {
     private DaoManager daoManager;
     private int dbVersion = 1;
 
+    private DownloadHelper downloadHelper;
+
     // must set dao stuff in constructor?
     public HomeActivity() {
 
@@ -88,6 +90,7 @@ public class HomeActivity extends BaseActivity {
         daoManager = new DaoManager(HomeActivity.this, "Storymaker.db", dbVersion, instanceIndexItemDao, expansionIndexItemDao);
         daoManager.setLogging(true);
 
+        downloadHelper = new DownloadHelper(HomeActivity.this, expansionIndexItemDao);
     }
 
 
@@ -215,7 +218,7 @@ public class HomeActivity extends BaseActivity {
 
             mSwipeRefreshLayout.setRefreshing(false);
             // resolve available/installed conflicts and grab updates if needed
-            if (!DownloadHelper.checkAndDownload(mContext)) {
+            if (downloadHelper.checkAndDownload()) {
                 Toast.makeText(mContext, "Downloading content and/or updating installed files", Toast.LENGTH_LONG).show(); // FIXME move to strings.xml
             }
             // refresh regardless (called from onResume and OnRefreshListener)
@@ -700,7 +703,7 @@ public class HomeActivity extends BaseActivity {
         if ((splId != null) && (splId.equals("default_library"))) {
 
             // initiate check/download for main/patch expansion files
-            boolean readyToOpen = DownloadHelper.checkAndDownloadNew(context);
+            boolean readyToOpen = DownloadHelper.checkAndDownloadExpansionFiles(context);
 
             if (!readyToOpen) {
                 // if file is being downloaded, don't open
