@@ -1,4 +1,4 @@
---- build 1069
+--- build 1069 / 1070
 
 - Fix Moto G 2 Dual Sim crash
 
