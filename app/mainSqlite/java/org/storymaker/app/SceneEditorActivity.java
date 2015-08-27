@@ -32,8 +32,6 @@ import java.util.Date;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
-import net.micode.soundrecorder.SoundRecorder;
-
 import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.app.FragmentTransaction;
@@ -374,13 +372,7 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
 
         if (mProject.getStoryType() == Project.STORY_TYPE_AUDIO)
         {
-            Intent i = new Intent(getApplicationContext(), SoundRecorder.class);
-            i.putExtra("dir", mMPM.getExternalProjectFolder(mProject, getBaseContext()));
-            i.setType(CAPTURE_MIMETYPE_AUDIO);
-            i.putExtra("mode", mProject.getStoryType());
-            mMPM.mClipIndex = clipIndex;
-            startActivityForResult(i,mProject.getStoryType());
-
+            Log.d(TAG, "openCaptureMode was called for STORY_TYPE_AUDIO, this shouldn't happen anymore!");
         }
         else
         {
