@@ -2,9 +2,9 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
 
     <!-- add account names/passwords for testing -->
-    <string name="storymaker_name"></string>
-    <string name="storymaker_pass"></string>
-    <string name="soundcloud_name"></string>
-    <string name="soundcloud_pass"></string>
+    <string name="storymaker_name">johnscalio1</string>
+    <string name="storymaker_pass">test123123</string>
+    <string name="soundcloud_name">johnscalio1@gmail.com</string>
+    <string name="soundcloud_pass">test123123</string>
 
 </resources>
