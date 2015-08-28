@@ -25,7 +25,7 @@ import static org.hamcrest.Matchers.is;
 /**
  * Created by mnbogner on 7/24/15.
  */
-public class    EndToEndTest extends BaseTest {
+public class EndToEndTest extends BaseTest {
 
     boolean soundcloudConnected = false;
 
