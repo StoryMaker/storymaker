@@ -106,7 +106,13 @@ public class HomeActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
 
         // file cleanup
-        JsonHelper.cleanup(StorageHelper.getActualStorageDirectory(this).getPath());
+        File actualStorageDirectory = StorageHelper.getActualStorageDirectory(this);
+
+        if (actualStorageDirectory != null) {
+            JsonHelper.cleanup(actualStorageDirectory.getPath());
+        } else {
+            // this is an error, will deal with it below
+        }
 
         // default
         loggedIn = false;
@@ -114,14 +120,23 @@ public class HomeActivity extends BaseActivity {
         // set title bar as a reminder if test server is specified
         getActionBar().setTitle(Utils.getAppName(this));
 
-        // copy index files
-        IndexManager.copyAvailableIndex(this, false); // TODO: REPLACE THIS WITH INDEX DOWNLOAD (IF LOGGED IN) <- NEED TO COPY FILE FOR BASELINE CONTENT
+        if (actualStorageDirectory != null) {
+            // copy index files
+            IndexManager.copyAvailableIndex(this, false); // TODO: REPLACE THIS WITH INDEX DOWNLOAD (IF LOGGED IN) <- NEED TO COPY FILE FOR BASELINE CONTENT
 
-        // NEW/TEMP
-        // DOWNLOAD AVAILABE INDEX FOR CURRENT USER AND SAVE TO TARGET FILE
-        // NEED TO ACCOUNT FOR POSSIBLE MISSING INDEX
-        IndexTask iTask = new IndexTask(this, true); // force download at startup (maybe only force on a timetable?)
-        iTask.execute();
+            // NEW/TEMP
+            // DOWNLOAD AVAILABE INDEX FOR CURRENT USER AND SAVE TO TARGET FILE
+            // NEED TO ACCOUNT FOR POSSIBLE MISSING INDEX
+            IndexTask iTask = new IndexTask(this, true); // force download at startup (maybe only force on a timetable?)
+            iTask.execute();
+        } else {
+            //show storage error message
+            new AlertDialog.Builder(this)
+                    .setTitle(Utils.getAppName(this))
+                    .setIcon(android.R.drawable.ic_dialog_info)
+                    .setMessage(R.string.err_storage_not_available)
+                    .show();
+        }
 
         // we want to grab required updates without restarting the app
         // integrate with index task
@@ -247,8 +262,22 @@ public class HomeActivity extends BaseActivity {
         //} //else {
         // merge this with index task
          //   initActivityList();
-        IndexTask iTask = new IndexTask(this, false); // don't force download on resume (currently triggers only on login)
-        iTask.execute();
+
+        // need to check this to determine whether there is a storage issue that will cause a crash
+        File actualStorageDirectory = StorageHelper.getActualStorageDirectory(this);
+
+        if (actualStorageDirectory != null) {
+            IndexTask iTask = new IndexTask(this, false); // don't force download on resume (currently triggers only on login)
+            iTask.execute();
+        } else {
+            //show storage error message
+            new AlertDialog.Builder(this)
+                    .setTitle(Utils.getAppName(this))
+                    .setIcon(android.R.drawable.ic_dialog_info)
+                    .setMessage(R.string.err_storage_not_available)
+                    .show();
+        }
+
         //}
 		
 		boolean isExternalStorageReady = Utils.Files.isExternalStorageReady();
@@ -677,7 +706,20 @@ public class HomeActivity extends BaseActivity {
         }
         else if (item.getItemId() == R.id.menu_new_project)
         {
-            launchLiger(this, "default_library", null, null);
+            // need to check this to determine whether there is a storage issue that will cause a crash
+            File actualStorageDirectory = StorageHelper.getActualStorageDirectory(this);
+
+            if (actualStorageDirectory != null) {
+                launchLiger(this, "default_library", null, null);
+            } else {
+                //show storage error message
+                new AlertDialog.Builder(this)
+                        .setTitle(Utils.getAppName(this))
+                        .setIcon(android.R.drawable.ic_dialog_info)
+                        .setMessage(R.string.err_storage_not_available)
+                        .show();
+            }
+
             return true;
         }
         else if (item.getItemId() == R.id.menu_about)
