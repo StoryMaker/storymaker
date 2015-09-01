@@ -1,51 +1,11 @@
 package org.storymaker.app;
 
-import org.apache.commons.io.FilenameUtils;
-import org.storymaker.app.model.Project;
-import org.storymaker.app.server.LoginActivity;
-import org.storymaker.app.server.ServerManager;
-
-import info.guardianproject.onionkit.ui.OrbotHelper;
-import rx.functions.Action1;
-//import scal.io.liger.DownloadHelper;
-//import scal.io.liger.IndexManager;
-import scal.io.liger.JsonHelper;
-import scal.io.liger.MainActivity;
-//import scal.io.liger.model.BaseIndexItem;
-import scal.io.liger.StorymakerIndexManager;
-import scal.io.liger.model.ContentPackMetadata;
-//import scal.io.liger.model.ExpansionIndexItem;
-//import scal.io.liger.model.InstanceIndexItem;
-import scal.io.liger.model.StoryPathLibrary;
-import scal.io.liger.model.sqlbrite.AvailableIndexItem;
-import scal.io.liger.model.sqlbrite.AvailableIndexItemDao;
-import scal.io.liger.model.sqlbrite.BaseIndexItem;
-import scal.io.liger.model.sqlbrite.ExpansionIndexItem;
-import scal.io.liger.model.sqlbrite.InstalledIndexItem;
-import scal.io.liger.model.sqlbrite.InstalledIndexItemDao;
-import scal.io.liger.model.sqlbrite.InstanceIndexItem;
-import scal.io.liger.model.sqlbrite.InstanceIndexItemDao;
-import scal.io.liger.model.sqlbrite.QueueItemDao;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-
-import net.hockeyapp.android.CrashManager;
-import net.hockeyapp.android.CrashManagerListener;
-import net.hockeyapp.android.UpdateManager;
-
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.database.sqlite.SQLiteConstraintException;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -65,8 +25,50 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-//import com.google.analytics.tracking.android.GoogleAnalytics;
 import com.hannesdorfmann.sqlbrite.dao.DaoManager;
+
+import net.hockeyapp.android.CrashManager;
+import net.hockeyapp.android.CrashManagerListener;
+import net.hockeyapp.android.UpdateManager;
+
+import org.apache.commons.io.FilenameUtils;
+import org.storymaker.app.model.Project;
+import org.storymaker.app.server.LoginActivity;
+import org.storymaker.app.server.ServerManager;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+
+import info.guardianproject.onionkit.ui.OrbotHelper;
+import rx.functions.Action1;
+import scal.io.liger.JsonHelper;
+import scal.io.liger.MainActivity;
+import scal.io.liger.StorageHelper;
+import scal.io.liger.StorymakerIndexManager;
+import scal.io.liger.model.ContentPackMetadata;
+import scal.io.liger.model.StoryPathLibrary;
+import scal.io.liger.model.sqlbrite.AvailableIndexItem;
+import scal.io.liger.model.sqlbrite.AvailableIndexItemDao;
+import scal.io.liger.model.sqlbrite.BaseIndexItem;
+import scal.io.liger.model.sqlbrite.ExpansionIndexItem;
+import scal.io.liger.model.sqlbrite.InstalledIndexItem;
+import scal.io.liger.model.sqlbrite.InstalledIndexItemDao;
+import scal.io.liger.model.sqlbrite.InstanceIndexItem;
+import scal.io.liger.model.sqlbrite.InstanceIndexItemDao;
+import scal.io.liger.model.sqlbrite.QueueItemDao;
+
+//import scal.io.liger.DownloadHelper;
+//import scal.io.liger.IndexManager;
+//import scal.io.liger.model.BaseIndexItem;
+//import scal.io.liger.model.ExpansionIndexItem;
+//import scal.io.liger.model.InstanceIndexItem;
+//import com.google.analytics.tracking.android.GoogleAnalytics;
 
 public class HomeActivity extends BaseActivity {
     private final static String TAG = "HomeActivity";
@@ -175,17 +177,35 @@ public class HomeActivity extends BaseActivity {
 
 
 
+        // file cleanup
+        File actualStorageDirectory = StorageHelper.getActualStorageDirectory(this);
+
+        if (actualStorageDirectory != null) {
+            JsonHelper.cleanup(actualStorageDirectory.getPath());
+        } else {
+            // this is an error, will deal with it below
+        }
+
         // default
         loggedIn = false;
 
         // set title bar as a reminder if test server is specified
         getActionBar().setTitle(Utils.getAppName(this));
 
-        // NEW/TEMP
-        // DOWNLOAD AVAILABE INDEX FOR CURRENT USER AND SAVE TO TARGET FILE
-        // NEED TO ACCOUNT FOR POSSIBLE MISSING INDEX
-        IndexTask iTask = new IndexTask(this, true); // force download at startup (maybe only force on a timetable?)
-        iTask.execute();
+        if (actualStorageDirectory != null) {
+            // NEW/TEMP
+            // DOWNLOAD AVAILABE INDEX FOR CURRENT USER AND SAVE TO TARGET FILE
+            // NEED TO ACCOUNT FOR POSSIBLE MISSING INDEX
+            IndexTask iTask = new IndexTask(this, true); // force download at startup (maybe only force on a timetable?)
+            iTask.execute();
+        } else {
+            //show storage error message
+            new AlertDialog.Builder(this)
+                    .setTitle(Utils.getAppName(this))
+                    .setIcon(android.R.drawable.ic_dialog_info)
+                    .setMessage(R.string.err_storage_not_available)
+                    .show();
+        }
 
         // we want to grab required updates without restarting the app
         // integrate with index task
@@ -313,8 +333,22 @@ public class HomeActivity extends BaseActivity {
         //} //else {
         // merge this with index task
          //   initActivityList();
-        IndexTask iTask = new IndexTask(this, false); // don't force download on resume (currently triggers only on login)
-        iTask.execute();
+
+        // need to check this to determine whether there is a storage issue that will cause a crash
+        File actualStorageDirectory = StorageHelper.getActualStorageDirectory(this);
+
+        if (actualStorageDirectory != null) {
+            IndexTask iTask = new IndexTask(this, false); // don't force download on resume (currently triggers only on login)
+            iTask.execute();
+        } else {
+            //show storage error message
+            new AlertDialog.Builder(this)
+                    .setTitle(Utils.getAppName(this))
+                    .setIcon(android.R.drawable.ic_dialog_info)
+                    .setMessage(R.string.err_storage_not_available)
+                    .show();
+        }
+
         //}
 		
 		boolean isExternalStorageReady = Utils.Files.isExternalStorageReady();
@@ -900,7 +934,20 @@ public class HomeActivity extends BaseActivity {
         }
         else if (item.getItemId() == R.id.menu_new_project)
         {
-            launchLiger(this, "default_library", null, null);
+            // need to check this to determine whether there is a storage issue that will cause a crash
+            File actualStorageDirectory = StorageHelper.getActualStorageDirectory(this);
+
+            if (actualStorageDirectory != null) {
+                launchLiger(this, "default_library", null, null);
+            } else {
+                //show storage error message
+                new AlertDialog.Builder(this)
+                        .setTitle(Utils.getAppName(this))
+                        .setIcon(android.R.drawable.ic_dialog_info)
+                        .setMessage(R.string.err_storage_not_available)
+                        .show();
+            }
+
             return true;
         }
         else if (item.getItemId() == R.id.menu_about)
