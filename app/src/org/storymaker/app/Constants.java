@@ -24,4 +24,10 @@ public class Constants {
 
     public final static String TOR_PROXY_HOST = "localhost";
     public final static int TOR_PROXY_PORT = 8118;
+
+    public static final String AVAILABLE = "available";
+    public static final String INSTALLED = "installed";
+
+    public static final String PREFS_FILE = "storypath_prefs";
+    public static final String PREFS_APP_TITLE = "PREFS_APP_TITLE";
 }

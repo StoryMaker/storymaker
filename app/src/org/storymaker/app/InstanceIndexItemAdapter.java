@@ -25,11 +25,16 @@ import java.util.HashMap;
 import java.util.List;
 
 import scal.io.liger.Constants;
-import scal.io.liger.IndexManager;
+//import scal.io.liger.IndexManager;
+import scal.io.liger.StorymakerIndexManager;
 import scal.io.liger.ZipHelper;
-import scal.io.liger.model.BaseIndexItem;
-import scal.io.liger.model.ExpansionIndexItem;
-import scal.io.liger.model.InstanceIndexItem;
+import scal.io.liger.model.sqlbrite.BaseIndexItem;
+import scal.io.liger.model.sqlbrite.ExpansionIndexItem;
+import scal.io.liger.model.sqlbrite.InstalledIndexItemDao;
+import scal.io.liger.model.sqlbrite.InstanceIndexItem;
+//import scal.io.liger.model.BaseIndexItem;
+//import scal.io.liger.model.ExpansionIndexItem;
+//import scal.io.liger.model.InstanceIndexItem;
 
 /**
  * Created by davidbrodsky on 10/12/14.
@@ -38,6 +43,7 @@ public class InstanceIndexItemAdapter extends RecyclerView.Adapter<InstanceIndex
 
     public List<BaseIndexItem> mDataset;
     private BaseIndexItemSelectedListener mListener;
+    private InstalledIndexItemDao installedDao;
 
     private static final SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm");
 
@@ -62,9 +68,12 @@ public class InstanceIndexItemAdapter extends RecyclerView.Adapter<InstanceIndex
     }
 
     public InstanceIndexItemAdapter(@NonNull List<BaseIndexItem> myDataset,
-                                    @Nullable BaseIndexItemSelectedListener listener) {
+                                    @Nullable BaseIndexItemSelectedListener listener,
+                                    InstalledIndexItemDao installedDao) {
         mDataset = myDataset;
         mListener = listener;
+
+        this.installedDao = installedDao;
     }
 
     @Override
@@ -153,11 +162,11 @@ public class InstanceIndexItemAdapter extends RecyclerView.Adapter<InstanceIndex
         } else {
             ExpansionIndexItem expansionIndexItem = (ExpansionIndexItem) baseItem;
             // check if this is already installed or waiting to be downloaded to change which picture we show
-            HashMap<String, ExpansionIndexItem> installedIds = IndexManager.loadInstalledIdIndex(context);
+            HashMap<String, ExpansionIndexItem> installedIds = StorymakerIndexManager.loadInstalledIdIndex(context, installedDao);
             holder.title.setText(baseItem.getTitle());
 
             // need to verify that content pack containing thumbnail actually exists
-            File contentCheck = new File(IndexManager.buildFilePath(expansionIndexItem, context), IndexManager.buildFileName(expansionIndexItem, Constants.MAIN));
+            File contentCheck = new File(StorymakerIndexManager.buildFilePath(expansionIndexItem, context), StorymakerIndexManager.buildFileName(expansionIndexItem, Constants.MAIN));
 
             // need to verify that index item has been updated with content pack thumbnail path
             String contentPath = expansionIndexItem.getPackageName() + File.separator + expansionIndexItem.getExpansionId();
@@ -175,7 +184,7 @@ public class InstanceIndexItemAdapter extends RecyclerView.Adapter<InstanceIndex
                                 .load(thumbnailPath)
                                 .into(holder.thumb);
                     } else {
-                        File file = IndexManager.copyThumbnail(context, expansionIndexItem.getThumbnailPath());
+                        File file = StorymakerIndexManager.copyThumbnail(context, expansionIndexItem.getThumbnailPath());
                         Picasso.with(context)
                                 .load(file)
 //                        .load("file:///android_assets/" + expansionIndexItem.getThumbnailPath())

@@ -1,26 +1,29 @@
 package org.storymaker.app;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.DownloadManager;
 import android.app.Notification;
 import android.app.NotificationManager;
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
-import com.hannesdorfmann.sqlbrite.dao.DaoManager;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.filefilter.WildcardFileFilter;
-import org.apache.http.conn.ConnectTimeoutException;
-import org.storymaker.app.db.ExpansionIndexItem;
-import org.storymaker.app.db.ExpansionIndexItemDao;
 
 import java.io.BufferedInputStream;
 import java.io.File;
@@ -31,48 +34,79 @@ import java.net.InetSocketAddress;
 import java.net.Proxy;
 import java.net.SocketAddress;
 import java.net.SocketTimeoutException;
+import java.net.URI;
 import java.util.Date;
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import ch.boye.httpclientandroidlib.HttpResponse;
+import ch.boye.httpclientandroidlib.client.methods.HttpGet;
+import ch.boye.httpclientandroidlib.conn.ConnectTimeoutException;
+import info.guardianproject.onionkit.trust.StrongHttpsClient;
 import info.guardianproject.onionkit.ui.OrbotHelper;
-import rx.functions.Action1;
-import scal.io.liger.StorageHelper;
+import scal.io.liger.StorymakerIndexManager;
+import scal.io.liger.StorymakerQueueManager;
 import scal.io.liger.ZipHelper;
+import scal.io.liger.model.sqlbrite.ExpansionIndexItem;
+import scal.io.liger.model.sqlbrite.InstalledIndexItemDao;
+import scal.io.liger.model.sqlbrite.QueueItemDao;
 
 /**
- * Created by mnbogner on 8/24/15.
+ * Created by mnbogner on 11/7/14.
  */
-public class DownloadManager implements Runnable {
+public class StorymakerDownloadManager implements Runnable {
+    private final static String TAG = "LigerAltDownloadManager";
 
-    boolean foundInQueue;
+    // TODO use HTTPS
+    // TODO pickup Tor settings
 
-    private final static String TAG = "DownloadManager";
-
-    // store in manager to skip db lookups
+    // store in manager to skip index lookups
     private ExpansionIndexItem indexItem = null;
-
-
-    // i think we need a clean db item to set/unset flags, DownloadHelper will update the actual content of the db item
-    private ExpansionIndexItem cleanItem = null;
-
-
     private String fileName;
     private Context context;
 
+    private DownloadManager dManager;
     private NotificationManager nManager;
+    private long lastDownload = -1L;
 
-    private String mAppTitle = "StoryMaker";  // fix later to pull from context/preferences
+    StrongHttpsClient mClient = null;
 
-    // db stuff
-    private ExpansionIndexItemDao expansionIndexItemDao;
+    //boolean useManager = true;
+    //boolean useTor = true; // CURRENTLY SET TO TRUE, WILL USE TOR IF ORBOT IS RUNNING
 
-    // pass in dao for more predictable db interaction?
-    public DownloadManager(String fileName, ExpansionIndexItem indexItem, Context context, ExpansionIndexItemDao expansionIndexItemDao) {
+    private String mAppTitle;
+
+    InstalledIndexItemDao installedDao;
+    private QueueItemDao queueDao;
+
+    private boolean confirmDownload;
+
+    public StorymakerDownloadManager(String fileName, ExpansionIndexItem indexItem, Context context, InstalledIndexItemDao installedDao, QueueItemDao queueDao, boolean confirmDownload) {
         this.fileName = fileName;
         this.indexItem = indexItem;
         this.context = context;
-        this.expansionIndexItemDao = expansionIndexItemDao;
+
+        this.installedDao = installedDao;
+        this.queueDao = queueDao;
+
+        this.confirmDownload = confirmDownload;
+
+        this.mAppTitle = context.getSharedPreferences(Constants.PREFS_FILE, Context.MODE_PRIVATE).getString(Constants.PREFS_APP_TITLE, "StoryPath");
+    }
+
+    public String getFileName() {
+        return fileName;
+    }
+
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
+    }
+
+    public Context getContext() {
+        return context;
+    }
+
+    public void setContext(Context context) {
+        this.context = context;
     }
 
     @Override
@@ -85,12 +119,12 @@ public class DownloadManager implements Runnable {
         //       finished download and no visible file progress, we'll manage the file and return without
         //       starting another download.
 
-        if (checkDownloadFlag()) {
+        if (checkQueue()) {
             Log.d("DOWNLOAD", "ANOTHER PROCESS IS ALREADY DOWNLOADING " + fileName + ", WILL NOT START DOWNLOAD");
         } else {
             Log.d("DOWNLOAD", "NO OTHER PROCESS IS DOWNLOADING " + fileName + ", CHECKING FOR FILES");
 
-            File tempFile = new File(StorageHelper.getActualStorageDirectory(context), fileName + ".tmp");
+            File tempFile = new File(StorymakerIndexManager.buildFilePath(indexItem, context), fileName + ".tmp");
 
             if (tempFile.exists()) {
 
@@ -108,6 +142,7 @@ public class DownloadManager implements Runnable {
                         Log.d("DOWNLOAD", partFile.getPath() + " IS A ZERO BYTE FILE ");
                         downloadRequired = true;
                     } else {
+
                         if (partFile.getPath().contains(Constants.MAIN)) {
                             if ((indexItem.getExpansionFileSize() > 0) && (indexItem.getExpansionFileSize() > partFile.length())) {
                                 Log.d("DOWNLOAD", partFile.getPath() + " IS TOO SMALL (" + partFile.length() + "/" + indexItem.getExpansionFileSize() + ")");
@@ -166,7 +201,9 @@ public class DownloadManager implements Runnable {
 
         if (downloadRequired) {
             Log.d("DOWNLOAD", fileName + " MUST BE DOWNLOADED");
-            download();
+
+            downloadFromLigerServer();
+
         } else {
             Log.d("DOWNLOAD", fileName + " WILL NOT BE DOWNLOADED");
         }
@@ -174,47 +211,98 @@ public class DownloadManager implements Runnable {
         return;
     }
 
+    public boolean checkQueue() {
 
-    public boolean checkDownloadFlag() {
+        File checkFile = new File(StorymakerIndexManager.buildFilePath(indexItem, context), fileName + ".tmp");
+        boolean foundInQueue = false;
 
-        // set default
-        foundInQueue = false;
+        // need to check if a download has already been queued for this file
 
-        final File checkFile = new File(StorageHelper.getActualStorageDirectory(context), fileName + ".tmp");
+        //Log.d("QUEUE", "QUEUE ITEM IS " + queueMap.get(queueId).getQueueFile() + " LOOKING FOR " + checkFile.getName());
 
-        // need to check if a download has already begun for this file
-        // check if corresponding db item has been flagged
+        Long queueId = StorymakerQueueManager.checkQueue(context, checkFile, queueDao);
 
-        expansionIndexItemDao.getExpansionIndexItem(indexItem).subscribe(new Action1<List<ExpansionIndexItem>>() {
+        if (queueId == null) {
 
-            @Override
-            public void call(List<org.storymaker.app.db.ExpansionIndexItem> expansionIndexItems) {
+            // not found
+            foundInQueue = false;
 
-                if (expansionIndexItems.size() == 0) {
-                    Log.e("DOWNLOAD", "NO RECORD FOUND IN THE DB FOR " + checkFile.getName());
-                    foundInQueue = true;  // error state, returning true will prevent a download
-                }
+        } else if (queueId == StorymakerQueueManager.DUPLICATE_QUERY) {
 
-                if (expansionIndexItems.size() > 1) {
-                    Log.e("DOWNLOAD", "MULTIPLE RECORDS FOUND IN THE DB FOR " + checkFile.getName());
-                    foundInQueue = true;  // error state, returning true will prevent a download
-                }
+            // not exactly in queue, but someone is already looking for this item, so avoid collision
+            foundInQueue = true;
 
-                cleanItem = expansionIndexItems.get(0);
+        } else if (queueId < 0) {
+            // use negative numbers to flag non-manager downloads
 
-                if (cleanItem.isDownloading()) {
-                    if (checkFileProgress()) {
-                        Log.d("QUEUE", "DOWNLOAD FLAG SET FOR " + checkFile.getName() + " AND DOWNLOAD PROGRESS OBSERVED, LEAVING DOWNLOAD FLAG");
+            if (checkFileProgress()) {
+
+                Log.d("QUEUE", "QUEUE ITEM FOUND FOR " + checkFile.getName() + " AND DOWNLOAD PROGRESS OBSERVED, LEAVING " + queueId.toString() + " IN QUEUE ");
+                foundInQueue = true;
+
+            } else {
+
+                Log.d("QUEUE", "QUEUE ITEM FOUND FOR " + checkFile.getName() + " BUT NO DOWNLOAD PROGRESS OBSERVED, REMOVING " + queueId.toString() + " FROM QUEUE ");
+                StorymakerQueueManager.removeFromQueue(context, Long.valueOf(queueId), queueDao);
+
+            }
+
+        } else {
+            // use download manager ids to flag manager downloads
+
+            // need to init download manager to check queue
+            initDownloadManager();
+
+            DownloadManager.Query query = new DownloadManager.Query();
+            query.setFilterById(queueId.longValue());
+            Cursor c = dManager.query(query);
+            try {
+                if (c.moveToFirst()) {
+
+                    int columnIndex = c.getColumnIndex(DownloadManager.COLUMN_STATUS);
+                    if (DownloadManager.STATUS_FAILED == c.getInt(columnIndex)) {
+
+                        Log.d("QUEUE", "QUEUE ITEM FOUND FOR " + checkFile.getName() + " BUT DOWNLOAD STATUS IS FAILED, REMOVING " + queueId.toString() + " FROM QUEUE ");
+                        StorymakerQueueManager.removeFromQueue(context, Long.valueOf(queueId), queueDao);
+
+                    } else if (DownloadManager.STATUS_PAUSED == c.getInt(columnIndex)) {
+
+                        Log.d("QUEUE", "QUEUE ITEM FOUND FOR " + checkFile.getName() + " AND DOWNLOAD STATUS IS PAUSED, LEAVING " + queueId.toString() + " IN QUEUE ");
                         foundInQueue = true;
-                    } else {
-                        Log.d("QUEUE", "DOWNLOAD FLAG SET FOR " + checkFile.getName() + " BUT NO DOWNLOAD PROGRESS OBSERVED, REMOVING DOWNLOAD FLAG");
 
-                        cleanItem.setDownloadFlag(false);
-                        expansionIndexItemDao.addExpansionIndexItem(cleanItem);
+                    } else if (DownloadManager.STATUS_PENDING == c.getInt(columnIndex)) {
+
+                        Log.d("QUEUE", "QUEUE ITEM FOUND FOR " + checkFile.getName() + " AND DOWNLOAD STATUS IS PENDING, LEAVING " + queueId.toString() + " IN QUEUE ");
+                        foundInQueue = true;
+
+                    } else if (DownloadManager.STATUS_RUNNING == c.getInt(columnIndex)) {
+
+                        Log.d("QUEUE", "QUEUE ITEM FOUND FOR " + checkFile.getName() + " AND DOWNLOAD STATUS IS RUNNING, LEAVING " + queueId.toString() + " IN QUEUE ");
+                        foundInQueue = true;
+
+                    } else if (DownloadManager.STATUS_SUCCESSFUL == c.getInt(columnIndex)) {
+
+                        Log.d("QUEUE", "QUEUE ITEM FOUND FOR " + checkFile.getName() + " BUT DOWNLOAD STATUS IS SUCCESSFUL, REMOVING " + queueId.toString() + " FROM QUEUE ");
+                        StorymakerQueueManager.removeFromQueue(context, Long.valueOf(queueId), queueDao);
+
+                    } else {
+
+                        Log.d("QUEUE", "QUEUE ITEM FOUND FOR " + checkFile.getName() + " BUT DOWNLOAD STATUS IS UNKNOWN, REMOVING " + queueId.toString() + " FROM QUEUE ");
+                        StorymakerQueueManager.removeFromQueue(context, Long.valueOf(queueId), queueDao);
+
                     }
+                } else {
+
+                    Log.d("QUEUE", "QUEUE ITEM FOUND FOR " + checkFile.getName() + " BUT NOTHING FOUND IN DOWNLOAD MANAGER, REMOVING " + queueId.toString() + " FROM QUEUE ");
+                    StorymakerQueueManager.removeFromQueue(context, Long.valueOf(queueId), queueDao);
+
+                }
+            } finally {
+                if (c != null) {
+                    c.close(); // cleanup
                 }
             }
-        });
+        }
 
         return foundInQueue;
     }
@@ -224,7 +312,7 @@ public class DownloadManager implements Runnable {
         // not a great solution, but should indicate if file is being actively downloaded
         // only .tmp files should be download targets
 
-        File checkFile = new File(StorageHelper.getActualStorageDirectory(context), fileName + ".tmp");
+        File checkFile = new File(StorymakerIndexManager.buildFilePath(indexItem, context), fileName + ".tmp");
         if (checkFile.exists()) {
             long firstSize = checkFile.length();
 
@@ -241,13 +329,16 @@ public class DownloadManager implements Runnable {
 
             if (secondSize > firstSize) {
                 Log.d("DOWNLOAD", "DOWNLOAD IN PROGRESS FOR " + checkFile.getPath() + "(" + firstSize + " -> " + secondSize + ")");
+
                 return true;
             } else {
                 Log.d("DOWNLOAD", "NO DOWNLOAD PROGRESS FOR " + checkFile.getPath() + "(" + firstSize + " -> " + secondSize + ")");
+
                 return false;
             }
         } else {
             Log.d("DOWNLOAD", "NO FILE FOUND FOR " + checkFile.getPath());
+
             return false;
         }
     }
@@ -255,6 +346,7 @@ public class DownloadManager implements Runnable {
     private File managePartialFile (File tempFile) {
 
         // return null if an error occurs
+
         // otherwise return .part file name
 
         File partFile = new File(tempFile.getPath().replace(".tmp", ".part"));
@@ -269,11 +361,13 @@ public class DownloadManager implements Runnable {
             } catch (IOException ioe) {
                 Log.e("DOWNLOAD", "FAILED TO MOVE INCOMPLETE FILE " + tempFile.getPath() + " TO " + partFile.getPath());
                 ioe.printStackTrace();
+
                 return null;
             }
         } else {
             // if there is a current partial file, append .tmp file contents and remove .tmp file
             try {
+
                 Log.d("APPEND", "MAKE FILE INPUT STREAM FOR " + tempFile.getPath());
                 BufferedInputStream fileInput = new BufferedInputStream(new FileInputStream(tempFile));
 
@@ -286,7 +380,6 @@ public class DownloadManager implements Runnable {
                     fileOutput.write(buf, 0, i);
                 }
 
-                // cleanup
                 fileOutput.flush();
                 fileOutput.close();
                 fileOutput = null;
@@ -294,50 +387,67 @@ public class DownloadManager implements Runnable {
                 fileInput.close();
                 fileInput = null;
 
+
                 FileUtils.deleteQuietly(tempFile);
                 Log.d("DOWNLOAD", "APPENDED " + tempFile.getPath() + " TO " + partFile.getPath());
+
                 return partFile;
+
             } catch (IOException ioe) {
                 Log.e("DOWNLOAD", "FAILED TO APPENDED " + tempFile.getPath() + " TO " + partFile.getPath());
                 ioe.printStackTrace();
+
                 return null;
             }
         }
     }
 
-    private void download() {
+    private void downloadFromLigerServer() {
 
-        String sourceUrl = indexItem.getExpansionFileUrl();
-        String targetPathName = StorageHelper.getActualStorageDirectory(context).getPath();
-        String targetFileName = fileName;
+        String ligerUrl = indexItem.getExpansionFileUrl();
+        String ligerPath = StorymakerIndexManager.buildFilePath(indexItem, context);
+        String ligerObb = fileName;
 
-        Log.d("DOWNLOAD", "DOWNLOADING " + targetFileName + " FROM " + sourceUrl + " TO " + targetPathName);
-
-        // set download flag (unset on failure)
-        cleanItem.setDownloadFlag(true);
-        expansionIndexItemDao.addExpansionIndexItem(cleanItem);
+        Log.d("DOWNLOAD", "DOWNLOADING " + ligerObb + " FROM " + ligerUrl + " TO " + ligerPath);
 
         try {
-            File targetPath = new File(targetPathName);
+
+            URI expansionFileUri = null;
+            HttpGet request = null;
+            HttpResponse response = null;
+
+            File targetFolder = new File(ligerPath);
 
             String nameFilter = "";
 
-            if ((targetFileName.contains(Constants.MAIN)) && (targetFileName.contains(indexItem.getExpansionFileVersion()))) {
-                nameFilter = targetFileName.replace(indexItem.getExpansionFileVersion(), "*") + "*.tmp";
-            }
-            if ((targetFileName.contains(Constants.PATCH)) && (targetFileName.contains(indexItem.getPatchFileVersion()))) {
-                nameFilter = targetFileName.replace(indexItem.getPatchFileVersion(), "*") + "*.tmp";
+            if (ligerObb.contains(indexItem.getExpansionFileVersion())) {
+                nameFilter = fileName.replace(indexItem.getExpansionFileVersion(), "*") + "*.tmp";
+            } else {
+                nameFilter = fileName + "*.tmp";
             }
 
-            Log.d("DOWNLOAD", "CLEANUP: DELETING " + nameFilter + " FROM " + targetPath.getPath());
+            Log.d("DOWNLOAD", "CLEANUP: DELETING " + nameFilter + " FROM " + targetFolder.getPath());
 
             WildcardFileFilter oldFileFilter = new WildcardFileFilter(nameFilter);
-            for (File oldFile : FileUtils.listFiles(targetPath, oldFileFilter, null)) {
+            for (File oldFile : FileUtils.listFiles(targetFolder, oldFileFilter, null)) {
                 Log.d("DOWNLOAD", "CLEANUP: FOUND " + oldFile.getPath() + ", DELETING");
                 FileUtils.deleteQuietly(oldFile);
             }
 
-            File targetFile = new File(targetPath, targetFileName + ".tmp");
+            // additional cleanup of pre-name-change files
+            if (fileName.contains(Constants.MAIN)) {
+                nameFilter = fileName.replace(Constants.MAIN + ".", "").replace(indexItem.getExpansionFileVersion(), "*");
+
+                Log.d("DOWNLOAD", "CLEANUP: DELETING OLD FILES " + nameFilter + " FROM " + targetFolder.getPath());
+
+                oldFileFilter = new WildcardFileFilter(nameFilter);
+                for (File oldFile : FileUtils.listFiles(targetFolder, oldFileFilter, null)) {
+                    Log.d("DOWNLOAD", "CLEANUP: FOUND OLD FILE " + oldFile.getPath() + ", DELETING");
+                    FileUtils.deleteQuietly(oldFile);
+                }
+            }
+
+            File targetFile = new File(targetFolder, ligerObb + ".tmp");
 
             // if there is no connectivity, do not queue item (no longer seems to pause if connection is unavailable)
             ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -354,56 +464,55 @@ public class DownloadManager implements Runnable {
                 boolean useTor = settings.getBoolean("pusetor", false);
                 boolean useManager = settings.getBoolean("pusedownloadmanager", false);
 
+                //if (checkTor(useTor, context)) {
                 if (useTor && useManager) {
                     Log.e("DOWNLOAD", "ANDROID DOWNLOAD MANAGER IS NOT COMPATABLE WITH TOR");
-
-                    // download aborted, unset flag
-                    cleanItem.setDownloadFlag(false);
-                    expansionIndexItemDao.addExpansionIndexItem(cleanItem);
 
                     if (context instanceof Activity) {
                         Utils.toastOnUiThread((Activity) context, "Check settings, can't use download manager and tor", true); // FIXME move to strings
                     }
+
+                    StorymakerQueueManager.checkQueueFinished(context, targetFile.getName());
+
                 } else if (useTor || !useManager) {
-                    useStorymakerDownloader(useTor, Uri.parse(sourceUrl + targetFileName), mAppTitle + " content download", targetFileName, targetFile);
+                    downloadWithTor(useTor, Uri.parse(ligerUrl + ligerObb), mAppTitle + " content download", ligerObb, targetFile);
                 } else {
-                    Log.e("DOWNLOAD", "ANDROID DOWNLOAD MANAGER IS NOT YET SUPPORTED");
-
-                    // download aborted, unset flag
-                    cleanItem.setDownloadFlag(false);
-                    expansionIndexItemDao.addExpansionIndexItem(cleanItem);
-
-                    if (context instanceof Activity) {
-                        Utils.toastOnUiThread((Activity) context, "Check settings, can't use download manager at this time", true); // FIXME move to strings
-                    }
+                    downloadWithManager(Uri.parse(ligerUrl + ligerObb), mAppTitle + " content download", ligerObb, Uri.fromFile(targetFile));
                 }
-            } else {
-                Log.d("DOWNLOAD", "NO CONNECTION, NOT QUEUEING DOWNLOAD: " + sourceUrl + targetFileName + " -> " + targetFile.getPath());
 
-                // download aborted, unset flag
-                cleanItem.setDownloadFlag(false);
-                expansionIndexItemDao.addExpansionIndexItem(cleanItem);
+            } else {
+                Log.d("DOWNLOAD", "NO CONNECTION, NOT QUEUEING DOWNLOAD: " + ligerUrl + ligerObb + " -> " + targetFile.getPath());
 
                 if (context instanceof Activity) {
                     Utils.toastOnUiThread((Activity) context, "Check settings, no connection, can't start download", true); // FIXME move to strings
                 }
-            }
-        } catch (Exception e) {
-            Log.e("DOWNLOAD", "DOWNLOAD ERROR: " + sourceUrl + targetFileName + " -> " + e.getMessage());
-            e.printStackTrace();
 
-            // download aborted, unset flag
-            cleanItem.setDownloadFlag(false);
-            expansionIndexItemDao.addExpansionIndexItem(cleanItem);
+                StorymakerQueueManager.checkQueueFinished(context, targetFile.getName());
+
+            }
+
+        } catch (Exception e) {
+            Log.e("DOWNLOAD", "DOWNLOAD ERROR: " + ligerUrl + ligerObb + " -> " + e.getMessage());
+            e.printStackTrace();
         }
     }
 
-    private void useStorymakerDownloader(boolean useTor, Uri uri, String title, String desc, File targetFile) {
+    public static boolean checkTor(Context mContext) {
+        OrbotHelper orbotHelper = new OrbotHelper(mContext);
 
-        // set up notifications
+        if(orbotHelper.isOrbotRunning()) {
+            Log.d("DOWNLOAD/TOR", "ORBOT RUNNING, USE TOR");
+            return true;
+        } else {
+            Log.d("DOWNLOAD/TOR", "ORBOT NOT RUNNING, DON'T USE TOR");
+            return false;
+        }
+    }
 
+    private void downloadWithTor(boolean useTor, Uri uri, String title, String desc, File targetFile) {
         initNotificationManager();
 
+        // generate id/tag for notification
         String nTag = indexItem.getExpansionId();
         int nId = 0;
         if (fileName.contains(Constants.MAIN)) {
@@ -412,16 +521,20 @@ public class DownloadManager implements Runnable {
             nId = Integer.parseInt(indexItem.getPatchFileVersion());
         }
 
+        // incompatible with lungcast certificate
+        // StrongHttpsClient httpClient = getHttpClientInstance();
         OkHttpClient httpClient = new OkHttpClient();
 
-        // check tor settings and configure proxy if needed
+        // we're now using this method to support non-tor downloads as well, so settings must be checked
         if (useTor) {
-            if (checkTor()) {
+            if (checkTor(context)) {
+
                 Log.d("DOWNLOAD/TOR", "DOWNLOAD WITH TOR PROXY: " + Constants.TOR_PROXY_HOST + "/" + Constants.TOR_PROXY_PORT);
 
                 SocketAddress torSocket = new InetSocketAddress(Constants.TOR_PROXY_HOST, Constants.TOR_PROXY_PORT);
                 Proxy torProxy = new Proxy(Proxy.Type.HTTP, torSocket);
                 httpClient.setProxy(torProxy);
+
             } else {
                 Log.e("DOWNLOAD/TOR", "CANNOT DOWNLOAD WITH TOR, TOR IS NOT ACTIVE");
 
@@ -429,9 +542,7 @@ public class DownloadManager implements Runnable {
                     Utils.toastOnUiThread((Activity) context, "Check settings, can't use tor if orbot isn't running", true); // FIXME move to strings
                 }
 
-                // download aborted, unset flag
-                cleanItem.setDownloadFlag(false);
-                expansionIndexItemDao.addExpansionIndexItem(cleanItem);
+                StorymakerQueueManager.checkQueueFinished(context, targetFile.getName());
 
                 return;
             }
@@ -448,6 +559,7 @@ public class DownloadManager implements Runnable {
         Log.d("DOWNLOAD/TOR", "CHECKING URI: " + uri.toString());
 
         try {
+
             Request request = new Request.Builder().url(uri.toString()).build();
 
             // check for partially downloaded file
@@ -456,19 +568,31 @@ public class DownloadManager implements Runnable {
             if (partFile.exists()) {
                 long partBytes = partFile.length();
                 Log.d("DOWNLOAD", "PARTIAL FILE " + partFile.getPath() + " FOUND, SETTING RANGE HEADER: " + "Range" + " / " + "bytes=" + Long.toString(partBytes) + "-");
+                // request.setHeader("Range", "bytes=" + Long.toString(partBytes) + "-");
                 request = new Request.Builder().url(uri.toString()).addHeader("Range", "bytes=" + Long.toString(partBytes) + "-").build();
             } else {
                 Log.d("DOWNLOAD", "PARTIAL FILE " + partFile.getPath() + " NOT FOUND, STARTING AT BYTE 0");
             }
 
             Response response = httpClient.newCall(request).execute();
+
             int statusCode = response.code();
 
             if ((statusCode == 200) || (statusCode == 206)) {
 
-                Log.d("DOWNLOAD/TOR", "DOWNLOAD SUCCEEDED, STATUS CODE: " + statusCode + ", GETTING ENTITY...");
+                Log.d("DOWNLOAD/TOR", "DOWNLOAD SUCCEEDED, STATUS CODE: " + statusCode);
+
+                // queue item here, "download" doesn't start until after we get a status code
+
+                // queue item, use date to get a unique long, subtract to get a negative number (to distinguish from download manager items)
+                Date startTime = new Date();
+                long queueId = 0 - startTime.getTime();
+                StorymakerQueueManager.addToQueue(context, queueId, targetFile.getName(), queueDao);
 
                 targetFile.getParentFile().mkdirs();
+
+                Log.d("DOWNLOAD/TOR", "DOWNLOAD SUCCEEDED, GETTING ENTITY...");
+
                 BufferedInputStream responseInput = new BufferedInputStream(response.body().byteStream());
 
                 try {
@@ -476,13 +600,10 @@ public class DownloadManager implements Runnable {
                     byte[] buf = new byte[1024];
                     int i;
                     int oldPercent = 0;
-
-                    Date startTime = new Date();
-
                     while ((i = responseInput.read(buf)) > 0) {
 
                         // create status bar notification
-                        int nPercent = getDownloadPercent();
+                        int nPercent = StorymakerDownloadHelper.getDownloadPercent(context, fileName, installedDao);
 
                         if (oldPercent == nPercent) {
                             // need to cut back on notification traffic
@@ -501,9 +622,7 @@ public class DownloadManager implements Runnable {
                         targetOutput.write(buf, 0, i);
                     }
                     targetOutput.close();
-                    targetOutput = null;
                     responseInput.close();
-                    responseInput = null;
                     Log.d("DOWNLOAD/TOR", "SAVED DOWNLOAD TO " + targetFile);
                 } catch (ConnectTimeoutException cte) {
                     Log.e("DOWNLOAD/TOR", "FAILED TO SAVE DOWNLOAD TO " + actualFileName + " (CONNECTION EXCEPTION)");
@@ -516,9 +635,8 @@ public class DownloadManager implements Runnable {
                     ioe.printStackTrace();
                 }
 
-                // unset flag here, regardless of success
-                cleanItem.setDownloadFlag(false);
-                expansionIndexItemDao.addExpansionIndexItem(cleanItem);
+                // remove from queue here, regardless of success
+                StorymakerQueueManager.removeFromQueue(context, queueId, queueDao);
 
                 // remove notification, regardless of success
                 nManager.cancel(nTag, nId);
@@ -531,17 +649,58 @@ public class DownloadManager implements Runnable {
             } else {
                 Log.e("DOWNLOAD/TOR", "DOWNLOAD FAILED FOR " + actualFileName + ", STATUS CODE: " + statusCode);
 
-                // download failed, unset flag
-                cleanItem.setDownloadFlag(false);
-                expansionIndexItemDao.addExpansionIndexItem(cleanItem);
+                StorymakerQueueManager.checkQueueFinished(context, targetFile.getName());
             }
+
+            // clean up connection
+            // EntityUtils.consume(entity);
+            // request.abort();
+            // request.releaseConnection();
+
         } catch (IOException ioe) {
             Log.e("DOWNLOAD/TOR", "DOWNLOAD FAILED FOR " + actualFileName + ", EXCEPTION THROWN");
             ioe.printStackTrace();
 
-            // download failed, unset flag
-            cleanItem.setDownloadFlag(false);
-            expansionIndexItemDao.addExpansionIndexItem(cleanItem);        }
+            StorymakerQueueManager.checkQueueFinished(context, targetFile.getName());
+        }
+    }
+
+    private void downloadWithManager(Uri uri, String title, String desc, Uri uriFile) {
+        initDownloadManager();
+
+        Log.d("DOWNLOAD", "QUEUEING DOWNLOAD: " + uri.toString() + " -> " + uriFile.toString());
+
+        initReceivers();
+
+        DownloadManager.Request request = new DownloadManager.Request(uri)
+                .setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI | DownloadManager.Request.NETWORK_MOBILE)
+                .setAllowedOverRoaming(false)
+                .setTitle(title)
+                .setDescription(desc)
+                .setVisibleInDownloadsUi(false)
+                .setDestinationUri(uriFile);
+
+        File partFile = new File(uriFile.toString().replace(".tmp", ".part"));
+
+        if (partFile.exists()) {
+            long partBytes = partFile.length();
+            Log.d("DOWNLOAD", "PARTIAL FILE " + partFile.getPath() + " FOUND, SETTING RANGE HEADER: " + "Range" + " / " + "bytes=" + Long.toString(partBytes) + "-");
+            request.addRequestHeader("Range", "bytes=" + Long.toString(partBytes) + "-");
+        } else {
+            Log.d("DOWNLOAD", "PARTIAL FILE " + partFile.getPath() + " NOT FOUND, STARTING AT BYTE 0");
+        }
+
+        lastDownload = dManager.enqueue(request);
+
+        // have to enqueue first to get manager id
+        String uriString = uriFile.toString();
+        StorymakerQueueManager.addToQueue(context, Long.valueOf(lastDownload), uriString.substring(uriString.lastIndexOf("/") + 1), queueDao);
+    }
+
+    private synchronized void initDownloadManager() {
+        if (dManager == null) {
+            dManager = (DownloadManager)context.getSystemService(context.DOWNLOAD_SERVICE);
+        }
     }
 
     private synchronized void initNotificationManager() {
@@ -550,74 +709,142 @@ public class DownloadManager implements Runnable {
         }
     }
 
-    public boolean checkTor() {
-        OrbotHelper orbotHelper = new OrbotHelper(context);
+    private synchronized void initReceivers() {
+        FilteredBroadcastReceiver onComplete = new FilteredBroadcastReceiver(fileName);
+        BroadcastReceiver onNotificationClick = new BroadcastReceiver() {
+            public void onReceive(Context context, Intent intent) {
+                // ???
+            }
+        };
 
-        if(orbotHelper.isOrbotRunning()) {
-            Log.d("DOWNLOAD/TOR", "ORBOT RUNNING, USE TOR");
-            return true;
-        } else {
-            Log.d("DOWNLOAD/TOR", "ORBOT NOT RUNNING, DON'T USE TOR");
-            return false;
-        }
+        context.registerReceiver(onComplete, new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE));
+        context.registerReceiver(onNotificationClick, new IntentFilter(DownloadManager.ACTION_NOTIFICATION_CLICKED));
     }
 
-    // return extra digits for greater precision in notification
-    private int getDownloadPercent() {
-        float percentFloat = getDownloadProgress();
-        int percentInt = (int) (percentFloat * 1000);
-        return percentInt;
-    }
+    private class FilteredBroadcastReceiver extends BroadcastReceiver {
 
-    private float getDownloadProgress() {
+        public String fileFilter;
+        public boolean fileReceived = false;
 
-        long expectedSize = 0;
-        long currentSize = 0;
-        boolean sizeUndefined = false;
-
-        if (fileName.contains(Constants.MAIN)) {
-            expectedSize = indexItem.getExpansionFileSize();
-        } else if (fileName.contains(Constants.PATCH)) {
-            expectedSize = indexItem.getPatchFileSize();
-        } else {
-            // no file information found, can't evaluate
-            return -1;
+        public FilteredBroadcastReceiver(String fileFilter) {
+            this.fileFilter = fileFilter;
         }
 
-        if (expectedSize == 0) {
-            // this seems like an error state
-            return -1;
-        } else {
-            File contentPackFile = new File(StorageHelper.getActualStorageDirectory(context), fileName);
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            if (DownloadManager.ACTION_DOWNLOAD_COMPLETE.equals(action)) {
+                long downloadId = intent.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, 0);
+                DownloadManager.Query query = new DownloadManager.Query();
+                query.setFilterById(downloadId);
+                Cursor c = dManager.query(query);
+                try {
+                    if (c.moveToFirst()) {
 
-            if (!contentPackFile.exists()) {
-                // actual file doesn't exist, check for temp file
-                File contentPackFileTemp = new File(contentPackFile.getPath() + ".tmp");
+                        int columnIndex = c.getColumnIndex(DownloadManager.COLUMN_STATUS);
 
-                if (!contentPackFileTemp.exists()) {
-                    // still no file, add nothing to current size
-                } else {
-                    currentSize = currentSize + contentPackFileTemp.length();
-                }
+                        if (DownloadManager.STATUS_SUCCESSFUL == c.getInt(columnIndex)) {
 
-                // also check for partial file
-                File contentPackFilePart = new File(contentPackFile.getPath() + ".part");
+                            String uriString = c.getString(c.getColumnIndex(DownloadManager.COLUMN_LOCAL_URI));
 
-                if (!contentPackFilePart.exists()) {
-                    // still no file, add nothing to current size
-                } else {
-                    currentSize = currentSize + contentPackFilePart.length();
+                            File savedFile = new File(Uri.parse(uriString).getPath());
+                            Log.d("DOWNLOAD", "PROCESSING DOWNLOADED FILE " + savedFile.getPath());
+
+                            File fileCheck = new File(savedFile.getPath().substring(0, savedFile.getPath().lastIndexOf(".")));
+
+                            if (fileReceived) {
+                                Log.d("DOWNLOAD", "GOT FILE " + fileCheck.getName() + " BUT THIS RECEIVER HAS ALREADY PROCESSED A FILE");
+                                return;
+                            } else if (!fileCheck.getName().equals(fileFilter)) {
+                                Log.d("DOWNLOAD", "GOT FILE " + fileCheck.getName() + " BUT THIS RECEIVER IS FOR " + fileFilter);
+                                return;
+                            } else {
+                                Log.d("DOWNLOAD", "GOT FILE " + fileCheck.getName() + " AND THIS RECEIVER IS FOR " + fileFilter + ", PROCESSING...");
+                                fileReceived = true;
+                            }
+
+                            StorymakerQueueManager.removeFromQueue(context, Long.valueOf(downloadId), queueDao);
+
+                            Log.d("QUEUE", "DOWNLOAD COMPLETE, REMOVING FROM QUEUE: " + downloadId);
+
+                            if (!handleFile(savedFile)) {
+                                Log.e("DOWNLOAD", "ERROR DURING FILE PROCESSING FOR " + fileCheck.getName());
+
+                            } else {
+                                Log.e("DOWNLOAD", "FILE PROCESSING COMPLETE FOR " + fileCheck.getName());
+                            }
+                        } else {
+
+                            // COLUMN_LOCAL_URI seems to be null if download fails
+                            // COLUMN_URI is the download url, not the .tmp file path
+                            String uriString = c.getString(c.getColumnIndex(DownloadManager.COLUMN_URI));
+                            String uriName = uriString.substring(uriString.lastIndexOf("/"));
+
+                            File savedFile = new File(StorymakerIndexManager.buildFilePath(indexItem, context), uriName + ".tmp");
+                            Log.d("DOWNLOAD", "PROCESSING DOWNLOADED FILE " + savedFile.getPath());
+
+                            File fileCheck = new File(savedFile.getPath().substring(0, savedFile.getPath().lastIndexOf(".")));
+
+                            if (fileReceived) {
+                                Log.d("DOWNLOAD", "GOT FILE " + fileCheck.getName() + " BUT THIS RECEIVER HAS ALREADY PROCESSED A FILE");
+                                return;
+                            } else if (!fileCheck.getName().equals(fileFilter)) {
+                                Log.d("DOWNLOAD", "GOT FILE " + fileCheck.getName() + " BUT THIS RECEIVER IS FOR " + fileFilter);
+                                return;
+                            } else {
+                                Log.d("DOWNLOAD", "GOT FILE " + fileCheck.getName() + " AND THIS RECEIVER IS FOR " + fileFilter + ", PROCESSING...");
+                                fileReceived = true;
+                            }
+
+                            String status;
+                            boolean willResume = true;
+
+                            // improve feedback
+                            if (DownloadManager.STATUS_RUNNING == c.getInt(columnIndex)) {
+                                status = "RUNNING";
+                            } else if (DownloadManager.STATUS_PENDING == c.getInt(columnIndex)) {
+                                status = "PENDING";
+                            } else if (DownloadManager.STATUS_PAUSED == c.getInt(columnIndex)) {
+                                status = "PAUSED";
+                            } else if (DownloadManager.STATUS_FAILED == c.getInt(columnIndex)) {
+                                status = "FAILED";
+                                willResume = false;
+                            } else {
+                                status = "UNKNOWN";
+                                willResume = false;
+                            }
+
+                            Log.e("DOWNLOAD", "MANAGER FAILED AT STATUS CHECK, STATUS IS " + status);
+
+                            if (willResume) {
+                                Log.e("DOWNLOAD", "STATUS IS " + status + ", LEAVING QUEUE/FILES AS-IS FOR MANAGER TO HANDLE");
+                            } else {
+                                Log.e("DOWNLOAD", "STATUS IS " + status + ", CLEANING UP QUEUE/FILES, MANAGER WILL NOT RESUME");
+
+                                Log.d("QUEUE", "DOWNLOAD STOPPED, REMOVING FROM QUEUE: " + downloadId);
+
+                                StorymakerQueueManager.removeFromQueue(context, Long.valueOf(downloadId), queueDao);
+
+                                if (!handleFile(savedFile)) {
+                                    Log.e("DOWNLOAD", "ERROR DURING FILE PROCESSING FOR " + fileCheck.getName());
+                                } else {
+                                    Log.e("DOWNLOAD", "FILE PROCESSING COMPLETE FOR " + fileCheck.getName());
+                                }
+                            }
+                        }
+                    } else {
+                        Log.e("DOWNLOAD", "MANAGER FAILED AT QUERY");
+                    }
+                } finally {
+                    if (c != null) {
+                        c.close();
+                    }
                 }
             } else {
-                currentSize = currentSize + contentPackFile.length();
+                Log.e("DOWNLOAD", "MANAGER FAILED AT COMPLETION CHECK");
             }
 
-            if (currentSize > 0) {
-                return (float) currentSize / (float) expectedSize;
-            } else {
-                // this seems like an error state
-                return -1;
-            }
+            // once this has done its job, make it go away
+            context.unregisterReceiver(this);
         }
     }
 
@@ -645,7 +872,8 @@ public class DownloadManager implements Runnable {
                 Log.e("DOWNLOAD", "FINISHED DOWNLOAD OF " + tempFile.getPath() + " BUT IT IS A ZERO BYTE FILE");
                 return false;
             } else if (tempFile.length() < fileSize) {
-                Log.d("DOWNLOAD", "FINISHED DOWNLOAD OF " + tempFile.getPath() + " BUT IT IS TOO SMALL: " + Long.toString(tempFile.length()) + "/" + Long.toString(fileSize));
+
+                Log.e("DOWNLOAD", "FINISHED DOWNLOAD OF " + tempFile.getPath() + " BUT IT IS TOO SMALL: " + Long.toString(tempFile.length()) + "/" + Long.toString(fileSize));
 
                 // if file is too small, managePartialFile
                 appendedFile = managePartialFile(tempFile);
@@ -665,6 +893,7 @@ public class DownloadManager implements Runnable {
 
                 // show notification
                 Utils.toastOnUiThread((Activity) context, "Finished downloading " + indexItem.getTitle() + ".", false); // FIXME move to strings
+
             }
         } else {
             Log.e("DOWNLOAD", "FINISHED DOWNLOAD OF " + tempFile.getPath() + " BUT IT DOES NOT EXIST");
@@ -675,13 +904,11 @@ public class DownloadManager implements Runnable {
             // clean up old obbs before renaming new file
             File directory = new File(actualFile.getParent());
 
-            String nameFilter = actualFile.getName();
-
-            if ((actualFile.getName().contains(Constants.MAIN)) && (actualFile.getName().contains(indexItem.getExpansionFileVersion()))) {
+            String nameFilter = "";
+            if (actualFile.getName().contains(indexItem.getExpansionFileVersion())) {
                 nameFilter = actualFile.getName().replace(indexItem.getExpansionFileVersion(), "*");
-            }
-            if ((actualFile.getName().contains(Constants.PATCH)) && (actualFile.getName().contains(indexItem.getPatchFileVersion()))) {
-                nameFilter = actualFile.getName().replace(indexItem.getPatchFileVersion(), "*");
+            } else {
+                nameFilter = actualFile.getName();
             }
 
             Log.d("DOWNLOAD", "CLEANUP: DELETING " + nameFilter + " FROM " + directory.getPath());
