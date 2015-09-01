@@ -23,5 +23,5 @@ echo "Run tests with Spoon"
 #java -jar spoon-runner-1.1.2-jar-with-dependencies.jar --sdk ~/Android/Sdk/ --apk ./app/build/outputs/apk/app-mainSqlite-debug.apk --test-apk ./app/build/outputs/apk/app-mainSqlite-debug-test-unaligned.apk --class-name org.storymaker.app.tests.MinimumTest
 java -jar spoon-runner-1.1.2-jar-with-dependencies.jar --sdk ~/Android/Sdk/ --apk ./app/build/outputs/apk/app-mainSqlite-debug.apk --test-apk ./app/build/outputs/apk/app-mainSqlite-debug-test-unaligned.apk --class-name org.storymaker.app.tests.EndToEndTest
 
-#adb uninstall org.storymaker.app
-#adb uninstall org.storymaker.app.test
+adb uninstall org.storymaker.app
+adb uninstall org.storymaker.app.test
