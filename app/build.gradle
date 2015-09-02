@@ -1,28 +1,24 @@
 apply plugin: 'com.android.application'
 
-
-
 // required for sqlbrite/apt
 buildscript {
     repositories {
         mavenCentral()
     }
     dependencies {
-        // replace with the current version of the Android plugin
         classpath 'com.android.tools.build:gradle:1.3.0'
-        // the latest version of the android-apt plugin
         classpath 'com.neenbedankt.gradle.plugins:android-apt:1.7'
+        classpath 'com.jakewharton.hugo:hugo-plugin:1.2.1'
     }
 }
 
 apply plugin: 'com.android.application'
 apply plugin: 'com.neenbedankt.android-apt'
-
-
+apply plugin: 'com.jakewharton.hugo'
 
 android {
-    compileSdkVersion 21
-    buildToolsVersion "21.1.2"
+    compileSdkVersion 22
+    buildToolsVersion "22.0.1"
 
     sourceSets {
         main {
@@ -111,19 +107,13 @@ dependencies {
     //
     //compile fileTree(dir: 'libs', include: '*.jar')
 
-
-
     // new db stuff
-    //compile 'com.squareup.sqlbrite:sqlbrite:0.2.1'
-    //compile 'com.squareup.sqlbrite:sqlbrite:0.1.0'
-    compile 'com.hannesdorfmann.sqlbrite:dao:0.2.2'
-    compile 'com.hannesdorfmann.sqlbrite:annotations:0.2.2'
-    apt 'com.hannesdorfmann.sqlbrite:object-mapper:0.2.2'
-
-
+    // compile 'com.hannesdorfmann.sqlbrite:dao:0.2.2'
+    // compile 'com.hannesdorfmann.sqlbrite:annotations:0.2.2'
+    // apt 'com.hannesdorfmann.sqlbrite:object-mapper:0.2.2'
 
     // Maven imports
-    compile 'com.android.support:support-annotations:21.0.3'
+    compile 'com.android.support:support-annotations:23.0.0'
     androidTestCompile 'com.android.support.test.espresso:espresso-core:2.0'
     androidTestCompile 'com.android.support.test:testing-support-lib:0.1'
     androidTestCompile 'com.squareup.spoon:spoon-client:1.1.2'
