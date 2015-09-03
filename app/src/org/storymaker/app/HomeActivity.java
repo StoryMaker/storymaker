@@ -31,7 +31,9 @@ import net.hockeyapp.android.CrashManager;
 import net.hockeyapp.android.CrashManagerListener;
 import net.hockeyapp.android.UpdateManager;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
+import org.apache.commons.io.filefilter.WildcardFileFilter;
 import org.storymaker.app.model.Project;
 import org.storymaker.app.server.LoginActivity;
 import org.storymaker.app.server.ServerManager;
@@ -92,6 +94,12 @@ public class HomeActivity extends BaseActivity {
 
     private HashMap<String, ArrayList<Thread>> downloadThreads = new HashMap<String, ArrayList<Thread>>();
 
+    public void removeThreads(String id) {
+        if (downloadThreads.containsKey(id)) {
+            downloadThreads.remove(id);
+        }
+    }
+
     // must set dao stuff in constructor?
     public HomeActivity() {
 
@@ -124,6 +132,8 @@ public class HomeActivity extends BaseActivity {
 
         int availableIndexVersion = preferences.getInt("AVAILABLE_INDEX_VERSION", 0);
 
+        Log.d("INDEX", "VERSION CHECK: " + availableIndexVersion + " vs. " + Constants.AVAILABLE_INDEX_VERSION);
+
         if (availableIndexVersion != Constants.AVAILABLE_INDEX_VERSION) {
 
             // load db from file
@@ -141,8 +151,7 @@ public class HomeActivity extends BaseActivity {
 
             // update preferences
 
-            preferences.edit().putInt("AVAILABLE_INDEX_VERSION", Constants.AVAILABLE_INDEX_VERSION);
-            preferences.edit().commit();
+            preferences.edit().putInt("AVAILABLE_INDEX_VERSION", Constants.AVAILABLE_INDEX_VERSION).commit();
         }
 
 
@@ -486,7 +495,7 @@ public class HomeActivity extends BaseActivity {
 
                     if (!installedIds.containsKey(eItem.getExpansionId()) && (downloadThreads.get(eItem.getExpansionId()) == null)) {
 
-                        Log.d("INDEX", "DIALOG");
+                        Log.d("INDEX", "DIALOG - START");
 
                         // this item is not installed and there are no saved threads for it
 
@@ -499,21 +508,46 @@ public class HomeActivity extends BaseActivity {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
 
-                                        Log.d("DOWNLOAD", "YES...");
+                                        Log.d("DOWNLOAD", "START...");
 
-                                        handleClick(eItem, installedIds);
+                                        handleClick(eItem, installedIds, false);
 
                                     }
                                 })
                                 .setPositiveButton("No", null)
                                 .show();
+                    } else if (installedIds.containsKey(eItem.getExpansionId()) && (downloadThreads.get(eItem.getExpansionId()) == null)) {
+
+                        Log.d("INDEX", "DIALOG - RESUME");
+
+                        // this item is installed and there are no saved threads for it
+
+                        new AlertDialog.Builder(HomeActivity.this)
+                                .setTitle("Resume Download")
+                                .setMessage(eItem.getTitle() + " is incomplete")
+                                        // using negative button to account for fixed order
+                                .setNegativeButton("Resume download", new DialogInterface.OnClickListener() {
+
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+
+                                        Log.d("DOWNLOAD", "RESUME...");
+
+                                        handleClick(eItem, installedIds, false);
+
+                                    }
+                                })
+                                .setNeutralButton("Do nothing", null)
+                                .setPositiveButton("Cancel download", new CancelListener(eItem))
+                                .show();
+
                     } else {
 
                         // proceed as usual
 
                         Log.d("INDEX", "DO STUFF");
 
-                        handleClick(eItem, installedIds);
+                        handleClick(eItem, installedIds, true);
                     }
 
 
@@ -646,8 +680,7 @@ public class HomeActivity extends BaseActivity {
 
 
     // HAD TO SPLIT OUT INTO A METHOD
-    public void handleClick (ExpansionIndexItem eItem, HashMap<String, ExpansionIndexItem> installedIds) {
-
+    public void handleClick (ExpansionIndexItem eItem, HashMap<String, ExpansionIndexItem> installedIds, boolean showDialog) {
 
         // initiate check/download whether installed or not
         HashMap<String, Thread> newThreads = StorymakerDownloadHelper.checkAndDownload(HomeActivity.this, eItem, installedIndexItemDao, queueItemDao, true); // <- THIS SHOULD PICK UP EXISTING PARTIAL FILES
@@ -679,7 +712,9 @@ public class HomeActivity extends BaseActivity {
         if (!installedIds.containsKey(eItem.getExpansionId())) {
 
             // if clicked item is not installed, update index
-            StorymakerIndexManager.registerInstalledIndexItem(HomeActivity.this, eItem, installedIndexItemDao);
+            // un-installed AvailableIndexItems need to be converted to InstalledIndexItems
+            InstalledIndexItem iItem = new InstalledIndexItem(eItem);
+            StorymakerIndexManager.installedIndexAdd(HomeActivity.this, iItem, installedIndexItemDao);
 
             Log.d("HOME MENU CLICK", eItem.getExpansionId() + " NOT INSTALLED, ADDING ITEM TO INDEX");
 
@@ -718,7 +753,10 @@ public class HomeActivity extends BaseActivity {
                     Log.d("HOME MENU CLICK", eItem.getExpansionId() + " FIRST OPEN, UPDATING THUMBNAIL PATH");
 
                     eItem.setThumbnailPath(metadata.getContentPackThumbnailPath());
-                    StorymakerIndexManager.registerInstalledIndexItem(HomeActivity.this, eItem, installedIndexItemDao);
+
+                    // un-installed AvailableIndexItems need to be converted to InstalledIndexItems
+                    InstalledIndexItem iItem = new InstalledIndexItem(eItem);
+                    StorymakerIndexManager.installedIndexAdd(HomeActivity.this, iItem, installedIndexItemDao);
 
                     // wait for index serialization
                     try {
@@ -753,14 +791,16 @@ public class HomeActivity extends BaseActivity {
 
                 // create pause/cancel dialog
 
-                new AlertDialog.Builder(HomeActivity.this)
-                        .setTitle("Pause/Cancel Download")
-                        .setMessage(eItem.getTitle() + " is currently downloading")
-                                // using negative button to account for fixed order
-                        .setNegativeButton("Continue download", null)
-                        .setNeutralButton("Pause download", new PauseListener(eItem))
-                        .setPositiveButton("Cancel download", new CancelListener(eItem))
-                        .show();
+                if (showDialog) {
+                    new AlertDialog.Builder(HomeActivity.this)
+                            .setTitle("Pause/Cancel Download")
+                            .setMessage(eItem.getTitle() + " is currently downloading")
+                                    // using negative button to account for fixed order
+                            .setNegativeButton("Continue download", null)
+                            .setNeutralButton("Pause download", new PauseListener(eItem))
+                            .setPositiveButton("Cancel download", new CancelListener(eItem))
+                            .show();
+                }
 
                 // Toast.makeText(HomeActivity.this, "Please wait for this content pack to finish downloading", Toast.LENGTH_LONG).show(); // FIXME move to strings.xml
             }
@@ -1238,6 +1278,12 @@ public class HomeActivity extends BaseActivity {
 
             Log.d("INDEX", "CANCEL...");
 
+            // remove from installed index
+
+            // un-installed AvailableIndexItems need to be converted to InstalledIndexItems
+            InstalledIndexItem iItem = new InstalledIndexItem(eItem);
+            StorymakerIndexManager.installedIndexRemove(HomeActivity.this, iItem, installedIndexItemDao);
+
             // stop associated threads and delete associated files
 
             ArrayList<Thread> currentThreads = downloadThreads.get(eItem.getExpansionId());
@@ -1253,6 +1299,12 @@ public class HomeActivity extends BaseActivity {
 
             Log.d("DOWNLOAD", "DELETE STUFF?");
 
+            File fileDirectory = StorageHelper.getActualStorageDirectory(HomeActivity.this);
+            WildcardFileFilter fileFilter = new WildcardFileFilter(eItem.getExpansionId() + ".*");
+            for (File foundFile : FileUtils.listFiles(fileDirectory, fileFilter, null)) {
+                Log.d("DOWNLOAD", "STOPPED THREAD: FOUND " + foundFile.getPath() + ", DELETING");
+                FileUtils.deleteQuietly(foundFile);
+            }
         }
     }
 }

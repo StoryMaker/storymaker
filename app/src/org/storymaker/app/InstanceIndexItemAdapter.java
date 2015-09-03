@@ -18,18 +18,24 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.filefilter.WildcardFileFilter;
+
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
+import rx.functions.Action1;
 import scal.io.liger.Constants;
 //import scal.io.liger.IndexManager;
+import scal.io.liger.StorageHelper;
 import scal.io.liger.StorymakerIndexManager;
 import scal.io.liger.ZipHelper;
 import scal.io.liger.model.sqlbrite.BaseIndexItem;
 import scal.io.liger.model.sqlbrite.ExpansionIndexItem;
+import scal.io.liger.model.sqlbrite.InstalledIndexItem;
 import scal.io.liger.model.sqlbrite.InstalledIndexItemDao;
 import scal.io.liger.model.sqlbrite.InstanceIndexItem;
 //import scal.io.liger.model.BaseIndexItem;
@@ -243,24 +249,24 @@ public class InstanceIndexItemAdapter extends RecyclerView.Adapter<InstanceIndex
                         // using negative button to account for fixed order
                         .setNegativeButton("Delete story", new DialogInterface.OnClickListener() {
 
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
 
-                        Log.d("INDEX", "DELETING FILES FOR " + ((InstanceIndexItem)item).getTitle());
-                        ((InstanceIndexItem) item).deleteAssociatedFiles(context, false);
+                                Log.d("INDEX", "DELETING FILES FOR " + ((InstanceIndexItem) item).getTitle());
+                                ((InstanceIndexItem) item).deleteAssociatedFiles(context, false);
 
-                        mDataset.remove(safePosition);
-                        notifyItemRemoved(safePosition);
+                                mDataset.remove(safePosition);
+                                notifyItemRemoved(safePosition);
 
-                    }
+                            }
 
-                })
+                        })
                         .setNeutralButton("Delete story and media", new DialogInterface.OnClickListener() {
 
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
 
-                                Log.d("INDEX", "DELETING FILES AND MEDIA FOR " + ((InstanceIndexItem)item).getTitle());
+                                Log.d("INDEX", "DELETING FILES AND MEDIA FOR " + ((InstanceIndexItem) item).getTitle());
                                 ((InstanceIndexItem) item).deleteAssociatedFiles(context, true);
 
                                 mDataset.remove(safePosition);
@@ -272,9 +278,72 @@ public class InstanceIndexItemAdapter extends RecyclerView.Adapter<InstanceIndex
                         // using positive button to account for fixed order
                         .setPositiveButton("Cancel", null)
                         .show();
+            } else if (item instanceof ExpansionIndexItem) {
+
+                // let users delete content packs too
+
+                // check if item is installed?
+
+                new AlertDialog.Builder(context)
+                        .setTitle("Delete Content Pack")
+                        .setMessage("Delete downloaded content for " + item.getTitle() + " ?")
+                        // using negative button to account for fixed order
+                        .setNegativeButton("Delete content pack", new DialogInterface.OnClickListener() {
+
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                                // check installed index
+                                installedDao.getInstalledIndexItemByKey(((ExpansionIndexItem) item).getExpansionId()).take(1).subscribe(new Action1<List<InstalledIndexItem>>() {
+
+                                    @Override
+                                    public void call(List<InstalledIndexItem> expansionIndexItems) {
+
+                                        // only one item expected
+
+                                        if (expansionIndexItems.size() != 1) {
+                                            Log.e("INDEX", "LONG PRESS: UNEXPECTED NUMBER OF RECORDS FOUND FOR " + ((ExpansionIndexItem) item).getExpansionId() + "(" + expansionIndexItems.size() + ")");
+                                            return;
+
+                                        }
+
+                                        InstalledIndexItem installedItem = expansionIndexItems.get(0);
+
+                                        File fileDirectory = StorageHelper.getActualStorageDirectory(context);
+                                        WildcardFileFilter fileFilter = new WildcardFileFilter(installedItem.getExpansionId() + ".*");
+                                        for (File foundFile : FileUtils.listFiles(fileDirectory, fileFilter, null)) {
+                                            Log.d("INDEX", "LONG PRESS: FOUND " + foundFile.getPath() + ", DELETING");
+                                            FileUtils.deleteQuietly(foundFile);
+                                        }
+
+                                        // remove from installed index
+                                        Log.d("INDEX", "LONG PRESS: REMOVING " + installedItem.expansionId + ", FROM DB");
+                                        StorymakerIndexManager.installedIndexRemove(context, installedItem, installedDao);
+
+                                        // need to clear saved threads
+                                        if (context instanceof HomeActivity) {
+                                            Log.d("INDEX", "LONG PRESS: REMOVING THREADS FOR " + installedItem.expansionId);
+                                            HomeActivity home = (HomeActivity)context;
+                                            home.removeThreads(installedItem.expansionId);
+                                        } else {
+                                            Log.e("INDEX", "LONG PRESS: UNEXPECTED CONTEXT");
+                                        }
+                                    }
+                                });
+
+
+
+                            }
+
+                        })
+                        // using positive button to account for fixed order
+                        .setPositiveButton("Cancel", null)
+                        .show();
+
             } else {
-                // no op
-                Log.d("INDEX", "NO_OP");
+
+                // no-op
+
             }
 
             return true;

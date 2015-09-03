@@ -178,16 +178,21 @@ public class StorymakerDownloadHelper {
                 tempIndexItem = updateItem(context, installedItem, availableItem); // DO STUFF
 
                 // build list and update index once
+
+                // DISABLING AUTOMATIC CHECK/DOWNLOAD OF CONTENT PACKS FOR NOW
+                // CONFLICTS WITH USER-CONTROLLED CONFIRM/PAUSE/CANCEL ACTIONS
+                // CONTENT PACKS WILL BE CHECKED/DOWNLOADED ON MENU CLICK
+
                 if (tempIndexItem == null) {
-                    if (checkAndDownload(context, installedItem, installedDao, queueDao, false).size() > 0) {
-                        contentPacksOk = false;
-                    }
+                    // if (checkAndDownload(context, installedItem, installedDao, queueDao, false).size() > 0) {
+                    //     contentPacksOk = false;
+                    // }
 
                     updatedIndex.put(installedItem.getExpansionId(), installedItem);
                 } else {
-                    if (checkAndDownload(context, tempIndexItem, installedDao, queueDao, false).size() > 0) {
-                        contentPacksOk = false;
-                    }
+                    // if (checkAndDownload(context, tempIndexItem, installedDao, queueDao, false).size() > 0) {
+                    //     contentPacksOk = false;
+                    // }
 
                     updatedIndex.put(tempIndexItem.getExpansionId(), tempIndexItem);
                     updateFlag = true;
