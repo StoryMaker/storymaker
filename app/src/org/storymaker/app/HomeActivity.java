@@ -132,7 +132,7 @@ public class HomeActivity extends BaseActivity {
 
         int availableIndexVersion = preferences.getInt("AVAILABLE_INDEX_VERSION", 0);
 
-        Log.d("INDEX", "VERSION CHECK: " + availableIndexVersion + " vs. " + Constants.AVAILABLE_INDEX_VERSION);
+        Log.d("MIGRATION", "VERSION CHECK: " + availableIndexVersion + " vs. " + Constants.AVAILABLE_INDEX_VERSION);
 
         if (availableIndexVersion != Constants.AVAILABLE_INDEX_VERSION) {
 
@@ -141,12 +141,59 @@ public class HomeActivity extends BaseActivity {
             HashMap<String, scal.io.liger.model.ExpansionIndexItem> availableItemsFromFile = scal.io.liger.IndexManager.loadAvailableIdIndex(this);
 
             if (availableItemsFromFile.size() == 0) {
-                Log.d("INDEX", "NOTHING LOADED FROM AVAILABLE FILE");
+                Log.d("MIGRATION", "NOTHING LOADED FROM AVAILABLE FILE");
             } else {
                 for (scal.io.liger.model.ExpansionIndexItem item : availableItemsFromFile.values()) {
-                    Log.d("INDEX", "ADDING " + item.getExpansionId() + " TO DATABASE");
+                    Log.d("MIGRATION", "ADDING " + item.getExpansionId() + " TO DATABASE (AVAILABLE)");
                     availableIndexItemDao.addAvailableIndexItem(item, true); // replaces existing items, should trigger updates to installed items and table as needed
+
+                    // ugly solution to deal with the fact that the popup menu assumes there will be threads for an item we tried to download/install
+                    ArrayList<Thread> noThreads = new ArrayList<Thread>();
+                    downloadThreads.put(item.getExpansionId(), noThreads);
+
                 }
+            }
+
+            // if found, migrate installed index
+
+            File installedFile = new File(StorageHelper.getActualStorageDirectory(this), "installed_index.json");
+
+            if (installedFile.exists()) {
+                HashMap<String, scal.io.liger.model.ExpansionIndexItem> installedItemsFromFile = scal.io.liger.IndexManager.loadInstalledIdIndex(this);
+
+                if (installedItemsFromFile.size() == 0) {
+                    Log.d("MIGRATION", "NOTHING LOADED FROM INSTALLED INDEX FILE");
+                } else {
+                    for (scal.io.liger.model.ExpansionIndexItem item : installedItemsFromFile.values()) {
+                        Log.d("MIGRATION", "ADDING " + item.getExpansionId() + " TO DATABASE (INSTALLED)");
+                        installedIndexItemDao.addInstalledIndexItem(item, true); // replaces existing items, should trigger updates to installed items and table as needed
+                    }
+                }
+
+                installedFile.delete();
+            } else {
+                Log.d("MIGRATION", "NO INSTALLED INDEX FILE");
+            }
+
+            // if found, migrate instance index
+
+            File instanceFile = new File(StorageHelper.getActualStorageDirectory(this), "instance_index.json");
+
+            if (instanceFile.exists()) {
+                HashMap<String, scal.io.liger.model.InstanceIndexItem> instanceItemsFromFile = scal.io.liger.IndexManager.loadInstanceIndex(this);
+
+                if (instanceItemsFromFile.size() == 0) {
+                    Log.d("MIGRATION", "NOTHING LOADED FROM INSTANCE INDEX FILE");
+                } else {
+                    for (scal.io.liger.model.InstanceIndexItem item : instanceItemsFromFile.values()) {
+                        Log.d("MIGRATION", "ADDING " + item.getInstanceFilePath() + " TO DATABASE (INSTANCE)");
+                        instanceIndexItemDao.addInstanceIndexItem(item, true); // replaces existing items, should trigger updates to installed items and table as needed
+                    }
+                }
+
+                instanceFile.delete();
+            } else {
+                Log.d("MIGRATION", "NO INSTANCE INDEX FILE");
             }
 
             // update preferences
