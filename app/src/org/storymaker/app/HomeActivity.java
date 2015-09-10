@@ -49,6 +49,7 @@ import java.util.List;
 
 import info.guardianproject.onionkit.ui.OrbotHelper;
 import rx.functions.Action1;
+import scal.io.liger.IndexManager;
 import scal.io.liger.JsonHelper;
 import scal.io.liger.MainActivity;
 import scal.io.liger.StorageHelper;
@@ -540,6 +541,10 @@ public class HomeActivity extends BaseActivity {
 
                     // this isn't ideal but pushing an alert dialog down into the check/download process is difficult
 
+                    if ((downloadThreads.get(eItem.getExpansionId()) != null)) {
+                        Log.d("INDEX", "DIALOG - FOUND THREADS: " + downloadThreads.get(eItem.getExpansionId()).size());
+                    }
+
                     if (!installedIds.containsKey(eItem.getExpansionId()) && (downloadThreads.get(eItem.getExpansionId()) == null)) {
 
                         Log.d("INDEX", "DIALOG - START");
@@ -569,24 +574,35 @@ public class HomeActivity extends BaseActivity {
 
                         // this item is installed and there are no saved threads for it
 
-                        new AlertDialog.Builder(HomeActivity.this)
-                                .setTitle("Resume Download")
-                                .setMessage(eItem.getTitle() + " is incomplete")
-                                        // using negative button to account for fixed order
-                                .setNegativeButton("Resume download", new DialogInterface.OnClickListener() {
+                        // if item is flagged, download finished, do not prompt to resume
+                        if (eItem.isInstalled()) {
 
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
+                            // proceed as usual
 
-                                        Log.d("DOWNLOAD", "RESUME...");
+                            Log.d("INDEX", "DO STUFF");
 
-                                        handleClick(eItem, installedIds, false);
+                            handleClick(eItem, installedIds, true);
+                        } else {
 
-                                    }
-                                })
-                                .setNeutralButton("Do nothing", null)
-                                .setPositiveButton("Cancel download", new CancelListener(eItem))
-                                .show();
+                            new AlertDialog.Builder(HomeActivity.this)
+                                    .setTitle("Resume Download")
+                                    .setMessage(eItem.getTitle() + " is incomplete")
+                                            // using negative button to account for fixed order
+                                    .setNegativeButton("Resume download", new DialogInterface.OnClickListener() {
+
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+
+                                            Log.d("DOWNLOAD", "RESUME...");
+
+                                            handleClick(eItem, installedIds, false);
+
+                                        }
+                                    })
+                                    .setNeutralButton("Do nothing", null)
+                                    .setPositiveButton("Cancel download", new CancelListener(eItem))
+                                    .show();
+                        }
 
                     } else {
 
@@ -785,6 +801,14 @@ public class HomeActivity extends BaseActivity {
                     downloadThreads.remove(eItem.getExpansionId());
                 }
 
+                // update db record with flag
+                if (!eItem.isInstalled()) {
+                    Log.d("HOME MENU CLICK", "SET INSTALLED FLAG FOR " + eItem.getExpansionId());
+                    eItem.setInstalledFlag(true);
+                    InstalledIndexItem iItem = new InstalledIndexItem(eItem);
+                    StorymakerIndexManager.installedIndexAdd(this, iItem, installedIndexItemDao);
+                }
+
                 // if file has been downloaded, open file
                 Log.d("HOME MENU CLICK", eItem.getExpansionId() + " INSTALLED, FILE OK");
 
@@ -835,6 +859,14 @@ public class HomeActivity extends BaseActivity {
             } else {
                 // if file is being downloaded, don't open
                 Log.d("HOME MENU CLICK", eItem.getExpansionId() + " INSTALLED, CURRENTLY DOWNLOADING FILE");
+
+                // if necessary, un-flag db record (this probably indicates an installed file that is being patched
+                if (eItem.isInstalled()) {
+                    Log.d("HOME MENU CLICK", "UN-SET INSTALLED FLAG FOR " + eItem.getExpansionId());
+                    eItem.setInstalledFlag(false);
+                    InstalledIndexItem iItem = new InstalledIndexItem(eItem);
+                    StorymakerIndexManager.installedIndexAdd(this, iItem, installedIndexItemDao);
+                }
 
                 // create pause/cancel dialog
 
