@@ -244,40 +244,23 @@ public class InstanceIndexItemAdapter extends RecyclerView.Adapter<InstanceIndex
             if (item instanceof InstanceIndexItem) {
 
                 new AlertDialog.Builder(context)
-                        .setTitle("Delete Story Path")
-                        .setMessage("Delete " + item.getTitle() + " " + sdf.format(new Date(((InstanceIndexItem) item).getStoryCreationDate())) + " ?")
-                        // using negative button to account for fixed order
-                        .setNegativeButton("Delete story", new DialogInterface.OnClickListener() {
+                    .setTitle(context.getString(R.string.delete_story))
+                    .setMessage(item.getTitle() + " " + sdf.format(new Date(((InstanceIndexItem) item).getStoryCreationDate()))) // FIXME we need to move this logic into the model
+                    // using negative button to account for fixed order
+                    .setPositiveButton(context.getString(R.string.delete), new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
 
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
+                            Log.d("INDEX", "DELETING FILES FOR " + ((InstanceIndexItem) item).getTitle());
+                            ((InstanceIndexItem) item).deleteAssociatedFiles(context, false);
 
-                                Log.d("INDEX", "DELETING FILES FOR " + ((InstanceIndexItem) item).getTitle());
-                                ((InstanceIndexItem) item).deleteAssociatedFiles(context, false);
+                            mDataset.remove(safePosition);
+                            notifyItemRemoved(safePosition);
 
-                                mDataset.remove(safePosition);
-                                notifyItemRemoved(safePosition);
-
-                            }
-
-                        })
-                        .setNeutralButton("Delete story and media", new DialogInterface.OnClickListener() {
-
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-
-                                Log.d("INDEX", "DELETING FILES AND MEDIA FOR " + ((InstanceIndexItem) item).getTitle());
-                                ((InstanceIndexItem) item).deleteAssociatedFiles(context, true);
-
-                                mDataset.remove(safePosition);
-                                notifyItemRemoved(safePosition);
-
-                            }
-
-                        })
-                        // using positive button to account for fixed order
-                        .setPositiveButton("Cancel", null)
-                        .show();
+                        }
+                    })
+                    .setNegativeButton(context.getString(R.string.cancel), null)
+                    .show();
             } else if (item instanceof ExpansionIndexItem) {
 
                 // let users delete content packs too
@@ -339,7 +322,6 @@ public class InstanceIndexItemAdapter extends RecyclerView.Adapter<InstanceIndex
                         // using positive button to account for fixed order
                         .setPositiveButton("Cancel", null)
                         .show();
-
             } else {
 
                 // no-op
