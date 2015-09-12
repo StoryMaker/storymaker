@@ -1,8 +1,10 @@
 --- build 1072
 
+- Confirm, Pause, Resume and Stop big Content Pack downloads!
+- Delete content packs you dont need anymore by longpressing on them
 - import file picker only shows files of the right type
 - stop user from accidentally importing wrong media type
-- fix crash when trying to public stories with mixed media
+- fix crash when trying to publish stories with mixed media
 
 --- build 1071
 
