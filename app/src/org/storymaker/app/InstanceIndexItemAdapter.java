@@ -268,10 +268,9 @@ public class InstanceIndexItemAdapter extends RecyclerView.Adapter<InstanceIndex
                 // check if item is installed?
 
                 new AlertDialog.Builder(context)
-                        .setTitle("Delete Content Pack")
-                        .setMessage("Delete downloaded content for " + item.getTitle() + " ?")
-                        // using negative button to account for fixed order
-                        .setNegativeButton("Delete content pack", new DialogInterface.OnClickListener() {
+                        .setTitle(context.getString(R.string.delete_content_pack))
+                        .setMessage(item.getTitle())
+                        .setPositiveButton(context.getString(R.string.delete), new DialogInterface.OnClickListener() {
 
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
@@ -306,7 +305,7 @@ public class InstanceIndexItemAdapter extends RecyclerView.Adapter<InstanceIndex
                                         // need to clear saved threads
                                         if (context instanceof HomeActivity) {
                                             Log.d("INDEX", "LONG PRESS: REMOVING THREADS FOR " + installedItem.expansionId);
-                                            HomeActivity home = (HomeActivity)context;
+                                            HomeActivity home = (HomeActivity) context;
                                             home.removeThreads(installedItem.expansionId);
                                         } else {
                                             Log.e("INDEX", "LONG PRESS: UNEXPECTED CONTEXT");
@@ -315,17 +314,13 @@ public class InstanceIndexItemAdapter extends RecyclerView.Adapter<InstanceIndex
                                 });
 
 
-
                             }
 
                         })
-                        // using positive button to account for fixed order
-                        .setPositiveButton("Cancel", null)
+                        .setNegativeButton(context.getString(R.string.cancel), null)
                         .show();
             } else {
-
                 // no-op
-
             }
 
             return true;
