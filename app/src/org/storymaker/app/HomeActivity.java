@@ -585,22 +585,18 @@ public class HomeActivity extends BaseActivity {
                         } else {
 
                             new AlertDialog.Builder(HomeActivity.this)
-                                    .setTitle("Resume Download")
-                                    .setMessage(eItem.getTitle() + " is incomplete")
-                                            // using negative button to account for fixed order
-                                    .setNegativeButton("Resume download", new DialogInterface.OnClickListener() {
+                                    .setTitle(getString(R.string.resume_download))
+                                    .setMessage(eItem.getTitle())
+                                    .setPositiveButton(getString(R.string.resume), new DialogInterface.OnClickListener() {
 
                                         @Override
                                         public void onClick(DialogInterface dialog, int which) {
-
                                             Log.d("DOWNLOAD", "RESUME...");
-
                                             handleClick(eItem, installedIds, false);
-
                                         }
                                     })
-                                    .setNeutralButton("Do nothing", null)
-                                    .setPositiveButton("Cancel download", new CancelListener(eItem))
+                                    .setNegativeButton(getString(R.string.cancel), null)
+                                    .setNeutralButton(getString(R.string.stop), new CancelListener(eItem))
                                     .show();
                         }
 
@@ -872,13 +868,12 @@ public class HomeActivity extends BaseActivity {
 
                 if (showDialog) {
                     new AlertDialog.Builder(HomeActivity.this)
-                            .setTitle("Pause/Cancel Download")
-                            .setMessage(eItem.getTitle() + " is currently downloading")
-                                    // using negative button to account for fixed order
-                            .setNegativeButton("Continue download", null)
-                            .setNeutralButton("Pause download", new PauseListener(eItem))
-                            .setPositiveButton("Cancel download", new CancelListener(eItem))
-                            .show();
+                            .setTitle(R.string.stop_download)
+                            .setMessage(eItem.getTitle())
+                            .setNegativeButton(getString(R.string.cancel), null)
+                            .setNeutralButton(getString(R.string.pause), new PauseListener(eItem))
+                            .setPositiveButton(getString(R.string.stop), new CancelListener(eItem))
+                                            .show();
                 }
 
                 // Toast.makeText(HomeActivity.this, "Please wait for this content pack to finish downloading", Toast.LENGTH_LONG).show(); // FIXME move to strings.xml
