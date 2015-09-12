@@ -220,7 +220,7 @@ You also will have an opportunity to see and modify the data being sent."</strin
     <string name="uploading_to_storymaker">publishing to StoryMaker site...</string>
     <string name="rendering_clips_">rendering clips...</string>
     <string name="you_must_enter_a_project_name">Please enter a working draft title. You can change this later.</string>
-    <string name="delete_project_">Delete project?</string>
+    <string name="delete_project_">Delete Export?</string>
     <string name="delete_story">Delete Story?</string>
     <string name="delete_content_pack">"Delete Content Pack?"</string>
     <string name="delete_clip">Delete Clip?</string>
