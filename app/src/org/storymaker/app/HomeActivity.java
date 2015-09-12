@@ -552,10 +552,10 @@ public class HomeActivity extends BaseActivity {
                         // this item is not installed and there are no saved threads for it
 
                         new AlertDialog.Builder(HomeActivity.this)
-                                .setTitle("Confirm Download")
-                                .setMessage("Do you want to start downloading " + eItem.getTitle() + "? (Size: " + ((eItem.getExpansionFileSize() + eItem.getPatchFileSize()) / 1048576) + " MB)")
+                                .setTitle(R.string.download_content_pack)
+                                .setMessage(eItem.getTitle() + " (" + ((eItem.getExpansionFileSize() + eItem.getPatchFileSize()) / 1048576) + " MB)") // FIXME we need to flip this for RTL
                                         // using negative button to account for fixed order
-                                .setNegativeButton("Yes", new DialogInterface.OnClickListener() {
+                                .setPositiveButton(getString(R.string.download), new DialogInterface.OnClickListener() {
 
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
@@ -566,7 +566,7 @@ public class HomeActivity extends BaseActivity {
 
                                     }
                                 })
-                                .setPositiveButton("No", null)
+                                .setNegativeButton(getString(R.string.cancel), null)
                                 .show();
                     } else if (installedIds.containsKey(eItem.getExpansionId()) && (downloadThreads.get(eItem.getExpansionId()) == null)) {
 

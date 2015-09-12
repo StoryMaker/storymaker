@@ -261,6 +261,7 @@ You also will have an opportunity to see and modify the data being sent."</strin
     <string name="delete_warning">This action cannot be undone!</string>
     <string name="cancel">Cancel</string>
     <string name="delete">Delete</string>
+    <string name="download">Download</string>
     <string name="play_or_share_exported_media_">Play or Share exported media?</string>
     <string name="share_published_story">Share published story?</string>
     <string name="err_storage_not_ready">The external storage (SDCard) does not appear to be available for reading and writing at this time. StoryMaker requires access to this for lesson and story project data. Please check your device and restart the pp.</string>
@@ -340,5 +341,5 @@ You also will have an opportunity to see and modify the data being sent."</strin
     <string name="you_are_not_signed_into_storymakerorg">You are not signed into StoryMaker.org!</string>
     <string name="fb_post_not_public">Only public Facebook posts can be published on StoryMaker.org!</string>
     <string name="send_feedback">Send Feedback</string>
-
+    <string name="download_content_pack">Download Content Pack?</string>
 </resources>
