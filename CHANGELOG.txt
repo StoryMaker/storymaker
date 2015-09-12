@@ -1,3 +1,9 @@
+--- build 1072
+
+- import file picker only shows files of the right type
+- stop user from accidentally importing wrong media type
+- fix crash when trying to public stories with mixed media
+
 --- build 1071
 
 - fix sideways thumbnails in clipcards for photos taken in portait on Samsung devices
