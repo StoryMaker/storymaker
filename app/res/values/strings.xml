@@ -221,6 +221,7 @@ You also will have an opportunity to see and modify the data being sent."</strin
     <string name="rendering_clips_">rendering clips...</string>
     <string name="you_must_enter_a_project_name">Please enter a working draft title. You can change this later.</string>
     <string name="delete_project_">Delete project?</string>
+    <string name="delete_story">Delete Story?</string>
     <string name="delete_clip">Delete Clip?</string>
     <string name="add_new_clip_to_the_scene_">Add new clip to the scene?</string>
     <string name="video_project_project_type">Video Project</string>
