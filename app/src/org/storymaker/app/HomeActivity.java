@@ -366,7 +366,7 @@ public class HomeActivity extends BaseActivity {
             mSwipeRefreshLayout.setRefreshing(false);
             // resolve available/installed conflicts and grab updates if needed
             if (!StorymakerDownloadHelper.checkAndDownload(mContext, availableIndexItemDao, installedIndexItemDao, queueItemDao)) {
-                Toast.makeText(mContext, getString(R.string.home_downloading_content), Toast.LENGTH_LONG).show(); // FIXME move to strings.xml
+                Toast.makeText(mContext, getString(R.string.home_downloading_content), Toast.LENGTH_LONG).show();
             }
             // refresh regardless (called from onResume and OnRefreshListener)
             initActivityList();
