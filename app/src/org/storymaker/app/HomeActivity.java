@@ -366,7 +366,7 @@ public class HomeActivity extends BaseActivity {
             mSwipeRefreshLayout.setRefreshing(false);
             // resolve available/installed conflicts and grab updates if needed
             if (!StorymakerDownloadHelper.checkAndDownload(mContext, availableIndexItemDao, installedIndexItemDao, queueItemDao)) {
-                Toast.makeText(mContext, "Downloading content and/or updating installed files", Toast.LENGTH_LONG).show(); // FIXME move to strings.xml
+                Toast.makeText(mContext, getString(R.string.home_downloading_content), Toast.LENGTH_LONG).show();
             }
             // refresh regardless (called from onResume and OnRefreshListener)
             initActivityList();
@@ -432,7 +432,7 @@ public class HomeActivity extends BaseActivity {
     // copied this as a short term fix until we get loading cleanly split out from the liger sample app ui stuff
     private StoryPathLibrary initSPLFromJson(String json, String jsonPath) {
         if (json == null || json.equals("")) {
-            Toast.makeText(this, "Was not able to load this path, content is missing!", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, getString(R.string.home_content_missing), Toast.LENGTH_LONG).show();
             finish();
             return null;
         }
@@ -815,7 +815,10 @@ public class HomeActivity extends BaseActivity {
                         eItem.getExpansionId(),
                         StoryMakerApp.getCurrentLocale().getLanguage());
 
-                if ((eItem.getThumbnailPath() == null) || (!eItem.getThumbnailPath().equals(metadata.getContentPackThumbnailPath()))) {
+                if (metadata == null) {
+                    Toast.makeText(HomeActivity.this, getString(R.string.home_metadata_missing), Toast.LENGTH_LONG).show();
+                    Log.e(TAG, "failed to load content metadata");
+                } else if ((eItem.getThumbnailPath() == null) || (!eItem.getThumbnailPath().equals(metadata.getContentPackThumbnailPath()))) {
 
                     Log.d("HOME MENU CLICK", eItem.getExpansionId() + " FIRST OPEN, UPDATING THUMBNAIL PATH");
 
@@ -839,7 +842,11 @@ public class HomeActivity extends BaseActivity {
                         eItem.getPackageName(),
                         eItem.getExpansionId(),
                         StoryMakerApp.getCurrentLocale().getLanguage());
-                if (contentIndex.size() == 1) {
+
+                if ((contentIndex == null) || (contentIndex.size() < 1)) {
+                    Toast.makeText(HomeActivity.this, getString(R.string.home_index_missing), Toast.LENGTH_LONG).show();
+                    Log.e(TAG, "failed to load content index");
+                } else if (contentIndex.size() == 1) {
                     launchLiger(HomeActivity.this, null, null, contentIndex.get(0).getInstanceFilePath());
                 } else {
                     String[] names = new String[contentIndex.size()];
@@ -1097,7 +1104,7 @@ public class HomeActivity extends BaseActivity {
                 // if file is being downloaded, don't open
                 Log.d("NEW ITEM CLICK", "CURRENTLY DOWNLOADING FILE");
 
-                Toast.makeText(context, "Please wait for this content pack to finish downloading", Toast.LENGTH_LONG).show(); // FIXME move to strings.xml
+                Toast.makeText(context, context.getString(R.string.home_please_wait), Toast.LENGTH_LONG).show();
                 return;
             }
 
