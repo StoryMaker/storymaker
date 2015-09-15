@@ -816,7 +816,7 @@ public class HomeActivity extends BaseActivity {
                         StoryMakerApp.getCurrentLocale().getLanguage());
 
                 if (metadata == null) {
-                    Toast.makeText(HomeActivity.this, getString(R.string.home_metadata_missing), Toast.LENGTH_LONG).show(); // FIXME move to strings.xml
+                    Toast.makeText(HomeActivity.this, getString(R.string.home_metadata_missing), Toast.LENGTH_LONG).show();
                     Log.e(TAG, "failed to load content metadata");
                 } else if ((eItem.getThumbnailPath() == null) || (!eItem.getThumbnailPath().equals(metadata.getContentPackThumbnailPath()))) {
 
@@ -844,7 +844,7 @@ public class HomeActivity extends BaseActivity {
                         StoryMakerApp.getCurrentLocale().getLanguage());
 
                 if ((contentIndex == null) || (contentIndex.size() < 1)) {
-                    Toast.makeText(HomeActivity.this, getString(R.string.home_index_missing), Toast.LENGTH_LONG).show(); // FIXME move to strings.xml
+                    Toast.makeText(HomeActivity.this, getString(R.string.home_index_missing), Toast.LENGTH_LONG).show();
                     Log.e(TAG, "failed to load content index");
                 } else if (contentIndex.size() == 1) {
                     launchLiger(HomeActivity.this, null, null, contentIndex.get(0).getInstanceFilePath());
@@ -1104,7 +1104,7 @@ public class HomeActivity extends BaseActivity {
                 // if file is being downloaded, don't open
                 Log.d("NEW ITEM CLICK", "CURRENTLY DOWNLOADING FILE");
 
-                Toast.makeText(context, context.getString(R.string.home_please_wait), Toast.LENGTH_LONG).show(); // FIXME move to strings.xml
+                Toast.makeText(context, context.getString(R.string.home_please_wait), Toast.LENGTH_LONG).show();
                 return;
             }
 
