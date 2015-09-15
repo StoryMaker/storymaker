@@ -1,3 +1,8 @@
+--- build 1073
+
+- Disable RTL controls on Edit Clip popup
+- Bugfixes
+
 --- build 1072
 
 - Confirm, Pause, Resume and Stop big Content Pack downloads!
