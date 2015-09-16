@@ -1,3 +1,7 @@
+--- build 1074
+
+- Crash fixes
+
 --- build 1073
 
 - Disable RTL controls on Edit Clip popup
