@@ -570,173 +570,74 @@ public class HomeActivity extends BaseActivity {
                                 .show();
                     } else if (installedIds.containsKey(eItem.getExpansionId()) && (downloadThreads.get(eItem.getExpansionId()) == null)) {
 
-                        Log.d("INDEX", "DIALOG - RESUME");
+                        // do not display dialog options if user selected "use manager"
+                        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(HomeActivity.this);
+                        boolean useManager = settings.getBoolean("pusedownloadmanager", false);
 
-                        // this item is installed and there are no saved threads for it
+                        if (useManager) {
 
-                        // if item is flagged, download finished, do not prompt to resume
-                        if (eItem.isInstalled()) {
+                            Log.d("INDEX", "USING MANAGER - NO DIALOG");
 
-                            // proceed as usual
+                            handleClick(eItem, installedIds, false);
 
-                            Log.d("INDEX", "DO STUFF");
-
-                            handleClick(eItem, installedIds, true);
                         } else {
 
-                            new AlertDialog.Builder(HomeActivity.this)
-                                    .setTitle(getString(R.string.resume_download))
-                                    .setMessage(eItem.getTitle())
-                                    .setPositiveButton(getString(R.string.resume), new DialogInterface.OnClickListener() {
+                            Log.d("INDEX", "DIALOG - RESUME");
 
-                                        @Override
-                                        public void onClick(DialogInterface dialog, int which) {
-                                            Log.d("DOWNLOAD", "RESUME...");
-                                            handleClick(eItem, installedIds, false);
-                                        }
-                                    })
-                                    .setNegativeButton(getString(R.string.cancel), null)
-                                    .setNeutralButton(getString(R.string.stop), new CancelListener(eItem))
-                                    .show();
+                            // this item is installed and there are no saved threads for it
+
+                            // if item is flagged, download finished, do not prompt to resume
+                            if (eItem.isInstalled()) {
+
+                                // proceed as usual
+
+                                Log.d("INDEX", "DO STUFF");
+
+                                handleClick(eItem, installedIds, true);
+                            } else {
+
+                                new AlertDialog.Builder(HomeActivity.this)
+                                        .setTitle(getString(R.string.resume_download))
+                                        .setMessage(eItem.getTitle())
+                                        .setPositiveButton(getString(R.string.resume), new DialogInterface.OnClickListener() {
+
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                Log.d("DOWNLOAD", "RESUME...");
+                                                handleClick(eItem, installedIds, false);
+                                            }
+                                        })
+                                        .setNegativeButton(getString(R.string.cancel), null)
+                                        .setNeutralButton(getString(R.string.stop), new CancelListener(eItem))
+                                        .show();
+                            }
                         }
-
                     } else {
 
                         // proceed as usual
 
-                        Log.d("INDEX", "DO STUFF");
+                        // do not display dialog options if user selected "use manager"
+                        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(HomeActivity.this);
+                        boolean useManager = settings.getBoolean("pusedownloadmanager", false);
 
-                        handleClick(eItem, installedIds, true);
-                    }
+                        if (useManager) {
 
+                            Log.d("INDEX", "USING MANAGER - NO DIALOG");
 
+                            handleClick(eItem, installedIds, false);
 
-
-                    /*
-                    // initiate check/download whether installed or not
-                    HashMap<String, Thread> newThreads = StorymakerDownloadHelper.checkAndDownload(HomeActivity.this, eItem, installedIndexItemDao, queueItemDao, true); // <- THIS SHOULD PICK UP EXISTING PARTIAL FILES
-                                                                                                                                                                         // <- THIS ALSO NEEDS TO NOT INTERACT WITH THE INDEX
-                                                                                                                                                                         // <- METADATA UPDATE SHOULD HAPPEN WHEN APP IS INITIALIZED
-
-                    // if any download threads were initiated, item is not ready to open
-
-                    boolean readyToOpen = true;
-
-                    if (newThreads.size() > 0) {
-                        readyToOpen = false;
-
-                        // update stored threads for index item
-
-                        ArrayList<Thread> currentThreads = downloadThreads.get(eItem.getExpansionId());
-
-                        if (currentThreads == null) {
-                            currentThreads = new ArrayList<Thread>();
-                        }
-
-                        for (Thread thread : newThreads.values()) {
-                            currentThreads.add(thread);
-                        }
-
-                        downloadThreads.put(eItem.getExpansionId(), currentThreads);
-                    }
-
-                    if (!installedIds.containsKey(eItem.getExpansionId())) {
-
-                        // if clicked item is not installed, update index
-                        StorymakerIndexManager.registerInstalledIndexItem(HomeActivity.this, eItem, installedIndexItemDao);
-
-                        Log.d("HOME MENU CLICK", eItem.getExpansionId() + " NOT INSTALLED, ADDING ITEM TO INDEX");
-
-                        // wait for index serialization
-                        try {
-                            synchronized (this) {
-                                wait(1000);
-                            }
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                    } else {
-
-                        Log.d("HOME MENU CLICK", eItem.getExpansionId() + " INSTALLED, CHECKING FILE");
-
-                        // if clicked item is installed, check state
-                        if (readyToOpen) {
-
-                            // clear saved threads
-                            if (downloadThreads.get(eItem.getExpansionId()) != null) {
-                                downloadThreads.remove(eItem.getExpansionId());
-                            }
-
-                            // if file has been downloaded, open file
-                            Log.d("HOME MENU CLICK", eItem.getExpansionId() + " INSTALLED, FILE OK");
-
-                            // update with new thumbnail path
-                            // move this somewhere that it can be triggered by completed download?
-                            ContentPackMetadata metadata = scal.io.liger.IndexManager.loadContentMetadata(HomeActivity.this,
-                                    eItem.getPackageName(),
-                                    eItem.getExpansionId(),
-                                    StoryMakerApp.getCurrentLocale().getLanguage());
-
-                            if ((eItem.getThumbnailPath() == null) || (!eItem.getThumbnailPath().equals(metadata.getContentPackThumbnailPath()))) {
-
-                                Log.d("HOME MENU CLICK", eItem.getExpansionId() + " FIRST OPEN, UPDATING THUMBNAIL PATH");
-
-                                eItem.setThumbnailPath(metadata.getContentPackThumbnailPath());
-                                StorymakerIndexManager.registerInstalledIndexItem(HomeActivity.this, eItem, installedIndexItemDao);
-
-                                // wait for index serialization
-                                try {
-                                    synchronized (this) {
-                                        wait(1000);
-                                    }
-                                } catch (InterruptedException e) {
-                                    e.printStackTrace();
-                                }
-                            }
-
-                            ArrayList<scal.io.liger.model.InstanceIndexItem> contentIndex = scal.io.liger.IndexManager.loadContentIndexAsList(HomeActivity.this,
-                                    eItem.getPackageName(),
-                                    eItem.getExpansionId(),
-                                    StoryMakerApp.getCurrentLocale().getLanguage());
-                            if (contentIndex.size() == 1) {
-                                launchLiger(HomeActivity.this, null, null, contentIndex.get(0).getInstanceFilePath());
-                            } else {
-                                String[] names = new String[contentIndex.size()];
-                                String[] paths = new String[contentIndex.size()];
-                                int i = 0;
-                                for (scal.io.liger.model.InstanceIndexItem item : contentIndex) {
-                                    names[i] = item.getTitle();
-                                    paths[i] = item.getInstanceFilePath();
-                                    i++;
-                                }
-                                showSPLSelectorPopup(names, paths);
-                            }
                         } else {
-                            // if file is being downloaded, don't open
-                            Log.d("HOME MENU CLICK", eItem.getExpansionId() + " INSTALLED, CURRENTLY DOWNLOADING FILE");
 
-                            // create pause/cancel dialog
+                            Log.d("INDEX", "CONTINUE...");
 
-                            new AlertDialog.Builder(HomeActivity.this)
-                                    .setTitle("Pause/Cancel Download")
-                                    .setMessage(eItem.getTitle() + " is currently downloading")
-                                            // using negative button to account for fixed order
-                                    .setNegativeButton("Continue download", null)
-                                    .setNeutralButton("Pause download", new PauseListener(eItem))
-                                    .setPositiveButton("Cancel download", new CancelListener(eItem))
-                                    .show();
+                            handleClick(eItem, installedIds, true);
 
-                            // Toast.makeText(HomeActivity.this, "Please wait for this content pack to finish downloading", Toast.LENGTH_LONG).show(); // FIXME move to strings.xml
                         }
                     }
-                    */
                 }
             }
         }, installedIndexItemDao));
     }
-
-
-
 
     // HAD TO SPLIT OUT INTO A METHOD
     public void handleClick (ExpansionIndexItem eItem, HashMap<String, ExpansionIndexItem> installedIds, boolean showDialog) {
