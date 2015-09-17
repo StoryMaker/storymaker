@@ -1,3 +1,7 @@
+--- build 1076
+
+hid pause/resume/stop options if user selects "use download manager"
+
 --- build 1075
 
 - Right-to-left UI fixes
