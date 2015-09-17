@@ -1,3 +1,7 @@
+--- build 1075
+
+- Right-to-left UI fixes
+
 --- build 1074
 
 - Crash fixes
