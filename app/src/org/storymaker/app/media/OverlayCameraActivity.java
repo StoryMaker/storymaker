@@ -31,6 +31,8 @@ import android.widget.ImageView;
 import com.larvalabs.svgandroid.SVG;
 import com.larvalabs.svgandroid.SVGParser;
 
+import timber.log.Timber;
+
 
 public class OverlayCameraActivity extends Activity implements Callback, SwipeInterface
 {
@@ -164,7 +166,7 @@ public class OverlayCameraActivity extends Activity implements Callback, SwipeIn
         }
         catch(IOException ex) 
         {
-        	Log.e(AppConstants.TAG,"error rendering overlay",ex);
+        	Timber.e(ex, "error rendering overlay", ex);
             return;
         }
         

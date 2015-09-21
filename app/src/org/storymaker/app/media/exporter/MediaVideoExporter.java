@@ -23,6 +23,8 @@ import android.os.Message;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
+import timber.log.Timber;
+
 /*
  * cross fades audio and other niceities
  */
@@ -188,7 +190,7 @@ public class MediaVideoExporter extends MediaExporter {
     			}
     			
     			
-    			Log.d(AppConstants.TAG,"video clip start=" + media.startTime + " length=" + media.duration);
+    			Timber.d("video clip start=" + media.startTime + " length=" + media.duration);
     		}
     		
     		msg = mHandler.obtainMessage(0);
@@ -245,7 +247,7 @@ public class MediaVideoExporter extends MediaExporter {
             msg.getData().putString("status", mContext.getString(R.string.export_error_4) + ": " + e.getMessage());
 
 	         mHandler.sendMessage(msg);
-    		Log.e(AppConstants.TAG, "error exporting",e);
+    		Timber.e(e, "error exporting");
     	}
 	}
 	
@@ -257,7 +259,7 @@ public class MediaVideoExporter extends MediaExporter {
 			public void shellOut(String line) {
 				
 				if (!line.startsWith("frame"))
-					Log.d(AppConstants.TAG, line);
+					Timber.d(line);
 			
 				int idx1;
 				String newStatus = null;

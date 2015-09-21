@@ -27,6 +27,8 @@ import android.view.SubMenu;
 import android.view.View;
 import android.widget.Toast;
 
+import timber.log.Timber;
+
 public class Utils {
     public static void toastOnUiThread(Activity activity, String message) {
     	toastOnUiThread(activity, message, false);
@@ -399,7 +401,7 @@ public class Utils {
             File fileCmd = new File(context.getDir("bin", Context.MODE_WORLD_READABLE), "ffmpeg");
 
             while ((procId = findProcessId(fileCmd.getAbsolutePath())) != -1) {
-                Log.w(AppConstants.TAG, "Found Tor PID=" + procId + " - killing now...");
+				Timber.w("Found Tor PID=" + procId + " - killing now...");
 
                 String[] cmd = {
                     SHELL_CMD_KILL + ' ' + procId + ""
@@ -427,7 +429,7 @@ public class Utils {
                 try {
                     procId = findProcessIdWithPS(command);
                 } catch (Exception e2) {
-                    Log.w(AppConstants.TAG, "Unable to get proc id for: " + command, e2);
+					Timber.w(e2, "Unable to get proc id for: " + command);
                 }
             }
 

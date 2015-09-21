@@ -24,6 +24,8 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 
+import timber.log.Timber;
+
 public class MediaView extends BigImageLabelView implements OnClickListener, OnDismissListener, ShellCallback {
 
 	private MediaManager mMediaManager;
@@ -148,7 +150,7 @@ public class MediaView extends BigImageLabelView implements OnClickListener, OnD
 	public void shellOut(String line) {
 		
 		if (!line.startsWith("frame"))
-			Log.d(AppConstants.TAG, line);
+			Timber.d(line);
 		
 		int idx1;
 		String newStatus = null;

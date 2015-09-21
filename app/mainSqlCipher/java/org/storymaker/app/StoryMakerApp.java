@@ -29,6 +29,7 @@ import android.util.Log;
 
 import scal.io.liger.DownloadHelper;
 import scal.io.liger.IndexManager;
+import timber.log.Timber;
 
 public class StoryMakerApp extends MultiDexApplication {
 
@@ -97,7 +98,7 @@ public class StoryMakerApp extends MultiDexApplication {
 		}
 		catch (Exception e)
 		{
-			Log.e(AppConstants.TAG,"error init app",e);
+			Timber.e(e, "error init app");
 		}
 	}
 		
@@ -250,22 +251,22 @@ public class StoryMakerApp extends MultiDexApplication {
 			int exitCode = Utils.Proc.doShellCommand(cmd, log, false, true);
 			
 			if (exitCode == 0) {
-				Log.d(AppConstants.TAG,"root exists, but not sure about permissions");
+				Timber.d("root exists, but not sure about permissions");
 		    	 return true;
 		     
 		    }
 		      
 		} catch (IOException e) {
 			//this means that there is no root to be had (normally) so we won't log anything
-			Log.e(AppConstants.TAG,"Error checking for root access",e);
+			Timber.e(e,"Error checking for root access");
 			
 		}
 		catch (Exception e) {
-			Log.e(AppConstants.TAG,"Error checking for root access",e);
+			Timber.e(e, "Error checking for root access");
 			//this means that there is no root to be had (normally)
 		}
 		
-		Log.e(AppConstants.TAG,"Could not acquire root permissions");
+		Timber.e("Could not acquire root permissions");
 		
 		
 		return false;
@@ -283,7 +284,7 @@ public class StoryMakerApp extends MultiDexApplication {
 		activityManager.getMemoryInfo(mi);
 		long availableMegs = mi.availMem / 1048576L;
 		
-		Log.e(AppConstants.TAG,"LOW MEMORY WARNING/ MEMORY AVAIL=" + availableMegs);
+		Timber.e("LOW MEMORY WARNING/ MEMORY AVAIL=" + availableMegs);
 		
 	}
 
@@ -304,7 +305,7 @@ public class StoryMakerApp extends MultiDexApplication {
 		}
 		catch (IOException ioe)
 		{
-			Log.w(AppConstants.TAG,"error deleting render tmp on exit",ioe);
+			Timber.w(ioe, "error deleting render tmp on exit");
 		}
 	}
 	

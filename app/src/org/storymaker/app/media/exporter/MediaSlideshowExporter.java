@@ -13,7 +13,8 @@ import android.content.Context;
 import android.media.MediaScannerConnection;
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
+
+import timber.log.Timber;
 
 public class MediaSlideshowExporter extends MediaExporter {
 
@@ -80,8 +81,8 @@ public class MediaSlideshowExporter extends MediaExporter {
     		Message msg = mHandler.obtainMessage(-1);
             msg.getData().putString("error","error: " + e.getMessage());
 
-	         mHandler.sendMessage(msg);
-    		Log.e(AppConstants.TAG, "error exporting",e);
+			mHandler.sendMessage(msg);
+			Timber.e(e, "error exporting");
     	}
 	}
 	
@@ -208,7 +209,7 @@ public class MediaSlideshowExporter extends MediaExporter {
 			
 			
 			if (!line.startsWith("frame"))
-				Log.d(AppConstants.TAG, line);
+				Timber.d(line);
 			
 			
 			int idx1;

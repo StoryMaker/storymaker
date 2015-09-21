@@ -25,6 +25,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import timber.log.Timber;
+
 public class LoginActivity extends BaseActivity implements Runnable 
 {
 	
@@ -131,7 +133,7 @@ public class LoginActivity extends BaseActivity implements Runnable
 			Message msgErr= mHandler.obtainMessage(1);
 			msgErr.getData().putString("err",e.getLocalizedMessage());
 			mHandler.sendMessage(msgErr);
-			Log.e(AppConstants.TAG,"login err",e);
+			Timber.e(e, "login err");
 		}
     }
     

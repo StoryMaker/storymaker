@@ -19,6 +19,7 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 
 import scal.io.liger.StorageHelper;
+import timber.log.Timber;
 
 //http://stackoverflow.com/questions/5734332/vu-audio-meter-when-recording-audio-in-android
 
@@ -169,7 +170,7 @@ public class AudioRecorderView {
 	            mPlayer.prepare();
 	            mPlayer.start();
 	        } catch (IOException e) {
-	            Log.e(AppConstants.TAG, "prepare() failed",e);
+				Timber.e(e, "prepare() failed");
 	        }
         }
     }

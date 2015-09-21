@@ -151,4 +151,5 @@ dependencies {
     compile project(':external:SecureShareLib:SecureShareUILibrary:external:facebook-sdk:facebook')
     compile project(':android-iconify')
     compile project(':external:liger:lib')
+    compile 'com.jakewharton.timber:timber:3.1.0'
 }

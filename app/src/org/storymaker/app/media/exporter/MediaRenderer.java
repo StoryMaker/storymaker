@@ -14,7 +14,7 @@ import org.ffmpeg.android.ShellUtils.ShellCallback;
 import android.content.Context;
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
+import timber.log.Timber;
 
 public class MediaRenderer implements Runnable
 {
@@ -58,7 +58,7 @@ public class MediaRenderer implements Runnable
             msg.getData().putString("status","error: " + e.getMessage());
 
 	         mHandler.sendMessage(msg);
-    		Log.e(AppConstants.TAG, "error exporting",e);
+    		Timber.e(e, "error exporting");
     	}
 	}
 	

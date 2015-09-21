@@ -37,6 +37,7 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 
 import scal.io.liger.StorageHelper;
+import timber.log.Timber;
 
 public class MediaProjectManager implements MediaManager {
 	public final static String TAG = "MediaProjectManager";
@@ -598,7 +599,7 @@ public class MediaProjectManager implements MediaManager {
 			} 
 			catch (java.io.FileNotFoundException fnfe) 
 			{
-				Log.e(AppConstants.TAG, "Input image does not exist or is not readable" + ": " + media.getPath(), fnfe);
+				Timber.e(fnfe, "Input image does not exist or is not readable" + ": " + media.getPath());
 			}			
  		}
  		

@@ -29,6 +29,8 @@ import android.provider.MediaStore;
 import android.util.Log;
 import android.webkit.MimeTypeMap;
 
+import timber.log.Timber;
+
 public class MediaHelper implements MediaScannerConnectionClient {
 
 	private Activity mActivity;
@@ -266,7 +268,7 @@ public class MediaHelper implements MediaScannerConnectionClient {
 					catch (Exception e)
 					{
 						result = null;
-						Log.e(AppConstants.TAG, "error loading media: " + e.getMessage(), e);
+						Timber.e(e, "error loading media: " + e.getMessage());
 
 					}
 				}
@@ -313,9 +315,9 @@ public class MediaHelper implements MediaScannerConnectionClient {
 						fos.close();
 						media.close();
 					} catch (FileNotFoundException e) {
-						Log.e(AppConstants.TAG, e.toString());
+						Timber.e(e, e.toString());
 					} catch (IOException e) {
-						Log.e(AppConstants.TAG, e.toString());
+						Timber.e(e, e.toString());
 					}
 					
 				}
