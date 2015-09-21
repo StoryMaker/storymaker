@@ -67,6 +67,11 @@ public class StoryMakerApp extends MultiDexApplication {
 
 		checkLocale();
 
+		// FIXME FOR NOW WE SHOULD ALWAYS LOG, BUT WE SHOULD FIX THIS SOON AS WE CAN
+		//if (BuildConfig.DEBUG) {
+			Timber.plant(new Timber.DebugTree());
+		//}
+
 		Log.d("TESTTESTTEST", CrashReportingConfig.foo);
 		
 		SQLiteDatabase.loadLibs(this);
