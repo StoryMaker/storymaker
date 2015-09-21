@@ -140,7 +140,16 @@ def adb_push_obb():
     os.system("cd liger-content/assets ; adb push zipped.zip /sdcard/Android/obb/%s/main.1.%s.obb" % (packagename, packagename))
 
 def push_obb_file(pack, version):
-    os.system("cd liger-content/zips ; adb push {1}.main.{2}.obb /sdcard/Android/data/{0}/files/{1}.main.{2}.obb".format(packagename, pack, version))
+    cmd = "cd liger-content/zips ; adb push {1}.main.{2}.obb /sdcard/Android/data/{0}/files/{1}.main.{2}.obb".format(packagename, pack, version)
+    print cmd
+    os.system(cmd)
+    
+@cli.command()
+@click.argument('pack')
+@click.argument('version')
+def adb_push_content_pack(pack, version):
+    """this pushes one obb pack to a phone"""    
+    push_obb_file(pack, version)
     
 @cli.command()
 def adb_push_files():
@@ -203,8 +212,8 @@ def build_zip_push_mobile_photo_101():
     adb_push()
 
 def push_test_indexes(pack, version, avail_index_version):
-    file_size = 12345
-    checksum = "abc123"
+    file_size = 389169
+    checksum = "e830f000725f6c42a726650a2e3f02f97563ca600087051489985992247d1920"
     template = """[{{
         "expansionId": "{1}",
         "patchOrder": "4",
@@ -241,7 +250,8 @@ cli.add_command(zip_content)
 cli.add_command(zip_one_content_pack)
 cli.add_command(adb_push)
 cli.add_command(adb_push_obb)
-cli.add_command(adb_push_files)
+cli.add_command(adb_push_files) 
+cli.add_command(adb_push_content_pack)
 cli.add_command(generate)
 cli.add_command(build_zip_push)
 cli.add_command(build_zip_push_mobile_photo_101)
