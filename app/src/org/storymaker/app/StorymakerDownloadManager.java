@@ -143,7 +143,7 @@ public class StorymakerDownloadManager implements Runnable {
                         downloadRequired = true;
                     } else {
 
-                        if (partFile.getPath().contains(Constants.MAIN)) {
+                        if (partFile.getPath().contains(scal.io.liger.Constants.MAIN)) {
                             if ((indexItem.getExpansionFileSize() > 0) && (indexItem.getExpansionFileSize() > partFile.length())) {
                                 Log.d("DOWNLOAD", partFile.getPath() + " IS TOO SMALL (" + partFile.length() + "/" + indexItem.getExpansionFileSize() + ")");
                                 downloadRequired = true;
@@ -165,7 +165,7 @@ public class StorymakerDownloadManager implements Runnable {
                                     downloadRequired = true;
                                 }
                             }
-                        } else if (partFile.getPath().contains(Constants.PATCH)) {
+                        } else if (partFile.getPath().contains(scal.io.liger.Constants.PATCH)) {
                             if ((indexItem.getPatchFileSize() > 0) && (indexItem.getPatchFileSize() > partFile.length())) {
                                 Log.d("DOWNLOAD", partFile.getPath() + " IS TOO SMALL (" + partFile.length() + "/" + indexItem.getPatchFileSize() + ")");
                                 downloadRequired = true;
@@ -435,8 +435,8 @@ public class StorymakerDownloadManager implements Runnable {
             }
 
             // additional cleanup of pre-name-change files
-            if (fileName.contains(Constants.MAIN)) {
-                nameFilter = fileName.replace(Constants.MAIN + ".", "").replace(indexItem.getExpansionFileVersion(), "*");
+            if (fileName.contains(scal.io.liger.Constants.MAIN)) {
+                nameFilter = fileName.replace(scal.io.liger.Constants.MAIN + ".", "").replace(indexItem.getExpansionFileVersion(), "*");
 
                 Log.d("DOWNLOAD", "CLEANUP: DELETING OLD FILES " + nameFilter + " FROM " + targetFolder.getPath());
 
@@ -515,9 +515,9 @@ public class StorymakerDownloadManager implements Runnable {
         // generate id/tag for notification
         String nTag = indexItem.getExpansionId();
         int nId = 0;
-        if (fileName.contains(Constants.MAIN)) {
+        if (fileName.contains(scal.io.liger.Constants.MAIN)) {
             nId = Integer.parseInt(indexItem.getExpansionFileVersion());
-        } else if (fileName.contains(Constants.PATCH)) {
+        } else if (fileName.contains(scal.io.liger.Constants.PATCH)) {
             nId = Integer.parseInt(indexItem.getPatchFileVersion());
         }
 
@@ -529,9 +529,9 @@ public class StorymakerDownloadManager implements Runnable {
         if (useTor) {
             if (checkTor(context)) {
 
-                Log.d("DOWNLOAD/TOR", "DOWNLOAD WITH TOR PROXY: " + Constants.TOR_PROXY_HOST + "/" + Constants.TOR_PROXY_PORT);
+                Log.d("DOWNLOAD/TOR", "DOWNLOAD WITH TOR PROXY: " + scal.io.liger.Constants.TOR_PROXY_HOST + "/" + scal.io.liger.Constants.TOR_PROXY_PORT);
 
-                SocketAddress torSocket = new InetSocketAddress(Constants.TOR_PROXY_HOST, Constants.TOR_PROXY_PORT);
+                SocketAddress torSocket = new InetSocketAddress(scal.io.liger.Constants.TOR_PROXY_HOST, scal.io.liger.Constants.TOR_PROXY_PORT);
                 Proxy torProxy = new Proxy(Proxy.Type.HTTP, torSocket);
                 httpClient.setProxy(torProxy);
 
@@ -857,9 +857,9 @@ public class StorymakerDownloadManager implements Runnable {
 
         long fileSize = 0;
 
-        if (tempFile.getName().contains(Constants.MAIN)) {
+        if (tempFile.getName().contains(scal.io.liger.Constants.MAIN)) {
             fileSize = indexItem.getExpansionFileSize();
-        } else if (tempFile.getName().contains(Constants.PATCH)) {
+        } else if (tempFile.getName().contains(scal.io.liger.Constants.PATCH)) {
             fileSize = indexItem.getPatchFileSize();
         } else {
             Log.e("DOWNLOAD", "CAN'T DETERMINE FILE SIZE FOR " + tempFile.getName() + " (NOT A MAIN OR PATCH FILE)");

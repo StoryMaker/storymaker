@@ -133,19 +133,19 @@ public class HomeActivity extends BaseActivity {
 
         int availableIndexVersion = preferences.getInt("AVAILABLE_INDEX_VERSION", 0);
 
-        Log.d("MIGRATION", "VERSION CHECK: " + availableIndexVersion + " vs. " + Constants.AVAILABLE_INDEX_VERSION);
+        Log.d("UPDATE", "VERSION CHECK: " + availableIndexVersion + " vs. " + scal.io.liger.Constants.AVAILABLE_INDEX_VERSION);
 
-        if (availableIndexVersion != Constants.AVAILABLE_INDEX_VERSION) {
+        if (availableIndexVersion != scal.io.liger.Constants.AVAILABLE_INDEX_VERSION) {
 
             // load db from file
 
             HashMap<String, scal.io.liger.model.ExpansionIndexItem> availableItemsFromFile = scal.io.liger.IndexManager.loadAvailableIdIndex(this);
 
             if (availableItemsFromFile.size() == 0) {
-                Log.d("MIGRATION", "NOTHING LOADED FROM AVAILABLE FILE");
+                Log.d("UPDATE", "NOTHING LOADED FROM AVAILABLE FILE");
             } else {
                 for (scal.io.liger.model.ExpansionIndexItem item : availableItemsFromFile.values()) {
-                    Log.d("MIGRATION", "ADDING " + item.getExpansionId() + " TO DATABASE (AVAILABLE)");
+                    Log.d("UPDATE", "ADDING " + item.getExpansionId() + " TO DATABASE (AVAILABLE)");
                     availableIndexItemDao.addAvailableIndexItem(item, true); // replaces existing items, should trigger updates to installed items and table as needed
 
                     // ugly solution to deal with the fact that the popup menu assumes there will be threads for an item we tried to download/install
@@ -154,6 +154,8 @@ public class HomeActivity extends BaseActivity {
 
                 }
             }
+
+            // the following migration stuff is currently piggy-backing on the index update stuff
 
             // if found, migrate installed index
 
@@ -199,7 +201,7 @@ public class HomeActivity extends BaseActivity {
 
             // update preferences
 
-            preferences.edit().putInt("AVAILABLE_INDEX_VERSION", Constants.AVAILABLE_INDEX_VERSION).commit();
+            preferences.edit().putInt("AVAILABLE_INDEX_VERSION", scal.io.liger.Constants.AVAILABLE_INDEX_VERSION).commit();
         }
 
 
