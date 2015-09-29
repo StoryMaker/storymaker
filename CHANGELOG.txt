@@ -1,6 +1,10 @@
+--- build 1078
+
+- Update Mobile Photo 101
+
 --- build 1076
 
-hid pause/resume/stop options if user selects "use download manager"
+- hide pause/resume/stop options if user selects "use download manager"
 
 --- build 1075
 

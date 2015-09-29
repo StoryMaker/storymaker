@@ -158,8 +158,8 @@ def adb_push_files():
     if query_yes_no("adb push beta.main.5.obb to device files/ folder?"):
         push_obb_file("beta", "5")
 
-    if query_yes_no("adb push mobile_photo_101.main.2.obb to device files/ folder?"):
-        push_obb_file("mobile_photo_101", "2")
+    if query_yes_no("adb push mobile_photo_101.main.3.obb to device files/ folder?"):
+        push_obb_file("mobile_photo_101", "3")
         
     if query_yes_no("adb push learning_guide.main.2.obb to device files/ folder?"):
         push_obb_file("learning_guide", "2")
