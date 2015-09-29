@@ -20,6 +20,7 @@ import io.scal.secureshareui.lib.ChooseAccountFragment;
 import io.scal.secureshareui.lib.ArchiveMetadataActivity;
 import scal.io.liger.Constants;
 import scal.io.liger.model.FullMetadata;
+import timber.log.Timber;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -133,7 +134,7 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
         }
         catch (Exception e)
         {
-            Log.e(AppConstants.TAG,"could not parse templates",e);
+            Timber.e(e, "could not parse templates");
         }
         setContentView(R.layout.activity_scene_editor_no_swipe);
 
@@ -241,7 +242,7 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
         }
         catch (IOException ioe)
         {
-            Log.e(AppConstants.TAG, "Error creating zip file:", ioe);
+            Timber.e(ioe, "Error creating zip file:");
         }
     }
 
@@ -272,7 +273,7 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
             }
             catch (IOException ioe)
             {
-                Log.e(AppConstants.TAG, "Error creating zip file:", ioe);
+                Timber.e(ioe, "Error creating zip file:");
             }
         }
     }

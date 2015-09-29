@@ -364,7 +364,7 @@ public class Project extends Model {
             return mDB.query((new SceneTable(mDB)).getTableName(), null, selection, selectionArgs, null, null, orderBy);
         }
     }
-    
+
     public ArrayList<Media> getMediaAsList() {
         ArrayList<Media> mediaList = null;
         mediaList = new ArrayList<Media>();
@@ -373,13 +373,13 @@ public class Project extends Model {
         }
         return mediaList;
     }
-    
+
     public String[] getMediaAsPathArray() {
         ArrayList<Media> mediaList = getMediaAsList();
 
         // purge nulls
         mediaList.removeAll(Collections.singleton(null));
-        
+
         String[] pathArray = new String[mediaList.size()];
         for (int i = 0 ; i < mediaList.size() ; i++) {
             pathArray[i] = mediaList.get(i).getPath(); // how this makes me long for python
@@ -395,7 +395,7 @@ public class Project extends Model {
         return audioClips;
     }
 
-    public String[] getAudiClipsAsPathArray() {
+    public String[] getAudioClipsAsPathArray() {
         ArrayList<AudioClip> audioClips = getAudioClipsAsList();
 
         // purge nulls
@@ -506,10 +506,6 @@ public class Project extends Model {
         return tags;
     }
 
-    public boolean isTemplateStory() {
-        return (templatePath != null) && !templatePath.equals(""); 
-    }
-    
     public String[] getCategories() {
         // only one item can be selected
         ArrayList<String> alCats = new ArrayList<String>();
