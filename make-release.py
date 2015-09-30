@@ -11,7 +11,7 @@ tree = ET.parse('app/AndroidManifest.xml')
 root = tree.getroot()
 version_code = root.attrib['{http://schemas.android.com/apk/res/android}versionCode']
 version_name = root.attrib['{http://schemas.android.com/apk/res/android}versionName']
-version = "{0}-build{1)".format(version_name, version_code)
+version = "{0}-build{1}".format(version_name, version_code)
 
 print("building app version {0}".format(version))
 
