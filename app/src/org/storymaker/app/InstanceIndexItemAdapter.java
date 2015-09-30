@@ -171,6 +171,13 @@ public class InstanceIndexItemAdapter extends RecyclerView.Adapter<InstanceIndex
             HashMap<String, ExpansionIndexItem> installedIds = StorymakerIndexManager.loadInstalledIdIndex(context, installedDao);
             holder.title.setText(baseItem.getTitle());
 
+            // show the content pack version info for help debugging upgrade issues
+            if (BuildConfig.DEBUG) {
+                int patchVer = !TextUtils.isEmpty(expansionIndexItem.getPatchFileVersion()) ? Integer.parseInt(expansionIndexItem.getPatchFileVersion()) : 0;
+                String ver = expansionIndexItem.getExpansionFileVersion() + ((patchVer > 0) ? ("." + patchVer) : "");
+                description = "v" + ver + ": " + description;
+            }
+
             // need to verify that content pack containing thumbnail actually exists
             File contentCheck = new File(StorymakerIndexManager.buildFilePath(expansionIndexItem, context), StorymakerIndexManager.buildFileName(expansionIndexItem, Constants.MAIN));
 
