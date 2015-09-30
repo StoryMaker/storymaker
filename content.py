@@ -233,11 +233,16 @@ def push_test_indexes(pack, version, avail_index_version):
     os.system("adb push tmp.json /sdcard/Android/data/{0}/files/available_index.{1}.json".format(packagename, avail_index_version))
     os.system("adb push tmp.json /sdcard/Android/data/{0}/files/installed_index.json".format(packagename))
 
+def cleanup_content_db():
+    os.system("adb shell run-as org.storymaker.app rm /data/data/org.storymaker.app/databases/Storymaker.db")
+    os.system("adb shell run-as org.storymaker.app rm /data/data/org.storymaker.app/databases/Storymaker-journal.db")
+    
 @cli.command()   
 @click.argument('pack')
 @click.argument('version') 
 @click.argument('avail_index_version') 
 def push_test_files(pack, version, avail_index_version):
+    cleanup_content_db()
     push_test_indexes(pack, version, avail_index_version)
     push_obb_file(pack, version)
     
