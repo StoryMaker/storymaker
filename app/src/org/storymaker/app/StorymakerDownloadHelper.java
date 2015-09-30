@@ -34,14 +34,14 @@ public class StorymakerDownloadHelper {
 
         ArrayList<String> missingFiles = new ArrayList<String>();
 
-        if (ZipHelper.getExpansionFileFolder(context, Constants.MAIN, Constants.MAIN_VERSION) == null) {
-            missingFiles.add(ZipHelper.getExpansionZipFilename(context, Constants.MAIN, Constants.MAIN_VERSION));
+        if (ZipHelper.getExpansionFileFolder(context, scal.io.liger.Constants.MAIN, scal.io.liger.Constants.MAIN_VERSION) == null) {
+            missingFiles.add(ZipHelper.getExpansionZipFilename(context, scal.io.liger.Constants.MAIN, scal.io.liger.Constants.MAIN_VERSION));
         }
 
         // only check for patch file if version is newer than main file version
-        if ((Constants.PATCH_VERSION > 0) && (Constants.PATCH_VERSION >= Constants.MAIN_VERSION)) {
-            if (ZipHelper.getExpansionFileFolder(context, Constants.PATCH, Constants.PATCH_VERSION) == null) {
-                missingFiles.add(ZipHelper.getExpansionZipFilename(context, Constants.PATCH, Constants.PATCH_VERSION));
+        if ((scal.io.liger.Constants.PATCH_VERSION > 0) && (scal.io.liger.Constants.PATCH_VERSION >= scal.io.liger.Constants.MAIN_VERSION)) {
+            if (ZipHelper.getExpansionFileFolder(context, scal.io.liger.Constants.PATCH, scal.io.liger.Constants.PATCH_VERSION) == null) {
+                missingFiles.add(ZipHelper.getExpansionZipFilename(context, scal.io.liger.Constants.PATCH, scal.io.liger.Constants.PATCH_VERSION));
             }
         }
 
@@ -79,10 +79,10 @@ public class StorymakerDownloadHelper {
         if(contentPack != null) {
             File contentPackFile = null;
 
-            if (fileName.contains(Constants.MAIN)) {
-                contentPackFile = new File(StorymakerIndexManager.buildFileAbsolutePath(contentPack, Constants.MAIN, context));
-            } else if (fileName.contains(Constants.PATCH)) {
-                contentPackFile = new File(StorymakerIndexManager.buildFileAbsolutePath(contentPack, Constants.PATCH, context));
+            if (fileName.contains(scal.io.liger.Constants.MAIN)) {
+                contentPackFile = new File(StorymakerIndexManager.buildFileAbsolutePath(contentPack, scal.io.liger.Constants.MAIN, context));
+            } else if (fileName.contains(scal.io.liger.Constants.PATCH)) {
+                contentPackFile = new File(StorymakerIndexManager.buildFileAbsolutePath(contentPack, scal.io.liger.Constants.PATCH, context));
             } else {
                 //Log.e("DOWNLOAD", "CAN'T DETERMINE IF " + fileName + " IS A MAIN OR PATCH FILE");
                 sizeUndefined = true;
@@ -93,9 +93,9 @@ public class StorymakerDownloadHelper {
                 //Log.e("DOWNLOAD", "NO FILE SIZE FOUND FOR " + fileName);
                 sizeUndefined = true;
             } else {
-                if (fileName.contains(Constants.MAIN)) {
+                if (fileName.contains(scal.io.liger.Constants.MAIN)) {
                     totalExpectedSize = totalExpectedSize + contentPack.getExpansionFileSize();
-                } else if (fileName.contains(Constants.PATCH)) {
+                } else if (fileName.contains(scal.io.liger.Constants.PATCH)) {
                     totalExpectedSize = totalExpectedSize + contentPack.getPatchFileSize();
                 } else {
                     //Log.e("DOWNLOAD", "CAN'T DETERMINE IF " + fileName + " IS A MAIN OR PATCH FILE");
@@ -166,10 +166,10 @@ public class StorymakerDownloadHelper {
             if (availableItem == null) {
                 Log.d(TAG, "item removed from availabe index. deleting obb file and removing from isntalled index");
                 updateFlag = true;
-                String absPath = StorymakerIndexManager.buildFileAbsolutePath(installedItem, Constants.MAIN, context);
+                String absPath = StorymakerIndexManager.buildFileAbsolutePath(installedItem, scal.io.liger.Constants.MAIN, context);
                 new File(absPath).delete();
 
-                absPath = StorymakerIndexManager.buildFileAbsolutePath(installedItem, Constants.PATCH, context);
+                absPath = StorymakerIndexManager.buildFileAbsolutePath(installedItem, scal.io.liger.Constants.PATCH, context);
                 File file = new File(absPath);
                 if (file.exists()) {
                     file.delete();
@@ -292,8 +292,8 @@ public class StorymakerDownloadHelper {
         boolean patchFileOk = true;
         boolean fileStateOk = true;
 
-        String filePath = ZipHelper.getExpansionZipDirectory(context, Constants.MAIN, Constants.MAIN_VERSION);
-        String fileName = ZipHelper.getExpansionZipFilename(context, Constants.MAIN, Constants.MAIN_VERSION);
+        String filePath = ZipHelper.getExpansionZipDirectory(context, scal.io.liger.Constants.MAIN, scal.io.liger.Constants.MAIN_VERSION);
+        String fileName = ZipHelper.getExpansionZipFilename(context, scal.io.liger.Constants.MAIN, scal.io.liger.Constants.MAIN_VERSION);
 
         File expansionFile = new File(filePath + fileName);
 
@@ -305,8 +305,8 @@ public class StorymakerDownloadHelper {
                 mainFileOk = false;
             }
 
-            if ((Constants.MAIN_SIZE > 0) && (Constants.MAIN_SIZE > expansionFile.length())) {
-                Log.d("CHECK/DOWNLOAD", "MAIN EXPANSION FILE " + fileName + " IS TOO SMALL (" + expansionFile.length() + "/" + Constants.MAIN_SIZE + ")");
+            if ((scal.io.liger.Constants.MAIN_SIZE > 0) && (scal.io.liger.Constants.MAIN_SIZE > expansionFile.length())) {
+                Log.d("CHECK/DOWNLOAD", "MAIN EXPANSION FILE " + fileName + " IS TOO SMALL (" + expansionFile.length() + "/" + scal.io.liger.Constants.MAIN_SIZE + ")");
                 mainFileOk = false;
             }
 
@@ -322,7 +322,7 @@ public class StorymakerDownloadHelper {
         } else {
             Log.d("CHECK/DOWNLOAD", "MAIN EXPANSION FILE " + fileName + " MUST BE DOWNLOADED");
 
-            final LigerDownloadManager expansionDownload = new LigerDownloadManager(Constants.MAIN, Constants.MAIN_VERSION, context);
+            final LigerDownloadManager expansionDownload = new LigerDownloadManager(scal.io.liger.Constants.MAIN, scal.io.liger.Constants.MAIN_VERSION, context);
             Thread expansionDownloadThread = new Thread(expansionDownload);
 
             expansionDownloadThread.start();
@@ -334,13 +334,13 @@ public class StorymakerDownloadHelper {
         }
 
         // if the main file is newer than the patch file, remove the patch file rather than downloading
-        if (Constants.PATCH_VERSION > 0) {
-            if (Constants.PATCH_VERSION < Constants.MAIN_VERSION) {
+        if (scal.io.liger.Constants.PATCH_VERSION > 0) {
+            if (scal.io.liger.Constants.PATCH_VERSION < scal.io.liger.Constants.MAIN_VERSION) {
 
                 File obbDirectory = new File(ZipHelper.getObbFolderName(context));
                 File fileDirectory = new File(ZipHelper.getFileFolderName(context));
 
-                String nameFilter = Constants.PATCH + ".*." + context.getPackageName() + ".obb";
+                String nameFilter = scal.io.liger.Constants.PATCH + ".*." + context.getPackageName() + ".obb";
 
                 Log.d("CHECK/DOWNLOAD", "CLEANUP: DELETING " + nameFilter + " FROM " + obbDirectory.getPath());
 
@@ -359,7 +359,7 @@ public class StorymakerDownloadHelper {
                 }
             } else {
 
-                String patchName = ZipHelper.getExpansionZipFilename(context, Constants.PATCH, Constants.PATCH_VERSION);
+                String patchName = ZipHelper.getExpansionZipFilename(context, scal.io.liger.Constants.PATCH, scal.io.liger.Constants.PATCH_VERSION);
 
                 expansionFile = new File(filePath + patchName);
 
@@ -371,8 +371,8 @@ public class StorymakerDownloadHelper {
                         patchFileOk = false;
                     }
 
-                    if ((Constants.PATCH_SIZE > 0) && (Constants.PATCH_SIZE > expansionFile.length())) {
-                        Log.d("CHECK/DOWNLOAD", "EXPANSION FILE PATCH " + fileName + " IS TOO SMALL (" + expansionFile.length() + "/" + Constants.PATCH_SIZE + ")");
+                    if ((scal.io.liger.Constants.PATCH_SIZE > 0) && (scal.io.liger.Constants.PATCH_SIZE > expansionFile.length())) {
+                        Log.d("CHECK/DOWNLOAD", "EXPANSION FILE PATCH " + fileName + " IS TOO SMALL (" + expansionFile.length() + "/" + scal.io.liger.Constants.PATCH_SIZE + ")");
                         patchFileOk = false;
                     }
 
@@ -388,7 +388,7 @@ public class StorymakerDownloadHelper {
                 } else {
                     Log.d("CHECK/DOWNLOAD", "EXPANSION FILE PATCH " + patchName + " MUST BE DOWNLOADED");
 
-                    final LigerDownloadManager expansionDownload = new LigerDownloadManager(Constants.PATCH, Constants.PATCH_VERSION, context);
+                    final LigerDownloadManager expansionDownload = new LigerDownloadManager(scal.io.liger.Constants.PATCH, scal.io.liger.Constants.PATCH_VERSION, context);
                     Thread expansionDownloadThread = new Thread(expansionDownload);
 
                     expansionDownloadThread.start();
@@ -411,7 +411,7 @@ public class StorymakerDownloadHelper {
         boolean fileStateOk = true;
 
         String filePath = StorymakerIndexManager.buildFilePath(installedItem, context);
-        String fileName = StorymakerIndexManager.buildFileName(installedItem, Constants.MAIN);
+        String fileName = StorymakerIndexManager.buildFileName(installedItem, scal.io.liger.Constants.MAIN);
 
         HashMap<String, Thread> downloadThreads = new HashMap<String, Thread>();
 
@@ -452,7 +452,7 @@ public class StorymakerDownloadHelper {
 
             // expansionDownloadThread.start();
 
-            downloadThreads.put(Constants.MAIN, mainDownloadThread);
+            downloadThreads.put(scal.io.liger.Constants.MAIN, mainDownloadThread);
 
             // downloading a new content pack file, must clear ZipHelper cache
             // ZipHelper.clearCache();
@@ -468,7 +468,7 @@ public class StorymakerDownloadHelper {
                 File obbDirectory = new File(ZipHelper.getObbFolderName(context));
                 File fileDirectory = new File(ZipHelper.getFileFolderName(context));
 
-                String nameFilter = installedItem.getExpansionId() + "." + Constants.PATCH + "*" + ".obb";
+                String nameFilter = installedItem.getExpansionId() + "." + scal.io.liger.Constants.PATCH + "*" + ".obb";
 
                 Log.d("CHECK/DOWNLOAD", "CLEANUP: DELETING " + nameFilter + " FROM " + obbDirectory.getPath());
 
@@ -487,7 +487,7 @@ public class StorymakerDownloadHelper {
                 }
             } else {
 
-                String patchName = StorymakerIndexManager.buildFileName(installedItem, Constants.PATCH);
+                String patchName = StorymakerIndexManager.buildFileName(installedItem, scal.io.liger.Constants.PATCH);
 
                 expansionFile = new File(filePath + patchName);
 
@@ -528,7 +528,7 @@ public class StorymakerDownloadHelper {
 
                     // expansionDownloadThread.start();
 
-                    downloadThreads.put(Constants.PATCH, patchDownloadThread);
+                    downloadThreads.put(scal.io.liger.Constants.PATCH, patchDownloadThread);
 
                     // downloading a new content pack patch, must clear ZipHelper cache
                     // ZipHelper.clearCache();
@@ -542,7 +542,7 @@ public class StorymakerDownloadHelper {
 
         boolean downloadStarted = false;
 
-        Thread mainThread = downloadThreads.get(Constants.MAIN);
+        Thread mainThread = downloadThreads.get(scal.io.liger.Constants.MAIN);
 
         if (mainThread != null) {
             Log.d("DOWNLOAD", "STOPPING THREAD " + mainThread.getId());
@@ -550,7 +550,7 @@ public class StorymakerDownloadHelper {
             downloadStarted = true;
         }
 
-        Thread patchThread = downloadThreads.get(Constants.PATCH);
+        Thread patchThread = downloadThreads.get(scal.io.liger.Constants.PATCH);
 
         if (patchThread != null) {
             Log.d("DOWNLOAD", "STOPPING THREAD " + patchThread.getId());
