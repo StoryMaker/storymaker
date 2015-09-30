@@ -98,10 +98,10 @@ public class BaseActivity extends FragmentActivity {
         TextView textViewVersion =      (TextView) findViewById(R.id.textViewVersion);
 
         String pkg = getPackageName();
-        String vers = null;
         try {
-            vers = getPackageManager().getPackageInfo(pkg, 0).versionName;
-            textViewVersion.setText("v" + vers);
+            String versionName = getPackageManager().getPackageInfo(pkg, 0).versionName;
+            int versionCode = getPackageManager().getPackageInfo(pkg, 0).versionCode;
+            textViewVersion.setText("v" + versionName + " build " + versionCode);
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
