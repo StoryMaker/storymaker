@@ -237,11 +237,15 @@ def cleanup_content_db():
     os.system("adb shell run-as org.storymaker.app rm /data/data/org.storymaker.app/databases/Storymaker.db")
     os.system("adb shell run-as org.storymaker.app rm /data/data/org.storymaker.app/databases/Storymaker-journal.db")
     
+def clear_app_data():
+    os.system("adb shell pm clear org.storymaker.app")
+    
 @cli.command()   
 @click.argument('pack')
 @click.argument('version') 
 @click.argument('avail_index_version') 
 def push_test_files(pack, version, avail_index_version):
+    clear_app_data()
     cleanup_content_db()
     push_test_indexes(pack, version, avail_index_version)
     push_obb_file(pack, version)
