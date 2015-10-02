@@ -41,8 +41,13 @@ public class FlickrPublisher extends PublisherBase {
 
     @Override
     public String getResultUrl(Job job) {
-        Long id = Long.valueOf(job.getResult());
-        String base58 = FlickrBaseEncoder.encode(id);
-        return "https://flic.kr/p/" + base58;
+        //Long id = Long.valueOf(job.getResult());
+        //String base58 = FlickrBaseEncoder.encode(id);
+        //return "https://flic.kr/p/" + base58;
+
+        // need long url to handle sets, format https://www.flickr.com/photos/{user-id}/{photo-id} OR https://www.flickr.com/photos/{user-id}/sets/{photoset-id}
+        String longUrl = "https://www.flickr.com/photos/" + job.getResult();
+        return longUrl;
+
     }
 }

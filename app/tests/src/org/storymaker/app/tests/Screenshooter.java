@@ -10,6 +10,8 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
+import scal.io.liger.StorageHelper;
+
 /**
  * As Spoon screenshots don't work on Android 5
  * (see https://github.com/square/spoon/issues/189),
@@ -37,7 +39,10 @@ public class Screenshooter {
 
         Bitmap screen = mInstrumentation.getUiAutomation().takeScreenshot();
         try {
-            File output = new File(mInstrumentation.getContext().getExternalFilesDir(null), title);
+
+            // File output = new File(mInstrumentation.getContext().getExternalFilesDir(null), title);
+            File output = new File(StorageHelper.getActualStorageDirectory(mInstrumentation.getContext()), title);
+
             FileOutputStream os = new FileOutputStream(output);
             screen.compress(Bitmap.CompressFormat.PNG, 100, os);
             os.close();

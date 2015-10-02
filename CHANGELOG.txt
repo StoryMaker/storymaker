@@ -1,4 +1,101 @@
---- build 1054
+--- build 1078
+
+- Update Mobile Photo 101
+
+--- build 1076
+
+- hide pause/resume/stop options if user selects "use download manager"
+
+--- build 1075
+
+- Right-to-left UI fixes
+
+--- build 1074
+
+- Crash fixes
+
+--- build 1073
+
+- Disable RTL controls on Edit Clip popup
+- Bugfixes
+
+--- build 1072
+
+- Confirm, Pause, Resume and Stop big Content Pack downloads!
+- Delete content packs you dont need anymore by longpressing on them
+- import file picker only shows files of the right type
+- stop user from accidentally importing wrong media type
+- fix crash when trying to publish stories with mixed media
+
+--- build 1071
+
+- fix sideways thumbnails in clipcards for photos taken in portait on Samsung devices
+- add Empty path for testing
+- improved logging
+- bugfixes
+
+--- build 1069 / 1070
+
+- Fix Moto G 2 Dual Sim crash
+
+--- build 1068
+
+- Bugfixes
+- Changes to content packs
+
+--- build 1067
+
+- Cleanup after publishing to prevent devices from filling up
+- Improved error reports
+- Crash fixes
+
+--- build 1066
+
+- Added new "Send Feedback" to the navigation drawer.  Ask us anything, we can reply directly to you in app!
+- Delete stories from home screen by long pressing
+- Optionally delete media from a story when you delete a story
+- Warn if you don't have enough storage space to publish a story
+- Cleanup SD Card usage
+    - No more "Liger" or "Stories" folder
+    - Default to using SD on 4.4+ devices
+- Fix StoryMaker.org login over Tor
+
+--- 2.0.1 build 1065
+
+- Fix StoryMaker.org login over Tor
+
+--- build 1063
+
+- New "Mobile Photo 101" content pack
+- Experimental Photo set upload support ("Photo Essay Format" option)
+- assignments desk code merged but active only if you change url to demo.storymaker.org
+
+--- build 1061
+
+- Fix memory leaks
+- Fix login and publish to StoryMaker.org over Tor
+
+--- build 1060
+
+New features to announce!
+
+- Access Edit/Trim mode directly from the Order popup
+- Duplicate clip cards
+
+Bugs:
+
+- Fix: screen turns off during publish, breaking it
+- Fix: alternate clips in clipcards ending up in final story
+
+--- build 1057
+
+- UI fixes for small devices (Trim screen)
+
+--- build 1056
+
+- Arabic translation for beta pack
+
+--- build 1055
 
 - bugfixes and new content for Beta pack
 

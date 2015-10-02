@@ -39,6 +39,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import net.hockeyapp.android.FeedbackManager;
+
 //import com.google.analytics.tracking.android.EasyTracker;
 
 // NEW/CACHEWORD
@@ -176,6 +178,7 @@ public class BaseActivity extends FragmentActivity implements ICacheWordSubscrib
         Button btnDrawerExports =      (Button) findViewById(R.id.btnDrawerExports);
         Button btnDrawerUploadManager = (Button) findViewById(R.id.btnDrawerUploadManager);
         Button btnDrawerSettings =      (Button) findViewById(R.id.btnDrawerSettings);
+        Button btnDrawerFeedback =      (Button) findViewById(R.id.btnDrawerFeedback);
         TextView textViewVersion =      (TextView) findViewById(R.id.textViewVersion);
 
         // NEW/CACHEWORD
@@ -192,10 +195,10 @@ public class BaseActivity extends FragmentActivity implements ICacheWordSubscrib
         }
 
         String pkg = getPackageName();
-        String vers = null;
         try {
-            vers = getPackageManager().getPackageInfo(pkg, 0).versionName;
-            textViewVersion.setText("v" + vers);
+            String versionName = getPackageManager().getPackageInfo(pkg, 0).versionName;
+            int versionCode = getPackageManager().getPackageInfo(pkg, 0).versionCode;
+            textViewVersion.setText("v" + versionName + " build " + versionCode);
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
@@ -278,6 +281,16 @@ public class BaseActivity extends FragmentActivity implements ICacheWordSubscrib
             }
         });
 
+        btnDrawerFeedback.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mDrawerLayout.closeDrawers();
+
+                FeedbackManager.register(activity, AppConstants.HOCKEY_APP_ID, null);
+                FeedbackManager.showFeedbackActivity(activity);
+            }
+        });
+
         // NEW/CACHEWORD
         btnDrawerLock.setOnClickListener(new OnClickListener() {
             @Override
@@ -294,7 +307,6 @@ public class BaseActivity extends FragmentActivity implements ICacheWordSubscrib
                 mCacheWordHandler.lock();
             }
         });
-
     }
     
     /**

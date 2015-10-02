@@ -14,7 +14,10 @@ import org.storymaker.app.model.Job;
 import org.storymaker.app.model.JobTable;
 import org.storymaker.app.model.Project;
 import org.storymaker.app.model.PublishJob;
+import org.storymaker.app.publish.sites.VideoRenderer;
 import org.storymaker.app.server.ServerManager;
+
+import io.scal.secureshareui.controller.FacebookSiteController;
 import io.scal.secureshareui.controller.SiteController;
 import io.scal.secureshareui.controller.ZTSiteController;
 
@@ -122,7 +125,13 @@ public abstract class PublisherBase {
 
         // FIXME make this async and put this in the callback
         // FIXME store the final published url in the project table?
-        publishToStoryMakerSucceeded(urlPost);
+        // FIXME urlPost is probably null
+        if (postId == null) {
+            publishToStoryMakerSucceeded(urlPost);
+        } else {
+            String[] parts = postId.split(":");
+            publishToStoryMakerFailed(null, Integer.parseInt(parts[0]), parts[1]);
+        }
         
         return urlPost;
     }
@@ -151,18 +160,34 @@ public abstract class PublisherBase {
         Log.d(TAG, "jobSucceeded: " + job);
         if (job.isType(JobTable.TYPE_RENDER)) {
             // since the user must now initiate upload, we just stop this publishjob now and wait
-//            mController.publishJobSucceeded(mPublishJob);
-		} else if (job.isType(JobTable.TYPE_UPLOAD)) {
+            // mController.publishJobSucceeded(mPublishJob);
+
+            VideoRenderer.clearRenderTempFolder(mContext);
+
+        } else if (job.isType(JobTable.TYPE_UPLOAD)) {
 			String publishToStoryMaker = mPublishJob.getMetadata().get(SiteController.VALUE_KEY_PUBLISH_TO_STORYMAKER);
 			if (publishToStoryMaker != null && publishToStoryMaker.equals("true")) {
-				//Auth auth = (new AuthTable()).getAuthDefault(mContext, Auth.SITE_STORYMAKER);
+
+                // Auth auth = (new AuthTable()).getAuthDefault(mContext, Auth.SITE_STORYMAKER);
                 Auth auth = (new AuthTable()).getAuthDefault(mContext, ZTSiteController.SITE_KEY);
-				if (auth != null) {
-					publishToStoryMaker();  // fail on null result?
-				} else {
-					mController.publishJobFailed(mPublishJob, null, 78268832, mContext.getString(R.string.you_are_not_signed_into_storymakerorg)); // FIXME do this nicer!
-				}
-			} else {
+                if (auth != null) {
+
+                    // check for facebook privacy issues
+                    if ((job.getResult() != null) && (job.getResult().equals(FacebookSiteController.POST_NOT_PUBLIC))) {
+                        Log.e(TAG, "CAN'T PUBLISH A FACEBOOK POST THAT ISN'T PUBLIC");
+
+                        // is this viable?
+                        mController.publishJobFailed(mPublishJob, null, 78268832, mContext.getString(R.string.fb_post_not_public));
+
+                    } else {
+
+                        publishToStoryMaker();
+
+                    }
+                } else {
+                    mController.publishJobFailed(mPublishJob, null, 78268832, mContext.getString(R.string.you_are_not_signed_into_storymakerorg)); // FIXME do this nicer!
+                }
+            } else {
                 publishSucceeded(getResultUrl(job));
 			}
 		}

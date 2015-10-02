@@ -8,9 +8,6 @@ import java.io.OutputStreamWriter;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.StringTokenizer;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 import android.app.Activity;
 import android.content.Context;
@@ -29,6 +26,8 @@ import android.view.MenuItem;
 import android.view.SubMenu;
 import android.view.View;
 import android.widget.Toast;
+
+import timber.log.Timber;
 
 public class Utils {
     public static void toastOnUiThread(Activity activity, String message) {
@@ -62,7 +61,7 @@ public class Utils {
 
 	public static String getAppName(Context context) {
 		SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context);
-		String url = settings.getString("pserver", "https://storymaker.org/");
+		String url = settings.getString("pserver", Constants.DEFAULT_SERVER_URL);
 		String appName = context.getString(R.string.app_name);
 		if(url.contains("beta")) {
 			appName = "BETA MODE: " + appName;
@@ -402,7 +401,7 @@ public class Utils {
             File fileCmd = new File(context.getDir("bin", Context.MODE_WORLD_READABLE), "ffmpeg");
 
             while ((procId = findProcessId(fileCmd.getAbsolutePath())) != -1) {
-                Log.w(AppConstants.TAG, "Found Tor PID=" + procId + " - killing now...");
+				Timber.w("Found Tor PID=" + procId + " - killing now...");
 
                 String[] cmd = {
                     SHELL_CMD_KILL + ' ' + procId + ""
@@ -430,7 +429,7 @@ public class Utils {
                 try {
                     procId = findProcessIdWithPS(command);
                 } catch (Exception e2) {
-                    Log.w(AppConstants.TAG, "Unable to get proc id for: " + command, e2);
+					Timber.w(e2, "Unable to get proc id for: " + command);
                 }
             }
 
@@ -554,6 +553,19 @@ public class Utils {
                 // but all we need to know is we can neither read nor write
                 mExternalStorageAvailable = mExternalStorageWriteable = false;
             }
+
+			// adding logging to clarify errors
+			if (!mExternalStorageAvailable || !mExternalStorageWriteable) {
+				if (Environment.MEDIA_MOUNTED_READ_ONLY.equals(state)) {
+					Log.e("STORAGE_ERROR", "EXTERNAL STORAGE IS READ ONLY");
+				}
+				if (!mExternalStorageAvailable) {
+					Log.e("STORAGE_ERROR", "EXTERNAL STORAGE IS NOT AVAILABLE (STATE: " + state + ")");
+				}
+				if (!mExternalStorageWriteable) {
+					Log.e("STORAGE_ERROR", "EXTERNAL STORAGE IS NOT WRITEABLE (STATE: " + state + ")");
+				}
+			}
 
             return mExternalStorageAvailable && mExternalStorageWriteable;
         }

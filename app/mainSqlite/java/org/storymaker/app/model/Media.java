@@ -23,7 +23,10 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.support.annotation.NonNull;
 import android.util.Log;
+
+import timber.log.Timber;
 
 public class Media extends Model {
 	private static final String TAG = "Media";
@@ -79,8 +82,8 @@ public class Media extends Model {
      * @param createdAt
      * @param updatedAt
      */
-    public Media(Context context, int id, String path, String mimeType, String clipType, int clipIndex,
-            int sceneId, float trimStart, float trimEnd, float duration, Date createdAt, Date updatedAt) {
+    public Media(Context context, int id, @NonNull String path, @NonNull String mimeType, @NonNull String clipType, int clipIndex,
+             @NonNull int sceneId, float trimStart, float trimEnd, float duration, Date createdAt, Date updatedAt) {
         super(context);
         this.context = context;
         this.id = id;
@@ -245,7 +248,8 @@ public class Media extends Model {
      * @return 0.0-1.0 percent into the clip to end play
      */
     public float getTrimmedEndPercent() {
-        return (trimEnd + 1) / 100F;
+        // If no trim is set (-1), treat as trimmed to media end
+        return trimEnd == -1f ? 1f : (trimEnd + 1) / 100F;
     }
 
     /** 
@@ -538,7 +542,7 @@ public class Media extends Model {
 		                try {
 		                    bmp.compress(Bitmap.CompressFormat.PNG, 70, new FileOutputStream(fileThumb));
 		                } catch (FileNotFoundException e) {
-		                    Log.e(AppConstants.TAG, "could not cache video thumb", e);
+		                    Timber.e(e, "could not cache video thumb");
 		                }
 	                }
 	                
@@ -546,12 +550,12 @@ public class Media extends Model {
             	}
             	catch (Exception e)
             	{
-            		Log.w(AppConstants.TAG,"Could not generate thumbnail: " + media.getPath(),e);
+                    Timber.w(e, "Could not generate thumbnail: " + media.getPath());
             		return null;
             	}
             	catch (OutOfMemoryError oe)
             	{
-            		Log.e(AppConstants.TAG,"Could not generate thumbnail - OutofMemory!: " + media.getPath());
+                    Timber.e(oe, "Could not generate thumbnail - OutofMemory!: " + media.getPath());
             		return null;
             	}
             }

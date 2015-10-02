@@ -23,6 +23,8 @@ import android.os.Message;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
+import timber.log.Timber;
+
 public class MediaAudioExporter extends MediaExporter {
 
 	private Handler mHandler;
@@ -124,7 +126,7 @@ public class MediaAudioExporter extends MediaExporter {
             msg.getData().putString("status", mContext.getString(R.string.export_error_2) + ": " + e.getMessage());
 
 	         mHandler.sendMessage(msg);
-    		Log.e(AppConstants.TAG, "error exporting",e);
+    		Timber.e(e, "error exporting");
     	}
 	}
 	
@@ -160,7 +162,7 @@ public class MediaAudioExporter extends MediaExporter {
 		    	alAudio.add(audioOut);
 		    	
 	    		float duration = (float) sxCon.getLength(new File(audioOut.path).getCanonicalPath());
-	    		Log.d(AppConstants.TAG,"got clip " + wavIdx + " length: " + duration);
+	    		Timber.d("got clip " + wavIdx + " length: " + duration);
 	    		
 		    	if (mediaIn.duration == null)
 		    	{	
@@ -168,7 +170,7 @@ public class MediaAudioExporter extends MediaExporter {
 		    	}
 		    	else
 		    	{
-		    		Log.d(AppConstants.TAG,"found clip " + wavIdx + " existing length: " + mediaIn.duration);
+		    		Timber.d("found clip " + wavIdx + " existing length: " + mediaIn.duration);
 		    	}
 		    		
 
@@ -233,7 +235,7 @@ public class MediaAudioExporter extends MediaExporter {
 			public void shellOut(String line) {
 				
 				if (!line.startsWith("frame"))
-					Log.d(AppConstants.TAG, line);
+					Timber.d(line);
 			
 				
 				int idx1;
@@ -294,7 +296,7 @@ public class MediaAudioExporter extends MediaExporter {
 			@Override
 			public void processComplete(int exitValue) {
 			
-				Log.d(AppConstants.TAG,"process complete; exit=" + exitValue);
+				Timber.d("process complete; exit=" + exitValue);
 				
 			}
  	};

@@ -135,9 +135,11 @@ public class PublishFragment extends Fragment implements PublishListener {
         if (storyPathInstancePath != null && !storyPathInstancePath.equals("")) {
             File f = new File(storyPathInstancePath);
             String jsonString = JsonHelper.loadJSON(f, "en"); // FIXME don't hardcode "en"
-            ArrayList<String> referencedFiles = new ArrayList<String>(); // should not need to insert dependencies to check metadata
-            String language = StoryMakerApp.getCurrentLocale().getLanguage();
-            mStoryPathInstance = JsonHelper.deserializeStoryPathLibrary(jsonString, f.getAbsolutePath(), referencedFiles, getActivity(), language);
+            if (jsonString != null) {
+                ArrayList<String> referencedFiles = new ArrayList<String>(); // should not need to insert dependencies to check metadata
+                String language = StoryMakerApp.getCurrentLocale().getLanguage();
+                mStoryPathInstance = JsonHelper.deserializeStoryPathLibrary(jsonString, f.getAbsolutePath(), referencedFiles, getActivity(), language);
+            }
         }
 
 //        mStoryPathInstance = JsonHelper.deserializeStoryPathLibrary(json, storyPathInstancePath, referencedFiles, this, );
@@ -292,6 +294,7 @@ public class PublishFragment extends Fragment implements PublishListener {
 	}
 
     private void showPlaySpinner(boolean vis) {
+        mButtonPlay.setKeepScreenOn(vis);
         mButtonPlay.setEnabled(vis);
         mButtonPlay.setChecked(vis);
         mButtonPlay.setImageResource(vis ? R.drawable.spinner_play : R.drawable.ic_comp_play);
@@ -308,6 +311,7 @@ public class PublishFragment extends Fragment implements PublishListener {
 //        } else {
 //            mButtonPlay.setImageResource(R.drawable.ic_comp_play);
 //        }
+        mButtonUpload.setKeepScreenOn(vis);
         mButtonUpload.setEnabled(vis);
         mButtonUpload.setChecked(vis);
         mButtonUpload.setImageResource( vis ? R.drawable.spinner_upload : R.drawable.ic_comp_upload);

@@ -1,8 +1,24 @@
 apply plugin: 'com.android.application'
 
+// required for sqlbrite/apt
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:1.3.0'
+        classpath 'com.neenbedankt.gradle.plugins:android-apt:1.7'
+        classpath 'com.jakewharton.hugo:hugo-plugin:1.2.1'
+    }
+}
+
+apply plugin: 'com.android.application'
+apply plugin: 'com.neenbedankt.android-apt'
+apply plugin: 'com.jakewharton.hugo'
+
 android {
-    compileSdkVersion 21
-    buildToolsVersion "21.1.2"
+    compileSdkVersion 22
+    buildToolsVersion "22.0.1"
 
     sourceSets {
         main {
@@ -16,9 +32,9 @@ android {
         }
 
         mainSqlite.setRoot('mainSqlite')
-
         mainSqlCipher.setRoot('mainSqlCipher')
 
+        beta.setRoot("beta")
 
         androidTest {
             java.srcDirs = ['tests/src']
@@ -43,9 +59,20 @@ android {
         mainSqlCipher {}
     }
 
+    buildTypes {
+        beta.initWith(buildTypes.debug)
+        beta {}
+
+        debuggableRelease.initWith(buildTypes.release)
+        debuggableRelease {
+            minifyEnabled false
+            debuggable true
+        }
+    }
+
     defaultConfig {
         minSdkVersion 16
-        targetSdkVersion 21
+        targetSdkVersion 22
         multiDexEnabled true
         //testPackageName "org.storymaker.app.tests"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -80,8 +107,13 @@ dependencies {
     //
     //compile fileTree(dir: 'libs', include: '*.jar')
 
+    // new db stuff
+    // compile 'com.hannesdorfmann.sqlbrite:dao:0.2.2'
+    // compile 'com.hannesdorfmann.sqlbrite:annotations:0.2.2'
+    // apt 'com.hannesdorfmann.sqlbrite:object-mapper:0.2.2'
+
     // Maven imports
-    compile 'com.android.support:support-annotations:21.0.3'
+    compile 'com.android.support:support-annotations:23.0.0'
     androidTestCompile 'com.android.support.test.espresso:espresso-core:2.0'
     androidTestCompile 'com.android.support.test:testing-support-lib:0.1'
     androidTestCompile 'com.squareup.spoon:spoon-client:1.1.2'
@@ -101,7 +133,7 @@ dependencies {
     compile files('libs/google-api-client-googleapis-1.4.1-beta.jar')
     compile files('libs/google-api-services-latitude-v1-1.1.0-beta.jar')
     //compile files('libs/guava-r09.jar')
-    compile files('libs/HockeySDK.jar')
+    compile 'net.hockeyapp.android:HockeySDK:3.5.0'
     compile files('libs/httpmime-4.0.3.jar')
     compile files('libs/soundcloud-api-1.0.1.jar')
     compile files('libs/svg-android-1.1.jar')
@@ -120,6 +152,5 @@ dependencies {
     compile project(':android-iconify')
     compile project(':external:liger:lib')
     compile project(':external:cacheword:cachewordlib')
+    compile 'com.jakewharton.timber:timber:3.1.0'
 }
-
-

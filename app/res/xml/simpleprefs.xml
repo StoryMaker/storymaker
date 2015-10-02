@@ -1,47 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-    
-	<PreferenceCategory android:title="@string/prefs_category_networking_security_title">	
+    <PreferenceCategory android:title="@string/prefs_category_networking_security_title">
 		<EditTextPreference android:title="@string/prefs_storymaker_server_title" android:summary="@string/prefs_storymaker_server_summary" android:key="pserver" android:defaultValue="https://storymaker.org/" android:enabled="true"/>
-		    
-		<CheckBoxPreference android:title="@string/prefs_use_tor_title" android:summary="@string/prefs_use_tor_summary" android:key="pusetor" android:defaultValue="false"/>
-		<CheckBoxPreference android:title="@string/prefs_sm_upload_title" android:summary="@string/prefs_sm_upload_summary" android:key="psmupload" android:defaultValue="false"/>
-		<CheckBoxPreference android:title="@string/prefs_use_download_manager_title" android:summary="@string/prefs_use_download_manager_summary" android:key="pusedownloadmanager" android:defaultValue="false"/>
-		<!-- <CheckBoxPreference android:title="@string/prefs_use_upload_manager_title" android:summary="@string/prefs_use_upload_manager_summary" android:key="puseuploadmanager" android:defaultValue="true"/> -->
-	</PreferenceCategory>
-	
-	<PreferenceCategory android:title="@string/prefs_category_locales_title">	    
-		<ListPreference 	android:title="@string/prefs_interface_language_title" android:summary="@string/prefs_interface_language_summary" android:key="pintlanguage" android:defaultValue="english" android:entries="@array/interface_language_options" android:entryValues="@array/interface_language_options_values" android:enabled="true"/>
-	</PreferenceCategory>
-	
-	<PreferenceCategory android:title="@string/prefs_category_media_title">	    
-		<EditTextPreference android:title="@string/prefs_slide_duration_title" android:summary="@string/prefs_slide_duration_summary" android:key="pslideduration" android:defaultValue="5" android:enabled="true"/>
-		
-		<CheckBoxPreference android:title="@string/prefs_enable_compression_title" android:summary="@string/prefs_enable_compression_summary" android:key="pcompress" android:defaultValue="false"/>
-		<CheckBoxPreference android:title="@string/prefs_preprocess_3gp_title" android:summary="@string/prefs_preprocess_3gp_summary" android:key="p_preconvert_mp4" android:defaultValue="false"/>
-		<CheckBoxPreference android:title="@string/prefs_use_cat_command_title" android:summary="@string/prefs_use_cat_command_summary" android:key="p_use_cat" android:defaultValue="false"/>
-		
-		<EditTextPreference android:title="@string/prefs_video_codec_title" android:summary="@string/prefs_video_codec_summary" android:key="p_video_codec" android:defaultValue="mpeg4" android:enabled="true"/>
-		
-		<ListPreference 	android:title="@string/prefs_video_resolution_title" android:summary="@string/prefs_video_resolution_summary" android:key="p_video_resolution" android:defaultValue="480" android:entries="@array/resolution_options" android:entryValues="@array/resolution_options_values" android:enabled="true"/>
-		<EditTextPreference android:title="@string/prefs_video_width_title" android:inputType="number" android:summary="@string/prefs_video_width_summary" android:key="p_video_width" android:defaultValue="720" android:enabled="false"/>
-		<EditTextPreference android:title="@string/prefs_video_height_title" android:inputType="number" android:summary="@string/prefs_video_height_summary" android:key="p_video_height" android:defaultValue="480" android:enabled="false" android:selectable="false"/>
-		
-		<EditTextPreference android:title="@string/prefs_video_bitrate_title" android:summary="@string/prefs_video_bitrate_summary" android:key="p_video_bitrate" android:defaultValue="1000" android:enabled="true"/>
-		<EditTextPreference android:title="@string/prefs_video_framrate_title" android:summary="@string/prefs_video_framrate_summary" android:key="p_video_framerate" android:defaultValue="29.97" android:enabled="true"/>
-		
-		<EditTextPreference android:title="@string/prefs_audio_codec_title" android:summary="@string/prefs_audio_codec_summary" android:key="p_audio_codec" android:defaultValue="aac" android:enabled="true"/>
-		
-		<EditTextPreference android:title="@string/prefs_audio_bitrate_title" android:summary="@string/prefs_audio_bitrate_summary" android:key="p_audio_bitrate" android:defaultValue="128" android:enabled="true"/>
-		<EditTextPreference android:title="@string/prefs_audio_samplerate_title" android:summary="@string/prefs_audio_samplerate_summary" android:key="p_audio_samplerate" android:defaultValue="22050" android:enabled="true"/>
-		
-		<EditTextPreference android:title="@string/prefs_audio_crossfade_title" android:summary="@string/prefs_audio_crossfade_summary" android:key="p_audio_xfade_len" android:defaultValue=".5" android:enabled="true"/>	
-	</PreferenceCategory>
-		
-	<PreferenceCategory android:title="@string/prefs_category_debug_title">	        
-		<CheckBoxPreference android:title="@string/prefs_internal_storage_title" android:summary="@string/prefs_internal_storage_summary" android:key="p_use_internal_storage" android:defaultValue="false"/>		   
-		<EditTextPreference android:title="@string/prefs_youtube_method_title" android:summary="@string/prefs_youtube_method_summary" android:key="glsauthmethod" android:defaultValue="0" android:enabled="true"/>
-	</PreferenceCategory>
-	
+
+        <CheckBoxPreference android:title="@string/prefs_use_tor_title" android:summary="@string/prefs_use_tor_summary" android:key="pusetor" android:defaultValue="false"/>
+        <CheckBoxPreference android:title="@string/prefs_sm_upload_title" android:summary="@string/prefs_sm_upload_summary" android:key="psmupload" android:defaultValue="false"/>
+        <CheckBoxPreference android:title="@string/prefs_use_download_manager_title" android:summary="@string/prefs_use_download_manager_summary" android:key="pusedownloadmanager" android:defaultValue="false"/>
+        <!-- <CheckBoxPreference android:title="@string/prefs_use_upload_manager_title" android:summary="@string/prefs_use_upload_manager_summary" android:key="puseuploadmanager" android:defaultValue="true"/> -->
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/prefs_category_locales_title">
+        <ListPreference 	android:title="@string/prefs_interface_language_title" android:summary="@string/prefs_interface_language_summary" android:key="pintlanguage" android:defaultValue="english" android:entries="@array/interface_language_options" android:entryValues="@array/interface_language_options_values" android:enabled="true"/>
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/prefs_category_media_title">
+        <CheckBoxPreference android:title="@string/prefs_photo_format_title" android:summary="@string/prefs_photo_format_summary" android:key="pphotoformat" android:defaultValue="false"/>
+
+        <EditTextPreference android:title="@string/prefs_slide_duration_title" android:summary="@string/prefs_slide_duration_summary" android:key="pslideduration" android:defaultValue="5" android:enabled="true"/>
+
+        <CheckBoxPreference android:title="@string/prefs_enable_compression_title" android:summary="@string/prefs_enable_compression_summary" android:key="pcompress" android:defaultValue="false"/>
+        <CheckBoxPreference android:title="@string/prefs_preprocess_3gp_title" android:summary="@string/prefs_preprocess_3gp_summary" android:key="p_preconvert_mp4" android:defaultValue="false"/>
+        <CheckBoxPreference android:title="@string/prefs_use_cat_command_title" android:summary="@string/prefs_use_cat_command_summary" android:key="p_use_cat" android:defaultValue="false"/>
+
+        <EditTextPreference android:title="@string/prefs_video_codec_title" android:summary="@string/prefs_video_codec_summary" android:key="p_video_codec" android:defaultValue="mpeg4" android:enabled="true"/>
+
+        <ListPreference 	android:title="@string/prefs_video_resolution_title" android:summary="@string/prefs_video_resolution_summary" android:key="p_video_resolution" android:defaultValue="480" android:entries="@array/resolution_options" android:entryValues="@array/resolution_options_values" android:enabled="true"/>
+        <EditTextPreference android:title="@string/prefs_video_width_title" android:inputType="number" android:summary="@string/prefs_video_width_summary" android:key="p_video_width" android:defaultValue="720" android:enabled="false"/>
+        <EditTextPreference android:title="@string/prefs_video_height_title" android:inputType="number" android:summary="@string/prefs_video_height_summary" android:key="p_video_height" android:defaultValue="480" android:enabled="false" android:selectable="false"/>
+
+        <EditTextPreference android:title="@string/prefs_video_bitrate_title" android:summary="@string/prefs_video_bitrate_summary" android:key="p_video_bitrate" android:defaultValue="1000" android:enabled="true"/>
+        <EditTextPreference android:title="@string/prefs_video_framrate_title" android:summary="@string/prefs_video_framrate_summary" android:key="p_video_framerate" android:defaultValue="29.97" android:enabled="true"/>
+
+        <EditTextPreference android:title="@string/prefs_audio_codec_title" android:summary="@string/prefs_audio_codec_summary" android:key="p_audio_codec" android:defaultValue="aac" android:enabled="true"/>
+
+        <EditTextPreference android:title="@string/prefs_audio_bitrate_title" android:summary="@string/prefs_audio_bitrate_summary" android:key="p_audio_bitrate" android:defaultValue="128" android:enabled="true"/>
+        <EditTextPreference android:title="@string/prefs_audio_samplerate_title" android:summary="@string/prefs_audio_samplerate_summary" android:key="p_audio_samplerate" android:defaultValue="22050" android:enabled="true"/>
+
+        <EditTextPreference android:title="@string/prefs_audio_crossfade_title" android:summary="@string/prefs_audio_crossfade_summary" android:key="p_audio_xfade_len" android:defaultValue=".5" android:enabled="true"/>
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/prefs_category_debug_title">
+        <CheckBoxPreference android:title="@string/prefs_internal_storage_title" android:summary="@string/prefs_internal_storage_summary" android:key="p_use_internal_storage" android:defaultValue="false"/>
+        <EditTextPreference android:title="@string/prefs_youtube_method_title" android:summary="@string/prefs_youtube_method_summary" android:key="glsauthmethod" android:defaultValue="0" android:enabled="true"/>
+    </PreferenceCategory>
 </PreferenceScreen>
 

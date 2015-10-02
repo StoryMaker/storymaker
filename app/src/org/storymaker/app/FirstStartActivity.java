@@ -6,20 +6,14 @@ import android.app.AlertDialog;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.content.DialogInterface;
-import android.content.SharedPreferences;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
-import android.util.Log;
-import android.view.Menu;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
-import android.widget.TextView;
 
 import org.storymaker.app.Eula.OnEulaAgreedTo;
-import org.storymaker.app.server.LoginActivity;
-import org.storymaker.app.server.RegisterActivity;
 
 /**
  * Prompt the user to view & agree to the StoryMaker TOS / EULA
@@ -67,7 +61,7 @@ public class FirstStartActivity extends Activity implements OnEulaAgreedTo {
     @Override
     public void onResume() {
         super.onResume();
-        if ( PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getBoolean(Globals.PREFERENCES_WP_REGISTERED, false) ) {
+        if ( PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getBoolean(Constants.PREFERENCES_WP_REGISTERED, false) ) {
             // The user is returning to this Activity after a successful WordPress signup
             Intent homeIntent = new Intent(FirstStartActivity.this, HomeActivity.class);
             homeIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);

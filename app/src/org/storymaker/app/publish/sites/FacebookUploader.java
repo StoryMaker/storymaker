@@ -1,12 +1,15 @@
 package org.storymaker.app.publish.sites;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.preference.PreferenceManager;
 import android.util.Log;
 
 import org.storymaker.app.R;
@@ -15,6 +18,7 @@ import org.storymaker.app.model.Auth;
 import org.storymaker.app.model.AuthTable;
 import org.storymaker.app.model.Job;
 import org.storymaker.app.model.JobTable;
+import org.storymaker.app.model.Media;
 import org.storymaker.app.model.Project;
 import org.storymaker.app.model.PublishJob;
 import org.storymaker.app.model.json.ProjectJson;
@@ -48,6 +52,29 @@ public class FacebookUploader extends UploaderBase {
                 public void run() {
                     jobProgress(mJob, 0, mContext.getString(R.string.uploading_to_facebook));
                     HashMap<String, String> valueMap = publishJob.getMetadata();
+
+                    // need to extract raw photos
+                    // what happened to STORY_TYPE_PHOTO?
+
+                    // TODO: currently checking preferences, will revisit when ui is updated
+                    SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(mContext);
+                    boolean uploadPhotos = sharedPref.getBoolean("pphotoformat", false);
+
+                    if ((publishJob.getProject().getStoryType() == Project.STORY_TYPE_ESSAY) && uploadPhotos) {
+                        
+                        ArrayList<Media> photos = publishJob.getProject().getMediaAsList();
+                        String photoString = "";
+                        for (Media photo : photos) {
+                            photoString = photoString + photo.getPath() + ";";
+                        }
+
+                        // drop trailing ;
+                        photoString = photoString.substring(0, photoString.length() - 1);
+
+                        valueMap.put(FacebookSiteController.PHOTO_SET_KEY, photoString);
+
+                    }
+
                     addValuesToHashmap(valueMap, project.getTitle(), project.getDescription(), path);
                     controller.upload(auth.convertToAccountObject(), valueMap);
                 }

@@ -1,9 +1,9 @@
 Story Maker - Make your story great.
 =====
 
-## [StoryMaker.cc](http://storymaker.cc/)
+## [StoryMaker.org](http://storymaker.org/)
 
-Download [StoryMaker - Video, Audio & Photo](https://play.google.com/store/apps/details?id=info.guardianproject.mrapp) in the the Google Play Store. 
+Download [StoryMaker - Video, Audio & Photo](https://play.google.com/store/apps/details?id=org.storymaker.app) in the the Google Play Store. 
 
 ## Setting up Development Environment
 
@@ -98,19 +98,28 @@ After completing all items under Prerequisites:
 
 We have a helper script "run-tests.sh" that should run the core tests
 
-There are several test classes you can also run manually:
+There are several test classes you can also run manually: 
 
-- CompleteTest.java - long test, accepts eula, creates and uploads a new story, checks hook paths, checks content pack downloads, checks settings and preferences
+- DownloadAndPatchTest - downloads a content pack with a patch and verifies their content
 
-- DefaultLibraryTest.java - old test class, probably no longer runs
+- EndToEndTest.java - logs in before creating and uploading a new story
 
-- EulaTest.java - old test class, incorporated into Complete/MinimumTest
+- HookPathsTest.java - checks all possible hook paths for dead ends
 
-- LearningGuideTest.java - old test class, should revisit if learning guides need to be verified
+Please note that you must build with the "testing" branch of the liger(storypath) submodule to run DownloadAndPatchTest.  To do this, follow these steps:
 
-- MainTest.java - old test class, probably no longer runs
+    ```
+    $ cd external/liger/
+    $ git fetch origin testing:testing
+    $ git checkout testing
+    ```
 
-- MinimumTest.java - short test, accepts eula, creates and uploads a new story
+To return to the "master" branch of liger(storypath) for a normal build, do the following:
+
+    ```
+    $ cd external/liger/
+    $ git checkout master
+    ```
 
 ### Eclipse Specific Steps
 

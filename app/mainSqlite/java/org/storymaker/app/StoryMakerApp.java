@@ -1,5 +1,6 @@
 package org.storymaker.app;
 
+import org.storymaker.app.CrashReportingConfig;
 import org.storymaker.app.media.MediaProjectManager;
 import org.storymaker.app.server.ServerManager;
 
@@ -28,6 +29,7 @@ import android.util.Log;
 
 import scal.io.liger.DownloadHelper;
 import scal.io.liger.IndexManager;
+import timber.log.Timber;
 
 public class StoryMakerApp extends MultiDexApplication {
 
@@ -63,13 +65,20 @@ public class StoryMakerApp extends MultiDexApplication {
 	public void onCreate() {
 		super.onCreate();
 
-		checkLocale ();
-		
+		checkLocale();
+
+		// FIXME FOR NOW WE SHOULD ALWAYS LOG, BUT WE SHOULD FIX THIS SOON AS WE CAN
+		//if (BuildConfig.DEBUG) {
+			Timber.plant(new Timber.DebugTree());
+		//}
+
+		Log.d("TESTTESTTEST", CrashReportingConfig.foo);
+
 //		SQLiteDatabase.loadLibs(this);
 
 //		boolean optOut = true;
-//		final SharedPreferences prefsAnalytics = getSharedPreferences(Globals.PREFERENCES_ANALYTICS, Activity.MODE_PRIVATE);
-//		optOut = !(prefsAnalytics.getBoolean(Globals.PREFERENCE_ANALYTICS_OPTIN, false));
+//		final SharedPreferences prefsAnalytics = getSharedPreferences(Constants.PREFERENCES_ANALYTICS, Activity.MODE_PRIVATE);
+//		optOut = !(prefsAnalytics.getBoolean(Constants.PREFERENCE_ANALYTICS_OPTIN, false));
 //		GoogleAnalytics.getInstance(this).setAppOptOut(optOut);
 		
 		initApp();
@@ -94,7 +103,7 @@ public class StoryMakerApp extends MultiDexApplication {
 		}
 		catch (Exception e)
 		{
-			Log.e(AppConstants.TAG,"error init app",e);
+			Timber.e(e, "error init app");
 		}
 	}
 		
@@ -247,22 +256,22 @@ public class StoryMakerApp extends MultiDexApplication {
 			int exitCode = Utils.Proc.doShellCommand(cmd, log, false, true);
 			
 			if (exitCode == 0) {
-				Log.d(AppConstants.TAG,"root exists, but not sure about permissions");
+				Timber.d("root exists, but not sure about permissions");
 		    	 return true;
 		     
 		    }
 		      
 		} catch (IOException e) {
 			//this means that there is no root to be had (normally) so we won't log anything
-			Log.e(AppConstants.TAG,"Error checking for root access",e);
+			Timber.e(e,"Error checking for root access");
 			
 		}
 		catch (Exception e) {
-			Log.e(AppConstants.TAG,"Error checking for root access",e);
+			Timber.e(e, "Error checking for root access");
 			//this means that there is no root to be had (normally)
 		}
 		
-		Log.e(AppConstants.TAG,"Could not acquire root permissions");
+		Timber.e("Could not acquire root permissions");
 		
 		
 		return false;
@@ -280,7 +289,7 @@ public class StoryMakerApp extends MultiDexApplication {
 		activityManager.getMemoryInfo(mi);
 		long availableMegs = mi.availMem / 1048576L;
 		
-		Log.e(AppConstants.TAG,"LOW MEMORY WARNING/ MEMORY AVAIL=" + availableMegs);
+		Timber.e("LOW MEMORY WARNING/ MEMORY AVAIL=" + availableMegs);
 		
 	}
 
@@ -301,7 +310,7 @@ public class StoryMakerApp extends MultiDexApplication {
 		}
 		catch (IOException ioe)
 		{
-			Log.w(AppConstants.TAG,"error deleting render tmp on exit",ioe);
+			Timber.w(ioe, "error deleting render tmp on exit");
 		}
 	}
 	

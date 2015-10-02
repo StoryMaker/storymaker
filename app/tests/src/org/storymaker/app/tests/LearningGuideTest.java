@@ -16,6 +16,8 @@ import org.storymaker.app.R;
 
 import java.io.File;
 
+import scal.io.liger.StorageHelper;
+
 import static android.support.test.espresso.Espresso.onData;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
@@ -53,9 +55,12 @@ public class LearningGuideTest extends ActivityInstrumentationTestCase2<HomeActi
         // create references to sample files for dummy responses
         // sample files assumed to be present (copied by test setup script)
         // NOTE: can these be refactored into uri's like "content://media/external/video/media/1258"
-        String packageName = mHomeActivity.getApplicationContext().getPackageName();
-        File root = Environment.getExternalStorageDirectory();
-        String directory = root.toString() + "/Android/data/" + packageName + "/files/";
+
+        // String packageName = mHomeActivity.getApplicationContext().getPackageName();
+        // File root = Environment.getExternalStorageDirectory();
+        // String directory = root.toString() + "/Android/data/" + packageName + "/files/";
+        String directory = StorageHelper.getActualStorageDirectory(mHomeActivity.getApplicationContext()).getPath() + "/";
+
         String sampleVideo = directory + "SAMPLE.mp4";
         String sampleAudio = directory + "SAMPLE.mp3";
         String samplePhoto = directory + "SAMPLE.jpg";

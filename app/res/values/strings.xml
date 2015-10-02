@@ -102,7 +102,6 @@ You also will have an opportunity to see and modify the data being sent."</strin
     <string name="new_story_choose_template">Scene Template</string>
     <string name="home_new_story">MAKE A STORY</string>
     <string name="home_start_a_lesson">EXPLORE LESSONS</string>
-    <string name="title_activity_new_story">You created a story!</string>
     <string name="title_activity_lessons">Lessons</string>
     <string name="title_activity_scene_editor">Scene Editor</string>
     <string name="title_activity_choose_template">Choose Template</string>
@@ -221,7 +220,9 @@ You also will have an opportunity to see and modify the data being sent."</strin
     <string name="uploading_to_storymaker">publishing to StoryMaker site...</string>
     <string name="rendering_clips_">rendering clips...</string>
     <string name="you_must_enter_a_project_name">Please enter a working draft title. You can change this later.</string>
-    <string name="delete_project_">Delete project?</string>
+    <string name="delete_project_">Delete Export?</string>
+    <string name="delete_story">Delete Story?</string>
+    <string name="delete_content_pack">"Delete Content Pack?"</string>
     <string name="delete_clip">Delete Clip?</string>
     <string name="add_new_clip_to_the_scene_">Add new clip to the scene?</string>
     <string name="video_project_project_type">Video Project</string>
@@ -259,10 +260,15 @@ You also will have an opportunity to see and modify the data being sent."</strin
     <string name="scene_editor_trim_clip">Trim clip</string>
     <string name="delete_warning">This action cannot be undone!</string>
     <string name="cancel">Cancel</string>
+    <string name="stop">Stop</string>
     <string name="delete">Delete</string>
+    <string name="download">Download</string>
+    <string name="pause">Pause</string>
+    <string name="resume">Resume</string>
     <string name="play_or_share_exported_media_">Play or Share exported media?</string>
     <string name="share_published_story">Share published story?</string>
     <string name="err_storage_not_ready">The external storage (SDCard) does not appear to be available for reading and writing at this time. StoryMaker requires access to this for lesson and story project data. Please check your device and restart the pp.</string>
+    <string name="err_storage_not_available">The expected storage location is not available for reading and writing at this time. StoryMaker cannot run without access to storage. Please check any SD cards and/or disconnect the device from your computer.</string>
     <string name="scene_s_">scene(s)</string>
     <string name="clip_s_">clip(s)</string>
     <string name="sc_app_not_found">SoundCloud App not found!</string>
@@ -336,6 +342,17 @@ You also will have an opportunity to see and modify the data being sent."</strin
     <string name="publishing_to_storymakerorg">Publishing to StoryMaker.org...</string>
     <string name="published_to_storymaker">Published to StoryMaker.org!</string>
     <string name="you_are_not_signed_into_storymakerorg">You are not signed into StoryMaker.org!</string>
+    <string name="fb_post_not_public">Only public Facebook posts can be published on StoryMaker.org!</string>
+    <string name="send_feedback">Send Feedback</string>
+    <string name="download_content_pack">Download Content Pack?</string>
+    <string name="stop_download">Stop Download?</string>
+    <string name="resume_download">Resume Download?</string>
+    
+    <string name="home_downloading_content">Downloading content and/or updating installed files"</string>
+    <string name="home_content_missing">Was not able to load this path, content is missing!</string>
+    <string name="home_metadata_missing">Could not locate content metadata</string>
+    <string name="home_index_missing">Could not locate content index</string>
+    <string name="home_please_wait">Please wait for this content pack to finish downloading</string>
 
     <!-- NEW/CACHEWORD -->
     <string name="lock_screen_open_button_text">UNLOCK APP</string>

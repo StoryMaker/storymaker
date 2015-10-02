@@ -4,7 +4,6 @@ package org.storymaker.app;
 import android.content.Intent;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -41,7 +40,7 @@ public class ConnectAccountActivity extends BaseActivity {
     @Override
     public void onResume() {
         super.onResume();
-        if ( !mActivityJustCreated && PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getBoolean(Globals.PREFERENCES_WP_REGISTERED, false) ) {
+        if ( !mActivityJustCreated && PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getBoolean(Constants.PREFERENCES_WP_REGISTERED, false) ) {
             // The user is returning to this Activity after a successful WordPress signup
             // that originated here.
             startHomeActivityAsNewTask();

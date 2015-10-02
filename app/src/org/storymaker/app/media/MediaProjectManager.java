@@ -36,6 +36,9 @@ import android.os.StatFs;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
+import scal.io.liger.StorageHelper;
+import timber.log.Timber;
+
 public class MediaProjectManager implements MediaManager {
 	public final static String TAG = "MediaProjectManager";
 
@@ -112,8 +115,11 @@ public class MediaProjectManager implements MediaManager {
 	private static synchronized void initExternalStorage (Context context)
     {   	
     	if (sFileExternDir == null){
-    	   	
-    		SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context.getApplicationContext());	 
+
+			// file location now handled by helper class
+
+			/*
+			SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context.getApplicationContext());
     		mUseInternal = settings.getBoolean("p_use_internal_storage",false);
 
     		boolean isStorageEmulated = false;
@@ -135,21 +141,25 @@ public class MediaProjectManager implements MediaManager {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             }
-    		sFileExternDir.mkdirs();
+            */
+
+			sFileExternDir = new File(StorageHelper.getActualStorageDirectory(context), AppConstants.FOLDER_PROJECTS_NAME);
+
+			Log.d(TAG, "sFileExternDir:" + sFileExternDir.getAbsolutePath());
+
+			sFileExternDir.mkdirs();
     	}
     }
     
     public static File getRenderPath (Context context)
     {
 
-		 File fileRenderTmpDir = null;
-		 
-		 if (mUseInternal)
-			 fileRenderTmpDir = context.getDir("render", Context.MODE_PRIVATE);
-		 else
-			 fileRenderTmpDir = new File(context.getExternalFilesDir(null),"render");
-		 
-		 return fileRenderTmpDir;
+	    // simplifying this method to ensure cleanup happens as intended
+		// StorageHelper method should respect internal/external storage settings
+
+		File fileRenderTmpDir = new File(StorageHelper.getActualStorageDirectory(context), "render");
+
+		return fileRenderTmpDir;
     }
     
     public static File getExternalProjectFolder (Project project, Context context)
@@ -242,10 +252,12 @@ public class MediaProjectManager implements MediaManager {
 
          Utils.Proc.killZombieProcs(mContext);
 
+		 double storageSpace = checkStorageSpace();
          //if not enough space
-         if(!checkStorageSpace())
+		 if (storageSpace > 0)
          {
-        	 return null;
+			 // throw exception to pass info up the stack
+			 throw new Exception(String.format(mContext.getString(R.string.error_storage_space), storageSpace));
          }
          
 		 File fileRenderTmpDir = getRenderPath(mContext);
@@ -463,8 +475,10 @@ public class MediaProjectManager implements MediaManager {
     			audioPath = fileAudio.getCanonicalPath();
     		else
     		{
-    			fileAudio = new File(mContext.getExternalFilesDir(null),"narration" + mScene.getId() + ".wav");
-    			if (fileAudio.exists())
+    			// fileAudio = new File(mContext.getExternalFilesDir(null),"narration" + mScene.getId() + ".wav");
+				fileAudio = new File(StorageHelper.getActualStorageDirectory(mContext),"narration" + mScene.getId() + ".wav");
+
+				if (fileAudio.exists())
         			audioPath = fileAudio.getCanonicalPath();
     		}
     		
@@ -559,8 +573,9 @@ public class MediaProjectManager implements MediaManager {
     {
     	return this.mContext;
     }
-    
-    public boolean checkStorageSpace()
+
+	// return space required to pass info up the stack
+	public double checkStorageSpace()
     {
     	ArrayList<Media> mList = this.mProject.getMediaAsList();
     	Long totalBytesRequired= 0l;
@@ -584,7 +599,7 @@ public class MediaProjectManager implements MediaManager {
 			} 
 			catch (java.io.FileNotFoundException fnfe) 
 			{
-				Log.e(AppConstants.TAG, "Input image does not exist or is not readable" + ": " + media.getPath(), fnfe);
+				Timber.e(fnfe, "Input image does not exist or is not readable" + ": " + media.getPath());
 			}			
  		}
  		
@@ -605,16 +620,16 @@ public class MediaProjectManager implements MediaManager {
 
     	//if not enough storage
 		// FIXME we should raise this error via a intent, not a straight toast so it can be handled if the activity is hidden
- 		if(totalBytesRequired > totalBytesAvailable && mActivity != null)
+ 		if(totalBytesRequired > totalBytesAvailable)
  		{
  			double totalMBRequired = totalBytesRequired /(double)(1024*1024);
  			
  			// FIXME we need to warn the user here via a message sent to the current activity since this could be called from a service now
- 			Utils.toastOnUiThread(mActivity, String.format(mContext.getString(R.string.error_storage_space), totalMBRequired), true);
- 			return false;
+			// can't create toast message here because instances created by renderer have a null value for activity
+ 			return totalMBRequired;
  		}
     	  	
-    	return true;
+    	return 0;
     }
     
     public static boolean migrateProjectFiles(Project project, Context context)

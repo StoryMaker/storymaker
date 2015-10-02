@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -62,7 +63,7 @@ public class PublishActivity extends EditorBaseActivity {
             mProject.setStoryType(Project.STORY_TYPE_VIDEO);
         }
         mProject.setTemplatePath(storyPathInstancePath);
-        if (spl.getPublishProfile() != null) {
+        if ((spl != null) && (spl.getPublishProfile() != null)) {
             mProject.setTagsFromStringList(spl.getPublishProfile().getTags()); // FIXME move this into the actual publish step so the user doesn't remove them in the publishfragment info editor
         }
         mProject.save();
@@ -81,7 +82,7 @@ public class PublishActivity extends EditorBaseActivity {
             int trimStart = (int) (trimStartRatio * 100) - 1;
             float trimEndRatio = ((float)m.getStopTime()) / m.getDuration();
             int trimEnd = (int) (trimEndRatio * 100) - 1;
-            scene.setMedia(i, m.getFilePath(), m.getFilePath(), "video/mp4", trimStart, trimEnd, m.getDuration());
+            scene.setMedia(i, m.getFilePath(), m.getFilePath(), "video/mp4", trimStart, trimEnd, m.getDuration()); // FIXME hardcoded "video/mp4"
             i++;
         }
         scene.save();
@@ -121,6 +122,13 @@ public class PublishActivity extends EditorBaseActivity {
         Context context = this;
         String language = "en"; // FIXME don't hardcode "en"
         String json = JsonHelper.loadJSON(new File(jsonFilePath), language);
+
+        // if no string was loaded, cannot continue
+        if (json == null) {
+            Log.e(TAG, "json could not be loaded from " + jsonFilePath);
+            return null;
+        }
+
         ArrayList<String> referencedFiles = new ArrayList<String>();
         return JsonHelper.deserializeStoryPathLibrary(json, jsonFilePath, referencedFiles, context, language);
     }

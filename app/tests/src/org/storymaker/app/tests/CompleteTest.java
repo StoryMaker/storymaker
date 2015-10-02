@@ -1,24 +1,17 @@
 package org.storymaker.app.tests;
 
 import android.app.Activity;
-import android.app.AlarmManager;
 import android.app.Instrumentation;
-import android.app.PendingIntent;
-import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.pm.PackageManager;
 import android.content.res.AssetManager;
 import android.net.Uri;
 import android.os.Environment;
-import android.os.Handler;
 import android.provider.MediaStore;
 import android.support.test.espresso.NoMatchingViewException;
-import android.support.test.espresso.action.ViewActions;
-import android.support.test.espresso.matcher.PreferenceMatchers;
+import android.support.test.internal.runner.lifecycle.ActivityLifecycleMonitorRegistry;
 import android.test.ActivityInstrumentationTestCase2;
 import android.util.Log;
-import android.widget.Toast;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.filefilter.WildcardFileFilter;
@@ -39,11 +32,12 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.GregorianCalendar;
 
 import io.scal.secureshareui.login.SoundCloudLoginActivity;
-import scal.io.liger.Constants;
 import scal.io.liger.MainActivity;
+import scal.io.liger.StorageHelper;
 import scal.io.liger.ZipHelper;
 
 import static android.support.test.espresso.Espresso.onView;
@@ -52,16 +46,16 @@ import static android.support.test.espresso.action.ViewActions.clearText;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.scrollTo;
 import static android.support.test.espresso.action.ViewActions.typeText;
+import static android.support.test.espresso.assertion.ViewAssertions.matches;
+import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withChild;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withParent;
 import static android.support.test.espresso.matcher.ViewMatchers.withTagValue;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
+import static android.support.test.runner.lifecycle.Stage.RESUMED;
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.is;
-
-import static android.support.test.espresso.assertion.ViewAssertions.matches;
-import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 
 //import com.google.android.apps.common.testing.ui.espresso.NoMatchingViewException;
 /*
@@ -84,6 +78,7 @@ import static com.google.android.apps.common.testing.ui.espresso.matcher.ViewMat
 public class CompleteTest extends ActivityInstrumentationTestCase2<HomeActivity> {
 
     private HomeActivity mHomeActivity;
+    private MainActivity mMainActivity;
 
     private Instrumentation.ActivityMonitor mVideoActivityMonitor;
     private Instrumentation.ActivityMonitor mAudioActivityMonitor;
@@ -162,9 +157,12 @@ public class CompleteTest extends ActivityInstrumentationTestCase2<HomeActivity>
 
         // create references to sample files for dummy responses
         // NOTE: can these be refactored into uri's like "content://media/external/video/media/1258"
-        String packageName = mHomeActivity.getApplicationContext().getPackageName();
-        File root = Environment.getExternalStorageDirectory();
-        testDirectory = root.toString() + "/Android/data/" + packageName + "/files/";
+
+        // String packageName = mHomeActivity.getApplicationContext().getPackageName();
+        // File root = Environment.getExternalStorageDirectory();
+        // testDirectory = root.toString() + "/Android/data/" + packageName + "/files/";
+        testDirectory = StorageHelper.getActualStorageDirectory(mHomeActivity.getApplicationContext()).getPath() + "/";
+
         String sampleVideo = testDirectory + sampleVideoName;
         String sampleAudio = testDirectory + sampleAudioName;
         String samplePhoto = testDirectory + samplePhotoName;
@@ -279,6 +277,11 @@ public class CompleteTest extends ActivityInstrumentationTestCase2<HomeActivity>
     public void testBbDownloadAndPatch() {
 
         Log.d("AUTOMATION", "BEGIN DOWNLOAD TEST");
+
+        // scroll to bottom
+        HomeActivityScroller as = new HomeActivityScroller(4); // UPDATE IF INDEX CHANGES
+        mHomeActivity.runOnUiThread(as);
+        stall(500, "WAIT FOR SCROLLING");
 
         // initiate download by clicking a menu item.
         Log.d("AUTOMATION", "SELECTING CONTENT PACK");
@@ -492,15 +495,29 @@ public class CompleteTest extends ActivityInstrumentationTestCase2<HomeActivity>
         onView(withText(mediaString)).perform(click());
         Log.d("AUTOMATION", "CLICKED MEDIA BUTTON");
 
-        // media capture
-        swipe(2);
+        // get liger activity
+        ActivityGetter ag = new ActivityGetter();
+        getInstrumentation().runOnMainSync(ag);
+
+        if (mMainActivity == null) {
+            Log.e("AUTOMATION", "NO LIGER ACTIVITY ACCESS");
+            return false;
+        }
+
+        // scroll to first capture card
+        ActivityScroller as1 = new ActivityScroller(4); // UPDATE IF STORY PATH CHANGES
+        mMainActivity.runOnUiThread(as1);
         stall(500, "WAIT FOR SCROLLING");
+
+        // media capture
         onView(allOf(withText("Capture"), withParent(withParent(withTagValue(is((Object) "clip_card_0")))))).perform(click());
         Log.d("AUTOMATION", "CLICKED CAPTURE BUTTON");
         stall(500, "WAIT FOR MEDIA CAPTURE UPDATE");
 
         // scroll to bottom
-        swipeMore(9);
+        ActivityScroller as2 = new ActivityScroller(18); // UPDATE IF STORY PATH CHANGES
+        mMainActivity.runOnUiThread(as2);
+        stall(500, "WAIT FOR SCROLLING");
 
         // begin publish/upload steps
         try {
@@ -588,7 +605,7 @@ public class CompleteTest extends ActivityInstrumentationTestCase2<HomeActivity>
 
         try {
             // TODO: re-enable once test points to beta server
-            // onView(withText("Continue")).perform(click());
+            onView(withText("Continue")).perform(click());
             Log.d("AUTOMATION", "CLICKED CONTINUE BUTTON");
         } catch (NoMatchingViewException nmve) {
             // implies no button was found (failure)
@@ -649,9 +666,19 @@ public class CompleteTest extends ActivityInstrumentationTestCase2<HomeActivity>
                                         Log.d("AUTOMATION", "FOURTH SELECTION (" + fourthSelection + ")");
                                         onView(withText(fourthSelection)).perform(click());
 
+                                        // get liger activity
+                                        ActivityGetter ag = new ActivityGetter();
+                                        getInstrumentation().runOnMainSync(ag);
+
+                                        if (mMainActivity == null) {
+                                            Log.e("AUTOMATION", "NO LIGER ACTIVITY ACCESS");
+                                            assertTrue(false);
+                                        }
+
                                         // check to see if a story path was loaded
                                         // scroll down, check for capture button
-                                        swipe(2);
+                                        ActivityScroller as = new ActivityScroller(5); // UPDATE IF STORY PATH CHANGES
+                                        mMainActivity.runOnUiThread(as);
 
                                         try {
                                             stall(500, "CAPTURE BUTTON");
@@ -720,9 +747,19 @@ public class CompleteTest extends ActivityInstrumentationTestCase2<HomeActivity>
                                         Log.d("AUTOMATION", "FOURTH SELECTION (" + fourthSelection + ")");
                                         onView(withText(fourthSelection)).perform(click());
 
+                                        // get liger activity
+                                        ActivityGetter ag = new ActivityGetter();
+                                        getInstrumentation().runOnMainSync(ag);
+
+                                        if (mMainActivity == null) {
+                                            Log.e("AUTOMATION", "NO LIGER ACTIVITY ACCESS");
+                                            assertTrue(false);
+                                        }
+
                                         // check to see if a story path was loaded
                                         // scroll down, check for capture button
-                                        swipe(2);
+                                        ActivityScroller as = new ActivityScroller(5); // UPDATE IF STORY PATH CHANGES
+                                        mMainActivity.runOnUiThread(as);
 
                                         try {
                                             stall(500, "CAPTURE BUTTON");
@@ -780,9 +817,19 @@ public class CompleteTest extends ActivityInstrumentationTestCase2<HomeActivity>
                             Log.d("AUTOMATION", "THIRD SELECTION (" + thirdSelection + ")");
                             onView(withText(thirdSelection)).perform(click());
 
+                            // get liger activity
+                            ActivityGetter ag = new ActivityGetter();
+                            getInstrumentation().runOnMainSync(ag);
+
+                            if (mMainActivity == null) {
+                                Log.e("AUTOMATION", "NO LIGER ACTIVITY ACCESS");
+                                assertTrue(false);
+                            }
+
                             // check to see if a story path was loaded
                             // scroll down, check for capture button
-                            swipe(2);
+                            ActivityScroller as = new ActivityScroller(4); // UPDATE IF STORY PATH CHANGES
+                            mMainActivity.runOnUiThread(as);
 
                             try {
                                 stall(500, "CAPTURE BUTTON");
@@ -891,6 +938,8 @@ public class CompleteTest extends ActivityInstrumentationTestCase2<HomeActivity>
         Log.d("AUTOMATION", "SELECTED DOWNLOAD MANAGER");
         settingsSwipe(R.string.prefs_use_download_manager_title);
 
+        // settings removed?
+        /*
         onView(withText(mHomeActivity.getApplicationContext().getString(R.string.prefs_youtube_acccount_title))).perform(click());
         Log.d("AUTOMATION", "SELECTED YOUTUBE ACCOUNT");
         pressBack();
@@ -906,6 +955,7 @@ public class CompleteTest extends ActivityInstrumentationTestCase2<HomeActivity>
         pressBack();
         pressBack();
         settingsSwipe(R.string.prefs_soundcloud_account_title);
+        */
 
         onView(withText(mHomeActivity.getApplicationContext().getString(R.string.prefs_interface_language_title))).perform(click());
         Log.d("AUTOMATION", "SELECTED INTERFACE LANGUAGE");
@@ -1009,6 +1059,7 @@ public class CompleteTest extends ActivityInstrumentationTestCase2<HomeActivity>
         }
     }
 
+    /*
     private void swipe(int swipes) {
         for (int i = 0; i < swipes; i++) {
             onView(withId(R.id.recyclerView)).perform(Util.swipeUpLess());
@@ -1020,6 +1071,7 @@ public class CompleteTest extends ActivityInstrumentationTestCase2<HomeActivity>
             onView(withId(R.id.recyclerView)).perform(Util.swipeUp());
         }
     }
+    */
 
     private void settingsSwipe(int currentItem) {
         onView(withChild(withChild(withText(mHomeActivity.getApplicationContext().getString(currentItem))))).perform(Util.swipeUp());
@@ -1030,6 +1082,49 @@ public class CompleteTest extends ActivityInstrumentationTestCase2<HomeActivity>
         for (File oldFile : FileUtils.listFiles(new File(directory), oldFileFilter, null)) {
             Log.d("AUTOMATION", "CLEANUP: FOUND " + oldFile.getPath() + ", DELETING");
             FileUtils.deleteQuietly(oldFile);
+        }
+    }
+
+    private class ActivityGetter implements Runnable
+    {
+        public void run() {
+            Collection resumedActivities = ActivityLifecycleMonitorRegistry.getInstance().getActivitiesInStage(RESUMED);
+            if (resumedActivities.iterator().hasNext()){
+                Object currentActivity = resumedActivities.iterator().next();
+
+                if (currentActivity instanceof MainActivity) {
+                    Log.d("AUTOMATION", "GOT MAIN ACTIVITY");
+                    mMainActivity = (MainActivity)currentActivity;
+                } else {
+                    Log.d("AUTOMATION", "NOT MAIN ACTIVITY");
+                }
+            }
+        }
+    }
+
+    private class ActivityScroller implements Runnable
+    {
+        int position = 0;
+
+        public ActivityScroller (int position) {
+            this.position = position;
+        }
+
+        public void run() {
+            mMainActivity.scroll(position);
+        }
+    }
+
+    private class HomeActivityScroller implements Runnable
+    {
+        int position = 0;
+
+        public HomeActivityScroller (int position) {
+            this.position = position;
+        }
+
+        public void run() {
+            mHomeActivity.scroll(position);
         }
     }
 }
