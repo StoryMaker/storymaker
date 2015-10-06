@@ -170,7 +170,6 @@ public class ServerManager {
             // throw exception so LoginActivity doesn't save credentials
             throw new IOException("Login failed");
         }
-<<<<<<< HEAD
 
         // replace with oauth code
         /*
@@ -233,20 +232,22 @@ public class ServerManager {
 	
 	public String post (String title, String body, String embed, String[] catstrings, String medium, String mediaService, String mediaGuid, String mimeType, File file) throws IOException // XmlRpcFault, MalformedURLException
 	{
+        String result = null;
+
         // wrapper will build post
 
 		connect();
 
         // TEMP, FOR TESTING PUBLISHING TO ZT
         if (zt != null) {
-            String result = zt.post(ztCredentials, title, body, embed);
+            result = zt.post(ztCredentials, title, body, embed);
             Log.d("ZT TEMP", "ZT POST RESULT: " + result);
         } else {
             Log.e("ZT TEMP", "ZT POST SKIPPED");
         }
 
         //Log.e(TAG, "can't post, no user name found");
-        return null;
+        return result;
 	}
 
     // NEW/TEMP

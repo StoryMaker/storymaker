@@ -322,7 +322,7 @@ public class BaseActivity extends FragmentActivity implements ICacheWordSubscrib
         if (mCacheWordHandler.isLocked()) {
 
             // prevent credential check attempt if database is locked
-            Log.d("CACHEWORD", "cacheword locked, skipping credential check");
+            Log.d("CACHEWORD", "cacheword locked, skipping menu credential check");
             textViewSignIn.setText(R.string.sign_in);
             textViewJoinStorymaker.setVisibility(View.VISIBLE);
 

@@ -3,6 +3,7 @@ package org.storymaker.app;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.content.DialogInterface;
@@ -34,9 +35,9 @@ public class FirstStartActivity extends Activity implements OnEulaAgreedTo {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
 
         // this seems to be getting created after the user has already accepted the EULA
+        /*
         final SharedPreferences prefsEula = getSharedPreferences(Globals.PREFERENCES_EULA, Activity.MODE_PRIVATE);
         boolean eulaAccepted = prefsEula.getBoolean(Globals.PREFERENCE_EULA_ACCEPTED, false);
         if (eulaAccepted) {
@@ -51,6 +52,13 @@ public class FirstStartActivity extends Activity implements OnEulaAgreedTo {
             mTosAccepted = false;
             mTosButton = (Button) findViewById(R.id.btnTos);
         }
+        */
+
+        super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        setContentView(R.layout.activity_first_start);
+        mTosAccepted = false;
+        mTosButton = (Button) findViewById(R.id.btnTos);
     }
     
     @Override

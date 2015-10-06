@@ -125,12 +125,14 @@ public abstract class PublisherBase {
 
         // FIXME make this async and put this in the callback
         // FIXME store the final published url in the project table?
-        // FIXME urlPost is probably null
-        if (postId == null) {
+
+        // TODO - need a better sense of the return value (null on failure or value of "link" parsed out of response)
+
+        if (urlPost != null) {
             publishToStoryMakerSucceeded(urlPost);
         } else {
-            String[] parts = postId.split(":");
-            publishToStoryMakerFailed(null, Integer.parseInt(parts[0]), parts[1]);
+            // TODO - need to formalize error code and message
+            publishToStoryMakerFailed(null, Integer.valueOf(-1), "failed to publish story");
         }
         
         return urlPost;

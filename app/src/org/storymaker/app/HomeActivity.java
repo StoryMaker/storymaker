@@ -321,7 +321,16 @@ public class HomeActivity extends BaseActivity {
 
             ServerManager sm = StoryMakerApp.getServerManager();
 
-            if (sm.hasCreds()) {
+            if (mCacheWordHandler.isLocked()) {
+
+                // prevent credential check attempt if database is locked
+                Log.d("CACHEWORD", "cacheword locked, skipping index credential check");
+                // user is not logged in, update status flag if necessary
+                if (loggedIn) {
+                    loggedIn = false;
+                }
+
+            } else if (sm.hasCreds()) {
                 // user is logged in, update status flag if necessary
                 if (!loggedIn) {
                     loggedIn = true;
@@ -345,8 +354,8 @@ public class HomeActivity extends BaseActivity {
                 return Boolean.valueOf(sm.index());
             }
 
-            // check server if user insists
-            if (forceDownload) {
+            // check server if user insists (if database is unlocked)
+            if (forceDownload && !mCacheWordHandler.isLocked()) {
                 Log.d(TAG, "UPDATE REQUIRED, CHECK SERVER");
 
                 // reset available index
@@ -1265,6 +1274,7 @@ public class HomeActivity extends BaseActivity {
         intent.putExtra("originalIntent", getIntent());
         startActivity(intent);
         finish();
+    }
 
     public class PauseListener implements DialogInterface.OnClickListener {
 
