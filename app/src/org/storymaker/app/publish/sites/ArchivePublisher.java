@@ -43,7 +43,7 @@ public class ArchivePublisher extends PublisherBase {
 			return null;
 		}
 
-		String medium = job.getSpec();
+		String medium = job.getSpec(); // FIXME spec is not the same as medium, there can be many render spec's for a single medium
 		String fileURL = job.getResult();
 		String width = null;
 		String height = null;
