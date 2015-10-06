@@ -19,7 +19,6 @@ import org.storymaker.app.server.ServerManager;
 
 import io.scal.secureshareui.controller.FacebookSiteController;
 import io.scal.secureshareui.controller.SiteController;
-import io.scal.secureshareui.controller.ZTSiteController;
 
 public abstract class PublisherBase {
     private final static String TAG = "PublisherBase";
@@ -116,23 +115,18 @@ public abstract class PublisherBase {
         mController.publishJobProgress(mPublishJob, 0, mContext.getString(R.string.publishing_to_storymakerorg));
         // split out embed
         // String descWithMedia = desc + "\n\n" + mediaEmbed;
-
-        // now returning url directly
-        //String postId = sm.post(title, desc, mediaEmbed, categories, medium, mediaService, mediaGuid);
+        String postId = sm.post(title, desc, mediaEmbed, categories, medium, mediaService, mediaGuid);
         mController.publishJobProgress(mPublishJob, 0.5f, mContext.getString(R.string.publishing_to_storymakerorg));
-        //String urlPost = sm.getPostUrl(postId);
-        String urlPost = sm.post(title, desc, mediaEmbed, categories, medium, mediaService, mediaGuid);
+        String urlPost = sm.getPostUrl(postId);
 
         // FIXME make this async and put this in the callback
         // FIXME store the final published url in the project table?
-
-        // TODO - need a better sense of the return value (null on failure or value of "link" parsed out of response)
-
-        if (urlPost != null) {
+        // FIXME urlPost is probably null
+        if (postId == null) {
             publishToStoryMakerSucceeded(urlPost);
         } else {
-            // TODO - need to formalize error code and message
-            publishToStoryMakerFailed(null, Integer.valueOf(-1), "failed to publish story");
+            String[] parts = postId.split(":");
+            publishToStoryMakerFailed(null, Integer.parseInt(parts[0]), parts[1]);
         }
         
         return urlPost;
@@ -170,8 +164,7 @@ public abstract class PublisherBase {
 			String publishToStoryMaker = mPublishJob.getMetadata().get(SiteController.VALUE_KEY_PUBLISH_TO_STORYMAKER);
 			if (publishToStoryMaker != null && publishToStoryMaker.equals("true")) {
 
-                // Auth auth = (new AuthTable()).getAuthDefault(mContext, Auth.SITE_STORYMAKER);
-                Auth auth = (new AuthTable()).getAuthDefault(mContext, ZTSiteController.SITE_KEY);
+                Auth auth = (new AuthTable()).getAuthDefault(mContext, Auth.SITE_STORYMAKER);
                 if (auth != null) {
 
                     // check for facebook privacy issues
@@ -189,7 +182,8 @@ public abstract class PublisherBase {
                 } else {
                     mController.publishJobFailed(mPublishJob, null, 78268832, mContext.getString(R.string.you_are_not_signed_into_storymakerorg)); // FIXME do this nicer!
                 }
-            } else {
+
+			} else {
                 publishSucceeded(getResultUrl(job));
 			}
 		}

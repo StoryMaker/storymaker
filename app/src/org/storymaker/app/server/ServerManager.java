@@ -15,8 +15,6 @@ import java.util.List;
 import net.bican.wordpress.Comment;
 import net.bican.wordpress.Page;
 
-import io.scal.secureshareui.controller.SiteController;
-import io.scal.secureshareui.controller.ZTSiteController;
 import io.scal.secureshareui.lib.CaptchaException;
 import io.scal.secureshareui.lib.SMWrapper;
 import scal.io.liger.IndexManager;
@@ -31,13 +29,11 @@ import android.util.Log;
 
 public class ServerManager {
     private static final String TAG = "ServerManager";
-
     //private Wordpress mWordpress;
     private String mServerUrl;
     private Context mContext;
     
     //private final static String PATH_XMLRPC = "/xmlrpc.php";
-    //private final static String PATH_REGISTER = "accounts/signup/";
     private final static String PATH_REGISTER = "accounts/signup/?chrome=0";
     //private final static String PATH_LOGIN = "/wp-admin";
     //public final static String PATH_REGISTERED = "/wp-login.php?checkemail=registered";
@@ -55,8 +51,6 @@ public class ServerManager {
     private SharedPreferences mSettings;
 
     private SMWrapper smWrapper;
-    private ZTSiteController zt;
-    private String ztCredentials;
     
     public ServerManager (Context context)
     {
@@ -115,7 +109,6 @@ public class ServerManager {
     private void connect () throws IOException // MalformedURLException, XmlRpcFault
     {
         //if (mWordpress == null)
-        /*
         if (smWrapper == null)
         {
             Auth auth = (new AuthTable()).getAuthDefault(mContext, Auth.SITE_STORYMAKER);
@@ -129,29 +122,6 @@ public class ServerManager {
             }
             Log.e(TAG, "connect() bailing out, user credentials are null or blank");
         }
-        */
-
-
-
-        // TEMP, FOR TESTING PUBLISHING TO ZT
-        if (zt == null) {
-            Auth auth = (new AuthTable()).getAuthDefault(mContext, ZTSiteController.SITE_KEY);
-            if (auth != null) {
-                ztCredentials = auth.getCredentials();
-                if ((ztCredentials == null) || (ztCredentials.length() == 0)) {
-                    Log.e("ZT TEMP", "ZT CREDENTIALS ARE BLANK");
-                } else {
-                    Log.d("ZT TEMP", "FOUND ZT CREDENTIALS");
-
-                    zt = (ZTSiteController)SiteController.getSiteController(ZTSiteController.SITE_KEY, mContext, null, null);
-                }
-            } else {
-                Log.e("ZT TEMP", "NO ZT CREDENTIALS FOUND");
-            }
-        }
-
-
-
     }
     
     public void connect (String username, String password) throws IOException // MalformedURLException, XmlRpcFault
@@ -170,30 +140,7 @@ public class ServerManager {
             // throw exception so LoginActivity doesn't save credentials
             throw new IOException("Login failed");
         }
-
-        // replace with oauth code
-        /*
-		XmlRpcClient.setContext(mContext);
-
-	    boolean useTor = mSettings.getBoolean("pusetor", false);
-	    
-		if (useTor)
-		{
-            // socks proxy scheme no longer supported by StrongHttpClient
-			// XmlRpcClient.setProxy(true, "SOCKS", AppConstants.TOR_PROXY_HOST, AppConstants.TOR_PROXY_PORT);
-            XmlRpcClient.setProxy(true, "http", AppConstants.TOR_PROXY_HOST, AppConstants.TOR_PROXY_PORT);
-        }
-		else
-		{
-			XmlRpcClient.setProxy(false, null, null, -1);
-		}
-		
-		Log.d(TAG, "Logging into Wordpress: " + username + '@' + mServerUrl + PATH_XMLRPC);
-		mWordpress = new Wordpress(username, password, mServerUrl + PATH_XMLRPC);	
-		
-		mWordpress.getRecentPosts(1); //need to do a test to force authentication
-		*/
-	}
+    }
     
     public String getPostUrl (String postId) throws IOException // XmlRpcFault, MalformedURLException
     {
@@ -221,33 +168,30 @@ public class ServerManager {
 
     public String post (String title, String body, String embed, String[] cats, String medium, String mediaService, String mediaGuid) throws IOException // XmlRpcFault, MalformedURLException
     {
-        return post(title, body, embed, cats, medium, mediaService, mediaGuid, null, null);
+        return post (title, body, embed, cats, medium, mediaService, mediaGuid, null, null);
     }
-
+    
     public String addMedia (String mimeType, File file) throws IOException // XmlRpcFault, MalformedURLException
     {
         connect();
         return smWrapper.addMedia(mimeType, file); // TODO: implement method in wrapper
     }
-	
-	public String post (String title, String body, String embed, String[] catstrings, String medium, String mediaService, String mediaGuid, String mimeType, File file) throws IOException // XmlRpcFault, MalformedURLException
-	{
-        String result = null;
-
-        // wrapper will build post
-
-		connect();
-
-        // TEMP, FOR TESTING PUBLISHING TO ZT
-        if (zt != null) {
-            result = zt.post(ztCredentials, title, body, embed);
-            Log.d("ZT TEMP", "ZT POST RESULT: " + result);
-        } else {
-            Log.e("ZT TEMP", "ZT POST SKIPPED");
+    
+    public String post (String title, String body, String embed, String[] catstrings, String medium, String mediaService, String mediaGuid, String mimeType, File file) throws IOException // XmlRpcFault, MalformedURLException
+    {
+        connect();
+        
+        // need user name for group id
+        Auth auth = (new AuthTable()).getAuthDefault(mContext, Auth.SITE_STORYMAKER);
+        if (auth != null) {
+            String user = auth.getUserName();
+            if (user != null && user.length() > 0) {
+                return smWrapper.post(user, title, body, embed, catstrings, medium, mediaService, mediaGuid, mimeType, file);
+            }
         }
 
-        //Log.e(TAG, "can't post, no user name found");
-        return result;
+        Log.e(TAG, "can't post, no user name found");
+        return null;
 	}
 
     // NEW/TEMP
@@ -333,7 +277,7 @@ public class ServerManager {
         Log.e("INDEX", "CAN'T DOWNLOAD NEW ASSIGNMENTS");
         return false;
     }
-
+	
     public void createAccount (Activity activity)
     {
         //open web view here to reg form
@@ -342,14 +286,5 @@ public class ServerManager {
         intent.putExtra("url", mServerUrl + PATH_REGISTER);
         
         activity.startActivity(intent);
-    }
-
-    public void showPost (String title, String url)
-    {
-        Intent intent = new Intent(mContext,WebViewActivity.class);
-        intent.putExtra("title", title);
-        intent.putExtra("url", url);
-
-        mContext.startActivity(intent);
     }
 }
