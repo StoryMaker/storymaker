@@ -292,6 +292,9 @@
 <string name="prefs_internal_storage_title">Internal Storage</string>
 <string name="prefs_internal_storage_summary">Use internal project storage</string>
 
+<string name="prefs_iocipher_storage_title">IOCipher Storage</string>
+<string name="prefs_iocipher_storage_summary">Use IOCipher secure storage</string>
+
 <string name="prefs_youtube_method_title">YouTube Method</string>
 <string name="prefs_youtube_method_summary">Debug authorization method type</string>
 

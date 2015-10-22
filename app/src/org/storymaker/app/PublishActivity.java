@@ -121,7 +121,7 @@ public class PublishActivity extends EditorBaseActivity {
     StoryPathLibrary getStoryPathLibrary(String jsonFilePath) {
         Context context = this;
         String language = "en"; // FIXME don't hardcode "en"
-        String json = JsonHelper.loadJSON(new File(jsonFilePath), language);
+        String json = JsonHelper.loadJSON(jsonFilePath, context, language);
 
         // if no string was loaded, cannot continue
         if (json == null) {
