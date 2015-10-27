@@ -46,6 +46,7 @@ import net.hockeyapp.android.FeedbackManager;
 // NEW/CACHEWORD
 import info.guardianproject.cacheword.CacheWordHandler;
 import info.guardianproject.cacheword.ICacheWordSubscriber;
+import scal.io.liger.StorageHelper;
 
 public class BaseActivity extends FragmentActivity implements ICacheWordSubscriber {
 
@@ -132,6 +133,21 @@ public class BaseActivity extends FragmentActivity implements ICacheWordSubscrib
 
     @Override
     public void onCacheWordOpened() {
+
+        // mount vfs file (if a pin has been set) - mounting here seems to be required for loading stories from the home screen
+
+        SharedPreferences sp = getSharedPreferences("appPrefs", MODE_PRIVATE);
+        String cachewordStatus = sp.getString("cacheword_status", "default");
+        if (cachewordStatus.equals(CACHEWORD_SET)) {
+            if (mCacheWordHandler.isLocked()) {
+                Log.d("IOCIPHER", "onCacheWordOpened(storymaker) - pin set but cacheword locked, cannot mount vfs");
+            } else {
+                Log.d("IOCIPHER", "onCacheWordOpened(storymaker) - pin set and cacheword unlocked, mounting vfs");
+                StorageHelper.mountStorage(this, null, mCacheWordHandler.getEncryptionKey());
+            }
+        } else {
+            Log.d("IOCIPHER", "onCacheWordOpened(storymaker) - no pin set, cannot mount vfs");
+        }
 
         // if we're opened, check db and update menu status
         Log.d("CACHEWORD", "cacheword opened, activity will continue");
