@@ -21,4 +21,4 @@
 	url = https://github.com/StoryMaker/storypath.git
 [submodule "external/cacheword"]
 	path = external/cacheword
-	url = https://github.com/mnbogner/cacheword.git
+	url = https://github.com/StoryMaker/cacheword.git
