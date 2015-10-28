@@ -5,7 +5,8 @@
     android:installLocation="auto"
     android:versionCode="1081"
     android:versionName="2.0.5">
-   
+  
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -186,6 +187,14 @@
             android:screenOrientation="portrait">
         </activity>
         <activity
+            android:name="io.scal.secureshareui.login.ZTLoginActivity"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name="io.scal.secureshareui.login.ZTWebActivity"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
             android:name="org.storymaker.app.ConnectAccountActivity"
             android:label="@string/title_activity_connect_account"
             android:screenOrientation="portrait"
@@ -213,6 +222,14 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".HomeActivity" />
         </activity>
+
+        <!-- NEW/CACHEWORD -->
+        <service android:name="info.guardianproject.cacheword.CacheWordService"
+            android:enabled="true"
+            android:exported="false"/>
+
+        <activity android:name="org.storymaker.app.CacheWordActivity"/>
+
     </application>
 
 </manifest>

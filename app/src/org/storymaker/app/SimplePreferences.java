@@ -18,8 +18,10 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.Toast;
 
+import scal.io.liger.StorageHelper;
 
-public class SimplePreferences extends PreferenceActivity implements OnSharedPreferenceChangeListener {
+
+public class SimplePreferences extends LockablePreferenceActivity implements OnSharedPreferenceChangeListener {
 
 	public static final String KEY_VIDEO_RESOLUTION = "p_video_resolution";
 	public static final String KEY_VIDEO_WIDTH = "p_video_width";
@@ -32,7 +34,11 @@ public class SimplePreferences extends PreferenceActivity implements OnSharedPre
 
     public static final String KEY_LANGUAGE = "pintlanguage";
 
-	public static final int MAX_VIDEO_WIDTH = 1920;
+    public static final String KEY_TIMEOUT = "pcachewordtimeout";
+
+    public static final String KEY_USE_IOCIPHER = "p_use_iocipher_storage";
+
+    public static final int MAX_VIDEO_WIDTH = 1920;
 	public static final int MAX_VIDEO_HEIGHT = 1080;
 	
 	
@@ -48,23 +54,18 @@ public class SimplePreferences extends PreferenceActivity implements OnSharedPre
 		setResult(RESULT_OK);
 		
 		Preference prefVideoWidth = (Preference) getPreferenceScreen().findPreference(KEY_VIDEO_WIDTH);	
-		prefVideoWidth.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() 
-		{
-		    public boolean onPreferenceChange(Preference preference, Object newValue) 
-		    {
-		    	int vWidth = Integer.parseInt(newValue.toString());
-		    	
-		    	if(vWidth > MAX_VIDEO_WIDTH)
-				{
-					Toast.makeText(getApplicationContext(), "Width must be less than 1920.", Toast.LENGTH_SHORT).show();
-					return false;
-				}
-		    	else
-		    	{
-		    		return true;
-		    	}
-		    }
-		});
+		prefVideoWidth.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+            public boolean onPreferenceChange(Preference preference, Object newValue) {
+                int vWidth = Integer.parseInt(newValue.toString());
+
+                if (vWidth > MAX_VIDEO_WIDTH) {
+                    Toast.makeText(getApplicationContext(), "Width must be less than 1920.", Toast.LENGTH_SHORT).show();
+                    return false;
+                } else {
+                    return true;
+                }
+            }
+        });
 		
 		Preference prefVideoHeight = (Preference) getPreferenceScreen().findPreference(KEY_VIDEO_HEIGHT);	
 		prefVideoHeight.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() 
@@ -138,6 +139,41 @@ public class SimplePreferences extends PreferenceActivity implements OnSharedPre
                 return true;
             }
         });
+
+        Preference prefUseIOCipher = (Preference)getPreferenceScreen().findPreference(KEY_USE_IOCIPHER);
+        prefUseIOCipher.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+            public boolean onPreferenceChange(Preference preference, Object newValue) {
+
+                boolean useIOCipher = Boolean.parseBoolean(newValue.toString());
+
+                SharedPreferences sp = getSharedPreferences("appPrefs", MODE_PRIVATE);
+                String cachewordStatus = sp.getString("cacheword_status", "default");
+                if (cachewordStatus.equals(CACHEWORD_SET)) {
+                    if (mCacheWordHandler.isLocked()) {
+                        Log.d("IOCIPHER", "onPreferenceChange - pin set but cacheword locked, cannot use iocipher");
+                        Toast.makeText(getApplicationContext(), "App must be unlocked before IOCipher can be used", Toast.LENGTH_LONG).show();
+                    } else {
+                        Log.d("IOCIPHER", "onPreferenceChange - pin set and cacheword unlocked, updating iocipher preferences");
+
+                        if(useIOCipher) {
+                            StorageHelper.migrateToIOCipher(getApplicationContext());
+                            Toast.makeText(getApplicationContext(), "Migrating actual files to virtual file system", Toast.LENGTH_LONG).show();
+                        } else {
+                            StorageHelper.migrateFromIOCipher(getApplicationContext());
+                            Toast.makeText(getApplicationContext(), "Migrating virtual files to actual file system", Toast.LENGTH_LONG).show();
+
+                        }
+
+                        return true;
+                    }
+                } else {
+                    Log.d("IOCIPHER", "onPreferenceChange - no pin set, cannot use iocipher");
+                    Toast.makeText(getApplicationContext(), "A pin must be set before IOCipher can be used", Toast.LENGTH_LONG).show();
+                }
+
+                return false;
+            }
+        });
 	}
 	
 	@SuppressWarnings("deprecation")
@@ -193,6 +229,11 @@ public class SimplePreferences extends PreferenceActivity implements OnSharedPre
         {
             ((StoryMakerApp)getApplication()).checkLocale();
 //            restartActivity();
+            restartApp(getApplicationContext());
+        }
+
+        // force update so cacheword handlers are re-created with updated timeout
+        else if (key.equals(KEY_TIMEOUT)) {
             restartApp(getApplicationContext());
         }
 	}

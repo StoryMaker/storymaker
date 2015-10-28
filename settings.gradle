@@ -8,5 +8,6 @@ include ':external:NetCipher:libnetcipher'
 include ':external:SecureShareLib:SecureShareUILibrary'
 include ':external:SecureShareLib:SecureShareUILibrary:external:facebook-sdk:facebook'
 include ":external:liger:lib"
+include ":external:cacheword:cachewordlib"
 include ":android-iconify"
 project(':android-iconify').projectDir = new File('external/liger/android-iconify')
