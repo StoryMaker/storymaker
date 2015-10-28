@@ -1,3 +1,7 @@
+--- build 1082
+
+- Clicking Next or Start button scrolls newly available cards into view
+
 --- build 1081
 
 - revert RecyclerView to older non buggy version com.android.support:recyclerview-v7:21.0.0'
