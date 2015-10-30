@@ -3,6 +3,7 @@ apply plugin: 'com.android.application'
 // required for sqlbrite/apt
 buildscript {
     repositories {
+        jcenter()
         mavenCentral()
     }
     dependencies {
@@ -113,7 +114,7 @@ dependencies {
     // apt 'com.hannesdorfmann.sqlbrite:object-mapper:0.2.2'
 
     // Maven imports
-    compile 'com.android.support:support-annotations:23.1.0'
+    compile 'com.android.support:support-annotations:22.0.1'
     androidTestCompile 'com.android.support.test.espresso:espresso-core:2.0'
     androidTestCompile 'com.android.support.test:testing-support-lib:0.1'
     androidTestCompile 'com.squareup.spoon:spoon-client:1.1.2'
@@ -123,22 +124,25 @@ dependencies {
     compile 'com.google.guava:guava:18.0'
     // Will use ActionBarDrawerToggle in BaseActivity once we migrate ActionBar -> ToolBar
     //compile 'com.android.support:appcompat-v7:21.0.2'
+    compile 'net.hockeyapp.android:HockeySDK:3.5.0'
+    compile 'commons-io:commons-io:2.4'
+    compile 'info.guardianproject.netcipher:netcipher:1.2'
+    compile 'info.guardianproject.cacheword:cachewordlib:0.1'
+    compile 'com.jakewharton.timber:timber:3.1.0'
+   // compile 'com.github.japgolly.android:svg-android:2.0.6'
+
 
     // .Jar imports
     compile files('libs/apache-mime4j-0.6.jar')
-    compile files('libs/apache-mime4j-0.6.jar')
-    compile 'commons-io:commons-io:2.4'
     compile files('libs/commons-lang3-3.1.jar')
     compile files('libs/google-api-client-1.4.1-beta.jar')
     compile files('libs/google-api-client-googleapis-1.4.1-beta.jar')
     compile files('libs/google-api-services-latitude-v1-1.1.0-beta.jar')
-    //compile files('libs/guava-r09.jar')
-    compile 'net.hockeyapp.android:HockeySDK:3.5.0'
     compile files('libs/httpmime-4.0.3.jar')
     compile files('libs/soundcloud-api-1.0.1.jar')
     compile files('libs/svg-android-1.1.jar')
-    compile files('libs/wordpressjavaandroid.jar')
-    compile files('libs/sqlcipher.jar')
+    compile files('libs/httpclientandroidlib-1.2.1.jar')
+    //compile files('libs/wordpressjavaandroid.jar')
 
     // Project imports
     compile project(':external:android-ffmpeg-java')
@@ -146,11 +150,8 @@ dependencies {
     compile project(':external:cardsui-for-android:CardsUILib')
     compile project(':external:Android-ViewPagerIndicator:library')
     compile project(':external:RangeSeekBar:library')
-    compile project(':external:NetCipher:libnetcipher')
     compile project(':external:SecureShareLib:SecureShareUILibrary')
     compile project(':external:SecureShareLib:SecureShareUILibrary:external:facebook-sdk:facebook')
     compile project(':android-iconify')
     compile project(':external:liger:lib')
-    compile project(':external:cacheword:cachewordlib')
-    compile 'com.jakewharton.timber:timber:3.1.0'
 }
