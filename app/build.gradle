@@ -126,8 +126,11 @@ dependencies {
     //compile 'com.android.support:appcompat-v7:21.0.2'
     compile 'net.hockeyapp.android:HockeySDK:3.5.0'
     compile 'commons-io:commons-io:2.4'
+
     compile 'info.guardianproject.netcipher:netcipher:1.2'
     compile 'info.guardianproject.cacheword:cachewordlib:0.1'
+    compile 'net.zetetic:android-database-sqlcipher:3.3.1-1@aar'
+
     compile 'com.jakewharton.timber:timber:3.1.0'
    // compile 'com.github.japgolly.android:svg-android:2.0.6'
 
