@@ -64,7 +64,7 @@ public class LockablePreferenceActivity extends PreferenceActivity implements IC
         Log.d("CACHEWORD", "buildNotification (lockable)");
 
         NotificationCompat.Builder b = new NotificationCompat.Builder(c);
-        b.setSmallIcon(scal.io.liger.R.drawable.ic_menu_key);
+        b.setSmallIcon(R.drawable.ic_menu_key);
         b.setContentTitle(c.getText(scal.io.liger.R.string.cacheword_notification_cached_title));
         b.setContentText(c.getText(scal.io.liger.R.string.cacheword_notification_cached_message));
         b.setTicker(c.getText(scal.io.liger.R.string.cacheword_notification_cached));

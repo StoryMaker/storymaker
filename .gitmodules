@@ -10,15 +10,9 @@
 [submodule "external/RangeSeekBar"]
 	path = external/RangeSeekBar
 	url = https://github.com/scalio/RangeSeekBar.git
-[submodule "external/NetCipher"]
-	path = external/NetCipher
-	url = https://github.com/scalio/NetCipher.git
 [submodule "external/SecureShareLib"]
 	path = external/SecureShareLib
 	url = https://github.com/StoryMaker/SecureShareLib.git
 [submodule "external/liger"]
 	path = external/liger
 	url = https://github.com/StoryMaker/storypath.git
-[submodule "external/cacheword"]
-	path = external/cacheword
-	url = https://github.com/StoryMaker/cacheword.git

@@ -47,6 +47,8 @@ public class CacheWordActivity extends Activity implements ICacheWordSubscriber 
     private String CACHEWORD_UNSET;
     private String CACHEWORD_FIRST_LOCK;
     private String CACHEWORD_SET;
+
+    private Notification mNotif;
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -235,7 +237,7 @@ public class CacheWordActivity extends Activity implements ICacheWordSubscriber 
                 // Check passphrase
                 try {
 
-                    if (mCacheWordHandler.mNotification == null) {
+                    if (mNotif == null){
                         Log.d("CACHEWORD", "no handler notification");
 
                         // only display notification if the user has set a pin
@@ -243,7 +245,8 @@ public class CacheWordActivity extends Activity implements ICacheWordSubscriber 
                         String cachewordStatus = sp.getString("cacheword_status", "default");
                         if (cachewordStatus.equals(CACHEWORD_SET)) {
                             Log.d("CACHEWORD", "pin set, so display notification (cacheword)");
-                            mCacheWordHandler.setNotification(buildNotification(CacheWordActivity.this));
+                            mNotif = buildNotification(CacheWordActivity.this);
+                            mCacheWordHandler.setNotification(mNotif);
                         } else {
                             Log.d("CACHEWORD", "no pin set, so no notification (cacheword)");
                         }
