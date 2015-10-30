@@ -155,6 +155,13 @@ dependencies {
     compile 'com.github.n8fr8:Android-ViewPagerIndicator:6d15751bca'
 
     // .Jar imports
+  //  compile files('libs/apache-mime4j-0.6.jar')
+    compile files('libs/commons-lang3-3.1.jar')
+   // compile files('libs/google-api-client-1.4.1-beta.jar')
+   // compile files('libs/google-api-client-googleapis-1.4.1-beta.jar')
+   // compile files('libs/google-api-services-latitude-v1-1.1.0-beta.jar')
+  //  compile files('libs/httpmime-4.0.3.jar')
+  //  compile files('libs/soundcloud-api-1.0.1.jar')
     compile files('libs/svg-android-1.1.jar')
     compile files('libs/httpclientandroidlib-1.2.1.jar')
     compile files('libs/rangeseekbar.jar')
