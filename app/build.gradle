@@ -143,10 +143,18 @@ dependencies {
 
     compile 'net.hockeyapp.android:HockeySDK:3.5.0'
     compile 'commons-io:commons-io:2.4'
+<<<<<<< HEAD
     compile 'org.apache.commons:commons-lang3:3.1'
 
     compile 'info.guardianproject.cacheword:cachewordlib:0.1'
     compile 'net.zetetic:android-database-sqlcipher:3.3.1-1@aar'
+=======
+
+    compile 'info.guardianproject.netcipher:netcipher:1.2'
+    compile 'info.guardianproject.cacheword:cachewordlib:0.1'
+    compile 'net.zetetic:android-database-sqlcipher:3.3.1-1@aar'
+
+>>>>>>> 523209f... more fixes for building with sqlcipher, netcipher gradle depends
     compile 'com.jakewharton.timber:timber:3.1.0'
 
     //scalio repos via jitpack

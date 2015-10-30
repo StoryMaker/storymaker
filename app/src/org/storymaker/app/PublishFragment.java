@@ -704,8 +704,8 @@ public class PublishFragment extends Fragment implements PublishListener {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(mActivity);
         builder.setMessage(R.string.view_published_media_online_or_local_copy_)
-                .setPositiveButton(R.string.yes, dialogClickListener)
-                .setNegativeButton(R.string.no, dialogClickListener).show();
+                .setPositiveButton(android.R.string.yes, dialogClickListener)
+                .setNegativeButton(android.R.string.no, dialogClickListener).show();
     }
     
     private String getStoryMakerUserName(){ 

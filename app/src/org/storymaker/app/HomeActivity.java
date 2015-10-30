@@ -58,7 +58,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
-import info.guardianproject.onionkit.ui.OrbotHelper;
+import info.guardianproject.netcipher.proxy.OrbotHelper;
 import rx.functions.Action1;
 import scal.io.liger.IndexManager;
 import scal.io.liger.JsonHelper;
@@ -924,15 +924,14 @@ public class HomeActivity extends BaseActivity {
 	     
 	     if (useTor)
 	     {
-	    	 OrbotHelper oh = new OrbotHelper(this);
-	    	 
-	    	 if (!oh.isOrbotInstalled())
+
+	    	 if (!OrbotHelper.isOrbotInstalled(this))
 	    	 {
-	    		 oh.promptToInstall(this);
+                 startActivity(OrbotHelper.getOrbotInstallIntent(this));
 	    	 }
-	    	 else if (!oh.isOrbotRunning())
+	    	 else if (!OrbotHelper.isOrbotRunning(this))
 	    	 {
-	    		 oh.requestOrbotStart(this);
+                 OrbotHelper.requestStartTor(this);
 	    	 }
 	    	 
 	     }
