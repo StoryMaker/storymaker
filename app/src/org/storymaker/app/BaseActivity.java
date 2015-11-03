@@ -57,6 +57,7 @@ public class BaseActivity extends FragmentActivity {
 //		EasyTracker.getInstance(this).activityStop(this);
 	}
 
+
     public void setupDrawerLayout() {
 
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
