@@ -110,7 +110,7 @@ public class BaseActivity extends FragmentActivity implements ICacheWordSubscrib
         b.setWhen(System.currentTimeMillis());
         b.setOngoing(true);
         b.setContentIntent(CacheWordHandler.getPasswordLockPendingIntent(c));
-        return b.build();
+        return b.getNotification();
     }
 
     @Override
