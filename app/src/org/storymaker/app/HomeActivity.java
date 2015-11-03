@@ -1005,7 +1005,6 @@ public class HomeActivity extends BaseActivity {
         } else if (item.getItemId() == R.id.menu_hide)
         {
             hideLauncherIcon();
-            finish();
         }
 
         return super.onOptionsItemSelected(item);
@@ -1378,8 +1377,17 @@ public class HomeActivity extends BaseActivity {
                 getPackageManager().setComponentEnabledSetting(LAUNCHER_COMPONENT_NAME,
                         PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
                         PackageManager.DONT_KILL_APP);
+
+                finish();
             }
         });
+        builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+
+
+            }
+        });
+        builder.setCancelable(true);
         builder.setIcon(android.R.drawable.ic_dialog_alert);
         builder.show();
     }
