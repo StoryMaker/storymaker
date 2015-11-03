@@ -1,15 +1,6 @@
 [submodule "external/android-ffmpeg-java"]
 	path = external/android-ffmpeg-java
     url = https://github.com/StoryMaker/android-ffmpeg-java
-[submodule "external/cardsui-for-android"]
-	path = external/cardsui-for-android
-	url = https://github.com/scalio/cardsui-for-android.git
-[submodule "external/Android-ViewPagerIndicator"]
-	path = external/Android-ViewPagerIndicator
-	url = https://github.com/scalio/Android-ViewPagerIndicator.git
-[submodule "external/RangeSeekBar"]
-	path = external/RangeSeekBar
-	url = https://github.com/scalio/RangeSeekBar.git
 [submodule "external/SecureShareLib"]
 	path = external/SecureShareLib
 	url = https://github.com/StoryMaker/SecureShareLib.git

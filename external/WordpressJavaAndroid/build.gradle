@@ -4,13 +4,17 @@ apply plugin: 'android-library'
 buildscript {
     repositories {
         jcenter()
+        maven { url "https://jitpack.io" }
+
     }
 }
 
 
 dependencies {
     compile files('libs/httpclientandroidlib-1.2.1.jar')
-    compile 'info.guardianproject.netcipher:netcipher:1.2'
+    compile 'com.github.n8fr8:NetCipher:n8fr8-dev-release'
+
+//    compile 'info.guardianproject.netcipher:netcipher:1.2'
     compile 'org.apache.httpcomponents:httpcore:4.3.2'
 }
 
