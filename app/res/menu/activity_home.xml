@@ -9,5 +9,11 @@
         android:title="@string/menu_about"
         android:orderInCategory="4"
         android:showAsAction="never" />
-    
+
+    <item android:id="@+id/menu_hide"
+        android:title="Hide Icon"
+        android:orderInCategory="4"
+        android:showAsAction="never" />
+
+
 </menu>
