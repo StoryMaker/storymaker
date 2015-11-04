@@ -155,18 +155,18 @@ def adb_push_content_pack(pack, version):
 def adb_push_files():
     """adb push to /sdcard/Android/<package>/files"""
 
-    if query_yes_no("adb push beta.main.5.obb to device files/ folder?"):
-        push_obb_file("beta", "5")
+    if query_yes_no("adb push beta to device files/ folder?"):
+        push_obb_file("beta", "6")
 
-    if query_yes_no("adb push mobile_photo_101.main.3.obb to device files/ folder?"):
+    if query_yes_no("adb push mobile_photo_101 to device files/ folder?"):
         push_obb_file("mobile_photo_101", "3")
         
-    if query_yes_no("adb push learning_guide.main.2.obb to device files/ folder?"):
+    if query_yes_no("adb push learning_guide to device files/ folder?"):
         push_obb_file("learning_guide", "2")
     if query_yes_no("adb push learning_guide.patch.2.obb to device files/ folder?"):
         os.system("cd liger-content/zips ; adb push learning_guide.patch.2.obb /sdcard/Android/data/%s/files/learning_guide.patch.2.obb" % (packagename))
         
-    if query_yes_no("adb push burundi.main.4.obb to device files/ folder?"):
+    if query_yes_no("adb push burundi to device files/ folder?"):
         push_obb_file("burundi", "4")
         os.system("cd liger-content/zips ; adb push burundi.main.4.obb /sdcard/Android/data/%s/files/burundi.main.4.obb" % (packagename))
     if query_yes_no("adb push burundi.patch.4.obb to device files/ folder?"):
