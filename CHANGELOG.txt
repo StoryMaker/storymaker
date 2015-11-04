@@ -1,6 +1,8 @@
 --- build 1082
 
+- Fix: setting volume to 0 on one clips also mutes following clips in narration/review cards
 - Clicking Next or Start button scrolls newly available cards into view
+- Update content packs
 
 --- build 1081
 
