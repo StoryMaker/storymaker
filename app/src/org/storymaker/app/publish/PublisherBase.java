@@ -49,7 +49,7 @@ public abstract class PublisherBase {
 	    Project project = mPublishJob.getProject();
 	    String title = project.getTitle();
 	    String desc = project.getDescription(); 
-	    String mediaEmbed = getEmbed(job);
+	    String mediaEmbed = getResultUrl(job); // RZ's wordpress uses url not embeds for its posts
 	    String[] categories = project.getCategories();
 	    String medium =  getMedium();
 	    String mediaService = job.getSite();
