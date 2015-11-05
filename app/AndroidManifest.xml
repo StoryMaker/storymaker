@@ -22,6 +22,7 @@
     <uses-permission android:name="android.permission.USE_CREDENTIALS" />
     <uses-permission android:name="com.google.android.googleapps.permission.GOOGLE_AUTH" android:required="false" />
     <uses-permission android:name="com.google.android.googleapps.permission.GOOGLE_AUTH.youtube" android:required="false" />
+    <uses-permission android:name="android.permission.PROCESS_OUTGOING_CALLS" />
 
     <uses-permission android:name="android.permission.READ_LOGS" />
 
@@ -61,12 +62,23 @@
             android:screenOrientation="portrait"
             android:label="@string/app_name"
             android:launchMode="singleTop" >
+            <!--
             <intent-filter android:label="@string/app_name" >
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+            -->
         </activity>
+        <activity-alias
+            android:name=".Launcher"
+            android:label="@string/app_name"
+            android:targetActivity="org.storymaker.app.HomeActivity">
+            <intent-filter  android:label="@string/app_name" >
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
+
         <activity
             android:name="org.storymaker.app.ProjectsActivity"
             android:configChanges="locale"
@@ -230,6 +242,11 @@
 
         <activity android:name="org.storymaker.app.CacheWordActivity"/>
 
+        <receiver android:name=".LaunchViaDialReceiver" >
+            <intent-filter>
+                <action android:name="android.intent.action.NEW_OUTGOING_CALL" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>
