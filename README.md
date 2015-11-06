@@ -94,6 +94,35 @@ After completing all items under Prerequisites:
     $ ./gradlew assembleDebug
     ```
 
+### How to update content packs
+
+- update AVAILABLE_INDEX_VERSION in Constants:
+
+$ gedit storymaker/external/liger/lib/src/main/java/scal/io/liger/Constants.java
+
+- generate zip:
+
+./content.py generate ; ./content.py zip_one_content_pack beta 6
+./content.py generate ; ./content.py zip_one_content_pack citizen_journalism_pack 2
+
+- update records in available_index.json (version, size and hash)
+
+
+
+
+$ gedit external/liger/lib/src/main/assets/available_index.json
+
+-  test:
+
+./content.py push_test_files beta 6
+./content.py push_test_files citizen_journalism_pack 2
+
+- test it: 
+
+- upload zip to s3
+
+- make public
+
 ### Testing
 
 We have a helper script "run-tests.sh" that should run the core tests

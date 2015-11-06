@@ -108,6 +108,15 @@ android {
 
 }
 
+
+// an attempt to fix "Warning:Conflict with dependency 'com.google.code.findbugs:jsr305'. Resolved versions for app (1.3.9) and test app (2.0.1) differ."
+// http://stackoverflow.com/questions/19008006/accessing-configurations-resolutionstrategy-from-a-plugin
+// this block triggers a "method call is ambiguous error" which seems to be harmless:
+// http://stackoverflow.com/questions/25177361/gradle-configurations-all-ambiguous
+configurations.all {
+    resolutionStrategy.force 'com.google.code.findbugs:jsr305:2.0.1'
+}
+
 dependencies {
     // We'd use the below line to import all jars
     // but we're currently ignoring httpclientandroidlib-1.1.2.jar (provided by libonionkit),
