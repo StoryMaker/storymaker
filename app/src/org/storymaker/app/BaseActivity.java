@@ -90,10 +90,10 @@ public class BaseActivity extends FragmentActivity implements ICacheWordSubscrib
         SharedPreferences sp = getSharedPreferences("appPrefs", MODE_PRIVATE);
         String cachewordStatus = sp.getString("cacheword_status", "default");
         if (cachewordStatus.equals(CACHEWORD_SET)) {
-            Log.d("CACHEWORD", "pin set, so display notification (base)");
+            Timber.d("pin set, so display notification (base)");
             mCacheWordHandler.setNotification(buildNotification(this));
         } else {
-            Log.d("CACHEWORD", "no pin set, so no notification (base)");
+            Timber.d("no pin set, so no notification (base)");
         }
 
         mCacheWordHandler.connectToService();
@@ -102,7 +102,7 @@ public class BaseActivity extends FragmentActivity implements ICacheWordSubscrib
 
     private Notification buildNotification(Context c) {
 
-        Log.d("CACHEWORD", "buildNotification (base)");
+        Timber.d("buildNotification (base)");
 
         NotificationCompat.Builder b = new NotificationCompat.Builder(c);
         b.setSmallIcon(R.drawable.ic_menu_key);
@@ -119,7 +119,7 @@ public class BaseActivity extends FragmentActivity implements ICacheWordSubscrib
     public void onCacheWordUninitialized() {
 
         // if we're uninitialized, default behavior should be to stop
-        Log.d("CACHEWORD", "cacheword uninitialized, activity will not continue");
+        Timber.d("cacheword uninitialized, activity will not continue");
         finish();
 
     }
@@ -128,7 +128,7 @@ public class BaseActivity extends FragmentActivity implements ICacheWordSubscrib
     public void onCacheWordLocked() {
 
         // if we're locked, default behavior should be to stop
-        Log.d("CACHEWORD", "cacheword locked, activity will not continue");
+        Timber.d("cacheword locked, activity will not continue");
         finish();
 
     }
@@ -142,17 +142,17 @@ public class BaseActivity extends FragmentActivity implements ICacheWordSubscrib
         String cachewordStatus = sp.getString("cacheword_status", "default");
         if (cachewordStatus.equals(CACHEWORD_SET)) {
             if (mCacheWordHandler.isLocked()) {
-                Log.d("IOCIPHER", "onCacheWordOpened(storymaker) - pin set but cacheword locked, cannot mount vfs");
+                Timber.d("onCacheWordOpened(storymaker) - pin set but cacheword locked, cannot mount vfs");
             } else {
-                Log.d("IOCIPHER", "onCacheWordOpened(storymaker) - pin set and cacheword unlocked, mounting vfs");
+                Timber.d("onCacheWordOpened(storymaker) - pin set and cacheword unlocked, mounting vfs");
                 StorageHelper.mountStorage(this, null, mCacheWordHandler.getEncryptionKey());
             }
         } else {
-            Log.d("IOCIPHER", "onCacheWordOpened(storymaker) - no pin set, cannot mount vfs");
+            Timber.d("onCacheWordOpened(storymaker) - no pin set, cannot mount vfs");
         }
 
         // if we're opened, check db and update menu status
-        Log.d("CACHEWORD", "cacheword opened, activity will continue");
+        Timber.d("cacheword opened, activity will continue");
         updateSlidingMenuWithUserState();
 
     }
@@ -206,10 +206,10 @@ public class BaseActivity extends FragmentActivity implements ICacheWordSubscrib
         SharedPreferences sp = getSharedPreferences("appPrefs", MODE_PRIVATE);
         String cachewordStatus = sp.getString("cacheword_status", "default");
         if (cachewordStatus.equals(CACHEWORD_SET)) {
-            Log.d("CACHEWORD", "pin set, so remove button");
+            Timber.d("pin set, so remove button");
             btnDrawerLock.setVisibility(View.GONE);
         } else {
-            Log.d("CACHEWORD", "no pin set, so show button");
+            Timber.d("no pin set, so show button");
         }
 
         String pkg = getPackageName();
@@ -320,7 +320,7 @@ public class BaseActivity extends FragmentActivity implements ICacheWordSubscrib
                     SharedPreferences.Editor e = sp.edit();
                     e.putString("cacheword_status", CACHEWORD_FIRST_LOCK);
                     e.commit();
-                    Log.d("CACHEWORD", "set cacheword first lock status");
+                    Timber.d("set cacheword first lock status");
                 }
                 mCacheWordHandler.lock();
             }
@@ -340,7 +340,7 @@ public class BaseActivity extends FragmentActivity implements ICacheWordSubscrib
         if (mCacheWordHandler.isLocked()) {
 
             // prevent credential check attempt if database is locked
-            Log.d("CACHEWORD", "cacheword locked, skipping menu credential check");
+            Timber.d("cacheword locked, skipping menu credential check");
             textViewSignIn.setText(R.string.sign_in);
             textViewJoinStorymaker.setVisibility(View.VISIBLE);
 

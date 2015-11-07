@@ -1,5 +1,7 @@
 package org.storymaker.app;
 
+import timber.log.Timber;
+
 import android.app.Activity;
 import android.app.Notification;
 import android.content.Context;
@@ -50,10 +52,10 @@ public class LockablePreferenceActivity extends PreferenceActivity implements IC
         SharedPreferences sp = getSharedPreferences("appPrefs", MODE_PRIVATE);
         String cachewordStatus = sp.getString("cacheword_status", "default");
         if (cachewordStatus.equals(CACHEWORD_SET)) {
-            Log.d("CACHEWORD", "pin set, so display notification (lockable)");
+            Timber.d("pin set, so display notification (lockable)");
             mCacheWordHandler.setNotification(buildNotification(this));
         } else {
-            Log.d("CACHEWORD", "no pin set, so no notification (lockable)");
+            Timber.d("no pin set, so no notification (lockable)");
         }
 
         mCacheWordHandler.connectToService();
@@ -61,7 +63,7 @@ public class LockablePreferenceActivity extends PreferenceActivity implements IC
 
     protected Notification buildNotification(Context c) {
 
-        Log.d("CACHEWORD", "buildNotification (lockable)");
+        Timber.d("buildNotification (lockable)");
 
         NotificationCompat.Builder b = new NotificationCompat.Builder(c);
         b.setSmallIcon(R.drawable.ic_menu_key);
@@ -78,7 +80,7 @@ public class LockablePreferenceActivity extends PreferenceActivity implements IC
     public void onCacheWordUninitialized() {
 
         // if we're uninitialized, default behavior should be to stop
-        Log.d("CACHEWORD", "cacheword uninitialized, activity will not continue");
+        Timber.d("cacheword uninitialized, activity will not continue");
         finish();
 
     }
@@ -87,7 +89,7 @@ public class LockablePreferenceActivity extends PreferenceActivity implements IC
     public void onCacheWordLocked() {
 
         // if we're locked, default behavior should be to stop
-        Log.d("CACHEWORD", "cacheword locked, activity will not continue");
+        Timber.d("cacheword locked, activity will not continue");
         finish();
 
     }
@@ -96,7 +98,7 @@ public class LockablePreferenceActivity extends PreferenceActivity implements IC
     public void onCacheWordOpened() {
 
         // if we're opened, check db and update menu status
-        Log.d("CACHEWORD", "cacheword opened, activity will continue");
+        Timber.d("cacheword opened, activity will continue");
 
     }
 }

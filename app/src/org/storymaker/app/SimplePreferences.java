@@ -152,10 +152,10 @@ public class SimplePreferences extends LockablePreferenceActivity implements OnS
                 String cachewordStatus = sp.getString("cacheword_status", "default");
                 if (cachewordStatus.equals(CACHEWORD_SET)) {
                     if (mCacheWordHandler.isLocked()) {
-                        Log.d("IOCIPHER", "onPreferenceChange - pin set but cacheword locked, cannot use iocipher");
+                        Timber.d("onPreferenceChange - pin set but cacheword locked, cannot use iocipher");
                         Toast.makeText(getApplicationContext(), "App must be unlocked before IOCipher can be used", Toast.LENGTH_LONG).show();
                     } else {
-                        Log.d("IOCIPHER", "onPreferenceChange - pin set and cacheword unlocked, updating iocipher preferences");
+                        Timber.d("onPreferenceChange - pin set and cacheword unlocked, updating iocipher preferences");
 
                         if(useIOCipher) {
                             StorageHelper.migrateToIOCipher(getApplicationContext());
@@ -169,7 +169,7 @@ public class SimplePreferences extends LockablePreferenceActivity implements OnS
                         return true;
                     }
                 } else {
-                    Log.d("IOCIPHER", "onPreferenceChange - no pin set, cannot use iocipher");
+                    Timber.d("onPreferenceChange - no pin set, cannot use iocipher");
                     Toast.makeText(getApplicationContext(), "A pin must be set before IOCipher can be used", Toast.LENGTH_LONG).show();
                 }
 

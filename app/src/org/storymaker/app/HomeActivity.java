@@ -343,7 +343,7 @@ public class HomeActivity extends BaseActivity {
             if (mCacheWordHandler.isLocked()) {
 
                 // prevent credential check attempt if database is locked
-                Log.d("CACHEWORD", "cacheword locked, skipping index credential check");
+                Timber.d("cacheword locked, skipping index credential check");
                 // user is not logged in, update status flag if necessary
                 if (loggedIn) {
                     loggedIn = false;
@@ -1260,7 +1260,7 @@ public class HomeActivity extends BaseActivity {
             SharedPreferences.Editor e = sp.edit();
             e.putString("cacheword_status", CACHEWORD_UNSET);
             e.commit();
-            Log.d("CACHEWORD", "set default cacheword pin");
+            Timber.d("set default cacheword pin");
         } catch (GeneralSecurityException gse) {
             Log.e("CACHEWORD", "failed to set default cacheword pin: " + gse.getMessage());
             gse.printStackTrace();
@@ -1277,13 +1277,13 @@ public class HomeActivity extends BaseActivity {
                 CharSequence defaultPinSequence = getText(R.string.cacheword_default_pin);
                 char[] defaultPin = defaultPinSequence.toString().toCharArray();
                 mCacheWordHandler.setPassphrase(defaultPin);
-                Log.d("CACHEWORD", "used default cacheword pin");
+                Timber.d("used default cacheword pin");
             } catch (GeneralSecurityException gse) {
                 Log.e("CACHEWORD", "failed to use default cacheword pin: " + gse.getMessage());
                 gse.printStackTrace();
             }
         } else {
-            Log.d("CACHEWORD", "prompt for cacheword pin");
+            Timber.d("prompt for cacheword pin");
             showLockScreen();
         }
     }

@@ -1,5 +1,7 @@
 package org.storymaker.app;
 
+import timber.log.Timber;
+
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 
@@ -101,14 +103,14 @@ public class CacheWordActivity extends Activity implements ICacheWordSubscriber 
         SharedPreferences sp = getSharedPreferences("appPrefs", Context.MODE_PRIVATE);
         String cachewordStatus = sp.getString("cacheword_status", "default");
         if (cachewordStatus.equals(CACHEWORD_FIRST_LOCK)) {
-            Log.d("CacheWordActivity", "create new cacheword pin");
+            Timber.d("create new cacheword pin");
             createPassphrase();  
             // set status to prevent use of default pin
             SharedPreferences.Editor e = sp.edit();
             e.putString("cacheword_status", CACHEWORD_SET);
             e.commit();
         } else {
-            Log.d("CacheWordActivity", "request existing cacheword pin");
+            Timber.d("request existing cacheword pin");
             requestPassphrase();
         }
     }
@@ -175,14 +177,14 @@ public class CacheWordActivity extends Activity implements ICacheWordSubscriber 
                         char[] defaultPin = defaultPinSequence.toString().toCharArray();
                         PassphraseSecrets secrets = PassphraseSecrets.fetchSecrets(CacheWordActivity.this, defaultPin);
                         mCacheWordHandler.changePassphrase(secrets, mTextCreatePin.getText().toString().toCharArray());
-                        Log.d("CacheWordActivity", "replaced default pin");
+                        Timber.d("replaced default pin");
                         // changePassphrase does not seem to trigger this so it is called manually
                         onCacheWordOpened();
                     } catch (GeneralSecurityException gse1) {
                         Log.e("CacheWordActivity", "failed to replace default pin: " + gse1.getMessage());
                         try {
                             mCacheWordHandler.setPassphrase(mTextCreatePin.getText().toString().toCharArray());
-                            Log.d("CacheWordActivity", "created new pin (create)");
+                            Timber.d("created new pin (create)");
                         } catch (GeneralSecurityException gse2) {
                             Log.e("CacheWordActivity", "failed to create new pin (create): " + gse2.getMessage());
                         }
@@ -238,26 +240,26 @@ public class CacheWordActivity extends Activity implements ICacheWordSubscriber 
                 try {
 
                     if (mNotif == null){
-                        Log.d("CACHEWORD", "no handler notification");
+                        Timber.d("no handler notification");
 
                         // only display notification if the user has set a pin
                         SharedPreferences sp = getSharedPreferences("appPrefs", MODE_PRIVATE);
                         String cachewordStatus = sp.getString("cacheword_status", "default");
                         if (cachewordStatus.equals(CACHEWORD_SET)) {
-                            Log.d("CACHEWORD", "pin set, so display notification (cacheword)");
+                            Timber.d("pin set, so display notification (cacheword)");
                             mNotif = buildNotification(CacheWordActivity.this);
                             mCacheWordHandler.setNotification(mNotif);
                         } else {
-                            Log.d("CACHEWORD", "no pin set, so no notification (cacheword)");
+                            Timber.d("no pin set, so no notification (cacheword)");
                         }
 
-                        Log.d("CACHEWORD", "set handler notification?");
+                        Timber.d("set handler notification?");
                     } else {
-                        Log.d("CACHEWORD", "handler has a notification");
+                        Timber.d("handler has a notification");
                     }
 
                     mCacheWordHandler.setPassphrase(mTextEnterPin.getText().toString().toCharArray());
-                    Log.d("CacheWordActivity", "verified pin (request)");
+                    Timber.d("verified pin (request)");
                 } catch (GeneralSecurityException gse) {
                     mTextEnterPin.setText("");
                     Log.e("CacheWordActivity", "failed to verify pin (request): " + gse.getMessage());
@@ -349,7 +351,7 @@ public class CacheWordActivity extends Activity implements ICacheWordSubscriber 
 
     private Notification buildNotification(Context c) {
 
-        Log.d("CACHEWORD", "buildNotification (cacheword)");
+        Timber.d("buildNotification (cacheword)");
 
         NotificationCompat.Builder b = new NotificationCompat.Builder(c);
         b.setSmallIcon(R.drawable.ic_menu_key);

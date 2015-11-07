@@ -1,6 +1,8 @@
 
 package org.storymaker.app.db;
 
+import timber.log.Timber;
+
 import android.content.Context;
 import android.util.Log;
 
@@ -100,11 +102,11 @@ public abstract class StoryMakerDBWrapper extends SQLiteOpenHelper {
         final String kSuffix;
 
         if (sqlcipher_uses_native_key) {
-            Log.d(TAG, "sqlcipher uses native method to set key");
+            Timber.d("sqlcipher uses native method to set key");
             kPrefix = "x'";
             kSuffix = "'";
         } else {
-            Log.d(TAG, "sqlcipher uses PRAGMA to set key - SPECIAL HACK IN PROGRESS");
+            Timber.d("sqlcipher uses PRAGMA to set key - SPECIAL HACK IN PROGRESS");
             kPrefix = "x''";
             kSuffix = "''";
         }
