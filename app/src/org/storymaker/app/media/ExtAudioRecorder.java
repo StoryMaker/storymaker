@@ -1,5 +1,7 @@
 package org.storymaker.app.media;
 
+import timber.log.Timber;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
@@ -172,7 +174,7 @@ public class ExtAudioRecorder
 			}
 			catch (IOException e)
 			{
-				Log.e(ExtAudioRecorder.class.getName(), "Error occured in updateListener, recording is aborted");
+				Timber.e("Error occured in updateListener, recording is aborted");
 				//stop();
 			}
 		}
@@ -227,7 +229,7 @@ public class ExtAudioRecorder
 					bufferSize = AudioRecord.getMinBufferSize(sampleRate, channelConfig, audioFormat);
 					// Set frame period and timer interval accordingly
 					framePeriod = bufferSize / ( 2 * bSamples * nChannels / 8 );
-					Log.w(ExtAudioRecorder.class.getName(), "Increasing buffer size to " + Integer.toString(bufferSize));
+					Timber.w("Increasing buffer size to " + Integer.toString(bufferSize));
 				}
 				
 				audioRecorder = new AudioRecord(audioSource, sampleRate, channelConfig, audioFormat, bufferSize);
@@ -250,11 +252,11 @@ public class ExtAudioRecorder
 		{
 			if (e.getMessage() != null)
 			{
-				Log.e(ExtAudioRecorder.class.getName(), e.getMessage());
+				Timber.e(e.getMessage());
 			}
 			else
 			{
-				Log.e(ExtAudioRecorder.class.getName(), "Unknown error occured while initializing recording");
+				Timber.e("Unknown error occured while initializing recording");
 			}
 			state = State.ERROR;
 		}
@@ -283,11 +285,11 @@ public class ExtAudioRecorder
 		{
 			if (e.getMessage() != null)
 			{
-				Log.e(ExtAudioRecorder.class.getName(), e.getMessage());
+				Timber.e(e.getMessage());
 			}
 			else
 			{
-				Log.e(ExtAudioRecorder.class.getName(), "Unknown error occured while setting output path");
+				Timber.e("Unknown error occured while setting output path");
 			}
 			state = State.ERROR;
 		}
@@ -371,7 +373,7 @@ public class ExtAudioRecorder
 					}
 					else
 					{
-						Log.e(ExtAudioRecorder.class.getName(), "prepare() method called on uninitialized recorder");
+						Timber.e("prepare() method called on uninitialized recorder");
 						state = State.ERROR;
 					}
 				}
@@ -383,7 +385,7 @@ public class ExtAudioRecorder
 			}
 			else
 			{
-				Log.e(ExtAudioRecorder.class.getName(), "prepare() method called on illegal state");
+				Timber.e("prepare() method called on illegal state");
 				release();
 				state = State.ERROR;
 			}
@@ -392,11 +394,11 @@ public class ExtAudioRecorder
 		{
 			if (e.getMessage() != null)
 			{
-				Log.e(ExtAudioRecorder.class.getName(), e.getMessage());
+				Timber.e(e.getMessage());
 			}
 			else
 			{
-				Log.e(ExtAudioRecorder.class.getName(), "Unknown error occured in prepare()");
+				Timber.e("Unknown error occured in prepare()");
 			}
 			state = State.ERROR;
 		}
@@ -424,7 +426,7 @@ public class ExtAudioRecorder
 				}
 				catch (IOException e)
 				{
-					Log.e(ExtAudioRecorder.class.getName(), "I/O exception occured while closing output file");
+					Timber.e("I/O exception occured while closing output file");
 				}
 				(new File(filePath)).delete();
 			}
@@ -479,7 +481,7 @@ public class ExtAudioRecorder
 		}
 		catch (Exception e)
 		{
-			Log.e(ExtAudioRecorder.class.getName(), e.getMessage());
+			Timber.e(e.getMessage());
 			state = State.ERROR;
 		}
 	}
@@ -509,7 +511,7 @@ public class ExtAudioRecorder
 		}
 		else
 		{
-			Log.e(ExtAudioRecorder.class.getName(), "start() called on illegal state");
+			Timber.e("start() called on illegal state");
 			state = State.ERROR;
 		}
 	}
@@ -542,7 +544,7 @@ public class ExtAudioRecorder
 				}
 				catch(IOException e)
 				{
-					Log.e(ExtAudioRecorder.class.getName(), "I/O exception occured while closing output file");
+					Timber.e("I/O exception occured while closing output file");
 					state = State.ERROR;
 				}
 			}
@@ -554,7 +556,7 @@ public class ExtAudioRecorder
 		}
 		else
 		{
-			Log.e(ExtAudioRecorder.class.getName(), "stop() called on illegal state");
+			Timber.e("stop() called on illegal state");
 			state = State.ERROR;
 		}
 	}

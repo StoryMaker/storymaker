@@ -1,5 +1,7 @@
 package org.storymaker.app.ui;
 
+import timber.log.Timber;
+
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;

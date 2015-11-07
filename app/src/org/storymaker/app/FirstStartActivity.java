@@ -1,6 +1,8 @@
 
 package org.storymaker.app;
 
+import timber.log.Timber;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.SharedPreferences;

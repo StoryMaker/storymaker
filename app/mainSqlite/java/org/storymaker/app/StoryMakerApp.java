@@ -1,5 +1,7 @@
 package org.storymaker.app;
 
+import timber.log.Timber;
+
 import org.storymaker.app.CrashReportingConfig;
 import org.storymaker.app.media.MediaProjectManager;
 import org.storymaker.app.server.ServerManager;
@@ -72,7 +74,7 @@ public class StoryMakerApp extends MultiDexApplication {
 			Timber.plant(new Timber.DebugTree());
 		//}
 
-		Log.d("TESTTESTTEST", CrashReportingConfig.foo);
+		Timber.d(CrashReportingConfig.foo);
 
 //		SQLiteDatabase.loadLibs(this);
 

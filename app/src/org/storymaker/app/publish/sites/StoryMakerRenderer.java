@@ -1,5 +1,7 @@
 package org.storymaker.app.publish.sites;
 
+import timber.log.Timber;
+
 import android.app.Activity;
 
 import org.storymaker.app.model.Job;

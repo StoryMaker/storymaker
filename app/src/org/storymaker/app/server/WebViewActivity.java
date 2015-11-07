@@ -1,5 +1,7 @@
 package org.storymaker.app.server;
 
+import timber.log.Timber;
+
 import org.storymaker.app.R;
 import org.storymaker.app.media.MediaHelper;
 import io.scal.secureshareui.lib.Util;

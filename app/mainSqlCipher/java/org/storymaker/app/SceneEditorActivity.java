@@ -1,6 +1,8 @@
 
 package org.storymaker.app;
 
+import timber.log.Timber;
+
 import org.storymaker.app.db.StoryMakerDB;
 import org.storymaker.app.media.MediaProjectManager;
 import org.storymaker.app.media.OverlayCameraActivity;
@@ -388,7 +390,7 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
 
         if (mProject.getStoryType() == Project.STORY_TYPE_AUDIO)
         {
-            Log.d(TAG, "openCaptureMode was called for STORY_TYPE_AUDIO, this shouldn't happen anymore!");
+            Timber.d("openCaptureMode was called for STORY_TYPE_AUDIO, this shouldn't happen anymore!");
         }
         else
         {

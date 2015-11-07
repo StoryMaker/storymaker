@@ -1,6 +1,8 @@
 
 package org.storymaker.app;
 
+import timber.log.Timber;
+
 import org.storymaker.app.model.Auth;
 import org.storymaker.app.model.AuthTable;
 import io.scal.secureshareui.controller.SiteController.OnEventListener;

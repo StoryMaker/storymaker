@@ -1,5 +1,7 @@
 package org.storymaker.app.ui;
 
+import timber.log.Timber;
+
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;

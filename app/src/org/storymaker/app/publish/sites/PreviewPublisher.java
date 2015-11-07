@@ -1,5 +1,7 @@
 package org.storymaker.app.publish.sites;
 
+import timber.log.Timber;
+
 import org.storymaker.app.model.Auth;
 import org.storymaker.app.model.Job;
 import org.storymaker.app.model.JobTable;
@@ -23,14 +25,14 @@ public class PreviewPublisher extends PublisherBase {
 	}
 	
 	public void startRender() {
-        Log.d(TAG, "startRender");
+        Timber.d("startRender");
         
 		Job videoRenderJob = new Job(mContext, mPublishJob.getProjectId(), mPublishJob.getId(), JobTable.TYPE_RENDER, SITE_KEY, VideoRenderer.SPEC_KEY);
 		mController.enqueueJob(videoRenderJob);
 	}
 	
 	public void startUpload() {
-        Log.d(TAG, "startUpload");
+        Timber.d("startUpload");
         mController.publishJobFailed(mPublishJob, null, ERROR_CANT_UPLOAD_PREVIEW_JOB, "You cannot upload a preview job");
 	}
 

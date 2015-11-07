@@ -1,5 +1,7 @@
 package org.storymaker.app.publish;
 
+import timber.log.Timber;
+
 import java.io.IOException;
 import java.util.Arrays;
 
@@ -55,13 +57,13 @@ public abstract class PublisherBase {
 	    String mediaGuid = job.getResult(); // TODO get the id from the preferred job to publish to facebook
 
         /*
-        Log.d("PUBLISH", "TITLE: " + title);
-        Log.d("PUBLISH", "DESC: " + desc);
-        Log.d("PUBLISH", "EMBED: " + mediaEmbed);
-        Log.d("PUBLISH", "CATEGORIES: " + Arrays.toString(categories));
-        Log.d("PUBLISH", "MEDIUM: " + medium);
-        Log.d("PUBLISH", "SERVICE: " + mediaService);
-        Log.d("PUBLISH", "GUID: " + mediaGuid);
+        Timber.d("TITLE: " + title);
+        Timber.d("DESC: " + desc);
+        Timber.d("EMBED: " + mediaEmbed);
+        Timber.d("CATEGORIES: " + Arrays.toString(categories));
+        Timber.d("MEDIUM: " + medium);
+        Timber.d("SERVICE: " + mediaService);
+        Timber.d("GUID: " + mediaGuid);
         */
 
 	    try {
@@ -153,7 +155,7 @@ public abstract class PublisherBase {
     }
     
     public void jobSucceeded(Job job) {
-        Log.d(TAG, "jobSucceeded: " + job);
+        Timber.d("jobSucceeded: " + job);
         if (job.isType(JobTable.TYPE_RENDER)) {
             // since the user must now initiate upload, we just stop this publishjob now and wait
             // mController.publishJobSucceeded(mPublishJob);
@@ -169,7 +171,7 @@ public abstract class PublisherBase {
 
                     // check for facebook privacy issues
                     if ((job.getResult() != null) && (job.getResult().equals(FacebookSiteController.POST_NOT_PUBLIC))) {
-                        Log.e(TAG, "CAN'T PUBLISH A FACEBOOK POST THAT ISN'T PUBLIC");
+                        Timber.e("CAN'T PUBLISH A FACEBOOK POST THAT ISN'T PUBLIC");
 
                         // is this viable?
                         mController.publishJobFailed(mPublishJob, null, 78268832, mContext.getString(R.string.fb_post_not_public));
@@ -190,7 +192,7 @@ public abstract class PublisherBase {
 	}
     
     public void jobFailed(Job job, Exception exception, int errorCode, String errorMessage) {
-        Log.d(TAG, "jobFailed: " + job);
+        Timber.d("jobFailed: " + job);
         mController.publishJobFailed(mPublishJob, exception, errorCode, errorMessage);
     }
 

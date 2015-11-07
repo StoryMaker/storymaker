@@ -1,5 +1,7 @@
 package org.storymaker.app.model.template;
 
+import timber.log.Timber;
+
 public class Clip {
 
     // TODO use getter/setters

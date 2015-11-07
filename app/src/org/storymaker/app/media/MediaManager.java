@@ -1,5 +1,7 @@
 package org.storymaker.app.media;
 
+import timber.log.Timber;
+
 import org.ffmpeg.android.MediaDesc;
 //import org.ffmpeg.android.ShellUtils.ShellCallback;
 

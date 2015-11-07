@@ -1,5 +1,7 @@
 package org.storymaker.app.tests;
 
+import timber.log.Timber;
+
 import android.util.Log;
 
 import java.io.File;
@@ -21,14 +23,14 @@ public class TorDownloadAndPatchTest extends BaseTest {
 
     public void testDownloadAndPatch() {
 
-        Log.d("AUTOMATION", "BEGIN DOWNLOAD AND PATCH TEST");
+        Timber.d("BEGIN DOWNLOAD AND PATCH TEST");
 
         // eula
         doEula();
 
         // tor
         if (!doTorToggle()) {
-            Log.e("AUTOMATION", "TOR TOGGLE FAILED, CAN'T CONTINUE");
+            Timber.e("TOR TOGGLE FAILED, CAN'T CONTINUE");
             assertTrue(false);
         }
 
@@ -38,17 +40,17 @@ public class TorDownloadAndPatchTest extends BaseTest {
         // stall(500, "WAIT FOR SCROLLING");
 
         // initiate download by clicking a menu item.
-        Log.d("AUTOMATION", "SELECTING CONTENT PACK");
+        Timber.d("SELECTING CONTENT PACK");
         onView(withText("Learning Guide")).perform(click());
 
         // delay to allow time for downloads
         stall(30000, "WAITING FOR DOWNLOADS");
 
         // test that clicking again brings up the content index
-        Log.d("AUTOMATION", "SELECTING CONTENT PACK AGAIN");
+        Timber.d("SELECTING CONTENT PACK AGAIN");
         onView(withText("Learning Guide")).perform(click());
 
-        Log.d("AUTOMATION", "CHECKING CONTENT PACK ITEMS");
+        Timber.d("CHECKING CONTENT PACK ITEMS");
         onView(withText("Learn the Basic Elements of a Story")).check(matches(isDisplayed()));
         onView(withText("Add More Detail to Your Story")).check(matches(isDisplayed()));
 
@@ -64,25 +66,25 @@ public class TorDownloadAndPatchTest extends BaseTest {
 
         // verify index file existence (created when first content pack is installed)
         assertTrue(indexFile.exists());
-        Log.d("AUTOMATION", "INDEX FILE EXISTS");
+        Timber.d("INDEX FILE EXISTS");
 
         // verify test file existence
         assertTrue(learningGuideMain.exists());
         assertTrue(learningGuidePatch.exists());
-        Log.d("AUTOMATION", "EXPANSION FILES EXIST");
+        Timber.d("EXPANSION FILES EXIST");
 
         // verify test file size
         assertTrue(learningGuideMain.length() > 0);
         assertTrue(learningGuidePatch.length() > 0);
-        Log.d("AUTOMATION", "EXPANSION FILES NON-ZERO");
+        Timber.d("EXPANSION FILES NON-ZERO");
 
         // verify test file cleanup
         assertTrue(!learningGuideMainTemp.exists());
         assertTrue(!learningGuidePatchTemp.exists());
-        Log.d("AUTOMATION", "TEMP EXPANSION FILES DELETED");
+        Timber.d("TEMP EXPANSION FILES DELETED");
         assertTrue(!learningGuideMainPart.exists());
         assertTrue(!learningGuidePatchPart.exists());
-        Log.d("AUTOMATION", "PART EXPANSION FILES DELETED");
+        Timber.d("PART EXPANSION FILES DELETED");
 
         // verify test file contents
         try {
@@ -98,9 +100,9 @@ public class TorDownloadAndPatchTest extends BaseTest {
             }
 
             assertTrue(testString.contains("Learn the Basic Elements of a Story"));
-            Log.d("AUTOMATION", "learning_guide_1_library.json IS OK");
+            Timber.d("learning_guide_1_library.json IS OK");
         } catch (IOException ioe) {
-            Log.e("AUTOMATION", "READING JSON FILE " + "org.storymaker.app/learning_test/learning_guide_1/learning_guide_1_library.json" + " FROM ZIP FILE FAILED");
+            Timber.e("READING JSON FILE " + "org.storymaker.app/learning_test/learning_guide_1/learning_guide_1_library.json" + " FROM ZIP FILE FAILED");
         }
 
         try {
@@ -116,9 +118,9 @@ public class TorDownloadAndPatchTest extends BaseTest {
             }
 
             assertTrue(testString.contains("Add More Detail to Your Story"));
-            Log.d("AUTOMATION", "learning_guide_2_library.json IS OK");
+            Timber.d("learning_guide_2_library.json IS OK");
         } catch (IOException ioe) {
-            Log.e("AUTOMATION", "READING JSON FILE " + "org.storymaker.app/learning_test/learning_guide_2/learning_guide_2_library.json" + " FROM ZIP FILE FAILED");
+            Timber.e("READING JSON FILE " + "org.storymaker.app/learning_test/learning_guide_2/learning_guide_2_library.json" + " FROM ZIP FILE FAILED");
         }
 
         // delete test files so test can be re-run
@@ -144,8 +146,8 @@ public class TorDownloadAndPatchTest extends BaseTest {
             learningGuidePatchPart.delete();
         }
 
-        Log.d("AUTOMATION", "FINISHED CLEANUP");
+        Timber.d("FINISHED CLEANUP");
 
-        Log.d("AUTOMATION", "DOWNLOAD AND PATCH TEST COMPLETE");
+        Timber.d("DOWNLOAD AND PATCH TEST COMPLETE");
     }
 }

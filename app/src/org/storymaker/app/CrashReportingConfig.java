@@ -1,5 +1,7 @@
 package org.storymaker.app;
 
+import timber.log.Timber;
+
 /**
  * Created by josh on 8/11/15.
  */

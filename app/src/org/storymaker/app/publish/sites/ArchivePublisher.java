@@ -1,5 +1,7 @@
 package org.storymaker.app.publish.sites;
 
+import timber.log.Timber;
+
 import org.storymaker.app.model.Auth;
 import org.storymaker.app.model.Job;
 import org.storymaker.app.model.JobTable;
@@ -24,14 +26,14 @@ public class ArchivePublisher extends PublisherBase {
 	}
 
 	public void startRender() {
-		Log.d(TAG, "startRender");
+		Timber.d("startRender");
 		// TODO should detect if user is directly publishing to youtube so we don't double publish to there
 		Job videoRenderJob = new Job(mContext, mPublishJob.getProjectId(),mPublishJob.getId(), JobTable.TYPE_RENDER, null,VideoRenderer.SPEC_KEY);
 		mController.enqueueJob(videoRenderJob);
 	}
 
 	public void startUpload() {
-		Log.d(TAG, "startUpload");
+		Timber.d("startUpload");
 		 // FIXME hardcoded to youtube?
 		Job newJob = new Job(mContext, mPublishJob.getProjectId(),mPublishJob.getId(), JobTable.TYPE_UPLOAD, Auth.SITE_ARCHIVE,null);
 		mController.enqueueJob(newJob);

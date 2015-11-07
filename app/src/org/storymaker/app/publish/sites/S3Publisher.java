@@ -1,5 +1,7 @@
 package org.storymaker.app.publish.sites;
 
+import timber.log.Timber;
+
 import android.content.Context;
 import android.util.Log;
 
@@ -19,7 +21,7 @@ public class S3Publisher extends PublisherBase {
     }
     
     public void startRender() {
-        Log.d(TAG, "startRender");
+        Timber.d("startRender");
         // TODO should detect if user is directly publishing to youtube so we don't double publish to there
         
         Job job = new Job(mContext, mPublishJob.getProjectId(), mPublishJob.getId(), JobTable.TYPE_RENDER, null, VideoRenderer.SPEC_KEY);
@@ -27,7 +29,7 @@ public class S3Publisher extends PublisherBase {
     }
     
     public void startUpload() {
-        Log.d(TAG, "startUpload");
+        Timber.d("startUpload");
         Job newJob = new Job(mContext, mPublishJob.getProjectId(), mPublishJob.getId(), JobTable.TYPE_UPLOAD, Auth.SITE_S3, null);
         mController.enqueueJob(newJob);
     }

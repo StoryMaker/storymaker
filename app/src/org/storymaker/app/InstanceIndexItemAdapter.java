@@ -1,5 +1,7 @@
 package org.storymaker.app;
 
+import timber.log.Timber;
+
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -258,7 +260,7 @@ public class InstanceIndexItemAdapter extends RecyclerView.Adapter<InstanceIndex
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
 
-                            Log.d("INDEX", "DELETING FILES FOR " + ((InstanceIndexItem) item).getTitle());
+                            Timber.d("DELETING FILES FOR " + ((InstanceIndexItem) item).getTitle());
                             ((InstanceIndexItem) item).deleteAssociatedFiles(context, false);
 
                             mDataset.remove(safePosition);
@@ -291,7 +293,7 @@ public class InstanceIndexItemAdapter extends RecyclerView.Adapter<InstanceIndex
                                         // only one item expected
 
                                         if (expansionIndexItems.size() != 1) {
-                                            Log.e("INDEX", "LONG PRESS: UNEXPECTED NUMBER OF RECORDS FOUND FOR " + ((ExpansionIndexItem) item).getExpansionId() + "(" + expansionIndexItems.size() + ")");
+                                            Timber.e("LONG PRESS: UNEXPECTED NUMBER OF RECORDS FOUND FOR " + ((ExpansionIndexItem) item).getExpansionId() + "(" + expansionIndexItems.size() + ")");
                                             return;
 
                                         }
@@ -301,21 +303,21 @@ public class InstanceIndexItemAdapter extends RecyclerView.Adapter<InstanceIndex
                                         File fileDirectory = StorageHelper.getActualStorageDirectory(context);
                                         WildcardFileFilter fileFilter = new WildcardFileFilter(installedItem.getExpansionId() + ".*");
                                         for (File foundFile : FileUtils.listFiles(fileDirectory, fileFilter, null)) {
-                                            Log.d("INDEX", "LONG PRESS: FOUND " + foundFile.getPath() + ", DELETING");
+                                            Timber.d("LONG PRESS: FOUND " + foundFile.getPath() + ", DELETING");
                                             FileUtils.deleteQuietly(foundFile);
                                         }
 
                                         // remove from installed index
-                                        Log.d("INDEX", "LONG PRESS: REMOVING " + installedItem.expansionId + ", FROM DB");
+                                        Timber.d("LONG PRESS: REMOVING " + installedItem.expansionId + ", FROM DB");
                                         StorymakerIndexManager.installedIndexRemove(context, installedItem, installedDao);
 
                                         // need to clear saved threads
                                         if (context instanceof HomeActivity) {
-                                            Log.d("INDEX", "LONG PRESS: REMOVING THREADS FOR " + installedItem.expansionId);
+                                            Timber.d("LONG PRESS: REMOVING THREADS FOR " + installedItem.expansionId);
                                             HomeActivity home = (HomeActivity) context;
                                             home.removeThreads(installedItem.expansionId);
                                         } else {
-                                            Log.e("INDEX", "LONG PRESS: UNEXPECTED CONTEXT");
+                                            Timber.e("LONG PRESS: UNEXPECTED CONTEXT");
                                         }
                                     }
                                 });

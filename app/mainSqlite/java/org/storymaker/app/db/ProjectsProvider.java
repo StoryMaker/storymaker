@@ -1,5 +1,7 @@
 package org.storymaker.app.db;
 
+import timber.log.Timber;
+
 import org.storymaker.app.model.AudioClipTable;
 import org.storymaker.app.model.Auth;
 import org.storymaker.app.model.AuthTable;

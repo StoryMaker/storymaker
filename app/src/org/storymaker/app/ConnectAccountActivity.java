@@ -1,6 +1,8 @@
 
 package org.storymaker.app;
 
+import timber.log.Timber;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.preference.PreferenceManager;

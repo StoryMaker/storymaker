@@ -2,6 +2,8 @@
 
 package org.storymaker.app;
 
+import timber.log.Timber;
+
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;

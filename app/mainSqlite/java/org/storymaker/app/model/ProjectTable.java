@@ -1,5 +1,7 @@
 package org.storymaker.app.model;
 
+import timber.log.Timber;
+
 import android.database.sqlite.SQLiteDatabase;
 import org.storymaker.app.db.ProjectsProvider;
 import org.storymaker.app.db.StoryMakerDB;

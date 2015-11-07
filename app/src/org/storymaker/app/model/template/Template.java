@@ -1,5 +1,7 @@
 package org.storymaker.app.model.template;
 
+import timber.log.Timber;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;

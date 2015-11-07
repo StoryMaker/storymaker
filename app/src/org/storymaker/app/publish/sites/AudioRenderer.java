@@ -1,5 +1,7 @@
 package org.storymaker.app.publish.sites;
 
+import timber.log.Timber;
+
 import java.io.File;
 
 import org.storymaker.app.EditorBaseActivity;
@@ -63,7 +65,7 @@ public class AudioRenderer extends RendererBase {
             String statusTitle = msg.getData().getString("statusTitle");
             String status = msg.getData().getString("status");
             if (status != null) {
-                Log.d(TAG, status);
+                Timber.d(status);
             }
 
             String error = msg.getData().getString("error");

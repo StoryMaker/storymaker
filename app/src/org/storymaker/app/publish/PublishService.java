@@ -1,5 +1,7 @@
 package org.storymaker.app.publish;
 
+import timber.log.Timber;
+
 import org.storymaker.app.model.Auth;
 import org.storymaker.app.model.Job;
 import org.storymaker.app.model.Project;
@@ -47,7 +49,7 @@ public class PublishService extends IntentService implements PublishListener {
                     controller.startUpload(id);
                 }
             } else {
-                Log.d(TAG, "invalid publishJobId passed: " + id);
+                Timber.d("invalid publishJobId passed: " + id);
             }
         }
     }

@@ -1,5 +1,7 @@
 package org.storymaker.app.tests;
 
+import timber.log.Timber;
+
 import android.app.Activity;
 import android.app.Instrumentation;
 import android.content.Intent;
@@ -142,7 +144,7 @@ public class MinimumTest extends ActivityInstrumentationTestCase2<HomeActivity> 
     public void setUp() throws Exception {
         super.setUp();
 
-        Log.d("AUTOMATION", "BEGIN SETUP");
+        Timber.d("BEGIN SETUP");
 
         mHomeActivity = getActivity();
 
@@ -185,15 +187,15 @@ public class MinimumTest extends ActivityInstrumentationTestCase2<HomeActivity> 
             assetOut.flush();
             assetOut.close();
             assetOut = null;
-            Log.d("AUTOMATION", "COPYING SAMPLE FILE " + sampleVideoName + " FROM ASSETS TO " + testDirectory + " FINISHED");
+            Timber.d("COPYING SAMPLE FILE " + sampleVideoName + " FROM ASSETS TO " + testDirectory + " FINISHED");
         } catch (IOException ioe) {
-            Log.e("AUTOMATION", "COPYING SAMPLE FILE " + sampleVideoName + " FROM ASSETS TO " + testDirectory + " FAILED");
+            Timber.e("COPYING SAMPLE FILE " + sampleVideoName + " FROM ASSETS TO " + testDirectory + " FAILED");
             return;
         }
 
         // check for zero-byte files
         if (sampleVideoFile.exists() && (sampleVideoFile.length() == 0)) {
-            Log.e("AUTOMATION", "COPYING SAMPLE FILE " + sampleVideoName + " FROM ASSETS TO " + testDirectory + " FAILED (FILE WAS ZERO BYTES)");
+            Timber.e("COPYING SAMPLE FILE " + sampleVideoName + " FROM ASSETS TO " + testDirectory + " FAILED (FILE WAS ZERO BYTES)");
             sampleVideoFile.delete();
         }
 
@@ -247,31 +249,31 @@ public class MinimumTest extends ActivityInstrumentationTestCase2<HomeActivity> 
         // clear out files from previous tests
         cleanup(testDirectory);
 
-        Log.d("AUTOMATION", "SETUP COMPLETE");
+        Timber.d("SETUP COMPLETE");
     }
 
     public void testAaEula() {
 
-        Log.d("AUTOMATION", "BEGIN EULA TEST");
+        Timber.d("BEGIN EULA TEST");
 
         onView(withId(R.id.btnTos)).perform(click());
-        Log.d("AUTOMATION", "CLICKED TOS BUTTON");
+        Timber.d("CLICKED TOS BUTTON");
 
         onView(withText("Accept")).perform(click());
-        Log.d("AUTOMATION", "CLICKED ACCEPT BUTTON");
+        Timber.d("CLICKED ACCEPT BUTTON");
 
         onView(withId(R.id.btnNoThanks)).perform(click());
-        Log.d("AUTOMATION", "CLICKED NO THANKS BUTTON");
+        Timber.d("CLICKED NO THANKS BUTTON");
 
         // just pass, this is mostly for setting up the real tests
         assertTrue(true);
 
-        Log.d("AUTOMATION", "EULA TEST COMPLETE");
+        Timber.d("EULA TEST COMPLETE");
     }
 
     public void testBbDownloadAndPatch() {
 
-        Log.d("AUTOMATION", "DOWNLOAD TEST NOT IMPLEMENTED IN MinimumTest CLASS");
+        Timber.d("DOWNLOAD TEST NOT IMPLEMENTED IN MinimumTest CLASS");
 
         assertTrue(true);
 
@@ -279,17 +281,17 @@ public class MinimumTest extends ActivityInstrumentationTestCase2<HomeActivity> 
 
     public void testCcEverything() {
 
-        Log.d("AUTOMATION", "BEGIN END-TO-END TEST");
+        Timber.d("BEGIN END-TO-END TEST");
 
         // signup/login
         onView(withText(mHomeActivity.getApplicationContext().getString(R.string.app_name))).perform(click());
-        Log.d("AUTOMATION", "OPENED SIDE MENU");
+        Timber.d("OPENED SIDE MENU");
 
         onView(withId(R.id.llLogin)).perform(click());
-        Log.d("AUTOMATION", "SELECTED SIGNUP/LOGIN");
+        Timber.d("SELECTED SIGNUP/LOGIN");
 
         onView(withId(R.id.btnSignIn)).perform(click());
-        Log.d("AUTOMATION", "SELECTED LOGIN");
+        Timber.d("SELECTED LOGIN");
 
         // get name/password from xml file
         String accountName = mHomeActivity.getApplicationContext().getString(R.string.storymaker_name);
@@ -297,17 +299,17 @@ public class MinimumTest extends ActivityInstrumentationTestCase2<HomeActivity> 
 
         // enter name/password
         onView(withId(R.id.login_username)).perform(clearText()).perform(typeText(accountName));
-        Log.d("AUTOMATION", "ENTERED USER NAME");
+        Timber.d("ENTERED USER NAME");
         pressBack();
         stall(500, "PAUSE TO CLEAR KEYBOARD");
 
         onView(withId(R.id.login_password)).perform(clearText()).perform(typeText(accountPass));
-        Log.d("AUTOMATION", "ENTERED USER PASSWORD");
+        Timber.d("ENTERED USER PASSWORD");
         pressBack();
         stall(500, "PAUSE TO CLEAR KEYBOARD");
 
         onView(withId(R.id.btnLogin)).perform(click());
-        Log.d("AUTOMATION", "CLICKED LOGIN BUTTON");
+        Timber.d("CLICKED LOGIN BUTTON");
         stall(5000, "WAIT FOR LOGIN");
 
         pressBack();
@@ -338,7 +340,7 @@ public class MinimumTest extends ActivityInstrumentationTestCase2<HomeActivity> 
 
                 String secondSelection = secondOption[j];
 
-                Log.d("AUTOMATION", " *** TESTING " + firstSelection + "/" + secondSelection + " ****************************** ");
+                Timber.d(" *** TESTING " + firstSelection + "/" + secondSelection + " ****************************** ");
 
                 testFlag = (testFlag && doTest(firstSelection, secondSelection));
 
@@ -354,7 +356,7 @@ public class MinimumTest extends ActivityInstrumentationTestCase2<HomeActivity> 
 
         assertTrue(testFlag);
 
-        Log.d("AUTOMATION", "END-TO-END TEST COMPLETE");
+        Timber.d("END-TO-END TEST COMPLETE");
     }
 
     public boolean doTest(String mediaString, String accountString) {
@@ -363,26 +365,26 @@ public class MinimumTest extends ActivityInstrumentationTestCase2<HomeActivity> 
 
         // select "new" option
         onView(withText("New")).perform(click());
-        Log.d("AUTOMATION", "CLICKED NEW BUTTON");
+        Timber.d("CLICKED NEW BUTTON");
 
         // first selection
         onView(withText("An Event")).perform(click());
-        Log.d("AUTOMATION", "CLICKED EVENT BUTTON");
+        Timber.d("CLICKED EVENT BUTTON");
 
         // second selection
         onView(withText("Show the best moments.")).perform(click());
-        Log.d("AUTOMATION", "CLICKED HIGHLIGHTS BUTTON");
+        Timber.d("CLICKED HIGHLIGHTS BUTTON");
 
         // third selection
         onView(withText(mediaString)).perform(click());
-        Log.d("AUTOMATION", "CLICKED MEDIA BUTTON");
+        Timber.d("CLICKED MEDIA BUTTON");
 
         // get liger activity
         ActivityGetter ag = new ActivityGetter();
         getInstrumentation().runOnMainSync(ag);
 
         if (mMainActivity == null) {
-            Log.e("AUTOMATION", "NO LIGER ACTIVITY ACCESS");
+            Timber.e("NO LIGER ACTIVITY ACCESS");
             return false;
         }
 
@@ -393,7 +395,7 @@ public class MinimumTest extends ActivityInstrumentationTestCase2<HomeActivity> 
 
         // media capture
         onView(allOf(withText("Capture"), withParent(withParent(withTagValue(is((Object) "clip_card_0")))))).perform(click());
-        Log.d("AUTOMATION", "CLICKED CAPTURE BUTTON");
+        Timber.d("CLICKED CAPTURE BUTTON");
         stall(500, "WAIT FOR MEDIA CAPTURE UPDATE");
 
         // scroll to bottom
@@ -404,36 +406,36 @@ public class MinimumTest extends ActivityInstrumentationTestCase2<HomeActivity> 
         // begin publish/upload steps
         try {
             onView(allOf(withText("Publish"), withParent(withTagValue(is((Object) "publish_card_1"))))).perform(click());
-            Log.d("AUTOMATION", "CLICKED PUBLISH BUTTON");
+            Timber.d("CLICKED PUBLISH BUTTON");
         } catch (NoMatchingViewException nmve) {
             // implies no button was found (failure)
-            Log.d("AUTOMATION", "NO PUBLISH BUTTON FOUND (FAIL)");
+            Timber.d("NO PUBLISH BUTTON FOUND (FAIL)");
             return false;
         }
 
         // enter metadata
         onView(withId(R.id.fl_info_container)).perform(click());
-        Log.d("AUTOMATION", "CLICKED METADATA FIELD");
+        Timber.d("CLICKED METADATA FIELD");
 
         //get time for unique id
         Calendar now = new GregorianCalendar();
 
         onView(withId(R.id.et_story_info_title)).perform(clearText()).perform(typeText(mediaString.toUpperCase() + "/" + accountString.toUpperCase() + "/" + now.get(Calendar.HOUR) + ":" + now.get(Calendar.MINUTE)));
-        Log.d("AUTOMATION", "ENTERED TITLE TEXT");
+        Timber.d("ENTERED TITLE TEXT");
         pressBack();
         stall(500, "PAUSE TO CLEAR KEYBOARD");
 
         onView(withId(R.id.et_story_info_description)).perform(clearText()).perform(typeText(mediaString + "/" + accountString));
-        Log.d("AUTOMATION", "ENTERED DESCRIPTION TEXT");
+        Timber.d("ENTERED DESCRIPTION TEXT");
         pressBack();
         stall(500, "PAUSE TO CLEAR KEYBOARD");
 
         onView(withId(R.id.act_story_info_tag)).perform(clearText()).perform(typeText(mediaString.toLowerCase()));
         onView(withId(R.id.btn_add_tag)).perform(click());
-        Log.d("AUTOMATION", "ENTERED FIRST TAG");
+        Timber.d("ENTERED FIRST TAG");
         onView(withId(R.id.act_story_info_tag)).perform(clearText()).perform(typeText(accountString.toLowerCase()));
         onView(withId(R.id.btn_add_tag)).perform(click());
-        Log.d("AUTOMATION", "ENTERED SECOND TAG");
+        Timber.d("ENTERED SECOND TAG");
         pressBack();
         stall(500, "PAUSE TO CLEAR KEYBOARD");
 
@@ -441,23 +443,23 @@ public class MinimumTest extends ActivityInstrumentationTestCase2<HomeActivity> 
         /*
         onView(withId(R.id.sp_story_section)).perform(click());
         onView(withText("Travel")).perform(click());
-        Log.d("AUTOMATION", "SELECTED SECTION");
+        Timber.d("SELECTED SECTION");
 
         onView(withId(R.id.sp_story_location)).perform(click());
         onView(withText("Czech Republic")).perform(click());
-        Log.d("AUTOMATION", "SELECTED LOCATION");
+        Timber.d("SELECTED LOCATION");
         */
 
         onView(withText("Save")).perform(click());
-        Log.d("AUTOMATION", "SAVED METADATA");
+        Timber.d("SAVED METADATA");
 
         // select account and upload
         onView(withId(R.id.btnUpload)).perform(click());
-        Log.d("AUTOMATION", "CLICKED UPLOAD BUTTON");
+        Timber.d("CLICKED UPLOAD BUTTON");
 
         // scroll to account
         onView(withText(accountString)).perform(scrollTo(), click());
-        Log.d("AUTOMATION", "SCROLLED TO " + accountString + " BUTTON");
+        Timber.d("SCROLLED TO " + accountString + " BUTTON");
 
         // get name/password from xml file (add more later)
         String accountName = "";
@@ -470,54 +472,54 @@ public class MinimumTest extends ActivityInstrumentationTestCase2<HomeActivity> 
 
         // enter name/password
         onView(withId(R.id.etUsername)).perform(clearText()).perform(typeText(accountName));
-        Log.d("AUTOMATION", "ENTERED USER NAME");
+        Timber.d("ENTERED USER NAME");
         pressBack();
         stall(500, "PAUSE TO CLEAR KEYBOARD");
 
         onView(withId(R.id.etPassword)).perform(clearText()).perform(typeText(accountPass));
-        Log.d("AUTOMATION", "ENTERED USER PASSWORD");
+        Timber.d("ENTERED USER PASSWORD");
         pressBack();
         stall(500, "PAUSE TO CLEAR KEYBOARD");
 
         onView(withId(R.id.btnSignIn)).perform(click());
-        Log.d("AUTOMATION", "CLICKED SIGN IN BUTTON");
+        Timber.d("CLICKED SIGN IN BUTTON");
 
         onView(withId(R.id.switchStoryMaker)).perform(click());
-        Log.d("AUTOMATION", "CLICKED STORYMAKER PUBLISH SWITCH");
+        Timber.d("CLICKED STORYMAKER PUBLISH SWITCH");
 
         try {
             // TODO: re-enable once test points to beta server
             onView(withText("Continue")).perform(click());
-            Log.d("AUTOMATION", "CLICKED CONTINUE BUTTON");
+            Timber.d("CLICKED CONTINUE BUTTON");
         } catch (NoMatchingViewException nmve) {
             // implies no button was found (failure)
-            Log.d("AUTOMATION", "NO CONTINUE BUTTON FOUND (FAIL)");
+            Timber.d("NO CONTINUE BUTTON FOUND (FAIL)");
             return false;
         }
 
         // TODO: how to verify successful upload? (failure indicated by visible message)
         stall(30000, "WAITING FOR UPLOAD");
-        Log.d("AUTOMATION", "TEST RUN COMPLETE (PASS)");
+        Timber.d("TEST RUN COMPLETE (PASS)");
         return true;
     }
 
     public void testDdHookPaths() {
 
-        Log.d("AUTOMATION", "HOOK TEST NOT IMPLEMENTED IN MinimumTest CLASS");
+        Timber.d("HOOK TEST NOT IMPLEMENTED IN MinimumTest CLASS");
 
         assertTrue(true);
     }
 
     public void testEeSettings() {
 
-        Log.d("AUTOMATION", "SETTINGS TEST NOT IMPLEMENTED IN MinimumTest CLASS");
+        Timber.d("SETTINGS TEST NOT IMPLEMENTED IN MinimumTest CLASS");
 
         assertTrue(true);
     }
 
     private void stall(long milliseconds, String message) {
         try {
-            Log.d("AUTOMATION", "SLEEP " + (milliseconds / 1000) + " (" + message + ")");
+            Timber.d("SLEEP " + (milliseconds / 1000) + " (" + message + ")");
             Thread.sleep(milliseconds);
         } catch (InterruptedException e) {
             e.printStackTrace();
@@ -545,7 +547,7 @@ public class MinimumTest extends ActivityInstrumentationTestCase2<HomeActivity> 
     private void cleanup(String directory) {
         WildcardFileFilter oldFileFilter = new WildcardFileFilter("*instance*");
         for (File oldFile : FileUtils.listFiles(new File(directory), oldFileFilter, null)) {
-            Log.d("AUTOMATION", "CLEANUP: FOUND " + oldFile.getPath() + ", DELETING");
+            Timber.d("CLEANUP: FOUND " + oldFile.getPath() + ", DELETING");
             FileUtils.deleteQuietly(oldFile);
         }
     }
@@ -558,10 +560,10 @@ public class MinimumTest extends ActivityInstrumentationTestCase2<HomeActivity> 
                 Object currentActivity = resumedActivities.iterator().next();
 
                 if (currentActivity instanceof MainActivity) {
-                    Log.d("AUTOMATION", "GOT MAIN ACTIVITY");
+                    Timber.d("GOT MAIN ACTIVITY");
                     mMainActivity = (MainActivity)currentActivity;
                 } else {
-                    Log.d("AUTOMATION", "NOT MAIN ACTIVITY");
+                    Timber.d("NOT MAIN ACTIVITY");
                 }
             }
         }

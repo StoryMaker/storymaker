@@ -1,6 +1,8 @@
 
 package org.storymaker.app;
 
+import timber.log.Timber;
+
 /*
  * Copyright (C) 2008 The Android Open Source Project
  *

@@ -1,6 +1,8 @@
 
 package org.storymaker.app.model.json;
 
+import timber.log.Timber;
+
 import android.content.Context;
 import android.util.Log;
 
@@ -57,7 +59,7 @@ public class SceneJson {
                 if (media != null) {
                     mediaArray.add(context.serialize(media));
                 } else {
-                    Log.w(TAG, "Ignoring null Scene Media. Scene.mClipCount (" + scene.getClipCount() + ") may be incorrect");
+                    Timber.w("Ignoring null Scene Media. Scene.mClipCount (" + scene.getClipCount() + ") may be incorrect");
                 }
             }
             if (mediaArray.size() > 0) {

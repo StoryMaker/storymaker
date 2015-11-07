@@ -3,6 +3,8 @@
  */
 package org.storymaker.app;
 
+import timber.log.Timber;
+
 import java.io.File;
 import java.util.ArrayList;
 

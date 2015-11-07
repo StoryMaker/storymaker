@@ -1,5 +1,7 @@
 package org.storymaker.app.media;
 
+import timber.log.Timber;
+
 import org.storymaker.app.AppConstants;
 import org.storymaker.app.R;
 import org.storymaker.app.StoryMakerApp;
@@ -134,9 +136,9 @@ public class MediaProjectManager implements MediaManager {
     		else{
     			sFileExternDir = new File(Environment.getExternalStorageDirectory(), AppConstants.FOLDER_PROJECTS_NAME);
     		}
-            Log.d(TAG, "sFileExternDir:" + sFileExternDir.getAbsolutePath());
+            Timber.d("sFileExternDir:" + sFileExternDir.getAbsolutePath());
             try {
-                Log.d(TAG, "sFileExternDir.getCanonicalPath():" + sFileExternDir.getCanonicalPath());
+                Timber.d("sFileExternDir.getCanonicalPath():" + sFileExternDir.getCanonicalPath());
             } catch (IOException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
@@ -145,7 +147,7 @@ public class MediaProjectManager implements MediaManager {
 
 			sFileExternDir = new File(StorageHelper.getActualStorageDirectory(context), AppConstants.FOLDER_PROJECTS_NAME);
 
-			Log.d(TAG, "sFileExternDir:" + sFileExternDir.getAbsolutePath());
+			Timber.d("sFileExternDir:" + sFileExternDir.getAbsolutePath());
 
 			sFileExternDir.mkdirs();
     	}
@@ -644,7 +646,7 @@ public class MediaProjectManager implements MediaManager {
             oldString = oldDir.getCanonicalPath();
             newString = newDir.getCanonicalPath();
     	} catch (Exception e) {
-    		Log.e("FILE MIGRATION", "exception ocurred while getting project path: " + e.getMessage());
+    		Timber.e("exception ocurred while getting project path: " + e.getMessage());
             return false;
     	}
     	
@@ -660,24 +662,24 @@ public class MediaProjectManager implements MediaManager {
                     File newFile = new File(newPath);
                     oldFile.renameTo(newFile);
                 } catch (Exception e) {
-                    Log.e("FILE MIGRATION", "exception ocurred while moving files: " + e.getMessage());
+                    Timber.e("exception ocurred while moving files: " + e.getMessage());
                     return false;
                 }
             }
     	}
     	else if (!oldDir.exists())
     	{
-    		Log.e("FILE MIGRATION", oldString + " (old directory) doesn't exist");
+    		Timber.e(oldString + " (old directory) doesn't exist");
     		return false;
     	}
     	else if (!newDir.exists())
     	{
-    	    Log.e("FILE MIGRATION", newString + " (new directory) doesn't exist"); // created by get external dir method
+    	    Timber.e(newString + " (new directory) doesn't exist"); // created by get external dir method
             return false;
     	}
     	else
     	{
-    	    Log.e("FILE MIGRATION", "an unexpected error has ocurred");
+    	    Timber.e("an unexpected error has ocurred");
             return false;
     	}
     	

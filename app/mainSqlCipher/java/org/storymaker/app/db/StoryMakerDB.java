@@ -1,5 +1,7 @@
 package org.storymaker.app.db;
 
+import timber.log.Timber;
+
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -43,7 +45,7 @@ public class StoryMakerDB extends StoryMakerDBWrapper {
     
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        Log.d(TAG, "updating db from " + oldVersion + " to " + newVersion);
+        Timber.d("updating db from " + oldVersion + " to " + newVersion);
         if ((oldVersion < 2) && (newVersion == 2)) {
             db.execSQL(StoryMakerDB.Schema.Projects.UPDATE_TABLE_PROJECTS);
         } 

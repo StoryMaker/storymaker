@@ -1,5 +1,7 @@
 package org.storymaker.app.model.template;
 
+import timber.log.Timber;
+
 import java.util.ArrayList;
 
 public class Scene {

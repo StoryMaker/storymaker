@@ -1,5 +1,7 @@
 package org.storymaker.app.publish.sites;
 
+import timber.log.Timber;
+
 import org.storymaker.app.model.Auth;
 import org.storymaker.app.model.Job;
 import org.storymaker.app.model.JobTable;
@@ -24,7 +26,7 @@ public class FacebookPublisher extends PublisherBase {
 	}
 	
 	public void startRender() {
-        Log.d(TAG, "startRender");
+        Timber.d("startRender");
 		
         
 		Job videoRenderJob = new Job(mContext, mPublishJob.getProjectId(), mPublishJob.getId(), JobTable.TYPE_RENDER, null, VideoRenderer.SPEC_KEY);
@@ -32,7 +34,7 @@ public class FacebookPublisher extends PublisherBase {
 	}
 	
 	public void startUpload() {
-        Log.d(TAG, "startUpload");
+        Timber.d("startUpload");
         Job newJob = new Job(mContext, mPublishJob.getProjectId(), mPublishJob.getId(), JobTable.TYPE_UPLOAD, Auth.SITE_FACEBOOK, null);
         mController.enqueueJob(newJob);
 	}

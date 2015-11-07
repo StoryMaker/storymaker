@@ -1,5 +1,7 @@
 package org.storymaker.app.model;
 
+import timber.log.Timber;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -732,7 +734,7 @@ public class Project extends Model {
                 for (Scene scene : allScenes) {
                     if (scene != null) {
                         if (!scene.migrate(project, projectDate)) {
-                            Log.e("PROJECT MIGRATION", "failed to migrate scene " + scene.getId());
+                            Timber.e("failed to migrate scene " + scene.getId());
                             failure = true;
                         }
                     }
@@ -742,7 +744,7 @@ public class Project extends Model {
                 for (Media media : allMedia) {
                     if (media != null) {
                         if (!media.migrate(project, projectDate)) {
-                            Log.e("PROJECT MIGRATION", "failed to migrate media " + media.getId());
+                            Timber.e("failed to migrate media " + media.getId());
                             failure = true;
                         }
                     }
@@ -750,15 +752,15 @@ public class Project extends Model {
     		    
     		    if (!failure) {
    			        if (!MediaProjectManager.migrateProjectFiles(project, context)) {
-   			        	Log.e("PROJECT MIGRATION", "failed to migrate files");
+   			        	Timber.e("failed to migrate files");
    			    	    failure = true;
    			        }
     		    }
     		} else {
     			try {
-    			    Log.e("PROJECT MIGRATION", projectDir.getCanonicalPath() + "does not exist");
+    			    Timber.e(projectDir.getCanonicalPath() + "does not exist");
     			} catch (Exception e) {
-    				Log.e("PROJECT MIGRATION", "unexpected exception: " + e.getMessage());
+    				Timber.e("unexpected exception: " + e.getMessage());
     			}
     			failure = true;
     		}
@@ -766,7 +768,7 @@ public class Project extends Model {
     		if (!failure) { 
     			project.update();
     		} else {
-    			Log.e("PROJECT MIGRATION", "failed to migrate project " + project.getId());
+    			Timber.e("failed to migrate project " + project.getId());
     			// if migration failed in some way, add project to result list for error handling upstream
     			failed.add(project);
     		}

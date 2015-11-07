@@ -1,5 +1,7 @@
 package org.storymaker.app.ui;
 
+import timber.log.Timber;
+
 import android.view.View;
 
 public interface SwipeInterface {

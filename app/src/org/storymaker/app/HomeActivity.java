@@ -1,4 +1,15 @@
+
+
+
+
+
+
+
 package org.storymaker.app;
+
+import timber.log.Timber;
+
+import timber.log.Timber;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -120,7 +131,7 @@ public class HomeActivity extends BaseActivity {
 
     // added for testing
     public void scroll(int position) {
-        Log.d("TEST", "Scrolling to index item " + position);
+        Timber.d("Scrolling to index item " + position);
         mRecyclerView.scrollToPosition(position);
     }
 
@@ -137,7 +148,7 @@ public class HomeActivity extends BaseActivity {
 
         int availableIndexVersion = preferences.getInt("AVAILABLE_INDEX_VERSION", 0);
 
-        Log.d("UPDATE", "VERSION CHECK: " + availableIndexVersion + " vs. " + scal.io.liger.Constants.AVAILABLE_INDEX_VERSION);
+        Timber.d("VERSION CHECK: " + availableIndexVersion + " vs. " + scal.io.liger.Constants.AVAILABLE_INDEX_VERSION);
 
         if (availableIndexVersion != scal.io.liger.Constants.AVAILABLE_INDEX_VERSION) {
 
@@ -146,10 +157,10 @@ public class HomeActivity extends BaseActivity {
             HashMap<String, scal.io.liger.model.ExpansionIndexItem> availableItemsFromFile = scal.io.liger.IndexManager.loadAvailableIdIndex(this);
 
             if (availableItemsFromFile.size() == 0) {
-                Log.d("UPDATE", "NOTHING LOADED FROM AVAILABLE FILE");
+                Timber.d("NOTHING LOADED FROM AVAILABLE FILE");
             } else {
                 for (scal.io.liger.model.ExpansionIndexItem item : availableItemsFromFile.values()) {
-                    Log.d("UPDATE", "ADDING " + item.getExpansionId() + " TO DATABASE (AVAILABLE)");
+                    Timber.d("ADDING " + item.getExpansionId() + " TO DATABASE (AVAILABLE)");
                     availableIndexItemDao.addAvailableIndexItem(item, true); // replaces existing items, should trigger updates to installed items and table as needed
 
                     // ugly solution to deal with the fact that the popup menu assumes there will be threads for an item we tried to download/install
@@ -169,17 +180,17 @@ public class HomeActivity extends BaseActivity {
                 HashMap<String, scal.io.liger.model.ExpansionIndexItem> installedItemsFromFile = scal.io.liger.IndexManager.loadInstalledIdIndex(this);
 
                 if (installedItemsFromFile.size() == 0) {
-                    Log.d("MIGRATION", "NOTHING LOADED FROM INSTALLED INDEX FILE");
+                    Timber.d("NOTHING LOADED FROM INSTALLED INDEX FILE");
                 } else {
                     for (scal.io.liger.model.ExpansionIndexItem item : installedItemsFromFile.values()) {
-                        Log.d("MIGRATION", "ADDING " + item.getExpansionId() + " TO DATABASE (INSTALLED)");
+                        Timber.d("ADDING " + item.getExpansionId() + " TO DATABASE (INSTALLED)");
                         installedIndexItemDao.addInstalledIndexItem(item, true); // replaces existing items, should trigger updates to installed items and table as needed
                     }
                 }
 
                 installedFile.delete();
             } else {
-                Log.d("MIGRATION", "NO INSTALLED INDEX FILE");
+                Timber.d("NO INSTALLED INDEX FILE");
             }
 
             // if found, migrate instance index
@@ -190,17 +201,17 @@ public class HomeActivity extends BaseActivity {
                 HashMap<String, scal.io.liger.model.InstanceIndexItem> instanceItemsFromFile = scal.io.liger.IndexManager.loadInstanceIndex(this);
 
                 if (instanceItemsFromFile.size() == 0) {
-                    Log.d("MIGRATION", "NOTHING LOADED FROM INSTANCE INDEX FILE");
+                    Timber.d("NOTHING LOADED FROM INSTANCE INDEX FILE");
                 } else {
                     for (scal.io.liger.model.InstanceIndexItem item : instanceItemsFromFile.values()) {
-                        Log.d("MIGRATION", "ADDING " + item.getInstanceFilePath() + " TO DATABASE (INSTANCE)");
+                        Timber.d("ADDING " + item.getInstanceFilePath() + " TO DATABASE (INSTANCE)");
                         instanceIndexItemDao.addInstanceIndexItem(item, true); // replaces existing items, should trigger updates to installed items and table as needed
                     }
                 }
 
                 instanceFile.delete();
             } else {
-                Log.d("MIGRATION", "NO INSTANCE INDEX FILE");
+                Timber.d("NO INSTANCE INDEX FILE");
             }
 
             // update preferences
@@ -227,7 +238,7 @@ public class HomeActivity extends BaseActivity {
                 // just process the list
 
                 for (ExpansionIndexItem item : expansionIndexItems) {
-                    Log.d("RX_DB", "AVAILABLE ITEM " + item.getExpansionId() + ", TITLE: " + item.getTitle());
+                    Timber.d("AVAILABLE ITEM " + item.getExpansionId() + ", TITLE: " + item.getTitle());
                 }
             }
         });
@@ -240,7 +251,7 @@ public class HomeActivity extends BaseActivity {
                 // just process the list
 
                 for (ExpansionIndexItem item : expansionIndexItems) {
-                    Log.d("RX_DB", "INSTALLED ITEM " + item.getExpansionId() + ", TITLE: " + item.getTitle());
+                    Timber.d("INSTALLED ITEM " + item.getExpansionId() + ", TITLE: " + item.getTitle());
                 }
             }
         });
@@ -323,7 +334,7 @@ public class HomeActivity extends BaseActivity {
         @Override
         protected Boolean doInBackground(Void... params) {
 
-            Log.d(TAG, "IndexTask.doInBackground IS RUNNING");
+            Timber.d("IndexTask.doInBackground IS RUNNING");
 
             boolean loginRequest = false;
 
@@ -353,7 +364,7 @@ public class HomeActivity extends BaseActivity {
 
             // check server if user just logged in
             if (loginRequest) {
-                Log.d(TAG, "USER LOGGED IN, CHECK SERVER");
+                Timber.d("USER LOGGED IN, CHECK SERVER");
 
                 // reset available index
                 StorymakerIndexManager.copyAvailableIndex(mContext, false);
@@ -364,7 +375,7 @@ public class HomeActivity extends BaseActivity {
 
             // check server if user insists (if database is unlocked)
             if (forceDownload && !mCacheWordHandler.isLocked()) {
-                Log.d(TAG, "UPDATE REQUIRED, CHECK SERVER");
+                Timber.d("UPDATE REQUIRED, CHECK SERVER");
 
                 // reset available index
                 StorymakerIndexManager.copyAvailableIndex(mContext, false);
@@ -379,9 +390,9 @@ public class HomeActivity extends BaseActivity {
 
         protected void onPostExecute(Boolean result) {
             if (result.booleanValue()) {
-                Log.d(TAG, "DOWNLOADED ASSIGNMENTS AND UPDATED AVAILABLE INDEX");
+                Timber.d("DOWNLOADED ASSIGNMENTS AND UPDATED AVAILABLE INDEX");
             } else {
-                Log.d(TAG, "DID NOT DOWNLOAD ASSIGNMENTS OR UPDATE AVAILABLE INDEX");
+                Timber.d("DID NOT DOWNLOAD ASSIGNMENTS OR UPDATE AVAILABLE INDEX");
             }
 
             mSwipeRefreshLayout.setRefreshing(false);
@@ -495,12 +506,12 @@ public class HomeActivity extends BaseActivity {
 
         // NEW: load instance index
         String lang = StoryMakerApp.getCurrentLocale().getLanguage();
-        Log.d(TAG, "lang returned from getCurrentLocale: " + lang);
+        Timber.d("lang returned from getCurrentLocale: " + lang);
         HashMap<String, InstanceIndexItem> instanceIndex = StorymakerIndexManager.fillInstanceIndex(HomeActivity.this, StorymakerIndexManager.loadInstanceIndex(HomeActivity.this, instanceIndexItemDao), lang, instanceIndexItemDao);
 
         // FIXME --- this should only happen on app updates in a migration
         if (instanceIndex.size() > 0) {
-            Log.d(TAG, "INITACTIVITYLIST - FOUND INSTANCE INDEX WITH " + instanceIndex.size() + " ITEMS");
+            Timber.d("INITACTIVITYLIST - FOUND INSTANCE INDEX WITH " + instanceIndex.size() + " ITEMS");
 
 
 
@@ -521,7 +532,7 @@ public class HomeActivity extends BaseActivity {
                     // just process the list
 
                     for (org.storymaker.app.db.InstanceIndexItem item : instanceIndexItems) {
-                        Log.d("RX_DB", "GOT ITEM " + item.getId() + ", TITLE: " + item.getTitle());
+                        Timber.d("GOT ITEM " + item.getId() + ", TITLE: " + item.getTitle());
                     }
                 }
             });
@@ -530,7 +541,7 @@ public class HomeActivity extends BaseActivity {
 
 
         } else {
-            Log.d(TAG, "INITACTIVITYLIST - FOUND INSTANCE INDEX WITH NO ITEMS");
+            Timber.d("INITACTIVITYLIST - FOUND INSTANCE INDEX WITH NO ITEMS");
         }
 
         ArrayList<BaseIndexItem> instances = new ArrayList<BaseIndexItem>(instanceIndex.values());
@@ -558,7 +569,7 @@ public class HomeActivity extends BaseActivity {
                     launchLiger(HomeActivity.this, null, ((InstanceIndexItem) selectedItem).getInstanceFilePath(), null);
                 } else {
 
-                    Log.d("INDEX", "CLICKED AN ITEM");
+                    Timber.d("CLICKED AN ITEM");
 
                     // get clicked item
                     final ExpansionIndexItem eItem = ((ExpansionIndexItem)selectedItem);
@@ -569,12 +580,12 @@ public class HomeActivity extends BaseActivity {
                     // this isn't ideal but pushing an alert dialog down into the check/download process is difficult
 
                     if ((downloadThreads.get(eItem.getExpansionId()) != null)) {
-                        Log.d("INDEX", "DIALOG - FOUND THREADS: " + downloadThreads.get(eItem.getExpansionId()).size());
+                        Timber.d("DIALOG - FOUND THREADS: " + downloadThreads.get(eItem.getExpansionId()).size());
                     }
 
                     if (!installedIds.containsKey(eItem.getExpansionId()) && (downloadThreads.get(eItem.getExpansionId()) == null)) {
 
-                        Log.d("INDEX", "DIALOG - START");
+                        Timber.d("DIALOG - START");
 
                         // this item is not installed and there are no saved threads for it
 
@@ -587,7 +598,7 @@ public class HomeActivity extends BaseActivity {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
 
-                                        Log.d("DOWNLOAD", "START...");
+                                        Timber.d("START...");
 
                                         handleClick(eItem, installedIds, false);
 
@@ -603,13 +614,13 @@ public class HomeActivity extends BaseActivity {
 
                         if (useManager) {
 
-                            Log.d("INDEX", "USING MANAGER - NO DIALOG");
+                            Timber.d("USING MANAGER - NO DIALOG");
 
                             handleClick(eItem, installedIds, false);
 
                         } else {
 
-                            Log.d("INDEX", "DIALOG - RESUME");
+                            Timber.d("DIALOG - RESUME");
 
                             // this item is installed and there are no saved threads for it
 
@@ -618,7 +629,7 @@ public class HomeActivity extends BaseActivity {
 
                                 // proceed as usual
 
-                                Log.d("INDEX", "DO STUFF");
+                                Timber.d("DO STUFF");
 
                                 handleClick(eItem, installedIds, true);
                             } else {
@@ -630,7 +641,7 @@ public class HomeActivity extends BaseActivity {
 
                                             @Override
                                             public void onClick(DialogInterface dialog, int which) {
-                                                Log.d("DOWNLOAD", "RESUME...");
+                                                Timber.d("RESUME...");
                                                 handleClick(eItem, installedIds, false);
                                             }
                                         })
@@ -649,13 +660,13 @@ public class HomeActivity extends BaseActivity {
 
                         if (useManager) {
 
-                            Log.d("INDEX", "USING MANAGER - NO DIALOG");
+                            Timber.d("USING MANAGER - NO DIALOG");
 
                             handleClick(eItem, installedIds, false);
 
                         } else {
 
-                            Log.d("INDEX", "CONTINUE...");
+                            Timber.d("CONTINUE...");
 
                             handleClick(eItem, installedIds, true);
 
@@ -703,7 +714,7 @@ public class HomeActivity extends BaseActivity {
             InstalledIndexItem iItem = new InstalledIndexItem(eItem);
             StorymakerIndexManager.installedIndexAdd(HomeActivity.this, iItem, installedIndexItemDao);
 
-            Log.d("HOME MENU CLICK", eItem.getExpansionId() + " NOT INSTALLED, ADDING ITEM TO INDEX");
+            Timber.d(eItem.getExpansionId() + " NOT INSTALLED, ADDING ITEM TO INDEX");
 
             // wait for index serialization
             try {
@@ -715,7 +726,7 @@ public class HomeActivity extends BaseActivity {
             }
         } else {
 
-            Log.d("HOME MENU CLICK", eItem.getExpansionId() + " INSTALLED, CHECKING FILE");
+            Timber.d(eItem.getExpansionId() + " INSTALLED, CHECKING FILE");
 
             // if clicked item is installed, check state
             if (readyToOpen) {
@@ -727,14 +738,14 @@ public class HomeActivity extends BaseActivity {
 
                 // update db record with flag
                 if (!eItem.isInstalled()) {
-                    Log.d("HOME MENU CLICK", "SET INSTALLED FLAG FOR " + eItem.getExpansionId());
+                    Timber.d("SET INSTALLED FLAG FOR " + eItem.getExpansionId());
                     eItem.setInstalledFlag(true);
                     InstalledIndexItem iItem = new InstalledIndexItem(eItem);
                     StorymakerIndexManager.installedIndexAdd(this, iItem, installedIndexItemDao);
                 }
 
                 // if file has been downloaded, open file
-                Log.d("HOME MENU CLICK", eItem.getExpansionId() + " INSTALLED, FILE OK");
+                Timber.d(eItem.getExpansionId() + " INSTALLED, FILE OK");
 
                 // update with new thumbnail path
                 // move this somewhere that it can be triggered by completed download?
@@ -745,10 +756,10 @@ public class HomeActivity extends BaseActivity {
 
                 if (metadata == null) {
                     Toast.makeText(HomeActivity.this, getString(R.string.home_metadata_missing), Toast.LENGTH_LONG).show();
-                    Log.e(TAG, "failed to load content metadata");
+                    Timber.e("failed to load content metadata");
                 } else if ((eItem.getThumbnailPath() == null) || (!eItem.getThumbnailPath().equals(metadata.getContentPackThumbnailPath()))) {
 
-                    Log.d("HOME MENU CLICK", eItem.getExpansionId() + " FIRST OPEN, UPDATING THUMBNAIL PATH");
+                    Timber.d(eItem.getExpansionId() + " FIRST OPEN, UPDATING THUMBNAIL PATH");
 
                     eItem.setThumbnailPath(metadata.getContentPackThumbnailPath());
 
@@ -773,7 +784,7 @@ public class HomeActivity extends BaseActivity {
 
                 if ((contentIndex == null) || (contentIndex.size() < 1)) {
                     Toast.makeText(HomeActivity.this, getString(R.string.home_index_missing), Toast.LENGTH_LONG).show();
-                    Log.e(TAG, "failed to load content index");
+                    Timber.e("failed to load content index");
                 } else if (contentIndex.size() == 1) {
                     launchLiger(HomeActivity.this, null, null, contentIndex.get(0).getInstanceFilePath());
                 } else {
@@ -789,11 +800,11 @@ public class HomeActivity extends BaseActivity {
                 }
             } else {
                 // if file is being downloaded, don't open
-                Log.d("HOME MENU CLICK", eItem.getExpansionId() + " INSTALLED, CURRENTLY DOWNLOADING FILE");
+                Timber.d(eItem.getExpansionId() + " INSTALLED, CURRENTLY DOWNLOADING FILE");
 
                 // if necessary, un-flag db record (this probably indicates an installed file that is being patched
                 if (eItem.isInstalled()) {
-                    Log.d("HOME MENU CLICK", "UN-SET INSTALLED FLAG FOR " + eItem.getExpansionId());
+                    Timber.d("UN-SET INSTALLED FLAG FOR " + eItem.getExpansionId());
                     eItem.setInstalledFlag(false);
                     InstalledIndexItem iItem = new InstalledIndexItem(eItem);
                     StorymakerIndexManager.installedIndexAdd(this, iItem, installedIndexItemDao);
@@ -875,7 +886,7 @@ public class HomeActivity extends BaseActivity {
 //        }
 //        catch (IOException ioe)
 //        {
-//            Log.e(AppConstants.TAG, "Error creating zip file:", ioe);
+//            Timber.e("Error creating zip file:", ioe);
 //        }
 //    }
 //
@@ -906,7 +917,7 @@ public class HomeActivity extends BaseActivity {
 //            }
 //            catch (IOException ioe)
 //            {
-//                Log.e(AppConstants.TAG, "Error creating zip file:", ioe);
+//                Timber.e("Error creating zip file:", ioe);
 //            }
 //        }
 //    }
@@ -1027,7 +1038,7 @@ public class HomeActivity extends BaseActivity {
 
             if (!readyToOpen) {
                 // if file is being downloaded, don't open
-                Log.d("NEW ITEM CLICK", "CURRENTLY DOWNLOADING FILE");
+                Timber.d("CURRENTLY DOWNLOADING FILE");
 
                 Toast.makeText(context, context.getString(R.string.home_please_wait), Toast.LENGTH_LONG).show();
                 return;
@@ -1300,7 +1311,7 @@ public class HomeActivity extends BaseActivity {
         @Override
         public void onClick(DialogInterface dialog, int which) {
 
-            Log.d("DOWNLOAD", "PAUSE...");
+            Timber.d("PAUSE...");
 
             // stop associated threads
 
@@ -1308,7 +1319,7 @@ public class HomeActivity extends BaseActivity {
 
             if (currentThreads != null) {
                 for (Thread thread : currentThreads) {
-                    Log.d("DOWNLOAD", "STOPPING THREAD " + thread.getId());
+                    Timber.d("STOPPING THREAD " + thread.getId());
                     thread.interrupt();
                 }
             }
@@ -1331,7 +1342,7 @@ public class HomeActivity extends BaseActivity {
         @Override
         public void onClick(DialogInterface dialog, int which) {
 
-            Log.d("INDEX", "CANCEL...");
+            Timber.d("CANCEL...");
 
             // remove from installed index
 
@@ -1345,19 +1356,19 @@ public class HomeActivity extends BaseActivity {
 
             if (currentThreads != null) {
                 for (Thread thread : currentThreads) {
-                    Log.d("DOWNLOAD", "STOPPING THREAD " + thread.getId());
+                    Timber.d("STOPPING THREAD " + thread.getId());
                     thread.interrupt();
                 }
             }
 
             downloadThreads.remove(eItem.getExpansionId());
 
-            Log.d("DOWNLOAD", "DELETE STUFF?");
+            Timber.d("DELETE STUFF?");
 
             File fileDirectory = StorageHelper.getActualStorageDirectory(HomeActivity.this);
             WildcardFileFilter fileFilter = new WildcardFileFilter(eItem.getExpansionId() + ".*");
             for (File foundFile : FileUtils.listFiles(fileDirectory, fileFilter, null)) {
-                Log.d("DOWNLOAD", "STOPPED THREAD: FOUND " + foundFile.getPath() + ", DELETING");
+                Timber.d("STOPPED THREAD: FOUND " + foundFile.getPath() + ", DELETING");
                 FileUtils.deleteQuietly(foundFile);
             }
         }

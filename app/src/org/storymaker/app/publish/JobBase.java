@@ -1,5 +1,7 @@
 package org.storymaker.app.publish;
 
+import timber.log.Timber;
+
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
@@ -26,11 +28,11 @@ public class JobBase {
      * @param type upload or render
      */
     public void start() {
-        Log.d(TAG, "start");
+        Timber.d("start");
     }
     
     public void jobSucceeded(String result) {
-        Log.d(TAG, "onSuccess: " + result);
+        Timber.d("onSuccess: " + result);
         mJob.setResult(result);
         mJob.setFinishedAtNow();
         mJob.save();
@@ -38,7 +40,7 @@ public class JobBase {
     }
 
     public void jobFailed(Exception exception, int errorCode, String errorMessage) {
-        Log.d(TAG, "onFailure: errorCode: " + errorCode + ", with message: " + errorCode);
+        Timber.d("onFailure: errorCode: " + errorCode + ", with message: " + errorCode);
         mJob.setResult(null);
         mJob.setErrorCode(errorCode);
         mJob.setErrorMessage(errorMessage);

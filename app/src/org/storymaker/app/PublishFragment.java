@@ -1,5 +1,7 @@
 package org.storymaker.app;
 
+import timber.log.Timber;
+
 import org.storymaker.app.db.StoryMakerDB;
 import org.storymaker.app.model.Auth;
 import org.storymaker.app.model.AuthTable;
@@ -456,11 +458,11 @@ public class PublishFragment extends Fragment implements PublishListener {
 
     public void onChooseAccountDialogResult(int resultCode, Intent intent) {
         if (resultCode == Activity.RESULT_OK) {
-            Log.d("PublishFragment", "Choose Accounts dialog return ok");
+            Timber.d("Choose Accounts dialog return ok");
             if (intent.hasExtra(ChooseAccountFragment.EXTRAS_ACCOUNT_KEYS)) {
                 ArrayList<String> siteKeys = intent.getStringArrayListExtra(ChooseAccountFragment.EXTRAS_ACCOUNT_KEYS);
                 if (!siteKeys.isEmpty()) {
-                    Log.d(TAG, "selected sites: " + siteKeys);
+                    Timber.d("selected sites: " + siteKeys);
                     mSiteKeys = siteKeys.toArray(new String[siteKeys.size()]);
                     
                     useTor = intent.getBooleanExtra(SiteController.VALUE_KEY_USE_TOR, false);
@@ -480,7 +482,7 @@ public class PublishFragment extends Fragment implements PublishListener {
                 Utils.toastOnUiThread(mActivity, mActivity.getString(R.string.no_site_selected));
             }
         } else {
-            Log.d("PublishFragment", "Choose Accounts dialog canceled");
+            Timber.d("Choose Accounts dialog canceled");
             showPlayAndUpload(true);
         }
     }
@@ -567,7 +569,7 @@ public class PublishFragment extends Fragment implements PublishListener {
 //                    }
 //                }, 200);
 //            } else {
-//                Log.d(TAG, "last rendered path is empty!");
+//                Timber.d("last rendered path is empty!");
 //            }
 //            
 ////            if (job != null) {
@@ -602,7 +604,7 @@ public class PublishFragment extends Fragment implements PublishListener {
         int prog = Math.round(progress * 100);
         String txt = message + ((prog > 0) ? " " + prog + "%" : "");
         mProgressText.setText(txt);
-        Log.d(TAG, txt);
+        Timber.d(txt);
     }
 
     @Override
@@ -624,7 +626,7 @@ public class PublishFragment extends Fragment implements PublishListener {
                         }
                     }, 200);
                 } else {
-                    Log.d(TAG, "last rendered path is empty!");
+                    Timber.d("last rendered path is empty!");
                 }                
                 
                 if (mFileLastExport != null && mFileLastExport.exists()) { // FIXME replace this with a check to make sure render is suitable
@@ -680,7 +682,7 @@ public class PublishFragment extends Fragment implements PublishListener {
 //    }
     
     public void showPublished(final String postUrl) {
-        Log.d(TAG, "dialog for showing published url: " + postUrl);
+        Timber.d("dialog for showing published url: " + postUrl);
         DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {

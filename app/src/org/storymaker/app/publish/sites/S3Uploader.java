@@ -1,5 +1,7 @@
 package org.storymaker.app.publish.sites;
 
+import timber.log.Timber;
+
 import android.content.Context;
 import android.os.Handler;
 import android.util.Log;
@@ -59,7 +61,7 @@ public class S3Uploader extends UploaderBase {
             };
             mainHandler.post(myRunnable);
         } else {
-            Log.d(TAG, "Can't upload to S3, last rendered file doesn't exist.");
+            Timber.d("Can't upload to S3, last rendered file doesn't exist.");
             // TODO get this error back to the activity for display 
             jobFailed(null, ERROR_NO_RENDER_FILE, "Can't upload to S3, last rendered file doesn't exist."); // FIXME move to strings.xml
         }

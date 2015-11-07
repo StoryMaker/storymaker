@@ -1,5 +1,7 @@
 package org.storymaker.app.publish;
 
+import timber.log.Timber;
+
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -180,7 +182,7 @@ public class PublishController {
 	}
 	
 	public void jobSucceeded(Job job, String code) {
-        Log.d(TAG, "jobSucceeded: " + job + ", with code: " + code);
+        Timber.d("jobSucceeded: " + job + ", with code: " + code);
 		// TODO need to raise this to the interested activities here
         PublishJob publishJob = job.getPublishJob();
         PublisherBase publisher = getPublisher(publishJob);
@@ -193,7 +195,7 @@ public class PublishController {
 	}
 	
 	public void jobFailed(Job job, Exception exception, int errorCode, String errorMessage) {
-        Log.d(TAG, "jobFailed: " + job + ", with errorCode: " + errorCode + ", and errorMessage: " + errorMessage);
+        Timber.d("jobFailed: " + job + ", with errorCode: " + errorCode + ", and errorMessage: " + errorMessage);
 		// TODO need to raise this to the interested activities here
         PublishJob publishJob = job.getPublishJob();
         PublisherBase publisher = getPublisher(publishJob);

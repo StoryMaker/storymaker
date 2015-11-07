@@ -1,5 +1,7 @@
 package org.storymaker.app;
 
+import timber.log.Timber;
+
 import org.storymaker.app.server.ServerManager;
 
 import java.io.IOException;

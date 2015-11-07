@@ -1,5 +1,7 @@
 package org.storymaker.app;
 
+import timber.log.Timber;
+
 import org.storymaker.app.media.AudioRecorderView;
 import org.storymaker.app.media.MediaProjectManager;
 import org.storymaker.app.model.Media;

@@ -1,5 +1,7 @@
 package org.storymaker.app.tests;
 
+import timber.log.Timber;
+
 import android.app.Activity;
 import android.app.Instrumentation;
 import android.content.Intent;
@@ -83,7 +85,7 @@ public class EulaTest extends ActivityInstrumentationTestCase2<FirstStartActivit
         onView(withText("New")).perform(click());
 
         try {
-            Log.d("AUTOMATION", "SLEEP " + (5000 / 1000) + " (" + "foo" + ")");
+            Timber.d("SLEEP " + (5000 / 1000) + " (" + "foo" + ")");
             Thread.sleep(5000);
         } catch (InterruptedException e) {
             e.printStackTrace();

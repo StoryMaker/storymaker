@@ -1,5 +1,7 @@
 package org.storymaker.app;
 
+import timber.log.Timber;
+
 import org.storymaker.app.model.Project;
 import org.storymaker.app.model.ProjectTable;
 

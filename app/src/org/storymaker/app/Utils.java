@@ -1,5 +1,7 @@
 package org.storymaker.app;
 
+import timber.log.Timber;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
@@ -76,7 +78,7 @@ public class Utils {
             mg.open(path);
             return true;
         } catch (IOException e) {
-            Log.d("Utils.assetExists", e.getLocalizedMessage());
+            Timber.d(e.getLocalizedMessage());
             return false;
         }
     }
@@ -457,7 +459,7 @@ public class Utils {
                     procId = Integer.parseInt(line.trim());
                     break;
                 } catch (NumberFormatException e) {
-                    Log.e("TorServiceUtils", "unable to parse process pid: " + line, e);
+                    Timber.e("unable to parse process pid: " + line, e);
                 }
             }
 
@@ -557,13 +559,13 @@ public class Utils {
 			// adding logging to clarify errors
 			if (!mExternalStorageAvailable || !mExternalStorageWriteable) {
 				if (Environment.MEDIA_MOUNTED_READ_ONLY.equals(state)) {
-					Log.e("STORAGE_ERROR", "EXTERNAL STORAGE IS READ ONLY");
+					Timber.e("EXTERNAL STORAGE IS READ ONLY");
 				}
 				if (!mExternalStorageAvailable) {
-					Log.e("STORAGE_ERROR", "EXTERNAL STORAGE IS NOT AVAILABLE (STATE: " + state + ")");
+					Timber.e("EXTERNAL STORAGE IS NOT AVAILABLE (STATE: " + state + ")");
 				}
 				if (!mExternalStorageWriteable) {
-					Log.e("STORAGE_ERROR", "EXTERNAL STORAGE IS NOT WRITEABLE (STATE: " + state + ")");
+					Timber.e("EXTERNAL STORAGE IS NOT WRITEABLE (STATE: " + state + ")");
 				}
 			}
 

@@ -1,5 +1,7 @@
 package org.storymaker.app.ui;
 
+import timber.log.Timber;
+
 import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;

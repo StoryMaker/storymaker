@@ -1,5 +1,7 @@
 package org.storymaker.app;
 
+import timber.log.Timber;
+
 import android.app.Activity;
 import android.app.ActionBar;
 import android.content.Context;
@@ -125,7 +127,7 @@ public class PublishActivity extends EditorBaseActivity {
 
         // if no string was loaded, cannot continue
         if (json == null) {
-            Log.e(TAG, "json could not be loaded from " + jsonFilePath);
+            Timber.e("json could not be loaded from " + jsonFilePath);
             return null;
         }
 
