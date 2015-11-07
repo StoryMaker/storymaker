@@ -1,5 +1,7 @@
 package org.storymaker.app.tests;
 
+import timber.log.Timber;
+
 import android.support.test.espresso.NoMatchingViewException;
 import android.util.Log;
 
@@ -67,7 +69,7 @@ public class HookPathsTest extends BaseTest {
 
     public void testHookPaths() {
 
-        Log.d("AUTOMATION", "BEGIN HOOK PATHS TEST");
+        Timber.d("BEGIN HOOK PATHS TEST");
 
         // eula
         doEula();
@@ -97,22 +99,22 @@ public class HookPathsTest extends BaseTest {
                             onView(withText("New")).perform(click());
 
                             // first selection
-                            Log.d("AUTOMATION", "FIRST SELECTION (" + firstSelection + ")");
+                            Timber.d("FIRST SELECTION (" + firstSelection + ")");
                             onView(withText(firstSelection)).perform(click());
 
                             // second selection
                             try {
-                                Log.d("AUTOMATION", "SECOND SELECTION (" + secondSelection + ")");
+                                Timber.d("SECOND SELECTION (" + secondSelection + ")");
                                 onView(withText(secondSelection)).perform(click());
 
                                 // third selection
                                 try {
-                                    Log.d("AUTOMATION", "THIRD SELECTION (" + thirdSelection + ")");
+                                    Timber.d("THIRD SELECTION (" + thirdSelection + ")");
                                     onView(withText(thirdSelection)).perform(click());
 
                                     // fourth selection
                                     try {
-                                        Log.d("AUTOMATION", "FOURTH SELECTION (" + fourthSelection + ")");
+                                        Timber.d("FOURTH SELECTION (" + fourthSelection + ")");
                                         onView(withText(fourthSelection)).perform(click());
 
                                         // get liger activity
@@ -120,7 +122,7 @@ public class HookPathsTest extends BaseTest {
                                         getInstrumentation().runOnMainSync(ag);
 
                                         if (mMainActivity == null) {
-                                            Log.e("AUTOMATION", "NO LIGER ACTIVITY ACCESS");
+                                            Timber.e("NO LIGER ACTIVITY ACCESS");
                                             assertTrue(false);
                                         }
 
@@ -137,21 +139,21 @@ public class HookPathsTest extends BaseTest {
                                             stall(500, "INTERMISSION (" + firstSelection + " > " + secondSelection + " > " + thirdSelection + " > " + fourthSelection + " COMPLETE)");
                                         } catch (NoMatchingViewException nmve) {
                                             // implies no button was found (failure)
-                                            Log.d("AUTOMATION", "NO CAPTURE BUTTON FOUND IN " + firstSelection + " > " + secondSelection + " > " + thirdSelection + " > " + fourthSelection);
+                                            Timber.d("NO CAPTURE BUTTON FOUND IN " + firstSelection + " > " + secondSelection + " > " + thirdSelection + " > " + fourthSelection);
                                             // return;
                                             brokenPaths.add(firstSelection + " > " + secondSelection + " > " + thirdSelection + " > " + fourthSelection);
                                         }
                                     } catch (NoMatchingViewException nmve) {
                                         // some options do not support all questions (not a failure state)
-                                        Log.d("AUTOMATION", "SELECTION " + fourthSelection + " NOT AVAILABLE");
+                                        Timber.d("SELECTION " + fourthSelection + " NOT AVAILABLE");
                                     }
                                 } catch (NoMatchingViewException nmve) {
                                     // some options do not support all media types (not a failure state)
-                                    Log.d("AUTOMATION", "SELECTION " + thirdSelection + " NOT AVAILABLE");
+                                    Timber.d("SELECTION " + thirdSelection + " NOT AVAILABLE");
                                 }
                             } catch (NoMatchingViewException nmve) {
                                 // some options do not support all formats (not a failure state???)
-                                Log.d("AUTOMATION", "SELECTION " + secondSelection + " NOT AVAILABLE");
+                                Timber.d("SELECTION " + secondSelection + " NOT AVAILABLE");
                             }
 
                             // restart app
@@ -178,22 +180,22 @@ public class HookPathsTest extends BaseTest {
                             onView(withText("New")).perform(click());
 
                             // first selection
-                            Log.d("AUTOMATION", "FIRST SELECTION (" + firstSelection + ")");
+                            Timber.d("FIRST SELECTION (" + firstSelection + ")");
                             onView(withText(firstSelection)).perform(click());
 
                             // second selection
                             try {
-                                Log.d("AUTOMATION", "SECOND SELECTION (" + secondSelection + ")");
+                                Timber.d("SECOND SELECTION (" + secondSelection + ")");
                                 onView(withText(secondSelection)).perform(click());
 
                                 // third selection
                                 try {
-                                    Log.d("AUTOMATION", "THIRD SELECTION (" + thirdSelection + ")");
+                                    Timber.d("THIRD SELECTION (" + thirdSelection + ")");
                                     onView(withText(thirdSelection)).perform(click());
 
                                     // fourth selection
                                     try {
-                                        Log.d("AUTOMATION", "FOURTH SELECTION (" + fourthSelection + ")");
+                                        Timber.d("FOURTH SELECTION (" + fourthSelection + ")");
                                         onView(withText(fourthSelection)).perform(click());
 
                                         // get liger activity
@@ -201,7 +203,7 @@ public class HookPathsTest extends BaseTest {
                                         getInstrumentation().runOnMainSync(ag);
 
                                         if (mMainActivity == null) {
-                                            Log.e("AUTOMATION", "NO LIGER ACTIVITY ACCESS");
+                                            Timber.e("NO LIGER ACTIVITY ACCESS");
                                             assertTrue(false);
                                         }
 
@@ -218,21 +220,21 @@ public class HookPathsTest extends BaseTest {
                                             stall(500, "INTERMISSION (" + firstSelection + " > " + secondSelection + " > " + thirdSelection + " > " + fourthSelection + " COMPLETE)");
                                         } catch (NoMatchingViewException nmve) {
                                             // implies no button was found (failure)
-                                            Log.d("AUTOMATION", "NO CAPTURE BUTTON FOUND IN " + firstSelection + " > " + secondSelection + " > " + thirdSelection + " > " + fourthSelection);
+                                            Timber.d("NO CAPTURE BUTTON FOUND IN " + firstSelection + " > " + secondSelection + " > " + thirdSelection + " > " + fourthSelection);
                                             // return;
                                             brokenPaths.add(firstSelection + " > " + secondSelection + " > " + thirdSelection + " > " + fourthSelection);
                                         }
                                     } catch (NoMatchingViewException nmve) {
                                         // some options do not support all questions (not a failure state)
-                                        Log.d("AUTOMATION", "SELECTION " + fourthSelection + " NOT AVAILABLE");
+                                        Timber.d("SELECTION " + fourthSelection + " NOT AVAILABLE");
                                     }
                                 } catch (NoMatchingViewException nmve) {
                                     // some options do not support all media types (not a failure state)
-                                    Log.d("AUTOMATION", "SELECTION " + thirdSelection + " NOT AVAILABLE");
+                                    Timber.d("SELECTION " + thirdSelection + " NOT AVAILABLE");
                                 }
                             } catch (NoMatchingViewException nmve) {
                                 // some options do not support all formats (not a failure state???)
-                                Log.d("AUTOMATION", "SELECTION " + secondSelection + " NOT AVAILABLE");
+                                Timber.d("SELECTION " + secondSelection + " NOT AVAILABLE");
                             }
 
                             // restart app
@@ -253,17 +255,17 @@ public class HookPathsTest extends BaseTest {
                     onView(withText("New")).perform(click());
 
                     // first selection
-                    Log.d("AUTOMATION", "FIRST SELECTION (" + firstSelection + ")");
+                    Timber.d("FIRST SELECTION (" + firstSelection + ")");
                     onView(withText(firstSelection)).perform(click());
 
                     // second selection
                     try {
-                        Log.d("AUTOMATION", "SECOND SELECTION (" + secondSelection + ")");
+                        Timber.d("SECOND SELECTION (" + secondSelection + ")");
                         onView(withText(secondSelection)).perform(click());
 
                         // third selection
                         try {
-                            Log.d("AUTOMATION", "THIRD SELECTION (" + thirdSelection + ")");
+                            Timber.d("THIRD SELECTION (" + thirdSelection + ")");
                             onView(withText(thirdSelection)).perform(click());
 
                             // get liger activity
@@ -271,7 +273,7 @@ public class HookPathsTest extends BaseTest {
                             getInstrumentation().runOnMainSync(ag);
 
                             if (mMainActivity == null) {
-                                Log.e("AUTOMATION", "NO LIGER ACTIVITY ACCESS");
+                                Timber.e("NO LIGER ACTIVITY ACCESS");
                                 assertTrue(false);
                             }
 
@@ -288,17 +290,17 @@ public class HookPathsTest extends BaseTest {
                                 stall(500, "INTERMISSION (" + firstSelection + " > " + secondSelection + " > " + thirdSelection + " COMPLETE)");
                             } catch (NoMatchingViewException nmve) {
                                 // implies no button was found (failure)
-                                Log.d("AUTOMATION", "NO CAPTURE BUTTON FOUND IN " + firstSelection + " > " + secondSelection + " > " + thirdSelection);
+                                Timber.d("NO CAPTURE BUTTON FOUND IN " + firstSelection + " > " + secondSelection + " > " + thirdSelection);
                                 // return;
                                 brokenPaths.add(firstSelection + " > " + secondSelection + " > " + thirdSelection);
                             }
                         } catch (NoMatchingViewException nmve) {
                             // some options do not support all media types (not a failure state)
-                            Log.d("AUTOMATION", "SELECTION " + thirdSelection + " NOT AVAILABLE");
+                            Timber.d("SELECTION " + thirdSelection + " NOT AVAILABLE");
                         }
                     } catch (NoMatchingViewException nmve) {
                         // some options do not support all formats (not a failure state???)
-                        Log.d("AUTOMATION", "SELECTION " + secondSelection + " NOT AVAILABLE");
+                        Timber.d("SELECTION " + secondSelection + " NOT AVAILABLE");
                     }
 
                     // restart app
@@ -313,11 +315,11 @@ public class HookPathsTest extends BaseTest {
         }
 
         for (String brokenPath : brokenPaths) {
-            Log.d("AUTOMATION", "BROKEN PATH: " + brokenPath);
+            Timber.d("BROKEN PATH: " + brokenPath);
         }
 
         assertEquals(brokenPaths.size(), 0);
 
-        Log.d("AUTOMATION", "HOOK PATHS TEST COMPLETE");
+        Timber.d("HOOK PATHS TEST COMPLETE");
     }
 }

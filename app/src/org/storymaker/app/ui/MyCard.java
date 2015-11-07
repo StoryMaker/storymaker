@@ -1,5 +1,7 @@
 package org.storymaker.app.ui;
 
+import timber.log.Timber;
+
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;

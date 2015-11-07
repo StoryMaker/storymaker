@@ -1,5 +1,7 @@
 package org.storymaker.app.server;
 
+import timber.log.Timber;
+
 import org.storymaker.app.R;
 import android.app.Activity;
 import android.os.Bundle;

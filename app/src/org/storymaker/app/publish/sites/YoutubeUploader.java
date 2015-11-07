@@ -1,5 +1,7 @@
 package org.storymaker.app.publish.sites;
 
+import timber.log.Timber;
+
 import java.util.HashMap;
 
 import org.storymaker.app.model.Auth;
@@ -24,7 +26,7 @@ public class YoutubeUploader extends UploaderBase {
 
     @Override
     public void start() {
-        Log.d(TAG, "start()");
+        Timber.d("start()");
         
         final SiteController controller = SiteController.getSiteController(YoutubeSiteController.SITE_KEY, mContext, mHandler, "" + mJob.getId());
         final Project project = mJob.getProject();
@@ -36,7 +38,7 @@ public class YoutubeUploader extends UploaderBase {
             Runnable myRunnable = new Runnable() {
                 @Override
                 public void run() {
-                    Log.d(TAG, "run()");
+                    Timber.d("run()");
                     // FIXME, this might not be wise to run on the main thread youtube, does the youtube SDK automatically run itself on a backgroundthread?
                     HashMap<String, String> valueMap = publishJob.getMetadata();
                     addValuesToHashmap(valueMap, project.getTitle(), project.getDescription(), path);
@@ -45,7 +47,7 @@ public class YoutubeUploader extends UploaderBase {
             };
             mainHandler.post(myRunnable);
         } else {
-            Log.e(TAG, "youtube upload failed, file path is null");
+            Timber.e("youtube upload failed, file path is null");
         }
     }
 }

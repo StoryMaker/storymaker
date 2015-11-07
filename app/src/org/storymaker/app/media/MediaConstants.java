@@ -1,5 +1,7 @@
 package org.storymaker.app.media;
 
+import timber.log.Timber;
+
 public class MediaConstants {
 
 	public final static int GALLERY_RESULT = 1001;

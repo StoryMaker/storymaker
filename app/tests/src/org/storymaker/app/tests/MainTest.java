@@ -1,5 +1,7 @@
 package org.storymaker.app.tests;
 
+import timber.log.Timber;
+
 import android.app.Activity;
 import android.test.ActivityInstrumentationTestCase2;
 import android.util.Log;

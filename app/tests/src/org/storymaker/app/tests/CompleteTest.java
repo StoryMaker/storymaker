@@ -1,5 +1,7 @@
 package org.storymaker.app.tests;
 
+import timber.log.Timber;
+
 import android.app.Activity;
 import android.app.Instrumentation;
 import android.content.Intent;
@@ -147,7 +149,7 @@ public class CompleteTest extends ActivityInstrumentationTestCase2<HomeActivity>
     public void setUp() throws Exception {
         super.setUp();
 
-        Log.d("AUTOMATION", "BEGIN SETUP");
+        Timber.d("BEGIN SETUP");
 
         mHomeActivity = getActivity();
 
@@ -190,15 +192,15 @@ public class CompleteTest extends ActivityInstrumentationTestCase2<HomeActivity>
             assetOut.flush();
             assetOut.close();
             assetOut = null;
-            Log.d("AUTOMATION", "COPYING SAMPLE FILE " + sampleVideoName + " FROM ASSETS TO " + testDirectory + " FINISHED");
+            Timber.d("COPYING SAMPLE FILE " + sampleVideoName + " FROM ASSETS TO " + testDirectory + " FINISHED");
         } catch (IOException ioe) {
-            Log.e("AUTOMATION", "COPYING SAMPLE FILE " + sampleVideoName + " FROM ASSETS TO " + testDirectory + " FAILED");
+            Timber.e("COPYING SAMPLE FILE " + sampleVideoName + " FROM ASSETS TO " + testDirectory + " FAILED");
             return;
         }
 
         // check for zero-byte files
         if (sampleVideoFile.exists() && (sampleVideoFile.length() == 0)) {
-            Log.e("AUTOMATION", "COPYING SAMPLE FILE " + sampleVideoName + " FROM ASSETS TO " + testDirectory + " FAILED (FILE WAS ZERO BYTES)");
+            Timber.e("COPYING SAMPLE FILE " + sampleVideoName + " FROM ASSETS TO " + testDirectory + " FAILED (FILE WAS ZERO BYTES)");
             sampleVideoFile.delete();
         }
 
@@ -252,31 +254,31 @@ public class CompleteTest extends ActivityInstrumentationTestCase2<HomeActivity>
         // clear out files from previous tests
         cleanup(testDirectory);
 
-        Log.d("AUTOMATION", "SETUP COMPLETE");
+        Timber.d("SETUP COMPLETE");
     }
 
     public void testAaEula() {
 
-        Log.d("AUTOMATION", "BEGIN EULA TEST");
+        Timber.d("BEGIN EULA TEST");
 
         onView(withId(R.id.btnTos)).perform(click());
-        Log.d("AUTOMATION", "CLICKED TOS BUTTON");
+        Timber.d("CLICKED TOS BUTTON");
 
         onView(withText("Accept")).perform(click());
-        Log.d("AUTOMATION", "CLICKED ACCEPT BUTTON");
+        Timber.d("CLICKED ACCEPT BUTTON");
 
         onView(withId(R.id.btnNoThanks)).perform(click());
-        Log.d("AUTOMATION", "CLICKED NO THANKS BUTTON");
+        Timber.d("CLICKED NO THANKS BUTTON");
 
         // just pass, this is mostly for setting up the real tests
         assertTrue(true);
 
-        Log.d("AUTOMATION", "EULA TEST COMPLETE");
+        Timber.d("EULA TEST COMPLETE");
     }
 
     public void testBbDownloadAndPatch() {
 
-        Log.d("AUTOMATION", "BEGIN DOWNLOAD TEST");
+        Timber.d("BEGIN DOWNLOAD TEST");
 
         // scroll to bottom
         HomeActivityScroller as = new HomeActivityScroller(4); // UPDATE IF INDEX CHANGES
@@ -284,17 +286,17 @@ public class CompleteTest extends ActivityInstrumentationTestCase2<HomeActivity>
         stall(500, "WAIT FOR SCROLLING");
 
         // initiate download by clicking a menu item.
-        Log.d("AUTOMATION", "SELECTING CONTENT PACK");
+        Timber.d("SELECTING CONTENT PACK");
         onView(withText("Learning Guide")).perform(click());
 
         // delay to allow time for downloads
         stall(30000, "WAITING FOR DOWNLOADS");
 
         // test that clicking again brings up the content index
-        Log.d("AUTOMATION", "SELECTING CONTENT PACK AGAIN");
+        Timber.d("SELECTING CONTENT PACK AGAIN");
         onView(withText("Learning Guide")).perform(click());
 
-        Log.d("AUTOMATION", "CHECKING CONTENT PACK ITEMS");
+        Timber.d("CHECKING CONTENT PACK ITEMS");
         onView(withText("Learn the Basic Elements of a Story")).check(matches(isDisplayed()));
         onView(withText("Add More Detail to Your Story")).check(matches(isDisplayed()));
 
@@ -310,25 +312,25 @@ public class CompleteTest extends ActivityInstrumentationTestCase2<HomeActivity>
 
         // verify index file existence (created when first content pack is installed)
         assertTrue(indexFile.exists());
-        Log.d("AUTOMATION", "INDEX FILE EXISTS");
+        Timber.d("INDEX FILE EXISTS");
 
         // verify test file existence
         assertTrue(learningGuideMain.exists());
         assertTrue(learningGuidePatch.exists());
-        Log.d("AUTOMATION", "EXPANSION FILES EXIST");
+        Timber.d("EXPANSION FILES EXIST");
 
         // verify test file size
         assertTrue(learningGuideMain.length() > 0);
         assertTrue(learningGuidePatch.length() > 0);
-        Log.d("AUTOMATION", "EXPANSION FILES NON-ZERO");
+        Timber.d("EXPANSION FILES NON-ZERO");
 
         // verify test file cleanup
         assertTrue(!learningGuideMainTemp.exists());
         assertTrue(!learningGuidePatchTemp.exists());
-        Log.d("AUTOMATION", "TEMP EXPANSION FILES DELETED");
+        Timber.d("TEMP EXPANSION FILES DELETED");
         assertTrue(!learningGuideMainPart.exists());
         assertTrue(!learningGuidePatchPart.exists());
-        Log.d("AUTOMATION", "PART EXPANSION FILES DELETED");
+        Timber.d("PART EXPANSION FILES DELETED");
 
         // verify test file contents
         try {
@@ -344,9 +346,9 @@ public class CompleteTest extends ActivityInstrumentationTestCase2<HomeActivity>
             }
 
             assertTrue(testString.contains("Learn the Basic Elements of a Story"));
-            Log.d("AUTOMATION", "learning_guide_1_library.json IS OK");
+            Timber.d("learning_guide_1_library.json IS OK");
         } catch (IOException ioe) {
-            Log.e("AUTOMATION", "READING JSON FILE " + "org.storymaker.app/learning_test/learning_guide_1/learning_guide_1_library.json" + " FROM ZIP FILE FAILED");
+            Timber.e("READING JSON FILE " + "org.storymaker.app/learning_test/learning_guide_1/learning_guide_1_library.json" + " FROM ZIP FILE FAILED");
         }
 
         try {
@@ -362,9 +364,9 @@ public class CompleteTest extends ActivityInstrumentationTestCase2<HomeActivity>
             }
 
             assertTrue(testString.contains("Add More Detail to Your Story"));
-            Log.d("AUTOMATION", "learning_guide_2_library.json IS OK");
+            Timber.d("learning_guide_2_library.json IS OK");
         } catch (IOException ioe) {
-            Log.e("AUTOMATION", "READING JSON FILE " + "org.storymaker.app/learning_test/learning_guide_2/learning_guide_2_library.json" + " FROM ZIP FILE FAILED");
+            Timber.e("READING JSON FILE " + "org.storymaker.app/learning_test/learning_guide_2/learning_guide_2_library.json" + " FROM ZIP FILE FAILED");
         }
 
         // delete test files so test can be re-run
@@ -390,24 +392,24 @@ public class CompleteTest extends ActivityInstrumentationTestCase2<HomeActivity>
             learningGuidePatchPart.delete();
         }
 
-        Log.d("AUTOMATION", "FINISHED CLEANUP");
+        Timber.d("FINISHED CLEANUP");
 
-        Log.d("AUTOMATION", "DOWNLOAD TEST COMPLETE");
+        Timber.d("DOWNLOAD TEST COMPLETE");
     }
 
     public void testCcEverything() {
 
-        Log.d("AUTOMATION", "BEGIN END-TO-END TEST");
+        Timber.d("BEGIN END-TO-END TEST");
 
         // signup/login
         onView(withText(mHomeActivity.getApplicationContext().getString(R.string.app_name))).perform(click());
-        Log.d("AUTOMATION", "OPENED SIDE MENU");
+        Timber.d("OPENED SIDE MENU");
 
         onView(withId(R.id.llLogin)).perform(click());
-        Log.d("AUTOMATION", "SELECTED SIGNUP/LOGIN");
+        Timber.d("SELECTED SIGNUP/LOGIN");
 
         onView(withId(R.id.btnSignIn)).perform(click());
-        Log.d("AUTOMATION", "SELECTED LOGIN");
+        Timber.d("SELECTED LOGIN");
 
         // get name/password from xml file
         String accountName = mHomeActivity.getApplicationContext().getString(R.string.storymaker_name);
@@ -415,17 +417,17 @@ public class CompleteTest extends ActivityInstrumentationTestCase2<HomeActivity>
 
         // enter name/password
         onView(withId(R.id.login_username)).perform(clearText()).perform(typeText(accountName));
-        Log.d("AUTOMATION", "ENTERED USER NAME");
+        Timber.d("ENTERED USER NAME");
         pressBack();
         stall(500, "PAUSE TO CLEAR KEYBOARD");
 
         onView(withId(R.id.login_password)).perform(clearText()).perform(typeText(accountPass));
-        Log.d("AUTOMATION", "ENTERED USER PASSWORD");
+        Timber.d("ENTERED USER PASSWORD");
         pressBack();
         stall(500, "PAUSE TO CLEAR KEYBOARD");
 
         onView(withId(R.id.btnLogin)).perform(click());
-        Log.d("AUTOMATION", "CLICKED LOGIN BUTTON");
+        Timber.d("CLICKED LOGIN BUTTON");
         stall(5000, "WAIT FOR LOGIN");
 
         pressBack();
@@ -456,7 +458,7 @@ public class CompleteTest extends ActivityInstrumentationTestCase2<HomeActivity>
 
                 String secondSelection = secondOption[j];
 
-                Log.d("AUTOMATION", " *** TESTING " + firstSelection + "/" + secondSelection + " ****************************** ");
+                Timber.d(" *** TESTING " + firstSelection + "/" + secondSelection + " ****************************** ");
 
                 testFlag = (testFlag && doTest(firstSelection, secondSelection));
 
@@ -472,7 +474,7 @@ public class CompleteTest extends ActivityInstrumentationTestCase2<HomeActivity>
 
         assertTrue(testFlag);
 
-        Log.d("AUTOMATION", "END-TO-END TEST COMPLETE");
+        Timber.d("END-TO-END TEST COMPLETE");
     }
 
     public boolean doTest(String mediaString, String accountString) {
@@ -481,26 +483,26 @@ public class CompleteTest extends ActivityInstrumentationTestCase2<HomeActivity>
 
         // select "new" option
         onView(withText("New")).perform(click());
-        Log.d("AUTOMATION", "CLICKED NEW BUTTON");
+        Timber.d("CLICKED NEW BUTTON");
 
         // first selection
         onView(withText("An Event")).perform(click());
-        Log.d("AUTOMATION", "CLICKED EVENT BUTTON");
+        Timber.d("CLICKED EVENT BUTTON");
 
         // second selection
         onView(withText("Show the best moments.")).perform(click());
-        Log.d("AUTOMATION", "CLICKED HIGHLIGHTS BUTTON");
+        Timber.d("CLICKED HIGHLIGHTS BUTTON");
 
         // third selection
         onView(withText(mediaString)).perform(click());
-        Log.d("AUTOMATION", "CLICKED MEDIA BUTTON");
+        Timber.d("CLICKED MEDIA BUTTON");
 
         // get liger activity
         ActivityGetter ag = new ActivityGetter();
         getInstrumentation().runOnMainSync(ag);
 
         if (mMainActivity == null) {
-            Log.e("AUTOMATION", "NO LIGER ACTIVITY ACCESS");
+            Timber.e("NO LIGER ACTIVITY ACCESS");
             return false;
         }
 
@@ -511,7 +513,7 @@ public class CompleteTest extends ActivityInstrumentationTestCase2<HomeActivity>
 
         // media capture
         onView(allOf(withText("Capture"), withParent(withParent(withTagValue(is((Object) "clip_card_0")))))).perform(click());
-        Log.d("AUTOMATION", "CLICKED CAPTURE BUTTON");
+        Timber.d("CLICKED CAPTURE BUTTON");
         stall(500, "WAIT FOR MEDIA CAPTURE UPDATE");
 
         // scroll to bottom
@@ -522,36 +524,36 @@ public class CompleteTest extends ActivityInstrumentationTestCase2<HomeActivity>
         // begin publish/upload steps
         try {
             onView(allOf(withText("Publish"), withParent(withTagValue(is((Object) "publish_card_1"))))).perform(click());
-            Log.d("AUTOMATION", "CLICKED PUBLISH BUTTON");
+            Timber.d("CLICKED PUBLISH BUTTON");
         } catch (NoMatchingViewException nmve) {
             // implies no button was found (failure)
-            Log.d("AUTOMATION", "NO PUBLISH BUTTON FOUND (FAIL)");
+            Timber.d("NO PUBLISH BUTTON FOUND (FAIL)");
             return false;
         }
 
         // enter metadata
         onView(withId(R.id.fl_info_container)).perform(click());
-        Log.d("AUTOMATION", "CLICKED METADATA FIELD");
+        Timber.d("CLICKED METADATA FIELD");
 
         //get time for unique id
         Calendar now = new GregorianCalendar();
 
         onView(withId(R.id.et_story_info_title)).perform(clearText()).perform(typeText(mediaString.toUpperCase() + "/" + accountString.toUpperCase() + "/" + now.get(Calendar.HOUR) + ":" + now.get(Calendar.MINUTE)));
-        Log.d("AUTOMATION", "ENTERED TITLE TEXT");
+        Timber.d("ENTERED TITLE TEXT");
         pressBack();
         stall(500, "PAUSE TO CLEAR KEYBOARD");
 
         onView(withId(R.id.et_story_info_description)).perform(clearText()).perform(typeText(mediaString + "/" + accountString));
-        Log.d("AUTOMATION", "ENTERED DESCRIPTION TEXT");
+        Timber.d("ENTERED DESCRIPTION TEXT");
         pressBack();
         stall(500, "PAUSE TO CLEAR KEYBOARD");
 
         onView(withId(R.id.act_story_info_tag)).perform(clearText()).perform(typeText(mediaString.toLowerCase()));
         onView(withId(R.id.btn_add_tag)).perform(click());
-        Log.d("AUTOMATION", "ENTERED FIRST TAG");
+        Timber.d("ENTERED FIRST TAG");
         onView(withId(R.id.act_story_info_tag)).perform(clearText()).perform(typeText(accountString.toLowerCase()));
         onView(withId(R.id.btn_add_tag)).perform(click());
-        Log.d("AUTOMATION", "ENTERED SECOND TAG");
+        Timber.d("ENTERED SECOND TAG");
         pressBack();
         stall(500, "PAUSE TO CLEAR KEYBOARD");
 
@@ -559,23 +561,23 @@ public class CompleteTest extends ActivityInstrumentationTestCase2<HomeActivity>
         /*
         onView(withId(R.id.sp_story_section)).perform(click());
         onView(withText("Travel")).perform(click());
-        Log.d("AUTOMATION", "SELECTED SECTION");
+        Timber.d("SELECTED SECTION");
 
         onView(withId(R.id.sp_story_location)).perform(click());
         onView(withText("Czech Republic")).perform(click());
-        Log.d("AUTOMATION", "SELECTED LOCATION");
+        Timber.d("SELECTED LOCATION");
         */
 
         onView(withText("Save")).perform(click());
-        Log.d("AUTOMATION", "SAVED METADATA");
+        Timber.d("SAVED METADATA");
 
         // select account and upload
         onView(withId(R.id.btnUpload)).perform(click());
-        Log.d("AUTOMATION", "CLICKED UPLOAD BUTTON");
+        Timber.d("CLICKED UPLOAD BUTTON");
 
         // scroll to account
         onView(withText(accountString)).perform(scrollTo(), click());
-        Log.d("AUTOMATION", "SCROLLED TO " + accountString + " BUTTON");
+        Timber.d("SCROLLED TO " + accountString + " BUTTON");
 
         // get name/password from xml file (add more later)
         String accountName = "";
@@ -588,40 +590,40 @@ public class CompleteTest extends ActivityInstrumentationTestCase2<HomeActivity>
 
         // enter name/password
         onView(withId(R.id.etUsername)).perform(clearText()).perform(typeText(accountName));
-        Log.d("AUTOMATION", "ENTERED USER NAME");
+        Timber.d("ENTERED USER NAME");
         pressBack();
         stall(500, "PAUSE TO CLEAR KEYBOARD");
 
         onView(withId(R.id.etPassword)).perform(clearText()).perform(typeText(accountPass));
-        Log.d("AUTOMATION", "ENTERED USER PASSWORD");
+        Timber.d("ENTERED USER PASSWORD");
         pressBack();
         stall(500, "PAUSE TO CLEAR KEYBOARD");
 
         onView(withId(R.id.btnSignIn)).perform(click());
-        Log.d("AUTOMATION", "CLICKED SIGN IN BUTTON");
+        Timber.d("CLICKED SIGN IN BUTTON");
 
         onView(withId(R.id.switchStoryMaker)).perform(click());
-        Log.d("AUTOMATION", "CLICKED STORYMAKER PUBLISH SWITCH");
+        Timber.d("CLICKED STORYMAKER PUBLISH SWITCH");
 
         try {
             // TODO: re-enable once test points to beta server
             onView(withText("Continue")).perform(click());
-            Log.d("AUTOMATION", "CLICKED CONTINUE BUTTON");
+            Timber.d("CLICKED CONTINUE BUTTON");
         } catch (NoMatchingViewException nmve) {
             // implies no button was found (failure)
-            Log.d("AUTOMATION", "NO CONTINUE BUTTON FOUND (FAIL)");
+            Timber.d("NO CONTINUE BUTTON FOUND (FAIL)");
             return false;
         }
 
         // TODO: how to verify successful upload? (failure indicated by visible message)
         stall(30000, "WAITING FOR UPLOAD");
-        Log.d("AUTOMATION", "TEST RUN COMPLETE (PASS)");
+        Timber.d("TEST RUN COMPLETE (PASS)");
         return true;
     }
 
     public void testDdHookPaths() {
 
-        Log.d("AUTOMATION", "BEGIN HOOK TEST");
+        Timber.d("BEGIN HOOK TEST");
 
         for (int i = 0; i < firstOption.length; i++) {
 
@@ -648,22 +650,22 @@ public class CompleteTest extends ActivityInstrumentationTestCase2<HomeActivity>
                             onView(withText("New")).perform(click());
 
                             // first selection
-                            Log.d("AUTOMATION", "FIRST SELECTION (" + firstSelection + ")");
+                            Timber.d("FIRST SELECTION (" + firstSelection + ")");
                             onView(withText(firstSelection)).perform(click());
 
                             // second selection
                             try {
-                                Log.d("AUTOMATION", "SECOND SELECTION (" + secondSelection + ")");
+                                Timber.d("SECOND SELECTION (" + secondSelection + ")");
                                 onView(withText(secondSelection)).perform(click());
 
                                 // third selection
                                 try {
-                                    Log.d("AUTOMATION", "THIRD SELECTION (" + thirdSelection + ")");
+                                    Timber.d("THIRD SELECTION (" + thirdSelection + ")");
                                     onView(withText(thirdSelection)).perform(click());
 
                                     // fourth selection
                                     try {
-                                        Log.d("AUTOMATION", "FOURTH SELECTION (" + fourthSelection + ")");
+                                        Timber.d("FOURTH SELECTION (" + fourthSelection + ")");
                                         onView(withText(fourthSelection)).perform(click());
 
                                         // get liger activity
@@ -671,7 +673,7 @@ public class CompleteTest extends ActivityInstrumentationTestCase2<HomeActivity>
                                         getInstrumentation().runOnMainSync(ag);
 
                                         if (mMainActivity == null) {
-                                            Log.e("AUTOMATION", "NO LIGER ACTIVITY ACCESS");
+                                            Timber.e("NO LIGER ACTIVITY ACCESS");
                                             assertTrue(false);
                                         }
 
@@ -688,21 +690,21 @@ public class CompleteTest extends ActivityInstrumentationTestCase2<HomeActivity>
                                             stall(500, "INTERMISSION (" + firstSelection + " > " + secondSelection + " > " + thirdSelection + " > " + fourthSelection + " COMPLETE)");
                                         } catch (NoMatchingViewException nmve) {
                                             // implies no button was found (failure)
-                                            Log.d("AUTOMATION", "NO CAPTURE BUTTON FOUND IN " + firstSelection + " > " + secondSelection + " > " + thirdSelection + " > " + fourthSelection);
+                                            Timber.d("NO CAPTURE BUTTON FOUND IN " + firstSelection + " > " + secondSelection + " > " + thirdSelection + " > " + fourthSelection);
                                             // return;
                                             brokenPaths.add(firstSelection + " > " + secondSelection + " > " + thirdSelection + " > " + fourthSelection);
                                         }
                                     } catch (NoMatchingViewException nmve) {
                                         // some options do not support all questions (not a failure state)
-                                        Log.d("AUTOMATION", "SELECTION " + fourthSelection + " NOT AVAILABLE");
+                                        Timber.d("SELECTION " + fourthSelection + " NOT AVAILABLE");
                                     }
                                 } catch (NoMatchingViewException nmve) {
                                     // some options do not support all media types (not a failure state)
-                                    Log.d("AUTOMATION", "SELECTION " + thirdSelection + " NOT AVAILABLE");
+                                    Timber.d("SELECTION " + thirdSelection + " NOT AVAILABLE");
                                 }
                             } catch (NoMatchingViewException nmve) {
                                 // some options do not support all formats (not a failure state???)
-                                Log.d("AUTOMATION", "SELECTION " + secondSelection + " NOT AVAILABLE");
+                                Timber.d("SELECTION " + secondSelection + " NOT AVAILABLE");
                             }
 
                             // restart app
@@ -729,22 +731,22 @@ public class CompleteTest extends ActivityInstrumentationTestCase2<HomeActivity>
                             onView(withText("New")).perform(click());
 
                             // first selection
-                            Log.d("AUTOMATION", "FIRST SELECTION (" + firstSelection + ")");
+                            Timber.d("FIRST SELECTION (" + firstSelection + ")");
                             onView(withText(firstSelection)).perform(click());
 
                             // second selection
                             try {
-                                Log.d("AUTOMATION", "SECOND SELECTION (" + secondSelection + ")");
+                                Timber.d("SECOND SELECTION (" + secondSelection + ")");
                                 onView(withText(secondSelection)).perform(click());
 
                                 // third selection
                                 try {
-                                    Log.d("AUTOMATION", "THIRD SELECTION (" + thirdSelection + ")");
+                                    Timber.d("THIRD SELECTION (" + thirdSelection + ")");
                                     onView(withText(thirdSelection)).perform(click());
 
                                     // fourth selection
                                     try {
-                                        Log.d("AUTOMATION", "FOURTH SELECTION (" + fourthSelection + ")");
+                                        Timber.d("FOURTH SELECTION (" + fourthSelection + ")");
                                         onView(withText(fourthSelection)).perform(click());
 
                                         // get liger activity
@@ -752,7 +754,7 @@ public class CompleteTest extends ActivityInstrumentationTestCase2<HomeActivity>
                                         getInstrumentation().runOnMainSync(ag);
 
                                         if (mMainActivity == null) {
-                                            Log.e("AUTOMATION", "NO LIGER ACTIVITY ACCESS");
+                                            Timber.e("NO LIGER ACTIVITY ACCESS");
                                             assertTrue(false);
                                         }
 
@@ -769,21 +771,21 @@ public class CompleteTest extends ActivityInstrumentationTestCase2<HomeActivity>
                                             stall(500, "INTERMISSION (" + firstSelection + " > " + secondSelection + " > " + thirdSelection + " > " + fourthSelection + " COMPLETE)");
                                         } catch (NoMatchingViewException nmve) {
                                             // implies no button was found (failure)
-                                            Log.d("AUTOMATION", "NO CAPTURE BUTTON FOUND IN " + firstSelection + " > " + secondSelection + " > " + thirdSelection + " > " + fourthSelection);
+                                            Timber.d("NO CAPTURE BUTTON FOUND IN " + firstSelection + " > " + secondSelection + " > " + thirdSelection + " > " + fourthSelection);
                                             // return;
                                             brokenPaths.add(firstSelection + " > " + secondSelection + " > " + thirdSelection + " > " + fourthSelection);
                                         }
                                     } catch (NoMatchingViewException nmve) {
                                         // some options do not support all questions (not a failure state)
-                                        Log.d("AUTOMATION", "SELECTION " + fourthSelection + " NOT AVAILABLE");
+                                        Timber.d("SELECTION " + fourthSelection + " NOT AVAILABLE");
                                     }
                                 } catch (NoMatchingViewException nmve) {
                                     // some options do not support all media types (not a failure state)
-                                    Log.d("AUTOMATION", "SELECTION " + thirdSelection + " NOT AVAILABLE");
+                                    Timber.d("SELECTION " + thirdSelection + " NOT AVAILABLE");
                                 }
                             } catch (NoMatchingViewException nmve) {
                                 // some options do not support all formats (not a failure state???)
-                                Log.d("AUTOMATION", "SELECTION " + secondSelection + " NOT AVAILABLE");
+                                Timber.d("SELECTION " + secondSelection + " NOT AVAILABLE");
                             }
 
                             // restart app
@@ -804,17 +806,17 @@ public class CompleteTest extends ActivityInstrumentationTestCase2<HomeActivity>
                     onView(withText("New")).perform(click());
 
                     // first selection
-                    Log.d("AUTOMATION", "FIRST SELECTION (" + firstSelection + ")");
+                    Timber.d("FIRST SELECTION (" + firstSelection + ")");
                     onView(withText(firstSelection)).perform(click());
 
                     // second selection
                     try {
-                        Log.d("AUTOMATION", "SECOND SELECTION (" + secondSelection + ")");
+                        Timber.d("SECOND SELECTION (" + secondSelection + ")");
                         onView(withText(secondSelection)).perform(click());
 
                         // third selection
                         try {
-                            Log.d("AUTOMATION", "THIRD SELECTION (" + thirdSelection + ")");
+                            Timber.d("THIRD SELECTION (" + thirdSelection + ")");
                             onView(withText(thirdSelection)).perform(click());
 
                             // get liger activity
@@ -822,7 +824,7 @@ public class CompleteTest extends ActivityInstrumentationTestCase2<HomeActivity>
                             getInstrumentation().runOnMainSync(ag);
 
                             if (mMainActivity == null) {
-                                Log.e("AUTOMATION", "NO LIGER ACTIVITY ACCESS");
+                                Timber.e("NO LIGER ACTIVITY ACCESS");
                                 assertTrue(false);
                             }
 
@@ -839,17 +841,17 @@ public class CompleteTest extends ActivityInstrumentationTestCase2<HomeActivity>
                                 stall(500, "INTERMISSION (" + firstSelection + " > " + secondSelection + " > " + thirdSelection + " COMPLETE)");
                             } catch (NoMatchingViewException nmve) {
                                 // implies no button was found (failure)
-                                Log.d("AUTOMATION", "NO CAPTURE BUTTON FOUND IN " + firstSelection + " > " + secondSelection + " > " + thirdSelection);
+                                Timber.d("NO CAPTURE BUTTON FOUND IN " + firstSelection + " > " + secondSelection + " > " + thirdSelection);
                                 // return;
                                 brokenPaths.add(firstSelection + " > " + secondSelection + " > " + thirdSelection);
                             }
                         } catch (NoMatchingViewException nmve) {
                             // some options do not support all media types (not a failure state)
-                            Log.d("AUTOMATION", "SELECTION " + thirdSelection + " NOT AVAILABLE");
+                            Timber.d("SELECTION " + thirdSelection + " NOT AVAILABLE");
                         }
                     } catch (NoMatchingViewException nmve) {
                         // some options do not support all formats (not a failure state???)
-                        Log.d("AUTOMATION", "SELECTION " + secondSelection + " NOT AVAILABLE");
+                        Timber.d("SELECTION " + secondSelection + " NOT AVAILABLE");
                     }
 
                     // restart app
@@ -864,130 +866,130 @@ public class CompleteTest extends ActivityInstrumentationTestCase2<HomeActivity>
         }
 
         for (String brokenPath : brokenPaths) {
-            Log.d("AUTOMATION", "BROKEN PATH: " + brokenPath);
+            Timber.d("BROKEN PATH: " + brokenPath);
         }
 
         assertEquals(brokenPaths.size(), 0);
 
-        Log.d("AUTOMATION", "HOOK TEST COMPLETE");
+        Timber.d("HOOK TEST COMPLETE");
     }
 
     public void testEeSettings() {
 
-        Log.d("AUTOMATION", "BEGIN SETTINGS TEST");
+        Timber.d("BEGIN SETTINGS TEST");
 
         // signup/login
         onView(withText(mHomeActivity.getApplicationContext().getString(R.string.app_name))).perform(click());
-        Log.d("AUTOMATION", "OPENED SIDE MENU");
+        Timber.d("OPENED SIDE MENU");
 
         onView(withId(R.id.llLogin)).perform(click());
-        Log.d("AUTOMATION", "SELECTED SIGNUP/LOGIN");
+        Timber.d("SELECTED SIGNUP/LOGIN");
 
         pressBack();
 
         // home button
         onView(withText(mHomeActivity.getApplicationContext().getString(R.string.app_name))).perform(click());
-        Log.d("AUTOMATION", "OPENED SIDE MENU");
+        Timber.d("OPENED SIDE MENU");
 
         onView(withText(mHomeActivity.getApplicationContext().getString(R.string.title_activity_home))).perform(click());
-        Log.d("AUTOMATION", "SELECTED HOME");
+        Timber.d("SELECTED HOME");
 
         // exports
         onView(withText(mHomeActivity.getApplicationContext().getString(R.string.app_name))).perform(click());
-        Log.d("AUTOMATION", "OPENED SIDE MENU");
+        Timber.d("OPENED SIDE MENU");
 
         onView(withText(mHomeActivity.getApplicationContext().getString(R.string.exported_stories))).perform(click());
-        Log.d("AUTOMATION", "SELECTED EXPORTS");
+        Timber.d("SELECTED EXPORTS");
 
         pressBack();
 
         // accounts
         onView(withText(mHomeActivity.getApplicationContext().getString(R.string.app_name))).perform(click());
-        Log.d("AUTOMATION", "OPENED SIDE MENU");
+        Timber.d("OPENED SIDE MENU");
 
         onView(withText(mHomeActivity.getApplicationContext().getString(R.string.menu_accounts))).perform(click());
-        Log.d("AUTOMATION", "SELECTED ACCOUNTS");
+        Timber.d("SELECTED ACCOUNTS");
 
         pressBack();
 
         // settings
         onView(withText(mHomeActivity.getApplicationContext().getString(R.string.app_name))).perform(click());
-        Log.d("AUTOMATION", "OPENED SIDE MENU");
+        Timber.d("OPENED SIDE MENU");
 
         onView(withText(mHomeActivity.getApplicationContext().getString(R.string.menu_settings))).perform(click());
-        Log.d("AUTOMATION", "SELECTED SETTINGS");
+        Timber.d("SELECTED SETTINGS");
 
         // test settings
         onView(withText(mHomeActivity.getApplicationContext().getString(R.string.prefs_storymaker_server_title))).perform(click());
-        Log.d("AUTOMATION", "SELECTED STORYMAKER SERVER");
+        Timber.d("SELECTED STORYMAKER SERVER");
         pressBack();
         pressBack();
         settingsSwipe(R.string.prefs_storymaker_server_title);
 
         onView(withText(mHomeActivity.getApplicationContext().getString(R.string.prefs_use_tor_title))).perform(click());
-        Log.d("AUTOMATION", "SELECTED USE TOR");
+        Timber.d("SELECTED USE TOR");
         onView(withText(mHomeActivity.getApplicationContext().getString(R.string.prefs_use_tor_title))).perform(click()); // re-click to clear checkbox and prevent toast message
-        Log.d("AUTOMATION", "SELECTED USE TOR AGAIN");
+        Timber.d("SELECTED USE TOR AGAIN");
         settingsSwipe(R.string.prefs_use_tor_title);
 
         onView(withText(mHomeActivity.getApplicationContext().getString(R.string.prefs_sm_upload_title))).perform(click());
-        Log.d("AUTOMATION", "SELECTED STORYMAKER UPLOAD");
+        Timber.d("SELECTED STORYMAKER UPLOAD");
         settingsSwipe(R.string.prefs_sm_upload_title);
 
         onView(withText(mHomeActivity.getApplicationContext().getString(R.string.prefs_use_download_manager_title))).perform(click());
-        Log.d("AUTOMATION", "SELECTED DOWNLOAD MANAGER");
+        Timber.d("SELECTED DOWNLOAD MANAGER");
         settingsSwipe(R.string.prefs_use_download_manager_title);
 
         // settings removed?
         /*
         onView(withText(mHomeActivity.getApplicationContext().getString(R.string.prefs_youtube_acccount_title))).perform(click());
-        Log.d("AUTOMATION", "SELECTED YOUTUBE ACCOUNT");
+        Timber.d("SELECTED YOUTUBE ACCOUNT");
         pressBack();
         pressBack();
         settingsSwipe(R.string.prefs_youtube_acccount_title);
 
         onView(withText(mHomeActivity.getApplicationContext().getString(R.string.prefs_youtube_login_title))).perform(click());
-        Log.d("AUTOMATION", "SELECTED YOUTUBE LOGIN");
+        Timber.d("SELECTED YOUTUBE LOGIN");
         settingsSwipe(R.string.prefs_youtube_login_title);
 
         onView(withText(mHomeActivity.getApplicationContext().getString(R.string.prefs_soundcloud_account_title))).perform(click());
-        Log.d("AUTOMATION", "SELECTED SOUNDCLOUD ACCOUNT");
+        Timber.d("SELECTED SOUNDCLOUD ACCOUNT");
         pressBack();
         pressBack();
         settingsSwipe(R.string.prefs_soundcloud_account_title);
         */
 
         onView(withText(mHomeActivity.getApplicationContext().getString(R.string.prefs_interface_language_title))).perform(click());
-        Log.d("AUTOMATION", "SELECTED INTERFACE LANGUAGE");
+        Timber.d("SELECTED INTERFACE LANGUAGE");
         pressBack();
         settingsSwipe(R.string.prefs_interface_language_title);
 
         onView(withText(mHomeActivity.getApplicationContext().getString(R.string.prefs_slide_duration_title))).perform(click());
-        Log.d("AUTOMATION", "SELECTED SLIDE DURATION");
+        Timber.d("SELECTED SLIDE DURATION");
         pressBack();
         pressBack();
         settingsSwipe(R.string.prefs_slide_duration_title);
 
         onView(withText(mHomeActivity.getApplicationContext().getString(R.string.prefs_enable_compression_title))).perform(click());
-        Log.d("AUTOMATION", "SELECTED ENABLE COMPLRESSION");
+        Timber.d("SELECTED ENABLE COMPLRESSION");
         settingsSwipe(R.string.prefs_enable_compression_title);
 
         onView(withText(mHomeActivity.getApplicationContext().getString(R.string.prefs_preprocess_3gp_title))).perform(click());
-        Log.d("AUTOMATION", "SELECTED PREPROCESS 3GP");
+        Timber.d("SELECTED PREPROCESS 3GP");
         settingsSwipe(R.string.prefs_preprocess_3gp_title);
 
         onView(withText(mHomeActivity.getApplicationContext().getString(R.string.prefs_use_cat_command_title))).perform(click());
-        Log.d("AUTOMATION", "SELECTED USE CAT");
+        Timber.d("SELECTED USE CAT");
         settingsSwipe(R.string.prefs_use_cat_command_title);
 
         onView(withText(mHomeActivity.getApplicationContext().getString(R.string.prefs_video_codec_title))).perform(click());
-        Log.d("AUTOMATION", "SELECTED VIDEO CODEC");
+        Timber.d("SELECTED VIDEO CODEC");
         pressBack();
         pressBack();
         settingsSwipe(R.string.prefs_video_codec_title);
 
         onView(withText(mHomeActivity.getApplicationContext().getString(R.string.prefs_video_resolution_title))).perform(click());
-        Log.d("AUTOMATION", "SELECTED RESOLUTION");
+        Timber.d("SELECTED RESOLUTION");
         pressBack();
         settingsSwipe(R.string.prefs_video_resolution_title);
 
@@ -1000,59 +1002,59 @@ public class CompleteTest extends ActivityInstrumentationTestCase2<HomeActivity>
         settingsSwipe(R.string.prefs_video_resolution_title);
 
         onView(withText(mHomeActivity.getApplicationContext().getString(R.string.prefs_video_bitrate_title))).perform(click());
-        Log.d("AUTOMATION", "SELECTED VIDEO BIT RATE");
+        Timber.d("SELECTED VIDEO BIT RATE");
         pressBack();
         pressBack();
         settingsSwipe(R.string.prefs_video_bitrate_title);
 
         onView(withText(mHomeActivity.getApplicationContext().getString(R.string.prefs_video_framrate_title))).perform(click());
-        Log.d("AUTOMATION", "SELECTED VIDEO FRAME RATE");
+        Timber.d("SELECTED VIDEO FRAME RATE");
         pressBack();
         pressBack();
         settingsSwipe(R.string.prefs_video_framrate_title);
 
         onView(withText(mHomeActivity.getApplicationContext().getString(R.string.prefs_audio_codec_title))).perform(click());
-        Log.d("AUTOMATION", "SELECTED AUDIO CODEC");
+        Timber.d("SELECTED AUDIO CODEC");
         pressBack();
         pressBack();
         settingsSwipe(R.string.prefs_audio_codec_title);
 
         onView(withText(mHomeActivity.getApplicationContext().getString(R.string.prefs_audio_bitrate_title))).perform(click());
-        Log.d("AUTOMATION", "SELECTED AUDIO BIT RATE");
+        Timber.d("SELECTED AUDIO BIT RATE");
         pressBack();
         pressBack();
         settingsSwipe(R.string.prefs_audio_bitrate_title);
 
         onView(withText(mHomeActivity.getApplicationContext().getString(R.string.prefs_audio_samplerate_title))).perform(click());
-        Log.d("AUTOMATION", "SELECTED AUDIO SAMPLE RATE");
+        Timber.d("SELECTED AUDIO SAMPLE RATE");
         pressBack();
         pressBack();
         settingsSwipe(R.string.prefs_audio_samplerate_title);
 
         onView(withText(mHomeActivity.getApplicationContext().getString(R.string.prefs_audio_crossfade_title))).perform(click());
-        Log.d("AUTOMATION", "SELECTED AUDIO CROSSFADE");
+        Timber.d("SELECTED AUDIO CROSSFADE");
         pressBack();
         pressBack();
         settingsSwipe(R.string.prefs_audio_crossfade_title);
 
         onView(withText(mHomeActivity.getApplicationContext().getString(R.string.prefs_internal_storage_title))).perform(click());
-        Log.d("AUTOMATION", "SELECTED INTERNAL STORAGE");
+        Timber.d("SELECTED INTERNAL STORAGE");
         settingsSwipe(R.string.prefs_internal_storage_title);
 
         onView(withText(mHomeActivity.getApplicationContext().getString(R.string.prefs_youtube_method_title))).perform(click());
-        Log.d("AUTOMATION", "SELECTED YOUTUBE METHOD");
+        Timber.d("SELECTED YOUTUBE METHOD");
         pressBack();
         pressBack();
 
         // return to home screen
         pressBack();
 
-        Log.d("AUTOMATION", "SETTINGS TEST COMPLETE");
+        Timber.d("SETTINGS TEST COMPLETE");
     }
 
     private void stall(long milliseconds, String message) {
         try {
-            Log.d("AUTOMATION", "SLEEP " + (milliseconds / 1000) + " (" + message + ")");
+            Timber.d("SLEEP " + (milliseconds / 1000) + " (" + message + ")");
             Thread.sleep(milliseconds);
         } catch (InterruptedException e) {
             e.printStackTrace();
@@ -1080,7 +1082,7 @@ public class CompleteTest extends ActivityInstrumentationTestCase2<HomeActivity>
     private void cleanup(String directory) {
         WildcardFileFilter oldFileFilter = new WildcardFileFilter("*instance*");
         for (File oldFile : FileUtils.listFiles(new File(directory), oldFileFilter, null)) {
-            Log.d("AUTOMATION", "CLEANUP: FOUND " + oldFile.getPath() + ", DELETING");
+            Timber.d("CLEANUP: FOUND " + oldFile.getPath() + ", DELETING");
             FileUtils.deleteQuietly(oldFile);
         }
     }
@@ -1093,10 +1095,10 @@ public class CompleteTest extends ActivityInstrumentationTestCase2<HomeActivity>
                 Object currentActivity = resumedActivities.iterator().next();
 
                 if (currentActivity instanceof MainActivity) {
-                    Log.d("AUTOMATION", "GOT MAIN ACTIVITY");
+                    Timber.d("GOT MAIN ACTIVITY");
                     mMainActivity = (MainActivity)currentActivity;
                 } else {
-                    Log.d("AUTOMATION", "NOT MAIN ACTIVITY");
+                    Timber.d("NOT MAIN ACTIVITY");
                 }
             }
         }

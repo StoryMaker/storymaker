@@ -1,5 +1,7 @@
 package org.storymaker.app.media.exporter;
 
+import timber.log.Timber;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;

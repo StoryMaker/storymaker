@@ -1,5 +1,7 @@
 package org.storymaker.app.server;
 
+import timber.log.Timber;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -120,7 +122,7 @@ public class ServerManager {
                     return;
                 }
             }
-            Log.e(TAG, "connect() bailing out, user credentials are null or blank");
+            Timber.e("connect() bailing out, user credentials are null or blank");
         }
     }
     
@@ -132,11 +134,11 @@ public class ServerManager {
         try {
             smWrapper.login(username, password);
         } catch (CaptchaException ce) {
-            Log.e(TAG, "connect() bailing out, server returned captcha challenge");
+            Timber.e("connect() bailing out, server returned captcha challenge");
             // throw exception so LoginActivity doesn't save credentials
             throw new IOException("Some TOR IPs may be flagged as suspicious, try restarting TOR");
         } catch (IOException ioe) {
-            Log.e(TAG, "connect() bailing out, user credentials are not valid");
+            Timber.e("connect() bailing out, user credentials are not valid");
             // throw exception so LoginActivity doesn't save credentials
             throw new IOException("Login failed");
         }
@@ -190,7 +192,7 @@ public class ServerManager {
             }
         }
 
-        Log.e(TAG, "can't post, no user name found");
+        Timber.e("can't post, no user name found");
         return null;
 	}
 
@@ -205,7 +207,7 @@ public class ServerManager {
         try {
             connect();
         } catch (IOException ioe) {
-            Log.e("INDEX", "UNABLE TO CONNECT TO SERVER, CAN'T GET INDEX");
+            Timber.e("UNABLE TO CONNECT TO SERVER, CAN'T GET INDEX");
             return false;
         }
 
@@ -222,12 +224,12 @@ public class ServerManager {
                 JSONArray jArray = smWrapper.index(1); // TODO: WHERE IS INTERFACE VERSION SPECIFIED?
 
                 if (jArray == null) {
-                    Log.e("INDEX", "FAILED TO DOWNLOAD NEW ASSIGNMENTS");
+                    Timber.e("FAILED TO DOWNLOAD NEW ASSIGNMENTS");
                     return false;
                 }
 
                 if (jArray.length() == 0) {
-                    Log.d("INDEX", "NO ASSIGNMENTS FOUND, INDEX WILL NOT BE UPDATED");
+                    Timber.d("NO ASSIGNMENTS FOUND, INDEX WILL NOT BE UPDATED");
                     return true;
                 }
 
@@ -256,25 +258,25 @@ public class ServerManager {
 
                         contentItems.put(contentItem.getPatchOrder(), contentItem);
 
-                        Log.d("INDEX", "ADDED ITEM TO INDEX (" + contentItem.getTitle() + ")");
+                        Timber.d("ADDED ITEM TO INDEX (" + contentItem.getTitle() + ")");
 
                     } catch (JSONException je) {
-                        Log.e("INDEX", "FAILED TO EXTRACT VALUE FROM JSON OBJECT (ARRAY ELEMENT " + i + "): " + je.getMessage());
+                        Timber.e("FAILED TO EXTRACT VALUE FROM JSON OBJECT (ARRAY ELEMENT " + i + "): " + je.getMessage());
                     }
                 }
 
                 IndexManager.saveAvailableIndex(mContext, contentItems);
 
-                Log.d("INDEX", "SAVED UPDATED INDEX");
+                Timber.d("SAVED UPDATED INDEX");
                 return true;
             } else {
-                Log.e("INDEX", "NO USER NAME");
+                Timber.e("NO USER NAME");
             }
         } else {
-            Log.e("INDEX", "NOT LOGGED IN");
+            Timber.e("NOT LOGGED IN");
         }
 
-        Log.e("INDEX", "CAN'T DOWNLOAD NEW ASSIGNMENTS");
+        Timber.e("CAN'T DOWNLOAD NEW ASSIGNMENTS");
         return false;
     }
 	

@@ -1,5 +1,7 @@
 package org.storymaker.app;
 
+import timber.log.Timber;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -48,7 +50,7 @@ public class StorymakerDownloadHelper {
         if (missingFiles.isEmpty()) {
             return true;
         } else {
-            Log.e("CHECKING FILES", "THE FOLLOWING EXPECTED EXPANSION FILES ARE MISSING OR INCOMPLETE: " + missingFiles.toString());
+            Timber.e("THE FOLLOWING EXPECTED EXPANSION FILES ARE MISSING OR INCOMPLETE: " + missingFiles.toString());
             return false;
         }
     }
@@ -62,7 +64,7 @@ public class StorymakerDownloadHelper {
 
     public static float getDownloadProgress(Context context, String fileName, InstalledIndexItemDao installedDao) {
 
-        //Log.d("DOWNLOAD", "CHECKING PROGRESS FOR " + fileName);
+        //Timber.d("CHECKING PROGRESS FOR " + fileName);
 
         long totalExpectedSize = 0;
         long totalCurrentSize = 0;
@@ -84,13 +86,13 @@ public class StorymakerDownloadHelper {
             } else if (fileName.contains(scal.io.liger.Constants.PATCH)) {
                 contentPackFile = new File(StorymakerIndexManager.buildFileAbsolutePath(contentPack, scal.io.liger.Constants.PATCH, context));
             } else {
-                //Log.e("DOWNLOAD", "CAN'T DETERMINE IF " + fileName + " IS A MAIN OR PATCH FILE");
+                //Timber.e("CAN'T DETERMINE IF " + fileName + " IS A MAIN OR PATCH FILE");
                 sizeUndefined = true;
             }
 
             if ((contentPackFile == null) || (contentPack.getExpansionFileSize() == 0)) {
                 // no size defined, can't evaluate
-                //Log.e("DOWNLOAD", "NO FILE SIZE FOUND FOR " + fileName);
+                //Timber.e("NO FILE SIZE FOUND FOR " + fileName);
                 sizeUndefined = true;
             } else {
                 if (fileName.contains(scal.io.liger.Constants.MAIN)) {
@@ -98,7 +100,7 @@ public class StorymakerDownloadHelper {
                 } else if (fileName.contains(scal.io.liger.Constants.PATCH)) {
                     totalExpectedSize = totalExpectedSize + contentPack.getPatchFileSize();
                 } else {
-                    //Log.e("DOWNLOAD", "CAN'T DETERMINE IF " + fileName + " IS A MAIN OR PATCH FILE");
+                    //Timber.e("CAN'T DETERMINE IF " + fileName + " IS A MAIN OR PATCH FILE");
                     sizeUndefined = true;
                 }
 
@@ -126,17 +128,17 @@ public class StorymakerDownloadHelper {
             }
         } else {
             // no file information found, can't evaluate
-            //Log.e("DOWNLOAD", "NO METADATA FOUND FOR " + fileName);
+            //Timber.e("NO METADATA FOUND FOR " + fileName);
             sizeUndefined = true;
         }
 
         if (sizeUndefined) {
             return -1;
         } else if (totalExpectedSize == 0) {
-            //Log.e("CHECKING FILES", "TOTAL EXPECTED SIZE IS 0 BYTES (NO CURRENT DOWNLOADS?)");
+            //Timber.e("TOTAL EXPECTED SIZE IS 0 BYTES (NO CURRENT DOWNLOADS?)");
             return -1;
         } else {
-            //Log.d("CHECKING FILES", "CURRENT DOWNLOAD PROGRESS: " + totalCurrentSize + " BYTES OUT OF " + totalExpectedSize + " BYTES");
+            //Timber.d("CURRENT DOWNLOAD PROGRESS: " + totalCurrentSize + " BYTES OUT OF " + totalExpectedSize + " BYTES");
             return (float) totalCurrentSize / (float) totalExpectedSize;
         }
     }
@@ -164,7 +166,7 @@ public class StorymakerDownloadHelper {
 
             // if availableItem is null, this was likely removed from the available index and we should purge it from the installed and remove the obb file
             if (availableItem == null) {
-                Log.d(TAG, "item removed from availabe index. deleting obb file and removing from isntalled index");
+                Timber.d("item removed from availabe index. deleting obb file and removing from isntalled index");
                 updateFlag = true;
                 String absPath = StorymakerIndexManager.buildFileAbsolutePath(installedItem, scal.io.liger.Constants.MAIN, context);
                 new File(absPath).delete();
@@ -207,7 +209,7 @@ public class StorymakerDownloadHelper {
             // need a better solution
             try {
                 synchronized (waitObj) {
-                    Log.d("WAITING", "PERSISTING INDEX WITH UPDATED VALUES");
+                    Timber.d("PERSISTING INDEX WITH UPDATED VALUES");
                     waitObj.wait(1000);
                 }
             } catch (InterruptedException e) {
@@ -230,10 +232,10 @@ public class StorymakerDownloadHelper {
         String expansionFilePath = ZipHelper.getExpansionFileFolder(context, mainOrPatch, version);
 
         if (expansionFilePath != null) {
-            Log.d("DOWNLOAD", "EXPANSION FILE " + ZipHelper.getExpansionZipFilename(context, mainOrPatch, version) + " FOUND IN " + expansionFilePath);
+            Timber.d("EXPANSION FILE " + ZipHelper.getExpansionZipFilename(context, mainOrPatch, version) + " FOUND IN " + expansionFilePath);
             return true;
         } else {
-            Log.d("DOWNLOAD", "EXPANSION FILE " + ZipHelper.getExpansionZipFilename(context, mainOrPatch, version) + " NOT FOUND");
+            Timber.d("EXPANSION FILE " + ZipHelper.getExpansionZipFilename(context, mainOrPatch, version) + " NOT FOUND");
             return false;
         }
     }
@@ -249,7 +251,7 @@ public class StorymakerDownloadHelper {
         if ((installedItem.getExpansionFileVersion() != null) &&
                 (availableItem.getExpansionFileVersion() != null) &&
                 (Integer.parseInt(availableItem.getExpansionFileVersion()) > Integer.parseInt(installedItem.getExpansionFileVersion()))) {
-            Log.d("DOWNLOAD", "FOUND NEWER VERSION OF MAIN EXPANSION ITEM " + installedItem.getExpansionId() + " (" + availableItem.getExpansionFileVersion() + " vs. " + installedItem.getExpansionFileVersion() + ") UPDATING");
+            Timber.d("FOUND NEWER VERSION OF MAIN EXPANSION ITEM " + installedItem.getExpansionId() + " (" + availableItem.getExpansionFileVersion() + " vs. " + installedItem.getExpansionFileVersion() + ") UPDATING");
             installedItem.setExpansionFileVersion(availableItem.getExpansionFileVersion());
             itemUpdated = true;
         }
@@ -258,12 +260,12 @@ public class StorymakerDownloadHelper {
         if (availableItem.getPatchFileVersion() != null) {
             if (installedItem.getPatchFileVersion() != null) {
                 if (Integer.parseInt(availableItem.getPatchFileVersion()) > Integer.parseInt(installedItem.getPatchFileVersion())) {
-                    Log.d("DOWNLOAD", "FOUND NEWER VERSION OF PATCH EXPANSION ITEM " + installedItem.getExpansionId() + " (" + availableItem.getPatchFileVersion() + " vs. " + installedItem.getPatchFileVersion() + ") UPDATING");
+                    Timber.d("FOUND NEWER VERSION OF PATCH EXPANSION ITEM " + installedItem.getExpansionId() + " (" + availableItem.getPatchFileVersion() + " vs. " + installedItem.getPatchFileVersion() + ") UPDATING");
                     installedItem.setPatchFileVersion(availableItem.getPatchFileVersion());
                     itemUpdated = true;
                 }
             } else {
-                Log.d("DOWNLOAD", "FOUND NEWER VERSION OF PATCH EXPANSION ITEM " + installedItem.getExpansionId() + " (" + availableItem.getPatchFileVersion() + " vs. " + installedItem.getPatchFileVersion() + ") UPDATING");
+                Timber.d("FOUND NEWER VERSION OF PATCH EXPANSION ITEM " + installedItem.getExpansionId() + " (" + availableItem.getPatchFileVersion() + " vs. " + installedItem.getPatchFileVersion() + ") UPDATING");
                 installedItem.setPatchFileVersion(availableItem.getPatchFileVersion());
                 itemUpdated = true;
             }
@@ -272,7 +274,7 @@ public class StorymakerDownloadHelper {
         ExpansionIndexItem tempItem = fixStats(installedItem, availableItem);
 
         if (tempItem != null) {
-            Log.d("DOWNLOAD", "FOUND UPDATED STATS FOR EXPANSION ITEM " + installedItem.getExpansionId() + " UPDATING");
+            Timber.d("FOUND UPDATED STATS FOR EXPANSION ITEM " + installedItem.getExpansionId() + " UPDATING");
             installedItem = tempItem;
             itemUpdated = true;
         }
@@ -301,26 +303,26 @@ public class StorymakerDownloadHelper {
             // file exists, check size/hash (TODO: hash check)
 
             if (expansionFile.length() == 0) {
-                Log.d("CHECK/DOWNLOAD", "MAIN EXPANSION FILE " + fileName + " IS A ZERO BYTE FILE ");
+                Timber.d("MAIN EXPANSION FILE " + fileName + " IS A ZERO BYTE FILE ");
                 mainFileOk = false;
             }
 
             if ((scal.io.liger.Constants.MAIN_SIZE > 0) && (scal.io.liger.Constants.MAIN_SIZE > expansionFile.length())) {
-                Log.d("CHECK/DOWNLOAD", "MAIN EXPANSION FILE " + fileName + " IS TOO SMALL (" + expansionFile.length() + "/" + scal.io.liger.Constants.MAIN_SIZE + ")");
+                Timber.d("MAIN EXPANSION FILE " + fileName + " IS TOO SMALL (" + expansionFile.length() + "/" + scal.io.liger.Constants.MAIN_SIZE + ")");
                 mainFileOk = false;
             }
 
         } else {
             // file does not exist, flag for downloading
 
-            Log.d("CHECK/DOWNLOAD", "MAIN EXPANSION FILE " + fileName + " DOES NOT EXIST ");
+            Timber.d("MAIN EXPANSION FILE " + fileName + " DOES NOT EXIST ");
             mainFileOk = false;
         }
 
         if (mainFileOk) {
-            Log.d("CHECK/DOWNLOAD", "MAIN EXPANSION FILE " + fileName + " CHECKS OUT, NO DOWNLOAD");
+            Timber.d("MAIN EXPANSION FILE " + fileName + " CHECKS OUT, NO DOWNLOAD");
         } else {
-            Log.d("CHECK/DOWNLOAD", "MAIN EXPANSION FILE " + fileName + " MUST BE DOWNLOADED");
+            Timber.d("MAIN EXPANSION FILE " + fileName + " MUST BE DOWNLOADED");
 
             final LigerDownloadManager expansionDownload = new LigerDownloadManager(scal.io.liger.Constants.MAIN, scal.io.liger.Constants.MAIN_VERSION, context);
             Thread expansionDownloadThread = new Thread(expansionDownload);
@@ -342,19 +344,19 @@ public class StorymakerDownloadHelper {
 
                 String nameFilter = scal.io.liger.Constants.PATCH + ".*." + context.getPackageName() + ".obb";
 
-                Log.d("CHECK/DOWNLOAD", "CLEANUP: DELETING " + nameFilter + " FROM " + obbDirectory.getPath());
+                Timber.d("CLEANUP: DELETING " + nameFilter + " FROM " + obbDirectory.getPath());
 
                 WildcardFileFilter obbFileFilter = new WildcardFileFilter(nameFilter);
                 for (File obbFile : FileUtils.listFiles(obbDirectory, obbFileFilter, null)) {
-                    Log.d("CHECK/DOWNLOAD", "CLEANUP: FOUND " + obbFile.getPath() + ", DELETING");
+                    Timber.d("CLEANUP: FOUND " + obbFile.getPath() + ", DELETING");
                     FileUtils.deleteQuietly(obbFile);
                 }
 
-                Log.d("CHECK/DOWNLOAD", "CLEANUP: DELETING " + nameFilter + " FROM " + fileDirectory.getPath());
+                Timber.d("CLEANUP: DELETING " + nameFilter + " FROM " + fileDirectory.getPath());
 
                 WildcardFileFilter fileFileFilter = new WildcardFileFilter(nameFilter);
                 for (File fileFile : FileUtils.listFiles(fileDirectory, fileFileFilter, null)) {
-                    Log.d("CHECK/DOWNLOAD", "CLEANUP: FOUND " + fileFile.getPath() + ", DELETING");
+                    Timber.d("CLEANUP: FOUND " + fileFile.getPath() + ", DELETING");
                     FileUtils.deleteQuietly(fileFile);
                 }
             } else {
@@ -367,26 +369,26 @@ public class StorymakerDownloadHelper {
                     // file exists, check size/hash (TODO: hash check)
 
                     if (expansionFile.length() == 0) {
-                        Log.d("CHECK/DOWNLOAD", "EXPANSION FILE PATCH " + patchName + " IS A ZERO BYTE FILE ");
+                        Timber.d("EXPANSION FILE PATCH " + patchName + " IS A ZERO BYTE FILE ");
                         patchFileOk = false;
                     }
 
                     if ((scal.io.liger.Constants.PATCH_SIZE > 0) && (scal.io.liger.Constants.PATCH_SIZE > expansionFile.length())) {
-                        Log.d("CHECK/DOWNLOAD", "EXPANSION FILE PATCH " + fileName + " IS TOO SMALL (" + expansionFile.length() + "/" + scal.io.liger.Constants.PATCH_SIZE + ")");
+                        Timber.d("EXPANSION FILE PATCH " + fileName + " IS TOO SMALL (" + expansionFile.length() + "/" + scal.io.liger.Constants.PATCH_SIZE + ")");
                         patchFileOk = false;
                     }
 
                 } else {
                     // file does not exist, flag for downloading
 
-                    Log.d("CHECK/DOWNLOAD", "EXPANSION FILE PATCH " + patchName + " DOES NOT EXIST ");
+                    Timber.d("EXPANSION FILE PATCH " + patchName + " DOES NOT EXIST ");
                     patchFileOk = false;
                 }
 
                 if (patchFileOk) {
-                    Log.d("CHECK/DOWNLOAD", "EXPANSION FILE PATCH " + patchName + " CHECKS OUT, NO DOWNLOAD");
+                    Timber.d("EXPANSION FILE PATCH " + patchName + " CHECKS OUT, NO DOWNLOAD");
                 } else {
-                    Log.d("CHECK/DOWNLOAD", "EXPANSION FILE PATCH " + patchName + " MUST BE DOWNLOADED");
+                    Timber.d("EXPANSION FILE PATCH " + patchName + " MUST BE DOWNLOADED");
 
                     final LigerDownloadManager expansionDownload = new LigerDownloadManager(scal.io.liger.Constants.PATCH, scal.io.liger.Constants.PATCH_VERSION, context);
                     Thread expansionDownloadThread = new Thread(expansionDownload);
@@ -421,12 +423,12 @@ public class StorymakerDownloadHelper {
             // file exists, check size/hash (TODO: hash check)
 
             if (expansionFile.length() == 0) {
-                Log.d("CHECK/DOWNLOAD", "CONTENT PACK FILE " + fileName + " IS A ZERO BYTE FILE ");
+                Timber.d("CONTENT PACK FILE " + fileName + " IS A ZERO BYTE FILE ");
                 mainFileOk = false;
             }
 
             if ((installedItem.getExpansionFileSize() > 0) && (installedItem.getExpansionFileSize() > expansionFile.length())) {
-                Log.d("CHECK/DOWNLOAD", "CONTENT PACK FILE " + fileName + " IS TOO SMALL (" + expansionFile.length() + "/" + installedItem.getExpansionFileSize() + ")");
+                Timber.d("CONTENT PACK FILE " + fileName + " IS TOO SMALL (" + expansionFile.length() + "/" + installedItem.getExpansionFileSize() + ")");
                 mainFileOk = false;
             }
 
@@ -435,15 +437,15 @@ public class StorymakerDownloadHelper {
         } else {
             // file does not exist, flag for downloading
             // (download process will handle .tmp and .part files)
-            Log.d("CHECK/DOWNLOAD", "CONTENT PACK FILE " + fileName + " DOES NOT EXIST ");
+            Timber.d("CONTENT PACK FILE " + fileName + " DOES NOT EXIST ");
             mainFileOk = false;
         }
 
         if (mainFileOk) {
-            Log.d("CHECK/DOWNLOAD", "CONTENT PACK FILE " + fileName + " CHECKS OUT, NO DOWNLOAD");
+            Timber.d("CONTENT PACK FILE " + fileName + " CHECKS OUT, NO DOWNLOAD");
 
         } else {
-            Log.d("CHECK/DOWNLOAD", "CONTENT PACK FILE " + fileName + " MUST BE DOWNLOADED");
+            Timber.d("CONTENT PACK FILE " + fileName + " MUST BE DOWNLOADED");
 
             final StorymakerDownloadManager mainDownload = new StorymakerDownloadManager(fileName, installedItem, context, installedDao, queueDao, confirmDownload);
             Thread mainDownloadThread = new Thread(mainDownload);
@@ -470,19 +472,19 @@ public class StorymakerDownloadHelper {
 
                 String nameFilter = installedItem.getExpansionId() + "." + scal.io.liger.Constants.PATCH + "*" + ".obb";
 
-                Log.d("CHECK/DOWNLOAD", "CLEANUP: DELETING " + nameFilter + " FROM " + obbDirectory.getPath());
+                Timber.d("CLEANUP: DELETING " + nameFilter + " FROM " + obbDirectory.getPath());
 
                 WildcardFileFilter obbFileFilter = new WildcardFileFilter(nameFilter);
                 for (File obbFile : FileUtils.listFiles(obbDirectory, obbFileFilter, null)) {
-                    Log.d("CHECK/DOWNLOAD", "CLEANUP: FOUND " + obbFile.getPath() + ", DELETING");
+                    Timber.d("CLEANUP: FOUND " + obbFile.getPath() + ", DELETING");
                     FileUtils.deleteQuietly(obbFile);
                 }
 
-                Log.d("CHECK/DOWNLOAD", "CLEANUP: DELETING " + nameFilter + " FROM " + fileDirectory.getPath());
+                Timber.d("CLEANUP: DELETING " + nameFilter + " FROM " + fileDirectory.getPath());
 
                 WildcardFileFilter fileFileFilter = new WildcardFileFilter(nameFilter);
                 for (File fileFile : FileUtils.listFiles(fileDirectory, fileFileFilter, null)) {
-                    Log.d("CHECK/DOWNLOAD", "CLEANUP: FOUND " + fileFile.getPath() + ", DELETING");
+                    Timber.d("CLEANUP: FOUND " + fileFile.getPath() + ", DELETING");
                     FileUtils.deleteQuietly(fileFile);
                 }
             } else {
@@ -495,12 +497,12 @@ public class StorymakerDownloadHelper {
                     // file exists, check size/hash (TODO: hash check)
 
                     if (expansionFile.length() == 0) {
-                        Log.d("CHECK/DOWNLOAD", "CONTENT PACK PATCH " + patchName + " IS A ZERO BYTE FILE ");
+                        Timber.d("CONTENT PACK PATCH " + patchName + " IS A ZERO BYTE FILE ");
                         patchFileOk = false;
                     }
 
                     if ((installedItem.getPatchFileSize() > 0) && (installedItem.getPatchFileSize() > expansionFile.length())) {
-                        Log.d("CHECK/DOWNLOAD", "CONTENT PACK PATCH " + patchName + " IS TOO SMALL (" + expansionFile.length() + "/" + installedItem.getPatchFileSize() + ")");
+                        Timber.d("CONTENT PACK PATCH " + patchName + " IS TOO SMALL (" + expansionFile.length() + "/" + installedItem.getPatchFileSize() + ")");
                         patchFileOk = false;
                     }
 
@@ -510,16 +512,16 @@ public class StorymakerDownloadHelper {
                 } else {
                     // file does not exist, flag for downloading
                     // (download process will handle .tmp and .part files)
-                    Log.d("CHECK/DOWNLOAD", "CONTENT PACK PATCH " + patchName + " DOES NOT EXIST ");
+                    Timber.d("CONTENT PACK PATCH " + patchName + " DOES NOT EXIST ");
                     patchFileOk = false;
                 }
 
                 if (patchFileOk) {
-                    Log.d("CHECK/DOWNLOAD", "CONTENT PACK PATCH " + patchName + " CHECKS OUT, NO DOWNLOAD");
+                    Timber.d("CONTENT PACK PATCH " + patchName + " CHECKS OUT, NO DOWNLOAD");
 
 
                 } else {
-                    Log.d("CHECK/DOWNLOAD", "CONTENT PACK PATCH " + patchName + " MUST BE DOWNLOADED");
+                    Timber.d("CONTENT PACK PATCH " + patchName + " MUST BE DOWNLOADED");
 
                     final StorymakerDownloadManager patchDownload = new StorymakerDownloadManager(patchName, installedItem, context, installedDao, queueDao, confirmDownload);
                     Thread patchDownloadThread = new Thread(patchDownload);
@@ -545,7 +547,7 @@ public class StorymakerDownloadHelper {
         Thread mainThread = downloadThreads.get(scal.io.liger.Constants.MAIN);
 
         if (mainThread != null) {
-            Log.d("DOWNLOAD", "STOPPING THREAD " + mainThread.getId());
+            Timber.d("STOPPING THREAD " + mainThread.getId());
             mainThread.start();
             downloadStarted = true;
         }
@@ -553,7 +555,7 @@ public class StorymakerDownloadHelper {
         Thread patchThread = downloadThreads.get(scal.io.liger.Constants.PATCH);
 
         if (patchThread != null) {
-            Log.d("DOWNLOAD", "STOPPING THREAD " + patchThread.getId());
+            Timber.d("STOPPING THREAD " + patchThread.getId());
             patchThread.start();
             downloadStarted = true;
         }
@@ -609,7 +611,7 @@ public class StorymakerDownloadHelper {
         }
 
         if (!updatedStats.isEmpty()) {
-            Log.d("INDEX", "UPDATED STATS FOR " + installedItem.getExpansionId() + ": " + updatedStats.toString());
+            Timber.d("UPDATED STATS FOR " + installedItem.getExpansionId() + ": " + updatedStats.toString());
             return installedItem;
         } else {
             return null;

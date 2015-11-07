@@ -1,5 +1,7 @@
 package org.storymaker.app.model;
 
+import timber.log.Timber;
+
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;

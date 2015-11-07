@@ -1,5 +1,7 @@
 package org.storymaker.app.publish;
 
+import timber.log.Timber;
+
 import org.storymaker.app.model.Auth;
 import org.storymaker.app.model.Job;
 import org.storymaker.app.model.JobTable;
@@ -84,14 +86,14 @@ public  class UploadWorker extends WorkerBase {
 
     @Override
 	public void jobSucceeded(Job job, String code) {
-        Log.d(TAG, "jobSucceeded: " + job + ", with code: " + code);
+        Timber.d("jobSucceeded: " + job + ", with code: " + code);
 		// TODO start the next job
 		mController.jobSucceeded(job, code);
 	}
 
     @Override
 	public void jobFailed(Job job, Exception exception, int errorCode, String errorMessage) {
-        Log.d(TAG, "jobFailed: " + job + ", with errorCode: " + errorCode + ", and errorMessage: " + errorMessage);
+        Timber.d("jobFailed: " + job + ", with errorCode: " + errorCode + ", and errorMessage: " + errorMessage);
 		// TODO start the next job
 		mController.jobFailed(job, exception, errorCode, errorMessage);
 	}

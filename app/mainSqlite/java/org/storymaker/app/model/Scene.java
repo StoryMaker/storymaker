@@ -1,5 +1,7 @@
 package org.storymaker.app.model;
 
+import timber.log.Timber;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -575,7 +577,7 @@ public class Scene extends Model {
     }    
     
     public void migrateDeleteDupedMedia() {
-        Log.d("Scene", "Migrating to delete duped Media records in scene: " + this.getId());
+        Timber.d("Migrating to delete duped Media records in scene: " + this.getId());
         Cursor cursor = getMediaAsCursor();
         ArrayList<Media> medias = new ArrayList<Media>(mClipCount);
         
@@ -603,7 +605,7 @@ public class Scene extends Model {
                 }
                 // if it's not found in the reduced arraylist, this means it was a dupe record that we can delete
                 if (!found) {
-                    Log.d("Scene", "found a deplicated media: " + id);
+                    Timber.d("found a deplicated media: " + id);
                     (new MediaTable(mDB)).delete(context, id);
                 }
             } while (cursor.moveToNext());

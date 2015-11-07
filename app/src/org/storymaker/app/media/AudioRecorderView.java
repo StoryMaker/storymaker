@@ -1,5 +1,7 @@
 package org.storymaker.app.media;
 
+import timber.log.Timber;
+
 import org.storymaker.app.AppConstants;
 
 import java.io.File;

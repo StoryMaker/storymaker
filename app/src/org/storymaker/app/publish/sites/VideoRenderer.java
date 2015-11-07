@@ -1,5 +1,7 @@
 package org.storymaker.app.publish.sites;
 
+import timber.log.Timber;
+
 import java.io.File;
 import java.io.IOException;
 
@@ -60,7 +62,7 @@ public class VideoRenderer extends RendererBase {
             File renderTempFolder = MediaProjectManager.getRenderPath(context);
             Runtime.getRuntime().exec("rm -rf " + renderTempFolder.getCanonicalPath());
         } catch (IOException ioe) {
-            Log.e("VideoRenderer", "Exception caught while clearing temporary folder: ", ioe);
+            Timber.e("Exception caught while clearing temporary folder: ", ioe);
         }
     }
     
@@ -73,7 +75,7 @@ public class VideoRenderer extends RendererBase {
             String statusTitle = msg.getData().getString("statusTitle");
             String status = msg.getData().getString("status");
             if (status != null) {
-                Log.d(TAG, status);
+                Timber.d(status);
             }
 
             String error = msg.getData().getString("error");

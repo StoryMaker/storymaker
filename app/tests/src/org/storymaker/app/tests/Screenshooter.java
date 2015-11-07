@@ -1,5 +1,7 @@
 package org.storymaker.app.tests;
 
+import timber.log.Timber;
+
 import android.annotation.TargetApi;
 import android.app.Instrumentation;
 import android.graphics.Bitmap;
@@ -33,7 +35,7 @@ public class Screenshooter {
 
     public void takeScreenshot(String title) {
         if (mInstrumentation.getContext() == null) {
-            Log.e(TAG, "Provided instrumentation has non Context reference. Cannot take screenshot");
+            Timber.e("Provided instrumentation has non Context reference. Cannot take screenshot");
             return;
         }
 
@@ -47,7 +49,7 @@ public class Screenshooter {
             screen.compress(Bitmap.CompressFormat.PNG, 100, os);
             os.close();
         } catch (IOException e) {
-            Log.w("takeScreenshot", "Unable to save: " + e.getMessage());
+            Timber.w("Unable to save: " + e.getMessage());
             e.printStackTrace();
         }
     }

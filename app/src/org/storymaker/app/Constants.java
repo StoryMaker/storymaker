@@ -1,5 +1,7 @@
 package org.storymaker.app;
 
+import timber.log.Timber;
+
 public class Constants {
     public static final String ASSET_EULA = "EULA";
     public static final String PREFERENCE_EULA_ACCEPTED = "eula.accepted";

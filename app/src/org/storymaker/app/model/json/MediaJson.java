@@ -1,6 +1,10 @@
 
 package org.storymaker.app.model.json;
 
+import timber.log.Timber;
+
+import timber.log.Timber;
+
 import org.storymaker.app.model.Media;
 import org.storymaker.app.model.json.ModelJson.ModelSerializerDeserializer;
 

@@ -1,5 +1,7 @@
 package org.storymaker.app.model;
 
+import timber.log.Timber;
+
 import java.util.ArrayList;
 
 import net.sqlcipher.database.SQLiteDatabase;

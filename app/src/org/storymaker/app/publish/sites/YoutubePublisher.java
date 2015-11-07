@@ -1,5 +1,7 @@
 package org.storymaker.app.publish.sites;
 
+import timber.log.Timber;
+
 import android.content.Context;
 import android.util.Log;
 import org.storymaker.app.model.Auth;
@@ -20,7 +22,7 @@ public class YoutubePublisher extends PublisherBase {
     @Override
     public void startRender() 
     {
-        Log.d(TAG, "startRender()");
+        Timber.d("startRender()");
         
         Job videoRenderJob = new Job(mContext, mPublishJob.getProjectId(), mPublishJob.getId(), JobTable.TYPE_RENDER, null, VideoRenderer.SPEC_KEY);
         mController.enqueueJob(videoRenderJob);
@@ -29,7 +31,7 @@ public class YoutubePublisher extends PublisherBase {
     @Override
     public void startUpload() 
     {
-        Log.d(TAG, "startUpload()");
+        Timber.d("startUpload()");
         
         Job newJob = new Job(mContext, mPublishJob.getProjectId(), mPublishJob.getId(), JobTable.TYPE_UPLOAD, Auth.SITE_YOUTUBE, null);
         mController.enqueueJob(newJob);

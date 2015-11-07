@@ -1,5 +1,7 @@
 package org.storymaker.app.publish.sites;
 
+import timber.log.Timber;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -28,7 +30,7 @@ public class FlickrUploader extends UploaderBase {
 
     @Override
     public void start() {
-        Log.d(TAG, "start()");
+        Timber.d("start()");
         
         final SiteController controller = SiteController.getSiteController(FlickrSiteController.SITE_KEY, mContext, mHandler, ""+mJob.getId());
         final Project project = mJob.getProject();
@@ -40,7 +42,7 @@ public class FlickrUploader extends UploaderBase {
             Runnable myRunnable = new Runnable() {
                 @Override
                 public void run() {
-                    Log.d(TAG, "run()");
+                    Timber.d("run()");
                  // FIXME, this might not be wise to run on the main thread flickr, does the flickr SDK automatically run itself on a backgroundthread?
                     HashMap<String, String> valueMap = publishJob.getMetadata();
 
@@ -71,7 +73,7 @@ public class FlickrUploader extends UploaderBase {
             };
             mainHandler.post(myRunnable);
         } else {
-            Log.e(TAG, "flickr upload failed, file path is null");
+            Timber.e("flickr upload failed, file path is null");
         }
     }
 }

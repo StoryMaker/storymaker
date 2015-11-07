@@ -1,5 +1,7 @@
 package org.storymaker.app.media.exporter;
 
+import timber.log.Timber;
+
 import java.io.File;
 import java.util.ArrayList;
 
@@ -146,7 +148,7 @@ public class MediaSlideshowExporter extends MediaExporter {
 					
 					
 					if (!line.startsWith("frame"))
-						Log.d(AppConstants.TAG, line);
+						Timber.d(line);
 					
 					
 					int idx1;

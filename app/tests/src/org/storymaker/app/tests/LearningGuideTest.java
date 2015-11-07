@@ -1,5 +1,7 @@
 package org.storymaker.app.tests;
 
+import timber.log.Timber;
+
 import android.app.Activity;
 import android.app.Instrumentation;
 import android.content.Intent;
@@ -94,12 +96,12 @@ public class LearningGuideTest extends ActivityInstrumentationTestCase2<HomeActi
     public void testPreConditions() {
         assertTrue(mHomeActivity != null);
         assertTrue(mRecyclerView != null);
-        Log.d("AUTOMATION", "testPreConditions() COMPLETE");
+        Timber.d("testPreConditions() COMPLETE");
     }
 
     public void testRecyclerViewExist() {
         assertOnScreen(mHomeActivity.getWindow().getDecorView(), mRecyclerView);
-        Log.d("AUTOMATION", "testRecyclerViewExist() COMPLETE");
+        Timber.d("testRecyclerViewExist() COMPLETE");
     }
 
 
@@ -167,7 +169,7 @@ public class LearningGuideTest extends ActivityInstrumentationTestCase2<HomeActi
         // pause before closing
         stall(2000, "INTERMISSION (LEARNING GUIDE 1 VIDEO COMPLETE)");
 
-        Log.d("AUTOMATION", "testVideo() COMPLETE");
+        Timber.d("testVideo() COMPLETE");
     }
 
     public void testAudio() {
@@ -234,7 +236,7 @@ public class LearningGuideTest extends ActivityInstrumentationTestCase2<HomeActi
         // pause before closing
         stall(2000, "INTERMISSION (LEARNING GUIDE 1 AUDIO COMPLETE)");
 
-        Log.d("AUTOMATION", "testAudio() COMPLETE");
+        Timber.d("testAudio() COMPLETE");
     }
 
     public void testPhoto() {
@@ -301,12 +303,12 @@ public class LearningGuideTest extends ActivityInstrumentationTestCase2<HomeActi
         // pause before closing
         stall(2000, "INTERMISSION (LEARNING GUIDE 1 PHOTO COMPLETE)");
 
-        Log.d("AUTOMATION", "testPhoto() COMPLETE");
+        Timber.d("testPhoto() COMPLETE");
     }
 
     private void stall(long milliseconds, String message) {
         try {
-            Log.d("AUTOMATION", "SLEEP " + (milliseconds / 1000) + " (" + message + ")");
+            Timber.d("SLEEP " + (milliseconds / 1000) + " (" + message + ")");
             Thread.sleep(milliseconds);
         } catch (InterruptedException e) {
             e.printStackTrace();

@@ -1,5 +1,7 @@
 package org.storymaker.app.model;
 
+import timber.log.Timber;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -647,7 +649,7 @@ public class Media extends Model {
 		} 
     	catch (IOException e) 
     	{
-    		Log.e("MEDIA MIGRATION", "unexpected exception: " + e.getMessage());
+    		Timber.e("unexpected exception: " + e.getMessage());
 			return false;
 		}
     	

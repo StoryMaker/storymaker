@@ -1,5 +1,7 @@
 package org.storymaker.app.ui;
 
+import timber.log.Timber;
+
 import java.util.ArrayList;
 
 import org.storymaker.app.AppConstants;

@@ -1,5 +1,7 @@
 package org.storymaker.app.publish;
 
+import timber.log.Timber;
+
 import java.util.ArrayList;
 
 import org.storymaker.app.model.Job;
@@ -73,12 +75,12 @@ public class RenderWorker extends WorkerBase {
 	
 	public void jobSucceeded(Job job, String code) {
 		// TODO start the next job
-	    Log.d(TAG, "jobSucceeded: " + job + ", with code: " + code);
+	    Timber.d("jobSucceeded: " + job + ", with code: " + code);
 		mController.jobSucceeded(job, code);
 	}
 	
 	public void jobFailed(Job job, Exception exception, int errorCode, String errorMessage) {
-        Log.d(TAG, "jobFailed: " + job + ", with errorCode: " + errorCode + ", and errorMessage: " + errorMessage);
+        Timber.d("jobFailed: " + job + ", with errorCode: " + errorCode + ", and errorMessage: " + errorMessage);
 		// TODO start the next job
 		mController.jobFailed(job, exception, errorCode, errorMessage);
 	}

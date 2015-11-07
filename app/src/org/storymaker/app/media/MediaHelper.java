@@ -1,5 +1,7 @@
 package org.storymaker.app.media;
 
+import timber.log.Timber;
+
 import org.storymaker.app.AppConstants;
 import org.storymaker.app.EditorBaseActivity;
 
@@ -282,7 +284,7 @@ public class MediaHelper implements MediaScannerConnectionClient {
 			else if(requestCode == MediaConstants.CAMERA_RESULT) {
 				
 				//Uri uriCameraImage = intent.getData();			
-				//Log.d(MediaAppConstants.TAG, "RETURNED URI FROM CAMERA RESULT: " + uriCameraImage.toString());
+				//Timber.d("RETURNED URI FROM CAMERA RESULT: " + uriCameraImage.toString());
 				//Uri uriCameraImage = Uri.fromFile(mFileTmp);
 				
 				result = new MediaResult();
@@ -424,7 +426,7 @@ public class MediaHelper implements MediaScannerConnectionClient {
 	public void onScanCompleted(String path, Uri uri) {
 		
 		mScanner.disconnect();
-		//Log.d(MediaAppConstants.TAG, "new path: " + path + "\nnew uri for path: " + uri.toString());
+		//Timber.d("new path: " + path + "\nnew uri for path: " + uri.toString());
 		
 		if (mHandler != null)
 		{

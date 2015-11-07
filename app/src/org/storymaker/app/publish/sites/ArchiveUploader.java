@@ -1,5 +1,7 @@
 package org.storymaker.app.publish.sites;
 
+import timber.log.Timber;
+
 import java.io.File;
 import java.util.HashMap;
 
@@ -41,7 +43,7 @@ public class ArchiveUploader extends UploaderBase {
             addValuesToHashmap(valueMap, project.getTitle(), project.getDescription(), path);
             controller.upload(auth.convertToAccountObject(), valueMap); // FIXME need to hookup Account to this
         } else {
-            Log.d(TAG, "Can't upload to Internet Archive server, last rendered file doesn't exist.");
+            Timber.d("Can't upload to Internet Archive server, last rendered file doesn't exist.");
             // TODO get this error back to the activity for display 
             jobFailed(null, ERROR_NO_RENDER_FILE, "Can't upload to Internet Archive server, last rendered file doesn't exist."); // FIXME move to strings.xml
         }

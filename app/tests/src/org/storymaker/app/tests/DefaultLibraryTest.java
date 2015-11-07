@@ -1,5 +1,7 @@
 package org.storymaker.app.tests;
 
+import timber.log.Timber;
+
 import android.app.Activity;
 import android.app.Instrumentation;
 import android.content.Intent;
@@ -160,7 +162,7 @@ public class DefaultLibraryTest extends ActivityInstrumentationTestCase2<HomeAct
 
                 String secondSelection = secondOption[j];
 
-                Log.d("AUTOMATION", " *** TESTING " + firstSelection + "/" + secondSelection + " ****************************** ");
+                Timber.d(" *** TESTING " + firstSelection + "/" + secondSelection + " ****************************** ");
 
                 testFlag = (testFlag && doTest(firstSelection, secondSelection));
 
@@ -220,75 +222,75 @@ public class DefaultLibraryTest extends ActivityInstrumentationTestCase2<HomeAct
         try {
             stall(500, "PUBLISH BUTTON");
             onView(allOf(withText("Publish"), withParent(withTagValue(is((Object) "publish_card_1"))))).perform(click());
-            Log.d("AUTOMATION", "CLICKED PUBLISH BUTTON");
+            Timber.d("CLICKED PUBLISH BUTTON");
         } catch (NoMatchingViewException nmve) {
             // implies no button was found (failure)
-            Log.d("AUTOMATION", "NO PUBLISH BUTTON FOUND (FAIL)");
+            Timber.d("NO PUBLISH BUTTON FOUND (FAIL)");
             return false;
         }
 
         // enter metadata
         stall(500, "METADATA");
         onView(withId(R.id.fl_info_container)).perform(click());
-        Log.d("AUTOMATION", "CLICKED DESCRIPTION FIELD");
+        Timber.d("CLICKED DESCRIPTION FIELD");
         stall(500, "TITLE");
         onView(withId(R.id.et_story_info_title)).perform(clearText()).perform(typeText(mediaString.toUpperCase() + "/" + accountString.toUpperCase()));
-        Log.d("AUTOMATION", "ENTERED TITLE TEXT");
+        Timber.d("ENTERED TITLE TEXT");
         stall(500, "DESCRIPTION");
         onView(withId(R.id.et_story_info_description)).perform(clearText()).perform(typeText(mediaString + "/" + accountString));
-        Log.d("AUTOMATION", "ENTERED DESCRIPTION TEXT");
+        Timber.d("ENTERED DESCRIPTION TEXT");
         stall(500, "FIRST TAG");
         onView(withId(R.id.act_story_info_tag)).perform(clearText()).perform(typeText(mediaString.toLowerCase()));
         stall(500, "FIRST ADD");
         onView(withId(R.id.btn_add_tag)).perform(click());
-        Log.d("AUTOMATION", "ENTERED FIRST TAG");
+        Timber.d("ENTERED FIRST TAG");
         stall(500, "SECOND TAG");
         onView(withId(R.id.act_story_info_tag)).perform(clearText()).perform(typeText(accountString.toLowerCase()));
         stall(500, "SECOND ADD");
         onView(withId(R.id.btn_add_tag)).perform(click());
-        Log.d("AUTOMATION", "ENTERED SECOND TAG");
+        Timber.d("ENTERED SECOND TAG");
         stall(500, "SECTION LIST");
         onView(withId(R.id.sp_story_section)).perform(click());
         stall(500, "SECTION ITEM");
         onView(withText("Travel")).perform(click());
-        Log.d("AUTOMATION", "SELECTED SECTION");
+        Timber.d("SELECTED SECTION");
         stall(500, "LOCATION LIST");
         onView(withId(R.id.sp_story_location)).perform(click());
         stall(500, "LOCATION ITEM");
         onView(withText("Czech Republic")).perform(click());
-        Log.d("AUTOMATION", "SELECTED LOCATION");
+        Timber.d("SELECTED LOCATION");
         stall(500, "SAVE");
         onView(withText("Save")).perform(click());
-        Log.d("AUTOMATION", "SAVED INFO");
+        Timber.d("SAVED INFO");
 
 
 
         // select account and upload
         stall(500, "UPLOAD BUTTON");
         onView(withId(R.id.btnUpload)).perform(click());
-        Log.d("AUTOMATION", "CLICKED UPLOAD BUTTON");
+        Timber.d("CLICKED UPLOAD BUTTON");
         stall(500, "ACCOUNT BUTTON");
         onView(withText(accountString)).perform(click());
-        Log.d("AUTOMATION", "CLICKED " + accountString + " BUTTON");
+        Timber.d("CLICKED " + accountString + " BUTTON");
 
         try {
             stall(500, "CONTINUE BUTTON");
             // CRASHES onView(withText("Continue")).perform(click());
-            Log.d("AUTOMATION", "CLICKED CONTINUE BUTTON");
+            Timber.d("CLICKED CONTINUE BUTTON");
         } catch (NoMatchingViewException nmve) {
             // implies no button was found (failure)
-            Log.d("AUTOMATION", "NO CONTINUE BUTTON FOUND (FAIL)");
+            Timber.d("NO CONTINUE BUTTON FOUND (FAIL)");
             return false;
         }
 
         // test complete
-        Log.d("AUTOMATION", "TEST RUN COMPLETE (PASS)");
+        Timber.d("TEST RUN COMPLETE (PASS)");
         return true;
     }
 
     private void stall(long milliseconds, String message) {
         try {
-            Log.d("AUTOMATION", "SLEEP " + (milliseconds / 1000) + " (" + message + ")");
+            Timber.d("SLEEP " + (milliseconds / 1000) + " (" + message + ")");
             Thread.sleep(milliseconds);
         } catch (InterruptedException e) {
             e.printStackTrace();
@@ -304,7 +306,7 @@ public class DefaultLibraryTest extends ActivityInstrumentationTestCase2<HomeAct
     private void cleanup(String directory) {
         WildcardFileFilter oldFileFilter = new WildcardFileFilter("*instance*");
         for (File oldFile : FileUtils.listFiles(new File(directory), oldFileFilter, null)) {
-            Log.d("AUTOMATION", "CLEANUP: FOUND " + oldFile.getPath() + ", DELETING");
+            Timber.d("CLEANUP: FOUND " + oldFile.getPath() + ", DELETING");
             FileUtils.deleteQuietly(oldFile);
         }
     }

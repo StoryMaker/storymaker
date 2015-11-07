@@ -1,5 +1,7 @@
 package org.storymaker.app;
 
+import timber.log.Timber;
+
 import java.util.ArrayList;
 
 import org.storymaker.app.model.Project;

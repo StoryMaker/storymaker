@@ -1,5 +1,7 @@
 package org.storymaker.app.publish;
 
+import timber.log.Timber;
+
 import java.util.HashMap;
 import java.util.Map;
 

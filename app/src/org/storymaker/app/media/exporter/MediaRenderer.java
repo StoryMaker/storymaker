@@ -1,5 +1,7 @@
 package org.storymaker.app.media.exporter;
 
+import timber.log.Timber;
+
 import org.storymaker.app.AppConstants;
 import org.storymaker.app.media.MediaClip;
 import org.storymaker.app.media.MediaManager;

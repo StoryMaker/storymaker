@@ -15,6 +15,8 @@
 
 package org.storymaker.app.server;
 
+import timber.log.Timber;
+
 import android.app.Activity;
 import android.content.Context;
 

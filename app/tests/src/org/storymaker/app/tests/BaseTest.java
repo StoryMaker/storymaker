@@ -1,5 +1,7 @@
 package org.storymaker.app.tests;
 
+import timber.log.Timber;
+
 import android.app.Activity;
 import android.app.Instrumentation;
 import android.content.Intent;
@@ -74,7 +76,7 @@ public class BaseTest extends ActivityInstrumentationTestCase2<HomeActivity> {
     public void setUp() throws Exception {
         super.setUp();
 
-        Log.d("AUTOMATION", "BEGIN SETUP");
+        Timber.d("BEGIN SETUP");
 
         mHomeActivity = getActivity();
 
@@ -117,15 +119,15 @@ public class BaseTest extends ActivityInstrumentationTestCase2<HomeActivity> {
             assetOut.flush();
             assetOut.close();
             assetOut = null;
-            Log.d("AUTOMATION", "COPYING SAMPLE FILE " + sampleVideoName + " FROM ASSETS TO " + testDirectory + " FINISHED");
+            Timber.d("COPYING SAMPLE FILE " + sampleVideoName + " FROM ASSETS TO " + testDirectory + " FINISHED");
         } catch (IOException ioe) {
-            Log.e("AUTOMATION", "COPYING SAMPLE FILE " + sampleVideoName + " FROM ASSETS TO " + testDirectory + " FAILED");
+            Timber.e("COPYING SAMPLE FILE " + sampleVideoName + " FROM ASSETS TO " + testDirectory + " FAILED");
             return;
         }
 
         // check for zero-byte files
         if (sampleVideoFile.exists() && (sampleVideoFile.length() == 0)) {
-            Log.e("AUTOMATION", "COPYING SAMPLE FILE " + sampleVideoName + " FROM ASSETS TO " + testDirectory + " FAILED (FILE WAS ZERO BYTES)");
+            Timber.e("COPYING SAMPLE FILE " + sampleVideoName + " FROM ASSETS TO " + testDirectory + " FAILED (FILE WAS ZERO BYTES)");
             sampleVideoFile.delete();
         }
 
@@ -179,87 +181,87 @@ public class BaseTest extends ActivityInstrumentationTestCase2<HomeActivity> {
         // clear out files from previous tests
         cleanup(testDirectory);
 
-        Log.d("AUTOMATION", "SETUP COMPLETE");
+        Timber.d("SETUP COMPLETE");
     }
 
     public void tearDown() throws Exception {
         super.tearDown();
 
-        Log.d("AUTOMATION", "BEGIN TEARDOWN");
+        Timber.d("BEGIN TEARDOWN");
 
-        Log.d("AUTOMATION", "TEARDOWN COMPLETE");
+        Timber.d("TEARDOWN COMPLETE");
     }
 
     public void cleanup(String directory) {
 
-        Log.d("AUTOMATION", "BEGIN CLEANUP");
+        Timber.d("BEGIN CLEANUP");
 
         WildcardFileFilter oldFileFilter = new WildcardFileFilter("*instance*");
         for (File oldFile : FileUtils.listFiles(new File(directory), oldFileFilter, null)) {
-            Log.d("AUTOMATION", "FOUND " + oldFile.getPath() + ", DELETING");
+            Timber.d("FOUND " + oldFile.getPath() + ", DELETING");
             FileUtils.deleteQuietly(oldFile);
         }
 
-        Log.d("AUTOMATION", "CLEANUP COMPLETE");
+        Timber.d("CLEANUP COMPLETE");
     }
 
     public void doEula() {
 
-        Log.d("AUTOMATION", "BEGIN EULA");
+        Timber.d("BEGIN EULA");
 
         onView(withId(R.id.btnTos)).perform(click());
-        Log.d("AUTOMATION", "CLICKED TOS BUTTON");
+        Timber.d("CLICKED TOS BUTTON");
 
         onView(withText("Accept")).perform(click());
-        Log.d("AUTOMATION", "CLICKED ACCEPT BUTTON");
+        Timber.d("CLICKED ACCEPT BUTTON");
 
         onView(withId(R.id.btnNoThanks)).perform(click());
-        Log.d("AUTOMATION", "CLICKED NO THANKS BUTTON");
+        Timber.d("CLICKED NO THANKS BUTTON");
 
-        Log.d("AUTOMATION", "EULA COMPLETE");
+        Timber.d("EULA COMPLETE");
     }
 
     public boolean doTorToggle() {
 
         // assumes app is on home screen
 
-        Log.d("AUTOMATION", "BEGIN TOR TOGGLE");
+        Timber.d("BEGIN TOR TOGGLE");
 
         // check for tor
         OrbotHelper oh = new OrbotHelper(mHomeActivity);
 
         if (!oh.isOrbotInstalled())
         {
-            Log.e("AUTOMATION", "TOR TOGGLE FAILED, ORBOT NOT INSTALLED");
+            Timber.e("TOR TOGGLE FAILED, ORBOT NOT INSTALLED");
             return false;
         }
         else if (!oh.isOrbotRunning())
         {
-            Log.e("AUTOMATION", "TOR TOGGLE FAILED, ORBOT NOT RUNNING");
+            Timber.e("TOR TOGGLE FAILED, ORBOT NOT RUNNING");
             return false;
         }
 
         // go to tor settings
         onView(withText(mHomeActivity.getApplicationContext().getString(R.string.app_name))).perform(click());
-        Log.d("AUTOMATION", "OPENED SIDE MENU");
+        Timber.d("OPENED SIDE MENU");
 
         onView(withText(mHomeActivity.getApplicationContext().getString(R.string.menu_settings))).perform(click());
-        Log.d("AUTOMATION", "SELECTED SETTINGS");
+        Timber.d("SELECTED SETTINGS");
 
         onView(withText(mHomeActivity.getApplicationContext().getString(R.string.prefs_use_tor_title))).perform(click());
-        Log.d("AUTOMATION", "SELECTED USE TOR");
+        Timber.d("SELECTED USE TOR");
 
         pressBack();
         stall(500, "PAUSE TO CLEAR MENU");
 
-        Log.d("AUTOMATION", "TOR TOGGLE COMPLETE");
+        Timber.d("TOR TOGGLE COMPLETE");
 
         return true;
     }
 
     public void stall(long milliseconds, String message) {
         try {
-            Log.d("AUTOMATION", "SLEEP " + (milliseconds / 1000) + " (" + message + ")");
+            Timber.d("SLEEP " + (milliseconds / 1000) + " (" + message + ")");
             Thread.sleep(milliseconds);
         } catch (InterruptedException e) {
             e.printStackTrace();
@@ -274,10 +276,10 @@ public class BaseTest extends ActivityInstrumentationTestCase2<HomeActivity> {
                 Object currentActivity = resumedActivities.iterator().next();
 
                 if (currentActivity instanceof MainActivity) {
-                    Log.d("AUTOMATION", "GOT MAIN ACTIVITY");
+                    Timber.d("GOT MAIN ACTIVITY");
                     mMainActivity = (MainActivity)currentActivity;
                 } else {
-                    Log.d("AUTOMATION", "NOT MAIN ACTIVITY");
+                    Timber.d("NOT MAIN ACTIVITY");
                 }
             }
         }

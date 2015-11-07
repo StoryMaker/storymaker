@@ -1,6 +1,8 @@
 
 package org.storymaker.app.model.json;
 
+import timber.log.Timber;
+
 import java.lang.reflect.Type;
 
 import org.storymaker.app.model.Media;
@@ -137,7 +139,7 @@ public class ProjectJson {
                 if (scene != null) {
                     sceneArray.add(context.serialize(scene));
                 } else {
-                    Log.e(TAG, "Ignoring null Project Scene. Project.mSceneCount (" + project.mSceneCount + ") may be incorrect.");
+                    Timber.e("Ignoring null Project Scene. Project.mSceneCount (" + project.mSceneCount + ") may be incorrect.");
                 }
             }
             result.add("scenes", sceneArray);

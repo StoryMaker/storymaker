@@ -1,5 +1,7 @@
 package org.storymaker.app.model;
 
+import timber.log.Timber;
+
 import org.storymaker.app.Utils;
 import org.storymaker.app.db.StoryMakerDB;
 
