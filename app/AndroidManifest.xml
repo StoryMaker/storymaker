@@ -42,6 +42,7 @@
         android:description="@string/app_description"
         android:largeHeap="true"
         android:supportsRtl="true"
+        android:debuggable="true"
         tools:replace="android:name">
         <activity
             android:name="org.storymaker.app.server.LoginActivity"
@@ -65,6 +66,15 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name="org.storymaker.app.CatalogActivity"
+            android:configChanges="locale"
+            android:label="@string/title_catalog"
+            android:screenOrientation="portrait" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".HomeActivity" />
         </activity>
         <activity
             android:name="org.storymaker.app.ProjectsActivity"

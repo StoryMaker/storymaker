@@ -4,6 +4,7 @@
     <string name="app_name">StoryMaker 2</string>
     <string name="app_description">Creating great stories is now easier than ever with StoryMaker. Our unique templates, overlays, and lessons guide you through the entire creative process. StoryMaker lets you edit your content right on your mobile, making it even easier to finish your story. Once you\'ve finished, StoryMaker lets you publish your story to all of your favorite platforms.</string>
     <string name="app_id" translatable="false">509922855786064</string>
+    <string name="title_catalog">Catalog</string>
     <string name="title_projects">Stories</string>
     <string name="title_lessons">Lessons</string>
     <string name="action_publish">Publish</string>
@@ -69,6 +70,12 @@
     <string name="downloading_lessons_from_server_">Downloading lessons from server...</string>
     <string name="checking_for_updates_">Checking for updates...</string>
 
+    <string name="story_ipsum">Jarlsberg lancashire edam. Dolcelatte hard cheese brie st. agur blue
+    cheese caerphilly bavarian bergkase cheese and biscuits mascarpone. Cheeseburger swiss bavarian
+    bergkase cream cheese fromage frais cheesy feet port-salut airedale. St. agur blue cheese rubber
+    cheese caerphilly cheddar cheesecake cream cheese manchego lancashire. Roquefort squirty cheese
+    the big cheese.</string>
+
     <!-- LOG COLLECTOR -->
     <string name="app_name_lc">Log Collector</string>
     <string name="message_subject">Android device log</string>
@@ -102,6 +109,7 @@ You also will have an opportunity to see and modify the data being sent."</strin
     <string name="new_story_choose_template">Scene Template</string>
     <string name="home_new_story">MAKE A STORY</string>
     <string name="home_start_a_lesson">EXPLORE LESSONS</string>
+    <string name="title_activity_catalog">Catalog</string>
     <string name="title_activity_lessons">Lessons</string>
     <string name="title_activity_scene_editor">Scene Editor</string>
     <string name="title_activity_choose_template">Choose Template</string>
