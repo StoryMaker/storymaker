@@ -139,5 +139,12 @@
         <item>Technology</item>
         <item>Travel</item>
     </string-array>
-    
+
+    <string-array name="catalog_menu_ids">
+        <item>catalog</item>
+        <item>guides</item>
+        <item>lessons</item>
+        <item>templates</item>
+    </string-array>
+
 </resources>
