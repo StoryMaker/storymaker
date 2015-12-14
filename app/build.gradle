@@ -142,20 +142,10 @@ dependencies {
     //compile 'com.android.support:appcompat-v7:21.0.2'
     compile 'net.hockeyapp.android:HockeySDK:3.5.0'
     compile 'commons-io:commons-io:2.4'
-    compile 'info.guardianproject.netcipher:netcipher:1.2'
-    compile 'info.guardianproject.cacheword:cachewordlib:0.1'
-    compile 'com.jakewharton.timber:timber:3.1.0'
-   // compile 'com.github.japgolly.android:svg-android:2.0.6'
+    compile 'org.apache.commons:commons-lang3:3.1'
 
-
-<<<<<<< HEAD
-    compile 'net.hockeyapp.android:HockeySDK:3.5.0'
-    compile 'commons-io:commons-io:2.4'
-
-    compile 'info.guardianproject.netcipher:netcipher:1.2'
     compile 'info.guardianproject.cacheword:cachewordlib:0.1'
     compile 'net.zetetic:android-database-sqlcipher:3.3.1-1@aar'
-
     compile 'com.jakewharton.timber:timber:3.1.0'
 
     //scalio repos via jitpack
@@ -164,39 +154,14 @@ dependencies {
     compile 'com.github.n8fr8:Android-ViewPagerIndicator:6d15751bca'
 
     // .Jar imports
-  //  compile files('libs/apache-mime4j-0.6.jar')
-    compile files('libs/commons-lang3-3.1.jar')
-   // compile files('libs/google-api-client-1.4.1-beta.jar')
-   // compile files('libs/google-api-client-googleapis-1.4.1-beta.jar')
-   // compile files('libs/google-api-services-latitude-v1-1.1.0-beta.jar')
-  //  compile files('libs/httpmime-4.0.3.jar')
-  //  compile files('libs/soundcloud-api-1.0.1.jar')
     compile files('libs/svg-android-1.1.jar')
     compile files('libs/httpclientandroidlib-1.2.1.jar')
     compile files('libs/rangeseekbar.jar')
-=======
-    // .Jar imports
-    compile files('libs/apache-mime4j-0.6.jar')
-    compile files('libs/commons-lang3-3.1.jar')
-    compile files('libs/google-api-client-1.4.1-beta.jar')
-    compile files('libs/google-api-client-googleapis-1.4.1-beta.jar')
-    compile files('libs/google-api-services-latitude-v1-1.1.0-beta.jar')
-    compile files('libs/httpmime-4.0.3.jar')
-    compile files('libs/soundcloud-api-1.0.1.jar')
-    compile files('libs/svg-android-1.1.jar')
-    compile files('libs/httpclientandroidlib-1.2.1.jar')
-    //compile files('libs/wordpressjavaandroid.jar')
->>>>>>> dd5ed25... update dependencies to use new gradle/latest versions
+
 
     // Project imports
     compile project(':external:android-ffmpeg-java')
     compile project(':external:WordpressJavaAndroid')
-<<<<<<< HEAD
-=======
-    compile project(':external:cardsui-for-android:CardsUILib')
-    compile project(':external:Android-ViewPagerIndicator:library')
-    compile project(':external:RangeSeekBar:library')
->>>>>>> dd5ed25... update dependencies to use new gradle/latest versions
     compile project(':external:SecureShareLib:SecureShareUILibrary')
     compile project(':external:SecureShareLib:SecureShareUILibrary:external:facebook-sdk:facebook')
     compile project(':android-iconify')
