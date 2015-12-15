@@ -23,6 +23,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.hannesdorfmann.sqlbrite.dao.Dao;
 import com.hannesdorfmann.sqlbrite.dao.DaoManager;
 
 import net.hockeyapp.android.CrashManager;
@@ -108,6 +109,55 @@ public class CatalogActivity extends BaseActivity {
 
 
 
+    public static ArrayList<String> getIndexItemIdsByType(Dao dao, String type) {
+
+        final ArrayList<String> returnList = new ArrayList<String>();
+
+        if (dao instanceof AvailableIndexItemDao) {
+            AvailableIndexItemDao availableDao = (AvailableIndexItemDao) dao;
+
+            availableDao.getAvailableIndexItemsByType(type).subscribe(new Action1<List<AvailableIndexItem>>() {
+
+                @Override
+                public void call(List<AvailableIndexItem> availableIndexItems) {
+
+                    ArrayList<scal.io.liger.model.sqlbrite.ExpansionIndexItem> indexList = new ArrayList<scal.io.liger.model.sqlbrite.ExpansionIndexItem>();
+
+                    for (AvailableIndexItem item : availableIndexItems) {
+                        indexList.add(item);
+                        returnList.add(item.getExpansionId());
+                    }
+
+                }
+            });
+
+        } else if (dao instanceof InstalledIndexItemDao) {
+
+            InstalledIndexItemDao installedDao = (InstalledIndexItemDao)dao;
+
+            installedDao.getInstalledIndexItemsByType(type).subscribe(new Action1<List<InstalledIndexItem>>() {
+
+                @Override
+                public void call(List<InstalledIndexItem> installedIndexItems) {
+
+                    ArrayList<scal.io.liger.model.sqlbrite.ExpansionIndexItem> indexList = new ArrayList<scal.io.liger.model.sqlbrite.ExpansionIndexItem>();
+
+                    for (InstalledIndexItem item : installedIndexItems) {
+                        indexList.add(item);
+                        returnList.add(item.getExpansionId());
+                    }
+
+
+                }
+            });
+        } else {
+            //error
+        }
+
+        return returnList;
+    }
+
+
     public String[] getCatalogMenu() {
 
         //This Method Transposes between an arrays.xml array of ids to build the catalog menu
@@ -151,6 +201,7 @@ public class CatalogActivity extends BaseActivity {
         instanceIndexItemDao = new InstanceIndexItemDao();
         availableIndexItemDao = new AvailableIndexItemDao();
         installedIndexItemDao = new InstalledIndexItemDao();
+
         queueItemDao = new QueueItemDao();
 
         daoManager = new DaoManager(CatalogActivity.this, "Storymaker.db", dbVersion, instanceIndexItemDao, availableIndexItemDao, installedIndexItemDao, queueItemDao);
@@ -249,31 +300,32 @@ public class CatalogActivity extends BaseActivity {
         // dumb test
 
         // check values
-        availableIndexItemDao.getAvailableIndexItems().take(1).subscribe(new Action1<List<AvailableIndexItem>>() {
-
-            @Override
-            public void call(List<AvailableIndexItem> expansionIndexItems) {
-
-                // just process the list
-
-                for (scal.io.liger.model.sqlbrite.ExpansionIndexItem item : expansionIndexItems) {
-                    Timber.d("AVAILABLE ITEM " + item.getExpansionId() + ", TITLE: " + item.getTitle());
-                }
-            }
-        });
-
-        installedIndexItemDao.getInstalledIndexItems().take(1).subscribe(new Action1<List<InstalledIndexItem>>() {
-
-            @Override
-            public void call(List<InstalledIndexItem> expansionIndexItems) {
-
-                // just process the list
-
-                for (scal.io.liger.model.sqlbrite.ExpansionIndexItem item : expansionIndexItems) {
-                    Timber.d("INSTALLED ITEM " + item.getExpansionId() + ", TITLE: " + item.getTitle());
-                }
-            }
-        });
+        //RES
+//        availableIndexItemDao.getAvailableIndexItems().take(1).subscribe(new Action1<List<AvailableIndexItem>>() {
+//
+//            @Override
+//            public void call(List<AvailableIndexItem> expansionIndexItems) {
+//
+//                // just process the list
+//
+//                for (scal.io.liger.model.sqlbrite.ExpansionIndexItem item : expansionIndexItems) {
+//                    Timber.d("AVAILABLE ITEM " + item.getExpansionId() + ", TITLE: " + item.getTitle());
+//                }
+//            }
+//        });
+//
+//        installedIndexItemDao.getInstalledIndexItems().take(1).subscribe(new Action1<List<InstalledIndexItem>>() {
+//
+//            @Override
+//            public void call(List<InstalledIndexItem> expansionIndexItems) {
+//
+//                // just process the list
+//
+//                for (scal.io.liger.model.sqlbrite.ExpansionIndexItem item : expansionIndexItems) {
+//                    Timber.d("INSTALLED ITEM " + item.getExpansionId() + ", TITLE: " + item.getTitle());
+//                }
+//            }
+//        });
 
 
 
@@ -341,18 +393,18 @@ public class CatalogActivity extends BaseActivity {
      */
     public class DemoCollectionPagerAdapter extends FragmentStatePagerAdapter {
 
-        private InstanceIndexItemAdapter myInstanceIndexItemAdapter;
+        private ArrayList<InstanceIndexItemAdapter> myInstanceIndexItemAdapters;
 
-        public DemoCollectionPagerAdapter(FragmentManager fm, InstanceIndexItemAdapter iiia) {
+        public DemoCollectionPagerAdapter(FragmentManager fm, ArrayList<InstanceIndexItemAdapter> iiias) {
             super(fm);
 
-            myInstanceIndexItemAdapter = iiia;
+            myInstanceIndexItemAdapters = iiias;
 
         }
 
         @Override
         public Fragment getItem(int i) {
-            Fragment fragment = new StoryListFragment(myInstanceIndexItemAdapter);
+            Fragment fragment = new StoryListFragment(myInstanceIndexItemAdapters.get(i));
             Bundle args = new Bundle();
             args.putInt(StoryListFragment.ARG_OBJECT, i + 1); // Our object is just an integer :-P
             fragment.setArguments(args);
@@ -365,7 +417,6 @@ public class CatalogActivity extends BaseActivity {
             //return 100;
             //return categories.size();
 
-            //Log.d("CatalogActivity", menu.size());
             return mCatalogMenu.length;
         }
 
@@ -505,6 +556,8 @@ public class CatalogActivity extends BaseActivity {
         }
     }
 
+
+
     private void initActivityList () {
         // menu items now locked during downloads, i think this can be removed
         /*
@@ -558,24 +611,58 @@ public class CatalogActivity extends BaseActivity {
 
         ArrayList<BaseIndexItem> instances = new ArrayList<BaseIndexItem>(instanceIndex.values());
 
+        ArrayList<BaseIndexItem> guides = new ArrayList<BaseIndexItem>(instanceIndex.values());
+        ArrayList<BaseIndexItem> lessons = new ArrayList<BaseIndexItem>(instanceIndex.values());
+        ArrayList<BaseIndexItem> templates = new ArrayList<BaseIndexItem>(instanceIndex.values());
+
+
         HashMap<String, scal.io.liger.model.sqlbrite.ExpansionIndexItem> availableIds = StorymakerIndexManager.loadAvailableIdIndex(this, availableIndexItemDao);
+        ArrayList<String> availableGuideIds = getIndexItemIdsByType(availableIndexItemDao, "guide");
+        ArrayList<String> availableLessonIds = getIndexItemIdsByType(availableIndexItemDao, "lesson");
+        ArrayList<String> availableTemplateIds = getIndexItemIdsByType(availableIndexItemDao, "template");
+
         HashMap<String, scal.io.liger.model.sqlbrite.ExpansionIndexItem> installedIds = StorymakerIndexManager.loadInstalledIdIndex(this, installedIndexItemDao);
+        ArrayList<String> installedGuideIds = getIndexItemIdsByType(installedIndexItemDao, "guide");
+        ArrayList<String> installedLessonIds = getIndexItemIdsByType(installedIndexItemDao, "lesson");
+        ArrayList<String> installedTemplateIds = getIndexItemIdsByType(installedIndexItemDao, "template");
 
         for (String id : availableIds.keySet()) {
+
             if (installedIds.keySet().contains(id)) {
                 // if the available item has been installed, add the corresponding item from the installed index
                 instances.add(installedIds.get(id));
+
+                if (installedGuideIds.contains(id)) {
+                    guides.add(installedIds.get(id));
+                } else if (installedLessonIds.contains(id)) {
+                    lessons.add(installedIds.get(id));
+                } else if (installedTemplateIds.contains(id)) {
+                    templates.add(installedIds.get(id));
+                }
+
             } else {
                 // if the available item has not been installed, add the item from the available index
                 instances.add(availableIds.get(id));
+
+                if (availableGuideIds.contains(id)) {
+                    guides.add(availableIds.get(id));
+                } else if (availableLessonIds.contains(id)) {
+                    lessons.add(availableIds.get(id));
+                } else if (availableTemplateIds.contains(id)) {
+                    templates.add(availableIds.get(id));
+                }
+
             }
         }
 
         Collections.sort(instances, Collections.reverseOrder()); // FIXME we should sort this down a layer, perhaps in loadInstanceIndexAsList
+        Collections.sort(lessons, Collections.reverseOrder()); // FIXME we should sort this down a layer, perhaps in loadInstanceIndexAsList
+        Collections.sort(guides, Collections.reverseOrder()); // FIXME we should sort this down a layer, perhaps in loadInstanceIndexAsList
+        Collections.sort(templates, Collections.reverseOrder()); // FIXME we should sort this down a layer, perhaps in loadInstanceIndexAsList
 
         //mRecyclerView.setAdapter(new InstanceIndexItemAdapter(instances, new InstanceIndexItemAdapter.BaseIndexItemSelectedListener() {
 
-        InstanceIndexItemAdapter myInstanceIndexItemAdapter = new InstanceIndexItemAdapter(instances, new InstanceIndexItemAdapter.BaseIndexItemSelectedListener() {
+        InstanceIndexItemAdapter.BaseIndexItemSelectedListener myBaseIndexItemSelectedListener = new InstanceIndexItemAdapter.BaseIndexItemSelectedListener() {
 
             @Override
             public void onStorySelected(BaseIndexItem selectedItem) {
@@ -689,14 +776,26 @@ public class CatalogActivity extends BaseActivity {
                     }
                 }
             }
-        }, installedIndexItemDao);
+        };
+
+        final InstanceIndexItemAdapter myInstancesInstanceIndexItemAdapter = new InstanceIndexItemAdapter(instances, myBaseIndexItemSelectedListener, installedIndexItemDao);
+        final InstanceIndexItemAdapter myGuidesInstanceIndexItemAdapter = new InstanceIndexItemAdapter(guides, myBaseIndexItemSelectedListener, installedIndexItemDao);
+        final InstanceIndexItemAdapter myLessonsInstanceIndexItemAdapter = new InstanceIndexItemAdapter(lessons, myBaseIndexItemSelectedListener, installedIndexItemDao);
+        final InstanceIndexItemAdapter myTemplatesInstanceIndexItemAdapter = new InstanceIndexItemAdapter(templates, myBaseIndexItemSelectedListener, installedIndexItemDao);
+
+        ArrayList<InstanceIndexItemAdapter> myInstanceIndexItemAdapters = new ArrayList<InstanceIndexItemAdapter>() {{
+            add(myInstancesInstanceIndexItemAdapter);
+            add(myGuidesInstanceIndexItemAdapter);
+            add(myLessonsInstanceIndexItemAdapter);
+            add(myTemplatesInstanceIndexItemAdapter);
+        }};
 
         //RES
         //mRecyclerView.setAdapter(myInstanceIndexItemAdapter);
 
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
-        mDemoCollectionPagerAdapter = new DemoCollectionPagerAdapter(getSupportFragmentManager(), myInstanceIndexItemAdapter);
+        mDemoCollectionPagerAdapter = new DemoCollectionPagerAdapter(getSupportFragmentManager(), myInstanceIndexItemAdapters);
 
         // Set up the ViewPager with the sections adapter.
         mViewPager = (SwipelessViewPager) findViewById(R.id.pager);
