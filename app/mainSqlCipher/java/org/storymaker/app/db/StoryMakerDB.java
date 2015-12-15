@@ -2,6 +2,7 @@ package org.storymaker.app.db;
 
 import timber.log.Timber;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -13,7 +14,10 @@ import org.storymaker.app.model.SceneTable;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+
+import net.sqlcipher.Cursor;
 import net.sqlcipher.database.SQLiteDatabase;
+import net.sqlcipher.database.SQLiteDatabaseHook;
 import net.sqlcipher.database.SQLiteOpenHelper;
 import android.util.Log;
 
@@ -43,15 +47,59 @@ public class StoryMakerDB extends SQLiteOpenHelper {
     
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+
+        Timber.d("DATABASE: temporarily forcing re-encryption");
+
+        final boolean[] status = {false};
+        try {
+            SQLiteDatabaseHook hook = new SQLiteDatabaseHook() {
+                public void preKey(SQLiteDatabase database) {
+                }
+
+                public void postKey(SQLiteDatabase database) {
+
+                    Cursor cursor = database.rawQuery("PRAGMA cipher_migrate", new String[]{});
+                    String value = "";
+                    if (cursor != null) {
+                        cursor.moveToFirst();
+                        value = cursor.getString(0);
+                        cursor.close();
+                    }
+
+                    status[0] = Integer.valueOf(value) == 0;
+                }
+            };
+
+            if (status[0]) {
+                Timber.d("DATABASE: true?");
+            } else {
+                Timber.d("DATABASE: false?");
+            }
+
+            File dbPath = mContext.getDatabasePath("sm.db");
+            Timber.d("DATABASE: got path -> " + dbPath.getPath());
+
+            SQLiteDatabase sqldb = SQLiteDatabase.openOrCreateDatabase(dbPath,
+                    "foo", null, hook);
+            if (sqldb != null) {
+                Timber.d("DATABASE: db isn't null, success?");
+                sqldb.close();
+            } else {
+                Timber.d("DATABASE: db is null, failure.");
+            }
+        } catch (Exception ex) {
+            Timber.d("DATABASE: migration exception -> " + ex.getMessage());
+        }
+
         Timber.d("updating db from " + oldVersion + " to " + newVersion);
         if ((oldVersion < 2) && (newVersion == 2)) {
             db.execSQL(StoryMakerDB.Schema.Projects.UPDATE_TABLE_PROJECTS);
-        } 
+        }
         if ((oldVersion < 3) && (newVersion == 3)) {
             db.execSQL(StoryMakerDB.Schema.Media.UPDATE_TABLE_MEDIA_ADD_TRIM_START);
             db.execSQL(StoryMakerDB.Schema.Media.UPDATE_TABLE_MEDIA_ADD_TRIM_END);
             db.execSQL(StoryMakerDB.Schema.Media.UPDATE_TABLE_MEDIA_ADD_DURATION);
-        } 
+        }
         if ((oldVersion < 4) && (newVersion >= 4)) {
             db.execSQL(StoryMakerDB.Schema.Auth.UPDATE_TABLE_AUTH);
             Auth.migrate(mContext, db); // migrates storymaker login credentials
@@ -73,7 +121,7 @@ public class StoryMakerDB extends SQLiteOpenHelper {
         if ((oldVersion < 7) && (newVersion >= 7)) {
             @SuppressWarnings("unchecked")
             ArrayList<Scene> scenes = (ArrayList<Scene>) (new SceneTable(db)).getAllAsList(mContext);
-            for (Scene scene: scenes) {
+            for (Scene scene : scenes) {
                 scene.migrateDeleteDupedMedia();
             }
         }

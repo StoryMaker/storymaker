@@ -17,6 +17,8 @@ import org.storymaker.app.model.Lesson;
 import org.storymaker.app.model.SceneTable;
 import org.storymaker.app.model.TagTable;
 import net.sqlcipher.database.SQLiteDatabase;
+import net.sqlcipher.database.SQLiteDatabaseHook;
+import net.sqlcipher.database.SQLiteException;
 import net.sqlcipher.database.SQLiteQueryBuilder;
 import android.content.ContentProvider;
 import android.content.ContentResolver;
@@ -24,6 +26,8 @@ import android.content.ContentValues;
 import android.content.UriMatcher;
 import android.database.Cursor;
 import android.net.Uri;
+
+import java.io.File;
 
 // FIXME rename this to SMProvier and get rid of LessonsProvider
 public class ProjectsProvider extends ContentProvider {  
@@ -148,7 +152,52 @@ public class ProjectsProvider extends ContentProvider {
     
     private SQLiteDatabase getDB() {
         if (mDB == null) {
-            mDB = mDBHelper.getWritableDatabase(mPassphrase);
+
+            //try {
+                mDB = mDBHelper.getWritableDatabase(mPassphrase);
+            /*} catch (Exception e) {
+                Timber.d("DATABASE: probable encryption issue -> " + e.getMessage());
+
+                final boolean[] status = {false};
+                try {
+                    SQLiteDatabaseHook hook = new SQLiteDatabaseHook() {
+                        public void preKey(SQLiteDatabase database) {}
+                        public void postKey(SQLiteDatabase database) {
+
+                            Cursor cursor = database.rawQuery("PRAGMA cipher_migrate", new String[]{});
+                            String value = "";
+                            if (cursor != null) {
+                                cursor.moveToFirst();
+                                value = cursor.getString(0);
+                                cursor.close();
+                            }
+
+                            status[0] = Integer.valueOf(value) == 0;
+                        }
+                    };
+
+                    if (status[0]) {
+                        Timber.d("DATABASE: true?");
+                    } else {
+                        Timber.d("DATABASE: false?");
+                    }
+
+                    File dbPath = getContext().getDatabasePath("sm.db");
+                    Timber.d("DATABASE: got path -> " + dbPath.getPath());
+
+                    mDB = SQLiteDatabase.openOrCreateDatabase(dbPath,
+                            mPassphrase, null, hook);
+                    if(mDB != null){
+                        Timber.d("DATABASE: db isn't null, success?");
+                        mDB.close();
+                    } else {
+                        Timber.d("DATABASE: db is null, failure.");
+                    }
+                } catch (Exception ex) {
+                    Timber.d("DATABASE: migration exception -> " + ex.getMessage());
+                }
+
+            }*/
         }
         return mDB;
     }
