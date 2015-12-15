@@ -140,8 +140,8 @@
         <item>Travel</item>
     </string-array>
 
+    <!--         <item>catalog</item> -->
     <string-array name="catalog_menu_ids">
-        <item>catalog</item>
         <item>guides</item>
         <item>lessons</item>
         <item>templates</item>

@@ -34,6 +34,7 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.filefilter.WildcardFileFilter;
 import org.storymaker.app.server.LoginActivity;
 import org.storymaker.app.server.ServerManager;
+import org.storymaker.app.ui.SlidingTabLayout;
 import org.storymaker.app.ui.SwipelessViewPager;
 
 import java.io.BufferedReader;
@@ -84,6 +85,8 @@ public class CatalogActivity extends BaseActivity {
      * The {@link ViewPager} that will host the section contents.
      */
     private SwipelessViewPager mViewPager;
+    private SlidingTabLayout mSlidingTabLayout;
+
 
     private String[] mCatalogMenu;
 
@@ -784,7 +787,7 @@ public class CatalogActivity extends BaseActivity {
         final InstanceIndexItemAdapter myTemplatesInstanceIndexItemAdapter = new InstanceIndexItemAdapter(templates, myBaseIndexItemSelectedListener, installedIndexItemDao);
 
         ArrayList<InstanceIndexItemAdapter> myInstanceIndexItemAdapters = new ArrayList<InstanceIndexItemAdapter>() {{
-            add(myInstancesInstanceIndexItemAdapter);
+            //add(myInstancesInstanceIndexItemAdapter);
             add(myGuidesInstanceIndexItemAdapter);
             add(myLessonsInstanceIndexItemAdapter);
             add(myTemplatesInstanceIndexItemAdapter);
@@ -801,6 +804,14 @@ public class CatalogActivity extends BaseActivity {
         mViewPager = (SwipelessViewPager) findViewById(R.id.pager);
         mViewPager.setAdapter(mDemoCollectionPagerAdapter);
         mViewPager.setPagingEnabled(false);
+
+        // Give the SlidingTabLayout the ViewPager, this must be done AFTER the ViewPager has had
+        // it's PagerAdapter set.
+        mSlidingTabLayout = (SlidingTabLayout) findViewById(R.id.sliding_tabs);
+        mSlidingTabLayout.setSelectedIndicatorColors(
+                getResources().getColor(R.color.white));
+        mSlidingTabLayout.setDistributeEvenly(true);
+        mSlidingTabLayout.setViewPager(mViewPager);
     }
 
     // HAD TO SPLIT OUT INTO A METHOD
