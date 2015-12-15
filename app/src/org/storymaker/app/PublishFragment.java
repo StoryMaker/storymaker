@@ -136,7 +136,7 @@ public class PublishFragment extends Fragment implements PublishListener {
         String storyPathInstancePath = mActivity.getProject().getTemplatePath();
         if (storyPathInstancePath != null && !storyPathInstancePath.equals("")) {
             File f = new File(storyPathInstancePath);
-            String jsonString = JsonHelper.loadJSON(f, "en"); // FIXME don't hardcode "en"
+            String jsonString = JsonHelper.loadJSON(f.getPath(), getActivity().getApplicationContext(), "en"); // FIXME don't hardcode "en"
             if (jsonString != null) {
                 ArrayList<String> referencedFiles = new ArrayList<String>(); // should not need to insert dependencies to check metadata
                 String language = StoryMakerApp.getCurrentLocale().getLanguage();
