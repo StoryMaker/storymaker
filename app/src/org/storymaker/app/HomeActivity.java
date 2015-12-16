@@ -1,15 +1,4 @@
-
-
-
-
-
-
-
 package org.storymaker.app;
-
-import timber.log.Timber;
-
-import timber.log.Timber;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -27,7 +16,6 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -41,6 +29,9 @@ import com.hannesdorfmann.sqlbrite.dao.DaoManager;
 import net.hockeyapp.android.CrashManager;
 import net.hockeyapp.android.CrashManagerListener;
 import net.hockeyapp.android.UpdateManager;
+import net.sqlcipher.Cursor;
+import net.sqlcipher.database.SQLiteDatabase;
+import net.sqlcipher.database.SQLiteDatabaseHook;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
@@ -56,18 +47,14 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
 
 import info.guardianproject.netcipher.proxy.OrbotHelper;
-import rx.functions.Action1;
-import scal.io.liger.IndexManager;
 import scal.io.liger.JsonHelper;
 import scal.io.liger.MainActivity;
 import scal.io.liger.StorageHelper;
 import scal.io.liger.StorymakerIndexManager;
 import scal.io.liger.model.ContentPackMetadata;
 import scal.io.liger.model.StoryPathLibrary;
-import scal.io.liger.model.sqlbrite.AvailableIndexItem;
 import scal.io.liger.model.sqlbrite.AvailableIndexItemDao;
 import scal.io.liger.model.sqlbrite.BaseIndexItem;
 import scal.io.liger.model.sqlbrite.ExpansionIndexItem;
@@ -76,6 +63,7 @@ import scal.io.liger.model.sqlbrite.InstalledIndexItemDao;
 import scal.io.liger.model.sqlbrite.InstanceIndexItem;
 import scal.io.liger.model.sqlbrite.InstanceIndexItemDao;
 import scal.io.liger.model.sqlbrite.QueueItemDao;
+import timber.log.Timber;
 
 //import scal.io.liger.DownloadHelper;
 //import scal.io.liger.IndexManager;
@@ -141,6 +129,54 @@ public class HomeActivity extends BaseActivity {
         // initialize db
 
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+
+        // version check (sqlite upgrade requires migration)
+
+        int appMigrationVersion = preferences.getInt("APP_MIGRATION_VERSION", 0);
+
+        Timber.d("MIGRATION CHECK: " + appMigrationVersion + " vs. " + scal.io.liger.Constants.APP_MIGRATION_VERSION);
+
+        if (appMigrationVersion != scal.io.liger.Constants.AVAILABLE_INDEX_VERSION) {
+
+            Timber.d("MIGRATION REQUIRED, RE-ENCRYPTING DATABASE");
+
+            final boolean[] dbStatus = {false};
+            try {
+                SQLiteDatabaseHook dbHook = new SQLiteDatabaseHook() {
+                    public void preKey(SQLiteDatabase database) {
+                    }
+                    public void postKey(SQLiteDatabase database) {
+                        Cursor cursor = database.rawQuery("PRAGMA cipher_migrate", new String[]{});
+                        String value = "";
+                        if (cursor != null) {
+                            cursor.moveToFirst();
+                            value = cursor.getString(0);
+                            cursor.close();
+                        }
+
+                        // this result is currently ignored, checking if db is null instead
+                        dbStatus[0] = Integer.valueOf(value) == 0;
+                    }
+                };
+
+                File dbPath = getDatabasePath("sm.db");
+                Timber.d("MIGRATING DATABASE AT " + dbPath.getPath());
+
+                SQLiteDatabase sqldb = SQLiteDatabase.openOrCreateDatabase(dbPath, "foo", null, dbHook);
+                if (sqldb != null) {
+                    Timber.d("MIGRATED DATABASE NOT NULL");
+                    sqldb.close();
+
+                    // update preferences if migration succeeded
+
+                    preferences.edit().putInt("AVAILABLE_INDEX_VERSION", scal.io.liger.Constants.AVAILABLE_INDEX_VERSION).commit();
+                } else {
+                    Timber.e("MIGRATED DATABASE IS NULL");
+                }
+            } catch (Exception ex) {
+                Timber.e("EXCEPTION WHILE MIGRATING DATABASE: " + ex.getMessage());
+            }
+        }
 
         int availableIndexVersion = preferences.getInt("AVAILABLE_INDEX_VERSION", 0);
 
@@ -215,11 +251,8 @@ public class HomeActivity extends BaseActivity {
             preferences.edit().putInt("AVAILABLE_INDEX_VERSION", scal.io.liger.Constants.AVAILABLE_INDEX_VERSION).commit();
         }
 
-
-
-        // dumb test
-
         // check values
+        /*
         availableIndexItemDao.getAvailableIndexItems().take(1).subscribe(new Action1<List<AvailableIndexItem>>() {
 
             @Override
@@ -245,8 +278,7 @@ public class HomeActivity extends BaseActivity {
                 }
             }
         });
-
-
+        */
 
         // file cleanup
         File actualStorageDirectory = StorageHelper.getActualStorageDirectory(this);

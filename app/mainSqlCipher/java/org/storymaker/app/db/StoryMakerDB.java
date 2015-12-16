@@ -1,25 +1,21 @@
 package org.storymaker.app.db;
 
-import timber.log.Timber;
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.Date;
+import net.sqlcipher.database.SQLiteDatabase;
+import net.sqlcipher.database.SQLiteOpenHelper;
 
 import org.storymaker.app.StoryMakerApp;
 import org.storymaker.app.model.Auth;
 import org.storymaker.app.model.Project;
 import org.storymaker.app.model.Scene;
 import org.storymaker.app.model.SceneTable;
-import android.content.Context;
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
 
-import net.sqlcipher.Cursor;
-import net.sqlcipher.database.SQLiteDatabase;
-import net.sqlcipher.database.SQLiteDatabaseHook;
-import net.sqlcipher.database.SQLiteOpenHelper;
-import android.util.Log;
+import java.util.ArrayList;
+
+import timber.log.Timber;
 
 public class StoryMakerDB extends SQLiteOpenHelper {
     private static final String TAG = "StoryMakerDB";
@@ -47,50 +43,6 @@ public class StoryMakerDB extends SQLiteOpenHelper {
     
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-
-        Timber.d("DATABASE: temporarily forcing re-encryption");
-
-        final boolean[] status = {false};
-        try {
-            SQLiteDatabaseHook hook = new SQLiteDatabaseHook() {
-                public void preKey(SQLiteDatabase database) {
-                }
-
-                public void postKey(SQLiteDatabase database) {
-
-                    Cursor cursor = database.rawQuery("PRAGMA cipher_migrate", new String[]{});
-                    String value = "";
-                    if (cursor != null) {
-                        cursor.moveToFirst();
-                        value = cursor.getString(0);
-                        cursor.close();
-                    }
-
-                    status[0] = Integer.valueOf(value) == 0;
-                }
-            };
-
-            if (status[0]) {
-                Timber.d("DATABASE: true?");
-            } else {
-                Timber.d("DATABASE: false?");
-            }
-
-            File dbPath = mContext.getDatabasePath("sm.db");
-            Timber.d("DATABASE: got path -> " + dbPath.getPath());
-
-            SQLiteDatabase sqldb = SQLiteDatabase.openOrCreateDatabase(dbPath,
-                    "foo", null, hook);
-            if (sqldb != null) {
-                Timber.d("DATABASE: db isn't null, success?");
-                sqldb.close();
-            } else {
-                Timber.d("DATABASE: db is null, failure.");
-            }
-        } catch (Exception ex) {
-            Timber.d("DATABASE: migration exception -> " + ex.getMessage());
-        }
-
         Timber.d("updating db from " + oldVersion + " to " + newVersion);
         if ((oldVersion < 2) && (newVersion == 2)) {
             db.execSQL(StoryMakerDB.Schema.Projects.UPDATE_TABLE_PROJECTS);
