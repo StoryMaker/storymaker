@@ -134,9 +134,9 @@ public class HomeActivity extends BaseActivity {
 
         int appMigrationVersion = preferences.getInt("APP_MIGRATION_VERSION", 0);
 
-        Timber.d("MIGRATION CHECK: " + appMigrationVersion + " vs. " + scal.io.liger.Constants.APP_MIGRATION_VERSION);
+        Timber.d("MIGRATION CHECK: " + appMigrationVersion + " vs. " + Constants.APP_MIGRATION_VERSION);
 
-        if (appMigrationVersion != scal.io.liger.Constants.AVAILABLE_INDEX_VERSION) {
+        if (appMigrationVersion != Constants.APP_MIGRATION_VERSION) {
 
             Timber.d("MIGRATION REQUIRED, RE-ENCRYPTING DATABASE");
 
@@ -169,7 +169,7 @@ public class HomeActivity extends BaseActivity {
 
                     // update preferences if migration succeeded
 
-                    preferences.edit().putInt("AVAILABLE_INDEX_VERSION", scal.io.liger.Constants.AVAILABLE_INDEX_VERSION).commit();
+                    preferences.edit().putInt("APP_MIGRATION_VERSION", Constants.APP_MIGRATION_VERSION).commit();
                 } else {
                     Timber.e("MIGRATED DATABASE IS NULL");
                 }
