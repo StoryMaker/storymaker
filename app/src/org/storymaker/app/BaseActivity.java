@@ -150,6 +150,7 @@ public class BaseActivity extends FragmentActivity {
 
                 Intent i = new Intent(activity, CatalogActivity.class);
                 activity.startActivity(i);
+                finish();
             }
         });
 

@@ -489,7 +489,6 @@ public class HomeActivity extends BaseActivity {
             Timber.d("INITACTIVITYLIST - FOUND INSTANCE INDEX WITH " + instanceIndex.size() + " ITEMS");
 
 
-
             // dumb test
 
             // put in values
@@ -514,7 +513,6 @@ public class HomeActivity extends BaseActivity {
             */
 
 
-
         } else {
             Timber.d("INITACTIVITYLIST - FOUND INSTANCE INDEX WITH NO ITEMS");
         }
@@ -530,126 +528,134 @@ public class HomeActivity extends BaseActivity {
                 instances.add(installedIds.get(id));
             } else {
                 // if the available item has not been installed, add the item from the available index
-                instances.add(availableIds.get(id));
+                //instances.add(availableIds.get(id)); // FIXME temporarily commenting this out, we could much more gracefully do this now that we only care about installed items and stories
             }
         }
 
-        Collections.sort(instances, Collections.reverseOrder()); // FIXME we should sort this down a layer, perhaps in loadInstanceIndexAsList
+        if (instances.size() > 0) {
 
-        mRecyclerView.setAdapter(new InstanceIndexItemAdapter(instances, new InstanceIndexItemAdapter.BaseIndexItemSelectedListener() {
-            @Override
-            public void onStorySelected(BaseIndexItem selectedItem) {
+            Collections.sort(instances, Collections.reverseOrder()); // FIXME we should sort this down a layer, perhaps in loadInstanceIndexAsList
 
-                if (selectedItem instanceof InstanceIndexItem) {
-                    launchLiger(HomeActivity.this, null, ((InstanceIndexItem) selectedItem).getInstanceFilePath(), null);
-                } else {
+            mRecyclerView.setAdapter(new InstanceIndexItemAdapter(instances, new InstanceIndexItemAdapter.BaseIndexItemSelectedListener() {
+                @Override
+                public void onStorySelected(BaseIndexItem selectedItem) {
 
-                    Timber.d("CLICKED AN ITEM");
-
-                    // get clicked item
-                    final ExpansionIndexItem eItem = ((ExpansionIndexItem)selectedItem);
-
-                    // get installed items
-                    final HashMap<String, ExpansionIndexItem> installedIds = StorymakerIndexManager.loadInstalledIdIndex(HomeActivity.this, installedIndexItemDao);
-
-                    // this isn't ideal but pushing an alert dialog down into the check/download process is difficult
-
-                    if ((downloadThreads.get(eItem.getExpansionId()) != null)) {
-                        Timber.d("DIALOG - FOUND THREADS: " + downloadThreads.get(eItem.getExpansionId()).size());
-                    }
-
-                    if (!installedIds.containsKey(eItem.getExpansionId()) && (downloadThreads.get(eItem.getExpansionId()) == null)) {
-
-                        Timber.d("DIALOG - START");
-
-                        // this item is not installed and there are no saved threads for it
-
-                        new AlertDialog.Builder(HomeActivity.this)
-                                .setTitle(R.string.download_content_pack)
-                                .setMessage(eItem.getTitle() + " (" + ((eItem.getExpansionFileSize() + eItem.getPatchFileSize()) / 1048576) + " MB)") // FIXME we need to flip this for RTL
-                                        // using negative button to account for fixed order
-                                .setPositiveButton(getString(R.string.download), new DialogInterface.OnClickListener() {
-
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-
-                                        Timber.d("START...");
-
-                                        handleClick(eItem, installedIds, false);
-
-                                    }
-                                })
-                                .setNegativeButton(getString(R.string.cancel), null)
-                                .show();
-                    } else if (installedIds.containsKey(eItem.getExpansionId()) && (downloadThreads.get(eItem.getExpansionId()) == null)) {
-
-                        // do not display dialog options if user selected "use manager"
-                        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(HomeActivity.this);
-                        boolean useManager = settings.getBoolean("pusedownloadmanager", false);
-
-                        if (useManager) {
-
-                            Timber.d("USING MANAGER - NO DIALOG");
-
-                            handleClick(eItem, installedIds, false);
-
-                        } else {
-
-                            Timber.d("DIALOG - RESUME");
-
-                            // this item is installed and there are no saved threads for it
-
-                            // if item is flagged, download finished, do not prompt to resume
-                            if (eItem.isInstalled()) {
-
-                                // proceed as usual
-
-                                Timber.d("DO STUFF");
-
-                                handleClick(eItem, installedIds, true);
-                            } else {
-
-                                new AlertDialog.Builder(HomeActivity.this)
-                                        .setTitle(getString(R.string.resume_download))
-                                        .setMessage(eItem.getTitle())
-                                        .setPositiveButton(getString(R.string.resume), new DialogInterface.OnClickListener() {
-
-                                            @Override
-                                            public void onClick(DialogInterface dialog, int which) {
-                                                Timber.d("RESUME...");
-                                                handleClick(eItem, installedIds, false);
-                                            }
-                                        })
-                                        .setNegativeButton(getString(R.string.cancel), null)
-                                        .setNeutralButton(getString(R.string.stop), new CancelListener(eItem))
-                                        .show();
-                            }
-                        }
+                    if (selectedItem instanceof InstanceIndexItem) {
+                        launchLiger(HomeActivity.this, null, ((InstanceIndexItem) selectedItem).getInstanceFilePath(), null);
                     } else {
 
-                        // proceed as usual
+                        Timber.d("CLICKED AN ITEM");
 
-                        // do not display dialog options if user selected "use manager"
-                        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(HomeActivity.this);
-                        boolean useManager = settings.getBoolean("pusedownloadmanager", false);
+                        // get clicked item
+                        final ExpansionIndexItem eItem = ((ExpansionIndexItem) selectedItem);
 
-                        if (useManager) {
+                        // get installed items
+                        final HashMap<String, ExpansionIndexItem> installedIds = StorymakerIndexManager.loadInstalledIdIndex(HomeActivity.this, installedIndexItemDao);
 
-                            Timber.d("USING MANAGER - NO DIALOG");
+                        // this isn't ideal but pushing an alert dialog down into the check/download process is difficult
 
-                            handleClick(eItem, installedIds, false);
+                        if ((downloadThreads.get(eItem.getExpansionId()) != null)) {
+                            Timber.d("DIALOG - FOUND THREADS: " + downloadThreads.get(eItem.getExpansionId()).size());
+                        }
 
+                        if (!installedIds.containsKey(eItem.getExpansionId()) && (downloadThreads.get(eItem.getExpansionId()) == null)) {
+
+                            Timber.d("DIALOG - START");
+
+                            // this item is not installed and there are no saved threads for it
+
+                            new AlertDialog.Builder(HomeActivity.this)
+                                    .setTitle(R.string.download_content_pack)
+                                    .setMessage(eItem.getTitle() + " (" + ((eItem.getExpansionFileSize() + eItem.getPatchFileSize()) / 1048576) + " MB)") // FIXME we need to flip this for RTL
+                                            // using negative button to account for fixed order
+                                    .setPositiveButton(getString(R.string.download), new DialogInterface.OnClickListener() {
+
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+
+                                            Timber.d("START...");
+
+                                            handleClick(eItem, installedIds, false);
+
+                                        }
+                                    })
+                                    .setNegativeButton(getString(R.string.cancel), null)
+                                    .show();
+                        } else if (installedIds.containsKey(eItem.getExpansionId()) && (downloadThreads.get(eItem.getExpansionId()) == null)) {
+
+                            // do not display dialog options if user selected "use manager"
+                            SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(HomeActivity.this);
+                            boolean useManager = settings.getBoolean("pusedownloadmanager", false);
+
+                            if (useManager) {
+
+                                Timber.d("USING MANAGER - NO DIALOG");
+
+                                handleClick(eItem, installedIds, false);
+
+                            } else {
+
+                                Timber.d("DIALOG - RESUME");
+
+                                // this item is installed and there are no saved threads for it
+
+                                // if item is flagged, download finished, do not prompt to resume
+                                if (eItem.isInstalled()) {
+
+                                    // proceed as usual
+
+                                    Timber.d("DO STUFF");
+
+                                    handleClick(eItem, installedIds, true);
+                                } else {
+
+                                    new AlertDialog.Builder(HomeActivity.this)
+                                            .setTitle(getString(R.string.resume_download))
+                                            .setMessage(eItem.getTitle())
+                                            .setPositiveButton(getString(R.string.resume), new DialogInterface.OnClickListener() {
+
+                                                @Override
+                                                public void onClick(DialogInterface dialog, int which) {
+                                                    Timber.d("RESUME...");
+                                                    handleClick(eItem, installedIds, false);
+                                                }
+                                            })
+                                            .setNegativeButton(getString(R.string.cancel), null)
+                                            .setNeutralButton(getString(R.string.stop), new CancelListener(eItem))
+                                            .show();
+                                }
+                            }
                         } else {
 
-                            Timber.d("CONTINUE...");
+                            // proceed as usual
 
-                            handleClick(eItem, installedIds, true);
+                            // do not display dialog options if user selected "use manager"
+                            SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(HomeActivity.this);
+                            boolean useManager = settings.getBoolean("pusedownloadmanager", false);
 
+                            if (useManager) {
+
+                                Timber.d("USING MANAGER - NO DIALOG");
+
+                                handleClick(eItem, installedIds, false);
+
+                            } else {
+
+                                Timber.d("CONTINUE...");
+
+                                handleClick(eItem, installedIds, true);
+
+                            }
                         }
                     }
                 }
-            }
-        }, installedIndexItemDao));
+            }, installedIndexItemDao));
+        } else {
+            // empty list
+            TextView textView = (TextView) findViewById(R.id.textViewEmptyState);
+            textView.setVisibility(View.VISIBLE);
+            mSwipeRefreshLayout.setVisibility(View.GONE);
+        }
     }
 
     // HAD TO SPLIT OUT INTO A METHOD
