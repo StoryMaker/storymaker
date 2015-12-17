@@ -147,4 +147,12 @@
         <item>templates</item>
     </string-array>
 
+    <string-array name="home_menu_ids">
+        <item>home</item>
+        <item>stories</item>
+        <item>guides</item>
+        <item>lessons</item>
+        <item>templates</item>
+    </string-array>
+
 </resources>

@@ -15,9 +15,15 @@
         android:layout_height="wrap_content" />
 
 
-    <org.storymaker.app.ui.SwipelessViewPager
+    
+    <android.support.v4.view.ViewPager
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/pager" />
+
+    <!--<org.storymaker.app.ui.SwipelessViewPager
         android:id="@+id/pager"
-        android:layout_width="match_parent" android:layout_height="match_parent" >
+        android:layout_width="match_parent" android:layout_height="match_parent" >-->
 
     <!--<android.support.v4.view.PagerTabStrip
         android:id="@+id/pager_tab_strip"
@@ -31,6 +37,6 @@
         android:paddingStart="20dp"
         android:paddingEnd="20dp"/>-->
 
-    </org.storymaker.app.ui.SwipelessViewPager>
+    <!--</org.storymaker.app.ui.SwipelessViewPager>-->
 
 </LinearLayout>

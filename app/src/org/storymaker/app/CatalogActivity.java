@@ -35,7 +35,6 @@ import org.apache.commons.io.filefilter.WildcardFileFilter;
 import org.storymaker.app.server.LoginActivity;
 import org.storymaker.app.server.ServerManager;
 import org.storymaker.app.ui.SlidingTabLayout;
-import org.storymaker.app.ui.SwipelessViewPager;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -84,7 +83,8 @@ public class CatalogActivity extends BaseActivity {
     /**
      * The {@link ViewPager} that will host the section contents.
      */
-    private SwipelessViewPager mViewPager;
+    //private SwipelessViewPager mViewPager;
+    private ViewPager mViewPager;
     private SlidingTabLayout mSlidingTabLayout;
 
 
@@ -801,9 +801,10 @@ public class CatalogActivity extends BaseActivity {
         mDemoCollectionPagerAdapter = new DemoCollectionPagerAdapter(getSupportFragmentManager(), myInstanceIndexItemAdapters);
 
         // Set up the ViewPager with the sections adapter.
-        mViewPager = (SwipelessViewPager) findViewById(R.id.pager);
+        //mViewPager = (SwipelessViewPager) findViewById(R.id.pager);
+        mViewPager = (ViewPager) findViewById(R.id.pager);
         mViewPager.setAdapter(mDemoCollectionPagerAdapter);
-        mViewPager.setPagingEnabled(false);
+        //mViewPager.setPagingEnabled(false);
 
         // Give the SlidingTabLayout the ViewPager, this must be done AFTER the ViewPager has had
         // it's PagerAdapter set.
