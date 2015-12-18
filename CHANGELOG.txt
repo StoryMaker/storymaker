@@ -1,3 +1,7 @@
+--- build 1083:
+
+- New Spanish translation for Mobile Photo 101 pack!
+
 --- build 1082
 
 - Fix: setting volume to 0 on one clips also mutes following clips in narration/review cards

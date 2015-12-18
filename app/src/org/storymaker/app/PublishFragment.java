@@ -136,7 +136,7 @@ public class PublishFragment extends Fragment implements PublishListener {
         String storyPathInstancePath = mActivity.getProject().getTemplatePath();
         if (storyPathInstancePath != null && !storyPathInstancePath.equals("")) {
             File f = new File(storyPathInstancePath);
-            String jsonString = JsonHelper.loadJSON(f, "en"); // FIXME don't hardcode "en"
+            String jsonString = JsonHelper.loadJSON(f.getPath(), getActivity().getApplicationContext(), "en"); // FIXME don't hardcode "en"
             if (jsonString != null) {
                 ArrayList<String> referencedFiles = new ArrayList<String>(); // should not need to insert dependencies to check metadata
                 String language = StoryMakerApp.getCurrentLocale().getLanguage();
@@ -704,8 +704,8 @@ public class PublishFragment extends Fragment implements PublishListener {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(mActivity);
         builder.setMessage(R.string.view_published_media_online_or_local_copy_)
-                .setPositiveButton(R.string.yes, dialogClickListener)
-                .setNegativeButton(R.string.no, dialogClickListener).show();
+                .setPositiveButton(android.R.string.yes, dialogClickListener)
+                .setNegativeButton(android.R.string.no, dialogClickListener).show();
     }
     
     private String getStoryMakerUserName(){ 

@@ -127,7 +127,7 @@ public class ProjectsActivity extends BaseActivity {
 
             AlertDialog.Builder builder = new AlertDialog.Builder(ProjectsActivity.this);
             builder.setMessage(R.string.delete_project_)
-                    .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener(){
+                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener(){
 
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
@@ -135,7 +135,7 @@ public class ProjectsActivity extends BaseActivity {
                         }
                         
                     })
-                    .setNegativeButton(R.string.no, null).show();
+                    .setNegativeButton(android.R.string.no, null).show();
             
             
                 
