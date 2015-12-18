@@ -59,7 +59,6 @@ import scal.io.liger.model.sqlbrite.BaseIndexItem;
 import scal.io.liger.model.sqlbrite.InstalledIndexItem;
 import scal.io.liger.model.sqlbrite.InstalledIndexItemDao;
 import scal.io.liger.model.sqlbrite.InstanceIndexItem;
-import scal.io.liger.model.sqlbrite.InstanceIndexItemDao;
 import scal.io.liger.model.sqlbrite.QueueItemDao;
 import timber.log.Timber;
 
@@ -102,7 +101,7 @@ public class CatalogActivity extends BaseActivity {
     private boolean loggedIn;
 
     // new stuff
-    private InstanceIndexItemDao instanceIndexItemDao;
+    //private InstanceIndexItemDao instanceIndexItemDao;
     private AvailableIndexItemDao availableIndexItemDao;
     private InstalledIndexItemDao installedIndexItemDao;
     private QueueItemDao queueItemDao;
@@ -201,13 +200,14 @@ public class CatalogActivity extends BaseActivity {
     // must set dao stuff in constructor?
     public CatalogActivity() {
 
-        instanceIndexItemDao = new InstanceIndexItemDao();
+        //instanceIndexItemDao = new InstanceIndexItemDao();
         availableIndexItemDao = new AvailableIndexItemDao();
         installedIndexItemDao = new InstalledIndexItemDao();
 
         queueItemDao = new QueueItemDao();
 
-        daoManager = new DaoManager(CatalogActivity.this, "Storymaker.db", dbVersion, instanceIndexItemDao, availableIndexItemDao, installedIndexItemDao, queueItemDao);
+        //daoManager = new DaoManager(CatalogActivity.this, "Storymaker.db", dbVersion, instanceIndexItemDao, availableIndexItemDao, installedIndexItemDao, queueItemDao);
+        daoManager = new DaoManager(CatalogActivity.this, "Storymaker.db", dbVersion, availableIndexItemDao, installedIndexItemDao, queueItemDao);
         daoManager.setLogging(false);
 
     }
@@ -274,24 +274,24 @@ public class CatalogActivity extends BaseActivity {
 
             // if found, migrate instance index
 
-            File instanceFile = new File(StorageHelper.getActualStorageDirectory(this), "instance_index.json");
-
-            if (instanceFile.exists()) {
-                HashMap<String, scal.io.liger.model.InstanceIndexItem> instanceItemsFromFile = scal.io.liger.IndexManager.loadInstanceIndex(this);
-
-                if (instanceItemsFromFile.size() == 0) {
-                    Timber.d("NOTHING LOADED FROM INSTANCE INDEX FILE");
-                } else {
-                    for (scal.io.liger.model.InstanceIndexItem item : instanceItemsFromFile.values()) {
-                        Timber.d("ADDING " + item.getInstanceFilePath() + " TO DATABASE (INSTANCE)");
-                        instanceIndexItemDao.addInstanceIndexItem(item, true); // replaces existing items, should trigger updates to installed items and table as needed
-                    }
-                }
-
-                instanceFile.delete();
-            } else {
-                Timber.d("NO INSTANCE INDEX FILE");
-            }
+//            File instanceFile = new File(StorageHelper.getActualStorageDirectory(this), "instance_index.json");
+//
+//            if (instanceFile.exists()) {
+//                HashMap<String, scal.io.liger.model.InstanceIndexItem> instanceItemsFromFile = scal.io.liger.IndexManager.loadInstanceIndex(this);
+//
+//                if (instanceItemsFromFile.size() == 0) {
+//                    Timber.d("NOTHING LOADED FROM INSTANCE INDEX FILE");
+//                } else {
+//                    for (scal.io.liger.model.InstanceIndexItem item : instanceItemsFromFile.values()) {
+//                        Timber.d("ADDING " + item.getInstanceFilePath() + " TO DATABASE (INSTANCE)");
+//                        instanceIndexItemDao.addInstanceIndexItem(item, true); // replaces existing items, should trigger updates to installed items and table as needed
+//                    }
+//                }
+//
+//                instanceFile.delete();
+//            } else {
+//                Timber.d("NO INSTANCE INDEX FILE");
+//            }
 
             // update preferences
 
@@ -587,11 +587,11 @@ public class CatalogActivity extends BaseActivity {
         // NEW: load instance index
         String lang = StoryMakerApp.getCurrentLocale().getLanguage();
         Timber.d("lang returned from getCurrentLocale: " + lang);
-        HashMap<String, InstanceIndexItem> instanceIndex = StorymakerIndexManager.fillInstanceIndex(CatalogActivity.this, StorymakerIndexManager.loadInstanceIndex(CatalogActivity.this, instanceIndexItemDao), lang, instanceIndexItemDao);
+        //HashMap<String, InstanceIndexItem> instanceIndex = StorymakerIndexManager.fillInstanceIndex(CatalogActivity.this, StorymakerIndexManager.loadInstanceIndex(CatalogActivity.this, instanceIndexItemDao), lang, instanceIndexItemDao);
 
         // FIXME --- this should only happen on app updates in a migration
-        if (instanceIndex.size() > 0) {
-            Timber.d("INITACTIVITYLIST - FOUND INSTANCE INDEX WITH " + instanceIndex.size() + " ITEMS");
+        //if (instanceIndex.size() > 0) {
+        //    Timber.d("INITACTIVITYLIST - FOUND INSTANCE INDEX WITH " + instanceIndex.size() + " ITEMS");
 
 
 
@@ -620,15 +620,15 @@ public class CatalogActivity extends BaseActivity {
 
 
 
-        } else {
-            Timber.d("INITACTIVITYLIST - FOUND INSTANCE INDEX WITH NO ITEMS");
-        }
+        //} else {
+        //    Timber.d("INITACTIVITYLIST - FOUND INSTANCE INDEX WITH NO ITEMS");
+        //}
 
-        ArrayList<BaseIndexItem> instances = new ArrayList<BaseIndexItem>(instanceIndex.values());
+        //ArrayList<BaseIndexItem> instances = new ArrayList<BaseIndexItem>();
 
-        ArrayList<BaseIndexItem> guides = new ArrayList<BaseIndexItem>(instanceIndex.values());
-        ArrayList<BaseIndexItem> lessons = new ArrayList<BaseIndexItem>(instanceIndex.values());
-        ArrayList<BaseIndexItem> templates = new ArrayList<BaseIndexItem>(instanceIndex.values());
+        ArrayList<BaseIndexItem> guides = new ArrayList<BaseIndexItem>();
+        ArrayList<BaseIndexItem> lessons = new ArrayList<BaseIndexItem>();
+        ArrayList<BaseIndexItem> templates = new ArrayList<BaseIndexItem>();
 
 
         HashMap<String, scal.io.liger.model.sqlbrite.ExpansionIndexItem> availableIds = StorymakerIndexManager.loadAvailableIdIndex(this, availableIndexItemDao);
@@ -645,7 +645,7 @@ public class CatalogActivity extends BaseActivity {
 
             if (installedIds.keySet().contains(id)) {
                 // if the available item has been installed, add the corresponding item from the installed index
-                instances.add(installedIds.get(id));
+                //instances.add(installedIds.get(id));
 
                 if (installedGuideIds.contains(id)) {
                     guides.add(installedIds.get(id));
@@ -657,7 +657,7 @@ public class CatalogActivity extends BaseActivity {
 
             } else {
                 // if the available item has not been installed, add the item from the available index
-                instances.add(availableIds.get(id));
+                //instances.add(availableIds.get(id));
 
                 if (availableGuideIds.contains(id)) {
                     guides.add(availableIds.get(id));
@@ -670,7 +670,7 @@ public class CatalogActivity extends BaseActivity {
             }
         }
 
-        Collections.sort(instances, Collections.reverseOrder()); // FIXME we should sort this down a layer, perhaps in loadInstanceIndexAsList
+        //Collections.sort(instances, Collections.reverseOrder()); // FIXME we should sort this down a layer, perhaps in loadInstanceIndexAsList
         Collections.sort(lessons, Collections.reverseOrder()); // FIXME we should sort this down a layer, perhaps in loadInstanceIndexAsList
         Collections.sort(guides, Collections.reverseOrder()); // FIXME we should sort this down a layer, perhaps in loadInstanceIndexAsList
         Collections.sort(templates, Collections.reverseOrder()); // FIXME we should sort this down a layer, perhaps in loadInstanceIndexAsList
@@ -793,7 +793,7 @@ public class CatalogActivity extends BaseActivity {
             }
         };
 
-        final InstanceIndexItemAdapter myInstancesInstanceIndexItemAdapter = new InstanceIndexItemAdapter(instances, myBaseIndexItemSelectedListener, installedIndexItemDao);
+        //final InstanceIndexItemAdapter myInstancesInstanceIndexItemAdapter = new InstanceIndexItemAdapter(instances, myBaseIndexItemSelectedListener, installedIndexItemDao);
         final InstanceIndexItemAdapter myGuidesInstanceIndexItemAdapter = new InstanceIndexItemAdapter(guides, myBaseIndexItemSelectedListener, installedIndexItemDao);
         final InstanceIndexItemAdapter myLessonsInstanceIndexItemAdapter = new InstanceIndexItemAdapter(lessons, myBaseIndexItemSelectedListener, installedIndexItemDao);
         final InstanceIndexItemAdapter myTemplatesInstanceIndexItemAdapter = new InstanceIndexItemAdapter(templates, myBaseIndexItemSelectedListener, installedIndexItemDao);
