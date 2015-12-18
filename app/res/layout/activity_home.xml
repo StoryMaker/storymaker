@@ -8,6 +8,18 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:padding="0dp">
 
+    <org.storymaker.app.ui.SlidingTabLayout
+        android:background="#222222"
+        android:id="@+id/home_sliding_tabs"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <android.support.v4.view.ViewPager
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/home_pager" />
+
+    <!--
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/swipeRefreshLayout"
         android:layout_width="match_parent"
@@ -20,6 +32,7 @@
         android:scrollbars="vertical" />
     </android.support.v4.widget.SwipeRefreshLayout>
 
+
     <TextView
         android:id="@+id/textViewEmptyState"
         android:padding="16dp"
@@ -28,6 +41,8 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Go download some Content Packs from the Catalog!"
         android:visibility="gone" />
+    -->
+
 
 
 </LinearLayout>

@@ -369,5 +369,16 @@ You also will have an opportunity to see and modify the data being sent."</strin
     <string name="catalog_menu_lessons">Lessons</string>
     <string name="catalog_menu_templates">Templates</string>
 
+    <string name="home_menu_home">Home</string>
+    <string name="home_menu_stories">Stories</string>
+    <string name="home_menu_guides">Guides</string>
+    <string name="home_menu_lessons">Lessons</string>
+    <string name="home_menu_templates">Templates</string>
+
+    <string name="home_empty_home">You haven\'t worked on any stories yet.</string>
+    <string name="home_empty_stories">You haven\'t saved any stories yet.</string>
+    <string name="home_empty_guides">You haven\'t installed any guides yet.</string>
+    <string name="home_empty_lessons">You haven\'t installed any lessons yet.</string>
+    <string name="home_empty_templates">You haven\'t installed any templates yet.</string>
 
 </resources>
