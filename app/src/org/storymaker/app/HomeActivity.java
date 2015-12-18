@@ -55,7 +55,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
-import info.guardianproject.netcipher.proxy.OrbotHelper;
 import rx.functions.Action1;
 import scal.io.liger.JsonHelper;
 import scal.io.liger.MainActivity;
@@ -81,7 +80,7 @@ import timber.log.Timber;
 //import scal.io.liger.model.InstanceIndexItem;
 //import com.google.analytics.tracking.android.GoogleAnalytics;
 
-public class HomeActivity extends BaseActivity {
+public class HomeActivity extends BaseHomeActivity {
 
     private final static String TAG = "HomeActivity";
 
@@ -1156,28 +1155,6 @@ public class HomeActivity extends BaseActivity {
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-    }
-
-
-	private void checkForTor ()
-    {
-    	 SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-
-	     boolean useTor = settings.getBoolean("pusetor", false);
-	     
-	     if (useTor)
-	     {
-
-	    	 if (!OrbotHelper.isOrbotInstalled(this))
-	    	 {
-                 startActivity(OrbotHelper.getOrbotInstallIntent(this));
-	    	 }
-	    	 else if (!OrbotHelper.isOrbotRunning(this))
-	    	 {
-                 OrbotHelper.requestStartTor(this);
-	    	 }
-	    	 
-	     }
     }
 
     //if the user hasn't registered with the user, show the login screen

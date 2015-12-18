@@ -45,7 +45,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
-import info.guardianproject.onionkit.ui.OrbotHelper;
 import rx.functions.Action1;
 import scal.io.liger.JsonHelper;
 import scal.io.liger.MainActivity;
@@ -66,7 +65,7 @@ import timber.log.Timber;
  * Created by admin on 12/8/15.
  */
 
-public class CatalogActivity extends BaseActivity {
+public class CatalogActivity extends BaseHomeActivity {
 
 
     /**
@@ -1116,29 +1115,6 @@ public class CatalogActivity extends BaseActivity {
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-    }
-
-
-    private void checkForTor ()
-    {
-        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-
-        boolean useTor = settings.getBoolean("pusetor", false);
-
-        if (useTor)
-        {
-            OrbotHelper oh = new OrbotHelper(this);
-
-            if (!oh.isOrbotInstalled())
-            {
-                oh.promptToInstall(this);
-            }
-            else if (!oh.isOrbotRunning())
-            {
-                oh.requestOrbotStart(this);
-            }
-
-        }
     }
 
     //if the user hasn't registered with the user, show the login screen
