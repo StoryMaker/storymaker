@@ -95,7 +95,6 @@ public class HomeActivity extends BaseActivity {
     private SlidingTabLayout mSlidingTabLayout;
     private String[] mHomeMenu;
 
-
     private boolean loggedIn;
 
     // new stuff
@@ -656,26 +655,26 @@ public class HomeActivity extends BaseActivity {
         }
 
         ArrayList<BaseIndexItem> instances = new ArrayList<BaseIndexItem>(instanceIndex.values());
-        ArrayList<BaseIndexItem> guides = new ArrayList<BaseIndexItem>(instanceIndex.values());
-        ArrayList<BaseIndexItem> lessons = new ArrayList<BaseIndexItem>(instanceIndex.values());
-        ArrayList<BaseIndexItem> templates = new ArrayList<BaseIndexItem>(instanceIndex.values());
+        ArrayList<BaseIndexItem> guides = new ArrayList<BaseIndexItem>();
+        ArrayList<BaseIndexItem> lessons = new ArrayList<BaseIndexItem>();
+        ArrayList<BaseIndexItem> templates = new ArrayList<BaseIndexItem>();
 
 
 
-        HashMap<String, ExpansionIndexItem> availableIds = StorymakerIndexManager.loadAvailableIdIndex(this, availableIndexItemDao);
-        ArrayList<String> availableGuideIds = getIndexItemIdsByType(availableIndexItemDao, "guide");
-        ArrayList<String> availableLessonIds = getIndexItemIdsByType(availableIndexItemDao, "lesson");
-        ArrayList<String> availableTemplateIds = getIndexItemIdsByType(availableIndexItemDao, "template");
+        //HashMap<String, ExpansionIndexItem> availableIds = StorymakerIndexManager.loadAvailableIdIndex(this, availableIndexItemDao);
+        //ArrayList<String> availableGuideIds = getIndexItemIdsByType(availableIndexItemDao, "guide");
+        //ArrayList<String> availableLessonIds = getIndexItemIdsByType(availableIndexItemDao, "lesson");
+        //ArrayList<String> availableTemplateIds = getIndexItemIdsByType(availableIndexItemDao, "template");
 
         HashMap<String, ExpansionIndexItem> installedIds = StorymakerIndexManager.loadInstalledIdIndex(this, installedIndexItemDao);
         ArrayList<String> installedGuideIds = getIndexItemIdsByType(installedIndexItemDao, "guide");
         ArrayList<String> installedLessonIds = getIndexItemIdsByType(installedIndexItemDao, "lesson");
         ArrayList<String> installedTemplateIds = getIndexItemIdsByType(installedIndexItemDao, "template");
 
-        for (String id : availableIds.keySet()) {
-            if (installedIds.keySet().contains(id)) {
+        for (String id : installedIds.keySet()) {
+            //if (installedIds.keySet().contains(id)) {
                 // if the available item has been installed, add the corresponding item from the installed index
-                instances.add(installedIds.get(id));
+                //instances.add(installedIds.get(id));
 
                 if (installedGuideIds.contains(id)) {
                     guides.add(installedIds.get(id));
@@ -684,7 +683,7 @@ public class HomeActivity extends BaseActivity {
                 } else if (installedTemplateIds.contains(id)) {
                     templates.add(installedIds.get(id));
                 }
-            } else {
+            //} else {
                 // if the available item has not been installed, add the item from the available index
                 //instances.add(availableIds.get(id)); // FIXME temporarily commenting this out, we could much more gracefully do this now that we only care about installed items and stories
 
@@ -695,7 +694,7 @@ public class HomeActivity extends BaseActivity {
 //                } else if (availableTemplateIds.contains(id)) {
 //                    templates.add(availableIds.get(id));
 //                }
-            }
+            //}
         }
 
         //if (instances.size() > 0) {
@@ -835,7 +834,7 @@ public class HomeActivity extends BaseActivity {
             final Integer templatesSize = templates.size();
 
             final String homeName = "home";
-            final String storiesName = "home";
+            final String storiesName = "stories";
             final String guidesName = "guides";
             final String lessonsName = "lessons";
             final String templatesName = "templates";
@@ -1203,6 +1202,22 @@ public class HomeActivity extends BaseActivity {
     }
 
 
+    public void launchNewProject() {
+        // need to check this to determine whether there is a storage issue that will cause a crash
+        File actualStorageDirectory = StorageHelper.getActualStorageDirectory(this);
+
+        if (actualStorageDirectory != null) {
+            launchLiger(this, "default_library", null, null);
+        } else {
+            //show storage error message
+            new AlertDialog.Builder(this)
+                    .setTitle(Utils.getAppName(this))
+                    .setIcon(android.R.drawable.ic_dialog_info)
+                    .setMessage(R.string.err_storage_not_available)
+                    .show();
+        }
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
@@ -1213,20 +1228,7 @@ public class HomeActivity extends BaseActivity {
         }
         else if (item.getItemId() == R.id.menu_new_project)
         {
-            // need to check this to determine whether there is a storage issue that will cause a crash
-            File actualStorageDirectory = StorageHelper.getActualStorageDirectory(this);
-
-            if (actualStorageDirectory != null) {
-                launchLiger(this, "default_library", null, null);
-            } else {
-                //show storage error message
-                new AlertDialog.Builder(this)
-                        .setTitle(Utils.getAppName(this))
-                        .setIcon(android.R.drawable.ic_dialog_info)
-                        .setMessage(R.string.err_storage_not_available)
-                        .show();
-            }
-
+            launchNewProject();
             return true;
         }
         else if (item.getItemId() == R.id.menu_about)

@@ -18,11 +18,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingRight="@dimen/padding_large"
-            android:textSize="@dimen/text_large"
+            android:textSize="@dimen/text_medium"
             android:textColor="#999"
+            android:text="You haven\'t worked on any stories yet."
             android:layout_gravity="end"
-            android:padding="8dp"
-             />
+            android:padding="16dp"
+            android:textStyle="italic"
+            android:gravity="center" />
 
         <Button
             android:id="@+id/fragment_button"
