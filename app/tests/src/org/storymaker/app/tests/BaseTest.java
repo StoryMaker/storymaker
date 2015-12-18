@@ -33,7 +33,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Collection;
 
-import info.guardianproject.onionkit.ui.OrbotHelper;
+import info.guardianproject.netcipher.proxy.OrbotHelper;
 import io.scal.secureshareui.login.SoundCloudLoginActivity;
 import scal.io.liger.MainActivity;
 import scal.io.liger.StorageHelper;
@@ -228,14 +228,13 @@ public class BaseTest extends ActivityInstrumentationTestCase2<HomeActivity> {
         Timber.d("BEGIN TOR TOGGLE");
 
         // check for tor
-        OrbotHelper oh = new OrbotHelper(mHomeActivity);
 
-        if (!oh.isOrbotInstalled())
+        if (!OrbotHelper.isOrbotInstalled(mHomeActivity))
         {
             Timber.e("TOR TOGGLE FAILED, ORBOT NOT INSTALLED");
             return false;
         }
-        else if (!oh.isOrbotRunning())
+        else if (!OrbotHelper.isOrbotRunning(mHomeActivity))
         {
             Timber.e("TOR TOGGLE FAILED, ORBOT NOT RUNNING");
             return false;
