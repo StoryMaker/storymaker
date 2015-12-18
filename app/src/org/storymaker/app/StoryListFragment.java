@@ -74,30 +74,30 @@ public class StoryListFragment extends Fragment{
 
             LinearLayout ll = (LinearLayout) inflater.inflate(R.layout.fragment_story_list_empty, null);
             TextView tv = (TextView) ll.findViewById(R.id.tv_text);
-            tv.setText("Empty");
+            Button linkButton = (Button) ll.findViewById(R.id.fragment_button);
+
+            int id = getResources().getIdentifier("home_empty_" + myListName, "string", "org.storymaker.app");
+            //String catalog_name = getResources().getString(id);
+            tv.setText(getResources().getString(id));
 
             //Only add Links if it's the Home page
             if (myHomeFlag) {
 
-                Button linkButton = new Button(getContext());
-
-                linkButton.setText("Hello");
+                if (myListName.equals("stories")) {
+                    linkButton.setText("New Story");
+                }
+                linkButton.setVisibility(View.VISIBLE);
+                //linkButton.setText("Go to Catalog");
                 linkButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        //Log.d("StoryListFragment", "link click");
-
                         sendMessage(v);
-
                     }
                 });
-
-                ll.addView(linkButton);
-
+            } else {
+                linkButton.setVisibility(View.GONE);
             }
-
             return ll;
-
         }
     }
 
