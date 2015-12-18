@@ -89,6 +89,7 @@ public class CatalogActivity extends BaseActivity {
 
 
     private String[] mCatalogMenu;
+    private String mIntentMessage;
 
     private final static String TAG = "CatalogActivity";
 
@@ -109,7 +110,6 @@ public class CatalogActivity extends BaseActivity {
     private int dbVersion = 1;
 
     private HashMap<String, ArrayList<Thread>> downloadThreads = new HashMap<String, ArrayList<Thread>>();
-
 
 
     public static ArrayList<String> getIndexItemIdsByType(Dao dao, String type) {
@@ -388,6 +388,14 @@ public class CatalogActivity extends BaseActivity {
 
         checkForUpdates();
 
+        // Get the message from the intent
+        Intent intent = getIntent();
+        mIntentMessage = intent.getStringExtra(StoryListFragment.EXTRA_MESSAGE);
+        if (mIntentMessage == null) {
+            mIntentMessage = "null";
+        }
+        //Log.d("CatalogActivity", intent.toString()+" "+intent.getStringExtra(StoryListFragment.EXTRA_MESSAGE));
+
     }
 
     /**
@@ -407,9 +415,13 @@ public class CatalogActivity extends BaseActivity {
 
         @Override
         public Fragment getItem(int i) {
+
             Fragment fragment = new StoryListFragment(myInstanceIndexItemAdapters.get(i));
             Bundle args = new Bundle();
             args.putInt(StoryListFragment.ARG_OBJECT, i + 1); // Our object is just an integer :-P
+            args.putInt(StoryListFragment.LIST_COUNT, 1);
+            args.putString(StoryListFragment.LIST_NAME, "");
+            args.putBoolean(StoryListFragment.HOME_FLAG, false);
             fragment.setArguments(args);
             return fragment;
         }
@@ -804,6 +816,7 @@ public class CatalogActivity extends BaseActivity {
         //mViewPager = (SwipelessViewPager) findViewById(R.id.pager);
         mViewPager = (ViewPager) findViewById(R.id.pager);
         mViewPager.setAdapter(mDemoCollectionPagerAdapter);
+        goToCatalogTab();
         //mViewPager.setPagingEnabled(false);
 
         // Give the SlidingTabLayout the ViewPager, this must be done AFTER the ViewPager has had
@@ -813,6 +826,33 @@ public class CatalogActivity extends BaseActivity {
                 getResources().getColor(R.color.white));
         mSlidingTabLayout.setDistributeEvenly(true);
         mSlidingTabLayout.setViewPager(mViewPager);
+    }
+
+    public void goToCatalogTab() {
+
+        int i;
+        switch (mIntentMessage) {
+            case "home":
+                i = 0;
+                break;
+            case "guides":
+                i = 0;
+                break;
+            case "lessons":
+                i = 1;
+                break;
+            case "templates":
+                i = 2;
+                break;
+            case "null":
+                i = 0;
+                break;
+            default:
+                i = 0;
+                break;
+        }
+        mViewPager.setCurrentItem(i);
+
     }
 
     // HAD TO SPLIT OUT INTO A METHOD

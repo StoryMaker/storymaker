@@ -406,21 +406,29 @@ public class HomeActivity extends BaseActivity {
     public class DemoCollectionPagerAdapter extends FragmentStatePagerAdapter {
 
         private ArrayList<InstanceIndexItemAdapter> myInstanceIndexItemAdapters;
+        private ArrayList<Integer> myListLengths;
+        private ArrayList<String> myListNames;
 
-        public DemoCollectionPagerAdapter(FragmentManager fm, ArrayList<InstanceIndexItemAdapter> iiias) {
+        public DemoCollectionPagerAdapter(FragmentManager fm, ArrayList<InstanceIndexItemAdapter> iiias, ArrayList<Integer> ls, ArrayList<String> ns) {
             super(fm);
 
             myInstanceIndexItemAdapters = iiias;
-
+            myListLengths = ls;
+            myListNames = ns;
         }
 
         @Override
         public Fragment getItem(int i) {
+
             Fragment fragment = new StoryListFragment(myInstanceIndexItemAdapters.get(i));
             Bundle args = new Bundle();
             args.putInt(StoryListFragment.ARG_OBJECT, i + 1); // Our object is just an integer :-P
+            args.putInt(StoryListFragment.LIST_COUNT, myListLengths.get(i));
+            args.putString(StoryListFragment.LIST_NAME, myListNames.get(i));
+            args.putBoolean(StoryListFragment.HOME_FLAG, true);
             fragment.setArguments(args);
             return fragment;
+
         }
 
         @Override
@@ -678,15 +686,15 @@ public class HomeActivity extends BaseActivity {
                 }
             } else {
                 // if the available item has not been installed, add the item from the available index
-                instances.add(availableIds.get(id)); // FIXME temporarily commenting this out, we could much more gracefully do this now that we only care about installed items and stories
+                //instances.add(availableIds.get(id)); // FIXME temporarily commenting this out, we could much more gracefully do this now that we only care about installed items and stories
 
-                if (availableGuideIds.contains(id)) {
-                    guides.add(availableIds.get(id));
-                } else if (availableLessonIds.contains(id)) {
-                    lessons.add(availableIds.get(id));
-                } else if (availableTemplateIds.contains(id)) {
-                    templates.add(availableIds.get(id));
-                }
+//                if (availableGuideIds.contains(id)) {
+//                    guides.add(availableIds.get(id));
+//                } else if (availableLessonIds.contains(id)) {
+//                    lessons.add(availableIds.get(id));
+//                } else if (availableTemplateIds.contains(id)) {
+//                    templates.add(availableIds.get(id));
+//                }
             }
         }
 
@@ -820,6 +828,19 @@ public class HomeActivity extends BaseActivity {
             final InstanceIndexItemAdapter myLessonsInstanceIndexItemAdapter = new InstanceIndexItemAdapter(lessons, myBaseIndexItemSelectedListener, installedIndexItemDao);
             final InstanceIndexItemAdapter myTemplatesInstanceIndexItemAdapter = new InstanceIndexItemAdapter(templates, myBaseIndexItemSelectedListener, installedIndexItemDao);
 
+            final Integer homeSize = instances.size();
+            final Integer storiesSize = instances.size();
+            final Integer guidesSize = guides.size();
+            final Integer lessonsSize = lessons.size();
+            final Integer templatesSize = templates.size();
+
+            final String homeName = "home";
+            final String storiesName = "home";
+            final String guidesName = "guides";
+            final String lessonsName = "lessons";
+            final String templatesName = "templates";
+
+
             ArrayList<InstanceIndexItemAdapter> myInstanceIndexItemAdapters = new ArrayList<InstanceIndexItemAdapter>() {{
                 add(myInstancesInstanceIndexItemAdapter);   //Home
                 add(myInstancesInstanceIndexItemAdapter);   //Stories
@@ -828,12 +849,28 @@ public class HomeActivity extends BaseActivity {
                 add(myTemplatesInstanceIndexItemAdapter);   //Templates
             }};
 
+            ArrayList<Integer> myListLengths = new ArrayList<Integer>() {{
+                add(homeSize);   //Home
+                add(storiesSize);   //Stories
+                add(guidesSize);      //Guides
+                add(lessonsSize);     //Lessons
+                add(templatesSize);   //Templates
+            }};
+
+            ArrayList<String> myListNames = new ArrayList<String>() {{
+                add(homeName);   //Home
+                add(storiesName);   //Stories
+                add(guidesName);      //Guides
+                add(lessonsName);     //Lessons
+                add(templatesName);   //Templates
+            }};
+
             //RES
             //mRecyclerView.setAdapter(myInstanceIndexItemAdapter);
 
             // Create the adapter that will return a fragment for each of the three
             // primary sections of the activity.
-            mDemoCollectionPagerAdapter = new DemoCollectionPagerAdapter(getSupportFragmentManager(), myInstanceIndexItemAdapters);
+            mDemoCollectionPagerAdapter = new DemoCollectionPagerAdapter(getSupportFragmentManager(), myInstanceIndexItemAdapters, myListLengths, myListNames);
 
             // Set up the ViewPager with the sections adapter.
             //mViewPager = (SwipelessViewPager) findViewById(R.id.pager);

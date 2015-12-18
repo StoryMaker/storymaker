@@ -1,21 +1,17 @@
 package org.storymaker.app;
 
-import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.annotation.Nullable;
-
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
 
 
 /**
@@ -24,15 +20,23 @@ import java.util.Random;
 public class StoryListFragment extends Fragment{
 
     public static final String ARG_OBJECT = "object";
+    public final static String EXTRA_MESSAGE = "org.storymaker.app.MESSAGE";
+    public static final String LIST_COUNT = "org.storymaker.app.LIST_COUNT";
+    public static final String LIST_NAME = "org.storymaker.app.LIST_NAME";
+    public static final String HOME_FLAG = "org.storymaker.app.HOME_FLAG";
 
     private InstanceIndexItemAdapter myInstanceIndexItemAdapter;
-
+    private Integer myListLength;
+    private String myListName;
+    private Boolean myHomeFlag;
 
     public StoryListFragment(InstanceIndexItemAdapter iiia) {
 
         myInstanceIndexItemAdapter = iiia;
 
     }
+
+
 
 //    public static final String ARG_OBJECT = "object";
 
@@ -49,10 +53,60 @@ public class StoryListFragment extends Fragment{
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        RecyclerView rv = (RecyclerView) inflater.inflate(
-                R.layout.fragment_story_list, container, false);
-        setupRecyclerView(rv);
-        return rv;
+
+        Bundle args = getArguments();
+        myListLength = args.getInt(LIST_COUNT);
+        myListName = args.getString(LIST_NAME);
+        myHomeFlag = args.getBoolean(HOME_FLAG);
+
+        if (myListLength > 0) {
+
+            RecyclerView rv = (RecyclerView) inflater.inflate(
+                    R.layout.fragment_story_list, container, false);
+            setupRecyclerView(rv);
+            return rv;
+
+        } else {
+
+            //LinearLayout ll = (LinearLayout) inflater.inflate(
+            //        R.layout.fragment_story_list_empty, container, false);
+            //return ll;
+
+            LinearLayout ll = (LinearLayout) inflater.inflate(R.layout.fragment_story_list_empty, null);
+            TextView tv = (TextView) ll.findViewById(R.id.tv_text);
+            tv.setText("Empty");
+
+            //Only add Links if it's the Home page
+            if (myHomeFlag) {
+
+                Button linkButton = new Button(getContext());
+
+                linkButton.setText("Hello");
+                linkButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        //Log.d("StoryListFragment", "link click");
+
+                        sendMessage(v);
+
+                    }
+                });
+
+                ll.addView(linkButton);
+
+            }
+
+            return ll;
+
+        }
+    }
+
+    public void sendMessage(View view) {
+
+        Intent intent = new Intent(view.getContext(), CatalogActivity.class);
+        intent.putExtra(EXTRA_MESSAGE, myListName);
+        startActivity(intent);
+
     }
 
     private void setupRecyclerView(RecyclerView recyclerView) {
