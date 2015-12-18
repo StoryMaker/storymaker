@@ -83,17 +83,24 @@ public class StoryListFragment extends Fragment{
             //Only add Links if it's the Home page
             if (myHomeFlag) {
 
+                linkButton.setVisibility(View.VISIBLE);
                 if (myListName.equals("stories")) {
                     linkButton.setText("New Story");
+                    linkButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            newProject();
+                        }
+                    });
+                } else {
+                    linkButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            openCatalogTab(v);
+                        }
+                    });
                 }
-                linkButton.setVisibility(View.VISIBLE);
-                //linkButton.setText("Go to Catalog");
-                linkButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        sendMessage(v);
-                    }
-                });
+
             } else {
                 linkButton.setVisibility(View.GONE);
             }
@@ -101,13 +108,18 @@ public class StoryListFragment extends Fragment{
         }
     }
 
-    public void sendMessage(View view) {
+    public void openCatalogTab(View view) {
 
         Intent intent = new Intent(view.getContext(), CatalogActivity.class);
         intent.putExtra(EXTRA_MESSAGE, myListName);
         startActivity(intent);
 
     }
+
+    public void newProject() {
+        ((HomeActivity)getActivity()).launchNewProject();
+    }
+
 
     private void setupRecyclerView(RecyclerView recyclerView) {
         recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext()));

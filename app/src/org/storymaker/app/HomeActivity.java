@@ -95,7 +95,6 @@ public class HomeActivity extends BaseActivity {
     private SlidingTabLayout mSlidingTabLayout;
     private String[] mHomeMenu;
 
-
     private boolean loggedIn;
 
     // new stuff
@@ -835,7 +834,7 @@ public class HomeActivity extends BaseActivity {
             final Integer templatesSize = templates.size();
 
             final String homeName = "home";
-            final String storiesName = "home";
+            final String storiesName = "stories";
             final String guidesName = "guides";
             final String lessonsName = "lessons";
             final String templatesName = "templates";
@@ -1204,6 +1203,22 @@ public class HomeActivity extends BaseActivity {
     }
 
 
+    public void launchNewProject() {
+        // need to check this to determine whether there is a storage issue that will cause a crash
+        File actualStorageDirectory = StorageHelper.getActualStorageDirectory(this);
+
+        if (actualStorageDirectory != null) {
+            launchLiger(this, "default_library", null, null);
+        } else {
+            //show storage error message
+            new AlertDialog.Builder(this)
+                    .setTitle(Utils.getAppName(this))
+                    .setIcon(android.R.drawable.ic_dialog_info)
+                    .setMessage(R.string.err_storage_not_available)
+                    .show();
+        }
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
@@ -1214,20 +1229,7 @@ public class HomeActivity extends BaseActivity {
         }
         else if (item.getItemId() == R.id.menu_new_project)
         {
-            // need to check this to determine whether there is a storage issue that will cause a crash
-            File actualStorageDirectory = StorageHelper.getActualStorageDirectory(this);
-
-            if (actualStorageDirectory != null) {
-                launchLiger(this, "default_library", null, null);
-            } else {
-                //show storage error message
-                new AlertDialog.Builder(this)
-                        .setTitle(Utils.getAppName(this))
-                        .setIcon(android.R.drawable.ic_dialog_info)
-                        .setMessage(R.string.err_storage_not_available)
-                        .show();
-            }
-
+            launchNewProject();
             return true;
         }
         else if (item.getItemId() == R.id.menu_about)
