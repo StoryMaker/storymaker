@@ -654,9 +654,11 @@ public class HomeActivity extends BaseHomeActivity {
         }
 
         ArrayList<BaseIndexItem> instances = new ArrayList<BaseIndexItem>(instanceIndex.values());
+        ArrayList<BaseIndexItem> installations = new ArrayList<BaseIndexItem>();
         ArrayList<BaseIndexItem> guides = new ArrayList<BaseIndexItem>();
         ArrayList<BaseIndexItem> lessons = new ArrayList<BaseIndexItem>();
         ArrayList<BaseIndexItem> templates = new ArrayList<BaseIndexItem>();
+        ArrayList<BaseIndexItem> homeitems = new ArrayList<BaseIndexItem>();
 
 
 
@@ -670,10 +672,16 @@ public class HomeActivity extends BaseHomeActivity {
         ArrayList<String> installedLessonIds = getIndexItemIdsByType(installedIndexItemDao, "lesson");
         ArrayList<String> installedTemplateIds = getIndexItemIdsByType(installedIndexItemDao, "template");
 
+        int i = 0;
         for (String id : installedIds.keySet()) {
             //if (installedIds.keySet().contains(id)) {
                 // if the available item has been installed, add the corresponding item from the installed index
                 //instances.add(installedIds.get(id));
+                installations.add(installedIds.get(id));
+
+                if (i <= 0) {
+                    homeitems.add(installedIds.get(id));
+                }
 
                 if (installedGuideIds.contains(id)) {
                     guides.add(installedIds.get(id));
@@ -694,195 +702,207 @@ public class HomeActivity extends BaseHomeActivity {
 //                    templates.add(availableIds.get(id));
 //                }
             //}
+            i++;
+        }
+        int j = 0;
+        for (String id : instanceIndex.keySet()) {
+            if (j <= 1) {
+                homeitems.add(instanceIndex.get(id));
+            } else {
+                break;
+            }
+            j++;
         }
 
-        //if (instances.size() > 0) {
+            //if (instances.size() > 0) {
 
-            Collections.sort(instances, Collections.reverseOrder()); // FIXME we should sort this down a layer, perhaps in loadInstanceIndexAsList
-            Collections.sort(lessons, Collections.reverseOrder()); // FIXME we should sort this down a layer, perhaps in loadInstanceIndexAsList
-            Collections.sort(guides, Collections.reverseOrder()); // FIXME we should sort this down a layer, perhaps in loadInstanceIndexAsList
-            Collections.sort(templates, Collections.reverseOrder()); // FIXME we should sort this down a layer, perhaps in loadInstanceIndexAsList
+        Collections.sort(instances, Collections.reverseOrder()); // FIXME we should sort this down a layer, perhaps in loadInstanceIndexAsList
+        Collections.sort(lessons, Collections.reverseOrder()); // FIXME we should sort this down a layer, perhaps in loadInstanceIndexAsList
+        Collections.sort(guides, Collections.reverseOrder()); // FIXME we should sort this down a layer, perhaps in loadInstanceIndexAsList
+        Collections.sort(templates, Collections.reverseOrder()); // FIXME we should sort this down a layer, perhaps in loadInstanceIndexAsList
+        Collections.sort(installations, Collections.reverseOrder()); // FIXME we should sort this down a layer, perhaps in loadInstanceIndexAsList
 
-            //mRecyclerView.setAdapter(new InstanceIndexItemAdapter(instances, new InstanceIndexItemAdapter.BaseIndexItemSelectedListener() {
+        //mRecyclerView.setAdapter(new InstanceIndexItemAdapter(instances, new InstanceIndexItemAdapter.BaseIndexItemSelectedListener() {
 
-            InstanceIndexItemAdapter.BaseIndexItemSelectedListener myBaseIndexItemSelectedListener = new InstanceIndexItemAdapter.BaseIndexItemSelectedListener() {
+        InstanceIndexItemAdapter.BaseIndexItemSelectedListener myBaseIndexItemSelectedListener = new InstanceIndexItemAdapter.BaseIndexItemSelectedListener() {
 
-                @Override
-                public void onStorySelected(BaseIndexItem selectedItem) {
+            @Override
+            public void onStorySelected(BaseIndexItem selectedItem) {
 
-                    if (selectedItem instanceof InstanceIndexItem) {
-                        launchLiger(HomeActivity.this, null, ((InstanceIndexItem) selectedItem).getInstanceFilePath(), null);
-                    } else {
+                if (selectedItem instanceof InstanceIndexItem) {
+                    launchLiger(HomeActivity.this, null, ((InstanceIndexItem) selectedItem).getInstanceFilePath(), null);
+                } else {
 
-                        Timber.d("CLICKED AN ITEM");
+                    Timber.d("CLICKED AN ITEM");
 
-                        // get clicked item
-                        final ExpansionIndexItem eItem = ((ExpansionIndexItem) selectedItem);
+                    // get clicked item
+                    final ExpansionIndexItem eItem = ((ExpansionIndexItem) selectedItem);
 
-                        // get installed items
-                        final HashMap<String, ExpansionIndexItem> installedIds = StorymakerIndexManager.loadInstalledIdIndex(HomeActivity.this, installedIndexItemDao);
+                    // get installed items
+                    final HashMap<String, ExpansionIndexItem> installedIds = StorymakerIndexManager.loadInstalledIdIndex(HomeActivity.this, installedIndexItemDao);
 
-                        // this isn't ideal but pushing an alert dialog down into the check/download process is difficult
+                    // this isn't ideal but pushing an alert dialog down into the check/download process is difficult
 
-                        if ((downloadThreads.get(eItem.getExpansionId()) != null)) {
-                            Timber.d("DIALOG - FOUND THREADS: " + downloadThreads.get(eItem.getExpansionId()).size());
-                        }
+                    if ((downloadThreads.get(eItem.getExpansionId()) != null)) {
+                        Timber.d("DIALOG - FOUND THREADS: " + downloadThreads.get(eItem.getExpansionId()).size());
+                    }
 
-                        if (!installedIds.containsKey(eItem.getExpansionId()) && (downloadThreads.get(eItem.getExpansionId()) == null)) {
+                    if (!installedIds.containsKey(eItem.getExpansionId()) && (downloadThreads.get(eItem.getExpansionId()) == null)) {
 
-                            Timber.d("DIALOG - START");
+                        Timber.d("DIALOG - START");
 
-                            // this item is not installed and there are no saved threads for it
+                        // this item is not installed and there are no saved threads for it
 
-                            new AlertDialog.Builder(HomeActivity.this)
-                                    .setTitle(R.string.download_content_pack)
-                                    .setMessage(eItem.getTitle() + " (" + ((eItem.getExpansionFileSize() + eItem.getPatchFileSize()) / 1048576) + " MB)") // FIXME we need to flip this for RTL
-                                            // using negative button to account for fixed order
-                                    .setPositiveButton(getString(R.string.download), new DialogInterface.OnClickListener() {
+                        new AlertDialog.Builder(HomeActivity.this)
+                                .setTitle(R.string.download_content_pack)
+                                .setMessage(eItem.getTitle() + " (" + ((eItem.getExpansionFileSize() + eItem.getPatchFileSize()) / 1048576) + " MB)") // FIXME we need to flip this for RTL
+                                        // using negative button to account for fixed order
+                                .setPositiveButton(getString(R.string.download), new DialogInterface.OnClickListener() {
 
-                                        @Override
-                                        public void onClick(DialogInterface dialog, int which) {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
 
-                                            Timber.d("START...");
+                                        Timber.d("START...");
 
-                                            handleClick(eItem, installedIds, false);
+                                        handleClick(eItem, installedIds, false);
 
-                                        }
-                                    })
-                                    .setNegativeButton(getString(R.string.cancel), null)
-                                    .show();
-                        } else if (installedIds.containsKey(eItem.getExpansionId()) && (downloadThreads.get(eItem.getExpansionId()) == null)) {
+                                    }
+                                })
+                                .setNegativeButton(getString(R.string.cancel), null)
+                                .show();
+                    } else if (installedIds.containsKey(eItem.getExpansionId()) && (downloadThreads.get(eItem.getExpansionId()) == null)) {
 
-                            // do not display dialog options if user selected "use manager"
-                            SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(HomeActivity.this);
-                            boolean useManager = settings.getBoolean("pusedownloadmanager", false);
+                        // do not display dialog options if user selected "use manager"
+                        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(HomeActivity.this);
+                        boolean useManager = settings.getBoolean("pusedownloadmanager", false);
 
-                            if (useManager) {
+                        if (useManager) {
 
-                                Timber.d("USING MANAGER - NO DIALOG");
+                            Timber.d("USING MANAGER - NO DIALOG");
 
-                                handleClick(eItem, installedIds, false);
+                            handleClick(eItem, installedIds, false);
 
-                            } else {
-
-                                Timber.d("DIALOG - RESUME");
-
-                                // this item is installed and there are no saved threads for it
-
-                                // if item is flagged, download finished, do not prompt to resume
-                                if (eItem.isInstalled()) {
-
-                                    // proceed as usual
-
-                                    Timber.d("DO STUFF");
-
-                                    handleClick(eItem, installedIds, true);
-                                } else {
-
-                                    new AlertDialog.Builder(HomeActivity.this)
-                                            .setTitle(getString(R.string.resume_download))
-                                            .setMessage(eItem.getTitle())
-                                            .setPositiveButton(getString(R.string.resume), new DialogInterface.OnClickListener() {
-
-                                                @Override
-                                                public void onClick(DialogInterface dialog, int which) {
-                                                    Timber.d("RESUME...");
-                                                    handleClick(eItem, installedIds, false);
-                                                }
-                                            })
-                                            .setNegativeButton(getString(R.string.cancel), null)
-                                            .setNeutralButton(getString(R.string.stop), new CancelListener(eItem))
-                                            .show();
-                                }
-                            }
                         } else {
 
-                            // proceed as usual
+                            Timber.d("DIALOG - RESUME");
 
-                            // do not display dialog options if user selected "use manager"
-                            SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(HomeActivity.this);
-                            boolean useManager = settings.getBoolean("pusedownloadmanager", false);
+                            // this item is installed and there are no saved threads for it
 
-                            if (useManager) {
+                            // if item is flagged, download finished, do not prompt to resume
+                            if (eItem.isInstalled()) {
 
-                                Timber.d("USING MANAGER - NO DIALOG");
+                                // proceed as usual
 
-                                handleClick(eItem, installedIds, false);
-
-                            } else {
-
-                                Timber.d("CONTINUE...");
+                                Timber.d("DO STUFF");
 
                                 handleClick(eItem, installedIds, true);
+                            } else {
 
+                                new AlertDialog.Builder(HomeActivity.this)
+                                        .setTitle(getString(R.string.resume_download))
+                                        .setMessage(eItem.getTitle())
+                                        .setPositiveButton(getString(R.string.resume), new DialogInterface.OnClickListener() {
+
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                Timber.d("RESUME...");
+                                                handleClick(eItem, installedIds, false);
+                                            }
+                                        })
+                                        .setNegativeButton(getString(R.string.cancel), null)
+                                        .setNeutralButton(getString(R.string.stop), new CancelListener(eItem))
+                                        .show();
                             }
+                        }
+                    } else {
+
+                        // proceed as usual
+
+                        // do not display dialog options if user selected "use manager"
+                        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(HomeActivity.this);
+                        boolean useManager = settings.getBoolean("pusedownloadmanager", false);
+
+                        if (useManager) {
+
+                            Timber.d("USING MANAGER - NO DIALOG");
+
+                            handleClick(eItem, installedIds, false);
+
+                        } else {
+
+                            Timber.d("CONTINUE...");
+
+                            handleClick(eItem, installedIds, true);
+
                         }
                     }
                 }
-            };
+            }
+        };
 
-            final InstanceIndexItemAdapter myInstancesInstanceIndexItemAdapter = new InstanceIndexItemAdapter(instances, myBaseIndexItemSelectedListener, installedIndexItemDao);
-            final InstanceIndexItemAdapter myGuidesInstanceIndexItemAdapter = new InstanceIndexItemAdapter(guides, myBaseIndexItemSelectedListener, installedIndexItemDao);
-            final InstanceIndexItemAdapter myLessonsInstanceIndexItemAdapter = new InstanceIndexItemAdapter(lessons, myBaseIndexItemSelectedListener, installedIndexItemDao);
-            final InstanceIndexItemAdapter myTemplatesInstanceIndexItemAdapter = new InstanceIndexItemAdapter(templates, myBaseIndexItemSelectedListener, installedIndexItemDao);
+        final InstanceIndexItemAdapter myHomeItemsInstanceIndexItemAdapter = new InstanceIndexItemAdapter(homeitems, myBaseIndexItemSelectedListener, installedIndexItemDao);
+        final InstanceIndexItemAdapter myInstancesInstanceIndexItemAdapter = new InstanceIndexItemAdapter(instances, myBaseIndexItemSelectedListener, installedIndexItemDao);
+        final InstanceIndexItemAdapter myGuidesInstanceIndexItemAdapter = new InstanceIndexItemAdapter(guides, myBaseIndexItemSelectedListener, installedIndexItemDao);
+        final InstanceIndexItemAdapter myLessonsInstanceIndexItemAdapter = new InstanceIndexItemAdapter(lessons, myBaseIndexItemSelectedListener, installedIndexItemDao);
+        final InstanceIndexItemAdapter myTemplatesInstanceIndexItemAdapter = new InstanceIndexItemAdapter(templates, myBaseIndexItemSelectedListener, installedIndexItemDao);
 
-            final Integer homeSize = instances.size();
-            final Integer storiesSize = instances.size();
-            final Integer guidesSize = guides.size();
-            final Integer lessonsSize = lessons.size();
-            final Integer templatesSize = templates.size();
+        final Integer homeSize = homeitems.size();
+        final Integer storiesSize = instances.size();
+        final Integer guidesSize = guides.size();
+        final Integer lessonsSize = lessons.size();
+        final Integer templatesSize = templates.size();
 
-            final String homeName = "home";
-            final String storiesName = "stories";
-            final String guidesName = "guides";
-            final String lessonsName = "lessons";
-            final String templatesName = "templates";
+        final String homeName = "home";
+        final String storiesName = "stories";
+        final String guidesName = "guides";
+        final String lessonsName = "lessons";
+        final String templatesName = "templates";
 
 
-            ArrayList<InstanceIndexItemAdapter> myInstanceIndexItemAdapters = new ArrayList<InstanceIndexItemAdapter>() {{
-                add(myInstancesInstanceIndexItemAdapter);   //Home
-                add(myInstancesInstanceIndexItemAdapter);   //Stories
-                add(myGuidesInstanceIndexItemAdapter);      //Guides
-                add(myLessonsInstanceIndexItemAdapter);     //Lessons
-                add(myTemplatesInstanceIndexItemAdapter);   //Templates
-            }};
+        ArrayList<InstanceIndexItemAdapter> myInstanceIndexItemAdapters = new ArrayList<InstanceIndexItemAdapter>() {{
+            add(myHomeItemsInstanceIndexItemAdapter);   //Home
+            add(myInstancesInstanceIndexItemAdapter);   //Stories
+            add(myGuidesInstanceIndexItemAdapter);      //Guides
+            add(myLessonsInstanceIndexItemAdapter);     //Lessons
+            add(myTemplatesInstanceIndexItemAdapter);   //Templates
+        }};
 
-            ArrayList<Integer> myListLengths = new ArrayList<Integer>() {{
-                add(homeSize);   //Home
-                add(storiesSize);   //Stories
-                add(guidesSize);      //Guides
-                add(lessonsSize);     //Lessons
-                add(templatesSize);   //Templates
-            }};
+        ArrayList<Integer> myListLengths = new ArrayList<Integer>() {{
+            add(homeSize);   //Home
+            add(storiesSize);   //Stories
+            add(guidesSize);      //Guides
+            add(lessonsSize);     //Lessons
+            add(templatesSize);   //Templates
+        }};
 
-            ArrayList<String> myListNames = new ArrayList<String>() {{
-                add(homeName);   //Home
-                add(storiesName);   //Stories
-                add(guidesName);      //Guides
-                add(lessonsName);     //Lessons
-                add(templatesName);   //Templates
-            }};
+        ArrayList<String> myListNames = new ArrayList<String>() {{
+            add(homeName);   //Home
+            add(storiesName);   //Stories
+            add(guidesName);      //Guides
+            add(lessonsName);     //Lessons
+            add(templatesName);   //Templates
+        }};
 
-            //RES
-            //mRecyclerView.setAdapter(myInstanceIndexItemAdapter);
+        //RES
+        //mRecyclerView.setAdapter(myInstanceIndexItemAdapter);
 
-            // Create the adapter that will return a fragment for each of the three
-            // primary sections of the activity.
-            mDemoCollectionPagerAdapter = new DemoCollectionPagerAdapter(getSupportFragmentManager(), myInstanceIndexItemAdapters, myListLengths, myListNames);
+        // Create the adapter that will return a fragment for each of the three
+        // primary sections of the activity.
+        mDemoCollectionPagerAdapter = new DemoCollectionPagerAdapter(getSupportFragmentManager(), myInstanceIndexItemAdapters, myListLengths, myListNames);
 
-            // Set up the ViewPager with the sections adapter.
-            //mViewPager = (SwipelessViewPager) findViewById(R.id.pager);
-            mViewPager = (ViewPager) findViewById(R.id.home_pager);
-            mViewPager.setAdapter(mDemoCollectionPagerAdapter);
-            //mViewPager.setPagingEnabled(false);
+        // Set up the ViewPager with the sections adapter.
+        //mViewPager = (SwipelessViewPager) findViewById(R.id.pager);
+        mViewPager = (ViewPager) findViewById(R.id.home_pager);
+        mViewPager.setAdapter(mDemoCollectionPagerAdapter);
+        //mViewPager.setPagingEnabled(false);
 
-            // Give the SlidingTabLayout the ViewPager, this must be done AFTER the ViewPager has had
-            // it's PagerAdapter set.
-            mSlidingTabLayout = (SlidingTabLayout) findViewById(R.id.home_sliding_tabs);
-            mSlidingTabLayout.setSelectedIndicatorColors(
-                    getResources().getColor(R.color.white));
-            //mSlidingTabLayout.setDistributeEvenly(true);
-            mSlidingTabLayout.setViewPager(mViewPager);
+        // Give the SlidingTabLayout the ViewPager, this must be done AFTER the ViewPager has had
+        // it's PagerAdapter set.
+        mSlidingTabLayout = (SlidingTabLayout) findViewById(R.id.home_sliding_tabs);
+        mSlidingTabLayout.setSelectedIndicatorColors(
+                getResources().getColor(R.color.white));
+        //mSlidingTabLayout.setDistributeEvenly(true);
+        mSlidingTabLayout.setViewPager(mViewPager);
 
 
 
