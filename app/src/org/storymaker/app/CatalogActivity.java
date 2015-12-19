@@ -381,7 +381,7 @@ public class CatalogActivity extends BaseHomeActivity {
         //mTabLayout.setupWithViewPager(mViewPager);
 
         // action bar stuff
-        //getActionBar().setDisplayHomeAsUpEnabled(true);
+        getActionBar().setDisplayHomeAsUpEnabled(true);
 
         checkForTor();
 
