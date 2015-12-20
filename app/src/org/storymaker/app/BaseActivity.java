@@ -1,13 +1,5 @@
 package org.storymaker.app;
 
-import timber.log.Timber;
-
-import org.storymaker.app.server.ServerManager;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Date;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -20,14 +12,12 @@ import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.widget.DrawerLayout;
-import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -35,6 +25,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import net.hockeyapp.android.FeedbackManager;
+
+import org.storymaker.app.server.ServerManager;
+
+import java.io.IOException;
+import java.io.InputStream;
 
 //import com.google.analytics.tracking.android.EasyTracker;
 
@@ -91,6 +86,7 @@ public class BaseActivity extends FragmentActivity {
         ImageButton btnDrawerQuickCaptureAudio = (ImageButton) findViewById(R.id.btnDrawerQuickCaptureAudio);
         
         Button btnDrawerHome =          (Button) findViewById(R.id.btnDrawerHome);
+        Button btnDrawerCatalog =          (Button) findViewById(R.id.btnDrawerCatalog);
 //        Button btnDrawerProjects =      (Button) findViewById(R.id.btnDrawerProjects);
         //Button btnDrawerAccount = (Button) findViewById(R.id.btnDrawerAccount);
         Button btnDrawerAccounts =      (Button) findViewById(R.id.btnDrawerAccounts);
@@ -147,6 +143,17 @@ public class BaseActivity extends FragmentActivity {
                  activity.startActivity(i);
             }
         });
+
+        btnDrawerCatalog.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mDrawerLayout.closeDrawers();
+
+                Intent i = new Intent(activity, CatalogActivity.class);
+                activity.startActivity(i);
+            }
+        });
+
         btnDrawerExports.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
