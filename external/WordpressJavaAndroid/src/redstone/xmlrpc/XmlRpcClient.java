@@ -16,7 +16,7 @@
 
 package redstone.xmlrpc;
 
-import info.guardianproject.onionkit.trust.StrongHttpsClient;
+import info.guardianproject.netcipher.client.StrongHttpsClient;
 
 import java.io.BufferedInputStream;
 import java.io.IOException;
@@ -33,6 +33,9 @@ import org.xml.sax.SAXException;
 
 import android.content.Context;
 import android.util.Log;
+
+import net.bican.wordpress.R;
+
 import ch.boye.httpclientandroidlib.Header;
 import ch.boye.httpclientandroidlib.HttpResponse;
 import ch.boye.httpclientandroidlib.client.methods.HttpPost;
@@ -471,7 +474,16 @@ public class XmlRpcClient extends XmlRpcParser implements XmlRpcInvocationHandle
 
     private HttpResponse openConnection(AbstractHttpEntity entity) throws IOException
     {
-    	StrongHttpsClient httpClient = new StrongHttpsClient(mContext);
+    	StrongHttpsClient httpClient = null;
+
+        try {
+            httpClient = new StrongHttpsClient(mContext, R.raw.debiancacerts, null);
+        }
+        catch (Exception e)
+        {
+            //catch keystore setup exceptions
+            throw new IOException(e.getMessage());
+        }
 
 		if (mUseProxy)
 		{
