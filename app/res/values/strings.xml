@@ -70,12 +70,6 @@
     <string name="downloading_lessons_from_server_">Downloading lessons from server...</string>
     <string name="checking_for_updates_">Checking for updates...</string>
 
-    <string name="story_ipsum">Jarlsberg lancashire edam. Dolcelatte hard cheese brie st. agur blue
-    cheese caerphilly bavarian bergkase cheese and biscuits mascarpone. Cheeseburger swiss bavarian
-    bergkase cream cheese fromage frais cheesy feet port-salut airedale. St. agur blue cheese rubber
-    cheese caerphilly cheddar cheesecake cream cheese manchego lancashire. Roquefort squirty cheese
-    the big cheese.</string>
-
     <!-- LOG COLLECTOR -->
     <string name="app_name_lc">Log Collector</string>
     <string name="message_subject">Android device log</string>
@@ -357,7 +351,9 @@ You also will have an opportunity to see and modify the data being sent."</strin
     <string name="download_content_pack">Download Content Pack?</string>
     <string name="stop_download">Stop Download?</string>
     <string name="resume_download">Resume Download?</string>
-    
+    <string name="finished_downloading">Finished Downloading</string>
+
+
     <string name="home_downloading_content">Downloading content and/or updating installed files"</string>
     <string name="home_content_missing">Was not able to load this path, content is missing!</string>
     <string name="home_metadata_missing">Could not locate content metadata</string>

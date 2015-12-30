@@ -14,7 +14,7 @@
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/prefs_category_media_title">
-        <CheckBoxPreference android:title="@string/prefs_photo_format_title" android:summary="@string/prefs_photo_format_summary" android:key="pphotoformat" android:defaultValue="false"/>
+        <CheckBoxPreference android:title="@string/prefs_photo_format_title" android:summary="@string/prefs_photo_format_summary" android:key="pphotoformat" android:defaultValue="true"/>
 
         <EditTextPreference android:title="@string/prefs_slide_duration_title" android:summary="@string/prefs_slide_duration_summary" android:key="pslideduration" android:defaultValue="5" android:enabled="true"/>
 

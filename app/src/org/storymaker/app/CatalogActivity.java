@@ -6,34 +6,34 @@ package org.storymaker.app;
 
 
 import android.app.AlertDialog;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.hannesdorfmann.sqlbrite.dao.Dao;
-import com.hannesdorfmann.sqlbrite.dao.DaoManager;
 
 import net.hockeyapp.android.CrashManager;
 import net.hockeyapp.android.CrashManagerListener;
-import net.hockeyapp.android.UpdateManager;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.filefilter.WildcardFileFilter;
 import org.storymaker.app.server.LoginActivity;
-import org.storymaker.app.server.ServerManager;
 import org.storymaker.app.ui.SlidingTabLayout;
 
 import java.io.BufferedReader;
@@ -47,18 +47,15 @@ import java.util.List;
 
 import rx.functions.Action1;
 import scal.io.liger.JsonHelper;
-import scal.io.liger.MainActivity;
 import scal.io.liger.StorageHelper;
 import scal.io.liger.StorymakerIndexManager;
 import scal.io.liger.model.ContentPackMetadata;
-import scal.io.liger.model.ExpansionIndexItem;
 import scal.io.liger.model.sqlbrite.AvailableIndexItem;
 import scal.io.liger.model.sqlbrite.AvailableIndexItemDao;
 import scal.io.liger.model.sqlbrite.BaseIndexItem;
 import scal.io.liger.model.sqlbrite.InstalledIndexItem;
 import scal.io.liger.model.sqlbrite.InstalledIndexItemDao;
 import scal.io.liger.model.sqlbrite.InstanceIndexItem;
-import scal.io.liger.model.sqlbrite.QueueItemDao;
 import timber.log.Timber;
 
 /**
@@ -67,6 +64,9 @@ import timber.log.Timber;
 
 public class CatalogActivity extends BaseHomeActivity {
 
+    private InstanceIndexItemAdapter myGuidesInstanceIndexItemAdapter;
+    private InstanceIndexItemAdapter myLessonsInstanceIndexItemAdapter;
+    private InstanceIndexItemAdapter myTemplatesInstanceIndexItemAdapter;
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -82,11 +82,11 @@ public class CatalogActivity extends BaseHomeActivity {
      * The {@link ViewPager} that will host the section contents.
      */
     //private SwipelessViewPager mViewPager;
-    private ViewPager mViewPager;
-    private SlidingTabLayout mSlidingTabLayout;
+    //private ViewPager mViewPager;
+    //private SlidingTabLayout mSlidingTabLayout;
 
 
-    private String[] mCatalogMenu;
+    //private String[] mCatalogMenu;
     private String mIntentMessage;
 
     private final static String TAG = "CatalogActivity";
@@ -97,17 +97,17 @@ public class CatalogActivity extends BaseHomeActivity {
     //private SwipeRefreshLayout mSwipeRefreshLayout;
     // private DownloadPoller downloadPoller = null;
 
-    private boolean loggedIn;
+    //private boolean loggedIn;
 
     // new stuff
     //private InstanceIndexItemDao instanceIndexItemDao;
-    private AvailableIndexItemDao availableIndexItemDao;
-    private InstalledIndexItemDao installedIndexItemDao;
-    private QueueItemDao queueItemDao;
-    private DaoManager daoManager;
-    private int dbVersion = 1;
-
-    private HashMap<String, ArrayList<Thread>> downloadThreads = new HashMap<String, ArrayList<Thread>>();
+//    private AvailableIndexItemDao availableIndexItemDao;
+//    private InstalledIndexItemDao installedIndexItemDao;
+//    private QueueItemDao queueItemDao;
+//    private DaoManager daoManager;
+//    private int dbVersion = 1;
+//
+//    private HashMap<String, ArrayList<Thread>> downloadThreads = new HashMap<String, ArrayList<Thread>>();
 
 
     public static ArrayList<String> getIndexItemIdsByType(Dao dao, String type) {
@@ -159,57 +159,20 @@ public class CatalogActivity extends BaseHomeActivity {
     }
 
 
-    public String[] getCatalogMenu() {
-
-        //This Method Transposes between an arrays.xml array of ids to build the catalog menu
-        //      and their strings.xml display name counterparts
-        //      the idea is the ids can be consistent (they will be part of database queries),
-        //      whereas the Menu tab names can be localized
-        //
-        //      ex: in arrays.xml
-        //
-        //              <string-array name="catalog_menu_ids">
-        //                  <item>catalog</item>
-        //                  <item>guides</item>
-        //                  <item>lessons</item>
-        //                  <item>templates</item>
-        //              </string-array>
-        //
-        //      ex: in strings.xml
-        //
-        //              <string name="catalog_menu_catalog">Catalog</string>
-        //              <string name="catalog_menu_guides">Guides</string>
-        //              <string name="catalog_menu_lessons">Lessons</string>
-        //              <string name="catalog_menu_templates">Templates</string>
-        //
-
-        String[] catalog_ids = getResources().getStringArray(R.array.catalog_menu_ids);
-        String[] catalog_names = new String[catalog_ids.length];
-
-        for (int i=0; i<catalog_ids.length; i++) {
-            int id = getResources().getIdentifier("catalog_menu_" + catalog_ids[i], "string", getApplicationContext().getPackageName());
-            String catalog_name = getResources().getString(id);
-            catalog_names[i] = catalog_name;
-        }
-
-        return catalog_names;
-
-    }
-
     // must set dao stuff in constructor?
-    public CatalogActivity() {
-
-        //instanceIndexItemDao = new InstanceIndexItemDao();
-        availableIndexItemDao = new AvailableIndexItemDao();
-        installedIndexItemDao = new InstalledIndexItemDao();
-
-        queueItemDao = new QueueItemDao();
-
-        //daoManager = new DaoManager(CatalogActivity.this, "Storymaker.db", dbVersion, instanceIndexItemDao, availableIndexItemDao, installedIndexItemDao, queueItemDao);
-        daoManager = new DaoManager(CatalogActivity.this, "Storymaker.db", dbVersion, availableIndexItemDao, installedIndexItemDao, queueItemDao);
-        daoManager.setLogging(false);
-
-    }
+//    public CatalogActivity() {
+//
+//        //instanceIndexItemDao = new InstanceIndexItemDao();
+//        availableIndexItemDao = new AvailableIndexItemDao();
+//        installedIndexItemDao = new InstalledIndexItemDao();
+//
+//        queueItemDao = new QueueItemDao();
+//
+//        //daoManager = new DaoManager(CatalogActivity.this, "Storymaker.db", dbVersion, instanceIndexItemDao, availableIndexItemDao, installedIndexItemDao, queueItemDao);
+//        daoManager = new DaoManager(CatalogActivity.this, "Storymaker.db", dbVersion, availableIndexItemDao, installedIndexItemDao, queueItemDao);
+//        daoManager.setLogging(false);
+//
+//    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -217,86 +180,86 @@ public class CatalogActivity extends BaseHomeActivity {
 
         setContentView(R.layout.activity_catalog);
 
-        // copy index file
-        StorymakerIndexManager.copyAvailableIndex(this, false); // TODO: REPLACE THIS WITH INDEX DOWNLOAD (IF LOGGED IN) <- NEED TO COPY FILE FOR BASELINE CONTENT
-
-        // initialize db
-
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-
-        int availableIndexVersion = preferences.getInt("AVAILABLE_INDEX_VERSION", 0);
-
-        Timber.d("VERSION CHECK: " + availableIndexVersion + " vs. " + scal.io.liger.Constants.AVAILABLE_INDEX_VERSION);
-
-        if (availableIndexVersion != scal.io.liger.Constants.AVAILABLE_INDEX_VERSION) {
-
-            // load db from file
-
-            HashMap<String, ExpansionIndexItem> availableItemsFromFile = scal.io.liger.IndexManager.loadAvailableIdIndex(this);
-
-            if (availableItemsFromFile.size() == 0) {
-                Timber.d("NOTHING LOADED FROM AVAILABLE FILE");
-            } else {
-                for (scal.io.liger.model.ExpansionIndexItem item : availableItemsFromFile.values()) {
-                    Timber.d("ADDING " + item.getExpansionId() + " TO DATABASE (AVAILABLE)");
-                    availableIndexItemDao.addAvailableIndexItem(item, true); // replaces existing items, should trigger updates to installed items and table as needed
-
-                    // ugly solution to deal with the fact that the popup menu assumes there will be threads for an item we tried to download/install
-                    ArrayList<Thread> noThreads = new ArrayList<Thread>();
-                    downloadThreads.put(item.getExpansionId(), noThreads);
-
-                }
-            }
-
-            // the following migration stuff is currently piggy-backing on the index update stuff
-
-            // if found, migrate installed index
-
-            File installedFile = new File(StorageHelper.getActualStorageDirectory(this), "installed_index.json");
-
-            if (installedFile.exists()) {
-                HashMap<String, scal.io.liger.model.ExpansionIndexItem> installedItemsFromFile = scal.io.liger.IndexManager.loadInstalledIdIndex(this);
-
-                if (installedItemsFromFile.size() == 0) {
-                    Timber.d("NOTHING LOADED FROM INSTALLED INDEX FILE");
-                } else {
-                    for (scal.io.liger.model.ExpansionIndexItem item : installedItemsFromFile.values()) {
-                        Timber.d("ADDING " + item.getExpansionId() + " TO DATABASE (INSTALLED)");
-                        installedIndexItemDao.addInstalledIndexItem(item, true); // replaces existing items, should trigger updates to installed items and table as needed
-                    }
-                }
-
-                installedFile.delete();
-            } else {
-                Timber.d("NO INSTALLED INDEX FILE");
-            }
-
-            // if found, migrate instance index
-
-//            File instanceFile = new File(StorageHelper.getActualStorageDirectory(this), "instance_index.json");
+//        // copy index file
+//        StorymakerIndexManager.copyAvailableIndex(this, false); // TODO: REPLACE THIS WITH INDEX DOWNLOAD (IF LOGGED IN) <- NEED TO COPY FILE FOR BASELINE CONTENT
 //
-//            if (instanceFile.exists()) {
-//                HashMap<String, scal.io.liger.model.InstanceIndexItem> instanceItemsFromFile = scal.io.liger.IndexManager.loadInstanceIndex(this);
+//        // initialize db
 //
-//                if (instanceItemsFromFile.size() == 0) {
-//                    Timber.d("NOTHING LOADED FROM INSTANCE INDEX FILE");
+//        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+//
+//        int availableIndexVersion = preferences.getInt("AVAILABLE_INDEX_VERSION", 0);
+//
+//        Timber.d("VERSION CHECK: " + availableIndexVersion + " vs. " + scal.io.liger.Constants.AVAILABLE_INDEX_VERSION);
+//
+//        if (availableIndexVersion != scal.io.liger.Constants.AVAILABLE_INDEX_VERSION) {
+//
+//            // load db from file
+//
+//            HashMap<String, ExpansionIndexItem> availableItemsFromFile = scal.io.liger.IndexManager.loadAvailableIdIndex(this);
+//
+//            if (availableItemsFromFile.size() == 0) {
+//                Timber.d("NOTHING LOADED FROM AVAILABLE FILE");
+//            } else {
+//                for (scal.io.liger.model.ExpansionIndexItem item : availableItemsFromFile.values()) {
+//                    Timber.d("ADDING " + item.getExpansionId() + " TO DATABASE (AVAILABLE)");
+//                    availableIndexItemDao.addAvailableIndexItem(item, true); // replaces existing items, should trigger updates to installed items and table as needed
+//
+//                    // ugly solution to deal with the fact that the popup menu assumes there will be threads for an item we tried to download/install
+//                    ArrayList<Thread> noThreads = new ArrayList<Thread>();
+//                    downloadThreads.put(item.getExpansionId(), noThreads);
+//
+//                }
+//            }
+//
+//            // the following migration stuff is currently piggy-backing on the index update stuff
+//
+//            // if found, migrate installed index
+//
+//            File installedFile = new File(StorageHelper.getActualStorageDirectory(this), "installed_index.json");
+//
+//            if (installedFile.exists()) {
+//                HashMap<String, scal.io.liger.model.ExpansionIndexItem> installedItemsFromFile = scal.io.liger.IndexManager.loadInstalledIdIndex(this);
+//
+//                if (installedItemsFromFile.size() == 0) {
+//                    Timber.d("NOTHING LOADED FROM INSTALLED INDEX FILE");
 //                } else {
-//                    for (scal.io.liger.model.InstanceIndexItem item : instanceItemsFromFile.values()) {
-//                        Timber.d("ADDING " + item.getInstanceFilePath() + " TO DATABASE (INSTANCE)");
-//                        instanceIndexItemDao.addInstanceIndexItem(item, true); // replaces existing items, should trigger updates to installed items and table as needed
+//                    for (scal.io.liger.model.ExpansionIndexItem item : installedItemsFromFile.values()) {
+//                        Timber.d("ADDING " + item.getExpansionId() + " TO DATABASE (INSTALLED)");
+//                        installedIndexItemDao.addInstalledIndexItem(item, true); // replaces existing items, should trigger updates to installed items and table as needed
 //                    }
 //                }
 //
-//                instanceFile.delete();
+//                installedFile.delete();
 //            } else {
-//                Timber.d("NO INSTANCE INDEX FILE");
+//                Timber.d("NO INSTALLED INDEX FILE");
 //            }
-
-            // update preferences
-
-            preferences.edit().putInt("AVAILABLE_INDEX_VERSION", scal.io.liger.Constants.AVAILABLE_INDEX_VERSION).commit();
-        }
-
+//
+//            // if found, migrate instance index
+//
+////            File instanceFile = new File(StorageHelper.getActualStorageDirectory(this), "instance_index.json");
+////
+////            if (instanceFile.exists()) {
+////                HashMap<String, scal.io.liger.model.InstanceIndexItem> instanceItemsFromFile = scal.io.liger.IndexManager.loadInstanceIndex(this);
+////
+////                if (instanceItemsFromFile.size() == 0) {
+////                    Timber.d("NOTHING LOADED FROM INSTANCE INDEX FILE");
+////                } else {
+////                    for (scal.io.liger.model.InstanceIndexItem item : instanceItemsFromFile.values()) {
+////                        Timber.d("ADDING " + item.getInstanceFilePath() + " TO DATABASE (INSTANCE)");
+////                        instanceIndexItemDao.addInstanceIndexItem(item, true); // replaces existing items, should trigger updates to installed items and table as needed
+////                    }
+////                }
+////
+////                instanceFile.delete();
+////            } else {
+////                Timber.d("NO INSTANCE INDEX FILE");
+////            }
+//
+//            // update preferences
+//
+//            preferences.edit().putInt("AVAILABLE_INDEX_VERSION", scal.io.liger.Constants.AVAILABLE_INDEX_VERSION).commit();
+//        }
+//
 
 
         // dumb test
@@ -332,34 +295,34 @@ public class CatalogActivity extends BaseHomeActivity {
 
 
         // file cleanup
-        File actualStorageDirectory = StorageHelper.getActualStorageDirectory(this);
-
-        if (actualStorageDirectory != null) {
-            JsonHelper.cleanup(actualStorageDirectory.getPath());
-        } else {
-            // this is an error, will deal with it below
-        }
-
-        // default
-        loggedIn = false;
-
-        // set title bar as a reminder if test server is specified
-        //getActionBar().setTitle(Utils.getAppName(this));
-
-        if (actualStorageDirectory != null) {
-            // NEW/TEMP
-            // DOWNLOAD AVAILABE INDEX FOR CURRENT USER AND SAVE TO TARGET FILE
-            // NEED TO ACCOUNT FOR POSSIBLE MISSING INDEX
-            IndexTask iTask = new IndexTask(this, true); // force download at startup (maybe only force on a timetable?)
-            iTask.execute();
-        } else {
-            //show storage error message
-            new AlertDialog.Builder(this)
-                    .setTitle(Utils.getAppName(this))
-                    .setIcon(android.R.drawable.ic_dialog_info)
-                    .setMessage(R.string.err_storage_not_available)
-                    .show();
-        }
+//        File actualStorageDirectory = StorageHelper.getActualStorageDirectory(this);
+//
+//        if (actualStorageDirectory != null) {
+//            JsonHelper.cleanup(actualStorageDirectory.getPath());
+//        } else {
+//            // this is an error, will deal with it below
+//        }
+//
+//        // default
+//        loggedIn = false;
+//
+//        // set title bar as a reminder if test server is specified
+//        //getActionBar().setTitle(Utils.getAppName(this));
+//
+//        if (actualStorageDirectory != null) {
+//            // NEW/TEMP
+//            // DOWNLOAD AVAILABE INDEX FOR CURRENT USER AND SAVE TO TARGET FILE
+//            // NEED TO ACCOUNT FOR POSSIBLE MISSING INDEX
+//            IndexTask iTask = new IndexTask(this, true); // force download at startup (maybe only force on a timetable?)
+//            iTask.execute();
+//        } else {
+//            //show storage error message
+//            new AlertDialog.Builder(this)
+//                    .setTitle(Utils.getAppName(this))
+//                    .setIcon(android.R.drawable.ic_dialog_info)
+//                    .setMessage(R.string.err_storage_not_available)
+//                    .show();
+//        }
 
 
         //setupDrawerLayout();
@@ -368,7 +331,7 @@ public class CatalogActivity extends BaseHomeActivity {
         //TabLayout mTabLayout = (TabLayout) findViewById(R.id.tabLayout);
         //mTabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
 
-        mCatalogMenu = getCatalogMenu();
+        mTabMenu = getMenu("catalog");
 
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
@@ -381,11 +344,11 @@ public class CatalogActivity extends BaseHomeActivity {
         //mTabLayout.setupWithViewPager(mViewPager);
 
         // action bar stuff
-        getActionBar().setDisplayHomeAsUpEnabled(true);
-
-        checkForTor();
-
-        checkForUpdates();
+//        getActionBar().setDisplayHomeAsUpEnabled(true);
+//
+//        checkForTor();
+//
+//        checkForUpdates();
 
         // Get the message from the intent
         Intent intent = getIntent();
@@ -395,7 +358,42 @@ public class CatalogActivity extends BaseHomeActivity {
         }
         //Log.d("CatalogActivity", intent.toString()+" "+intent.getStringExtra(StoryListFragment.EXTRA_MESSAGE));
 
+        LocalBroadcastManager.getInstance(this).registerReceiver(mDownloadMessageReceiver,
+                new IntentFilter("download-complete"));
+
+        LocalBroadcastManager.getInstance(this).registerReceiver(mDeleteMessageReceiver,
+                new IntentFilter("delete-complete"));
+
     }
+
+    // Our handler for received Intents. This will be called whenever an Intent
+    // with an action named "custom-event-name" is broadcasted.
+    private BroadcastReceiver mDownloadMessageReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            // Get extra data included in the Intent
+            String expansionId = intent.getStringExtra("expansionid");
+            Log.d("receiver", "catalog download expansion id: " + expansionId + " " + this.toString());
+
+            myGuidesInstanceIndexItemAdapter.notifyDataSetChanged();
+            myLessonsInstanceIndexItemAdapter.notifyDataSetChanged();
+            myTemplatesInstanceIndexItemAdapter.notifyDataSetChanged();
+        }
+    };
+
+    private BroadcastReceiver mDeleteMessageReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            // Get extra data included in the Intent
+            String expansionId = intent.getStringExtra("expansionid");
+            Log.d("receiver", "catalog delete expansion id: " + expansionId + " " + this.toString());
+
+            removeThreads(expansionId);
+            myGuidesInstanceIndexItemAdapter.notifyDataSetChanged();
+            myLessonsInstanceIndexItemAdapter.notifyDataSetChanged();
+            myTemplatesInstanceIndexItemAdapter.notifyDataSetChanged();
+        }
+    };
 
     /**
      * A {@link android.support.v4.app.FragmentStatePagerAdapter} that returns a fragment
@@ -431,94 +429,94 @@ public class CatalogActivity extends BaseHomeActivity {
             //return 100;
             //return categories.size();
 
-            return mCatalogMenu.length;
+            return mTabMenu.length;
         }
 
         @Override
         public CharSequence getPageTitle(int position) {
             //return "Category " + (position + 1);
-            return mCatalogMenu[position];
+            return mTabMenu[position];
         }
     }
 
-    private class IndexTask extends AsyncTask<Void, Void, Boolean> {
-
-        // TODO: ADJUST THIS TO ACCOUNT FOR STORING AVAILABLE INDEX IN DB
-
-        private Context mContext;
-        private boolean forceDownload;
-
-        public IndexTask(Context context, boolean forceDownload) {
-            this.mContext = context;
-            this.forceDownload = forceDownload;
-        }
-
-        @Override
-        protected Boolean doInBackground(Void... params) {
-
-            Timber.d("IndexTask.doInBackground IS RUNNING");
-
-            boolean loginRequest = false;
-
-            ServerManager sm = StoryMakerApp.getServerManager();
-
-            if (sm.hasCreds()) {
-                // user is logged in, update status flag if necessary
-                if (!loggedIn) {
-                    loggedIn = true;
-                    loginRequest = true; // user just logged in, need to check server
-                }
-            } else {
-                // user is not logged in, update status flag if necessary
-                if (loggedIn) {
-                    loggedIn = false;
-                }
-            }
-
-            // check server if user just logged in
-            if (loginRequest) {
-                Timber.d("USER LOGGED IN, CHECK SERVER");
-
-                // reset available index
-                StorymakerIndexManager.copyAvailableIndex(mContext, false);
-
-                // attempt to download new assignments
-                return Boolean.valueOf(sm.index());
-            }
-
-            // check server if user insists
-            if (forceDownload) {
-                Timber.d("UPDATE REQUIRED, CHECK SERVER");
-
-                // reset available index
-                StorymakerIndexManager.copyAvailableIndex(mContext, false);
-
-                // attempt to download new assignments
-                return Boolean.valueOf(sm.index());
-            }
-
-            // no-op
-            return false;
-        }
-
-        protected void onPostExecute(Boolean result) {
-            if (result.booleanValue()) {
-                Timber.d("DOWNLOADED ASSIGNMENTS AND UPDATED AVAILABLE INDEX");
-            } else {
-                Timber.d("DID NOT DOWNLOAD ASSIGNMENTS OR UPDATE AVAILABLE INDEX");
-            }
-
-            //RES
-            //mSwipeRefreshLayout.setRefreshing(false);
-
-            // resolve available/installed conflicts and grab updates if needed
-            if (!StorymakerDownloadHelper.checkAndDownload(mContext, availableIndexItemDao, installedIndexItemDao, queueItemDao)) {
-                Toast.makeText(mContext, getString(R.string.home_downloading_content), Toast.LENGTH_LONG).show();
-            }
-            // refresh regardless (called from onResume and OnRefreshListener)
-            initActivityList();
-        }
-    }
+//    private class IndexTask extends AsyncTask<Void, Void, Boolean> {
+//
+//        // TODO: ADJUST THIS TO ACCOUNT FOR STORING AVAILABLE INDEX IN DB
+//
+//        private Context mContext;
+//        private boolean forceDownload;
+//
+//        public IndexTask(Context context, boolean forceDownload) {
+//            this.mContext = context;
+//            this.forceDownload = forceDownload;
+//        }
+//
+//        @Override
+//        protected Boolean doInBackground(Void... params) {
+//
+//            Timber.d("IndexTask.doInBackground IS RUNNING");
+//
+//            boolean loginRequest = false;
+//
+//            ServerManager sm = StoryMakerApp.getServerManager();
+//
+//            if (sm.hasCreds()) {
+//                // user is logged in, update status flag if necessary
+//                if (!loggedIn) {
+//                    loggedIn = true;
+//                    loginRequest = true; // user just logged in, need to check server
+//                }
+//            } else {
+//                // user is not logged in, update status flag if necessary
+//                if (loggedIn) {
+//                    loggedIn = false;
+//                }
+//            }
+//
+//            // check server if user just logged in
+//            if (loginRequest) {
+//                Timber.d("USER LOGGED IN, CHECK SERVER");
+//
+//                // reset available index
+//                StorymakerIndexManager.copyAvailableIndex(mContext, false);
+//
+//                // attempt to download new assignments
+//                return Boolean.valueOf(sm.index());
+//            }
+//
+//            // check server if user insists
+//            if (forceDownload) {
+//                Timber.d("UPDATE REQUIRED, CHECK SERVER");
+//
+//                // reset available index
+//                StorymakerIndexManager.copyAvailableIndex(mContext, false);
+//
+//                // attempt to download new assignments
+//                return Boolean.valueOf(sm.index());
+//            }
+//
+//            // no-op
+//            return false;
+//        }
+//
+//        protected void onPostExecute(Boolean result) {
+//            if (result.booleanValue()) {
+//                Timber.d("DOWNLOADED ASSIGNMENTS AND UPDATED AVAILABLE INDEX");
+//            } else {
+//                Timber.d("DID NOT DOWNLOAD ASSIGNMENTS OR UPDATE AVAILABLE INDEX");
+//            }
+//
+//            //RES
+//            //mSwipeRefreshLayout.setRefreshing(false);
+//
+//            // resolve available/installed conflicts and grab updates if needed
+//            if (!StorymakerDownloadHelper.checkAndDownload(mContext, availableIndexItemDao, installedIndexItemDao, queueItemDao)) {
+//                Toast.makeText(mContext, getString(R.string.home_downloading_content), Toast.LENGTH_LONG).show();
+//            }
+//            // refresh regardless (called from onResume and OnRefreshListener)
+//            initActivityList();
+//        }
+//    }
 
     @Override
     public void onResume() {
@@ -571,8 +569,7 @@ public class CatalogActivity extends BaseHomeActivity {
     }
 
 
-
-    private void initActivityList () {
+    public void initActivityList () {
         // menu items now locked during downloads, i think this can be removed
         /*
         if (!DownloadHelper.checkAllFiles(this)) { // FIXME the app should define these, not the library
@@ -793,16 +790,20 @@ public class CatalogActivity extends BaseHomeActivity {
         };
 
         //final InstanceIndexItemAdapter myInstancesInstanceIndexItemAdapter = new InstanceIndexItemAdapter(instances, myBaseIndexItemSelectedListener, installedIndexItemDao);
-        final InstanceIndexItemAdapter myGuidesInstanceIndexItemAdapter = new InstanceIndexItemAdapter(guides, myBaseIndexItemSelectedListener, installedIndexItemDao);
-        final InstanceIndexItemAdapter myLessonsInstanceIndexItemAdapter = new InstanceIndexItemAdapter(lessons, myBaseIndexItemSelectedListener, installedIndexItemDao);
-        final InstanceIndexItemAdapter myTemplatesInstanceIndexItemAdapter = new InstanceIndexItemAdapter(templates, myBaseIndexItemSelectedListener, installedIndexItemDao);
+        //final InstanceIndexItemAdapter myGuidesInstanceIndexItemAdapter = new InstanceIndexItemAdapter(guides, myBaseIndexItemSelectedListener, installedIndexItemDao);
+        //final InstanceIndexItemAdapter myLessonsInstanceIndexItemAdapter = new InstanceIndexItemAdapter(lessons, myBaseIndexItemSelectedListener, installedIndexItemDao);
+        //final InstanceIndexItemAdapter myTemplatesInstanceIndexItemAdapter = new InstanceIndexItemAdapter(templates, myBaseIndexItemSelectedListener, installedIndexItemDao);
 
-        ArrayList<InstanceIndexItemAdapter> myInstanceIndexItemAdapters = new ArrayList<InstanceIndexItemAdapter>() {{
-            //add(myInstancesInstanceIndexItemAdapter);
-            add(myGuidesInstanceIndexItemAdapter);
-            add(myLessonsInstanceIndexItemAdapter);
-            add(myTemplatesInstanceIndexItemAdapter);
-        }};
+        myGuidesInstanceIndexItemAdapter = new InstanceIndexItemAdapter(guides, myBaseIndexItemSelectedListener, installedIndexItemDao);
+        myLessonsInstanceIndexItemAdapter = new InstanceIndexItemAdapter(lessons, myBaseIndexItemSelectedListener, installedIndexItemDao);
+        myTemplatesInstanceIndexItemAdapter = new InstanceIndexItemAdapter(templates, myBaseIndexItemSelectedListener, installedIndexItemDao);
+
+        //final CatalogActivity activity = this;
+        ArrayList<InstanceIndexItemAdapter> myInstanceIndexItemAdapters = new ArrayList<InstanceIndexItemAdapter>();
+        //myInstanceIndexItemAdapters.add(myInstancesInstanceIndexItemAdapter);
+        myInstanceIndexItemAdapters.add(myGuidesInstanceIndexItemAdapter);
+        myInstanceIndexItemAdapters.add(myLessonsInstanceIndexItemAdapter);
+        myInstanceIndexItemAdapters.add(myTemplatesInstanceIndexItemAdapter);
 
         //RES
         //mRecyclerView.setAdapter(myInstanceIndexItemAdapter);
@@ -1134,7 +1135,7 @@ public class CatalogActivity extends BaseHomeActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.activity_home, menu);
+        getMenuInflater().inflate(R.menu.activity_catalog, menu);
         return true;
     }
 
@@ -1147,24 +1148,6 @@ public class CatalogActivity extends BaseHomeActivity {
             toggleDrawer();
             return true;
         }
-        else if (item.getItemId() == R.id.menu_new_project)
-        {
-            // need to check this to determine whether there is a storage issue that will cause a crash
-            File actualStorageDirectory = StorageHelper.getActualStorageDirectory(this);
-
-            if (actualStorageDirectory != null) {
-                launchLiger(this, "default_library", null, null);
-            } else {
-                //show storage error message
-                new AlertDialog.Builder(this)
-                        .setTitle(Utils.getAppName(this))
-                        .setIcon(android.R.drawable.ic_dialog_info)
-                        .setMessage(R.string.err_storage_not_available)
-                        .show();
-            }
-
-            return true;
-        }
         else if (item.getItemId() == R.id.menu_about)
         {
             String url = "https://storymaker.org";
@@ -1175,51 +1158,70 @@ public class CatalogActivity extends BaseHomeActivity {
             return true;
         }
 
+        //        else if (item.getItemId() == R.id.menu_new_project)
+//        {
+//            // need to check this to determine whether there is a storage issue that will cause a crash
+//            File actualStorageDirectory = StorageHelper.getActualStorageDirectory(this);
+//
+//            if (actualStorageDirectory != null) {
+//                launchLiger(this, "default_library", null, null);
+//            } else {
+//                //show storage error message
+//                new AlertDialog.Builder(this)
+//                        .setTitle(Utils.getAppName(this))
+//                        .setIcon(android.R.drawable.ic_dialog_info)
+//                        .setMessage(R.string.err_storage_not_available)
+//                        .show();
+//            }
+//
+//            return true;
+//        }
+
         return super.onOptionsItemSelected(item);
     }
 
-    public static void launchLiger(Context context, String splId, String instancePath, String splPath) {
-
-        // TEMP - do we need to check files for anything besides the default library?
-        /*
-        if (!DownloadHelper.checkAllFiles(context)) { // FIXME the app should define these, not the library
-            Toast.makeText(context, "Please wait for the content pack to finish downloading", Toast.LENGTH_LONG).show(); // FIXME move to strings.xml
-            return;
-        }
-        */
-
-        if ((splId != null) && (splId.equals("default_library"))) {
-
-            // initiate check/download for main/patch expansion files
-            boolean readyToOpen = StorymakerDownloadHelper.checkAndDownloadNew(context);
-
-            if (!readyToOpen) {
-                // if file is being downloaded, don't open
-                Timber.d("CURRENTLY DOWNLOADING FILE");
-
-                Toast.makeText(context, context.getString(R.string.home_please_wait), Toast.LENGTH_LONG).show();
-                return;
-            }
-
-        }
-
-        Intent ligerIntent = new Intent(context, MainActivity.class);
-        ligerIntent.putExtra(MainActivity.INTENT_KEY_WINDOW_TITLE, Utils.getAppName(context));
-        String lang = StoryMakerApp.getCurrentLocale().getLanguage();
-        ligerIntent.putExtra("lang", lang);
-
-        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context.getApplicationContext());
-        int pslideduration = Integer.parseInt(settings.getString("pslideduration", "5"));
-        ligerIntent.putExtra("photo_essay_slide_duration", pslideduration * 1000);
-        if (splId != null && !splId.isEmpty()) {
-            ligerIntent.putExtra(MainActivity.INTENT_KEY_STORYPATH_LIBRARY_ID, splId);
-        } else if (splPath != null && !splPath.isEmpty()) {
-            ligerIntent.putExtra(MainActivity.INTENT_KEY_STORYPATH_LIBRARY_PATH, splPath);
-        } else if (instancePath != null && !instancePath.isEmpty()) {
-            ligerIntent.putExtra(MainActivity.INTENT_KEY_STORYPATH_INSTANCE_PATH, instancePath);
-        }
-        context.startActivity(ligerIntent);
-    }
+//    public static void launchLiger(Context context, String splId, String instancePath, String splPath) {
+//
+//        // TEMP - do we need to check files for anything besides the default library?
+//        /*
+//        if (!DownloadHelper.checkAllFiles(context)) { // FIXME the app should define these, not the library
+//            Toast.makeText(context, "Please wait for the content pack to finish downloading", Toast.LENGTH_LONG).show(); // FIXME move to strings.xml
+//            return;
+//        }
+//        */
+//
+//        if ((splId != null) && (splId.equals("default_library"))) {
+//
+//            // initiate check/download for main/patch expansion files
+//            boolean readyToOpen = StorymakerDownloadHelper.checkAndDownloadNew(context);
+//
+//            if (!readyToOpen) {
+//                // if file is being downloaded, don't open
+//                Timber.d("CURRENTLY DOWNLOADING FILE");
+//
+//                Toast.makeText(context, context.getString(R.string.home_please_wait), Toast.LENGTH_LONG).show();
+//                return;
+//            }
+//
+//        }
+//
+//        Intent ligerIntent = new Intent(context, MainActivity.class);
+//        ligerIntent.putExtra(MainActivity.INTENT_KEY_WINDOW_TITLE, Utils.getAppName(context));
+//        String lang = StoryMakerApp.getCurrentLocale().getLanguage();
+//        ligerIntent.putExtra("lang", lang);
+//
+//        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context.getApplicationContext());
+//        int pslideduration = Integer.parseInt(settings.getString("pslideduration", "5"));
+//        ligerIntent.putExtra("photo_essay_slide_duration", pslideduration * 1000);
+//        if (splId != null && !splId.isEmpty()) {
+//            ligerIntent.putExtra(MainActivity.INTENT_KEY_STORYPATH_LIBRARY_ID, splId);
+//        } else if (splPath != null && !splPath.isEmpty()) {
+//            ligerIntent.putExtra(MainActivity.INTENT_KEY_STORYPATH_LIBRARY_PATH, splPath);
+//        } else if (instancePath != null && !instancePath.isEmpty()) {
+//            ligerIntent.putExtra(MainActivity.INTENT_KEY_STORYPATH_INSTANCE_PATH, instancePath);
+//        }
+//        context.startActivity(ligerIntent);
+//    }
 
     private void showPreferences ()
     {
@@ -1271,11 +1273,11 @@ public class CatalogActivity extends BaseHomeActivity {
         });
     }
 
-    private void checkForUpdates() {
-        if (BuildConfig.DEBUG) {
-            UpdateManager.register(this, AppConstants.HOCKEY_APP_ID);
-        }
-    }
+//    private void checkForUpdates() {
+//        if (BuildConfig.DEBUG) {
+//            UpdateManager.register(this, AppConstants.HOCKEY_APP_ID);
+//        }
+//    }
 
 
     public class PauseListener implements DialogInterface.OnClickListener {
@@ -1354,5 +1356,11 @@ public class CatalogActivity extends BaseHomeActivity {
         }
     }
 
-
+    @Override
+    protected void onDestroy() {
+        // Unregister since the activity is about to be closed.
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(mDownloadMessageReceiver);
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(mDeleteMessageReceiver);
+        super.onDestroy();
+    }
 }

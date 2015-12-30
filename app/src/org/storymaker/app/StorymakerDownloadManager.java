@@ -1,15 +1,11 @@
 package org.storymaker.app;
 
-import timber.log.Timber;
-
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.DownloadManager;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
@@ -18,6 +14,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.preference.PreferenceManager;
+import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
 import com.squareup.okhttp.OkHttpClient;
@@ -42,7 +39,6 @@ import java.util.concurrent.TimeUnit;
 
 import ch.boye.httpclientandroidlib.HttpResponse;
 import ch.boye.httpclientandroidlib.client.methods.HttpGet;
-
 import ch.boye.httpclientandroidlib.conn.ConnectTimeoutException;
 import info.guardianproject.netcipher.client.StrongHttpsClient;
 import info.guardianproject.netcipher.proxy.OrbotHelper;
@@ -52,6 +48,7 @@ import scal.io.liger.ZipHelper;
 import scal.io.liger.model.sqlbrite.ExpansionIndexItem;
 import scal.io.liger.model.sqlbrite.InstalledIndexItemDao;
 import scal.io.liger.model.sqlbrite.QueueItemDao;
+import timber.log.Timber;
 
 /**
  * Created by mnbogner on 11/7/14.
@@ -850,6 +847,15 @@ public class StorymakerDownloadManager implements Runnable {
         }
     }
 
+    private void sendDownloadCompleteMessage(String expansionId) {
+
+        //Log.d("receiver", "sending download complete message");
+
+        Intent intent = new Intent("download-complete");
+        intent.putExtra("expansionid", expansionId);
+        LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
+    }
+
     private boolean handleFile (File tempFile) {
 
         File appendedFile = null;
@@ -894,7 +900,9 @@ public class StorymakerDownloadManager implements Runnable {
                 Timber.d("FINISHED DOWNLOAD OF " + tempFile.getPath() + " AND FILE LOOKS OK");
 
                 // show notification
-                Utils.toastOnUiThread((Activity) context, "Finished downloading " + indexItem.getTitle() + ".", false); // FIXME move to strings
+                Utils.toastOnUiThread((Activity) context, context.getString(R.string.finished_downloading) + " " + indexItem.getTitle() + ".", false);
+
+                sendDownloadCompleteMessage(indexItem.getExpansionId());
 
             }
         } else {
