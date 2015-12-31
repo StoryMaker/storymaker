@@ -375,9 +375,10 @@ public class CatalogActivity extends BaseHomeActivity {
             String expansionId = intent.getStringExtra("expansionid");
             Log.d("receiver", "catalog download expansion id: " + expansionId + " " + this.toString());
 
-            myGuidesInstanceIndexItemAdapter.notifyDataSetChanged();
-            myLessonsInstanceIndexItemAdapter.notifyDataSetChanged();
-            myTemplatesInstanceIndexItemAdapter.notifyDataSetChanged();
+            initActivityList();
+//            myGuidesInstanceIndexItemAdapter.notifyDataSetChanged();
+//            myLessonsInstanceIndexItemAdapter.notifyDataSetChanged();
+//            myTemplatesInstanceIndexItemAdapter.notifyDataSetChanged();
         }
     };
 
@@ -388,10 +389,11 @@ public class CatalogActivity extends BaseHomeActivity {
             String expansionId = intent.getStringExtra("expansionid");
             Log.d("receiver", "catalog delete expansion id: " + expansionId + " " + this.toString());
 
+            initActivityList();
             removeThreads(expansionId);
-            myGuidesInstanceIndexItemAdapter.notifyDataSetChanged();
-            myLessonsInstanceIndexItemAdapter.notifyDataSetChanged();
-            myTemplatesInstanceIndexItemAdapter.notifyDataSetChanged();
+//            myGuidesInstanceIndexItemAdapter.notifyDataSetChanged();
+//            myLessonsInstanceIndexItemAdapter.notifyDataSetChanged();
+//            myTemplatesInstanceIndexItemAdapter.notifyDataSetChanged();
         }
     };
 
@@ -583,6 +585,10 @@ public class CatalogActivity extends BaseHomeActivity {
         // NEW: load instance index
         String lang = StoryMakerApp.getCurrentLocale().getLanguage();
         Timber.d("lang returned from getCurrentLocale: " + lang);
+        boolean fileAddedFlag = StorymakerIndexManager.fillInstalledIndex(CatalogActivity.this, StorymakerIndexManager.loadInstalledFileIndex(CatalogActivity.this, installedIndexItemDao), StorymakerIndexManager.loadAvailableFileIndex(CatalogActivity.this, availableIndexItemDao), lang, installedIndexItemDao);
+        if (fileAddedFlag) {
+            Log.d("CatalogActivity", "file added");
+        }
         //HashMap<String, InstanceIndexItem> instanceIndex = StorymakerIndexManager.fillInstanceIndex(CatalogActivity.this, StorymakerIndexManager.loadInstanceIndex(CatalogActivity.this, instanceIndexItemDao), lang, instanceIndexItemDao);
 
         // FIXME --- this should only happen on app updates in a migration
@@ -812,12 +818,16 @@ public class CatalogActivity extends BaseHomeActivity {
         // primary sections of the activity.
         mDemoCollectionPagerAdapter = new DemoCollectionPagerAdapter(getSupportFragmentManager(), myInstanceIndexItemAdapters);
 
+
         // Set up the ViewPager with the sections adapter.
         //mViewPager = (SwipelessViewPager) findViewById(R.id.pager);
         mViewPager = (ViewPager) findViewById(R.id.pager);
         mViewPager.setAdapter(mDemoCollectionPagerAdapter);
+
+            //if (firstTimeFlag) {
         goToCatalogTab();
-        //mViewPager.setPagingEnabled(false);
+            //}
+            //mViewPager.setPagingEnabled(false);
 
         // Give the SlidingTabLayout the ViewPager, this must be done AFTER the ViewPager has had
         // it's PagerAdapter set.
@@ -826,6 +836,7 @@ public class CatalogActivity extends BaseHomeActivity {
                 getResources().getColor(R.color.white));
         mSlidingTabLayout.setDistributeEvenly(true);
         mSlidingTabLayout.setViewPager(mViewPager);
+
     }
 
     public void goToCatalogTab() {
