@@ -375,9 +375,10 @@ public class CatalogActivity extends BaseHomeActivity {
             String expansionId = intent.getStringExtra("expansionid");
             Log.d("receiver", "catalog download expansion id: " + expansionId + " " + this.toString());
 
-            myGuidesInstanceIndexItemAdapter.notifyDataSetChanged();
-            myLessonsInstanceIndexItemAdapter.notifyDataSetChanged();
-            myTemplatesInstanceIndexItemAdapter.notifyDataSetChanged();
+            initActivityList();
+//            myGuidesInstanceIndexItemAdapter.notifyDataSetChanged();
+//            myLessonsInstanceIndexItemAdapter.notifyDataSetChanged();
+//            myTemplatesInstanceIndexItemAdapter.notifyDataSetChanged();
         }
     };
 
@@ -389,9 +390,11 @@ public class CatalogActivity extends BaseHomeActivity {
             Log.d("receiver", "catalog delete expansion id: " + expansionId + " " + this.toString());
 
             removeThreads(expansionId);
-            myGuidesInstanceIndexItemAdapter.notifyDataSetChanged();
-            myLessonsInstanceIndexItemAdapter.notifyDataSetChanged();
-            myTemplatesInstanceIndexItemAdapter.notifyDataSetChanged();
+            initActivityList();
+
+//            myGuidesInstanceIndexItemAdapter.notifyDataSetChanged();
+//            myLessonsInstanceIndexItemAdapter.notifyDataSetChanged();
+//            myTemplatesInstanceIndexItemAdapter.notifyDataSetChanged();
         }
     };
 
@@ -583,6 +586,11 @@ public class CatalogActivity extends BaseHomeActivity {
         // NEW: load instance index
         String lang = StoryMakerApp.getCurrentLocale().getLanguage();
         Timber.d("lang returned from getCurrentLocale: " + lang);
+        boolean fileAddedFlag = StorymakerIndexManager.fillInstalledIndex(CatalogActivity.this, StorymakerIndexManager.loadInstalledFileIndex(CatalogActivity.this, installedIndexItemDao), StorymakerIndexManager.loadAvailableFileIndex(CatalogActivity.this, availableIndexItemDao), lang, installedIndexItemDao);
+        if (fileAddedFlag) {
+            Log.d("CatalogActivity", "file added");
+        }
+
         //HashMap<String, InstanceIndexItem> instanceIndex = StorymakerIndexManager.fillInstanceIndex(CatalogActivity.this, StorymakerIndexManager.loadInstanceIndex(CatalogActivity.this, instanceIndexItemDao), lang, instanceIndexItemDao);
 
         // FIXME --- this should only happen on app updates in a migration

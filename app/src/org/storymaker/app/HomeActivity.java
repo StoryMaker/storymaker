@@ -379,11 +379,12 @@ public class HomeActivity extends BaseHomeActivity {
             String expansionId = intent.getStringExtra("expansionid");
             Log.d("receiver", "home download expansion id: " + expansionId + " " + this.toString());
 
-            myHomeItemsInstanceIndexItemAdapter.notifyDataSetChanged();
-            myInstancesInstanceIndexItemAdapter.notifyDataSetChanged();
-            myGuidesInstanceIndexItemAdapter.notifyDataSetChanged();
-            myLessonsInstanceIndexItemAdapter.notifyDataSetChanged();
-            myTemplatesInstanceIndexItemAdapter.notifyDataSetChanged();
+            initActivityList();
+//            myHomeItemsInstanceIndexItemAdapter.notifyDataSetChanged();
+//            myInstancesInstanceIndexItemAdapter.notifyDataSetChanged();
+//            myGuidesInstanceIndexItemAdapter.notifyDataSetChanged();
+//            myLessonsInstanceIndexItemAdapter.notifyDataSetChanged();
+//            myTemplatesInstanceIndexItemAdapter.notifyDataSetChanged();
         }
     };
     private BroadcastReceiver mDeleteMessageReceiver = new BroadcastReceiver() {
@@ -393,12 +394,13 @@ public class HomeActivity extends BaseHomeActivity {
             String expansionId = intent.getStringExtra("expansionid");
             Log.d("receiver", "home delete expansion id: " + expansionId + " " + this.toString());
 
+            initActivityList();
             removeThreads(expansionId);
-            myHomeItemsInstanceIndexItemAdapter.notifyDataSetChanged();
-            myInstancesInstanceIndexItemAdapter.notifyDataSetChanged();
-            myGuidesInstanceIndexItemAdapter.notifyDataSetChanged();
-            myLessonsInstanceIndexItemAdapter.notifyDataSetChanged();
-            myTemplatesInstanceIndexItemAdapter.notifyDataSetChanged();
+//            myHomeItemsInstanceIndexItemAdapter.notifyDataSetChanged();
+//            myInstancesInstanceIndexItemAdapter.notifyDataSetChanged();
+//            myGuidesInstanceIndexItemAdapter.notifyDataSetChanged();
+//            myLessonsInstanceIndexItemAdapter.notifyDataSetChanged();
+//            myTemplatesInstanceIndexItemAdapter.notifyDataSetChanged();
         }
     };
 
@@ -550,6 +552,11 @@ public class HomeActivity extends BaseHomeActivity {
         String lang = StoryMakerApp.getCurrentLocale().getLanguage();
         Timber.d("lang returned from getCurrentLocale: " + lang);
         HashMap<String, InstanceIndexItem> instanceIndex = StorymakerIndexManager.fillInstanceIndex(HomeActivity.this, StorymakerIndexManager.loadInstanceIndex(HomeActivity.this, instanceIndexItemDao), lang, instanceIndexItemDao);
+        boolean fileAddedFlag = StorymakerIndexManager.fillInstalledIndex(HomeActivity.this, StorymakerIndexManager.loadInstalledFileIndex(HomeActivity.this, installedIndexItemDao), StorymakerIndexManager.loadAvailableFileIndex(HomeActivity.this, availableIndexItemDao), lang, installedIndexItemDao);
+        if (fileAddedFlag) {
+            Log.d("HomeActivity", "file added");
+        }
+
 
         // FIXME --- this should only happen on app updates in a migration
         if (instanceIndex.size() > 0) {
