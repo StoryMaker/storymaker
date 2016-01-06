@@ -1,5 +1,13 @@
 package org.storymaker.app;
 
+import timber.log.Timber;
+
+import org.storymaker.app.model.Media;
+import org.storymaker.app.model.Project;
+import org.storymaker.app.model.ProjectTable;
+
+import java.util.ArrayList;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -14,18 +22,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-
-import org.storymaker.app.model.Media;
-import org.storymaker.app.model.Project;
-import org.storymaker.app.model.ProjectTable;
-
-import java.util.ArrayList;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemLongClickListener;
 
 public class ProjectsActivity extends BaseActivity {
 
@@ -73,11 +75,11 @@ public class ProjectsActivity extends BaseActivity {
 	        	NavUtils.navigateUpFromSameTask(this);
 	        	
              return true;
-//         case R.id.menu_new_project:
-//
-//             HomeActivity.launchLiger(this, "default_library", null, null);
-//
-//             return true;
+         case R.id.menu_new_project:
+
+             HomeActivity.launchLiger(this, "default_library", null, null);
+
+             return true;
      }
  		
      return super.onOptionsItemSelected(item);
