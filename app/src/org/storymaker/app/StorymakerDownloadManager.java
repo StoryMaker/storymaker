@@ -2,7 +2,6 @@ package org.storymaker.app;
 
 import android.app.Activity;
 import android.app.DownloadManager;
-import android.app.Notification;
 import android.app.NotificationManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -608,14 +607,16 @@ public class StorymakerDownloadManager implements Runnable {
                             // need to cut back on notification traffic
                         } else {
                             oldPercent = nPercent;
-                            Notification nProgress = new Notification.Builder(context)
-                                    .setContentTitle(mAppTitle + " content download")
-                                    .setContentText(indexItem.getTitle() + " - " + (nPercent / 10.0) + "%") // assignment file names are meaningless uuids
-                                    .setSmallIcon(android.R.drawable.arrow_down_float)
-                                    .setProgress(100, (nPercent / 10), false)
-                                    .setWhen(startTime.getTime())
-                                    .build();
-                            nManager.notify(nTag, nId, nProgress);
+
+                            //RES - whacking this for now
+//                            Notification nProgress = new Notification.Builder(context)
+//                                    .setContentTitle(mAppTitle + " content download")
+//                                    .setContentText(indexItem.getTitle() + " - " + (nPercent / 10.0) + "%") // assignment file names are meaningless uuids
+//                                    .setSmallIcon(android.R.drawable.arrow_down_float)
+//                                    .setProgress(100, (nPercent / 10), false)
+//                                    .setWhen(startTime.getTime())
+//                                    .build();
+//                            nManager.notify(nTag, nId, nProgress);
                         }
 
                         targetOutput.write(buf, 0, i);

@@ -1,6 +1,6 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     
-    <item android:id="@+id/menu_new_project"
+    <!--<item android:id="@+id/menu_new_project"
         android:title="@string/menu_new_project"
         android:orderInCategory="1"
         android:showAsAction="always" />
@@ -8,6 +8,6 @@
     <item android:id="@+id/menu_about"
         android:title="@string/menu_about"
         android:orderInCategory="4"
-        android:showAsAction="never" />
+        android:showAsAction="never" />-->
     
 </menu>

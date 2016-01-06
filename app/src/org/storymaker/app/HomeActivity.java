@@ -14,7 +14,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
-import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
@@ -1160,20 +1159,20 @@ public class HomeActivity extends BaseHomeActivity {
             toggleDrawer();
             return true;
         }
-        else if (item.getItemId() == R.id.menu_new_project)
-        {
-            launchNewProject();
-            return true;
-        }
-        else if (item.getItemId() == R.id.menu_about)
-        {
-            String url = "https://storymaker.org";
-
-            Intent i = new Intent(Intent.ACTION_VIEW);
-            i.setData(Uri.parse(url));
-            startActivity(i);
-            return true;
-        }
+//        else if (item.getItemId() == R.id.menu_new_project)
+//        {
+//            launchNewProject();
+//            return true;
+//        }
+//        else if (item.getItemId() == R.id.menu_about)
+//        {
+//            String url = "https://storymaker.org";
+//
+//            Intent i = new Intent(Intent.ACTION_VIEW);
+//            i.setData(Uri.parse(url));
+//            startActivity(i);
+//            return true;
+//        }
 
         return super.onOptionsItemSelected(item);
     }

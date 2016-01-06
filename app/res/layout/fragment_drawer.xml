@@ -132,7 +132,7 @@
 			android:background="@android:color/transparent"
 			android:padding="8dp"
 			android:drawablePadding="8dp"
-			android:drawableLeft="@drawable/ic_nav_home"
+			android:drawableLeft="@drawable/ic_nav_catalog"
 			android:gravity="left|center_vertical"
 			android:text="@string/title_activity_catalog"
 			android:textColor="#dddddd" />
@@ -171,7 +171,7 @@
             android:background="@android:color/transparent"
             android:padding="8dp"
             android:drawablePadding="8dp"
-            android:drawableLeft="@drawable/ic_home_projects"
+            android:drawableLeft="@drawable/ic_nav_exports"
             android:gravity="left|center_vertical"
             android:text="@string/exported_stories"
             android:textColor="#dddddd" />
@@ -205,7 +205,7 @@
 	        android:background="@android:color/transparent"
             android:padding="8dp"
             android:drawablePadding="8dp"
-	        android:drawableLeft="@drawable/ic_nav_preferences"
+	        android:drawableLeft="@drawable/ic_nav_accounts"
 	        android:gravity="left|center_vertical"
 	        android:text="@string/menu_accounts"
 	        android:textColor="#dddddd" />
@@ -257,7 +257,7 @@
 			android:background="@android:color/transparent"
 			android:padding="8dp"
 			android:drawablePadding="8dp"
-			android:drawableLeft="@drawable/ic_nav_upload"
+			android:drawableLeft="@drawable/ic_nav_feedback"
 			android:gravity="left|center_vertical"
 			android:text="@string/send_feedback"
 			android:textColor="#dddddd" />
