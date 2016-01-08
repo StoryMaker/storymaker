@@ -599,23 +599,40 @@ public class StorymakerDownloadManager implements Runnable {
                     byte[] buf = new byte[1024];
                     int i;
                     int oldPercent = 0;
+                    long thisTime;
+                    long lastTime = -1;
+                    int lastPercent = 0;
                     while ((i = responseInput.read(buf)) > 0) {
 
                         // create status bar notification
                         int nPercent = StorymakerDownloadHelper.getDownloadPercent(context, fileName, installedDao);
+                        thisTime = System.currentTimeMillis();
 
                         if (oldPercent == nPercent) {
                             // need to cut back on notification traffic
                         } else {
-                            oldPercent = nPercent;
-                            Notification nProgress = new Notification.Builder(context)
-                                    .setContentTitle(mAppTitle + " content download")
-                                    .setContentText(indexItem.getTitle() + " - " + (nPercent / 10.0) + "%") // assignment file names are meaningless uuids
-                                    .setSmallIcon(android.R.drawable.arrow_down_float)
-                                    .setProgress(100, (nPercent / 10), false)
-                                    .setWhen(startTime.getTime())
-                                    .build();
-                            nManager.notify(nTag, nId, nProgress);
+
+                            // cutting back on notification traffic even more
+                            // only 1 notification per whole percentage point (used to be every 1/10th of a percent)
+                            // only 1 notification per second
+
+                            if (nPercent % 10 == 0 && nPercent != lastPercent) {
+                                if (lastTime == -1 || (thisTime - lastTime) > 1000) {
+                                    lastPercent = nPercent;
+                                    oldPercent = nPercent;
+                                    lastTime = thisTime;
+                                    Notification nProgress = new Notification.Builder(context)
+                                            .setContentTitle(mAppTitle + " content download")
+                                            .setContentText(indexItem.getTitle() + " - " + (nPercent / 10.0) + "%") // assignment file names are meaningless uuids
+                                            .setSmallIcon(android.R.drawable.arrow_down_float)
+                                            .setProgress(100, (nPercent / 10), false)
+                                            .setWhen(startTime.getTime())
+                                            .build();
+                                    nManager.notify(nTag, nId, nProgress);
+
+                                    //Log.d("Storymaker Download Manager", "** NOTIFICATION ** " + nPercent );
+                                }
+                            }
                         }
 
                         targetOutput.write(buf, 0, i);

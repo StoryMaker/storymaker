@@ -371,10 +371,17 @@ You also will have an opportunity to see and modify the data being sent."</strin
     <string name="home_menu_lessons">Lessons</string>
     <string name="home_menu_templates">Templates</string>
 
-    <string name="home_empty_home">You haven\'t worked on any stories yet.</string>
+    <string name="home_empty_home">Browse our catalog and discover all the different ways you can start making better stories.</string>
     <string name="home_empty_stories">You haven\'t saved any stories yet.</string>
-    <string name="home_empty_guides">You haven\'t installed any guides yet.</string>
-    <string name="home_empty_lessons">You haven\'t installed any lessons yet.</string>
-    <string name="home_empty_templates">You haven\'t installed any templates yet.</string>
+    <string name="home_empty_guides">You don\'t have any Guides yet. Download a Guide and brush up on your techniques.</string>
+    <string name="home_empty_lessons">Looking to learn? Download a Lesson pack to dive deep on a topic.</string>
+    <string name="home_empty_templates">You don\'t have any Templates yet. Download Templates and you\'ll have story structures you can use again and again.</string>
+
+    <string name="home_empty_btn_home">Browse the Catalog</string>
+    <string name="home_empty_btn_stories">New Story</string>
+    <string name="home_empty_btn_guides">Grab a Guide</string>
+    <string name="home_empty_btn_lessons">Load a Lesson</string>
+    <string name="home_empty_btn_templates">Try a Template</string>
+
 
 </resources>

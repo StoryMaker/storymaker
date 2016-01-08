@@ -80,12 +80,15 @@ public class StoryListFragment extends Fragment{
             //String catalog_name = getResources().getString(id);
             tv.setText(getResources().getString(id));
 
+            int id2 = getResources().getIdentifier("home_empty_btn_" + myListName, "string", "org.storymaker.app");
+            linkButton.setText(getResources().getString(id2));
+
             //Only add Links if it's the Home page
             if (myHomeFlag) {
 
                 linkButton.setVisibility(View.VISIBLE);
                 if (myListName.equals("stories")) {
-                    linkButton.setText("New Story");
+                    //linkButton.setText("New Story");
                     linkButton.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
