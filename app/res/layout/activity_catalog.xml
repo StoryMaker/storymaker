@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#eaeae5"
+    android:orientation="vertical"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:padding="0dp">
+
+    <org.storymaker.app.ui.SlidingTabLayout
+        android:background="#222222"
+        android:id="@+id/sliding_tabs"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+
+    
+    <android.support.v4.view.ViewPager
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/pager" />
+
+    <!--<org.storymaker.app.ui.SwipelessViewPager
+        android:id="@+id/pager"
+        android:layout_width="match_parent" android:layout_height="match_parent" >-->
+
+    <!--<android.support.v4.view.PagerTabStrip
+        android:id="@+id/pager_tab_strip"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top"
+        android:background="#27aae1"
+        android:textColor="#fff"
+        android:paddingTop="15dp"
+        android:paddingBottom="15dp"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"/>-->
+
+    <!--</org.storymaker.app.ui.SwipelessViewPager>-->
+
+</LinearLayout>
