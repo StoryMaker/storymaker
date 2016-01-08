@@ -1,10 +1,3 @@
-
-
-
-
-
-
-
 package org.storymaker.app;
 
 import android.app.AlertDialog;
@@ -62,13 +55,6 @@ import scal.io.liger.model.sqlbrite.InstalledIndexItemDao;
 import scal.io.liger.model.sqlbrite.InstanceIndexItem;
 import timber.log.Timber;
 
-//import scal.io.liger.DownloadHelper;
-//import scal.io.liger.IndexManager;
-//import scal.io.liger.model.BaseIndexItem;
-//import scal.io.liger.model.ExpansionIndexItem;
-//import scal.io.liger.model.InstanceIndexItem;
-//import com.google.analytics.tracking.android.GoogleAnalytics;
-
 public class HomeActivity extends BaseHomeActivity {
 
     private final static String TAG = "HomeActivity";
@@ -123,8 +109,6 @@ public class HomeActivity extends BaseHomeActivity {
 //        daoManager.setLogging(false);
 //
 //    }
-
-
 
     public static ArrayList<String> getIndexItemIdsByType(Dao dao, String type) {
 
@@ -266,8 +250,6 @@ public class HomeActivity extends BaseHomeActivity {
 //            preferences.edit().putInt("AVAILABLE_INDEX_VERSION", scal.io.liger.Constants.AVAILABLE_INDEX_VERSION).commit();
 //        }
 
-
-
         // dumb test
 
         // check values
@@ -296,8 +278,6 @@ public class HomeActivity extends BaseHomeActivity {
 //                }
 //            }
 //        });
-
-
 
         // file cleanup
 //        File actualStorageDirectory = StorageHelper.getActualStorageDirectory(this);
