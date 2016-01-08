@@ -24,9 +24,6 @@ import com.hannesdorfmann.sqlbrite.dao.Dao;
 
 import net.hockeyapp.android.CrashManager;
 import net.hockeyapp.android.CrashManagerListener;
-import net.sqlcipher.Cursor;
-import net.sqlcipher.database.SQLiteDatabase;
-import net.sqlcipher.database.SQLiteDatabaseHook;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
@@ -170,58 +167,6 @@ public class HomeActivity extends BaseHomeActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-
-        // version check (sqlite upgrade requires migration)
-
-        int appMigrationVersion = preferences.getInt("APP_MIGRATION_VERSION", 0);
-
-        Timber.d("MIGRATION CHECK: " + appMigrationVersion + " vs. " + Constants.APP_MIGRATION_VERSION);
-
-        if (appMigrationVersion != Constants.APP_MIGRATION_VERSION) {
-
-            Timber.d("MIGRATION REQUIRED, RE-ENCRYPTING DATABASE");
-
-            final boolean[] dbStatus = {false};
-            try {
-                SQLiteDatabaseHook dbHook = new SQLiteDatabaseHook() {
-                    public void preKey(SQLiteDatabase database) {
-                    }
-                    public void postKey(SQLiteDatabase database) {
-                        Cursor cursor = database.rawQuery("PRAGMA cipher_migrate", new String[]{});
-                        String value = "";
-                        if (cursor != null) {
-                            cursor.moveToFirst();
-                            value = cursor.getString(0);
-                            cursor.close();
-                        }
-
-                        // this result is currently ignored, checking if db is null instead
-                        dbStatus[0] = Integer.valueOf(value) == 0;
-                    }
-                };
-
-                File dbPath = getDatabasePath("sm.db");
-                Timber.d("MIGRATING DATABASE AT " + dbPath.getPath());
-
-                SQLiteDatabase sqldb = SQLiteDatabase.openOrCreateDatabase(dbPath, "foo", null, dbHook);
-                if (sqldb != null) {
-                    Timber.d("MIGRATED DATABASE NOT NULL");
-                    sqldb.close();
-
-                    // update preferences if migration succeeded
-
-                    preferences.edit().putInt("APP_MIGRATION_VERSION", Constants.APP_MIGRATION_VERSION).commit();
-                } else {
-                    Timber.e("MIGRATED DATABASE IS NULL");
-                }
-            } catch (Exception ex) {
-                Timber.e("EXCEPTION WHILE MIGRATING DATABASE: " + ex.getMessage());
-            }
-        }
-
-        int availableIndexVersion = preferences.getInt("AVAILABLE_INDEX_VERSION", 0);
 
         getActionBar().setTitle(Utils.getAppName(this));
 
