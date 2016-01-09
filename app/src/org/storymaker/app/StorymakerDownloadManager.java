@@ -500,7 +500,7 @@ public class StorymakerDownloadManager implements Runnable {
     public static boolean checkTor(Context mContext) {
 
         if(OrbotHelper.isOrbotRunning(mContext)) {
-            Log.d("DOWNLOAD/TOR", "ORBOT RUNNING, USE TOR");
+            Timber.d("ORBOT RUNNING, USE TOR");
             return true;
         } else {
             Timber.d("ORBOT NOT RUNNING, DON'T USE TOR");

@@ -24,8 +24,11 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 
+import info.guardianproject.cacheword.CacheWordHandler;
+import info.guardianproject.cacheword.ICacheWordSubscriber;
+
 // FIXME rename this to SMProvier and get rid of LessonsProvider
-public class ProjectsProvider extends ContentProvider {  
+public class ProjectsProvider extends ContentProvider implements ICacheWordSubscriber {
 	private StoryMakerDB mDBHelper;
 	private SQLiteDatabase mDB = null;
     private String mPassphrase = "foo"; //how and when do we set this??
@@ -138,10 +141,18 @@ public class ProjectsProvider extends ContentProvider {
         sURIMatcher.addURI(AUTHORITY, AUDIO_CLIPS_BASE_PATH, AUDIO_CLIPS);
         sURIMatcher.addURI(AUTHORITY, AUDIO_CLIPS_BASE_PATH + "/#", AUDIO_CLIP_ID);
     }
-    
+
+    // NEW/CACHEWORD
+    CacheWordHandler mCacheWordHandler;
+
     @Override
     public boolean onCreate() {
-        mDBHelper = new StoryMakerDB(getContext()); 
+
+        // NEW/CACHEWORD
+        mCacheWordHandler = new CacheWordHandler(getContext(), this, -1); // TODO: timeout of -1 represents no timeout (revisit)
+        mCacheWordHandler.connectToService();
+        mDBHelper = new StoryMakerDB(mCacheWordHandler, getContext());
+
         return true;
     }
     
@@ -310,5 +321,35 @@ public class ProjectsProvider extends ContentProvider {
         default:
             throw new IllegalArgumentException("Unknown URI");
         }
+    }
+
+    // NEW/CACHEWORD
+    @Override
+    public void onCacheWordUninitialized() {
+        // prevent db access while cacheword is uninitialized
+        if (mDBHelper != null)
+            mDBHelper.close();
+        if (mDB != null)
+            mDB.close();
+        mDBHelper = null;
+        mDB = null;
+    }
+
+    @Override
+    public void onCacheWordLocked() {
+        // prevent db access when cacheword is locked
+        if (mDBHelper != null)
+            mDBHelper.close();
+        if (mDB != null)
+            mDB.close();
+        mDBHelper = null;
+        mDB = null;
+    }
+
+    @Override
+    public void onCacheWordOpened() {
+        // permit db access when cacheword is unlocked
+        mDBHelper = new StoryMakerDB(mCacheWordHandler, getContext());
+        mDB = mDBHelper.getWritableDatabase();
     }
 }

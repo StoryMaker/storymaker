@@ -3,9 +3,11 @@ package org.storymaker.app.db;
 import android.content.ContentProvider;
 import android.content.ContentResolver;
 import android.content.ContentValues;
+import android.content.SharedPreferences;
 import android.content.UriMatcher;
 import android.database.Cursor;
 import android.net.Uri;
+import android.preference.PreferenceManager;
 
 import net.sqlcipher.database.SQLiteDatabase;
 
@@ -19,8 +21,14 @@ import org.storymaker.app.model.PublishJobTable;
 import org.storymaker.app.model.SceneTable;
 import org.storymaker.app.model.TagTable;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
+import info.guardianproject.cacheword.CacheWordHandler;
+import info.guardianproject.cacheword.ICacheWordSubscriber;
+
 // FIXME rename this to SMProvier and get rid of LessonsProvider
-public class ProjectsProvider extends ContentProvider {  
+public class ProjectsProvider extends ContentProvider implements ICacheWordSubscriber {
 	private StoryMakerDB mDBHelper;
 	private SQLiteDatabase mDB = null;
     private String mPassphrase = "foo"; //how and when do we set this??
@@ -133,10 +141,42 @@ public class ProjectsProvider extends ContentProvider {
         sURIMatcher.addURI(AUTHORITY, AUDIO_CLIPS_BASE_PATH, AUDIO_CLIPS);
         sURIMatcher.addURI(AUTHORITY, AUDIO_CLIPS_BASE_PATH + "/#", AUDIO_CLIP_ID);
     }
+
+    // NEW/CACHEWORD
+    CacheWordHandler mCacheWordHandler;
+
+    // NEED A WAY TO DISCONNECT FROM SERVICE WHEN IDLE
+    Timer dbTimer;
+
+    synchronized void setTimer(long delay) {
+        // if there is an existing timer, clear it
+        if(dbTimer != null) {
+            dbTimer.cancel();
+            dbTimer = null;
+        }
+
+        // set timer to disconnect from cacheword service so it can timeout
+        dbTimer = new Timer();
+        dbTimer.schedule(new TimerTask() {
+            public void run() {
+                mCacheWordHandler.disconnectFromService();
+                dbTimer.cancel();
+                dbTimer = null;
+            }
+        }, delay ); // 1 min delay
+    }
     
     @Override
     public boolean onCreate() {
-        mDBHelper = new StoryMakerDB(getContext()); 
+
+        // NEW/CACHEWORD
+        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getContext().getApplicationContext());
+        int timeout = Integer.parseInt(settings.getString("pcachewordtimeout", "600"));
+        mCacheWordHandler = new CacheWordHandler(getContext(), this, timeout); // TODO: timeout of -1 represents no timeout (revisit)
+        mCacheWordHandler.connectToService();
+        setTimer(60000);
+        mDBHelper = new StoryMakerDB(mCacheWordHandler, getContext());
+
         return true;
     }
     
@@ -155,6 +195,10 @@ public class ProjectsProvider extends ContentProvider {
     
     @Override
     public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
+
+        mCacheWordHandler.connectToService();
+        setTimer(60000);
+
         int uriType = sURIMatcher.match(uri);
         switch (uriType) {
         case PROJECT_ID:
@@ -204,6 +248,10 @@ public class ProjectsProvider extends ContentProvider {
 
     @Override
     public Uri insert(Uri uri, ContentValues values) {
+
+        mCacheWordHandler.connectToService();
+        setTimer(60000);
+
         long newId;
         int uriType = sURIMatcher.match(uri);
         switch (uriType) {
@@ -233,6 +281,10 @@ public class ProjectsProvider extends ContentProvider {
     
     @Override
     public int delete(Uri uri, String selection, String[] selectionArgs) {
+
+        mCacheWordHandler.connectToService();
+        setTimer(60000);
+
         int uriType = sURIMatcher.match(uri);
         switch (uriType) {
         case PROJECTS:
@@ -271,6 +323,10 @@ public class ProjectsProvider extends ContentProvider {
 
     @Override
     public int update(Uri uri, ContentValues values, String selection, String[] selectionArgs) {
+
+        mCacheWordHandler.connectToService();
+        setTimer(60000);
+
         int uriType = sURIMatcher.match(uri);
         switch (uriType) {
         case PROJECTS:
@@ -305,5 +361,35 @@ public class ProjectsProvider extends ContentProvider {
         default:
             throw new IllegalArgumentException("Unknown URI");
         }
+    }
+
+    // NEW/CACHEWORD
+    @Override
+    public void onCacheWordUninitialized() {
+        // prevent db access while cacheword is uninitialized
+        if (mDBHelper != null)
+            mDBHelper.close();
+        if (mDB != null)
+            mDB.close();
+        mDBHelper = null;
+        mDB = null;
+    }
+
+    @Override
+    public void onCacheWordLocked() {
+        // prevent db access when cacheword is locked
+        if (mDBHelper != null)
+            mDBHelper.close();
+        if (mDB != null)
+            mDB.close();
+        mDBHelper = null;
+        mDB = null;
+    }
+
+    @Override
+    public void onCacheWordOpened() {
+        // permit db access when cacheword is unlocked
+        mDBHelper = new StoryMakerDB(mCacheWordHandler, getContext());
+        mDB = mDBHelper.getWritableDatabase(mPassphrase);
     }
 }

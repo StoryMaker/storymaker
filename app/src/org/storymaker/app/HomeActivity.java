@@ -35,6 +35,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.security.GeneralSecurityException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -134,7 +135,7 @@ public class HomeActivity extends BaseHomeActivity {
 
         } else if (dao instanceof InstalledIndexItemDao) {
 
-            InstalledIndexItemDao installedDao = (InstalledIndexItemDao)dao;
+            InstalledIndexItemDao installedDao = (InstalledIndexItemDao) dao;
 
             installedDao.getInstalledIndexItemsByType(type).subscribe(new Action1<List<InstalledIndexItem>>() {
 
@@ -346,8 +347,6 @@ public class HomeActivity extends BaseHomeActivity {
 
         LocalBroadcastManager.getInstance(this).registerReceiver(mDeleteMessageReceiver,
                 new IntentFilter("delete-complete"));
-
-
     }
 
     // Our handler for received Intents. This will be called whenever an Intent
@@ -406,14 +405,14 @@ public class HomeActivity extends BaseHomeActivity {
         @Override
         public Fragment getItem(int i) {
 
-            Fragment fragment = new StoryListFragment(myInstanceIndexItemAdapters.get(i));
-            Bundle args = new Bundle();
-            args.putInt(StoryListFragment.ARG_OBJECT, i + 1); // Our object is just an integer :-P
-            args.putInt(StoryListFragment.LIST_COUNT, myListLengths.get(i));
-            args.putString(StoryListFragment.LIST_NAME, myListNames.get(i));
-            args.putBoolean(StoryListFragment.HOME_FLAG, true);
-            fragment.setArguments(args);
-            return fragment;
+                Fragment fragment = new StoryListFragment(myInstanceIndexItemAdapters.get(i));
+                Bundle args = new Bundle();
+                args.putInt(StoryListFragment.ARG_OBJECT, i + 1); // Our object is just an integer :-P
+                args.putInt(StoryListFragment.LIST_COUNT, myListLengths.get(i));
+                args.putString(StoryListFragment.LIST_NAME, myListNames.get(i));
+                args.putBoolean(StoryListFragment.HOME_FLAG, true);
+                fragment.setArguments(args);
+                return fragment;
 
         }
 
@@ -434,10 +433,9 @@ public class HomeActivity extends BaseHomeActivity {
     }
 
 
-
     @Override
-	public void onResume() {
-		super.onResume();
+    public void onResume() {
+        super.onResume();
 
         getActionBar().setTitle(Utils.getAppName(this));
 
@@ -446,13 +444,13 @@ public class HomeActivity extends BaseHomeActivity {
         //if (!DownloadHelper.checkAllFiles(this) && downloadPoller == null) {
         // integrate with index task
         //if (!DownloadHelper.checkAndDownload(this)) {
-            // don't poll, just pop up message if a download was initiated
-            //downloadPoller = new DownloadPoller();
-            //downloadPoller.execute("foo");
+        // don't poll, just pop up message if a download was initiated
+        //downloadPoller = new DownloadPoller();
+        //downloadPoller.execute("foo");
         //    Toast.makeText(this, "Downloading content and/or updating installed files", Toast.LENGTH_LONG).show(); // FIXME move to strings.xml
         //} //else {
         // merge this with index task
-         //   initActivityList();
+        //   initActivityList();
 
         // need to check this to determine whether there is a storage issue that will cause a crash
         File actualStorageDirectory = StorageHelper.getActualStorageDirectory(this);
@@ -471,24 +469,29 @@ public class HomeActivity extends BaseHomeActivity {
 
         //}
 
-		boolean isExternalStorageReady = Utils.Files.isExternalStorageReady();
+        boolean isExternalStorageReady = Utils.Files.isExternalStorageReady();
 
-		if (!isExternalStorageReady)
-		{
-			//show storage error message
-			new AlertDialog.Builder(this)
-            .setTitle(Utils.getAppName(this))
-            .setIcon(android.R.drawable.ic_dialog_info)
-            .setMessage(R.string.err_storage_not_ready)
-            .show();
+        if (!isExternalStorageReady) {
+            //show storage error message
+            new AlertDialog.Builder(this)
+                    .setTitle(Utils.getAppName(this))
+                    .setIcon(android.R.drawable.ic_dialog_info)
+                    .setMessage(R.string.err_storage_not_ready)
+                    .show();
 
-		}
-	}
+        }
+
+        if (getIntent() != null && getIntent().hasExtra("showlauncher")) {
+            if (getIntent().getBooleanExtra("showlauncher", false)) {
+                showLauncherIcon();
+            }
+        }
+    }
 
     public static String parseInstanceDate(String filename) {
 //        String jsonFilePath = storyPath.buildTargetPath(storyPath.getId() + "-instance-" + timeStamp.getTime() + ".json");
         String[] splits = FilenameUtils.removeExtension(filename).split("-");
-        return splits[splits.length-1]; // FIXME make more robust and move into liger
+        return splits[splits.length - 1]; // FIXME make more robust and move into liger
     }
 
     // copied this as a short term fix until we get loading cleanly split out from the liger sample app ui stuff
@@ -517,7 +520,7 @@ public class HomeActivity extends BaseHomeActivity {
         return storyPathLibrary;
     }
 
-    public void initActivityList () {
+    public void initActivityList() {
         // menu items now locked during downloads, i think this can be removed
         /*
         if (!DownloadHelper.checkAllFiles(this)) { // FIXME the app should define these, not the library
@@ -579,7 +582,6 @@ public class HomeActivity extends BaseHomeActivity {
         ArrayList<BaseIndexItem> homeitems = new ArrayList<BaseIndexItem>();
 
 
-
         //HashMap<String, ExpansionIndexItem> availableIds = StorymakerIndexManager.loadAvailableIdIndex(this, availableIndexItemDao);
         //ArrayList<String> availableGuideIds = getIndexItemIdsByType(availableIndexItemDao, "guide");
         //ArrayList<String> availableLessonIds = getIndexItemIdsByType(availableIndexItemDao, "lesson");
@@ -593,24 +595,24 @@ public class HomeActivity extends BaseHomeActivity {
         //int i = 0;
         for (String id : installedIds.keySet()) {
             //if (installedIds.keySet().contains(id)) {
-                // if the available item has been installed, add the corresponding item from the installed index
-                //instances.add(installedIds.get(id));
-                installations.add(installedIds.get(id));
+            // if the available item has been installed, add the corresponding item from the installed index
+            //instances.add(installedIds.get(id));
+            installations.add(installedIds.get(id));
 
-                //if (i <= 0) {
-                //    homeitems.add(installedIds.get(id));
-                //}
+            //if (i <= 0) {
+            //    homeitems.add(installedIds.get(id));
+            //}
 
-                if (installedGuideIds.contains(id)) {
-                    guides.add(installedIds.get(id));
-                } else if (installedLessonIds.contains(id)) {
-                    lessons.add(installedIds.get(id));
-                } else if (installedTemplateIds.contains(id)) {
-                    templates.add(installedIds.get(id));
-                }
+            if (installedGuideIds.contains(id)) {
+                guides.add(installedIds.get(id));
+            } else if (installedLessonIds.contains(id)) {
+                lessons.add(installedIds.get(id));
+            } else if (installedTemplateIds.contains(id)) {
+                templates.add(installedIds.get(id));
+            }
             //} else {
-                // if the available item has not been installed, add the item from the available index
-                //instances.add(availableIds.get(id)); // FIXME temporarily commenting this out, we could much more gracefully do this now that we only care about installed items and stories
+            // if the available item has not been installed, add the item from the available index
+            //instances.add(availableIds.get(id)); // FIXME temporarily commenting this out, we could much more gracefully do this now that we only care about installed items and stories
 
 //                if (availableGuideIds.contains(id)) {
 //                    guides.add(availableIds.get(id));
@@ -632,7 +634,7 @@ public class HomeActivity extends BaseHomeActivity {
         //    j++;
         //}
 
-            //if (instances.size() > 0) {
+        //if (instances.size() > 0) {
 
         Collections.sort(instances, Collections.reverseOrder()); // FIXME we should sort this down a layer, perhaps in loadInstanceIndexAsList
         Collections.sort(lessons, Collections.reverseOrder()); // FIXME we should sort this down a layer, perhaps in loadInstanceIndexAsList
@@ -822,17 +824,16 @@ public class HomeActivity extends BaseHomeActivity {
         mSlidingTabLayout.setViewPager(mViewPager);
 
 
-
         //} else {
-            // empty list
+        // empty list
         //    TextView textView = (TextView) findViewById(R.id.textViewEmptyState);
         //    textView.setVisibility(View.VISIBLE);
-            //mSwipeRefreshLayout.setVisibility(View.GONE);
+        //mSwipeRefreshLayout.setVisibility(View.GONE);
         //}
     }
 
     // HAD TO SPLIT OUT INTO A METHOD
-    public void handleClick (ExpansionIndexItem eItem, HashMap<String, ExpansionIndexItem> installedIds, boolean showDialog) {
+    public void handleClick(ExpansionIndexItem eItem, HashMap<String, ExpansionIndexItem> installedIds, boolean showDialog) {
 
         // initiate check/download whether installed or not
         HashMap<String, Thread> newThreads = StorymakerDownloadHelper.checkAndDownload(HomeActivity.this, eItem, installedIndexItemDao, queueItemDao, true); // <- THIS SHOULD PICK UP EXISTING PARTIAL FILES
@@ -973,7 +974,7 @@ public class HomeActivity extends BaseHomeActivity {
                             .setNegativeButton(getString(R.string.cancel), null)
                             .setNeutralButton(getString(R.string.pause), new PauseListener(eItem))
                             .setPositiveButton(getString(R.string.stop), new CancelListener(eItem))
-                                            .show();
+                            .show();
                 }
 
                 // Toast.makeText(HomeActivity.this, "Please wait for this content pack to finish downloading", Toast.LENGTH_LONG).show(); // FIXME move to strings.xml
@@ -982,9 +983,6 @@ public class HomeActivity extends BaseHomeActivity {
 
 
     }
-
-
-
 
 
 //
@@ -1095,17 +1093,15 @@ public class HomeActivity extends BaseHomeActivity {
     }
 
     //if the user hasn't registered with the user, show the login screen
-    private void checkCreds ()
-    {
+    private void checkCreds() {
 
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 
         String user = settings.getString("user", null);
 
-        if (user == null)
-        {
-        	Intent intent = new Intent(this,LoginActivity.class);
-        	startActivity(intent);
+        if (user == null) {
+            Intent intent = new Intent(this, LoginActivity.class);
+            startActivity(intent);
         }
     }
 
@@ -1135,50 +1131,57 @@ public class HomeActivity extends BaseHomeActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-        if (item.getItemId() == android.R.id.home)
-        {
+        if (item.getItemId() == android.R.id.home) {
             toggleDrawer();
             return true;
-        }
-        else if (item.getItemId() == R.id.menu_new_project)
-        {
-            launchNewProject();
+        } else if (item.getItemId() == R.id.menu_new_project) {
+            // need to check this to determine whether there is a storage issue that will cause a crash
+            File actualStorageDirectory = StorageHelper.getActualStorageDirectory(this);
+
+            if (actualStorageDirectory != null) {
+                launchNewProject();
+            } else {
+                //show storage error message
+                new AlertDialog.Builder(this)
+                        .setTitle(Utils.getAppName(this))
+                        .setIcon(android.R.drawable.ic_dialog_info)
+                        .setMessage(R.string.err_storage_not_available)
+                        .show();
+            }
+
             return true;
-        }
-        else if (item.getItemId() == R.id.menu_about)
-        {
+        } else if (item.getItemId() == R.id.menu_about) {
             String url = "https://storymaker.org";
 
             Intent i = new Intent(Intent.ACTION_VIEW);
             i.setData(Uri.parse(url));
             startActivity(i);
             return true;
+        } else if (item.getItemId() == R.id.menu_hide) {
+            hideLauncherIcon();
         }
 
         return super.onOptionsItemSelected(item);
     }
 
 
+    private void showPreferences() {
+        Intent intent = new Intent(this, SimplePreferences.class);
+        this.startActivityForResult(intent, 9999);
+    }
 
-	private void showPreferences ()
-	{
-		Intent intent = new Intent(this,SimplePreferences.class);
-		this.startActivityForResult(intent, 9999);
-	}
+    @Override
+    protected void onActivityResult(int arg0, int arg1, Intent arg2) {
 
-	@Override
-	protected void onActivityResult(int arg0, int arg1, Intent arg2) {
+        super.onActivityResult(arg0, arg1, arg2);
 
-		super.onActivityResult(arg0, arg1, arg2);
+        boolean changed = ((StoryMakerApp) getApplication()).checkLocale();
+        if (changed) {
+            finish();
+            startActivity(new Intent(this, HomeActivity.class));
 
-		boolean changed = ((StoryMakerApp)getApplication()).checkLocale();
-		if (changed)
-		{
-			finish();
-			startActivity(new Intent(this,HomeActivity.class));
-
-		}
-	}
+        }
+    }
 
 //	public class MyAdapter extends FragmentPagerAdapter {
 //
@@ -1244,8 +1247,8 @@ public class HomeActivity extends BaseHomeActivity {
 //
 //	}
 
-	private void checkForCrashes() {
-	    //CrashManager.register(this, AppConstants.HOCKEY_APP_ID);
+    private void checkForCrashes() {
+        //CrashManager.register(this, AppConstants.HOCKEY_APP_ID);
         CrashManager.register(this, AppConstants.HOCKEY_APP_ID, new CrashManagerListener() {
             public String getDescription() {
                 String description = "";
@@ -1265,14 +1268,13 @@ public class HomeActivity extends BaseHomeActivity {
                     bufferedReader.close();
 
                     description = log.toString();
-                }
-                catch (IOException e) {
+                } catch (IOException e) {
                 }
 
                 return description;
             }
         });
-	 }
+    }
 
 //    private void checkForUpdates() {
 //        if (BuildConfig.DEBUG) {
@@ -1344,6 +1346,55 @@ public class HomeActivity extends BaseHomeActivity {
         }
     }
     */
+
+    @Override
+    public void onCacheWordUninitialized() {
+        // set default pin, prompt for actual pin on first lock
+        try {
+            CharSequence defaultPinSequence = getText(R.string.cacheword_default_pin);
+            char[] defaultPin = defaultPinSequence.toString().toCharArray();
+            mCacheWordHandler.setPassphrase(defaultPin);
+            SharedPreferences sp = getSharedPreferences("appPrefs", MODE_PRIVATE);
+            SharedPreferences.Editor e = sp.edit();
+            e.putString("cacheword_status", CACHEWORD_UNSET);
+            e.commit();
+            Timber.d("set default cacheword pin");
+        } catch (GeneralSecurityException gse) {
+            Log.e("CACHEWORD", "failed to set default cacheword pin: " + gse.getMessage());
+            gse.printStackTrace();
+        }
+    }
+
+    @Override
+    public void onCacheWordLocked() {
+        // if there has been no first lock and pin prompt, use default pin to unlock
+        SharedPreferences sp = getSharedPreferences("appPrefs", MODE_PRIVATE);
+        String cachewordStatus = sp.getString("cacheword_status", "default");
+        if (cachewordStatus.equals(CACHEWORD_UNSET)) {
+            try {
+                CharSequence defaultPinSequence = getText(R.string.cacheword_default_pin);
+                char[] defaultPin = defaultPinSequence.toString().toCharArray();
+                mCacheWordHandler.setPassphrase(defaultPin);
+                Timber.d("used default cacheword pin");
+            } catch (GeneralSecurityException gse) {
+                Log.e("CACHEWORD", "failed to use default cacheword pin: " + gse.getMessage());
+                gse.printStackTrace();
+            }
+        } else {
+            Timber.d("prompt for cacheword pin");
+            showLockScreen();
+        }
+    }
+
+    // NEW/CACHEWORD
+    void showLockScreen() {
+        // set aside current activity and prompt for cacheword pin
+        Intent intent = new Intent(this, CacheWordActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        intent.putExtra("originalIntent", getIntent());
+        startActivity(intent);
+        finish();
+    }
 
     public class PauseListener implements DialogInterface.OnClickListener {
 

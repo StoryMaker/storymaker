@@ -2,9 +2,12 @@ package org.storymaker.app;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.ComponentName;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -256,6 +259,12 @@ public abstract class BaseHomeActivity extends BaseActivity {
             // update preferences
 
             preferences.edit().putInt("AVAILABLE_INDEX_VERSION", scal.io.liger.Constants.AVAILABLE_INDEX_VERSION).commit();
+
+            if (getIntent() != null && getIntent().hasExtra("showlauncher")) {
+                if (getIntent().getBooleanExtra("showlauncher", false)) {
+                    showLauncherIcon();
+                }
+            }
         }
 
 
@@ -419,7 +428,16 @@ public abstract class BaseHomeActivity extends BaseActivity {
 
             ServerManager sm = StoryMakerApp.getServerManager();
 
-            if (sm.hasCreds()) {
+            if (mCacheWordHandler.isLocked()) {
+
+                // prevent credential check attempt if database is locked
+                Timber.d("cacheword locked, skipping index credential check");
+                // user is not logged in, update status flag if necessary
+                if (loggedIn) {
+                    loggedIn = false;
+                }
+
+            } else if (sm.hasCreds()) {
                 // user is logged in, update status flag if necessary
                 if (!loggedIn) {
                     loggedIn = true;
@@ -443,8 +461,8 @@ public abstract class BaseHomeActivity extends BaseActivity {
                 return Boolean.valueOf(sm.index());
             }
 
-            // check server if user insists
-            if (forceDownload) {
+            // check server if user insists (if database is unlocked)
+            if (forceDownload && !mCacheWordHandler.isLocked()) {
                 Timber.d("UPDATE REQUIRED, CHECK SERVER");
 
                 // reset available index
@@ -498,5 +516,46 @@ public abstract class BaseHomeActivity extends BaseActivity {
                 OrbotHelper.requestStartTor(this);
              }
          }
+    }
+
+    protected static final ComponentName LAUNCHER_COMPONENT_NAME = new ComponentName(
+            "org.storymaker.app", "org.storymaker.app.Launcher");
+
+    protected void hideLauncherIcon() {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Important!");
+        builder.setMessage("This will hide the app's icon in the launcher.\n\nTo show the app again, dial phone number 98765.");
+        builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+
+                getPackageManager().setComponentEnabledSetting(LAUNCHER_COMPONENT_NAME,
+                        PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
+                        PackageManager.DONT_KILL_APP);
+
+                finish();
+            }
+        });
+        builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+
+
+            }
+        });
+        builder.setCancelable(true);
+        builder.setIcon(android.R.drawable.ic_dialog_alert);
+        builder.show();
+    }
+
+    protected void showLauncherIcon() {
+        getPackageManager().setComponentEnabledSetting(LAUNCHER_COMPONENT_NAME,
+                PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
+                PackageManager.DONT_KILL_APP);
+    }
+
+    protected boolean isLauncherIconVisible() {
+        int enabledSetting = getPackageManager()
+                .getComponentEnabledSetting(LAUNCHER_COMPONENT_NAME);
+        return enabledSetting != PackageManager.COMPONENT_ENABLED_STATE_DISABLED;
     }
 }

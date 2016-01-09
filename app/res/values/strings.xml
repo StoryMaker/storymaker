@@ -360,6 +360,14 @@ You also will have an opportunity to see and modify the data being sent."</strin
     <string name="home_index_missing">Could not locate content index</string>
     <string name="home_please_wait">Please wait for this content pack to finish downloading</string>
 
+    <!-- NEW/CACHEWORD -->
+    <string name="lock_screen_open_button_text">UNLOCK APP</string>
+    <string name="lock_screen_pin_enter_text">Enter PIN to unlock app</string>
+    <string name="lock_screen_create_button_text">CREATE PIN</string>
+    <string name="lock_screen_pin_create_text">Enter new PIN to lock app</string>
+    <string name="lock_screen_pin_confirm_text">Enter PIN again to confirm</string>
+    <string name="menu_lock">LOCK</string>
+
     <string name="catalog_menu_catalog">Catalog</string>
     <string name="catalog_menu_guides">Guides</string>
     <string name="catalog_menu_lessons">Lessons</string>
@@ -382,6 +390,5 @@ You also will have an opportunity to see and modify the data being sent."</strin
     <string name="home_empty_btn_guides">Grab a Guide</string>
     <string name="home_empty_btn_lessons">Load a Lesson</string>
     <string name="home_empty_btn_templates">Try a Template</string>
-
 
 </resources>
