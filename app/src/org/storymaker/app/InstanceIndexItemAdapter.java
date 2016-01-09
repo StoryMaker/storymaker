@@ -1,17 +1,16 @@
 package org.storymaker.app;
 
-import timber.log.Timber;
-
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,13 +24,13 @@ import org.apache.commons.io.filefilter.WildcardFileFilter;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
 import rx.functions.Action1;
 import scal.io.liger.Constants;
-//import scal.io.liger.IndexManager;
 import scal.io.liger.StorageHelper;
 import scal.io.liger.StorymakerIndexManager;
 import scal.io.liger.ZipHelper;
@@ -40,6 +39,9 @@ import scal.io.liger.model.sqlbrite.ExpansionIndexItem;
 import scal.io.liger.model.sqlbrite.InstalledIndexItem;
 import scal.io.liger.model.sqlbrite.InstalledIndexItemDao;
 import scal.io.liger.model.sqlbrite.InstanceIndexItem;
+import timber.log.Timber;
+
+//import scal.io.liger.IndexManager;
 //import scal.io.liger.model.BaseIndexItem;
 //import scal.io.liger.model.ExpansionIndexItem;
 //import scal.io.liger.model.InstanceIndexItem;
@@ -234,6 +236,44 @@ public class InstanceIndexItemAdapter extends RecyclerView.Adapter<InstanceIndex
         return mDataset.size();
     }
 
+    private boolean CheckIfInstalled(BaseIndexItem itemToCheck) {
+
+        if (itemToCheck instanceof ExpansionIndexItem) {
+            final String expansionId = ((ExpansionIndexItem) itemToCheck).getExpansionId();
+
+            final ArrayList<String> installedList = new ArrayList<String>();
+
+            installedDao.getInstalledIndexItems().subscribe(new Action1<List<InstalledIndexItem>>() {
+
+                @Override
+                public void call(List<InstalledIndexItem> installedIndexItems) {
+
+                    //ArrayList<scal.io.liger.model.sqlbrite.ExpansionIndexItem> indexList = new ArrayList<scal.io.liger.model.sqlbrite.ExpansionIndexItem>();
+
+                    for (InstalledIndexItem item : installedIndexItems) {
+                        //indexList.add(item);
+                        //returnList.add(item.getExpansionId());
+                        if (item.getExpansionId().equals(expansionId)) {
+                            installedList.add(expansionId);
+                            break;
+                        }
+                    }
+
+
+                }
+            });
+
+            if (installedList.size() == 0) {
+                return false;
+            } else {
+                return true;
+            }
+        } else {
+            return false;
+        }
+
+    }
+
     private class DeleteListener implements View.OnLongClickListener {
 
         Context context;
@@ -243,6 +283,13 @@ public class InstanceIndexItemAdapter extends RecyclerView.Adapter<InstanceIndex
         public DeleteListener(Context context, BaseIndexItem item) {
             this.context = context;
             this.item = item;
+        }
+
+        private void sendDeleteCompleteMessage(String expansionId) {
+
+            Intent intent = new Intent("delete-complete");
+            intent.putExtra("expansionid", expansionId);
+            LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
         }
 
         @Override
@@ -273,61 +320,69 @@ public class InstanceIndexItemAdapter extends RecyclerView.Adapter<InstanceIndex
             } else if (item instanceof ExpansionIndexItem) {
 
                 // let users delete content packs too
+                
+                //Only allow content pack deletion from Catalog Activity
+                if (context instanceof CatalogActivity) {
 
-                // check if item is installed?
+                    // check if item is installed? -- only show delete dialog if it's possible to delete
+                    if (CheckIfInstalled(item)) {
 
-                new AlertDialog.Builder(context)
-                        .setTitle(context.getString(R.string.delete_content_pack))
-                        .setMessage(item.getTitle())
-                        .setPositiveButton(context.getString(R.string.delete), new DialogInterface.OnClickListener() {
-
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-
-                                // check installed index
-                                installedDao.getInstalledIndexItemByKey(((ExpansionIndexItem) item).getExpansionId()).take(1).subscribe(new Action1<List<InstalledIndexItem>>() {
+                        new AlertDialog.Builder(context)
+                                .setTitle(context.getString(R.string.delete_content_pack))
+                                .setMessage(item.getTitle())
+                                .setPositiveButton(context.getString(R.string.delete), new DialogInterface.OnClickListener() {
 
                                     @Override
-                                    public void call(List<InstalledIndexItem> expansionIndexItems) {
+                                    public void onClick(DialogInterface dialog, int which) {
 
-                                        // only one item expected
+                                        // check installed index
+                                        installedDao.getInstalledIndexItemByKey(((ExpansionIndexItem) item).getExpansionId()).take(1).subscribe(new Action1<List<InstalledIndexItem>>() {
 
-                                        if (expansionIndexItems.size() != 1) {
-                                            Timber.e("LONG PRESS: UNEXPECTED NUMBER OF RECORDS FOUND FOR " + ((ExpansionIndexItem) item).getExpansionId() + "(" + expansionIndexItems.size() + ")");
-                                            return;
+                                            @Override
+                                            public void call(List<InstalledIndexItem> expansionIndexItems) {
 
-                                        }
+                                                // only one item expected
 
-                                        InstalledIndexItem installedItem = expansionIndexItems.get(0);
+                                                if (expansionIndexItems.size() != 1) {
+                                                    Timber.e("LONG PRESS: UNEXPECTED NUMBER OF RECORDS FOUND FOR " + ((ExpansionIndexItem) item).getExpansionId() + "(" + expansionIndexItems.size() + ")");
+                                                    return;
 
-                                        File fileDirectory = StorageHelper.getActualStorageDirectory(context);
-                                        WildcardFileFilter fileFilter = new WildcardFileFilter(installedItem.getExpansionId() + ".*");
-                                        for (File foundFile : FileUtils.listFiles(fileDirectory, fileFilter, null)) {
-                                            Timber.d("LONG PRESS: FOUND " + foundFile.getPath() + ", DELETING");
-                                            FileUtils.deleteQuietly(foundFile);
-                                        }
+                                                }
 
-                                        // remove from installed index
-                                        Timber.d("LONG PRESS: REMOVING " + installedItem.expansionId + ", FROM DB");
-                                        StorymakerIndexManager.installedIndexRemove(context, installedItem, installedDao);
+                                                InstalledIndexItem installedItem = expansionIndexItems.get(0);
 
-                                        // need to clear saved threads
-                                        if (context instanceof HomeActivity) {
-                                            Timber.d("LONG PRESS: REMOVING THREADS FOR " + installedItem.expansionId);
-                                            HomeActivity home = (HomeActivity) context;
-                                            home.removeThreads(installedItem.expansionId);
-                                        } else {
-                                            Timber.e("LONG PRESS: UNEXPECTED CONTEXT");
-                                        }
+                                                File fileDirectory = StorageHelper.getActualStorageDirectory(context);
+                                                WildcardFileFilter fileFilter = new WildcardFileFilter(installedItem.getExpansionId() + ".*");
+                                                for (File foundFile : FileUtils.listFiles(fileDirectory, fileFilter, null)) {
+                                                    Timber.d("LONG PRESS: FOUND " + foundFile.getPath() + ", DELETING");
+                                                    FileUtils.deleteQuietly(foundFile);
+                                                }
+
+                                                // remove from installed index
+                                                Timber.d("LONG PRESS: REMOVING " + installedItem.expansionId + ", FROM DB");
+                                                StorymakerIndexManager.installedIndexRemove(context, installedItem, installedDao);
+
+                                                // need to clear saved threads
+                                                sendDeleteCompleteMessage(installedItem.getExpansionId());
+
+                                                //if (context instanceof HomeActivity) {
+                                                //    Timber.d("LONG PRESS: REMOVING THREADS FOR " + installedItem.expansionId);
+                                                //HomeActivity home = (HomeActivity) context;
+                                                //home.removeThreads(installedItem.expansionId);
+                                                //} else {
+                                                //    Timber.e("LONG PRESS: UNEXPECTED CONTEXT");
+                                                //}
+                                            }
+                                        });
+
+
                                     }
-                                });
 
-
-                            }
-
-                        })
-                        .setNegativeButton(context.getString(R.string.cancel), null)
-                        .show();
+                                })
+                                .setNegativeButton(context.getString(R.string.cancel), null)
+                                .show();
+                    }
+                }
             } else {
                 // no-op
             }

@@ -1,14 +1,5 @@
 package org.storymaker.app;
 
-import timber.log.Timber;
-
-import org.storymaker.app.server.ServerManager;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.security.GeneralSecurityException;
-import java.util.Date;
-
 import android.app.Activity;
 import android.app.Notification;
 import android.content.Context;
@@ -26,15 +17,12 @@ import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.util.Log;
-import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -43,12 +31,18 @@ import android.widget.Toast;
 
 import net.hockeyapp.android.FeedbackManager;
 
-//import com.google.analytics.tracking.android.EasyTracker;
+import org.storymaker.app.server.ServerManager;
 
-// NEW/CACHEWORD
+import java.io.IOException;
+import java.io.InputStream;
+
 import info.guardianproject.cacheword.CacheWordHandler;
 import info.guardianproject.cacheword.ICacheWordSubscriber;
 import scal.io.liger.StorageHelper;
+import timber.log.Timber;
+
+//import com.google.analytics.tracking.android.EasyTracker;
+// NEW/CACHEWORD
 
 public class BaseActivity extends FragmentActivity implements ICacheWordSubscriber {
 
@@ -190,6 +184,7 @@ public class BaseActivity extends FragmentActivity implements ICacheWordSubscrib
         ImageButton btnDrawerQuickCaptureAudio = (ImageButton) findViewById(R.id.btnDrawerQuickCaptureAudio);
         
         Button btnDrawerHome =          (Button) findViewById(R.id.btnDrawerHome);
+        Button btnDrawerCatalog =          (Button) findViewById(R.id.btnDrawerCatalog);
 //        Button btnDrawerProjects =      (Button) findViewById(R.id.btnDrawerProjects);
         //Button btnDrawerAccount = (Button) findViewById(R.id.btnDrawerAccount);
         Button btnDrawerAccounts =      (Button) findViewById(R.id.btnDrawerAccounts);
@@ -259,6 +254,17 @@ public class BaseActivity extends FragmentActivity implements ICacheWordSubscrib
                  activity.startActivity(i);
             }
         });
+
+        btnDrawerCatalog.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mDrawerLayout.closeDrawers();
+
+                Intent i = new Intent(activity, CatalogActivity.class);
+                activity.startActivity(i);
+            }
+        });
+
         btnDrawerExports.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {

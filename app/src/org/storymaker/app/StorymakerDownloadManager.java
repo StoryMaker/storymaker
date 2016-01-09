@@ -1,15 +1,11 @@
 package org.storymaker.app;
 
-import timber.log.Timber;
-
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.DownloadManager;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
@@ -18,6 +14,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.preference.PreferenceManager;
+import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
 import com.squareup.okhttp.OkHttpClient;
@@ -42,7 +39,6 @@ import java.util.concurrent.TimeUnit;
 
 import ch.boye.httpclientandroidlib.HttpResponse;
 import ch.boye.httpclientandroidlib.client.methods.HttpGet;
-
 import ch.boye.httpclientandroidlib.conn.ConnectTimeoutException;
 import info.guardianproject.netcipher.client.StrongHttpsClient;
 import info.guardianproject.netcipher.proxy.OrbotHelper;
@@ -52,6 +48,7 @@ import scal.io.liger.ZipHelper;
 import scal.io.liger.model.sqlbrite.ExpansionIndexItem;
 import scal.io.liger.model.sqlbrite.InstalledIndexItemDao;
 import scal.io.liger.model.sqlbrite.QueueItemDao;
+import timber.log.Timber;
 
 /**
  * Created by mnbogner on 11/7/14.
@@ -602,23 +599,40 @@ public class StorymakerDownloadManager implements Runnable {
                     byte[] buf = new byte[1024];
                     int i;
                     int oldPercent = 0;
+                    long thisTime;
+                    long lastTime = -1;
+                    int lastPercent = 0;
                     while ((i = responseInput.read(buf)) > 0) {
 
                         // create status bar notification
                         int nPercent = StorymakerDownloadHelper.getDownloadPercent(context, fileName, installedDao);
+                        thisTime = System.currentTimeMillis();
 
                         if (oldPercent == nPercent) {
                             // need to cut back on notification traffic
                         } else {
-                            oldPercent = nPercent;
-                            Notification nProgress = new Notification.Builder(context)
-                                    .setContentTitle(mAppTitle + " content download")
-                                    .setContentText(indexItem.getTitle() + " - " + (nPercent / 10.0) + "%") // assignment file names are meaningless uuids
-                                    .setSmallIcon(android.R.drawable.arrow_down_float)
-                                    .setProgress(100, (nPercent / 10), false)
-                                    .setWhen(startTime.getTime())
-                                    .build();
-                            nManager.notify(nTag, nId, nProgress);
+
+                            // cutting back on notification traffic even more
+                            // only 1 notification per whole percentage point (used to be every 1/10th of a percent)
+                            // only 1 notification per second
+
+                            if (nPercent % 10 == 0 && nPercent != lastPercent) {
+                                if (lastTime == -1 || (thisTime - lastTime) > 1000) {
+                                    lastPercent = nPercent;
+                                    oldPercent = nPercent;
+                                    lastTime = thisTime;
+                                    Notification nProgress = new Notification.Builder(context)
+                                            .setContentTitle(mAppTitle + " content download")
+                                            .setContentText(indexItem.getTitle() + " - " + (nPercent / 10.0) + "%") // assignment file names are meaningless uuids
+                                            .setSmallIcon(android.R.drawable.arrow_down_float)
+                                            .setProgress(100, (nPercent / 10), false)
+                                            .setWhen(startTime.getTime())
+                                            .build();
+                                    nManager.notify(nTag, nId, nProgress);
+
+                                    //Log.d("Storymaker Download Manager", "** NOTIFICATION ** " + nPercent );
+                                }
+                            }
                         }
 
                         targetOutput.write(buf, 0, i);
@@ -850,6 +864,15 @@ public class StorymakerDownloadManager implements Runnable {
         }
     }
 
+    private void sendDownloadCompleteMessage(String expansionId) {
+
+        //Log.d("receiver", "sending download complete message");
+
+        Intent intent = new Intent("download-complete");
+        intent.putExtra("expansionid", expansionId);
+        LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
+    }
+
     private boolean handleFile (File tempFile) {
 
         File appendedFile = null;
@@ -894,7 +917,9 @@ public class StorymakerDownloadManager implements Runnable {
                 Timber.d("FINISHED DOWNLOAD OF " + tempFile.getPath() + " AND FILE LOOKS OK");
 
                 // show notification
-                Utils.toastOnUiThread((Activity) context, "Finished downloading " + indexItem.getTitle() + ".", false); // FIXME move to strings
+                Utils.toastOnUiThread((Activity) context, context.getString(R.string.finished_downloading) + " " + indexItem.getTitle() + ".", false);
+
+                sendDownloadCompleteMessage(indexItem.getExpansionId());
 
             }
         } else {

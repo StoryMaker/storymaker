@@ -1,24 +1,5 @@
 package org.storymaker.app.db;
 
-import org.storymaker.app.R;
-import timber.log.Timber;
-
-import org.storymaker.app.model.AudioClipTable;
-import org.storymaker.app.model.Auth;
-import org.storymaker.app.model.AuthTable;
-import org.storymaker.app.model.JobTable;
-import org.storymaker.app.model.LessonTable;
-import org.storymaker.app.model.MediaTable;
-import org.storymaker.app.model.Project;
-import org.storymaker.app.model.ProjectTable;
-import org.storymaker.app.model.PublishJobTable;
-import org.storymaker.app.model.Scene;
-import org.storymaker.app.model.Media;
-import org.storymaker.app.model.Lesson;
-import org.storymaker.app.model.SceneTable;
-import org.storymaker.app.model.TagTable;
-import net.sqlcipher.database.SQLiteDatabase;
-import net.sqlcipher.database.SQLiteQueryBuilder;
 import android.content.ContentProvider;
 import android.content.ContentResolver;
 import android.content.ContentValues;
@@ -27,7 +8,18 @@ import android.content.UriMatcher;
 import android.database.Cursor;
 import android.net.Uri;
 import android.preference.PreferenceManager;
-import android.util.Log;
+
+import net.sqlcipher.database.SQLiteDatabase;
+
+import org.storymaker.app.model.AudioClipTable;
+import org.storymaker.app.model.AuthTable;
+import org.storymaker.app.model.JobTable;
+import org.storymaker.app.model.LessonTable;
+import org.storymaker.app.model.MediaTable;
+import org.storymaker.app.model.ProjectTable;
+import org.storymaker.app.model.PublishJobTable;
+import org.storymaker.app.model.SceneTable;
+import org.storymaker.app.model.TagTable;
 
 import java.util.Timer;
 import java.util.TimerTask;

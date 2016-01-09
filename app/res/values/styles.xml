@@ -6,22 +6,34 @@
 	<item name="android:windowNoTitle">true</item>
 	</style>
 
+    <style name="Widget.CardContent" parent="android:Widget">
+        <item name="android:paddingLeft">16dp</item>
+        <item name="android:paddingRight">16dp</item>
+        <item name="android:paddingTop">24dp</item>
+        <item name="android:paddingBottom">24dp</item>
+        <item name="android:orientation">vertical</item>
+    </style>
 
-    
     <style name="AppTheme" parent="android:Theme.Holo.Light.DarkActionBar" >
         <item name="android:windowBackground">@color/light_grey</item>
         <item name="android:colorBackground">@color/light_grey</item>
+    </style>
+
+
+    <!--<style name="AppTheme" parent="android:Theme.Holo.Light.DarkActionBar" >
+        <item name="android:windowBackground">@color/light_grey</item>
+        <item name="android:colorBackground">@color/light_grey</item>-->
                   <!--<item name="android:windowAnimationStyle">@null</item>-->
         <!--<item name="android:editTextStyle">@style/EditTextAppTheme</item>-->
         
-    </style>
+    <!--</style>-->
     
         <!-- Custom Colors -->
     <color name="light_grey">#E9EBE7</color>
     <color name="light_grey_super">#D4D4D4</color>
     <color name="dark_gray">#848484</color>
 	<color name="light_blue">#10B2EF</color>
-    
+
     <!-- Custom Styles -->
 	<!--<style name="LabelHeader" >-->
         <!--<item name="android:layout_width">fill_parent</item>-->
