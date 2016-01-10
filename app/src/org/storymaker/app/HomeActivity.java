@@ -7,7 +7,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
-import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
@@ -16,26 +15,11 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.widget.Toast;
 
 import com.hannesdorfmann.sqlbrite.dao.Dao;
 
-import net.hockeyapp.android.CrashManager;
-import net.hockeyapp.android.CrashManagerListener;
-
-import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.FilenameUtils;
-import org.apache.commons.io.filefilter.WildcardFileFilter;
-import org.storymaker.app.server.LoginActivity;
 import org.storymaker.app.ui.SlidingTabLayout;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.security.GeneralSecurityException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -43,10 +27,7 @@ import java.util.List;
 
 import rx.functions.Action1;
 import scal.io.liger.JsonHelper;
-import scal.io.liger.StorageHelper;
 import scal.io.liger.StorymakerIndexManager;
-import scal.io.liger.model.ContentPackMetadata;
-import scal.io.liger.model.StoryPathLibrary;
 import scal.io.liger.model.sqlbrite.AvailableIndexItem;
 import scal.io.liger.model.sqlbrite.AvailableIndexItemDao;
 import scal.io.liger.model.sqlbrite.BaseIndexItem;
@@ -159,11 +140,11 @@ public class HomeActivity extends BaseHomeActivity {
         return returnList;
     }
 
-    // added for testing
-    public void scroll(int position) {
-        Timber.d("Scrolling to index item " + position);
-        mRecyclerView.scrollToPosition(position);
-    }
+//    // added for testing
+//    public void scroll(int position) {
+//        Timber.d("Scrolling to index item " + position);
+//        mRecyclerView.scrollToPosition(position);
+//    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -433,92 +414,92 @@ public class HomeActivity extends BaseHomeActivity {
     }
 
 
-    @Override
-    public void onResume() {
-        super.onResume();
+//    @Override
+//    public void onResume() {
+//        super.onResume();
+//
+//        getActionBar().setTitle(Utils.getAppName(this));
+//
+//        checkForCrashes();
+//
+//        //if (!DownloadHelper.checkAllFiles(this) && downloadPoller == null) {
+//        // integrate with index task
+//        //if (!DownloadHelper.checkAndDownload(this)) {
+//        // don't poll, just pop up message if a download was initiated
+//        //downloadPoller = new DownloadPoller();
+//        //downloadPoller.execute("foo");
+//        //    Toast.makeText(this, "Downloading content and/or updating installed files", Toast.LENGTH_LONG).show(); // FIXME move to strings.xml
+//        //} //else {
+//        // merge this with index task
+//        //   initActivityList();
+//
+//        // need to check this to determine whether there is a storage issue that will cause a crash
+//        File actualStorageDirectory = StorageHelper.getActualStorageDirectory(this);
+//
+//        if (actualStorageDirectory != null) {
+//            IndexTask iTask = new IndexTask(this, false); // don't force download on resume (currently triggers only on login)
+//            iTask.execute();
+//        } else {
+//            //show storage error message
+//            new AlertDialog.Builder(this)
+//                    .setTitle(Utils.getAppName(this))
+//                    .setIcon(android.R.drawable.ic_dialog_info)
+//                    .setMessage(R.string.err_storage_not_available)
+//                    .show();
+//        }
+//
+//        //}
+//
+//        boolean isExternalStorageReady = Utils.Files.isExternalStorageReady();
+//
+//        if (!isExternalStorageReady) {
+//            //show storage error message
+//            new AlertDialog.Builder(this)
+//                    .setTitle(Utils.getAppName(this))
+//                    .setIcon(android.R.drawable.ic_dialog_info)
+//                    .setMessage(R.string.err_storage_not_ready)
+//                    .show();
+//
+//        }
+//
+//        if (getIntent() != null && getIntent().hasExtra("showlauncher")) {
+//            if (getIntent().getBooleanExtra("showlauncher", false)) {
+//                showLauncherIcon();
+//            }
+//        }
+//    }
 
-        getActionBar().setTitle(Utils.getAppName(this));
+//    public static String parseInstanceDate(String filename) {
+////        String jsonFilePath = storyPath.buildTargetPath(storyPath.getId() + "-instance-" + timeStamp.getTime() + ".json");
+//        String[] splits = FilenameUtils.removeExtension(filename).split("-");
+//        return splits[splits.length - 1]; // FIXME make more robust and move into liger
+//    }
 
-        checkForCrashes();
-
-        //if (!DownloadHelper.checkAllFiles(this) && downloadPoller == null) {
-        // integrate with index task
-        //if (!DownloadHelper.checkAndDownload(this)) {
-        // don't poll, just pop up message if a download was initiated
-        //downloadPoller = new DownloadPoller();
-        //downloadPoller.execute("foo");
-        //    Toast.makeText(this, "Downloading content and/or updating installed files", Toast.LENGTH_LONG).show(); // FIXME move to strings.xml
-        //} //else {
-        // merge this with index task
-        //   initActivityList();
-
-        // need to check this to determine whether there is a storage issue that will cause a crash
-        File actualStorageDirectory = StorageHelper.getActualStorageDirectory(this);
-
-        if (actualStorageDirectory != null) {
-            IndexTask iTask = new IndexTask(this, false); // don't force download on resume (currently triggers only on login)
-            iTask.execute();
-        } else {
-            //show storage error message
-            new AlertDialog.Builder(this)
-                    .setTitle(Utils.getAppName(this))
-                    .setIcon(android.R.drawable.ic_dialog_info)
-                    .setMessage(R.string.err_storage_not_available)
-                    .show();
-        }
-
-        //}
-
-        boolean isExternalStorageReady = Utils.Files.isExternalStorageReady();
-
-        if (!isExternalStorageReady) {
-            //show storage error message
-            new AlertDialog.Builder(this)
-                    .setTitle(Utils.getAppName(this))
-                    .setIcon(android.R.drawable.ic_dialog_info)
-                    .setMessage(R.string.err_storage_not_ready)
-                    .show();
-
-        }
-
-        if (getIntent() != null && getIntent().hasExtra("showlauncher")) {
-            if (getIntent().getBooleanExtra("showlauncher", false)) {
-                showLauncherIcon();
-            }
-        }
-    }
-
-    public static String parseInstanceDate(String filename) {
-//        String jsonFilePath = storyPath.buildTargetPath(storyPath.getId() + "-instance-" + timeStamp.getTime() + ".json");
-        String[] splits = FilenameUtils.removeExtension(filename).split("-");
-        return splits[splits.length - 1]; // FIXME make more robust and move into liger
-    }
-
-    // copied this as a short term fix until we get loading cleanly split out from the liger sample app ui stuff
-    private StoryPathLibrary initSPLFromJson(String json, String jsonPath) {
-        if (json == null || json.equals("")) {
-            Toast.makeText(this, getString(R.string.home_content_missing), Toast.LENGTH_LONG).show();
-            finish();
-            return null;
-        }
-
-        ArrayList<String> referencedFiles = null;
-
-        // should not need to insert dependencies into a saved instance
-        if (jsonPath.contains("instance")) {
-            referencedFiles = new ArrayList<String>();
-        } else {
-            referencedFiles = JsonHelper.getInstancePaths(this);
-        }
-
-        StoryPathLibrary storyPathLibrary = JsonHelper.deserializeStoryPathLibrary(json, jsonPath, referencedFiles, this, StoryMakerApp.getCurrentLocale().getLanguage());
-
-        if ((storyPathLibrary != null) && (storyPathLibrary.getCurrentStoryPathFile() != null)) {
-            storyPathLibrary.loadStoryPathTemplate("CURRENT", false);
-        }
-
-        return storyPathLibrary;
-    }
+//    // copied this as a short term fix until we get loading cleanly split out from the liger sample app ui stuff
+//    private StoryPathLibrary initSPLFromJson(String json, String jsonPath) {
+//        if (json == null || json.equals("")) {
+//            Toast.makeText(this, getString(R.string.home_content_missing), Toast.LENGTH_LONG).show();
+//            finish();
+//            return null;
+//        }
+//
+//        ArrayList<String> referencedFiles = null;
+//
+//        // should not need to insert dependencies into a saved instance
+//        if (jsonPath.contains("instance")) {
+//            referencedFiles = new ArrayList<String>();
+//        } else {
+//            referencedFiles = JsonHelper.getInstancePaths(this);
+//        }
+//
+//        StoryPathLibrary storyPathLibrary = JsonHelper.deserializeStoryPathLibrary(json, jsonPath, referencedFiles, this, StoryMakerApp.getCurrentLocale().getLanguage());
+//
+//        if ((storyPathLibrary != null) && (storyPathLibrary.getCurrentStoryPathFile() != null)) {
+//            storyPathLibrary.loadStoryPathTemplate("CURRENT", false);
+//        }
+//
+//        return storyPathLibrary;
+//    }
 
     public void initActivityList() {
         // menu items now locked during downloads, i think this can be removed
@@ -832,157 +813,157 @@ public class HomeActivity extends BaseHomeActivity {
         //}
     }
 
-    // HAD TO SPLIT OUT INTO A METHOD
-    public void handleClick(ExpansionIndexItem eItem, HashMap<String, ExpansionIndexItem> installedIds, boolean showDialog) {
-
-        // initiate check/download whether installed or not
-        HashMap<String, Thread> newThreads = StorymakerDownloadHelper.checkAndDownload(HomeActivity.this, eItem, installedIndexItemDao, queueItemDao, true); // <- THIS SHOULD PICK UP EXISTING PARTIAL FILES
-        // <- THIS ALSO NEEDS TO NOT INTERACT WITH THE INDEX
-        // <- METADATA UPDATE SHOULD HAPPEN WHEN APP IS INITIALIZED
-
-        // if any download threads were initiated, item is not ready to open
-
-        boolean readyToOpen = true;
-
-        if (newThreads.size() > 0) {
-            readyToOpen = false;
-
-            // update stored threads for index item
-
-            ArrayList<Thread> currentThreads = downloadThreads.get(eItem.getExpansionId());
-
-            if (currentThreads == null) {
-                currentThreads = new ArrayList<Thread>();
-            }
-
-            for (Thread thread : newThreads.values()) {
-                currentThreads.add(thread);
-            }
-
-            downloadThreads.put(eItem.getExpansionId(), currentThreads);
-        }
-
-        if (!installedIds.containsKey(eItem.getExpansionId())) {
-
-            // if clicked item is not installed, update index
-            // un-installed AvailableIndexItems need to be converted to InstalledIndexItems
-            InstalledIndexItem iItem = new InstalledIndexItem(eItem);
-            StorymakerIndexManager.installedIndexAdd(HomeActivity.this, iItem, installedIndexItemDao);
-
-            Timber.d(eItem.getExpansionId() + " NOT INSTALLED, ADDING ITEM TO INDEX");
-
-            // wait for index serialization
-            try {
-                synchronized (this) {
-                    wait(1000);
-                }
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        } else {
-
-            Timber.d(eItem.getExpansionId() + " INSTALLED, CHECKING FILE");
-
-            // if clicked item is installed, check state
-            if (readyToOpen) {
-
-                // clear saved threads
-                if (downloadThreads.get(eItem.getExpansionId()) != null) {
-                    downloadThreads.remove(eItem.getExpansionId());
-                }
-
-                // update db record with flag
-                if (!eItem.isInstalled()) {
-                    Timber.d("SET INSTALLED FLAG FOR " + eItem.getExpansionId());
-                    eItem.setInstalledFlag(true);
-                    InstalledIndexItem iItem = new InstalledIndexItem(eItem);
-                    StorymakerIndexManager.installedIndexAdd(this, iItem, installedIndexItemDao);
-                }
-
-                // if file has been downloaded, open file
-                Timber.d(eItem.getExpansionId() + " INSTALLED, FILE OK");
-
-                // update with new thumbnail path
-                // move this somewhere that it can be triggered by completed download?
-                ContentPackMetadata metadata = scal.io.liger.IndexManager.loadContentMetadata(HomeActivity.this,
-                        eItem.getPackageName(),
-                        eItem.getExpansionId(),
-                        StoryMakerApp.getCurrentLocale().getLanguage());
-
-                if (metadata == null) {
-                    Toast.makeText(HomeActivity.this, getString(R.string.home_metadata_missing), Toast.LENGTH_LONG).show();
-                    Timber.e("failed to load content metadata");
-                } else if ((eItem.getThumbnailPath() == null) || (!eItem.getThumbnailPath().equals(metadata.getContentPackThumbnailPath()))) {
-
-                    Timber.d(eItem.getExpansionId() + " FIRST OPEN, UPDATING THUMBNAIL PATH");
-
-                    eItem.setThumbnailPath(metadata.getContentPackThumbnailPath());
-
-                    // un-installed AvailableIndexItems need to be converted to InstalledIndexItems
-                    InstalledIndexItem iItem = new InstalledIndexItem(eItem);
-                    StorymakerIndexManager.installedIndexAdd(HomeActivity.this, iItem, installedIndexItemDao);
-
-                    // wait for index serialization
-                    try {
-                        synchronized (this) {
-                            wait(1000);
-                        }
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
-
-                ArrayList<scal.io.liger.model.InstanceIndexItem> contentIndex = scal.io.liger.IndexManager.loadContentIndexAsList(HomeActivity.this,
-                        eItem.getPackageName(),
-                        eItem.getExpansionId(),
-                        StoryMakerApp.getCurrentLocale().getLanguage());
-
-                if ((contentIndex == null) || (contentIndex.size() < 1)) {
-                    Toast.makeText(HomeActivity.this, getString(R.string.home_index_missing), Toast.LENGTH_LONG).show();
-                    Timber.e("failed to load content index");
-                } else if (contentIndex.size() == 1) {
-                    launchLiger(HomeActivity.this, null, null, contentIndex.get(0).getInstanceFilePath());
-                } else {
-                    String[] names = new String[contentIndex.size()];
-                    String[] paths = new String[contentIndex.size()];
-                    int i = 0;
-                    for (scal.io.liger.model.InstanceIndexItem item : contentIndex) {
-                        names[i] = item.getTitle();
-                        paths[i] = item.getInstanceFilePath();
-                        i++;
-                    }
-                    showSPLSelectorPopup(names, paths);
-                }
-            } else {
-                // if file is being downloaded, don't open
-                Timber.d(eItem.getExpansionId() + " INSTALLED, CURRENTLY DOWNLOADING FILE");
-
-                // if necessary, un-flag db record (this probably indicates an installed file that is being patched
-                if (eItem.isInstalled()) {
-                    Timber.d("UN-SET INSTALLED FLAG FOR " + eItem.getExpansionId());
-                    eItem.setInstalledFlag(false);
-                    InstalledIndexItem iItem = new InstalledIndexItem(eItem);
-                    StorymakerIndexManager.installedIndexAdd(this, iItem, installedIndexItemDao);
-                }
-
-                // create pause/cancel dialog
-
-                if (showDialog) {
-                    new AlertDialog.Builder(HomeActivity.this)
-                            .setTitle(R.string.stop_download)
-                            .setMessage(eItem.getTitle())
-                            .setNegativeButton(getString(R.string.cancel), null)
-                            .setNeutralButton(getString(R.string.pause), new PauseListener(eItem))
-                            .setPositiveButton(getString(R.string.stop), new CancelListener(eItem))
-                            .show();
-                }
-
-                // Toast.makeText(HomeActivity.this, "Please wait for this content pack to finish downloading", Toast.LENGTH_LONG).show(); // FIXME move to strings.xml
-            }
-        }
-
-
-    }
+//    // HAD TO SPLIT OUT INTO A METHOD
+//    public void handleClick(ExpansionIndexItem eItem, HashMap<String, ExpansionIndexItem> installedIds, boolean showDialog) {
+//
+//        // initiate check/download whether installed or not
+//        HashMap<String, Thread> newThreads = StorymakerDownloadHelper.checkAndDownload(HomeActivity.this, eItem, installedIndexItemDao, queueItemDao, true); // <- THIS SHOULD PICK UP EXISTING PARTIAL FILES
+//        // <- THIS ALSO NEEDS TO NOT INTERACT WITH THE INDEX
+//        // <- METADATA UPDATE SHOULD HAPPEN WHEN APP IS INITIALIZED
+//
+//        // if any download threads were initiated, item is not ready to open
+//
+//        boolean readyToOpen = true;
+//
+//        if (newThreads.size() > 0) {
+//            readyToOpen = false;
+//
+//            // update stored threads for index item
+//
+//            ArrayList<Thread> currentThreads = downloadThreads.get(eItem.getExpansionId());
+//
+//            if (currentThreads == null) {
+//                currentThreads = new ArrayList<Thread>();
+//            }
+//
+//            for (Thread thread : newThreads.values()) {
+//                currentThreads.add(thread);
+//            }
+//
+//            downloadThreads.put(eItem.getExpansionId(), currentThreads);
+//        }
+//
+//        if (!installedIds.containsKey(eItem.getExpansionId())) {
+//
+//            // if clicked item is not installed, update index
+//            // un-installed AvailableIndexItems need to be converted to InstalledIndexItems
+//            InstalledIndexItem iItem = new InstalledIndexItem(eItem);
+//            StorymakerIndexManager.installedIndexAdd(HomeActivity.this, iItem, installedIndexItemDao);
+//
+//            Timber.d(eItem.getExpansionId() + " NOT INSTALLED, ADDING ITEM TO INDEX");
+//
+//            // wait for index serialization
+//            try {
+//                synchronized (this) {
+//                    wait(1000);
+//                }
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            }
+//        } else {
+//
+//            Timber.d(eItem.getExpansionId() + " INSTALLED, CHECKING FILE");
+//
+//            // if clicked item is installed, check state
+//            if (readyToOpen) {
+//
+//                // clear saved threads
+//                if (downloadThreads.get(eItem.getExpansionId()) != null) {
+//                    downloadThreads.remove(eItem.getExpansionId());
+//                }
+//
+//                // update db record with flag
+//                if (!eItem.isInstalled()) {
+//                    Timber.d("SET INSTALLED FLAG FOR " + eItem.getExpansionId());
+//                    eItem.setInstalledFlag(true);
+//                    InstalledIndexItem iItem = new InstalledIndexItem(eItem);
+//                    StorymakerIndexManager.installedIndexAdd(this, iItem, installedIndexItemDao);
+//                }
+//
+//                // if file has been downloaded, open file
+//                Timber.d(eItem.getExpansionId() + " INSTALLED, FILE OK");
+//
+//                // update with new thumbnail path
+//                // move this somewhere that it can be triggered by completed download?
+//                ContentPackMetadata metadata = scal.io.liger.IndexManager.loadContentMetadata(HomeActivity.this,
+//                        eItem.getPackageName(),
+//                        eItem.getExpansionId(),
+//                        StoryMakerApp.getCurrentLocale().getLanguage());
+//
+//                if (metadata == null) {
+//                    Toast.makeText(HomeActivity.this, getString(R.string.home_metadata_missing), Toast.LENGTH_LONG).show();
+//                    Timber.e("failed to load content metadata");
+//                } else if ((eItem.getThumbnailPath() == null) || (!eItem.getThumbnailPath().equals(metadata.getContentPackThumbnailPath()))) {
+//
+//                    Timber.d(eItem.getExpansionId() + " FIRST OPEN, UPDATING THUMBNAIL PATH");
+//
+//                    eItem.setThumbnailPath(metadata.getContentPackThumbnailPath());
+//
+//                    // un-installed AvailableIndexItems need to be converted to InstalledIndexItems
+//                    InstalledIndexItem iItem = new InstalledIndexItem(eItem);
+//                    StorymakerIndexManager.installedIndexAdd(HomeActivity.this, iItem, installedIndexItemDao);
+//
+//                    // wait for index serialization
+//                    try {
+//                        synchronized (this) {
+//                            wait(1000);
+//                        }
+//                    } catch (InterruptedException e) {
+//                        e.printStackTrace();
+//                    }
+//                }
+//
+//                ArrayList<scal.io.liger.model.InstanceIndexItem> contentIndex = scal.io.liger.IndexManager.loadContentIndexAsList(HomeActivity.this,
+//                        eItem.getPackageName(),
+//                        eItem.getExpansionId(),
+//                        StoryMakerApp.getCurrentLocale().getLanguage());
+//
+//                if ((contentIndex == null) || (contentIndex.size() < 1)) {
+//                    Toast.makeText(HomeActivity.this, getString(R.string.home_index_missing), Toast.LENGTH_LONG).show();
+//                    Timber.e("failed to load content index");
+//                } else if (contentIndex.size() == 1) {
+//                    launchLiger(HomeActivity.this, null, null, contentIndex.get(0).getInstanceFilePath());
+//                } else {
+//                    String[] names = new String[contentIndex.size()];
+//                    String[] paths = new String[contentIndex.size()];
+//                    int i = 0;
+//                    for (scal.io.liger.model.InstanceIndexItem item : contentIndex) {
+//                        names[i] = item.getTitle();
+//                        paths[i] = item.getInstanceFilePath();
+//                        i++;
+//                    }
+//                    showSPLSelectorPopup(names, paths);
+//                }
+//            } else {
+//                // if file is being downloaded, don't open
+//                Timber.d(eItem.getExpansionId() + " INSTALLED, CURRENTLY DOWNLOADING FILE");
+//
+//                // if necessary, un-flag db record (this probably indicates an installed file that is being patched
+//                if (eItem.isInstalled()) {
+//                    Timber.d("UN-SET INSTALLED FLAG FOR " + eItem.getExpansionId());
+//                    eItem.setInstalledFlag(false);
+//                    InstalledIndexItem iItem = new InstalledIndexItem(eItem);
+//                    StorymakerIndexManager.installedIndexAdd(this, iItem, installedIndexItemDao);
+//                }
+//
+//                // create pause/cancel dialog
+//
+//                if (showDialog) {
+//                    new AlertDialog.Builder(HomeActivity.this)
+//                            .setTitle(R.string.stop_download)
+//                            .setMessage(eItem.getTitle())
+//                            .setNegativeButton(getString(R.string.cancel), null)
+//                            .setNeutralButton(getString(R.string.pause), new PauseListener(eItem))
+//                            .setPositiveButton(getString(R.string.stop), new CancelListener(eItem))
+//                            .show();
+//                }
+//
+//                // Toast.makeText(HomeActivity.this, "Please wait for this content pack to finish downloading", Toast.LENGTH_LONG).show(); // FIXME move to strings.xml
+//            }
+//        }
+//
+//
+//    }
 
 
 //
@@ -1073,102 +1054,102 @@ public class HomeActivity extends BaseHomeActivity {
 //            }
 //        }
 //    }
+//
+//    private void showSPLSelectorPopup(final String[] names, final String[] paths) {
+//        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+//
+//        builder.setTitle("Choose Story File(SdCard/Liger/)").setItems(names, new DialogInterface.OnClickListener() {
+//            public void onClick(DialogInterface dialog, int index) {
+//                launchLiger(HomeActivity.this, null, null, paths[index]);
+//            }
+//        });
+//
+//        AlertDialog alert = builder.create();
+//        alert.show();
+//    }
 
-    private void showSPLSelectorPopup(final String[] names, final String[] paths) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+//    @Override
+//    public void onSaveInstanceState(Bundle outState) {
+//        super.onSaveInstanceState(outState);
+//    }
+//
+//    //if the user hasn't registered with the user, show the login screen
+//    private void checkCreds() {
+//
+//        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+//
+//        String user = settings.getString("user", null);
+//
+//        if (user == null) {
+//            Intent intent = new Intent(this, LoginActivity.class);
+//            startActivity(intent);
+//        }
+//    }
 
-        builder.setTitle("Choose Story File(SdCard/Liger/)").setItems(names, new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int index) {
-                launchLiger(HomeActivity.this, null, null, paths[index]);
-            }
-        });
-
-        AlertDialog alert = builder.create();
-        alert.show();
-    }
-
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-    }
-
-    //if the user hasn't registered with the user, show the login screen
-    private void checkCreds() {
-
-        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-
-        String user = settings.getString("user", null);
-
-        if (user == null) {
-            Intent intent = new Intent(this, LoginActivity.class);
-            startActivity(intent);
-        }
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.activity_home, menu);
-        return true;
-    }
-
-
-    public void launchNewProject() {
-        // need to check this to determine whether there is a storage issue that will cause a crash
-        File actualStorageDirectory = StorageHelper.getActualStorageDirectory(this);
-
-        if (actualStorageDirectory != null) {
-            launchLiger(this, "default_library", null, null);
-        } else {
-            //show storage error message
-            new AlertDialog.Builder(this)
-                    .setTitle(Utils.getAppName(this))
-                    .setIcon(android.R.drawable.ic_dialog_info)
-                    .setMessage(R.string.err_storage_not_available)
-                    .show();
-        }
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-
-        if (item.getItemId() == android.R.id.home) {
-            toggleDrawer();
-            return true;
-        } else if (item.getItemId() == R.id.menu_new_project) {
-            // need to check this to determine whether there is a storage issue that will cause a crash
-            File actualStorageDirectory = StorageHelper.getActualStorageDirectory(this);
-
-            if (actualStorageDirectory != null) {
-                launchNewProject();
-            } else {
-                //show storage error message
-                new AlertDialog.Builder(this)
-                        .setTitle(Utils.getAppName(this))
-                        .setIcon(android.R.drawable.ic_dialog_info)
-                        .setMessage(R.string.err_storage_not_available)
-                        .show();
-            }
-
-            return true;
-        } else if (item.getItemId() == R.id.menu_about) {
-            String url = "https://storymaker.org";
-
-            Intent i = new Intent(Intent.ACTION_VIEW);
-            i.setData(Uri.parse(url));
-            startActivity(i);
-            return true;
-        } else if (item.getItemId() == R.id.menu_hide) {
-            hideLauncherIcon();
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        getMenuInflater().inflate(R.menu.activity_home, menu);
+//        return true;
+//    }
 
 
-    private void showPreferences() {
-        Intent intent = new Intent(this, SimplePreferences.class);
-        this.startActivityForResult(intent, 9999);
-    }
+//    public void launchNewProject() {
+//        // need to check this to determine whether there is a storage issue that will cause a crash
+//        File actualStorageDirectory = StorageHelper.getActualStorageDirectory(this);
+//
+//        if (actualStorageDirectory != null) {
+//            launchLiger(this, "default_library", null, null);
+//        } else {
+//            //show storage error message
+//            new AlertDialog.Builder(this)
+//                    .setTitle(Utils.getAppName(this))
+//                    .setIcon(android.R.drawable.ic_dialog_info)
+//                    .setMessage(R.string.err_storage_not_available)
+//                    .show();
+//        }
+//    }
+
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//
+//        if (item.getItemId() == android.R.id.home) {
+//            toggleDrawer();
+//            return true;
+//        } else if (item.getItemId() == R.id.menu_new_project) {
+//            // need to check this to determine whether there is a storage issue that will cause a crash
+//            File actualStorageDirectory = StorageHelper.getActualStorageDirectory(this);
+//
+//            if (actualStorageDirectory != null) {
+//                launchNewProject();
+//            } else {
+//                //show storage error message
+//                new AlertDialog.Builder(this)
+//                        .setTitle(Utils.getAppName(this))
+//                        .setIcon(android.R.drawable.ic_dialog_info)
+//                        .setMessage(R.string.err_storage_not_available)
+//                        .show();
+//            }
+//
+//            return true;
+//        } else if (item.getItemId() == R.id.menu_about) {
+//            String url = "https://storymaker.org";
+//
+//            Intent i = new Intent(Intent.ACTION_VIEW);
+//            i.setData(Uri.parse(url));
+//            startActivity(i);
+//            return true;
+//        } else if (item.getItemId() == R.id.menu_hide) {
+//            hideLauncherIcon();
+//        }
+//
+//        return super.onOptionsItemSelected(item);
+//    }
+
+
+//    private void showPreferences() {
+//        Intent intent = new Intent(this, SimplePreferences.class);
+//        this.startActivityForResult(intent, 9999);
+//    }
 
     @Override
     protected void onActivityResult(int arg0, int arg1, Intent arg2) {
@@ -1247,34 +1228,34 @@ public class HomeActivity extends BaseHomeActivity {
 //
 //	}
 
-    private void checkForCrashes() {
-        //CrashManager.register(this, AppConstants.HOCKEY_APP_ID);
-        CrashManager.register(this, AppConstants.HOCKEY_APP_ID, new CrashManagerListener() {
-            public String getDescription() {
-                String description = "";
-
-                try {
-                    //Process process = Runtime.getRuntime().exec("logcat -d HockeyApp:D *:S");
-                    Process process = Runtime.getRuntime().exec("logcat -d");
-                    BufferedReader bufferedReader =
-                            new BufferedReader(new InputStreamReader(process.getInputStream()));
-
-                    StringBuilder log = new StringBuilder();
-                    String line;
-                    while ((line = bufferedReader.readLine()) != null) {
-                        log.append(line);
-                        log.append(System.getProperty("line.separator"));
-                    }
-                    bufferedReader.close();
-
-                    description = log.toString();
-                } catch (IOException e) {
-                }
-
-                return description;
-            }
-        });
-    }
+//    private void checkForCrashes() {
+//        //CrashManager.register(this, AppConstants.HOCKEY_APP_ID);
+//        CrashManager.register(this, AppConstants.HOCKEY_APP_ID, new CrashManagerListener() {
+//            public String getDescription() {
+//                String description = "";
+//
+//                try {
+//                    //Process process = Runtime.getRuntime().exec("logcat -d HockeyApp:D *:S");
+//                    Process process = Runtime.getRuntime().exec("logcat -d");
+//                    BufferedReader bufferedReader =
+//                            new BufferedReader(new InputStreamReader(process.getInputStream()));
+//
+//                    StringBuilder log = new StringBuilder();
+//                    String line;
+//                    while ((line = bufferedReader.readLine()) != null) {
+//                        log.append(line);
+//                        log.append(System.getProperty("line.separator"));
+//                    }
+//                    bufferedReader.close();
+//
+//                    description = log.toString();
+//                } catch (IOException e) {
+//                }
+//
+//                return description;
+//            }
+//        });
+//    }
 
 //    private void checkForUpdates() {
 //        if (BuildConfig.DEBUG) {
@@ -1346,131 +1327,131 @@ public class HomeActivity extends BaseHomeActivity {
         }
     }
     */
+//
+//    @Override
+//    public void onCacheWordUninitialized() {
+//        // set default pin, prompt for actual pin on first lock
+//        try {
+//            CharSequence defaultPinSequence = getText(R.string.cacheword_default_pin);
+//            char[] defaultPin = defaultPinSequence.toString().toCharArray();
+//            mCacheWordHandler.setPassphrase(defaultPin);
+//            SharedPreferences sp = getSharedPreferences("appPrefs", MODE_PRIVATE);
+//            SharedPreferences.Editor e = sp.edit();
+//            e.putString("cacheword_status", CACHEWORD_UNSET);
+//            e.commit();
+//            Timber.d("set default cacheword pin");
+//        } catch (GeneralSecurityException gse) {
+//            Log.e("CACHEWORD", "failed to set default cacheword pin: " + gse.getMessage());
+//            gse.printStackTrace();
+//        }
+//    }
 
-    @Override
-    public void onCacheWordUninitialized() {
-        // set default pin, prompt for actual pin on first lock
-        try {
-            CharSequence defaultPinSequence = getText(R.string.cacheword_default_pin);
-            char[] defaultPin = defaultPinSequence.toString().toCharArray();
-            mCacheWordHandler.setPassphrase(defaultPin);
-            SharedPreferences sp = getSharedPreferences("appPrefs", MODE_PRIVATE);
-            SharedPreferences.Editor e = sp.edit();
-            e.putString("cacheword_status", CACHEWORD_UNSET);
-            e.commit();
-            Timber.d("set default cacheword pin");
-        } catch (GeneralSecurityException gse) {
-            Log.e("CACHEWORD", "failed to set default cacheword pin: " + gse.getMessage());
-            gse.printStackTrace();
-        }
-    }
+//    @Override
+//    public void onCacheWordLocked() {
+//        // if there has been no first lock and pin prompt, use default pin to unlock
+//        SharedPreferences sp = getSharedPreferences("appPrefs", MODE_PRIVATE);
+//        String cachewordStatus = sp.getString("cacheword_status", "default");
+//        if (cachewordStatus.equals(CACHEWORD_UNSET)) {
+//            try {
+//                CharSequence defaultPinSequence = getText(R.string.cacheword_default_pin);
+//                char[] defaultPin = defaultPinSequence.toString().toCharArray();
+//                mCacheWordHandler.setPassphrase(defaultPin);
+//                Timber.d("used default cacheword pin");
+//            } catch (GeneralSecurityException gse) {
+//                Log.e("CACHEWORD", "failed to use default cacheword pin: " + gse.getMessage());
+//                gse.printStackTrace();
+//            }
+//        } else {
+//            Timber.d("prompt for cacheword pin");
+//            showLockScreen();
+//        }
+//    }
 
-    @Override
-    public void onCacheWordLocked() {
-        // if there has been no first lock and pin prompt, use default pin to unlock
-        SharedPreferences sp = getSharedPreferences("appPrefs", MODE_PRIVATE);
-        String cachewordStatus = sp.getString("cacheword_status", "default");
-        if (cachewordStatus.equals(CACHEWORD_UNSET)) {
-            try {
-                CharSequence defaultPinSequence = getText(R.string.cacheword_default_pin);
-                char[] defaultPin = defaultPinSequence.toString().toCharArray();
-                mCacheWordHandler.setPassphrase(defaultPin);
-                Timber.d("used default cacheword pin");
-            } catch (GeneralSecurityException gse) {
-                Log.e("CACHEWORD", "failed to use default cacheword pin: " + gse.getMessage());
-                gse.printStackTrace();
-            }
-        } else {
-            Timber.d("prompt for cacheword pin");
-            showLockScreen();
-        }
-    }
+//    // NEW/CACHEWORD
+//    void showLockScreen() {
+//        // set aside current activity and prompt for cacheword pin
+//        Intent intent = new Intent(this, CacheWordActivity.class);
+//        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+//        intent.putExtra("originalIntent", getIntent());
+//        startActivity(intent);
+//        finish();
+//    }
 
-    // NEW/CACHEWORD
-    void showLockScreen() {
-        // set aside current activity and prompt for cacheword pin
-        Intent intent = new Intent(this, CacheWordActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-        intent.putExtra("originalIntent", getIntent());
-        startActivity(intent);
-        finish();
-    }
+//    public class PauseListener implements DialogInterface.OnClickListener {
+//
+//        private ExpansionIndexItem eItem;
+//
+//        public PauseListener(ExpansionIndexItem eItem) {
+//            super();
+//
+//            this.eItem = eItem;
+//        }
+//
+//        @Override
+//        public void onClick(DialogInterface dialog, int which) {
+//
+//            Timber.d("PAUSE...");
+//
+//            // stop associated threads
+//
+//            ArrayList<Thread> currentThreads = downloadThreads.get(eItem.getExpansionId());
+//
+//            if (currentThreads != null) {
+//                for (Thread thread : currentThreads) {
+//                    Timber.d("STOPPING THREAD " + thread.getId());
+//                    thread.interrupt();
+//                }
+//            }
+//
+//            downloadThreads.remove(eItem.getExpansionId());
+//
+//        }
+//    }
 
-    public class PauseListener implements DialogInterface.OnClickListener {
-
-        private ExpansionIndexItem eItem;
-
-        public PauseListener(ExpansionIndexItem eItem) {
-            super();
-
-            this.eItem = eItem;
-        }
-
-        @Override
-        public void onClick(DialogInterface dialog, int which) {
-
-            Timber.d("PAUSE...");
-
-            // stop associated threads
-
-            ArrayList<Thread> currentThreads = downloadThreads.get(eItem.getExpansionId());
-
-            if (currentThreads != null) {
-                for (Thread thread : currentThreads) {
-                    Timber.d("STOPPING THREAD " + thread.getId());
-                    thread.interrupt();
-                }
-            }
-
-            downloadThreads.remove(eItem.getExpansionId());
-
-        }
-    }
-
-    public class CancelListener implements DialogInterface.OnClickListener {
-
-        private ExpansionIndexItem eItem;
-
-        public CancelListener(ExpansionIndexItem eItem) {
-            super();
-
-            this.eItem = eItem;
-        }
-
-        @Override
-        public void onClick(DialogInterface dialog, int which) {
-
-            Timber.d("CANCEL...");
-
-            // remove from installed index
-
-            // un-installed AvailableIndexItems need to be converted to InstalledIndexItems
-            InstalledIndexItem iItem = new InstalledIndexItem(eItem);
-            StorymakerIndexManager.installedIndexRemove(HomeActivity.this, iItem, installedIndexItemDao);
-
-            // stop associated threads and delete associated files
-
-            ArrayList<Thread> currentThreads = downloadThreads.get(eItem.getExpansionId());
-
-            if (currentThreads != null) {
-                for (Thread thread : currentThreads) {
-                    Timber.d("STOPPING THREAD " + thread.getId());
-                    thread.interrupt();
-                }
-            }
-
-            downloadThreads.remove(eItem.getExpansionId());
-
-            Timber.d("DELETE STUFF?");
-
-            File fileDirectory = StorageHelper.getActualStorageDirectory(HomeActivity.this);
-            WildcardFileFilter fileFilter = new WildcardFileFilter(eItem.getExpansionId() + ".*");
-            for (File foundFile : FileUtils.listFiles(fileDirectory, fileFilter, null)) {
-                Timber.d("STOPPED THREAD: FOUND " + foundFile.getPath() + ", DELETING");
-                FileUtils.deleteQuietly(foundFile);
-            }
-        }
-    }
+//    public class CancelListener implements DialogInterface.OnClickListener {
+//
+//        private ExpansionIndexItem eItem;
+//
+//        public CancelListener(ExpansionIndexItem eItem) {
+//            super();
+//
+//            this.eItem = eItem;
+//        }
+//
+//        @Override
+//        public void onClick(DialogInterface dialog, int which) {
+//
+//            Timber.d("CANCEL...");
+//            Log.d("RES_", "cancel home click");
+//            // remove from installed index
+//
+//            // un-installed AvailableIndexItems need to be converted to InstalledIndexItems
+//            InstalledIndexItem iItem = new InstalledIndexItem(eItem);
+//            StorymakerIndexManager.installedIndexRemove(HomeActivity.this, iItem, installedIndexItemDao);
+//
+//            // stop associated threads and delete associated files
+//
+//            ArrayList<Thread> currentThreads = downloadThreads.get(eItem.getExpansionId());
+//
+//            if (currentThreads != null) {
+//                for (Thread thread : currentThreads) {
+//                    Timber.d("STOPPING THREAD " + thread.getId());
+//                    thread.interrupt();
+//                }
+//            }
+//
+//            downloadThreads.remove(eItem.getExpansionId());
+//
+//            Timber.d("DELETE STUFF?");
+//
+//            File fileDirectory = StorageHelper.getActualStorageDirectory(HomeActivity.this);
+//            WildcardFileFilter fileFilter = new WildcardFileFilter(eItem.getExpansionId() + ".*");
+//            for (File foundFile : FileUtils.listFiles(fileDirectory, fileFilter, null)) {
+//                Timber.d("STOPPED THREAD: FOUND " + foundFile.getPath() + ", DELETING");
+//                FileUtils.deleteQuietly(foundFile);
+//            }
+//        }
+//    }
 
     @Override
     protected void onDestroy() {
