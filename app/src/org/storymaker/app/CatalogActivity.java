@@ -12,7 +12,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
-import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
@@ -22,24 +21,11 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.widget.Toast;
 
 import com.hannesdorfmann.sqlbrite.dao.Dao;
 
-import net.hockeyapp.android.CrashManager;
-import net.hockeyapp.android.CrashManagerListener;
-
-import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.filefilter.WildcardFileFilter;
-import org.storymaker.app.server.LoginActivity;
 import org.storymaker.app.ui.SlidingTabLayout;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -47,9 +33,7 @@ import java.util.List;
 
 import rx.functions.Action1;
 import scal.io.liger.JsonHelper;
-import scal.io.liger.StorageHelper;
 import scal.io.liger.StorymakerIndexManager;
-import scal.io.liger.model.ContentPackMetadata;
 import scal.io.liger.model.sqlbrite.AvailableIndexItem;
 import scal.io.liger.model.sqlbrite.AvailableIndexItemDao;
 import scal.io.liger.model.sqlbrite.BaseIndexItem;
@@ -521,55 +505,55 @@ public class CatalogActivity extends BaseHomeActivity {
 //        }
 //    }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-
-        //getActionBar().setTitle(Utils.getAppName(this));
-
-        checkForCrashes();
-
-        //if (!DownloadHelper.checkAllFiles(this) && downloadPoller == null) {
-        // integrate with index task
-        //if (!DownloadHelper.checkAndDownload(this)) {
-        // don't poll, just pop up message if a download was initiated
-        //downloadPoller = new DownloadPoller();
-        //downloadPoller.execute("foo");
-        //    Toast.makeText(this, "Downloading content and/or updating installed files", Toast.LENGTH_LONG).show(); // FIXME move to strings.xml
-        //} //else {
-        // merge this with index task
-        //   initActivityList();
-
-        // need to check this to determine whether there is a storage issue that will cause a crash
-        File actualStorageDirectory = StorageHelper.getActualStorageDirectory(this);
-
-        if (actualStorageDirectory != null) {
-            IndexTask iTask = new IndexTask(this, false); // don't force download on resume (currently triggers only on login)
-            iTask.execute();
-        } else {
-            //show storage error message
-            new AlertDialog.Builder(this)
-                    .setTitle(Utils.getAppName(this))
-                    .setIcon(android.R.drawable.ic_dialog_info)
-                    .setMessage(R.string.err_storage_not_available)
-                    .show();
-        }
-
-        //}
-
-        boolean isExternalStorageReady = Utils.Files.isExternalStorageReady();
-
-        if (!isExternalStorageReady)
-        {
-            //show storage error message
-            new AlertDialog.Builder(this)
-                    .setTitle(Utils.getAppName(this))
-                    .setIcon(android.R.drawable.ic_dialog_info)
-                    .setMessage(R.string.err_storage_not_ready)
-                    .show();
-
-        }
-    }
+//    @Override
+//    public void onResume() {
+//        super.onResume();
+//
+//        //getActionBar().setTitle(Utils.getAppName(this));
+//
+//        checkForCrashes();
+//
+//        //if (!DownloadHelper.checkAllFiles(this) && downloadPoller == null) {
+//        // integrate with index task
+//        //if (!DownloadHelper.checkAndDownload(this)) {
+//        // don't poll, just pop up message if a download was initiated
+//        //downloadPoller = new DownloadPoller();
+//        //downloadPoller.execute("foo");
+//        //    Toast.makeText(this, "Downloading content and/or updating installed files", Toast.LENGTH_LONG).show(); // FIXME move to strings.xml
+//        //} //else {
+//        // merge this with index task
+//        //   initActivityList();
+//
+//        // need to check this to determine whether there is a storage issue that will cause a crash
+//        File actualStorageDirectory = StorageHelper.getActualStorageDirectory(this);
+//
+//        if (actualStorageDirectory != null) {
+//            IndexTask iTask = new IndexTask(this, false); // don't force download on resume (currently triggers only on login)
+//            iTask.execute();
+//        } else {
+//            //show storage error message
+//            new AlertDialog.Builder(this)
+//                    .setTitle(Utils.getAppName(this))
+//                    .setIcon(android.R.drawable.ic_dialog_info)
+//                    .setMessage(R.string.err_storage_not_available)
+//                    .show();
+//        }
+//
+//        //}
+//
+//        boolean isExternalStorageReady = Utils.Files.isExternalStorageReady();
+//
+//        if (!isExternalStorageReady)
+//        {
+//            //show storage error message
+//            new AlertDialog.Builder(this)
+//                    .setTitle(Utils.getAppName(this))
+//                    .setIcon(android.R.drawable.ic_dialog_info)
+//                    .setMessage(R.string.err_storage_not_ready)
+//                    .show();
+//
+//        }
+//    }
 
 
     public void initActivityList () {
@@ -863,157 +847,157 @@ public class CatalogActivity extends BaseHomeActivity {
 
     }
 
-    // HAD TO SPLIT OUT INTO A METHOD
-    public void handleClick (scal.io.liger.model.sqlbrite.ExpansionIndexItem eItem, HashMap<String, scal.io.liger.model.sqlbrite.ExpansionIndexItem> installedIds, boolean showDialog) {
-
-        // initiate check/download whether installed or not
-        HashMap<String, Thread> newThreads = StorymakerDownloadHelper.checkAndDownload(CatalogActivity.this, eItem, installedIndexItemDao, queueItemDao, true); // <- THIS SHOULD PICK UP EXISTING PARTIAL FILES
-        // <- THIS ALSO NEEDS TO NOT INTERACT WITH THE INDEX
-        // <- METADATA UPDATE SHOULD HAPPEN WHEN APP IS INITIALIZED
-
-        // if any download threads were initiated, item is not ready to open
-
-        boolean readyToOpen = true;
-
-        if (newThreads.size() > 0) {
-            readyToOpen = false;
-
-            // update stored threads for index item
-
-            ArrayList<Thread> currentThreads = downloadThreads.get(eItem.getExpansionId());
-
-            if (currentThreads == null) {
-                currentThreads = new ArrayList<Thread>();
-            }
-
-            for (Thread thread : newThreads.values()) {
-                currentThreads.add(thread);
-            }
-
-            downloadThreads.put(eItem.getExpansionId(), currentThreads);
-        }
-
-        if (!installedIds.containsKey(eItem.getExpansionId())) {
-
-            // if clicked item is not installed, update index
-            // un-installed AvailableIndexItems need to be converted to InstalledIndexItems
-            InstalledIndexItem iItem = new InstalledIndexItem(eItem);
-            StorymakerIndexManager.installedIndexAdd(CatalogActivity.this, iItem, installedIndexItemDao);
-
-            Timber.d(eItem.getExpansionId() + " NOT INSTALLED, ADDING ITEM TO INDEX");
-
-            // wait for index serialization
-            try {
-                synchronized (this) {
-                    wait(1000);
-                }
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        } else {
-
-            Timber.d(eItem.getExpansionId() + " INSTALLED, CHECKING FILE");
-
-            // if clicked item is installed, check state
-            if (readyToOpen) {
-
-                // clear saved threads
-                if (downloadThreads.get(eItem.getExpansionId()) != null) {
-                    downloadThreads.remove(eItem.getExpansionId());
-                }
-
-                // update db record with flag
-                if (!eItem.isInstalled()) {
-                    Timber.d("SET INSTALLED FLAG FOR " + eItem.getExpansionId());
-                    eItem.setInstalledFlag(true);
-                    InstalledIndexItem iItem = new InstalledIndexItem(eItem);
-                    StorymakerIndexManager.installedIndexAdd(this, iItem, installedIndexItemDao);
-                }
-
-                // if file has been downloaded, open file
-                Timber.d(eItem.getExpansionId() + " INSTALLED, FILE OK");
-
-                // update with new thumbnail path
-                // move this somewhere that it can be triggered by completed download?
-                ContentPackMetadata metadata = scal.io.liger.IndexManager.loadContentMetadata(CatalogActivity.this,
-                        eItem.getPackageName(),
-                        eItem.getExpansionId(),
-                        StoryMakerApp.getCurrentLocale().getLanguage());
-
-                if (metadata == null) {
-                    Toast.makeText(CatalogActivity.this, getString(R.string.home_metadata_missing), Toast.LENGTH_LONG).show();
-                    Timber.e("failed to load content metadata");
-                } else if ((eItem.getThumbnailPath() == null) || (!eItem.getThumbnailPath().equals(metadata.getContentPackThumbnailPath()))) {
-
-                    Timber.d(eItem.getExpansionId() + " FIRST OPEN, UPDATING THUMBNAIL PATH");
-
-                    eItem.setThumbnailPath(metadata.getContentPackThumbnailPath());
-
-                    // un-installed AvailableIndexItems need to be converted to InstalledIndexItems
-                    InstalledIndexItem iItem = new InstalledIndexItem(eItem);
-                    StorymakerIndexManager.installedIndexAdd(CatalogActivity.this, iItem, installedIndexItemDao);
-
-                    // wait for index serialization
-                    try {
-                        synchronized (this) {
-                            wait(1000);
-                        }
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
-
-                ArrayList<scal.io.liger.model.InstanceIndexItem> contentIndex = scal.io.liger.IndexManager.loadContentIndexAsList(CatalogActivity.this,
-                        eItem.getPackageName(),
-                        eItem.getExpansionId(),
-                        StoryMakerApp.getCurrentLocale().getLanguage());
-
-                if ((contentIndex == null) || (contentIndex.size() < 1)) {
-                    Toast.makeText(CatalogActivity.this, getString(R.string.home_index_missing), Toast.LENGTH_LONG).show();
-                    Timber.e("failed to load content index");
-                } else if (contentIndex.size() == 1) {
-                    launchLiger(CatalogActivity.this, null, null, contentIndex.get(0).getInstanceFilePath());
-                } else {
-                    String[] names = new String[contentIndex.size()];
-                    String[] paths = new String[contentIndex.size()];
-                    int i = 0;
-                    for (scal.io.liger.model.InstanceIndexItem item : contentIndex) {
-                        names[i] = item.getTitle();
-                        paths[i] = item.getInstanceFilePath();
-                        i++;
-                    }
-                    showSPLSelectorPopup(names, paths);
-                }
-            } else {
-                // if file is being downloaded, don't open
-                Timber.d(eItem.getExpansionId() + " INSTALLED, CURRENTLY DOWNLOADING FILE");
-
-                // if necessary, un-flag db record (this probably indicates an installed file that is being patched
-                if (eItem.isInstalled()) {
-                    Timber.d("UN-SET INSTALLED FLAG FOR " + eItem.getExpansionId());
-                    eItem.setInstalledFlag(false);
-                    InstalledIndexItem iItem = new InstalledIndexItem(eItem);
-                    StorymakerIndexManager.installedIndexAdd(this, iItem, installedIndexItemDao);
-                }
-
-                // create pause/cancel dialog
-
-                if (showDialog) {
-                    new AlertDialog.Builder(CatalogActivity.this)
-                            .setTitle(R.string.stop_download)
-                            .setMessage(eItem.getTitle())
-                            .setNegativeButton(getString(R.string.cancel), null)
-                            .setNeutralButton(getString(R.string.pause), new PauseListener(eItem))
-                            .setPositiveButton(getString(R.string.stop), new CancelListener(eItem))
-                            .show();
-                }
-
-                // Toast.makeText(HomeActivity.this, "Please wait for this content pack to finish downloading", Toast.LENGTH_LONG).show(); // FIXME move to strings.xml
-            }
-        }
-
-
-    }
+//    // HAD TO SPLIT OUT INTO A METHOD
+//    public void handleClick (scal.io.liger.model.sqlbrite.ExpansionIndexItem eItem, HashMap<String, scal.io.liger.model.sqlbrite.ExpansionIndexItem> installedIds, boolean showDialog) {
+//
+//        // initiate check/download whether installed or not
+//        HashMap<String, Thread> newThreads = StorymakerDownloadHelper.checkAndDownload(CatalogActivity.this, eItem, installedIndexItemDao, queueItemDao, true); // <- THIS SHOULD PICK UP EXISTING PARTIAL FILES
+//        // <- THIS ALSO NEEDS TO NOT INTERACT WITH THE INDEX
+//        // <- METADATA UPDATE SHOULD HAPPEN WHEN APP IS INITIALIZED
+//
+//        // if any download threads were initiated, item is not ready to open
+//
+//        boolean readyToOpen = true;
+//
+//        if (newThreads.size() > 0) {
+//            readyToOpen = false;
+//
+//            // update stored threads for index item
+//
+//            ArrayList<Thread> currentThreads = downloadThreads.get(eItem.getExpansionId());
+//
+//            if (currentThreads == null) {
+//                currentThreads = new ArrayList<Thread>();
+//            }
+//
+//            for (Thread thread : newThreads.values()) {
+//                currentThreads.add(thread);
+//            }
+//
+//            downloadThreads.put(eItem.getExpansionId(), currentThreads);
+//        }
+//
+//        if (!installedIds.containsKey(eItem.getExpansionId())) {
+//
+//            // if clicked item is not installed, update index
+//            // un-installed AvailableIndexItems need to be converted to InstalledIndexItems
+//            InstalledIndexItem iItem = new InstalledIndexItem(eItem);
+//            StorymakerIndexManager.installedIndexAdd(CatalogActivity.this, iItem, installedIndexItemDao);
+//
+//            Timber.d(eItem.getExpansionId() + " NOT INSTALLED, ADDING ITEM TO INDEX");
+//
+//            // wait for index serialization
+//            try {
+//                synchronized (this) {
+//                    wait(1000);
+//                }
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            }
+//        } else {
+//
+//            Timber.d(eItem.getExpansionId() + " INSTALLED, CHECKING FILE");
+//
+//            // if clicked item is installed, check state
+//            if (readyToOpen) {
+//
+//                // clear saved threads
+//                if (downloadThreads.get(eItem.getExpansionId()) != null) {
+//                    downloadThreads.remove(eItem.getExpansionId());
+//                }
+//
+//                // update db record with flag
+//                if (!eItem.isInstalled()) {
+//                    Timber.d("SET INSTALLED FLAG FOR " + eItem.getExpansionId());
+//                    eItem.setInstalledFlag(true);
+//                    InstalledIndexItem iItem = new InstalledIndexItem(eItem);
+//                    StorymakerIndexManager.installedIndexAdd(this, iItem, installedIndexItemDao);
+//                }
+//
+//                // if file has been downloaded, open file
+//                Timber.d(eItem.getExpansionId() + " INSTALLED, FILE OK");
+//
+//                // update with new thumbnail path
+//                // move this somewhere that it can be triggered by completed download?
+//                ContentPackMetadata metadata = scal.io.liger.IndexManager.loadContentMetadata(CatalogActivity.this,
+//                        eItem.getPackageName(),
+//                        eItem.getExpansionId(),
+//                        StoryMakerApp.getCurrentLocale().getLanguage());
+//
+//                if (metadata == null) {
+//                    Toast.makeText(CatalogActivity.this, getString(R.string.home_metadata_missing), Toast.LENGTH_LONG).show();
+//                    Timber.e("failed to load content metadata");
+//                } else if ((eItem.getThumbnailPath() == null) || (!eItem.getThumbnailPath().equals(metadata.getContentPackThumbnailPath()))) {
+//
+//                    Timber.d(eItem.getExpansionId() + " FIRST OPEN, UPDATING THUMBNAIL PATH");
+//
+//                    eItem.setThumbnailPath(metadata.getContentPackThumbnailPath());
+//
+//                    // un-installed AvailableIndexItems need to be converted to InstalledIndexItems
+//                    InstalledIndexItem iItem = new InstalledIndexItem(eItem);
+//                    StorymakerIndexManager.installedIndexAdd(CatalogActivity.this, iItem, installedIndexItemDao);
+//
+//                    // wait for index serialization
+//                    try {
+//                        synchronized (this) {
+//                            wait(1000);
+//                        }
+//                    } catch (InterruptedException e) {
+//                        e.printStackTrace();
+//                    }
+//                }
+//
+//                ArrayList<scal.io.liger.model.InstanceIndexItem> contentIndex = scal.io.liger.IndexManager.loadContentIndexAsList(CatalogActivity.this,
+//                        eItem.getPackageName(),
+//                        eItem.getExpansionId(),
+//                        StoryMakerApp.getCurrentLocale().getLanguage());
+//
+//                if ((contentIndex == null) || (contentIndex.size() < 1)) {
+//                    Toast.makeText(CatalogActivity.this, getString(R.string.home_index_missing), Toast.LENGTH_LONG).show();
+//                    Timber.e("failed to load content index");
+//                } else if (contentIndex.size() == 1) {
+//                    launchLiger(CatalogActivity.this, null, null, contentIndex.get(0).getInstanceFilePath());
+//                } else {
+//                    String[] names = new String[contentIndex.size()];
+//                    String[] paths = new String[contentIndex.size()];
+//                    int i = 0;
+//                    for (scal.io.liger.model.InstanceIndexItem item : contentIndex) {
+//                        names[i] = item.getTitle();
+//                        paths[i] = item.getInstanceFilePath();
+//                        i++;
+//                    }
+//                    showSPLSelectorPopup(names, paths);
+//                }
+//            } else {
+//                // if file is being downloaded, don't open
+//                Timber.d(eItem.getExpansionId() + " INSTALLED, CURRENTLY DOWNLOADING FILE");
+//
+//                // if necessary, un-flag db record (this probably indicates an installed file that is being patched
+//                if (eItem.isInstalled()) {
+//                    Timber.d("UN-SET INSTALLED FLAG FOR " + eItem.getExpansionId());
+//                    eItem.setInstalledFlag(false);
+//                    InstalledIndexItem iItem = new InstalledIndexItem(eItem);
+//                    StorymakerIndexManager.installedIndexAdd(this, iItem, installedIndexItemDao);
+//                }
+//
+//                // create pause/cancel dialog
+//
+//                if (showDialog) {
+//                    new AlertDialog.Builder(CatalogActivity.this)
+//                            .setTitle(R.string.stop_download)
+//                            .setMessage(eItem.getTitle())
+//                            .setNegativeButton(getString(R.string.cancel), null)
+//                            .setNeutralButton(getString(R.string.pause), new PauseListener(eItem))
+//                            .setPositiveButton(getString(R.string.stop), new CancelListener(eItem))
+//                            .show();
+//                }
+//
+//                // Toast.makeText(HomeActivity.this, "Please wait for this content pack to finish downloading", Toast.LENGTH_LONG).show(); // FIXME move to strings.xml
+//            }
+//        }
+//
+//
+//    }
 
 
 
@@ -1108,85 +1092,85 @@ public class CatalogActivity extends BaseHomeActivity {
 //        }
 //    }
 
-    private void showSPLSelectorPopup(final String[] names, final String[] paths) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-
-        builder.setTitle("Choose Story File(SdCard/Liger/)").setItems(names, new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int index) {
-                launchLiger(CatalogActivity.this, null, null, paths[index]);
-            }
-        });
-
-        AlertDialog alert = builder.create();
-        alert.show();
-    }
-
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-    }
-
-    //if the user hasn't registered with the user, show the login screen
-    private void checkCreds ()
-    {
-
-        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-
-        String user = settings.getString("user", null);
-
-        if (user == null)
-        {
-            Intent intent = new Intent(this,LoginActivity.class);
-            startActivity(intent);
-        }
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.activity_catalog, menu);
-        return true;
-    }
-
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-
-        if (item.getItemId() == android.R.id.home)
-        {
-            toggleDrawer();
-            return true;
-        }
-        else if (item.getItemId() == R.id.menu_about)
-        {
-            String url = "https://storymaker.org";
-
-            Intent i = new Intent(Intent.ACTION_VIEW);
-            i.setData(Uri.parse(url));
-            startActivity(i);
-            return true;
-        }
-
-        //        else if (item.getItemId() == R.id.menu_new_project)
-//        {
-//            // need to check this to determine whether there is a storage issue that will cause a crash
-//            File actualStorageDirectory = StorageHelper.getActualStorageDirectory(this);
+//    private void showSPLSelectorPopup(final String[] names, final String[] paths) {
+//        AlertDialog.Builder builder = new AlertDialog.Builder(this);
 //
-//            if (actualStorageDirectory != null) {
-//                launchLiger(this, "default_library", null, null);
-//            } else {
-//                //show storage error message
-//                new AlertDialog.Builder(this)
-//                        .setTitle(Utils.getAppName(this))
-//                        .setIcon(android.R.drawable.ic_dialog_info)
-//                        .setMessage(R.string.err_storage_not_available)
-//                        .show();
+//        builder.setTitle("Choose Story File(SdCard/Liger/)").setItems(names, new DialogInterface.OnClickListener() {
+//            public void onClick(DialogInterface dialog, int index) {
+//                launchLiger(CatalogActivity.this, null, null, paths[index]);
 //            }
+//        });
 //
+//        AlertDialog alert = builder.create();
+//        alert.show();
+//    }
+
+//    @Override
+//    public void onSaveInstanceState(Bundle outState) {
+//        super.onSaveInstanceState(outState);
+//    }
+//
+//    //if the user hasn't registered with the user, show the login screen
+//    private void checkCreds ()
+//    {
+//
+//        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+//
+//        String user = settings.getString("user", null);
+//
+//        if (user == null)
+//        {
+//            Intent intent = new Intent(this,LoginActivity.class);
+//            startActivity(intent);
+//        }
+//    }
+
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        getMenuInflater().inflate(R.menu.activity_catalog, menu);
+//        return true;
+//    }
+
+
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//
+//        if (item.getItemId() == android.R.id.home)
+//        {
+//            toggleDrawer();
 //            return true;
 //        }
-
-        return super.onOptionsItemSelected(item);
-    }
+//        else if (item.getItemId() == R.id.menu_about)
+//        {
+//            String url = "https://storymaker.org";
+//
+//            Intent i = new Intent(Intent.ACTION_VIEW);
+//            i.setData(Uri.parse(url));
+//            startActivity(i);
+//            return true;
+//        }
+//
+//        //        else if (item.getItemId() == R.id.menu_new_project)
+////        {
+////            // need to check this to determine whether there is a storage issue that will cause a crash
+////            File actualStorageDirectory = StorageHelper.getActualStorageDirectory(this);
+////
+////            if (actualStorageDirectory != null) {
+////                launchLiger(this, "default_library", null, null);
+////            } else {
+////                //show storage error message
+////                new AlertDialog.Builder(this)
+////                        .setTitle(Utils.getAppName(this))
+////                        .setIcon(android.R.drawable.ic_dialog_info)
+////                        .setMessage(R.string.err_storage_not_available)
+////                        .show();
+////            }
+////
+////            return true;
+////        }
+//
+//        return super.onOptionsItemSelected(item);
+//    }
 
 //    public static void launchLiger(Context context, String splId, String instancePath, String splPath) {
 //
@@ -1231,11 +1215,11 @@ public class CatalogActivity extends BaseHomeActivity {
 //        context.startActivity(ligerIntent);
 //    }
 
-    private void showPreferences ()
-    {
-        Intent intent = new Intent(this,SimplePreferences.class);
-        this.startActivityForResult(intent, 9999);
-    }
+//    private void showPreferences ()
+//    {
+//        Intent intent = new Intent(this,SimplePreferences.class);
+//        this.startActivityForResult(intent, 9999);
+//    }
 
     @Override
     protected void onActivityResult(int arg0, int arg1, Intent arg2) {
@@ -1252,34 +1236,34 @@ public class CatalogActivity extends BaseHomeActivity {
     }
 
 
-    private void checkForCrashes() {
-        //CrashManager.register(this, AppConstants.HOCKEY_APP_ID);
-        CrashManager.register(this, AppConstants.HOCKEY_APP_ID, new CrashManagerListener() {
-            public String getDescription() {
-                String description = "";
-
-                try {
-                    //Process process = Runtime.getRuntime().exec("logcat -d HockeyApp:D *:S");
-                    Process process = Runtime.getRuntime().exec("logcat -d");
-                    BufferedReader bufferedReader =
-                            new BufferedReader(new InputStreamReader(process.getInputStream()));
-
-                    StringBuilder log = new StringBuilder();
-                    String line;
-                    while ((line = bufferedReader.readLine()) != null) {
-                        log.append(line);
-                        log.append(System.getProperty("line.separator"));
-                    }
-                    bufferedReader.close();
-
-                    description = log.toString();
-                } catch (IOException e) {
-                }
-
-                return description;
-            }
-        });
-    }
+//    private void checkForCrashes() {
+//        //CrashManager.register(this, AppConstants.HOCKEY_APP_ID);
+//        CrashManager.register(this, AppConstants.HOCKEY_APP_ID, new CrashManagerListener() {
+//            public String getDescription() {
+//                String description = "";
+//
+//                try {
+//                    //Process process = Runtime.getRuntime().exec("logcat -d HockeyApp:D *:S");
+//                    Process process = Runtime.getRuntime().exec("logcat -d");
+//                    BufferedReader bufferedReader =
+//                            new BufferedReader(new InputStreamReader(process.getInputStream()));
+//
+//                    StringBuilder log = new StringBuilder();
+//                    String line;
+//                    while ((line = bufferedReader.readLine()) != null) {
+//                        log.append(line);
+//                        log.append(System.getProperty("line.separator"));
+//                    }
+//                    bufferedReader.close();
+//
+//                    description = log.toString();
+//                } catch (IOException e) {
+//                }
+//
+//                return description;
+//            }
+//        });
+//    }
 
 //    private void checkForUpdates() {
 //        if (BuildConfig.DEBUG) {
@@ -1288,81 +1272,83 @@ public class CatalogActivity extends BaseHomeActivity {
 //    }
 
 
-    public class PauseListener implements DialogInterface.OnClickListener {
+//    public class PauseListener implements DialogInterface.OnClickListener {
+//
+//        private scal.io.liger.model.sqlbrite.ExpansionIndexItem eItem;
+//
+//        public PauseListener(scal.io.liger.model.sqlbrite.ExpansionIndexItem eItem) {
+//            super();
+//
+//            this.eItem = eItem;
+//        }
+//
+//        @Override
+//        public void onClick(DialogInterface dialog, int which) {
+//
+//            Timber.d("PAUSE...");
+//
+//            // stop associated threads
+//
+//            ArrayList<Thread> currentThreads = downloadThreads.get(eItem.getExpansionId());
+//
+//            if (currentThreads != null) {
+//                for (Thread thread : currentThreads) {
+//                    Timber.d("STOPPING THREAD " + thread.getId());
+//                    thread.interrupt();
+//                }
+//            }
+//
+//            downloadThreads.remove(eItem.getExpansionId());
+//
+//        }
+//    }
 
-        private scal.io.liger.model.sqlbrite.ExpansionIndexItem eItem;
-
-        public PauseListener(scal.io.liger.model.sqlbrite.ExpansionIndexItem eItem) {
-            super();
-
-            this.eItem = eItem;
-        }
-
-        @Override
-        public void onClick(DialogInterface dialog, int which) {
-
-            Timber.d("PAUSE...");
-
-            // stop associated threads
-
-            ArrayList<Thread> currentThreads = downloadThreads.get(eItem.getExpansionId());
-
-            if (currentThreads != null) {
-                for (Thread thread : currentThreads) {
-                    Timber.d("STOPPING THREAD " + thread.getId());
-                    thread.interrupt();
-                }
-            }
-
-            downloadThreads.remove(eItem.getExpansionId());
-
-        }
-    }
-
-    public class CancelListener implements DialogInterface.OnClickListener {
-
-        private scal.io.liger.model.sqlbrite.ExpansionIndexItem eItem;
-
-        public CancelListener(scal.io.liger.model.sqlbrite.ExpansionIndexItem eItem) {
-            super();
-
-            this.eItem = eItem;
-        }
-
-        @Override
-        public void onClick(DialogInterface dialog, int which) {
-
-            Timber.d("CANCEL...");
-
-            // remove from installed index
-
-            // un-installed AvailableIndexItems need to be converted to InstalledIndexItems
-            InstalledIndexItem iItem = new InstalledIndexItem(eItem);
-            StorymakerIndexManager.installedIndexRemove(CatalogActivity.this, iItem, installedIndexItemDao);
-
-            // stop associated threads and delete associated files
-
-            ArrayList<Thread> currentThreads = downloadThreads.get(eItem.getExpansionId());
-
-            if (currentThreads != null) {
-                for (Thread thread : currentThreads) {
-                    Timber.d("STOPPING THREAD " + thread.getId());
-                    thread.interrupt();
-                }
-            }
-
-            downloadThreads.remove(eItem.getExpansionId());
-
-            Timber.d("DELETE STUFF?");
-
-            File fileDirectory = StorageHelper.getActualStorageDirectory(CatalogActivity.this);
-            WildcardFileFilter fileFilter = new WildcardFileFilter(eItem.getExpansionId() + ".*");
-            for (File foundFile : FileUtils.listFiles(fileDirectory, fileFilter, null)) {
-                Timber.d("STOPPED THREAD: FOUND " + foundFile.getPath() + ", DELETING");
-                FileUtils.deleteQuietly(foundFile);
-            }
-        }
-    }
+//    public class CancelListener implements DialogInterface.OnClickListener {
+//
+//        private scal.io.liger.model.sqlbrite.ExpansionIndexItem eItem;
+//
+//        public CancelListener(scal.io.liger.model.sqlbrite.ExpansionIndexItem eItem) {
+//            super();
+//
+//            this.eItem = eItem;
+//        }
+//
+//        @Override
+//        public void onClick(DialogInterface dialog, int which) {
+//
+//            Timber.d("CANCEL...");
+//
+//            Log.d("RES_", "cancel catalog click");
+//
+//            // remove from installed index
+//
+//            // un-installed AvailableIndexItems need to be converted to InstalledIndexItems
+//            InstalledIndexItem iItem = new InstalledIndexItem(eItem);
+//            StorymakerIndexManager.installedIndexRemove(CatalogActivity.this, iItem, installedIndexItemDao);
+//
+//            // stop associated threads and delete associated files
+//
+//            ArrayList<Thread> currentThreads = downloadThreads.get(eItem.getExpansionId());
+//
+//            if (currentThreads != null) {
+//                for (Thread thread : currentThreads) {
+//                    Timber.d("STOPPING THREAD " + thread.getId());
+//                    thread.interrupt();
+//                }
+//            }
+//
+//            downloadThreads.remove(eItem.getExpansionId());
+//
+//            Timber.d("DELETE STUFF?");
+//
+//            File fileDirectory = StorageHelper.getActualStorageDirectory(CatalogActivity.this);
+//            WildcardFileFilter fileFilter = new WildcardFileFilter(eItem.getExpansionId() + ".*");
+//            for (File foundFile : FileUtils.listFiles(fileDirectory, fileFilter, null)) {
+//                Timber.d("STOPPED THREAD: FOUND " + foundFile.getPath() + ", DELETING");
+//                FileUtils.deleteQuietly(foundFile);
+//            }
+//        }
+//    }
 
     @Override
     protected void onDestroy() {
