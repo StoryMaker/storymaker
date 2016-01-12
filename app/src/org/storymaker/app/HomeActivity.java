@@ -756,11 +756,11 @@ public class HomeActivity extends BaseHomeActivity {
             }
         };
 
-        myHomeItemsInstanceIndexItemAdapter = new InstanceIndexItemAdapter(homeitems, myBaseIndexItemSelectedListener, installedIndexItemDao);
-        myInstancesInstanceIndexItemAdapter = new InstanceIndexItemAdapter(instances, myBaseIndexItemSelectedListener, installedIndexItemDao);
-        myGuidesInstanceIndexItemAdapter = new InstanceIndexItemAdapter(guides, myBaseIndexItemSelectedListener, installedIndexItemDao);
-        myLessonsInstanceIndexItemAdapter = new InstanceIndexItemAdapter(lessons, myBaseIndexItemSelectedListener, installedIndexItemDao);
-        myTemplatesInstanceIndexItemAdapter = new InstanceIndexItemAdapter(templates, myBaseIndexItemSelectedListener, installedIndexItemDao);
+        myHomeItemsInstanceIndexItemAdapter = new InstanceIndexItemAdapter(homeitems, myBaseIndexItemSelectedListener, installedIndexItemDao, instanceIndexItemDao);
+        myInstancesInstanceIndexItemAdapter = new InstanceIndexItemAdapter(instances, myBaseIndexItemSelectedListener, installedIndexItemDao, instanceIndexItemDao);
+        myGuidesInstanceIndexItemAdapter = new InstanceIndexItemAdapter(guides, myBaseIndexItemSelectedListener, installedIndexItemDao, instanceIndexItemDao);
+        myLessonsInstanceIndexItemAdapter = new InstanceIndexItemAdapter(lessons, myBaseIndexItemSelectedListener, installedIndexItemDao, instanceIndexItemDao);
+        myTemplatesInstanceIndexItemAdapter = new InstanceIndexItemAdapter(templates, myBaseIndexItemSelectedListener, installedIndexItemDao, instanceIndexItemDao);
 
         ArrayList<InstanceIndexItemAdapter> myInstanceIndexItemAdapters = new ArrayList<InstanceIndexItemAdapter>();
         myInstanceIndexItemAdapters.add(myHomeItemsInstanceIndexItemAdapter);
