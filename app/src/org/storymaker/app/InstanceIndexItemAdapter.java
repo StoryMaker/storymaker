@@ -11,6 +11,7 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,6 +40,7 @@ import scal.io.liger.model.sqlbrite.ExpansionIndexItem;
 import scal.io.liger.model.sqlbrite.InstalledIndexItem;
 import scal.io.liger.model.sqlbrite.InstalledIndexItemDao;
 import scal.io.liger.model.sqlbrite.InstanceIndexItem;
+import scal.io.liger.model.sqlbrite.InstanceIndexItemDao;
 import timber.log.Timber;
 
 //import scal.io.liger.IndexManager;
@@ -54,6 +56,7 @@ public class InstanceIndexItemAdapter extends RecyclerView.Adapter<InstanceIndex
     public List<BaseIndexItem> mDataset;
     private BaseIndexItemSelectedListener mListener;
     private InstalledIndexItemDao installedDao;
+    private InstanceIndexItemDao instanceDao;
 
     private static final SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm");
 
@@ -79,11 +82,13 @@ public class InstanceIndexItemAdapter extends RecyclerView.Adapter<InstanceIndex
 
     public InstanceIndexItemAdapter(@NonNull List<BaseIndexItem> myDataset,
                                     @Nullable BaseIndexItemSelectedListener listener,
-                                    InstalledIndexItemDao installedDao) {
+                                    InstalledIndexItemDao installedDao, InstanceIndexItemDao instanceDao) {
         mDataset = myDataset;
         mListener = listener;
 
         this.installedDao = installedDao;
+        this.instanceDao = instanceDao;
+
     }
 
     @Override
@@ -310,13 +315,19 @@ public class InstanceIndexItemAdapter extends RecyclerView.Adapter<InstanceIndex
                             Timber.d("DELETING FILES FOR " + ((InstanceIndexItem) item).getTitle());
                             ((InstanceIndexItem) item).deleteAssociatedFiles(context, false);
 
+                            //Log.d("InstanceIndexItemAdapter", "deleting story "+instanceDao.toString());
+
+                            StorymakerIndexManager.instanceIndexRemoveFromDB(context, (InstanceIndexItem) item, instanceDao);
+
                             mDataset.remove(safePosition);
                             notifyItemRemoved(safePosition);
+
+                            sendDeleteCompleteMessage(((InstanceIndexItem) item).getInstanceFilePath());
 
                         }
                     })
                     .setNegativeButton(context.getString(R.string.cancel), null)
-                    .show();
+                        .show();
             } else if (item instanceof ExpansionIndexItem) {
 
                 // let users delete content packs too
