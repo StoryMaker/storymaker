@@ -30,13 +30,13 @@ public class StoryListFragment extends Fragment{
     private String myListName;
     private Boolean myHomeFlag;
 
-    public StoryListFragment(InstanceIndexItemAdapter iiia) {
-
-        myInstanceIndexItemAdapter = iiia;
+    public StoryListFragment() {
 
     }
 
-
+    public void setMyInstanceIndexItemAdapter(InstanceIndexItemAdapter myInstanceIndexItemAdapter) {
+        this.myInstanceIndexItemAdapter = myInstanceIndexItemAdapter;
+    }
 
 //    public static final String ARG_OBJECT = "object";
 

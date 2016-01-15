@@ -245,6 +245,21 @@
                 android:value=".HomeActivity" />
         </activity>
 
+        <activity
+            android:name=".SMPanicResponderActivity"
+            android:noHistory="true"
+            android:theme="@android:style/Theme.NoDisplay">
+            <intent-filter>
+                <action
+                    android:name="info.guardianproject.panic.action.TRIGGER" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".ExitActivity"
+            android:noHistory="true"
+            android:theme="@android:style/Theme.NoDisplay" />
+
         <!-- NEW/CACHEWORD -->
         <service android:name="info.guardianproject.cacheword.CacheWordService"
             android:enabled="true"

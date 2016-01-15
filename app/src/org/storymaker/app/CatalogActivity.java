@@ -435,7 +435,8 @@ public class CatalogActivity extends BaseHomeActivity {
         @Override
         public Fragment getItem(int i) {
 
-            Fragment fragment = new StoryListFragment(myInstanceIndexItemAdapters.get(i));
+            StoryListFragment fragment = new StoryListFragment();
+            fragment.setMyInstanceIndexItemAdapter(myInstanceIndexItemAdapters.get(i));
             Bundle args = new Bundle();
             args.putInt(StoryListFragment.ARG_OBJECT, i + 1); // Our object is just an integer :-P
             args.putInt(StoryListFragment.LIST_COUNT, 1);
