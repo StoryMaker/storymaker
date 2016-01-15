@@ -547,7 +547,7 @@ public class StorymakerDownloadHelper {
         Thread mainThread = downloadThreads.get(scal.io.liger.Constants.MAIN);
 
         if (mainThread != null) {
-            Timber.d("STOPPING THREAD " + mainThread.getId());
+            Timber.d("STARTING THREAD " + mainThread.getId());
             mainThread.start();
             downloadStarted = true;
         }
@@ -555,7 +555,7 @@ public class StorymakerDownloadHelper {
         Thread patchThread = downloadThreads.get(scal.io.liger.Constants.PATCH);
 
         if (patchThread != null) {
-            Timber.d("STOPPING THREAD " + patchThread.getId());
+            Timber.d("STARTING THREAD " + patchThread.getId());
             patchThread.start();
             downloadStarted = true;
         }

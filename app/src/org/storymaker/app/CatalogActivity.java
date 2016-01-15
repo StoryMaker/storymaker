@@ -34,6 +34,7 @@ import java.util.List;
 import rx.functions.Action1;
 import scal.io.liger.JsonHelper;
 import scal.io.liger.StorymakerIndexManager;
+import scal.io.liger.model.ContentPackMetadata;
 import scal.io.liger.model.sqlbrite.AvailableIndexItem;
 import scal.io.liger.model.sqlbrite.AvailableIndexItemDao;
 import scal.io.liger.model.sqlbrite.BaseIndexItem;
@@ -356,8 +357,42 @@ public class CatalogActivity extends BaseHomeActivity {
         @Override
         public void onReceive(Context context, Intent intent) {
             // Get extra data included in the Intent
-            String expansionId = intent.getStringExtra("expansionid");
+            final String[] expansionId = new String[1];
+            expansionId[0] = intent.getStringExtra("expansionid");
             Log.d("receiver", "catalog download expansion id: " + expansionId + " " + this.toString());
+
+            availableIndexItemDao.getAvailableIndexItemByKey(expansionId[0]).subscribe(new Action1<List<AvailableIndexItem>>() {
+
+                @Override
+                public void call(List<AvailableIndexItem> availableIndexItems) {
+
+                    ArrayList<scal.io.liger.model.sqlbrite.ExpansionIndexItem> indexList = new ArrayList<scal.io.liger.model.sqlbrite.ExpansionIndexItem>();
+
+                    if (availableIndexItems.size() != 1) {
+                        Timber.e("can't update thumbnail, unexpected number of available index entries (" + availableIndexItems.size() + ") for " + expansionId[0]);
+                    } else {
+                        AvailableIndexItem item = availableIndexItems.get(0);
+
+                        ContentPackMetadata metadata = scal.io.liger.IndexManager.loadContentMetadata(CatalogActivity.this,
+                                item.getPackageName(),
+                                item.getExpansionId(),
+                                StoryMakerApp.getCurrentLocale().getLanguage());
+
+                        if (metadata == null) {
+                            Timber.e("can't update thumbnail, failed to load metadata for " + expansionId[0]);
+                        } else if ((item.getThumbnailPath() == null) || (!item.getThumbnailPath().equals(metadata.getContentPackThumbnailPath()))) {
+
+                            item.setThumbnailPath(metadata.getContentPackThumbnailPath());
+
+                            // un-installed AvailableIndexItems need to be converted to InstalledIndexItems
+                            InstalledIndexItem iItem = new InstalledIndexItem(item);
+
+                            Timber.d("updated thumbnail and added installed index entry for " + expansionId[0]);
+                            StorymakerIndexManager.installedIndexAdd(CatalogActivity.this, iItem, installedIndexItemDao);
+                        }
+                    }
+                }
+            });
 
             initActivityList();
 //            myGuidesInstanceIndexItemAdapter.notifyDataSetChanged();
