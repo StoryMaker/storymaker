@@ -1,0 +1,250 @@
+[
+    {
+        "expansionId": "mobile_photo_basics",
+        "patchOrder": "1",
+        "contentType": "guide",
+        "title": "Mobile Photo Basics",
+        "packageName": "org.storymaker.app",
+        "description": "Learn to make compelling photographs",
+        "thumbnailPath": "images/content_packs/mobile_photo_basics_cover.png",
+        "expansionFilePath": "Android/data/org.storymaker.app/files/",
+        "expansionFileUrl": "https://s3-us-west-1.amazonaws.com/storymakerorg/appdata/obb/org.storymaker.app/",
+        "expansionFileVersion": "1"
+    },
+    {
+        "expansionId": "g_odvw",
+        "patchOrder": "2",
+        "contentType": "guide",
+        "title": "Learn to Make Better Video",
+        "packageName": "org.storymaker.app",
+        "description": "A one day workshop in video basics",
+        "thumbnailPath": "images/content_packs/g_odvw_cover.png",
+        "expansionFilePath": "Android/data/org.storymaker.app/files/",
+        "expansionFileUrl": "https://s3-us-west-1.amazonaws.com/storymakerorg/appdata/obb/org.storymaker.app/",
+        "expansionFileVersion": "1"
+    },
+    {
+        "expansionId": "default",
+        "patchOrder": "3",
+        "contentType": "guide",
+        "title": "Story Assistant",
+        "packageName": "org.storymaker.app",
+        "description": "Answer a few questions to get a story template",
+        "thumbnailPath": "images/content_packs/default_cover.png",
+        "expansionFilePath": "Android/data/org.storymaker.app/files/",
+        "expansionFileUrl": "https://s3-us-west-1.amazonaws.com/storymakerorg/appdata/obb/org.storymaker.app/",
+        "expansionFileVersion": "1"
+    },
+    {
+        "expansionId": "learning_guide",
+        "patchOrder": "4",
+        "contentType": "guide",
+        "title": "Basic Elements of a Story",
+        "packageName": "org.storymaker.app",
+        "description": "Three steps to stronger stories",
+        "thumbnailPath": "images/content_packs/learning_guide_cover.jpg",
+        "expansionFilePath": "Android/data/org.storymaker.app/files/",
+        "expansionFileUrl": "https://s3-us-west-1.amazonaws.com/storymakerorg/appdata/obb/org.storymaker.app/",
+        "expansionFileVersion": "1"
+    },
+    {
+        "expansionId": "g_welcome",
+        "patchOrder": "5",
+        "contentType": "guide",
+        "title": "Welcome to StoryMaker",
+        "packageName": "org.storymaker.app",
+        "description": "Tour through StoryMaker's features",
+        "thumbnailPath": "images/content_packs/g_welcome_cover.jpg",
+        "expansionFilePath": "Android/data/org.storymaker.app/files/",
+        "expansionFileUrl": "https://s3-us-west-1.amazonaws.com/storymakerorg/appdata/obb/org.storymaker.app/",
+        "expansionFileVersion": "1"
+    },
+    
+    
+    
+    {
+        "expansionId": "journalism_part_1",
+        "patchOrder": "6",
+        "contentType": "lesson",
+        "title": "Journalism 1",
+        "packageName": "org.storymaker.app",
+        "description": "Social Media Basics and 4 more lessons",
+        "thumbnailPath": "images/content_packs/journalism_part_1_cover.png",
+        "expansionFilePath": "Android/data/org.storymaker.app/files/",
+        "expansionFileUrl": "https://s3-us-west-1.amazonaws.com/storymakerorg/appdata/obb/org.storymaker.app/",
+        "expansionFileVersion": "1"
+    },
+    {
+        "expansionId": "journalism_part_2",
+        "patchOrder": "7",
+        "contentType": "lesson",
+        "title": "Journalism 2",
+        "packageName": "org.storymaker.app",
+        "description": "Evolution of a Story and 3 more lessons",
+        "thumbnailPath": "images/content_packs/journalism_part_2_cover.png",
+        "expansionFilePath": "Android/data/org.storymaker.app/files/",
+        "expansionFileUrl": "https://s3-us-west-1.amazonaws.com/storymakerorg/appdata/obb/org.storymaker.app/",
+        "expansionFileVersion": "1"
+    },
+    {
+        "expansionId": "security",
+        "patchOrder": "8",
+        "contentType": "lesson",
+        "title": "Security",
+        "packageName": "org.storymaker.app",
+        "description": "How can I use SMS Safely and 6 more lessons",
+        "thumbnailPath": "images/content_packs/security_cover.png",
+        "expansionFilePath": "Android/data/org.storymaker.app/files/",
+        "expansionFileUrl": "https://s3-us-west-1.amazonaws.com/storymakerorg/appdata/obb/org.storymaker.app/",
+        "expansionFileVersion": "1"
+    },
+    {
+        "expansionId": "audio",
+        "patchOrder": "9",
+        "contentType": "lesson",
+        "title": "Audio",
+        "packageName": "org.storymaker.app",
+        "description": "Audio Basics and 5 more lessons",
+        "thumbnailPath": "images/content_packs/audio_cover.png",
+        "expansionFilePath": "Android/data/org.storymaker.app/files/",
+        "expansionFileUrl": "https://s3-us-west-1.amazonaws.com/storymakerorg/appdata/obb/org.storymaker.app/",
+        "expansionFileVersion": "1"
+    },
+    {
+        "expansionId": "photography_1",
+        "patchOrder": "10",
+        "contentType": "lesson",
+        "title": "Photography 1",
+        "packageName": "org.storymaker.app",
+        "description": "Camera Basics and 5 more lessons",
+        "thumbnailPath": "images/content_packs/photography_1_cover.png",
+        "expansionFilePath": "Android/data/org.storymaker.app/files/",
+        "expansionFileUrl": "https://s3-us-west-1.amazonaws.com/storymakerorg/appdata/obb/org.storymaker.app/",
+        "expansionFileVersion": "1"
+    },
+    {
+        "expansionId": "photography_2",
+        "patchOrder": "11",
+        "contentType": "lesson",
+        "title": "Photography 2",
+        "packageName": "org.storymaker.app",
+        "description": "The Photo Essay and 4 more lessons",
+        "thumbnailPath": "images/content_packs/photography_2_cover.png",
+        "expansionFilePath": "Android/data/org.storymaker.app/files/",
+        "expansionFileUrl": "https://s3-us-west-1.amazonaws.com/storymakerorg/appdata/obb/org.storymaker.app/",
+        "expansionFileVersion": "1"
+    },
+    {
+        "expansionId": "video_1",
+        "patchOrder": "12",
+        "contentType": "lesson",
+        "title": "Video 1",
+        "packageName": "org.storymaker.app",
+        "description": "Video Basics and 3 more lessons",
+        "thumbnailPath": "images/content_packs/video_1_cover.png",
+        "expansionFilePath": "Android/data/org.storymaker.app/files/",
+        "expansionFileUrl": "https://s3-us-west-1.amazonaws.com/storymakerorg/appdata/obb/org.storymaker.app/",
+        "expansionFileVersion": "1"
+    },
+    {
+        "expansionId": "video_2",
+        "patchOrder": "13",
+        "contentType": "lesson",
+        "title": "Video 2",
+        "packageName": "org.storymaker.app",
+        "description": "Framing your Shot and 4 more lessons",
+        "thumbnailPath": "images/content_packs/video_2_cover.png",
+        "expansionFilePath": "Android/data/org.storymaker.app/files/",
+        "expansionFileUrl": "https://s3-us-west-1.amazonaws.com/storymakerorg/appdata/obb/org.storymaker.app/",
+        "expansionFileVersion": "1"
+    },
+    {
+        "expansionId": "story",
+        "patchOrder": "14",
+        "contentType": "lesson",
+        "title": "Story",
+        "packageName": "org.storymaker.app",
+        "description": "Central Question and 6 more lessons",
+        "thumbnailPath": "images/content_packs/story_cover.png",
+        "expansionFilePath": "Android/data/org.storymaker.app/files/",
+        "expansionFileUrl": "https://s3-us-west-1.amazonaws.com/storymakerorg/appdata/obb/org.storymaker.app/",
+        "expansionFileVersion": "1"
+    },
+    
+    
+    
+    
+    
+    {
+        "expansionId": "t_video",
+        "patchOrder": "15",
+        "contentType": "template",
+        "title": "Make a Video Story",
+        "packageName": "org.storymaker.app",
+        "description": "7 templates for video stories",
+        "thumbnailPath": "images/content_packs/t_video_cover.png",
+        "expansionFilePath": "Android/data/org.storymaker.app/files/",
+        "expansionFileUrl": "https://s3-us-west-1.amazonaws.com/storymakerorg/appdata/obb/org.storymaker.app/",
+        "expansionFileVersion": "1"
+    },
+    {
+        "expansionId": "t_audio",
+        "patchOrder": "16",
+        "contentType": "template",
+        "title": "Make an Audio Story",
+        "packageName": "org.storymaker.app",
+        "description": "Record an audio story in a variety of ways",
+        "thumbnailPath": "images/content_packs/t_audio_cover.png",
+        "expansionFilePath": "Android/data/org.storymaker.app/files/",
+        "expansionFileUrl": "https://s3-us-west-1.amazonaws.com/storymakerorg/appdata/obb/org.storymaker.app/",
+        "expansionFileVersion": "1"
+    },
+    {
+        "expansionId": "t_photo",
+        "patchOrder": "17",
+        "contentType": "template",
+        "title": "Make Photo Essay Stories",
+        "packageName": "org.storymaker.app",
+        "description": "Tell a story with several photos",
+        "thumbnailPath": "images/content_packs/t_photo_cover.png",
+        "expansionFilePath": "Android/data/org.storymaker.app/files/",
+        "expansionFileUrl": "https://s3-us-west-1.amazonaws.com/storymakerorg/appdata/obb/org.storymaker.app/",
+        "expansionFileVersion": "1"
+    },
+    {
+        "expansionId": "t_news",
+        "patchOrder": "18",
+        "contentType": "template",
+        "title": "Make a News Report Story",
+        "packageName": "org.storymaker.app",
+        "description": "News stories on different topics",
+        "thumbnailPath": "images/content_packs/t_news_cover.png",
+        "expansionFilePath": "Android/data/org.storymaker.app/files/",
+        "expansionFileUrl": "https://s3-us-west-1.amazonaws.com/storymakerorg/appdata/obb/org.storymaker.app/",
+        "expansionFileVersion": "1"
+    },
+    {
+        "expansionId": "t_process",
+        "patchOrder": "19",
+        "contentType": "template",
+        "title": "Make a Story Based on a Process",
+        "packageName": "org.storymaker.app",
+        "description": "Tell a story using a single process",
+        "thumbnailPath": "images/content_packs/t_process_cover.png",
+        "expansionFilePath": "Android/data/org.storymaker.app/files/",
+        "expansionFileUrl": "https://s3-us-west-1.amazonaws.com/storymakerorg/appdata/obb/org.storymaker.app/",
+        "expansionFileVersion": "1"
+    },
+    {
+        "expansionId": "t_citizen_journalist",
+        "patchOrder": "20",
+        "contentType": "template",
+        "title": "Citizen Journalism Pack",
+        "packageName": "org.storymaker.app",
+        "description": "Begin telling stories you care about",
+        "thumbnailPath": "images/content_packs/t_citizen_journalist_cover.jpg",
+        "expansionFilePath": "Android/data/org.storymaker.app/files/",
+        "expansionFileUrl": "https://s3-us-west-1.amazonaws.com/storymakerorg/appdata/obb/org.storymaker.app/",
+        "expansionFileVersion": "1"
+    }
+]
