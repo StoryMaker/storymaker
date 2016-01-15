@@ -559,7 +559,11 @@ public class StorymakerDownloadManager implements Runnable {
 
         try {
 
-            Request request = new Request.Builder().url(uri.toString()).build();
+            // FIXME - adding the "Connection: close" header to resolve an issue that seemed to be caused
+            // FIXME - by a lingering connection.  when possible, the better solution would be to track
+            // FIXME - down the possible end states and add appropriate cleanup steps.
+
+            Request request = new Request.Builder().url(uri.toString()).addHeader("Connection", "close").build();
 
             // check for partially downloaded file
             File partFile = new File(targetFile.getPath().replace(".tmp", ".part"));
@@ -568,7 +572,7 @@ public class StorymakerDownloadManager implements Runnable {
                 long partBytes = partFile.length();
                 Timber.d("PARTIAL FILE " + partFile.getPath() + " FOUND, SETTING RANGE HEADER: " + "Range" + " / " + "bytes=" + Long.toString(partBytes) + "-");
                 // request.setHeader("Range", "bytes=" + Long.toString(partBytes) + "-");
-                request = new Request.Builder().url(uri.toString()).addHeader("Range", "bytes=" + Long.toString(partBytes) + "-").build();
+                request = new Request.Builder().url(uri.toString()).addHeader("Connection", "close").addHeader("Range", "bytes=" + Long.toString(partBytes) + "-").build();
             } else {
                 Timber.d("PARTIAL FILE " + partFile.getPath() + " NOT FOUND, STARTING AT BYTE 0");
             }
@@ -912,6 +916,11 @@ public class StorymakerDownloadManager implements Runnable {
                     return false;
                 } else {
                     Timber.d("APPENDED FILE " + appendedFile.getPath() + " IS COMPLETE!");
+
+                    // show notification
+                    Utils.toastOnUiThread((Activity) context, context.getString(R.string.finished_downloading) + " " + indexItem.getTitle() + ".", false);
+
+                    sendDownloadCompleteMessage(indexItem.getExpansionId());
                 }
             } else {
                 Timber.d("FINISHED DOWNLOAD OF " + tempFile.getPath() + " AND FILE LOOKS OK");
