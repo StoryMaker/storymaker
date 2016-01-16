@@ -3,6 +3,8 @@
 import os
 import click
 import sys
+import json
+import subprocess
 
 def query_yes_no(question, default="yes"):
     """Ask a yes/no question via raw_input() and return their answer.
@@ -54,13 +56,14 @@ def pull():
 
     os.system('cd liger-content ; git pull')
 
-def _generate_json():
-    os.system("cd liger-content ; python generate_content.py ; python generate_localized_content.py")
+
+def _generate_json(pack_id):
+    os.system("cd liger-content ; python generate_content.py {0}; python generate_localized_content.py".format(pack_id))
 
 @cli.command()
 def generate():
     """generate json from yaml, also splits out strings into translation intermediates ready for pushing"""
-    _generate_json()
+    _generate_json('all_content')
 
 @cli.command()
 def push_strings():
@@ -86,9 +89,20 @@ def zip_pack(pack, version):
     print "content generated at: liger-content/zips/{0}.main.{1}.obb".format(pack, version)
     os.system("rm liger-content/assets/{0}.main.{1}.obb ; cd liger-content/assets ; zip -n .mp4:.ogg:.mov:.qt:.wav:.au:.aiff:.3gp:.avi -r ../zips/{0}.main.{1}.obb org.storymaker.app/{0}".format(pack, version))
     print("")
-    os.system("sha256sum liger-content/zips/{0}.main.{1}.obb".format(pack, version))
-    os.system("ls -l liger-content/zips/{0}.main.{1}.obb".format(pack, version))
+    cmd = "sha256sum liger-content/zips/{0}.main.{1}.obb".format(pack, version)
+    result = subprocess.check_output(cmd, shell=True)
+    print result
+    splits = result.split(' ')
+    hash = splits[0]
+
+    cmd = "ls -l liger-content/zips/{0}.main.{1}.obb".format(pack, version)
+    result = subprocess.check_output(cmd, shell=True)
+    print result
+    splits = result.split(' ')
+    size = splits[4]
+
     print("")
+    return (hash, size)
     
 @cli.command()
 @click.argument('pack')
@@ -249,8 +263,66 @@ def push_test_files(pack, version, avail_index_version):
     cleanup_content_db()
     push_test_indexes(pack, version, avail_index_version)
     push_obb_file(pack, version)
+
+content_packs = [
+    'journalism_part_1-persian',
+    'journalism_part_1-mena',
+    'journalism_part_1-burundi',
+    'journalism_part_2-persian',
+    'journalism_part_2-mena',
+    'journalism_part_2-burundi',
+    # audio
+    # story
+    # lessons
+    # video_1
+    # video_2
+    # security
+    # photography_1
+    # photography_2
+    # journalism_part_1
+    # journalism_part_2
+    "mobile_photo_basics",
+    "default",
+    "learning_guide",
+    "t_citizen_journalist",
+    "g_odvw",
+    "g_welcome",
+    "t_audio",
+    "t_process",
+    "t_video",
+    "t_photo",
+    "t_news"
+]
+
+# TODO we need to iterate over the available index template and for each item in it, zip the content and get the size and checksum from it:
+#        "expansionFileSize": "YYY",
+#        "expansionFileChecksum": "YYY",
+# TODO deal with patches
+#        "patchFileSize": "YYY",
+#        "patchFileChecksum": "YYY"
+
+def create_available_index():
+    with open('available_index_template.json', 'r') as f:
+        file_json = json.load(f)
+        for item in file_json:
+            id = item['expansionId']
+            ver = item['expansionFileVersion']
+            (hash, size) = zip_pack(id, ver)
+            item['expansionFileSize'] = size
+            item['expansionFileChecksum'] = hash
+            print("item: {0}".format(item))
+        with open('available_index.json.new', 'w') as out_file:
+            json.dump(file_json, out_file, indent=4)
+
+# TODO how do we handle localized lessons?
+
     
-    
+@cli.command()
+def make_all():
+    _generate_json('all_content')
+    create_available_index()
+
+cli.add_command(make_all)
 cli.add_command(clone)
 cli.add_command(pull)
 cli.add_command(push_strings)
