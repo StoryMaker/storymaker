@@ -1070,4 +1070,5 @@ public abstract class BaseHomeActivity extends BaseActivity {
             }
         }
     }
+
 }
