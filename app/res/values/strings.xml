@@ -391,7 +391,7 @@ You also will have an opportunity to see and modify the data being sent."</strin
     <string name="home_empty_btn_lessons">Load a Lesson</string>
     <string name="home_empty_btn_templates">Try a Template</string>
 
-    <string name="home_tab_latest_stories">Latest Stories</string>
-    <string name="home_tab_latest_installation">Last Installed</string>
+    <string name="home_tab_latest_stories">Recent Stories</string>
+    <string name="home_tab_latest_installation">Recent Content Packs</string>
 
 </resources>
