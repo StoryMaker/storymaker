@@ -1,3 +1,10 @@
+--- build 1085:
+
+- All new content!  Checkout the Catalog
+- Implement basic Panic responder
+- New categorized home screen
+- Many bug fixes
+
 --- build 1083:
 
 - New Spanish translation for Mobile Photo 101 pack!

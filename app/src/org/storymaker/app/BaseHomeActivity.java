@@ -596,22 +596,22 @@ public abstract class BaseHomeActivity extends BaseActivity {
         if (item.getItemId() == android.R.id.home) {
             toggleDrawer();
             return true;
-        } else if (item.getItemId() == R.id.menu_new_project) {
-            // need to check this to determine whether there is a storage issue that will cause a crash
-            File actualStorageDirectory = StorageHelper.getActualStorageDirectory(this);
-
-            if (actualStorageDirectory != null) {
-                launchNewProject();
-            } else {
-                //show storage error message
-                new AlertDialog.Builder(this)
-                        .setTitle(Utils.getAppName(this))
-                        .setIcon(android.R.drawable.ic_dialog_info)
-                        .setMessage(R.string.err_storage_not_available)
-                        .show();
-            }
-
-            return true;
+//        } else if (item.getItemId() == R.id.menu_new_project) {
+//            // need to check this to determine whether there is a storage issue that will cause a crash
+//            File actualStorageDirectory = StorageHelper.getActualStorageDirectory(this);
+//
+//            if (actualStorageDirectory != null) {
+//                launchNewProject();
+//            } else {
+//                //show storage error message
+//                new AlertDialog.Builder(this)
+//                        .setTitle(Utils.getAppName(this))
+//                        .setIcon(android.R.drawable.ic_dialog_info)
+//                        .setMessage(R.string.err_storage_not_available)
+//                        .show();
+//            }
+//
+//            return true;
         } else if (item.getItemId() == R.id.menu_about) {
             String url = "https://storymaker.org";
 
@@ -1070,4 +1070,5 @@ public abstract class BaseHomeActivity extends BaseActivity {
             }
         }
     }
+
 }

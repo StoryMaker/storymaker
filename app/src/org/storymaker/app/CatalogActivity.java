@@ -75,6 +75,7 @@ public class CatalogActivity extends BaseHomeActivity {
     private String mIntentMessage;
 
     private final static String TAG = "CatalogActivity";
+    private int currentPage = -1;
 
     //private ProgressDialog mLoading;
     //private ArrayList<Project> mListProjects;
@@ -844,8 +845,23 @@ public class CatalogActivity extends BaseHomeActivity {
         // Set up the ViewPager with the sections adapter.
         //mViewPager = (SwipelessViewPager) findViewById(R.id.pager);
         mViewPager = (ViewPager) findViewById(R.id.pager);
+
         mViewPager.setAdapter(mDemoCollectionPagerAdapter);
-        goToCatalogTab();
+        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageSelected(int position) {
+                currentPage = position;
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+            }
+
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+            }
+        });
+        goToCatalogTab(currentPage);
         //mViewPager.setPagingEnabled(false);
 
         // Give the SlidingTabLayout the ViewPager, this must be done AFTER the ViewPager has had
@@ -857,30 +873,36 @@ public class CatalogActivity extends BaseHomeActivity {
         mSlidingTabLayout.setViewPager(mViewPager);
     }
 
-    public void goToCatalogTab() {
+    public void goToCatalogTab(int currentPage) {
 
         int i;
-        switch (mIntentMessage) {
-            case "home":
-                i = 0;
-                break;
-            case "guides":
-                i = 0;
-                break;
-            case "lessons":
-                i = 1;
-                break;
-            case "templates":
-                i = 2;
-                break;
-            case "null":
-                i = 0;
-                break;
-            default:
-                i = 0;
-                break;
+
+        if (currentPage != -1) {
+            mViewPager.setCurrentItem(currentPage);
+        } else {
+
+            switch (mIntentMessage) {
+                case "home":
+                    i = 0;
+                    break;
+                case "guides":
+                    i = 0;
+                    break;
+                case "lessons":
+                    i = 1;
+                    break;
+                case "templates":
+                    i = 2;
+                    break;
+                case "null":
+                    i = 0;
+                    break;
+                default:
+                    i = 0;
+                    break;
+            }
+            mViewPager.setCurrentItem(i);
         }
-        mViewPager.setCurrentItem(i);
 
     }
 

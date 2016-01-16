@@ -58,6 +58,7 @@ public class HomeActivity extends BaseHomeActivity {
     //private SwipeRefreshLayout mSwipeRefreshLayout;
     // private DownloadPoller downloadPoller = null;
     private DemoCollectionPagerAdapter mDemoCollectionPagerAdapter;
+    private int currentPage = -1;
 
 //    private ViewPager mViewPager;
 //    private SlidingTabLayout mSlidingTabLayout;
@@ -394,27 +395,25 @@ public class HomeActivity extends BaseHomeActivity {
 
         @Override
         public Fragment getItem(int i) {
-
-                StoryListFragment fragment = new StoryListFragment();
-                fragment.setContext(HomeActivity.this);
-                fragment.setMyInstanceIndexItemAdapter(myInstanceIndexItemAdapters.get(i));
-                Bundle args = new Bundle();
-                args.putInt(StoryListFragment.ARG_OBJECT, i + 1); // Our object is just an integer :-P
-                args.putInt(StoryListFragment.LIST_COUNT, myListLengths.get(i));
-                args.putString(StoryListFragment.LIST_NAME, myListNames.get(i));
-                args.putBoolean(StoryListFragment.HOME_FLAG, true);
-                args.putInt(StoryListFragment.HOME_TAB_INSTALLATION_COUNT, myHomeTabInstallationCount);
-                args.putInt(StoryListFragment.HOME_TAB_INSTANCE_COUNT, myHomeTabInstanceCount);
-                if (i == 0) {
-                    args.putBoolean(StoryListFragment.HOME_TAB_FLAG, true);
-                    args.putBoolean(StoryListFragment.SECTION_FLAG, true);
-                } else {
-                    args.putBoolean(StoryListFragment.HOME_TAB_FLAG, false);
-                    args.putBoolean(StoryListFragment.SECTION_FLAG, false);
-                }
-                fragment.setArguments(args);
-                return fragment;
-
+            StoryListFragment fragment = new StoryListFragment();
+            fragment.setContext(HomeActivity.this);
+            fragment.setMyInstanceIndexItemAdapter(myInstanceIndexItemAdapters.get(i));
+            Bundle args = new Bundle();
+            args.putInt(StoryListFragment.ARG_OBJECT, i + 1); // Our object is just an integer :-P
+            args.putInt(StoryListFragment.LIST_COUNT, myListLengths.get(i));
+            args.putString(StoryListFragment.LIST_NAME, myListNames.get(i));
+            args.putBoolean(StoryListFragment.HOME_FLAG, true);
+            args.putInt(StoryListFragment.HOME_TAB_INSTALLATION_COUNT, myHomeTabInstallationCount);
+            args.putInt(StoryListFragment.HOME_TAB_INSTANCE_COUNT, myHomeTabInstanceCount);
+            if (i == 0) {
+                args.putBoolean(StoryListFragment.HOME_TAB_FLAG, true);
+                args.putBoolean(StoryListFragment.SECTION_FLAG, true);
+            } else {
+                args.putBoolean(StoryListFragment.HOME_TAB_FLAG, false);
+                args.putBoolean(StoryListFragment.SECTION_FLAG, false);
+            }
+            fragment.setArguments(args);
+            return fragment;
         }
 
         @Override
@@ -819,6 +818,20 @@ public class HomeActivity extends BaseHomeActivity {
         //mViewPager = (SwipelessViewPager) findViewById(R.id.pager);
         mViewPager = (ViewPager) findViewById(R.id.home_pager);
         mViewPager.setAdapter(mDemoCollectionPagerAdapter);
+        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageSelected(int position) {
+                currentPage = position;
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+            }
+
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+            }
+        });
         //mViewPager.setPagingEnabled(false);
 
         // Give the SlidingTabLayout the ViewPager, this must be done AFTER the ViewPager has had
@@ -828,6 +841,10 @@ public class HomeActivity extends BaseHomeActivity {
                 getResources().getColor(R.color.white));
         //mSlidingTabLayout.setDistributeEvenly(true);
         mSlidingTabLayout.setViewPager(mViewPager);
+
+        if (currentPage != -1) {
+            mViewPager.setCurrentItem(currentPage);
+        }
 
 
         //} else {
