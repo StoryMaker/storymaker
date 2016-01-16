@@ -46,6 +46,8 @@ public class HomeActivity extends BaseHomeActivity {
     private InstanceIndexItemAdapter myGuidesInstanceIndexItemAdapter;
     private InstanceIndexItemAdapter myLessonsInstanceIndexItemAdapter;
     private InstanceIndexItemAdapter myTemplatesInstanceIndexItemAdapter;
+    private int mHomeTabInstanceCount;
+    private int mHomeTabInstallationCount;
 
     //RES
 //    private ProgressDialog mLoading;
@@ -316,6 +318,9 @@ public class HomeActivity extends BaseHomeActivity {
         //});
 
 
+        mHomeTabInstanceCount = 0;
+        mHomeTabInstallationCount = 0;
+
         mTabMenu = getMenu("home");
         // action bar stuff
 //        getActionBar().setDisplayHomeAsUpEnabled(true);
@@ -375,28 +380,40 @@ public class HomeActivity extends BaseHomeActivity {
         private ArrayList<InstanceIndexItemAdapter> myInstanceIndexItemAdapters;
         private ArrayList<Integer> myListLengths;
         private ArrayList<String> myListNames;
+        private int myHomeTabInstanceCount;
+        private int myHomeTabInstallationCount;
 
-        public DemoCollectionPagerAdapter(FragmentManager fm, ArrayList<InstanceIndexItemAdapter> iiias, ArrayList<Integer> ls, ArrayList<String> ns) {
+        public DemoCollectionPagerAdapter(FragmentManager fm, ArrayList<InstanceIndexItemAdapter> iiias, ArrayList<Integer> ls, ArrayList<String> ns, int instanceCount, int installationCount) {
             super(fm);
 
             myInstanceIndexItemAdapters = iiias;
             myListLengths = ls;
             myListNames = ns;
+            myHomeTabInstanceCount = instanceCount;
+            myHomeTabInstallationCount = installationCount;
         }
 
         @Override
         public Fragment getItem(int i) {
-
-                StoryListFragment fragment = new StoryListFragment();
-                fragment.setMyInstanceIndexItemAdapter(myInstanceIndexItemAdapters.get(i));
-                Bundle args = new Bundle();
+            StoryListFragment fragment = new StoryListFragment();
+            fragment.setContext(HomeActivity.this);
+            fragment.setMyInstanceIndexItemAdapter(myInstanceIndexItemAdapters.get(i));
+            Bundle args = new Bundle();
             args.putInt(StoryListFragment.ARG_OBJECT, i + 1); // Our object is just an integer :-P
             args.putInt(StoryListFragment.LIST_COUNT, myListLengths.get(i));
             args.putString(StoryListFragment.LIST_NAME, myListNames.get(i));
             args.putBoolean(StoryListFragment.HOME_FLAG, true);
-                fragment.setArguments(args);
-                return fragment;
-
+            args.putInt(StoryListFragment.HOME_TAB_INSTALLATION_COUNT, myHomeTabInstallationCount);
+            args.putInt(StoryListFragment.HOME_TAB_INSTANCE_COUNT, myHomeTabInstanceCount);
+            if (i == 0) {
+                args.putBoolean(StoryListFragment.HOME_TAB_FLAG, true);
+                args.putBoolean(StoryListFragment.SECTION_FLAG, true);
+            } else {
+                args.putBoolean(StoryListFragment.HOME_TAB_FLAG, false);
+                args.putBoolean(StoryListFragment.SECTION_FLAG, false);
+            }
+            fragment.setArguments(args);
+            return fragment;
         }
 
         @Override
@@ -625,9 +642,13 @@ public class HomeActivity extends BaseHomeActivity {
         Collections.sort(templates, Collections.reverseOrder()); // FIXME we should sort this down a layer, perhaps in loadInstanceIndexAsList
         Collections.sort(installations, Collections.reverseOrder()); // FIXME we should sort this down a layer, perhaps in loadInstanceIndexAsList
 
+        mHomeTabInstanceCount = 0;
+        mHomeTabInstallationCount = 0;
+
         for (int i = 0; i < instances.size(); i++) {
             //System.out.println(list.get(i));
             homeitems.add(instances.get(i));
+            mHomeTabInstanceCount++;
             if (i == 1) {
                 break;
             }
@@ -635,11 +656,12 @@ public class HomeActivity extends BaseHomeActivity {
         for (int j = 0; j < installations.size(); j++) {
             //System.out.println(list.get(i));
             homeitems.add(installations.get(j));
+            mHomeTabInstallationCount++;
             if (j == 0) {
                 break;
             }
         }
-
+        
         //mRecyclerView.setAdapter(new InstanceIndexItemAdapter(instances, new InstanceIndexItemAdapter.BaseIndexItemSelectedListener() {
 
         InstanceIndexItemAdapter.BaseIndexItemSelectedListener myBaseIndexItemSelectedListener = new InstanceIndexItemAdapter.BaseIndexItemSelectedListener() {
@@ -790,7 +812,7 @@ public class HomeActivity extends BaseHomeActivity {
 
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
-        mDemoCollectionPagerAdapter = new DemoCollectionPagerAdapter(getSupportFragmentManager(), myInstanceIndexItemAdapters, myListLengths, myListNames);
+        mDemoCollectionPagerAdapter = new DemoCollectionPagerAdapter(getSupportFragmentManager(), myInstanceIndexItemAdapters, myListLengths, myListNames, mHomeTabInstanceCount, mHomeTabInstallationCount);
 
         // Set up the ViewPager with the sections adapter.
         //mViewPager = (SwipelessViewPager) findViewById(R.id.pager);
