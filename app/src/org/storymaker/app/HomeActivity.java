@@ -662,9 +662,7 @@ public class HomeActivity extends BaseHomeActivity {
                 break;
             }
         }
-
-        Log.d("StoryListFragment", "initActivityList instances: " + mHomeTabInstanceCount+" installations:" + mHomeTabInstallationCount);
-
+        
         //mRecyclerView.setAdapter(new InstanceIndexItemAdapter(instances, new InstanceIndexItemAdapter.BaseIndexItemSelectedListener() {
 
         InstanceIndexItemAdapter.BaseIndexItemSelectedListener myBaseIndexItemSelectedListener = new InstanceIndexItemAdapter.BaseIndexItemSelectedListener() {
