@@ -732,9 +732,11 @@ public class CatalogActivity extends BaseHomeActivity {
 
                         // this item is not installed and there are no saved threads for it
 
+                        double size = ((eItem.getExpansionFileSize() + eItem.getPatchFileSize()) / 1048576.0);
+                        size = Utils.round(size, 2);
                         new AlertDialog.Builder(CatalogActivity.this)
                                 .setTitle(R.string.download_content_pack)
-                                .setMessage(eItem.getTitle() + " (" + ((eItem.getExpansionFileSize() + eItem.getPatchFileSize()) / 1048576) + " MB)") // FIXME we need to flip this for RTL
+                                .setMessage(eItem.getTitle() + " (" + size + " MB)") // FIXME we need to flip this for RTL
                                         // using negative button to account for fixed order
                                 .setPositiveButton(getString(R.string.download), new DialogInterface.OnClickListener() {
 
