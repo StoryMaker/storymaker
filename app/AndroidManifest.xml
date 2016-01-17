@@ -44,7 +44,6 @@
         android:description="@string/app_description"
         android:largeHeap="true"
         android:supportsRtl="true"
-        android:debuggable="true"
         tools:replace="android:name">
         <activity
             android:name="org.storymaker.app.server.LoginActivity"
