@@ -2,6 +2,7 @@
     {
         "expansionId": "mobile_photo_basics",
         "patchOrder": "1",
+        "sortOrder": "1",
         "contentType": "guide",
         "title": "Mobile Photo Basics",
         "packageName": "org.storymaker.app",
@@ -14,6 +15,7 @@
     {
         "expansionId": "g_odvw",
         "patchOrder": "2",
+        "sortOrder": "2",
         "contentType": "guide",
         "title": "Learn to Make Better Video",
         "packageName": "org.storymaker.app",
@@ -26,6 +28,7 @@
     {
         "expansionId": "default",
         "patchOrder": "3",
+        "sortOrder": "3",
         "contentType": "guide",
         "title": "Story Assistant",
         "packageName": "org.storymaker.app",
@@ -38,6 +41,7 @@
     {
         "expansionId": "learning_guide",
         "patchOrder": "4",
+        "sortOrder": "4",
         "contentType": "guide",
         "title": "Basic Elements of a Story",
         "packageName": "org.storymaker.app",
@@ -50,6 +54,7 @@
     {
         "expansionId": "g_welcome",
         "patchOrder": "5",
+        "sortOrder": "5",
         "contentType": "guide",
         "title": "Welcome to StoryMaker",
         "packageName": "org.storymaker.app",
@@ -65,6 +70,7 @@
     {
         "expansionId": "journalism_part_1-mena",
         "patchOrder": "6",
+        "sortOrder": "6",
         "contentType": "lesson",
         "title": "Journalism 1 - MENA Edition",
         "packageName": "org.storymaker.app",
@@ -76,7 +82,8 @@
     },
     {
         "expansionId": "journalism_part_1-persian",
-        "patchOrder": "6",
+        "patchOrder": "7",
+        "sortOrder": "7",
         "contentType": "lesson",
         "title": "Journalism 1 - Persian Edition",
         "packageName": "org.storymaker.app",
@@ -88,7 +95,8 @@
     },
     {
         "expansionId": "journalism_part_1-burundi",
-        "patchOrder": "6",
+        "patchOrder": "8",
+        "sortOrder": "8",
         "contentType": "lesson",
         "title": "Journalism 1 - Burundi Edition",
         "packageName": "org.storymaker.app",
@@ -100,7 +108,8 @@
     },
     {
         "expansionId": "journalism_part_2-mena",
-        "patchOrder": "7",
+        "patchOrder": "9",
+        "sortOrder": "9",
         "contentType": "lesson",
         "title": "Journalism 2 - MENA Edition",
         "packageName": "org.storymaker.app",
@@ -112,7 +121,8 @@
     },
     {
         "expansionId": "journalism_part_2-persian",
-        "patchOrder": "7",
+        "patchOrder": "10",
+        "sortOrder": "10",
         "contentType": "lesson",
         "title": "Journalism 2 - Persian Edition",
         "packageName": "org.storymaker.app",
@@ -124,7 +134,8 @@
     },
     {
         "expansionId": "journalism_part_2-burundi",
-        "patchOrder": "7",
+        "patchOrder": "11",
+        "sortOrder": "11",
         "contentType": "lesson",
         "title": "Journalism 2 - Burundi Edition",
         "packageName": "org.storymaker.app",
@@ -137,7 +148,8 @@
     
     {
         "expansionId": "security-mena",
-        "patchOrder": "8",
+        "patchOrder": "12",
+        "sortOrder": "12",
         "contentType": "lesson",
         "title": "Security - MENA Edition",
         "packageName": "org.storymaker.app",
@@ -149,7 +161,8 @@
     },
     {
         "expansionId": "security-persian",
-        "patchOrder": "8",
+        "patchOrder": "13",
+        "sortOrder": "13",
         "contentType": "lesson",
         "title": "Security - Persian Edition",
         "packageName": "org.storymaker.app",
@@ -161,7 +174,8 @@
     },
     {
         "expansionId": "security-burundi",
-        "patchOrder": "8",
+        "patchOrder": "14",
+        "sortOrder": "14",
         "contentType": "lesson",
         "title": "Security - Burundi Edition",
         "packageName": "org.storymaker.app",
@@ -174,7 +188,8 @@
     
     {
         "expansionId": "audio-mena",
-        "patchOrder": "9",
+        "patchOrder": "15",
+        "sortOrder": "15,
         "contentType": "lesson",
         "title": "Audio - MENA Edition",
         "packageName": "org.storymaker.app",
@@ -186,7 +201,8 @@
     },
     {
         "expansionId": "audio-persian",
-        "patchOrder": "9",
+        "patchOrder": "16",
+        "sortOrder": "16",
         "contentType": "lesson",
         "title": "Audio - Persian Edition",
         "packageName": "org.storymaker.app",
@@ -198,7 +214,8 @@
     },
     {
         "expansionId": "audio-burundi",
-        "patchOrder": "9",
+        "patchOrder": "17",
+        "sortOrder": "17",
         "contentType": "lesson",
         "title": "Audio - Burundi Edition",
         "packageName": "org.storymaker.app",
@@ -211,7 +228,8 @@
     
     {
         "expansionId": "photography_1-mena",
-        "patchOrder": "10",
+        "patchOrder": "18",
+        "sortOrder": "18",
         "contentType": "lesson",
         "title": "Photography 1 - MENA Edition",
         "packageName": "org.storymaker.app",
@@ -223,7 +241,8 @@
     },
     {
         "expansionId": "photography_1-persian",
-        "patchOrder": "10",
+        "patchOrder": "19",
+        "sortOrder": "19",
         "contentType": "lesson",
         "title": "Photography 1 - Persian Edition",
         "packageName": "org.storymaker.app",
@@ -235,7 +254,8 @@
     },
     {
         "expansionId": "photography_1-burundi",
-        "patchOrder": "10",
+        "patchOrder": "20",
+        "sortOrder": "20",
         "contentType": "lesson",
         "title": "Photography 1 - Burundi Edition",
         "packageName": "org.storymaker.app",
@@ -248,7 +268,8 @@
     
     {
         "expansionId": "photography_2-mena",
-        "patchOrder": "11",
+        "patchOrder": "21",
+        "sortOrder": "21",
         "contentType": "lesson",
         "title": "Photography 2 - MENA Edition",
         "packageName": "org.storymaker.app",
@@ -260,7 +281,8 @@
     },
     {
         "expansionId": "photography_2-persian",
-        "patchOrder": "11",
+        "patchOrder": "22",
+        "sortOrder": "22",
         "contentType": "lesson",
         "title": "Photography 2 - Persian Edition",
         "packageName": "org.storymaker.app",
@@ -272,7 +294,8 @@
     },
     {
         "expansionId": "photography_2-burundi",
-        "patchOrder": "11",
+        "patchOrder": "23",
+        "sortOrder": "23",
         "contentType": "lesson",
         "title": "Photography 2 - Burundi Edition",
         "packageName": "org.storymaker.app",
@@ -285,7 +308,8 @@
     
     {
         "expansionId": "video_1-mena",
-        "patchOrder": "12",
+        "patchOrder": "24",
+        "sortOrder": "24",
         "contentType": "lesson",
         "title": "Video 1 - MENA Edition",
         "packageName": "org.storymaker.app",
@@ -297,7 +321,8 @@
     },
     {
         "expansionId": "video_1-persian",
-        "patchOrder": "12",
+        "patchOrder": "25",
+        "sortOrder": "25",
         "contentType": "lesson",
         "title": "Video 1 - Persian Edition",
         "packageName": "org.storymaker.app",
@@ -309,7 +334,8 @@
     },
     {
         "expansionId": "video_1-burundi",
-        "patchOrder": "12",
+        "patchOrder": "26",
+        "sortOrder": "26",
         "contentType": "lesson",
         "title": "Video 1 - Burundi Edition",
         "packageName": "org.storymaker.app",
@@ -322,7 +348,8 @@
     
     {
         "expansionId": "video_2-mena",
-        "patchOrder": "13",
+        "patchOrder": "27",
+        "sortOrder": "27",
         "contentType": "lesson",
         "title": "Video 2 - MENA Edition",
         "packageName": "org.storymaker.app",
@@ -334,7 +361,8 @@
     },
     {
         "expansionId": "video_2-persian",
-        "patchOrder": "13",
+        "patchOrder": "28",
+        "sortOrder": "28",
         "contentType": "lesson",
         "title": "Video 2 - Persian Edition",
         "packageName": "org.storymaker.app",
@@ -346,7 +374,8 @@
     },
     {
         "expansionId": "video_2-burundi",
-        "patchOrder": "13",
+        "patchOrder": "29",
+        "sortOrder": "29",
         "contentType": "lesson",
         "title": "Video 2 - Burundi Edition",
         "packageName": "org.storymaker.app",
@@ -359,7 +388,8 @@
     
     {
         "expansionId": "story-mena",
-        "patchOrder": "14",
+        "patchOrder": "30",
+        "sortOrder": "30",
         "contentType": "lesson",
         "title": "Story - MENA Edition",
         "packageName": "org.storymaker.app",
@@ -371,7 +401,8 @@
     },
     {
         "expansionId": "story-persian",
-        "patchOrder": "14",
+        "patchOrder": "31",
+        "sortOrder": "31",
         "contentType": "lesson",
         "title": "Story - Persian Edition",
         "packageName": "org.storymaker.app",
@@ -383,7 +414,8 @@
     },
     {
         "expansionId": "story-burundi",
-        "patchOrder": "14",
+        "patchOrder": "32",
+        "sortOrder": "32",
         "contentType": "lesson",
         "title": "Story - Burundi Edition",
         "packageName": "org.storymaker.app",
@@ -400,7 +432,8 @@
     
     {
         "expansionId": "t_video",
-        "patchOrder": "15",
+        "patchOrder": "33",
+        "sortOrder": "33",
         "contentType": "template",
         "title": "Make a Video Story",
         "packageName": "org.storymaker.app",
@@ -412,7 +445,8 @@
     },
     {
         "expansionId": "t_audio",
-        "patchOrder": "16",
+        "patchOrder": "34",
+        "sortOrder": "34",
         "contentType": "template",
         "title": "Make an Audio Story",
         "packageName": "org.storymaker.app",
@@ -424,7 +458,8 @@
     },
     {
         "expansionId": "t_photo",
-        "patchOrder": "17",
+        "patchOrder": "35",
+        "sortOrder": "35",
         "contentType": "template",
         "title": "Make Photo Essay Stories",
         "packageName": "org.storymaker.app",
@@ -436,7 +471,8 @@
     },
     {
         "expansionId": "t_news",
-        "patchOrder": "18",
+        "patchOrder": "36",
+        "sortOrder": "36",
         "contentType": "template",
         "title": "Make a News Report Story",
         "packageName": "org.storymaker.app",
@@ -448,7 +484,8 @@
     },
     {
         "expansionId": "t_process",
-        "patchOrder": "19",
+        "patchOrder": "37",
+        "sortOrder": "37",
         "contentType": "template",
         "title": "Make a Story Based on a Process",
         "packageName": "org.storymaker.app",
@@ -460,7 +497,8 @@
     },
     {
         "expansionId": "t_citizen_journalist",
-        "patchOrder": "20",
+        "patchOrder": "38",
+        "sortOrder": "38",
         "contentType": "template",
         "title": "Citizen Journalism Pack",
         "packageName": "org.storymaker.app",
