@@ -26,6 +26,7 @@ import java.util.TimerTask;
 
 import info.guardianproject.cacheword.CacheWordHandler;
 import info.guardianproject.cacheword.ICacheWordSubscriber;
+import timber.log.Timber;
 
 // FIXME rename this to SMProvier and get rid of LessonsProvider
 public class ProjectsProvider extends ContentProvider implements ICacheWordSubscriber {
@@ -366,6 +367,7 @@ public class ProjectsProvider extends ContentProvider implements ICacheWordSubsc
     // NEW/CACHEWORD
     @Override
     public void onCacheWordUninitialized() {
+        Timber.d("onCacheWordUninitialized, mDBHelper is " + mDBHelper + ", mDB is " + mDB);
         // prevent db access while cacheword is uninitialized
         if (mDBHelper != null)
             mDBHelper.close();
@@ -377,6 +379,7 @@ public class ProjectsProvider extends ContentProvider implements ICacheWordSubsc
 
     @Override
     public void onCacheWordLocked() {
+        Timber.d("onCacheWordLocked, mDBHelper is " + mDBHelper + ", mDB is " + mDB);
         // prevent db access when cacheword is locked
         if (mDBHelper != null)
             mDBHelper.close();
@@ -388,6 +391,7 @@ public class ProjectsProvider extends ContentProvider implements ICacheWordSubsc
 
     @Override
     public void onCacheWordOpened() {
+        Timber.d("onCacheWordOpened, mDBHelper is " + mDBHelper + ", mDB is " + mDB);
         // permit db access when cacheword is unlocked
         mDBHelper = new StoryMakerDB(mCacheWordHandler, getContext());
         mDB = mDBHelper.getWritableDatabase(mPassphrase);
