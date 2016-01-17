@@ -83,7 +83,7 @@ public abstract class BaseHomeActivity extends BaseActivity {
     protected InstalledIndexItemDao installedIndexItemDao;
     protected QueueItemDao queueItemDao;
     protected DaoManager daoManager;
-    protected int dbVersion = 1;
+    protected int dbVersion = 2;
 
     protected HashMap<String, ArrayList<Thread>> downloadThreads = new HashMap<String, ArrayList<Thread>>();
 
@@ -102,6 +102,9 @@ public abstract class BaseHomeActivity extends BaseActivity {
 
         daoManager = new DaoManager(BaseHomeActivity.this, "Storymaker.db", dbVersion, instanceIndexItemDao, availableIndexItemDao, installedIndexItemDao, queueItemDao);
         daoManager.setLogging(false);
+
+        //Log.d("BaseHomeActivity", "DB version "+daoManager.getVersion());
+
 
     }
 

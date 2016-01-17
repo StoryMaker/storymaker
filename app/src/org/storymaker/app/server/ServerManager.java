@@ -1,6 +1,13 @@
 package org.storymaker.app.server;
 
-import timber.log.Timber;
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
+
+import net.bican.wordpress.Comment;
+import net.bican.wordpress.Page;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -14,20 +21,11 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 
-import net.bican.wordpress.Comment;
-import net.bican.wordpress.Page;
-
 import io.scal.secureshareui.lib.CaptchaException;
 import io.scal.secureshareui.lib.SMWrapper;
 import scal.io.liger.IndexManager;
 import scal.io.liger.model.ExpansionIndexItem;
-
-import android.app.Activity;
-import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
-import android.util.Log;
+import timber.log.Timber;
 
 public class ServerManager {
     private static final String TAG = "ServerManager";
@@ -243,6 +241,7 @@ public class ServerManager {
 
                         ExpansionIndexItem contentItem = new ExpansionIndexItem(jObject.getString("organization"), // packageName
                                                                                 jObject.getString("uuid"), // expansionId
+                                                                                jObject.getInt("patchOrder"),
                                                                                 "" + (-1 - i), // patchOrder (using arbitrary negative value to avoid collisions with existing items
                                                                                 jObject.getString("contentType"),
                                                                                 "" + jObject.getInt("version"), // expansionFileVersion
