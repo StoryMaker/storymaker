@@ -11,6 +11,8 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 public abstract class Table {
     protected abstract String getTableName();
@@ -24,20 +26,23 @@ public abstract class Table {
         
     }
     
-    public Table(SQLiteDatabase db) {
+    public Table(@NonNull SQLiteDatabase db) {
         mDB = db;
     }
-    
+
+    @Nullable
     public Cursor queryOne(Context context, Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
         SQLiteQueryBuilder queryBuilder = new SQLiteQueryBuilder();
         queryBuilder.setTables(getTableName());
         queryBuilder.appendWhere(getIDColumnName() + "=" + uri.getLastPathSegment());
         
         Cursor cursor = queryBuilder.query(mDB, projection, selection, selectionArgs, null, null, sortOrder);
+        // FIXME cursor can be null!
         cursor.setNotificationUri(context.getContentResolver(), uri);
         return cursor;
     }
 
+    @Nullable
     public Cursor queryAll(Context context, Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
         SQLiteQueryBuilder queryBuilder = new SQLiteQueryBuilder();
         queryBuilder.setTables(getTableName());
@@ -46,7 +51,8 @@ public abstract class Table {
         cursor.setNotificationUri(context.getContentResolver(), uri);
         return cursor;
     }
-    
+
+    @Nullable
     public Cursor queryOneDistinct(Context context, Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
         SQLiteQueryBuilder queryBuilder = new SQLiteQueryBuilder();
         queryBuilder.setTables(getTableName());
@@ -58,6 +64,7 @@ public abstract class Table {
         return cursor;
     }
 
+    @Nullable
     public Cursor queryAllDistinct(Context context, Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
         SQLiteQueryBuilder queryBuilder = new SQLiteQueryBuilder();
         queryBuilder.setTables(getTableName());
@@ -68,13 +75,14 @@ public abstract class Table {
         return cursor;
     }
 
+    @NonNull
     public Uri insert(Context context, Uri uri, ContentValues values) {
         long newId;
         newId = mDB.insertOrThrow(getTableName(), null, values);
         context.getContentResolver().notifyChange(uri, null);
         return getURI().buildUpon().appendPath(getProviderBasePath()).appendPath("" + newId).build();
     }
-    
+
     public int delete(Context context, Uri uri, String selection, String[] selectionArgs) {
         int count = mDB.delete(getTableName(), selection, selectionArgs);
         context.getContentResolver().notifyChange(uri, null);
