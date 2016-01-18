@@ -697,9 +697,9 @@ public class CatalogActivity extends BaseHomeActivity {
         }
 
         //Collections.sort(instances, Collections.reverseOrder()); // FIXME we should sort this down a layer, perhaps in loadInstanceIndexAsList
-        Collections.sort(lessons, Collections.reverseOrder()); // FIXME we should sort this down a layer, perhaps in loadInstanceIndexAsList
-        Collections.sort(guides, Collections.reverseOrder()); // FIXME we should sort this down a layer, perhaps in loadInstanceIndexAsList
-        Collections.sort(templates, Collections.reverseOrder()); // FIXME we should sort this down a layer, perhaps in loadInstanceIndexAsList
+        Collections.sort(lessons); // FIXME we should sort this down a layer, perhaps in loadInstanceIndexAsList
+        Collections.sort(guides); // FIXME we should sort this down a layer, perhaps in loadInstanceIndexAsList
+        Collections.sort(templates); // FIXME we should sort this down a layer, perhaps in loadInstanceIndexAsList
 
         //mRecyclerView.setAdapter(new InstanceIndexItemAdapter(instances, new InstanceIndexItemAdapter.BaseIndexItemSelectedListener() {
 
