@@ -241,7 +241,7 @@ public class ServerManager {
 
                         ExpansionIndexItem contentItem = new ExpansionIndexItem(jObject.getString("organization"), // packageName
                                                                                 jObject.getString("uuid"), // expansionId
-                                                                                jObject.getInt("patchOrder"),
+                                                                                Integer.parseInt(jObject.getString("sortOrder")),
                                                                                 "" + (-1 - i), // patchOrder (using arbitrary negative value to avoid collisions with existing items
                                                                                 jObject.getString("contentType"),
                                                                                 "" + jObject.getInt("version"), // expansionFileVersion
