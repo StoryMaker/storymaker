@@ -145,10 +145,14 @@ public class BaseActivity extends FragmentActivity implements ICacheWordSubscrib
             Timber.d("onCacheWordOpened(storymaker) - no pin set, cannot mount vfs");
         }
 
-        // if we're opened, check db and update menu status
-        Timber.d("cacheword opened, activity will continue");
-        updateSlidingMenuWithUserState();
-
+        // unsure how this resolves first-run crash issue but i'm unable to reproduce the error with this check here
+        if (mCacheWordHandler.isLocked()) {
+            Timber.d("onCacheWordOpened(storymaker) - we're in on-opened method but we're still locked somehow");
+        } else {
+            // if we're opened, check db and update menu status
+            Timber.d("onCacheWordOpened(storymaker) - cacheword unlocked, updating menu");
+            updateSlidingMenuWithUserState();
+        }
     }
 
     public void setupDrawerLayout() {
