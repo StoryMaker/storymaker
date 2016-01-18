@@ -235,6 +235,9 @@
 <string name="prefs_youtube_login_title">YouTube Login</string>
 <string name="prefs_youtube_login_summary">Use YouTube web authentication</string>
 
+<string name="prefs_cacheword_timeout_title">Cacheword Timeout</string>
+<string name="prefs_cacheword_timeout_summary">Number of seconds before cacheword automatically locks the app (app will restart)</string>
+
 <string name="prefs_soundcloud_account_title">SoundCloud Account</string>
 <string name="prefs_soundcloud_account_summary">The SoundCloud account to use for audio uploads</string>
 
@@ -288,6 +291,9 @@
 
 <string name="prefs_internal_storage_title">Internal Storage</string>
 <string name="prefs_internal_storage_summary">Use internal project storage</string>
+
+<string name="prefs_iocipher_storage_title">IOCipher Storage</string>
+<string name="prefs_iocipher_storage_summary">Use IOCipher secure storage</string>
 
 <string name="prefs_youtube_method_title">YouTube Method</string>
 <string name="prefs_youtube_method_summary">Debug authorization method type</string>

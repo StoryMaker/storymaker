@@ -1,32 +1,36 @@
 package org.storymaker.app.db;
 
-import timber.log.Timber;
+import android.content.ContentProvider;
+import android.content.ContentResolver;
+import android.content.ContentValues;
+import android.content.SharedPreferences;
+import android.content.UriMatcher;
+import android.database.Cursor;
+import android.net.Uri;
+import android.preference.PreferenceManager;
+import android.support.annotation.Nullable;
+
+import net.sqlcipher.database.SQLiteDatabase;
 
 import org.storymaker.app.model.AudioClipTable;
-import org.storymaker.app.model.Auth;
 import org.storymaker.app.model.AuthTable;
 import org.storymaker.app.model.JobTable;
 import org.storymaker.app.model.LessonTable;
 import org.storymaker.app.model.MediaTable;
-import org.storymaker.app.model.Project;
 import org.storymaker.app.model.ProjectTable;
 import org.storymaker.app.model.PublishJobTable;
-import org.storymaker.app.model.Scene;
-import org.storymaker.app.model.Media;
-import org.storymaker.app.model.Lesson;
 import org.storymaker.app.model.SceneTable;
 import org.storymaker.app.model.TagTable;
-import net.sqlcipher.database.SQLiteDatabase;
-import net.sqlcipher.database.SQLiteQueryBuilder;
-import android.content.ContentProvider;
-import android.content.ContentResolver;
-import android.content.ContentValues;
-import android.content.UriMatcher;
-import android.database.Cursor;
-import android.net.Uri;
+
+import java.util.Timer;
+import java.util.TimerTask;
+
+import info.guardianproject.cacheword.CacheWordHandler;
+import info.guardianproject.cacheword.ICacheWordSubscriber;
+import timber.log.Timber;
 
 // FIXME rename this to SMProvier and get rid of LessonsProvider
-public class ProjectsProvider extends ContentProvider {  
+public class ProjectsProvider extends ContentProvider implements ICacheWordSubscriber {
 	private StoryMakerDB mDBHelper;
 	private SQLiteDatabase mDB = null;
     private String mPassphrase = "foo"; //how and when do we set this??
@@ -139,15 +143,48 @@ public class ProjectsProvider extends ContentProvider {
         sURIMatcher.addURI(AUTHORITY, AUDIO_CLIPS_BASE_PATH, AUDIO_CLIPS);
         sURIMatcher.addURI(AUTHORITY, AUDIO_CLIPS_BASE_PATH + "/#", AUDIO_CLIP_ID);
     }
+
+    // NEW/CACHEWORD
+    CacheWordHandler mCacheWordHandler;
+
+    // NEED A WAY TO DISCONNECT FROM SERVICE WHEN IDLE
+    Timer dbTimer;
+
+    synchronized void setTimer(long delay) {
+        // if there is an existing timer, clear it
+        if(dbTimer != null) {
+            dbTimer.cancel();
+            dbTimer = null;
+        }
+
+        // set timer to disconnect from cacheword service so it can timeout
+        dbTimer = new Timer();
+        dbTimer.schedule(new TimerTask() {
+            public void run() {
+                mCacheWordHandler.disconnectFromService();
+                dbTimer.cancel();
+                dbTimer = null;
+            }
+        }, delay ); // 1 min delay
+    }
     
     @Override
     public boolean onCreate() {
-        mDBHelper = new StoryMakerDB(getContext()); 
+
+        // NEW/CACHEWORD
+        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getContext().getApplicationContext());
+        int timeout = Integer.parseInt(settings.getString("pcachewordtimeout", "600"));
+        mCacheWordHandler = new CacheWordHandler(getContext(), this, timeout); // TODO: timeout of -1 represents no timeout (revisit)
+        mCacheWordHandler.connectToService();
+        setTimer(60000);
+        mDBHelper = new StoryMakerDB(mCacheWordHandler, getContext());
+
         return true;
     }
-    
+
+    @Nullable
     private SQLiteDatabase getDB() {
-        if (mDB == null) {
+        if ((mDB == null) && (mDBHelper != null)) {
             mDB = mDBHelper.getWritableDatabase(mPassphrase);
         }
         return mDB;
@@ -158,158 +195,228 @@ public class ProjectsProvider extends ContentProvider {
 		// TODO Auto-generated method stub
 		return null;
 	}
-    
+
+    @Nullable
     @Override
     public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
-        int uriType = sURIMatcher.match(uri);
-        switch (uriType) {
-        case PROJECT_ID:
-            return (new ProjectTable(getDB())).queryOne(getContext(), uri, projection, selection, selectionArgs, sortOrder);
-        case PROJECTS:
-            return (new ProjectTable(getDB())).queryAll(getContext(), uri, projection, selection, selectionArgs, sortOrder);
-        case SCENE_ID:
-            return (new SceneTable(getDB())).queryOne(getContext(), uri, projection, selection, selectionArgs, sortOrder);
-        case SCENES:
-            return (new SceneTable(getDB())).queryAll(getContext(), uri, projection, selection, selectionArgs, sortOrder);
-        case LESSON_ID:
-            return (new LessonTable(getDB())).queryOne(getContext(), uri, projection, selection, selectionArgs, sortOrder);
-        case LESSONS:
-            return (new LessonTable(getDB())).queryAll(getContext(), uri, projection, selection, selectionArgs, sortOrder);
-        case MEDIA_ID:
-            return (new MediaTable(getDB())).queryOne(getContext(), uri, projection, selection, selectionArgs, sortOrder);
-        case MEDIA:
-            return (new MediaTable(getDB())).queryAll(getContext(), uri, projection, selection, selectionArgs, sortOrder);
-        case AUTH_ID:
-            return (new AuthTable(getDB())).queryOne(getContext(), uri, projection, selection, selectionArgs, sortOrder);
-        case AUTH:
-            return (new AuthTable(getDB())).queryAll(getContext(), uri, projection, selection, selectionArgs, sortOrder);
-        case TAG_ID:
-            return (new TagTable(getDB())).queryOne(getContext(), uri, projection, selection, selectionArgs, sortOrder);
-        case TAGS:
-            return (new TagTable(getDB())).queryAll(getContext(), uri, projection, selection, selectionArgs, sortOrder);
-        case DISTINCT_TAG_ID:
-            return (new TagTable(getDB())).queryOneDistinct(getContext(), uri, projection, selection, selectionArgs, sortOrder);
-        case DISTINCT_TAGS:
-            return (new TagTable(getDB())).queryAllDistinct(getContext(), uri, projection, selection, selectionArgs, sortOrder);
-        case JOB_ID:
-            return (new JobTable(getDB())).queryOne(getContext(), uri, projection, selection, selectionArgs, sortOrder);
-        case JOBS:
-            return (new JobTable(getDB())).queryAll(getContext(), uri, projection, selection, selectionArgs, sortOrder);
-        case PUBLISH_JOB_ID:
-            return (new PublishJobTable(getDB())).queryOne(getContext(), uri, projection, selection, selectionArgs, sortOrder);
-        case PUBLISH_JOBS:
-            return (new PublishJobTable(getDB())).queryAll(getContext(), uri, projection, selection, selectionArgs, sortOrder);
-        case AUDIO_CLIP_ID:
-            return (new AudioClipTable(getDB())).queryOne(getContext(), uri, projection, selection, selectionArgs, sortOrder);
-        case AUDIO_CLIPS:
-            return (new AudioClipTable(getDB())).queryAll(getContext(), uri, projection, selection, selectionArgs, sortOrder);
-        default:
-            throw new IllegalArgumentException("Unknown URI");
+
+        mCacheWordHandler.connectToService();
+        setTimer(60000);
+        SQLiteDatabase db = getDB();
+
+        if (db != null) {
+            int uriType = sURIMatcher.match(uri);
+            switch (uriType) {
+                case PROJECT_ID:
+                    return (new ProjectTable(db)).queryOne(getContext(), uri, projection, selection, selectionArgs, sortOrder);
+                case PROJECTS:
+                return (new ProjectTable(db)).queryAll(getContext(), uri, projection, selection, selectionArgs, sortOrder);
+                case SCENE_ID:
+                    return (new SceneTable(db)).queryOne(getContext(), uri, projection, selection, selectionArgs, sortOrder);
+                case SCENES:
+                    return (new SceneTable(db)).queryAll(getContext(), uri, projection, selection, selectionArgs, sortOrder);
+                case LESSON_ID:
+                    return (new LessonTable(db)).queryOne(getContext(), uri, projection, selection, selectionArgs, sortOrder);
+                case LESSONS:
+                    return (new LessonTable(db)).queryAll(getContext(), uri, projection, selection, selectionArgs, sortOrder);
+                case MEDIA_ID:
+                    return (new MediaTable(db)).queryOne(getContext(), uri, projection, selection, selectionArgs, sortOrder);
+                case MEDIA:
+                    return (new MediaTable(db)).queryAll(getContext(), uri, projection, selection, selectionArgs, sortOrder);
+                case AUTH_ID:
+                    return (new AuthTable(db)).queryOne(getContext(), uri, projection, selection, selectionArgs, sortOrder);
+                case AUTH:
+                    return (new AuthTable(db)).queryAll(getContext(), uri, projection, selection, selectionArgs, sortOrder);
+                case TAG_ID:
+                    return (new TagTable(db)).queryOne(getContext(), uri, projection, selection, selectionArgs, sortOrder);
+                case TAGS:
+                    return (new TagTable(db)).queryAll(getContext(), uri, projection, selection, selectionArgs, sortOrder);
+                case DISTINCT_TAG_ID:
+                    return (new TagTable(db)).queryOneDistinct(getContext(), uri, projection, selection, selectionArgs, sortOrder);
+                case DISTINCT_TAGS:
+                    return (new TagTable(db)).queryAllDistinct(getContext(), uri, projection, selection, selectionArgs, sortOrder);
+                case JOB_ID:
+                    return (new JobTable(db)).queryOne(getContext(), uri, projection, selection, selectionArgs, sortOrder);
+                case JOBS:
+                    return (new JobTable(db)).queryAll(getContext(), uri, projection, selection, selectionArgs, sortOrder);
+                case PUBLISH_JOB_ID:
+                    return (new PublishJobTable(db)).queryOne(getContext(), uri, projection, selection, selectionArgs, sortOrder);
+                case PUBLISH_JOBS:
+                    return (new PublishJobTable(db)).queryAll(getContext(), uri, projection, selection, selectionArgs, sortOrder);
+                case AUDIO_CLIP_ID:
+                    return (new AudioClipTable(db)).queryOne(getContext(), uri, projection, selection, selectionArgs, sortOrder);
+                case AUDIO_CLIPS:
+                    return (new AudioClipTable(db)).queryAll(getContext(), uri, projection, selection, selectionArgs, sortOrder);
+                default:
+                    throw new IllegalArgumentException("Unknown URI");
+            }
         }
+        return null;
     }
 
+    @Nullable
     @Override
     public Uri insert(Uri uri, ContentValues values) {
-        long newId;
-        int uriType = sURIMatcher.match(uri);
-        switch (uriType) {
-        case PROJECTS:
-            return (new ProjectTable(getDB())).insert(getContext(), uri, values);
-        case SCENES:
-            return (new SceneTable(getDB())).insert(getContext(), uri, values);
-        case LESSONS:
-            return (new LessonTable(getDB())).insert(getContext(), uri, values);
-        case MEDIA:
-            return (new MediaTable(getDB())).insert(getContext(), uri, values);
-        case AUTH:
-            return (new AuthTable(getDB())).insert(getContext(), uri, values);
-        case TAGS:
-        case DISTINCT_TAGS:
-            return (new TagTable(getDB())).insert(getContext(), uri, values);
-        case JOBS:
-            return (new JobTable(getDB())).insert(getContext(), uri, values);
-        case PUBLISH_JOBS:
-            return (new PublishJobTable(getDB())).insert(getContext(), uri, values);
-        case AUDIO_CLIPS:
-            return (new AudioClipTable(getDB())).insert(getContext(), uri, values);
-        default:
-            throw new IllegalArgumentException("Unknown URI");
+
+        mCacheWordHandler.connectToService();
+        setTimer(60000);
+
+        SQLiteDatabase db = getDB();
+
+        if (db != null) {
+            long newId;
+            int uriType = sURIMatcher.match(uri);
+            switch (uriType) {
+                case PROJECTS:
+                    return (new ProjectTable(db)).insert(getContext(), uri, values);
+                case SCENES:
+                    return (new SceneTable(db)).insert(getContext(), uri, values);
+                case LESSONS:
+                    return (new LessonTable(db)).insert(getContext(), uri, values);
+                case MEDIA:
+                    return (new MediaTable(db)).insert(getContext(), uri, values);
+                case AUTH:
+                    return (new AuthTable(db)).insert(getContext(), uri, values);
+                case TAGS:
+                case DISTINCT_TAGS:
+                    return (new TagTable(db)).insert(getContext(), uri, values);
+                case JOBS:
+                    return (new JobTable(db)).insert(getContext(), uri, values);
+                case PUBLISH_JOBS:
+                    return (new PublishJobTable(db)).insert(getContext(), uri, values);
+                case AUDIO_CLIPS:
+                    return (new AudioClipTable(db)).insert(getContext(), uri, values);
+                default:
+                    throw new IllegalArgumentException("Unknown URI");
+            }
         }
+        return null;
     }
     
     @Override
     public int delete(Uri uri, String selection, String[] selectionArgs) {
-        int uriType = sURIMatcher.match(uri);
-        switch (uriType) {
-        case PROJECTS:
-        case PROJECT_ID:
-            return (new ProjectTable(getDB())).delete(getContext(), uri, selection, selectionArgs);
-        case SCENES:
-        case SCENE_ID:
-            return (new SceneTable(getDB())).delete(getContext(), uri, selection, selectionArgs);
-        case LESSONS:
-        case LESSON_ID:
-            return (new LessonTable(getDB())).delete(getContext(), uri, selection, selectionArgs);
-        case MEDIA:
-        case MEDIA_ID:
-            return (new MediaTable(getDB())).delete(getContext(), uri, selection, selectionArgs);
-        case AUTH:
-        case AUTH_ID:
-            return (new AuthTable(getDB())).delete(getContext(), uri, selection, selectionArgs);
-        case TAGS:
-        case TAG_ID:
-        case DISTINCT_TAGS:
-        case DISTINCT_TAG_ID:
-            return (new TagTable(getDB())).delete(getContext(), uri, selection, selectionArgs);
-        case JOBS:
-        case JOB_ID:
-            return (new JobTable(getDB())).delete(getContext(), uri, selection, selectionArgs);
-        case PUBLISH_JOBS:
-        case PUBLISH_JOB_ID:
-            return (new PublishJobTable(getDB())).delete(getContext(), uri, selection, selectionArgs);
-        case AUDIO_CLIPS:
-        case AUDIO_CLIP_ID:
-            return (new AudioClipTable(getDB())).delete(getContext(), uri, selection, selectionArgs);
-        default:
-            throw new IllegalArgumentException("Unknown URI");
+
+        mCacheWordHandler.connectToService();
+        setTimer(60000);
+
+        SQLiteDatabase db = getDB();
+
+        if (db != null) {
+            int uriType = sURIMatcher.match(uri);
+            switch (uriType) {
+            case PROJECTS:
+            case PROJECT_ID:
+                return (new ProjectTable(db)).delete(getContext(), uri, selection, selectionArgs);
+            case SCENES:
+            case SCENE_ID:
+                return (new SceneTable(db)).delete(getContext(), uri, selection, selectionArgs);
+            case LESSONS:
+            case LESSON_ID:
+                return (new LessonTable(db)).delete(getContext(), uri, selection, selectionArgs);
+            case MEDIA:
+            case MEDIA_ID:
+                return (new MediaTable(db)).delete(getContext(), uri, selection, selectionArgs);
+            case AUTH:
+            case AUTH_ID:
+                return (new AuthTable(db)).delete(getContext(), uri, selection, selectionArgs);
+            case TAGS:
+            case TAG_ID:
+            case DISTINCT_TAGS:
+            case DISTINCT_TAG_ID:
+                return (new TagTable(db)).delete(getContext(), uri, selection, selectionArgs);
+            case JOBS:
+            case JOB_ID:
+                return (new JobTable(db)).delete(getContext(), uri, selection, selectionArgs);
+            case PUBLISH_JOBS:
+            case PUBLISH_JOB_ID:
+                return (new PublishJobTable(db)).delete(getContext(), uri, selection, selectionArgs);
+            case AUDIO_CLIPS:
+            case AUDIO_CLIP_ID:
+                return (new AudioClipTable(db)).delete(getContext(), uri, selection, selectionArgs);
+            default:
+                throw new IllegalArgumentException("Unknown URI");
+            }
         }
+        return 0;
     }
 
     @Override
     public int update(Uri uri, ContentValues values, String selection, String[] selectionArgs) {
-        int uriType = sURIMatcher.match(uri);
-        switch (uriType) {
-        case PROJECTS:
-        case PROJECT_ID:
-            return (new ProjectTable(getDB())).update(getContext(), uri, values, selection, selectionArgs);
-        case SCENES:
-        case SCENE_ID:
-            return (new SceneTable(getDB())).update(getContext(), uri, values, selection, selectionArgs);
-        case LESSONS:
-        case LESSON_ID:
-            return (new LessonTable(getDB())).update(getContext(), uri, values, selection, selectionArgs);
-        case MEDIA:
-        case MEDIA_ID:
-            return (new MediaTable(getDB())).update(getContext(), uri, values, selection, selectionArgs);
-        case AUTH:
-        case AUTH_ID:
-            return (new AuthTable(getDB())).update(getContext(), uri, values, selection, selectionArgs);
-        case TAGS:
-        case TAG_ID:
-        case DISTINCT_TAGS:
-        case DISTINCT_TAG_ID:
-            return (new TagTable(getDB())).update(getContext(), uri, values, selection, selectionArgs);
-        case JOBS:
-        case JOB_ID:
-            return (new JobTable(getDB())).update(getContext(), uri, values, selection, selectionArgs);
-        case PUBLISH_JOBS:
-        case PUBLISH_JOB_ID:
-            return (new PublishJobTable(getDB())).update(getContext(), uri, values, selection, selectionArgs);
-        case AUDIO_CLIPS:
-        case AUDIO_CLIP_ID:
-            return (new AudioClipTable(getDB())).update(getContext(), uri, values, selection, selectionArgs);
-        default:
-            throw new IllegalArgumentException("Unknown URI");
+
+        mCacheWordHandler.connectToService();
+        setTimer(60000);
+
+        SQLiteDatabase db = getDB();
+
+        if (db != null) {
+            int uriType = sURIMatcher.match(uri);
+            switch (uriType) {
+            case PROJECTS:
+            case PROJECT_ID:
+                return (new ProjectTable(db)).update(getContext(), uri, values, selection, selectionArgs);
+            case SCENES:
+            case SCENE_ID:
+                return (new SceneTable(db)).update(getContext(), uri, values, selection, selectionArgs);
+            case LESSONS:
+            case LESSON_ID:
+                return (new LessonTable(db)).update(getContext(), uri, values, selection, selectionArgs);
+            case MEDIA:
+            case MEDIA_ID:
+                return (new MediaTable(db)).update(getContext(), uri, values, selection, selectionArgs);
+            case AUTH:
+            case AUTH_ID:
+                return (new AuthTable(db)).update(getContext(), uri, values, selection, selectionArgs);
+            case TAGS:
+            case TAG_ID:
+            case DISTINCT_TAGS:
+            case DISTINCT_TAG_ID:
+                return (new TagTable(db)).update(getContext(), uri, values, selection, selectionArgs);
+            case JOBS:
+            case JOB_ID:
+                return (new JobTable(db)).update(getContext(), uri, values, selection, selectionArgs);
+            case PUBLISH_JOBS:
+            case PUBLISH_JOB_ID:
+                return (new PublishJobTable(db)).update(getContext(), uri, values, selection, selectionArgs);
+            case AUDIO_CLIPS:
+            case AUDIO_CLIP_ID:
+                return (new AudioClipTable(db)).update(getContext(), uri, values, selection, selectionArgs);
+            default:
+                throw new IllegalArgumentException("Unknown URI");
+            }
         }
+        return 0;
+    }
+
+    // NEW/CACHEWORD
+    @Override
+    public void onCacheWordUninitialized() {
+        Timber.d("onCacheWordUninitialized, mDBHelper is " + mDBHelper + ", mDB is " + mDB);
+        // prevent db access while cacheword is uninitialized
+        if (mDBHelper != null)
+            mDBHelper.close();
+        if (mDB != null)
+            mDB.close();
+        mDBHelper = null;
+        mDB = null;
+    }
+
+    @Override
+    public void onCacheWordLocked() {
+        Timber.d("onCacheWordLocked, mDBHelper is " + mDBHelper + ", mDB is " + mDB);
+        // prevent db access when cacheword is locked
+        if (mDBHelper != null)
+            mDBHelper.close();
+        if (mDB != null)
+            mDB.close();
+        mDBHelper = null;
+        mDB = null;
+    }
+
+    @Override
+    public void onCacheWordOpened() {
+        Timber.d("onCacheWordOpened, mDBHelper is " + mDBHelper + ", mDB is " + mDB);
+        // permit db access when cacheword is unlocked
+        mDBHelper = new StoryMakerDB(mCacheWordHandler, getContext());
+        mDB = mDBHelper.getWritableDatabase(mPassphrase);
     }
 }

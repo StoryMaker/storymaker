@@ -4,6 +4,7 @@
     <string name="app_name">StoryMaker 2</string>
     <string name="app_description">Creating great stories is now easier than ever with StoryMaker. Our unique templates, overlays, and lessons guide you through the entire creative process. StoryMaker lets you edit your content right on your mobile, making it even easier to finish your story. Once you\'ve finished, StoryMaker lets you publish your story to all of your favorite platforms.</string>
     <string name="app_id" translatable="false">509922855786064</string>
+    <string name="title_catalog">Catalog</string>
     <string name="title_projects">Stories</string>
     <string name="title_lessons">Lessons</string>
     <string name="action_publish">Publish</string>
@@ -90,6 +91,8 @@ You also will have an opportunity to see and modify the data being sent."</strin
     <string name="new_story_choose_something">Choose something brief that defines the topic and intrigues your audience.</string>
     <string name="new_story_choose_a_medium">Choose a medium.</string>
 
+
+
     <!--
     <string name="new_story_video">Video: Something here about why simple, short video is good! Ideally it should be about the same length as the other strings.</string>
    	<string name="new_story_essay">Photo Essay: Tell a story about one character. Follow this template to produce a simple photo essay story about one character.</string>
@@ -102,6 +105,7 @@ You also will have an opportunity to see and modify the data being sent."</strin
     <string name="new_story_choose_template">Scene Template</string>
     <string name="home_new_story">MAKE A STORY</string>
     <string name="home_start_a_lesson">EXPLORE LESSONS</string>
+    <string name="title_activity_catalog">Catalog</string>
     <string name="title_activity_lessons">Lessons</string>
     <string name="title_activity_scene_editor">Scene Editor</string>
     <string name="title_activity_choose_template">Choose Template</string>
@@ -347,11 +351,47 @@ You also will have an opportunity to see and modify the data being sent."</strin
     <string name="download_content_pack">Download Content Pack?</string>
     <string name="stop_download">Stop Download?</string>
     <string name="resume_download">Resume Download?</string>
-    
+    <string name="finished_downloading">Finished Downloading</string>
+
+
     <string name="home_downloading_content">Downloading content and/or updating installed files"</string>
     <string name="home_content_missing">Was not able to load this path, content is missing!</string>
     <string name="home_metadata_missing">Could not locate content metadata</string>
     <string name="home_index_missing">Could not locate content index</string>
     <string name="home_please_wait">Please wait for this content pack to finish downloading</string>
+
+    <!-- NEW/CACHEWORD -->
+    <string name="lock_screen_open_button_text">UNLOCK APP</string>
+    <string name="lock_screen_pin_enter_text">Enter PIN to unlock app</string>
+    <string name="lock_screen_create_button_text">CREATE PIN</string>
+    <string name="lock_screen_pin_create_text">Enter new PIN to lock app</string>
+    <string name="lock_screen_pin_confirm_text">Enter PIN again to confirm</string>
+    <string name="menu_lock">LOCK</string>
+
+    <string name="catalog_menu_catalog">Catalog</string>
+    <string name="catalog_menu_guides">Guides</string>
+    <string name="catalog_menu_lessons">Lessons</string>
+    <string name="catalog_menu_templates">Templates</string>
+
+    <string name="home_menu_home">Home</string>
+    <string name="home_menu_stories">Stories</string>
+    <string name="home_menu_guides">Guides</string>
+    <string name="home_menu_lessons">Lessons</string>
+    <string name="home_menu_templates">Templates</string>
+
+    <string name="home_empty_home">Browse our catalog and discover all the different ways you can start making better stories.</string>
+    <string name="home_empty_stories">You haven\'t saved any stories yet.</string>
+    <string name="home_empty_guides">You don\'t have any Guides yet. Download a Guide and brush up on your techniques.</string>
+    <string name="home_empty_lessons">Looking to learn? Download a Lesson pack to dive deep on a topic.</string>
+    <string name="home_empty_templates">You don\'t have any Templates yet. Download Templates and you\'ll have story structures you can use again and again.</string>
+
+    <string name="home_empty_btn_home">Browse the Catalog</string>
+    <string name="home_empty_btn_stories">New Story</string>
+    <string name="home_empty_btn_guides">Grab a Guide</string>
+    <string name="home_empty_btn_lessons">Load a Lesson</string>
+    <string name="home_empty_btn_templates">Try a Template</string>
+
+    <string name="home_tab_latest_stories">Recent Stories</string>
+    <string name="home_tab_latest_installation">Recent Content Packs</string>
 
 </resources>

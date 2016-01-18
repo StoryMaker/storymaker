@@ -4,7 +4,15 @@
     <color name="black">#000000</color>
     <color name="green">#00ff00</color>
     <color name="blue">#0000ff</color>
+    <color name="offwhite">#f3f3f3</color>
     <color name="transparent_black">#33333333</color>
     <color name="storymaker_blue">#27aae1</color>
     <color name="pressed_storymakerstyle">#CC7e8182</color>
+
+    <!-- NEW/CACHEWORD -->
+    <color name="cw_black">#000000</color>
+    <color name="cw_white">#ffffff</color>
+    <color name="cw_light_gray">#aaaaaa</color>
+    <color name="cw_dark_gray">#555555</color>
+
 </resources>

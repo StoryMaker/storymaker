@@ -16,4 +16,6 @@ public class Constants {
 
     public static final String PREFS_FILE = "storypath_prefs";
     public static final String PREFS_APP_TITLE = "PREFS_APP_TITLE";
+
+    public static final int APP_MIGRATION_VERSION = 1;
 }

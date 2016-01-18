@@ -1,12 +1,26 @@
 apply plugin: 'android-library'
 
+// required for sqlbrite/apt
+buildscript {
+    repositories {
+        jcenter()
+        maven { url "https://jitpack.io" }
+
+    }
+}
+
+
 dependencies {
-    compile project(':external:NetCipher:libnetcipher')
+    compile files('libs/httpclientandroidlib-1.2.1.jar')
+    compile 'com.github.n8fr8:NetCipher:n8fr8-dev-release'
+
+//    compile 'info.guardianproject.netcipher:netcipher:1.2'
+    compile 'org.apache.httpcomponents:httpcore:4.3.2'
 }
 
 android {
     compileSdkVersion 21
-    buildToolsVersion "21.0.0"
+    buildToolsVersion "22.0.1"
 
     sourceSets {
         main {

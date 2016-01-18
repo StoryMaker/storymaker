@@ -1,15 +1,10 @@
 package org.storymaker.app;
 
-import timber.log.Timber;
-
-import org.storymaker.app.server.ServerManager;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Date;
-
 import android.app.Activity;
+import android.app.Notification;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.AssetManager;
 import android.content.res.Configuration;
@@ -17,17 +12,17 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.PixelFormat;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.NotificationCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -36,9 +31,26 @@ import android.widget.Toast;
 
 import net.hockeyapp.android.FeedbackManager;
 
-//import com.google.analytics.tracking.android.EasyTracker;
+import org.storymaker.app.server.ServerManager;
 
-public class BaseActivity extends FragmentActivity {
+import java.io.IOException;
+import java.io.InputStream;
+
+import info.guardianproject.cacheword.CacheWordHandler;
+import info.guardianproject.cacheword.ICacheWordSubscriber;
+import scal.io.liger.StorageHelper;
+import timber.log.Timber;
+
+//import com.google.analytics.tracking.android.EasyTracker;
+// NEW/CACHEWORD
+
+public class BaseActivity extends FragmentActivity implements ICacheWordSubscriber {
+
+    // NEW/CACHEWORD
+    protected CacheWordHandler mCacheWordHandler;
+    protected String CACHEWORD_UNSET;
+    protected String CACHEWORD_FIRST_LOCK;
+    protected String CACHEWORD_SET;
 
     protected ActionBarDrawerToggle mDrawerToggle;
     protected DrawerLayout mDrawerLayout;
@@ -56,6 +68,92 @@ public class BaseActivity extends FragmentActivity {
 		super.onStop();
 //		EasyTracker.getInstance(this).activityStop(this);
 	}
+
+    // NEW/CACHEWORD
+    @Override
+    protected void onPause() {
+        super.onPause();
+        mCacheWordHandler.disconnectFromService();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        // only display notification if the user has set a pin
+        SharedPreferences sp = getSharedPreferences("appPrefs", MODE_PRIVATE);
+        String cachewordStatus = sp.getString("cacheword_status", "default");
+        if (cachewordStatus.equals(CACHEWORD_SET)) {
+            Timber.d("pin set, so display notification (base)");
+            mCacheWordHandler.setNotification(buildNotification(this));
+        } else {
+            Timber.d("no pin set, so no notification (base)");
+        }
+
+        mCacheWordHandler.connectToService();
+        updateSlidingMenuWithUserState();
+    }
+
+    private Notification buildNotification(Context c) {
+
+        Timber.d("buildNotification (base)");
+
+        NotificationCompat.Builder b = new NotificationCompat.Builder(c);
+        b.setSmallIcon(R.drawable.ic_menu_key);
+        b.setContentTitle(c.getText(R.string.cacheword_notification_cached_title));
+        b.setContentText(c.getText(R.string.cacheword_notification_cached_message));
+        b.setTicker(c.getText(R.string.cacheword_notification_cached));
+        b.setWhen(System.currentTimeMillis());
+        b.setOngoing(true);
+        b.setContentIntent(CacheWordHandler.getPasswordLockPendingIntent(c));
+        return b.getNotification();
+    }
+
+    @Override
+    public void onCacheWordUninitialized() {
+
+        // if we're uninitialized, default behavior should be to stop
+        Timber.d("cacheword uninitialized, activity will not continue");
+        finish();
+
+    }
+
+    @Override
+    public void onCacheWordLocked() {
+
+        // if we're locked, default behavior should be to stop
+        Timber.d("cacheword locked, activity will not continue");
+        finish();
+
+    }
+
+    @Override
+    public void onCacheWordOpened() {
+
+        // mount vfs file (if a pin has been set) - mounting here seems to be required for loading stories from the home screen
+
+        SharedPreferences sp = getSharedPreferences("appPrefs", MODE_PRIVATE);
+        String cachewordStatus = sp.getString("cacheword_status", "default");
+        if (cachewordStatus.equals(CACHEWORD_SET)) {
+            if (mCacheWordHandler.isLocked()) {
+                Timber.d("onCacheWordOpened(storymaker) - pin set but cacheword locked, cannot mount vfs");
+            } else {
+                Timber.d("onCacheWordOpened(storymaker) - pin set and cacheword unlocked, mounting vfs");
+                StorageHelper.mountStorage(this, null, mCacheWordHandler.getEncryptionKey());
+            }
+        } else {
+            Timber.d("onCacheWordOpened(storymaker) - no pin set, cannot mount vfs");
+        }
+
+        // unsure how this resolves first-run crash issue but i'm unable to reproduce the error with this check here
+        if (mCacheWordHandler.isLocked()) {
+            Timber.d("onCacheWordOpened(storymaker) - we're in on-opened method but we're still locked somehow");
+        } else {
+            // if we're opened, check db and update menu status
+            Timber.d("onCacheWordOpened(storymaker) - cacheword unlocked, updating menu");
+            updateSlidingMenuWithUserState();
+        }
+    }
 
     public void setupDrawerLayout() {
 
@@ -90,6 +188,7 @@ public class BaseActivity extends FragmentActivity {
         ImageButton btnDrawerQuickCaptureAudio = (ImageButton) findViewById(R.id.btnDrawerQuickCaptureAudio);
         
         Button btnDrawerHome =          (Button) findViewById(R.id.btnDrawerHome);
+        Button btnDrawerCatalog =          (Button) findViewById(R.id.btnDrawerCatalog);
 //        Button btnDrawerProjects =      (Button) findViewById(R.id.btnDrawerProjects);
         //Button btnDrawerAccount = (Button) findViewById(R.id.btnDrawerAccount);
         Button btnDrawerAccounts =      (Button) findViewById(R.id.btnDrawerAccounts);
@@ -98,6 +197,19 @@ public class BaseActivity extends FragmentActivity {
         Button btnDrawerSettings =      (Button) findViewById(R.id.btnDrawerSettings);
         Button btnDrawerFeedback =      (Button) findViewById(R.id.btnDrawerFeedback);
         TextView textViewVersion =      (TextView) findViewById(R.id.textViewVersion);
+
+        // NEW/CACHEWORD
+        Button btnDrawerLock = (Button) findViewById(R.id.btnDrawerLock);
+
+        // disable button if the user has set a pin
+        SharedPreferences sp = getSharedPreferences("appPrefs", MODE_PRIVATE);
+        String cachewordStatus = sp.getString("cacheword_status", "default");
+        if (cachewordStatus.equals(CACHEWORD_SET)) {
+            Timber.d("pin set, so remove button");
+            btnDrawerLock.setVisibility(View.GONE);
+        } else {
+            Timber.d("no pin set, so show button");
+        }
 
         String pkg = getPackageName();
         try {
@@ -146,6 +258,17 @@ public class BaseActivity extends FragmentActivity {
                  activity.startActivity(i);
             }
         });
+
+        btnDrawerCatalog.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mDrawerLayout.closeDrawers();
+
+                Intent i = new Intent(activity, CatalogActivity.class);
+                activity.startActivity(i);
+            }
+        });
+
         btnDrawerExports.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -195,6 +318,23 @@ public class BaseActivity extends FragmentActivity {
                 FeedbackManager.showFeedbackActivity(activity);
             }
         });
+
+        // NEW/CACHEWORD
+        btnDrawerLock.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // if there has been no first lock, set status so user will be prompted to create a pin
+                SharedPreferences sp = getSharedPreferences("appPrefs", MODE_PRIVATE);
+                String cachewordStatus = sp.getString("cacheword_status", "default");
+                if (cachewordStatus.equals(CACHEWORD_UNSET)) {
+                    SharedPreferences.Editor e = sp.edit();
+                    e.putString("cacheword_status", CACHEWORD_FIRST_LOCK);
+                    e.commit();
+                    Timber.d("set cacheword first lock status");
+                }
+                mCacheWordHandler.lock();
+            }
+        });
     }
     
     /**
@@ -206,7 +346,15 @@ public class BaseActivity extends FragmentActivity {
         ServerManager serverManager = StoryMakerApp.getServerManager();
         TextView textViewSignIn = (TextView) findViewById(R.id.textViewSignIn);
         TextView textViewJoinStorymaker = (TextView) findViewById(R.id.textViewJoinStorymaker);
-        if (serverManager.hasCreds()) {
+
+        if (mCacheWordHandler.isLocked()) {
+
+            // prevent credential check attempt if database is locked
+            Timber.d("cacheword locked, skipping menu credential check");
+            textViewSignIn.setText(R.string.sign_in);
+            textViewJoinStorymaker.setVisibility(View.VISIBLE);
+
+        } else if (serverManager.hasCreds()) {
             // The Storymaker user is logged in. Replace Sign/Up language with username
             textViewSignIn.setText(serverManager.getUserName());
             textViewJoinStorymaker.setVisibility(View.GONE);
@@ -219,7 +367,17 @@ public class BaseActivity extends FragmentActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
     	super.onCreate(savedInstanceState);
-    	if(!Eula.isAccepted(this)) {
+
+        // NEW/CACHEWORD
+        CACHEWORD_UNSET = getText(R.string.cacheword_state_unset).toString();
+        CACHEWORD_FIRST_LOCK = getText(R.string.cacheword_state_first_lock).toString();
+        CACHEWORD_SET = getText(R.string.cacheword_state_set).toString();
+
+        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        int timeout = Integer.parseInt(settings.getString("pcachewordtimeout", "600"));
+        mCacheWordHandler = new CacheWordHandler(this, timeout); // TODO: timeout of -1 represents no timeout (revisit)
+
+        if(!Eula.isAccepted(this)) {
             Intent firstStartIntent = new Intent(this, FirstStartActivity.class);
             firstStartIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(firstStartIntent);
@@ -274,12 +432,14 @@ public class BaseActivity extends FragmentActivity {
         ViewGroup content = (ViewGroup) findViewById(R.id.content_frame);
         getLayoutInflater().inflate(resId, content, true);
     }
-    
+
+    /*
     @Override
     protected void onResume() {
         super.onResume();
         updateSlidingMenuWithUserState();
     }
+    */
 
 	private void detectCoachOverlay ()
     {

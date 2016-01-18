@@ -1,30 +1,32 @@
 package org.storymaker.app.db;
 
-import timber.log.Timber;
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 
-import java.util.ArrayList;
-import java.util.Date;
+import net.sqlcipher.database.SQLiteDatabase;
+import net.sqlcipher.database.SQLiteOpenHelper;
 
 import org.storymaker.app.StoryMakerApp;
 import org.storymaker.app.model.Auth;
 import org.storymaker.app.model.Project;
 import org.storymaker.app.model.Scene;
 import org.storymaker.app.model.SceneTable;
-import android.content.Context;
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
-import net.sqlcipher.database.SQLiteDatabase;
-import net.sqlcipher.database.SQLiteOpenHelper;
-import android.util.Log;
 
-public class StoryMakerDB extends SQLiteOpenHelper {
+import java.util.ArrayList;
+
+import timber.log.Timber;
+
+import info.guardianproject.cacheword.CacheWordHandler;
+
+public class StoryMakerDB extends StoryMakerDBWrapper {
     private static final String TAG = "StoryMakerDB";
     private static final int DB_VERSION = 11;
     private static final String DB_NAME = "sm.db";
     private Context mContext;
     
-    public StoryMakerDB(Context context) {
-        super(context, DB_NAME, null, DB_VERSION);
+    public StoryMakerDB(CacheWordHandler cacheWord, Context context) {
+        super(cacheWord, context, DB_NAME, null, DB_VERSION);
         mContext = context;
     }
     
@@ -46,12 +48,12 @@ public class StoryMakerDB extends SQLiteOpenHelper {
         Timber.d("updating db from " + oldVersion + " to " + newVersion);
         if ((oldVersion < 2) && (newVersion == 2)) {
             db.execSQL(StoryMakerDB.Schema.Projects.UPDATE_TABLE_PROJECTS);
-        } 
+        }
         if ((oldVersion < 3) && (newVersion == 3)) {
             db.execSQL(StoryMakerDB.Schema.Media.UPDATE_TABLE_MEDIA_ADD_TRIM_START);
             db.execSQL(StoryMakerDB.Schema.Media.UPDATE_TABLE_MEDIA_ADD_TRIM_END);
             db.execSQL(StoryMakerDB.Schema.Media.UPDATE_TABLE_MEDIA_ADD_DURATION);
-        } 
+        }
         if ((oldVersion < 4) && (newVersion >= 4)) {
             db.execSQL(StoryMakerDB.Schema.Auth.UPDATE_TABLE_AUTH);
             Auth.migrate(mContext, db); // migrates storymaker login credentials
@@ -73,7 +75,7 @@ public class StoryMakerDB extends SQLiteOpenHelper {
         if ((oldVersion < 7) && (newVersion >= 7)) {
             @SuppressWarnings("unchecked")
             ArrayList<Scene> scenes = (ArrayList<Scene>) (new SceneTable(db)).getAllAsList(mContext);
-            for (Scene scene: scenes) {
+            for (Scene scene : scenes) {
                 scene.migrateDeleteDupedMedia();
             }
         }
