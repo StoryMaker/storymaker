@@ -3,6 +3,7 @@ package org.storymaker.app.db;
 import android.content.ContentProvider;
 import android.content.ContentResolver;
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.UriMatcher;
 import android.database.Cursor;
@@ -152,6 +153,14 @@ public class ProjectsProvider extends ContentProvider implements ICacheWordSubsc
     Timer dbTimer;
 
     synchronized void setTimer(long delay) {
+
+        // if there is no pin set, do not set a timer (will force a lock and potentially cause a crash)
+        SharedPreferences settings = getContext().getApplicationContext().getSharedPreferences("appPrefs", Context.MODE_PRIVATE);
+        String cachewordStatus = settings.getString("cacheword_status", null);
+        if (cachewordStatus == null) {
+            return;
+        }
+
         // if there is an existing timer, clear it
         if(dbTimer != null) {
             dbTimer.cancel();
