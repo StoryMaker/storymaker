@@ -21,21 +21,14 @@ import info.guardianproject.cacheword.ICacheWordSubscriber;
 public class LockablePreferenceActivity extends PreferenceActivity implements ICacheWordSubscriber {
 
     protected CacheWordHandler mCacheWordHandler;
-    protected String CACHEWORD_UNSET;
-    protected String CACHEWORD_FIRST_LOCK;
-    protected String CACHEWORD_SET;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        CACHEWORD_UNSET = getText(scal.io.liger.R.string.cacheword_state_unset).toString();
-        CACHEWORD_FIRST_LOCK = getText(scal.io.liger.R.string.cacheword_state_first_lock).toString();
-        CACHEWORD_SET = getText(scal.io.liger.R.string.cacheword_state_set).toString();
-
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        int timeout = Integer.parseInt(settings.getString("pcachewordtimeout", "600"));
-        mCacheWordHandler = new CacheWordHandler(this, timeout); // TODO: timeout of -1 represents no timeout (revisit)
+        int timeout = Integer.parseInt(settings.getString("pcachewordtimeout", BaseActivity.CACHEWORD_TIMEOUT));
+        mCacheWordHandler = new CacheWordHandler(this, timeout);
     }
 
     @Override
@@ -51,7 +44,7 @@ public class LockablePreferenceActivity extends PreferenceActivity implements IC
         // only display notification if the user has set a pin
         SharedPreferences sp = getSharedPreferences("appPrefs", MODE_PRIVATE);
         String cachewordStatus = sp.getString("cacheword_status", "default");
-        if (cachewordStatus.equals(CACHEWORD_SET)) {
+        if (cachewordStatus.equals(BaseActivity.CACHEWORD_SET)) {
             Timber.d("pin set, so display notification (lockable)");
             mCacheWordHandler.setNotification(buildNotification(this));
         } else {

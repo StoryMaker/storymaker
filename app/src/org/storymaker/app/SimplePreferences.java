@@ -150,7 +150,7 @@ public class SimplePreferences extends LockablePreferenceActivity implements OnS
 
                 SharedPreferences sp = getSharedPreferences("appPrefs", MODE_PRIVATE);
                 String cachewordStatus = sp.getString("cacheword_status", "default");
-                if (cachewordStatus.equals(CACHEWORD_SET)) {
+                if (cachewordStatus.equals(BaseActivity.CACHEWORD_SET)) {
                     if (mCacheWordHandler.isLocked()) {
                         Timber.d("onPreferenceChange - pin set but cacheword locked, cannot use iocipher");
                         Toast.makeText(getApplicationContext(), "App must be unlocked before IOCipher can be used", Toast.LENGTH_LONG).show();

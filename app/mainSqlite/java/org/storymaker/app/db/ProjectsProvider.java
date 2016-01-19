@@ -2,6 +2,7 @@ package org.storymaker.app.db;
 
 import timber.log.Timber;
 
+import org.storymaker.app.BaseActivity;
 import org.storymaker.app.model.AudioClipTable;
 import org.storymaker.app.model.Auth;
 import org.storymaker.app.model.AuthTable;
@@ -149,7 +150,9 @@ public class ProjectsProvider extends ContentProvider implements ICacheWordSubsc
     public boolean onCreate() {
 
         // NEW/CACHEWORD
-        mCacheWordHandler = new CacheWordHandler(getContext(), this, -1); // TODO: timeout of -1 represents no timeout (revisit)
+        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getContext().getApplicationContext());
+        int timeout = Integer.parseInt(settings.getString("pcachewordtimeout", BaseActivity.CACHEWORD_TIMEOUT));
+        mCacheWordHandler = new CacheWordHandler(getContext(), this, timeout);
         mCacheWordHandler.connectToService();
         mDBHelper = new StoryMakerDB(mCacheWordHandler, getContext());
 

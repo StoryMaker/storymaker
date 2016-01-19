@@ -12,6 +12,7 @@ import android.support.annotation.Nullable;
 
 import net.sqlcipher.database.SQLiteDatabase;
 
+import org.storymaker.app.BaseActivity;
 import org.storymaker.app.model.AudioClipTable;
 import org.storymaker.app.model.AuthTable;
 import org.storymaker.app.model.JobTable;
@@ -173,8 +174,8 @@ public class ProjectsProvider extends ContentProvider implements ICacheWordSubsc
 
         // NEW/CACHEWORD
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getContext().getApplicationContext());
-        int timeout = Integer.parseInt(settings.getString("pcachewordtimeout", "600"));
-        mCacheWordHandler = new CacheWordHandler(getContext(), this, timeout); // TODO: timeout of -1 represents no timeout (revisit)
+        int timeout = Integer.parseInt(settings.getString("pcachewordtimeout", BaseActivity.CACHEWORD_TIMEOUT));
+        mCacheWordHandler = new CacheWordHandler(getContext(), this, timeout);
         mCacheWordHandler.connectToService();
         setTimer(60000);
         mDBHelper = new StoryMakerDB(mCacheWordHandler, getContext());

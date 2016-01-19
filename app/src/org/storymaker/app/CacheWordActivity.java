@@ -45,10 +45,6 @@ public class CacheWordActivity extends Activity implements ICacheWordSubscriber 
     private Button mButton;
     
     private CacheWordHandler mCacheWordHandler;
-    
-    private String CACHEWORD_UNSET;
-    private String CACHEWORD_FIRST_LOCK;
-    private String CACHEWORD_SET;
 
     private Notification mNotif;
     
@@ -56,15 +52,11 @@ public class CacheWordActivity extends Activity implements ICacheWordSubscriber 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         
-        CACHEWORD_UNSET = getText(R.string.cacheword_state_unset).toString();
-        CACHEWORD_FIRST_LOCK = getText(R.string.cacheword_state_first_lock).toString();
-        CACHEWORD_SET = getText(R.string.cacheword_state_set).toString();
-        
         setContentView(R.layout.activity_lock_screen);
 
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        int timeout = Integer.parseInt(settings.getString("pcachewordtimeout", "600"));
-        mCacheWordHandler = new CacheWordHandler(this, timeout); // TODO: timeout of -1 represents no timeout (revisit)
+        int timeout = Integer.parseInt(settings.getString("pcachewordtimeout", BaseActivity.CACHEWORD_TIMEOUT));
+        mCacheWordHandler = new CacheWordHandler(this, timeout);
 
         mViewEnterPin = findViewById(R.id.llEnterPin);
         mViewCreatePin = findViewById(R.id.llCreatePin);
@@ -102,12 +94,12 @@ public class CacheWordActivity extends Activity implements ICacheWordSubscriber 
         // check for first lock status and prompt user to create a pin if necessary
         SharedPreferences sp = getSharedPreferences("appPrefs", Context.MODE_PRIVATE);
         String cachewordStatus = sp.getString("cacheword_status", "default");
-        if (cachewordStatus.equals(CACHEWORD_FIRST_LOCK)) {
+        if (cachewordStatus.equals(BaseActivity.CACHEWORD_FIRST_LOCK)) {
             Timber.d("create new cacheword pin");
             createPassphrase();  
             // set status to prevent use of default pin
             SharedPreferences.Editor e = sp.edit();
-            e.putString("cacheword_status", CACHEWORD_SET);
+            e.putString("cacheword_status", BaseActivity.CACHEWORD_SET);
             e.commit();
         } else {
             Timber.d("request existing cacheword pin");
@@ -245,7 +237,7 @@ public class CacheWordActivity extends Activity implements ICacheWordSubscriber 
                         // only display notification if the user has set a pin
                         SharedPreferences sp = getSharedPreferences("appPrefs", MODE_PRIVATE);
                         String cachewordStatus = sp.getString("cacheword_status", "default");
-                        if (cachewordStatus.equals(CACHEWORD_SET)) {
+                        if (cachewordStatus.equals(BaseActivity.CACHEWORD_SET)) {
                             Timber.d("pin set, so display notification (cacheword)");
                             mNotif = buildNotification(CacheWordActivity.this);
                             mCacheWordHandler.setNotification(mNotif);
