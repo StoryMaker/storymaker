@@ -21,8 +21,8 @@ import android.webkit.WebSettings.PluginState;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
-import info.guardianproject.onionkit.ui.OrbotHelper;
-import info.guardianproject.onionkit.web.WebkitProxy;
+import info.guardianproject.netcipher.proxy.OrbotHelper;
+import info.guardianproject.netcipher.web.WebkitProxy;
 import io.scal.secureshareui.lib.Util;
 
 /**
@@ -55,13 +55,12 @@ public class WordPressAuthWebViewActivity extends WebViewActivity {
         if (useTor) {
             Timber.d("user selected \"use tor\"");
 
-            OrbotHelper orbotHelper = new OrbotHelper(getApplicationContext());
-            if ((!orbotHelper.isOrbotInstalled()) || (!orbotHelper.isOrbotRunning())) {
+            if ((!OrbotHelper.isOrbotInstalled(getApplicationContext())) || (!OrbotHelper.isOrbotRunning(getApplicationContext()))) {
                 Timber.e("user selected \"use tor\" but orbot is not installed or not running");
                 return;
             } else {
                 try {
-                    WebkitProxy.setProxy("android.app.Application", getApplicationContext(), Util.ORBOT_HOST, Util.ORBOT_HTTP_PORT);
+                    WebkitProxy.setProxy("android.app.Application", getApplicationContext(),mWebView, Util.ORBOT_HOST, Util.ORBOT_HTTP_PORT);
                 } catch (Exception e) {
                     Timber.e("user selected \"use tor\" but an exception was thrown while setting the proxy: " + e.getLocalizedMessage());
                     return;

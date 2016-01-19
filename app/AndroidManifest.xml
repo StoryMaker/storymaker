@@ -3,9 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="org.storymaker.app"
     android:installLocation="auto"
-    android:versionCode="1083"
-    android:versionName="2.0.7">
+    android:versionCode="1086"
+    android:versionName="2.1.0">
    
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -21,6 +22,7 @@
     <uses-permission android:name="android.permission.USE_CREDENTIALS" />
     <uses-permission android:name="com.google.android.googleapps.permission.GOOGLE_AUTH" android:required="false" />
     <uses-permission android:name="com.google.android.googleapps.permission.GOOGLE_AUTH.youtube" android:required="false" />
+    <uses-permission android:name="android.permission.PROCESS_OUTGOING_CALLS" />
 
     <uses-permission android:name="android.permission.READ_LOGS" />
 
@@ -60,11 +62,31 @@
             android:screenOrientation="portrait"
             android:label="@string/app_name"
             android:launchMode="singleTop" >
+            <!--
             <intent-filter android:label="@string/app_name" >
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+            -->
+        </activity>
+        <activity-alias
+            android:name=".Launcher"
+            android:label="@string/app_name"
+            android:targetActivity="org.storymaker.app.HomeActivity">
+            <intent-filter  android:label="@string/app_name" >
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
+
+        <activity
+            android:name="org.storymaker.app.CatalogActivity"
+            android:configChanges="locale"
+            android:label="@string/title_catalog"
+            android:screenOrientation="portrait" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".HomeActivity" />
         </activity>
         <activity
             android:name="org.storymaker.app.ProjectsActivity"
@@ -186,6 +208,14 @@
             android:screenOrientation="portrait">
         </activity>
         <activity
+            android:name="io.scal.secureshareui.login.ZTLoginActivity"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name="io.scal.secureshareui.login.ZTWebActivity"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
             android:name="org.storymaker.app.ConnectAccountActivity"
             android:label="@string/title_activity_connect_account"
             android:screenOrientation="portrait"
@@ -213,6 +243,34 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".HomeActivity" />
         </activity>
+
+        <activity
+            android:name=".SMPanicResponderActivity"
+            android:noHistory="true"
+            android:theme="@android:style/Theme.NoDisplay">
+            <intent-filter>
+                <action
+                    android:name="info.guardianproject.panic.action.TRIGGER" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".ExitActivity"
+            android:noHistory="true"
+            android:theme="@android:style/Theme.NoDisplay" />
+
+        <!-- NEW/CACHEWORD -->
+        <service android:name="info.guardianproject.cacheword.CacheWordService"
+            android:enabled="true"
+            android:exported="false"/>
+
+        <activity android:name="org.storymaker.app.CacheWordActivity"/>
+
+        <receiver android:name=".LaunchViaDialReceiver" >
+            <intent-filter>
+                <action android:name="android.intent.action.NEW_OUTGOING_CALL" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

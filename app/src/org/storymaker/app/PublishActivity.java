@@ -1,39 +1,25 @@
 package org.storymaker.app;
 
-import timber.log.Timber;
-
-import android.app.Activity;
-import android.app.ActionBar;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
-import android.support.v4.app.Fragment;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.os.Build;
-
-import com.google.gson.JsonObject;
-
-import java.io.File;
-import java.util.ArrayList;
 
 import org.storymaker.app.media.MediaProjectManager;
 import org.storymaker.app.model.Project;
 import org.storymaker.app.model.Scene;
 
+import java.util.ArrayList;
+
 import io.scal.secureshareui.lib.ChooseAccountFragment;
 import scal.io.liger.Constants;
 import scal.io.liger.JsonHelper;
-import scal.io.liger.model.AudioClip;
 import scal.io.liger.model.AudioClipFull;
 import scal.io.liger.model.FullMetadata;
-import scal.io.liger.model.MediaFile;
 import scal.io.liger.model.StoryPathLibrary;
+import timber.log.Timber;
 
 
 public class PublishActivity extends EditorBaseActivity {
@@ -123,7 +109,7 @@ public class PublishActivity extends EditorBaseActivity {
     StoryPathLibrary getStoryPathLibrary(String jsonFilePath) {
         Context context = this;
         String language = "en"; // FIXME don't hardcode "en"
-        String json = JsonHelper.loadJSON(new File(jsonFilePath), language);
+        String json = JsonHelper.loadJSON(jsonFilePath, context, language);
 
         // if no string was loaded, cannot continue
         if (json == null) {

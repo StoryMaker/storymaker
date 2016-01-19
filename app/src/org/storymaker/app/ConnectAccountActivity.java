@@ -46,8 +46,9 @@ public class ConnectAccountActivity extends BaseActivity {
             // The user is returning to this Activity after a successful WordPress signup
             // that originated here.
             startHomeActivityAsNewTask();
-        }
-        else if (mServerManager.hasCreds()) {
+        } else if ((!mCacheWordHandler.isLocked()) && (mServerManager.hasCreds())) {
+            // prevent credential check attempt if database is locked
+            // (this should only apply the first time the app is started)
             // A WordPress account was already used to log in. Show as "Signed In Screen"
             mTitleText.setText(mServerManager.getUserName());
             mCreateAccountBtn.setVisibility(View.INVISIBLE);
