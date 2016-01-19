@@ -189,7 +189,7 @@
     {
         "expansionId": "audio-mena",
         "patchOrder": "15",
-        "sortOrder": "15,
+        "sortOrder": "15",
         "contentType": "lesson",
         "title": "Audio - MENA Edition",
         "packageName": "org.storymaker.app",
