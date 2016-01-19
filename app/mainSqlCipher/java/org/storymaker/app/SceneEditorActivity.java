@@ -205,8 +205,8 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
 
                 // NEW/CACHEWORD
                 SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-                int timeout = Integer.parseInt(settings.getString("pcachewordtimeout", "600"));
-                mCacheWordHandler = new CacheWordHandler(getBaseContext(), this, timeout); // TODO: timeout of -1 represents no timeout (revisit)
+                int timeout = Integer.parseInt(settings.getString("pcachewordtimeout", CACHEWORD_TIMEOUT));
+                mCacheWordHandler = new CacheWordHandler(getBaseContext(), this, timeout);
                 mCacheWordHandler.connectToService();
                 net.sqlcipher.database.SQLiteDatabase db = new StoryMakerDB(mCacheWordHandler, getBaseContext()).getWritableDatabase();
 

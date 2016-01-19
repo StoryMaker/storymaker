@@ -3,6 +3,7 @@ package org.storymaker.app.db;
 import android.content.ContentProvider;
 import android.content.ContentResolver;
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.UriMatcher;
 import android.database.Cursor;
@@ -12,6 +13,7 @@ import android.support.annotation.Nullable;
 
 import net.sqlcipher.database.SQLiteDatabase;
 
+import org.storymaker.app.BaseActivity;
 import org.storymaker.app.model.AudioClipTable;
 import org.storymaker.app.model.AuthTable;
 import org.storymaker.app.model.JobTable;
@@ -151,6 +153,14 @@ public class ProjectsProvider extends ContentProvider implements ICacheWordSubsc
     Timer dbTimer;
 
     synchronized void setTimer(long delay) {
+
+        // if there is no pin set, do not set a timer (will force a lock and potentially cause a crash)
+        SharedPreferences settings = getContext().getApplicationContext().getSharedPreferences("appPrefs", Context.MODE_PRIVATE);
+        String cachewordStatus = settings.getString("cacheword_status", null);
+        if (cachewordStatus == null) {
+            return;
+        }
+
         // if there is an existing timer, clear it
         if(dbTimer != null) {
             dbTimer.cancel();
@@ -173,8 +183,8 @@ public class ProjectsProvider extends ContentProvider implements ICacheWordSubsc
 
         // NEW/CACHEWORD
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getContext().getApplicationContext());
-        int timeout = Integer.parseInt(settings.getString("pcachewordtimeout", "600"));
-        mCacheWordHandler = new CacheWordHandler(getContext(), this, timeout); // TODO: timeout of -1 represents no timeout (revisit)
+        int timeout = Integer.parseInt(settings.getString("pcachewordtimeout", BaseActivity.CACHEWORD_TIMEOUT));
+        mCacheWordHandler = new CacheWordHandler(getContext(), this, timeout);
         mCacheWordHandler.connectToService();
         setTimer(60000);
         mDBHelper = new StoryMakerDB(mCacheWordHandler, getContext());

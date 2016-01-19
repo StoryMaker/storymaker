@@ -3,6 +3,7 @@ package org.storymaker.app;
 
 import timber.log.Timber;
 
+import org.storymaker.app.BaseActivity;
 import org.storymaker.app.db.StoryMakerDB;
 import org.storymaker.app.media.MediaProjectManager;
 import org.storymaker.app.media.OverlayCameraActivity;
@@ -202,7 +203,9 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
             case R.id.purgePublishTables:
 
                 // NEW/CACHEWORD
-                mCacheWordHandler = new CacheWordHandler(getBaseContext(), this, -1); // TODO: timeout of -1 represents no timeout (revisit)
+                SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                int timeout = Integer.parseInt(settings.getString("pcachewordtimeout", CACHEWORD_TIMEOUT));
+                mCacheWordHandler = new CacheWordHandler(getBaseContext(), this, timeout);
                 mCacheWordHandler.connectToService();
                 SQLiteDatabase db = new StoryMakerDB(mCacheWordHandler, getBaseContext()).getWritableDatabase();
 
