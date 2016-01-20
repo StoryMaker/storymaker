@@ -671,6 +671,7 @@ public class HomeActivity extends BaseHomeActivity {
             public void onStorySelected(BaseIndexItem selectedItem) {
 
                 if (selectedItem instanceof InstanceIndexItem) {
+                    updateInstanceIndexItemLastOpenedDate((InstanceIndexItem) selectedItem);
                     launchLiger(HomeActivity.this, null, ((InstanceIndexItem) selectedItem).getInstanceFilePath(), null);
                 } else {
 

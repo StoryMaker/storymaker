@@ -58,6 +58,7 @@ import scal.io.liger.model.sqlbrite.AvailableIndexItemDao;
 import scal.io.liger.model.sqlbrite.ExpansionIndexItem;
 import scal.io.liger.model.sqlbrite.InstalledIndexItem;
 import scal.io.liger.model.sqlbrite.InstalledIndexItemDao;
+import scal.io.liger.model.sqlbrite.InstanceIndexItem;
 import scal.io.liger.model.sqlbrite.InstanceIndexItemDao;
 import scal.io.liger.model.sqlbrite.QueueItemDao;
 import timber.log.Timber;
@@ -420,6 +421,7 @@ public abstract class BaseHomeActivity extends BaseActivity {
         checkForUpdates();
 
     }
+    
 
     public static void launchLiger(Context context, String splId, String instancePath, String splPath) {
 
@@ -1023,6 +1025,12 @@ public abstract class BaseHomeActivity extends BaseActivity {
                 FileUtils.deleteQuietly(foundFile);
             }
         }
+    }
+
+    public void updateInstanceIndexItemLastOpenedDate(InstanceIndexItem item) {
+        java.util.Date thisDate = new java.util.Date();
+        Log.d("BaseHomeActivity", "setLastOpenedDate " + thisDate.toString());
+        instanceIndexItemDao.updateInstanceItemLastOpenedDate(item, thisDate);
     }
 
 }
