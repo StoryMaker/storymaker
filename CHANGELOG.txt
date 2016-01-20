@@ -1,3 +1,9 @@
+--- build 1087:
+
+- Fix templates
+- Fix ordering of saved stories
+- Pin timeout fixes
+
 --- build 1086:
 
 - Fix immediate crash on Android 6 devices
