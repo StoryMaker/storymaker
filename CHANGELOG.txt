@@ -1,3 +1,8 @@
+--- build 1088:
+
+- Content fixes
+- Fix order in catalog after installing a pack
+
 --- build 1087:
 
 - Fix templates
