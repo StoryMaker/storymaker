@@ -16,20 +16,20 @@ version = "{0}-build{1}".format(version_name, version_code)
 print("building app version {0}".format(version))
 
 #'''
-os.system("./gradlew assembleRelease")
+os.system("./gradlew assembleMainSqlCipherRelease")
 os.system("jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore storymaker-release.key app/build/outputs/apk/app-mainSqlCipher-release-unsigned.apk release")
 os.system("jarsigner -verify -verbose -certs app/build/outputs/apk/app-mainSqlCipher-release-unsigned.apk")
 os.system("/home/josh/Android/Sdk/build-tools/{0}/zipalign -v 4 app/build/outputs/apk/app-mainSqlCipher-release-unsigned.apk storymaker-release-{1}.apk".format(build_tools_version, version))
 #'''
 
 #'''
-os.system("./gradlew assembleDebuggableRelease")
+os.system("./gradlew assembleMainSqlCipherDebuggableRelease")
 os.system("jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore storymaker-release.key app/build/outputs/apk/app-mainSqlCipher-debuggableRelease-unsigned.apk release")
 os.system("jarsigner -verify -verbose -certs app/build/outputs/apk/app-mainSqlCipher-debuggableRelease-unsigned.apk")
 os.system("/home/josh/Android/Sdk/build-tools/{0}/zipalign -v 4 app/build/outputs/apk/app-mainSqlCipher-debuggableRelease-unsigned.apk storymaker-debuggable-release-{1}.apk".format(build_tools_version, version))
 #'''
 
 #'''
-os.system("./gradlew assembleDebug")
+os.system("./gradlew assembleMainSqlCipherDebug")
 os.system("cp app/build/outputs/apk/app-mainSqlCipher-debug.apk storymaker-debug-{0}.apk".format(version))
 #'''
