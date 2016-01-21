@@ -1,5 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+  <string name="app_name">StoryMaker 2</string>
+  <string name="app_description">Videos mit StoryMaker zu erstellen ist nun einfacher als zuvor. Unsere einzigartigen Vorlagen und Unterrichtsstunden leiten dich durch die kompletten kreativen Schritte. StoryMaker erlaubt es dir deine Geschichten über das Smartphone zu bearbeiten und vereinfacht das abschließen. Nachdem du eine Datei fertig erstellt hast, kannst du diese auf deine lieblings Plattform veröffentlichen.</string>
   <string name="title_projects">Geschichten</string>
   <string name="title_lessons">Lektionen</string>
   <string name="action_publish">Veröffentlichen</string>
@@ -19,6 +21,7 @@
   <string name="menu_share_media">Teilen</string>
   <string name="menu_save_media">Speichern</string>
   <string name="menu_play_media">Abspielen</string>
+  <string name="menu_render_media">Render</string>
   <string name="menu_bug_report">Fehlerbericht</string>
   <string name="menu_login">Anmelden</string>
   <string name="menu_logs">Protokoll senden</string>
@@ -30,8 +33,14 @@
   <string name="menu_export_project_files">Projektdateien als Zip exportieren</string>
   <string name="menu_join_storymaker">Tritt der StoryMaker Community bei</string>
   <string name="menu_sign_up">Registrieren / Anmelden</string>
+  <string name="menu_upload_manager">Upload Manager</string>
+  <string name="menu_uploads">Uploads</string>
+  <string name="welcome_message">Hallo!\n Willkommen bei StoryMaker</string>
   <!--project list-->
+  <string name="default_project_list_view">Das erste mal das du je ein Projekt erstellt hast!\n\n -Tippe zum Starten-</string>
+  <string name="default_project_view_message">Du hast die Wahl.\nErzähl deine Geschichte mit einem Video, Audio oder mit Fotos.\n\n -Tippe zum Hinzufügen-</string>
   <!--video processing-->
+  <string name="pref_out_fps_title">Ausgehende Bildrate (FPS)</string>
   <string name="pref_out_rate_title">Ausgabe-Bitrate (kbps)</string>
   <string name="pref_out_rate_summary">Bitrate der Video-Ausgabe (300-1500)</string>
   <string name="pref_out_format_title">Ausgabeformat</string>
@@ -47,6 +56,8 @@
   <string name="hintTitle">Titel</string>
   <string name="hintStartTime">Start (00:00:00)</string>
   <string name="hintEndTime">Laufzeit (00:00:00)</string>
+  <string name="hintFadeIn">Einblenden (Bildrate)</string>
+  <string name="hintFadeOut">Ausblenden (Bildrate)</string>
   <string name="start_recording">Aufnahme</string>
   <string name="stop_recording">Stopp</string>
   <string name="play_recording">Abspielen</string>
@@ -70,6 +81,10 @@
     <string name="new_story_photo">Single Photo: Telling a strong story with one image is a skill. To simplify, these templates explain some primary photo types.</string>
     
     <string name="new_story_audio">Audio: Something here about using audio to tell a story. Personally, I really like to listen to the radio and podcasts while I do housework!</string>-->
+  <string name="new_story_simple_story">Kurz Geschichte</string>
+  <string name="new_story_choose_template">Themen Voralge</string>
+  <string name="home_new_story">Erstelle eine Geschichte</string>
+  <string name="home_start_a_lesson">Entdecke mehr Stunden</string>
   <string name="title_activity_lessons">Lektionen</string>
   <string name="title_activity_scene_editor">Szenen-Editor</string>
   <string name="title_activity_choose_template">Wählen Sie eine Vorlage</string>
@@ -91,6 +106,8 @@
   <string name="story_publish_status_processing">Verarbeitung läuft</string>
   <string name="story_publish_status_not">Nicht veröffentlicht</string>
   <string name="story_publish_describe_hint">Beschreiben Sie Ihre Geschichte...</string>
+  <string name="story_publish_story_title">Geschichten Überschrift hier</string>
+  <string name="story_publish_story_date">Geschichts Datum hier</string>
   <!--delete these below-->
   <string name="title_section3">Bereich 3</string>
   <string name="title_section2">Bereich 2</string>
@@ -124,11 +141,13 @@
   <!--all recordings will show up in the media database in a playlist with this name-->
   <string name="audio_db_playlist_name">Meine Aufnahmen</string>
   <!--shown as the message in a dialog when an error occured because of an error accessing the sd card-->
+  <string name="error_sdcard_access">Kann nicht auf den Externen oder Internen Speicher zugreifen</string>
   <!--shown as the message in a dialog when the app encountered an unspecified internal error-->
   <string name="error_app_internal">Interner Anwendungsfehler.</string>
   <!--shown as the message in a dialog when the recording could not be added to the media database-->
   <string name="error_mediadb_new_record">Konnte Audio-Aufnahme nicht speichern.</string>
   <!--shown as the message in a dialog when an export will tak up too much space-->
+  <string name="error_storage_space" formatted="false">Whoops, kein Speicher mehr vorhanden. Bitte versuche mindestens %.2f%nMB freizumachen und versuche es erneut!</string>
   <!--add for libra begin-->
   <string name="default_record_name">Unbenannte Aufnahme</string>
   <string name="menu_view_record_list">Aufnahmeliste anzeigen</string>
@@ -140,6 +159,7 @@
   <string name="prefDialogTitle_recordType">Bitte wählen Sie einen Dateityp.</string>
   <string name="prefDefault_recordType">audio/3gp</string>
   <string name="pref_title_enable_high_quality">Hohe Qualität aktivieren</string>
+  <string name="pref_summary_enable_high_quality">Eine Audio Datei mit besserer Qualität kann größer sein</string>
   <string name="pref_title_enable_sound_effect">Sound-Effekte aktivieren</string>
   <string name="pref_summary_enable_sound_effect">Spiele Sound-Effekt beim Statuswechsel</string>
   <string name="notification_recording">Aufnahme...</string>
@@ -150,14 +170,23 @@
   <string name="alert_message_delete_record">Möchten Sie die ausgewählte Aufnahme löschen?</string>
   <!--add for libra end-->
   <!--youtube upload-->
+  <string name="lesson_status_have_not_started">Noch nicht gestartet</string>
   <string name="lessons_congratulations_you_have_completed_the_lesson_">Sie haben eine Lektion vollständig bearbeitet!</string>
   <string name="lesson_status_in_progress">In Bearbeitung</string>
   <string name="lesson_status_complete">ERLEDIGT!</string>
   <string name="no_lessons_available_tap_to_load_">Keine Lektionen verfügbar (berühren zum Laden)</string>
   <string name="_lesson_complete">vollständig bearbeitet</string>
+  <string name="_of_">von</string>
   <string name="default_youtube_desc">Ein StoryMaker-Projekt</string>
   <string name="view_published_media_online_or_local_copy_">Veröffentlichte Medien online anzeigen?</string>
-  <string name="delete_project_">Projekt löschen?</string>
+  <string name="choose_account_for_youtube_upload">Wähle einen Account zum Hochladen</string>
+  <string name="rendering">Rendering</string>
+  <string name="rendering_project_">Rendert Projekt...</string>
+  <string name="publishing">Veröffentlichen</string>
+  <string name="connecting_to_youtube_">verbinden zu Youtube...</string>
+  <string name="uploading_to_storymaker">veröffentlicht auf StoryMaker...</string>
+  <string name="rendering_clips_">Rendert Videos</string>
+  <string name="delete_clip">Video löschen?</string>
   <string name="add_new_clip_to_the_scene_">Neuen Clip zur Szene hinzufügen?</string>
   <string name="video_project_project_type">Video-Projekt</string>
   <string name="photo_project_project_type">Foto-Projekt</string>
@@ -167,6 +196,8 @@
   <string name="eula_accept">Akzeptieren</string>
   <string name="eula_refuse">Ablehnen</string>
   <string name="privacy_policy">Datenschutzerklärung</string>
+  <string name="end_user_license_agreement">Endverbraucher Vereinbarung</string>
+  <string name="by_clicking_accept">Mit \"Akzeptieren\" stimmst du unseren Endverbraucher Vereinbarungen und den Geschäftsbedingungen zu und hast diese damit gelesen.</string>
   <string name="button_render_preview">Vorschau anzeigen</string>
   <string name="publish_sm">Storymaker.cc</string>
   <string name="publish_youtube">YouTube</string>
@@ -174,14 +205,24 @@
   <string name="action_play">Abspielen</string>
   <string name="action_share">Teilen</string>
   <string name="cbRenderTypeLabel">Schnellen Video-Renderer benutzen</string>
+  <string name="drawer_quick_capture">Schnellaufnahme</string>
+  <string name="select_story_type">Wähle einen Geschichts Typen</string>
+  <string name="button_start_my_story">Meine Geschichte starten</string>
+  <string name="home_intro_button_lessons">Entdecke mehr Stunden</string>
+  <string name="home_intro_button_projects">Erstelle eine Geschichte</string>
   <string name="created_with_storymaker_tag">Erstellt mit StoryMaker - https://storymaker.cc/</string>
   <string name="err_you_need_at_least_one_account_configured_on_your_device">Sie müssen mindestens ein Konto auf Ihrem Gerät konfiguriert haben</string>
   <string name="you_began_a_new_lesson">Sie haben eine neue Lektion begonnen</string>
+  <string name="delete_warning">Dieses Vorhaben kann nicht mehr rückgängig gemacht werden!</string>
   <string name="cancel">Abbrechen</string>
+  <string name="delete">Löschen</string>
+  <string name="play_or_share_exported_media_">Die exportierte Datei abspielen oder veröffentlichen?</string>
+  <string name="share_published_story">Die veröffentlichte Geschichte teilen?</string>
   <string name="scene_s_">Szene(n)</string>
   <string name="clip_s_">Clip(s)</string>
   <string name="sc_app_not_found">SoundCloud App nicht gefunden!</string>
   <string name="sc_app_not_found_message">Möchten Sie sie jetzt installieren?</string>
+  <string name="no_active_sc_account">Kein SoundCloud Account gefunden, bitte einloggen / registrieren</string>
   <string name="operation_canceled">Vorgang abgebrochen</string>
   <string name="getting_details">Ermittle Benutzer-Details</string>
   <string name="could_not_create_account">Konnte kein Benutzerkonto erstellen</string>
@@ -192,12 +233,14 @@
   <string name="export_dialog_share">Teilen</string>
   <string name="title_activity_accounts">Konten</string>
   <string name="action_settings">Einstellungen</string>
+  <string name="label_activity_log">Aktivitätsverlauf</string>
   <string name="label_title">Titel</string>
   <string name="label_description">Beschreibung</string>
   <string name="label_tags">Schlagwörter</string>
   <string name="label_add">Hinzufügen</string>
   <string name="label_edit">Bearbeiten</string>
   <string name="label_save">Speichern</string>
+  <string name="label_activities">Aktivitätsverlauf</string>
   <string name="hint_story_title">Geben Sie einen Titel ein</string>
   <string name="hint_story_description">Beschreiben Sie Ihre Geschichte...</string>
   <string name="label_section">Bereich</string>
@@ -208,4 +251,17 @@
   <string name="hint_no_description">Keine Beschreibung.</string>
   <string name="info">Info</string>
   <string name="restarting_storymaker">StoryMaker wird neu gestartet...</string>
+  <string name="send">Senden</string>
+  <string name="uploading_to_soundcloud">Lädt hoch zu SoundCloud...</string>
+  <string name="uploading_to_facebook">Lädt hoch zu Facebook...</string>
+  <string name="uploading_to_internet_archive">Lädt ins Internet Archiv...</string>
+  <string name="no_site_selected">Keine Seite ausgewählt.</string>
+  <string name="no_title">Kein Titel.</string>
+  <string name="title_exports">Veröffentlichte Geschichten</string>
+  <string name="last_modified">Zuletzt bearbeitet</string>
+  <string name="export_error_1">Etwas ist mit dem Export schiefgelaufen</string>
+  <string name="export_error_2">Fehler</string>
+  <string name="export_error_3">Etwas ist mit dem Export schiefgelaufen</string>
+  <string name="export_error_4">Fehler</string>
+  <!--NEW/CACHEWORD-->
 </resources>

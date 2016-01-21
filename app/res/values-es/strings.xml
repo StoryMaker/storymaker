@@ -93,7 +93,6 @@ También tendrá una oportunidad de ver y modificar los datos que se envían.</s
   <string name="new_story_choose_template">Plantilla de escena</string>
   <string name="home_new_story">ELABORAR UNA HISTORIA</string>
   <string name="home_start_a_lesson">EXPLORAR LECCIONES</string>
-  <string name="title_activity_new_story">¡Ha creado una historia!</string>
   <string name="title_activity_lessons">Lecciones</string>
   <string name="title_activity_scene_editor">Editor de Escena</string>
   <string name="title_activity_choose_template">Elija Modelo</string>
@@ -200,7 +199,6 @@ No se puede acceder al almacenamiento externo o interno</string>
   <string name="uploading_to_storymaker">publicando en el sitio de StoryMarker...</string>
   <string name="rendering_clips_">renderizando vídeos...</string>
   <string name="you_must_enter_a_project_name">Por favor introduzca un título funcional de borrador. Puede cambiar esto más tarde.</string>
-  <string name="delete_project_">¿Borrar proyecto?</string>
   <string name="delete_clip">¿Borrar corte de vídeo?</string>
   <string name="add_new_clip_to_the_scene_">¿Añadir nuevo vídeo a la escena?</string>
   <string name="video_project_project_type">Proyecto de vídeo</string>
@@ -290,6 +288,21 @@ No se puede acceder al almacenamiento externo o interno</string>
   <string name="no_title">Sin título.</string>
   <string name="title_exports">Historias publicadas</string>
   <string name="last_modified">Última modificación</string>
+  <string name="no_medium">(ningún medio)</string>
+  <string name="learning_guide_description">Construir una narrativa convincente.</string>
+  <string name="extracting_audio_multiple">extrayendo pista de audio</string>
+  <string name="crossfading_audio">audio encadenada</string>
+  <string name="crossfading_audio_multiple"> pista de audio encadenada</string>
+  <string name="fade_audio">Desvanecer totalmente audio de entrada y salida</string>
+  <string name="converting_audio">convirtiendo a salida de audio</string>
+  <string name="export_error_1">Algo salió mal con la exportación de medios</string>
   <string name="export_error_2">Error</string>
+  <string name="processing_audio">procesando pistas de audio</string>
+  <string name="processing_audio_multiple">procesando pista de audio</string>
+  <string name="mixing_tracks">mezclando pistas</string>
+  <string name="trimming_merging">recortando y combinando videos</string>
+  <string name="merging_video_audio">combinando video y audio</string>
+  <string name="export_error_3">Algo salió mal con la exportación de medios</string>
   <string name="export_error_4">Error</string>
+  <!--NEW/CACHEWORD-->
 </resources>

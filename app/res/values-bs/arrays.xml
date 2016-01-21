@@ -3,4 +3,5 @@
   <string-array name="story_sections"/>
   <string-array name="lesson_sections"/>
   <string-array name="array_story_sections"/>
+  <!--<item>catalog</item>-->
 </resources>

@@ -93,7 +93,6 @@
   <string name="new_story_choose_template">قالب المشهد</string>
   <string name="home_new_story">اصنع قصة</string>
   <string name="home_start_a_lesson">تصفح الدروس</string>
-  <string name="title_activity_new_story">لقد أنشأت قصة</string>
   <string name="title_activity_lessons">الدروس</string>
   <string name="title_activity_scene_editor">محرر المشاهد</string>
   <string name="title_activity_choose_template">اختر قالباً</string>
@@ -199,7 +198,6 @@
   <string name="uploading_to_storymaker">النشر على موقع موقع StoryMaker.cc</string>
   <string name="rendering_clips_">تحضير الكليبات</string>
   <string name="you_must_enter_a_project_name">الرجاء إدخال عنوان أولي, يمكنك تغييره لاحقا.</string>
-  <string name="delete_project_">حذف المشروع؟</string>
   <string name="delete_clip">فسخ اللقطة؟</string>
   <string name="add_new_clip_to_the_scene_">إضافة كليب للمشهد؟</string>
   <string name="video_project_project_type">مشروع فيديو</string>
@@ -281,4 +279,5 @@
   <string name="uploading_to_internet_archive">جاري التحميل لأرشيف الأنترنات...</string>
   <string name="export_error_2">خطأ</string>
   <string name="export_error_4">خطأ</string>
+  <!--NEW/CACHEWORD-->
 </resources>

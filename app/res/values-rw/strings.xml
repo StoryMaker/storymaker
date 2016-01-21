@@ -93,7 +93,6 @@ Uza kuronka kandi akaryo kokubona no guhindura informations ziriko zirungikwa. <
   <string name="new_story_choose_template">Akarorero kibiboneka (modèle de scène)</string>
   <string name="home_new_story">GUTEGURA INKURU</string>
   <string name="home_start_a_lesson">KWIHWEZA NEZA INYIGISHO</string>
-  <string name="title_activity_new_story">Wantaguye inkuru</string>
   <string name="title_activity_lessons">Inyigisho</string>
   <string name="title_activity_scene_editor">Igitunganya ibiboneka (éditeur de scène)</string>
   <string name="title_activity_choose_template">Tora akarorero</string>
@@ -199,7 +198,6 @@ Uza kuronka kandi akaryo kokubona no guhindura informations ziriko zirungikwa. <
   <string name="uploading_to_storymaker">Kumenyekanisha kuri Site ya StoryMaker</string>
   <string name="rendering_clips_">kugira rendu y\'amasanamu</string>
   <string name="you_must_enter_a_project_name">Tubasavye gushiramwo umutwe w\'ijambo ukora (titre actif) naho utarahera. Ushobora kubihindura munyuma</string>
-  <string name="delete_project_">Gufuta igikorwa?</string>
   <string name="delete_clip">Gufuta isanamu?</string>
   <string name="add_new_clip_to_the_scene_">Ongerako isanamu nshasha kubiboneka (scène)</string>
   <string name="video_project_project_type">Igikorwa c\'amasanamu</string>
@@ -291,4 +289,5 @@ Uza kuronka kandi akaryo kokubona no guhindura informations ziriko zirungikwa. <
   <string name="last_modified">Isubirwamwo ryanyuma (dernière modification)</string>
   <string name="export_error_2">Ikosa</string>
   <string name="export_error_4">Ikosa</string>
+  <!--NEW/CACHEWORD-->
 </resources>

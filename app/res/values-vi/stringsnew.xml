@@ -178,12 +178,15 @@
   <string name="prefs_category_media_title">Truyền thông</string>
   <string name="prefs_category_debug_title">Tìm lỗi</string>
   <string name="prefs_storymaker_server_title">Máy Chủ StoryMaker</string>
+  <string name="prefs_storymaker_server_summary">Máy chủ để chưa tất cả nội dung của StoryMaker</string>
   <string name="prefs_use_tor_title">Dùng Orbot (Tor)</string>
   <string name="prefs_use_tor_summary">Gửi tất cả giao thông mạng xuyên qua mạng Tor với ứng dụng Orbot</string>
   <string name="prefs_sm_upload_title">Tải lên StoryMaker</string>
   <string name="prefs_sm_upload_summary">Tải lên máy chủ StoryMaker theo mặc định</string>
   <string name="prefs_use_download_manager_title">Dùng Quản Lý Tải Xuống</string>
+  <string name="prefs_use_download_manager_summary">Tải xuống nội dung StoryMaker dùng dịch vụ Download Manager (quản lý tải xuống) của Android</string>
   <string name="prefs_use_upload_manager_title">Dùng Quản Lý Tải Lên</string>
+  <string name="prefs_use_upload_manager_summary">Tải lên nội dung StoryMaker dùng dịch vụ UploadManager (quản lý tải lên) của Android</string>
   <string name="prefs_youtube_acccount_title">Tài khoản YouTube</string>
   <string name="prefs_youtube_acccount_summary">Tài khoản YouTube dùng để tải video lên. Nó phải được đăng ký trên thiết bị của bạn.</string>
   <string name="prefs_youtube_login_title">Đăng nhập YouTube</string>

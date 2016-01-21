@@ -93,7 +93,6 @@
   <string name="new_story_choose_template">قالب صفحه نمایش</string>
   <string name="home_new_story">یک گزارش خبری تهیه کنید.</string>
   <string name="home_start_a_lesson">درس ‌ها را جست‌وجو کنید.</string>
-  <string name="title_activity_new_story">شما یک گزارش خبری تهیه کردید!</string>
   <string name="title_activity_lessons">درس‌ها</string>
   <string name="title_activity_scene_editor">ویرایش‌گر صفحه نمایش</string>
   <string name="title_activity_choose_template">قالبی انتخاب کنید.</string>
@@ -199,7 +198,6 @@
   <string name="uploading_to_storymaker">انتشار در وب‌سایت StoryMaker </string>
   <string name="rendering_clips_">پردازش کلیپ با گرافیک رایانه‌ای</string>
   <string name="you_must_enter_a_project_name">لطفا وارد یک پیش نویس شوید. می‌توانید بعدا آن را تغییر دهید.</string>
-  <string name="delete_project_">حذف پروژه؟</string>
   <string name="delete_clip">حذف کلیپ؟</string>
   <string name="add_new_clip_to_the_scene_">ضمیمه کلیپ جدید به صفحه نمایش؟</string>
   <string name="video_project_project_type">پروژه ویدیویی</string>
@@ -306,4 +304,5 @@ https://storymaker.cc</string>
   <string name="merging_video_audio">در حال ادغام ویدیو و صدا ...</string>
   <string name="export_error_3">مشکلی در مورد ارسال رسانه به خارج وجود دارد.</string>
   <string name="export_error_4">خطا</string>
+  <!--NEW/CACHEWORD-->
 </resources>

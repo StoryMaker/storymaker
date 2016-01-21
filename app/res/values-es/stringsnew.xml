@@ -49,7 +49,7 @@
   <!--story_type-->
   <string name="story_type_event_news_title">Evento de noticias</string>
   <string name="story_type_event_feature_title">Evento de característica</string>
-  <string name="story_type_event_breaking_title">Evento de noticias de última hora</string>
+  <string name="story_type_event_breaking_title">Evento de noticias urgentes</string>
   <string name="story_type_issue_social_title">Asunto social</string>
   <string name="story_type_issue_political_title">Asunto político</string>
   <string name="story_type_issue_economic_title">Asunto económico</string>
@@ -60,7 +60,7 @@
   <!--story_type_description-->
   <string name="story_type_event_news_desc">Historias sobre eventos con importancia inmediata, que a menudo están programadas, y tienen un claro inicio y un final. Unas elecciones o una manifestación son buenos eventos de noticias.</string>
   <string name="story_type_event_feature_desc">Historias sobre eventos que pueden no tener las implicaciones de noticias trascendentes. Un evento deportivo, un nuevo negocio en un vecindario, una tecnología emergente, son buenos eventos de características.</string>
-  <string name="story_type_event_breaking_desc">Eventos no programados con un valor importante como novedades. Un fuego, un anuncio oficial sorpresa de un Gobierno, o un desastre natural son buenos eventos de noticias de última hora.</string>
+  <string name="story_type_event_breaking_desc">Eventos no programados con un valor importante como novedades. Un fuego, un anuncio oficial sorpresa de un Gobierno, o un desastre natural son buenos eventos de noticias urgentes.</string>
   <string name="story_type_issue_social_desc">Historias sobre asuntos que afectan a comunidades. Un cambio en la regulación de un Gobierno local o una infraestructura son buenos asuntos sociales.</string>
   <string name="story_type_issue_political_desc">Historias sobre el Gobierno y el trabajo de los funcionarios públicos. Una historia sobre nuevas leyes o cambios parlamentarios es un buen asunto político.</string>
   <string name="story_type_issue_economic_desc">Historias sobre la economía en general o sobre finanzas personales de la gente. Una historia sobre el impacto de los cambios en los subsidios gubernamentales a los agricultores es un buen asunto económico</string>
@@ -213,8 +213,8 @@
   <string name="prefs_video_height_summary">Exporta la altura de vídeo</string>
   <string name="prefs_video_bitrate_title">Ratio de bits de vídeo</string>
   <string name="prefs_video_bitrate_summary">Exporta el ratio de bits de vídeo (kbps)</string>
-  <string name="prefs_video_framrate_title">Ratio de imágenes de vídeo</string>
-  <string name="prefs_video_framrate_summary">Exporta el ratio de imágenes (frames) por segundo (fps)</string>
+  <string name="prefs_video_framrate_title">Tasa de fotogramas de vídeo</string>
+  <string name="prefs_video_framrate_summary">Tasa de exportación de fotogramas por segundo (fps)</string>
   <string name="prefs_audio_codec_title">Códec de audio</string>
   <string name="prefs_audio_codec_summary">Exporta el códec de audio</string>
   <string name="prefs_audio_bitrate_title">Ratio de bits de audio</string>
@@ -248,4 +248,5 @@
   <string name="no_tags_msg">No se añadieron #etiquetas</string>
   <!--BaesActivity Drawer  (For Accessibility Descriptions)-->
   <string name="open_drawer">Abrir bandeja</string>
+  <string name="close_drawer">Cerrar panel deslizante</string>
 </resources>

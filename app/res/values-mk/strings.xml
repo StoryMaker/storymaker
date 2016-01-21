@@ -87,7 +87,6 @@
   <string name="new_story_choose_template">Сценски Шаблон</string>
   <string name="home_new_story">НАПРАВИ ПРИКАЗНА</string>
   <string name="home_start_a_lesson">ПРОУЧУВАЈ ГИ ЛЕКЦИИТЕ</string>
-  <string name="title_activity_new_story">Направивте приказна!</string>
   <string name="title_activity_lessons">Лекции</string>
   <string name="title_activity_scene_editor">Едитор на Сцени</string>
   <string name="title_activity_choose_template">Одбери Шаблон</string>
@@ -193,7 +192,6 @@
   <string name="uploading_to_storymaker">објавување на StoryMaker сајтот...</string>
   <string name="rendering_clips_">рендирање на клиповите...</string>
   <string name="you_must_enter_a_project_name">Внесете работно име. Ова може да се промени подоцна.</string>
-  <string name="delete_project_">Избриши го проектот?</string>
   <string name="add_new_clip_to_the_scene_">Додади нов клип во сцената?</string>
   <string name="video_project_project_type">Видео Проект</string>
   <string name="photo_project_project_type">Фото Проект</string>
@@ -268,4 +266,5 @@
   <string name="info">Инфо</string>
   <string name="send_logcat_to_support">Испрати Logcat до техничката подршка</string>
   <string name="restarting_storymaker">StoryMaker се рестартира...</string>
+  <!--NEW/CACHEWORD-->
 </resources>

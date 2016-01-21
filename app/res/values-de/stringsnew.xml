@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-  <string name="terms_title">StoryMaker-Regeln</string>
+  <string name="terms_title">StoryMaker Bedingungen</string>
   <string name="terms_text_1">Sie behalten alle Urheberrechte an Ihren Inhalten und können diese herunterladen wann immer Sie wünschen. Wir werden Ihre Daten nicht verkaufen. Indem Sie Ihre Inhalte mit StoryMaker.cc teilen, erklären Sie sich einverstanden, dass Small World News und Partner Ihre Geschichten zusammen mit ähnlichen Artikeln, die mit StoryMaker erstellt wurden, darstellt. Die Gruppierung erfolgt anhand des Artikeltyps, der Themen und des Orts.</string>
   <string name="terms_text_2">Ihr Artikel ist nach wie vor auf der Plattform Ihrer Wahl gepostet und wird zusätzlich auf StoryMaker.cc referenziert. Der Titel, die Beschreibung und Schlagworte werden auf StoryMaker.cc gepostet; jeglicher andere Inhalt sind Regerenzen auf Ihren persönlichen Kanal auf der von Ihnen gewählten Plattform.</string>
   <!--tutorial_lessons-->
@@ -11,6 +11,7 @@
   <string name="tutorial_title_3">Schützen Sie sich.</string>
   <string name="tutorial_text_3">Unsere digitalen Sicherheitsübungen werden Ihnen und Ihren Quellen helfen in Sicherheit zu bleiben. StoryMaker zielt darauf ab, Sie abzusichern ganz egal wo auf der Welt Sie sind.</string>
   <string name="tutorial_title_4">Erzählen Sie Ihre Geschichte besser.</string>
+  <string name="tutorial_text_4">Die Stories passen am besten in verschiedenen Medien, ob Audio, als Foto oder Video. Lernen Sie, wie unterschiedlich jedes Medium ist.</string>
   <string name="tutorial_title_5">Prüfen Sie Ihr Wissen.</string>
   <string name="tutorial_text_5">Jede Lektion endet mit einem Quiz, mit dem Sie Ihr Verständnis prüfen können.</string>
   <string name="tutorial_title_6">Lernen Sie weiter.</string>
@@ -40,8 +41,10 @@
   <string name="story_type_issue_title">Thema</string>
   <string name="story_type_profile_title">Profil</string>
   <string name="story_type_news_title">Eilmeldungen</string>
+  <string name="story_type_event_desc">Event Stories haben einen festgesetzten Zeitrahmen und einen bestimmten Ort. Beachten Sie, was bei diesem Event passiert. Fügen Sie in Ihrer Story ein, wenn, wo und warum diese an genau diesem Ort und in genau dieser Zeit abläuft.</string>
   <!--/ legacy_story_type-->
   <!--story_type-->
+  <string name="story_type_event_news_title">Neuigkeit</string>
   <string name="story_type_event_feature_title">zukünftiges Event</string>
   <string name="story_type_event_breaking_title">Eilmeldung</string>
   <string name="story_type_issue_social_title">Gesellschaftliches Thema</string>
@@ -53,6 +56,7 @@
   <!--/story_type-->
   <!--story_type_description-->
   <string name="story_type_event_news_desc">Geschichten über Ereignisse mit unmittelbarer Bedeutung; sie sind häufig geplant und haben einen definierten Beginn und ein definiertes Ende. Gute Beispiele hierfür sind Wahlen oder Demonstrationen.</string>
+  <string name="story_type_profile_professional_desc">Geschichten über Menschen und ihre Arbeitsplätze. Ein Profil von einem berühmten Künstler oder Sportler ist eine gute Berufsprofil.</string>
   <!--/story_type_description-->
   <!--template_options-->
   <string name="choose_level">Wählen Sie eine Stufe</string>
@@ -119,6 +123,7 @@
   <string name="story_type_profile_personal_text5">Was würden Sie gerne in der Zukunft passieren sehen?</string>
   <!--/story_type_new-->
   <!--story_type_old-->
+  <string name="scene_number">Szene &lt;xliff:g id="number"&gt;%1$d&lt;/xliff:g&gt;</string>
   <string name="when">Wann?</string>
   <string name="how">Wie?</string>
   <string name="what">Was?</string>
@@ -163,6 +168,7 @@
   <string name="prefs_category_media_title">Medien</string>
   <string name="prefs_category_debug_title">Debuggen</string>
   <string name="prefs_storymaker_server_title">StoryMaker-Server</string>
+  <string name="prefs_storymaker_server_summary">Server für das Hosten des ganzen StoryMaker-Inhalts</string>
   <string name="prefs_use_tor_title">Orbot (Tor) benutzen</string>
   <string name="prefs_use_tor_summary">Sende den gesamten Netzwerk-Datenverkehr mit der Orbot-App durch das Tor-Netzwerk.</string>
   <string name="prefs_sm_upload_title">Upload zu StoryMaker</string>
@@ -180,6 +186,7 @@
   <string name="prefs_interface_language_title">Sprache auswählen</string>
   <string name="prefs_interface_language_summary">Die Sprache, welche StoryMaker für die Benutzeroberfläche benutzen wird</string>
   <string name="prefs_slide_duration_title">Anzeigedauer</string>
+  <string name="prefs_slide_duration_summary">Dauer jeder Folie in einer Foto-Abfolge</string>
   <string name="prefs_enable_compression_title">Komprimierung aktivieren</string>
   <string name="prefs_enable_compression_summary">Komprimiere alle Videos und Töne mit den untenstehenden Einstellungen</string>
   <string name="prefs_preprocess_3gp_title">Vorverarbeitung 3GP</string>
@@ -209,6 +216,7 @@
   <string name="prefs_internal_storage_title">Interner Speicher</string>
   <string name="prefs_internal_storage_summary">Internen Projekt-Speicher nutzen</string>
   <string name="prefs_youtube_method_title">YouTube Methode</string>
+  <string name="prefs_youtube_method_summary">Korrigiere die Autorisierung des Methodentyps</string>
   <!--/prefs-->
   <!--FirstStartActivity-->
   <string name="sign_up_btn">Für StoryMaker registrieren</string>

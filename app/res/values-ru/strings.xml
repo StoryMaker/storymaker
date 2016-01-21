@@ -1,5 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+  <string name="app_name">StoryMaker 2</string>
   <string name="app_description">Благодаря StoryMaker, процесс создание сюжетов стал еще проще. Наши оригинальные шаблоны, схемы и уроки будут служить вам ориентиром в творческом процессе. StoryMaker позволяет вам редактировать сюжет прямо на мобильном телефоне, что позволяет быстро закончить работу над ним. Когда вы завершили сюжет, StoryMaker позволяет вам опубликовать его на ваших любимых форумах. </string>
   <string name="title_projects">Сюжеты</string>
   <string name="title_lessons">Уроки</string>
@@ -92,7 +93,6 @@
   <string name="new_story_choose_template">Шаблон эпизода</string>
   <string name="home_new_story">СОЗДАТЬ СЮЖЕТ</string>
   <string name="home_start_a_lesson">ПОСМОТРЕТЬ УРОКИ</string>
-  <string name="title_activity_new_story">Вы создали сюжет!</string>
   <string name="title_activity_lessons">Уроки</string>
   <string name="title_activity_scene_editor">Редактор сцен</string>
   <string name="title_activity_choose_template">Выберите шаблон</string>
@@ -198,7 +198,6 @@
   <string name="uploading_to_storymaker">публикуем на сайте StoryMaker...</string>
   <string name="rendering_clips_">обработка клипов...</string>
   <string name="you_must_enter_a_project_name">Пожалуйста, введите заголовок для черновика. Вы можете изменить его позже.</string>
-  <string name="delete_project_">Удалить проект?</string>
   <string name="delete_clip">Удалить клип?</string>
   <string name="add_new_clip_to_the_scene_">Добавить новый клип к эпизоду?</string>
   <string name="video_project_project_type">Видео проект</string>
@@ -279,4 +278,26 @@
   <string name="restarting_storymaker">Перезапуск StoryMaker...</string>
   <string name="send">Отослать</string>
   <string name="title_activity_press_secure">PressSecure</string>
+  <string name="uploading_to_soundcloud">Выгрузка в SoundCloud...</string>
+  <string name="uploading_to_facebook">Выгрузка в Facebook...</string>
+  <string name="uploading_to_internet_archive">Выгрузка в интернет-архив...</string>
+  <string name="no_site_selected">Не выбран сайт.</string>
+  <string name="exported_stories">Экспорт</string>
+  <string name="no_title">Нет заголовка.</string>
+  <string name="title_exports">Опубликованные истории</string>
+  <string name="last_modified">Последние изменения</string>
+  <string name="extracting_audio_multiple">Извлечение аудио дорожки</string>
+  <string name="crossfading_audio">Настройка плавного перехода в аудио...</string>
+  <string name="crossfading_audio_multiple">Настройка плавного перехода в аудио дорожке</string>
+  <string name="converting_audio">Конвертирование в выходное аудио...</string>
+  <string name="export_error_1">Что-то пошло не так с экспортом медиа информации</string>
+  <string name="export_error_2">Ошибка</string>
+  <string name="processing_audio">Обработка аудиодорожек...</string>
+  <string name="processing_audio_multiple">Обработка аудиодорожки...</string>
+  <string name="mixing_tracks">Сведение дорожек</string>
+  <string name="trimming_merging">Обрезка и слияние видео</string>
+  <string name="merging_video_audio">Слияние видео и аудио...</string>
+  <string name="export_error_3">Что-то пошло не так с экспортом медиа информации</string>
+  <string name="export_error_4">Ошибка</string>
+  <!--NEW/CACHEWORD-->
 </resources>

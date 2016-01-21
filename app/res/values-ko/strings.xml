@@ -84,7 +84,6 @@
   <string name="new_story_choose_template">템플릿 장면</string>
   <string name="home_new_story">이야기 만들기</string>
   <string name="home_start_a_lesson">레슨 둘러보기</string>
-  <string name="title_activity_new_story">이야기를 만들어보세요!</string>
   <string name="title_activity_lessons">레슨들</string>
   <string name="title_activity_scene_editor">장면 편집기</string>
   <string name="title_activity_choose_template">템플릿 선택하기</string>
@@ -190,7 +189,6 @@
   <string name="uploading_to_storymaker">스토리메이커 사이트에 출판하기...</string>
   <string name="rendering_clips_">클립 렌더링...</string>
   <string name="you_must_enter_a_project_name">초안의 가제를 입력하세요. 나중에 바꿀 수도 있습니다.</string>
-  <string name="delete_project_">프로젝트를 지우시겠습니까?</string>
   <string name="add_new_clip_to_the_scene_">장면에 새로운 클립을 넣으시겠습니까?</string>
   <string name="video_project_project_type">비디오 프로젝트</string>
   <string name="photo_project_project_type">사진 프로젝트</string>
@@ -264,4 +262,5 @@
   <string name="trim_clips">클립 다듬기</string>
   <string name="info">정보</string>
   <string name="send_logcat_to_support">로크켓 보내기</string>
+  <!--NEW/CACHEWORD-->
 </resources>

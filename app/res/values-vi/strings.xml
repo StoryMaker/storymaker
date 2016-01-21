@@ -93,7 +93,6 @@ Bạn cũng có cơ hội để duyệt xem và điều chỉnh dữ liệu gử
   <string name="new_story_choose_template">Khuôn Cảnh</string>
   <string name="home_new_story">LÀM MỘT PHÓNG SỰ</string>
   <string name="home_start_a_lesson">XEM XÉT CÁC BÀI HỌC</string>
-  <string name="title_activity_new_story">Bạn tạo ra một phóng sự!</string>
   <string name="title_activity_lessons">Bài học</string>
   <string name="title_activity_scene_editor">Chỉnh sửa Cảnh</string>
   <string name="title_activity_choose_template">Chọn Khuôn</string>
@@ -199,7 +198,6 @@ Bạn cũng có cơ hội để duyệt xem và điều chỉnh dữ liệu gử
   <string name="uploading_to_storymaker">đưa vào trang của StoryMaker</string>
   <string name="rendering_clips_">đang kết xuất clip...</string>
   <string name="you_must_enter_a_project_name">Xin điền vào tựa đề làm việc tạm. Bạn có thể thay đổi sau.</string>
-  <string name="delete_project_">Xóa đề án?</string>
   <string name="delete_clip">Xóa Clip?</string>
   <string name="add_new_clip_to_the_scene_">Thêm clip mới vào cảnh?</string>
   <string name="video_project_project_type">Đề án Video</string>
@@ -289,7 +287,7 @@ Bạn cũng có cơ hội để duyệt xem và điều chỉnh dữ liệu gử
   <string name="no_title">Không Tựa Đề</string>
   <string name="title_exports">Phóng Sự Đã Xuất Bản</string>
   <string name="last_modified">Sửa đổi lần cuối</string>
-  <string name="no_medium">(không có phương tiện truyền đạt nào)</string>
+  <string name="no_medium">(chưa có nội dung)</string>
   <string name="learning_guide_description">Xây dựng một câu chuyện lôi cuốn.</string>
   <string name="extracting_audio_multiple">Trích track âm thanh ra</string>
   <string name="crossfading_audio">Chuyển dần âm thanh...</string>
@@ -305,4 +303,5 @@ Bạn cũng có cơ hội để duyệt xem và điều chỉnh dữ liệu gử
   <string name="merging_video_audio">Ghép nối video và âm thanh...</string>
   <string name="export_error_3">Có lỗi khi xuất phương tiện dữ liệu </string>
   <string name="export_error_4">Lỗi</string>
+  <!--NEW/CACHEWORD-->
 </resources>
