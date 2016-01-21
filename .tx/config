@@ -36,28 +36,3 @@ file_filter = app/res/values-<lang>/arrays.xml
 source_file = app/res/values/arrays.xml
 source_lang = en
 type = ANDROID
-
-[storymaker.audio_simple_template]
-file_filter = app/assets/story/templates/<lang>/simple/audio_simple.json
-source_file = app/assets/story/templates/en/simple/audio_simple.json
-source_lang = en
-type = TXT
-
-[storymaker.video_simple_template]
-file_filter = app/assets/story/templates/<lang>/simple/video_simple.json
-source_file = app/assets/story/templates/en/simple/video_simple.json
-source_lang = en
-type = TXT
-
-[storymaker.photo_simple_template]
-file_filter = app/assets/story/templates/<lang>/simple/photo_simple.json
-source_file = app/assets/story/templates/en/simple/photo_simple.json
-source_lang = en
-type = TXT
-
-[storymaker.essay_simple_template]
-file_filter = app/assets/story/templates/<lang>/simple/essay_simple.json
-source_file = app/assets/story/templates/en/simple/essay_simple.json
-source_lang = en
-type = TXT
-
