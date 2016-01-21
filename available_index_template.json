@@ -9,7 +9,7 @@
         "description": "Learn to make compelling photographs",
         "thumbnailPath": "images/content_packs/mobile_photo_basics_cover.png",
         "expansionFilePath": "Android/data/org.storymaker.app/files/",
-        "expansionFileUrl": "https://s3-us-west-1.amazonaws.com/storymakerorg/appdata/obb/org.storymaker.app/beta/",
+        "expansionFileUrl": "https://s3-us-west-1.amazonaws.com/storymakerorg/appdata/obb/org.storymaker.app/",
         "expansionFileVersion": "10"
     },
     {
@@ -22,7 +22,7 @@
         "description": "A one day workshop in video basics",
         "thumbnailPath": "images/content_packs/g_odvw_cover.png",
         "expansionFilePath": "Android/data/org.storymaker.app/files/",
-        "expansionFileUrl": "https://s3-us-west-1.amazonaws.com/storymakerorg/appdata/obb/org.storymaker.app/beta/",
+        "expansionFileUrl": "https://s3-us-west-1.amazonaws.com/storymakerorg/appdata/obb/org.storymaker.app/",
         "expansionFileVersion": "10"
     },
     {
@@ -35,7 +35,7 @@
         "description": "Answer a few questions to get a story template",
         "thumbnailPath": "images/content_packs/default_cover.png",
         "expansionFilePath": "Android/data/org.storymaker.app/files/",
-        "expansionFileUrl": "https://s3-us-west-1.amazonaws.com/storymakerorg/appdata/obb/org.storymaker.app/beta/",
+        "expansionFileUrl": "https://s3-us-west-1.amazonaws.com/storymakerorg/appdata/obb/org.storymaker.app/",
         "expansionFileVersion": "10"
     },
     {
@@ -48,7 +48,7 @@
         "description": "Three steps to stronger stories",
         "thumbnailPath": "images/content_packs/learning_guide_cover.jpg",
         "expansionFilePath": "Android/data/org.storymaker.app/files/",
-        "expansionFileUrl": "https://s3-us-west-1.amazonaws.com/storymakerorg/appdata/obb/org.storymaker.app/beta/",
+        "expansionFileUrl": "https://s3-us-west-1.amazonaws.com/storymakerorg/appdata/obb/org.storymaker.app/",
         "expansionFileVersion": "10"
     },
     {
@@ -61,7 +61,7 @@
         "description": "Tour through StoryMaker's features",
         "thumbnailPath": "images/content_packs/g_welcome_cover.jpg",
         "expansionFilePath": "Android/data/org.storymaker.app/files/",
-        "expansionFileUrl": "https://s3-us-west-1.amazonaws.com/storymakerorg/appdata/obb/org.storymaker.app/beta/",
+        "expansionFileUrl": "https://s3-us-west-1.amazonaws.com/storymakerorg/appdata/obb/org.storymaker.app/",
         "expansionFileVersion": "10"
     },
     
@@ -77,7 +77,7 @@
         "description": "Social Media Basics and 4 more lessons",
         "thumbnailPath": "images/content_packs/journalism_part_1_cover.png",
         "expansionFilePath": "Android/data/org.storymaker.app/files/",
-        "expansionFileUrl": "https://s3-us-west-1.amazonaws.com/storymakerorg/appdata/obb/org.storymaker.app/beta/",
+        "expansionFileUrl": "https://s3-us-west-1.amazonaws.com/storymakerorg/appdata/obb/org.storymaker.app/",
         "expansionFileVersion": "10"
     },
     {
@@ -90,7 +90,7 @@
         "description": "Social Media Basics and 4 more lessons",
         "thumbnailPath": "images/content_packs/journalism_part_1_cover.png",
         "expansionFilePath": "Android/data/org.storymaker.app/files/",
-        "expansionFileUrl": "https://s3-us-west-1.amazonaws.com/storymakerorg/appdata/obb/org.storymaker.app/beta/",
+        "expansionFileUrl": "https://s3-us-west-1.amazonaws.com/storymakerorg/appdata/obb/org.storymaker.app/",
         "expansionFileVersion": "10"
     },
     {
@@ -103,7 +103,7 @@
         "description": "Social Media Basics and 4 more lessons",
         "thumbnailPath": "images/content_packs/journalism_part_1_cover.png",
         "expansionFilePath": "Android/data/org.storymaker.app/files/",
-        "expansionFileUrl": "https://s3-us-west-1.amazonaws.com/storymakerorg/appdata/obb/org.storymaker.app/beta/",
+        "expansionFileUrl": "https://s3-us-west-1.amazonaws.com/storymakerorg/appdata/obb/org.storymaker.app/",
         "expansionFileVersion": "10"
     },
     {
@@ -116,7 +116,7 @@
         "description": "Evolution of a Story and 3 more lessons",
         "thumbnailPath": "images/content_packs/journalism_part_2_cover.png",
         "expansionFilePath": "Android/data/org.storymaker.app/files/",
-        "expansionFileUrl": "https://s3-us-west-1.amazonaws.com/storymakerorg/appdata/obb/org.storymaker.app/beta/",
+        "expansionFileUrl": "https://s3-us-west-1.amazonaws.com/storymakerorg/appdata/obb/org.storymaker.app/",
         "expansionFileVersion": "10"
     },
     {
@@ -129,7 +129,7 @@
         "description": "Evolution of a Story and 3 more lessons",
         "thumbnailPath": "images/content_packs/journalism_part_2_cover.png",
         "expansionFilePath": "Android/data/org.storymaker.app/files/",
-        "expansionFileUrl": "https://s3-us-west-1.amazonaws.com/storymakerorg/appdata/obb/org.storymaker.app/beta/",
+        "expansionFileUrl": "https://s3-us-west-1.amazonaws.com/storymakerorg/appdata/obb/org.storymaker.app/",
         "expansionFileVersion": "10"
     },
     {
@@ -142,7 +142,7 @@
         "description": "Evolution of a Story and 3 more lessons",
         "thumbnailPath": "images/content_packs/journalism_part_2_cover.png",
         "expansionFilePath": "Android/data/org.storymaker.app/files/",
-        "expansionFileUrl": "https://s3-us-west-1.amazonaws.com/storymakerorg/appdata/obb/org.storymaker.app/beta/",
+        "expansionFileUrl": "https://s3-us-west-1.amazonaws.com/storymakerorg/appdata/obb/org.storymaker.app/",
         "expansionFileVersion": "10"
     },
     
@@ -156,7 +156,7 @@
         "description": "How can I use SMS Safely and 6 more lessons",
         "thumbnailPath": "images/content_packs/security_cover.png",
         "expansionFilePath": "Android/data/org.storymaker.app/files/",
-        "expansionFileUrl": "https://s3-us-west-1.amazonaws.com/storymakerorg/appdata/obb/org.storymaker.app/beta/",
+        "expansionFileUrl": "https://s3-us-west-1.amazonaws.com/storymakerorg/appdata/obb/org.storymaker.app/",
         "expansionFileVersion": "10"
     },
     {
@@ -169,7 +169,7 @@
         "description": "How can I use SMS Safely and 6 more lessons",
         "thumbnailPath": "images/content_packs/security_cover.png",
         "expansionFilePath": "Android/data/org.storymaker.app/files/",
-        "expansionFileUrl": "https://s3-us-west-1.amazonaws.com/storymakerorg/appdata/obb/org.storymaker.app/beta/",
+        "expansionFileUrl": "https://s3-us-west-1.amazonaws.com/storymakerorg/appdata/obb/org.storymaker.app/",
         "expansionFileVersion": "10"
     },
     {
@@ -182,7 +182,7 @@
         "description": "How can I use SMS Safely and 6 more lessons",
         "thumbnailPath": "images/content_packs/security_cover.png",
         "expansionFilePath": "Android/data/org.storymaker.app/files/",
-        "expansionFileUrl": "https://s3-us-west-1.amazonaws.com/storymakerorg/appdata/obb/org.storymaker.app/beta/",
+        "expansionFileUrl": "https://s3-us-west-1.amazonaws.com/storymakerorg/appdata/obb/org.storymaker.app/",
         "expansionFileVersion": "10"
     },
     
@@ -196,7 +196,7 @@
         "description": "Audio Basics and 5 more lessons",
         "thumbnailPath": "images/content_packs/audio_cover.png",
         "expansionFilePath": "Android/data/org.storymaker.app/files/",
-        "expansionFileUrl": "https://s3-us-west-1.amazonaws.com/storymakerorg/appdata/obb/org.storymaker.app/beta/",
+        "expansionFileUrl": "https://s3-us-west-1.amazonaws.com/storymakerorg/appdata/obb/org.storymaker.app/",
         "expansionFileVersion": "10"
     },
     {
@@ -209,7 +209,7 @@
         "description": "Audio Basics and 5 more lessons",
         "thumbnailPath": "images/content_packs/audio_cover.png",
         "expansionFilePath": "Android/data/org.storymaker.app/files/",
-        "expansionFileUrl": "https://s3-us-west-1.amazonaws.com/storymakerorg/appdata/obb/org.storymaker.app/beta/",
+        "expansionFileUrl": "https://s3-us-west-1.amazonaws.com/storymakerorg/appdata/obb/org.storymaker.app/",
         "expansionFileVersion": "10"
     },
     {
@@ -222,7 +222,7 @@
         "description": "Audio Basics and 5 more lessons",
         "thumbnailPath": "images/content_packs/audio_cover.png",
         "expansionFilePath": "Android/data/org.storymaker.app/files/",
-        "expansionFileUrl": "https://s3-us-west-1.amazonaws.com/storymakerorg/appdata/obb/org.storymaker.app/beta/",
+        "expansionFileUrl": "https://s3-us-west-1.amazonaws.com/storymakerorg/appdata/obb/org.storymaker.app/",
         "expansionFileVersion": "10"
     },
     
@@ -236,7 +236,7 @@
         "description": "Camera Basics and 5 more lessons",
         "thumbnailPath": "images/content_packs/photography_1_cover.png",
         "expansionFilePath": "Android/data/org.storymaker.app/files/",
-        "expansionFileUrl": "https://s3-us-west-1.amazonaws.com/storymakerorg/appdata/obb/org.storymaker.app/beta/",
+        "expansionFileUrl": "https://s3-us-west-1.amazonaws.com/storymakerorg/appdata/obb/org.storymaker.app/",
         "expansionFileVersion": "10"
     },
     {
@@ -249,7 +249,7 @@
         "description": "Camera Basics and 5 more lessons",
         "thumbnailPath": "images/content_packs/photography_1_cover.png",
         "expansionFilePath": "Android/data/org.storymaker.app/files/",
-        "expansionFileUrl": "https://s3-us-west-1.amazonaws.com/storymakerorg/appdata/obb/org.storymaker.app/beta/",
+        "expansionFileUrl": "https://s3-us-west-1.amazonaws.com/storymakerorg/appdata/obb/org.storymaker.app/",
         "expansionFileVersion": "10"
     },
     {
@@ -262,7 +262,7 @@
         "description": "Camera Basics and 5 more lessons",
         "thumbnailPath": "images/content_packs/photography_1_cover.png",
         "expansionFilePath": "Android/data/org.storymaker.app/files/",
-        "expansionFileUrl": "https://s3-us-west-1.amazonaws.com/storymakerorg/appdata/obb/org.storymaker.app/beta/",
+        "expansionFileUrl": "https://s3-us-west-1.amazonaws.com/storymakerorg/appdata/obb/org.storymaker.app/",
         "expansionFileVersion": "10"
     },
     
@@ -276,7 +276,7 @@
         "description": "The Photo Essay and 4 more lessons",
         "thumbnailPath": "images/content_packs/photography_2_cover.png",
         "expansionFilePath": "Android/data/org.storymaker.app/files/",
-        "expansionFileUrl": "https://s3-us-west-1.amazonaws.com/storymakerorg/appdata/obb/org.storymaker.app/beta/",
+        "expansionFileUrl": "https://s3-us-west-1.amazonaws.com/storymakerorg/appdata/obb/org.storymaker.app/",
         "expansionFileVersion": "10"
     },
     {
@@ -289,7 +289,7 @@
         "description": "The Photo Essay and 4 more lessons",
         "thumbnailPath": "images/content_packs/photography_2_cover.png",
         "expansionFilePath": "Android/data/org.storymaker.app/files/",
-        "expansionFileUrl": "https://s3-us-west-1.amazonaws.com/storymakerorg/appdata/obb/org.storymaker.app/beta/",
+        "expansionFileUrl": "https://s3-us-west-1.amazonaws.com/storymakerorg/appdata/obb/org.storymaker.app/",
         "expansionFileVersion": "10"
     },
     {
@@ -302,7 +302,7 @@
         "description": "The Photo Essay and 4 more lessons",
         "thumbnailPath": "images/content_packs/photography_2_cover.png",
         "expansionFilePath": "Android/data/org.storymaker.app/files/",
-        "expansionFileUrl": "https://s3-us-west-1.amazonaws.com/storymakerorg/appdata/obb/org.storymaker.app/beta/",
+        "expansionFileUrl": "https://s3-us-west-1.amazonaws.com/storymakerorg/appdata/obb/org.storymaker.app/",
         "expansionFileVersion": "10"
     },
     
@@ -316,7 +316,7 @@
         "description": "Video Basics and 3 more lessons",
         "thumbnailPath": "images/content_packs/video_1_cover.png",
         "expansionFilePath": "Android/data/org.storymaker.app/files/",
-        "expansionFileUrl": "https://s3-us-west-1.amazonaws.com/storymakerorg/appdata/obb/org.storymaker.app/beta/",
+        "expansionFileUrl": "https://s3-us-west-1.amazonaws.com/storymakerorg/appdata/obb/org.storymaker.app/",
         "expansionFileVersion": "10"
     },
     {
@@ -329,7 +329,7 @@
         "description": "Video Basics and 3 more lessons",
         "thumbnailPath": "images/content_packs/video_1_cover.png",
         "expansionFilePath": "Android/data/org.storymaker.app/files/",
-        "expansionFileUrl": "https://s3-us-west-1.amazonaws.com/storymakerorg/appdata/obb/org.storymaker.app/beta/",
+        "expansionFileUrl": "https://s3-us-west-1.amazonaws.com/storymakerorg/appdata/obb/org.storymaker.app/",
         "expansionFileVersion": "10"
     },
     {
@@ -342,7 +342,7 @@
         "description": "Video Basics and 3 more lessons",
         "thumbnailPath": "images/content_packs/video_1_cover.png",
         "expansionFilePath": "Android/data/org.storymaker.app/files/",
-        "expansionFileUrl": "https://s3-us-west-1.amazonaws.com/storymakerorg/appdata/obb/org.storymaker.app/beta/",
+        "expansionFileUrl": "https://s3-us-west-1.amazonaws.com/storymakerorg/appdata/obb/org.storymaker.app/",
         "expansionFileVersion": "10"
     },
     
@@ -356,7 +356,7 @@
         "description": "Framing your Shot and 4 more lessons",
         "thumbnailPath": "images/content_packs/video_2_cover.png",
         "expansionFilePath": "Android/data/org.storymaker.app/files/",
-        "expansionFileUrl": "https://s3-us-west-1.amazonaws.com/storymakerorg/appdata/obb/org.storymaker.app/beta/",
+        "expansionFileUrl": "https://s3-us-west-1.amazonaws.com/storymakerorg/appdata/obb/org.storymaker.app/",
         "expansionFileVersion": "10"
     },
     {
@@ -369,7 +369,7 @@
         "description": "Framing your Shot and 4 more lessons",
         "thumbnailPath": "images/content_packs/video_2_cover.png",
         "expansionFilePath": "Android/data/org.storymaker.app/files/",
-        "expansionFileUrl": "https://s3-us-west-1.amazonaws.com/storymakerorg/appdata/obb/org.storymaker.app/beta/",
+        "expansionFileUrl": "https://s3-us-west-1.amazonaws.com/storymakerorg/appdata/obb/org.storymaker.app/",
         "expansionFileVersion": "10"
     },
     {
@@ -382,7 +382,7 @@
         "description": "Framing your Shot and 4 more lessons",
         "thumbnailPath": "images/content_packs/video_2_cover.png",
         "expansionFilePath": "Android/data/org.storymaker.app/files/",
-        "expansionFileUrl": "https://s3-us-west-1.amazonaws.com/storymakerorg/appdata/obb/org.storymaker.app/beta/",
+        "expansionFileUrl": "https://s3-us-west-1.amazonaws.com/storymakerorg/appdata/obb/org.storymaker.app/",
         "expansionFileVersion": "10"
     },
     
@@ -396,7 +396,7 @@
         "description": "Central Question and 6 more lessons",
         "thumbnailPath": "images/content_packs/story_cover.png",
         "expansionFilePath": "Android/data/org.storymaker.app/files/",
-        "expansionFileUrl": "https://s3-us-west-1.amazonaws.com/storymakerorg/appdata/obb/org.storymaker.app/beta/",
+        "expansionFileUrl": "https://s3-us-west-1.amazonaws.com/storymakerorg/appdata/obb/org.storymaker.app/",
         "expansionFileVersion": "10"
     },
     {
@@ -409,7 +409,7 @@
         "description": "Central Question and 6 more lessons",
         "thumbnailPath": "images/content_packs/story_cover.png",
         "expansionFilePath": "Android/data/org.storymaker.app/files/",
-        "expansionFileUrl": "https://s3-us-west-1.amazonaws.com/storymakerorg/appdata/obb/org.storymaker.app/beta/",
+        "expansionFileUrl": "https://s3-us-west-1.amazonaws.com/storymakerorg/appdata/obb/org.storymaker.app/",
         "expansionFileVersion": "10"
     },
     {
@@ -422,7 +422,7 @@
         "description": "Central Question and 6 more lessons",
         "thumbnailPath": "images/content_packs/story_cover.png",
         "expansionFilePath": "Android/data/org.storymaker.app/files/",
-        "expansionFileUrl": "https://s3-us-west-1.amazonaws.com/storymakerorg/appdata/obb/org.storymaker.app/beta/",
+        "expansionFileUrl": "https://s3-us-west-1.amazonaws.com/storymakerorg/appdata/obb/org.storymaker.app/",
         "expansionFileVersion": "10"
     },
     
@@ -440,7 +440,7 @@
         "description": "7 templates for video stories",
         "thumbnailPath": "images/content_packs/t_video_cover.png",
         "expansionFilePath": "Android/data/org.storymaker.app/files/",
-        "expansionFileUrl": "https://s3-us-west-1.amazonaws.com/storymakerorg/appdata/obb/org.storymaker.app/beta/",
+        "expansionFileUrl": "https://s3-us-west-1.amazonaws.com/storymakerorg/appdata/obb/org.storymaker.app/",
         "expansionFileVersion": "10"
     },
     {
@@ -453,7 +453,7 @@
         "description": "Record an audio story in a variety of ways",
         "thumbnailPath": "images/content_packs/t_audio_cover.png",
         "expansionFilePath": "Android/data/org.storymaker.app/files/",
-        "expansionFileUrl": "https://s3-us-west-1.amazonaws.com/storymakerorg/appdata/obb/org.storymaker.app/beta/",
+        "expansionFileUrl": "https://s3-us-west-1.amazonaws.com/storymakerorg/appdata/obb/org.storymaker.app/",
         "expansionFileVersion": "10"
     },
     {
@@ -466,7 +466,7 @@
         "description": "Tell a story with several photos",
         "thumbnailPath": "images/content_packs/t_photo_cover.png",
         "expansionFilePath": "Android/data/org.storymaker.app/files/",
-        "expansionFileUrl": "https://s3-us-west-1.amazonaws.com/storymakerorg/appdata/obb/org.storymaker.app/beta/",
+        "expansionFileUrl": "https://s3-us-west-1.amazonaws.com/storymakerorg/appdata/obb/org.storymaker.app/",
         "expansionFileVersion": "10"
     },
     {
@@ -479,7 +479,7 @@
         "description": "News stories on different topics",
         "thumbnailPath": "images/content_packs/t_news_cover.png",
         "expansionFilePath": "Android/data/org.storymaker.app/files/",
-        "expansionFileUrl": "https://s3-us-west-1.amazonaws.com/storymakerorg/appdata/obb/org.storymaker.app/beta/",
+        "expansionFileUrl": "https://s3-us-west-1.amazonaws.com/storymakerorg/appdata/obb/org.storymaker.app/",
         "expansionFileVersion": "10"
     },
     {
@@ -492,7 +492,7 @@
         "description": "Tell a story using a single process",
         "thumbnailPath": "images/content_packs/t_process_cover.png",
         "expansionFilePath": "Android/data/org.storymaker.app/files/",
-        "expansionFileUrl": "https://s3-us-west-1.amazonaws.com/storymakerorg/appdata/obb/org.storymaker.app/beta/",
+        "expansionFileUrl": "https://s3-us-west-1.amazonaws.com/storymakerorg/appdata/obb/org.storymaker.app/",
         "expansionFileVersion": "10"
     },
     {
@@ -505,7 +505,7 @@
         "description": "Begin telling stories you care about",
         "thumbnailPath": "images/content_packs/t_citizen_journalist_cover.jpg",
         "expansionFilePath": "Android/data/org.storymaker.app/files/",
-        "expansionFileUrl": "https://s3-us-west-1.amazonaws.com/storymakerorg/appdata/obb/org.storymaker.app/beta/",
+        "expansionFileUrl": "https://s3-us-west-1.amazonaws.com/storymakerorg/appdata/obb/org.storymaker.app/",
         "expansionFileVersion": "10"
     }
 ]
