@@ -589,12 +589,19 @@ public class HomeActivity extends BaseHomeActivity {
         //ArrayList<String> availableTemplateIds = getIndexItemIdsByType(availableIndexItemDao, "template");
 
         HashMap<String, ExpansionIndexItem> installedIds = StorymakerIndexManager.loadInstalledIdIndex(this, installedIndexItemDao);
+        ArrayList<String> installedIdList = StorymakerIndexManager.loadInstalledIdIndexList(this, installedIndexItemDao);
+
         ArrayList<String> installedGuideIds = getIndexItemIdsByType(installedIndexItemDao, "guide");
         ArrayList<String> installedLessonIds = getIndexItemIdsByType(installedIndexItemDao, "lesson");
         ArrayList<String> installedTemplateIds = getIndexItemIdsByType(installedIndexItemDao, "template");
 
-        //int i = 0;
-        for (String id : installedIds.keySet()) {
+        int k = 0;
+        //for (String id : installedIds.keySet()) {
+        for (String id : installedIdList) {
+
+
+            Log.d("InstalledIndex", "installed "+k+" "+id);
+
             //if (installedIds.keySet().contains(id)) {
             // if the available item has been installed, add the corresponding item from the installed index
             //instances.add(installedIds.get(id));
@@ -623,7 +630,7 @@ public class HomeActivity extends BaseHomeActivity {
 //                    templates.add(availableIds.get(id));
 //                }
             //}
-            //i++;
+            k++;
         }
         //int j = 0;
         //for (String id : instanceIndex.keySet()) {
@@ -637,10 +644,10 @@ public class HomeActivity extends BaseHomeActivity {
 
         //if (instances.size() > 0) {
 
-        Collections.sort(instances, Collections.reverseOrder()); // FIXME we should sort this down a layer, perhaps in loadInstanceIndexAsList
-        Collections.sort(lessons, Collections.reverseOrder()); // FIXME we should sort this down a layer, perhaps in loadInstanceIndexAsList
-        Collections.sort(guides, Collections.reverseOrder()); // FIXME we should sort this down a layer, perhaps in loadInstanceIndexAsList
-        Collections.sort(templates, Collections.reverseOrder()); // FIXME we should sort this down a layer, perhaps in loadInstanceIndexAsList
+        //Collections.sort(instances, Collections.reverseOrder()); // FIXME we should sort this down a layer, perhaps in loadInstanceIndexAsList
+        //Collections.sort(lessons, Collections.reverseOrder()); // FIXME we should sort this down a layer, perhaps in loadInstanceIndexAsList
+        //Collections.sort(guides, Collections.reverseOrder()); // FIXME we should sort this down a layer, perhaps in loadInstanceIndexAsList
+        //Collections.sort(templates, Collections.reverseOrder()); // FIXME we should sort this down a layer, perhaps in loadInstanceIndexAsList
         Collections.sort(installations, Collections.reverseOrder()); // FIXME we should sort this down a layer, perhaps in loadInstanceIndexAsList
 
         mHomeTabInstanceCount = 0;
@@ -654,14 +661,20 @@ public class HomeActivity extends BaseHomeActivity {
                 break;
             }
         }
-        for (int j = 0; j < installations.size(); j++) {
-            //System.out.println(list.get(i));
-            homeitems.add(installations.get(j));
+
+        if (installations.size() > 0) {
+            homeitems.add(installations.get(0));
             mHomeTabInstallationCount++;
-            if (j == 0) {
-                break;
-            }
         }
+
+//        for (int j = 0; j < installations.size(); j++) {
+//            //System.out.println(list.get(i));
+//            homeitems.add(installations.get(j));
+//            mHomeTabInstallationCount++;
+//            if (j == 0) {
+//                break;
+//            }
+//        }
         
         //mRecyclerView.setAdapter(new InstanceIndexItemAdapter(instances, new InstanceIndexItemAdapter.BaseIndexItemSelectedListener() {
 

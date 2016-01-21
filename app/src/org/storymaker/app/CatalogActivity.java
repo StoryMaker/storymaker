@@ -27,7 +27,6 @@ import com.hannesdorfmann.sqlbrite.dao.Dao;
 import org.storymaker.app.ui.SlidingTabLayout;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
@@ -362,6 +361,7 @@ public class CatalogActivity extends BaseHomeActivity {
             expansionId[0] = intent.getStringExtra("expansionid");
             Log.d("receiver", "catalog download expansion id: " + expansionId + " " + this.toString());
 
+            //updates thumbnail image when item finishes downloading
             availableIndexItemDao.getAvailableIndexItemByKey(expansionId[0]).subscribe(new Action1<List<AvailableIndexItem>>() {
 
                 @Override
@@ -679,6 +679,8 @@ public class CatalogActivity extends BaseHomeActivity {
                     lessons.add(installedIds.get(id));
                 } else if (installedTemplateIds.contains(id)) {
                     templates.add(installedIds.get(id));
+
+                    //Log.d("CatalogActivity", "add installed template "+id+" "+installedIds.get(id).getExpansionId()+" "+installedIds.get(id));
                 }
 
             } else {
@@ -691,15 +693,17 @@ public class CatalogActivity extends BaseHomeActivity {
                     lessons.add(availableIds.get(id));
                 } else if (availableTemplateIds.contains(id)) {
                     templates.add(availableIds.get(id));
+                    //Log.d("CatalogActivity", "add available template " + id + " " + availableIds.get(id).getExpansionId()+" "+availableIds.get(id));
                 }
 
             }
         }
 
         //Collections.sort(instances, Collections.reverseOrder()); // FIXME we should sort this down a layer, perhaps in loadInstanceIndexAsList
-        Collections.sort(lessons); // FIXME we should sort this down a layer, perhaps in loadInstanceIndexAsList
-        Collections.sort(guides); // FIXME we should sort this down a layer, perhaps in loadInstanceIndexAsList
-        Collections.sort(templates); // FIXME we should sort this down a layer, perhaps in loadInstanceIndexAsList
+
+        //Collections.sort(lessons); // FIXME we should sort this down a layer, perhaps in loadInstanceIndexAsList
+        //Collections.sort(guides); // FIXME we should sort this down a layer, perhaps in loadInstanceIndexAsList
+        //Collections.sort(templates); // FIXME we should sort this down a layer, perhaps in loadInstanceIndexAsList
 
         //mRecyclerView.setAdapter(new InstanceIndexItemAdapter(instances, new InstanceIndexItemAdapter.BaseIndexItemSelectedListener() {
 
@@ -861,6 +865,9 @@ public class CatalogActivity extends BaseHomeActivity {
 
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+               // currentScroll = positionOffsetPixels;
+
             }
         });
         goToCatalogTab(currentPage);
