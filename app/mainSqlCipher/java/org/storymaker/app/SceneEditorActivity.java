@@ -16,6 +16,9 @@ import org.storymaker.app.model.ProjectTable;
 import org.storymaker.app.model.PublishJobTable;
 import org.storymaker.app.model.Scene;
 import org.storymaker.app.server.ServerManager;
+
+import info.guardianproject.cacheword.CacheWordHandler;
+import info.guardianproject.cacheword.ICacheWordSubscriber;
 import io.scal.secureshareui.controller.ArchiveSiteController;
 import io.scal.secureshareui.controller.SiteController;
 import io.scal.secureshareui.lib.ChooseAccountFragment;
@@ -40,11 +43,13 @@ import android.app.AlertDialog;
 import android.app.FragmentTransaction;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.util.Log;
@@ -53,7 +58,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
-public class SceneEditorActivity extends EditorBaseActivity implements ActionBar.TabListener {
+public class SceneEditorActivity extends EditorBaseActivity implements ActionBar.TabListener, ICacheWordSubscriber {
     private static final String STATE_SELECTED_NAVIGATION_ITEM = "selected_navigation_item";
 
 
@@ -65,6 +70,9 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
     private final static String CAPTURE_MIMETYPE_AUDIO = "audio/3gpp";
     public Fragment mFragmentTab0, mFragmentTab1, mLastTabFrag;
     public PublishFragment mPublishFragment;
+
+    // NEW/CACHEWORD
+    CacheWordHandler mCacheWordHandler;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -194,7 +202,14 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
 
                 return true;
             case R.id.purgePublishTables:
-                net.sqlcipher.database.SQLiteDatabase db = new StoryMakerDB(getBaseContext()).getWritableDatabase("foo");
+
+                // NEW/CACHEWORD
+                SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                int timeout = Integer.parseInt(settings.getString("pcachewordtimeout", CACHEWORD_TIMEOUT));
+                mCacheWordHandler = new CacheWordHandler(getBaseContext(), this, timeout);
+                mCacheWordHandler.connectToService();
+                net.sqlcipher.database.SQLiteDatabase db = new StoryMakerDB(mCacheWordHandler, getBaseContext()).getWritableDatabase();
+
                 JobTable foo;
                 (new PublishJobTable(db)).debugPurgeTable();
                 (new JobTable(db)).debugPurgeTable();
@@ -429,5 +444,29 @@ public class SceneEditorActivity extends EditorBaseActivity implements ActionBar
                 mPublishFragment.onChooseAccountDialogResult(resultCode, intent);
             }
         }
+    }
+
+    // NEW/CACHEWORD
+    @Override
+    public void onCacheWordUninitialized() {
+        // prevent db access while cacheword is uninitialized
+
+        // no persistent db?
+    }
+
+    @Override
+    public void onCacheWordLocked() {
+        // prevent db access when cacheword is locked
+
+        // no persistent db?
+
+    }
+
+    @Override
+    public void onCacheWordOpened() {
+        // permit db access when cacheword is unlocked
+
+        // no persistent db?
+
     }
 }

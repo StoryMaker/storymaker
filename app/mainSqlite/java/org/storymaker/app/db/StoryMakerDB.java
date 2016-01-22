@@ -17,14 +17,16 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-public class StoryMakerDB extends SQLiteOpenHelper {
+import info.guardianproject.cacheword.CacheWordHandler;
+
+public class StoryMakerDB extends StoryMakerDBWrapper {
     private static final String TAG = "StoryMakerDB";
     private static final int DB_VERSION = 11;
     private static final String DB_NAME = "sm.db";
     private Context mContext;
-    
-    public StoryMakerDB(Context context) {
-        super(context, DB_NAME, null, DB_VERSION);
+
+    public StoryMakerDB(CacheWordHandler cacheWord, Context context) {
+        super(cacheWord, context, DB_NAME, null, DB_VERSION);
         mContext = context;
     }
     
@@ -42,7 +44,7 @@ public class StoryMakerDB extends SQLiteOpenHelper {
     }
     
     @Override
-    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         Timber.d("updating db from " + oldVersion + " to " + newVersion);
         if ((oldVersion < 2) && (newVersion == 2)) {
             db.execSQL(StoryMakerDB.Schema.Projects.UPDATE_TABLE_PROJECTS);

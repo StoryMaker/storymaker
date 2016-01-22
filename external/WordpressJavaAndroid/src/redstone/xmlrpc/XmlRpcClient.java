@@ -16,8 +16,6 @@
 
 package redstone.xmlrpc;
 
-import info.guardianproject.onionkit.trust.StrongHttpsClient;
-
 import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.StringWriter;
@@ -33,6 +31,9 @@ import org.xml.sax.SAXException;
 
 import android.content.Context;
 import android.util.Log;
+
+import net.bican.wordpress.R;
+
 import ch.boye.httpclientandroidlib.Header;
 import ch.boye.httpclientandroidlib.HttpResponse;
 import ch.boye.httpclientandroidlib.client.methods.HttpPost;
@@ -40,6 +41,7 @@ import ch.boye.httpclientandroidlib.entity.AbstractHttpEntity;
 import ch.boye.httpclientandroidlib.entity.StringEntity;
 import ch.boye.httpclientandroidlib.message.BasicHeader;
 import ch.boye.httpclientandroidlib.protocol.HTTP;
+import info.guardianproject.netcipher.client.StrongHttpsClient;
 
 /**
  *  An XmlRpcClient represents a connection to an XML-RPC enabled server. It
@@ -63,7 +65,7 @@ public class XmlRpcClient extends XmlRpcParser implements XmlRpcInvocationHandle
 
     
     /**
-     *  @see #XmlRpcClient(String,boolean)
+     *
      */
 
     public XmlRpcClient( URL url)
@@ -340,7 +342,7 @@ public class XmlRpcClient extends XmlRpcParser implements XmlRpcInvocationHandle
             writer.write( "</methodCall>" );
 
             String xmlOut = ( ( StringWriter ) writer ).getBuffer().toString();
-            StringEntity entity = new StringEntity(xmlOut,HTTP.UTF_8);
+            StringEntity entity = new StringEntity(xmlOut, HTTP.UTF_8);
             entity.setContentType(
             		new BasicHeader("Content-Type", "text/xml; charset=" + XmlRpcMessages.getString( "XmlRpcClient.Encoding" ))
             );
@@ -377,8 +379,6 @@ public class XmlRpcClient extends XmlRpcParser implements XmlRpcInvocationHandle
      *
      *  If the user does not want the socket to be kept alive or if the server does not
      *  support keep-alive, the socket is closed.
-     *
-     *  @param inout The stream containing the server response to interpret.
      *
      *  @throws IOException If a socket error occurrs, or if the XML returned is unparseable.
      *                      This exception is currently also thrown if a HTTP response other
@@ -471,7 +471,16 @@ public class XmlRpcClient extends XmlRpcParser implements XmlRpcInvocationHandle
 
     private HttpResponse openConnection(AbstractHttpEntity entity) throws IOException
     {
-    	StrongHttpsClient httpClient = new StrongHttpsClient(mContext);
+    	StrongHttpsClient httpClient = null;
+
+        try {
+            httpClient = new StrongHttpsClient(mContext, R.raw.debiancacerts, null);
+        }
+        catch (Exception e)
+        {
+            //catch keystore setup exceptions
+            throw new IOException(e.getMessage());
+        }
 
 		if (mUseProxy)
 		{
