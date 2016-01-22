@@ -863,6 +863,8 @@ public abstract class BaseHomeActivity extends BaseActivity {
             // if clicked item is not installed, update index
             // un-installed AvailableIndexItems need to be converted to InstalledIndexItems
             InstalledIndexItem iItem = new InstalledIndexItem(eItem);
+
+            Log.d("InstalledIndexItem", "installed index add 1");
             StorymakerIndexManager.installedIndexAdd(BaseHomeActivity.this, iItem, installedIndexItemDao);
 
             Timber.d(eItem.getExpansionId() + " NOT INSTALLED, ADDING ITEM TO INDEX");
@@ -892,6 +894,7 @@ public abstract class BaseHomeActivity extends BaseActivity {
                     Timber.d("SET INSTALLED FLAG FOR " + eItem.getExpansionId());
                     eItem.setInstalledFlag(true);
                     InstalledIndexItem iItem = new InstalledIndexItem(eItem);
+                    Log.d("InstalledIndexItem", "installed index add 2");
                     StorymakerIndexManager.installedIndexAdd(this, iItem, installedIndexItemDao);
                 }
 
@@ -916,6 +919,7 @@ public abstract class BaseHomeActivity extends BaseActivity {
 
                     // un-installed AvailableIndexItems need to be converted to InstalledIndexItems
                     InstalledIndexItem iItem = new InstalledIndexItem(eItem);
+                    Log.d("InstalledIndexItem", "installed index add 3");
                     StorymakerIndexManager.installedIndexAdd(BaseHomeActivity.this, iItem, installedIndexItemDao);
 
                     // wait for index serialization
@@ -958,6 +962,7 @@ public abstract class BaseHomeActivity extends BaseActivity {
                     Timber.d("UN-SET INSTALLED FLAG FOR " + eItem.getExpansionId());
                     eItem.setInstalledFlag(false);
                     InstalledIndexItem iItem = new InstalledIndexItem(eItem);
+                    Log.d("InstalledIndexItem", "installed index add 4");
                     StorymakerIndexManager.installedIndexAdd(this, iItem, installedIndexItemDao);
                 }
 
@@ -995,7 +1000,6 @@ public abstract class BaseHomeActivity extends BaseActivity {
         public void onClick(DialogInterface dialog, int which) {
 
             Timber.d("CANCEL...");
-            Log.d("RES_", "cancel base home click");
             // remove from installed index
 
             // un-installed AvailableIndexItems need to be converted to InstalledIndexItems
@@ -1028,8 +1032,30 @@ public abstract class BaseHomeActivity extends BaseActivity {
 
     public void updateInstanceIndexItemLastOpenedDate(InstanceIndexItem item) {
         java.util.Date thisDate = new java.util.Date();
-        Log.d("BaseHomeActivity", "setLastOpenedDate " + thisDate.toString());
+        //Log.d("BaseHomeActivity", "setLastOpenedDate " + thisDate.toString());
         instanceIndexItemDao.updateInstanceItemLastOpenedDate(item, thisDate);
     }
+
+    //this method loops through a HashMap of ExpansionIndexItems
+    //      and returns the ones that have a certain content type i.e. "guide", "lesson", "template"
+    //      used to filter an existing query set rather than running extra queries with getAvailableIndexItemsByType() or getInstalledIndexItemsByType()
+    public static ArrayList<String> getIndexItemIdsByType(HashMap<String, ExpansionIndexItem> installedIds, String type) {
+
+        ArrayList<String> indexItemIds = new ArrayList<String>();
+
+        for (String key : installedIds.keySet()) {
+
+            ExpansionIndexItem item = installedIds.get(key);
+
+            if (item.getContentType().equals(type)) {
+                indexItemIds.add(key);
+            }
+
+        }
+
+        return indexItemIds;
+
+    }
+
 
 }
