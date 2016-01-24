@@ -864,7 +864,11 @@ public abstract class BaseHomeActivity extends BaseActivity {
             // un-installed AvailableIndexItems need to be converted to InstalledIndexItems
             InstalledIndexItem iItem = new InstalledIndexItem(eItem);
 
-            Log.d("InstalledIndexItem", "installed index add 1");
+            java.util.Date thisDate = new java.util.Date();
+            iItem.setCreationDate(thisDate);
+            iItem.setLastModifiedDate(thisDate);
+            iItem.setCreationDate(thisDate);
+
             StorymakerIndexManager.installedIndexAdd(BaseHomeActivity.this, iItem, installedIndexItemDao);
 
             Timber.d(eItem.getExpansionId() + " NOT INSTALLED, ADDING ITEM TO INDEX");
@@ -894,7 +898,6 @@ public abstract class BaseHomeActivity extends BaseActivity {
                     Timber.d("SET INSTALLED FLAG FOR " + eItem.getExpansionId());
                     eItem.setInstalledFlag(true);
                     InstalledIndexItem iItem = new InstalledIndexItem(eItem);
-                    Log.d("InstalledIndexItem", "installed index add 2");
                     StorymakerIndexManager.installedIndexAdd(this, iItem, installedIndexItemDao);
                 }
 
@@ -919,7 +922,6 @@ public abstract class BaseHomeActivity extends BaseActivity {
 
                     // un-installed AvailableIndexItems need to be converted to InstalledIndexItems
                     InstalledIndexItem iItem = new InstalledIndexItem(eItem);
-                    Log.d("InstalledIndexItem", "installed index add 3");
                     StorymakerIndexManager.installedIndexAdd(BaseHomeActivity.this, iItem, installedIndexItemDao);
 
                     // wait for index serialization
@@ -962,7 +964,6 @@ public abstract class BaseHomeActivity extends BaseActivity {
                     Timber.d("UN-SET INSTALLED FLAG FOR " + eItem.getExpansionId());
                     eItem.setInstalledFlag(false);
                     InstalledIndexItem iItem = new InstalledIndexItem(eItem);
-                    Log.d("InstalledIndexItem", "installed index add 4");
                     StorymakerIndexManager.installedIndexAdd(this, iItem, installedIndexItemDao);
                 }
 

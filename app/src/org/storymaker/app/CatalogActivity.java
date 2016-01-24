@@ -123,9 +123,12 @@ public class CatalogActivity extends BaseHomeActivity {
 
                             // un-installed AvailableIndexItems need to be converted to InstalledIndexItems
                             InstalledIndexItem iItem = new InstalledIndexItem(item);
+                            java.util.Date thisDate = new java.util.Date();
+                            iItem.setCreationDate(thisDate);
+                            iItem.setLastModifiedDate(thisDate);
+                            iItem.setCreationDate(thisDate);
 
                             Timber.d("updated thumbnail and added installed index entry for " + expansionId[0]);
-                            Log.d("InstalledIndexItem", "installed index add 5 "+iItem.getCreationDate());
                             StorymakerIndexManager.installedIndexAdd(CatalogActivity.this, iItem, installedIndexItemDao);
                         }
                     }

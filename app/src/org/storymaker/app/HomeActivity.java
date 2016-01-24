@@ -27,7 +27,6 @@ import scal.io.liger.JsonHelper;
 import scal.io.liger.StorymakerIndexManager;
 import scal.io.liger.model.sqlbrite.BaseIndexItem;
 import scal.io.liger.model.sqlbrite.ExpansionIndexItem;
-import scal.io.liger.model.sqlbrite.InstalledIndexItem;
 import scal.io.liger.model.sqlbrite.InstanceIndexItem;
 import timber.log.Timber;
 
@@ -229,11 +228,7 @@ public class HomeActivity extends BaseHomeActivity {
         ArrayList<String> installedLessonIds = getIndexItemIdsByType(installedIds, "lesson");
         ArrayList<String> installedTemplateIds = getIndexItemIdsByType(installedIds, "template");
 
-        int k = 0;
-
         for (String id : installedKeys) {
-
-            Log.d("InstalledIndex", "installed "+k+" "+id+" "+((InstalledIndexItem) installedIds.get(id)).getCreationDate());
 
             // if the available item has been installed, add the corresponding item from the installed index
             installations.add(installedIds.get(id));
@@ -246,14 +241,13 @@ public class HomeActivity extends BaseHomeActivity {
                 templates.add(installedIds.get(id));
             }
 
-            k++;
         }
 
         Collections.sort(instances, Collections.reverseOrder()); // FIXME we should sort this down a layer, perhaps in loadInstanceIndexAsList
-        //Collections.sort(lessons, Collections.reverseOrder()); // FIXME we should sort this down a layer, perhaps in loadInstanceIndexAsList
-        //Collections.sort(guides, Collections.reverseOrder()); // FIXME we should sort this down a layer, perhaps in loadInstanceIndexAsList
-        //Collections.sort(templates, Collections.reverseOrder()); // FIXME we should sort this down a layer, perhaps in loadInstanceIndexAsList
-        //Collections.sort(installations, Collections.reverseOrder()); // FIXME we should sort this down a layer, perhaps in loadInstanceIndexAsList
+        Collections.sort(lessons, Collections.reverseOrder()); // FIXME we should sort this down a layer, perhaps in loadInstanceIndexAsList
+        Collections.sort(guides, Collections.reverseOrder()); // FIXME we should sort this down a layer, perhaps in loadInstanceIndexAsList
+        Collections.sort(templates, Collections.reverseOrder()); // FIXME we should sort this down a layer, perhaps in loadInstanceIndexAsList
+        Collections.sort(installations, Collections.reverseOrder()); // FIXME we should sort this down a layer, perhaps in loadInstanceIndexAsList
 
         mHomeTabInstanceCount = 0;
         mHomeTabInstallationCount = 0;
