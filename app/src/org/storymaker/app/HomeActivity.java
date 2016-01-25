@@ -74,7 +74,7 @@ public class HomeActivity extends BaseHomeActivity {
             String expansionId = intent.getStringExtra("expansionid");
             Log.d("receiver", "home download expansion id: " + expansionId + " " + this.toString());
 
-            initActivityList();     //To-do: consider modifying the ViewPager-RecyclerViewers with notifyDataSetChanged() rather than a full page refresh
+            initActivityList();     // TODO: consider modifying the ViewPager-RecyclerViewers with notifyDataSetChanged() rather than a full page refresh
         }
     };
     private BroadcastReceiver mDeleteMessageReceiver = new BroadcastReceiver() {
@@ -84,7 +84,7 @@ public class HomeActivity extends BaseHomeActivity {
             String expansionId = intent.getStringExtra("expansionid");
             Log.d("receiver", "home delete expansion id: " + expansionId + " " + this.toString());
 
-            initActivityList();     //To-do: consider modifying the ViewPager-RecyclerViewers with notifyDataSetChanged() rather than a full page refresh
+            initActivityList();     // TODO: consider modifying the ViewPager-RecyclerViewers with notifyDataSetChanged() rather than a full page refresh
             removeThreads(expansionId);
         }
     };
