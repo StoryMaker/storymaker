@@ -40,7 +40,6 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.security.GeneralSecurityException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -864,6 +863,12 @@ public abstract class BaseHomeActivity extends BaseActivity {
             // if clicked item is not installed, update index
             // un-installed AvailableIndexItems need to be converted to InstalledIndexItems
             InstalledIndexItem iItem = new InstalledIndexItem(eItem);
+
+            java.util.Date thisDate = new java.util.Date(); // FIXME we need to move this somewhere in the liger library that handles opening storypaths because this won't be triggered if we open open an instance by means other than a direct click
+            iItem.setCreationDate(thisDate);
+            iItem.setLastModifiedDate(thisDate);
+            iItem.setCreationDate(thisDate);
+
             StorymakerIndexManager.installedIndexAdd(BaseHomeActivity.this, iItem, installedIndexItemDao);
 
             Timber.d(eItem.getExpansionId() + " NOT INSTALLED, ADDING ITEM TO INDEX");
@@ -996,7 +1001,6 @@ public abstract class BaseHomeActivity extends BaseActivity {
         public void onClick(DialogInterface dialog, int which) {
 
             Timber.d("CANCEL...");
-            Log.d("RES_", "cancel base home click");
             // remove from installed index
 
             // un-installed AvailableIndexItems need to be converted to InstalledIndexItems
@@ -1029,8 +1033,30 @@ public abstract class BaseHomeActivity extends BaseActivity {
 
     public void updateInstanceIndexItemLastOpenedDate(InstanceIndexItem item) {
         java.util.Date thisDate = new java.util.Date();
-        Log.d("BaseHomeActivity", "setLastOpenedDate " + thisDate.toString());
+        //Log.d("BaseHomeActivity", "setLastOpenedDate " + thisDate.toString());
         instanceIndexItemDao.updateInstanceItemLastOpenedDate(item, thisDate);
     }
+
+    //this method loops through a HashMap of ExpansionIndexItems
+    //      and returns the ones that have a certain content type i.e. "guide", "lesson", "template"
+    //      used to filter an existing query set rather than running extra queries with getAvailableIndexItemsByType() or getInstalledIndexItemsByType()
+    public static ArrayList<String> getIndexItemIdsByType(HashMap<String, ExpansionIndexItem> installedIds, String type) {
+
+        ArrayList<String> indexItemIds = new ArrayList<String>();
+
+        for (String key : installedIds.keySet()) {
+
+            ExpansionIndexItem item = installedIds.get(key);
+
+            if (item.getContentType().equals(type)) {
+                indexItemIds.add(key);
+            }
+
+        }
+
+        return indexItemIds;
+
+    }
+
 
 }
