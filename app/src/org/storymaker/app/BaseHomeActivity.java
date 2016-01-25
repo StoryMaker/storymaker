@@ -864,7 +864,7 @@ public abstract class BaseHomeActivity extends BaseActivity {
             // un-installed AvailableIndexItems need to be converted to InstalledIndexItems
             InstalledIndexItem iItem = new InstalledIndexItem(eItem);
 
-            java.util.Date thisDate = new java.util.Date();
+            java.util.Date thisDate = new java.util.Date(); // FIXME we need to move this somewhere in the liger library that handles opening storypaths because this won't be triggered if we open open an instance by means other than a direct click
             iItem.setCreationDate(thisDate);
             iItem.setLastModifiedDate(thisDate);
             iItem.setCreationDate(thisDate);
