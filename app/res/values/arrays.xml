@@ -141,13 +141,13 @@
     </string-array>
 
     <!--         <item>catalog</item> -->
-    <string-array name="catalog_menu_ids">
+    <string-array name="catalog_menu_ids" translatable="false">
         <item>guides</item>
         <item>lessons</item>
         <item>templates</item>
     </string-array>
 
-    <string-array name="home_menu_ids">
+    <string-array name="home_menu_ids" translatable="false">
         <item>home</item>
         <item>stories</item>
         <item>guides</item>
