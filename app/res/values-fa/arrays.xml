@@ -16,16 +16,4 @@
   </string-array>
   <string-array name="array_story_sections"/>
   <!--<item>catalog</item>-->
-  <string-array name="catalog_menu_ids">
-    <item>راهنماها</item>
-    <item>درس‌ها</item>
-    <item>قالب‌ها</item>
-  </string-array>
-  <string-array name="home_menu_ids">
-    <item>خانه</item>
-    <item>گزارش‌ها</item>
-    <item>راهنماها</item>
-    <item>درس‌ها</item>
-    <item>قالب‌ها</item>
-  </string-array>
 </resources>
