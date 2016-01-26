@@ -222,6 +222,7 @@
   <string name="scene_editor_please_add_clips">이 탭을 선택하기 전에 \'만들기\'탭을 선택해서 클립을 추가하세요.</string>
   <string name="scene_editor_trim_clip">클립 다듬기</string>
   <string name="cancel">취소하기</string>
+  <string name="stop">멈추기</string>
   <string name="play_or_share_exported_media_">보낸매체를 재생하거나 공유하시겠습니까?</string>
   <string name="err_storage_not_ready">외부 저장소(SD카드)가 읽거나 쓰는데 이용할 수 없습니다.  이 레슨과 스토리 프로젝트 데이터를 위한 스토리메이커의 접근이 필요합니다. 장치를 확인하고 다시 시작해주십시오</string>
   <string name="scene_s_">장면(들)</string>
@@ -263,4 +264,8 @@
   <string name="info">정보</string>
   <string name="send_logcat_to_support">로크켓 보내기</string>
   <!--NEW/CACHEWORD-->
+  <string name="catalog_menu_lessons">레슨들</string>
+  <string name="home_menu_home">집</string>
+  <string name="home_menu_stories">이야기들</string>
+  <string name="home_menu_lessons">레슨들</string>
 </resources>

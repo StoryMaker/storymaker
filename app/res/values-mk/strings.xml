@@ -225,6 +225,7 @@
   <string name="scene_editor_please_add_clips">Додадете клипови во \'Направи\' јазичето пред да го одберете ова.</string>
   <string name="scene_editor_trim_clip">Намали го клипот</string>
   <string name="cancel">Откажи</string>
+  <string name="stop">Стоп</string>
   <string name="play_or_share_exported_media_">Пушти или Сподели го извезениот медиј?</string>
   <string name="err_storage_not_ready">Екстерната картичка (СД картичка) не е достапна во моментов. StoryMaker бара пристап до неа за снимање на податоци од лекциите и проектите. Проверете го вашиот уред и рестартирајте ја апликацијата.</string>
   <string name="scene_s_">Сцена(и)</string>
@@ -267,4 +268,8 @@
   <string name="send_logcat_to_support">Испрати Logcat до техничката подршка</string>
   <string name="restarting_storymaker">StoryMaker се рестартира...</string>
   <!--NEW/CACHEWORD-->
+  <string name="catalog_menu_lessons">Лекции</string>
+  <string name="home_menu_home">Дома</string>
+  <string name="home_menu_stories">Приказни</string>
+  <string name="home_menu_lessons">Лекции</string>
 </resources>

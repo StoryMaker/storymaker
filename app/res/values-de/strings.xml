@@ -215,6 +215,7 @@
   <string name="you_began_a_new_lesson">Sie haben eine neue Lektion begonnen</string>
   <string name="delete_warning">Dieses Vorhaben kann nicht mehr rückgängig gemacht werden!</string>
   <string name="cancel">Abbrechen</string>
+  <string name="stop">Stopp</string>
   <string name="delete">Löschen</string>
   <string name="play_or_share_exported_media_">Die exportierte Datei abspielen oder veröffentlichen?</string>
   <string name="share_published_story">Die veröffentlichte Geschichte teilen?</string>
@@ -264,4 +265,8 @@
   <string name="export_error_3">Etwas ist mit dem Export schiefgelaufen</string>
   <string name="export_error_4">Fehler</string>
   <!--NEW/CACHEWORD-->
+  <string name="catalog_menu_lessons">Lektionen</string>
+  <string name="home_menu_home">Zurück</string>
+  <string name="home_menu_stories">Geschichten</string>
+  <string name="home_menu_lessons">Lektionen</string>
 </resources>

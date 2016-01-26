@@ -133,7 +133,7 @@
   <string name="story_type_profile_personal_text5">دوست دارید در مورد این موضوع، چه اتفاقی بیفتد؟</string>
   <!--/story_type_new-->
   <!--story_type_old-->
-  <string name="scene_number">Scene &lt;xliff:g id=\"number\"&gt;%1$d&lt;/xliff:g&gt;</string>
+  <string name="scene_number">Scene &lt;xliff:g id="number"&gt;%1$d&lt;/xliff:g&gt;</string>
   <string name="when">کی؟</string>
   <string name="how">چگونه؟</string>
   <string name="what">چه؟</string>
@@ -178,23 +178,27 @@
   <string name="prefs_category_media_title">رسانه</string>
   <string name="prefs_category_debug_title">اشکال زدایی</string>
   <string name="prefs_storymaker_server_title">سرور Story Maker</string>
-  <string name="prefs_storymaker_server_summary">سروری برای ارایه همه دروس و گزارش‌ها</string>
+  <string name="prefs_storymaker_server_summary">سرور نگهداری تمام محتویات استوری میکر</string>
   <string name="prefs_use_tor_title">از نرم افزار (Orbot (tor استفاده کنید.</string>
   <string name="prefs_use_tor_summary">کلیه ترافیک ورود و خروج‌های شبکه را از طریق شبکه Tor و اپلیکیشن Orbot بفرستید.</string>
   <string name="prefs_sm_upload_title">بارگذاری در Story Maker</string>
   <string name="prefs_sm_upload_summary">بار گذاری در Story Maker  به‌طور پیش فرض</string>
   <string name="prefs_use_download_manager_title">از دانلود منیجر Download Manager استفاده کنید.</string>
-  <string name="prefs_use_download_manager_summary">بایگانی درس‌ها را از طریق  Android Download Manager بارگیری کنید.</string>
+  <string name="prefs_use_download_manager_summary">دانلود استوری میکر با اندروید رانلود منیجر</string>
   <string name="prefs_use_upload_manager_title">از دانلود منیجر Download Manager استفاده کنید.</string>
-  <string name="prefs_use_upload_manager_summary">متن گزارشتان را از طریق Android UploadManager بارگذاری کنید.</string>
+  <string name="prefs_use_upload_manager_summary">بارگذاری استوری میکر با اندروید آپلود استوری میکر</string>
   <string name="prefs_youtube_acccount_title">حساب شخصی یوتیوب</string>
   <string name="prefs_youtube_acccount_summary">حساب شخصی یوتیوب برای بارگذاری ویدیو. این گزینه باید بر روی تلفن همراه شما ثبت شده باشد.</string>
   <string name="prefs_youtube_login_title">ورود به یوتیوب</string>
   <string name="prefs_youtube_login_summary">از کنترل دسترسی یوتیوب(YouTube web authentication) استفاده کنید</string>
+  <string name="prefs_cacheword_timeout_title">اتمام مهلت کلمه حافظه</string>
+  <string name="prefs_cacheword_timeout_summary">تعداد لحظه‌هایی که کلمه حافظه پس از آن اپلیکیشن را قفل می‌کند و دوباره شروع می‌شود.</string>
   <string name="prefs_soundcloud_account_title">حساب شخصی SoundCloud</string>
   <string name="prefs_soundcloud_account_summary">حساب شخصی SoundCloud برای استفاده در بارگذاری صدا</string>
   <string name="prefs_interface_language_title">زبان خود را اتخاب کنید</string>
   <string name="prefs_interface_language_summary">زبانی که StoryMaker به عنوان رابط کاربر از آن استفاده خواهد کرد.</string>
+  <string name="prefs_photo_format_title">فرمت گزارش تصویری</string>
+  <string name="prefs_photo_format_summary">گزارش تصویری را به عنوان مجموعه‌ای از عکس‌ها بارگذاری کنید.</string>
   <string name="prefs_slide_duration_title">مدت زمان اسلاید</string>
   <string name="prefs_slide_duration_summary">مت زمان هر اسلاید در یک گزارش تصویری</string>
   <string name="prefs_enable_compression_title">قابلیت فشرده‌سازی را فعال کنید</string>
@@ -225,6 +229,8 @@
   <string name="prefs_audio_crossfade_summary">طول فید شدن صدا</string>
   <string name="prefs_internal_storage_title">مخزن داخلی</string>
   <string name="prefs_internal_storage_summary">استفاده از مخزن داخلی پروژه</string>
+  <string name="prefs_iocipher_storage_title">ذخیره‌سازی IOCipher </string>
+  <string name="prefs_iocipher_storage_summary">از انبار IOCipher استفاده کنید</string>
   <string name="prefs_youtube_method_title"> روش کار با یوتیوب</string>
   <string name="prefs_youtube_method_summary">روش فعال کردن سیستم رفع اشکال </string>
   <!--/prefs-->

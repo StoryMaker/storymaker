@@ -233,6 +233,7 @@ Bạn cũng có cơ hội để duyệt xem và điều chỉnh dữ liệu gử
   <string name="scene_editor_trim_clip">Tỉa xén clip</string>
   <string name="delete_warning">Việc này không thể lật ngược lại!</string>
   <string name="cancel">Hủy</string>
+  <string name="stop">Ngừng</string>
   <string name="delete">Xóa</string>
   <string name="play_or_share_exported_media_">Phát hay Chia sẻ dữ liệu đã xuất</string>
   <string name="share_published_story">Chia sẻ phóng sự đã xuất bản?</string>
@@ -304,4 +305,8 @@ Bạn cũng có cơ hội để duyệt xem và điều chỉnh dữ liệu gử
   <string name="export_error_3">Có lỗi khi xuất phương tiện dữ liệu </string>
   <string name="export_error_4">Lỗi</string>
   <!--NEW/CACHEWORD-->
+  <string name="catalog_menu_lessons">Bài học</string>
+  <string name="home_menu_home">Nhà</string>
+  <string name="home_menu_stories">Phóng sự</string>
+  <string name="home_menu_lessons">Bài học</string>
 </resources>

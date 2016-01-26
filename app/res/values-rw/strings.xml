@@ -233,6 +233,7 @@ Uza kuronka kandi akaryo kokubona no guhindura informations ziriko zirungikwa. <
   <string name="scene_editor_trim_clip">Kugabanya isanamu</string>
   <string name="delete_warning">Iki gikorwa ntigishobora guhindurwa (défait)</string>
   <string name="cancel">Hagarika</string>
+  <string name="stop">Guhagarika</string>
   <string name="delete">Gufuta</string>
   <string name="play_or_share_exported_media_">Kuvuza canke Gusangira (partager) ivyerekeye ibinyamakuru vyarungitswe (médias exportés)?</string>
   <string name="share_published_story">Gusangira (partager) inkuru zamenyekanishijwe</string>
@@ -290,4 +291,8 @@ Uza kuronka kandi akaryo kokubona no guhindura informations ziriko zirungikwa. <
   <string name="export_error_2">Ikosa</string>
   <string name="export_error_4">Ikosa</string>
   <!--NEW/CACHEWORD-->
+  <string name="catalog_menu_lessons">Inyigisho</string>
+  <string name="home_menu_home">Ahushikira (accueil)</string>
+  <string name="home_menu_stories">Inkuru</string>
+  <string name="home_menu_lessons">Inyigisho</string>
 </resources>

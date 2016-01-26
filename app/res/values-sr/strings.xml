@@ -225,6 +225,7 @@
   <string name="scene_editor_please_add_clips">Молимо додајте клипове на индикатор \'Направити\' пре одабира овог индикатора </string>
   <string name="scene_editor_trim_clip">Уређење клипа</string>
   <string name="cancel">Отказати</string>
+  <string name="stop">Стоп</string>
   <string name="play_or_share_exported_media_">Покренути или Делити извозне медије?</string>
   <string name="err_storage_not_ready">Екстерна меморија (СДЦард) чини се није тренутно доступна за учитавање и писање. СториМакер захтева приступ овој сесији и подацима стори пројекта. Молимо проверите свој уређај и рестартујте пп. </string>
   <string name="scene_s_">сцена(е)</string>
@@ -267,4 +268,8 @@
   <string name="send_logcat_to_support">Пошаљите Логцат у подршку</string>
   <string name="restarting_storymaker">Поновно покретање СториМакер</string>
   <!--NEW/CACHEWORD-->
+  <string name="catalog_menu_lessons">Лекције </string>
+  <string name="home_menu_home">Натраг</string>
+  <string name="home_menu_stories">Приче</string>
+  <string name="home_menu_lessons">Лекције </string>
 </resources>

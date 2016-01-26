@@ -232,6 +232,7 @@
   <string name="scene_editor_trim_clip">قص المقطع</string>
   <string name="delete_warning">لا يمكن التراجع بعد العملية!</string>
   <string name="cancel">إلغاء</string>
+  <string name="stop">إيقاف</string>
   <string name="delete">فسخ</string>
   <string name="play_or_share_exported_media_">تشغيل أو مشاركة الميديا المصدّرة؟</string>
   <string name="share_published_story">مشاركة القصة المنشورة؟</string>
@@ -280,4 +281,9 @@
   <string name="export_error_2">خطأ</string>
   <string name="export_error_4">خطأ</string>
   <!--NEW/CACHEWORD-->
+  <string name="catalog_menu_lessons">الدروس</string>
+  <string name="home_menu_home">الرئيسية</string>
+  <string name="home_menu_stories">قصص</string>
+  <string name="home_menu_lessons">الدروس</string>
+  <string name="home_empty_btn_stories">قصة جديدة</string>
 </resources>

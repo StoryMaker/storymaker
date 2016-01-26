@@ -233,6 +233,7 @@
   <string name="scene_editor_trim_clip">Обрезать клип</string>
   <string name="delete_warning">Действие не может быть отменено!</string>
   <string name="cancel">Отмена</string>
+  <string name="stop">Стоп</string>
   <string name="delete">Удалить</string>
   <string name="play_or_share_exported_media_">Воспроизвести или поделиться экспортированным материалом?</string>
   <string name="share_published_story">Поделиться опубликованным сюжетом?</string>
@@ -300,4 +301,9 @@
   <string name="export_error_3">Что-то пошло не так с экспортом медиа информации</string>
   <string name="export_error_4">Ошибка</string>
   <!--NEW/CACHEWORD-->
+  <string name="catalog_menu_lessons">Уроки</string>
+  <string name="home_menu_home">Домашняя</string>
+  <string name="home_menu_stories">Сюжеты</string>
+  <string name="home_menu_lessons">Уроки</string>
+  <string name="home_empty_btn_stories">Новая история</string>
 </resources>

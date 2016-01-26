@@ -233,6 +233,7 @@ Vous aurez aussi l’opportunité de voir et modifier les données à envoyer. <
   <string name="scene_editor_trim_clip">Couper le Clip</string>
   <string name="delete_warning">Cette action ne peut être annulée!</string>
   <string name="cancel">Annuler</string>
+  <string name="stop">Arrêter</string>
   <string name="delete">Supprimer</string>
   <string name="play_or_share_exported_media_">Lire ou Publier le média exporté?</string>
   <string name="share_published_story">Partager l\'Histoire publiée?</string>
@@ -304,4 +305,9 @@ Vous aurez aussi l’opportunité de voir et modifier les données à envoyer. <
   <string name="export_error_3">Erreurs lors de l\'export media</string>
   <string name="export_error_4">Erreur</string>
   <!--NEW/CACHEWORD-->
+  <string name="catalog_menu_lessons">Leçons</string>
+  <string name="home_menu_home">Accueil</string>
+  <string name="home_menu_stories">Histoires</string>
+  <string name="home_menu_lessons">Leçons</string>
+  <string name="home_empty_btn_stories">Nouvelle Histoire</string>
 </resources>

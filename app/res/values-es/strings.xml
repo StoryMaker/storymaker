@@ -234,6 +234,7 @@ No se puede acceder al almacenamiento externo o interno</string>
   <string name="scene_editor_trim_clip">Recortar vídeo</string>
   <string name="delete_warning">¡Esta acción no puede deshacerse!</string>
   <string name="cancel">Cancelar</string>
+  <string name="stop">Detener</string>
   <string name="delete">Borrar</string>
   <string name="play_or_share_exported_media_">¿Reproducir o Compartir audiovisuales exportados?</string>
   <string name="share_published_story">¿Compartir historia publicada?</string>
@@ -305,4 +306,9 @@ No se puede acceder al almacenamiento externo o interno</string>
   <string name="export_error_3">Algo salió mal con la exportación de medios</string>
   <string name="export_error_4">Error</string>
   <!--NEW/CACHEWORD-->
+  <string name="catalog_menu_lessons">Lecciones</string>
+  <string name="home_menu_home">Inicio</string>
+  <string name="home_menu_stories">Historias</string>
+  <string name="home_menu_lessons">Lecciones</string>
+  <string name="home_empty_btn_stories">Nueva Historia</string>
 </resources>

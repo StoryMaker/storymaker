@@ -1,14 +1,31 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
-  <string-array name="story_sections">
-    <item>سیاست</item>
-    <item>تجارت</item>
-    <item>ورزش</item>
-    <item>هنر</item>
-    <item>علم و فن آوری</item>
-    <item>سلامت</item>
-    <item>آموزش</item>
-    <item>محیط زیست</item>
+  <string-array name="story_sections"/>
+  <string-array name="lesson_sections"/>
+  <string-array name="array_story_locations">
+    <item>آمریکا</item>
+    <item>کالیفرنیا</item>
+    <item>اوکلند</item>
+    <item>مصر</item>
+    <item>عراق</item>
+    <item>مراکش</item>
+    <item>تونس</item>
+    <item>زیمباوه</item>
+    <item>جمهوری چک</item>
+    <item>ویتنام</item>
   </string-array>
+  <string-array name="array_story_sections"/>
   <!--<item>catalog</item>-->
+  <string-array name="catalog_menu_ids">
+    <item>راهنماها</item>
+    <item>درس‌ها</item>
+    <item>قالب‌ها</item>
+  </string-array>
+  <string-array name="home_menu_ids">
+    <item>خانه</item>
+    <item>گزارش‌ها</item>
+    <item>راهنماها</item>
+    <item>درس‌ها</item>
+    <item>قالب‌ها</item>
+  </string-array>
 </resources>
