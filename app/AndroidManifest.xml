@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="org.storymaker.app"
     android:installLocation="auto"
-    android:versionCode="1089"
+    android:versionCode="1090"
     android:versionName="2.1.1">
    
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
