@@ -1,3 +1,8 @@
+--- build 1089:
+
+- New Farsi / Persian Translation
+- Bugfixes
+
 --- build 1088:
 
 - Content fixes
