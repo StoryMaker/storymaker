@@ -10,7 +10,7 @@
         "thumbnailPath": "images/content_packs/mobile_photo_basics_cover.png",
         "expansionFilePath": "Android/data/org.storymaker.app/files/",
         "expansionFileUrl": "https://s3-us-west-1.amazonaws.com/storymakerorg/appdata/obb/org.storymaker.app/",
-        "expansionFileVersion": "11"
+        "expansionFileVersion": "12"
     },
     {
         "expansionId": "g_odvw",
@@ -23,7 +23,7 @@
         "thumbnailPath": "images/content_packs/g_odvw_cover.png",
         "expansionFilePath": "Android/data/org.storymaker.app/files/",
         "expansionFileUrl": "https://s3-us-west-1.amazonaws.com/storymakerorg/appdata/obb/org.storymaker.app/",
-        "expansionFileVersion": "11"
+        "expansionFileVersion": "12"
     },
     {
         "expansionId": "default",
@@ -36,7 +36,7 @@
         "thumbnailPath": "images/content_packs/default_cover.png",
         "expansionFilePath": "Android/data/org.storymaker.app/files/",
         "expansionFileUrl": "https://s3-us-west-1.amazonaws.com/storymakerorg/appdata/obb/org.storymaker.app/",
-        "expansionFileVersion": "11"
+        "expansionFileVersion": "12"
     },
     {
         "expansionId": "learning_guide",
@@ -49,7 +49,7 @@
         "thumbnailPath": "images/content_packs/learning_guide_cover.jpg",
         "expansionFilePath": "Android/data/org.storymaker.app/files/",
         "expansionFileUrl": "https://s3-us-west-1.amazonaws.com/storymakerorg/appdata/obb/org.storymaker.app/",
-        "expansionFileVersion": "11"
+        "expansionFileVersion": "12"
     },
     {
         "expansionId": "g_welcome",
@@ -62,7 +62,7 @@
         "thumbnailPath": "images/content_packs/g_welcome_cover.jpg",
         "expansionFilePath": "Android/data/org.storymaker.app/files/",
         "expansionFileUrl": "https://s3-us-west-1.amazonaws.com/storymakerorg/appdata/obb/org.storymaker.app/",
-        "expansionFileVersion": "11"
+        "expansionFileVersion": "12"
     },
     
     
@@ -75,10 +75,10 @@
         "title": "Journalism 1 - MENA Edition",
         "packageName": "org.storymaker.app",
         "description": "Social Media Basics and 4 more lessons",
-        "thumbnailPath": "images/content_packs/journalism_part_1_cover.png",
+        "thumbnailPath": "images/content_packs/journalism_part_1_mena_cover.png",
         "expansionFilePath": "Android/data/org.storymaker.app/files/",
         "expansionFileUrl": "https://s3-us-west-1.amazonaws.com/storymakerorg/appdata/obb/org.storymaker.app/",
-        "expansionFileVersion": "11"
+        "expansionFileVersion": "12"
     },
     {
         "expansionId": "journalism_part_1-persian",
@@ -88,10 +88,10 @@
         "title": "Journalism 1 - Persian Edition",
         "packageName": "org.storymaker.app",
         "description": "Social Media Basics and 4 more lessons",
-        "thumbnailPath": "images/content_packs/journalism_part_1_cover.png",
+        "thumbnailPath": "images/content_packs/journalism_part_1_persian_cover.png",
         "expansionFilePath": "Android/data/org.storymaker.app/files/",
         "expansionFileUrl": "https://s3-us-west-1.amazonaws.com/storymakerorg/appdata/obb/org.storymaker.app/",
-        "expansionFileVersion": "11"
+        "expansionFileVersion": "12"
     },
     {
         "expansionId": "journalism_part_1-burundi",
@@ -101,10 +101,10 @@
         "title": "Journalism 1 - Burundi Edition",
         "packageName": "org.storymaker.app",
         "description": "Social Media Basics and 4 more lessons",
-        "thumbnailPath": "images/content_packs/journalism_part_1_cover.png",
+        "thumbnailPath": "images/content_packs/journalism_part_1_burundi_cover.png",
         "expansionFilePath": "Android/data/org.storymaker.app/files/",
         "expansionFileUrl": "https://s3-us-west-1.amazonaws.com/storymakerorg/appdata/obb/org.storymaker.app/",
-        "expansionFileVersion": "11"
+        "expansionFileVersion": "12"
     },
     {
         "expansionId": "journalism_part_2-mena",
@@ -114,10 +114,10 @@
         "title": "Journalism 2 - MENA Edition",
         "packageName": "org.storymaker.app",
         "description": "Evolution of a Story and 3 more lessons",
-        "thumbnailPath": "images/content_packs/journalism_part_2_cover.png",
+        "thumbnailPath": "images/content_packs/journalism_part_2_mena_cover.png",
         "expansionFilePath": "Android/data/org.storymaker.app/files/",
         "expansionFileUrl": "https://s3-us-west-1.amazonaws.com/storymakerorg/appdata/obb/org.storymaker.app/",
-        "expansionFileVersion": "11"
+        "expansionFileVersion": "12"
     },
     {
         "expansionId": "journalism_part_2-persian",
@@ -127,10 +127,10 @@
         "title": "Journalism 2 - Persian Edition",
         "packageName": "org.storymaker.app",
         "description": "Evolution of a Story and 3 more lessons",
-        "thumbnailPath": "images/content_packs/journalism_part_2_cover.png",
+        "thumbnailPath": "images/content_packs/journalism_part_2_persian_cover.png",
         "expansionFilePath": "Android/data/org.storymaker.app/files/",
         "expansionFileUrl": "https://s3-us-west-1.amazonaws.com/storymakerorg/appdata/obb/org.storymaker.app/",
-        "expansionFileVersion": "11"
+        "expansionFileVersion": "12"
     },
     {
         "expansionId": "journalism_part_2-burundi",
@@ -140,10 +140,10 @@
         "title": "Journalism 2 - Burundi Edition",
         "packageName": "org.storymaker.app",
         "description": "Evolution of a Story and 3 more lessons",
-        "thumbnailPath": "images/content_packs/journalism_part_2_cover.png",
+        "thumbnailPath": "images/content_packs/journalism_part_2_burundi_cover.png",
         "expansionFilePath": "Android/data/org.storymaker.app/files/",
         "expansionFileUrl": "https://s3-us-west-1.amazonaws.com/storymakerorg/appdata/obb/org.storymaker.app/",
-        "expansionFileVersion": "11"
+        "expansionFileVersion": "12"
     },
     
     {
@@ -154,10 +154,10 @@
         "title": "Security - MENA Edition",
         "packageName": "org.storymaker.app",
         "description": "How can I use SMS Safely and 6 more lessons",
-        "thumbnailPath": "images/content_packs/security_cover.png",
+        "thumbnailPath": "images/content_packs/security_mena_cover.png",
         "expansionFilePath": "Android/data/org.storymaker.app/files/",
         "expansionFileUrl": "https://s3-us-west-1.amazonaws.com/storymakerorg/appdata/obb/org.storymaker.app/",
-        "expansionFileVersion": "11"
+        "expansionFileVersion": "12"
     },
     {
         "expansionId": "security-persian",
@@ -167,10 +167,10 @@
         "title": "Security - Persian Edition",
         "packageName": "org.storymaker.app",
         "description": "How can I use SMS Safely and 6 more lessons",
-        "thumbnailPath": "images/content_packs/security_cover.png",
+        "thumbnailPath": "images/content_packs/security_persian_cover.png",
         "expansionFilePath": "Android/data/org.storymaker.app/files/",
         "expansionFileUrl": "https://s3-us-west-1.amazonaws.com/storymakerorg/appdata/obb/org.storymaker.app/",
-        "expansionFileVersion": "11"
+        "expansionFileVersion": "12"
     },
     {
         "expansionId": "security-burundi",
@@ -180,10 +180,10 @@
         "title": "Security - Burundi Edition",
         "packageName": "org.storymaker.app",
         "description": "How can I use SMS Safely and 6 more lessons",
-        "thumbnailPath": "images/content_packs/security_cover.png",
+        "thumbnailPath": "images/content_packs/security_burundi_cover.png",
         "expansionFilePath": "Android/data/org.storymaker.app/files/",
         "expansionFileUrl": "https://s3-us-west-1.amazonaws.com/storymakerorg/appdata/obb/org.storymaker.app/",
-        "expansionFileVersion": "11"
+        "expansionFileVersion": "12"
     },
     
     {
@@ -194,10 +194,10 @@
         "title": "Audio - MENA Edition",
         "packageName": "org.storymaker.app",
         "description": "Audio Basics and 5 more lessons",
-        "thumbnailPath": "images/content_packs/audio_cover.png",
+        "thumbnailPath": "images/content_packs/audio_mena_cover.png",
         "expansionFilePath": "Android/data/org.storymaker.app/files/",
         "expansionFileUrl": "https://s3-us-west-1.amazonaws.com/storymakerorg/appdata/obb/org.storymaker.app/",
-        "expansionFileVersion": "11"
+        "expansionFileVersion": "12"
     },
     {
         "expansionId": "audio-persian",
@@ -207,10 +207,10 @@
         "title": "Audio - Persian Edition",
         "packageName": "org.storymaker.app",
         "description": "Audio Basics and 5 more lessons",
-        "thumbnailPath": "images/content_packs/audio_cover.png",
+        "thumbnailPath": "images/content_packs/audio_persian_cover.png",
         "expansionFilePath": "Android/data/org.storymaker.app/files/",
         "expansionFileUrl": "https://s3-us-west-1.amazonaws.com/storymakerorg/appdata/obb/org.storymaker.app/",
-        "expansionFileVersion": "11"
+        "expansionFileVersion": "12"
     },
     {
         "expansionId": "audio-burundi",
@@ -220,10 +220,10 @@
         "title": "Audio - Burundi Edition",
         "packageName": "org.storymaker.app",
         "description": "Audio Basics and 5 more lessons",
-        "thumbnailPath": "images/content_packs/audio_cover.png",
+        "thumbnailPath": "images/content_packs/audio_burundi_cover.png",
         "expansionFilePath": "Android/data/org.storymaker.app/files/",
         "expansionFileUrl": "https://s3-us-west-1.amazonaws.com/storymakerorg/appdata/obb/org.storymaker.app/",
-        "expansionFileVersion": "11"
+        "expansionFileVersion": "12"
     },
     
     {
@@ -234,10 +234,10 @@
         "title": "Photography 1 - MENA Edition",
         "packageName": "org.storymaker.app",
         "description": "Camera Basics and 5 more lessons",
-        "thumbnailPath": "images/content_packs/photography_1_cover.png",
+        "thumbnailPath": "images/content_packs/photography_1_mena_cover.png",
         "expansionFilePath": "Android/data/org.storymaker.app/files/",
         "expansionFileUrl": "https://s3-us-west-1.amazonaws.com/storymakerorg/appdata/obb/org.storymaker.app/",
-        "expansionFileVersion": "11"
+        "expansionFileVersion": "12"
     },
     {
         "expansionId": "photography_1-persian",
@@ -247,10 +247,10 @@
         "title": "Photography 1 - Persian Edition",
         "packageName": "org.storymaker.app",
         "description": "Camera Basics and 5 more lessons",
-        "thumbnailPath": "images/content_packs/photography_1_cover.png",
+        "thumbnailPath": "images/content_packs/photography_1_persian_cover.png",
         "expansionFilePath": "Android/data/org.storymaker.app/files/",
         "expansionFileUrl": "https://s3-us-west-1.amazonaws.com/storymakerorg/appdata/obb/org.storymaker.app/",
-        "expansionFileVersion": "11"
+        "expansionFileVersion": "12"
     },
     {
         "expansionId": "photography_1-burundi",
@@ -260,10 +260,10 @@
         "title": "Photography 1 - Burundi Edition",
         "packageName": "org.storymaker.app",
         "description": "Camera Basics and 5 more lessons",
-        "thumbnailPath": "images/content_packs/photography_1_cover.png",
+        "thumbnailPath": "images/content_packs/photography_1_burundi_cover.png",
         "expansionFilePath": "Android/data/org.storymaker.app/files/",
         "expansionFileUrl": "https://s3-us-west-1.amazonaws.com/storymakerorg/appdata/obb/org.storymaker.app/",
-        "expansionFileVersion": "11"
+        "expansionFileVersion": "12"
     },
     
     {
@@ -274,10 +274,10 @@
         "title": "Photography 2 - MENA Edition",
         "packageName": "org.storymaker.app",
         "description": "The Photo Essay and 4 more lessons",
-        "thumbnailPath": "images/content_packs/photography_2_cover.png",
+        "thumbnailPath": "images/content_packs/photography_2_mena_cover.png",
         "expansionFilePath": "Android/data/org.storymaker.app/files/",
         "expansionFileUrl": "https://s3-us-west-1.amazonaws.com/storymakerorg/appdata/obb/org.storymaker.app/",
-        "expansionFileVersion": "11"
+        "expansionFileVersion": "12"
     },
     {
         "expansionId": "photography_2-persian",
@@ -287,10 +287,10 @@
         "title": "Photography 2 - Persian Edition",
         "packageName": "org.storymaker.app",
         "description": "The Photo Essay and 4 more lessons",
-        "thumbnailPath": "images/content_packs/photography_2_cover.png",
+        "thumbnailPath": "images/content_packs/photography_2_persian_cover.png",
         "expansionFilePath": "Android/data/org.storymaker.app/files/",
         "expansionFileUrl": "https://s3-us-west-1.amazonaws.com/storymakerorg/appdata/obb/org.storymaker.app/",
-        "expansionFileVersion": "11"
+        "expansionFileVersion": "12"
     },
     {
         "expansionId": "photography_2-burundi",
@@ -300,10 +300,10 @@
         "title": "Photography 2 - Burundi Edition",
         "packageName": "org.storymaker.app",
         "description": "The Photo Essay and 4 more lessons",
-        "thumbnailPath": "images/content_packs/photography_2_cover.png",
+        "thumbnailPath": "images/content_packs/photography_2_burundi_cover.png",
         "expansionFilePath": "Android/data/org.storymaker.app/files/",
         "expansionFileUrl": "https://s3-us-west-1.amazonaws.com/storymakerorg/appdata/obb/org.storymaker.app/",
-        "expansionFileVersion": "11"
+        "expansionFileVersion": "12"
     },
     
     {
@@ -314,10 +314,10 @@
         "title": "Video 1 - MENA Edition",
         "packageName": "org.storymaker.app",
         "description": "Video Basics and 3 more lessons",
-        "thumbnailPath": "images/content_packs/video_1_cover.png",
+        "thumbnailPath": "images/content_packs/video_1_mena_cover.png",
         "expansionFilePath": "Android/data/org.storymaker.app/files/",
         "expansionFileUrl": "https://s3-us-west-1.amazonaws.com/storymakerorg/appdata/obb/org.storymaker.app/",
-        "expansionFileVersion": "11"
+        "expansionFileVersion": "12"
     },
     {
         "expansionId": "video_1-persian",
@@ -327,10 +327,10 @@
         "title": "Video 1 - Persian Edition",
         "packageName": "org.storymaker.app",
         "description": "Video Basics and 3 more lessons",
-        "thumbnailPath": "images/content_packs/video_1_cover.png",
+        "thumbnailPath": "images/content_packs/video_1_persian_cover.png",
         "expansionFilePath": "Android/data/org.storymaker.app/files/",
         "expansionFileUrl": "https://s3-us-west-1.amazonaws.com/storymakerorg/appdata/obb/org.storymaker.app/",
-        "expansionFileVersion": "11"
+        "expansionFileVersion": "12"
     },
     {
         "expansionId": "video_1-burundi",
@@ -340,10 +340,10 @@
         "title": "Video 1 - Burundi Edition",
         "packageName": "org.storymaker.app",
         "description": "Video Basics and 3 more lessons",
-        "thumbnailPath": "images/content_packs/video_1_cover.png",
+        "thumbnailPath": "images/content_packs/video_1_burundi_cover.png",
         "expansionFilePath": "Android/data/org.storymaker.app/files/",
         "expansionFileUrl": "https://s3-us-west-1.amazonaws.com/storymakerorg/appdata/obb/org.storymaker.app/",
-        "expansionFileVersion": "11"
+        "expansionFileVersion": "12"
     },
     
     {
@@ -354,10 +354,10 @@
         "title": "Video 2 - MENA Edition",
         "packageName": "org.storymaker.app",
         "description": "Framing your Shot and 4 more lessons",
-        "thumbnailPath": "images/content_packs/video_2_cover.png",
+        "thumbnailPath": "images/content_packs/video_2_mena_cover.png",
         "expansionFilePath": "Android/data/org.storymaker.app/files/",
         "expansionFileUrl": "https://s3-us-west-1.amazonaws.com/storymakerorg/appdata/obb/org.storymaker.app/",
-        "expansionFileVersion": "11"
+        "expansionFileVersion": "12"
     },
     {
         "expansionId": "video_2-persian",
@@ -367,10 +367,10 @@
         "title": "Video 2 - Persian Edition",
         "packageName": "org.storymaker.app",
         "description": "Framing your Shot and 4 more lessons",
-        "thumbnailPath": "images/content_packs/video_2_cover.png",
+        "thumbnailPath": "images/content_packs/video_2_persian_cover.png",
         "expansionFilePath": "Android/data/org.storymaker.app/files/",
         "expansionFileUrl": "https://s3-us-west-1.amazonaws.com/storymakerorg/appdata/obb/org.storymaker.app/",
-        "expansionFileVersion": "11"
+        "expansionFileVersion": "12"
     },
     {
         "expansionId": "video_2-burundi",
@@ -380,10 +380,10 @@
         "title": "Video 2 - Burundi Edition",
         "packageName": "org.storymaker.app",
         "description": "Framing your Shot and 4 more lessons",
-        "thumbnailPath": "images/content_packs/video_2_cover.png",
+        "thumbnailPath": "images/content_packs/video_2_burundi_cover.png",
         "expansionFilePath": "Android/data/org.storymaker.app/files/",
         "expansionFileUrl": "https://s3-us-west-1.amazonaws.com/storymakerorg/appdata/obb/org.storymaker.app/",
-        "expansionFileVersion": "11"
+        "expansionFileVersion": "12"
     },
     
     {
@@ -394,10 +394,10 @@
         "title": "Story - MENA Edition",
         "packageName": "org.storymaker.app",
         "description": "Central Question and 6 more lessons",
-        "thumbnailPath": "images/content_packs/story_cover.png",
+        "thumbnailPath": "images/content_packs/story_mena_cover.png",
         "expansionFilePath": "Android/data/org.storymaker.app/files/",
         "expansionFileUrl": "https://s3-us-west-1.amazonaws.com/storymakerorg/appdata/obb/org.storymaker.app/",
-        "expansionFileVersion": "11"
+        "expansionFileVersion": "12"
     },
     {
         "expansionId": "story-persian",
@@ -407,10 +407,10 @@
         "title": "Story - Persian Edition",
         "packageName": "org.storymaker.app",
         "description": "Central Question and 6 more lessons",
-        "thumbnailPath": "images/content_packs/story_cover.png",
+        "thumbnailPath": "images/content_packs/story_persian_cover.png",
         "expansionFilePath": "Android/data/org.storymaker.app/files/",
         "expansionFileUrl": "https://s3-us-west-1.amazonaws.com/storymakerorg/appdata/obb/org.storymaker.app/",
-        "expansionFileVersion": "11"
+        "expansionFileVersion": "12"
     },
     {
         "expansionId": "story-burundi",
@@ -420,10 +420,10 @@
         "title": "Story - Burundi Edition",
         "packageName": "org.storymaker.app",
         "description": "Central Question and 6 more lessons",
-        "thumbnailPath": "images/content_packs/story_cover.png",
+        "thumbnailPath": "images/content_packs/story_burundi_cover.png",
         "expansionFilePath": "Android/data/org.storymaker.app/files/",
         "expansionFileUrl": "https://s3-us-west-1.amazonaws.com/storymakerorg/appdata/obb/org.storymaker.app/",
-        "expansionFileVersion": "11"
+        "expansionFileVersion": "12"
     },
     
     
@@ -441,7 +441,7 @@
         "thumbnailPath": "images/content_packs/t_video_cover.png",
         "expansionFilePath": "Android/data/org.storymaker.app/files/",
         "expansionFileUrl": "https://s3-us-west-1.amazonaws.com/storymakerorg/appdata/obb/org.storymaker.app/",
-        "expansionFileVersion": "11"
+        "expansionFileVersion": "12"
     },
     {
         "expansionId": "t_audio",
@@ -454,7 +454,7 @@
         "thumbnailPath": "images/content_packs/t_audio_cover.png",
         "expansionFilePath": "Android/data/org.storymaker.app/files/",
         "expansionFileUrl": "https://s3-us-west-1.amazonaws.com/storymakerorg/appdata/obb/org.storymaker.app/",
-        "expansionFileVersion": "11"
+        "expansionFileVersion": "12"
     },
     {
         "expansionId": "t_photo",
@@ -467,7 +467,7 @@
         "thumbnailPath": "images/content_packs/t_photo_cover.png",
         "expansionFilePath": "Android/data/org.storymaker.app/files/",
         "expansionFileUrl": "https://s3-us-west-1.amazonaws.com/storymakerorg/appdata/obb/org.storymaker.app/",
-        "expansionFileVersion": "11"
+        "expansionFileVersion": "12"
     },
     {
         "expansionId": "t_news",
@@ -480,7 +480,7 @@
         "thumbnailPath": "images/content_packs/t_news_cover.png",
         "expansionFilePath": "Android/data/org.storymaker.app/files/",
         "expansionFileUrl": "https://s3-us-west-1.amazonaws.com/storymakerorg/appdata/obb/org.storymaker.app/",
-        "expansionFileVersion": "11"
+        "expansionFileVersion": "12"
     },
     {
         "expansionId": "t_process",
@@ -493,7 +493,7 @@
         "thumbnailPath": "images/content_packs/t_process_cover.png",
         "expansionFilePath": "Android/data/org.storymaker.app/files/",
         "expansionFileUrl": "https://s3-us-west-1.amazonaws.com/storymakerorg/appdata/obb/org.storymaker.app/",
-        "expansionFileVersion": "11"
+        "expansionFileVersion": "12"
     },
     {
         "expansionId": "t_citizen_journalist",
@@ -506,6 +506,6 @@
         "thumbnailPath": "images/content_packs/t_citizen_journalist_cover.jpg",
         "expansionFilePath": "Android/data/org.storymaker.app/files/",
         "expansionFileUrl": "https://s3-us-west-1.amazonaws.com/storymakerorg/appdata/obb/org.storymaker.app/",
-        "expansionFileVersion": "11"
+        "expansionFileVersion": "12"
     }
 ]
