@@ -225,6 +225,7 @@ Vi ćete biti u mogućnosti da vidite i uredite podatke koji su za slanje.</stri
   <string name="scene_editor_please_add_clips">Molimo dodajte isječke na indikator \'Napraviti\' prije odabira ovog indikatora.</string>
   <string name="scene_editor_trim_clip">Uređenje isječka</string>
   <string name="cancel">Otkazati</string>
+  <string name="stop">Stop</string>
   <string name="play_or_share_exported_media_">Pokrenuti ili Dijeliti izvozne medije?</string>
   <string name="err_storage_not_ready">Eksterna memorija (SDCard) čini se nije dostupna za učitavanje i pisanje trenutno. StoryMaker zahtijeva pristup ovoj sesiji i podacima story projekta. Molimo provjerite svoj uređaj i restartujte pp.</string>
   <string name="scene_s_">scena(e)</string>
@@ -267,4 +268,8 @@ Vi ćete biti u mogućnosti da vidite i uredite podatke koji su za slanje.</stri
   <string name="send_logcat_to_support">Pošaljite Logcat u podršku</string>
   <string name="restarting_storymaker">Ponovno pokretanje StoryMaker...</string>
   <!--NEW/CACHEWORD-->
+  <string name="catalog_menu_lessons">Lekcije</string>
+  <string name="home_menu_home">Natrag</string>
+  <string name="home_menu_stories">Priče</string>
+  <string name="home_menu_lessons">Lekcije</string>
 </resources>
