@@ -354,7 +354,7 @@ You also will have an opportunity to see and modify the data being sent."</strin
     <string name="finished_downloading">Finished Downloading</string>
 
 
-    <string name="home_downloading_content">Downloading content and/or updating installed files"</string>
+    <string name="home_downloading_content">Downloading content and/or updating installed files</string>
     <string name="home_content_missing">Was not able to load this path, content is missing!</string>
     <string name="home_metadata_missing">Could not locate content metadata</string>
     <string name="home_index_missing">Could not locate content index</string>
