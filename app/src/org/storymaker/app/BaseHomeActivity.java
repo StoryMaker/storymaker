@@ -31,6 +31,7 @@ import net.sqlcipher.database.SQLiteDatabaseHook;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.filefilter.WildcardFileFilter;
+import org.apache.commons.lang3.StringUtils;
 import org.storymaker.app.model.Project;
 import org.storymaker.app.server.LoginActivity;
 import org.storymaker.app.server.ServerManager;
@@ -162,7 +163,7 @@ public abstract class BaseHomeActivity extends BaseActivity {
 
     // copied this as a short term fix until we get loading cleanly split out from the liger sample app ui stuff
     protected StoryPathLibrary initSPLFromJson(String json, String jsonPath) {
-        if (json == null || json.equals("")) {
+        if (json == null || json.equals("")) { // FIXME use StringUtils
             Toast.makeText(this, getString(R.string.home_content_missing), Toast.LENGTH_LONG).show();
             finish();
             return null;
@@ -432,7 +433,7 @@ public abstract class BaseHomeActivity extends BaseActivity {
         }
         */
 
-        if ((splId != null) && (splId.equals("default_library"))) {
+        if ((splId != null) && (splId.equals("default_library"))) { // FIXME use StringUtils
 
             // initiate check/download for main/patch expansion files
             boolean readyToOpen = StorymakerDownloadHelper.checkAndDownloadNew(context);
@@ -914,7 +915,7 @@ public abstract class BaseHomeActivity extends BaseActivity {
                 if (metadata == null) {
                     Toast.makeText(BaseHomeActivity.this, getString(R.string.home_metadata_missing), Toast.LENGTH_LONG).show();
                     Timber.e("failed to load content metadata");
-                } else if ((eItem.getThumbnailPath() == null) || (!eItem.getThumbnailPath().equals(metadata.getContentPackThumbnailPath()))) {
+                } else if ((eItem.getThumbnailPath() == null) || (!eItem.getThumbnailPath().equals(metadata.getContentPackThumbnailPath()))) { // FIXME use StringUtils
 
                     Timber.d(eItem.getExpansionId() + " FIRST OPEN, UPDATING THUMBNAIL PATH");
 
@@ -1048,7 +1049,7 @@ public abstract class BaseHomeActivity extends BaseActivity {
 
             ExpansionIndexItem item = installedIds.get(key);
 
-            if (item.getContentType().equals(type)) {
+            if (StringUtils.equals(item.getContentType(),type)) {
                 indexItemIds.add(key);
             }
 
