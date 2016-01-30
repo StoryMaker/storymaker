@@ -467,6 +467,7 @@ public class StorymakerDownloadHelper {
             if ((installedItem.getExpansionFileVersion() != null) &&
                     (Integer.parseInt(installedItem.getPatchFileVersion()) < Integer.parseInt(installedItem.getExpansionFileVersion()))) {
 
+                // FIXME getFileFolderName can return null if the media is in some sort of disconnected state. in that case we need to revert to internal
                 File obbDirectory = new File(ZipHelper.getObbFolderName(context));
                 File fileDirectory = new File(ZipHelper.getFileFolderName(context));
 
