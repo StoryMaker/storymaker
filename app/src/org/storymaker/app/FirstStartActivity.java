@@ -1,22 +1,26 @@
 
 package org.storymaker.app;
 
-import timber.log.Timber;
-
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.SharedPreferences;
-import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
+import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 
 import org.storymaker.app.Eula.OnEulaAgreedTo;
+
+import java.security.GeneralSecurityException;
+
+import info.guardianproject.cacheword.CacheWordHandler;
+import info.guardianproject.cacheword.ICacheWordSubscriber;
+import timber.log.Timber;
 
 /**
  * Prompt the user to view & agree to the StoryMaker TOS / EULA
@@ -30,10 +34,13 @@ import org.storymaker.app.Eula.OnEulaAgreedTo;
  * @author David Brodsky
  *
  */
-public class FirstStartActivity extends Activity implements OnEulaAgreedTo {
+public class FirstStartActivity extends Activity implements OnEulaAgreedTo, ICacheWordSubscriber {
 
     private boolean mTosAccepted;
     private Button mTosButton;
+
+    // NEW/CACHEWORD
+    protected CacheWordHandler mCacheWordHandler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,20 +64,30 @@ public class FirstStartActivity extends Activity implements OnEulaAgreedTo {
         */
 
         super.onCreate(savedInstanceState);
+
+        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        int timeout = Integer.parseInt(settings.getString("pcachewordtimeout", BaseActivity.CACHEWORD_TIMEOUT));
+        mCacheWordHandler = new CacheWordHandler(this, timeout);
+
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_first_start);
         mTosAccepted = false;
         mTosButton = (Button) findViewById(R.id.btnTos);
     }
-    
+
     @Override
     public void onPause() {
         super.onPause();
+
+        mCacheWordHandler.disconnectFromService();
     }
     
     @Override
     public void onResume() {
         super.onResume();
+
+        mCacheWordHandler.connectToService();
+
         if ( PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getBoolean(Constants.PREFERENCES_WP_REGISTERED, false) ) {
             // The user is returning to this Activity after a successful WordPress signup
             Intent homeIntent = new Intent(FirstStartActivity.this, HomeActivity.class);
@@ -81,7 +98,7 @@ public class FirstStartActivity extends Activity implements OnEulaAgreedTo {
 
     /**
      * When the EULA / TOS button is clicked, show the EULA if it hasn't been shown.
-     * Else, allow the user to accept immediately. 
+     * Else, allow the user to accept immediately.
      */
     public void onTosButtonClick(View v) {
         mTosAccepted  = new Eula(this).show();
@@ -108,7 +125,7 @@ public class FirstStartActivity extends Activity implements OnEulaAgreedTo {
     }
 
     /**
-     * Show an AlertDialog prompting the user to 
+     * Show an AlertDialog prompting the user to
      * accept the EULA / TOS
      * @return
      */
@@ -130,7 +147,7 @@ public class FirstStartActivity extends Activity implements OnEulaAgreedTo {
         }
         return true;
     }
-    
+
     private void markTosButtonAccepted() {
         Drawable tosStateDrawable = FirstStartActivity.this.getResources().getDrawable(
                 R.drawable.ic_contextsm_checkbox_checked);
@@ -141,5 +158,41 @@ public class FirstStartActivity extends Activity implements OnEulaAgreedTo {
     public void onEulaAgreedTo() {
         mTosAccepted = true;
         markTosButtonAccepted();
+    }
+
+    @Override
+    public void onCacheWordUninitialized() {
+
+        // moving this code here so signup works.  should only need to happen once anyway.
+        Timber.d("cacheword uninitialized, first start activity / initialize");
+
+        // set default pin, prompt for actual pin on first lock
+        try {
+            CharSequence defaultPinSequence = getText(R.string.cacheword_default_pin);
+            char[] defaultPin = defaultPinSequence.toString().toCharArray();
+            mCacheWordHandler.setPassphrase(defaultPin);
+            SharedPreferences sp = getSharedPreferences("appPrefs", MODE_PRIVATE);
+            SharedPreferences.Editor e = sp.edit();
+            e.putString("cacheword_status", BaseActivity.CACHEWORD_UNSET);
+            e.commit();
+            Timber.d("set default cacheword pin");
+        } catch (GeneralSecurityException gse) {
+            Timber.e("failed to set default cacheword pin: " + gse.getMessage());
+            gse.printStackTrace();
+        }
+    }
+
+    @Override
+    public void onCacheWordLocked() {
+
+        // i don't think there's anything we need to do here
+        Timber.d("cacheword locked, first start activity / no-op");
+    }
+
+    @Override
+    public void onCacheWordOpened() {
+
+        // i don't think there's anything we need to do here
+        Timber.d("cacheword opened, first start activity / no-op");
     }
 }

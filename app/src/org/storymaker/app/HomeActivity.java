@@ -398,24 +398,6 @@ public class HomeActivity extends BaseHomeActivity {
     }
 
     @Override
-    public void onCacheWordUninitialized() {
-        // set default pin, prompt for actual pin on first lock
-        try {
-            CharSequence defaultPinSequence = getText(R.string.cacheword_default_pin);
-            char[] defaultPin = defaultPinSequence.toString().toCharArray();
-            mCacheWordHandler.setPassphrase(defaultPin);
-            SharedPreferences sp = getSharedPreferences("appPrefs", MODE_PRIVATE);
-            SharedPreferences.Editor e = sp.edit();
-            e.putString("cacheword_status", BaseActivity.CACHEWORD_UNSET);
-            e.commit();
-            Timber.d("set default cacheword pin");
-        } catch (GeneralSecurityException gse) {
-            Log.e("CACHEWORD", "failed to set default cacheword pin: " + gse.getMessage());
-            gse.printStackTrace();
-        }
-    }
-
-    @Override
     public void onCacheWordLocked() {
         // if there has been no first lock and pin prompt, use default pin to unlock
         SharedPreferences sp = getSharedPreferences("appPrefs", MODE_PRIVATE);
