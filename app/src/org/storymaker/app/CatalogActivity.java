@@ -128,7 +128,10 @@ public class CatalogActivity extends BaseHomeActivity {
                             iItem.setLastModifiedDate(thisDate);
                             iItem.setCreationDate(thisDate);
 
-                            Timber.d("updated thumbnail and added installed index entry for " + expansionId[0]);
+                            // i think this should be set here, we should only reach this if a download finished and checked out
+                            iItem.setInstalledFlag(true);
+
+                            Timber.d("CatalogActivity - updated thumbnail and flagged installed index item for " + iItem.getExpansionId());
                             StorymakerIndexManager.installedIndexAdd(CatalogActivity.this, iItem, installedIndexItemDao);
                         }
                     }
