@@ -565,10 +565,10 @@ public class CatalogActivity extends BaseHomeActivity {
 
 
     @Override
-    protected void onDestroy() {
+    protected void onPause() {
+        super.onPause();
         // Unregister since the activity is about to be closed.
         LocalBroadcastManager.getInstance(this).unregisterReceiver(mDownloadMessageReceiver);
         LocalBroadcastManager.getInstance(this).unregisterReceiver(mDeleteMessageReceiver);
-        super.onDestroy();
     }
 }
