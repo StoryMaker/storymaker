@@ -2,6 +2,7 @@
 
 - Fix: crash on launch for user who havn't updated in a while  
 - Fix: Signup button doesn't work
+- Fix: "Resume Download" keeps appearing after a content pack finishes
 
 --- build 1089:
 
