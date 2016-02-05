@@ -114,7 +114,7 @@ public class MediaVideoExporter extends MediaExporter {
     		//now merge all audio tracks into main audio track
     		if (mAudioTracks.size() > 0)
     		{
-	    		ArrayList<String> mAudioTracksPaths = new ArrayList<String>();
+	    		ArrayList<MediaDesc> mAudioTracksPaths = new ArrayList<MediaDesc>();
 	    		int idxAudioTracks = 0;
 	    		for (MediaDesc audioTrack : mAudioTracks)
 	    		{
@@ -132,13 +132,14 @@ public class MediaVideoExporter extends MediaExporter {
                     }
                     // FIXME temporarily disable narration delay to match position in story while we switch to fixing localization
 //                    out.path = sxCon.delayAudio(out.path, startTime, length);
-	    			mAudioTracksPaths.add(out.path);
+	    			mAudioTracksPaths.add(out);
 	    			idxAudioTracks++;
 	    		}
 	    		
-	    		mAudioTracksPaths.add(maOut.path);
-	    		
-	    		String finalAudioMix = maOut.path + "-mix.wav";
+	    		mAudioTracksPaths.add(maOut);
+
+				MediaDesc finalAudioMix = new MediaDesc();
+	    		finalAudioMix.path = maOut.path + "-mix.wav";
 	
 	    		msg = mHandler.obtainMessage(0);
                 msg.getData().putString("status", mContext.getString(R.string.mixing_tracks));
@@ -146,12 +147,12 @@ public class MediaVideoExporter extends MediaExporter {
     	        
 	    		sxCon.combineMix(mAudioTracksPaths, finalAudioMix);
 	    		
-	    		if (!new File(finalAudioMix).exists())
+	    		if (!new File(finalAudioMix.path).exists())
 	    		{
 	    			throw new Exception("Audio rendering error");
 	    		}
 	    		
-	    		maOut.path = finalAudioMix;
+	    		maOut.path = finalAudioMix.path;
     		}
     		
     		MediaDesc mMerge = new MediaDesc();

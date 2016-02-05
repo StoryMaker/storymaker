@@ -192,8 +192,8 @@ public class MediaAudioExporter extends MediaExporter {
 	        
 		 for (int i = 1; i < alAudio.size(); i++)
 		 {		
-			 String fileAdd = new File(alAudio.get(i).path).getCanonicalPath();
-			 CrossfadeCat xCat = new CrossfadeCat(sxCon, fileOut, fileAdd, fadeLen, fileOut);
+			 //String fileAdd = new File(alAudio.get(i).path).getCanonicalPath();
+			 CrossfadeCat xCat = new CrossfadeCat(sxCon, alAudio.get(0), alAudio.get(i), fadeLen, alAudio.get(0));
 			 xCat.start();
 			 
 			 msg = mHandler.obtainMessage(0);
