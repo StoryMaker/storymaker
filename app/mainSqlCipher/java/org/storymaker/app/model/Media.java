@@ -43,7 +43,7 @@ public class Media extends Model {
     protected float duration;
     protected Date createdAt; // long stored in database as 8-bit int
     protected Date updatedAt; // long stored in database as 8-bit int
-    protected float volume;
+    protected float volume = 1.0f; //defaul to 1;
 
     public final static int IMAGE_SAMPLE_SIZE = 4;
 
@@ -119,7 +119,7 @@ public class Media extends Model {
      * @param updatedAt
      */
     public Media(Context context, String path, String mimeType, String clipType, int clipIndex,
-            int sceneId, float trimStart, float trimEnd, float duration, Date createdAt, Date updatedAt) {
+            int sceneId, float trimStart, float trimEnd, float duration, float volume, Date createdAt, Date updatedAt) {
         super(context);
         this.context = context;
         this.path = path;
@@ -132,6 +132,7 @@ public class Media extends Model {
         this.duration = duration;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
+        this.volume = volume;
     }
     
     /**
@@ -179,7 +180,7 @@ public class Media extends Model {
      */
     public Media(SQLiteDatabase db, Context context, String path, String mimeType, String clipType, int clipIndex,
             int sceneId, float trimStart, float trimEnd, float duration, float volume, Date createdAt, Date updatedAt) {
-        this(context, path, mimeType, clipType, clipIndex, sceneId, trimStart, trimEnd, duration, createdAt, updatedAt);
+        this(context, path, mimeType, clipType, clipIndex, sceneId, trimStart, trimEnd, duration, volume, createdAt, updatedAt);
         this.mDB = db;
     }
 

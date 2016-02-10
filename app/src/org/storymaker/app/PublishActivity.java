@@ -70,7 +70,7 @@ public class PublishActivity extends EditorBaseActivity {
             int trimStart = (int) (trimStartRatio * 100) - 1;
             float trimEndRatio = ((float)m.getStopTime()) / m.getDuration();
             int trimEnd = (int) (trimEndRatio * 100) - 1;
-            scene.setMedia(i, m.getFilePath(), m.getFilePath(), "video/mp4", trimStart, trimEnd, m.getDuration()); // FIXME hardcoded "video/mp4"
+            scene.setMedia(i, m.getFilePath(), m.getFilePath(), "video/mp4", trimStart, trimEnd, m.getDuration(), m.getVolume()); // FIXME hardcoded "video/mp4"
             i++;
         }
         scene.save();
