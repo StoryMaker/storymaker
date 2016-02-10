@@ -286,6 +286,8 @@ public class MediaProjectManager implements MediaManager {
     	    		    mediaDesc.duration = "" + media.getTrimmedDuration() / 1000F;
     	    		}
 
+					mediaDesc.audioVolume = media.getVolume();
+
     	    		if (doCompress)
     	    			applyExportSettings(mediaDesc);
 
@@ -332,6 +334,8 @@ public class MediaProjectManager implements MediaManager {
                     audioTrack.path = tempPath;
                     audioTrack.startTime = audioClip.getStartTime(); // negative time will be padded in export
                     audioTrack.duration = audioClip.getDuration();
+					audioTrack.audioVolume = audioClip.getVolume();
+
                     // TODO put volume in here
                     mEx.addAudioTrack(audioTrack);
                 }
