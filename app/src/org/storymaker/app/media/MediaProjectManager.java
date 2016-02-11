@@ -358,6 +358,8 @@ public class MediaProjectManager implements MediaManager {
     	    		} else if ((media.getTrimEnd() < 99) && media.getTrimEnd() > 0) {
     	    		    mDesc.duration = "" + media.getTrimmedDuration() / 1000F;
     	    		}
+
+					mDesc.audioVolume = media.getVolume();
      	    		
      	    		if (doCompress)
      	    			applyExportSettings(mDesc);
