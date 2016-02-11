@@ -45,15 +45,9 @@ public class StoryListFragment extends Fragment{
     private Integer myHomeTabInstanceCount;
     private Integer myHomeTabInstallationCount;
 
-    private Context myContext;
-
     public StoryListFragment() {
 
 
-    }
-
-    public void setContext(Context context) {
-        myContext = context;
     }
 
     public void setMyInstanceIndexItemAdapter(InstanceIndexItemAdapter myInstanceIndexItemAdapter) {
@@ -155,7 +149,7 @@ public class StoryListFragment extends Fragment{
         if (mySectionFlag && myHomeTabFlag && (myHomeTabInstallationCount > 0 || myHomeTabInstanceCount > 0)) {
 
             recyclerView.setHasFixedSize(true);
-            recyclerView.setLayoutManager(new LinearLayoutManager(myContext));
+            recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
             //This is the code to provide a sectioned list
             List<SimpleSectionedRecyclerViewAdapter.Section> sections =
@@ -166,15 +160,15 @@ public class StoryListFragment extends Fragment{
             //Sections
             //FIXME - Simplify this code
             if (myHomeTabInstallationCount > 0 && myHomeTabInstanceCount == 0) {
-                sections.add(new SimpleSectionedRecyclerViewAdapter.Section(0, myContext.getString(R.string.home_tab_latest_installation)));
+                sections.add(new SimpleSectionedRecyclerViewAdapter.Section(0, getActivity().getString(R.string.home_tab_latest_installation)));
             } else if (myHomeTabInstallationCount == 0 && myHomeTabInstanceCount > 0) {
-                sections.add(new SimpleSectionedRecyclerViewAdapter.Section(0, myContext.getString(R.string.home_tab_latest_stories)));
+                sections.add(new SimpleSectionedRecyclerViewAdapter.Section(0, getActivity().getString(R.string.home_tab_latest_stories)));
             } else if (myHomeTabInstallationCount > 0 && myHomeTabInstanceCount > 0) {
-                sections.add(new SimpleSectionedRecyclerViewAdapter.Section(0, myContext.getString(R.string.home_tab_latest_stories)));
+                sections.add(new SimpleSectionedRecyclerViewAdapter.Section(0, getActivity().getString(R.string.home_tab_latest_stories)));
                 if (myHomeTabInstanceCount == 1) {
-                    sections.add(new SimpleSectionedRecyclerViewAdapter.Section(1, myContext.getString(R.string.home_tab_latest_installation)));
+                    sections.add(new SimpleSectionedRecyclerViewAdapter.Section(1, getActivity().getString(R.string.home_tab_latest_installation)));
                 } else if (myHomeTabInstanceCount == 2) {
-                    sections.add(new SimpleSectionedRecyclerViewAdapter.Section(2, myContext.getString(R.string.home_tab_latest_installation)));
+                    sections.add(new SimpleSectionedRecyclerViewAdapter.Section(2, getActivity().getString(R.string.home_tab_latest_installation)));
                 }
             }
 
@@ -182,7 +176,7 @@ public class StoryListFragment extends Fragment{
 
             SimpleSectionedRecyclerViewAdapter.Section[] dummy = new SimpleSectionedRecyclerViewAdapter.Section[sections.size()];
             SimpleSectionedRecyclerViewAdapter mSectionedAdapter = new
-                    SimpleSectionedRecyclerViewAdapter(myContext,R.layout.section,R.id.section_text,myInstanceIndexItemAdapter);
+                    SimpleSectionedRecyclerViewAdapter(getActivity(),R.layout.section,R.id.section_text,myInstanceIndexItemAdapter);
             mSectionedAdapter.setSections(sections.toArray(dummy));
 
             recyclerView.setAdapter(mSectionedAdapter);

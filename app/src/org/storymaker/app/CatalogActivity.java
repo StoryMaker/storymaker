@@ -128,7 +128,10 @@ public class CatalogActivity extends BaseHomeActivity {
                             iItem.setLastModifiedDate(thisDate);
                             iItem.setCreationDate(thisDate);
 
-                            Timber.d("updated thumbnail and added installed index entry for " + expansionId[0]);
+                            // i think this should be set here, we should only reach this if a download finished and checked out
+                            iItem.setInstalledFlag(true);
+
+                            Timber.d("CatalogActivity - updated thumbnail and flagged installed index item for " + iItem.getExpansionId());
                             StorymakerIndexManager.installedIndexAdd(CatalogActivity.this, iItem, installedIndexItemDao);
                         }
                     }
@@ -171,7 +174,6 @@ public class CatalogActivity extends BaseHomeActivity {
         public Fragment getItem(int i) {
 
             StoryListFragment fragment = new StoryListFragment();
-            fragment.setContext(CatalogActivity.this);
             fragment.setMyInstanceIndexItemAdapter(myInstanceIndexItemAdapters.get(i));
             Bundle args = new Bundle();
             args.putInt(StoryListFragment.ARG_OBJECT, i + 1); // Our object is just an integer :-P
@@ -563,10 +565,10 @@ public class CatalogActivity extends BaseHomeActivity {
 
 
     @Override
-    protected void onDestroy() {
+    protected void onPause() {
+        super.onPause();
         // Unregister since the activity is about to be closed.
         LocalBroadcastManager.getInstance(this).unregisterReceiver(mDownloadMessageReceiver);
         LocalBroadcastManager.getInstance(this).unregisterReceiver(mDeleteMessageReceiver);
-        super.onDestroy();
     }
 }
