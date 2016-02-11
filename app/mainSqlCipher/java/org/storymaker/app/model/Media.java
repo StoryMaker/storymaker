@@ -43,6 +43,7 @@ public class Media extends Model {
     protected float duration;
     protected Date createdAt; // long stored in database as 8-bit int
     protected Date updatedAt; // long stored in database as 8-bit int
+    protected float volume = 1.0f; //defaul to 1;
 
     public final static int IMAGE_SAMPLE_SIZE = 4;
 
@@ -85,7 +86,7 @@ public class Media extends Model {
      * @param updatedAt
      */
     public Media(Context context, int id, @NonNull String path, @NonNull String mimeType, @NonNull String clipType, int clipIndex,
-             @NonNull int sceneId, float trimStart, float trimEnd, float duration, Date createdAt, Date updatedAt) {
+             @NonNull int sceneId, float trimStart, float trimEnd, float duration, float volume, Date createdAt, Date updatedAt) {
         super(context);
         this.context = context;
         this.id = id;
@@ -99,6 +100,7 @@ public class Media extends Model {
         this.duration = duration;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
+        this.volume = volume;
     }
     
     /**
@@ -117,7 +119,7 @@ public class Media extends Model {
      * @param updatedAt
      */
     public Media(Context context, String path, String mimeType, String clipType, int clipIndex,
-            int sceneId, float trimStart, float trimEnd, float duration, Date createdAt, Date updatedAt) {
+            int sceneId, float trimStart, float trimEnd, float duration, float volume, Date createdAt, Date updatedAt) {
         super(context);
         this.context = context;
         this.path = path;
@@ -130,6 +132,7 @@ public class Media extends Model {
         this.duration = duration;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
+        this.volume = volume;
     }
     
     /**
@@ -152,8 +155,8 @@ public class Media extends Model {
      * @param updatedAt
      */
     public Media(SQLiteDatabase db, Context context, int id, String path, String mimeType, String clipType, int clipIndex,
-            int sceneId, float trimStart, float trimEnd, float duration, Date createdAt, Date updatedAt) {
-        this(context, id, path, mimeType, clipType, clipIndex, sceneId, trimStart, trimEnd, duration, createdAt, updatedAt);
+            int sceneId, float trimStart, float trimEnd, float duration, float volume, Date createdAt, Date updatedAt) {
+        this(context, id, path, mimeType, clipType, clipIndex, sceneId, trimStart, trimEnd, duration, volume, createdAt, updatedAt);
         this.mDB = db;
     }
     
@@ -176,8 +179,8 @@ public class Media extends Model {
      * @param updatedAt
      */
     public Media(SQLiteDatabase db, Context context, String path, String mimeType, String clipType, int clipIndex,
-            int sceneId, float trimStart, float trimEnd, float duration, Date createdAt, Date updatedAt) {
-        this(context, path, mimeType, clipType, clipIndex, sceneId, trimStart, trimEnd, duration, createdAt, updatedAt);
+            int sceneId, float trimStart, float trimEnd, float duration, float volume, Date createdAt, Date updatedAt) {
+        this(context, path, mimeType, clipType, clipIndex, sceneId, trimStart, trimEnd, duration, volume, createdAt, updatedAt);
         this.mDB = db;
     }
 
@@ -209,10 +212,14 @@ public class Media extends Model {
                         .getColumnIndex(StoryMakerDB.Schema.Media.COL_TRIM_END)),
                 cursor.getInt(cursor
                         .getColumnIndex(StoryMakerDB.Schema.Media.COL_DURATION)),
+                cursor.getFloat(cursor
+                        .getColumnIndex(StoryMakerDB.Schema.Media.COL_VOLUME)),
                 (!cursor.isNull(cursor.getColumnIndex(StoryMakerDB.Schema.Media.COL_CREATED_AT)) ?
                         new Date(cursor.getLong(cursor.getColumnIndex(StoryMakerDB.Schema.Media.COL_CREATED_AT))) : null),
                 (!cursor.isNull(cursor.getColumnIndex(StoryMakerDB.Schema.Media.COL_UPDATED_AT)) ?
                         new Date(cursor.getLong(cursor.getColumnIndex(StoryMakerDB.Schema.Media.COL_UPDATED_AT))) : null));
+
+
     }
 
     /**
@@ -292,6 +299,8 @@ public class Media extends Model {
         values.put(StoryMakerDB.Schema.Media.COL_TRIM_START, trimStart);
         values.put(StoryMakerDB.Schema.Media.COL_TRIM_END, trimEnd);
         values.put(StoryMakerDB.Schema.Media.COL_DURATION, duration);
+        values.put(StoryMakerDB.Schema.Media.COL_VOLUME, volume);
+
         if (createdAt != null) {
             values.put(StoryMakerDB.Schema.Media.COL_CREATED_AT, createdAt.getTime());
         }
@@ -509,6 +518,20 @@ public class Media extends Model {
      */
     public void setUpdatedAt(Date updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    /**
+     * @param volume the clip volume
+     */
+    public void setVolume(float volume) {
+        this.volume = volume;
+    }
+
+    /**
+     * @return the volume
+     */
+    public float getVolume() {
+        return volume;
     }
     
     // FIXME this should probably be refactored and split half into the media layer

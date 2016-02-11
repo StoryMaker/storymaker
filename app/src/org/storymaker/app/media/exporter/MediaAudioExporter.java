@@ -189,17 +189,23 @@ public class MediaAudioExporter extends MediaExporter {
 		 msg = mHandler.obtainMessage(0);
          msg.getData().putString("status", mContext.getString(R.string.crossfading_audio));
 	       mHandler.sendMessage(msg);
-	        
+
+            //change volume of first file
+//            sxCon.setVolume(new File(alAudio.get(0).path).getCanonicalPath(), alAudio.get(0).audioVolume, new File(alAudio.get(0).path).getCanonicalPath());
+
 		 for (int i = 1; i < alAudio.size(); i++)
-		 {		
-			 String fileAdd = new File(alAudio.get(i).path).getCanonicalPath();
-			 CrossfadeCat xCat = new CrossfadeCat(sxCon, fileOut, fileAdd, fadeLen, fileOut);
+		 {
+			 if (i > 1)
+				 alAudio.get(0).audioVolume = 1.0f;
+
+			 //String fileAdd = new File(alAudio.get(i).path).getCanonicalPath();
+             CrossfadeCat xCat = new CrossfadeCat(sxCon, alAudio.get(0), alAudio.get(i), fadeLen, alAudio.get(0));
 			 xCat.start();
 			 
 			 msg = mHandler.obtainMessage(0);
-	         msg.getData().putString("status",mContext.getString(R.string.crossfading_audio_multiple) + " " + (i + 1) + "/" + alAudio.size());
+	         msg.getData().putString("status", mContext.getString(R.string.crossfading_audio_multiple) + " " + (i + 1) + "/" + alAudio.size());
 		       mHandler.sendMessage(msg);
-		 
+
 		 }
 		 
 

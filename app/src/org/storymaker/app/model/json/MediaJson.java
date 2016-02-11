@@ -44,6 +44,7 @@ public class MediaJson {
             result.add("trimStart", new JsonPrimitive(media.getTrimStart()));
             result.add("trimEnd", new JsonPrimitive(media.getTrimEnd()));
             result.add("duration", new JsonPrimitive(media.getDuration()));
+            result.add("volume", new JsonPrimitive(media.getVolume()));
 
             if (media.getPath() != null) {
                 result.add("path", new JsonPrimitive(media.getPath()));
@@ -70,6 +71,7 @@ public class MediaJson {
             media.setTrimEnd(source.getAsJsonPrimitive("trimEnd").getAsFloat());
             // Is setDuration's int arg intentionally not a float?
             media.setDuration(source.getAsJsonPrimitive("duration").getAsInt());
+            media.setVolume(source.getAsJsonPrimitive("volume").getAsInt());
 
             if (source.has("path")) {
                 media.setPath(source.getAsJsonPrimitive("path").getAsString());
