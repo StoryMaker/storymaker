@@ -401,7 +401,8 @@ public class HomeActivity extends BaseHomeActivity {
         // if there has been no first lock and pin prompt, use default pin to unlock
         SharedPreferences sp = getSharedPreferences("appPrefs", MODE_PRIVATE);
         String cachewordStatus = sp.getString("cacheword_status", "default");
-        if (cachewordStatus.equals(BaseActivity.CACHEWORD_UNSET)) {
+        // if the user is trying to set a pin, we need to show the lock screen
+        if (cachewordStatus.equals(BaseActivity.CACHEWORD_UNSET) && !setPin) {
             try {
                 CharSequence defaultPinSequence = getText(R.string.cacheword_default_pin);
                 char[] defaultPin = defaultPinSequence.toString().toCharArray();
@@ -423,6 +424,15 @@ public class HomeActivity extends BaseHomeActivity {
         Intent intent = new Intent(this, CacheWordActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
         intent.putExtra("originalIntent", getIntent());
+
+        // notify the activity if the user is trying to set a pin
+        if (setPin) {
+            Timber.d("set flag for cacheword pin initialization");
+            intent.putExtra(CACHEWORD_FIRST_LOCK, setPin);
+            // now that we've initiated the activity, clear the flag so the user won't get stuck
+            setPin = false;
+        }
+
         startActivity(intent);
         finish();
     }

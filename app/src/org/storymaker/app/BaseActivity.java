@@ -53,6 +53,8 @@ public class BaseActivity extends FragmentActivity implements ICacheWordSubscrib
     public static final String CACHEWORD_SET = "set";
     public static final String CACHEWORD_TIMEOUT = "300";
 
+    public boolean setPin = false;
+
     protected ActionBarDrawerToggle mDrawerToggle;
     protected DrawerLayout mDrawerLayout;
     protected ViewGroup mDrawerContainer;
@@ -328,10 +330,10 @@ public class BaseActivity extends FragmentActivity implements ICacheWordSubscrib
                 SharedPreferences sp = getSharedPreferences("appPrefs", MODE_PRIVATE);
                 String cachewordStatus = sp.getString("cacheword_status", "default");
                 if (cachewordStatus.equals(CACHEWORD_UNSET)) {
-                    SharedPreferences.Editor e = sp.edit();
-                    e.putString("cacheword_status", CACHEWORD_FIRST_LOCK);
-                    e.commit();
-                    Timber.d("set cacheword first lock status");
+
+                    // set flag so user will be prompted to create a pin
+                    setPin = true;
+                    Timber.d("set cacheword first lock flag");
                 }
                 mCacheWordHandler.lock();
             }

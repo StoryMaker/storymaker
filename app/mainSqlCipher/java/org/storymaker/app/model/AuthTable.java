@@ -88,12 +88,19 @@ public class AuthTable extends Table {
     public ArrayList<Auth> getAuthsAsList(Context context, String site) {
         Cursor cursor = getAuthsAsCursor(context, site);
         ArrayList<Auth> auths = new ArrayList<Auth>();
-        if (cursor.moveToFirst()) {
+
+        // this needs to handle a null cursor gracefully in case cacheword prevents db access
+        if (cursor == null || !cursor.moveToFirst()) {
+            Timber.d("either no credentials were found or db could not be accessed");
+        } else {
             do {
                 auths.add(new Auth(mDB, context, cursor));
             } while (cursor.moveToNext());
         }
-        cursor.close();
+
+        if (cursor != null) {
+            cursor.close();
+        }
         return auths;
     }
     
