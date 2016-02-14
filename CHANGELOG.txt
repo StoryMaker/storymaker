@@ -1,3 +1,10 @@
+--- build 1095
+
+- Fix: Can't back out of pin screen / Some users locked out of app with no pin  
+- Update translations
+
+--- build 1094
+
 --- build 1093
 
 - Fix: Clip volume in export
