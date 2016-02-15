@@ -1,9 +1,13 @@
 --- build 1095
 
-- Fix: Can't back out of pin screen / Some users locked out of app with no pin  
+- Fix: Can't back out of pin screen
+- Fix: Sometimes users get locked out of app with no pin
 - Update translations
+- Allow clip volumes up to 200% of original
 
 --- build 1094
+
+- Fix: Crash on Galaxy S3
 
 --- build 1093
 
