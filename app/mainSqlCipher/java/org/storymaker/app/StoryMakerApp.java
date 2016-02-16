@@ -16,6 +16,8 @@ import java.util.StringTokenizer;
 //import com.google.analytics.tracking.android.GoogleAnalytics;
 
 import net.sqlcipher.database.SQLiteDatabase;
+
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.ActivityManager.MemoryInfo;
@@ -122,6 +124,7 @@ public class StoryMakerApp extends MultiDexApplication {
         }
     }
 
+	@SuppressLint("CommitPrefEdits") // FIXME we require thie to be blocking, but we should revist this later
 	public void updateLocale (String newLocale)
 	{
         mLocale = new Locale(newLocale);
