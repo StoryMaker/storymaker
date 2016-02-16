@@ -1,3 +1,7 @@
+--- build 1096
+
+- Fix: Clip volume not working in Persian mode
+
 --- build 1095
 
 - Fix: Can't back out of pin screen
