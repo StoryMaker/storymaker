@@ -34,87 +34,62 @@ import scal.io.liger.IndexManager;
 import timber.log.Timber;
 
 public class StoryMakerApp extends MultiDexApplication {
+    private static ServerManager mServerManager;
 
-	
-	private static ServerManager mServerManager;
-
-	private final static String PREF_LOCALE = "plocale";
-	private final static String LOCALE_DEFAULT = "en";//need to force english for now as default
-	private final static String LOCALE_ARABIC = "ar";//need to carry over settings from previous installed version
-	private final static String LOCALE_SOUTH_AFRICAN = "sa";
-	private static Locale mLocale = new Locale(LOCALE_DEFAULT);
+    private final static String PREF_LOCALE = "plocale";
+    private final static String LOCALE_DEFAULT = "en";//need to force english for now as default
+    private final static String LOCALE_ARABIC = "ar";//need to carry over settings from previous installed version
+    private final static String LOCALE_SOUTH_AFRICAN = "sa";
+    private static Locale mLocale = new Locale(LOCALE_DEFAULT);
 
     public final static String STORYMAKER_DEFAULT_SERVER_URL = "https://storymaker.org/";
     public final static String STORYMAKER_SERVER_URL_PREFS_KEY = "pserver";
-	private static String mBaseUrl = null;
-	
-	 public void InitializeSQLCipher(String dbName, String passphrase) {
+    private static String mBaseUrl = null;
 
-		 File databaseFile = getDatabasePath(dbName);
-	     databaseFile.mkdirs();
-//	     SQLiteDatabase database = SQLiteDatabase.openOrCreateDatabase(databaseFile, passphrase, null);
+    public void InitializeSQLCipher(String dbName, String passphrase) {
 
-	  }
-	 
-	 public static String initServerUrls (Context context)
-	 {
-		 SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context.getApplicationContext());
-		 mBaseUrl = settings.getString(STORYMAKER_SERVER_URL_PREFS_KEY, STORYMAKER_DEFAULT_SERVER_URL) ;
-		 return mBaseUrl;
-	 }
-	 
-	@Override
-	public void onCreate() {
-		super.onCreate();
+        File databaseFile = getDatabasePath(dbName);
+        databaseFile.mkdirs();
+    }
 
-		checkLocale();
+    public static String initServerUrls(Context context) {
+        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context.getApplicationContext());
+        mBaseUrl = settings.getString(STORYMAKER_SERVER_URL_PREFS_KEY, STORYMAKER_DEFAULT_SERVER_URL);
+        return mBaseUrl;
+    }
 
-		// FIXME FOR NOW WE SHOULD ALWAYS LOG, BUT WE SHOULD FIX THIS SOON AS WE CAN
-		//if (BuildConfig.DEBUG) {
-			Timber.plant(new Timber.DebugTree());
-		//}
+    @Override
+    public void onCreate() {
+        super.onCreate();
 
-		Timber.d(CrashReportingConfig.foo);
+        checkLocale();
 
-//		SQLiteDatabase.loadLibs(this);
+        Timber.plant(new Timber.DebugTree());
 
-//		boolean optOut = true;
-//		final SharedPreferences prefsAnalytics = getSharedPreferences(Constants.PREFERENCES_ANALYTICS, Activity.MODE_PRIVATE);
-//		optOut = !(prefsAnalytics.getBoolean(Constants.PREFERENCE_ANALYTICS_OPTIN, false));
-//		GoogleAnalytics.getInstance(this).setAppOptOut(optOut);
-		
-		initApp();
-		 
-	}
-	
-	private void initApp ()
-	{
-		try
-		{
+        Timber.d(CrashReportingConfig.foo);
 
-			clearRenderTmpFolders(getApplicationContext());
-			
-			initServerUrls(this);
-	
-			Utils.Proc.killZombieProcs(this);
+        initApp();
+    }
 
-            mServerManager = new ServerManager (getApplicationContext());
+    private void initApp() {
+        try {
+            clearRenderTmpFolders(getApplicationContext());
 
-            //moved this to HomeActivity.OnCreate() so it's redundant here
-            //DownloadHelper.checkAndDownload(this);
-		}
-		catch (Exception e)
-		{
-			Timber.e(e, "error init app");
-		}
-	}
-		
-	@Override
-    public void onConfigurationChanged(Configuration newConfig)
-    {
-		super.onConfigurationChanged(newConfig);
-        if (mLocale != null)
-        {
+            initServerUrls(this);
+
+            Utils.Proc.killZombieProcs(this);
+
+            mServerManager = new ServerManager(getApplicationContext());
+
+        } catch (Exception e) {
+            Timber.e(e, "error init app");
+        }
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        if (mLocale != null) {
             Locale.setDefault(mLocale);
             Configuration config = new Configuration();
             config.locale = mLocale;
@@ -122,210 +97,189 @@ public class StoryMakerApp extends MultiDexApplication {
         }
     }
 
-	public void updateLocale (String newLocale)
-	{
+    public void updateLocale(String newLocale) {
         mLocale = new Locale(newLocale);
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        settings.edit().putString(PREF_LOCALE,newLocale);
+        settings.edit().putString(PREF_LOCALE, newLocale);
         settings.edit().commit();
         checkLocale();
-        
-        //need to reload lesson manager for new locale
+
+        // need to reload lesson manager for new locale
         initServerUrls(this);
 
-	}
-	
-	private boolean isLocaleValid(String language) {
-		
-		if(!language.equals(LOCALE_DEFAULT) && !language.equals(LOCALE_ARABIC) && !language.equals(LOCALE_SOUTH_AFRICAN)) {
-    		return false;
-    	}
-		
-		return true;
-	}
-	
-	public boolean isExternalStorageReady ()
-	{
-		boolean mExternalStorageAvailable = false;
-		boolean mExternalStorageWriteable = false;
-		String state = Environment.getExternalStorageState();
+    }
 
-		if (Environment.MEDIA_MOUNTED.equals(state)) {
-		    // We can read and write the media
-		    mExternalStorageAvailable = mExternalStorageWriteable = true;
-		} else if (Environment.MEDIA_MOUNTED_READ_ONLY.equals(state)) {
-		    // We can only read the media
-		    mExternalStorageAvailable = true;
-		    mExternalStorageWriteable = false;
-		} else {
-		    // Something else is wrong. It may be one of many other states, but all we need
-		    //  to know is we can neither read nor write
-		    mExternalStorageAvailable = mExternalStorageWriteable = false;
-		}
-		
-		return mExternalStorageAvailable && mExternalStorageWriteable;
-	}
-	
-	public static Locale getCurrentLocale ()
-	{
-		return mLocale;
-	}
-	
-	 public boolean checkLocale ()
-	    {
-	        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+    private boolean isLocaleValid(String language) {
 
-	        Configuration config = getResources().getConfiguration();
+        if (!language.equals(LOCALE_DEFAULT) && !language.equals(LOCALE_ARABIC) && !language.equals(LOCALE_SOUTH_AFRICAN)) {
+            return false;
+        }
 
-	        //String lang = settings.getString("pintlanguage", LOCALE_DEFAULT);
-	        String lang = settings.getString("pintlanguage", null);
-	        
-	        if (lang == null) {
-	            // check for previous version settings, use if found
-	            if (settings.getBoolean("plocalear", false)) {
-	                lang = LOCALE_ARABIC;
-	            }
-	            else {
-	                lang = LOCALE_DEFAULT;
-	            }
-	        }  
+        return true;
+    }
 
-	        boolean updatedLocale = false;
-	        
-	        // if the language string is not empty, 
-	        // and the current config/locale/language is not the selected language, 
-	        // set locale to selected language and update default
-	        if (!"".equals(lang) && !config.locale.getLanguage().equals(lang)) {
-	            mLocale = new Locale(lang);
-	    		Locale.setDefault(mLocale);
-	            config.locale = mLocale;
-	            getResources().updateConfiguration(config, getResources().getDisplayMetrics());
+    public boolean isExternalStorageReady() {
+        boolean mExternalStorageAvailable = false;
+        boolean mExternalStorageWriteable = false;
+        String state = Environment.getExternalStorageState();
 
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1)
-                    getResources().getConfiguration().setLayoutDirection(mLocale);
+        if (Environment.MEDIA_MOUNTED.equals(state)) {
+            // We can read and write the media
+            mExternalStorageAvailable = mExternalStorageWriteable = true;
+        } else if (Environment.MEDIA_MOUNTED_READ_ONLY.equals(state)) {
+            // We can only read the media
+            mExternalStorageAvailable = true;
+            mExternalStorageWriteable = false;
+        } else {
+            // Something else is wrong. It may be one of many other states, but all we need
+            //  to know is we can neither read nor write
+            mExternalStorageAvailable = mExternalStorageWriteable = false;
+        }
 
-	            updatedLocale = true;
-	            lang = config.locale.getLanguage();
-	        }
-	        // otherwise, if the default locale/language is the selected language, 
-	        // set locale to default language (is this necessary?)
-	        else if (Locale.getDefault().getLanguage().equalsIgnoreCase(lang))
-	        {
-	        	  mLocale = Locale.getDefault();         
-		            config.locale = mLocale;
-		            getResources().updateConfiguration(config, getResources().getDisplayMetrics());
-		            updatedLocale = true;
-		            lang = config.locale.getLanguage();
-	        }
-	        
-	        return updatedLocale;
-	    }
-	
-	public static ServerManager getServerManager ()
-	{
-		return mServerManager;
-	}
-	
-	public static boolean isRootPossible()
-	{
-		
-		StringBuilder log = new StringBuilder();
-		
-		try {
-			
-			// Check if Superuser.apk exists
-			File fileSU = new File("/system/app/Superuser.apk");
-			if (fileSU.exists())
-				return true;
-			
-			fileSU = new File("/system/app/superuser.apk");
-			if (fileSU.exists())
-				return true;
-			
-			fileSU = new File("/system/bin/su");
-			if (fileSU.exists())
-			{
-				String[] cmd = {"su"};
-				int exitCode = Utils.Proc.doShellCommand(cmd, log, false, true);
-				if (exitCode != 0)
-					return false;
-				else
-					return true;
-			}
-			
-			//Check for 'su' binary 
-			String[] cmd = {"which su"};
-			int exitCode = Utils.Proc.doShellCommand(cmd, log, false, true);
-			
-			if (exitCode == 0) {
-				Timber.d("root exists, but not sure about permissions");
-		    	 return true;
-		     
-		    }
-		      
-		} catch (IOException e) {
-			//this means that there is no root to be had (normally) so we won't log anything
-			Timber.e(e,"Error checking for root access");
-			
-		}
-		catch (Exception e) {
-			Timber.e(e, "Error checking for root access");
-			//this means that there is no root to be had (normally)
-		}
-		
-		Timber.e("Could not acquire root permissions");
-		
-		
-		return false;
-	}
-	
-	
-	
-	
-	@Override
-	public void onLowMemory() {
-		super.onLowMemory();
-		
-		MemoryInfo mi = new MemoryInfo();
-		ActivityManager activityManager = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
-		activityManager.getMemoryInfo(mi);
-		long availableMegs = mi.availMem / 1048576L;
-		
-		Timber.e("LOW MEMORY WARNING/ MEMORY AVAIL=" + availableMegs);
-		
-	}
+        return mExternalStorageAvailable && mExternalStorageWriteable;
+    }
 
-	@Override
-	public void onTerminate() {
-		super.onTerminate();
-		
-		clearRenderTmpFolders(getApplicationContext());
-	}
+    public static Locale getCurrentLocale() {
+        return mLocale;
+    }
 
-	public void clearRenderTmpFolders (Context context)
-	{
-		try
-		{
-		 File fileRenderTmpDir = MediaProjectManager.getRenderPath(context);
-		// deleteRecursive(fileRenderTmpDir,false);
-		 Runtime.getRuntime().exec("rm -rf " + fileRenderTmpDir.getCanonicalPath());
-		}
-		catch (IOException ioe)
-		{
-			Timber.w(ioe, "error deleting render tmp on exit");
-		}
-	}
-	
-	 void deleteRecursive(File fileOrDirectory, boolean onExit) throws IOException {
-	        if (fileOrDirectory.isDirectory())
-	            for (File child : fileOrDirectory.listFiles())
-	            	deleteRecursive(child, onExit);
+    public boolean checkLocale() {
+        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 
-	        if (!onExit)
-	        {
-	        	fileOrDirectory.delete();
-	        }
-	        else
-	        	fileOrDirectory.deleteOnExit();
-	    }
+        Configuration config = getResources().getConfiguration();
+
+        String lang = settings.getString("pintlanguage", null);
+
+        if (lang == null) {
+            // check for previous version settings, use if found
+            if (settings.getBoolean("plocalear", false)) {
+                lang = LOCALE_ARABIC;
+            } else {
+                lang = LOCALE_DEFAULT;
+            }
+        }
+
+        boolean updatedLocale = false;
+
+        // if the language string is not empty,
+        // and the current config/locale/language is not the selected language,
+        // set locale to selected language and update default
+        if (!"".equals(lang) && !config.locale.getLanguage().equals(lang)) {
+            mLocale = new Locale(lang);
+            Locale.setDefault(mLocale);
+            config.locale = mLocale;
+            getResources().updateConfiguration(config, getResources().getDisplayMetrics());
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1)
+                getResources().getConfiguration().setLayoutDirection(mLocale);
+
+            updatedLocale = true;
+            lang = config.locale.getLanguage();
+        }
+        // otherwise, if the default locale/language is the selected language,
+        // set locale to default language (is this necessary?)
+        else if (Locale.getDefault().getLanguage().equalsIgnoreCase(lang)) {
+            mLocale = Locale.getDefault();
+            config.locale = mLocale;
+            getResources().updateConfiguration(config, getResources().getDisplayMetrics());
+            updatedLocale = true;
+            lang = config.locale.getLanguage();
+        }
+
+        return updatedLocale;
+    }
+
+    public static ServerManager getServerManager() {
+        return mServerManager;
+    }
+
+    public static boolean isRootPossible() {
+        StringBuilder log = new StringBuilder();
+
+        try {
+            // Check if Superuser.apk exists
+            File fileSU = new File("/system/app/Superuser.apk");
+            if (fileSU.exists()) {
+                return true;
+            }
+
+            fileSU = new File("/system/app/superuser.apk");
+            if (fileSU.exists()) {
+                return true;
+            }
+
+            fileSU = new File("/system/bin/su");
+            if (fileSU.exists()) {
+                String[] cmd = {"su"};
+                int exitCode = Utils.Proc.doShellCommand(cmd, log, false, true);
+                if (exitCode != 0) {
+                    return false;
+                }
+                else {
+                    return true;
+                }
+            }
+
+            //Check for 'su' binary
+            String[] cmd = {"which su"};
+            int exitCode = Utils.Proc.doShellCommand(cmd, log, false, true);
+
+            if (exitCode == 0) {
+                Timber.d("root exists, but not sure about permissions");
+                return true;
+
+            }
+
+        } catch (IOException e) { //this means that there is no root to be had (normally) so we won't log anything
+            Timber.e(e, "Error checking for root access");
+        } catch (Exception e) {
+            Timber.e(e, "Error checking for root access"); //this means that there is no root to be had (normally)
+        }
+
+        Timber.e("Could not acquire root permissions");
+
+        return false;
+    }
+
+    @Override
+    public void onLowMemory() {
+        super.onLowMemory();
+
+        MemoryInfo mi = new MemoryInfo();
+        ActivityManager activityManager = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
+        activityManager.getMemoryInfo(mi);
+        long availableMegs = mi.availMem / 1048576L;
+
+        Timber.e("LOW MEMORY WARNING/ MEMORY AVAIL=" + availableMegs);
+    }
+
+    @Override
+    public void onTerminate() {
+        super.onTerminate();
+
+        clearRenderTmpFolders(getApplicationContext());
+    }
+
+    public void clearRenderTmpFolders(Context context) {
+        try {
+            File fileRenderTmpDir = MediaProjectManager.getRenderPath(context);
+            Runtime.getRuntime().exec("rm -rf " + fileRenderTmpDir.getCanonicalPath());
+        } catch (IOException ioe) {
+            Timber.w(ioe, "error deleting render tmp on exit");
+        }
+    }
+
+    void deleteRecursive(File fileOrDirectory, boolean onExit) throws IOException {
+        if (fileOrDirectory.isDirectory()) {
+            for (File child : fileOrDirectory.listFiles()) {
+                deleteRecursive(child, onExit);
+            }
+        }
+
+        if (!onExit) {
+            fileOrDirectory.delete();
+        } else {
+            fileOrDirectory.deleteOnExit();
+        }
+    }
 }
