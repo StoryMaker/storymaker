@@ -395,6 +395,7 @@ public class HomeActivity extends BaseHomeActivity {
         }
     }
 
+    // FIXME this should probably be moved into BaseActivity.  also, the activities in SecureShare and Liger should probably have handlers which raise an intent that we catch here to prevetn tight coupling
     @Override
     public void onCacheWordLocked() {
         // if there has been no first lock and pin prompt, use default pin to unlock

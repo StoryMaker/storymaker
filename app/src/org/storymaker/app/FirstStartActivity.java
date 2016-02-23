@@ -166,19 +166,7 @@ public class FirstStartActivity extends Activity implements OnEulaAgreedTo, ICac
         // moving this code here so signup works.  should only need to happen once anyway.
         Timber.d("cacheword uninitialized, first start activity / initialize");
 
-        // set default pin, prompt for actual pin on first lock
-        try {
-            CharSequence defaultPinSequence = getText(R.string.cacheword_default_pin);
-            char[] defaultPin = defaultPinSequence.toString().toCharArray();
-            mCacheWordHandler.setPassphrase(defaultPin);
-            SharedPreferences sp = getSharedPreferences("appPrefs", MODE_PRIVATE);
-            SharedPreferences.Editor e = sp.edit();
-            e.putString("cacheword_status", BaseActivity.CACHEWORD_UNSET);
-            e.commit();
-            Timber.d("set default cacheword pin");
-        } catch (GeneralSecurityException gse) {
-            Timber.e(gse, "failed to set default cacheword pin: " + gse.getMessage());
-        }
+        CachewordHelper.initializeDefaultPin(this, mCacheWordHandler);
     }
 
     @Override

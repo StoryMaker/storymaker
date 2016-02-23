@@ -96,7 +96,6 @@ public class BaseActivity extends FragmentActivity implements ICacheWordSubscrib
     }
 
     private Notification buildNotification(Context c) {
-
         Timber.d("buildNotification (base)");
 
         NotificationCompat.Builder b = new NotificationCompat.Builder(c);
@@ -112,25 +111,20 @@ public class BaseActivity extends FragmentActivity implements ICacheWordSubscrib
 
     @Override
     public void onCacheWordUninitialized() {
-
         // if we're uninitialized, default behavior should be to stop
         Timber.d("cacheword uninitialized, activity will not continue");
         finish();
-
     }
 
     @Override
     public void onCacheWordLocked() {
-
         // if we're locked, default behavior should be to stop
         Timber.d("cacheword locked, activity will not continue");
         finish();
-
     }
 
     @Override
     public void onCacheWordOpened() {
-
         // mount vfs file (if a pin has been set) - mounting here seems to be required for loading stories from the home screen
 
         SharedPreferences sp = getSharedPreferences("appPrefs", MODE_PRIVATE);
@@ -157,7 +151,6 @@ public class BaseActivity extends FragmentActivity implements ICacheWordSubscrib
     }
 
     public void setupDrawerLayout() {
-
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerContainer = (ViewGroup) findViewById(R.id.left_drawer);
         mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,
