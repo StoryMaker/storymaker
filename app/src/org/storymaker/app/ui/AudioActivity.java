@@ -86,12 +86,12 @@ private void readFile(String fileName) {
 
            } catch (IOException e) {
                // TODO Auto-generated catch block
-               e.printStackTrace();
+               Timber.e(e, "readFile");
            }
 
        } catch (FileNotFoundException e) {
            // TODO Auto-generated catch block
-           e.printStackTrace();
+           Timber.e(e, "readFile");
        }
    }
 }
@@ -124,10 +124,10 @@ public void saveMedia(String fileName, byte[] data) {
        dataOutputStream.close();
    } catch (FileNotFoundException e) {
        // TODO Auto-generated catch block
-       e.printStackTrace();
+       Timber.e(e, "saveMedia");
    } catch (IOException e) {
        // TODO Auto-generated catch block
-       e.printStackTrace();
+       Timber.e(e, "saveMedia");
    }
 }
 

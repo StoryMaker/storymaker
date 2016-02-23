@@ -177,8 +177,7 @@ public class FirstStartActivity extends Activity implements OnEulaAgreedTo, ICac
             e.commit();
             Timber.d("set default cacheword pin");
         } catch (GeneralSecurityException gse) {
-            Timber.e("failed to set default cacheword pin: " + gse.getMessage());
-            gse.printStackTrace();
+            Timber.e(gse, "failed to set default cacheword pin: " + gse.getMessage());
         }
     }
 

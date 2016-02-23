@@ -11,7 +11,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 
 import org.storymaker.app.ui.SlidingTabLayout;
 
@@ -70,7 +69,7 @@ public class HomeActivity extends BaseHomeActivity {
         public void onReceive(Context context, Intent intent) {
             // Get extra data included in the Intent
             String expansionId = intent.getStringExtra("expansionid");
-            Log.d("receiver", "home download expansion id: " + expansionId + " " + this.toString());
+            Timber.d("receiver", "home download expansion id: " + expansionId + " " + this.toString());
 
             initActivityList();     // TODO: consider modifying the ViewPager-RecyclerViewers with notifyDataSetChanged() rather than a full page refresh
         }
@@ -80,7 +79,7 @@ public class HomeActivity extends BaseHomeActivity {
         public void onReceive(Context context, Intent intent) {
             // Get extra data included in the Intent
             String expansionId = intent.getStringExtra("expansionid");
-            Log.d("receiver", "home delete expansion id: " + expansionId + " " + this.toString());
+            Timber.d("receiver", "home delete expansion id: " + expansionId + " " + this.toString());
 
             initActivityList();     // TODO: consider modifying the ViewPager-RecyclerViewers with notifyDataSetChanged() rather than a full page refresh
             removeThreads(expansionId);
@@ -165,7 +164,7 @@ public class HomeActivity extends BaseHomeActivity {
         HashMap<String, InstanceIndexItem> instanceIndex = StorymakerIndexManager.fillInstanceIndex(HomeActivity.this, StorymakerIndexManager.loadInstanceIndex(HomeActivity.this, instanceIndexItemDao), lang, instanceIndexItemDao);
         boolean fileAddedFlag = StorymakerIndexManager.fillInstalledIndex(HomeActivity.this, StorymakerIndexManager.loadInstalledFileIndex(HomeActivity.this, installedIndexItemDao), StorymakerIndexManager.loadAvailableFileIndex(HomeActivity.this, availableIndexItemDao), lang, installedIndexItemDao);
         if (fileAddedFlag) {
-            Log.d("HomeActivity", "file added");
+            Timber.d("HomeActivity", "file added");
         }
 
 
@@ -409,8 +408,7 @@ public class HomeActivity extends BaseHomeActivity {
                 mCacheWordHandler.setPassphrase(defaultPin);
                 Timber.d("used default cacheword pin");
             } catch (GeneralSecurityException gse) {
-                Log.e("CACHEWORD", "failed to use default cacheword pin: " + gse.getMessage());
-                gse.printStackTrace();
+                Timber.e(gse, "CACHEWORD", "failed to use default cacheword pin: " + gse.getMessage());
             }
         } else {
             Timber.d("prompt for cacheword pin");

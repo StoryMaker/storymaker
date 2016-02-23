@@ -51,7 +51,7 @@ public class AudioRenderer extends RendererBase {
             jobSucceeded(mdExported.path);
         } catch (Exception e) {
             // TODO Auto-generated catch block
-            e.printStackTrace();
+            Timber.e(e, "got a generic exception trying to export media");
             jobFailed(e, 0, e.getMessage());
         }
     }

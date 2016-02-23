@@ -118,18 +118,10 @@ public class AudioRecorderView {
 				read = recorder.read(data, 0, bufferSize);
 					
 				if(AudioRecord.ERROR_INVALID_OPERATION != read){
-					/*
-					try {
-						livePlayer.write(data, 0, bufferSize);
-					} catch (IllegalStateException e) {
-						e.printStackTrace();
-					}
-					*/
-					
 					try {
 						os.write(data);
 					} catch (IOException e) {
-						e.printStackTrace();
+						Timber.e(e, "error trying to write audio data");
 					}
 				}
 				
@@ -138,7 +130,7 @@ public class AudioRecorderView {
 			try {
 				os.close();
 			} catch (IOException e) {
-				e.printStackTrace();
+				Timber.e(e, "error trying to close file");
 			}
 		}
 	}
@@ -217,9 +209,9 @@ public class AudioRecorderView {
 			in.close();
 			out.close();
 		} catch (FileNotFoundException e) {
-			e.printStackTrace();
+			Timber.e(e, "can't find file: " + inFilename);
 		} catch (IOException e) {
-			e.printStackTrace();
+			Timber.e(e, "ioexception with either infile: " + inFilename + " or outfile: " + outFilename);
 		}
 	}
 

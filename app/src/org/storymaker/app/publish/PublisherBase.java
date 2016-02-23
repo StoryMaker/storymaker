@@ -69,14 +69,8 @@ public abstract class PublisherBase {
 	    try {
             String ret = publishToStoryMaker(title, desc, mediaEmbed, categories, medium, mediaService, mediaGuid);
             return ret;
-        } /*catch (MalformedURLException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (XmlRpcFault e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }*/ catch (IOException ioe) {
-            ioe.printStackTrace();
+        } catch (IOException ioe) {
+            Timber.e(ioe, "failed to publish due to an IOException");
         }
 	    return null;
 	}

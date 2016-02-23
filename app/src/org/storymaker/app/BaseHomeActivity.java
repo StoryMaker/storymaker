@@ -877,10 +877,10 @@ public abstract class BaseHomeActivity extends BaseActivity {
             // wait for index serialization
             try {
                 synchronized (this) {
-                    wait(1000);
+                    wait(1000); // FIXME holy race conditions, batman
                 }
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                // nop
             }
         } else {
 
@@ -928,10 +928,10 @@ public abstract class BaseHomeActivity extends BaseActivity {
                     // wait for index serialization
                     try {
                         synchronized (this) {
-                            wait(1000);
+                            wait(1000); // FIXME holy race conditions, batman
                         }
                     } catch (InterruptedException e) {
-                        e.printStackTrace();
+                        // nop
                     }
                 }
 

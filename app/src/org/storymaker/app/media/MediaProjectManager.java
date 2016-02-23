@@ -36,10 +36,8 @@ import android.os.Handler;
 import android.os.Message;
 import android.os.StatFs;
 import android.preference.PreferenceManager;
-import android.util.Log;
 
 import scal.io.liger.StorageHelper;
-import timber.log.Timber;
 
 public class MediaProjectManager implements MediaManager {
 	public final static String TAG = "MediaProjectManager";
@@ -119,31 +117,6 @@ public class MediaProjectManager implements MediaManager {
     	if (sFileExternDir == null){
 
 			// file location now handled by helper class
-
-			/*
-			SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context.getApplicationContext());
-    		mUseInternal = settings.getBoolean("p_use_internal_storage",false);
-
-    		boolean isStorageEmulated = false;
-    		
-    		if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.HONEYCOMB){
-    			isStorageEmulated = Environment.isExternalStorageEmulated();
-    		}
-    		
-    		if (mUseInternal && !isStorageEmulated){
-    			sFileExternDir = new File (context.getFilesDir(), AppConstants.FOLDER_PROJECTS_NAME);
-    		}
-    		else{
-    			sFileExternDir = new File(Environment.getExternalStorageDirectory(), AppConstants.FOLDER_PROJECTS_NAME);
-    		}
-            Timber.d("sFileExternDir:" + sFileExternDir.getAbsolutePath());
-            try {
-                Timber.d("sFileExternDir.getCanonicalPath():" + sFileExternDir.getCanonicalPath());
-            } catch (IOException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-            */
 
 			sFileExternDir = new File(StorageHelper.getActualStorageDirectory(context), AppConstants.FOLDER_PROJECTS_NAME);
 
@@ -640,8 +613,7 @@ public class MediaProjectManager implements MediaManager {
     	return 0;
     }
     
-    public static boolean migrateProjectFiles(Project project, Context context)
-    {
+    public static boolean migrateProjectFiles(Project project, Context context) {
     	File oldDir = getExternalProjectFolderOld(project, context);
     	File newDir = getExternalProjectFolder(project, context);
     	
@@ -656,13 +628,11 @@ public class MediaProjectManager implements MediaManager {
             return false;
     	}
     	
-        if (oldDir.exists() && newDir.exists())
-    	{
+        if (oldDir.exists() && newDir.exists()) {
     	    File[] oldFiles = oldDir.listFiles();
             
-            for (File oldFile : oldFiles)
-            {
-                try{
+            for (File oldFile : oldFiles) {
+                try {
                     String oldPath = oldFile.getCanonicalPath();
                     String newPath = oldPath.replace(oldString, newString);
                     File newFile = new File(newPath);
@@ -673,107 +643,18 @@ public class MediaProjectManager implements MediaManager {
                 }
             }
     	}
-    	else if (!oldDir.exists())
-    	{
+    	else if (!oldDir.exists()) {
     		Timber.e(oldString + " (old directory) doesn't exist");
     		return false;
     	}
-    	else if (!newDir.exists())
-    	{
+    	else if (!newDir.exists()) {
     	    Timber.e(newString + " (new directory) doesn't exist"); // created by get external dir method
             return false;
-    	}
-    	else
-    	{
+    	} else {
     	    Timber.e("an unexpected error has ocurred");
             return false;
     	}
     	
     	return true;
     }
-    
-    /*
-    public void prerenderMedia (MediaClip mClip, ShellCallback shellCallback)
-    {
-    //		File fileExportProjectDir = new File(mFileExportDir,mProject.getId()+"");
-
-    		MediaRenderer mRenderer = new MediaRenderer(mContext, (MediaManager)this, mHandler, mClip, mFileExternDir, shellCallback);
-    		// Convert to video
-    		Thread thread = new Thread (mRenderer);
-    		thread.setPriority(Thread.NORM_PRIORITY);
-    		thread.start();
-	
-    }
-    
-    	
-	
-	private void copyFile ()
-	{
-		// TODO prompt user for storage location?
-		 if (mOut != null && mOut.path != null) {
-			 File inFile = new File(mOut.path);
-			 FileChannel in;
-			 try {
-				 in = new FileInputStream(inFile).getChannel();
-				 FileChannel out = new FileOutputStream(new File("/sdcard/"
-						 + inFile.getName())).getChannel();
-				 in.transferTo(0, in.size(), out);
-			 } catch (FileNotFoundException e) {
-				 // TODO Auto-generated catch block
-				 e.printStackTrace();
-			 } catch (IOException e) {
-				 // TODO Auto-generated catch block
-				 e.printStackTrace();
-			 }
-		 }
-	}*/
-	
-//	private void showAddMediaDialog (final Activity activity)
-//	{
-//		
-//		final CharSequence[] items = {"Open Gallery","Open File","Choose Shot","Record Video", "Record Audio", "Take Photo"};
-//
-//		AlertDialog.Builder builder = new AlertDialog.Builder(activity);
-//		builder.setTitle("Choose medium");
-//		builder.setItems(items, new DialogInterface.OnClickListener() {
-//		    public void onClick(DialogInterface dialog, int item) {
-//		        
-//		    	switch (item) {
-//		    		case 0:
-//		    			mMediaHelper.openGalleryChooser("*/*");
-//		    			break;
-//		    		case 1:
-//		    			mMediaHelper.openFileChooser();
-//		    			break;
-//		    		case 2:
-//		    			showOverlayCamera(activity);
-//		    			break;
-//		    		case 3:
-//		    			mMediaTmp = mMediaHelper.captureVideo(fileExternDir);
-//
-//		    			break;
-//		    		case 4:
-//		    			mMediaTmp = mMediaHelper.captureAudio(fileExternDir);
-//
-//		    			break;
-//		    		case 5:
-//		    			mMediaTmp = mMediaHelper.capturePhoto(fileExternDir);
-//		    			break;
-//		    		default:
-//		    			//do nothing!
-//		    	}
-//		    	
-//		    	
-//		    }
-//		});
-//		
-//		AlertDialog alert = builder.create();
-//		alert.show();
-//	}
-
-
-	
-	
-	
-	
 }

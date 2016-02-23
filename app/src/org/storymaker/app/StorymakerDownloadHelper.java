@@ -210,10 +210,10 @@ public class StorymakerDownloadHelper {
             try {
                 synchronized (waitObj) {
                     Timber.d("PERSISTING INDEX WITH UPDATED VALUES");
-                    waitObj.wait(1000);
+                    waitObj.wait(1000); // FIXME holy race condition, batman
                 }
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                // nop
             }
         }
 

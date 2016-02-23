@@ -160,8 +160,7 @@ public class StorymakerDownloadManager implements Runnable {
                                     FileUtils.deleteQuietly(partFile);
                                     Timber.d("MOVED COMPLETED FILE " + partFile.getPath() + " TO " + actualFile.getPath());
                                 } catch (IOException ioe) {
-                                    Timber.e("FAILED TO MOVE COMPLETED FILE " + partFile.getPath() + " TO " + actualFile.getPath());
-                                    ioe.printStackTrace();
+                                    Timber.e(ioe, "FAILED TO MOVE COMPLETED FILE " + partFile.getPath() + " TO " + actualFile.getPath());
                                     downloadRequired = true;
                                 }
                             }
@@ -182,8 +181,7 @@ public class StorymakerDownloadManager implements Runnable {
                                     FileUtils.deleteQuietly(partFile);
                                     Timber.d("MOVED COMPLETED FILE " + partFile.getPath() + " TO " + actualFile.getPath());
                                 } catch (IOException ioe) {
-                                    Timber.e("FAILED TO MOVE COMPLETED FILE " + partFile.getPath() + " TO " + actualFile.getPath());
-                                    ioe.printStackTrace();
+                                    Timber.e(ioe, "FAILED TO MOVE COMPLETED FILE " + partFile.getPath() + " TO " + actualFile.getPath());
                                     downloadRequired = true;
                                 }
                             }
@@ -319,10 +317,10 @@ public class StorymakerDownloadManager implements Runnable {
             // wait for download progress
             try {
                 synchronized (this) {
-                    wait(1000);
+                    wait(1000); // FIXME holy race condition, batman
                 }
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                // nop
             }
 
             long secondSize = checkFile.length();
@@ -359,8 +357,7 @@ public class StorymakerDownloadManager implements Runnable {
                 Timber.d("MOVED INCOMPLETE FILE " + tempFile.getPath() + " TO " + partFile.getPath());
                 return partFile;
             } catch (IOException ioe) {
-                Timber.e("FAILED TO MOVE INCOMPLETE FILE " + tempFile.getPath() + " TO " + partFile.getPath());
-                ioe.printStackTrace();
+                Timber.e(ioe, "FAILED TO MOVE INCOMPLETE FILE " + tempFile.getPath() + " TO " + partFile.getPath());
 
                 return null;
             }
@@ -394,8 +391,7 @@ public class StorymakerDownloadManager implements Runnable {
                 return partFile;
 
             } catch (IOException ioe) {
-                Timber.e("FAILED TO APPENDED " + tempFile.getPath() + " TO " + partFile.getPath());
-                ioe.printStackTrace();
+                Timber.e(ioe, "FAILED TO APPENDED " + tempFile.getPath() + " TO " + partFile.getPath());
 
                 return null;
             }
@@ -492,8 +488,7 @@ public class StorymakerDownloadManager implements Runnable {
             }
 
         } catch (Exception e) {
-            Timber.e("DOWNLOAD ERROR: " + ligerUrl + ligerObb + " -> " + e.getMessage());
-            e.printStackTrace();
+            Timber.e(e. "DOWNLOAD ERROR: " + ligerUrl + ligerObb + " -> " + e.getMessage());
         }
     }
 
@@ -645,14 +640,11 @@ public class StorymakerDownloadManager implements Runnable {
                     responseInput.close();
                     Timber.d("SAVED DOWNLOAD TO " + targetFile);
                 } catch (ConnectTimeoutException cte) {
-                    Timber.e("FAILED TO SAVE DOWNLOAD TO " + actualFileName + " (CONNECTION EXCEPTION)");
-                    cte.printStackTrace();
+                    Timber.e(cte, "FAILED TO SAVE DOWNLOAD TO " + actualFileName + " (CONNECTION EXCEPTION)");
                 } catch (SocketTimeoutException ste) {
-                    Timber.e("FAILED TO SAVE DOWNLOAD TO " + actualFileName + " (SOCKET EXCEPTION)");
-                    ste.printStackTrace();
+                    Timber.e(ste, "FAILED TO SAVE DOWNLOAD TO " + actualFileName + " (SOCKET EXCEPTION)");
                 } catch (IOException ioe) {
-                    Timber.e("FAILED TO SAVE DOWNLOAD TO " + actualFileName + " (IO EXCEPTION)");
-                    ioe.printStackTrace();
+                    Timber.e(ioe, "FAILED TO SAVE DOWNLOAD TO " + actualFileName + " (IO EXCEPTION)");
                 }
 
                 // remove from queue here, regardless of success
@@ -678,8 +670,7 @@ public class StorymakerDownloadManager implements Runnable {
             // request.releaseConnection();
 
         } catch (IOException ioe) {
-            Timber.e("DOWNLOAD FAILED FOR " + actualFileName + ", EXCEPTION THROWN");
-            ioe.printStackTrace();
+            Timber.e(ioe, "DOWNLOAD FAILED FOR " + actualFileName + ", EXCEPTION THROWN");
 
             StorymakerQueueManager.checkQueueFinished(context, targetFile.getName());
         }

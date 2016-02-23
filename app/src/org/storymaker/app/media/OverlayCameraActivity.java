@@ -214,9 +214,9 @@ public class OverlayCameraActivity extends Activity implements Callback, SwipeIn
 	        canvas = new Canvas(bitmap);
 	        setOverlayImage (overlayIdx);
 	        try {
-	        camera.setPreviewDisplay(arg0);
+	            camera.setPreviewDisplay(arg0);
 	        } catch (IOException e) {
-	        e.printStackTrace();
+	            Timber.e(e, "errorr setting preview display");
 	        }
 	        camera.startPreview();
     	}

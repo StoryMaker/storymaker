@@ -63,13 +63,11 @@ public class BaseActivity extends FragmentActivity implements ICacheWordSubscrib
 	@Override
 	public void onStart() {
 		super.onStart();
-//		EasyTracker.getInstance(this).activityStart(this);
 	}
 
 	@Override
 	public void onStop() {
 		super.onStop();
-//		EasyTracker.getInstance(this).activityStop(this);
 	}
 
     // NEW/CACHEWORD
@@ -220,7 +218,7 @@ public class BaseActivity extends FragmentActivity implements ICacheWordSubscrib
             int versionCode = getPackageManager().getPackageInfo(pkg, 0).versionCode;
             textViewVersion.setText("v" + versionName + " build " + versionCode);
         } catch (PackageManager.NameNotFoundException e) {
-            e.printStackTrace();
+            Timber.e(e, "NameNotFoundException?");
         }
 
         updateSlidingMenuWithUserState();
@@ -431,89 +429,10 @@ public class BaseActivity extends FragmentActivity implements ICacheWordSubscrib
         getLayoutInflater().inflate(resId, content, true);
     }
 
-    /*
-    @Override
-    protected void onResume() {
-        super.onResume();
-        updateSlidingMenuWithUserState();
-    }
-    */
-
-	private void detectCoachOverlay ()
-    {
-        try {
-        	
-        	if (this.getClass().getName().contains("SceneEditorActivity"))
-        	{
-        		showCoachOverlay("images/coach/coach_add.png");
-        	}
-        	else if (this.getClass().getName().contains("OverlayCameraActivity"))
-        	{
-        		showCoachOverlay("images/coach/coach_camera_prep.png");
-        	}
-        		
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-    }
-    
-    /**
-     * 
-	public void switchContent(final Fragment fragment) {
-		mContent = fragment;
-		getSupportFragmentManager()
-		.beginTransaction()
-		.replace(R.id.content_frame, fragment)
-		.commit();
-		Handler h = new Handler();
-		h.postDelayed(new Runnable() {
-			public void run() {
-				getSlidingMenu().showContent();
-			}
-		}, 50);
-	}	
-**/
-    
-    private void showCoachOverlay (String path) throws IOException
-    {
-    	ImageView overlayView = new ImageView(this);
-    	
-    	overlayView.setOnClickListener(new OnClickListener () 
-    	{
-
-			@Override
-			public void onClick(View v) {
-				getWindowManager().removeView(v);
-				
-			}
-    		
-    	});
-    	
-    	AssetManager mngr = getAssets();
-        // Create an input stream to read from the asset folder
-           InputStream ins = mngr.open(path);
-
-           // Convert the input stream into a bitmap
-           Bitmap bmpCoach = BitmapFactory.decodeStream(ins);
-           overlayView.setImageBitmap(bmpCoach);
-           
-    	WindowManager.LayoutParams params = new WindowManager.LayoutParams(
-    	        WindowManager.LayoutParams.MATCH_PARENT,
-    	        WindowManager.LayoutParams.MATCH_PARENT,
-    	        WindowManager.LayoutParams.TYPE_APPLICATION,
-    	        WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE |
-    	        WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN,
-    	        PixelFormat.TRANSLUCENT);
-
-    	getWindowManager().addView(overlayView, params);
-    }
-
     public void toggleDrawer() {
         if (mDrawerLayout == null) return;
 
         if (mDrawerOpen) mDrawerLayout.closeDrawer(mDrawerContainer);
         else mDrawerLayout.openDrawer(mDrawerContainer);
-
     }
 }

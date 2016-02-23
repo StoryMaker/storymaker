@@ -88,22 +88,7 @@ public class Utils {
     public static boolean isActivity(Context context) {
         return (context instanceof Activity);
     }
-    
-    /**
-     * 
-     * @param timeString in 00:00:00.000 format (hour:min:second.ms)
-     * @return time in ms
-     */
-    public static int convertTimeStringToInt(String timeString) {
-        int duration = 0;
-        try {
-            duration = (int) (new SimpleDateFormat("hh:mm:ss.SS").parse(timeString)).getTime();
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return duration;
-    }
-    
+
     /**
      * 
      * This converts a ActionbarSherlock MenuItem into a stock Android MenuItem so you can pass it into 
