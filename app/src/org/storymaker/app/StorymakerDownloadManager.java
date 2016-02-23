@@ -488,7 +488,7 @@ public class StorymakerDownloadManager implements Runnable {
             }
 
         } catch (Exception e) {
-            Timber.e(e. "DOWNLOAD ERROR: " + ligerUrl + ligerObb + " -> " + e.getMessage());
+            Timber.e(e, "DOWNLOAD ERROR: " + ligerUrl + ligerObb + " -> " + e.getMessage());
         }
     }
 
