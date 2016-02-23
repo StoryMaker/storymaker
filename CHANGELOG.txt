@@ -1,3 +1,7 @@
+--- build 1097
+
+- Fix: app closes immediately on launch for users who upgraded from older builds
+
 --- build 1096
 
 - Fix: Clip volume not working in Persian mode
