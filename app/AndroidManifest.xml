@@ -4,7 +4,7 @@
     package="org.storymaker.app"
     android:installLocation="auto"
     android:versionCode="1098"
-    android:versionName="2.1.4">
+    android:versionName="2.1.3">
    
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
