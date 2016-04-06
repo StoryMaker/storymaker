@@ -444,4 +444,13 @@ public class HomeActivity extends BaseHomeActivity {
         LocalBroadcastManager.getInstance(this).unregisterReceiver(mDownloadMessageReceiver);
         LocalBroadcastManager.getInstance(this).unregisterReceiver(mDeleteMessageReceiver);
     }
+
+    // FIXME this was brought in here from FirstRunActivity in order to stop the instaquit bug:
+    // https://trello.com/c/lciSehZr/1231-instant-quit-on-devices-upgradeing-from-older-builds-e-g-1082
+    // the long term fix should be to move this logic up into the BaseActivity
+    @Override
+    public void onCacheWordUninitialized() {
+        Timber.d("cacheword uninitialized, homeactivity");
+        CachewordHelper.initializeDefaultPin(this, mCacheWordHandler);
+    }
 }
