@@ -1,3 +1,8 @@
+
+--- build 1099
+
+- Fix: crash for users who upgraded from a Beta release
+
 --- build 1098
 
 - Fix: Clip volume not working in Persian mode (for real this time)
