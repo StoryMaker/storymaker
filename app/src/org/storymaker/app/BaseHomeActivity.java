@@ -1,5 +1,6 @@
 package org.storymaker.app;
 
+import android.Manifest;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.ComponentName;
@@ -12,6 +13,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -814,6 +816,8 @@ public abstract class BaseHomeActivity extends BaseActivity {
                 showLauncherIcon();
             }
         }
+
+        checkAndEnforcePermissions(); // FIXME we should handle these at time of use instead of like this
     }
 
     protected void showSPLSelectorPopup(final String[] names, final String[] paths) {

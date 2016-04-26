@@ -18,4 +18,8 @@ public class Constants {
     public static final String PREFS_APP_TITLE = "PREFS_APP_TITLE";
 
     public static final int APP_MIGRATION_VERSION = 1;
+
+    public static final int PERMS_REQ_ALL = 1;
+    public static final int PERMS_REQ_READ_EXTERNAL_STORAGE = 2;
+    public static final int PERMS_REQ_WRITE_EXTERNAL_STORAGE = 3;
 }
