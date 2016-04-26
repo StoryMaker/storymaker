@@ -25,7 +25,7 @@ apply plugin: 'com.neenbedankt.android-apt'
 apply plugin: 'com.jakewharton.hugo'
 
 android {
-    compileSdkVersion 23
+    compileSdkVersion 22
     buildToolsVersion "23.0.3"
 
     sourceSets {
@@ -135,7 +135,7 @@ dependencies {
     //compile 'com.android.support:appcompat-v7:21.0.2'
     //compile 'com.android.support:appcompat-v7:23.1.1'
     //compile 'com.android.support:design:23.1.1'
-    compile 'com.android.support:recyclerview-v7:23.2.0'
+    compile 'com.android.support:recyclerview-v7:22.2.1'
 
     androidTestCompile 'com.android.support.test.espresso:espresso-core:2.0'
     androidTestCompile 'com.android.support.test:testing-support-lib:0.1'
