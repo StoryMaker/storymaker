@@ -3,13 +3,14 @@ package org.storymaker.app.publish.sites;
 import timber.log.Timber;
 
 import android.content.Context;
-import android.util.Log;
+
 import org.storymaker.app.model.Auth;
 import org.storymaker.app.model.Job;
 import org.storymaker.app.model.JobTable;
 import org.storymaker.app.model.PublishJob;
 import org.storymaker.app.publish.PublishController;
 import org.storymaker.app.publish.PublisherBase;
+import org.storymaker.app.publish.VideoRenderer;
 
 public class YoutubePublisher extends PublisherBase {
 

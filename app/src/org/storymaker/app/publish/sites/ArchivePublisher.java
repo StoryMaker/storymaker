@@ -8,12 +8,12 @@ import org.storymaker.app.model.JobTable;
 import org.storymaker.app.model.PublishJob;
 import org.storymaker.app.publish.PublishController;
 import org.storymaker.app.publish.PublisherBase;
+import org.storymaker.app.publish.VideoRenderer;
 import org.storymaker.app.server.ServerManager;
 
 import java.util.Locale;
 
 import android.content.Context;
-import android.util.Log;
 
 public class ArchivePublisher extends PublisherBase {
 	private final String TAG = "ArchivePublisher";
@@ -28,7 +28,7 @@ public class ArchivePublisher extends PublisherBase {
 	public void startRender() {
 		Timber.d("startRender");
 		// TODO should detect if user is directly publishing to youtube so we don't double publish to there
-		Job videoRenderJob = new Job(mContext, mPublishJob.getProjectId(),mPublishJob.getId(), JobTable.TYPE_RENDER, null,VideoRenderer.SPEC_KEY);
+		Job videoRenderJob = new Job(mContext, mPublishJob.getProjectId(),mPublishJob.getId(), JobTable.TYPE_RENDER, null, VideoRenderer.SPEC_KEY);
 		mController.enqueueJob(videoRenderJob);
 	}
 

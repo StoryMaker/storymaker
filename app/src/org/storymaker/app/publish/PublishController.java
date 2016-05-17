@@ -1,15 +1,19 @@
 package org.storymaker.app.publish;
 
+import io.scal.secureshare.controller.ArchiveSiteController;
+import io.scal.secureshare.controller.FacebookSiteController;
+import io.scal.secureshare.controller.FlickrSiteController;
+import io.scal.secureshare.controller.SSHSiteController;
+import io.scal.secureshare.controller.SoundCloudSiteController;
+import io.scal.secureshare.controller.YoutubeSiteController;
 import timber.log.Timber;
 
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 
 import org.storymaker.app.model.Auth;
 import org.storymaker.app.model.Job;
 import org.storymaker.app.model.JobTable;
-import org.storymaker.app.model.Project;
 import org.storymaker.app.model.PublishJob;
 import org.storymaker.app.model.PublishJobTable;
 import org.storymaker.app.publish.sites.ArchivePublisher;
@@ -20,23 +24,10 @@ import org.storymaker.app.publish.sites.S3Publisher;
 import org.storymaker.app.publish.sites.SSHPublisher;
 import org.storymaker.app.publish.sites.SoundCloudPublisher;
 import org.storymaker.app.publish.sites.StoryMakerPublisher;
-import org.storymaker.app.publish.sites.VideoRenderer;
 import org.storymaker.app.publish.sites.YoutubePublisher;
-import io.scal.secureshareui.controller.FacebookSiteController;
-import io.scal.secureshareui.controller.FlickrSiteController;
-import io.scal.secureshareui.controller.SSHSiteController;
-import io.scal.secureshareui.controller.SoundCloudSiteController;
-import io.scal.secureshareui.controller.YoutubeSiteController;
-import io.scal.secureshareui.controller.ArchiveSiteController;
-
-import java.util.Arrays;
-import java.util.List;
-
-import com.google.gson.Gson;
 
 import android.app.Activity;
 import android.content.Context;
-import android.util.Log;
 
 // TODO we need to make sure this will be thread safe since upload and render jobs are on separate threads and could callback in a race here
 

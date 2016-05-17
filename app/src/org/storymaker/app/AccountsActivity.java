@@ -5,10 +5,6 @@ import timber.log.Timber;
 
 import org.storymaker.app.model.Auth;
 import org.storymaker.app.model.AuthTable;
-import io.scal.secureshareui.controller.SiteController.OnEventListener;
-import io.scal.secureshareui.lib.ChooseAccountFragment;
-import io.scal.secureshareui.model.Account;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -20,7 +16,7 @@ import android.support.v4.app.FragmentTransaction;
 
 public class AccountsActivity extends BaseActivity {
 
-	private ChooseAccountFragment caFragment;
+	//private ChooseAccountFragment caFragment;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -28,7 +24,7 @@ public class AccountsActivity extends BaseActivity {
 		if (getIntent().getBooleanExtra("isDialog", false)) {
             setTheme(android.R.style.Theme_Holo_Light_Dialog_NoActionBar_MinWidth);
 		}
-        setContentView(R.layout.activity_accounts);
+       // setContentView(R.layout.activity_accounts);
 
         boolean isUserLoggedIntoSM = false;
         Auth storymakerAuth = (new AuthTable()).getAuthDefault(getApplicationContext(), Auth.SITE_STORYMAKER);
@@ -47,6 +43,7 @@ public class AccountsActivity extends BaseActivity {
 	}
 
 	public void addChooseAccountFragment(Bundle bundle) {
+		/**
 	    FragmentManager fragManager = getSupportFragmentManager();
 	    FragmentTransaction fragTrans = fragManager.beginTransaction();
 
@@ -116,11 +113,12 @@ public class AccountsActivity extends BaseActivity {
 
 		fragTrans.add(R.id.fragmentLayout, caFragment);
 		fragTrans.commit();
+		 */
 	}
 	
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
-		caFragment.onActivityResult(requestCode, resultCode, data);
+		//caFragment.onActivityResult(requestCode, resultCode, data);
 	} 
 }

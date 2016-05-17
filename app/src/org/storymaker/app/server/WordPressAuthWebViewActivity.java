@@ -23,7 +23,7 @@ import android.webkit.WebViewClient;
 
 import info.guardianproject.netcipher.proxy.OrbotHelper;
 import info.guardianproject.netcipher.web.WebkitProxy;
-import io.scal.secureshareui.lib.Util;
+import io.scal.secureshare.lib.Util;
 
 /**
  * Hosts a WebView specifically for presenting

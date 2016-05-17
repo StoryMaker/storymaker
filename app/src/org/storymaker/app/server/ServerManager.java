@@ -21,8 +21,8 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 
-import io.scal.secureshareui.lib.CaptchaException;
-import io.scal.secureshareui.lib.SMWrapper;
+import io.scal.secureshare.lib.CaptchaException;
+import io.scal.secureshare.lib.SMWrapper;
 import scal.io.liger.IndexManager;
 import scal.io.liger.model.ExpansionIndexItem;
 import timber.log.Timber;

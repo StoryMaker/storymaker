@@ -13,7 +13,6 @@ import org.storymaker.app.model.Scene;
 
 import java.util.ArrayList;
 
-import io.scal.secureshareui.lib.ChooseAccountFragment;
 import scal.io.liger.Constants;
 import scal.io.liger.JsonHelper;
 import scal.io.liger.model.AudioClipFull;
@@ -162,8 +161,9 @@ public class PublishActivity extends EditorBaseActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
+        /**
         if (requestCode == ChooseAccountFragment.ACCOUNT_REQUEST_CODE) {
             mPublishFragment.onChooseAccountDialogResult(resultCode, intent);
-        }
+        }*/
     }
 }

@@ -23,8 +23,8 @@ import org.storymaker.app.publish.WorkerBase;
 import java.io.File;
 import java.util.HashMap;
 
-import io.scal.secureshareui.controller.SiteController;
-import io.scal.secureshareui.controller.S3SiteController;
+import io.scal.secureshare.controller.SiteController;
+import io.scal.secureshare.controller.S3SiteController;
 
 public class S3Uploader extends UploaderBase {
     private final String TAG = "S3Uploader";
