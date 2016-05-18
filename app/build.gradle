@@ -122,6 +122,8 @@ configurations.all {
 
 dependencies {
 
+    compile 'com.android.support:support-v4:23.1.0'
+
     compile 'com.android.support:support-annotations:23.2.0'
     compile 'com.android.support:recyclerview-v7:23.2.0'
     compile 'com.google.android.gms:play-services:8.4.0'
@@ -148,15 +150,16 @@ dependencies {
 
     // .Jar imports
     compile files('libs/svg-android-1.1.jar')
-    compile files('libs/httpclientandroidlib-1.2.1.jar')
-    compile files('libs/rangeseekbar.jar')
+  //  compile files('libs/httpclientandroidlib-1.2.1.jar')
+ //   compile files('libs/rangeseekbar.jar')
+    compile 'com.edmodo:rangebar:1.0.0'
 
     compile 'io.scal.secureshare:libsecureshare:0.0.1@aar'
 
     // Project imports
 
     compile project(':external:android-ffmpeg-java')
-    compile project(':external:WordpressJavaAndroid')
+//    compile project(':external:WordpressJavaAndroid')
     compile project(':external:liger:android-iconify')
     compile project(':external:liger:lib')
 
