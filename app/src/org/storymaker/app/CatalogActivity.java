@@ -22,6 +22,8 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 
+import net.hockeyapp.android.UpdateManager;
+
 import org.storymaker.app.ui.SlidingTabLayout;
 
 import java.util.ArrayList;
@@ -570,5 +572,9 @@ public class CatalogActivity extends BaseHomeActivity {
         // Unregister since the activity is about to be closed.
         LocalBroadcastManager.getInstance(this).unregisterReceiver(mDownloadMessageReceiver);
         LocalBroadcastManager.getInstance(this).unregisterReceiver(mDeleteMessageReceiver);
+    }
+
+    protected void checkForUpdates() {
+        //never check for updates here, as it is annoying!
     }
 }
