@@ -6,9 +6,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
-import net.bican.wordpress.Comment;
-import net.bican.wordpress.Page;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -147,7 +144,8 @@ public class ServerManager {
         connect();
         return smWrapper.getPostUrl(postId); // TODO: implement method in wrapper
     }
-    
+
+    /**
     public Page getPost (String postId) throws IOException // XmlRpcFault, MalformedURLException
     {
         connect();
@@ -165,6 +163,7 @@ public class ServerManager {
         connect();
         return null; // smWrapper.getComments(page); // TODO: implement method in wrapper
     }
+    */
 
     public String post (String title, String body, String embed, String[] cats, String medium, String mediaService, String mediaGuid) throws IOException // XmlRpcFault, MalformedURLException
     {
