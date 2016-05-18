@@ -155,6 +155,7 @@ dependencies {
     compile 'com.edmodo:rangebar:1.0.0'
 
     compile 'io.scal.secureshare:libsecureshare:0.0.1@aar'
+    compile 'com.facebook.android:facebook-release:1.0.0@aar'
 
     // Project imports
 
