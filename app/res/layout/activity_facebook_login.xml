@@ -12,7 +12,7 @@
         android:background="#FFF"
         android:id="@+id/main_ui_container">
 
-        <Button
+        <com.facebook.widget.LoginButton
             android:id="@+id/login_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
