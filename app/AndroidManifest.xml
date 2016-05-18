@@ -192,6 +192,7 @@
         </activity>
         <activity
             android:name="io.scal.secureshare.login.ArchiveLoginActivity"
+            android:theme="@style/Theme.AppCompat.Light"
             android:screenOrientation="portrait">
         </activity>
        	<activity 
