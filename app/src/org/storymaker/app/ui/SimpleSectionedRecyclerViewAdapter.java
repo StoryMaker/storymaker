@@ -20,7 +20,7 @@ public class SimpleSectionedRecyclerViewAdapter extends RecyclerView.Adapter<Rec
     private final Context mContext;
     private static final int SECTION_TYPE = 0;
 
-    private boolean mValid = true;
+    private boolean mValid = false;
     private int mSectionResourceId;
     private int mTextResourceId;
     private RecyclerView.Adapter mBaseAdapter;
@@ -36,6 +36,7 @@ public class SimpleSectionedRecyclerViewAdapter extends RecyclerView.Adapter<Rec
         mContext = context;
 
         if (mBaseAdapter != null) {
+
             mBaseAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
                 @Override
                 public void onChanged() {
@@ -61,6 +62,7 @@ public class SimpleSectionedRecyclerViewAdapter extends RecyclerView.Adapter<Rec
                     notifyItemRangeRemoved(positionStart, itemCount);
                 }
             });
+            mValid = true;
         }
     }
 
