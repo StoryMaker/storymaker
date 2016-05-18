@@ -126,6 +126,8 @@ dependencies {
 
     compile 'com.android.support:support-annotations:23.2.0'
     compile 'com.android.support:recyclerview-v7:23.2.0'
+    compile 'com.android.support:cardview-v7:23.1.0'
+
     compile 'com.google.android.gms:play-services:8.4.0'
 
 
@@ -147,8 +149,8 @@ dependencies {
 
     //scalio repos via jitpack
     compile 'com.github.n8fr8:NetCipher:n8fr8-dev-release'
-    compile 'com.github.n8fr8:cardsui-for-android:42ed1661c1'
-    compile 'com.github.n8fr8:Android-ViewPagerIndicator:6d15751bca'
+    //compile 'com.github.n8fr8:cardsui-for-android:42ed1661c1'
+    //compile 'com.github.n8fr8:Android-ViewPagerIndicator:6d15751bca'
 
     // AAR and  .Jar imports
     compile files('libs/svg-android-1.1.jar')
