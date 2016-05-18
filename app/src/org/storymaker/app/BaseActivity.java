@@ -381,7 +381,10 @@ public class BaseActivity extends FragmentActivity implements ICacheWordSubscrib
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
         // Sync the toggle state after onRestoreInstanceState has occurred.
-        mDrawerToggle.syncState();
+
+        if (mDrawerToggle != null)
+            mDrawerToggle.syncState();
+
     }
 
     @Override

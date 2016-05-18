@@ -35,31 +35,33 @@ public class SimpleSectionedRecyclerViewAdapter extends RecyclerView.Adapter<Rec
         mBaseAdapter = baseAdapter;
         mContext = context;
 
-        mBaseAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
-            @Override
-            public void onChanged() {
-                mValid = mBaseAdapter.getItemCount()>0;
-                notifyDataSetChanged();
-            }
+        if (mBaseAdapter != null) {
+            mBaseAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
+                @Override
+                public void onChanged() {
+                    mValid = mBaseAdapter.getItemCount() > 0;
+                    notifyDataSetChanged();
+                }
 
-            @Override
-            public void onItemRangeChanged(int positionStart, int itemCount) {
-                mValid = mBaseAdapter.getItemCount()>0;
-                notifyItemRangeChanged(positionStart, itemCount);
-            }
+                @Override
+                public void onItemRangeChanged(int positionStart, int itemCount) {
+                    mValid = mBaseAdapter.getItemCount() > 0;
+                    notifyItemRangeChanged(positionStart, itemCount);
+                }
 
-            @Override
-            public void onItemRangeInserted(int positionStart, int itemCount) {
-                mValid = mBaseAdapter.getItemCount()>0;
-                notifyItemRangeInserted(positionStart, itemCount);
-            }
+                @Override
+                public void onItemRangeInserted(int positionStart, int itemCount) {
+                    mValid = mBaseAdapter.getItemCount() > 0;
+                    notifyItemRangeInserted(positionStart, itemCount);
+                }
 
-            @Override
-            public void onItemRangeRemoved(int positionStart, int itemCount) {
-                mValid = mBaseAdapter.getItemCount()>0;
-                notifyItemRangeRemoved(positionStart, itemCount);
-            }
-        });
+                @Override
+                public void onItemRangeRemoved(int positionStart, int itemCount) {
+                    mValid = mBaseAdapter.getItemCount() > 0;
+                    notifyItemRangeRemoved(positionStart, itemCount);
+                }
+            });
+        }
     }
 
 

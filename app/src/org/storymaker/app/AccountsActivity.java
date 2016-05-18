@@ -1,6 +1,9 @@
 
 package org.storymaker.app;
 
+import io.scal.secureshare.controller.SiteController;
+import io.scal.secureshare.lib.ChooseAccountFragment;
+import io.scal.secureshare.model.Account;
 import timber.log.Timber;
 
 import org.storymaker.app.model.Auth;
@@ -16,7 +19,7 @@ import android.support.v4.app.FragmentTransaction;
 
 public class AccountsActivity extends BaseActivity {
 
-	//private ChooseAccountFragment caFragment;
+	private ChooseAccountFragment caFragment;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -24,7 +27,7 @@ public class AccountsActivity extends BaseActivity {
 		if (getIntent().getBooleanExtra("isDialog", false)) {
             setTheme(android.R.style.Theme_Holo_Light_Dialog_NoActionBar_MinWidth);
 		}
-       // setContentView(R.layout.activity_accounts);
+        setContentView(R.layout.activity_accounts);
 
         boolean isUserLoggedIntoSM = false;
         Auth storymakerAuth = (new AuthTable()).getAuthDefault(getApplicationContext(), Auth.SITE_STORYMAKER);
@@ -43,7 +46,7 @@ public class AccountsActivity extends BaseActivity {
 	}
 
 	public void addChooseAccountFragment(Bundle bundle) {
-		/**
+
 	    FragmentManager fragManager = getSupportFragmentManager();
 	    FragmentTransaction fragTrans = fragManager.beginTransaction();
 
@@ -64,11 +67,11 @@ public class AccountsActivity extends BaseActivity {
 			}
 		}
 		
-		caFragment = new ChooseAccountFragment(); 
+		caFragment = new ChooseAccountFragment();
 		caFragment.setArguments(bundle);
 		caFragment.setLoginIntent(new Intent(this, ConnectAccountActivity.class));
 		caFragment.setAccountsList(accounts);  // FIXME we should probably make Account object parcelable and pass this through the bundle
-		caFragment.setOnEventListener(new OnEventListener() {
+		caFragment.setOnEventListener(new SiteController.OnEventListener() {
 
 			@Override
 			public void onSuccess(Account account) {
@@ -113,7 +116,7 @@ public class AccountsActivity extends BaseActivity {
 
 		fragTrans.add(R.id.fragmentLayout, caFragment);
 		fragTrans.commit();
-		 */
+
 	}
 	
 	@Override

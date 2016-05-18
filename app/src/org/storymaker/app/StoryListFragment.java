@@ -45,14 +45,17 @@ public class StoryListFragment extends Fragment{
     private Integer myHomeTabInstanceCount;
     private Integer myHomeTabInstallationCount;
 
+    private RecyclerView recyclerView;
+
     public StoryListFragment() {
 
 
     }
 
+    /**
     public void setMyInstanceIndexItemAdapter(InstanceIndexItemAdapter myInstanceIndexItemAdapter) {
         this.myInstanceIndexItemAdapter = myInstanceIndexItemAdapter;
-    }
+    }*/
 
 //    public static final String ARG_OBJECT = "object";
 
@@ -81,10 +84,10 @@ public class StoryListFragment extends Fragment{
 
         if (myListLength > 0) {
 
-            RecyclerView rv = (RecyclerView) inflater.inflate(
+            recyclerView = (RecyclerView) inflater.inflate(
                     R.layout.fragment_story_list, container, false);
-            setupRecyclerView(rv);
-            return rv;
+            setupRecyclerView();
+            return recyclerView;
 
         } else {
 
@@ -143,8 +146,15 @@ public class StoryListFragment extends Fragment{
         ((HomeActivity)getActivity()).launchNewProject();
     }
 
+    public void setAdapter (InstanceIndexItemAdapter myInstanceIndexItemAdapter)
+    {
+        this.myInstanceIndexItemAdapter = myInstanceIndexItemAdapter;
 
-    private void setupRecyclerView(RecyclerView recyclerView) {
+    }
+
+
+    private void setupRecyclerView() {
+
 
         if (mySectionFlag && myHomeTabFlag && (myHomeTabInstallationCount > 0 || myHomeTabInstanceCount > 0)) {
 
