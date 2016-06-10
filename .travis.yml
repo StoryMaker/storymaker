@@ -1,0 +1,39 @@
+sudo: required
+
+language: android
+
+env:
+  global:
+    # switch glibc to a memory conserving mode
+    - MALLOC_ARENA_MAX=2
+
+jdk:
+  # the release build infrastructure uses OpenJDK from Debian
+  #- openjdk7
+  # many developers use the Oracle JDK
+  # (disabled because Travis cannot reliably start the emulator with these)
+  - oraclejdk8
+  #- oraclejdk7
+
+android:
+  components:
+    - tools
+    - platform-tools
+    - extra-android-m2repository
+    - build-tools-23.0.2
+    - android-23
+  licenses:
+    # only approve the non-Google licenses
+    - 'android-sdk-preview-license-52d11cd2'
+    - 'android-sdk-license-.+'
+
+cache: false
+
+script:
+  # 'assemble' everything and run all checks that do not require a device/emulator
+  - ./gradlew build -PdisablePreDex
+
+after_failure:
+  - find * -name lint-results.xml | xargs cat
+
+
