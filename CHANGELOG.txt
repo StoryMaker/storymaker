@@ -1,3 +1,6 @@
+--- build 1100
+
+- Fix: several crashes on Android 6 devices
 
 --- build 1099
 
