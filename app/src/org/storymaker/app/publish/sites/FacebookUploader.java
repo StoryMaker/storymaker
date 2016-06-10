@@ -26,8 +26,8 @@ import org.storymaker.app.model.PublishJob;
 import org.storymaker.app.model.json.ProjectJson;
 import org.storymaker.app.publish.UploadWorker;
 import org.storymaker.app.publish.UploaderBase;
-import io.scal.secureshareui.controller.FacebookSiteController;
-import io.scal.secureshareui.controller.SiteController;
+import io.scal.secureshare.controller.FacebookSiteController;
+import io.scal.secureshare.controller.SiteController;
 
 public class FacebookUploader extends UploaderBase {
     private final String TAG = "FacebookUploader";

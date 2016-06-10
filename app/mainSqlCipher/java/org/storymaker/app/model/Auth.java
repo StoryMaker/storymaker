@@ -3,7 +3,7 @@ package org.storymaker.app.model;
 import timber.log.Timber;
 
 import org.storymaker.app.db.StoryMakerDB;
-import io.scal.secureshareui.model.Account;
+import io.scal.secureshare.model.Account;
 
 import java.util.Date;
 

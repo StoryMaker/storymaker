@@ -1,26 +1,19 @@
-package org.storymaker.app.publish.sites;
+package org.storymaker.app.publish;
 
 import timber.log.Timber;
 
 import java.io.File;
 import java.io.IOException;
 
-import org.storymaker.app.EditorBaseActivity;
-import org.storymaker.app.R;
 import org.storymaker.app.media.MediaProjectManager;
 import org.storymaker.app.model.Job;
-import org.storymaker.app.publish.RenderWorker;
-import org.storymaker.app.publish.RendererBase;
 
 import org.ffmpeg.android.MediaDesc;
 
 import android.content.Context;
-import android.os.Bundle;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.Message;
-import android.util.Log;
-import android.widget.Toast;
 
 public class VideoRenderer extends RendererBase {
     private final String TAG = "VideoRenderer";

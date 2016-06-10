@@ -14,7 +14,7 @@ import org.storymaker.app.publish.PublisherBase;
 
 import java.util.Date;
 
-import io.scal.secureshareui.controller.SiteController;
+import io.scal.secureshare.controller.SiteController;
 
 /**
  * 

@@ -4,7 +4,7 @@ import timber.log.Timber;
 
 import org.storymaker.app.R;
 import org.storymaker.app.media.MediaHelper;
-import io.scal.secureshareui.lib.Util;
+import io.scal.secureshare.lib.Util;
 
 import android.app.Activity;
 import android.content.Intent;

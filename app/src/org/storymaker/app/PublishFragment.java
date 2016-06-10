@@ -2,32 +2,26 @@ package org.storymaker.app;
 
 import timber.log.Timber;
 
-import org.storymaker.app.db.StoryMakerDB;
 import org.storymaker.app.model.Auth;
 import org.storymaker.app.model.AuthTable;
 import org.storymaker.app.model.Job;
 import org.storymaker.app.model.JobTable;
 import org.storymaker.app.model.Media;
-import org.storymaker.app.model.Project;
 import org.storymaker.app.model.PublishJob;
 import org.storymaker.app.model.PublishJobTable;
-import org.storymaker.app.publish.PublishController;
 import org.storymaker.app.publish.PublishController.PublishListener;
 import org.storymaker.app.publish.PublishService;
-import org.storymaker.app.publish.sites.VideoRenderer;
-import org.storymaker.app.server.ServerManager;
+import org.storymaker.app.publish.VideoRenderer;
 import org.storymaker.app.ui.ToggleImageButton;
-import io.scal.secureshareui.controller.ArchiveSiteController;
-import io.scal.secureshareui.controller.SiteController;
-import io.scal.secureshareui.lib.ArchiveMetadataActivity;
-import io.scal.secureshareui.lib.ChooseAccountFragment;
+import io.scal.secureshare.controller.ArchiveSiteController;
+import io.scal.secureshare.controller.SiteController;
+import io.scal.secureshare.lib.ArchiveMetadataActivity;
+import io.scal.secureshare.lib.ChooseAccountFragment;
 
 import java.io.File;
-import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import redstone.xmlrpc.XmlRpcFault;
 import scal.io.liger.JsonHelper;
 import scal.io.liger.model.PublishProfile;
 import scal.io.liger.model.StoryPathLibrary;
@@ -49,7 +43,6 @@ import android.os.Message;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;

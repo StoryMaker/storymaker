@@ -425,6 +425,10 @@ public class ProjectsProvider extends ContentProvider implements ICacheWordSubsc
     @Override
     public void onCacheWordOpened() {
         Timber.d("onCacheWordOpened, mDBHelper is " + mDBHelper + ", mDB is " + mDB);
+
+        if (mDB != null && mDB.isOpen())
+            mDB.close();;
+
         // permit db access when cacheword is unlocked
         mDBHelper = new StoryMakerDB(mCacheWordHandler, getContext());
         mDB = mDBHelper.getWritableDatabase(mPassphrase);

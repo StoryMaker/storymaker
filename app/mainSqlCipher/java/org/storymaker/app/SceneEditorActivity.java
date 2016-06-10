@@ -19,10 +19,11 @@ import org.storymaker.app.server.ServerManager;
 
 import info.guardianproject.cacheword.CacheWordHandler;
 import info.guardianproject.cacheword.ICacheWordSubscriber;
-import io.scal.secureshareui.controller.ArchiveSiteController;
-import io.scal.secureshareui.controller.SiteController;
-import io.scal.secureshareui.lib.ChooseAccountFragment;
-import io.scal.secureshareui.lib.ArchiveMetadataActivity;
+
+
+import io.scal.secureshare.controller.*;
+import io.scal.secureshare.lib.*;
+
 import scal.io.liger.Constants;
 import scal.io.liger.model.FullMetadata;
 import timber.log.Timber;
