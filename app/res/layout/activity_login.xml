@@ -38,7 +38,7 @@
                 android:text="             "
                 android:gravity="center"
                 android:textSize="18dip"
-                android:textColor="@color/holo_red_dark"/>
+                android:textColor="@color/red"/>
                 <!-- Logo Ends -->
         </LinearLayout>
         <!--  Header Ends -->

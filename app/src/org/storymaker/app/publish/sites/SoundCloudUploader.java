@@ -22,8 +22,8 @@ import org.storymaker.app.model.Project;
 import org.storymaker.app.model.PublishJob;
 import org.storymaker.app.publish.UploaderBase;
 import org.storymaker.app.publish.WorkerBase;
-import io.scal.secureshareui.controller.SiteController;
-import io.scal.secureshareui.controller.SoundCloudSiteController;
+import io.scal.secureshare.controller.SiteController;
+import io.scal.secureshare.controller.SoundCloudSiteController;
 
 public class SoundCloudUploader extends UploaderBase {
     private final String TAG = "SoundCloudUploader";

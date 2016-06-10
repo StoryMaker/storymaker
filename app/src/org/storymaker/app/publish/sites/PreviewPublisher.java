@@ -2,18 +2,14 @@ package org.storymaker.app.publish.sites;
 
 import timber.log.Timber;
 
-import org.storymaker.app.model.Auth;
 import org.storymaker.app.model.Job;
 import org.storymaker.app.model.JobTable;
 import org.storymaker.app.model.PublishJob;
 import org.storymaker.app.publish.PublishController;
 import org.storymaker.app.publish.PublisherBase;
-
-import java.util.ArrayList;
-import java.util.Date;
+import org.storymaker.app.publish.VideoRenderer;
 
 import android.content.Context;
-import android.util.Log;
 
 public class PreviewPublisher extends PublisherBase {
     private final String TAG = "PreviewPublisher";

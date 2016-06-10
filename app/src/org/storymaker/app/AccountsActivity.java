@@ -1,14 +1,13 @@
 
 package org.storymaker.app;
 
+import io.scal.secureshare.controller.SiteController;
+import io.scal.secureshare.lib.ChooseAccountFragment;
+import io.scal.secureshare.model.Account;
 import timber.log.Timber;
 
 import org.storymaker.app.model.Auth;
 import org.storymaker.app.model.AuthTable;
-import io.scal.secureshareui.controller.SiteController.OnEventListener;
-import io.scal.secureshareui.lib.ChooseAccountFragment;
-import io.scal.secureshareui.model.Account;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -47,6 +46,7 @@ public class AccountsActivity extends BaseActivity {
 	}
 
 	public void addChooseAccountFragment(Bundle bundle) {
+
 	    FragmentManager fragManager = getSupportFragmentManager();
 	    FragmentTransaction fragTrans = fragManager.beginTransaction();
 
@@ -67,11 +67,11 @@ public class AccountsActivity extends BaseActivity {
 			}
 		}
 		
-		caFragment = new ChooseAccountFragment(); 
+		caFragment = new ChooseAccountFragment();
 		caFragment.setArguments(bundle);
 		caFragment.setLoginIntent(new Intent(this, ConnectAccountActivity.class));
 		caFragment.setAccountsList(accounts);  // FIXME we should probably make Account object parcelable and pass this through the bundle
-		caFragment.setOnEventListener(new OnEventListener() {
+		caFragment.setOnEventListener(new SiteController.OnEventListener() {
 
 			@Override
 			public void onSuccess(Account account) {
@@ -116,11 +116,12 @@ public class AccountsActivity extends BaseActivity {
 
 		fragTrans.add(R.id.fragmentLayout, caFragment);
 		fragTrans.commit();
+
 	}
 	
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
-		caFragment.onActivityResult(requestCode, resultCode, data);
+		//caFragment.onActivityResult(requestCode, resultCode, data);
 	} 
 }

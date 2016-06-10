@@ -330,7 +330,7 @@ public class StorymakerDownloadHelper {
             expansionDownloadThread.start();
 
             // downloading a new main file, must clear ZipHelper cache
-            ZipHelper.clearCache();
+           // ZipHelper.clearCache();
 
             fileStateOk = false;
         }
@@ -396,7 +396,7 @@ public class StorymakerDownloadHelper {
                     expansionDownloadThread.start();
 
                     // downloading a new patch file, must clear ZipHelper cache
-                    ZipHelper.clearCache();
+                   // ZipHelper.clearCache();
 
                     fileStateOk = false;
                 }
@@ -562,7 +562,7 @@ public class StorymakerDownloadHelper {
         }
 
         if (downloadStarted) {
-            ZipHelper.clearCache();
+           // ZipHelper.clearCache();
         }
 
 

@@ -5,13 +5,10 @@ import timber.log.Timber;
 import java.util.ArrayList;
 
 import org.storymaker.app.model.Job;
-import org.storymaker.app.model.JobTable;
 import org.storymaker.app.model.PublishJob;
 import org.storymaker.app.publish.sites.AudioRenderer;
-import org.storymaker.app.publish.sites.VideoRenderer;
 
 import android.content.Context;
-import android.util.Log;
 
 public class RenderWorker extends WorkerBase {
     private final String TAG = "RenderService";

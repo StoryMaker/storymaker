@@ -3,10 +3,8 @@ package org.storymaker.app.publish;
 import timber.log.Timber;
 
 import java.io.IOException;
-import java.util.Arrays;
 
 import android.content.Context;
-import android.util.Log;
 
 import org.storymaker.app.R;
 import org.storymaker.app.StoryMakerApp;
@@ -16,11 +14,11 @@ import org.storymaker.app.model.Job;
 import org.storymaker.app.model.JobTable;
 import org.storymaker.app.model.Project;
 import org.storymaker.app.model.PublishJob;
-import org.storymaker.app.publish.sites.VideoRenderer;
 import org.storymaker.app.server.ServerManager;
 
-import io.scal.secureshareui.controller.FacebookSiteController;
-import io.scal.secureshareui.controller.SiteController;
+import io.scal.secureshare.controller.FacebookSiteController;
+import io.scal.secureshare.controller.SiteController;
+
 
 public abstract class PublisherBase {
     private final static String TAG = "PublisherBase";

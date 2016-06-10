@@ -106,10 +106,6 @@
                 android:value=".ProjectsActivity" />
         </activity>
         <activity android:name="org.storymaker.app.server.WebViewActivity" />
-        <activity
-            android:name="org.storymaker.app.media.MediaProjectManager"
-            android:configChanges="orientation|keyboardHidden|screenSize" >
-        </activity>
         <activity android:name="org.storymaker.app.SimplePreferences" />
         <activity
             android:name="org.storymaker.app.media.OverlayCameraActivity"
@@ -127,11 +123,6 @@
             android:exported="false" >
         </service>
 
-        <activity
-            android:name="info.guardianproject.onionkit.ui.CertDisplayActivity"
-            android:configChanges="locale|screenSize|orientation"
-            android:taskAffinity=""
-            android:theme="@android:style/Theme.Dialog" />
         <activity android:name="net.hockeyapp.android.UpdateActivity" />
         <activity android:name="net.hockeyapp.android.FeedbackActivity" />
         <activity
@@ -175,44 +166,45 @@
             android:screenOrientation="portrait">
         </activity>
         <activity
-            android:name="io.scal.secureshareui.login.FacebookLoginActivity"
+            android:name="io.scal.secureshare.login.FacebookLoginActivity"
             android:screenOrientation="portrait">
         </activity>
         <activity
-            android:name="io.scal.secureshareui.login.FlickrLoginActivity"
+            android:name="io.scal.secureshare.login.FlickrLoginActivity"
             android:screenOrientation="portrait">
         </activity>
                 <activity
-            android:name="io.scal.secureshareui.login.FlickrWebActivity" 
+            android:name="io.scal.secureshare.login.FlickrWebActivity"
             android:screenOrientation="portrait">
         </activity>
         <activity
-            android:name="io.scal.secureshareui.login.SoundCloudLoginActivity" 
+            android:name="io.scal.secureshare.login.SoundCloudLoginActivity"
             android:theme="@style/PopupTheme"
             android:screenOrientation="portrait">
         </activity>
         <activity
-            android:name="io.scal.secureshareui.login.SSHLoginActivity" 
+            android:name="io.scal.secureshare.login.SSHLoginActivity"
             android:screenOrientation="portrait">
         </activity>
         <activity
-            android:name="io.scal.secureshareui.login.YoutubeLoginActivity" 
+            android:name="io.scal.secureshare.login.YoutubeLoginActivity"
             android:screenOrientation="portrait">
         </activity>
         <activity
-            android:name="io.scal.secureshareui.login.ArchiveLoginActivity" 
+            android:name="io.scal.secureshare.login.ArchiveLoginActivity"
+            android:theme="@style/Theme.AppCompat.Light"
             android:screenOrientation="portrait">
         </activity>
        	<activity 
-       	    android:name="com.facebook.LoginActivity" 
+       	    android:name="com.facebook.LoginActivity"
             android:screenOrientation="portrait">
         </activity>
         <activity
-            android:name="io.scal.secureshareui.login.ZTLoginActivity"
+            android:name="io.scal.secureshare.login.ZTLoginActivity"
             android:screenOrientation="portrait">
         </activity>
         <activity
-            android:name="io.scal.secureshareui.login.ZTWebActivity"
+            android:name="io.scal.secureshare.login.ZTWebActivity"
             android:screenOrientation="portrait">
         </activity>
         <activity
@@ -223,7 +215,7 @@
         </activity>
 
         <activity
-            android:name="io.scal.secureshareui.lib.ArchiveMetadataActivity"
+            android:name="io.scal.secureshare.lib.ArchiveMetadataActivity"
             android:label="@string/title_activity_press_secure" 
             android:theme="@style/PopupTheme" >
         </activity>

@@ -7,7 +7,7 @@ import java.util.Map;
 
 import org.storymaker.app.model.Job;
 import org.storymaker.app.model.JobTable;
-import io.scal.secureshareui.controller.SiteController;
+import io.scal.secureshare.controller.SiteController;
 
 import android.content.Context;
 import android.os.Bundle;

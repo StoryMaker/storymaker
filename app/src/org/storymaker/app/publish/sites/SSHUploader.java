@@ -16,8 +16,8 @@ import org.storymaker.app.model.Project;
 import org.storymaker.app.model.PublishJob;
 import org.storymaker.app.publish.UploadWorker;
 import org.storymaker.app.publish.UploaderBase;
-import io.scal.secureshareui.controller.SSHSiteController;
-import io.scal.secureshareui.controller.SiteController;
+import io.scal.secureshare.controller.SSHSiteController;
+import io.scal.secureshare.controller.SiteController;
 
 public class SSHUploader extends UploaderBase {
     private final String TAG = "SSHUploader";
