@@ -1,5 +1,6 @@
 package org.storymaker.app;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.Notification;
 import android.content.Context;
@@ -14,6 +15,7 @@ import android.graphics.PixelFormat;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.ActionBarDrawerToggle;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -35,6 +37,7 @@ import org.storymaker.app.server.ServerManager;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 
 import info.guardianproject.cacheword.CacheWordHandler;
 import info.guardianproject.cacheword.ICacheWordSubscriber;
@@ -430,5 +433,20 @@ public class BaseActivity extends FragmentActivity implements ICacheWordSubscrib
 
         if (mDrawerOpen) mDrawerLayout.closeDrawer(mDrawerContainer);
         else mDrawerLayout.openDrawer(mDrawerContainer);
+    }
+
+    // force permissions we require
+    protected void checkAndEnforcePermissions() {
+        ArrayList<String> perms = new ArrayList<>();
+
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            perms.add(Manifest.permission.READ_EXTERNAL_STORAGE);
+        }
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            perms.add(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        }
+        if (perms.size() > 0) {
+            ActivityCompat.requestPermissions(this, perms.toArray(new String[0]), Constants.PERMS_REQ_ALL);
+        }
     }
 }
