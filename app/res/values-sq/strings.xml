@@ -1,0 +1,302 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+  <string name="app_name">StoryMaker 2</string>
+  <string name="app_description">Krijimi historive të mëdha është tani më i lehtë se kurrë, me StoryMaker. Shabllonet tona unike, mbivendosjet dhe mësimet ju drejtojnë përmes të gjithë procesit krijues. StoryMaker ju lejon ta redaktoni përmbajtjen tuaj drejt e nga celulari, duke e bërë akoma më të lehtë që ta përfundoni historinë tuaj. Pasi të keni mbaruar, StoryMaker ju lejon ta publikoni historinë tuaj tek të gjitha platformat tuaja të parapëlqyera.</string>
+  <string name="title_projects">Artikujt </string>
+  <string name="title_lessons">Leksionet </string>
+  <string name="action_publish">Publiko</string>
+  <!--menus-->
+  <string name="menu_new_project">E re</string>
+  <string name="menu_projects">Artikujt </string>
+  <string name="menu_lessons">Leksionet</string>
+  <string name="menu_glossary">Renditja</string>
+  <string name="menu_contacts">Kontakte</string>
+  <string name="menu_settings">Parametrat </string>
+  <string name="menu_accounts">Llogaritë</string>
+  <string name="menu_archive">Arkiv</string>
+  <string name="drawer_profile">Kyçu </string>
+  <!--FIXME: rename-->
+  <string name="menu_add_media">Shto</string>
+  <string name="menu_capture_media">Regjistro</string>
+  <string name="menu_share_media">Shpërndaje</string>
+  <string name="menu_save_media">Ruaje</string>
+  <string name="menu_play_media">Lësho</string>
+  <string name="menu_render_media">Rendero</string>
+  <string name="menu_bug_report">Njofto të metat</string>
+  <string name="menu_login">Kyçu</string>
+  <string name="menu_logs">Dërgo informacionin </string>
+  <string name="menu_update">Përditëso</string>
+  <string name="menu_about">Rreth</string>
+  <string name="menu_save_project">Ruaj</string>
+  <string name="menu_overlay_camera">Kamera</string>
+  <string name="menu_add_new_shot">Sho klipin te skena</string>
+  <string name="menu_export_project_files">Eksporto dokumentet e projektit si Zip</string>
+  <string name="menu_join_storymaker">Bashkëngjitu te komuniteti i StoryMaker</string>
+  <string name="menu_sign_up">Regjistrohu / Identifikohu</string>
+  <string name="menu_upload_manager">Ngarko Udhëzuesin</string>
+  <string name="menu_uploads">Ngarkimet</string>
+  <string name="welcome_message">Përshëndetje!\nMirë se vini tek StoryMaker</string>
+  <!--project list-->
+  <string name="default_project_list_view">Kjo është hera e parë që krijoni një projekt!\n\n- trokitni që t\'ia nisni -</string>
+  <string name="default_project_view_message">Ju keni mundësi zgjedhje.\nTregojeni historinë tuaj me video, audio ose fotografi.\n\n- trokisni që ta shtoni -</string>
+  <!--video processing-->
+  <string name="pref_out_fps_title">Cakto shkallën e kornizës (fps)</string>
+  <string name="pref_out_fps_summary">Korniza për sekondë për të kursyer videon në (15-30)</string>
+  <string name="pref_out_rate_title">Shpejtësia maksimale (kbps)</string>
+  <string name="pref_out_rate_summary">Shpejtësia maksimale e videos (300-1500)</string>
+  <string name="pref_out_format_title">Formati i produktit</string>
+  <string name="pref_out_format_summary">Formati i dokumentit (mp4, 3gp, ogg)</string>
+  <string name="pref_out_vcodec_title">Prodhimi video kodek</string>
+  <string name="pref_out_vcodec_summary">video kodek (copy, libx264, etc)</string>
+  <string name="pref_out_acodec_title">Prodhimi audio kodek</string>
+  <string name="pref_out_acodec_summary">audio kodek (copy, aac, mp3, etc)</string>
+  <string name="pref_out_vwidth_title">Rregullo gjerësinë e videos (px)</string>
+  <string name="pref_out_vwidth_summary">Rregullo gjerësinë për videon e prodhuar</string>
+  <string name="pref_out_vheight_title">Rregullo lartësinë e videos (px)</string>
+  <string name="pref_out_vheight_summary">Rregullo lartësinë për videon e prodhuar</string>
+  <string name="hintTitle">titulli</string>
+  <string name="hintStartTime">Fillo (00:00:00)</string>
+  <string name="hintEndTime">kohëzgjatja (00:00:00)</string>
+  <string name="hintFadeIn">të zbehet në (korniza)</string>
+  <string name="hintFadeOut">të zbehet nga (korniza)</string>
+  <string name="start_recording">Regjistro</string>
+  <string name="stop_recording">Ndalo</string>
+  <string name="play_recording">Lësho</string>
+  <string name="save_recording">Ruaj</string>
+  <string name="downloading_lessons_from_server_">Duke shkarkuar leksionet nga serverët...</string>
+  <string name="checking_for_updates_">Përditësimi po bëhet...</string>
+  <!--LOG COLLECTOR-->
+  <string name="app_name_lc">Kolektori i identifikimit </string>
+  <string name="message_subject">Identifikimi i pajisjes Android </string>
+  <string name="acquiring_log_progress_dialog_message">Marrja e evidencës nga sistemi\u2026</string>
+  <string name="chooser_title">Selekto një aplikacion për të dërguar informatat </string>
+  <string name="failed_to_get_log_message">Nuk arriti të marrë evidentimin nga sistemi.</string>
+  <string name="main_dialog_text">Ky aplikacion do të përpiqet të mbledhë evidentimin e pajisjes.
+Evidentimi i mbledhur do të dërgohet duke përdorur aplikacionin që doni ju.
+Ju keni mundësinë t\'i modifikoni të dhënat që janë duke u dërguar.</string>
+  <string name="title_home_projects">Projektet </string>
+  <string name="title_home_activity">Aktiviteti</string>
+  <string name="title_lessons_lessons">Leksionet</string>
+  <string name="title_lessons_glossary">Renditja</string>
+  <string name="hello_world">Përshëndetje botë!</string>
+  <string name="title_activity_home">Shtëpi</string>
+  <string name="new_story_name_it">Emëroje.</string>
+  <string name="new_story_working_title">Duke punuar në titull...</string>
+  <string name="new_story_choose_something">Përzgjedh diçka të shkurtë që definon temën e cila tërheq audiencën tuaj. </string>
+  <string name="new_story_choose_a_medium">Zgjedh një mes.</string>
+  <!--<string name="new_story_video">Video: Something here about why simple, short video is good! Ideally it should be about the same length as the other strings.</string>
+   	<string name="new_story_essay">Photo Essay: Tell a story about one character. Follow this template to produce a simple photo essay story about one character.</string>
+    <string name="new_story_photo">Single Photo: Telling a strong story with one image is a skill. To simplify, these templates explain some primary photo types.</string>
+    
+    <string name="new_story_audio">Audio: Something here about using audio to tell a story. Personally, I really like to listen to the radio and podcasts while I do housework!</string>-->
+  <string name="new_story_simple_story">Tregim i thjeshtë</string>
+  <string name="new_story_choose_template">Modeli i skenës</string>
+  <string name="home_new_story">KRIJO NJË TREGIM</string>
+  <string name="home_start_a_lesson">EKSPLORO LEKSIONET</string>
+  <string name="title_activity_lessons">Leksionet</string>
+  <string name="title_activity_scene_editor">Redaktimi i skenës</string>
+  <string name="title_activity_choose_template">Zgjedh modelin</string>
+  <string name="title_activity_story_template">Modeli i artikullit</string>
+  <string name="tab_make">Ndërto</string>
+  <string name="tab_review">Rishiko</string>
+  <string name="tab_publish">Përfundo </string>
+  <string name="tab_finish">Përfundo</string>
+  <string name="tab_add_clips">Ndërto</string>
+  <string name="tab_order">Rregullo</string>
+  <string name="story_publish_section">Seksioni</string>
+  <string name="story_publish_section_hint">Sportet </string>
+  <string name="story_publish_topics">Temat</string>
+  <string name="story_publish_topics_hint">Gjinia</string>
+  <string name="story_publish_location">Vendndodhja</string>
+  <string name="story_publish_location_hint">Shtyp vendndodhje të përshtatshme</string>
+  <string name="story_publish_share">Shpërndaje</string>
+  <string name="story_publish_send_via">Dërgo përmes</string>
+  <string name="story_publish_status">Statusi</string>
+  <string name="story_publish_status_processing">Në përpunim</string>
+  <string name="story_publish_status_not">E papubikuar</string>
+  <string name="story_publish_describe_hint">Përshkruaj artikullin tënd...</string>
+  <string name="story_publish_story_title">Titulli i artikullit këtu</string>
+  <string name="story_publish_story_date">Data e artikullit këtu</string>
+  <!--delete these below-->
+  <string name="title_section3">Seksioni 3</string>
+  <string name="title_section2">Seksioni 2</string>
+  <string name="title_section1">Seksioni 1</string>
+  <string name="title_activity_test_drag">TestDrag</string>
+  <!--Screen title before and during recording-->
+  <!--Screen title after recording-->
+  <!--Screen title while playing back a recording-->
+  <!--Label shown during recording-->
+  <string name="recording">Duke regjistruar</string>
+  <!--Label shown when the recording is stopped for a reason other than the user stopping it (e.g. the sd card was removed)-->
+  <string name="recording_stopped">Regjistrimi u ndal</string>
+  <!--label shown when there is not enough space to record something-->
+  <string name="storage_is_full">Hapësira është e mbushur</string>
+  <!--label shown when the recording has reached maximum allowed file size-->
+  <string name="max_length_reached">Madhësia maksimale u arrit</string>
+  <!--label shown when there is no sd card available to record to-->
+  <string name="insert_sd_card">Kërkohet SD kartela</string>
+  <!--label shown when there is more than 1 minute but less than 9 minutes of space left to record-->
+  <!--label shown when there is less than 1 minute of space left to record-->
+  <!--button to accept the current recording and return it to the caller-->
+  <!--button to discard the current recording and return to the caller-->
+  <!--acknowlegement button in a number of dialogs-->
+  <string name="button_ok">Në rregull</string>
+  <!--Do not translate. Format of the timer that shows how much has been recorded so far-->
+  <!--label shown before the user has recorded anything-->
+  <!--the name under which recordings will be visible in the media database is formatted like this-->
+  <!--all recordings will show up in the media database with this 'artist' name-->
+  <string name="audio_db_artist_name">Regjistrimet tuaja</string>
+  <!--all recordings will show up in the media database with this 'album' name-->
+  <string name="audio_db_album_name">Audio regjistrimet</string>
+  <!--all recordings will show up in the media database in a playlist with this name-->
+  <string name="audio_db_playlist_name">Regjistrimet e mia</string>
+  <!--shown as the message in a dialog when an error occured because of an error accessing the sd card-->
+  <string name="error_sdcard_access">Në pamundësi të hyrë në ruajtje të jashtme ose të brendshme</string>
+  <!--shown as the message in a dialog when the app encountered an unspecified internal error-->
+  <string name="error_app_internal">Gabim në aplikacionin e brendshëm</string>
+  <!--shown as the message in a dialog when the recording could not be added to the media database-->
+  <string name="error_mediadb_new_record">Në pamundësi të ruajë audion e regjistruar</string>
+  <!--shown as the message in a dialog when an export will tak up too much space-->
+  <string name="error_storage_space" formatted="false">Ups, nuk kemi hapësrië. Ju lutemi të krijoni rreh %.2f%nMB të lira dhe provoni përsëri!</string>
+  <!--add for libra begin-->
+  <string name="default_record_name">Regjistrim i patitulluar</string>
+  <string name="menu_view_record_list">Shikoni listën e regjistrimeve</string>
+  <string name="menu_setting">Parametrat</string>
+  <string name="delete_dialog_title">Dëshironi të fshini regjistrimin e tashëm?</string>
+  <string name="overwrite_dialog_title">%s tashmë eksiston. Dëshironi të mbishkruani?</string>
+  <string name="preferences_title">Parametrat</string>
+  <string name="pref_title_record_type">Lloji i dokumentit të regjistruar</string>
+  <string name="prefDialogTitle_recordType">Ju lutemi, zgjidhni llojin e dokumentit</string>
+  <string name="prefDefault_recordType">audio/3gpp</string>
+  <string name="pref_title_enable_high_quality">Mundëso kualitet të lartë</string>
+  <string name="pref_summary_enable_high_quality">Audio me kualitet më të lartë mund të jetë më i madh</string>
+  <string name="pref_title_enable_sound_effect">Mundëso efektet e zërave</string>
+  <string name="pref_summary_enable_sound_effect">Duke lëshuar efektet e tingujve kur ndryshohet gjendja</string>
+  <string name="notification_recording">Duke regjistruar...</string>
+  <string name="notification_stopped">Regjistrimi u ndal</string>
+  <string name="notification_warning">Hapësirë e zënë(më pak se %d minuta)... </string>
+  <string name="sd_card_not_available">SD kartela nuk është në funskion</string>
+  <string name="open_file_explorer">Hap eksploruesn e dokumenteve</string>
+  <string name="alert_message_delete_record">Dëshironi të fshini regjistrimin e selektuar?</string>
+  <!--add for libra end-->
+  <string name="help_clip_select">Zgjidhni një lloj të klipit, pastaj prekni mbi imazhin për të lëshuar videon, foton apo audion</string>
+  <!--youtube upload-->
+  <string name="lesson_status_have_not_started">Nuk keni filluar</string>
+  <string name="lessons_congratulations_you_have_completed_the_lesson_">Keni përfunduar një leksion!</string>
+  <string name="lesson_status_in_progress">Në progres</string>
+  <string name="lesson_status_complete">PËRFUNDO!</string>
+  <string name="no_lessons_available_tap_to_load_">Nuk ka leksione në dispozicion (prekni për përditësim)</string>
+  <string name="_lesson_complete">leksioni përfundoi</string>
+  <string name="_of_">e</string>
+  <string name="default_youtube_desc">Një projekt i StoryMaker</string>
+  <string name="view_published_media_online_or_local_copy_">Shihni materialin e publikuar online?</string>
+  <string name="choose_account_for_youtube_upload">Zgjedhni llogarinë për ngarkim</string>
+  <string name="rendering">Duke renderuar...</string>
+  <string name="rendering_project_">Projekti duke u renderuar...</string>
+  <string name="publishing">Publikimi</string>
+  <string name="connecting_to_youtube_">Duke u konektuar me YouTube...</string>
+  <string name="uploading_to_storymaker">Duke u publikuar në faqen e StoryMaker...</string>
+  <string name="rendering_clips_">Klipet duke u renderuar....</string>
+  <string name="you_must_enter_a_project_name">Ju lutemi të vendosni një titull për draftin. Mund ta ndryshoni më vonë.</string>
+  <string name="delete_clip">Të Hiqet Fragmenti?</string>
+  <string name="add_new_clip_to_the_scene_">Shtoni klip të ri në skenë?</string>
+  <string name="video_project_project_type">Video projekt</string>
+  <string name="photo_project_project_type">Foto projekt</string>
+  <string name="audio_project_project_type">Audio projekti</string>
+  <string name="photo_essay_project_project_type">Projekti me foto ese</string>
+  <string name="eula_title">Ju pajtoheni me:</string>
+  <string name="eula_accept">Pranoni</string>
+  <string name="eula_refuse">Refuzoni</string>
+  <string name="privacy_policy">Politikat e privatësisë</string>
+  <string name="end_user_license_agreement">Përfundo lejen e përdoruesit</string>
+  <string name="send_annonymous_data">Dërgo informata anonimisht për të përmirësuar StoryMaker</string>
+  <string name="by_clicking_accept">Duke klikuar \'Pranoj\' ju pranoni Marrëveshjen tonë të Lejes për Përdoruesit dhe që keni lexuar Politikat e Privatësisë:</string>
+  <string name="button_add_narration">Incizo Voiceover</string>
+  <string name="button_play_narration">Lësho Voiceover </string>
+  <string name="button_delete_narration">Fshi Voiceover </string>
+  <string name="button_render_preview">Rendero shikimin paraprak</string>
+  <string name="publish_sm">StoryMaker.cc</string>
+  <string name="publish_youtube">YouTube</string>
+  <string name="action_render">Eksporto</string>
+  <string name="action_play">Lësho</string>
+  <string name="action_share">Shpërndaje</string>
+  <string name="cbRenderTypeLabel">Përdor videon me renderim të shpejtë </string>
+  <string name="drawer_quick_capture">Kapje e shpejtë</string>
+  <string name="select_story_type">Selekto llojin e artikullit</string>
+  <string name="button_start_my_story">FILLO ARTIKULLIN TIM</string>
+  <string name="home_intro_button_lessons">EKSPLORO LEKSIONET</string>
+  <string name="home_intro_button_projects">KRIJO NJË TREGIM</string>
+  <string name="created_with_storymaker_tag">U kriju me StoryMaker - https://storymaker.cc/</string>
+  <string name="err_you_need_at_least_one_account_configured_on_your_device">Ju duhet të paktën një llogari e konfiguruar në pajisjen tuaj</string>
+  <string name="you_began_a_new_lesson">Ju filluat një leksion të ri</string>
+  <string name="scene_editor_please_add_clips">Ju lutemi të shtoni klipe në \"Ndërto\" para se të selektoni këtë funksion</string>
+  <string name="scene_editor_trim_clip">Prejeni klipin</string>
+  <string name="delete_warning">Ky veprim s\'mund të zhbëhet!</string>
+  <string name="cancel">Anulo</string>
+  <string name="stop">Ndalo</string>
+  <string name="delete">Hiqeni</string>
+  <string name="play_or_share_exported_media_">Lëshoni ose shpërndajeni materialin e eksportuar?</string>
+  <string name="share_published_story">Do ta bashkëndani historinë e publikuar?</string>
+  <string name="err_storage_not_ready">Ruajtja e jashtme (SD karta) nuk duket që është në dispozicion për lexim dhe shkrim në këtë kohë. StoryMaker kërkon qasje në këtë për leksionet dhe të dhënat e projektit. Ju lutemi të kontrolloni pajisjen tuaj dhe të restartoni faqet.</string>
+  <string name="scene_s_">skena(t)</string>
+  <string name="clip_s_">klipe(t)</string>
+  <string name="sc_app_not_found">Aplikacioni SoundCloud nuk gjindet! </string>
+  <string name="sc_app_not_found_message">Dëshironi ta instaloni tani?</string>
+  <string name="no_active_sc_account">Nuk ka llogari në SoundCloud, ju lutemi të identifikoheni/regjistroheni</string>
+  <string name="operation_canceled">Veprimi u anulua</string>
+  <string name="could_not_get_token">Tokeni nuk u realizua</string>
+  <string name="getting_details">Duke marrë detajet e përdoruesit</string>
+  <string name="could_not_create_account">Llogaria nuk mund të krijohet </string>
+  <string name="uploading">Duke ngarkuar...</string>
+  <string name="canceled">Ngarkimi u anulua</string>
+  <!--added for project export-->
+  <string name="export_dialog_title">Dëshironi të shpërndani këtë zip projekt?</string>
+  <string name="export_dialog_close">Mbyll</string>
+  <string name="export_dialog_share">Shpërndaje</string>
+  <string name="title_activity_accounts">Llogaritë</string>
+  <string name="action_settings">Parametrat </string>
+  <string name="label_activity_log">Aktiviteti</string>
+  <string name="label_title">Titulli</string>
+  <string name="label_description">Përshkrimi</string>
+  <string name="label_tags">Etiketat</string>
+  <string name="label_add">Shto</string>
+  <string name="label_edit">Rregullo</string>
+  <string name="label_save">Ruaj</string>
+  <string name="label_activities">Aktiviteti</string>
+  <string name="hint_story_title">Shtyp një titull</string>
+  <string name="hint_story_description">Përshkruaj artikullin tënd...</string>
+  <string name="hint_story_tag">#shtoetiketat</string>
+  <string name="label_section">Seksioni</string>
+  <string name="label_location">Vendndodhja</string>
+  <string name="title_activity_story_info">Info</string>
+  <string name="title_activity_story_info_edit">Përmirëso infot</string>
+  <string name="title_activity_project_tag_fragment">ProjectTagFragment</string>
+  <string name="title_activity_connect_account">Llogaria Storymaker</string>
+  <string name="hint_no_description">Pa përshkrim.</string>
+  <string name="trim_clips">Prejeni klipin</string>
+  <string name="info">Info</string>
+  <string name="send_logcat_to_support">Dërgo Logcat për mbështetje</string>
+  <string name="restarting_storymaker">Duke restartuar StoryMaker...</string>
+  <string name="send">Dërgoni</string>
+  <string name="uploading_to_soundcloud">Duke e ngarkuar në SoundCloud...</string>
+  <string name="uploading_to_facebook">Duke e ngarkuar në Facebook</string>
+  <string name="no_site_selected">Asnjë titull i zgjedhur.</string>
+  <string name="exported_stories">Eksportime</string>
+  <string name="no_title">Pa titull.</string>
+  <string name="title_exports">Histori të publikuara</string>
+  <string name="last_modified">Ndryshimi i fundit</string>
+  <string name="export_error_1">Diçka shkoi keq me eksportimin e medias</string>
+  <string name="export_error_2">Gabim</string>
+  <string name="processing_audio">Duke proceduar regjistrimet audio...</string>
+  <string name="processing_audio_multiple">Procedimi i regjistrimit audio</string>
+  <string name="mixing_tracks">Përzierja e regjistrimeve</string>
+  <string name="trimming_merging">Prerja dhe bashkimi i videos</string>
+  <string name="merging_video_audio">Duke bashkuar videon dhe audion...</string>
+  <string name="export_error_3">Diçka shkoi keq me eksportimin e medias</string>
+  <string name="export_error_4">Gabim</string>
+  <!--NEW/CACHEWORD-->
+  <string name="catalog_menu_lessons">Leksionet</string>
+  <string name="home_menu_home">Shtëpi</string>
+  <string name="home_menu_stories">Artikujt </string>
+  <string name="home_menu_lessons">Leksionet</string>
+</resources>

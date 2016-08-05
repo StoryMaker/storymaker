@@ -1,0 +1,109 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+  <string name="terms_title">Storymaker使用条款</string>
+  <!--tutorial_lessons-->
+  <string name="tutorial_title_1">学习如何使用故事讲述者软件</string>
+  <string name="tutorial_text_1">学习如何在保证安全的同时，成为一名好的记者，制作出精彩的视频、图片和短片。</string>
+  <string name="tutorial_title_2">务必准确</string>
+  <string name="tutorial_text_2">我们和ICFJ共同开发了这个软件。你可以确定的是，我们的记者课程能够教会你如何做一个更出色的报道者。</string>
+  <string name="tutorial_title_3">保护自己</string>
+  <string name="tutorial_text_3">我们的数字安全课程将会教会你保护自己和你的数据。故事讲述者软件的最终目的是，无论你在哪里讲述的故事，都能保护你的安全。</string>
+  <string name="tutorial_title_4">更好的讲述你的故事</string>
+  <string name="tutorial_text_4">故事最好能够制作成多种不同的表现形式，可以是音频、或者图片、视频。学习每种表现形式之间 的不同点。</string>
+  <string name="tutorial_title_5">测试你自己</string>
+  <string name="tutorial_text_5">每个项目都会有一个小测试来检验你对它的理解程度</string>
+  <string name="tutorial_title_6">继续学习</string>
+  <!--/tutorial_lessons-->
+  <!--tutorial_story-->
+  <string name="tutorial_title_7">更好的讲述故事</string>
+  <string name="tutorial_title_8">选择你的讲述形式。</string>
+  <!--/tutorial_story-->
+  <!--template_description-->
+  <string name="template_audio_desc">通过记录声音来讲述你的故事，什么人，什么事。如果你的信号不够好，音频形式会是一个很好的选择。</string>
+  <string name="template_photo_desc">一张图片往往能够代替很多文字内容。通过图片向我展示哪些人或事物在你的事件中最重要，或者事件是怎么发生的。</string>
+  <string name="template_essay_desc">有时候，新闻需要很多的图片。通过图片来向我们展示事件如何发生的，用一系列的相关图片来讲述一个事件。</string>
+  <!--/template_description-->
+  <!--legacy_story_type-->
+  <!--once we refactor to keep this extra text fields in the db instead of referencing this strings file we can remove these (after doing a migration step)-->
+  <string name="story_type_event_title">事件</string>
+  <string name="story_type_issue_title">主题</string>
+  <string name="story_type_profile_title">文档</string>
+  <string name="story_type_news_title">爆炸性新闻</string>
+  <string name="story_type_news_desc">爆炸性的新闻往往是即时的。抓住一个角度，围绕着时间、地点、人物、事件来讲述你的事件。以详细记述的方式往里面添加内容。</string>
+  <!--/ legacy_story_type-->
+  <!--story_type-->
+  <string name="story_type_event_news_title">新闻事件</string>
+  <string name="story_type_event_feature_title">故事性事件</string>
+  <string name="story_type_event_breaking_title">爆炸性新闻事件</string>
+  <string name="story_type_issue_social_title">社会话题</string>
+  <string name="story_type_issue_political_title">政治话题</string>
+  <string name="story_type_issue_economic_title">经济话题</string>
+  <string name="story_type_profile_public_title">公开资料</string>
+  <string name="story_type_profile_professional_title">专业资料</string>
+  <string name="story_type_profile_personal_title">个人资料</string>
+  <!--/story_type-->
+  <!--story_type_description-->
+  <!--/story_type_description-->
+  <!--template_options-->
+  <string name="choose_level">选择一个等级</string>
+  <!--/template_options-->
+  <!--story_type_new-->
+  <string name="activity">活动</string>
+  <string name="impact">影响</string>
+  <string name="background">背景</string>
+  <string name="motivation">动机</string>
+  <string name="location">地点</string>
+  <string name="experience">经历</string>
+  <string name="results">结果</string>
+  <string name="next_steps">下步计划</string>
+  <string name="conclusion">结论</string>
+  <string name="story_type_event_news_text2">你是怎样被卷入该事件的？</string>
+  <string name="story_type_event_breaking_text1">发生了什么事件？</string>
+  <string name="story_type_event_breaking_text3">哪些人受到这件事的影响？</string>
+  <!--/story_type_new-->
+  <!--story_type_old-->
+  <string name="when">什么时间？</string>
+  <string name="how">具体情况？</string>
+  <string name="what">什么事？</string>
+  <string name="where">在哪里？</string>
+  <string name="why">为什么？</string>
+  <string name="story_type_event_text1">这件事什么时候发生的？</string>
+  <string name="story_type_event_text2">这件事的目的？</string>
+  <string name="story_type_event_text3">为什么这件事这么重要？</string>
+  <string name="story_type_event_text4">这件事什么时候发生的？</string>
+  <string name="story_type_event_text5">这件事是怎么开始的？</string>
+  <string name="story_type_event_text6">这件事的目的是什么？</string>
+  <string name="story_type_event_text7">这件事发生在哪里？</string>
+  <string name="story_type_event_text8">为什么这件事很重要？</string>
+  <string name="story_type_issue_text1">这个事件对社会群体产生了怎么的影响？</string>
+  <string name="story_type_issue_text2">谁受到的影响最大？</string>
+  <string name="story_type_issue_text3">受到影响后他们的反应是什么？</string>
+  <string name="story_type_issue_text4">这个事件对社会群体产生了怎么的影响？</string>
+  <string name="story_type_issue_text5">这个事件什么时候发生的？在哪里发生的？</string>
+  <string name="story_type_issue_text6">谁受到的影响最大？</string>
+  <string name="story_type_issue_text7">为什么他们受到的影响最大?</string>
+  <string name="story_type_issue_text8">受到影响后他们有什么反应？</string>
+  <string name="story_type_profile_text1">谁是事件的主要人物？</string>
+  <string name="story_type_profile_text2">主要人物在事件中面临哪些挑战？</string>
+  <string name="story_type_profile_text3">主要人物是如何应对这些挑战？</string>
+  <string name="story_type_profile_text4">谁是事件的主要人物？</string>
+  <string name="story_type_profile_text5">主要人物来自哪里？</string>
+  <string name="story_type_profile_text6">主要人物面临哪些挑战？</string>
+  <string name="story_type_profile_text7">为什么主要人物会去接受这些挑战？</string>
+  <string name="story_type_profile_text8">主要人物是如何应对这些挑战？</string>
+  <string name="story_type_news_text1">发生了什么事件？</string>
+  <string name="story_type_news_text2">哪些人受到这件事的影响？</string>
+  <string name="story_type_news_text3">对这件事是有怎样的反应？</string>
+  <string name="story_type_news_text4">发生了什么事件？</string>
+  <string name="story_type_news_text5">新闻在哪里的发生的？</string>
+  <string name="story_type_news_text6">哪些人受到这件事的影响？</string>
+  <string name="story_type_news_text7">为什么这件事会发生？</string>
+  <string name="story_type_news_text8">对这件事是有怎样的反应？</string>
+  <!--/story_type_old-->
+  <!--prefs-->
+  <!--/prefs-->
+  <!--FirstStartActivity-->
+  <!--ConnectAccountActivity-->
+  <!--ProjectTagFragment-->
+  <!--BaesActivity Drawer  (For Accessibility Descriptions)-->
+</resources>

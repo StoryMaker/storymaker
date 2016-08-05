@@ -1,0 +1,185 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+  <string name="terms_title">Termos do Storymaker</string>
+  <string name="terms_text_1">Você detém os direitos sobre o seu conteúdo, você pode retirar do ar quando quiser, e nós não iremos vender nenhuma informação sua. Ao concordar em compartilhar suas informações com alive.in/ você concede a Small World News e seus parceiros o direito de colocar suas estórias com estórias similares criadas pelo Storymaker. Nós agrupamos elas baseadas no tipo, tópico e localizações.</string>
+  <string name="terms_text_2">Sua história será postada na mídia de compartilhamento de sua escolha, mas também é referenciada em alive.in/. Título, descrição e tags serão postadas em alive.in/ e todo o demais conteúdo será referenciado para o seu feed pessoal da sua opção de compartilhamento.</string>
+  <!--tutorial_lessons-->
+  <string name="tutorial_title_1">Aprendendo a contar estória.</string>
+  <string name="tutorial_text_1">Aprenda a ser um jornalista de forma segura e a produzir um bom material de áudio, foto e vídeo.</string>
+  <string name="tutorial_title_2">Seja preciso.</string>
+  <string name="tutorial_text_2">Desenvolvido em parceria com ICFJ, você pode confiar que nossas dicas de jornalismo farão de você um melhor reporter.</string>
+  <string name="tutorial_title_3">Proteja-se</string>
+  <string name="tutorial_text_3">Nossas lições de segurança digital irão ajudar você e suas fontes a ficarem seguras. StoryMaker tem como objetivo garantir a sua segurança indiferente de onde seja sua estória.</string>
+  <string name="tutorial_title_4">Conte sua estória melhor.</string>
+  <string name="tutorial_text_4">Estórias são mais adequadas para diferentes meios, seja áudio, foto ou vídeo. Aprenda como cada meio é diferente.</string>
+  <string name="tutorial_title_5">Teste-se</string>
+  <string name="tutorial_text_5">Cada lição termina com um questionário para medir o seu entendimento.</string>
+  <string name="tutorial_title_6">Continue aprendendo</string>
+  <string name="tutorial_text_6">Compartilhe suas história em na comunidade Alive.in/ e aprenda cada vez a montar estórias.</string>
+  <!--/tutorial_lessons-->
+  <!--tutorial_story-->
+  <string name="tutorial_title_7">Conta estórias melhor.</string>
+  <string name="tutorial_text_7">Uma boa estória tem um início, meio e fim. Entreviste alguém que forneça mais contexto para sua estória. Mostre-nos onde els moram. Deixe pessoal.</string>
+  <string name="tutorial_title_8">Escolha o seu meio.</string>
+  <string name="tutorial_text_8">Audio, foto, e video se adequam em diferentes histórias. De uma olhada nas lições para saber mais. Escolha um meio, e aprenda consequentemente.</string>
+  <string name="tutorial_title_9">Conte uma história em cinco partes.</string>
+  <string name="tutorial_text_9">Use cinco partes para contar sua estória. Descriva a localização de sua estória. Introduza o sujeito principal. As outras três partes contam a estória com início, meio e fim.</string>
+  <string name="tutorial_title_10">Quebre o mofo.</string>
+  <string name="tutorial_text_10">Junte as partes em ordem distintas para dar mais impacto.</string>
+  <string name="tutorial_title_11">Conte estórias longas.</string>
+  <string name="tutorial_text_11">Modelos de estória pode servir de exemplo.</string>
+  <!--/tutorial_story-->
+  <!--template_description-->
+  <string name="template_audio_desc">Grave o som que conta a sua estória, quem, o que. Se você não conseguir visuais muito bons, audio é uma boa alternativa.</string>
+  <string name="template_photo_desc">Um imagem vale mil palavras. Mostre-nos quem ou o que é importante em sua estória ou como algo aconteceu.</string>
+  <string name="template_essay_desc">As vezes, diversas fotos são necessárias. Mostre-nos como a estória acontece, conte a estória em uma série de imagens relacionadas.</string>
+  <string name="template_video_desc">Capture imagens compenetrantes e ações na forma em que acontecem. Mostre-nos quem ou o que é importante e porque.</string>
+  <!--/template_description-->
+  <!--legacy_story_type-->
+  <!--once we refactor to keep this extra text fields in the db instead of referencing this strings file we can remove these (after doing a migration step)-->
+  <string name="story_type_event_title">Evento</string>
+  <string name="story_type_issue_title">Problema</string>
+  <string name="story_type_profile_title">Perfil</string>
+  <string name="story_type_news_title">Notícias de Última Hora</string>
+  <string name="story_type_event_desc">Estórias de evento tem uma janela de tempo e um cenário. Foque no que acontece no evento. Organize sua estória ao redor de quando o evento ocorre, onde e porquê ele ocorre neste local e momento.</string>
+  <string name="story_type_issue_desc">Estórias sobre um problema examinam de maneira mais genérica um tema. Foque em como este problema afeta a comunidade ou o grupo de pessoas. Organize sua estória ao redor de quem é impactado e o que está sendo feito em resposta.</string>
+  <string name="story_type_profile_desc">Construa o perfil de um personagem em específico. Foque em quem o personagem é. Organize sua estória ao redor da vida diária do personagem, o que acontece e como o personagem lida com os desafios.</string>
+  <string name="story_type_news_desc">Notícias de Última Hora são imediatas. Foque em um ângulo. Organize sua estória ao redor de fatos, quem, quando, o que, onde. Use narração para adicionar contexto.</string>
+  <!--/ legacy_story_type-->
+  <!--story_type-->
+  <string name="story_type_event_news_title">Evento de notícias</string>
+  <string name="story_type_event_feature_title">Recursos do evento</string>
+  <string name="story_type_event_breaking_title">Evento de noticias de ultima hora</string>
+  <string name="story_type_issue_social_title">Problema social</string>
+  <string name="story_type_issue_political_title">Problema politico</string>
+  <string name="story_type_issue_economic_title">Problema econômico</string>
+  <string name="story_type_profile_public_title">Perfil publico</string>
+  <string name="story_type_profile_professional_title">Perfil profissional</string>
+  <string name="story_type_profile_personal_title">Perfil Pessoal</string>
+  <!--/story_type-->
+  <!--story_type_description-->
+  <string name="story_type_event_news_desc">Histórias s</string>
+  <!--/story_type_description-->
+  <!--template_options-->
+  <string name="choose_level">Escolha um nível</string>
+  <string name="choose_level_basic">Básico</string>
+  <string name="choose_level_advanced">Avançado</string>
+  <!--/template_options-->
+  <!--story_type_new-->
+  <string name="overview">Visão geral</string>
+  <string name="activity">Atividade</string>
+  <string name="impact">Impacto</string>
+  <string name="background">Segundo plano</string>
+  <string name="involvement">Envolvimento</string>
+  <string name="motivation">Motivação</string>
+  <string name="location">Localização</string>
+  <string name="experience">Experiencia</string>
+  <string name="results">Resultados</string>
+  <string name="next_steps">Próximas etapas</string>
+  <string name="moving_forward">Movendo para frente</string>
+  <string name="conclusion">Conclusão</string>
+  <string name="story_type_event_news_text1">O que está acontecendo neste evento?</string>
+  <string name="story_type_event_news_text2">Como você está envolvido?</string>
+  <string name="story_type_event_news_text3">Quem é o mais afetado por este evento?</string>
+  <string name="story_type_event_news_text4">Qual é a história por trás deste evento?</string>
+  <string name="story_type_event_news_text5">Qual o impacto deste evento?</string>
+  <string name="story_type_event_feature_text1">O que está acontecendo neste evento?</string>
+  <string name="story_type_event_feature_text2">Por que você está envolvido com este evento?</string>
+  <string name="story_type_event_feature_text3">Onde o evento acontece?</string>
+  <string name="story_type_event_feature_text4">Como você está envolvido pessoalmente?</string>
+  <string name="story_type_event_feature_text5">Qual o impacto deste evento?</string>
+  <string name="story_type_event_breaking_text1">O que está acontecendo?</string>
+  <string name="story_type_event_breaking_text2">Onde isso está acontece?</string>
+  <string name="story_type_event_breaking_text3">Quem é afetado?</string>
+  <string name="story_type_event_breaking_text4">Existe algum dano imediato?</string>
+  <string name="story_type_event_breaking_text5">Como as pessoas estão respondendo?</string>
+  <string name="story_type_issue_social_text1">Por favor descreva o problema social.</string>
+  <string name="story_type_issue_social_text2">Quando &amp;amp, onde foi que este problema começou?</string>
+  <string name="story_type_issue_social_text3">Como isso afeta esta comunidade?</string>
+  <string name="story_type_issue_social_text4">Conte-nos sobre como esta história afeta sua vida.</string>
+  <string name="story_type_issue_social_text5">O que pode ser feito para resolver este problema?</string>
+  <string name="story_type_issue_political_text1">Por favor descreva o problema politico.</string>
+  <string name="story_type_issue_political_text2">Quem ele afeta diretamente?</string>
+  <string name="story_type_issue_political_text3">Como ele afeta o governo?</string>
+  <string name="story_type_issue_political_text4">Por que isto é importante pra você pessoalmente?</string>
+  <string name="story_type_issue_political_text5">O que pode ser feito para resolver este problema?</string>
+  <string name="story_type_issue_economic_text1">Por favor descreva o problema economico.</string>
+  <string name="story_type_issue_economic_text2">Qual é a sua relação com o problema?</string>
+  <string name="story_type_issue_economic_text3">Como ele afeta a economia?</string>
+  <string name="story_type_issue_economic_text4">Quem é o mais afetado por este?</string>
+  <string name="story_type_issue_economic_text5">O que pode ser feito para resolver este problema?</string>
+  <string name="story_type_profile_public_text1">Explique um pouco sobre quem você é.</string>
+  <string name="story_type_profile_public_text2">Quando você começou?</string>
+  <string name="story_type_profile_public_text3">O que você faz?\'</string>
+  <string name="story_type_profile_public_text4">Descreva um momento que você sentiu orgulho do seu trabalho.</string>
+  <string name="story_type_profile_public_text5">Como você vê seu papel no futuro?</string>
+  <string name="story_type_profile_professional_text1">Quem é você e o que é seu trabalho?</string>
+  <string name="story_type_profile_professional_text2">Por favor, explique como você faz trabalha.</string>
+  <string name="story_type_profile_professional_text3">Por que este trabalha é importante pra você?</string>
+  <string name="story_type_profile_professional_text4">Como você  cria um impacto no seu trabalho?</string>
+  <string name="story_type_profile_personal_text1">Explique um pouco sobre quem você é.</string>
+  <string name="story_type_profile_personal_text4">O que você faz de diferente agora?</string>
+  <!--/story_type_new-->
+  <!--story_type_old-->
+  <string name="scene_number">Cena</string>
+  <string name="when">Quando</string>
+  <string name="how">Como?</string>
+  <string name="what">O que?</string>
+  <string name="where">Quando?</string>
+  <string name="why">Porque?</string>
+  <string name="story_type_event_text1">Quando o evento ocorreu?</string>
+  <string name="story_type_event_text2">Qual o propósito do evento?</string>
+  <string name="story_type_event_text3">Porque o evento é importante?</string>
+  <string name="story_type_event_text4">Quando o evento ocorreu?</string>
+  <string name="story_type_event_text5">Como o evento está organizado?</string>
+  <string name="story_type_event_text6">Qual é o propósito do evento?</string>
+  <string name="story_type_event_text7">Quando o evento ocorreu?</string>
+  <string name="story_type_event_text8">Porque o evento é importante?</string>
+  <string name="story_type_issue_text1">Como este problema impacta a comunidade?</string>
+  <string name="story_type_issue_text2">Quem é o mais impactado?</string>
+  <string name="story_type_issue_text3">O que está sendo feito a respeito?</string>
+  <string name="story_type_issue_text4">Como que o problema impacta a comunidade?</string>
+  <string name="story_type_issue_text5">Quando/Onde o problema começou?</string>
+  <string name="story_type_issue_text6">Quem é mais impactado?</string>
+  <string name="story_type_issue_text7">Porque eles são os mais impactados?</string>
+  <string name="story_type_issue_text8">O que está sendo feito a respeito?</string>
+  <string name="story_type_profile_text1">Quem é o personagem?</string>
+  <string name="story_type_profile_text2">Qual o desafio deste personagem?</string>
+  <string name="story_type_profile_text3">Como o personagem lida com o desafio?</string>
+  <string name="story_type_profile_text4">Quem é o personagem?</string>
+  <string name="story_type_profile_text5">Da onde é o personagem?</string>
+  <string name="story_type_profile_text6">Qual é o desafio do personagem?</string>
+  <string name="story_type_profile_text7">Porque o personagem está tendo dificuldade com este desafio?</string>
+  <string name="story_type_profile_text8">Como que o personagem lida com o desafio?</string>
+  <string name="story_type_news_text1">O que está acontecendo?</string>
+  <string name="story_type_news_text2">Quem é afetado?</string>
+  <string name="story_type_news_text3">Quem é o resposável?</string>
+  <string name="story_type_news_text4">O que está acontecendo?</string>
+  <string name="story_type_news_text5">Onde a notícia está acontecendo?</string>
+  <string name="story_type_news_text6">Quem é afetado?</string>
+  <string name="story_type_news_text7">Porque isso aconteceu?</string>
+  <string name="story_type_news_text8">Como isso está sendo lidado?</string>
+  <!--/story_type_old-->
+  <!--prefs-->
+  <!--/prefs-->
+  <!--FirstStartActivity-->
+  <string name="sign_up_btn">CADASTRE-SE NO STORYMAKER</string>
+  <string name="no_thanks_btn">NÃO OBRIGADO</string>
+  <string name="tos_btn">EU CONCORDO COM OS TERMOS DE SERVIÇO</string>
+  <string name="tos_dialog_title">Termos de serviço</string>
+  <string name="tos_dialog_msg">Por favor aceite os Termos de Serviços antes de continuar</string>
+  <string name="tos_dialog_positive_button">Entendi</string>
+  <string name="acct_created_dialog_title">Acesse sua conta</string>
+  <string name="acct_created_dialog_positive_button">Começar!</string>
+  <!--ConnectAccountActivity-->
+  <string name="my_account">MINHA CONTA STORYMAJER</string>
+  <string name="join_storymaker">Entra para a Comunidade StoryMaker</string>
+  <string name="create_account">CRIAR MINHA CONTA</string>
+  <string name="sign_in">CADASTRE-SE / LOGIN</string>
+  <string name="sign_out">SAIR</string>
+  <!--ProjectTagFragment-->
+  <string name="no_tags_msg">Sem #tags adicionadas</string>
+  <!--BaesActivity Drawer  (For Accessibility Descriptions)-->
+  <string name="open_drawer">Abrir Gaveta</string>
+  <string name="close_drawer">Fechar Gaveta</string>
+</resources>

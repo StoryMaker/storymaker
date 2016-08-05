@@ -1,0 +1,46 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <string-array name="story_sections">
+    <item>Politiek</item>
+    <item>Zakelijk</item>
+    <item>Sport</item>
+    <item>Kunst</item>
+    <item>Wetenschap</item>
+    <item>Gezondheid</item>
+    <item>Onderwijs</item>
+    <item>Milieu</item>
+  </string-array>
+  <string-array name="lesson_sections">
+    <item>Journalistiek</item>
+    <item>Beveiliging</item>
+    <item>Geluid</item>
+    <item>Fotografie</item>
+    <item>Film</item>
+    <item>Verhaal</item>
+  </string-array>
+  <string-array name="array_story_locations">
+    <item>V.S.</item>
+    <item>Californië</item>
+    <item>Oakland</item>
+    <item>Egypte</item>
+    <item>Irak</item>
+    <item>Marokko</item>
+    <item>Tunesië</item>
+    <item>Zimbabwe</item>
+    <item>Tsjechische Republiek</item>
+    <item>Vietnam</item>
+  </string-array>
+  <string-array name="array_story_sections">
+    <item>Politiek</item>
+    <item>Zakelijk</item>
+    <item>Sport</item>
+    <item>Kust</item>
+    <item>Wetenschap</item>
+    <item>Gezondheid</item>
+    <item>Onderwijs</item>
+    <item>Milieu</item>
+    <item>Technologie</item>
+    <item>Reizen</item>
+  </string-array>
+  <!--<item>catalog</item>-->
+</resources>

@@ -1,0 +1,46 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <string-array name="story_sections">
+    <item>Politik</item>
+    <item>Bisnis</item>
+    <item>Olahraga</item>
+    <item>Seni</item>
+    <item>Sains</item>
+    <item>Kesehatan</item>
+    <item>Edukasi</item>
+    <item>Lingkungan</item>
+  </string-array>
+  <string-array name="lesson_sections">
+    <item>Journalisme</item>
+    <item>Keamanan</item>
+    <item>Audio</item>
+    <item>Fotografi</item>
+    <item>Videografi</item>
+    <item>Cerita</item>
+  </string-array>
+  <string-array name="array_story_locations">
+    <item>Amerika Serikat</item>
+    <item>California</item>
+    <item>Oakland</item>
+    <item>Mesir</item>
+    <item>Irak</item>
+    <item>Maroko</item>
+    <item>Tunisia</item>
+    <item>Zimbabwe</item>
+    <item>Republik Ceko</item>
+    <item>Vietnam</item>
+  </string-array>
+  <string-array name="array_story_sections">
+    <item>Politik</item>
+    <item>Bisnis</item>
+    <item>Olahraga</item>
+    <item>Seni</item>
+    <item>Sains</item>
+    <item>Kesehatan</item>
+    <item>Edukasi</item>
+    <item>Lingkungan</item>
+    <item>Teknologi</item>
+    <item>Perjalanan</item>
+  </string-array>
+  <!--<item>catalog</item>-->
+</resources>

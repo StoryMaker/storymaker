@@ -1,0 +1,45 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+  <string name="terms_title">Termini di Storymaker</string>
+  <!--tutorial_lessons-->
+  <!--/tutorial_lessons-->
+  <!--tutorial_story-->
+  <!--/tutorial_story-->
+  <!--template_description-->
+  <!--/template_description-->
+  <!--legacy_story_type-->
+  <!--once we refactor to keep this extra text fields in the db instead of referencing this strings file we can remove these (after doing a migration step)-->
+  <string name="story_type_event_title">Evento</string>
+  <string name="story_type_profile_title">Profilo</string>
+  <!--/ legacy_story_type-->
+  <!--story_type-->
+  <!--/story_type-->
+  <!--story_type_description-->
+  <!--/story_type_description-->
+  <!--template_options-->
+  <string name="choose_level_advanced">Avanzato</string>
+  <!--/template_options-->
+  <!--story_type_new-->
+  <string name="activity">Attività</string>
+  <string name="impact">Impatto</string>
+  <string name="motivation">Motivazione</string>
+  <string name="location">Luogo</string>
+  <string name="experience">Esperienza</string>
+  <string name="results">Risultati</string>
+  <string name="conclusion">Conclusione</string>
+  <!--/story_type_new-->
+  <!--story_type_old-->
+  <string name="story_type_event_text3">Perché l\'evento è importante?</string>
+  <string name="story_type_event_text8">Perché l\'evento è importante?</string>
+  <!--/story_type_old-->
+  <!--prefs-->
+  <string name="prefs_category_media_title">Media</string>
+  <string name="prefs_category_debug_title">Debug</string>
+  <string name="prefs_use_tor_title">Usa Orbot (Tor)</string>
+  <string name="prefs_video_codec_title">Codec Video</string>
+  <!--/prefs-->
+  <!--FirstStartActivity-->
+  <!--ConnectAccountActivity-->
+  <!--ProjectTagFragment-->
+  <!--BaesActivity Drawer  (For Accessibility Descriptions)-->
+</resources>

@@ -1,0 +1,22 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <string-array name="story_sections">
+    <item>سیاسیات</item>
+    <item>کاروبار</item>
+    <item>کھیل</item>
+    <item>فنون</item>
+    <item>سائنس</item>
+    <item>صحت</item>
+    <item>تعلیم</item>
+    <item>ماحول</item>
+  </string-array>
+  <string-array name="lesson_sections">
+    <item>صحافت</item>
+    <item>سیکیورٹی</item>
+    <item>آڈیو</item>
+    <item>فوٹوگرافی</item>
+    <item>ویڈیوگرافی</item>
+    <item>کہانی</item>
+  </string-array>
+  <!--<item>catalog</item>-->
+</resources>

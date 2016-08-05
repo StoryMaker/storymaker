@@ -1,0 +1,233 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+  <string name="title_projects">故事</string>
+  <string name="title_lessons">课程</string>
+  <string name="action_publish">发布</string>
+  <!--menus-->
+  <string name="menu_new_project">新闻</string>
+  <string name="menu_projects">故事</string>
+  <string name="menu_lessons">课程</string>
+  <string name="menu_glossary">词汇</string>
+  <string name="menu_contacts">联系</string>
+  <string name="menu_settings">设置</string>
+  <string name="menu_archive">标签</string>
+  <string name="drawer_profile">登陆</string>
+  <!--FIXME: rename-->
+  <string name="menu_add_media">添加</string>
+  <string name="menu_capture_media">记录</string>
+  <string name="menu_share_media">分享</string>
+  <string name="menu_save_media">保存</string>
+  <string name="menu_play_media">播放</string>
+  <string name="menu_render_media">放弃</string>
+  <string name="menu_bug_report">错误报告</string>
+  <string name="menu_login">登陆</string>
+  <string name="menu_logs">发送记录</string>
+  <string name="menu_update">更新</string>
+  <string name="menu_about">关于</string>
+  <string name="menu_save_project">保存</string>
+  <string name="menu_overlay_camera">照片</string>
+  <string name="menu_add_new_shot">将文件加入场景</string>
+  <string name="menu_export_project_files">将项目文件导出为zip压缩文件</string>
+  <!--project list-->
+  <!--video processing-->
+  <string name="pref_out_fps_title">输出帧率(帧每秒)</string>
+  <string name="pref_out_fps_summary">以每秒(15-30)帧的速度保存输出视频</string>
+  <string name="pref_out_rate_title">输出速率(比特率)</string>
+  <string name="pref_out_rate_summary">视频输出速率(300-1500)</string>
+  <string name="pref_out_format_title">输出格式</string>
+  <string name="pref_out_format_summary">文件包含形式(mp4,3gp,ogg)</string>
+  <string name="pref_out_vcodec_title">输出视频编码</string>
+  <string name="pref_out_vcodec_summary">视频编码解码方式(复制视频编码、使用libx264编码等)</string>
+  <string name="pref_out_acodec_title">输出视频解码</string>
+  <string name="pref_out_acodec_summary">自动解码(复制、aac、mp3等)</string>
+  <string name="pref_out_vwidth_title">自定义视频宽度(px)</string>
+  <string name="pref_out_vwidth_summary">自定义已输出视频的宽度</string>
+  <string name="pref_out_vheight_title">自定义视频高度(px)</string>
+  <string name="pref_out_vheight_summary">自定义已输出视频的高度</string>
+  <string name="hintTitle">标题</string>
+  <string name="hintStartTime">开始(00:00:00)</string>
+  <string name="hintEndTime">时长(00:00:00)</string>
+  <string name="hintFadeIn">淡入(帧速率)</string>
+  <string name="hintFadeOut">淡出(帧速率)</string>
+  <string name="start_recording">记录</string>
+  <string name="stop_recording">停止</string>
+  <string name="play_recording">播放</string>
+  <string name="save_recording">存档</string>
+  <string name="downloading_lessons_from_server_">下载最新的服务说明</string>
+  <string name="checking_for_updates_">检查更新</string>
+  <!--LOG COLLECTOR-->
+  <string name="app_name_lc">日志采集器</string>
+  <string name="message_subject">安卓设备日志</string>
+  <string name="acquiring_log_progress_dialog_message">从系统或者u2026里面获取日志</string>
+  <string name="chooser_title">向日志提交一个查看申请</string>
+  <string name="failed_to_get_log_message">从系统里面获取日志失败</string>
+  <string name="main_dialog_text">此程序将尝试收集设备日志。
+已收集的日志将从你选择的程序送出。
+你可以看见以及修改这些数据。</string>
+  <string name="title_home_projects">项目</string>
+  <string name="title_home_activity">活动</string>
+  <string name="title_lessons_lessons">课程</string>
+  <string name="title_lessons_glossary">词汇</string>
+  <string name="hello_world">你好，世界！</string>
+  <string name="title_activity_home">主页</string>
+  <string name="new_story_name_it">命名</string>
+  <string name="new_story_choose_something">请选择一些能够简短阐述主题并激发观众的兴趣的内容。</string>
+  <string name="new_story_choose_a_medium">请选择一个媒介。</string>
+  <!--<string name="new_story_video">Video: Something here about why simple, short video is good! Ideally it should be about the same length as the other strings.</string>
+   	<string name="new_story_essay">Photo Essay: Tell a story about one character. Follow this template to produce a simple photo essay story about one character.</string>
+    <string name="new_story_photo">Single Photo: Telling a strong story with one image is a skill. To simplify, these templates explain some primary photo types.</string>
+    
+    <string name="new_story_audio">Audio: Something here about using audio to tell a story. Personally, I really like to listen to the radio and podcasts while I do housework!</string>-->
+  <string name="new_story_simple_story">简短故事</string>
+  <string name="new_story_choose_template">场景模板</string>
+  <string name="home_new_story">讲述一个经历</string>
+  <string name="home_start_a_lesson">浏览教程</string>
+  <string name="title_activity_lessons">课程</string>
+  <string name="title_activity_scene_editor">场景编辑器</string>
+  <string name="title_activity_choose_template">选择模板</string>
+  <string name="title_activity_story_template">经历模板</string>
+  <string name="tab_make">生成</string>
+  <string name="tab_review">回看</string>
+  <string name="tab_publish">完成</string>
+  <string name="tab_finish">完成</string>
+  <string name="tab_add_clips">生成</string>
+  <string name="tab_order">编辑</string>
+  <string name="story_publish_section">节</string>
+  <string name="story_publish_section_hint">运动</string>
+  <string name="story_publish_topics">主题</string>
+  <string name="story_publish_topics_hint">性别</string>
+  <string name="story_publish_location">地点</string>
+  <string name="story_publish_share">分享</string>
+  <string name="story_publish_send_via">经由...传送</string>
+  <string name="story_publish_status">状态</string>
+  <string name="story_publish_status_processing">正在处理</string>
+  <string name="story_publish_status_not">不公开</string>
+  <string name="story_publish_describe_hint">讲述你的经历</string>
+  <string name="story_publish_story_title">这里填写经历标题</string>
+  <string name="story_publish_story_date">这里填写经历的具体内容</string>
+  <!--delete these below-->
+  <string name="title_section3">第3节</string>
+  <string name="title_section2">第2节</string>
+  <string name="title_section1">第1节</string>
+  <!--Screen title before and during recording-->
+  <!--Screen title after recording-->
+  <!--Screen title while playing back a recording-->
+  <!--Label shown during recording-->
+  <string name="recording">正在录像</string>
+  <!--Label shown when the recording is stopped for a reason other than the user stopping it (e.g. the sd card was removed)-->
+  <string name="recording_stopped">录像已经中止</string>
+  <!--label shown when there is not enough space to record something-->
+  <string name="storage_is_full">存储已满</string>
+  <!--label shown when the recording has reached maximum allowed file size-->
+  <string name="max_length_reached">已超过录像最长长度</string>
+  <!--label shown when there is no sd card available to record to-->
+  <string name="insert_sd_card">请插入SD卡</string>
+  <!--label shown when there is more than 1 minute but less than 9 minutes of space left to record-->
+  <!--label shown when there is less than 1 minute of space left to record-->
+  <!--button to accept the current recording and return it to the caller-->
+  <!--button to discard the current recording and return to the caller-->
+  <!--acknowlegement button in a number of dialogs-->
+  <string name="button_ok">确定</string>
+  <!--Do not translate. Format of the timer that shows how much has been recorded so far-->
+  <!--label shown before the user has recorded anything-->
+  <!--the name under which recordings will be visible in the media database is formatted like this-->
+  <!--all recordings will show up in the media database with this 'artist' name-->
+  <string name="audio_db_artist_name">你的录像</string>
+  <!--all recordings will show up in the media database with this 'album' name-->
+  <string name="audio_db_album_name">音频记录</string>
+  <!--all recordings will show up in the media database in a playlist with this name-->
+  <string name="audio_db_playlist_name">我的录像</string>
+  <!--shown as the message in a dialog when an error occured because of an error accessing the sd card-->
+  <string name="error_sdcard_access">不能读取存储卡或内存</string>
+  <!--shown as the message in a dialog when the app encountered an unspecified internal error-->
+  <string name="error_app_internal">程序内部错误</string>
+  <!--shown as the message in a dialog when the recording could not be added to the media database-->
+  <string name="error_mediadb_new_record">保存音频记录失败</string>
+  <!--shown as the message in a dialog when an export will tak up too much space-->
+  <string name="error_storage_space" formatted="false">很遗憾。存储空间不够了。请清出约%.2f%nMB空间后再试一次。</string>
+  <!--add for libra begin-->
+  <string name="default_record_name">未标题的录像</string>
+  <string name="menu_view_record_list">查看录像列表</string>
+  <string name="menu_setting">设置</string>
+  <string name="delete_dialog_title">你想删除当前记录吗？</string>
+  <string name="overwrite_dialog_title">%s已经存在，你希望覆盖这个文件吗？</string>
+  <string name="preferences_title">设置</string>
+  <string name="pref_title_record_type">记录文件类型</string>
+  <string name="prefDialogTitle_recordType">请选择文件类型</string>
+  <string name="prefDefault_recordType">音频/3gpp</string>
+  <string name="pref_title_enable_high_quality">开启高品质模式</string>
+  <string name="pref_summary_enable_high_quality">高品质音频可能增加文件大小</string>
+  <string name="pref_title_enable_sound_effect">开启声音效果</string>
+  <string name="pref_summary_enable_sound_effect">状态改变时给出音效</string>
+  <string name="notification_recording">正在记录</string>
+  <string name="notification_stopped">记录被中止。</string>
+  <string name="notification_warning">存储不足（不足 %d 分钟）</string>
+  <string name="sd_card_not_available">记忆卡不能使用</string>
+  <string name="open_file_explorer">打开文件夹进行搜索</string>
+  <string name="alert_message_delete_record">你希望删除所选的记录吗？</string>
+  <!--add for libra end-->
+  <string name="help_clip_select">滑动选择类型，然后轻触图片以开始录影、照相或录音</string>
+  <!--youtube upload-->
+  <string name="lesson_status_have_not_started">尚未开始</string>
+  <string name="lessons_congratulations_you_have_completed_the_lesson_">你已完成一个教程！</string>
+  <string name="lesson_status_in_progress">正在进行</string>
+  <string name="lesson_status_complete">完成</string>
+  <string name="no_lessons_available_tap_to_load_">没有可以使用的课程(轻触以加载更多)</string>
+  <string name="_lesson_complete">课程完成</string>
+  <string name="default_youtube_desc">一个“经历讲述者”项目</string>
+  <string name="view_published_media_online_or_local_copy_">现在上网浏览已发布的文件吗？</string>
+  <string name="choose_account_for_youtube_upload">选择要上传的账户</string>
+  <string name="rendering">正在渲染</string>
+  <string name="rendering_project_">正在渲染项目</string>
+  <string name="publishing">正在发布</string>
+  <string name="connecting_to_youtube_">正在连接到YouTube</string>
+  <string name="uploading_to_storymaker">正在发布到StoryMaker网站</string>
+  <string name="rendering_clips_">正在渲染文件</string>
+  <string name="you_must_enter_a_project_name">请输入一个符合标准的标题草稿。你可以稍后修改它。</string>
+  <string name="add_new_clip_to_the_scene_">添加新文件到场景里？</string>
+  <string name="video_project_project_type">影像项目</string>
+  <string name="photo_project_project_type">摄影项目</string>
+  <string name="audio_project_project_type">音像项目</string>
+  <string name="photo_essay_project_project_type">摄影小品项目</string>
+  <string name="eula_title">你同意：</string>
+  <string name="eula_accept">同意</string>
+  <string name="eula_refuse">拒绝</string>
+  <string name="privacy_policy">隐私政策</string>
+  <string name="end_user_license_agreement">最终用户许可协议</string>
+  <string name="send_annonymous_data">传送不含隐私的使用数据以帮助我们改进StoryMaker</string>
+  <string name="by_clicking_accept">当你按下“同意”的同时你将同意我们的《最终用户许可协议》并已经阅读我们的《隐私政策》：</string>
+  <string name="button_add_narration">录制旁白</string>
+  <string name="button_play_narration">播放旁白</string>
+  <string name="button_delete_narration">删除旁白</string>
+  <string name="button_render_preview">渲染预览</string>
+  <string name="publish_sm">StoryMaker.cc</string>
+  <string name="publish_youtube">YouTube</string>
+  <string name="action_render">导出</string>
+  <string name="action_play">播放</string>
+  <string name="action_share">分享</string>
+  <string name="cbRenderTypeLabel">快速视频渲染</string>
+  <string name="drawer_quick_capture">快速录制</string>
+  <string name="select_story_type">请选择故事类型</string>
+  <string name="button_start_my_story">开始讲述我的故事</string>
+  <string name="home_intro_button_lessons">浏览教程</string>
+  <string name="home_intro_button_projects">讲述一个故事</string>
+  <string name="created_with_storymaker_tag">使用StoryMaker制作 - https://storymaker.cc/</string>
+  <string name="err_you_need_at_least_one_account_configured_on_your_device">你至少需要在装置上设置一个账号</string>
+  <string name="you_began_a_new_lesson">你开始了一个新的课程</string>
+  <string name="stop">停止</string>
+  <!--added for project export-->
+  <string name="export_dialog_share">分享</string>
+  <string name="action_settings">设置</string>
+  <string name="label_add">添加</string>
+  <string name="label_edit">编辑</string>
+  <string name="label_save">存档</string>
+  <string name="hint_story_description">讲述你的经历</string>
+  <string name="label_section">节</string>
+  <string name="label_location">地点</string>
+  <!--NEW/CACHEWORD-->
+  <string name="catalog_menu_lessons">课程</string>
+  <string name="home_menu_home">主页</string>
+  <string name="home_menu_stories">故事</string>
+  <string name="home_menu_lessons">课程</string>
+  <string name="home_empty_btn_stories">新经历</string>
+</resources>

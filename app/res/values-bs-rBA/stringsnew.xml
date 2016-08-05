@@ -1,0 +1,245 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+  <string name="terms_title">Uvjeti StoryMaker </string>
+  <string name="terms_text_1">Zadržavate sva vlasnička prava na uneseni sadržaj, možete ga poništiti kada god želite, i mi nećemo prodavati bilo što od vaših podataka. Vašim pristankom da dijelite sadržaj sa StoryMaker.cc dozvoljavate Small World News i partnerima da smjeste vaše priče skupa sa sličnim pričama pomoću StoryMaker. Grupiramo ih na osnovu vrsta priče, tema i lokacija. </string>
+  <string name="terms_text_2">Vaša priča je i dalje objavljena na javnoj stranici po vašem izboru, ali je referencirana i na StoryMaker.cc također. Naziv, opis priče, i oznake će biti postavljene na StoryMaker.cc a sav preostali sadržaj će biti referenciran uz vaše lične podatke na javnoj stranici.</string>
+  <!--tutorial_lessons-->
+  <string name="tutorial_title_1">Savladajte vježbu</string>
+  <string name="tutorial_text_1">Naučite kako biti novinar pritom boraveći na sigurnom, i proizvodeći bolje audio, foto i video priloge.</string>
+  <string name="tutorial_title_2">Budite precizni.</string>
+  <string name="tutorial_text_2">Osnovano u partnerstvu sa ICFJ, možete biti uvjereni da će vas naše lekcije žurnalistike naučiti da budete bolji reporter. </string>
+  <string name="tutorial_title_3">Zaštitite se.</string>
+  <string name="tutorial_text_3">Lekcije digitalne sigurnosti će pomoći da vi i vaš izvor budete zaštićeni. StoryMaker ima za cilj da vi budete sigurni, ma gdje vas vaše priče odvele. </string>
+  <string name="tutorial_title_4">Ispričajte vašu priču bolje. </string>
+  <string name="tutorial_text_4">Priče su najprikladnije za različite medije, bilo audio, foto ili video. Saznajte kako se svaki medij razlikuje. </string>
+  <string name="tutorial_title_5">Testirajte se.</string>
+  <string name="tutorial_text_5">Svaka lekcija se zaključuje kvizom kako bi testirali vaše razumijevanje. </string>
+  <string name="tutorial_title_6">Nastavite učiti.</string>
+  <string name="tutorial_text_6">Dijelite vaše priče sa StoryMaker.cc zajednicom, i naučite da sa svakom pričom budete što bolji tumač priča.</string>
+  <!--/tutorial_lessons-->
+  <!--tutorial_story-->
+  <string name="tutorial_title_7">Tumačite vodič bolje.</string>
+  <string name="tutorial_text_7">Dobra priča ima početak, sredinu i završetak. Intervjuišite nekoga kako biste osigurali bolji kontekst vašoj priči. Prikažite nam gdje žive. Održite je osobnom. </string>
+  <string name="tutorial_title_8">Odaberite posrednika.</string>
+  <string name="tutorial_text_8">Audio, foto i video odgovaraju različitim stilovima pripovijedanja. Provjerite lekcije kako biste saznali više. Odaberite posrednika, i tijekom saznajte više. </string>
+  <string name="tutorial_title_9">Ispričajte priču putem pet. </string>
+  <string name="tutorial_text_9">Koristite pet isječaka kako biste ispričali priču. Opišite lokaciju priče. Predstavite primarni subjekt. Preostala tri tumače priču svojim početkom, sredinom i završetkom. </string>
+  <string name="tutorial_title_10">Razbijte kalup.</string>
+  <string name="tutorial_text_10">Složite isječke različitim redoslijedom radi boljeg utjecaja. </string>
+  <string name="tutorial_title_11">Pričajte duže priče. </string>
+  <string name="tutorial_text_11">Predlošci priča vam daju uputu kako.</string>
+  <!--/tutorial_story-->
+  <!--template_description-->
+  <string name="template_audio_desc">Snimajte zvuke koji pričaju vašu priču, tko, što. Ako ne možete napraviti dobru vizualnu zabilješku, audio je odlična alternativa. </string>
+  <string name="template_photo_desc">Slika govori tisuću riječi. Pokažite nam tko ili što je bitno u vašoj priči, ili kako se događa. </string>
+  <string name="template_essay_desc">Nekada je potrebno nekoliko fotografija. Pokažite nam kako se priča dešava, ispričajte nam priču kroz nekoliko povezanih slika. </string>
+  <string name="template_video_desc">Snimite uvjerljive slike i radnje kako se događaju. Pokažite nam tko ili što je bitno i zašto. </string>
+  <!--/template_description-->
+  <!--legacy_story_type-->
+  <!--once we refactor to keep this extra text fields in the db instead of referencing this strings file we can remove these (after doing a migration step)-->
+  <string name="story_type_event_title">Događaj</string>
+  <string name="story_type_issue_title">Ishod</string>
+  <string name="story_type_profile_title">Profil</string>
+  <string name="story_type_news_title">Najnovije vijesti</string>
+  <string name="story_type_event_desc">Priče o događajima imaju utvrđen vremenski okvir i utvrđeno mjesto. Fokusirajte se na to što se dešava na samom događaju. Organizirajte vašu priču vezano za vrijeme kada se događaj dešava, gdje, i zašto se dešava upravo u ovo vrijeme i na ovom mjestu. </string>
+  <string name="story_type_issue_desc">Pitanja priča ispituju široku temu. Fokusirajte se na to kako pitanja utječu na zajednicu ili grupu ljudi. Organizirajte vašu priču o tome na koga utječe i što se u tu svrhu radi. </string>
+  <string name="story_type_profile_desc">Prikažite profil specifične osobe. Fokusirajte se na to tko je ta osoba. Organizirajte vašu priču o svakodnevnici te osobe, što se dešava, i kako osoba izlazi na kraj sa izazovima. </string>
+  <string name="story_type_news_desc">Najnovije novosti su izravne. Fokusirajte se na jedan ugao. Organizirajte svoju priču oko činjenica, tko, što, gdje, kada. Koristite pripovijedanje kako biste dodali kontekst. </string>
+  <!--/ legacy_story_type-->
+  <!--story_type-->
+  <string name="story_type_event_news_title">Novosti o dešavanjima</string>
+  <string name="story_type_event_feature_title">Prilog o dešavanjima</string>
+  <string name="story_type_event_breaking_title">Najnovije novosti o dešavanjima</string>
+  <string name="story_type_issue_social_title">Društveno pitanje</string>
+  <string name="story_type_issue_political_title">Političko pitanje</string>
+  <string name="story_type_issue_economic_title">Ekonomsko pitanje</string>
+  <string name="story_type_profile_public_title">Javni profil</string>
+  <string name="story_type_profile_professional_title">Stručni profil</string>
+  <string name="story_type_profile_personal_title">Osobni profil</string>
+  <!--/story_type-->
+  <!--story_type_description-->
+  <string name="story_type_event_news_desc">Priče o događajima sa neposrednom važnošću, često prema rasporedu, i imaju jasan početak i završetak. Izbori ili demonstracije su dobri događaji za izvještavanje. </string>
+  <string name="story_type_event_feature_desc">Priče o događajima koji ne mogu imati vijesti sa velikim posljedicama. Sportski događaj, novi biznis u susjedstvu, tehnologija u razvoju su značajni događaji. </string>
+  <string name="story_type_event_breaking_desc">Nepredviđeni događaji s velikom vrijednosti za vijesti. Požar, iznenadna objava državnog dužnosnika, ili prirodna katastrofa su dobri događaji za najnovije vijesti. </string>
+  <string name="story_type_issue_social_desc">Priče o pitanjima koji utječu na zajednice. Promjena propisa lokalne samouprave ili infrastrukture  je dobro socijalno pitanje.</string>
+  <string name="story_type_issue_political_desc">Priče o vladi i radu javnih službenika. Priča o novim zakonima i parlamentarnim izmjenama je dobro političko pitanje.</string>
+  <string name="story_type_issue_economic_desc">Priče o širem gospodarstvu ili o osobnim financijama ljudi. Priča o utjecaju promjena državnih subvencija poljoprivrednicima je dobro gospodarsko pitanje.</string>
+  <string name="story_type_profile_public_desc">Priče o ulozi subjekta u javnom mišljenju. Profil političara tijekom kandidature u vladu je dobar javni profil. </string>
+  <string name="story_type_profile_professional_desc">Priče o ljudima i njihovim poslovima. Profil poznatog umjetnika ili sportiste je dobar profesionalni profil. </string>
+  <string name="story_type_profile_personal_desc">Priče o iskustvu subjekta, obično u vezi sa događajem u vijestima. Profil sa bivšim vojnikom na godišnjicu rata može biti dobar osobni profil. </string>
+  <!--/story_type_description-->
+  <!--template_options-->
+  <string name="choose_level">Odaberite nivo</string>
+  <string name="choose_level_basic">Osnovni</string>
+  <string name="choose_level_advanced">Napredni</string>
+  <!--/template_options-->
+  <!--story_type_new-->
+  <string name="overview">Pregled</string>
+  <string name="activity">Aktivnost</string>
+  <string name="impact">Utjecaj</string>
+  <string name="background">Pozadina</string>
+  <string name="involvement">Uključenost</string>
+  <string name="motivation">Motiviranost</string>
+  <string name="location">Lokacija</string>
+  <string name="experience">Iskustvo</string>
+  <string name="results">Rezultati</string>
+  <string name="next_steps">Slijedeći koraci</string>
+  <string name="moving_forward">Nastavljanje naprijed</string>
+  <string name="conclusion">Zaključak</string>
+  <string name="story_type_event_news_text1">Što se dešava na ovom događaju?</string>
+  <string name="story_type_event_news_text2">Na koji način ste vi uključeni?</string>
+  <string name="story_type_event_news_text3">Tko je najviše izložen utjecaju ovog događaja?</string>
+  <string name="story_type_event_news_text4">Kakva priča se krije iza ovog događaja?</string>
+  <string name="story_type_event_news_text5">Kakav je utjecaj ovog događaja?</string>
+  <string name="story_type_event_feature_text1">Što se dešava na ovom događaju?</string>
+  <string name="story_type_event_feature_text2">Zbog čega ste uključeni u ovaj događaj?</string>
+  <string name="story_type_event_feature_text3">Gdje se događaj odvija?</string>
+  <string name="story_type_event_feature_text4">Na koji način ste lično uključeni?</string>
+  <string name="story_type_event_feature_text5">Kakav je utjecaj ovog događaja? </string>
+  <string name="story_type_event_breaking_text1">Što se dešava? </string>
+  <string name="story_type_event_breaking_text2">Gdje se dešava?</string>
+  <string name="story_type_event_breaking_text3">Tko je izložen utjecaju? </string>
+  <string name="story_type_event_breaking_text4">Postoji li neposredna opasnost?</string>
+  <string name="story_type_event_breaking_text5">Kako ljudi reaguju?</string>
+  <string name="story_type_issue_social_text1">Molim opišite društveno pitanje.</string>
+  <string name="story_type_issue_social_text2">Kada i gdje je ovo stanje otpočelo?</string>
+  <string name="story_type_issue_social_text3">Na koji način ovo utječe na zajednicu?</string>
+  <string name="story_type_issue_social_text4">Ispričajte nam o tome kako ovo utječe na vaš život.</string>
+  <string name="story_type_issue_social_text5">Što se može učiniti da se poboljša ovo pitanje?</string>
+  <string name="story_type_issue_political_text1">Mоlim opišite političko pitanje.</string>
+  <string name="story_type_issue_political_text2">Na koga direktno utječe?</string>
+  <string name="story_type_issue_political_text3">Na koji način utječe na vladu?</string>
+  <string name="story_type_issue_political_text4">Zašto je ovo bitno vama lično?</string>
+  <string name="story_type_issue_political_text5">Što se može učiniti da se riješi ovo pitanje?</string>
+  <string name="story_type_issue_economic_text1">Molim opišite ekonomsko pitanje.</string>
+  <string name="story_type_issue_economic_text2">Kakav je vaš odnos prema ovom pitanju?</string>
+  <string name="story_type_issue_economic_text3">Na koji način to utječe na ekonomiju?</string>
+  <string name="story_type_issue_economic_text4">Tko će biti najviše pogođen ovim?</string>
+  <string name="story_type_issue_economic_text5">Što se može učiniti da se poboljša ovo pitanje? </string>
+  <string name="story_type_profile_public_text1">Objasnite malo o tome tko ste. </string>
+  <string name="story_type_profile_public_text2">Kada ste počeli?</string>
+  <string name="story_type_profile_public_text3">Čime se bavite?</string>
+  <string name="story_type_profile_public_text4">Opišite trenutak kada ste se osjetili ponosni na posao kojim se bavite.</string>
+  <string name="story_type_profile_public_text5">Kako vidite svoju ulogu u budućnosti?</string>
+  <string name="story_type_profile_professional_text1">Tko ste vi i što je vaš posao?</string>
+  <string name="story_type_profile_professional_text2">Molimo objasnite kako radite svoj posao?</string>
+  <string name="story_type_profile_professional_text3">Zašto vam je bitan ovaj posao?</string>
+  <string name="story_type_profile_professional_text4">Na koji način vršite utjecaj ovim poslom?</string>
+  <string name="story_type_profile_professional_text5">Što je za vas slijedeće u ovom poslu?</string>
+  <string name="story_type_profile_personal_text1">Molim objasnite malo o tome tko ste.</string>
+  <string name="story_type_profile_personal_text2">Kakvo vam se bitno iskustvo desilo?</string>
+  <string name="story_type_profile_personal_text3">Kako ste se osjećali zbog ovog iskustva?</string>
+  <string name="story_type_profile_personal_text4">Što sada radite drugačije?</string>
+  <string name="story_type_profile_personal_text5">Što biste voljeli da se desi u budućnosti?</string>
+  <!--/story_type_new-->
+  <!--story_type_old-->
+  <string name="scene_number">Scena &lt;xliff:g id="number"&gt;%1$d&lt;/xliff:g&gt;</string>
+  <string name="when">Kada?</string>
+  <string name="how">Kako?</string>
+  <string name="what">Što?</string>
+  <string name="where">Gdje?</string>
+  <string name="why">Zbog čega?</string>
+  <string name="story_type_event_text1">Kada se događaj dešava?</string>
+  <string name="story_type_event_text2">Koja je svrha događaja?</string>
+  <string name="story_type_event_text3">Zašto je događaj bitan?</string>
+  <string name="story_type_event_text4">Kada se događaj dešava? </string>
+  <string name="story_type_event_text5">Kako je događaj organiziran?</string>
+  <string name="story_type_event_text6">Koja je svrha događaja? </string>
+  <string name="story_type_event_text7">Gdje se događaj dešava?</string>
+  <string name="story_type_event_text8">Zašto je događaj bitan? </string>
+  <string name="story_type_issue_text1">Kako ishod utječe na zajednicu?</string>
+  <string name="story_type_issue_text2">Na koga je najviše utjecalo?</string>
+  <string name="story_type_issue_text3">Kakva je reakcija učinjena?</string>
+  <string name="story_type_issue_text4">Kako ishod utječe na zajednicu?</string>
+  <string name="story_type_issue_text5">Kada / Gdje je ishod započeo?</string>
+  <string name="story_type_issue_text6">Na koga je najviše utjecalo? </string>
+  <string name="story_type_issue_text7">Zašto je na njih najviše utjecalo?</string>
+  <string name="story_type_issue_text8">Kakva je reakcija učinjena?</string>
+  <string name="story_type_profile_text1">Tko je osoba? </string>
+  <string name="story_type_profile_text2">Koji je izazov te osobe?</string>
+  <string name="story_type_profile_text3">Kako se osoba suočava sa izazovom?</string>
+  <string name="story_type_profile_text4">Tko je osoba?</string>
+  <string name="story_type_profile_text5">Odakle je osoba?</string>
+  <string name="story_type_profile_text6">Koji je izazov te osobe?</string>
+  <string name="story_type_profile_text7">Zbog čega se osoba bori sa ovim izazovom?</string>
+  <string name="story_type_profile_text8">Kako se osoba suočava sa izazovom? </string>
+  <string name="story_type_news_text1">Što se dešava?</string>
+  <string name="story_type_news_text2">Tko je izložen utjecaju?</string>
+  <string name="story_type_news_text3">Kakva je reakcija?</string>
+  <string name="story_type_news_text4">Što se događa?</string>
+  <string name="story_type_news_text5">Gdje se novosti dešavaju?</string>
+  <string name="story_type_news_text6">Tko je izložen utjecaju? </string>
+  <string name="story_type_news_text7">Zbog čega se to dogodilo?</string>
+  <string name="story_type_news_text8">Kakva je reakcija? </string>
+  <!--/story_type_old-->
+  <!--prefs-->
+  <string name="prefs_category_networking_security_title">Networking &amp; Sigurnost</string>
+  <string name="prefs_category_locales_title">Mjesto</string>
+  <string name="prefs_category_media_title">Medij</string>
+  <string name="prefs_category_debug_title">Uklanjanje grešaka</string>
+  <string name="prefs_storymaker_server_title">StoryMaker Server </string>
+  <string name="prefs_use_tor_title">Koristite Orbot (Tor) </string>
+  <string name="prefs_use_tor_summary">Usmjerite sav mrežni saobraćaj kroz Tor mrežu koristeći Orbot aplikaciju</string>
+  <string name="prefs_use_download_manager_title">Koristite Download Manager </string>
+  <string name="prefs_use_upload_manager_title">Koristite Upravitelj učitavanja </string>
+  <string name="prefs_youtube_acccount_title">YouTube račun</string>
+  <string name="prefs_youtube_acccount_summary">You Tube račun je za učitavanje videa. Ovo MORA biti registrirano na vašem uređaju. </string>
+  <string name="prefs_youtube_login_title">YouTube prijava</string>
+  <string name="prefs_youtube_login_summary">Koristitie You Tube web odobrenje</string>
+  <string name="prefs_soundcloud_account_title">SoundCloud račun</string>
+  <string name="prefs_soundcloud_account_summary">SoundCloud račun koristiti za audio učitavanja</string>
+  <string name="prefs_interface_language_title">Odaberite jezik</string>
+  <string name="prefs_interface_language_summary">Jezik Story Maker će se koristiti za korisničko sučelje.</string>
+  <string name="prefs_slide_duration_title">Trajanje slajda</string>
+  <string name="prefs_slide_duration_summary">Trajanje svakog slajda u foto eseju</string>
+  <string name="prefs_enable_compression_title">Omogućite sažimanje</string>
+  <string name="prefs_enable_compression_summary">Sažmite sve video i audio koristeći postavke ponuđene dole</string>
+  <string name="prefs_preprocess_3gp_title">Preprocesirajte 3GP</string>
+  <string name="prefs_preprocess_3gp_summary">Pretvorite 3GP video isječke u MPEG-4</string>
+  <string name="prefs_use_cat_command_title">Koristite komandu \'Cat\'</string>
+  <string name="prefs_use_cat_command_summary">Kоristite \'cat\' komandu kako biste spojili videa</string>
+  <string name="prefs_video_codec_title">Video Codec </string>
+  <string name="prefs_video_codec_summary">Izvezite video kodek</string>
+  <string name="prefs_video_resolution_title">Video rezolucija</string>
+  <string name="prefs_video_resolution_summary">Izvezite video rezoluciju</string>
+  <string name="prefs_video_width_title">Širina videa</string>
+  <string name="prefs_video_width_summary">Izvezite širinu videa</string>
+  <string name="prefs_video_height_title">Visina videa</string>
+  <string name="prefs_video_height_summary">Izvezite visinu videa</string>
+  <string name="prefs_video_bitrate_title">Video Bitrate</string>
+  <string name="prefs_video_bitrate_summary">Izvezite video bitrate (kbps)</string>
+  <string name="prefs_video_framrate_title">Video Framerate</string>
+  <string name="prefs_video_framrate_summary">Izvezite frame rate po sekundi (fps)</string>
+  <string name="prefs_audio_codec_title">Audio kodek</string>
+  <string name="prefs_audio_codec_summary">Izvezite audio kodek</string>
+  <string name="prefs_audio_bitrate_title">Audio Bitrate </string>
+  <string name="prefs_audio_bitrate_summary">Izvezite audio bitrate (kbps)</string>
+  <string name="prefs_audio_samplerate_title">Audio Samplerate </string>
+  <string name="prefs_audio_samplerate_summary">Audio zapis sample rate (khz)</string>
+  <string name="prefs_audio_crossfade_title">Audio Crossfade </string>
+  <string name="prefs_audio_crossfade_summary">Duljina audio cross fade </string>
+  <string name="prefs_internal_storage_title">Interna memorija</string>
+  <string name="prefs_internal_storage_summary">Koristite projekt interne memorije</string>
+  <string name="prefs_youtube_method_title">YouTube metod</string>
+  <string name="prefs_youtube_method_summary">Vrsta metode autorizacije uklanjanja greške</string>
+  <!--/prefs-->
+  <!--FirstStartActivity-->
+  <string name="sign_up_btn">PRIJAVITE SE U STORYMAKER</string>
+  <string name="no_thanks_btn">NE HVALA</string>
+  <string name="tos_btn">SLAŽEM SE S UVJETIMA USLUGE </string>
+  <string name="tos_dialog_title">Uvjeti usluge</string>
+  <string name="tos_dialog_msg">Molimo prihvatite Uvjete usluge prije nego nastavite</string>
+  <string name="tos_dialog_positive_button">Razumijem</string>
+  <string name="acct_created_dialog_title">Pristupite svom računu</string>
+  <string name="acct_created_dialog_msg"><b>Vaša StoryMaker lozinka će vam biti poslana putem e-maila uskoro.</b> Nakon dobivanja vaše lozinke, možete se prijaviti u bilo kojem trenutku putem izbornika (Pristup omogućen povlačenjem preko lijevog ruba zaslona).</string>
+  <string name="acct_created_dialog_positive_button">Započnite!</string>
+  <!--ConnectAccountActivity-->
+  <string name="my_account">MOJ STORYMAKER RAČUN</string>
+  <string name="join_storymaker">Pridružite se StoryMaker zajednici</string>
+  <string name="create_account">KREIRAJ MOJ RAČUN</string>
+  <string name="sign_in">PRIJAVITE SE / PRISTUPITE</string>
+  <string name="sign_out">ODJAVITE SE</string>
+  <!--ProjectTagFragment-->
+  <string name="no_tags_msg">Nema # dodanih oznaka</string>
+  <!--BaesActivity Drawer  (For Accessibility Descriptions)-->
+</resources>

@@ -1,0 +1,34 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+  <!--tutorial_lessons-->
+  <!--/tutorial_lessons-->
+  <!--tutorial_story-->
+  <!--/tutorial_story-->
+  <!--template_description-->
+  <!--/template_description-->
+  <!--legacy_story_type-->
+  <!--once we refactor to keep this extra text fields in the db instead of referencing this strings file we can remove these (after doing a migration step)-->
+  <!--/ legacy_story_type-->
+  <!--story_type-->
+  <!--/story_type-->
+  <!--story_type_description-->
+  <!--/story_type_description-->
+  <!--template_options-->
+  <!--/template_options-->
+  <!--story_type_new-->
+  <string name="activity">Активність</string>
+  <string name="location">Розташування</string>
+  <string name="results">Результати</string>
+  <!--/story_type_new-->
+  <!--story_type_old-->
+  <string name="story_type_event_text3">Чому ця подія є важливою?</string>
+  <string name="story_type_event_text8">Чому ця подія є важливою?</string>
+  <!--/story_type_old-->
+  <!--prefs-->
+  <!--/prefs-->
+  <!--FirstStartActivity-->
+  <!--ConnectAccountActivity-->
+  <string name="join_storymaker">Приєднатись до спільноти StoryMaker</string>
+  <!--ProjectTagFragment-->
+  <!--BaesActivity Drawer  (For Accessibility Descriptions)-->
+</resources>

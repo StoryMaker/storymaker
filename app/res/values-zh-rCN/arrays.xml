@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <string-array name="story_sections">
+    <item>政治</item>
+    <item>商业</item>
+    <item>体育</item>
+    <item>艺术</item>
+    <item>科学</item>
+    <item>健康</item>
+    <item>教育</item>
+    <item>环境</item>
+  </string-array>
+  <!--<item>catalog</item>-->
+</resources>

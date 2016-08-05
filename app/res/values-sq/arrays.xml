@@ -1,0 +1,34 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <string-array name="story_sections">
+    <item>Politikë</item>
+    <item>Ekonomi</item>
+    <item>Sport</item>
+    <item>Kulturë</item>
+    <item>Shkencë</item>
+    <item>Shëndetësi</item>
+    <item>Arsim</item>
+    <item>Ambient</item>
+  </string-array>
+  <string-array name="lesson_sections">
+    <item>Gazetari</item>
+    <item>Siguri</item>
+    <item>Audio</item>
+    <item>Fotografi</item>
+    <item>Video</item>
+    <item>Artikull</item>
+  </string-array>
+  <string-array name="array_story_sections">
+    <item>Politikë</item>
+    <item>Biznes</item>
+    <item>Sport</item>
+    <item>Arte</item>
+    <item>Shkencë</item>
+    <item>Shëndetësi</item>
+    <item>Arsim</item>
+    <item>Ambient</item>
+    <item>Teknologji</item>
+    <item>Udhëtim</item>
+  </string-array>
+  <!--<item>catalog</item>-->
+</resources>

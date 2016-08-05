@@ -1,0 +1,46 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <string-array name="story_sections">
+    <item>ፖለቲካ</item>
+    <item>ቢዝነስ</item>
+    <item>ስፖርት</item>
+    <item>አርትስ</item>
+    <item>ሳይንስ</item>
+    <item>ጤና</item>
+    <item>ትምህርት</item>
+    <item>አካባቢ</item>
+  </string-array>
+  <string-array name="lesson_sections">
+    <item>ጋዜጠኝነት</item>
+    <item>ደህንነት</item>
+    <item>ድምጽ</item>
+    <item>ፎቶግራፍ</item>
+    <item>ቪዲዮ ቀረጻ</item>
+    <item>ታሪክ</item>
+  </string-array>
+  <string-array name="array_story_locations">
+    <item>ዩኤስኤ.</item>
+    <item>ካሊፎርኒያ</item>
+    <item>ኦክላንድ</item>
+    <item>ግብጽ</item>
+    <item>ኢራቅ</item>
+    <item>ሞሮኮ</item>
+    <item>ቱኒዚያ</item>
+    <item>ዚምባቡዌ</item>
+    <item>ቼክ ሪፑብሊክ</item>
+    <item>ቬትናም</item>
+  </string-array>
+  <string-array name="array_story_sections">
+    <item>ፖለቲካ</item>
+    <item>ቢዝነስ</item>
+    <item>ስፖርት</item>
+    <item>አርትስ</item>
+    <item>ሳይንስ</item>
+    <item>ጤና</item>
+    <item>ትምህርት</item>
+    <item>አካባቢ</item>
+    <item>ቴክኖሎጂ</item>
+    <item>ጉዞ</item>
+  </string-array>
+  <!--<item>catalog</item>-->
+</resources>

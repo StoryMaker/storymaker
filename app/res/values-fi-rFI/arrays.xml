@@ -1,0 +1,46 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <string-array name="story_sections">
+    <item>Politiikka</item>
+    <item>Liike-elämä</item>
+    <item>Urheilu</item>
+    <item>Taiteet</item>
+    <item>Tiede</item>
+    <item>Terveys</item>
+    <item>Koulutus</item>
+    <item>Ympäristö</item>
+  </string-array>
+  <string-array name="lesson_sections">
+    <item>Journalismi</item>
+    <item>Turvallisuus</item>
+    <item>Audio</item>
+    <item>Valokuvaus</item>
+    <item>Videointi</item>
+    <item>Tarina</item>
+  </string-array>
+  <string-array name="array_story_locations">
+    <item>U.S.A.</item>
+    <item>Kalifornia</item>
+    <item>Oakland</item>
+    <item>Egypti</item>
+    <item>Irak</item>
+    <item>Marokko</item>
+    <item>Tunisia</item>
+    <item>Zimbabwe</item>
+    <item>Tsekin tasavalta</item>
+    <item>Vietnam</item>
+  </string-array>
+  <string-array name="array_story_sections">
+    <item>Politiikka</item>
+    <item>Liike-elämä</item>
+    <item>Urheilu</item>
+    <item>Taiteet</item>
+    <item>Tiede</item>
+    <item>Terveys</item>
+    <item>Koulutus</item>
+    <item>Ympäristö</item>
+    <item>Teknologia</item>
+    <item>Matkailu</item>
+  </string-array>
+  <!--<item>catalog</item>-->
+</resources>

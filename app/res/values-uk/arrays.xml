@@ -1,0 +1,46 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <string-array name="story_sections">
+    <item>Політика</item>
+    <item>Бізнес</item>
+    <item>Спорт</item>
+    <item>Arts</item>
+    <item>Наука</item>
+    <item>Здоров\'я</item>
+    <item>Освіта</item>
+    <item>Навколишне середовище</item>
+  </string-array>
+  <string-array name="lesson_sections">
+    <item>Журналістика</item>
+    <item>Беспека</item>
+    <item>Аудіо</item>
+    <item>Фото</item>
+    <item>Відео</item>
+    <item>Репортаж</item>
+  </string-array>
+  <string-array name="array_story_locations">
+    <item>США</item>
+    <item>Калфорнія</item>
+    <item>Окленд</item>
+    <item>Єгипет</item>
+    <item>Ірак</item>
+    <item>Мароко</item>
+    <item>Туніс</item>
+    <item>Зімбабве</item>
+    <item>Чехія</item>
+    <item>В’єтнам</item>
+  </string-array>
+  <string-array name="array_story_sections">
+    <item>Політика</item>
+    <item>Бізнес</item>
+    <item>Спорт</item>
+    <item>Мистецтво</item>
+    <item>Наука</item>
+    <item>Здоров\'я</item>
+    <item>Освіта</item>
+    <item>Навколишне середовище</item>
+    <item>Технології</item>
+    <item>Подорожі</item>
+  </string-array>
+  <!--<item>catalog</item>-->
+</resources>

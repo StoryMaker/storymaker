@@ -1,0 +1,359 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+  <string name="app_name">StoryMaker 2</string>
+  <string name="app_description">StoryMakerで、すばらしいストーリーを作成することが、これまでより簡単になりました。私たち独自のテンプレート、オーバーレイ、レッスンで、創造的なプロセスの全体をご案内します。StoryMakerは、ご利用の携帯電話でコンテンツを編集することができ、さらに簡単にストーリを完成させることができます。作業が終了したら、StoryMakerはすべてのお好みのプラットフォームでストーリーを公開することができます。</string>
+  <string name="title_catalog">カタログ</string>
+  <string name="title_projects">ストーリー</string>
+  <string name="title_lessons">レッスン</string>
+  <string name="action_publish">公開</string>
+  <!--menus-->
+  <string name="menu_new_project">新規</string>
+  <string name="menu_projects">ストーリー</string>
+  <string name="menu_lessons">レッスン</string>
+  <string name="menu_glossary">用語集</string>
+  <string name="menu_contacts">連絡先</string>
+  <string name="menu_settings">設定</string>
+  <string name="menu_accounts">アカウント</string>
+  <string name="menu_archive">アーカイブ</string>
+  <string name="drawer_profile">ログイン</string>
+  <!--FIXME: rename-->
+  <string name="menu_add_media">追加</string>
+  <string name="menu_capture_media">記録</string>
+  <string name="menu_share_media">共有</string>
+  <string name="menu_save_media">保存</string>
+  <string name="menu_play_media">再生</string>
+  <string name="menu_render_media">提出</string>
+  <string name="menu_bug_report">バグ報告</string>
+  <string name="menu_login">ログイン</string>
+  <string name="menu_logs">ログを送信</string>
+  <string name="menu_update">更新</string>
+  <string name="menu_about">アプリについて</string>
+  <string name="menu_save_project">保存</string>
+  <string name="menu_overlay_camera">カメラ</string>
+  <string name="menu_add_new_shot">シーンにクリップを追加</string>
+  <string name="menu_export_project_files">ﾌﾟﾛｼﾞｪｸﾄﾌｧｲﾙをZipでｴｸｽﾎﾟｰﾄ</string>
+  <string name="menu_join_storymaker">StoryMakerコミュニティに参加</string>
+  <string name="menu_sign_up">サインアップ / ログイン</string>
+  <string name="menu_upload_manager">アップロードマネージャー</string>
+  <string name="menu_uploads">アップロード</string>
+  <string name="welcome_message">みなさん!\nStoryMakerへようこそ</string>
+  <!--project list-->
+  <string name="default_project_list_view">最初にプロジェクトを作成します!\n\n- タップして始めましょう -</string>
+  <string name="default_project_view_message">選択肢があります.\nあなたのストーリにビデオ、オーディオ、写真を含めましょう.\n\n- タップして追加してください -</string>
+  <!--video processing-->
+  <string name="pref_out_fps_title">出力フレームレート (fps)</string>
+  <string name="pref_out_fps_summary">出力ビデオの秒あたりフレーム数 (15-30)</string>
+  <string name="pref_out_rate_title">出力ビットレート (kbps)</string>
+  <string name="pref_out_rate_summary">ビデオ出力のビットレート (300-1500)</string>
+  <string name="pref_out_format_title">出力形式</string>
+  <string name="pref_out_format_summary">ファイルコンテナ形式 (mp4, 3gp, ogg)</string>
+  <string name="pref_out_vcodec_title">出力ビデオコーデック</string>
+  <string name="pref_out_vcodec_summary">ビデオコーデック (コピー, libx264, その他)</string>
+  <string name="pref_out_acodec_title">出力オーディオコーデック</string>
+  <string name="pref_out_acodec_summary">オーディオコーデック (コピー, aac, mp3, その他)</string>
+  <string name="pref_out_vwidth_title">カスタムビデオ幅 (px)</string>
+  <string name="pref_out_vwidth_summary">出力されるビデオのカスタムビデオ幅</string>
+  <string name="pref_out_vheight_title">カスタムビデオ高 (px)</string>
+  <string name="pref_out_vheight_summary">出力されるビデオのカスタムビデオ高</string>
+  <string name="hintTitle">タイトル</string>
+  <string name="hintStartTime">開始 (00:00:00)</string>
+  <string name="hintEndTime">時間 (00:00:00)</string>
+  <string name="hintFadeIn">フェードイン (フレーム)</string>
+  <string name="hintFadeOut">フェードアウト (フレーム)</string>
+  <string name="start_recording">記録</string>
+  <string name="stop_recording">停止</string>
+  <string name="play_recording">再生</string>
+  <string name="save_recording">保存</string>
+  <string name="downloading_lessons_from_server_">サーバーからレッスンをダウンロード中...</string>
+  <string name="checking_for_updates_">更新を確認中...</string>
+  <!--LOG COLLECTOR-->
+  <string name="app_name_lc">ログ収集</string>
+  <string name="message_subject">Android デバイスログ</string>
+  <string name="acquiring_log_progress_dialog_message">システムからログを取得中\u2026</string>
+  <string name="chooser_title">ログを送信するアプリケーションを選択してください</string>
+  <string name="failed_to_get_log_message">システムからログの取得に失敗しました。</string>
+  <string name="main_dialog_text">このアプリケーションは、デバイスのログを収集することがあります。
+収集されたログは、お好みのアプリケーションを使用して送信されます。
+送信されるデータは参照および修正の機会もあります。</string>
+  <string name="title_home_projects">プロジェクト</string>
+  <string name="title_home_activity">アクティビティ</string>
+  <string name="title_lessons_lessons">レッスン</string>
+  <string name="title_lessons_glossary">用語集</string>
+  <string name="hello_world">Hello world!</string>
+  <string name="title_activity_home">ホーム</string>
+  <string name="new_story_name_it">名前をつけてください。</string>
+  <string name="new_story_working_title">作品タイトル…</string>
+  <string name="new_story_choose_something">話題を定義し、視聴者の興味をひく、概要を選択してください。</string>
+  <string name="new_story_choose_a_medium">メディアを選択してください。</string>
+  <!--<string name="new_story_video">Video: Something here about why simple, short video is good! Ideally it should be about the same length as the other strings.</string>
+   	<string name="new_story_essay">Photo Essay: Tell a story about one character. Follow this template to produce a simple photo essay story about one character.</string>
+    <string name="new_story_photo">Single Photo: Telling a strong story with one image is a skill. To simplify, these templates explain some primary photo types.</string>
+    
+    <string name="new_story_audio">Audio: Something here about using audio to tell a story. Personally, I really like to listen to the radio and podcasts while I do housework!</string>-->
+  <string name="new_story_simple_story">簡単なストーリー</string>
+  <string name="new_story_choose_template">シーン テンプレート</string>
+  <string name="home_new_story">ストーリーの作成</string>
+  <string name="home_start_a_lesson">レッスンの探検</string>
+  <string name="title_activity_catalog">カタログ</string>
+  <string name="title_activity_lessons">レッスン</string>
+  <string name="title_activity_scene_editor">シーン エディター</string>
+  <string name="title_activity_choose_template">テンプレートを選択</string>
+  <string name="title_activity_story_template">テンプレート ストーリー</string>
+  <string name="tab_make">作成</string>
+  <string name="tab_review">レビュー</string>
+  <string name="tab_publish">完了</string>
+  <string name="tab_finish">終了</string>
+  <string name="tab_add_clips">作成</string>
+  <string name="tab_order">編集</string>
+  <string name="story_publish_section">セクション</string>
+  <string name="story_publish_section_hint">スポーツ</string>
+  <string name="story_publish_topics">話題</string>
+  <string name="story_publish_topics_hint">性別</string>
+  <string name="story_publish_location">場所</string>
+  <string name="story_publish_location_hint">関連する場所を入力してください</string>
+  <string name="story_publish_share">共有</string>
+  <string name="story_publish_send_via">送信。経由</string>
+  <string name="story_publish_status">ステータス</string>
+  <string name="story_publish_status_processing">処理中</string>
+  <string name="story_publish_status_not">公開していません</string>
+  <string name="story_publish_describe_hint">ストーリーを説明してください…</string>
+  <string name="story_publish_story_title">ストーリーのタイトルをここに</string>
+  <string name="story_publish_story_date">ストーリーの日付をここに</string>
+  <!--delete these below-->
+  <string name="title_section3">セクション 3</string>
+  <string name="title_section2">セクション 2</string>
+  <string name="title_section1">セクション 1</string>
+  <string name="title_activity_test_drag">テストドラッグ</string>
+  <!--Screen title before and during recording-->
+  <!--Screen title after recording-->
+  <!--Screen title while playing back a recording-->
+  <!--Label shown during recording-->
+  <string name="recording">録音中</string>
+  <!--Label shown when the recording is stopped for a reason other than the user stopping it (e.g. the sd card was removed)-->
+  <string name="recording_stopped">録音を停止しました</string>
+  <!--label shown when there is not enough space to record something-->
+  <string name="storage_is_full">ストレージがいっぱいです</string>
+  <!--label shown when the recording has reached maximum allowed file size-->
+  <string name="max_length_reached">最大長に達しました</string>
+  <!--label shown when there is no sd card available to record to-->
+  <string name="insert_sd_card">SD カードが必要です</string>
+  <!--label shown when there is more than 1 minute but less than 9 minutes of space left to record-->
+  <!--label shown when there is less than 1 minute of space left to record-->
+  <!--button to accept the current recording and return it to the caller-->
+  <!--button to discard the current recording and return to the caller-->
+  <!--acknowlegement button in a number of dialogs-->
+  <string name="button_ok">OK</string>
+  <!--Do not translate. Format of the timer that shows how much has been recorded so far-->
+  <!--label shown before the user has recorded anything-->
+  <!--the name under which recordings will be visible in the media database is formatted like this-->
+  <!--all recordings will show up in the media database with this 'artist' name-->
+  <string name="audio_db_artist_name">あなたの録音</string>
+  <!--all recordings will show up in the media database with this 'album' name-->
+  <string name="audio_db_album_name">オーディオ録音中</string>
+  <!--all recordings will show up in the media database in a playlist with this name-->
+  <string name="audio_db_playlist_name">マイ録音</string>
+  <!--shown as the message in a dialog when an error occured because of an error accessing the sd card-->
+  <string name="error_sdcard_access">外部または内部ストレージにアクセスできません</string>
+  <!--shown as the message in a dialog when the app encountered an unspecified internal error-->
+  <string name="error_app_internal">内部アプリケーションエラー</string>
+  <!--shown as the message in a dialog when the recording could not be added to the media database-->
+  <string name="error_mediadb_new_record">録音したオーディオを保存できません</string>
+  <!--shown as the message in a dialog when an export will tak up too much space-->
+  <string name="error_storage_space" formatted="false">残念ながら空き容量がありません。約 %.2f%nMB 利用できるようにして、もう一度実行してください!</string>
+  <!--add for libra begin-->
+  <string name="default_record_name">無題の録音</string>
+  <string name="menu_view_record_list">録音リストを表示</string>
+  <string name="menu_setting">設定</string>
+  <string name="delete_dialog_title">現在の録音を削除しますか?</string>
+  <string name="overwrite_dialog_title">%s は既に存在します。上書きしますか?</string>
+  <string name="preferences_title">設定</string>
+  <string name="pref_title_record_type">録音ファイル形式</string>
+  <string name="prefDialogTitle_recordType">ファイル形式を選択してください</string>
+  <string name="prefDefault_recordType">オーディオ/3gpp</string>
+  <string name="pref_title_enable_high_quality">高品質を有効にする</string>
+  <string name="pref_summary_enable_high_quality">高品質のオーディオファイルはサイズが大きくなります</string>
+  <string name="pref_title_enable_sound_effect">効果音を有効にする</string>
+  <string name="pref_summary_enable_sound_effect">状態が変化したとき効果音を再生する</string>
+  <string name="notification_recording">録音中...</string>
+  <string name="notification_stopped">録音が停止しました</string>
+  <string name="notification_warning">ストレージが足りません(%d 分未満)...</string>
+  <string name="sd_card_not_available">SD カードが利用できません</string>
+  <string name="open_file_explorer">ファイルエクスプローラーを開く</string>
+  <string name="alert_message_delete_record">選択した録音を削除しますか?</string>
+  <!--add for libra end-->
+  <string name="help_clip_select">スワイプしてクリップ形式を選択してください。その後でクリップ画像をタップしてビデオ、写真やオーディオのキャプチャを開始します</string>
+  <!--youtube upload-->
+  <string name="lesson_status_have_not_started">開始していません</string>
+  <string name="lessons_congratulations_you_have_completed_the_lesson_">レッスンを完了しました!</string>
+  <string name="lesson_status_in_progress">実行中</string>
+  <string name="lesson_status_complete">完了!</string>
+  <string name="no_lessons_available_tap_to_load_">利用可能なレッスンはありません (タップするとロードします)</string>
+  <string name="_lesson_complete">レッスンを完了しました</string>
+  <string name="_of_">/</string>
+  <string name="default_youtube_desc">StoryMaker プロジェクト</string>
+  <string name="view_published_media_online_or_local_copy_">オンラインで公開したメディアを表示しますか?</string>
+  <string name="choose_account_for_youtube_upload">アップロードするアカウントを選択してください</string>
+  <string name="rendering">描画中</string>
+  <string name="rendering_project_">プロジェクトを描画中...</string>
+  <string name="publishing">公開中</string>
+  <string name="connecting_to_youtube_">YouTube に接続中...</string>
+  <string name="uploading_to_storymaker">StoryMaker サイトに公開中...</string>
+  <string name="rendering_clips_">クリップの描画中...</string>
+  <string name="you_must_enter_a_project_name">ドラフト作品のタイトルを入力してください。これは後で変更することができます。</string>
+  <string name="delete_project_">エクスポートを削除しますか?</string>
+  <string name="delete_story">ストーリーを削除しますか?</string>
+  <string name="delete_content_pack">コンテンツパックを削除しますか?</string>
+  <string name="delete_clip">クリップを削除しますか?</string>
+  <string name="add_new_clip_to_the_scene_">シーンに新しいクリップを追加しますか?</string>
+  <string name="video_project_project_type">ビデオプロジェクト</string>
+  <string name="photo_project_project_type">写真プロジェクト</string>
+  <string name="audio_project_project_type">オーディオプロジェクト</string>
+  <string name="photo_essay_project_project_type">写真エッセイプロジェクト</string>
+  <string name="eula_title">あなたは同意します:</string>
+  <string name="eula_accept">同意する</string>
+  <string name="eula_refuse">同意しない</string>
+  <string name="privacy_policy">プライバシー ポリシー</string>
+  <string name="end_user_license_agreement">エンドユーザー使用許諾契約</string>
+  <string name="send_annonymous_data">私たちが StoryMaker を改善するために、匿名で使用データを送信します。</string>
+  <string name="by_clicking_accept">\'同意する\' をクリックすることで、あなたは私たちのエンドユーザー使用許諾契約に同意し、プライバシーポリシーを読んだとみなします:</string>
+  <string name="button_add_narration">ナレーションを録音</string>
+  <string name="button_play_narration">ナレーションを再生</string>
+  <string name="button_delete_narration">ナレーションを削除</string>
+  <string name="button_render_preview">プレビューを描画</string>
+  <string name="publish_sm">StoryMaker.cc</string>
+  <string name="publish_youtube">YouTube</string>
+  <string name="action_render">エクスポート</string>
+  <string name="action_play">再生</string>
+  <string name="action_share">共有</string>
+  <string name="cbRenderTypeLabel">高速ビデオ描画を使用する</string>
+  <string name="drawer_quick_capture">クイックキャプチャ</string>
+  <string name="select_story_type">ストーリーの種類を選択</string>
+  <string name="button_start_my_story">マイ ストーリーを開始</string>
+  <string name="home_intro_button_lessons">レッスンの探検</string>
+  <string name="home_intro_button_projects">ストーリーの作成</string>
+  <string name="created_with_storymaker_tag">StoryMaker - https://storymaker.cc/ で作成</string>
+  <string name="err_you_need_at_least_one_account_configured_on_your_device">お使いのデバイス上に少なくとも1つ構成されたアカウントが必要です</string>
+  <string name="you_began_a_new_lesson">新しいレッスンを開始しました</string>
+  <string name="scene_editor_please_add_clips">このタブを選択する前に、\'作成\' タブでクリップを追加してください。</string>
+  <string name="scene_editor_trim_clip">クリップをトリム</string>
+  <string name="delete_warning">この操作は元に戻すことはできません!</string>
+  <string name="cancel">キャンセル</string>
+  <string name="stop">停止</string>
+  <string name="delete">削除</string>
+  <string name="download">ダウンロード</string>
+  <string name="pause">一時停止</string>
+  <string name="resume">再開</string>
+  <string name="play_or_share_exported_media_">エクスポートしたメディアを再生または共有しますか?</string>
+  <string name="share_published_story">公開したストーリーを共有しますか?</string>
+  <string name="err_storage_not_ready">この時点で、外部ストレージ (SDカード) が読み取りや書き込みの利用ができないようです。 StoryMaker はレッスンとストーリー プロジェクト データのために、アクセスが必要です。お使いのデバイスをチェックして、アプリを再起動してください。</string>
+  <string name="err_storage_not_available">現在、予期した保管場所が読み書きできません。 StoryMakerは、ストレージにアクセスしないと実行できません。SD カードを確認し、および/またはコンピュータからデバイスを切断してください。</string>
+  <string name="scene_s_">シーン</string>
+  <string name="clip_s_">クリップ</string>
+  <string name="sc_app_not_found">SoundCloud アプリが見つかりません!</string>
+  <string name="sc_app_not_found_message">今すぐインストールしますか?</string>
+  <string name="no_active_sc_account">有効な SoundCloud アカウントが見つかりません。ログイン/サインアップしてください</string>
+  <string name="operation_canceled">操作をキャンセルしました</string>
+  <string name="could_not_get_token">トークンを取得できませんでした</string>
+  <string name="getting_details">ユーザーの詳細を取得中</string>
+  <string name="could_not_create_account">アカウントを作成できませんでした</string>
+  <string name="uploading">アップロード中…</string>
+  <string name="canceled">アップロードをキャンセルしました</string>
+  <!--added for project export-->
+  <string name="export_dialog_title">このプロジェクトの zip を共有しますか?</string>
+  <string name="export_dialog_close">閉じる</string>
+  <string name="export_dialog_share">共有</string>
+  <string name="title_activity_accounts">アカウント</string>
+  <string name="action_settings">設定</string>
+  <string name="label_activity_log">アクティビティログ</string>
+  <string name="label_title">タイトル</string>
+  <string name="label_description">説明</string>
+  <string name="label_tags">タグ</string>
+  <string name="label_add">追加</string>
+  <string name="label_edit">編集</string>
+  <string name="label_save">保存</string>
+  <string name="label_activities">アクティビティログ</string>
+  <string name="hint_story_title">タイトルを入力してください</string>
+  <string name="hint_story_description">ストーリーを説明してください…</string>
+  <string name="hint_story_tag">#addtags</string>
+  <string name="label_section">セクション</string>
+  <string name="label_location">場所</string>
+  <string name="title_activity_story_info">情報</string>
+  <string name="title_activity_story_info_edit">情報を編集</string>
+  <string name="title_activity_project_tag_fragment">ProjectTagFragment</string>
+  <string name="title_activity_connect_account">StoryMaker アカウント</string>
+  <string name="hint_no_description">説明はありません。</string>
+  <string name="trim_clips">クリップをトリム</string>
+  <string name="info">情報</string>
+  <string name="send_logcat_to_support">Logcat をサポートに送信</string>
+  <string name="restarting_storymaker">StoryMaker を再起動中...</string>
+  <string name="send">送信</string>
+  <string name="title_activity_press_secure">PressSecure</string>
+  <string name="title_activity_publish">アクティビティを公開</string>
+  <string name="uploading_to_soundcloud">SoundCloud にアップロード中...</string>
+  <string name="uploading_to_s3">S3 にアップロード中...</string>
+  <string name="uploading_to_facebook">Facebook にアップロード中...</string>
+  <string name="uploading_to_internet_archive">インターネットアーカイブにアップロード中...</string>
+  <string name="no_site_selected">サイトが選択されていません。</string>
+  <string name="exported_stories">エクスポート</string>
+  <string name="no_title">タイトルがありません。</string>
+  <string name="title_exports">公開したストーリー</string>
+  <string name="last_modified">最終更新</string>
+  <string name="no_medium">(メディアがありません)</string>
+  <string name="learning_guide_description">説得力のあるナレーションを構築します。</string>
+  <string name="extracting_audio_multiple">オーディオトラックの抽出</string>
+  <string name="crossfading_audio">オーディオのクロスフェード...</string>
+  <string name="crossfading_audio_multiple">オーディオトラックのクロスフェード</string>
+  <string name="fade_audio">すべてのオーディオのインとアウトをフェード...</string>
+  <string name="converting_audio">出力オーディオに変換中...</string>
+  <string name="export_error_1">メディアのエクスポートで問題が発生しました</string>
+  <string name="export_error_2">エラー</string>
+  <string name="processing_audio">オーディオトラックの処理...</string>
+  <string name="processing_audio_multiple">オーディオトラックの処理</string>
+  <string name="mixing_tracks">トラックのミックス</string>
+  <string name="trimming_merging">ビデオのトリミングとマージ</string>
+  <string name="merging_video_audio">ビデオとオーディオのマージ...</string>
+  <string name="export_error_3">メディアのエクスポートで問題が発生しました</string>
+  <string name="export_error_4">エラー</string>
+  <string name="publishing_to_storymakerorg">StoryMaker.org に公開中...</string>
+  <string name="published_to_storymaker">StoryMaker.org に公開しました!</string>
+  <string name="you_are_not_signed_into_storymakerorg">StoryMaker.org にサインインしていません!</string>
+  <string name="fb_post_not_public">公開された Facebook の投稿のみ StoryMaker.org で公開できます!</string>
+  <string name="send_feedback">フィードバックを送る</string>
+  <string name="download_content_pack">コンテンツパックをダウンロードしますか?</string>
+  <string name="stop_download">ダウンロードを停止しますか?</string>
+  <string name="resume_download">ダウンロードを再開しますか?</string>
+  <string name="finished_downloading">ダウンロードが完了しました</string>
+  <string name="home_downloading_content">コンテンツのダウンロード中、および/またはインストール済ファイルの更新中</string>
+  <string name="home_content_missing">このパスを読み込みできません。コンテンツが見つかりません!</string>
+  <string name="home_metadata_missing">コンテンツのメタデータが見つかりません</string>
+  <string name="home_index_missing">コンテンツのインデックスが見つかりません</string>
+  <string name="home_please_wait">コンテンツパックのダウンロードが終了するまで、しばらくお待ちください</string>
+  <!--NEW/CACHEWORD-->
+  <string name="lock_screen_open_button_text">アプリのロック解除</string>
+  <string name="lock_screen_pin_enter_text">アプリをロック解除するため PIN を入力</string>
+  <string name="lock_screen_create_button_text">PIN の作成</string>
+  <string name="lock_screen_pin_create_text">アプリをロックする新しい PIN を入力</string>
+  <string name="lock_screen_pin_confirm_text">確認のため PIN を再度入力</string>
+  <string name="menu_lock">ロック</string>
+  <string name="catalog_menu_catalog">カタログ</string>
+  <string name="catalog_menu_guides">ガイド</string>
+  <string name="catalog_menu_lessons">レッスン</string>
+  <string name="catalog_menu_templates">テンプレート</string>
+  <string name="home_menu_home">ホーム</string>
+  <string name="home_menu_stories">ストーリー</string>
+  <string name="home_menu_guides">ガイド</string>
+  <string name="home_menu_lessons">レッスン</string>
+  <string name="home_menu_templates">テンプレート</string>
+  <string name="home_empty_home">より良いストーリーを作り始めることができるように、カタログを参照して、さまざまな方法を見つけてください。</string>
+  <string name="home_empty_stories">ストーリーはまだ保存されていません。</string>
+  <string name="home_empty_guides">まだガイドはありません。ガイドをダウンロードして、技術をブラッシュアップしてください。</string>
+  <string name="home_empty_lessons">教材をお探しですか? レッスンパックをダウンロードして、トピックを掘り下げてください。</string>
+  <string name="home_empty_templates">まだテンプレートはありません。テンプレートをダウンロードして、何度も使用することができるストーリー構造を保管してください。</string>
+  <string name="home_empty_btn_home">カタログを参照</string>
+  <string name="home_empty_btn_stories">新しいストーリー</string>
+  <string name="home_empty_btn_guides">ガイドを確保</string>
+  <string name="home_empty_btn_lessons">レッスンをロード</string>
+  <string name="home_empty_btn_templates">テンプレートを試す</string>
+  <string name="home_tab_latest_stories">最近使用したストーリー</string>
+  <string name="home_tab_latest_installation">最近使用したコンテンツパック</string>
+</resources>

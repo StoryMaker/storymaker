@@ -1,0 +1,46 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <string-array name="story_sections">
+    <item>Siyasət</item>
+    <item>Biznes</item>
+    <item>İdman</item>
+    <item>İncəsənət</item>
+    <item>Elm</item>
+    <item>Sağlamlıq</item>
+    <item>Təhsil</item>
+    <item>Ətraf mühit</item>
+  </string-array>
+  <string-array name="lesson_sections">
+    <item>Jurnalistika</item>
+    <item>Təhlükəsizlik</item>
+    <item>Səs</item>
+    <item>Fotoqrafiya</item>
+    <item>Video</item>
+    <item>Hekayə</item>
+  </string-array>
+  <string-array name="array_story_locations">
+    <item>ABŞ</item>
+    <item>Kaliforniya</item>
+    <item>Oakland</item>
+    <item>Misir</item>
+    <item>İraq</item>
+    <item>Mərakeş</item>
+    <item>Tunis</item>
+    <item>Zimbabve</item>
+    <item>Çexiya Respublikası</item>
+    <item>Vietnam</item>
+  </string-array>
+  <string-array name="array_story_sections">
+    <item>Siyasət</item>
+    <item>Biznes</item>
+    <item>İdman</item>
+    <item>İncəsənət</item>
+    <item>Elm</item>
+    <item>Sağlamlıq</item>
+    <item>Təhsil</item>
+    <item>Ətraf mühit</item>
+    <item>Texnologiya</item>
+    <item>Səyahət</item>
+  </string-array>
+  <!--<item>catalog</item>-->
+</resources>
