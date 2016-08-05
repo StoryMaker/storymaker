@@ -2,7 +2,6 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string name="app_name">StoryMaker 2</string>
   <string name="app_description">اکنون خلق گزارش خبری موفق با بهره‌گیری از برنامه StoryMaker از گذشته آسان‌تر شده است. الگوها و پوشش های منحصر به فرد و درس‌های این برنامه شما را در طی این فرایند نوآور یاری می‌کنند. StoryMaker به شما این امکان را می‌دهد که متن‌تان را به درستی روی تلفن همراهتان ویرایش کنید  و از طرف دیگر، روند پایان دادن به گزارش‌تان را نیز آسان‌تر می‌کند. زمانی که گزارش‌تان را به پایان رساندید، این فرصت را برای شما فراهم می کند تا آن را در شبکه‌های اجتماعی مورد علاقه‌تان منتشر کنید.</string>
-  <string name="title_catalog">کاتالوگ</string>
   <string name="title_projects">گزارش‌های خبری</string>
   <string name="title_lessons">درس‌ها</string>
   <string name="action_publish">انتشار</string>
@@ -94,7 +93,6 @@
   <string name="new_story_choose_template">قالب صفحه نمایش</string>
   <string name="home_new_story">یک گزارش خبری تهیه کنید.</string>
   <string name="home_start_a_lesson">درس ‌ها را جست‌وجو کنید.</string>
-  <string name="title_activity_catalog">کاتالوگ</string>
   <string name="title_activity_lessons">درس‌ها</string>
   <string name="title_activity_scene_editor">ویرایش‌گر صفحه نمایش</string>
   <string name="title_activity_choose_template">قالبی انتخاب کنید.</string>
@@ -123,7 +121,7 @@
   <string name="title_section3">بخش 3</string>
   <string name="title_section2">بخش 2</string>
   <string name="title_section1">بخش 1</string>
-  <string name="title_activity_test_drag">تست درگ</string>
+  <string name="title_activity_test_drag">آزمایش ؟؟؟؟؟؟؟؟؟؟؟؟</string>
   <!--Screen title before and during recording-->
   <!--Screen title after recording-->
   <!--Screen title while playing back a recording-->
@@ -200,9 +198,6 @@
   <string name="uploading_to_storymaker">انتشار در وب‌سایت StoryMaker </string>
   <string name="rendering_clips_">پردازش کلیپ با گرافیک رایانه‌ای</string>
   <string name="you_must_enter_a_project_name">لطفا وارد یک پیش نویس شوید. می‌توانید بعدا آن را تغییر دهید.</string>
-  <string name="delete_project_">حذف محصول نهایی؟</string>
-  <string name="delete_story">حذف گزارش؟</string>
-  <string name="delete_content_pack">حذف مجموعه محتوا؟ </string>
   <string name="delete_clip">حذف کلیپ؟</string>
   <string name="add_new_clip_to_the_scene_">ضمیمه کلیپ جدید به صفحه نمایش؟</string>
   <string name="video_project_project_type">پروژه ویدیویی</string>
@@ -241,13 +236,9 @@ https://storymaker.cc</string>
   <string name="cancel">ابطال</string>
   <string name="stop">توقف</string>
   <string name="delete">حذف</string>
-  <string name="download">بارگیری</string>
-  <string name="pause">مکث</string>
-  <string name="resume">ادامه</string>
   <string name="play_or_share_exported_media_">اشتراک‌گذاری یا نمایش دادن محتوای رسانه‌ای ارسال شده؟</string>
   <string name="share_published_story">آیا گزارش منتشر شده، به اشتراک گذاشته شود؟</string>
   <string name="err_storage_not_ready">به نظر نمی‌رسد که در حال حاضر حافظه خارجی (اس دی کارت) برای خواندن و نوشتن در دسترس باشد. StoryMaker.cc برای دروس و اطلاعات گزارش شما باید به حافظه خارجی دسترسی داشته باشد. لطفا دستگاه/ تلفن همراه‌تان را کنترل کنید و اپلیکیشن را دوباره راه‌اندازی کنید.</string>
-  <string name="err_storage_not_available">حافظه برای خوانده شدن و نوشتن در دسترس نیست. استوری میکر نمی‌تواند بدون دسترسی به حاقظه کار کند. لطفا کارت اس دی را چک کنید یل دستگاه را از کامپیوترتان جدا کنید.</string>
   <string name="scene_s_">صحنه(ها)</string>
   <string name="clip_s_">کلیپ(ها)</string>
   <string name="sc_app_not_found">اپلیکیشن SoundCloud  یافت نشد!</string>
@@ -291,7 +282,6 @@ https://storymaker.cc</string>
   <string name="title_activity_press_secure">PressSecure</string>
   <string name="title_activity_publish">فعالیت مربوط به انتشار</string>
   <string name="uploading_to_soundcloud">در حال بارگذاری در SoundCloud ........</string>
-  <string name="uploading_to_s3">در حال بارگیری S3. </string>
   <string name="uploading_to_facebook">در حال بارگذاری در فیس بوک .......</string>
   <string name="uploading_to_internet_archive">در حال بارگذاری در بایگانی اینترنت ........</string>
   <string name="no_site_selected">هیچ وب‌سایتی انتخاب نشد.</string>
@@ -315,46 +305,10 @@ https://storymaker.cc</string>
   <string name="merging_video_audio">در حال ادغام ویدیو و صدا ...</string>
   <string name="export_error_3">مشکلی در مورد ارسال رسانه به خارج وجود دارد.</string>
   <string name="export_error_4">خطا</string>
-  <string name="publishing_to_storymakerorg">در حال انتشار در استوری میکر </string>
-  <string name="published_to_storymaker">منتشر شده در استوری میکر</string>
-  <string name="you_are_not_signed_into_storymakerorg">شما وارد استوری میکر نشده‌اید.</string>
-  <string name="fb_post_not_public">تنها پست‌های عمومی فیس‌بوک می‌تواند در استوری‌میکر منتشر شود.</string>
-  <string name="send_feedback">بازخورد بفرستید</string>
-  <string name="download_content_pack">مجموعه محتوایی را بارگیری کنید.</string>
-  <string name="stop_download">بارگیری را متوقف کنید.</string>
-  <string name="resume_download">ادامه بارگیری؟</string>
-  <string name="finished_downloading">پایان بارگیری</string>
-  <string name="home_downloading_content">بارگیری محتوا و به روز رسانی فایل‌های نصب شده</string>
-  <string name="home_content_missing">قادر به بارگیری این راه نیست. محتوا وجود ندارد.</string>
-  <string name="home_metadata_missing">نمی‌تواند محتوای متا را پیدا کند.</string>
-  <string name="home_index_missing">نمی‌تواند محتوای ایندکس را پیدا کند.</string>
-  <string name="home_please_wait">لطفا صبر کنید تا بارگیری محتوا تمام شود.</string>
   <!--NEW/CACHEWORD-->
-  <string name="lock_screen_open_button_text">باز کردن قفل اپلیکیشن</string>
-  <string name="lock_screen_pin_enter_text">پین کد را وارد کنید تا اپلیکیشن باز شود.</string>
-  <string name="lock_screen_create_button_text">پین کد انتخاب کنید.</string>
-  <string name="lock_screen_pin_create_text">پین کد تازه را وارد کنید تا اپلیکیشن قفل شود.</string>
-  <string name="lock_screen_pin_confirm_text">دوباره پین کد را وارد کنید تا تایید شود.</string>
-  <string name="menu_lock">قفل</string>
-  <string name="catalog_menu_catalog">کاتالوگ</string>
-  <string name="catalog_menu_guides">راهنماها</string>
   <string name="catalog_menu_lessons">درس‌ها</string>
-  <string name="catalog_menu_templates">قالب‌ها</string>
   <string name="home_menu_home">صفحه اصلی</string>
-  <string name="home_menu_stories">گزارش‌های خبری</string>
-  <string name="home_menu_guides">راهنماها</string>
+  <string name="home_menu_stories">گزارش های خبری</string>
   <string name="home_menu_lessons">درس‌ها</string>
-  <string name="home_menu_templates">قالب‌ها</string>
-  <string name="home_empty_home">کاتلوگ ما را باز کنید و راه‌های متفارت تهیه یک گزارش را در آن ببینید.</string>
-  <string name="home_empty_stories">تاکنون گزارشی را ذخیره نکرده‌اید.</string>
-  <string name="home_empty_guides">تاکنون راهنمایی نداشته‌اید. یک راهنما بارگیری کنید تا مهارت‌های خود را بهتر کنید.</string>
-  <string name="home_empty_lessons">دنبال یادگیری بیشتر هستید؟ درسی را دانلود کنید تا درباره آن موضوع اطلاعات به دست بیاورید.</string>
-  <string name="home_empty_templates">هنوز هیچ قالبی ندارید. قالب‌ها  را دانلود کنید تا بر اساس آن ساختار گزارش‌هایی را که می‌خواهید بسازید، داشته باشید.</string>
-  <string name="home_empty_btn_home">کاتالوگ را باز کنید.</string>
-  <string name="home_empty_btn_stories">گزارش جدید</string>
-  <string name="home_empty_btn_guides">یک راهنما دریافت کنید.</string>
-  <string name="home_empty_btn_lessons">یک درس را باز کنید.</string>
-  <string name="home_empty_btn_templates">یک قالب را امتحان کنید.</string>
-  <string name="home_tab_latest_stories">گزارش‌های جدید</string>
-  <string name="home_tab_latest_installation">محتواهای جدید</string>
+  <string name="home_empty_btn_stories">گزارش تازه </string>
 </resources>

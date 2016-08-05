@@ -286,4 +286,6 @@
   <string name="home_menu_stories">قصص</string>
   <string name="home_menu_lessons">الدروس</string>
   <string name="home_empty_btn_stories">قصة جديدة</string>
+  <string name="home_empty_btn_templates">جرب قالب للقصة.</string>
+  <string name="home_tab_latest_stories">أحدث القصص. </string>
 </resources>

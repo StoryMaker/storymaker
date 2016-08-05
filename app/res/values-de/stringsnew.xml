@@ -42,6 +42,7 @@
   <string name="story_type_profile_title">Profil</string>
   <string name="story_type_news_title">Eilmeldungen</string>
   <string name="story_type_event_desc">Event Stories haben einen festgesetzten Zeitrahmen und einen bestimmten Ort. Beachten Sie, was bei diesem Event passiert. Fügen Sie in Ihrer Story ein, wenn, wo und warum diese an genau diesem Ort und in genau dieser Zeit abläuft.</string>
+  <string name="story_type_profile_desc">Schreibe eine Kurzbiographie über einen bestimmten Charakter. Das Augenmerk sollte darauf liegen wer der Charakter ist. Gestalte deine Geschichte über das tägliche Leben deines Charakters und wie er mit Problemen umgeht.</string>
   <!--/ legacy_story_type-->
   <!--story_type-->
   <string name="story_type_event_news_title">Neuigkeit</string>
@@ -56,6 +57,7 @@
   <!--/story_type-->
   <!--story_type_description-->
   <string name="story_type_event_news_desc">Geschichten über Ereignisse mit unmittelbarer Bedeutung; sie sind häufig geplant und haben einen definierten Beginn und ein definiertes Ende. Gute Beispiele hierfür sind Wahlen oder Demonstrationen.</string>
+  <string name="story_type_event_feature_desc">Geschichten über Ereignisse die möglicherweiße keinen Hinweiß über harte Geschichten beinhalten, </string>
   <string name="story_type_profile_professional_desc">Geschichten über Menschen und ihre Arbeitsplätze. Ein Profil von einem berühmten Künstler oder Sportler ist eine gute Berufsprofil.</string>
   <!--/story_type_description-->
   <!--template_options-->
