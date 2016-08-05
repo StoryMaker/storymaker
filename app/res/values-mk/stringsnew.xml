@@ -26,10 +26,10 @@
   <!--story_type_old-->
   <!--/story_type_old-->
   <!--prefs-->
-  <string name="prefs_disable_lesson_completion_summary"></string>
   <!--/prefs-->
   <!--FirstStartActivity-->
   <!--ConnectAccountActivity-->
   <string name="join_storymaker">Приклучи се на StoryMaker заедницата</string>
   <!--ProjectTagFragment-->
+  <!--BaesActivity Drawer  (For Accessibility Descriptions)-->
 </resources>
