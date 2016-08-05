@@ -445,6 +445,12 @@ public class BaseActivity extends FragmentActivity implements ICacheWordSubscrib
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             perms.add(Manifest.permission.WRITE_EXTERNAL_STORAGE);
         }
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+            perms.add(Manifest.permission.CAMERA);
+        }
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
+            perms.add(Manifest.permission.RECORD_AUDIO);
+        }
         if (perms.size() > 0) {
             ActivityCompat.requestPermissions(this, perms.toArray(new String[0]), Constants.PERMS_REQ_ALL);
         }
