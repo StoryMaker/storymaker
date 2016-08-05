@@ -1,0 +1,46 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <string-array name="story_sections">
+    <item>政治</item>
+    <item>商業</item>
+    <item>體育</item>
+    <item>藝術</item>
+    <item>科學</item>
+    <item>健康</item>
+    <item>教育</item>
+    <item>環境</item>
+  </string-array>
+  <string-array name="lesson_sections">
+    <item>新聞</item>
+    <item>安全</item>
+    <item>聲音</item>
+    <item>照片</item>
+    <item>影片</item>
+    <item>故事</item>
+  </string-array>
+  <string-array name="array_story_locations">
+    <item>美國</item>
+    <item>加州</item>
+    <item>奧克蘭</item>
+    <item>埃及</item>
+    <item>伊拉克</item>
+    <item>摩洛哥</item>
+    <item>突尼西亞</item>
+    <item>辛巴威</item>
+    <item>捷克</item>
+    <item>越南</item>
+  </string-array>
+  <string-array name="array_story_sections">
+    <item>政治</item>
+    <item>商業</item>
+    <item>體育</item>
+    <item>藝術</item>
+    <item>科學</item>
+    <item>健康</item>
+    <item>教育</item>
+    <item>環境</item>
+    <item>科技</item>
+    <item>旅遊</item>
+  </string-array>
+  <!--<item>catalog</item>-->
+</resources>

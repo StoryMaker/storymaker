@@ -1,0 +1,143 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+  <string name="app_name">StoryMaker 2</string>
+  <string name="title_projects">Történetek</string>
+  <!--menus-->
+  <string name="menu_new_project">Új</string>
+  <string name="menu_projects">Történetek</string>
+  <string name="menu_glossary">Szójegyzék</string>
+  <string name="menu_settings">Beállítások</string>
+  <string name="menu_accounts">Fiókok</string>
+  <string name="drawer_profile">Bejelentkezés</string>
+  <!--FIXME: rename-->
+  <string name="menu_capture_media">Felvétel</string>
+  <string name="menu_share_media">Megosztás</string>
+  <string name="menu_save_media">Mentés</string>
+  <string name="menu_play_media">Lejátszás</string>
+  <string name="menu_login">Bejelentkezés</string>
+  <string name="menu_logs">Napló küldése</string>
+  <string name="menu_update">Frissítés</string>
+  <string name="menu_about">Rólunk</string>
+  <string name="menu_save_project">Mentés</string>
+  <string name="menu_overlay_camera">Kamera</string>
+  <string name="menu_sign_up">Feliratkozás / Bejelentkezés</string>
+  <string name="menu_uploads">Feltöltések</string>
+  <!--project list-->
+  <!--video processing-->
+  <string name="hintTitle">cím</string>
+  <string name="start_recording">Felvétel</string>
+  <string name="stop_recording">Megállítás</string>
+  <string name="play_recording">Lejátszás</string>
+  <string name="save_recording">Mentés</string>
+  <string name="checking_for_updates_">Frissítések keresése...</string>
+  <!--LOG COLLECTOR-->
+  <string name="message_subject">Android készülék napló</string>
+  <string name="title_lessons_glossary">Szójegyzék</string>
+  <string name="hello_world">Hello világ!</string>
+  <!--<string name="new_story_video">Video: Something here about why simple, short video is good! Ideally it should be about the same length as the other strings.</string>
+   	<string name="new_story_essay">Photo Essay: Tell a story about one character. Follow this template to produce a simple photo essay story about one character.</string>
+    <string name="new_story_photo">Single Photo: Telling a strong story with one image is a skill. To simplify, these templates explain some primary photo types.</string>
+    
+    <string name="new_story_audio">Audio: Something here about using audio to tell a story. Personally, I really like to listen to the radio and podcasts while I do housework!</string>-->
+  <string name="new_story_simple_story">Egyszerű Történet</string>
+  <string name="home_new_story">TÖRTÉNET KÉSZÍTÉSE</string>
+  <string name="title_activity_scene_editor">Jelenet Szerkesztő</string>
+  <string name="title_activity_choose_template">Sablon Választása</string>
+  <string name="title_activity_story_template">Sablon Történet</string>
+  <string name="tab_order">Szerkesztés</string>
+  <string name="story_publish_share">Megosztás</string>
+  <string name="story_publish_status">Állapot</string>
+  <string name="story_publish_status_processing">Feldolgozás</string>
+  <!--delete these below-->
+  <!--Screen title before and during recording-->
+  <!--Screen title after recording-->
+  <!--Screen title while playing back a recording-->
+  <!--Label shown during recording-->
+  <string name="recording">Felvétel</string>
+  <!--Label shown when the recording is stopped for a reason other than the user stopping it (e.g. the sd card was removed)-->
+  <string name="recording_stopped">Felvétel megállítva</string>
+  <!--label shown when there is not enough space to record something-->
+  <string name="storage_is_full">Tároló tele van</string>
+  <!--label shown when the recording has reached maximum allowed file size-->
+  <string name="max_length_reached">Maximum hossz elérve</string>
+  <!--label shown when there is no sd card available to record to-->
+  <string name="insert_sd_card">SD kártya szükséges</string>
+  <!--label shown when there is more than 1 minute but less than 9 minutes of space left to record-->
+  <!--label shown when there is less than 1 minute of space left to record-->
+  <!--button to accept the current recording and return it to the caller-->
+  <!--button to discard the current recording and return to the caller-->
+  <!--acknowlegement button in a number of dialogs-->
+  <string name="button_ok">OK</string>
+  <!--Do not translate. Format of the timer that shows how much has been recorded so far-->
+  <!--label shown before the user has recorded anything-->
+  <!--the name under which recordings will be visible in the media database is formatted like this-->
+  <!--all recordings will show up in the media database with this 'artist' name-->
+  <string name="audio_db_artist_name">Felvételeid</string>
+  <!--all recordings will show up in the media database with this 'album' name-->
+  <string name="audio_db_album_name">Hangfelvételek</string>
+  <!--all recordings will show up in the media database in a playlist with this name-->
+  <string name="audio_db_playlist_name">Felvételeim</string>
+  <!--shown as the message in a dialog when an error occured because of an error accessing the sd card-->
+  <string name="error_sdcard_access">Nem lehet elérni a külső vagy belső tárolót</string>
+  <!--shown as the message in a dialog when the app encountered an unspecified internal error-->
+  <!--shown as the message in a dialog when the recording could not be added to the media database-->
+  <string name="error_mediadb_new_record">Nem lehet menteni a felvett hangot</string>
+  <!--shown as the message in a dialog when an export will tak up too much space-->
+  <string name="error_storage_space" formatted="false">Hoppá, kifogytunk a helyből. Kérlek tegyél körülbelül %.2f%nMB -ot elérhetővé és próbáld újra!</string>
+  <!--add for libra begin-->
+  <string name="default_record_name">névtelen felvétel</string>
+  <string name="menu_view_record_list">Felvétel lista megtekintése</string>
+  <string name="menu_setting">Beállítások</string>
+  <string name="delete_dialog_title">Törölni akarod a jelenlegi felvételt?</string>
+  <string name="overwrite_dialog_title">%s már létezik. Felül akarod írni?</string>
+  <string name="preferences_title">Beállítások</string>
+  <string name="prefDialogTitle_recordType">Kérlek válassz fájltípust</string>
+  <string name="pref_title_enable_high_quality">Magas minőség engedélyezése</string>
+  <string name="pref_summary_enable_high_quality">A magas minőségű hangfájl nagyobb lehet</string>
+  <string name="pref_title_enable_sound_effect">Hangeffekt engedélyezése</string>
+  <string name="notification_recording">Felvétel...</string>
+  <string name="notification_stopped">Felvétel megállt</string>
+  <string name="sd_card_not_available">SD kártya nem elérhető</string>
+  <string name="alert_message_delete_record">Törölni akarod a kiválasztott felvételt?</string>
+  <!--add for libra end-->
+  <!--youtube upload-->
+  <string name="lesson_status_in_progress">Folyamatban van</string>
+  <string name="eula_accept">Elfogad</string>
+  <string name="eula_refuse">Visszautasít</string>
+  <string name="privacy_policy">Adatvédelmi Irányelvek</string>
+  <string name="end_user_license_agreement">Végfelhasználói Licencszerződés</string>
+  <string name="publish_sm">StoryMaker.cc</string>
+  <string name="publish_youtube">YouTube</string>
+  <string name="action_render">Exportálás</string>
+  <string name="action_play">Lejátszás</string>
+  <string name="action_share">Megosztás</string>
+  <string name="drawer_quick_capture">Gyors Rögzítés</string>
+  <string name="button_start_my_story">TÖRTÉNETEM KEZDÉSE</string>
+  <string name="home_intro_button_projects">TÖRTÉNET KÉSZÍTÉSE</string>
+  <string name="created_with_storymaker_tag">StoryMaker-rel készítve - https://storymaker.cc/</string>
+  <string name="stop">Megállítás</string>
+  <string name="delete">Törlés</string>
+  <string name="uploading">Feltöltés...</string>
+  <!--added for project export-->
+  <string name="export_dialog_close">Bezár</string>
+  <string name="export_dialog_share">Megoszt</string>
+  <string name="title_activity_accounts">Fiókok</string>
+  <string name="action_settings">Beállítások</string>
+  <string name="label_title">Cím</string>
+  <string name="label_description">Leírás</string>
+  <string name="label_tags">Címkék</string>
+  <string name="label_edit">Szerkesztés</string>
+  <string name="label_save">Mentés</string>
+  <string name="hint_no_description">Nincs leírás.</string>
+  <string name="restarting_storymaker">StoryMaker újraindítása...</string>
+  <string name="send">Küldés</string>
+  <string name="uploading_to_soundcloud">Feltöltés SoundCloud-ra...</string>
+  <string name="uploading_to_facebook">Feltöltés Facebook-ra...</string>
+  <string name="no_site_selected">Nincs oldal kiválasztva.</string>
+  <string name="no_title">Nincs Cím.</string>
+  <string name="last_modified">Utoljára Módosítva</string>
+  <string name="export_error_2">Hiba</string>
+  <string name="export_error_4">Hiba</string>
+  <!--NEW/CACHEWORD-->
+  <string name="home_menu_stories">Történetek</string>
+</resources>

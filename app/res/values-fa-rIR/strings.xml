@@ -1,0 +1,360 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+  <string name="app_name">StoryMaker 2</string>
+  <string name="app_description">اکنون خلق گزارش خبری موفق با بهره‌گیری از برنامه StoryMaker از گذشته آسان‌تر شده است. الگوها و پوشش های منحصر به فرد و درس‌های این برنامه شما را در طی این فرایند نوآور یاری می‌کنند. StoryMaker به شما این امکان را می‌دهد که متن‌تان را به درستی روی تلفن همراهتان ویرایش کنید  و از طرف دیگر، روند پایان دادن به گزارش‌تان را نیز آسان‌تر می‌کند. زمانی که گزارش‌تان را به پایان رساندید، این فرصت را برای شما فراهم می کند تا آن را در شبکه‌های اجتماعی مورد علاقه‌تان منتشر کنید.</string>
+  <string name="title_catalog">کاتالوگ</string>
+  <string name="title_projects">گزارش‌های خبری</string>
+  <string name="title_lessons">درس‌ها</string>
+  <string name="action_publish">انتشار</string>
+  <!--menus-->
+  <string name="menu_new_project">جدید</string>
+  <string name="menu_projects">گزارش های خبری</string>
+  <string name="menu_lessons">درس‌ها</string>
+  <string name="menu_glossary">واژه نامه</string>
+  <string name="menu_contacts">اطلاعات تماس</string>
+  <string name="menu_settings">تنظیمات</string>
+  <string name="menu_accounts">حساب های شخصی</string>
+  <string name="menu_archive">بایگانی</string>
+  <string name="drawer_profile">ورود</string>
+  <!--FIXME: rename-->
+  <string name="menu_add_media">افزودن</string>
+  <string name="menu_capture_media">ضبط</string>
+  <string name="menu_share_media">اشتراک‌گذاری</string>
+  <string name="menu_save_media">ذخیره</string>
+  <string name="menu_play_media">نمایش روی صفحه</string>
+  <string name="menu_render_media">پردازشگر گرافیک رایانه‌ای</string>
+  <string name="menu_bug_report"> گزارش اشکال</string>
+  <string name="menu_login">ورود</string>
+  <string name="menu_logs">ارسال لاگ</string>
+  <string name="menu_update">به روز رسانی</string>
+  <string name="menu_about">درباره</string>
+  <string name="menu_save_project">ذخیره</string>
+  <string name="menu_overlay_camera">دوربین</string>
+  <string name="menu_add_new_shot">کلیپ را به پرده نمایش ضمیمه کنید.</string>
+  <string name="menu_export_project_files">فایل‌های خروجی پروژه نظیر زیپ</string>
+  <string name="menu_join_storymaker">به گروه Story Maker بپیوندید.</string>
+  <string name="menu_sign_up">ثبت نام/ ورود</string>
+  <string name="menu_upload_manager">آپلود منیجر</string>
+  <string name="menu_uploads">بارگذاری شده‌ها</string>
+  <string name="welcome_message">سلام به همه!/ به StoryMaker خوش آمدید.</string>
+  <!--project list-->
+  <string name="default_project_list_view">این نخستین بار است که پروژه‌ای خلق می‌کنید\n\n- برای شروع فشار دهید -</string>
+  <string name="default_project_view_message">شما سه انتخاب دارید.\nمی توانید گزارش‌تان را صوتی، ویدیویی یا تصویری روایت کنید. برای افزودن گزارش فشار دهید.</string>
+  <!--video processing-->
+  <string name="pref_out_fps_title">خروجی فرم ریت -تعداد کادر در ثانیه (fps)</string>
+  <string name="pref_out_fps_summary">تعداد کادرها در ثانیه برای ذخیزه محصول ویدیویی در (15-30)</string>
+  <string name="pref_out_rate_title">خروجی تعداد بیت بر ثانیه (kbps)</string>
+  <string name="pref_out_rate_summary">خروجی تعداد بیت بر ثانیه در ویدیو (300-1500)</string>
+  <string name="pref_out_format_title">فرمت خروجی</string>
+  <string name="pref_out_format_summary">فرمت محتوای فایل (mp4, 3gp, ogg)</string>
+  <string name="pref_out_vcodec_title">خروجی فشرده ویدیو</string>
+  <string name="pref_out_vcodec_summary">فشرده سازی ویدیو (copy, libx264, etc)</string>
+  <string name="pref_out_acodec_title">خروجی فشرده ویدیو</string>
+  <string name="pref_out_acodec_summary">فشرده‌سازی صوت (copy, aac, mp3, etc)</string>
+  <string name="pref_out_vwidth_title">عرض رایج ویدیو (px)</string>
+  <string name="pref_out_vwidth_summary">عرض رایج ویدیو برای خروجی ویدیو</string>
+  <string name="pref_out_vheight_title">تعیین طول ویدیو (px)</string>
+  <string name="pref_out_vheight_summary">تعیین طول ویدیو برای خروجی ویدیو</string>
+  <string name="hintTitle">عنوان</string>
+  <string name="hintStartTime">شروع ضبط (00:00:00)</string>
+  <string name="hintEndTime">مدت زمان (00:00:00)</string>
+  <string name="hintFadeIn">محو شدن در (کادرها)</string>
+  <string name="hintFadeOut">محوسازی/ فید کردن (کادرها)</string>
+  <string name="start_recording">ضبط</string>
+  <string name="stop_recording">توقف</string>
+  <string name="play_recording">نمایش روی صفحه</string>
+  <string name="save_recording">ذخیره</string>
+  <string name="downloading_lessons_from_server_">بارگیری دروس از سرور ...</string>
+  <string name="checking_for_updates_">کنترل به روزرسانی...</string>
+  <!--LOG COLLECTOR-->
+  <string name="app_name_lc">گردآورنده لاگ(فایل گزارش کامپیوتر)</string>
+  <string name="message_subject">فایل لاگ در سیستم اندروید</string>
+  <string name="acquiring_log_progress_dialog_message">جمع آوری لاگ از سیستم \u2026</string>
+  <string name="chooser_title">انتخاب یک اپلیکیشن برای ارسال لاگ</string>
+  <string name="failed_to_get_log_message">به دست آوردن لاگ از سیستم ناموفق بود</string>
+  <string name="main_dialog_text">این اپلیکیشن تلاش می‌کند تا لاگ دستگاه شما را گردآوری کند.
+لاگ‌های گردآوری شده با استفاده از اپلیکیشن منتخب شما ارسال خواهد شد.
+شما هم چنین فرصت مشاهده اطلاعات ارسال شده و تغییر آن را نیز خواهید داشت.</string>
+  <string name="title_home_projects">پروژه‌ها</string>
+  <string name="title_home_activity">فعالیت</string>
+  <string name="title_lessons_lessons">درس‌ها</string>
+  <string name="title_lessons_glossary">واژه نامه</string>
+  <string name="hello_world">سلام دنیا!</string>
+  <string name="title_activity_home">صفحه اصلی</string>
+  <string name="new_story_name_it">نام گذاری کنید.</string>
+  <string name="new_story_working_title">عنوان شغلی</string>
+  <string name="new_story_choose_something">جمله کوتاهی بیابید تا موضوع را تعریف کند و مخاطب شما را بر سر ذوق آورد.</string>
+  <string name="new_story_choose_a_medium">یک رسانه انتخاب کنید.</string>
+  <!--<string name="new_story_video">Video: Something here about why simple, short video is good! Ideally it should be about the same length as the other strings.</string>
+   	<string name="new_story_essay">Photo Essay: Tell a story about one character. Follow this template to produce a simple photo essay story about one character.</string>
+    <string name="new_story_photo">Single Photo: Telling a strong story with one image is a skill. To simplify, these templates explain some primary photo types.</string>
+    
+    <string name="new_story_audio">Audio: Something here about using audio to tell a story. Personally, I really like to listen to the radio and podcasts while I do housework!</string>-->
+  <string name="new_story_simple_story">گزارش خبری ساده</string>
+  <string name="new_story_choose_template">قالب صفحه نمایش</string>
+  <string name="home_new_story">یک گزارش خبری تهیه کنید.</string>
+  <string name="home_start_a_lesson">درس ‌ها را جست‌وجو کنید.</string>
+  <string name="title_activity_catalog">کاتالوگ</string>
+  <string name="title_activity_lessons">درس‌ها</string>
+  <string name="title_activity_scene_editor">ویرایش‌گر صفحه نمایش</string>
+  <string name="title_activity_choose_template">قالبی انتخاب کنید.</string>
+  <string name="title_activity_story_template">قالب گزارش خبری</string>
+  <string name="tab_make">درست کنید.</string>
+  <string name="tab_review">مرور کنید.</string>
+  <string name="tab_publish">کامل کنید.</string>
+  <string name="tab_finish">پایان</string>
+  <string name="tab_add_clips">درست کنید.</string>
+  <string name="tab_order">ویرایش</string>
+  <string name="story_publish_section">بخش</string>
+  <string name="story_publish_section_hint">ورزشی</string>
+  <string name="story_publish_topics">موضوعات</string>
+  <string name="story_publish_topics_hint">جنسیت</string>
+  <string name="story_publish_location">مکان و موقعیت</string>
+  <string name="story_publish_location_hint"> به مکان مناسب وارد شوید.</string>
+  <string name="story_publish_share">به اشتراک بگذارید.</string>
+  <string name="story_publish_send_via">بفرستید از طریق ...</string>
+  <string name="story_publish_status">استتوس/ وضعیت و حالت</string>
+  <string name="story_publish_status_processing">در حال پردازش</string>
+  <string name="story_publish_status_not">منتشر نشده</string>
+  <string name="story_publish_describe_hint">گزارشتان را شرح دهید ...</string>
+  <string name="story_publish_story_title">عنوان گزارش خبری را این‌جا بنویسید.</string>
+  <string name="story_publish_story_date">تاریخ گزارش خبری را این جا بنویسید.</string>
+  <!--delete these below-->
+  <string name="title_section3">بخش 3</string>
+  <string name="title_section2">بخش 2</string>
+  <string name="title_section1">بخش 1</string>
+  <string name="title_activity_test_drag">تست درگ</string>
+  <!--Screen title before and during recording-->
+  <!--Screen title after recording-->
+  <!--Screen title while playing back a recording-->
+  <!--Label shown during recording-->
+  <string name="recording">ضبط</string>
+  <!--Label shown when the recording is stopped for a reason other than the user stopping it (e.g. the sd card was removed)-->
+  <string name="recording_stopped">ضبط متوقف شد.</string>
+  <!--label shown when there is not enough space to record something-->
+  <string name="storage_is_full">حافظه پر است.</string>
+  <!--label shown when the recording has reached maximum allowed file size-->
+  <string name="max_length_reached">رسیدن به حداکثر طول موجود</string>
+  <!--label shown when there is no sd card available to record to-->
+  <string name="insert_sd_card"> اس دی کارت لازم است.</string>
+  <!--label shown when there is more than 1 minute but less than 9 minutes of space left to record-->
+  <!--label shown when there is less than 1 minute of space left to record-->
+  <!--button to accept the current recording and return it to the caller-->
+  <!--button to discard the current recording and return to the caller-->
+  <!--acknowlegement button in a number of dialogs-->
+  <string name="button_ok">تایید</string>
+  <!--Do not translate. Format of the timer that shows how much has been recorded so far-->
+  <!--label shown before the user has recorded anything-->
+  <!--the name under which recordings will be visible in the media database is formatted like this-->
+  <!--all recordings will show up in the media database with this 'artist' name-->
+  <string name="audio_db_artist_name">محتوای ضبط شده شما</string>
+  <!--all recordings will show up in the media database with this 'album' name-->
+  <string name="audio_db_album_name">محتوای ضبط شده صوتی</string>
+  <!--all recordings will show up in the media database in a playlist with this name-->
+  <string name="audio_db_playlist_name">محتوای ضبط شده من</string>
+  <!--shown as the message in a dialog when an error occured because of an error accessing the sd card-->
+  <string name="error_sdcard_access"> دسترسی به حافظه خارجی یا داخلی ممکن نیست.</string>
+  <!--shown as the message in a dialog when the app encountered an unspecified internal error-->
+  <string name="error_app_internal">خطا در درخواست داخلی</string>
+  <!--shown as the message in a dialog when the recording could not be added to the media database-->
+  <string name="error_mediadb_new_record"> ذخیره صداهای ضبط شده ممکن نیست.</string>
+  <!--shown as the message in a dialog when an export will tak up too much space-->
+  <string name="error_storage_space" formatted="false">متاسفانه فضای کافی موجود نیست.لطفا حدود %.2f%nMB فضای خالی فراهم کنید و دوباره سعی کنید.</string>
+  <!--add for libra begin-->
+  <string name="default_record_name">بدون عنوان</string>
+  <string name="menu_view_record_list">لیست موارد ضبط شده را ببینید</string>
+  <string name="menu_setting">تنظیمات</string>
+  <string name="delete_dialog_title">آیا می خواهید فایل ضبط شده کنونی را حذف کنید؟</string>
+  <string name="overwrite_dialog_title">%s فضای خالی موجود است. آیا می‌خواهید متن را بازنویسی کنید؟</string>
+  <string name="preferences_title">تنظیمات</string>
+  <string name="pref_title_record_type">ثبت نوع فایل</string>
+  <string name="prefDialogTitle_recordType">لطفا نوع فایل را انتخاب کنید.</string>
+  <string name="prefDefault_recordType">/3gpp صوتی</string>
+  <string name="pref_title_enable_high_quality">فعال‌سازی کیفیت بالا</string>
+  <string name="pref_summary_enable_high_quality">فایل صوتی با کیفیت بالا می‌تواند بزرگ‌تر باشد.</string>
+  <string name="pref_title_enable_sound_effect">فعال سازی افکت‌های صوتی</string>
+  <string name="pref_summary_enable_sound_effect">نمایش افکت‌های صوت وقتی که کیفیت تغییر کرده است</string>
+  <string name="notification_recording">در حال ضبط</string>
+  <string name="notification_stopped">ضبط متوقف شد.</string>
+  <string name="notification_warning">حافظه ناکافی ( کم‌تر از %d دقیقه)</string>
+  <string name="sd_card_not_available">اس دی کارت در دسترس نیست.</string>
+  <string name="open_file_explorer">جست‌جوگر فایل را باز کنید.</string>
+  <string name="alert_message_delete_record">آیا می خواهید فایل ضبط شده کنونی را حذف کنید؟</string>
+  <!--add for libra end-->
+  <string name="help_clip_select">نشانگر را بکشید تا نوع کلیپ را انتخاب کنید، سپس بر روی تصویر کلیپ فشار دهید تا ویدیو، عکس یا ضبط صوت آغاز شود.</string>
+  <!--youtube upload-->
+  <string name="lesson_status_have_not_started">هنوز آغاز نشده است.</string>
+  <string name="lessons_congratulations_you_have_completed_the_lesson_">شما یک درس را به پایان رساندید!</string>
+  <string name="lesson_status_in_progress">در جریان</string>
+  <string name="lesson_status_complete">تکمیل کنید!</string>
+  <string name="no_lessons_available_tap_to_load_">هیچ درسی موجود نیست ( فشار دهید تا بارگیری کنید)</string>
+  <string name="_lesson_complete">تکمیل درس</string>
+  <string name="_of_">از</string>
+  <string name="default_youtube_desc">یک پروژه StoryMaker</string>
+  <string name="view_published_media_online_or_local_copy_">آیا مایلید به صورت آ‌ن‌لاین گزارش منتشر شده را مشاهد کنید؟</string>
+  <string name="choose_account_for_youtube_upload">حساب شخصی را برای بارگذاری انتخاب کنید.</string>
+  <string name="rendering">گرافیک رایانه ای یا ارایه ماشینی تصویر</string>
+  <string name="rendering_project_">پردازش پروژه با گرافیک رایانه‌ای</string>
+  <string name="publishing">انتشار</string>
+  <string name="connecting_to_youtube_">اتصال به یوتیوب ...</string>
+  <string name="uploading_to_storymaker">انتشار در وب‌سایت StoryMaker </string>
+  <string name="rendering_clips_">پردازش کلیپ با گرافیک رایانه‌ای</string>
+  <string name="you_must_enter_a_project_name">لطفا وارد یک پیش نویس شوید. می‌توانید بعدا آن را تغییر دهید.</string>
+  <string name="delete_project_">حذف محصول نهایی؟</string>
+  <string name="delete_story">حذف گزارش؟</string>
+  <string name="delete_content_pack">حذف مجموعه محتوا؟ </string>
+  <string name="delete_clip">حذف کلیپ؟</string>
+  <string name="add_new_clip_to_the_scene_">ضمیمه کلیپ جدید به صفحه نمایش؟</string>
+  <string name="video_project_project_type">پروژه ویدیویی</string>
+  <string name="photo_project_project_type">پروژه تصویری</string>
+  <string name="audio_project_project_type">پروژه صوتی</string>
+  <string name="photo_essay_project_project_type">پروژه گزارش تصویری</string>
+  <string name="eula_title">شما موافق هستید با:</string>
+  <string name="eula_accept">قبول</string>
+  <string name="eula_refuse">رد</string>
+  <string name="privacy_policy">سیاست حفظ حریم خصوصی</string>
+  <string name="end_user_license_agreement">اتمام قرارداد توافق کاربر</string>
+  <string name="send_annonymous_data">اطلاعاتی بی نام خود رابرای ما ارسال کنید تا به رشد StoryMaker کمک کنید.</string>
+  <string name="by_clicking_accept">با کلیک روی کلمه «پذیرش» شما با توافق‌نامه کاربری ما موافقت کرده‌اید و این به معنای آن است که سیاست حفظ حریم خصوصی ما را خوانده‌اید.</string>
+  <string name="button_add_narration">ضبط صدای گوینده</string>
+  <string name="button_play_narration">پخش صدای گوینده</string>
+  <string name="button_delete_narration">حذف صدای گوینده</string>
+  <string name="button_render_preview">مرور گرافیک رایانه‌ای</string>
+  <string name="publish_sm">StoryMaker.cc</string>
+  <string name="publish_youtube">یوتیوب</string>
+  <string name="action_render">ارسال به خارج</string>
+  <string name="action_play">اجرا</string>
+  <string name="action_share">اشتراک</string>
+  <string name="cbRenderTypeLabel">استفاده از پردازشگر پر سرعت گرافیک رایانه‌ای </string>
+  <string name="drawer_quick_capture">تصویربرداری پر سرعت</string>
+  <string name="select_story_type">نوع گزارش خبری را انتخاب کنید.</string>
+  <string name="button_start_my_story">آغاز گزارش خبری من</string>
+  <string name="home_intro_button_lessons">درس‌ها را جست‌وجو کنید.</string>
+  <string name="home_intro_button_projects">یک گزارش خبری تولید کنید.</string>
+  <string name="created_with_storymaker_tag">خلق شده توسط StoryMaker 
+https://storymaker.cc</string>
+  <string name="err_you_need_at_least_one_account_configured_on_your_device">شما حداقل به یک حساب شخصی ایجاد شده بر دستگاه تلفن‌تان نیاز دارید.</string>
+  <string name="you_began_a_new_lesson">شما یک درس جدید را شروع کرده‌اید.</string>
+  <string name="scene_editor_please_add_clips">لطفا کلیپ‌ها را قبل از انتخاب این بخش، به تب «درست کنید» ضمیمه کنید.</string>
+  <string name="scene_editor_trim_clip">کلیپ را پیرایش کنید.</string>
+  <string name="delete_warning">این کار نباید ناقص بماند!</string>
+  <string name="cancel">ابطال</string>
+  <string name="stop">توقف</string>
+  <string name="delete">حذف</string>
+  <string name="download">بارگیری</string>
+  <string name="pause">مکث</string>
+  <string name="resume">ادامه</string>
+  <string name="play_or_share_exported_media_">اشتراک‌گذاری یا نمایش دادن محتوای رسانه‌ای ارسال شده؟</string>
+  <string name="share_published_story">آیا گزارش منتشر شده، به اشتراک گذاشته شود؟</string>
+  <string name="err_storage_not_ready">به نظر نمی‌رسد که در حال حاضر حافظه خارجی (اس دی کارت) برای خواندن و نوشتن در دسترس باشد. StoryMaker.cc برای دروس و اطلاعات گزارش شما باید به حافظه خارجی دسترسی داشته باشد. لطفا دستگاه/ تلفن همراه‌تان را کنترل کنید و اپلیکیشن را دوباره راه‌اندازی کنید.</string>
+  <string name="err_storage_not_available">حافظه برای خوانده شدن و نوشتن در دسترس نیست. استوری میکر نمی‌تواند بدون دسترسی به حاقظه کار کند. لطفا کارت اس دی را چک کنید یل دستگاه را از کامپیوترتان جدا کنید.</string>
+  <string name="scene_s_">صحنه(ها)</string>
+  <string name="clip_s_">کلیپ(ها)</string>
+  <string name="sc_app_not_found">اپلیکیشن SoundCloud  یافت نشد!</string>
+  <string name="sc_app_not_found_message">آیا می خواهید آن را الان نصب کنید؟</string>
+  <string name="no_active_sc_account">هیچ حساب شخصی فعالی در SoundCloud یافت نشد، لطفا دوباره ثبت نام کنید/ دوباره وارد شوید.</string>
+  <string name="operation_canceled">عملیات لغو شد.</string>
+  <string name="could_not_get_token">رمز دریافت نشد.</string>
+  <string name="getting_details">کسب جزییات کاربر</string>
+  <string name="could_not_create_account">امکان ایجاد حساب شخصی وجود ندارد.</string>
+  <string name="uploading">بارگذاری.......</string>
+  <string name="canceled">بارگذاری لغو شد.</string>
+  <!--added for project export-->
+  <string name="export_dialog_title">آیا مایلید این پروژه رادر حالت زیپ به اشتراک بگذارید؟</string>
+  <string name="export_dialog_close">بستن</string>
+  <string name="export_dialog_share">اشتراک</string>
+  <string name="title_activity_accounts">حساب‌های شخصی</string>
+  <string name="action_settings">تنظیمات</string>
+  <string name="label_activity_log">لاگ یا گزارش فعالیت </string>
+  <string name="label_title">عنوان</string>
+  <string name="label_description">توضیح</string>
+  <string name="label_tags">برچسب‌ها</string>
+  <string name="label_add">ضمیمه کردن</string>
+  <string name="label_edit">ویرایش</string>
+  <string name="label_save">ذخیره</string>
+  <string name="label_activities">لاگ یا گزارش فعالیت </string>
+  <string name="hint_story_title">یک عنوان وارد کنید!</string>
+  <string name="hint_story_description">گزارشتان را شرح دهید ...</string>
+  <string name="hint_story_tag">#افزودن تگ‌ها</string>
+  <string name="label_section">بخش</string>
+  <string name="label_location">مکان و موقعیت</string>
+  <string name="title_activity_story_info">اطلاعات</string>
+  <string name="title_activity_story_info_edit">اطلاعات ویرایش</string>
+  <string name="title_activity_project_tag_fragment">قطعه قطعه کردن تگ‌های پروژه</string>
+  <string name="title_activity_connect_account">حساب شخصی StoryMaker</string>
+  <string name="hint_no_description">توضیحی یافت نشد.</string>
+  <string name="trim_clips"> پیرایش کلیپ‌ها</string>
+  <string name="info">اطلاعات</string>
+  <string name="send_logcat_to_support">ارسال لاگ کت به پشتیبانی</string>
+  <string name="restarting_storymaker">StoryMaker در حال شروع دوباره است.......</string>
+  <string name="send">ارسال</string>
+  <string name="title_activity_press_secure">PressSecure</string>
+  <string name="title_activity_publish">فعالیت مربوط به انتشار</string>
+  <string name="uploading_to_soundcloud">در حال بارگذاری در SoundCloud ........</string>
+  <string name="uploading_to_s3">در حال بارگیری S3. </string>
+  <string name="uploading_to_facebook">در حال بارگذاری در فیس بوک .......</string>
+  <string name="uploading_to_internet_archive">در حال بارگذاری در بایگانی اینترنت ........</string>
+  <string name="no_site_selected">هیچ وب‌سایتی انتخاب نشد.</string>
+  <string name="exported_stories">ارسال به خارج</string>
+  <string name="no_title">بدون عنوان.</string>
+  <string name="title_exports">گزارش خبری منتشر شده</string>
+  <string name="last_modified">آخرین ویرایش</string>
+  <string name="no_medium">( بدون رسانه)</string>
+  <string name="learning_guide_description">یک روایت فوری فوتی درست کنید.</string>
+  <string name="extracting_audio_multiple">استخراج اثر صوتی</string>
+  <string name="crossfading_audio">در حال فید کردن متقابل صوتی ...</string>
+  <string name="crossfading_audio_multiple">فید کردن اثر صوتی </string>
+  <string name="fade_audio">محو کردن و آشکار کردن(فید این و فید اوت)صدا ......</string>
+  <string name="converting_audio">در حال تبدیل به محصول صوتی .......</string>
+  <string name="export_error_1">مشکلی در ارسال رسانه به خارج وجود دارد.</string>
+  <string name="export_error_2">خطا</string>
+  <string name="processing_audio">در حال پردازش قطعه صوتی...</string>
+  <string name="processing_audio_multiple">پردازش قطعات صوتی</string>
+  <string name="mixing_tracks">تلفیق قطعات صوتی</string>
+  <string name="trimming_merging">پیرایش و ادغام کردن ویدیوها</string>
+  <string name="merging_video_audio">در حال ادغام ویدیو و صدا ...</string>
+  <string name="export_error_3">مشکلی در مورد ارسال رسانه به خارج وجود دارد.</string>
+  <string name="export_error_4">خطا</string>
+  <string name="publishing_to_storymakerorg">در حال انتشار در استوری میکر </string>
+  <string name="published_to_storymaker">منتشر شده در استوری میکر</string>
+  <string name="you_are_not_signed_into_storymakerorg">شما وارد استوری میکر نشده‌اید.</string>
+  <string name="fb_post_not_public">تنها پست‌های عمومی فیس‌بوک می‌تواند در استوری‌میکر منتشر شود.</string>
+  <string name="send_feedback">بازخورد بفرستید</string>
+  <string name="download_content_pack">مجموعه محتوایی را بارگیری کنید.</string>
+  <string name="stop_download">بارگیری را متوقف کنید.</string>
+  <string name="resume_download">ادامه بارگیری؟</string>
+  <string name="finished_downloading">پایان بارگیری</string>
+  <string name="home_downloading_content">بارگیری محتوا و به روز رسانی فایل‌های نصب شده</string>
+  <string name="home_content_missing">قادر به بارگیری این راه نیست. محتوا وجود ندارد.</string>
+  <string name="home_metadata_missing">نمی‌تواند محتوای متا را پیدا کند.</string>
+  <string name="home_index_missing">نمی‌تواند محتوای ایندکس را پیدا کند.</string>
+  <string name="home_please_wait">لطفا صبر کنید تا بارگیری محتوا تمام شود.</string>
+  <!--NEW/CACHEWORD-->
+  <string name="lock_screen_open_button_text">باز کردن قفل اپلیکیشن</string>
+  <string name="lock_screen_pin_enter_text">پین کد را وارد کنید تا اپلیکیشن باز شود.</string>
+  <string name="lock_screen_create_button_text">پین کد انتخاب کنید.</string>
+  <string name="lock_screen_pin_create_text">پین کد تازه را وارد کنید تا اپلیکیشن قفل شود.</string>
+  <string name="lock_screen_pin_confirm_text">دوباره پین کد را وارد کنید تا تایید شود.</string>
+  <string name="menu_lock">قفل</string>
+  <string name="catalog_menu_catalog">کاتالوگ</string>
+  <string name="catalog_menu_guides">راهنماها</string>
+  <string name="catalog_menu_lessons">درس‌ها</string>
+  <string name="catalog_menu_templates">قالب‌ها</string>
+  <string name="home_menu_home">صفحه اصلی</string>
+  <string name="home_menu_stories">گزارش‌های خبری</string>
+  <string name="home_menu_guides">راهنماها</string>
+  <string name="home_menu_lessons">درس‌ها</string>
+  <string name="home_menu_templates">قالب‌ها</string>
+  <string name="home_empty_home">کاتلوگ ما را باز کنید و راه‌های متفارت تهیه یک گزارش را در آن ببینید.</string>
+  <string name="home_empty_stories">تاکنون گزارشی را ذخیره نکرده‌اید.</string>
+  <string name="home_empty_guides">تاکنون راهنمایی نداشته‌اید. یک راهنما بارگیری کنید تا مهارت‌های خود را بهتر کنید.</string>
+  <string name="home_empty_lessons">دنبال یادگیری بیشتر هستید؟ درسی را دانلود کنید تا درباره آن موضوع اطلاعات به دست بیاورید.</string>
+  <string name="home_empty_templates">هنوز هیچ قالبی ندارید. قالب‌ها  را دانلود کنید تا بر اساس آن ساختار گزارش‌هایی را که می‌خواهید بسازید، داشته باشید.</string>
+  <string name="home_empty_btn_home">کاتالوگ را باز کنید.</string>
+  <string name="home_empty_btn_stories">گزارش جدید</string>
+  <string name="home_empty_btn_guides">یک راهنما دریافت کنید.</string>
+  <string name="home_empty_btn_lessons">یک درس را باز کنید.</string>
+  <string name="home_empty_btn_templates">یک قالب را امتحان کنید.</string>
+  <string name="home_tab_latest_stories">گزارش‌های جدید</string>
+  <string name="home_tab_latest_installation">محتواهای جدید</string>
+</resources>

@@ -1,0 +1,312 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+  <string name="app_name">StoryMaker 2</string>
+  <string name="app_description">Створювати визначны історії тепер ще легше, ніж з StoryMaker. Наші унікальні шаблони, схеми, і уроки, проведуть вас через весь творчий процес. StoryMaker дозволяє редагувати вміст прямо з вашого мобільного телефона, що робить процес закінчення історії ще простішим. Після того, як ви закінчите, StoryMaker дозволяє опублікувати свою історію на усіх улюблених платформах.</string>
+  <string name="title_projects">Історії</string>
+  <string name="title_lessons">Уроки</string>
+  <string name="action_publish">Опублікувати</string>
+  <!--menus-->
+  <string name="menu_new_project">Нове</string>
+  <string name="menu_projects">Історії</string>
+  <string name="menu_lessons">Уроки</string>
+  <string name="menu_glossary">Словник</string>
+  <string name="menu_contacts">Контакти</string>
+  <string name="menu_settings">Налаштування</string>
+  <string name="menu_accounts">Акаунти</string>
+  <string name="menu_archive">Архів</string>
+  <string name="drawer_profile">Увійти</string>
+  <!--FIXME: rename-->
+  <string name="menu_add_media">Додати</string>
+  <string name="menu_capture_media">Запис</string>
+  <string name="menu_share_media">Поділитись</string>
+  <string name="menu_save_media">Зберегти</string>
+  <string name="menu_play_media">Грати</string>
+  <string name="menu_render_media">Нагадати</string>
+  <string name="menu_bug_report">Звіт по помилкам</string>
+  <string name="menu_login">Увійти</string>
+  <string name="menu_logs">Надіслати звіт</string>
+  <string name="menu_update">Обновити</string>
+  <string name="menu_about">Про</string>
+  <string name="menu_save_project">Зберегти</string>
+  <string name="menu_overlay_camera">Камера</string>
+  <string name="menu_add_new_shot">Додати кліп до сцени</string>
+  <string name="menu_export_project_files">Експорт файлів проекту в Zip</string>
+  <string name="menu_join_storymaker">Приєднатись до спільноти StoryMaker</string>
+  <string name="menu_sign_up">Зареєструватись/Увійти</string>
+  <string name="menu_upload_manager">Менеджер завантажень</string>
+  <string name="menu_uploads">Завантаження</string>
+  <string name="welcome_message">Привіт!\nВітаємо на StoryMaker</string>
+  <!--project list-->
+  <string name="default_project_list_view">Це перший раз коли ви створюєте проект! \n\n- натисніть щоб почати -</string>
+  <string name="default_project_view_message">У вас є вибір.\n Розкажіть свою історію у відео, аудіо або фото\n\n- натисніть, щоб додати -</string>
+  <!--video processing-->
+  <string name="pref_out_fps_title">Частота кадрів (к/с)</string>
+  <string name="pref_out_fps_summary">Кадрів в секунду для збереження вихідного відео на (15-30)</string>
+  <string name="pref_out_rate_title">Вихідна швидкість передачі (кб/с)</string>
+  <string name="pref_out_rate_summary">Швидкість передачі вихідного відео (300-1500)</string>
+  <string name="pref_out_format_title">Вихідний формат</string>
+  <string name="pref_out_format_summary">Формат файлу-контейнера (mp4, 3gp, ogg)</string>
+  <string name="pref_out_vcodec_title">Вихідний відео кодек</string>
+  <string name="pref_out_vcodec_summary">відео кодек (копія, libx264, т.п.)</string>
+  <string name="pref_out_acodec_title">Вихідний аудіо кодек</string>
+  <string name="pref_out_acodec_summary">аудіо кодек (копія, aac, mp3, т.п. )</string>
+  <string name="pref_out_vwidth_title">Звичайна ширина відео (пікс)</string>
+  <string name="pref_out_vwidth_summary">звичайна ширина відео для вихідного відео</string>
+  <string name="pref_out_vheight_title">Звичайна висота відео (піус)</string>
+  <string name="pref_out_vheight_summary">звичайна висота відео для вихідного відео</string>
+  <string name="hintTitle">заголовок</string>
+  <string name="hintStartTime">початок (00:00:00)</string>
+  <string name="hintEndTime">тривалість (00:00:00)</string>
+  <string name="hintFadeIn">поступове збільшення чіткості (кадрів)</string>
+  <string name="hintFadeOut">поступове зменшення чіткості (кадрів)</string>
+  <string name="start_recording">Запис</string>
+  <string name="stop_recording">Стоп</string>
+  <string name="play_recording">Грати</string>
+  <string name="save_recording">Зберегти</string>
+  <string name="downloading_lessons_from_server_">Завантаження уроків з серверу...</string>
+  <string name="checking_for_updates_">Перевірка оновлень ...</string>
+  <!--LOG COLLECTOR-->
+  <string name="app_name_lc">Журнал рєєстрації</string>
+  <string name="message_subject">Журнал Android пристроїв</string>
+  <string name="acquiring_log_progress_dialog_message">Отриманий журнал системи\u2026</string>
+  <string name="chooser_title">Виберіть програму для відправки журналу</string>
+  <string name="failed_to_get_log_message">Не вдалося отримати журнал з системи.</string>
+  <string name="main_dialog_text">Ця програма буде намагатися зібрати журнал пристроїв.
+Зібраний журнал буде відправлений за допомогою програми на ваш вибір.
+Ви також будете мати можливість побачити і змінити дані що будуть відправлені.</string>
+  <string name="title_home_projects">Проекти</string>
+  <string name="title_home_activity">Активність</string>
+  <string name="title_lessons_lessons">Уроки</string>
+  <string name="title_lessons_glossary">Словник</string>
+  <string name="hello_world">Привіт світ!</string>
+  <string name="title_activity_home">Дім</string>
+  <string name="new_story_name_it">Назви.</string>
+  <string name="new_story_working_title">Робочий ззаголовок...</string>
+  <string name="new_story_choose_something">Виберіть щось чітке, яке буде визначати тему і інтригувати аудиторію.</string>
+  <string name="new_story_choose_a_medium">Вибрати середне</string>
+  <!--<string name="new_story_video">Video: Something here about why simple, short video is good! Ideally it should be about the same length as the other strings.</string>
+   	<string name="new_story_essay">Photo Essay: Tell a story about one character. Follow this template to produce a simple photo essay story about one character.</string>
+    <string name="new_story_photo">Single Photo: Telling a strong story with one image is a skill. To simplify, these templates explain some primary photo types.</string>
+    
+    <string name="new_story_audio">Audio: Something here about using audio to tell a story. Personally, I really like to listen to the radio and podcasts while I do housework!</string>-->
+  <string name="new_story_simple_story">Проста історія</string>
+  <string name="new_story_choose_template">Шаблон сцени</string>
+  <string name="home_new_story">Зробити Історію</string>
+  <string name="home_start_a_lesson">ПРОЙДЕНІ УРОКИ</string>
+  <string name="title_activity_lessons">Уроки</string>
+  <string name="title_activity_scene_editor">Редактор сцен</string>
+  <string name="title_activity_choose_template">Вибір шаблона</string>
+  <string name="title_activity_story_template">Шаблон історії</string>
+  <string name="tab_make">Зробити</string>
+  <string name="tab_review">Огляд</string>
+  <string name="tab_publish">Завершити</string>
+  <string name="tab_finish">Фініш</string>
+  <string name="tab_add_clips">Зробити</string>
+  <string name="tab_order">Редагувати</string>
+  <string name="story_publish_section">Секція</string>
+  <string name="story_publish_section_hint">Спорт</string>
+  <string name="story_publish_topics">Теми</string>
+  <string name="story_publish_topics_hint">Стать</string>
+  <string name="story_publish_location">Розташування</string>
+  <string name="story_publish_location_hint">Ввести релевантне розташування</string>
+  <string name="story_publish_share">Поділитись</string>
+  <string name="story_publish_send_via">Відправити через</string>
+  <string name="story_publish_status">Статус</string>
+  <string name="story_publish_status_processing">Обробка</string>
+  <string name="story_publish_status_not">Не опубліковано</string>
+  <string name="story_publish_describe_hint">Опишіть історію...</string>
+  <string name="story_publish_story_title">Заголовок історії тут</string>
+  <string name="story_publish_story_date">Дані історії тут</string>
+  <!--delete these below-->
+  <string name="title_section3">Секція 3</string>
+  <string name="title_section2">Секція 2</string>
+  <string name="title_section1">Секція 1</string>
+  <string name="title_activity_test_drag">Тестовий прокат</string>
+  <!--Screen title before and during recording-->
+  <!--Screen title after recording-->
+  <!--Screen title while playing back a recording-->
+  <!--Label shown during recording-->
+  <string name="recording">Запис</string>
+  <!--Label shown when the recording is stopped for a reason other than the user stopping it (e.g. the sd card was removed)-->
+  <string name="recording_stopped">Запис зупинено</string>
+  <!--label shown when there is not enough space to record something-->
+  <string name="storage_is_full">Сховище повне</string>
+  <!--label shown when the recording has reached maximum allowed file size-->
+  <string name="max_length_reached">Досягнута максимальна довжина</string>
+  <!--label shown when there is no sd card available to record to-->
+  <string name="insert_sd_card">Необхідна SD карта</string>
+  <!--label shown when there is more than 1 minute but less than 9 minutes of space left to record-->
+  <!--label shown when there is less than 1 minute of space left to record-->
+  <!--button to accept the current recording and return it to the caller-->
+  <!--button to discard the current recording and return to the caller-->
+  <!--acknowlegement button in a number of dialogs-->
+  <string name="button_ok">OK</string>
+  <!--Do not translate. Format of the timer that shows how much has been recorded so far-->
+  <!--label shown before the user has recorded anything-->
+  <!--the name under which recordings will be visible in the media database is formatted like this-->
+  <!--all recordings will show up in the media database with this 'artist' name-->
+  <string name="audio_db_artist_name">Ваші записи</string>
+  <!--all recordings will show up in the media database with this 'album' name-->
+  <string name="audio_db_album_name">Аудіо записи</string>
+  <!--all recordings will show up in the media database in a playlist with this name-->
+  <string name="audio_db_playlist_name">Мої записи</string>
+  <!--shown as the message in a dialog when an error occured because of an error accessing the sd card-->
+  <string name="error_sdcard_access">Відсутній лоступ до зовнішньої або внутрішньої пам\'яті</string>
+  <!--shown as the message in a dialog when the app encountered an unspecified internal error-->
+  <string name="error_app_internal">Помилка внутрішньої програми</string>
+  <!--shown as the message in a dialog when the recording could not be added to the media database-->
+  <string name="error_mediadb_new_record">Немає можливості зберегти аудіо запис</string>
+  <!--shown as the message in a dialog when an export will tak up too much space-->
+  <string name="error_storage_space" formatted="false">Ой, ми за простором. Будь ласка, зробіть приблизно %.2f%nMB доступні і спробуйте ще раз!</string>
+  <!--add for libra begin-->
+  <string name="default_record_name">запис без заголовку</string>
+  <string name="menu_view_record_list">Перегляд списку записів</string>
+  <string name="menu_setting">Налаштування</string>
+  <string name="delete_dialog_title">Ви хочете видалити поточний запис?</string>
+  <string name="overwrite_dialog_title">%s вже існує. Бажаєте перезаписати?</string>
+  <string name="preferences_title">Налаштування</string>
+  <string name="pref_title_record_type">Тип файла запису</string>
+  <string name="prefDialogTitle_recordType">Будь ласка оберіть тип файлу</string>
+  <string name="prefDefault_recordType">аудіо/3gpp</string>
+  <string name="pref_title_enable_high_quality">Дозволити високу якість</string>
+  <string name="pref_summary_enable_high_quality">Ауліо файл у високій якості може бути великим</string>
+  <string name="pref_title_enable_sound_effect">Дозволити звукові ефекти</string>
+  <string name="pref_summary_enable_sound_effect">Грати звукові ефекти коли змінюється статус</string>
+  <string name="notification_recording">Запис...</string>
+  <string name="notification_stopped">Запис зупинено</string>
+  <string name="notification_warning">Недостатньо пам\'яті(менше ніж %d хвилин)...</string>
+  <string name="sd_card_not_available">Відсутній доступ до SD карти</string>
+  <string name="open_file_explorer">Відкрити файл-менеджер</string>
+  <string name="alert_message_delete_record">Ви хочете видалити обраний запис?</string>
+  <!--add for libra end-->
+  <string name="help_clip_select">Проведіть, щоб вибрати тип кліпу, потім натисніть на зображення кліпу, щоб почати захоплення відео, фото або аудіо </string>
+  <!--youtube upload-->
+  <string name="lesson_status_have_not_started">Не почався</string>
+  <string name="lessons_congratulations_you_have_completed_the_lesson_">Ви закінчили урок!</string>
+  <string name="lesson_status_in_progress">В обробці</string>
+  <string name="lesson_status_complete">Завершено!</string>
+  <string name="no_lessons_available_tap_to_load_">Немає доступних уроків (завантажте)</string>
+  <string name="_lesson_complete">урок завершено</string>
+  <string name="_of_">в</string>
+  <string name="default_youtube_desc">Проект StoryMaker</string>
+  <string name="view_published_media_online_or_local_copy_">Переглянути опубліковане медія онлайн?</string>
+  <string name="choose_account_for_youtube_upload">Виберіть акаунт для завантаження</string>
+  <string name="rendering">Відтворення</string>
+  <string name="rendering_project_">Відтворення проекту...</string>
+  <string name="publishing">Публікація</string>
+  <string name="connecting_to_youtube_">з\'єднання з YouTube...</string>
+  <string name="uploading_to_storymaker">публікація на сайт StoryMaker...</string>
+  <string name="rendering_clips_">відтворення кліпів...</string>
+  <string name="you_must_enter_a_project_name">Будь ласка, введіть робочу назву проекту. Ви можете змінити її пізніше.</string>
+  <string name="delete_clip">Вилалити кліп?</string>
+  <string name="add_new_clip_to_the_scene_">Додати новий кліп до сцени?</string>
+  <string name="video_project_project_type">Відео проект</string>
+  <string name="photo_project_project_type">Фото проект</string>
+  <string name="audio_project_project_type">Аудіо проект</string>
+  <string name="photo_essay_project_project_type">Проект фото ессе</string>
+  <string name="eula_title">Ви погоджуетесь на:</string>
+  <string name="eula_accept">Прийняти</string>
+  <string name="eula_refuse">Відхилити</string>
+  <string name="privacy_policy">Політика приватності</string>
+  <string name="end_user_license_agreement">Ліцензійна угода користувача</string>
+  <string name="send_annonymous_data">Відправте анонімні дані про використання щоб допомогти нам поліпшити StoryMaker.</string>
+  <string name="by_clicking_accept">Натиснувши кнопку \"Прийняти\" ви погоджуєтеся з ліцензійною угодою з кінцевим користувачем і тим, що ви ознайомились з нашою політикою конфіденційності:</string>
+  <string name="button_add_narration">Запис закадрової начики</string>
+  <string name="button_play_narration">Вібтворення закадрової начики</string>
+  <string name="button_delete_narration">Видалення закадрової начики</string>
+  <string name="button_render_preview">Обробка для попереднього перегляду</string>
+  <string name="publish_sm">StoryMaker.cc</string>
+  <string name="publish_youtube">YouTube</string>
+  <string name="action_render">Експорт</string>
+  <string name="action_play">Грати</string>
+  <string name="action_share">Поділитись</string>
+  <string name="cbRenderTypeLabel">Вибрати прискорену обробку відео </string>
+  <string name="drawer_quick_capture">Швидий захват</string>
+  <string name="select_story_type">Вибрати тип історії</string>
+  <string name="button_start_my_story">Почати Мою Історію</string>
+  <string name="home_intro_button_lessons">ПРОЙДЕНІ УРОКИ</string>
+  <string name="home_intro_button_projects">Зробити Історію</string>
+  <string name="created_with_storymaker_tag">Створено разом з StoryMaker - https://storymaker.cc/</string>
+  <string name="err_you_need_at_least_one_account_configured_on_your_device">Вам потрібен принаймні один обліковий запис налаштований на вашому пристрої</string>
+  <string name="you_began_a_new_lesson">Ви почали новий урок</string>
+  <string name="scene_editor_please_add_clips">Будь ласка, додайте кліпи на вкладці \"Зробити\", перш ніж вибрати цю вкладку.</string>
+  <string name="scene_editor_trim_clip">Обрізати кліп</string>
+  <string name="delete_warning">Цю дію не можна пропустити!</string>
+  <string name="cancel">Відмінити</string>
+  <string name="stop">Стоп</string>
+  <string name="delete">Видалити</string>
+  <string name="play_or_share_exported_media_">Відтворити або поділитися експортованим медіа?</string>
+  <string name="share_published_story">Поділитись опублікованою історією?</string>
+  <string name="err_storage_not_ready">Зовнішні пристрої зберігання даних (SD карта) наразі не доступні для зчитування і запису. StoryMaker потрібен доступ до цього до уроку і історії даних проекту. Будь ласка, перевірте пристрій і виконайте перезавантаження.</string>
+  <string name="scene_s_">сцена(и) </string>
+  <string name="clip_s_">кліп(и)</string>
+  <string name="sc_app_not_found">Програма SoundCloud не знайдена!</string>
+  <string name="sc_app_not_found_message">Бажаєте встановити зараз?</string>
+  <string name="no_active_sc_account">Немає активного аккауту SoundCloud, будь-ласка увійдіть/зареєструйтесь </string>
+  <string name="operation_canceled">Оперпція відмінена</string>
+  <string name="could_not_get_token">Не вдалося отримати право доступу</string>
+  <string name="getting_details">Отримання інформації про користувача</string>
+  <string name="could_not_create_account">Неможливо створити акаут</string>
+  <string name="uploading">Завантаження...</string>
+  <string name="canceled">Відмінене завантаження</string>
+  <!--added for project export-->
+  <string name="export_dialog_title">Бажаєте поділитися цим проектом швидко?</string>
+  <string name="export_dialog_close">Закрити</string>
+  <string name="export_dialog_share">Поділитись</string>
+  <string name="title_activity_accounts">Акаунти</string>
+  <string name="action_settings">Налаштування</string>
+  <string name="label_activity_log">Журнал активності</string>
+  <string name="label_title">Заголовок</string>
+  <string name="label_description">Опис</string>
+  <string name="label_tags">Мітки</string>
+  <string name="label_add">Додати</string>
+  <string name="label_edit">Редагувати</string>
+  <string name="label_save">Зберегти</string>
+  <string name="label_activities">Журнал активності</string>
+  <string name="hint_story_title">Введіть заголовок</string>
+  <string name="hint_story_description">Опишіть історію...</string>
+  <string name="hint_story_tag">#додатимітки</string>
+  <string name="label_section">Секція</string>
+  <string name="label_location">Розташування</string>
+  <string name="title_activity_story_info">Інфо</string>
+  <string name="title_activity_story_info_edit">Редагувати інфо</string>
+  <string name="title_activity_project_tag_fragment">ВідміченийФрагментПроекту</string>
+  <string name="title_activity_connect_account">Аккаунт StoryMaker</string>
+  <string name="hint_no_description">Без опису.</string>
+  <string name="trim_clips">Обрізати кліпи</string>
+  <string name="info">Інфо</string>
+  <string name="send_logcat_to_support">Відправити подробиці для підтримкм</string>
+  <string name="restarting_storymaker">Перезапуск StoryMaker...</string>
+  <string name="send">Надіслати</string>
+  <string name="title_activity_press_secure">ЖурналістикаБезпеки</string>
+  <string name="title_activity_publish">Опублікувати активність</string>
+  <string name="uploading_to_soundcloud">Завантаження на SoundCloud...</string>
+  <string name="uploading_to_facebook">Завантаження на Facebook...</string>
+  <string name="uploading_to_internet_archive">Завантаження у інтернет архів...</string>
+  <string name="no_site_selected">Місце не вибрано.</string>
+  <string name="exported_stories">Експорт</string>
+  <string name="no_title">Без заголовку.</string>
+  <string name="title_exports">Опубліковані історії</string>
+  <string name="last_modified">Останні зміни</string>
+  <string name="no_medium">(не середне)</string>
+  <string name="learning_guide_description">Створення переконливої розповіді.</string>
+  <string name="extracting_audio_multiple">Витяг аудіо доріжки</string>
+  <string name="crossfading_audio">Плавне аудіо...</string>
+  <string name="crossfading_audio_multiple">Плавна звукова доріжка</string>
+  <string name="fade_audio">Плавне виведення повного аудіо в і з ...</string>
+  <string name="converting_audio">Перетворення для виведення аудіо ...</string>
+  <string name="export_error_1">Помилка експорту медіа</string>
+  <string name="export_error_2">Помилка</string>
+  <string name="processing_audio">Обробка аудіо треків...</string>
+  <string name="processing_audio_multiple">Обробка аудіо треку</string>
+  <string name="mixing_tracks">Змішування треків</string>
+  <string name="trimming_merging">Обрізка і злиття відео</string>
+  <string name="merging_video_audio">Злиття відео і аудіо ...</string>
+  <string name="export_error_3">Помилка експорту медіа</string>
+  <string name="export_error_4">Помилка</string>
+  <!--NEW/CACHEWORD-->
+  <string name="catalog_menu_lessons">Уроки</string>
+  <string name="home_menu_home">Дім</string>
+  <string name="home_menu_stories">Історії</string>
+  <string name="home_menu_lessons">Уроки</string>
+</resources>

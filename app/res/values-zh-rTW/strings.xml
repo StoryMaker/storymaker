@@ -1,0 +1,308 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+  <string name="app_name">StoryMaker 2</string>
+  <string name="app_description">利用StoryMaker讓創作好故事更為容易.我們獨特的樣式模版，覆蓋效果與課程訓練指引你完成一整個創作過程.StoryMaker可以在手機上編輯內容，更輕鬆地完成故事。一旦你完成了作品，可以上傳到你愛用的平台上發表.</string>
+  <string name="title_catalog">目錄</string>
+  <string name="title_projects">故事</string>
+  <string name="title_lessons">課程</string>
+  <string name="action_publish">發表</string>
+  <!--menus-->
+  <string name="menu_new_project">新</string>
+  <string name="menu_projects">故事</string>
+  <string name="menu_lessons">課程</string>
+  <string name="menu_glossary">詞匯表</string>
+  <string name="menu_contacts">聯絡人</string>
+  <string name="menu_settings">設定</string>
+  <string name="menu_accounts">帳號</string>
+  <string name="menu_archive">檔案庫</string>
+  <string name="drawer_profile">登入</string>
+  <!--FIXME: rename-->
+  <string name="menu_add_media">新增</string>
+  <string name="menu_capture_media">記錄</string>
+  <string name="menu_share_media">分享</string>
+  <string name="menu_save_media">儲存</string>
+  <string name="menu_play_media">播放</string>
+  <string name="menu_bug_report">錯誤回報</string>
+  <string name="menu_login">登入</string>
+  <string name="menu_logs">傳送日誌</string>
+  <string name="menu_update">更新</string>
+  <string name="menu_about">關於</string>
+  <string name="menu_save_project">儲存</string>
+  <string name="menu_overlay_camera">相機</string>
+  <string name="menu_add_new_shot">場景中加入片段</string>
+  <string name="menu_export_project_files">專案匯出成壓縮檔</string>
+  <string name="menu_join_storymaker">加入StoryMaker社群</string>
+  <string name="menu_sign_up">註冊 / 登入</string>
+  <string name="menu_upload_manager">上傳管理者</string>
+  <string name="menu_uploads">上傳</string>
+  <string name="welcome_message">哈囉！\n歡迎來到StoryMaker</string>
+  <!--project list-->
+  <string name="default_project_list_view">首次創建專案\n\n- 輕觸開始 -</string>
+  <string name="default_project_view_message">選項\n用影像，聲音和照片來敍說故事\n\n 輕觸開始</string>
+  <!--video processing-->
+  <string name="pref_out_fps_title">滙出的影片幀率 (fps)</string>
+  <string name="pref_out_fps_summary">滙出影片每秒儲存的影格為(15-30)</string>
+  <string name="pref_out_rate_title">滙出影片的位元速率 (kbps)</string>
+  <string name="pref_out_rate_summary">滙出影片的位元速率 (300-1500)</string>
+  <string name="pref_out_format_title">輸出格式</string>
+  <string name="pref_out_format_summary">檔案包含格式 (mp4, 3gp, ogg)</string>
+  <string name="pref_out_vcodec_title">輸出影片編碼</string>
+  <string name="pref_out_vcodec_summary">影片編碼 (copy, libx264, etc)</string>
+  <string name="pref_out_acodec_title">輸出音效格式</string>
+  <string name="pref_out_acodec_summary">音效編碼(copy, aac, mp3, etc)</string>
+  <string name="pref_out_vwidth_title">自定影片寛度(px)</string>
+  <string name="pref_out_vwidth_summary">自定滙出影片的寛度</string>
+  <string name="pref_out_vheight_title">自定影片高度(px)</string>
+  <string name="pref_out_vheight_summary">自定滙出影片的高度</string>
+  <string name="hintTitle">標題</string>
+  <string name="hintStartTime">開始(00:00:00)</string>
+  <string name="hintEndTime">期間 (00:00:00)</string>
+  <string name="hintFadeIn">鏡頭淡入 (frames)</string>
+  <string name="hintFadeOut">鏡頭淡出 (frames)</string>
+  <string name="start_recording">記錄</string>
+  <string name="stop_recording">停止</string>
+  <string name="play_recording">播放</string>
+  <string name="save_recording">儲存</string>
+  <string name="downloading_lessons_from_server_">從伺服器上下載課程</string>
+  <string name="checking_for_updates_">檢查更新</string>
+  <!--LOG COLLECTOR-->
+  <string name="app_name_lc">日誌收集</string>
+  <string name="message_subject">安卓設備的日誌記錄</string>
+  <string name="acquiring_log_progress_dialog_message">取得系統的日誌\u2026</string>
+  <string name="chooser_title">選擇傳送日誌的應用程式</string>
+  <string name="failed_to_get_log_message">無法從系統中取得日誌</string>
+  <string name="title_home_projects">專案</string>
+  <string name="title_home_activity">活動</string>
+  <string name="title_lessons_lessons">課程</string>
+  <string name="title_lessons_glossary">詞匯表</string>
+  <string name="hello_world">Hello world!</string>
+  <string name="title_activity_home">首頁</string>
+  <string name="new_story_name_it">命名</string>
+  <string name="new_story_working_title">工作標題</string>
+  <string name="new_story_choose_a_medium">選擇媒介</string>
+  <!--<string name="new_story_video">Video: Something here about why simple, short video is good! Ideally it should be about the same length as the other strings.</string>
+   	<string name="new_story_essay">Photo Essay: Tell a story about one character. Follow this template to produce a simple photo essay story about one character.</string>
+    <string name="new_story_photo">Single Photo: Telling a strong story with one image is a skill. To simplify, these templates explain some primary photo types.</string>
+    
+    <string name="new_story_audio">Audio: Something here about using audio to tell a story. Personally, I really like to listen to the radio and podcasts while I do housework!</string>-->
+  <string name="new_story_simple_story">示範故事</string>
+  <string name="new_story_choose_template">場景樣式</string>
+  <string name="home_new_story">編寫故事</string>
+  <string name="home_start_a_lesson">探索課程</string>
+  <string name="title_activity_catalog">目錄</string>
+  <string name="title_activity_lessons">課程</string>
+  <string name="title_activity_scene_editor">場景編輯</string>
+  <string name="title_activity_choose_template">選擇模版樣式</string>
+  <string name="title_activity_story_template">示範故事</string>
+  <string name="tab_make">製作</string>
+  <string name="tab_review">重新檢查</string>
+  <string name="tab_publish">完成</string>
+  <string name="tab_finish">結束</string>
+  <string name="tab_add_clips">製作</string>
+  <string name="tab_order">編輯</string>
+  <string name="story_publish_section">部份</string>
+  <string name="story_publish_section_hint">運動</string>
+  <string name="story_publish_topics">主題</string>
+  <string name="story_publish_topics_hint">性別</string>
+  <string name="story_publish_location">位置</string>
+  <string name="story_publish_location_hint">輸入相關的地點</string>
+  <string name="story_publish_share">分享</string>
+  <string name="story_publish_send_via">由傳送</string>
+  <string name="story_publish_status">狀態</string>
+  <string name="story_publish_status_processing">處理中</string>
+  <string name="story_publish_status_not">未發表</string>
+  <string name="story_publish_describe_hint">描述你的故事內容</string>
+  <string name="story_publish_story_title">故事標題</string>
+  <string name="story_publish_story_date">故事日期</string>
+  <!--delete these below-->
+  <string name="title_section3">第3部份</string>
+  <string name="title_section2">第2部份</string>
+  <string name="title_section1">第1部份</string>
+  <string name="title_activity_test_drag">測試拖拉</string>
+  <!--Screen title before and during recording-->
+  <!--Screen title after recording-->
+  <!--Screen title while playing back a recording-->
+  <!--Label shown during recording-->
+  <string name="recording">記錄中</string>
+  <!--Label shown when the recording is stopped for a reason other than the user stopping it (e.g. the sd card was removed)-->
+  <string name="recording_stopped">停止記錄</string>
+  <!--label shown when there is not enough space to record something-->
+  <string name="storage_is_full">儲存空間已滿</string>
+  <!--label shown when the recording has reached maximum allowed file size-->
+  <string name="max_length_reached">已達最大長度</string>
+  <!--label shown when there is no sd card available to record to-->
+  <string name="insert_sd_card">需要SD 記憶卡</string>
+  <!--label shown when there is more than 1 minute but less than 9 minutes of space left to record-->
+  <!--label shown when there is less than 1 minute of space left to record-->
+  <!--button to accept the current recording and return it to the caller-->
+  <!--button to discard the current recording and return to the caller-->
+  <!--acknowlegement button in a number of dialogs-->
+  <string name="button_ok">OK</string>
+  <!--Do not translate. Format of the timer that shows how much has been recorded so far-->
+  <!--label shown before the user has recorded anything-->
+  <!--the name under which recordings will be visible in the media database is formatted like this-->
+  <!--all recordings will show up in the media database with this 'artist' name-->
+  <string name="audio_db_artist_name">你的記錄</string>
+  <!--all recordings will show up in the media database with this 'album' name-->
+  <string name="audio_db_album_name">聲音記錄</string>
+  <!--all recordings will show up in the media database in a playlist with this name-->
+  <string name="audio_db_playlist_name">我的記錄</string>
+  <!--shown as the message in a dialog when an error occured because of an error accessing the sd card-->
+  <string name="error_sdcard_access">無法連結到內外部的儲存空間</string>
+  <!--shown as the message in a dialog when the app encountered an unspecified internal error-->
+  <string name="error_app_internal">內部應用程式出錯</string>
+  <!--shown as the message in a dialog when the recording could not be added to the media database-->
+  <string name="error_mediadb_new_record">無法儲存錄音檔案</string>
+  <!--shown as the message in a dialog when an export will tak up too much space-->
+  <string name="error_storage_space" formatted="false">Whoops, 容量用光了. 請先確認至少有 %.2f%nMB 後再重試一次!</string>
+  <!--add for libra begin-->
+  <string name="default_record_name">無標題的記錄</string>
+  <string name="menu_view_record_list">檢視記錄表單</string>
+  <string name="menu_setting">設定</string>
+  <string name="delete_dialog_title">你確定要刪除現在的記錄嗎?</string>
+  <string name="overwrite_dialog_title">%s 己存在，你要覆寫它嗎?</string>
+  <string name="preferences_title">設定</string>
+  <string name="pref_title_record_type">記錄檔案類型</string>
+  <string name="prefDialogTitle_recordType">請選擇檔案類型</string>
+  <string name="prefDefault_recordType">音訊/3gpp</string>
+  <string name="pref_title_enable_high_quality">開啟高質</string>
+  <string name="pref_summary_enable_high_quality">高音質的聲音檔案較大</string>
+  <string name="pref_title_enable_sound_effect">開啟聲音效果</string>
+  <string name="pref_summary_enable_sound_effect">當狀況改變時播放音效</string>
+  <string name="notification_recording">記錄中</string>
+  <string name="notification_stopped">記錄被中止</string>
+  <string name="notification_warning">儲存空間不足(少於 %d 分鐘)...</string>
+  <string name="sd_card_not_available">找不到SD記憶卡</string>
+  <string name="open_file_explorer">打開檔案管理</string>
+  <string name="alert_message_delete_record">你確定要刪除所選的檔案嗎?</string>
+  <!--add for libra end-->
+  <!--youtube upload-->
+  <string name="lesson_status_have_not_started">尚未開始</string>
+  <string name="lessons_congratulations_you_have_completed_the_lesson_">你完成了一個課程</string>
+  <string name="lesson_status_in_progress">進行中</string>
+  <string name="lesson_status_complete">完成!</string>
+  <string name="no_lessons_available_tap_to_load_">無課程可選（輕觸以載入更多）</string>
+  <string name="_lesson_complete">課程完結</string>
+  <string name="default_youtube_desc">StoryMaker 專案</string>
+  <string name="view_published_media_online_or_local_copy_">線上檢視發表的作品</string>
+  <string name="choose_account_for_youtube_upload">選擇上傳的帳號</string>
+  <string name="publishing">發表中</string>
+  <string name="connecting_to_youtube_">連結到YouTube...</string>
+  <string name="uploading_to_storymaker">發表到StoryMaker網站</string>
+  <string name="delete_project_">除刪滙出?</string>
+  <string name="delete_story">刪除故事</string>
+  <string name="delete_content_pack">刪除內容包</string>
+  <string name="delete_clip">刪除片段</string>
+  <string name="add_new_clip_to_the_scene_">在場景中加新片段?</string>
+  <string name="video_project_project_type">影片專案</string>
+  <string name="photo_project_project_type">照片專案</string>
+  <string name="audio_project_project_type">聲音專案</string>
+  <string name="eula_title">你同意：</string>
+  <string name="eula_accept">接受</string>
+  <string name="eula_refuse">拒絕</string>
+  <string name="privacy_policy">隱私政策</string>
+  <string name="button_add_narration">錄製旁白</string>
+  <string name="button_play_narration">播放旁白</string>
+  <string name="button_delete_narration">刪除旁白</string>
+  <string name="publish_sm">StoryMaker.cc</string>
+  <string name="publish_youtube">YouTube</string>
+  <string name="action_render">滙出</string>
+  <string name="action_play">播放</string>
+  <string name="action_share">分享</string>
+  <string name="drawer_quick_capture">快速抓取</string>
+  <string name="select_story_type">選擇故事類型</string>
+  <string name="button_start_my_story">開始我的故事</string>
+  <string name="home_intro_button_lessons">探索課程</string>
+  <string name="home_intro_button_projects">編寫故事</string>
+  <string name="created_with_storymaker_tag">用StoryMaker創作 - https://storymaker.cc/</string>
+  <string name="you_began_a_new_lesson">開始新課程</string>
+  <string name="scene_editor_trim_clip">修飾片段</string>
+  <string name="delete_warning">此行為無法回復</string>
+  <string name="cancel">取消</string>
+  <string name="stop">停止</string>
+  <string name="delete">刪除</string>
+  <string name="download">下載</string>
+  <string name="pause">暫停</string>
+  <string name="resume">再繼續</string>
+  <string name="play_or_share_exported_media_">播放或分享滙出的作品</string>
+  <string name="share_published_story">分享已發表的故事?</string>
+  <string name="scene_s_">場景(s)</string>
+  <string name="clip_s_">影片檔(s)</string>
+  <string name="sc_app_not_found">找不到SoundCloud應用程式!</string>
+  <string name="sc_app_not_found_message">你現在要安裝嗎?</string>
+  <string name="no_active_sc_account">找不到SoundCloud的有效帳號，請確認己登入或註冊</string>
+  <string name="operation_canceled">操作取消</string>
+  <string name="could_not_create_account">無法建立帳戶</string>
+  <string name="uploading">上傳中...</string>
+  <string name="canceled">取消上傳</string>
+  <!--added for project export-->
+  <string name="export_dialog_close">關閉</string>
+  <string name="export_dialog_share">分享</string>
+  <string name="title_activity_accounts">帳號</string>
+  <string name="action_settings">設定</string>
+  <string name="label_activity_log">活動日誌</string>
+  <string name="label_title">標題</string>
+  <string name="label_description">描述</string>
+  <string name="label_tags">標籤</string>
+  <string name="label_add">新增</string>
+  <string name="label_edit">編輯</string>
+  <string name="label_save">儲存</string>
+  <string name="label_activities">活動日誌</string>
+  <string name="hint_story_title">輸入標題</string>
+  <string name="hint_story_description">描述你的故事內容</string>
+  <string name="hint_story_tag">#加入標籤</string>
+  <string name="label_section">部份</string>
+  <string name="label_location">位置</string>
+  <string name="title_activity_story_info">資訊</string>
+  <string name="hint_no_description">無描述</string>
+  <string name="trim_clips">修飾片段</string>
+  <string name="info">資訊</string>
+  <string name="restarting_storymaker">重啟StoryMaker...</string>
+  <string name="send">傳送</string>
+  <string name="title_activity_publish">發佈活動</string>
+  <string name="uploading_to_soundcloud">上傳到SoundCloud...</string>
+  <string name="uploading_to_s3">上傳到S3...</string>
+  <string name="uploading_to_facebook">上傳到Facebook...</string>
+  <string name="uploading_to_internet_archive">上傳到網際網路檔案館Internet Archive...</string>
+  <string name="no_site_selected">未選擇網站</string>
+  <string name="exported_stories">滙出</string>
+  <string name="no_title">無標題</string>
+  <string name="title_exports">已發表的故事</string>
+  <string name="last_modified">上回修改</string>
+  <string name="no_medium">(no medium)</string>
+  <string name="converting_audio">變換聲音檔的産出格式</string>
+  <string name="export_error_2">出錯</string>
+  <string name="processing_audio">處理音軌</string>
+  <string name="processing_audio_multiple">處理音軌</string>
+  <string name="mixing_tracks">混合音軌</string>
+  <string name="trimming_merging">修飾與合併影片</string>
+  <string name="merging_video_audio">合併影片與音檔</string>
+  <string name="export_error_4">出錯</string>
+  <string name="download_content_pack">下載內容包?</string>
+  <string name="stop_download">停止下載?</string>
+  <string name="resume_download">再恢復下載</string>
+  <string name="finished_downloading">已完成下載</string>
+  <!--NEW/CACHEWORD-->
+  <string name="menu_lock">鎖住</string>
+  <string name="catalog_menu_catalog">目錄</string>
+  <string name="catalog_menu_guides">指引</string>
+  <string name="catalog_menu_lessons">課程</string>
+  <string name="catalog_menu_templates">樣式模版</string>
+  <string name="home_menu_home">首頁</string>
+  <string name="home_menu_stories">故事</string>
+  <string name="home_menu_guides">指引</string>
+  <string name="home_menu_lessons">課程</string>
+  <string name="home_menu_templates">模版樣式</string>
+  <string name="home_empty_home">瀏覧目錄來發現更多創作更好故事的各種方式</string>
+  <string name="home_empty_stories">你尚未儲存任何故事</string>
+  <string name="home_empty_guides">你尚未有任何指引，下載指引以熟練你的技巧</string>
+  <string name="home_empty_lessons">想了解更多?下載課程包以深入探索各主題</string>
+  <string name="home_empty_templates">你還未載入任何模版，下載模版可讓你重覆使用其故事架構</string>
+  <string name="home_empty_btn_home">瀏覽目錄</string>
+  <string name="home_empty_btn_stories">新故事</string>
+  <string name="home_empty_btn_guides">抓取指南</string>
+  <string name="home_empty_btn_lessons">載入課程</string>
+  <string name="home_empty_btn_templates">試用樣式</string>
+  <string name="home_tab_latest_stories">最近的故事</string>
+  <string name="home_tab_latest_installation">最近的內容包</string>
+</resources>

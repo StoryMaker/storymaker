@@ -1,0 +1,125 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+  <string name="app_name">StoryMaker 2</string>
+  <string name="title_projects">Storie</string>
+  <string name="title_lessons">Lezioni</string>
+  <string name="action_publish">Pubblica</string>
+  <!--menus-->
+  <string name="menu_new_project">Nuovo</string>
+  <string name="menu_projects">Storie</string>
+  <string name="menu_lessons">Lezioni</string>
+  <string name="menu_glossary">Glossario</string>
+  <string name="menu_contacts">Contatti</string>
+  <string name="menu_settings">Impostazioni</string>
+  <string name="menu_archive">Archivio</string>
+  <!--FIXME: rename-->
+  <string name="menu_add_media">Agg.</string>
+  <string name="menu_capture_media">Registra</string>
+  <string name="menu_share_media">Condividi</string>
+  <string name="menu_save_media">Salva</string>
+  <string name="menu_play_media">Play</string>
+  <string name="menu_render_media">Rappresenta</string>
+  <string name="menu_update">Aggiorna</string>
+  <string name="menu_save_project">Salva</string>
+  <string name="menu_overlay_camera">Camera</string>
+  <!--project list-->
+  <!--video processing-->
+  <string name="hintTitle">titolo</string>
+  <string name="start_recording">Registra</string>
+  <string name="stop_recording">Stop</string>
+  <string name="play_recording">Play</string>
+  <string name="save_recording">Salva</string>
+  <!--LOG COLLECTOR-->
+  <string name="title_home_projects">Progetti</string>
+  <string name="title_home_activity">Attività</string>
+  <string name="title_lessons_lessons">Lezioni</string>
+  <string name="title_lessons_glossary">Glossario</string>
+  <string name="hello_world">Ciao Mondo!</string>
+  <string name="title_activity_home">Home</string>
+  <string name="new_story_name_it">Indicalo</string>
+  <string name="new_story_working_title">Titolo di lavoro ...</string>
+  <string name="new_story_choose_something">Scegli qualcosa di breve che definisca il tema e incuriosisca il pubblico</string>
+  <string name="new_story_choose_a_medium">Scegli un mezzo espressivo</string>
+  <!--<string name="new_story_video">Video: Something here about why simple, short video is good! Ideally it should be about the same length as the other strings.</string>
+   	<string name="new_story_essay">Photo Essay: Tell a story about one character. Follow this template to produce a simple photo essay story about one character.</string>
+    <string name="new_story_photo">Single Photo: Telling a strong story with one image is a skill. To simplify, these templates explain some primary photo types.</string>
+    
+    <string name="new_story_audio">Audio: Something here about using audio to tell a story. Personally, I really like to listen to the radio and podcasts while I do housework!</string>-->
+  <string name="new_story_simple_story">Storia semplice</string>
+  <string name="new_story_choose_template">Modello di scena</string>
+  <string name="home_new_story">RENDI UN RACCONTO</string>
+  <string name="home_start_a_lesson">ANALIZZA LE LEZIONI</string>
+  <string name="title_activity_lessons">Lezioni</string>
+  <string name="title_activity_scene_editor">Editor della scena</string>
+  <string name="title_activity_choose_template">Sgegliere il modello</string>
+  <string name="title_activity_story_template">Racconto modello</string>
+  <string name="tab_order">Modifica</string>
+  <string name="story_publish_section">Sezione</string>
+  <string name="story_publish_section_hint">Sport</string>
+  <string name="story_publish_topics">Argomenti</string>
+  <string name="story_publish_topics_hint">Genere</string>
+  <string name="story_publish_location">Luogo</string>
+  <string name="story_publish_share">Condividi</string>
+  <string name="story_publish_status">Stato</string>
+  <!--delete these below-->
+  <string name="title_section3">Sezione 3</string>
+  <string name="title_section2">Sezione 2</string>
+  <string name="title_section1">Sezione 1</string>
+  <!--Screen title before and during recording-->
+  <!--Screen title after recording-->
+  <!--Screen title while playing back a recording-->
+  <!--Label shown during recording-->
+  <!--Label shown when the recording is stopped for a reason other than the user stopping it (e.g. the sd card was removed)-->
+  <!--label shown when there is not enough space to record something-->
+  <!--label shown when the recording has reached maximum allowed file size-->
+  <!--label shown when there is no sd card available to record to-->
+  <!--label shown when there is more than 1 minute but less than 9 minutes of space left to record-->
+  <!--label shown when there is less than 1 minute of space left to record-->
+  <!--button to accept the current recording and return it to the caller-->
+  <!--button to discard the current recording and return to the caller-->
+  <!--acknowlegement button in a number of dialogs-->
+  <string name="button_ok">OK</string>
+  <!--Do not translate. Format of the timer that shows how much has been recorded so far-->
+  <!--label shown before the user has recorded anything-->
+  <!--the name under which recordings will be visible in the media database is formatted like this-->
+  <!--all recordings will show up in the media database with this 'artist' name-->
+  <!--all recordings will show up in the media database with this 'album' name-->
+  <!--all recordings will show up in the media database in a playlist with this name-->
+  <!--shown as the message in a dialog when an error occured because of an error accessing the sd card-->
+  <!--shown as the message in a dialog when the app encountered an unspecified internal error-->
+  <!--shown as the message in a dialog when the recording could not be added to the media database-->
+  <!--shown as the message in a dialog when an export will tak up too much space-->
+  <!--add for libra begin-->
+  <string name="menu_setting">Impostazioni</string>
+  <string name="preferences_title">Impostazioni</string>
+  <string name="prefDefault_recordType">audio/3gpp</string>
+  <!--add for libra end-->
+  <!--youtube upload-->
+  <string name="_of_">di</string>
+  <string name="eula_accept">Accetta</string>
+  <string name="eula_refuse">Rifiuta</string>
+  <string name="privacy_policy">Privacy Policy</string>
+  <string name="publish_sm">StoryMaker.cc</string>
+  <string name="publish_youtube">YouTube</string>
+  <string name="action_render">Esporta</string>
+  <string name="action_play">Play</string>
+  <string name="action_share">Condividi</string>
+  <string name="home_intro_button_lessons">ANALIZZA LE LEZIONI</string>
+  <string name="home_intro_button_projects">RENDI UN RACCONTO</string>
+  <string name="cancel">Annulla</string>
+  <string name="stop">Stop</string>
+  <!--added for project export-->
+  <string name="export_dialog_close">Chiudi</string>
+  <string name="export_dialog_share">Condividi</string>
+  <string name="action_settings">Impostazioni</string>
+  <string name="label_add">Agg.</string>
+  <string name="label_edit">Modifica</string>
+  <string name="label_save">Salva</string>
+  <string name="label_section">Sezione</string>
+  <string name="label_location">Luogo</string>
+  <!--NEW/CACHEWORD-->
+  <string name="catalog_menu_lessons">Lezioni</string>
+  <string name="home_menu_home">Home</string>
+  <string name="home_menu_stories">Storie</string>
+  <string name="home_menu_lessons">Lezioni</string>
+</resources>

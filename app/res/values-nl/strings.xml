@@ -1,0 +1,359 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+  <string name="app_name">StoryMaker 2</string>
+  <string name="app_description">Het creëren van verhalen is nu nog makkelijker dan ooit met StoryMaker. Onze unieke templates, overlays en lessen gidsen je door het volledig creatief proces. Met StoryMaker kan je je inhoud meteen via je mobiel aanpassen, zo is het nog makkelijker om je verhaal af te werken. Eenmaal klaar laat StoryMaker je verhaal op al je favoriete platvormen publiceren.</string>
+  <string name="title_catalog">Catalogus</string>
+  <string name="title_projects">Verhalen</string>
+  <string name="title_lessons">Lessen</string>
+  <string name="action_publish">Publiceer</string>
+  <!--menus-->
+  <string name="menu_new_project">Nieuw</string>
+  <string name="menu_projects">Verhalen</string>
+  <string name="menu_lessons">Lessen</string>
+  <string name="menu_glossary">Overzicht</string>
+  <string name="menu_contacts">Contacten</string>
+  <string name="menu_settings">Instellingen</string>
+  <string name="menu_accounts">Gebruikers</string>
+  <string name="menu_archive">Archief</string>
+  <string name="drawer_profile">Login</string>
+  <!--FIXME: rename-->
+  <string name="menu_add_media">Voeg Toe</string>
+  <string name="menu_capture_media">Opnemen</string>
+  <string name="menu_share_media">Deel</string>
+  <string name="menu_save_media">Opslaan</string>
+  <string name="menu_play_media">Afspelen</string>
+  <string name="menu_render_media">Renderen</string>
+  <string name="menu_bug_report">Foutenrapport</string>
+  <string name="menu_login">Login</string>
+  <string name="menu_logs">Zend log</string>
+  <string name="menu_update">Updaten</string>
+  <string name="menu_about">Over</string>
+  <string name="menu_save_project">Opslaan</string>
+  <string name="menu_overlay_camera">Camera</string>
+  <string name="menu_add_new_shot">Voeg Fragment toe aan Scene</string>
+  <string name="menu_export_project_files">Export Project-bestanden als Zip</string>
+  <string name="menu_join_storymaker">Wordt Lid van de StoryMaker Gemeenschap</string>
+  <string name="menu_sign_up">Inschrijven/Inloggen</string>
+  <string name="menu_upload_manager">Upload Manager</string>
+  <string name="menu_uploads">Uploads</string>
+  <string name="welcome_message">Hallo daar!\nWelkom bij StoryMaker</string>
+  <!--project list-->
+  <string name="default_project_list_view">Dit is je eerst project dat je start!\n\n- tap om te starten -</string>
+  <string name="default_project_view_message">Je hebt keuze.\nVertel je verhaal met film, geluid of foto\'s.\n\n- tap om toe te voegen -</string>
+  <!--video processing-->
+  <string name="pref_out_fps_title">Output Framerate (fps)</string>
+  <string name="pref_out_fps_summary">Beelden per seconde om output video op te slaan in (15-30)</string>
+  <string name="pref_out_rate_title">Output Bitrate (kbps)</string>
+  <string name="pref_out_rate_summary">Bitrate voor video output (300-1500)</string>
+  <string name="pref_out_format_title">Output Formaat</string>
+  <string name="pref_out_format_summary">Bestandsformaat (mp4, 3gp, ogg)</string>
+  <string name="pref_out_vcodec_title">Video Output Codex</string>
+  <string name="pref_out_vcodec_summary">Video codex (copy, libx264, etc)</string>
+  <string name="pref_out_acodec_title">Geluid Output Codex</string>
+  <string name="pref_out_acodec_summary">Geluid codex (copy, aac, mp3, etc)</string>
+  <string name="pref_out_vwidth_title">Aangepaste Video-breedte (px)</string>
+  <string name="pref_out_vwidth_summary">aangepaste breedte voor uitgaand video</string>
+  <string name="pref_out_vheight_title">Aangepaste Video-hoogte (px)</string>
+  <string name="pref_out_vheight_summary">aangepaste hoogte voor uitgaand video</string>
+  <string name="hintTitle">titel</string>
+  <string name="hintStartTime">start (00:00:00)</string>
+  <string name="hintEndTime">duur (00:00:00)</string>
+  <string name="hintFadeIn">invagen (frames)</string>
+  <string name="hintFadeOut">uitvagen (frames)</string>
+  <string name="start_recording">Opnemen</string>
+  <string name="stop_recording">Stop</string>
+  <string name="play_recording">Afspelen</string>
+  <string name="save_recording">Opslaan</string>
+  <string name="downloading_lessons_from_server_">Downloaden van lessen van de server...</string>
+  <string name="checking_for_updates_">Zoeken naar updates...</string>
+  <!--LOG COLLECTOR-->
+  <string name="app_name_lc">Log Verzamelaar</string>
+  <string name="message_subject">Android toestel logboek</string>
+  <string name="acquiring_log_progress_dialog_message">Logboek ophalen van het systeem\u2026</string>
+  <string name="chooser_title">Kies de applicatie om het logboek naar toe te sturen</string>
+  <string name="failed_to_get_log_message">Fout tijdens ophalen logboek van het systeem.</string>
+  <string name="main_dialog_text">Deze applicatie zal proberen om het logboek op te halen. 
+Het opgehaalde logboek wordt verstuurd met een applicatie van je keuze.
+Verder heb je de optie om verzonden data te bekijken en te wijzigen.</string>
+  <string name="title_home_projects">Projecten</string>
+  <string name="title_home_activity">Activiteit</string>
+  <string name="title_lessons_lessons">Lessen</string>
+  <string name="title_lessons_glossary">Overzicht</string>
+  <string name="hello_world">Hallo wereld!</string>
+  <string name="title_activity_home">Thuisscherm</string>
+  <string name="new_story_name_it">Noem het.</string>
+  <string name="new_story_working_title">Werktitel...</string>
+  <string name="new_story_choose_something">Kies iets kort wat het onderwerp samenvat en je publiek intrigeert.</string>
+  <string name="new_story_choose_a_medium">Kies een medium.</string>
+  <!--<string name="new_story_video">Video: Something here about why simple, short video is good! Ideally it should be about the same length as the other strings.</string>
+   	<string name="new_story_essay">Photo Essay: Tell a story about one character. Follow this template to produce a simple photo essay story about one character.</string>
+    <string name="new_story_photo">Single Photo: Telling a strong story with one image is a skill. To simplify, these templates explain some primary photo types.</string>
+    
+    <string name="new_story_audio">Audio: Something here about using audio to tell a story. Personally, I really like to listen to the radio and podcasts while I do housework!</string>-->
+  <string name="new_story_simple_story">Simpel Verhaal</string>
+  <string name="new_story_choose_template">Scene Template</string>
+  <string name="home_new_story">MAAK EEN VERHAAL</string>
+  <string name="home_start_a_lesson">ONTDEK LESSEN</string>
+  <string name="title_activity_catalog">Catalogus</string>
+  <string name="title_activity_lessons">Lessen</string>
+  <string name="title_activity_scene_editor">Scene Aanpasser</string>
+  <string name="title_activity_choose_template">Kies een Template</string>
+  <string name="title_activity_story_template">Verhalen Template</string>
+  <string name="tab_make">Maak</string>
+  <string name="tab_review">Recentie</string>
+  <string name="tab_publish">Compleet</string>
+  <string name="tab_finish">Klaar</string>
+  <string name="tab_add_clips">Maak</string>
+  <string name="tab_order">Aanpassen</string>
+  <string name="story_publish_section">Deel</string>
+  <string name="story_publish_section_hint">Sport</string>
+  <string name="story_publish_topics">Onderwerp</string>
+  <string name="story_publish_topics_hint">Geslacht</string>
+  <string name="story_publish_location">Locatie</string>
+  <string name="story_publish_location_hint">Voer een relevante locatie in</string>
+  <string name="story_publish_share">Deel</string>
+  <string name="story_publish_send_via">Zend Via</string>
+  <string name="story_publish_status">Status</string>
+  <string name="story_publish_status_processing">Bezig</string>
+  <string name="story_publish_status_not">Niet Gepubliceerd</string>
+  <string name="story_publish_describe_hint">Beschrijf je verhaal...</string>
+  <string name="story_publish_story_title">Titel van je verhaal hier</string>
+  <string name="story_publish_story_date">Datum van je verhaal hier</string>
+  <!--delete these below-->
+  <string name="title_section3">Deel 3</string>
+  <string name="title_section2">Deel 2</string>
+  <string name="title_section1">Deel 1</string>
+  <string name="title_activity_test_drag">TestSlepen</string>
+  <!--Screen title before and during recording-->
+  <!--Screen title after recording-->
+  <!--Screen title while playing back a recording-->
+  <!--Label shown during recording-->
+  <string name="recording">Opnemen</string>
+  <!--Label shown when the recording is stopped for a reason other than the user stopping it (e.g. the sd card was removed)-->
+  <string name="recording_stopped">Opnemen gestopt</string>
+  <!--label shown when there is not enough space to record something-->
+  <string name="storage_is_full">Opslag is vol</string>
+  <!--label shown when the recording has reached maximum allowed file size-->
+  <string name="max_length_reached">Maximale lengte</string>
+  <!--label shown when there is no sd card available to record to-->
+  <string name="insert_sd_card">SD kaart vereist</string>
+  <!--label shown when there is more than 1 minute but less than 9 minutes of space left to record-->
+  <!--label shown when there is less than 1 minute of space left to record-->
+  <!--button to accept the current recording and return it to the caller-->
+  <!--button to discard the current recording and return to the caller-->
+  <!--acknowlegement button in a number of dialogs-->
+  <string name="button_ok">Oke</string>
+  <!--Do not translate. Format of the timer that shows how much has been recorded so far-->
+  <!--label shown before the user has recorded anything-->
+  <!--the name under which recordings will be visible in the media database is formatted like this-->
+  <!--all recordings will show up in the media database with this 'artist' name-->
+  <string name="audio_db_artist_name">Je opnames</string>
+  <!--all recordings will show up in the media database with this 'album' name-->
+  <string name="audio_db_album_name">Geluidsopnames</string>
+  <!--all recordings will show up in the media database in a playlist with this name-->
+  <string name="audio_db_playlist_name">Mijn opnames</string>
+  <!--shown as the message in a dialog when an error occured because of an error accessing the sd card-->
+  <string name="error_sdcard_access">Niet geslaagt om interne of externe opslag te vinden</string>
+  <!--shown as the message in a dialog when the app encountered an unspecified internal error-->
+  <string name="error_app_internal">Interne software error</string>
+  <!--shown as the message in a dialog when the recording could not be added to the media database-->
+  <string name="error_mediadb_new_record">Niet geslaagt om geluidsopname op te slaan</string>
+  <!--shown as the message in a dialog when an export will tak up too much space-->
+  <string name="error_storage_space" formatted="false">Oeps, er is geen plaats meer. Maak %.2f%nMB vrij en probeer dan opnieuw!</string>
+  <!--add for libra begin-->
+  <string name="default_record_name">Naamloze opname</string>
+  <string name="menu_view_record_list">Bekijk opnamelijst</string>
+  <string name="menu_setting">Instellingen</string>
+  <string name="delete_dialog_title">Wil je deze opname verwijderen?</string>
+  <string name="overwrite_dialog_title">%s bestaat al. Weet je zeker dat je deze wilt overschrijven?</string>
+  <string name="preferences_title">Instellingen</string>
+  <string name="pref_title_record_type">Bestandstype v.d. opname</string>
+  <string name="prefDialogTitle_recordType">Kies een bestandstype</string>
+  <string name="prefDefault_recordType">geluid/3gpp</string>
+  <string name="pref_title_enable_high_quality">Schakel high quality in</string>
+  <string name="pref_summary_enable_high_quality">Een geluidsbestand in high quality (hoge kwaliteit) kan groter zijn</string>
+  <string name="pref_title_enable_sound_effect">Schakel geluidseffecten in</string>
+  <string name="pref_summary_enable_sound_effect">Speel een geluidseffect af wanneer de staat is veranderd</string>
+  <string name="notification_recording">Opnemen...</string>
+  <string name="notification_stopped">Opname is gestopt</string>
+  <string name="notification_warning">Weinig opslag (minder dan %d minuten)...</string>
+  <string name="sd_card_not_available">SD kaart niet beschikbaar</string>
+  <string name="open_file_explorer">Open verkenner</string>
+  <string name="alert_message_delete_record">Wil je de geselecteerde opname zeker verwijderen?</string>
+  <!--add for libra end-->
+  <string name="help_clip_select">Veeg om een fragment-type te selecteren, tap daarna op de afbeelding van het fragment om een video-, geluid- of foto-opname te starten.</string>
+  <!--youtube upload-->
+  <string name="lesson_status_have_not_started">Is niet begonnen</string>
+  <string name="lessons_congratulations_you_have_completed_the_lesson_">Je hebt een les afgewerkt!</string>
+  <string name="lesson_status_in_progress">Nog bezig</string>
+  <string name="lesson_status_complete">KLAAR!</string>
+  <string name="no_lessons_available_tap_to_load_">Geen lessen beschikbaar (tap om te laden)</string>
+  <string name="_lesson_complete">les afgewerkt</string>
+  <string name="_of_">van</string>
+  <string name="default_youtube_desc">Een StoryMaker project</string>
+  <string name="view_published_media_online_or_local_copy_">De gepubliceerde media online bekijken?</string>
+  <string name="choose_account_for_youtube_upload">Kies een Gebruiker voor het Uploaden</string>
+  <string name="rendering">Renderen</string>
+  <string name="rendering_project_">Project bezig met renderen...</string>
+  <string name="publishing">Publiceren</string>
+  <string name="connecting_to_youtube_">verbinden met YouTube...</string>
+  <string name="uploading_to_storymaker">publiceren op de StoryMaker site...</string>
+  <string name="rendering_clips_">fragmenten renderen...</string>
+  <string name="you_must_enter_a_project_name">Maak een werktitel aan. Je kan dit later nog altijd aanpassen.</string>
+  <string name="delete_project_">Export deleten?</string>
+  <string name="delete_story">Verhaal deleten?</string>
+  <string name="delete_content_pack">Inhoudspakket deleten?</string>
+  <string name="delete_clip">Fragment deleten?</string>
+  <string name="add_new_clip_to_the_scene_">Een nieuw fragment aan de scene toevoegen?</string>
+  <string name="video_project_project_type">Video-project</string>
+  <string name="photo_project_project_type">Foto-project</string>
+  <string name="audio_project_project_type">Geluidsproject</string>
+  <string name="photo_essay_project_project_type">Fotoverhaal project</string>
+  <string name="eula_title">Je stemt in met:</string>
+  <string name="eula_accept">Aanvaarden</string>
+  <string name="eula_refuse">Weigeren</string>
+  <string name="privacy_policy">Privacybeleid</string>
+  <string name="end_user_license_agreement">Eindgebruikersovereenkomst</string>
+  <string name="send_annonymous_data">Zend anoniem gebruikersdata naar StoryMaker om ons te helpen met het verbeteren van de service.</string>
+  <string name="by_clicking_accept">Door op \'Aanvaarden\' te klikken accepteer je onze Eindverbruikersvoorwaarden en dat je ons Privacybeleid hebt gelezen:</string>
+  <string name="button_add_narration">Voiceover opnemen</string>
+  <string name="button_play_narration">Voiceover afspelen</string>
+  <string name="button_delete_narration">Voiceover verwijderen</string>
+  <string name="button_render_preview">Preview weergeven</string>
+  <string name="publish_sm">StoryMaker.cc</string>
+  <string name="publish_youtube">YouTube</string>
+  <string name="action_render">Exporteer</string>
+  <string name="action_play">Afspelen</string>
+  <string name="action_share">Deel</string>
+  <string name="cbRenderTypeLabel">Gebruik Fast Video Renderer</string>
+  <string name="drawer_quick_capture">Snel Opnemen</string>
+  <string name="select_story_type">Selecteer type van verhaal</string>
+  <string name="button_start_my_story">START MIJN VERHAAL</string>
+  <string name="home_intro_button_lessons">ONTDEK LESSEN</string>
+  <string name="home_intro_button_projects">MAAK EEN VERHAAL</string>
+  <string name="created_with_storymaker_tag">Gemaakt met StoryMaker - https://storymaker.cc/</string>
+  <string name="err_you_need_at_least_one_account_configured_on_your_device">Je moet minstens een account ingesteld hebben op je toestel.</string>
+  <string name="you_began_a_new_lesson">Je begon een nieuwe les</string>
+  <string name="scene_editor_please_add_clips">AUB voeg clips toe op het tabblad \'Maak\' alvorens deze te selecteren.</string>
+  <string name="scene_editor_trim_clip">Snij fragment bij</string>
+  <string name="delete_warning">Deze actie kan niet ongedaan worden!</string>
+  <string name="cancel">Annuleer</string>
+  <string name="stop">Stop</string>
+  <string name="delete">Verwijder</string>
+  <string name="download">Download</string>
+  <string name="pause">Pauze</string>
+  <string name="resume">Hervatten</string>
+  <string name="play_or_share_exported_media_">Deel of Speel geëxporteerde media af?</string>
+  <string name="share_published_story">Deel een gepubliceerd verhaal?</string>
+  <string name="err_storage_not_ready">Er is geen externe opslag (SDCard) beschikbaar voor lezen en schrijven. StoryMaker moet wel toegang hebben voor lessen en de projectdata. AUB controleer je toestel en herstart de pp.</string>
+  <string name="err_storage_not_available">De verwachte opslaglocatie is niet beschikbaar voor lezen en schrijven op dit moment. StoryMaker kan niet worden uitgevoerd zonder toegang tot opslag. Check alsjeblieft iedere SD kaarten en/of koppel het apparaat af van je computer.</string>
+  <string name="scene_s_">scene(s)</string>
+  <string name="clip_s_">fragment(en)</string>
+  <string name="sc_app_not_found">SoundCloud App niet gevonden!</string>
+  <string name="sc_app_not_found_message">Wil je het nu installeren?</string>
+  <string name="no_active_sc_account">Geen actief SoundCloud account gevonden, AUB inloggen/aanmelden</string>
+  <string name="operation_canceled">Handeling gestopt</string>
+  <string name="could_not_get_token">Geen token ontvangen</string>
+  <string name="getting_details">Gebruikerdetails ophalen</string>
+  <string name="could_not_create_account">Account maken mislukt</string>
+  <string name="uploading">Uploaden...</string>
+  <string name="canceled">Upload gestopt</string>
+  <!--added for project export-->
+  <string name="export_dialog_title">Wil je dit project zip delen?</string>
+  <string name="export_dialog_close">Sluit</string>
+  <string name="export_dialog_share">Deel</string>
+  <string name="title_activity_accounts">Gebruikers</string>
+  <string name="action_settings">Instellingen</string>
+  <string name="label_activity_log">Activiteiten logboek</string>
+  <string name="label_title">Titel</string>
+  <string name="label_description">Omschrijving</string>
+  <string name="label_tags">Tags</string>
+  <string name="label_add">Voeg Toe</string>
+  <string name="label_edit">Aanpassen</string>
+  <string name="label_save">Opslaan</string>
+  <string name="label_activities">Activiteiten logboek</string>
+  <string name="hint_story_title">Voer een Titel in</string>
+  <string name="hint_story_description">Beschrijf je verhaal...</string>
+  <string name="hint_story_tag">#addtags</string>
+  <string name="label_section">Deel</string>
+  <string name="label_location">Locatie</string>
+  <string name="title_activity_story_info">Info</string>
+  <string name="title_activity_story_info_edit">Pas Info aan</string>
+  <string name="title_activity_project_tag_fragment">ProjectTagFragment</string>
+  <string name="title_activity_connect_account">StoryMaker Gebruiker</string>
+  <string name="hint_no_description">Geen omschrijving.</string>
+  <string name="trim_clips">Snij Fragmenten bij</string>
+  <string name="info">Info</string>
+  <string name="send_logcat_to_support">Verstuur Logcat naar Support</string>
+  <string name="restarting_storymaker">Herstarten van StoryMaker...</string>
+  <string name="send">Zend</string>
+  <string name="title_activity_press_secure">PressSecure</string>
+  <string name="title_activity_publish">PublishActivity</string>
+  <string name="uploading_to_soundcloud">Uploaden naar SoundCloud...</string>
+  <string name="uploading_to_s3">Uploaden naar S3...</string>
+  <string name="uploading_to_facebook">Uploaden naar Facebook...</string>
+  <string name="uploading_to_internet_archive">Uploaden naar het Internet Archief...</string>
+  <string name="no_site_selected">Geen site geselecteert.</string>
+  <string name="exported_stories">Export</string>
+  <string name="no_title">Geen Titel.</string>
+  <string name="title_exports">Gepubliceerde Verhalen</string>
+  <string name="last_modified">Laatst Aangepast</string>
+  <string name="no_medium">(no medium)</string>
+  <string name="learning_guide_description">Maak een verplicht geluidsverhaal.</string>
+  <string name="extracting_audio_multiple">Audiospoor extraheren</string>
+  <string name="crossfading_audio">Audio crossfaden...</string>
+  <string name="crossfading_audio_multiple">Audiospoor crossfaden...</string>
+  <string name="fade_audio">Geheel audio in en uitfaden...</string>
+  <string name="converting_audio">Converteren naar uitgaand audio...</string>
+  <string name="export_error_1">Er ging iets fout tijdens media export</string>
+  <string name="export_error_2">Fout</string>
+  <string name="processing_audio">Audiosporen verwerken...</string>
+  <string name="processing_audio_multiple">Audiospoor verwerken</string>
+  <string name="mixing_tracks">Sporen mixen</string>
+  <string name="trimming_merging">Videos trimmen en samevoegen</string>
+  <string name="merging_video_audio">Video en audio samenvoegen</string>
+  <string name="export_error_3">Er ging iets fout tijdens media export</string>
+  <string name="export_error_4">Fout</string>
+  <string name="publishing_to_storymakerorg">Publiceren op StoryMaker.org...</string>
+  <string name="published_to_storymaker">Gepubliceerd op StoryMaker.org!</string>
+  <string name="you_are_not_signed_into_storymakerorg">Je bent niet ingelogd in StoryMaker.org!</string>
+  <string name="fb_post_not_public">Alleen publieke Facebook berichten kunnen worden gepubliceerd op StoryMaker.org!</string>
+  <string name="send_feedback">Stuur Feedback</string>
+  <string name="download_content_pack">Download Inhoudspakket?</string>
+  <string name="stop_download">Download stoppen?</string>
+  <string name="resume_download">Download Hervatten?</string>
+  <string name="finished_downloading">Download voltooid</string>
+  <string name="home_downloading_content">Downloaden van inhoud en/of aan het updaten van geïnstalleerde bestanden.</string>
+  <string name="home_content_missing">Kon dit pad niet laden, inhoud mist!</string>
+  <string name="home_metadata_missing">Kon de inhoud metadata niet localiseren</string>
+  <string name="home_index_missing">Kon de inhoud index niet localiseren</string>
+  <string name="home_please_wait">Wacht alsjeblieft op tot dit inhoudspakket klaar is met downloaden</string>
+  <!--NEW/CACHEWORD-->
+  <string name="lock_screen_open_button_text">ONTGRENDEL APP</string>
+  <string name="lock_screen_pin_enter_text">Voer PIN in om app te ontgrendelen</string>
+  <string name="lock_screen_create_button_text">CREËER PIN</string>
+  <string name="lock_screen_pin_create_text">Voer nieuwe PIN in om app te vergrendelen</string>
+  <string name="lock_screen_pin_confirm_text">Voer PIN opnieuw in om te bevestigen</string>
+  <string name="menu_lock">VERGRENDELD</string>
+  <string name="catalog_menu_catalog">Catalogus</string>
+  <string name="catalog_menu_guides">Gidsen</string>
+  <string name="catalog_menu_lessons">Lessen</string>
+  <string name="catalog_menu_templates">Templates</string>
+  <string name="home_menu_home">Thuisscherm</string>
+  <string name="home_menu_stories">Verhalen</string>
+  <string name="home_menu_guides">Gidsen</string>
+  <string name="home_menu_lessons">Lessen</string>
+  <string name="home_menu_templates">Templates</string>
+  <string name="home_empty_home">Blader in onze catalogus en ontdek alle verschillende manieren waarop je betere verhalen kunt gaan maken.</string>
+  <string name="home_empty_stories">Je hebt nog geen verhalen opgeslagen.</string>
+  <string name="home_empty_guides">Je hebt nog geen Gidsen. Download een Gids en fris uw technieken op.</string>
+  <string name="home_empty_lessons">Op zoek om te leren? Download een Les pakket om dieper in te gaan op een topic.</string>
+  <string name="home_empty_templates">Je hebt nog geen Templates. Download Templates en je zal verhaal structuren hebben die je keer op keer kunt gebruiken.</string>
+  <string name="home_empty_btn_home">Blader door de Catalogus</string>
+  <string name="home_empty_btn_stories">Nieuw Verhaal</string>
+  <string name="home_empty_btn_guides">Pak een Gids</string>
+  <string name="home_empty_btn_lessons">Laad een Les</string>
+  <string name="home_empty_btn_templates">Probeer een Template</string>
+  <string name="home_tab_latest_stories">Recente Verhalen</string>
+  <string name="home_tab_latest_installation">Recente Inhoudspakketten.</string>
+</resources>

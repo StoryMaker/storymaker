@@ -1,0 +1,46 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <string-array name="story_sections">
+    <item>პოლიტიკა</item>
+    <item>ბიზნესი</item>
+    <item>სპორტი</item>
+    <item>ხელოვნება</item>
+    <item>მეცნიერება</item>
+    <item>ჯანმრთელობა</item>
+    <item>განათლება</item>
+    <item>გარემო</item>
+  </string-array>
+  <string-array name="lesson_sections">
+    <item>ჟურნალიზმი</item>
+    <item>უსაფრთხოება</item>
+    <item>აუდიო</item>
+    <item>ფოტოგრაფია</item>
+    <item>ვიდეოგრაფია</item>
+    <item>ისტორია</item>
+  </string-array>
+  <string-array name="array_story_locations">
+    <item>აშშ</item>
+    <item>კალიფორნია</item>
+    <item>ოუქლენდი</item>
+    <item>ეგვიპტე</item>
+    <item>ერაყი</item>
+    <item>მოროკო</item>
+    <item>ტუნისი</item>
+    <item>ზიმბაბვე</item>
+    <item>ჩეხეთის რესპუბლიკა</item>
+    <item>ვიეტნამი</item>
+  </string-array>
+  <string-array name="array_story_sections">
+    <item>პოლიტიკა</item>
+    <item>ბიზნესი</item>
+    <item>სპორტი</item>
+    <item>ხელოვნება</item>
+    <item>მეცნიერება</item>
+    <item>ჯანმრთელობა</item>
+    <item>განათლება</item>
+    <item>გარემო</item>
+    <item>ტექნოლოგია</item>
+    <item>მოგზაურობა</item>
+  </string-array>
+  <!--<item>catalog</item>-->
+</resources>

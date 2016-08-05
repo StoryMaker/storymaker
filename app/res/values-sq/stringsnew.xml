@@ -1,0 +1,186 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+  <string name="terms_title">Kushtet e StoryMaker</string>
+  <string name="terms_text_1">Ju mbani të gjitha të drejtat pronësore mbi përmbajtjen tuaj, ju mund ta tërhiqni atë sa herë që ju dëshironi, dhe ne nuk do të shesim ndonjë nga të dhënat tuaja. Duke rënë dakord për të ndarë përmbajtjen tuaj me StoryMaker.cc ju lejoni Small World News dhe partnerët tjerë të vendosin artikujt tuaj me artikuj të ngjashëm të krijuar me Storymaker. Ne i grupojmë ato në bazë të llojeve, temave, dhe lokacioneve.</string>
+  <string name="terms_text_2">Artikulli juaj ende është i postuar në faqen e shërndarjes që ju keni zgjedhur, por po ashtu është i referuar edhe te StoryMaker.cc. Titulli, përshkrimi dhe etiketimet do të postohen në StoryMaker.cc. E gjithë përmbajtja tjetër do të jetë referenca juaj personale në faqen tuaj të shpërndarjes.</string>
+  <!--tutorial_lessons-->
+  <string name="tutorial_title_1">Mëso tregimbërjen.</string>
+  <string name="tutorial_text_1">Mëso të jesh gazetar duke qenë i sigurtë dhe të prodhosh audio të shkëlqyer, foto dhe video-tregime.</string>
+  <string name="tutorial_title_2">Tregohu i saktë.</string>
+  <string name="tutorial_text_2">I zhvilluar në partneritet me ICFJ, ju mund të jeni i sigurt se mësimet tona të gazetarisë do të të mësojnë të jesh një gazetar më i mirë.</string>
+  <string name="tutorial_title_3">Mbroni veten.</string>
+  <string name="tutorial_text_3">Mësimet tona digjitale të sigurisë do ju ndihmojë ju dhe burimet tuaja të qëndroni të sigurtë. StoryMaker ka për qëllim t\'ju mbajë të sigurt, pa marrë parasysh se ku ju dërgon artikulli juaj.</string>
+  <string name="tutorial_title_4">Shpjegoni artikullin tuaj më mirë.</string>
+  <string name="tutorial_text_4">Tregimet përshtaten për mediume të ndryshme, qoftë audio, foto ose video. Mëso se si çdo medium është i ndryshëm.</string>
+  <string name="tutorial_title_5">Testoni veten.</string>
+  <string name="tutorial_text_5">Çdo leksion konkludon me një kuiz për të testuar të kuptuarit tuaj. </string>
+  <string name="tutorial_title_6">Vazhdoni të mësoni.</string>
+  <string name="tutorial_text_6">Ndani artikuj tuaj me komunitetin e StoryMaker.cc, dhe mësoni të bëheni tregues më i mirë për secilin artikull që ju ndani.</string>
+  <!--/tutorial_lessons-->
+  <!--tutorial_story-->
+  <string name="tutorial_title_7">Trego tregime më mirë.</string>
+  <string name="tutorial_text_7">Një tregim i mirë ka një fillim, mes dhe përfundim. Intrevistoni dikë për të siguruar më shumë kontekst për artikullin tuaj. Na tregoni ku jetojnë. Bëjeni personale. </string>
+  <string name="tutorial_title_8">Zgjedhni mesin tuaj.</string>
+  <string name="tutorial_text_8">Audio, foto dhe video përshtaten me lloje të ndryshme të tregimbërjes. Shikoni leksionet dhe mësoni më shumë. Zgjedhni një mes, dhe mësoni gjatë rrugës.</string>
+  <string name="tutorial_title_9">Trego një tregim në pesë.</string>
+  <string name="tutorial_text_9">Përdorni pesë klipe për të treguar tregimin tuaj. Përshkruani lokacionin e tregimit tuaj. Prezantoni subjektin tuaj të parë. Tre të mbeturat tregojnë tregimin me një fillim, mes dhe fund.</string>
+  <string name="tutorial_title_10">Thejeni barrierën.</string>
+  <string name="tutorial_text_10">Mblidhen klipet tuaja në renditje të ndryshme për ndikim më të madh.</string>
+  <string name="tutorial_title_11">Tregoni tregime më të gjata.</string>
+  <string name="tutorial_text_11">Shballonet e tregimeve ju tregojnë si.</string>
+  <!--/tutorial_story-->
+  <!--template_description-->
+  <string name="template_audio_desc">Regjistroni tingujt që përshkruajnë tregimin tuaj, kush, çfarë. Nëse nuk mund të merrni pamje të fuqishme, audio është alternativë shumë e mirë.</string>
+  <string name="template_photo_desc">Një fotografi vlen sa njëmijë fjalë. Na trego kush ose çka është i rëndësishëm në tregimin tuaj, ose si ndodh.</string>
+  <string name="template_essay_desc">Ndonjëherë, disa fotografi janë të nevojshme. Na tregoni se si ndodh ngjarja, tregoni një tregim me një seri të fotografive. </string>
+  <string name="template_video_desc">Bëni fotografi bindëse dhe aksione se si ndodhën. Na tregoni kush ose çka është i rëndësishëm dhe pse.</string>
+  <!--/template_description-->
+  <!--legacy_story_type-->
+  <!--once we refactor to keep this extra text fields in the db instead of referencing this strings file we can remove these (after doing a migration step)-->
+  <string name="story_type_event_title">Evenimenti</string>
+  <string name="story_type_issue_title">Çështja</string>
+  <string name="story_type_profile_title">Profili</string>
+  <string name="story_type_news_title">Lajmet e fundit</string>
+  <string name="story_type_event_desc">Artikujt e evenimenteve kanë një afat kohor të caktuar dhe një vend të caktuar. Përqëndrohen në atë që ndodh në atë ngjarje. Organizoni artikullin tuaj rreth ngjarjes kur ndodh, ku, dhe pse ajo ndodh në atë kohë dhe vend.</string>
+  <string name="story_type_issue_desc">Artikujt e çështjeve shqyrtojnë një subjekt të gjerë. Përqëndrohuni në atë se si çështja prek një komunitet apo grup njerëzish. Organizoni artikullin tuaj rreth asaj që te kush ndikon dhe çfarë është duke u bërë në përgjigje.</string>
+  <string name="story_type_profile_desc">Profilizoni një personazh specifik. Fokusohuni se kush është ai personazh. Organizoni tregimin tuaj rreth jetës së përditshme të personazhit, çfarë ndodh, dhe se si personazhi ia del me sfidat.</string>
+  <string name="story_type_news_desc">Lajmet e fundit janë të menjëhershme. Përqendrohuni në një kënd. Organizoni artikullin tuaj përreth fakteve, kush, çka, ku, kur. Përdorni narracion për të shtuar kontekst.</string>
+  <!--/ legacy_story_type-->
+  <!--story_type-->
+  <string name="story_type_event_news_title">Eventet e lajmeve</string>
+  <string name="story_type_event_feature_title">Eventet e artikujve</string>
+  <string name="story_type_event_breaking_title">Eventet e lajmeve të fundit</string>
+  <string name="story_type_issue_social_title">Çështjet sociale</string>
+  <string name="story_type_issue_political_title">Çështjet politike</string>
+  <string name="story_type_issue_economic_title">Çështjet ekonomike</string>
+  <string name="story_type_profile_public_title">Profil publik</string>
+  <string name="story_type_profile_professional_title">Profil profesional</string>
+  <string name="story_type_profile_personal_title">Profil personal</string>
+  <!--/story_type-->
+  <!--story_type_description-->
+  <string name="story_type_event_news_desc">Tregimet rreth ngjarjeve me rëndësi janë të menjëhershme, shpesh të planifikuara, dhe kanë një fillim dhe fund të qartë. Zgjedhjet ose protesat janë ngjarje të mira për lajme.</string>
+  <string name="story_type_event_feature_desc">Artikujt rreth ngjarjeve që nuk mund të kenë implikime të vështira në lajme. Një ngjarje sportive, një biznes i ri në një lagje, teknologji të reja, janë ngjarje të mira për artikuj.</string>
+  <string name="story_type_event_breaking_desc">Ngjarjet e paplanifikuara me lajme me rëndësi. Një zjarr, një njoftim i papritur nga një zyrtar qeveritar ose një fatkeqësi natyrore, janë ngjarje të për lajme të menjëhershme.</string>
+  <string name="story_type_issue_social_desc">Artikuj për çështje që prekin komunitetet. Një ndryshim në një qeverisje lokale apo infrastrukturë janë janë temë e mirë për çështje sociale.</string>
+  <string name="story_type_issue_political_desc">Artikujt për qeverinë dhe punën e zyrtarëve publikë. Një artikull për ndonjë ligj të ri apo ndryshim në parlament, janë tema të mira për çështje politike.</string>
+  <!--/story_type_description-->
+  <!--template_options-->
+  <string name="choose_level">Zgjedhni një nivel</string>
+  <string name="choose_level_basic">Themelor</string>
+  <string name="choose_level_advanced">I përparuar</string>
+  <!--/template_options-->
+  <!--story_type_new-->
+  <string name="overview">Pamje e përgjithshme</string>
+  <string name="activity">Aktiviteti</string>
+  <string name="impact">Ndikimi</string>
+  <string name="background">Prapavija</string>
+  <string name="involvement">Pjesëmarrja</string>
+  <string name="motivation">Motivimi</string>
+  <string name="location">Vendndodhja</string>
+  <string name="experience">Eksperienca</string>
+  <string name="results">Rezultatet</string>
+  <string name="next_steps">Hapat tjerë</string>
+  <string name="moving_forward">Ecja përpara</string>
+  <string name="conclusion">Konkluzioni</string>
+  <string name="story_type_event_news_text1">Çfarë po ndodh në këtë ngjarje?</string>
+  <string name="story_type_event_news_text2">Si jeni ju të përfshirë?</string>
+  <string name="story_type_event_news_text3">Kush është më i prekuri nga kjo ngjarje?</string>
+  <string name="story_type_event_news_text4">Cili është tregimi prapa kësaj ngjarjeje?</string>
+  <string name="story_type_event_news_text5">Cili është ndikimi i kësaj ngjarjeje?</string>
+  <string name="story_type_event_feature_text1">Çfarë po ndodh në këtë ngjarje?</string>
+  <string name="story_type_event_feature_text2">Pse jeni ju të përfshirë?</string>
+  <string name="story_type_event_feature_text3">Ku po ndodhë ngjarja?</string>
+  <string name="story_type_event_feature_text4">Si jeni ju i përfshirë personalisht?</string>
+  <string name="story_type_event_feature_text5">Cili është ndikimi i kësaj ngjarjeje?</string>
+  <string name="story_type_event_breaking_text1">Çfarë po ndodhë?</string>
+  <string name="story_type_event_breaking_text2">Ku po ndodhë?</string>
+  <string name="story_type_event_breaking_text3">Kush është i prekur?</string>
+  <string name="story_type_event_breaking_text4">A ka rrezik të menjëhershëm?</string>
+  <string name="story_type_event_breaking_text5">Si po reagojnë njerëzit?</string>
+  <string name="story_type_issue_social_text1">Ju lutemi të përshkuani çështjen sociale.</string>
+  <string name="story_type_issue_social_text2">Kur &amp; ku ka filluar kjo çështje?</string>
+  <string name="story_type_issue_social_text3">Si po ndikon kjo te koumniteti?</string>
+  <string name="story_type_issue_social_text4">Na tregoni se si ndikon kjo në jetën tuaj.</string>
+  <string name="story_type_issue_social_text5">Çfarë mund të bëhet për ta rregulluar këtë çështje?</string>
+  <string name="story_type_issue_political_text1">Ju lutemi ta përshkruani çështjen politike.</string>
+  <string name="story_type_issue_political_text2">Kush preket drejtpërdrejtë?</string>
+  <string name="story_type_issue_political_text3">Si ndikon në qeveri?</string>
+  <string name="story_type_issue_political_text4">Pse është e rëndësishme për ju personalisht?</string>
+  <string name="story_type_issue_political_text5">Çfarë mund të bëhet për të rregulluar këtë çështje?</string>
+  <string name="story_type_issue_economic_text1">Ju lutemi të përshkruani çështjen ekonomike.</string>
+  <string name="story_type_issue_economic_text2">Cila është lidhja juaj me këtë çështje?</string>
+  <string name="story_type_issue_economic_text3">Si preket ekonomia me këtë?</string>
+  <string name="story_type_issue_economic_text4">Kush do të preket më së shumti nga kjo?</string>
+  <string name="story_type_issue_economic_text5">Çfarë mund të bëhet për ta rregulluar këtë çështje?</string>
+  <string name="story_type_profile_public_text1">Tregoni diçka për veten.</string>
+  <string name="story_type_profile_public_text2">Kur keni filluar?</string>
+  <string name="story_type_profile_public_text3">Çfarë bëni?</string>
+  <string name="story_type_profile_public_text4">Përshkruani një moment kur jeni ndjerë krenarë me punën tuaj.</string>
+  <string name="story_type_profile_public_text5">Si e shihni rolin tuaj në të ardhmen?</string>
+  <string name="story_type_profile_professional_text1">Kush jeni dhe çfarë pune bëni?</string>
+  <string name="story_type_profile_professional_text2">Ju lutemi të shpjegoni si e bëni punën tuaj.</string>
+  <string name="story_type_profile_professional_text3">Pse është kjo punë e rëndësishme për ju?</string>
+  <string name="story_type_profile_professional_text4">Si mund të keni ndikim me këtë punë?</string>
+  <string name="story_type_profile_professional_text5">Çfarë ka më pas për ju me këtë punë?</string>
+  <string name="story_type_profile_personal_text1">Shpjegoni se kush jeni ju.</string>
+  <string name="story_type_profile_personal_text2">Cila është një përvojë e rëndësishme që ju ka ndodhur?</string>
+  <string name="story_type_profile_personal_text3">Si ju ka bërë kjo përvojë të ndiheni? </string>
+  <string name="story_type_profile_personal_text4">Çfarë bëni ndryshe tani? </string>
+  <string name="story_type_profile_personal_text5">Çfarë keni dëshirë të shihni që ndodhë në të ardhmen?</string>
+  <!--/story_type_new-->
+  <!--story_type_old-->
+  <string name="scene_number">Skena &lt;xliff:g id="number"&gt;%1$d&lt;/xliff:g&gt;</string>
+  <string name="when">Kur?</string>
+  <string name="how">Si?</string>
+  <string name="what">Çka?</string>
+  <string name="where">Ku?</string>
+  <string name="why">Pse?</string>
+  <string name="story_type_event_text1">Kur ndodh evenimenti?</string>
+  <string name="story_type_event_text2">Çka është qëllimi i evenimentit?</string>
+  <string name="story_type_event_text3">Pse është evenimenti i rëndësishëm?</string>
+  <string name="story_type_event_text4">Kur ndodh evenimenti?</string>
+  <string name="story_type_event_text5">Si është i organizuar evenimenti?</string>
+  <string name="story_type_event_text6">Çka është qëllimi i evenimentit?</string>
+  <string name="story_type_event_text7">Ku ndodh evenimenti?</string>
+  <string name="story_type_event_text8">Pse është evenimenti i rëndësishëm?</string>
+  <string name="story_type_issue_text1">Si ka ndikim kjo çështje te komuniteti?</string>
+  <string name="story_type_issue_text2">Kush është më i ndikuari?</string>
+  <string name="story_type_issue_text3">Çka është duke u bërë në përgjigje?</string>
+  <string name="story_type_issue_text4">Si ka ndikim kjo çështje te komuniteti?</string>
+  <string name="story_type_issue_text5">Ku / kur ka filluar kjo çështje?</string>
+  <string name="story_type_issue_text6">Kush është më i ndikuari?</string>
+  <string name="story_type_issue_text7">Pse janë ata më të ndikuarit?</string>
+  <string name="story_type_issue_text8">Çka është duke u bërë në përgjigje?</string>
+  <string name="story_type_profile_text1">Kush është personazhi?</string>
+  <string name="story_type_profile_text2">Cila është sfida e personazhit?</string>
+  <string name="story_type_profile_text3">Si ia del personazhi me sfidën?</string>
+  <string name="story_type_profile_text4">Kush është personazhi?</string>
+  <string name="story_type_profile_text5">Prej nga është personazhi?</string>
+  <string name="story_type_profile_text6">Cila është sfida e personazhit?</string>
+  <string name="story_type_profile_text7">Pse personazhi është duke luftuar me këtë sfidë?</string>
+  <string name="story_type_profile_text8">Si ia del personazhi me sfidën?</string>
+  <string name="story_type_news_text1">Çfarë po ndodhë?</string>
+  <string name="story_type_news_text2">Kush është i prekur?</string>
+  <string name="story_type_news_text3">Si po i përgjigjen?</string>
+  <string name="story_type_news_text4">Çfarë po ndodhë?</string>
+  <string name="story_type_news_text5">Ku po ndodhë lajmi?</string>
+  <string name="story_type_news_text6">Kush është i prekur?</string>
+  <string name="story_type_news_text7">Pse ka ndodhur?</string>
+  <string name="story_type_news_text8">Si po i përgjigjen?</string>
+  <!--/story_type_old-->
+  <!--prefs-->
+  <string name="prefs_category_networking_security_title">Rrjetëzimi &amp; Siguria</string>
+  <string name="prefs_category_locales_title">Vendndodhjet</string>
+  <string name="prefs_category_media_title">Media</string>
+  <string name="prefs_category_debug_title">Rregullim</string>
+  <string name="prefs_storymaker_server_title">Serveri i StoryMaker </string>
+  <string name="prefs_use_tor_title">Përdorni Orbot (Tor)</string>
+  <string name="prefs_use_tor_summary">Dërgo gjithë trafikun e rrjetit përmes rrjetit Tor duke përdorur aplikacionin Orbot</string>
+  <string name="prefs_use_download_manager_title">Përdorni Download Manager</string>
+  <!--/prefs-->
+  <!--FirstStartActivity-->
+  <!--ConnectAccountActivity-->
+  <string name="join_storymaker">Bashkëngjitu te komuniteti i StoryMaker</string>
+  <!--ProjectTagFragment-->
+  <!--BaesActivity Drawer  (For Accessibility Descriptions)-->
+</resources>

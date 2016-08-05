@@ -1,0 +1,89 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+  <!--tutorial_lessons-->
+  <string name="tutorial_title_2">Ole tarkka.</string>
+  <string name="tutorial_title_3">Suojele itseäsi.</string>
+  <string name="tutorial_title_4">Kerro tarinasi paremmin.</string>
+  <!--/tutorial_lessons-->
+  <!--tutorial_story-->
+  <string name="tutorial_title_11">Kerro pitempiä tarinoita.</string>
+  <!--/tutorial_story-->
+  <!--template_description-->
+  <!--/template_description-->
+  <!--legacy_story_type-->
+  <!--once we refactor to keep this extra text fields in the db instead of referencing this strings file we can remove these (after doing a migration step)-->
+  <string name="story_type_event_title">Tapahtuma</string>
+  <string name="story_type_profile_title">Profiili</string>
+  <!--/ legacy_story_type-->
+  <!--story_type-->
+  <string name="story_type_event_news_title">Uutistapahtuma</string>
+  <string name="story_type_profile_public_title">Julkinen profiili</string>
+  <string name="story_type_profile_professional_title">Ammattiprofiili</string>
+  <string name="story_type_profile_personal_title">Henkilökohtainen profiili</string>
+  <!--/story_type-->
+  <!--story_type_description-->
+  <!--/story_type_description-->
+  <!--template_options-->
+  <string name="choose_level">Valitse taso</string>
+  <!--/template_options-->
+  <!--story_type_new-->
+  <string name="background">Tausta</string>
+  <string name="location">Sijainti</string>
+  <string name="experience">Kokemus</string>
+  <string name="results">Tulokset</string>
+  <string name="next_steps">Seuraavat vaiheet</string>
+  <string name="moving_forward">Siirrytään eteenpäin</string>
+  <string name="story_type_event_breaking_text1">Mitä tapahtuu?</string>
+  <string name="story_type_event_breaking_text2">Missä se tapahtuu?</string>
+  <string name="story_type_event_breaking_text3">Kehen se vaikuttaa?</string>
+  <string name="story_type_issue_political_text3">Kuinka se vaikuttaa hallitukseen?</string>
+  <string name="story_type_issue_political_text4">Miksi tämä on tärkeä sinulle henkilökohtaisesti?</string>
+  <string name="story_type_profile_public_text1">Selitä hiukan sitä, kuka sinä olet.</string>
+  <string name="story_type_profile_public_text5">Millaisena näet roolisi tulevaisuudessa?</string>
+  <string name="story_type_profile_professional_text1">Kuka sinä olet ja mikä on työtehtäväsi?</string>
+  <string name="story_type_profile_professional_text2">Selitä kuinka teet työtäsi.</string>
+  <string name="story_type_profile_professional_text3">Miksi tämä työ on sinulle tärkeä?</string>
+  <string name="story_type_profile_personal_text1">Selitä hiukan sitä, kuka sinä olet.</string>
+  <!--/story_type_new-->
+  <!--story_type_old-->
+  <string name="when">Milloin?</string>
+  <string name="how">Kuinka?</string>
+  <string name="what">Mitä?</string>
+  <string name="where">Missä?</string>
+  <string name="why">Miksi?</string>
+  <string name="story_type_event_text1">Milloin tapahtuma tapahtuu?</string>
+  <string name="story_type_event_text2">Mikä on tapahtuman tarkoitus?</string>
+  <string name="story_type_event_text3">Miksi tapahtuma on tärkeä?</string>
+  <string name="story_type_event_text4">Milloin tapahtuma tapahtuu?</string>
+  <string name="story_type_event_text5">Kuinka tapahtuma on järjestetty?</string>
+  <string name="story_type_event_text6">Mikä on tapahtuman tarkoitus?</string>
+  <string name="story_type_event_text7">Missä se tapahtuu?</string>
+  <string name="story_type_event_text8">Miksi tapahtuma on tärkeä?</string>
+  <string name="story_type_news_text1">Mitä tapahtuu?</string>
+  <string name="story_type_news_text2">Kehen se vaikuttaa?</string>
+  <string name="story_type_news_text4">Mitä tapahtuu?</string>
+  <string name="story_type_news_text6">Kehen se vaikuttaa?</string>
+  <!--/story_type_old-->
+  <!--prefs-->
+  <string name="prefs_youtube_acccount_title">YouTube-tili</string>
+  <string name="prefs_youtube_login_title">YouTube-kirjautuminen</string>
+  <string name="prefs_soundcloud_account_title">SoundCloud-tili</string>
+  <string name="prefs_interface_language_title">Valitse kieli</string>
+  <string name="prefs_use_cat_command_title">Käytä \'Cat\'-komentoa</string>
+  <string name="prefs_use_cat_command_summary">Käytä \'cat\'-komentoa videoiden yhdistämiseen</string>
+  <string name="prefs_video_codec_title">Video-koodekki</string>
+  <string name="prefs_video_width_title">Videoleveys</string>
+  <string name="prefs_video_width_summary">Vie videoleveys</string>
+  <string name="prefs_video_height_title">Videokorkeus</string>
+  <string name="prefs_video_height_summary">Vie videokorkeus</string>
+  <!--/prefs-->
+  <!--FirstStartActivity-->
+  <!--ConnectAccountActivity-->
+  <string name="my_account">STORYMAKER-TILINI</string>
+  <string name="join_storymaker">Liity StoryMaker-yhteisöön</string>
+  <string name="create_account">LUO TILINI</string>
+  <string name="sign_in">REKISTERÖIDY / KIRJAUDU</string>
+  <string name="sign_out">KIRJAUDU ULOS</string>
+  <!--ProjectTagFragment-->
+  <!--BaesActivity Drawer  (For Accessibility Descriptions)-->
+</resources>

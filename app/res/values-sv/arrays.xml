@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <string-array name="story_sections">
+    <item>Politik</item>
+    <item>Företag</item>
+    <item>Sporter</item>
+    <item>Konst</item>
+    <item>Forskning</item>
+    <item>Hälsa</item>
+    <item>Utbildning</item>
+    <item>Miljö</item>
+  </string-array>
+  <!--<item>catalog</item>-->
+</resources>

@@ -1,0 +1,34 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <string-array name="story_sections">
+    <item>Politika</item>
+    <item>İş</item>
+    <item>Spor</item>
+    <item>Sanat</item>
+    <item>Bilim</item>
+    <item>Sağlık</item>
+    <item>Eğitim</item>
+    <item>Çevre</item>
+  </string-array>
+  <string-array name="lesson_sections">
+    <item>Gazetecilik</item>
+    <item>Güvenlik</item>
+    <item>Ses</item>
+    <item>Fotoğrafçılık</item>
+    <item>Video Çekimi</item>
+    <item>Hikaye</item>
+  </string-array>
+  <string-array name="array_story_sections">
+    <item>Politika</item>
+    <item>İş</item>
+    <item>Spor</item>
+    <item>Sanat</item>
+    <item>Bilim</item>
+    <item>Sağlık</item>
+    <item>Eğitim</item>
+    <item>Çevre</item>
+    <item>Teknoloji</item>
+    <item>Seyahat</item>
+  </string-array>
+  <!--<item>catalog</item>-->
+</resources>

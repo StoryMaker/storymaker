@@ -1,0 +1,62 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+  <string name="title_lessons">သင်ခန်းစာများ</string>
+  <string name="action_publish">ထုတ်ဝေ</string>
+  <!--menus-->
+  <string name="menu_new_project">အသစ်</string>
+  <string name="menu_lessons">သင်ခန်းစာများ</string>
+  <string name="menu_glossary">ခက်ဆစ်အဘိဓာန်</string>
+  <string name="menu_contacts">ဆက်သွယ်မှုများ</string>
+  <string name="menu_settings">ချိန်ညှိချက်</string>
+  <!--FIXME: rename-->
+  <string name="menu_update">မွမ်းမံ</string>
+  <!--project list-->
+  <!--video processing-->
+  <!--LOG COLLECTOR-->
+  <string name="title_home_projects">ပရောဂျက်များ</string>
+  <string name="title_lessons_lessons">သင်ခန်းစာများ</string>
+  <string name="title_lessons_glossary">ခက်ဆစ်အဘိဓာန်</string>
+  <string name="hello_world">မင်္ဂလာပါကမ္ဘာကြီး!</string>
+  <string name="title_activity_home">ပင်မ</string>
+  <!--<string name="new_story_video">Video: Something here about why simple, short video is good! Ideally it should be about the same length as the other strings.</string>
+   	<string name="new_story_essay">Photo Essay: Tell a story about one character. Follow this template to produce a simple photo essay story about one character.</string>
+    <string name="new_story_photo">Single Photo: Telling a strong story with one image is a skill. To simplify, these templates explain some primary photo types.</string>
+    
+    <string name="new_story_audio">Audio: Something here about using audio to tell a story. Personally, I really like to listen to the radio and podcasts while I do housework!</string>-->
+  <string name="title_activity_lessons">သင်ခန်းစာများ</string>
+  <!--delete these below-->
+  <!--Screen title before and during recording-->
+  <!--Screen title after recording-->
+  <!--Screen title while playing back a recording-->
+  <!--Label shown during recording-->
+  <!--Label shown when the recording is stopped for a reason other than the user stopping it (e.g. the sd card was removed)-->
+  <!--label shown when there is not enough space to record something-->
+  <!--label shown when the recording has reached maximum allowed file size-->
+  <!--label shown when there is no sd card available to record to-->
+  <!--label shown when there is more than 1 minute but less than 9 minutes of space left to record-->
+  <!--label shown when there is less than 1 minute of space left to record-->
+  <!--button to accept the current recording and return it to the caller-->
+  <!--button to discard the current recording and return to the caller-->
+  <!--acknowlegement button in a number of dialogs-->
+  <!--Do not translate. Format of the timer that shows how much has been recorded so far-->
+  <!--label shown before the user has recorded anything-->
+  <!--the name under which recordings will be visible in the media database is formatted like this-->
+  <!--all recordings will show up in the media database with this 'artist' name-->
+  <!--all recordings will show up in the media database with this 'album' name-->
+  <!--all recordings will show up in the media database in a playlist with this name-->
+  <!--shown as the message in a dialog when an error occured because of an error accessing the sd card-->
+  <!--shown as the message in a dialog when the app encountered an unspecified internal error-->
+  <!--shown as the message in a dialog when the recording could not be added to the media database-->
+  <!--shown as the message in a dialog when an export will tak up too much space-->
+  <!--add for libra begin-->
+  <string name="menu_setting">ချိန်ညှိချက်</string>
+  <string name="preferences_title">ချိန်ညှိချက်</string>
+  <!--add for libra end-->
+  <!--youtube upload-->
+  <!--added for project export-->
+  <string name="action_settings">ချိန်ညှိချက်</string>
+  <!--NEW/CACHEWORD-->
+  <string name="catalog_menu_lessons">သင်ခန်းစာများ</string>
+  <string name="home_menu_home">ပင်မ</string>
+  <string name="home_menu_lessons">သင်ခန်းစာများ</string>
+</resources>

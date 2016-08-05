@@ -1,0 +1,46 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <string-array name="story_sections">
+    <item>Política</item>
+    <item>Economia</item>
+    <item>Esports</item>
+    <item>Arts</item>
+    <item>Ciència</item>
+    <item>Salut</item>
+    <item>Educació</item>
+    <item>Medi Ambient</item>
+  </string-array>
+  <string-array name="lesson_sections">
+    <item>Periodisme</item>
+    <item>Seguretat</item>
+    <item>Àudio</item>
+    <item>Fotografia</item>
+    <item>Videografia</item>
+    <item>Històries</item>
+  </string-array>
+  <string-array name="array_story_locations">
+    <item>E.U.A</item>
+    <item>Califòrnia</item>
+    <item>Oakland</item>
+    <item>Egipte</item>
+    <item>Iraq</item>
+    <item>Marroc</item>
+    <item>Tuníssia</item>
+    <item>Zimbaue</item>
+    <item>República Txeca</item>
+    <item>Vietnam</item>
+  </string-array>
+  <string-array name="array_story_sections">
+    <item>Política</item>
+    <item>Economia</item>
+    <item>Esports</item>
+    <item>Arts</item>
+    <item>Ciència</item>
+    <item>Salut</item>
+    <item>Educació</item>
+    <item>Medi Ambient</item>
+    <item>Tecnologia</item>
+    <item>Viatges</item>
+  </string-array>
+  <!--<item>catalog</item>-->
+</resources>

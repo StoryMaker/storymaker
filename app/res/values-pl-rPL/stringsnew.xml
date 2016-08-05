@@ -1,0 +1,60 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+  <string name="terms_title">Słowniczek Storymaker</string>
+  <string name="terms_text_2">Reportaż będzie opublikowany na wybranej przez ciebie stronie i dodane będzie odwołanie do niego na StoryMaker.cc. Tytuł, opis reportażu i tagi zostaną opublikowane na StoryMaker.cc. Odwołania do pozostałej zawartości zostaną dodane do Twojego kanału na wybranej stronie.</string>
+  <!--tutorial_lessons-->
+  <string name="tutorial_title_1">Ucz się pisania reportaży</string>
+  <string name="tutorial_text_1">Będąc dziennikarzem dbaj o swoje bezpieczeństwo, tworząc wspaniałe reportaże.</string>
+  <string name="tutorial_title_2">Bądź dokładny.</string>
+  <string name="tutorial_text_2">Stworzone we współpracy z ICFJ. Nasze lekcje nauczą Cię jak być lepszym dziennikarzem.</string>
+  <string name="tutorial_title_3">Dbaj o swoje bezpieczeństwo.</string>
+  <string name="tutorial_text_4">Niektóre sposoby przekazu lepiej pasują do reportażu, bądź to audio, zdjęcia czy wideo. Poznaj różnicę pomiędzy każdym z nich.</string>
+  <string name="tutorial_text_5">Każda lekcja kończy się quizem testującym zrozumienie tematu.</string>
+  <string name="tutorial_title_6">Kontynuuj uczenie się.</string>
+  <string name="tutorial_text_6">Podziel się swoimi reportażami ze społecznością StoryMaker.cc, z każdym kolejnym stając się lepszym dziennikarzem.</string>
+  <!--/tutorial_lessons-->
+  <!--tutorial_story-->
+  <string name="tutorial_text_7">Dobry reportaż ma początek, środek i zakończenie. Przeprowadź wywiad aby dodać więcej treści do reportażu. Pokaż nam gdzie rozmówca żyje. Zadawaj osobiste pytania.</string>
+  <string name="tutorial_title_8">Wybierz sposób przekazu</string>
+  <string name="tutorial_text_8">Dźwięk, zdjęcia lub wideo najlepiej sprawdzają się w konkretnych stylach tworzenia reportaży. Zapoznaj się z lekcjami aby dowiedzieć się więcej. Wybierz formę przekazu i ucz się ćwicząc.</string>
+  <!--/tutorial_story-->
+  <!--template_description-->
+  <string name="template_photo_desc">Dobre zdjęcie jest warte więcej niż tysiąc słów. Pokaż nam kto lub co jest ważne w reportażu lub jak to mam miejsce.</string>
+  <!--/template_description-->
+  <!--legacy_story_type-->
+  <!--once we refactor to keep this extra text fields in the db instead of referencing this strings file we can remove these (after doing a migration step)-->
+  <string name="story_type_event_title">Wydarzenie</string>
+  <string name="story_type_issue_title">Problem</string>
+  <string name="story_type_profile_title">Profil</string>
+  <string name="story_type_event_desc">Reportaże z wydarzeń mają okreslony przedział czasowy i miejsce. Skup się na tym co się dzieje. Zorganizuj reportaż wokół tego kiedy wydarzenie miało miejsce, gdzie i powód.</string>
+  <!--/ legacy_story_type-->
+  <!--story_type-->
+  <string name="story_type_profile_public_title">Profil publiczny</string>
+  <!--/story_type-->
+  <!--story_type_description-->
+  <!--/story_type_description-->
+  <!--template_options-->
+  <!--/template_options-->
+  <!--story_type_new-->
+  <string name="activity">Aktywność</string>
+  <string name="location">Lokacja</string>
+  <string name="results">Rezultaty</string>
+  <!--/story_type_new-->
+  <!--story_type_old-->
+  <string name="story_type_event_text3">Dlaczego to zdarzenie jest ważne?</string>
+  <string name="story_type_event_text8">Dlaczego to zdarzenie jest ważne?</string>
+  <!--/story_type_old-->
+  <!--prefs-->
+  <!--/prefs-->
+  <!--FirstStartActivity-->
+  <string name="acct_created_dialog_positive_button">Zacznij!</string>
+  <!--ConnectAccountActivity-->
+  <string name="my_account">MOJE KONTO STORYMAKER</string>
+  <string name="join_storymaker">Dołącz do społeczności StoryMaker</string>
+  <string name="create_account">UTWÓRZ MOJE KONTO</string>
+  <string name="sign_in">ZAPISZ SIĘ / ZALOGUJ</string>
+  <string name="sign_out">WYLOGUJ</string>
+  <!--ProjectTagFragment-->
+  <string name="no_tags_msg">Nie dodano #tagów</string>
+  <!--BaesActivity Drawer  (For Accessibility Descriptions)-->
+</resources>

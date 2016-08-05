@@ -1,0 +1,252 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+  <string name="terms_title">سٹوری میکر کی شرائط</string>
+  <string name="terms_text_1">آپ اپنے تمام تر مواد کے مالکانہ حقوق محفوظ رکھتے ہیں، آپ جب بھی چاہیں اسے ہٹا سکتے ہیں، اور ہم آپ کے کسی بھی ڈیٹا کو فروخت نہیں کرتے۔ StoryMaker.cc  پر اپنے مواد کو شیئر کرنے پر رضامندی کے ساتھ ہی آپ سمال ورلڈ نیوز اور شراکت داروں کو اجازت دیتے ہیں کہ وہ سٹوری میکر کے ساتھ تخلیق کردہ کہانیوں کو اپنی سائٹ پر لگاسکیں۔ ہم ان کہانیوں کو اقسام، موضوعات اور مقامات کی بنیاد پر گروپ میں تقسیم کرتے ہیں۔   </string>
+  <string name="terms_text_2">آپ کی کہانی ابھی بھی آپ کی پسند کی شئیرنگ والی ویب سائٹ پر موجود ہے مگر اس کا حوالہ StoryMaker.cc پر بھی دیا جاتا ہے۔ عنوان، کہانی کی تفصیل اور ٹیگ StoryMaker.cc پر پوسٹ کئے جائینگے۔ باقی تمام مواد کا حوالہ آپ کی پسند کی ویب سائٹ پر دیا جائے گا۔ </string>
+  <!--tutorial_lessons-->
+  <string name="tutorial_title_1">کہانی بیان کرنا سیکھیں۔</string>
+  <string name="tutorial_text_1">محفوظ رہ کر ایک صحافی کی طرح سبق سیکھیں اور نہایت شاندار آڈیو، تصویری اور ویڈیو کہانیاں تخلیق کریں۔ </string>
+  <string name="tutorial_title_2">بالکل درست رہیں۔</string>
+  <string name="tutorial_text_2">ICFJ کی شراکت داری کے ساتھ تیار کئے گئے ہوئے ہمارے صحافتی اسباق آپ کو یقیناً بہتر رپورٹر بننا سکھائیں گے۔</string>
+  <string name="tutorial_title_3">اپنی حفاظت کریں۔</string>
+  <string name="tutorial_text_3">ہمارے ڈیجیٹل سیفٹی اسباق آپ اور آپ کے ذرائع کو محفوظ رکھنے میں مدد کریں گے۔ سٹوری میکر کا مقصد آپ کو محفوظ رکھنا ہے اس سے قطع نظر کہ آپ کی کہانی آپ کو کس طرف لے جاتی ہے۔</string>
+  <string name="tutorial_title_4">اپنی کہانی زیادہ بہتر انداز میں سنائیں۔</string>
+  <string name="tutorial_text_4">چاہے آڈیو ہو، فوٹو یا ویڈیو، کہانیوں  کے لءے سب سے مناسب یہ ہے کہ انہیں مختلف میڈیم میں تیار کیا جائے۔</string>
+  <string name="tutorial_title_5">خود کو آزمائیں۔</string>
+  <string name="tutorial_text_5">ہر سبق سوالات پر ختم ہوتا ہے تاکہ آپ کی سمجھ بوجھ کی آزمائش کی جاسکے۔ </string>
+  <string name="tutorial_title_6">سیکھنا جاری رکھیں</string>
+  <string name="tutorial_text_6">StoryMaker.cc کمیونٹی کے ساتھ اپنی کہانیاں شیئر کریں اور شیئر کردہ ہر کہانی کے ساتھ زیادہ اچھی کہانیاں بنانا سیکھیں۔ </string>
+  <!--/tutorial_lessons-->
+  <!--tutorial_story-->
+  <string name="tutorial_title_7">بہتر انداز میں کہانیاں سنائیں۔ </string>
+  <string name="tutorial_text_7">اچھی کہانی آغاز، وسط اور انجام پر مشتمل ہوتی ہے۔ اپنی کہانی کے لے سیاق و سباق حاصل کرنے کے لئے کسی کا انٹرویو لیں۔ ہمیں بتائیں کہ وہ کہاں رہتے ہیں۔ اس کو اپنی ذات تک رکھیں۔</string>
+  <string name="tutorial_title_8">اپنا ذریعہ منتخب کریں۔</string>
+  <string name="tutorial_text_8">آڈیو، تصویر اور ویڈیوز کہانی بیان کرنے کے مختلف انداز کے لئے مناسب ہوتے ہیں۔ مزید جاننے کے لئے اسباق دیکھیں۔ میڈیم کا انتخاب کریں اور جیسا کرسکیں، ویسا سیکھیں۔  </string>
+  <string name="tutorial_title_9">پانچ فقروں میں کہانی بیان کریں۔ </string>
+  <string name="tutorial_text_9">اپنی کہانی بیان کرنے کے لئے پانچ کلپس استعمال کریں۔ اپنی کہانی کے مقام کی وضاحت کریں۔ اپنے بنیادی موضوع کو متعارف کرائیں۔  ابتدا، وسط اور اختتام کے ساتھ بقایا تین کہانی بیان کرتی ہیں۔</string>
+  <string name="tutorial_title_10">خرابی کو ختم کریں۔</string>
+  <string name="tutorial_text_10">زیاد پُرتاثر بنانے کے لئے اپنی کلپس کو مختلف انداز سے ترتیب دیں۔</string>
+  <string name="tutorial_title_11">طویل ترین کہانیاں سنائیں۔</string>
+  <string name="tutorial_text_11">کہانی کے  نمونے آپ کو بتاتے ہیں کہ کیسے کرتے ہیں۔</string>
+  <!--/tutorial_story-->
+  <!--template_description-->
+  <string name="template_audio_desc">ایسی آوازیں ریکارڈ کریں جو آپ کی کہانی کے کون، کیا کو بیان کرسکے۔ اگر آپ متاثر کُن وژوَل حاصل نہیں کرسکتے تو آڈیو اس کا شاندار متبادل ہے۔</string>
+  <string name="template_photo_desc">ایک تصویر ہزار لفظ کی قدر رکھتی ہے۔  ہمیں دکھائیں کہ آپ کی کہانی میں کون یا کیا اہم ہے یا یہ سب کچھ کیسے وقوع پذیر ہوتا ہے۔ </string>
+  <string name="template_essay_desc">بعض اوقات بہت زیادہ تصاویر کی ضرورت پڑتی ہے۔ ہمیں دکھائیں کہ کہانی کس طرح وقوع پذیر ہوتی ہے، سیریز یا متعلقہ تصاویر کے ذریعے کہانی بیان کریں۔ </string>
+  <string name="template_video_desc">پُرکشش تصاویر اور ایکشن کو فوراً واقع ہوتے ہی محفوظ کریں۔ ہمیں بتائیں کہ کون اور کیا اہم ہے اور کیوں اہم ہے۔</string>
+  <!--/template_description-->
+  <!--legacy_story_type-->
+  <!--once we refactor to keep this extra text fields in the db instead of referencing this strings file we can remove these (after doing a migration step)-->
+  <string name="story_type_event_title">ایونٹ</string>
+  <string name="story_type_issue_title">مسئلہ</string>
+  <string name="story_type_profile_title">پروفائل</string>
+  <string name="story_type_news_title">بریکنگ نیوز</string>
+  <string name="story_type_event_desc">واقعات پر مبنی کہانیوں کا قائم شدّہ وقت اور مقرر مقام ہوتا ہے۔ اس بات پر توجہ دیں کہ کونسا واقعہ رونما ہوتا ہے۔  اپنی کہانی اس بات پر منظّم کریں کہ یہ واقعہ کب اور کہاں رونما ہوا، اور اس وقت اور مقام پر کیوں رونما ہوا۔</string>
+  <string name="story_type_issue_desc">مسئلے سے متعلق کہانیاں وسیع تر موضوعات کا تجزیہ پیش کرتی ہیں۔ اس پر توجہ مرکوز کریں کہ کس طرح ایک مسئلہ کمیونٹی یا افراد پر مشتمل گروہ کو متاثر کررہا ہے۔ اس کے گرد کہانی بنائیں کہ اس کے اثرات کیا ہیں اور اس پر قابو پانے کے لئے اب تک کیا کیا جا رہا ہے۔  </string>
+  <string name="story_type_profile_desc">کردار کا خاکہ تیار کریں۔ اس بات پر توجہ مرکوز کریں کہ کردار کون ہیں۔ اپنی کہانی  کردار کی روزمرّہ زندگی، کیا پیش آتا ہے، اور کردار چیلنجوں کا مقابلہ کیسے کرتا ہے، کے گرد ترتیب دیں۔</string>
+  <string name="story_type_news_desc">بریکنگ نیوز فوری دی جاتی ہے۔ ایک زاویے پر توجہ دیں۔ اپنی خبر حقائق، کون، کیا، کہاں اور کب کے گرد ترتیب دیں۔ سیاق و سباق شامل کرنے کے لئے بیانیہ کو استعمال کریں۔</string>
+  <!--/ legacy_story_type-->
+  <!--story_type-->
+  <string name="story_type_event_news_title">نیوز ایونٹ</string>
+  <string name="story_type_event_feature_title">فیچر ایونٹ</string>
+  <string name="story_type_event_breaking_title">بریکنگ نیوز ایونٹ</string>
+  <string name="story_type_issue_social_title">سماجی مسئلہ</string>
+  <string name="story_type_issue_political_title">سیاسی معاملہ</string>
+  <string name="story_type_issue_economic_title">معاشی مسئلہ</string>
+  <string name="story_type_profile_public_title">پبلک پروفائل</string>
+  <string name="story_type_profile_professional_title">پیشہ ورانہ پروفائل</string>
+  <string name="story_type_profile_personal_title">ذاتی یا پرسنل پروفائل</string>
+  <!--/story_type-->
+  <!--story_type_description-->
+  <string name="story_type_event_news_desc">فوری اہمیت والے واقعات کے بارے میں خبروں کو شیڈول کے مطابق کیا جاتا ہے، اور ان کا آغاز اور اختتام واضح ہوتا ہے۔ انتخابات اور مظاہرہ اچھی خبر والے واقعات ہیں۔</string>
+  <string name="story_type_event_feature_desc">وقعات سے متعلق وہ کہانیاں، جن کی زیادہ خبری اہمیت نہیں ہوتی ۔ جیسے ایک کھیل کی تقریب، ہمسائے میں ایک نئے کاروبار کا آغاز، ابھرتی ٹیکنالوجی، یہ ایونٹ اچھے خصوصیت کے لئے ہیں۔ </string>
+  <string name="story_type_event_breaking_desc">غیر متوقع واقعات کی بہت زیادہ خبری اہمیت ہوتی ہے۔ آتشزدگی، حکومتی اہلکار کی طرف سے حیران کُن اعلان، یا قدرتی آفت، یہ تمام بہترین بریکنگ نیوز واقعات ہیں۔ </string>
+  <string name="story_type_issue_social_desc">کمیونٹیز کو متاثر کرنے والے مسائل سے متعلق کہانیاں۔ لوکل گورنمنٹ ریگولیشنز میں تبدیلی یا انفرا اسٹرکچر بھی ایک بہترین سماجی مسئلہ ہوسکتا ہے۔  </string>
+  <string name="story_type_issue_political_desc">حکومت اور سرکاری اہلکاروں کے کام کے بارے میں خبریں۔ نئے قوانین یا پارلیمانی تبدیلیوں کے بارے میں خبر ایک اچھا سیاسی مسئلہ ہے۔</string>
+  <string name="story_type_issue_economic_desc">وسیع تر اقتصادی موضوعات یا لوگوں کے ذاتی سرمائے سے متعلق کہانیاں۔ کسانوں کو حاصل سبسڈی میں حکومت کی طرف سے ردّ و بدل بھی معاشی مسائل سے متعلق ایک اچھی کہانی ہوسکتی ہے۔  </string>
+  <string name="story_type_profile_public_desc">عوامی نقطۂ نظر سے موضوع کے کردار کے بارے میں خبریں۔ دفتر سے جاری شدّہ سیاستدان کی پروفائل ایک اچھی عوامی پروفائل ہوتی ہے۔</string>
+  <string name="story_type_profile_professional_desc">لوگوں اور ان کے روزگار یا ملازمتوں سے متعلق کہانیاں۔ ایک معروف فنکار یا کھلاڑی بہترین پیشہ ورانہ خاکے یا پروفائل ہیں۔   </string>
+  <string name="story_type_profile_personal_desc">موضوع کے تجربہ کے بارے میں خبریں، اکثر اوقات خبروں میں واقعات کے بارے میں۔ جنگ کی برسی پر سابقہ سپاہی کی پروفائل ایک اچھی ذاتی پروفائل ہوسکتی ہے۔</string>
+  <!--/story_type_description-->
+  <!--template_options-->
+  <string name="choose_level">ایک لیول منتخب کریں</string>
+  <string name="choose_level_basic">بنیادی</string>
+  <string name="choose_level_advanced">ترقی یافتہ</string>
+  <!--/template_options-->
+  <!--story_type_new-->
+  <string name="overview">جائزہ</string>
+  <string name="activity">سرگرمی</string>
+  <string name="impact">اثر</string>
+  <string name="background">پسِ منظر</string>
+  <string name="involvement">شمولیت</string>
+  <string name="motivation">حوصلہ افزائی</string>
+  <string name="location">مقام</string>
+  <string name="experience">تجربہ</string>
+  <string name="results">نتائج</string>
+  <string name="next_steps">اگلے اقدامات</string>
+  <string name="moving_forward">تیزی سے آگے بڑھیں</string>
+  <string name="conclusion">اختتامیہ</string>
+  <string name="story_type_event_news_text1">اس واقعے میں کیا کچھ ہو رہا ہے؟</string>
+  <string name="story_type_event_news_text2">آپ کیسے ملوث ہوتے ہیں؟</string>
+  <string name="story_type_event_news_text3">اس واقعے میں سب سے زیادہ متاثر کون ہوتا ہے؟</string>
+  <string name="story_type_event_news_text4">اس واقعے کے پیچھے کہانی کیا ہے؟</string>
+  <string name="story_type_event_news_text5">اس واقعے کا اثر کیا ہے؟</string>
+  <string name="story_type_event_feature_text1">اس واقعے میں کیا کچھ ہو رہا ہے؟</string>
+  <string name="story_type_event_feature_text2">آپ اس  واقعے میں کیوں ملوث ہوتے ہیں؟</string>
+  <string name="story_type_event_feature_text3">واقعہ کہاں پیش آ رہا ہے؟</string>
+  <string name="story_type_event_feature_text4">آپ ذاتی طور پر کس طرح ملوث ہوتے ہیں؟</string>
+  <string name="story_type_event_feature_text5">اس واقعے کا اثر کیا ہے؟</string>
+  <string name="story_type_event_breaking_text1">کیا ہورہا ہے؟</string>
+  <string name="story_type_event_breaking_text2">یہ کہاں ہورہا ہے؟</string>
+  <string name="story_type_event_breaking_text3">کون متاثر ہوتا ہے؟</string>
+  <string name="story_type_event_breaking_text4">کیا وہاں کوئی فوری خطرہ موجود ہے؟</string>
+  <string name="story_type_event_breaking_text5">لوگ کیسا ردِّ عمل ظاہر کررہے ہیں؟</string>
+  <string name="story_type_issue_social_text1">برائے مہربانی سماجی مسائل زیرِ بحث لائیں۔</string>
+  <string name="story_type_issue_social_text2">کب اور عمومی  &amp;amp؛ یہ مسئلہ کہاں سے شروع ہوا؟</string>
+  <string name="story_type_issue_social_text3">یہ کمیونٹی پر کتنی اثرانداز ہورہی ہے؟</string>
+  <string name="story_type_issue_social_text4">ہمیں یہ بتائیں کہ اس واقعے نے آپ کی زندگی کو کس طرح متاثر کیا ہے۔</string>
+  <string name="story_type_issue_social_text5">اس مسئلے کو حل کرنے کے لیے کیا کیا جاسکتا ہے؟</string>
+  <string name="story_type_issue_political_text1">برائے مہربانی سیاجی معاملات زیرِ بحث لائیں۔</string>
+  <string name="story_type_issue_political_text2">کیا ویڈیو براہِ راست اثرانداز ہوتی ہے؟</string>
+  <string name="story_type_issue_political_text3">یہ حکومت پر کس طرح اثرانداز ہوتی ہے؟</string>
+  <string name="story_type_issue_political_text4">یہ واقعہ آپ کے لئے ذاتی طور پر کیوں اہم ہے؟</string>
+  <string name="story_type_issue_political_text5">اس مسئلے کو حل کرنے کے لئے کیا کیا جاسکتا ہے؟</string>
+  <string name="story_type_issue_economic_text1">برائے مہربانی معاشی مسائل زیرِ بحث لائیں۔</string>
+  <string name="story_type_issue_economic_text2">اس مسئلے سے آپ کا کیا تعلق ہے؟</string>
+  <string name="story_type_issue_economic_text3">یہ معیشت پر کس طرح اثر انداز ہوتا ہے؟</string>
+  <string name="story_type_issue_economic_text4">اس سے سب سے زیادہ کون متاثر ہوگا؟</string>
+  <string name="story_type_issue_economic_text5">اس مسئلے کو حل کرنے کے لئے کیا کچھ کرسکتے ہیں؟</string>
+  <string name="story_type_profile_public_text1">مختصراً وضاحت کریں کہ آپ کون ہیں؟ </string>
+  <string name="story_type_profile_public_text2">آپ نے کب شروع کیا تھا؟</string>
+  <string name="story_type_profile_public_text3">آپ کیا کرتے ہیں؟</string>
+  <string name="story_type_profile_public_text4">وہ لمحہ بیان کریں جب آپ کو اپنے کام پر فخر محسوس ہوا۔</string>
+  <string name="story_type_profile_public_text5">آپ مستقبل میں اپنا کس طرح کا کردار دیکھتے ہیں؟</string>
+  <string name="story_type_profile_professional_text1">آپ کون ہیں اور کیا کام کرتے ہیں؟</string>
+  <string name="story_type_profile_professional_text2">برائے مہربانی وضاحت کریں کہ آپ اپنا کام کس طرح کرتے ہیں؟</string>
+  <string name="story_type_profile_professional_text3">یہ نوکری آپ کے لئے اہم کیوں ہے؟</string>
+  <string name="story_type_profile_professional_text4">آپ اس کام سے کس طرح اپنا اثر قائم کرتے ہیں؟</string>
+  <string name="story_type_profile_professional_text5"> آپ کے لئے اس کام میں آگے کیا ہے؟</string>
+  <string name="story_type_profile_personal_text1">برائے مہربانی مختصراً وضاحت کریں کہ آپ کون ہیں۔</string>
+  <string name="story_type_profile_personal_text2">آپ کے ساتھ سب سے اہم تجربہ کونسا ہوا ہے؟</string>
+  <string name="story_type_profile_personal_text3">آپ نے اس تجربے پر کیسا محسوس کیا؟</string>
+  <string name="story_type_profile_personal_text4">اب آپ کیا مختلف کریں گے؟</string>
+  <string name="story_type_profile_personal_text5">آپ مستقبل میں کیا ہوتا ہوا دیکھنا پسند کریں گے؟</string>
+  <!--/story_type_new-->
+  <!--story_type_old-->
+  <string name="scene_number">منظر &lt;xliff:g id="number"&gt;%1$d&lt;/xliff:g&gt;</string>
+  <string name="when">کب؟</string>
+  <string name="how">کیسے؟</string>
+  <string name="what">کیا؟</string>
+  <string name="where">کہاں؟</string>
+  <string name="why">کیوں؟</string>
+  <string name="story_type_event_text1">کب یہ واقعہ پیش آتا ہے؟</string>
+  <string name="story_type_event_text2">ایونٹ کا مقصد کیا ہے؟</string>
+  <string name="story_type_event_text3">ایونٹ اہم کیوں ہے؟</string>
+  <string name="story_type_event_text4">کب یہ واقعہ پیش آتا ہے؟</string>
+  <string name="story_type_event_text5">ایونٹ کس طرح ترتیب دیا گیا ہے؟</string>
+  <string name="story_type_event_text6">ایونٹ کا مقصد کیا ہے؟</string>
+  <string name="story_type_event_text7">کب یہ واقعہ پیش آتا ہے؟</string>
+  <string name="story_type_event_text8">ایونٹ اہم کیوں ہے؟</string>
+  <string name="story_type_issue_text1">مسئلہ کس طرح کمیونٹی پر اثر انداز ہوتا ہے؟ </string>
+  <string name="story_type_issue_text2">سب سے زیادہ متاثر کون ہوتا ہے؟</string>
+  <string name="story_type_issue_text3">ردِّ عمل میں کیا کچھ ہو رہا ہے؟</string>
+  <string name="story_type_issue_text4">مسئلہ کس طرح کمیونٹی پر اثر انداز ہوتا ہے؟ </string>
+  <string name="story_type_issue_text5">یہ مسئلہ کب / کہاں شروع ہوا؟</string>
+  <string name="story_type_issue_text6">سب سے زیادہ متاثر کون ہوتا ہے؟</string>
+  <string name="story_type_issue_text7">یہ سب سے زیادہ متاثر کیوں ہوتے ہیں؟</string>
+  <string name="story_type_issue_text8">ردِّ عمل میں کیا کچھ ہو رہا ہے؟</string>
+  <string name="story_type_profile_text1">کردار کون ہے؟</string>
+  <string name="story_type_profile_text2">کردار کو درپیش چینلج کیا ہے؟</string>
+  <string name="story_type_profile_text3">درپیش چیلنجوں سے کردار کس طرح نمٹتا ہے؟</string>
+  <string name="story_type_profile_text4">کردار کون ہے؟</string>
+  <string name="story_type_profile_text5">کردار کا تعلق کہاں سے ہے؟</string>
+  <string name="story_type_profile_text6">کردار کو درپیش چینلج کیا ہے؟</string>
+  <string name="story_type_profile_text7">درپیش چیلنجوں سے کردار کس طرح نمٹتا ہے؟</string>
+  <string name="story_type_profile_text8">درپیش چیلنج سے کردار کس طرح نمٹتا ہے؟</string>
+  <string name="story_type_news_text1">کیا ہورہا ہے؟</string>
+  <string name="story_type_news_text2">کون متاثر ہوتا ہے؟</string>
+  <string name="story_type_news_text3">اس کے کس طرح کے جوابات دیئے جا رہےہیں؟</string>
+  <string name="story_type_news_text4">کیا ہورہا ہے؟</string>
+  <string name="story_type_news_text5">خبر کہاں واقع ہوتی ہے؟</string>
+  <string name="story_type_news_text6">کون متاثر ہوتا ہے؟</string>
+  <string name="story_type_news_text7">ایسا کیوں ہوا؟</string>
+  <string name="story_type_news_text8">اس کے کس طرح کے جوابات دیئے جا رہےہیں؟</string>
+  <!--/story_type_old-->
+  <!--prefs-->
+  <string name="prefs_category_networking_security_title">نیٹ ورکنگ &amp; سیکیورٹی</string>
+  <string name="prefs_category_locales_title">مقامی</string>
+  <string name="prefs_category_media_title">میڈیا</string>
+  <string name="prefs_category_debug_title">ڈیبگ</string>
+  <string name="prefs_storymaker_server_title">سٹوری میکرسروَر</string>
+  <string name="prefs_storymaker_server_summary">سٹوری میکر مواد کے لئے ہوسٹنگ سروَر</string>
+  <string name="prefs_use_tor_title">اوربوٹ (ٹور) Orbot Tor استعمال کریں</string>
+  <string name="prefs_use_tor_summary">تمام تر نیٹ ورک ٹریفک  کو ٹور نیٹ ورک کی اوربوٹ Orbot ایپ استعمال کرتے ہوئے بھیجیں۔</string>
+  <string name="prefs_sm_upload_title">سٹوری میکر پر اپ لوڈ</string>
+  <string name="prefs_sm_upload_summary">پہلے سے موجود سٹوری میکر سروَر پر اپ لوڈ کریں</string>
+  <string name="prefs_use_download_manager_title">ڈاؤن لوڈ مینیجر استعمال کریں</string>
+  <string name="prefs_use_download_manager_summary">اینڈرائیڈ ڈاؤن لوڈ مینیجر سروس کے ساتھ سٹوری میکر مواد ڈاؤن لوڈ کریں۔</string>
+  <string name="prefs_use_upload_manager_title">اپ لوڈ منیجر استعمال کریں</string>
+  <string name="prefs_use_upload_manager_summary">اینڈرائیڈ ڈاؤن لوڈ مینیجر سروس کے ساتھ سٹوری میکر مواد اپ لوڈ کریں۔</string>
+  <string name="prefs_youtube_acccount_title">یوٹیوب اکاؤنٹ</string>
+  <string name="prefs_youtube_acccount_summary">ویڈیو اپ لوڈ کرنے کے لئے یوٹیوب اکاؤنٹ کا استعمال کریں۔ اس کا آپ کی ڈیوائس پر رجسٹرڈ ہونا ضروری ہے۔   </string>
+  <string name="prefs_youtube_login_title">یو ٹیوب لاگ اِن</string>
+  <string name="prefs_youtube_login_summary">یو ٹیوب ویب تصدیق کو استعمال کریں</string>
+  <string name="prefs_soundcloud_account_title">ساؤنڈ کلاؤڈ اکاؤنٹ</string>
+  <string name="prefs_soundcloud_account_summary">آڈیو اپ لوڈ کرنے کے لئے ساؤنڈ کلاؤڈ اکاؤنٹ استعمال کریں۔  </string>
+  <string name="prefs_interface_language_title">زبان منتخب کریں</string>
+  <string name="prefs_interface_language_summary">سٹوری میکر کی زبان یوزر انٹرفیس کے لئے استعمال کی جائے گی۔</string>
+  <string name="prefs_slide_duration_title">سلائڈ کا دورانیہ</string>
+  <string name="prefs_slide_duration_summary">تصویری مضمون میں ہر سلائڈ کا دورانیہ  </string>
+  <string name="prefs_enable_compression_title">کمپریشن فعال کریں</string>
+  <string name="prefs_enable_compression_summary">ذیل میں دی گئی سیٹنگز استعمال کرتے ہوئے تمام ویڈیو اور آڈیو کو کمپریس یعنی ان کے حجم کو کم کریں۔  </string>
+  <string name="prefs_preprocess_3gp_title">پِری پروسیس  3GP</string>
+  <string name="prefs_preprocess_3gp_summary">3GP ویڈیو کلپس کو MPEG-4 میں تبدیل کریں۔</string>
+  <string name="prefs_use_cat_command_title">کیٹ \'Cat\' کمانڈ کا استعمال کریں</string>
+  <string name="prefs_use_cat_command_summary">ویڈیو کے انضمام یعنی مرجر کے لئے \'کیٹ\' کمانڈ کا استعمال کریں۔</string>
+  <string name="prefs_video_codec_title">ویڈیو کوڈیک </string>
+  <string name="prefs_video_codec_summary">ویڈیو کوڈیک ایکسپورٹ کریں</string>
+  <string name="prefs_video_resolution_title">ویڈیو ریزولوشن</string>
+  <string name="prefs_video_resolution_summary">ویڈیو ریزولوشن ایکسپورٹ کریں</string>
+  <string name="prefs_video_width_title">ویڈیو کی وسعت یعنی ویڈتھ</string>
+  <string name="prefs_video_width_summary">اویڈیو وتھ یکسپورٹ کریں</string>
+  <string name="prefs_video_height_title">ویڈیو ہائٹ یا اونچائی</string>
+  <string name="prefs_video_height_summary">ویڈیو ہائٹ ایکسپورٹ کریں</string>
+  <string name="prefs_video_bitrate_title">ویڈیو بِٹریٹ</string>
+  <string name="prefs_video_bitrate_summary">ویڈیو بِٹریٹ (کے بی پی ایس) ایکسپورٹ کریں</string>
+  <string name="prefs_video_framrate_title">ویڈیو فریم ریٹ</string>
+  <string name="prefs_video_framrate_summary">فریم ریٹ فی سیکنڈ (fps) ایکسپورٹ کریں</string>
+  <string name="prefs_audio_codec_title">آڈیو کوڈیک </string>
+  <string name="prefs_audio_codec_summary">آڈیو کوڈیک ایکسپورٹ کریں</string>
+  <string name="prefs_audio_bitrate_title">آڈیو بِٹریٹ</string>
+  <string name="prefs_audio_bitrate_summary">آڈیو بِٹریٹ (کے بی پی ایس) ایکسپورٹ کریں</string>
+  <string name="prefs_audio_samplerate_title">آڈیو سیمپل ریٹ</string>
+  <string name="prefs_audio_samplerate_summary">آڈیو ریکارڈ سیمپل ریٹ (khz) </string>
+  <string name="prefs_audio_crossfade_title">آڈیو کراس فیڈ</string>
+  <string name="prefs_audio_crossfade_summary">آڈیو کراس فیڈ کی طوالت یعنی لینگتھ</string>
+  <string name="prefs_internal_storage_title">داخلی ذخیرہ یا انٹرنل سٹوریج</string>
+  <string name="prefs_internal_storage_summary">انٹرنل پراجیکٹ سٹوریج استعمال کریں۔</string>
+  <string name="prefs_youtube_method_title">یو ٹیوب طریقۂ کار</string>
+  <string name="prefs_youtube_method_summary">ڈیبگ کی تصدق کے طریقہ کار کی قسم </string>
+  <!--/prefs-->
+  <!--FirstStartActivity-->
+  <string name="sign_up_btn">سائن اپ برائے سٹوری میکر</string>
+  <string name="no_thanks_btn">نہیں، شکریہ</string>
+  <string name="tos_btn">میں سروس کی شرائط و ضوابط سے متفق ہوں۔</string>
+  <string name="tos_dialog_title">سروس کی شرائط</string>
+  <string name="tos_dialog_msg">برائے م ہربانی مزید پیشرفت سے پہلے ہماری شرائط و ضوابط تسلیم کریں۔</string>
+  <string name="tos_dialog_positive_button">پا لیا</string>
+  <string name="acct_created_dialog_title">آپ کے اکاؤنٹ تک رسائی</string>
+  <string name="acct_created_dialog_msg"><b> آپ کا سٹوری میکر پاس ورڈ بہت جلد آپ کو ای میل سے بھیج دیا جائے گا۔ </b> پاس ورڈ وصول کئے جانے کے بعد، آپ کسی بھی وقت بذریعہ drawer menu لاگ ان ہوسکتے ہیں۔ (سکرین کے بائیں  کنارے کی سوائپنگ کرکے رسائی حاصل کی گئی۔) </string>
+  <string name="acct_created_dialog_positive_button">شروع کریں!</string>
+  <!--ConnectAccountActivity-->
+  <string name="my_account">میرا سٹوری میکر اکاؤنٹ</string>
+  <string name="join_storymaker">سٹوری میکر کمیونٹی میں شمولیت اختیار کریں</string>
+  <string name="create_account">میرا اکاؤنٹ بنائیں</string>
+  <string name="sign_in">سائن اپ / لاگ اِن</string>
+  <string name="sign_out">سائن آؤٹ</string>
+  <!--ProjectTagFragment-->
+  <string name="no_tags_msg">نہیں#ٹیگز شامل ہوئے</string>
+  <!--BaesActivity Drawer  (For Accessibility Descriptions)-->
+  <string name="open_drawer">ڈراور یعنی دراز کھولیں</string>
+  <string name="close_drawer">ڈراور یعنی دراز بند کردیں</string>
+</resources>

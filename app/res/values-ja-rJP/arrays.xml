@@ -1,0 +1,46 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <string-array name="story_sections">
+    <item>政治</item>
+    <item>ビジネス</item>
+    <item>スポーツ</item>
+    <item>芸術</item>
+    <item>科学</item>
+    <item>健康</item>
+    <item>教育</item>
+    <item>環境</item>
+  </string-array>
+  <string-array name="lesson_sections">
+    <item>ジャーナリズム</item>
+    <item>セキュリティ</item>
+    <item>オーディオ</item>
+    <item>写真</item>
+    <item>ビデオ</item>
+    <item>ストーリー</item>
+  </string-array>
+  <string-array name="array_story_locations">
+    <item>アメリカ</item>
+    <item>カリフォルニア</item>
+    <item>オークランド</item>
+    <item>エジプト</item>
+    <item>イラク</item>
+    <item>モロッコ</item>
+    <item>チュニジア</item>
+    <item>ジンバブエ</item>
+    <item>チェコ共和国</item>
+    <item>ベトナム</item>
+  </string-array>
+  <string-array name="array_story_sections">
+    <item>政治</item>
+    <item>ビジネス</item>
+    <item>スポーツ</item>
+    <item>芸術</item>
+    <item>科学</item>
+    <item>健康</item>
+    <item>教育</item>
+    <item>環境</item>
+    <item>テクノロジー</item>
+    <item>トラベル</item>
+  </string-array>
+  <!--<item>catalog</item>-->
+</resources>

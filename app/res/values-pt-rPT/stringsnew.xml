@@ -1,0 +1,73 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+  <string name="terms_title">Termos de um Contador de Histórias</string>
+  <!--tutorial_lessons-->
+  <string name="tutorial_title_1">Aprenda a contar uma história.</string>
+  <string name="tutorial_title_2">Seja preciso.</string>
+  <string name="tutorial_title_3">Proteja-se.</string>
+  <string name="tutorial_title_4">Conte a sua história de uma forma melhor.</string>
+  <string name="tutorial_text_5">Cada lição conclui com um questionário para testar o seu conhecimento.</string>
+  <string name="tutorial_title_6">Continue a aprender.</string>
+  <!--/tutorial_lessons-->
+  <!--tutorial_story-->
+  <string name="tutorial_title_8">Escolha o seu meio de comunicação.</string>
+  <string name="tutorial_title_10">Quebre o molde.</string>
+  <string name="tutorial_text_10">Junte os seus clips numa outra ordem para ter mais impacto.</string>
+  <string name="tutorial_title_11">Conte histórias mais longas.</string>
+  <string name="tutorial_text_11">Templates de História dizem-lhe como.</string>
+  <!--/tutorial_story-->
+  <!--template_description-->
+  <string name="template_audio_desc">Grave os sons que contam a sua história, com quem e o quê. Se não consegue obter imagens fortes, o som torna-se uma boa alternativa.</string>
+  <string name="template_photo_desc">Uma imagem vale mil palavras. Mostre-nos quem ou o que é importante na sua história, ou como acontece.</string>
+  <string name="template_essay_desc">Em certas alturas são necessárias várias fotos. Mostre-nos como a história ocorreu, conte a história numa série de imagens relacionadas.</string>
+  <!--/template_description-->
+  <!--legacy_story_type-->
+  <!--once we refactor to keep this extra text fields in the db instead of referencing this strings file we can remove these (after doing a migration step)-->
+  <string name="story_type_event_title">Event</string>
+  <string name="story_type_profile_title">Perfil</string>
+  <string name="story_type_news_title">Notícias de última hora</string>
+  <!--/ legacy_story_type-->
+  <!--story_type-->
+  <string name="story_type_profile_public_title">Perfil Público</string>
+  <string name="story_type_profile_professional_title">Perfil Profissional</string>
+  <string name="story_type_profile_personal_title">Perfil Pessoal</string>
+  <!--/story_type-->
+  <!--story_type_description-->
+  <!--/story_type_description-->
+  <!--template_options-->
+  <string name="choose_level_basic">Básico</string>
+  <string name="choose_level_advanced">Avançado</string>
+  <!--/template_options-->
+  <!--story_type_new-->
+  <string name="overview">Visão Geral</string>
+  <string name="activity">Atividade</string>
+  <string name="impact">Impacto</string>
+  <string name="involvement">Envolvimento</string>
+  <string name="motivation">Motivação</string>
+  <string name="location">Localização</string>
+  <string name="experience">Experiência</string>
+  <string name="results">Resultados</string>
+  <string name="next_steps">Próximos Passos</string>
+  <string name="conclusion">Conclusão</string>
+  <!--/story_type_new-->
+  <!--story_type_old-->
+  <string name="story_type_event_text3">Porque é que o evento é importante?</string>
+  <string name="story_type_event_text8">Porque é que o evento é importante?</string>
+  <!--/story_type_old-->
+  <!--prefs-->
+  <!--/prefs-->
+  <!--FirstStartActivity-->
+  <string name="sign_up_btn">REGISTE-SE NO STORYMAKER</string>
+  <string name="no_thanks_btn">NÃO OBRIGADO</string>
+  <string name="tos_btn">CONCORDO COM OS TERMOS DE SERVIÇO</string>
+  <string name="tos_dialog_title">Termos de Serviço</string>
+  <string name="tos_dialog_msg">Por favor aceite os Termos de Serviço antes de continuar</string>
+  <string name="tos_dialog_positive_button">Compreendi</string>
+  <string name="acct_created_dialog_title">Aceda à sua conta</string>
+  <string name="acct_created_dialog_msg"><b>A sua palavra-passe ser-lhe-á enviada para o seu correio electrónico em breve.</b>Após obter a sua palavra-chave, poderá entrar na sua área a qualquer altura através do menu lateral (acessível ao deslizar o seu dedo desde a borda esquerda do ecrã).</string>
+  <!--ConnectAccountActivity-->
+  <string name="join_storymaker">Junte-se à Comunidade StoryMaker</string>
+  <string name="create_account">CRIAR A MINHA CONTA</string>
+  <!--ProjectTagFragment-->
+  <!--BaesActivity Drawer  (For Accessibility Descriptions)-->
+</resources>

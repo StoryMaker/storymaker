@@ -1,0 +1,258 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+  <string name="terms_title">Storymaker Voorwaarden</string>
+  <string name="terms_text_1">Je behoudt alle eigendomsrechten voor je inhoud, je kunt het intrekken wanneer je dat wenst en wij zullen geen data van jou verkopen. Door akkoord te gaan met het delen van je inhoud met StoryMaker.cc, geef je Small World News en partners toestemming om je verhalen te plaatsen met gelijksoortige verhalen die met StoryMaker zijn gemaakt. We groeperen ze gebaseerd op soort verhaal, onderwerpen en locaties.</string>
+  <string name="terms_text_2">Jouw verhaal staat nog steeds op een sharing site van je keuze, maar wordt ook gedeeld op StoryMarker.cc. Titel, omschrijving en tags worden op StoryMaker.cc gezet, aan de overige inhoud wordt gerefereerd naar jouw persoonlijke feed op je sharing site.</string>
+  <!--tutorial_lessons-->
+  <string name="tutorial_title_1">Leer verhalen vertellen.</string>
+  <string name="tutorial_text_1">Leer om een journalist te worden terwijl je veilig blijft, en geweldige audio, foto en video verhalen produceert.</string>
+  <string name="tutorial_title_2">Wees accuraat.</string>
+  <string name="tutorial_text_2">Ontwikkeld samen met ICFJ kun je erop vertrouwen dat onze journalistiek-lessen je leren om een betere verslaggever te zijn.</string>
+  <string name="tutorial_title_3">Bescherm jezelf.</string>
+  <string name="tutorial_text_3">Onze digitale veiligheidslessen zullen helpen jou je jouw bronnen te beschermen. StoryMaker wil dat je veilig bent, ongeacht waar je verhaal je naartoe brengt.</string>
+  <string name="tutorial_title_4">Vertel jouw verhaal beter.</string>
+  <string name="tutorial_text_4">Verhalen passen het best voor bepaalde mediums, audio, foto of video. Leer, hoe elk medium anders is.</string>
+  <string name="tutorial_title_5">Test Jezelf.</string>
+  <string name="tutorial_text_5">Iedere les eindigt met een quiz om je kennis te testen.</string>
+  <string name="tutorial_title_6">Blijf Leren.</string>
+  <string name="tutorial_text_6">Deel je verhalen met de StoryMaker.cc gemeenschap en leer om een betere verhalenverteller te worden met elk verhaal dat je deelt.</string>
+  <!--/tutorial_lessons-->
+  <!--tutorial_story-->
+  <string name="tutorial_title_7">Vertel verhalen beter.</string>
+  <string name="tutorial_text_7">Een goed verhaal heeft een begin, midden en einde. Interview iemand om meet context met je verhaal te leggen. Laat ons zien waar ze leven. Houd het persoonlijk.</string>
+  <string name="tutorial_title_8">Kies je medium.</string>
+  <string name="tutorial_text_8">Audio, foto en video passen bij uiteenlopende verhaalstijlen. Lees de lessen om meer te leren. Kies een medium en leer al doende.</string>
+  <string name="tutorial_title_9">Vertel een verhaal in vijf.</string>
+  <string name="tutorial_text_9">Gebruik vijf clips om je verhaal te vertellen. Beschrijf de locatie van je verhaal. Stel je hoofdpersoon voor. De resterende drie vertellen een verhaal met begin, midden en einde.</string>
+  <string name="tutorial_title_10">Breek de mal.</string>
+  <string name="tutorial_text_10">Monteer je clips in verschillende volgorde voor meer impact.</string>
+  <string name="tutorial_title_11">Vertel langere verhalen</string>
+  <string name="tutorial_text_11">Verhaal Templates vertellen je hoe.</string>
+  <!--/tutorial_story-->
+  <!--template_description-->
+  <string name="template_audio_desc">Neem de geluiden op die je verhaal vertellen, wie, wat. Als je geen sterke visuele beelden kunt krijgen, is audio een prima alternatief.</string>
+  <string name="template_photo_desc">Beelden zeggen meer dan duizend woorden. Laat ons zien wie of wat belangrijk is in je verhaal, of hoe het gebeurt.</string>
+  <string name="template_essay_desc">Soms zijn meerdere foto\'s nodig. Laat ons zien hoe het verhaal gebeurt, vertel een verhaal in een serie samenhangende beelden.</string>
+  <string name="template_video_desc">Leg indrukwekkende beelden vast en acties. Laat ons zien wie en wat belangrijk is en waarom. </string>
+  <!--/template_description-->
+  <!--legacy_story_type-->
+  <!--once we refactor to keep this extra text fields in the db instead of referencing this strings file we can remove these (after doing a migration step)-->
+  <string name="story_type_event_title">Evenement</string>
+  <string name="story_type_issue_title">Kwestie</string>
+  <string name="story_type_profile_title">Profiel</string>
+  <string name="story_type_news_title">Voorpaginanieuws</string>
+  <string name="story_type_event_desc">Evenementenverhalen hebben een vast tijdschema en een vooraf bekende lokaliteit. Concentreer je op het gebeuren. Organiseer je verhaal rond de tijd van het evenement, waar en waarom het juist dan en daar plaatsvindt.</string>
+  <string name="story_type_issue_desc">Kwestieverhalen onderzoeken een breed thema. Concentreer je op hoe de kwestie een gemeenschap raakt of een groep mensen. Organiseer je verhaal rond de impact en wat er in reactie hierop aan gedaan wordt.</string>
+  <string name="story_type_profile_desc">Maak een profiel van een bepaalde persoon. Concentreer je op wie de personage is. Organiseer je verhaal rond het dagelijkse leven van de persoon, wat er gebeurt en hoe de persoon omgaat met uitdagingen.</string>
+  <string name="story_type_news_desc">Voorpaginanieuws is rechtstreeks. Concentreer je op een invalshoek. Organiseer je verhaal rond feiten, wie, wat, waar, wanneer. Gebruik een spreker om de context toe te voegen.</string>
+  <!--/ legacy_story_type-->
+  <!--story_type-->
+  <string name="story_type_event_news_title">Nieuws-evenement</string>
+  <string name="story_type_event_feature_title">Hoofdartikel-evenement</string>
+  <string name="story_type_event_breaking_title">Voorpaginanieuws-evenement</string>
+  <string name="story_type_issue_social_title">Sociale kwestie</string>
+  <string name="story_type_issue_political_title">Politieke kwestie</string>
+  <string name="story_type_issue_economic_title">Economische kwestie</string>
+  <string name="story_type_profile_public_title">Openbaar profiel</string>
+  <string name="story_type_profile_professional_title">Professioneel Profiel</string>
+  <string name="story_type_profile_personal_title">Persoonlijk Profiel</string>
+  <!--/story_type-->
+  <!--story_type_description-->
+  <string name="story_type_event_news_desc">Verhalen over evenementen met onmiddellijk belang, vaak met tijdschema en een duidelijk begin en einde. Een verkiezing of een demonstratie zijn goede voorbeelden van nieuws-evenementen.</string>
+  <string name="story_type_event_feature_desc">Verhalen over evenementen die vermoedelijk geen ernstige nieuwswaarde hebben. Een sport-evenement, een nieuw bedrijf in de wijk, een ontwikkeling in technologie zijn goede voorbeelden van een hoofdartikel-evenement.</string>
+  <string name="story_type_event_breaking_desc">Onverwachte evenement met belangrijke nieuwswaarde. Een uitslaande brand, een onverwachte aankondiging van een regeringsfunctionaris of een natuurramp zijn goede voorbeelden van voorpaginanieuws-evenementen.</string>
+  <string name="story_type_issue_social_desc">Verhalen over kwesties die gemeenschappen raken. Een verandering in lokale wetgeving of infrastructuur is een goed voorbeeld van een sociale kwestie.</string>
+  <string name="story_type_issue_political_desc">Verhalen over regering en het werk van openbare functionarissen. Een verhaal over nieuwe wetgeving of een regeringswissel is een goed voorbeeld van een politieke kwestie.</string>
+  <string name="story_type_issue_economic_desc">Verhalen over algemene economie of over de persoonlijke financiële situatie van mensen. een verhaal over de impact van veranderingen in overheidssubsidies aan boeren in een goed voorbeeld van een economische kwestie.</string>
+  <string name="story_type_profile_public_desc">Verhalen over de rol van een persoon in de publieke opinie. Een profiel van een politicus die zich verkiesbaar stelt in een goed voorbeeld van een openbaar profiel.</string>
+  <string name="story_type_profile_professional_desc">Verhalen over mensen en hun werk. Een profiel van een beroemde artiest of atleet is een goed voorbeeld van professioneel profiel.</string>
+  <string name="story_type_profile_personal_desc">Verhalen over de ervaringen van een persoon, vaak gerelateerd met evenementen in het nieuws. Een profiel van een voormalige soldaat op de herdenking van een oorlog is een goed voorbeeld van een persoonlijk profiel.</string>
+  <!--/story_type_description-->
+  <!--template_options-->
+  <string name="choose_level">Kies een Niveau</string>
+  <string name="choose_level_basic">Basis</string>
+  <string name="choose_level_advanced">Gevorderd</string>
+  <!--/template_options-->
+  <!--story_type_new-->
+  <string name="overview">Overzicht</string>
+  <string name="activity">Activiteit</string>
+  <string name="impact">Impact</string>
+  <string name="background">Achtergrond</string>
+  <string name="involvement">Betrokkenheid</string>
+  <string name="motivation">Motivatie</string>
+  <string name="location">Locatie</string>
+  <string name="experience">Ervaring</string>
+  <string name="results">Resultaten</string>
+  <string name="next_steps">Volgende Stappen</string>
+  <string name="moving_forward">Vooruit Gaan</string>
+  <string name="conclusion">Conclusie</string>
+  <string name="story_type_event_news_text1">Wat gebeurt er bij deze gebeurtenis?</string>
+  <string name="story_type_event_news_text2">Hoe ben jij betrokken?</string>
+  <string name="story_type_event_news_text3">Wie is het meest getroffen door de gebeurtenis?</string>
+  <string name="story_type_event_news_text4">Wat is het verhaal achter deze gebeurtenis?</string>
+  <string name="story_type_event_news_text5">Wat is de impact van deze gebeurtenis?</string>
+  <string name="story_type_event_feature_text1">Wat gebeurt er bij deze gebeurtenis?</string>
+  <string name="story_type_event_feature_text2">Waarom ben je betrokken bij deze gebeurtenis?</string>
+  <string name="story_type_event_feature_text3">Waar vind de gebeurtenis plaats?</string>
+  <string name="story_type_event_feature_text4">Hoe ben je persoonlijk betrokken?</string>
+  <string name="story_type_event_feature_text5">Wat is de impact van deze gebeurtenis?</string>
+  <string name="story_type_event_breaking_text1">Wat gebeurt er?</string>
+  <string name="story_type_event_breaking_text2">Waar gebeurt het?</string>
+  <string name="story_type_event_breaking_text3">Wie is getroffen?</string>
+  <string name="story_type_event_breaking_text4">Is er rechtstreeks gevaar?</string>
+  <string name="story_type_event_breaking_text5">Hoe reageren mensen?</string>
+  <string name="story_type_issue_social_text1">Beschrijf alsjeblieft het sociale voorval.</string>
+  <string name="story_type_issue_social_text2">Wanneer &amp; waar begon het voorval?</string>
+  <string name="story_type_issue_social_text3">Hoe beïnvloed dit de gemeenschap?</string>
+  <string name="story_type_issue_social_text4">Vertel ons een verhaal over hoe dit jouw leven beïnvloed.</string>
+  <string name="story_type_issue_social_text5">Wat kan er gedaan worden om dit voorval op te lossen?</string>
+  <string name="story_type_issue_political_text1">Beschrijf alsjeblieft het politieke voorval.</string>
+  <string name="story_type_issue_political_text2">Wie heeft een directe impact?</string>
+  <string name="story_type_issue_political_text3">Hoe heeft het een impact op de overheid?</string>
+  <string name="story_type_issue_political_text4">Waarom is dit belangrijk voor jou persoonlijk?</string>
+  <string name="story_type_issue_political_text5">Wat kan er gedaan worden om dit voorval op te lossen?</string>
+  <string name="story_type_issue_economic_text1">Beschrijf alsjeblieft het economische voorval.</string>
+  <string name="story_type_issue_economic_text2">Wat is jouw relatie tot dit voorval?</string>
+  <string name="story_type_issue_economic_text3">Hoe heeft het een impact op de economie?</string>
+  <string name="story_type_issue_economic_text4">Wie zal het meest getroffen worden door dit?</string>
+  <string name="story_type_issue_economic_text5">Wat kan er gedaan worden om dit voorval op te lossen?</string>
+  <string name="story_type_profile_public_text1">Leg een beetje uit wie je bent.</string>
+  <string name="story_type_profile_public_text2">Wanneer ben je begonnen?</string>
+  <string name="story_type_profile_public_text3">Wat voor werk doe je?</string>
+  <string name="story_type_profile_public_text4">Beschrijf een moment waarop je trots was op je baan.</string>
+  <string name="story_type_profile_public_text5">Hoe zie jij jouw rol in de toekomst?</string>
+  <string name="story_type_profile_professional_text1">Wie ben jij en wat voor baan heb je?</string>
+  <string name="story_type_profile_professional_text2">Leg alsjeblieft uit hoe jij je werk doet.</string>
+  <string name="story_type_profile_professional_text3">Waarom is deze baan belangrijk voor jou?</string>
+  <string name="story_type_profile_professional_text4">Hoe maak je een impact met dit werk?</string>
+  <string name="story_type_profile_professional_text5">Wat ga je als volgende aanpakken?</string>
+  <string name="story_type_profile_personal_text1">Leg een beetje uit wie je bent.</string>
+  <string name="story_type_profile_personal_text2">Wat was de belangrijkste ervaring voor jou?</string>
+  <string name="story_type_profile_personal_text3">Hoe heeft deze ervaring je gevormd? </string>
+  <string name="story_type_profile_personal_text4">Wat doe je nu anders?</string>
+  <string name="story_type_profile_personal_text5">Wat moet er volgens jou gebeuren in de toekomst?</string>
+  <!--/story_type_new-->
+  <!--story_type_old-->
+  <string name="scene_number">Scene &lt;xliff:g id="number"&gt;%1$d&lt;/xliff:g&gt;</string>
+  <string name="when">Wanneer?</string>
+  <string name="how">Hoe?</string>
+  <string name="what">Wat?</string>
+  <string name="where">Waar?</string>
+  <string name="why">Warom?</string>
+  <string name="story_type_event_text1">Wanneer gebeurt het evenement?</string>
+  <string name="story_type_event_text2">Wat is de bedoeling van het evenement?</string>
+  <string name="story_type_event_text3">Waarom is het evenement belangrijk?</string>
+  <string name="story_type_event_text4">Wanneer gebeurt het evenement?</string>
+  <string name="story_type_event_text5">Hoe wordt het evenement georganiseerd?</string>
+  <string name="story_type_event_text6">Wat is de bedoeling van het evenement?</string>
+  <string name="story_type_event_text7">Waar vindt het evenement plaats?</string>
+  <string name="story_type_event_text8">Waarom is het evenement belangrijk?</string>
+  <string name="story_type_issue_text1">Hoe raakt de kwestie de gemeenschap?</string>
+  <string name="story_type_issue_text2">Wie wordt het meest geraakt?</string>
+  <string name="story_type_issue_text3">Wat wordt er als antwoord aan gedaan? </string>
+  <string name="story_type_issue_text4">Hoe raakt de kwestie de gemeenschap?</string>
+  <string name="story_type_issue_text5">Wanneer / waar is de kwestie begonnen?</string>
+  <string name="story_type_issue_text6">Wie wordt het meest geraakt?</string>
+  <string name="story_type_issue_text7">Waarom worden ze het meest geraakt?</string>
+  <string name="story_type_issue_text8">Wat wordt er als antwoord aan gedaan?</string>
+  <string name="story_type_profile_text1">Wie is die persoon?</string>
+  <string name="story_type_profile_text2">Wat is de uitdaging voor de personage?</string>
+  <string name="story_type_profile_text3">Hoe pakt de personage de uitdaging aan?</string>
+  <string name="story_type_profile_text4">Wie is die persoon?</string>
+  <string name="story_type_profile_text5">Waar komt die persoon vandaan?</string>
+  <string name="story_type_profile_text6">Wat is de uitdaging voor de personage?</string>
+  <string name="story_type_profile_text7">Waarom heeft de personage moeite met de uitdaging?</string>
+  <string name="story_type_profile_text8">Hoe pakt de personage de uitdaging aan?</string>
+  <string name="story_type_news_text1">Wat gebeurt er? </string>
+  <string name="story_type_news_text2">Wie is getroffen?</string>
+  <string name="story_type_news_text3">Hoe wordt erop gereageerd?</string>
+  <string name="story_type_news_text4">Wat is er aan de hand?</string>
+  <string name="story_type_news_text5">Waar gebeurt het nieuws?</string>
+  <string name="story_type_news_text6">Wie is getroffen?</string>
+  <string name="story_type_news_text7">Waarom is het gebeurd?</string>
+  <string name="story_type_news_text8">Hoe wordt erop gereageerd?</string>
+  <!--/story_type_old-->
+  <!--prefs-->
+  <string name="prefs_category_networking_security_title">Netwerken &amp; Veiligheid</string>
+  <string name="prefs_category_locales_title">Locaties</string>
+  <string name="prefs_category_media_title">Media</string>
+  <string name="prefs_category_debug_title">Fouten zoeken</string>
+  <string name="prefs_storymaker_server_title">StoryMaker server</string>
+  <string name="prefs_storymaker_server_summary">Server voor het hosten van alle StoryMaker inhoud</string>
+  <string name="prefs_use_tor_title">Gebruik Orbot (Tor)</string>
+  <string name="prefs_use_tor_summary">Verzend al het netwerkverkeer over het Tor-netwerk met behulp van de Orbot app</string>
+  <string name="prefs_sm_upload_title">Upload naar StoryMaker</string>
+  <string name="prefs_sm_upload_summary">Standaard uploaden naar StoryMaker server</string>
+  <string name="prefs_use_download_manager_title">Gebruik Downloadbeheer</string>
+  <string name="prefs_use_download_manager_summary">Download StoryMaker inhoud met Android Downloadbeheer</string>
+  <string name="prefs_use_upload_manager_title">Gebruik Uploadbeheer</string>
+  <string name="prefs_use_upload_manager_summary">Upload StoryMaker inhoud met Android Uploadbeheer</string>
+  <string name="prefs_youtube_acccount_title">YouTube account</string>
+  <string name="prefs_youtube_acccount_summary">Welk YouTube account moet er ingesteld worden om video te uploaden. Hiervoor MOET je geregistreerd zijn op je toestel.</string>
+  <string name="prefs_youtube_login_title">YouTube inloggen</string>
+  <string name="prefs_youtube_login_summary">Gebruik YouTube web autorisatie</string>
+  <string name="prefs_cacheword_timeout_title">Cacheword Timeout</string>
+  <string name="prefs_cacheword_timeout_summary">Aantal seconden voordat cacheword de app automatisch blokkeert (app gaat herstarten)</string>
+  <string name="prefs_soundcloud_account_title">SoundCloud account</string>
+  <string name="prefs_soundcloud_account_summary">De SoundCloud account instellen om audio te uploaden</string>
+  <string name="prefs_interface_language_title">Kies taal</string>
+  <string name="prefs_interface_language_summary">De taal die StoryMaker gaat gebruiken voor de gebruiker.</string>
+  <string name="prefs_photo_format_title">Fotoverhaal formaat</string>
+  <string name="prefs_photo_format_summary">Upload fotoverhalen als een verzameling foto\'s</string>
+  <string name="prefs_slide_duration_title">Dia tijdsduur</string>
+  <string name="prefs_slide_duration_summary">Tijdsduur van elke foto in een fotoverhaal</string>
+  <string name="prefs_enable_compression_title">Activeer compressie</string>
+  <string name="prefs_enable_compression_summary">Comprimeer alle video en audio met behulp van onderstaande instellingen</string>
+  <string name="prefs_preprocess_3gp_title">3GP voorbewerken</string>
+  <string name="prefs_preprocess_3gp_summary">Converteer 3GP video clips naar MPEG-4</string>
+  <string name="prefs_use_cat_command_title">Gebruik \'Cat\' commando</string>
+  <string name="prefs_use_cat_command_summary">Gebruik \'cat\' commando om video\'s samen te voegen</string>
+  <string name="prefs_video_codec_title">Video Codec</string>
+  <string name="prefs_video_codec_summary">Export video codec</string>
+  <string name="prefs_video_resolution_title">Video resolutie</string>
+  <string name="prefs_video_resolution_summary">Exporteer video resolutie</string>
+  <string name="prefs_video_width_title">Video breedte</string>
+  <string name="prefs_video_width_summary">Export video breedte</string>
+  <string name="prefs_video_height_title">Video hoogte</string>
+  <string name="prefs_video_height_summary">Export video hoogte</string>
+  <string name="prefs_video_bitrate_title">Video bitsnelheid</string>
+  <string name="prefs_video_bitrate_summary">Export video bitsnelheid (kbps)</string>
+  <string name="prefs_video_framrate_title">Video framesnelheid</string>
+  <string name="prefs_video_framrate_summary">Export frames per seconde (fps)</string>
+  <string name="prefs_audio_codec_title">Audio Codec</string>
+  <string name="prefs_audio_codec_summary">Export audio Codec</string>
+  <string name="prefs_audio_bitrate_title">Audio bitsnelheid</string>
+  <string name="prefs_audio_bitrate_summary">Export audio bitsnelheid (kbps)</string>
+  <string name="prefs_audio_samplerate_title">Audio samplefrequentie</string>
+  <string name="prefs_audio_samplerate_summary">Audio opname samplefrequentie (kHz)</string>
+  <string name="prefs_audio_crossfade_title">Audio crossfading</string>
+  <string name="prefs_audio_crossfade_summary">Audio crossfading lengte</string>
+  <string name="prefs_internal_storage_title">Interne opslag</string>
+  <string name="prefs_internal_storage_summary">Gebruik interne project opslag</string>
+  <string name="prefs_iocipher_storage_title">IOCipher opslag</string>
+  <string name="prefs_iocipher_storage_summary">Gebruik IOCipher veilige opslag</string>
+  <string name="prefs_youtube_method_title">YouTube methode</string>
+  <string name="prefs_youtube_method_summary">Autorisatie foutenopsporing</string>
+  <!--/prefs-->
+  <!--FirstStartActivity-->
+  <string name="sign_up_btn">REGISTREREN BIJ STORYMAKER</string>
+  <string name="no_thanks_btn">NEE, BEDANKT</string>
+  <string name="tos_btn">I GA AKKOORD MET DE VOORWAARDEN</string>
+  <string name="tos_dialog_title">Voorwaarden</string>
+  <string name="tos_dialog_msg">AUB, accepteer onze Voorwaarden om door te gaan</string>
+  <string name="tos_dialog_positive_button">Begrepen</string>
+  <string name="acct_created_dialog_title">Toegang account</string>
+  <string name="acct_created_dialog_msg"><b>Je StoryMaker wachtwoord zal straks per e-mail worden verzonden.</b> Na ontvangst van je wachtwoord kan je inloggen in het uitschuif-menu (toegankelijk door van de linkerkant van je scherm naar rechts te wissen).</string>
+  <string name="acct_created_dialog_positive_button">Beginnen!</string>
+  <!--ConnectAccountActivity-->
+  <string name="my_account">MIJN STORYMAKER ACCOUNT</string>
+  <string name="join_storymaker">Wordt Lid van de StoryMaker Gemeenschap</string>
+  <string name="create_account">MIJN ACCOUNT MAKEN</string>
+  <string name="sign_in">REGISTREREN / INLOGGEN</string>
+  <string name="sign_out">UITLOGGEN</string>
+  <!--ProjectTagFragment-->
+  <string name="no_tags_msg">Geen #tags toegevoegd</string>
+  <!--BaesActivity Drawer  (For Accessibility Descriptions)-->
+  <string name="open_drawer">Open schuif</string>
+  <string name="close_drawer">Sluit schuif</string>
+</resources>

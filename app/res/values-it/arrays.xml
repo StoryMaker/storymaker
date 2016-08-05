@@ -1,0 +1,46 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <string-array name="story_sections">
+    <item>Politica</item>
+    <item>Lavoro</item>
+    <item>Sport</item>
+    <item>Arte</item>
+    <item>Scienza</item>
+    <item>Salute</item>
+    <item>Educazione</item>
+    <item>Ambiente</item>
+  </string-array>
+  <string-array name="lesson_sections">
+    <item>Giornalismo</item>
+    <item>Sicurezza</item>
+    <item>Audio</item>
+    <item>Fotografia</item>
+    <item>Videografia</item>
+    <item>Storia</item>
+  </string-array>
+  <string-array name="array_story_locations">
+    <item>U.S.A.</item>
+    <item>California</item>
+    <item>Oakland</item>
+    <item>Egitto</item>
+    <item>Iraq</item>
+    <item>Marocco</item>
+    <item>Tunisia</item>
+    <item>Zimbabwe</item>
+    <item>Repubblica Ceca</item>
+    <item>Vietnam</item>
+  </string-array>
+  <string-array name="array_story_sections">
+    <item>Politica</item>
+    <item>Business</item>
+    <item>Sport</item>
+    <item>Arte</item>
+    <item>Scienza</item>
+    <item>Salute</item>
+    <item>Educazione</item>
+    <item>Ambiente</item>
+    <item>Tecnologia</item>
+    <item>Viaggi</item>
+  </string-array>
+  <!--<item>catalog</item>-->
+</resources>

@@ -1,0 +1,59 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+  <string name="action_publish">Julkaise</string>
+  <!--menus-->
+  <string name="menu_settings">Asetukset</string>
+  <!--FIXME: rename-->
+  <string name="menu_join_storymaker">Liity StoryMaker-yhteisöön</string>
+  <!--project list-->
+  <!--video processing-->
+  <!--LOG COLLECTOR-->
+  <!--<string name="new_story_video">Video: Something here about why simple, short video is good! Ideally it should be about the same length as the other strings.</string>
+   	<string name="new_story_essay">Photo Essay: Tell a story about one character. Follow this template to produce a simple photo essay story about one character.</string>
+    <string name="new_story_photo">Single Photo: Telling a strong story with one image is a skill. To simplify, these templates explain some primary photo types.</string>
+    
+    <string name="new_story_audio">Audio: Something here about using audio to tell a story. Personally, I really like to listen to the radio and podcasts while I do housework!</string>-->
+  <string name="story_publish_location">Sijainti</string>
+  <!--delete these below-->
+  <!--Screen title before and during recording-->
+  <!--Screen title after recording-->
+  <!--Screen title while playing back a recording-->
+  <!--Label shown during recording-->
+  <!--Label shown when the recording is stopped for a reason other than the user stopping it (e.g. the sd card was removed)-->
+  <!--label shown when there is not enough space to record something-->
+  <string name="storage_is_full">Muisti on täynnä</string>
+  <!--label shown when the recording has reached maximum allowed file size-->
+  <!--label shown when there is no sd card available to record to-->
+  <!--label shown when there is more than 1 minute but less than 9 minutes of space left to record-->
+  <!--label shown when there is less than 1 minute of space left to record-->
+  <!--button to accept the current recording and return it to the caller-->
+  <!--button to discard the current recording and return to the caller-->
+  <!--acknowlegement button in a number of dialogs-->
+  <string name="button_ok">Valmis</string>
+  <!--Do not translate. Format of the timer that shows how much has been recorded so far-->
+  <!--label shown before the user has recorded anything-->
+  <!--the name under which recordings will be visible in the media database is formatted like this-->
+  <!--all recordings will show up in the media database with this 'artist' name-->
+  <!--all recordings will show up in the media database with this 'album' name-->
+  <!--all recordings will show up in the media database in a playlist with this name-->
+  <!--shown as the message in a dialog when an error occured because of an error accessing the sd card-->
+  <!--shown as the message in a dialog when the app encountered an unspecified internal error-->
+  <string name="error_app_internal">Sisäinen sovellusvirhe</string>
+  <!--shown as the message in a dialog when the recording could not be added to the media database-->
+  <!--shown as the message in a dialog when an export will tak up too much space-->
+  <!--add for libra begin-->
+  <string name="menu_setting">Asetukset</string>
+  <string name="preferences_title">Asetukset</string>
+  <string name="prefDialogTitle_recordType">Valitse tiedostotyyppi</string>
+  <string name="sd_card_not_available">SD-kortti ei ole saatavilla</string>
+  <string name="open_file_explorer">Avaa tiedostoselaimessa</string>
+  <!--add for libra end-->
+  <!--youtube upload-->
+  <string name="cancel">Peru</string>
+  <!--added for project export-->
+  <string name="action_settings">Asetukset</string>
+  <string name="label_location">Sijainti</string>
+  <string name="export_error_2">Virhe</string>
+  <string name="export_error_4">Virhe</string>
+  <!--NEW/CACHEWORD-->
+</resources>

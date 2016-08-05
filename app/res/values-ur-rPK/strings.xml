@@ -1,0 +1,312 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+  <string name="app_name">سٹوری میکر 2</string>
+  <string name="app_description">سٹوری میکر کے ساتھ اب شاندار کہانیوں کی تخلیق پہلے کی نسبت کہیں زیادہ آسان ہوچکی ہے۔ ہمارے منفرد نمونے یا ٹیمپلیٹس، سطحیں اور رہنما اسباق آپ کو تمام تر تخلیقی مراحل سے روشناس کراتے ہیں۔ سٹوری میکر، موبائل فون پر ہی مواد کو ایڈٹ کرنے کی سہولت دیتا ہے، جس سے آپ کے لئے اپنی سٹوری کی تکمیل آسان تر ہو جاتی ہے۔ ایک بار جیسے ہی آپ اپنا کام مکمل کرتے ہیں، سٹوری میکر آپ کے تمام تر پسندیدہ پلیٹ فارم پر اپنی کہانی شائع کرنے کی اجازت دے دیتا ہے۔</string>
+  <string name="title_projects">کہانیاں</string>
+  <string name="title_lessons">اسباق</string>
+  <string name="action_publish">شائع کریں</string>
+  <!--menus-->
+  <string name="menu_new_project">خبر</string>
+  <string name="menu_projects">کہانیاں</string>
+  <string name="menu_lessons">اسباق</string>
+  <string name="menu_glossary">تشریحات</string>
+  <string name="menu_contacts">رابطے</string>
+  <string name="menu_settings">ترتیب یا سیٹنگ</string>
+  <string name="menu_accounts">اکاؤنٹس</string>
+  <string name="menu_archive">آرکائیو</string>
+  <string name="drawer_profile">لاگ اِن</string>
+  <!--FIXME: rename-->
+  <string name="menu_add_media">شامل کریں</string>
+  <string name="menu_capture_media">ریکارڈ کریں</string>
+  <string name="menu_share_media">شیئر کریں</string>
+  <string name="menu_save_media">محفوظ کریں</string>
+  <string name="menu_play_media">چلائیں</string>
+  <string name="menu_render_media">گرافک تصویر یا رینڈر</string>
+  <string name="menu_bug_report">بَگ رپورٹ</string>
+  <string name="menu_login">لاگ اِن</string>
+  <string name="menu_logs">لاگ بھیجیں</string>
+  <string name="menu_update">اپ ڈیٹ کریں</string>
+  <string name="menu_about">متعلق</string>
+  <string name="menu_save_project">محفوظ کریں</string>
+  <string name="menu_overlay_camera">کیمرہ</string>
+  <string name="menu_add_new_shot">منظر یا سین میں کلپ شامل کریں</string>
+  <string name="menu_export_project_files">پراجیکٹ کی فائلوں کو بطور زِپ بھیجیں</string>
+  <string name="menu_join_storymaker">سٹوری میکر کمیونٹی میں شمولیت اختیار کریں</string>
+  <string name="menu_sign_up">سائن اپ / لاگ اِن</string>
+  <string name="menu_upload_manager">اپلوڈ منیجر</string>
+  <string name="menu_uploads">اپ لوڈ</string>
+  <string name="welcome_message">ہیلو!\nہماری طرف سے سٹوری میکر میں خوش آمدید</string>
+  <!--project list-->
+  <string name="default_project_list_view">آپ پراجیکٹ پہلی دفعہ تیار کر رہے ہیں!\n\n- شروع کرنے کے لئے ٹیپ کریں۔</string>
+  <string name="default_project_view_message">آپ انتخاب کریں.\n اپنی کہانی ویڈیو، آڈیو اور تصاویر کے ذریعے بتائیں۔ شامل کرنے کے لئے ٹیپ کریں۔ </string>
+  <!--video processing-->
+  <string name="pref_out_fps_title">آؤٹ پُٹ فریم ریٹ (fps)</string>
+  <string name="pref_out_fps_summary">ویڈیو آؤٹ پٹ محفوظ کرنے کے لئے فی سیکنڈ فریم (15-30)</string>
+  <string name="pref_out_rate_title">آؤٹ پُٹ بِٹریٹ (kbps)</string>
+  <string name="pref_out_rate_summary">ویڈیو آؤٹ پُٹ کا بِٹریٹ (300-1500)</string>
+  <string name="pref_out_format_title">آؤٹ پُٹ فارمیٹ</string>
+  <string name="pref_out_format_summary">فائل کی فارمیٹ میں شامل ہیں: ((mp4, 3gp, ogg)</string>
+  <string name="pref_out_vcodec_title">آؤٹ پُٹ ویڈیو کوڈیک</string>
+  <string name="pref_out_vcodec_summary">ویڈیو کوڈیک (کاپی، libx264, وغیرہ)</string>
+  <string name="pref_out_acodec_title">آؤٹ پُٹ آڈیو کوڈیک</string>
+  <string name="pref_out_acodec_summary">آآڈیو کوڈیک (کاپی, aac, mp3, وغیرہ)</string>
+  <string name="pref_out_vwidth_title">کسٹم یعنی مرضی کے مطابق ویڈیو کی وسعت (px)</string>
+  <string name="pref_out_vwidth_summary">آؤٹ پُٹ ویڈیو کے لئے کسٹم ویڈیو کی وسعت</string>
+  <string name="pref_out_vheight_title">کسٹم ویڈیو ہائٹ (px)</string>
+  <string name="pref_out_vheight_summary">کسٹم ویڈیو ہائٹ برائے ویڈیو آؤٹ پُٹ</string>
+  <string name="hintTitle">ٹائٹل</string>
+  <string name="hintStartTime">آغاز (00:00:00)</string>
+  <string name="hintEndTime">دورانیہ (00:00:00)</string>
+  <string name="hintFadeIn">فیڈ اِن (فریمز)</string>
+  <string name="hintFadeOut">فیڈآؤٹ (فریمز)</string>
+  <string name="start_recording">ریکارڈ کریں</string>
+  <string name="stop_recording">روکیں</string>
+  <string name="play_recording">چلائیں</string>
+  <string name="save_recording">محفوظ کریں</string>
+  <string name="downloading_lessons_from_server_">اسباق سروَر سے ڈاؤن لوڈ ہو رہے ہیں...</string>
+  <string name="checking_for_updates_">اپ ڈیٹس چیک کی جا رہی ہیں...</string>
+  <!--LOG COLLECTOR-->
+  <string name="app_name_lc">لاگ جمع کرنے والا</string>
+  <string name="message_subject">اینڈرائیڈ ڈیوائس لاگ</string>
+  <string name="acquiring_log_progress_dialog_message">سسٹم سے لاگ حاصل کرنا\u2026</string>
+  <string name="chooser_title">لاگ بھیجنے کے لئے ایک ایپلیکیشن منتخب کریں۔</string>
+  <string name="failed_to_get_log_message">سسٹم سے لاگ حاصل کرنے میں ناکامی ہوئی۔</string>
+  <string name="main_dialog_text">یہ اپلیکیشن ڈیوائس لاگ جمع کرے گی۔ 
+جمع شُدّہ لاگ آپ کی پسند کی اپلیکیشن کے ذریعے بھیجی جائے گی۔ 
+آپ کے پاس بھیجے جانے والی ڈیٹا کو دیکھنے اور اُس میں ترمیم کا موقع بھی ہوگا۔ </string>
+  <string name="title_home_projects">پراجیکٹس</string>
+  <string name="title_home_activity">سرگرمی</string>
+  <string name="title_lessons_lessons">اسباق</string>
+  <string name="title_lessons_glossary">تشریحات</string>
+  <string name="hello_world">ہیلو ورلڈ!</string>
+  <string name="title_activity_home">ہوم</string>
+  <string name="new_story_name_it">اس کو نام دیں</string>
+  <string name="new_story_working_title">ورکنگ ٹائٹل…</string>
+  <string name="new_story_choose_something">کچھ مختصر چیز منتخب کریں جو آپ کےموضوع کی وضاحت کرے اور آپ کے سامعین کا تجسس بڑھائیں۔</string>
+  <string name="new_story_choose_a_medium">کسی میڈیم کا انتخاب کریں۔</string>
+  <!--<string name="new_story_video">Video: Something here about why simple, short video is good! Ideally it should be about the same length as the other strings.</string>
+   	<string name="new_story_essay">Photo Essay: Tell a story about one character. Follow this template to produce a simple photo essay story about one character.</string>
+    <string name="new_story_photo">Single Photo: Telling a strong story with one image is a skill. To simplify, these templates explain some primary photo types.</string>
+    
+    <string name="new_story_audio">Audio: Something here about using audio to tell a story. Personally, I really like to listen to the radio and podcasts while I do housework!</string>-->
+  <string name="new_story_simple_story">سادہ کہانی</string>
+  <string name="new_story_choose_template">منظر کا نمونہ یا سین ٹیمپلیٹ</string>
+  <string name="home_new_story">کہانی بنائیں</string>
+  <string name="home_start_a_lesson">اسباق تلاش کریں</string>
+  <string name="title_activity_lessons">اسباق</string>
+  <string name="title_activity_scene_editor">سین ایڈیٹر</string>
+  <string name="title_activity_choose_template">ٹیمپلیٹ یا نمونہ منتخب کریں</string>
+  <string name="title_activity_story_template">ٹیمپلیٹ سٹوری</string>
+  <string name="tab_make">بنائیں</string>
+  <string name="tab_review">جائزہ لیں</string>
+  <string name="tab_publish">مکمل کریں</string>
+  <string name="tab_finish">ختم کریں</string>
+  <string name="tab_add_clips">بنائیں</string>
+  <string name="tab_order">ایڈیٹ کریں</string>
+  <string name="story_publish_section">سیکشن</string>
+  <string name="story_publish_section_hint">کھیل</string>
+  <string name="story_publish_topics">موضوعات</string>
+  <string name="story_publish_topics_hint">جنس</string>
+  <string name="story_publish_location">مقام</string>
+  <string name="story_publish_location_hint">متعلقہ مقام داخل کریں</string>
+  <string name="story_publish_share">شیئر کریں</string>
+  <string name="story_publish_send_via">بھیجیں بذریعہ</string>
+  <string name="story_publish_status">سٹیٹس</string>
+  <string name="story_publish_status_processing">عمل جاری ہے</string>
+  <string name="story_publish_status_not">شائع نہیں ہوئی</string>
+  <string name="story_publish_describe_hint">اپنی کہانی کی وضاحت کریں۔۔۔</string>
+  <string name="story_publish_story_title">کہانی کا عنوان یہاں ہے</string>
+  <string name="story_publish_story_date">کہانی کی تاریخ یہاں پر</string>
+  <!--delete these below-->
+  <string name="title_section3">سیکشن 3</string>
+  <string name="title_section2">سیکشن 2</string>
+  <string name="title_section1">سیکشن 1</string>
+  <string name="title_activity_test_drag">ٹیسٹ ڈریگ</string>
+  <!--Screen title before and during recording-->
+  <!--Screen title after recording-->
+  <!--Screen title while playing back a recording-->
+  <!--Label shown during recording-->
+  <string name="recording">ریکارڈ ہو رہی ہے</string>
+  <!--Label shown when the recording is stopped for a reason other than the user stopping it (e.g. the sd card was removed)-->
+  <string name="recording_stopped">ریکارڈنگ رُک گئی۔</string>
+  <!--label shown when there is not enough space to record something-->
+  <string name="storage_is_full">سٹوریج کی گنجائش ختم ہے</string>
+  <!--label shown when the recording has reached maximum allowed file size-->
+  <string name="max_length_reached">طوالت انتہائی حد تک پہنچ گئی</string>
+  <!--label shown when there is no sd card available to record to-->
+  <string name="insert_sd_card">ایس ڈی کارڈ درکار ہے</string>
+  <!--label shown when there is more than 1 minute but less than 9 minutes of space left to record-->
+  <!--label shown when there is less than 1 minute of space left to record-->
+  <!--button to accept the current recording and return it to the caller-->
+  <!--button to discard the current recording and return to the caller-->
+  <!--acknowlegement button in a number of dialogs-->
+  <string name="button_ok">ٹھیک ہے</string>
+  <!--Do not translate. Format of the timer that shows how much has been recorded so far-->
+  <!--label shown before the user has recorded anything-->
+  <!--the name under which recordings will be visible in the media database is formatted like this-->
+  <!--all recordings will show up in the media database with this 'artist' name-->
+  <string name="audio_db_artist_name">آپ کی ریکارڈنگ</string>
+  <!--all recordings will show up in the media database with this 'album' name-->
+  <string name="audio_db_album_name">آڈیو ریکارڈنگ</string>
+  <!--all recordings will show up in the media database in a playlist with this name-->
+  <string name="audio_db_playlist_name">میری ریکارڈنگ</string>
+  <!--shown as the message in a dialog when an error occured because of an error accessing the sd card-->
+  <string name="error_sdcard_access">ایکسٹرنل یا انٹرنل سٹوریج تک رسائی سے قاصر ہے</string>
+  <!--shown as the message in a dialog when the app encountered an unspecified internal error-->
+  <string name="error_app_internal">انٹرنل ایپلیکیشن کی خرابی</string>
+  <!--shown as the message in a dialog when the recording could not be added to the media database-->
+  <string name="error_mediadb_new_record">ریکارڈ کی گئی آڈیو محفوظ ہونے سے قاصر ہے۔</string>
+  <!--shown as the message in a dialog when an export will tak up too much space-->
+  <string name="error_storage_space" formatted="false">اُف، ہمارے پاس سپیس ختم ہے۔ برائے مہربانی تقریباً  %.2f%nMBسپیس چھوڑیں اور دوبارہ کوشش کریں!</string>
+  <!--add for libra begin-->
+  <string name="default_record_name">بلا عنوان ریکارڈ</string>
+  <string name="menu_view_record_list">ریکارڈ کی فہرست دیکھیں</string>
+  <string name="menu_setting">ترتیب یا سیٹنگ</string>
+  <string name="delete_dialog_title">کیا آپ موجودہ ریکارڈ ڈیلیٹ کرنا چاہتے ہیں؟</string>
+  <string name="overwrite_dialog_title">%s پہلے سے ہی موجود ہے۔ کیا آپ اس پر دوبارہ کرنا چاہتے ہیں؟</string>
+  <string name="preferences_title">ترتیب یا سیٹنگ</string>
+  <string name="pref_title_record_type">فائل کی قسم ریکارڈ کریں</string>
+  <string name="prefDialogTitle_recordType">برائے مہربانی فائل کی قسم منتخب کریں</string>
+  <string name="prefDefault_recordType">آڈیو/3gpp</string>
+  <string name="pref_title_enable_high_quality">اعلٰی معیار یقینی بنائیں</string>
+  <string name="pref_summary_enable_high_quality">اعلٰی معیار کی آڈیو فائل زیادہ بڑی ہوسکتی ہے</string>
+  <string name="pref_title_enable_sound_effect">صوتی اثرات فعال کریں</string>
+  <string name="pref_summary_enable_sound_effect">حالت بدلنے کے ساتھ صوتی اثرات چلانا</string>
+  <string name="notification_recording">ریکارڈ کر رہا ہے...</string>
+  <string name="notification_stopped">ریکارڈنگ رُک گئی</string>
+  <string name="notification_warning">ذخیرہ یا سٹور کرنے کی کم گنجائش (%d منٹ سے کم)۔۔۔</string>
+  <string name="sd_card_not_available">ایس ڈی کارڈ دستیاب نہیں ہے</string>
+  <string name="open_file_explorer">فائل ایکسپلورَر کھولیں</string>
+  <string name="alert_message_delete_record">کیا آپ منتخب کردہ ریکارڈ ڈیلیٹ کرنا چاہتے ہیں؟</string>
+  <!--add for libra end-->
+  <string name="help_clip_select">کلِپ کی قسم منتخب کرنے کے لئے یہاں دبائیں، پھر ویڈیو، تصویر یا آڈیو لینا شروع کرنے کے لئے امیج کو ٹیپ کریں۔ </string>
+  <!--youtube upload-->
+  <string name="lesson_status_have_not_started">شروع نہیں کیا ہے</string>
+  <string name="lessons_congratulations_you_have_completed_the_lesson_">آپ نے ایک سبق مکمل کرلیا!</string>
+  <string name="lesson_status_in_progress">پیشرفت جاری ہے</string>
+  <string name="lesson_status_complete">مکمل!</string>
+  <string name="no_lessons_available_tap_to_load_">کویہ سبق دستیاب نہیں (لوڈ کرنے کے لئے ٹیپ کریں)</string>
+  <string name="_lesson_complete">سبق مکمل ہوا</string>
+  <string name="_of_">کا</string>
+  <string name="default_youtube_desc">سٹوری میکر پراجیکٹ</string>
+  <string name="view_published_media_online_or_local_copy_">شائع شدّہ میڈیا آن لائن دیکھیں؟</string>
+  <string name="choose_account_for_youtube_upload">اپ لوڈ کرنے کے لئے اکاؤنٹ منتخب کریں</string>
+  <string name="rendering">گرافک تصویر جاری ہے</string>
+  <string name="rendering_project_">پراجیکٹ پیش کی جا رہی ہے۔۔۔</string>
+  <string name="publishing">شائع ہو رہا ہے</string>
+  <string name="connecting_to_youtube_">یو ٹیوب سے منسلک ہو رہا ہے۔۔۔</string>
+  <string name="uploading_to_storymaker">سٹوری میکرز سائٹ پر شائع ہو رہا ہے۔۔۔</string>
+  <string name="rendering_clips_">کلپس پیش ہو رہی ہے۔۔۔</string>
+  <string name="you_must_enter_a_project_name">براہ مہربانی ورکنگ ڈرافٹ ٹائٹل داخل کریں، جسے آپ بعد میں تبدیل بھی کرسکتے ہیں۔</string>
+  <string name="delete_clip">کلپ ڈیلیٹ کریں؟</string>
+  <string name="add_new_clip_to_the_scene_">منظر یا سین میں نئی کلپ شامل کریں؟</string>
+  <string name="video_project_project_type">ویڈیو پراجیکٹ</string>
+  <string name="photo_project_project_type">فوٹو پراجیکٹ</string>
+  <string name="audio_project_project_type">آڈیو پراجیکٹ</string>
+  <string name="photo_essay_project_project_type">تصویری مضمون کا پراجیکٹ</string>
+  <string name="eula_title">آپ کو منظور ہے:</string>
+  <string name="eula_accept">قبول کریں</string>
+  <string name="eula_refuse">مسترد کریں</string>
+  <string name="privacy_policy">پرائیویسی پالیسی</string>
+  <string name="end_user_license_agreement">اینڈ یوزر لائسنس ایگریمنٹ</string>
+  <string name="send_annonymous_data">گمنام رہتے ہوئے ڈیٹا ارسال کرنے سے ہمیں سٹوری میکر کو مزید بہتر بنانے میں مدد  ملے گی۔</string>
+  <string name="by_clicking_accept">\'قبول کریں\' پر کِلک کرنے کے ساتھ ہی آپ ہمارے اینڈ یوزر لائسنس ایگریمنٹ سے متفق ہوجاتے ہیں، جس کامطلب ہے کہ آپ ہماری پرائیویسی پالیسی کا مطالعہ کرچکے ہیں:  </string>
+  <string name="button_add_narration">وائس اووَر ریکارڈ کریں</string>
+  <string name="button_play_narration">وائس اووَر چلائیں</string>
+  <string name="button_delete_narration">وائس اووَر ڈیلیٹ کریں</string>
+  <string name="button_render_preview">پری ویو پیش کریں</string>
+  <string name="publish_sm">سٹوری میکر.سی سی StoryMaker.cc</string>
+  <string name="publish_youtube">یوٹیوب</string>
+  <string name="action_render">ایکسپورٹ کریں</string>
+  <string name="action_play">چلائیں</string>
+  <string name="action_share">شیئر کریں</string>
+  <string name="cbRenderTypeLabel">فاسٹ ویڈیو رینڈر استعمال کریں</string>
+  <string name="drawer_quick_capture">فوری کھینچیں</string>
+  <string name="select_story_type">کہانی کی قسم منتخب کریں</string>
+  <string name="button_start_my_story">میری کہانی شروع کریں</string>
+  <string name="home_intro_button_lessons">اسباق تلاش کریں</string>
+  <string name="home_intro_button_projects">کہانی بنائیں</string>
+  <string name="created_with_storymaker_tag">سٹوری میکر کے ساتھ تخلیق کردہ ۔ /https://storymaker.cc </string>
+  <string name="err_you_need_at_least_one_account_configured_on_your_device">آپ کو اپنی ڈیوائس پر کم ازکم ایک اکاؤنٹ کنفیوگر کرنے کی ضرورت ہے۔</string>
+  <string name="you_began_a_new_lesson">آپ نے نیا سبق شروع کیا</string>
+  <string name="scene_editor_please_add_clips">اس ٹیب کو منتخب کرنے سے قبل برائے مہربانی \'بنائیں\' ٹیب پر اپنے کلپس شامل کریں۔</string>
+  <string name="scene_editor_trim_clip">کلپ کو کم کریں</string>
+  <string name="delete_warning">اس عمل کو ختم نہیں کیا جاسکتا </string>
+  <string name="cancel">منسوخ کریں</string>
+  <string name="stop">روکیں</string>
+  <string name="delete">ڈیلیٹ کریں</string>
+  <string name="play_or_share_exported_media_">ایکسپورٹ کی گئی میڈیا کو چلائیں یا شیئر کریںا؟ </string>
+  <string name="share_published_story">شائع شدہ کہانی شیئر کریں؟</string>
+  <string name="err_storage_not_ready">اس وقت بیرونی ذخیرہ (ایس ڈی کارڈ) پڑھنے یا لکھنے کے لئے دستیاب نہیں ہوگا۔ سبق اور کہانی پراجیکٹ ڈیٹا کے لئے سٹوری میکر کو یہاں تک رسائی چاہیئے۔ برائے  مہربانی اپنا ڈیوائس چیک کریں اور اپلیکیشن دوبارہ شروع کریں ۔ </string>
+  <string name="scene_s_">منظر (مناظر)</string>
+  <string name="clip_s_">کلپ(کلپس)</string>
+  <string name="sc_app_not_found">ساؤنڈ کلاؤڈ ایپ نہیں ملی!</string>
+  <string name="sc_app_not_found_message">کیا آپ اسی وقت انسٹال کرنا چاہتے ہیں؟</string>
+  <string name="no_active_sc_account">کوئی فعال ساؤنڈ کلاؤڈ اکاؤنٹ نہیں ملا، برائے مہربانی لاگ اِن / سائن اَپ ہو جائیں۔ </string>
+  <string name="operation_canceled">آپریشن منسوخ ہوا</string>
+  <string name="could_not_get_token">ٹوکن حاصل نہیں ہو سکا</string>
+  <string name="getting_details">صارف کی تفصیلات حاصل کرنا</string>
+  <string name="could_not_create_account">اکاؤنٹ نہیں بنایا جاسکا</string>
+  <string name="uploading">اپ لوڈنگ جاری ہے…</string>
+  <string name="canceled">اپ لوڈ منسوخ ہوئی</string>
+  <!--added for project export-->
+  <string name="export_dialog_title">کیا آپ اس پراجیکٹ زِپ کو شیئر کرنا پسند کریں گے؟</string>
+  <string name="export_dialog_close">بند کریں</string>
+  <string name="export_dialog_share">شیئر کریں</string>
+  <string name="title_activity_accounts">اکاؤنٹس</string>
+  <string name="action_settings">ترتیب یا سیٹنگ</string>
+  <string name="label_activity_log">ایکٹیوٹی لاگ</string>
+  <string name="label_title">ٹائٹل</string>
+  <string name="label_description">تفصیل</string>
+  <string name="label_tags">ٹیگز</string>
+  <string name="label_add">شامل کریں</string>
+  <string name="label_edit">ایڈیٹ کریں</string>
+  <string name="label_save">محفوظ کریں</string>
+  <string name="label_activities">ایکٹیوٹی لاگ</string>
+  <string name="hint_story_title">ٹائٹل داخل کریں</string>
+  <string name="hint_story_description">اپنی کہانی کی وضاحت کریں۔۔۔</string>
+  <string name="hint_story_tag">#ٹیگز شامل کریں</string>
+  <string name="label_section">سیکشن</string>
+  <string name="label_location">مقام</string>
+  <string name="title_activity_story_info">معلومات</string>
+  <string name="title_activity_story_info_edit">معلومات ایڈیٹ کریں</string>
+  <string name="title_activity_project_tag_fragment">پراجیکٹ ٹیگ فریگمنٹ</string>
+  <string name="title_activity_connect_account">سٹوری میکر اکاؤنٹ</string>
+  <string name="hint_no_description">کوئی تفصیل نہیں۔</string>
+  <string name="trim_clips">کلپ مختصر کریں </string>
+  <string name="info">معلومات</string>
+  <string name="send_logcat_to_support">سپورٹ کرنے کے لئے لاگ کیٹ بھیجیں</string>
+  <string name="restarting_storymaker">سٹوری میکر دوبارہ شروع ہو رہا ہے...</string>
+  <string name="send">بھیجیں</string>
+  <string name="title_activity_press_secure">پریس سیکیور</string>
+  <string name="title_activity_publish">سرگرمی شائع کریں</string>
+  <string name="uploading_to_soundcloud">ساؤنڈ کلاؤڈ پر اپ لوڈنگ جاری ہے۔۔۔</string>
+  <string name="uploading_to_facebook">فیس بُک پر اپ لوڈنگ جاری ہے...</string>
+  <string name="uploading_to_internet_archive">انٹرنیٹ آرکائیو پر اپ لوڈنگ جاری ہے...</string>
+  <string name="no_site_selected">کوئی سائٹ منتخب نہیں کی گئی۔</string>
+  <string name="exported_stories">برآمدات یا ایکسپورٹس</string>
+  <string name="no_title">کوئی ٹائٹل نہیں۔</string>
+  <string name="title_exports">کہانیاں شائع کریں۔</string>
+  <string name="last_modified">آخری دفعہ تبدیل ہوا تھا</string>
+  <string name="no_medium">(کوئی میڈیم نہیں)</string>
+  <string name="learning_guide_description">توجہ مبذول کرانے والا بیانیہ تیار کریں۔</string>
+  <string name="extracting_audio_multiple"> آڈیو ٹریک نکالنا</string>
+  <string name="crossfading_audio">آڈیو کی کراس فیڈنگ جاری ہے۔۔۔</string>
+  <string name="crossfading_audio_multiple">آڈیو ٹریک کراس فیڈنگ کرنا</string>
+  <string name="fade_audio">مکمل آڈیو اِن اینڈ آؤٹ کو ختم کریں۔۔۔</string>
+  <string name="converting_audio">آؤٹ پُٹ ویڈیو کی تبدیلی جاری ہے۔۔۔</string>
+  <string name="export_error_1">میڈیا ایکسپورٹ میں کچھ گڑبڑ ہوگئی</string>
+  <string name="export_error_2">خرابی</string>
+  <string name="processing_audio">آڈیو ٹریک پر عمل جاری ہے۔۔۔</string>
+  <string name="processing_audio_multiple"> آڈیو ٹریک پر عمل کرنا</string>
+  <string name="mixing_tracks">ٹریکس مِکس کرنا</string>
+  <string name="trimming_merging">ویڈیوکی تراش اور اس کا انضمام یا مرج کرنا</string>
+  <string name="merging_video_audio">ویڈیو اور آڈیو کا انضمام یا مرجِنگ جاری ہے۔۔۔</string>
+  <string name="export_error_3">میڈیا ایکسپورٹ میں کچھ گڑبڑ ہوگئی</string>
+  <string name="export_error_4">خرابی</string>
+  <!--NEW/CACHEWORD-->
+  <string name="catalog_menu_lessons">اسباق</string>
+  <string name="home_menu_home">ہوم</string>
+  <string name="home_menu_stories">کہانیاں</string>
+  <string name="home_menu_lessons">اسباق</string>
+</resources>
