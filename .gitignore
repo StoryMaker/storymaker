@@ -5,6 +5,14 @@ liger-content/
 storymaker-art/
 test.xml
 
+# secureshare stuff
+app/res/values/flickr.xml
+app/res/values/google.xml
+app/res/values/storymaker-s3.xml
+app/res/values/storymaker.xml
+app/res/values/zt.xml
+
+
 # built application files
 *.apk
 *.ap_
