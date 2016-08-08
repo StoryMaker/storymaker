@@ -1,9 +1,11 @@
 v2.1.6
 
++ Android 6 support!
 + Fix clip order screen
 + Fix narration delete bug
 + Many crash fixes
 + Localize display of volume percentage
++ Updated Russian translation
 
 v2.1.5
 
