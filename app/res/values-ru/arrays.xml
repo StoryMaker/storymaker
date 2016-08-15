@@ -18,6 +18,18 @@
     <item>Видео</item>
     <item>Сюжет</item>
   </string-array>
+  <string-array name="array_story_locations">
+    <item>США</item>
+    <item>Калифорния</item>
+    <item>Окленд</item>
+    <item>Египет</item>
+    <item>Ирак</item>
+    <item>Морокко</item>
+    <item>Тунис</item>
+    <item>Зимбабве</item>
+    <item>Республика Чехия</item>
+    <item>Вьетнам</item>
+  </string-array>
   <string-array name="array_story_sections">
     <item>Политика</item>
     <item>Бизнес</item>

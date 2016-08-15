@@ -13,10 +13,22 @@
   <string-array name="lesson_sections">
     <item>Journalismus</item>
     <item>Sicherheit</item>
-    <item>Audio</item>
+    <item>Ton</item>
     <item>Photographie</item>
     <item>Videographie</item>
     <item>Erzählung</item>
+  </string-array>
+  <string-array name="array_story_locations">
+    <item>U.S.A.</item>
+    <item>Kalifornien</item>
+    <item>Oakland</item>
+    <item>Egypten</item>
+    <item>Irak</item>
+    <item>Marokko</item>
+    <item>Tunesien</item>
+    <item>Zimbabwe</item>
+    <item>Tschechische Republik</item>
+    <item>Vietnam</item>
   </string-array>
   <string-array name="array_story_sections">
     <item>Politik</item>
@@ -27,8 +39,6 @@
     <item>Gesundheit</item>
     <item>Bildung</item>
     <item>Umwelt</item>
-    <item>Technik</item>
-    <item>Reisen</item>
   </string-array>
   <!--<item>catalog</item>-->
 </resources>

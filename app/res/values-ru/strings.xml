@@ -1,7 +1,8 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string name="app_name">StoryMaker 2</string>
-  <string name="app_description">Благодаря StoryMaker, процесс создание сюжетов стал еще проще. Наши оригинальные шаблоны, схемы и уроки будут служить вам ориентиром в творческом процессе. StoryMaker позволяет вам редактировать сюжет прямо на мобильном телефоне, что позволяет быстро закончить работу над ним. Когда вы завершили сюжет, StoryMaker позволяет вам опубликовать его на ваших любимых форумах. </string>
+  <string name="app_description">Благодаря StoryMaker, процесс создания сюжетов стал еще проще. Наши оригинальные шаблоны, схемы и уроки будут служить вам ориентиром в творческом процессе. StoryMaker позволяет редактировать сюжет прямо на мобильном телефоне, что существенно сокращает время работы над ним. Когда вы завершили сюжет, StoryMaker помогает опубликовать его на ваших любимых платформах. </string>
+  <string name="title_catalog">Каталог</string>
   <string name="title_projects">Сюжеты</string>
   <string name="title_lessons">Уроки</string>
   <string name="action_publish">Опубликовать</string>
@@ -21,7 +22,7 @@
   <string name="menu_share_media">Поделиться</string>
   <string name="menu_save_media">Сохранить</string>
   <string name="menu_play_media">Воспроизвести</string>
-  <string name="menu_render_media">Визуализировать</string>
+  <string name="menu_render_media">Обработка</string>
   <string name="menu_bug_report">Отчет об ошибках</string>
   <string name="menu_login">Логин</string>
   <string name="menu_logs">Отправить лог-файл</string>
@@ -63,11 +64,11 @@
   <string name="stop_recording">Стоп</string>
   <string name="play_recording">Воспроизвести</string>
   <string name="save_recording">Сохранить</string>
-  <string name="downloading_lessons_from_server_">Скачиваю уроки с сервера...</string>
+  <string name="downloading_lessons_from_server_">Загрузка уроков с сервера...</string>
   <string name="checking_for_updates_">Проверка обновлений...</string>
   <!--LOG COLLECTOR-->
   <string name="app_name_lc">Хранилище лог-файлов</string>
-  <string name="message_subject">Лог Android устройств</string>
+  <string name="message_subject">Лог устройств Android </string>
   <string name="acquiring_log_progress_dialog_message">Получение лог-файла из папки system\u2026</string>
   <string name="chooser_title">Выберите приложение для отправки лог-файла</string>
   <string name="failed_to_get_log_message">Ошибка получения лог-файла системы</string>
@@ -75,15 +76,15 @@
 Полученный лог-файл будет отправлен с использованием выбранного вами приложения.
 У вас будет возможность просмотреть и изменить отправляемые данные.</string>
   <string name="title_home_projects">Проекты</string>
-  <string name="title_home_activity">Активность</string>
+  <string name="title_home_activity">Деятельность</string>
   <string name="title_lessons_lessons">Уроки</string>
   <string name="title_lessons_glossary">Глоссарий</string>
   <string name="hello_world">Привет, мир!</string>
   <string name="title_activity_home">Домашняя</string>
-  <string name="new_story_name_it">Назовите.</string>
+  <string name="new_story_name_it">Создайте название.</string>
   <string name="new_story_working_title">Рабочее название...</string>
   <string name="new_story_choose_something">Выберите краткое название, описывающее тему и интригующее вашу аудиторию.</string>
-  <string name="new_story_choose_a_medium">Выберите средство.</string>
+  <string name="new_story_choose_a_medium">Выберите средство повествования.</string>
   <!--<string name="new_story_video">Video: Something here about why simple, short video is good! Ideally it should be about the same length as the other strings.</string>
    	<string name="new_story_essay">Photo Essay: Tell a story about one character. Follow this template to produce a simple photo essay story about one character.</string>
     <string name="new_story_photo">Single Photo: Telling a strong story with one image is a skill. To simplify, these templates explain some primary photo types.</string>
@@ -93,6 +94,7 @@
   <string name="new_story_choose_template">Шаблон эпизода</string>
   <string name="home_new_story">СОЗДАТЬ СЮЖЕТ</string>
   <string name="home_start_a_lesson">ПОСМОТРЕТЬ УРОКИ</string>
+  <string name="title_activity_catalog">Каталог</string>
   <string name="title_activity_lessons">Уроки</string>
   <string name="title_activity_scene_editor">Редактор сцен</string>
   <string name="title_activity_choose_template">Выберите шаблон</string>
@@ -121,7 +123,7 @@
   <string name="title_section3">Раздел 3</string>
   <string name="title_section2">Раздел 2</string>
   <string name="title_section1">Раздел 1</string>
-  <string name="title_activity_test_drag">TestDrag</string>
+  <string name="title_activity_test_drag">Тестирование помех</string>
   <!--Screen title before and during recording-->
   <!--Screen title after recording-->
   <!--Screen title while playing back a recording-->
@@ -155,9 +157,9 @@
   <!--shown as the message in a dialog when the app encountered an unspecified internal error-->
   <string name="error_app_internal">Ошибка внутреннего приложения</string>
   <!--shown as the message in a dialog when the recording could not be added to the media database-->
-  <string name="error_mediadb_new_record">Не могу сохранить записанный аудио-файл</string>
+  <string name="error_mediadb_new_record">Не удается сохранить записанный аудио-файл</string>
   <!--shown as the message in a dialog when an export will tak up too much space-->
-  <string name="error_storage_space" formatted="false">Упс, у нас кончилось свободное место. Пожалуйста, освободите примерно %.2f%nMB и попробуйте снова!</string>
+  <string name="error_storage_space" formatted="false">Упс, у нас кончилось свободное место. Пожалуйста, освободите примерно %.2f%nМБ и попробуйте снова!</string>
   <!--add for libra begin-->
   <string name="default_record_name">запись без названия</string>
   <string name="menu_view_record_list">Просмотреть список записей</string>
@@ -179,7 +181,7 @@
   <string name="open_file_explorer">Открыть файл</string>
   <string name="alert_message_delete_record">Вы хотите удалить выделенную запись?</string>
   <!--add for libra end-->
-  <string name="help_clip_select">Проведите, чтобы выбрать тип клипа, затем нажмите на изображение клипа, чтобы начать запись видео, аудио или сделать фотографию</string>
+  <string name="help_clip_select">Проведите по экрану и выбирете тип клипа, затем нажмите на изображение клипа, чтобы начать запись видео, аудио или сделать фотографию</string>
   <!--youtube upload-->
   <string name="lesson_status_have_not_started">Не начато</string>
   <string name="lessons_congratulations_you_have_completed_the_lesson_">Вы закончили урок!</string>
@@ -191,19 +193,22 @@
   <string name="default_youtube_desc">Проект StoryMaker</string>
   <string name="view_published_media_online_or_local_copy_">Посмотреть опубликованный материал?</string>
   <string name="choose_account_for_youtube_upload">Выберите учетную запись для загруки</string>
-  <string name="rendering">Обработка</string>
-  <string name="rendering_project_">Обработка проекта...</string>
+  <string name="rendering">Идет обработка</string>
+  <string name="rendering_project_">Идет обработка проекта...</string>
   <string name="publishing">Публикация</string>
   <string name="connecting_to_youtube_">подключаемся к YouTube...</string>
   <string name="uploading_to_storymaker">публикуем на сайте StoryMaker...</string>
-  <string name="rendering_clips_">обработка клипов...</string>
-  <string name="you_must_enter_a_project_name">Пожалуйста, введите заголовок для черновика. Вы можете изменить его позже.</string>
+  <string name="rendering_clips_">идет обработка клипов...</string>
+  <string name="you_must_enter_a_project_name">Пожалуйста, введите рабочий вариант заголовка. Вы сможете изменить его позже.</string>
+  <string name="delete_project_">Удалить экспортируемые файлы?</string>
+  <string name="delete_story">Удалить репортаж?</string>
+  <string name="delete_content_pack">Удалить содержимое?</string>
   <string name="delete_clip">Удалить клип?</string>
   <string name="add_new_clip_to_the_scene_">Добавить новый клип к эпизоду?</string>
   <string name="video_project_project_type">Видео проект</string>
   <string name="photo_project_project_type">Фото проект</string>
   <string name="audio_project_project_type">Аудио проект</string>
-  <string name="photo_essay_project_project_type">Фото эссе проект</string>
+  <string name="photo_essay_project_project_type">Проект-фотоочерк</string>
   <string name="eula_title">Вы согласны с:</string>
   <string name="eula_accept">Принять</string>
   <string name="eula_refuse">Отказаться</string>
@@ -221,12 +226,12 @@
   <string name="action_play">Воспроизвести</string>
   <string name="action_share">Поделиться</string>
   <string name="cbRenderTypeLabel">Использовать быструю обработку видео</string>
-  <string name="drawer_quick_capture">Быстрый захват</string>
+  <string name="drawer_quick_capture">Быстрая запись</string>
   <string name="select_story_type">Выберите тип сюжета</string>
   <string name="button_start_my_story">НАЧАТЬ МОЙ СЮЖЕТ</string>
   <string name="home_intro_button_lessons">ПОСМОТРЕТЬ УРОКИ</string>
   <string name="home_intro_button_projects">СОЗДАТЬ СЮЖЕТ</string>
-  <string name="created_with_storymaker_tag">Создано в StoryMaker - https://storymaker.cc/</string>
+  <string name="created_with_storymaker_tag">Создано со StoryMaker - https://storymaker.cc/</string>
   <string name="err_you_need_at_least_one_account_configured_on_your_device">Необходима хотя бы одна учетная запись, настроенная на вашем устройстве</string>
   <string name="you_began_a_new_lesson">Вы начали новый урок</string>
   <string name="scene_editor_please_add_clips">Пожалуйста, добавьте клипы на закладке \"Создать\" перед выбором текущей закладки.</string>
@@ -235,9 +240,13 @@
   <string name="cancel">Отмена</string>
   <string name="stop">Стоп</string>
   <string name="delete">Удалить</string>
+  <string name="download">Скачать</string>
+  <string name="pause">Поставить на паузу</string>
+  <string name="resume">Продолжить</string>
   <string name="play_or_share_exported_media_">Воспроизвести или поделиться экспортированным материалом?</string>
   <string name="share_published_story">Поделиться опубликованным сюжетом?</string>
   <string name="err_storage_not_ready">Внешнее хранилище (SDCard) на данный момент не доступно для чтения и записи. StoryMaker необходим доступ к нему для уроков и проектных данных сюжета. Пожалуйста, проверьте ваше устройство и перезапустите приложение.</string>
+  <string name="err_storage_not_available">Предполагаемое место хранения недоступно для чтения и записи в данный момент. StoryMaker не может быть запущен без доступа к месту хранения. Пожалуйста, проверьте SD карты и/или отключите устройство от вашего компьютера.</string>
   <string name="scene_s_">эпизод(ы)</string>
   <string name="clip_s_">клип(ы)</string>
   <string name="sc_app_not_found">Приложение SoundCloud не найдено!</string>
@@ -255,17 +264,17 @@
   <string name="export_dialog_share">Поделиться</string>
   <string name="title_activity_accounts">Учетные записи</string>
   <string name="action_settings">Настройки</string>
-  <string name="label_activity_log">Журнал событий</string>
+  <string name="label_activity_log">Журнал действий</string>
   <string name="label_title">Название</string>
   <string name="label_description">Описание</string>
-  <string name="label_tags">Пометки</string>
+  <string name="label_tags">Теги</string>
   <string name="label_add">Добавить</string>
   <string name="label_edit">Редактировать</string>
   <string name="label_save">Сохранить</string>
-  <string name="label_activities">Журнал событий</string>
+  <string name="label_activities">Журнал действий</string>
   <string name="hint_story_title">Введите название</string>
   <string name="hint_story_description">Опишите ваш сюжет...</string>
-  <string name="hint_story_tag">#addtags</string>
+  <string name="hint_story_tag">#добавитьтеги</string>
   <string name="label_section">Раздел</string>
   <string name="label_location">Местоположение</string>
   <string name="title_activity_story_info">Информация</string>
@@ -277,33 +286,74 @@
   <string name="info">Информация</string>
   <string name="send_logcat_to_support">Отправить Logcat в службу поддержки</string>
   <string name="restarting_storymaker">Перезапуск StoryMaker...</string>
-  <string name="send">Отослать</string>
+  <string name="send">Отправить</string>
   <string name="title_activity_press_secure">PressSecure</string>
+  <string name="title_activity_publish">Активность публикаций</string>
   <string name="uploading_to_soundcloud">Выгрузка в SoundCloud...</string>
-  <string name="uploading_to_facebook">Выгрузка в Facebook...</string>
-  <string name="uploading_to_internet_archive">Выгрузка в интернет-архив...</string>
+  <string name="uploading_to_s3">Загрузка в S3...</string>
+  <string name="uploading_to_facebook">Загрузка на Facebook...</string>
+  <string name="uploading_to_internet_archive">Загрузка в интернет-архив...</string>
   <string name="no_site_selected">Не выбран сайт.</string>
   <string name="exported_stories">Экспорт</string>
   <string name="no_title">Нет заголовка.</string>
-  <string name="title_exports">Опубликованные истории</string>
+  <string name="title_exports">Опубликованные сюжеты</string>
   <string name="last_modified">Последние изменения</string>
+  <string name="no_medium">(нет носителя)</string>
+  <string name="learning_guide_description">Создайте захватывающее повествование.</string>
   <string name="extracting_audio_multiple">Извлечение аудио дорожки</string>
   <string name="crossfading_audio">Настройка плавного перехода в аудио...</string>
   <string name="crossfading_audio_multiple">Настройка плавного перехода в аудио дорожке</string>
-  <string name="converting_audio">Конвертирование в выходное аудио...</string>
+  <string name="fade_audio">Используйте затухание и усиление звука...</string>
+  <string name="converting_audio">Идет преобразование в аудио...</string>
   <string name="export_error_1">Что-то пошло не так с экспортом медиа информации</string>
   <string name="export_error_2">Ошибка</string>
-  <string name="processing_audio">Обработка аудиодорожек...</string>
-  <string name="processing_audio_multiple">Обработка аудиодорожки...</string>
+  <string name="processing_audio">Идет обработка аудиодорожек...</string>
+  <string name="processing_audio_multiple">Идет обработка аудиодорожки...</string>
   <string name="mixing_tracks">Сведение дорожек</string>
   <string name="trimming_merging">Обрезка и слияние видео</string>
   <string name="merging_video_audio">Слияние видео и аудио...</string>
   <string name="export_error_3">Что-то пошло не так с экспортом медиа информации</string>
   <string name="export_error_4">Ошибка</string>
+  <string name="publishing_to_storymakerorg">Публикация на StoryMaker.org...</string>
+  <string name="published_to_storymaker">Опубликовано в StoryMaker.org!</string>
+  <string name="you_are_not_signed_into_storymakerorg">Вы не зарегистрированы на StoryMaker.org!</string>
+  <string name="fb_post_not_public">Только открытая публикация в Facebook может быть опубликована на StoryMaker.org!</string>
+  <string name="send_feedback">Обратная связь</string>
+  <string name="download_content_pack">Скачать контент?</string>
+  <string name="stop_download">Остановить загрузку?</string>
+  <string name="resume_download">Продолжить загрузку?</string>
+  <string name="finished_downloading">Загрузка завершена.</string>
+  <string name="home_downloading_content">Загрузка контента и/или обновление установленных файлов</string>
+  <string name="home_content_missing">Невозможный путь доступа, содержимое отсутствует!</string>
+  <string name="home_metadata_missing">Невозможно размещение метаданных</string>
+  <string name="home_index_missing">Невозможно определить содержимое</string>
+  <string name="home_please_wait">Пожалуйста подождите, идет загрузка</string>
   <!--NEW/CACHEWORD-->
+  <string name="lock_screen_open_button_text">РАЗБЛОКИРОВАТЬ ПРИЛОЖЕНИЕ</string>
+  <string name="lock_screen_pin_enter_text">Введите PIN  код для розблокировки приложения</string>
+  <string name="lock_screen_create_button_text">СОЗДАЙТЕ PIN КОД</string>
+  <string name="lock_screen_pin_create_text">Введите  новый PIN код для того, чтоб заблокировать приложение</string>
+  <string name="lock_screen_pin_confirm_text">Введете PIN код еще раз для подтверждения</string>
+  <string name="menu_lock">ЗАБЛОКИРОВАТЬ</string>
+  <string name="catalog_menu_catalog">Каталог</string>
+  <string name="catalog_menu_guides">Инструкции</string>
   <string name="catalog_menu_lessons">Уроки</string>
+  <string name="catalog_menu_templates">Шаблоны</string>
   <string name="home_menu_home">Домашняя</string>
   <string name="home_menu_stories">Сюжеты</string>
+  <string name="home_menu_guides">Инструкции</string>
   <string name="home_menu_lessons">Уроки</string>
-  <string name="home_empty_btn_stories">Новая история</string>
+  <string name="home_menu_templates">Шаблоны</string>
+  <string name="home_empty_home">Рассмотрите наш каталог и узнайте все способы, с помощью которых вы сможете улучшить ваши сюжеты.</string>
+  <string name="home_empty_stories">У вас еще нет сохраненных сюжетов.</string>
+  <string name="home_empty_guides">У вас еще нет руководств. Загрузите руководство и усовершенствуйте свою технику.</string>
+  <string name="home_empty_lessons">Ищите возможности научиться? Загрузите набор уроков, чтоб углубиться в тему.</string>
+  <string name="home_empty_templates">У вас еще нет шаблонов. Загрузите шаблоны и у вас появятся элементы сюжета для повторного использования.</string>
+  <string name="home_empty_btn_home">Пролистать каталог</string>
+  <string name="home_empty_btn_stories">Новый сюжет</string>
+  <string name="home_empty_btn_guides">Использовать руководство</string>
+  <string name="home_empty_btn_lessons">Загрузить урок</string>
+  <string name="home_empty_btn_templates">Использовать шаблон</string>
+  <string name="home_tab_latest_stories">Недавние сюжеты</string>
+  <string name="home_tab_latest_installation">Недавний контент</string>
 </resources>

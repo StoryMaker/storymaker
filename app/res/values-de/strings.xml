@@ -2,6 +2,7 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string name="app_name">StoryMaker 2</string>
   <string name="app_description">Videos mit StoryMaker zu erstellen ist nun einfacher als zuvor. Unsere einzigartigen Vorlagen und Unterrichtsstunden leiten dich durch die kompletten kreativen Schritte. StoryMaker erlaubt es dir deine Geschichten über das Smartphone zu bearbeiten und vereinfacht das abschließen. Nachdem du eine Datei fertig erstellt hast, kannst du diese auf deine lieblings Plattform veröffentlichen.</string>
+  <string name="title_catalog">Katalog</string>
   <string name="title_projects">Geschichten</string>
   <string name="title_lessons">Lektionen</string>
   <string name="action_publish">Veröffentlichen</string>
@@ -85,6 +86,7 @@
   <string name="new_story_choose_template">Themen Voralge</string>
   <string name="home_new_story">Erstelle eine Geschichte</string>
   <string name="home_start_a_lesson">Entdecke mehr Stunden</string>
+  <string name="title_activity_catalog">Katalog</string>
   <string name="title_activity_lessons">Lektionen</string>
   <string name="title_activity_scene_editor">Szenen-Editor</string>
   <string name="title_activity_choose_template">Wählen Sie eine Vorlage</string>
@@ -100,6 +102,7 @@
   <string name="story_publish_topics">Themen</string>
   <string name="story_publish_topics_hint">Geschlecht</string>
   <string name="story_publish_location">Ort</string>
+  <string name="story_publish_location_hint">Tipp dein entsprechenden Ort ein </string>
   <string name="story_publish_share">Teilen</string>
   <string name="story_publish_send_via">Senden via</string>
   <string name="story_publish_status">Status</string>
@@ -112,6 +115,7 @@
   <string name="title_section3">Bereich 3</string>
   <string name="title_section2">Bereich 2</string>
   <string name="title_section1">Bereich 1</string>
+  <string name="title_activity_test_drag">TestZiehen</string>
   <!--Screen title before and during recording-->
   <!--Screen title after recording-->
   <!--Screen title while playing back a recording-->
@@ -169,6 +173,7 @@
   <string name="open_file_explorer">Öffne Datei-Explorer</string>
   <string name="alert_message_delete_record">Möchten Sie die ausgewählte Aufnahme löschen?</string>
   <!--add for libra end-->
+  <string name="help_clip_select">Waehle und Ziehe deinen gewuenschten Clip. Klick auf das Clipbild um ein Video, Foto oder Ton aufzunehmen</string>
   <!--youtube upload-->
   <string name="lesson_status_have_not_started">Noch nicht gestartet</string>
   <string name="lessons_congratulations_you_have_completed_the_lesson_">Sie haben eine Lektion vollständig bearbeitet!</string>
@@ -186,6 +191,7 @@
   <string name="connecting_to_youtube_">verbinden zu Youtube...</string>
   <string name="uploading_to_storymaker">veröffentlicht auf StoryMaker...</string>
   <string name="rendering_clips_">Rendert Videos</string>
+  <string name="you_must_enter_a_project_name">Gebe ein Titel fuer deinen Arbeitsentwurf ein. Du kannst es spaeter aendern.</string>
   <string name="delete_clip">Video löschen?</string>
   <string name="add_new_clip_to_the_scene_">Neuen Clip zur Szene hinzufügen?</string>
   <string name="video_project_project_type">Video-Projekt</string>
@@ -265,6 +271,7 @@
   <string name="export_error_3">Etwas ist mit dem Export schiefgelaufen</string>
   <string name="export_error_4">Fehler</string>
   <!--NEW/CACHEWORD-->
+  <string name="catalog_menu_catalog">Katalog</string>
   <string name="catalog_menu_lessons">Lektionen</string>
   <string name="home_menu_home">Zurück</string>
   <string name="home_menu_stories">Geschichten</string>
