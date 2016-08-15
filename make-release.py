@@ -22,9 +22,9 @@ version = "{0}-build{1}".format(version_name, version_code)
 
 print("building app version {0}".format(version))
 
-run("./gradlew clean")
+#run("./gradlew clean")
 
-#'''
+'''
 run("./gradlew assembleMainSqlCipherRelease")
 run("jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore storymaker-release.key app/build/outputs/apk/app-mainSqlCipher-release-unsigned.apk release")
 run("jarsigner -verify -verbose -certs app/build/outputs/apk/app-mainSqlCipher-release-unsigned.apk")
