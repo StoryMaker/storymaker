@@ -1,6 +1,6 @@
 #!/bin/sh
 
-tx pull -f -l ru,ar,bs_BA,sr,es,fa_IR,de,mk,ko,fr,rw,vi --minimum-perc=10
+tx pull -f -l ru,ja,nl,ar,bs_BA,sr,es,fa_IR,de,mk,ko,fr,rw,vi --minimum-perc=10
 
 # fix bs
 

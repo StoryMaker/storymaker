@@ -86,6 +86,9 @@ def update_strings():
     os.system('cd liger-content ; python generate_localized_content.py ')
 
 def zip_pack(pack, version):
+    if not os.path.exists("liger-content/zips"):
+        os.makedirs("liger-content/zips")
+
     print "content generated at: liger-content/zips/{0}.main.{1}.obb".format(pack, version)
     os.system("rm liger-content/assets/{0}.main.{1}.obb ; cd liger-content/assets ; zip -n .mp4:.ogg:.mov:.qt:.wav:.au:.aiff:.3gp:.avi -r ../zips/{0}.main.{1}.obb org.storymaker.app/{0}".format(pack, version))
     print("")
@@ -264,6 +267,7 @@ def push_test_files(pack, version, avail_index_version):
     push_test_indexes(pack, version, avail_index_version)
     push_obb_file(pack, version)
 
+'''
 content_packs = [
     'journalism_part_1-persian',
     'journalism_part_1-mena',
@@ -293,6 +297,7 @@ content_packs = [
     "t_photo",
     "t_news"
 ]
+'''
 
 # TODO we need to iterate over the available index template and for each item in it, zip the content and get the size and checksum from it:
 #        "expansionFileSize": "YYY",

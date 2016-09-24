@@ -74,8 +74,10 @@
         <item name="english">English</item>
         <item name="arabic">Arabic</item>
         <item name="bosnian">Croatian/Bosnian</item>
+        <item name="dutch">Dutch</item>
         <item name="french">French</item>
         <item name="german">German</item>
+        <item name="japanese">Japanese</item>
         <item name="korean">Korean</item>
         <item name="macedonian">Macedonian</item>
         <item name="persian">Persian</item>
@@ -90,8 +92,10 @@
         <item name="english">en</item>
         <item name="arabic">ar</item>
         <item name="bosnian">bs</item>
+        <item name="dutch">nl</item>
         <item name="french">fr</item>
         <item name="german">de</item>
+        <item name="japanese">ja</item>
         <item name="korean">ko</item>
         <item name="macedonian">mk</item>
         <item name="persian">fa</item>
