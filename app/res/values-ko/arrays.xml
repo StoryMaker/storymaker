@@ -18,6 +18,18 @@
     <item>비디오그래피</item>
     <item>스토리</item>
   </string-array>
+  <string-array name="array_story_locations">
+    <item>미국</item>
+    <item>캘리포니아</item>
+    <item>오클랜드</item>
+    <item>이집트</item>
+    <item>이라크</item>
+    <item>모로코</item>
+    <item>튀니지</item>
+    <item>짐바브웨</item>
+    <item>체코</item>
+    <item>베트남</item>
+  </string-array>
   <string-array name="array_story_sections">
     <item>정치</item>
     <item>비지니스</item>

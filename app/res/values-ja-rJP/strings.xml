@@ -22,7 +22,7 @@
   <string name="menu_share_media">共有</string>
   <string name="menu_save_media">保存</string>
   <string name="menu_play_media">再生</string>
-  <string name="menu_render_media">提出</string>
+  <string name="menu_render_media">描画</string>
   <string name="menu_bug_report">バグ報告</string>
   <string name="menu_login">ログイン</string>
   <string name="menu_logs">ログを送信</string>

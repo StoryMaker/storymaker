@@ -1,42 +1,359 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+  <string name="app_name">StoryMaker 2</string>
+  <string name="app_description">Seenaa hawwataa qopheessuun karaa StoryMaker yoom irra iyyuu caalaa salphaa ta\'eera. Qajojiin, qaqqabbbiin fi barumsooti addaa keenya sadarkaalee hundarratti si fayyadu. StoryMaker\'iin akka ati bilbilakeerratti qabiyyeewwan jiran gulaaltu fi seenaa akka salphaatti qopheessitee xumurtu godha. Erga xumurtee StoryMaker\'iin seenicha bakka barbaadderratti akka maxxansitu godha.</string>
+  <string name="title_catalog">Galmee</string>
+  <string name="title_projects">Seenaawwan</string>
+  <string name="title_lessons">Kutaalee</string>
+  <string name="action_publish">Maxxansi</string>
   <!--menus-->
+  <string name="menu_new_project">Haaraa</string>
+  <string name="menu_projects">seenaawwan</string>
+  <string name="menu_lessons">Kutaalee</string>
+  <string name="menu_glossary">Jibsoo</string>
+  <string name="menu_contacts">Quunnamtoota</string>
+  <string name="menu_settings">Qindaa\'ina</string>
+  <string name="menu_accounts">Eenyummeessaa</string>
+  <string name="menu_archive">Man-kuusa</string>
+  <string name="drawer_profile">Seeni</string>
   <!--FIXME: rename-->
+  <string name="menu_add_media">Dabali</string>
+  <string name="menu_capture_media">Galme</string>
+  <string name="menu_share_media">Hiri</string>
+  <string name="menu_save_media">Ol kaa\'i</string>
+  <string name="menu_play_media">Taphachiisi</string>
+  <string name="menu_render_media">Qopheessi</string>
+  <string name="menu_bug_report">Gabaasa Dogantaa</string>
+  <string name="menu_login">Seeni</string>
+  <string name="menu_logs">Dilbaa Ergi</string>
+  <string name="menu_update">Haromsi</string>
+  <string name="menu_about">Waa\'ee</string>
+  <string name="menu_save_project">Ol kaa\'i</string>
+  <string name="menu_overlay_camera">Kaameeraa</string>
+  <string name="menu_add_new_shot">Muraa Bakkatti Dabali</string>
+  <string name="menu_export_project_files">Faayilii Pirojektii akka Zip itti Alergi</string>
+  <string name="menu_join_storymaker">Hawaasa StoryMaker\'itti dabalami</string>
+  <string name="menu_sign_up">Galmaa\'i / Seeni</string>
+  <string name="menu_upload_manager">Hoogganaa Olfee\'iinsaa</string>
+  <string name="menu_uploads">Kan Olfe\'aman</string>
+  <string name="welcome_message">Akkam Jirta!\nBaga nagaan gara StoryMaker dhufte</string>
   <!--project list-->
+  <string name="default_project_list_view">Pirojektii qopheessuuf kun jalqaba keeti!\n\n- jalqabuuf tuqi -</string>
+  <string name="default_project_view_message">Filannoo qabda.\nSeenaakee karaa suur-sagalee, sagalee yookaan suuraa himi\n\n- dabaluuf tuqi -</string>
   <!--video processing-->
+  <string name="pref_out_fps_title">Sadarkaa goodaayyaa bahaa (fps)</string>
+  <string name="pref_out_fps_summary">Goodaayyaa sekoondiitti suur-sagalee bahaa ol kaa\'uuf (15-30)tti</string>
+  <string name="pref_out_rate_title">Bitreetii bahaa (kbps)</string>
+  <string name="pref_out_rate_summary">Bitreetii bahaa suur-sagalee (300-1500)</string>
+  <string name="pref_out_format_title">Dhangi\'i Bahaa</string>
+  <string name="pref_out_format_summary">Dhangii baataa faayilii (mo4, 3gp, ogg)</string>
+  <string name="pref_out_vcodec_title">Xiguu Suur-sagalee Bahaa</string>
+  <string name="pref_out_vcodec_summary">ziguu suur-sagalee ( copy, libx264, kkf)</string>
+  <string name="pref_out_acodec_title">xiguu sagalee bahaa</string>
+  <string name="pref_out_acodec_summary">xiguu sagalee (copy, aac, mp3, kkf)</string>
+  <string name="pref_out_vwidth_title">Bal\'ina Suur-sagalee Maammiloo (px)</string>
+  <string name="pref_out_vwidth_summary">bal\'ina suur-sagalee maammikoo suur-sagalee baheef</string>
+  <string name="pref_out_vheight_title">Dhaabbii Suur-sagalee Maammiloo (px)</string>
+  <string name="pref_out_vheight_summary">dhaabbii suur-sagalee maammiloo suur-sagalee baheef</string>
+  <string name="hintTitle">Mataduree</string>
+  <string name="hintStartTime">jalqabi (00:00:00)</string>
+  <string name="hintEndTime">turtii (00:00:00)</string>
+  <string name="hintFadeIn">qulqullina dabale (goodaayyaa)</string>
+  <string name="hintFadeOut">qulqullina hir\'ate (goodaayyaa)</string>
+  <string name="start_recording">Galme</string>
+  <string name="stop_recording">Dhaabi</string>
+  <string name="play_recording">Taphachiisi</string>
+  <string name="save_recording">Ol kaa\'i</string>
+  <string name="downloading_lessons_from_server_">Barnoota kaadimaarraa buusaa jira...</string>
+  <string name="checking_for_updates_">Haaromsa barbaadaa jira...</string>
   <!--LOG COLLECTOR-->
+  <string name="app_name_lc">Dilbaa Sassabduu</string>
+  <string name="message_subject">Dilbaa meeshaa andirooyidii</string>
+  <string name="acquiring_log_progress_dialog_message">Dilbaa system\u2026 keessaa argachuu</string>
+  <string name="chooser_title">Fayyadama dilba ittiin ergitu filadhu</string>
+  <string name="failed_to_get_log_message">Sirnicharraa dilbaa argachuu dadhabe.</string>
+  <string name="main_dialog_text">Fayyadamni kun dilbaa meeshichaa funaannachuu yaala.
+Dilbaan funaaname fayyadama fedhakeen ergama
+Ergamuusaa dura carraa ilaaltee jijjiiruus ni qabaatta</string>
+  <string name="title_home_projects">Pirojektii</string>
+  <string name="title_home_activity">Gocha</string>
+  <string name="title_lessons_lessons">Kutaalee</string>
+  <string name="title_lessons_glossary">Jibsoo</string>
+  <string name="hello_world">Hello Addunya!</string>
+  <string name="title_activity_home">Ka\'umsa</string>
+  <string name="new_story_name_it">Maqaa dha\'i.</string>
+  <string name="new_story_working_title">Mataduree hojii...</string>
+  <string name="new_story_choose_something">Waan bal\'ina qabu kan mataduricha ibsuu fi qaama hordofu hawwatu filadhu.</string>
+  <string name="new_story_choose_a_medium">Karaa filadhu.</string>
   <!--<string name="new_story_video">Video: Something here about why simple, short video is good! Ideally it should be about the same length as the other strings.</string>
    	<string name="new_story_essay">Photo Essay: Tell a story about one character. Follow this template to produce a simple photo essay story about one character.</string>
     <string name="new_story_photo">Single Photo: Telling a strong story with one image is a skill. To simplify, these templates explain some primary photo types.</string>
     
     <string name="new_story_audio">Audio: Something here about using audio to tell a story. Personally, I really like to listen to the radio and podcasts while I do housework!</string>-->
+  <string name="new_story_simple_story">Seenaa Salphaa</string>
+  <string name="new_story_choose_template">Qajojii Bakkaa</string>
+  <string name="home_new_story">SEENAA QOPHEESSI</string>
+  <string name="home_start_a_lesson">KUTAALEE ILAALI</string>
+  <string name="title_activity_catalog">Galmee</string>
+  <string name="title_activity_lessons">Kutaalee</string>
+  <string name="title_activity_scene_editor">Gulaalaa Bakkaa</string>
+  <string name="title_activity_choose_template">Qajojii Filadhu</string>
+  <string name="title_activity_story_template">Seenaa Qajojii</string>
+  <string name="tab_make">Qopheessi</string>
+  <string name="tab_review">Qoradhu</string>
+  <string name="tab_publish">Xumuri</string>
+  <string name="tab_finish">Xumuri</string>
+  <string name="tab_add_clips">Qopheessi</string>
+  <string name="tab_order">Gulaali</string>
+  <string name="story_publish_section">Kutaa</string>
+  <string name="story_publish_section_hint">Ispoortii</string>
+  <string name="story_publish_topics">Mataduree</string>
+  <string name="story_publish_topics_hint">Saala</string>
+  <string name="story_publish_location">Bakka</string>
+  <string name="story_publish_location_hint">Bakka barbaachisaa galchi</string>
+  <string name="story_publish_share">Yagutooma</string>
+  <string name="story_publish_send_via">Ergi karaa</string>
+  <string name="story_publish_status">Haalojii</string>
+  <string name="story_publish_status_processing">Qopheessuu</string>
+  <string name="story_publish_status_not">Kan Hin Maxxanfamne</string>
+  <string name="story_publish_describe_hint">Seenaakee ibsi...</string>
+  <string name="story_publish_story_title">Mataduree Seenaa As</string>
+  <string name="story_publish_story_date">Guyyaa Seenaa as</string>
   <!--delete these below-->
+  <string name="title_section3">Kutaa 3</string>
+  <string name="title_section2">Kutaa 2</string>
+  <string name="title_section1">Kutaa 1</string>
+  <string name="title_activity_test_drag">TestDrag</string>
   <!--Screen title before and during recording-->
   <!--Screen title after recording-->
   <!--Screen title while playing back a recording-->
   <!--Label shown during recording-->
+  <string name="recording">Waraabuu</string>
   <!--Label shown when the recording is stopped for a reason other than the user stopping it (e.g. the sd card was removed)-->
+  <string name="recording_stopped">Waraabbiin dhaabbate</string>
   <!--label shown when there is not enough space to record something-->
+  <string name="storage_is_full">Kuusaan guutuudha</string>
   <!--label shown when the recording has reached maximum allowed file size-->
+  <string name="max_length_reached">Dheerina dhumaarra ga\'eera</string>
   <!--label shown when there is no sd card available to record to-->
+  <string name="insert_sd_card">Kaardiin SD barbaachisaadha</string>
   <!--label shown when there is more than 1 minute but less than 9 minutes of space left to record-->
   <!--label shown when there is less than 1 minute of space left to record-->
   <!--button to accept the current recording and return it to the caller-->
   <!--button to discard the current recording and return to the caller-->
   <!--acknowlegement button in a number of dialogs-->
+  <string name="button_ok">Tole</string>
   <!--Do not translate. Format of the timer that shows how much has been recorded so far-->
   <!--label shown before the user has recorded anything-->
   <!--the name under which recordings will be visible in the media database is formatted like this-->
   <!--all recordings will show up in the media database with this 'artist' name-->
+  <string name="audio_db_artist_name">Waraabbiinkee</string>
   <!--all recordings will show up in the media database with this 'album' name-->
+  <string name="audio_db_album_name">Waraabbii sagalee</string>
   <!--all recordings will show up in the media database in a playlist with this name-->
+  <string name="audio_db_playlist_name">Waraabbiikoo</string>
   <!--shown as the message in a dialog when an error occured because of an error accessing the sd card-->
+  <string name="error_sdcard_access">Kuusaa keessaa yookaan alaa argachuu hin dandeenye</string>
   <!--shown as the message in a dialog when the app encountered an unspecified internal error-->
+  <string name="error_app_internal">Dogoggora fayyadama keessaa</string>
   <!--shown as the message in a dialog when the recording could not be added to the media database-->
+  <string name="error_mediadb_new_record">Sagalee waraabame olkaa\'uu hin dandeenye</string>
   <!--shown as the message in a dialog when an export will tak up too much space-->
+  <string name="error_storage_space" formatted="false">Whoops, bakkaa ala taane. Maaloo tilmaamaan bakka %.2f%nMB qopheessiitii deebi\'ii yaali!</string>
   <!--add for libra begin-->
+  <string name="default_record_name">waraabbii maqaa hin qabne</string>
+  <string name="menu_view_record_list">Tarreeffama galmee ilali</string>
+  <string name="menu_setting">Qindaa\'ina</string>
+  <string name="delete_dialog_title">Waraabbii ammaa haquu barbaaddaa?</string>
+  <string name="overwrite_dialog_title">%s duraanuu jira. Bakka buusuu barbaaddaa?</string>
+  <string name="preferences_title">Qindaa\'ina</string>
+  <string name="pref_title_record_type">Gosa faayilii galmeessi</string>
+  <string name="prefDialogTitle_recordType">Maaloo gosa faayilii filadhu</string>
+  <string name="prefDefault_recordType">audio/3gpp</string>
+  <string name="pref_title_enable_high_quality">Qulqullina olka\'aa bani</string>
+  <string name="pref_summary_enable_high_quality">Faayilli sagalee qulqullina olka\'aa guddaa ta\'uu danda\'a</string>
+  <string name="pref_title_enable_sound_effect">Sagalee bani</string>
+  <string name="pref_summary_enable_sound_effect">Yeroo haalli jijjiiramutti sagalicha taphachuu</string>
+  <string name="notification_recording">Waraabaa jira...</string>
+  <string name="notification_stopped">Waraabbiin dhaabateera</string>
+  <string name="notification_warning">Kuusaa xiqqoo(daqiiqaa %d gadi)...</string>
+  <string name="sd_card_not_available">Kaardiin SD hin jiru</string>
+  <string name="open_file_explorer">Aloolaa faayilii bani</string>
+  <string name="alert_message_delete_record">Waraabbii filame haquu barbaaddaa?</string>
   <!--add for libra end-->
+  <string name="help_clip_select">Gosa muraa filachuuf irra haxaa\'i, isa booda suur-sagalee, suuraa yookaan sagalee jalqabsiisuuf fakkii muraa tuqi.</string>
   <!--youtube upload-->
+  <string name="lesson_status_have_not_started">Hin jalqabne</string>
+  <string name="lessons_congratulations_you_have_completed_the_lesson_">Kutaa kana xumurteetta!</string>
+  <string name="lesson_status_in_progress">Guddachaa jira</string>
+  <string name="lesson_status_complete">XUMURA!</string>
+  <string name="no_lessons_available_tap_to_load_">Barumsi hin jiru (fee\'uuf tuqi)</string>
+  <string name="_lesson_complete">kutichi xumurameera</string>
+  <string name="_of_">kan</string>
+  <string name="default_youtube_desc">Pirojektii StoryMaker</string>
+  <string name="view_published_media_online_or_local_copy_">Miidiyaalee maxxansaman karaarra ilaalii?</string>
+  <string name="choose_account_for_youtube_upload">Olfe\'uuf Eenyummeessaa Filadhu</string>
+  <string name="rendering">Mijeessuu</string>
+  <string name="rendering_project_">Pirojektii mijeessaa jira...</string>
+  <string name="publishing">Maxxansuu</string>
+  <string name="connecting_to_youtube_">You Tube irratti walindhii gochaa jira...</string>
+  <string name="uploading_to_storymaker">Iddoola StoryMaker\'itti maxxansaa jira...</string>
+  <string name="rendering_clips_">muraa mijeessaa jira...</string>
+  <string name="you_must_enter_a_project_name">Maaloo mataduree hojii yeroof galchi. Booda jijjiiruu dandeessa.</string>
+  <string name="delete_project_">Alergii Haqii?</string>
+  <string name="delete_story">Seenaa Haqii?</string>
+  <string name="delete_content_pack">Qarqabii Qabiyyee Haqii?</string>
+  <string name="delete_clip">Muraa haqii?</string>
+  <string name="add_new_clip_to_the_scene_">Muraa haaraa bakkichatti dabalii?</string>
+  <string name="video_project_project_type">Pirojektii Suur-sagalee</string>
+  <string name="photo_project_project_type">Pirojektii Suuraa</string>
+  <string name="audio_project_project_type">Pirojektii Sagalee</string>
+  <string name="photo_essay_project_project_type">Pirojektii Barruu Suuraa</string>
+  <string name="eula_title">Kan ittu waliigaltu:</string>
+  <string name="eula_accept">Haata\'u</string>
+  <string name="eula_refuse">Didi</string>
+  <string name="privacy_policy">Qajeelfama Iccitii Dhuunfaa</string>
+  <string name="end_user_license_agreement">Waliigaltee Eyyama Fayyadamaa</string>
+  <string name="send_annonymous_data">Daataa dhokataa fayyadama keessanii akka StoryMaker haaromsinuuf nuuf ergaa.</string>
+  <string name="by_clicking_accept">\'Haata\'u\' kan jedhurratti cuqaasuu keetiin Waliigaltee Eyyama Fayyadamaatti waliigalteetta jechuu fi Qajeelfama Iccitii Dhuunfaas dubbisteetta jechuudha.</string>
+  <string name="button_add_narration">Sagalee Karaarraa Waraabi</string>
+  <string name="button_play_narration">Sagalee Karaarraa Taphachiisi</string>
+  <string name="button_delete_narration">Sagalee Karaarraa Haqi</string>
+  <string name="button_render_preview">Durargii Mijeessi</string>
+  <string name="publish_sm">StoryMaker.cc</string>
+  <string name="publish_youtube">YouTube</string>
+  <string name="action_render">Alergi</string>
+  <string name="action_play">Taphachiisi</string>
+  <string name="action_share">Yagutooma</string>
+  <string name="cbRenderTypeLabel">Mijeessaa Suur-sagalee Saffisaa Fayyadami</string>
+  <string name="drawer_quick_capture">Saffisaan Qabachuu</string>
+  <string name="select_story_type">Gosa seenaa filadhu</string>
+  <string name="button_start_my_story">SEENAAKOO JALQABI</string>
+  <string name="home_intro_button_lessons">KUTAALEE ILAALI</string>
+  <string name="home_intro_button_projects">SEENAA QOPHEESSI</string>
+  <string name="created_with_storymaker_tag">StoryMaker\'iin kan hojjetame - https://storymaker.cc/</string>
+  <string name="err_you_need_at_least_one_account_configured_on_your_device">Meeshaakee irratti yoo xiqqaate eenyummeessaa tokko qabaachuu qabda.</string>
+  <string name="you_began_a_new_lesson">Kutaa biraa jalqabdeetta</string>
+  <string name="scene_editor_please_add_clips">Maaloo utuu iyyaatoo kana hin filatin dura iyyaatoo \'Qopheessi\' jedhurratti muraa dabali.</string>
+  <string name="scene_editor_trim_clip">Muraa kuti</string>
+  <string name="delete_warning">Gocha kana deebisuun hin danda\'amu!</string>
+  <string name="cancel">Dhiisi</string>
+  <string name="stop">Dhaabi</string>
+  <string name="delete">Haqi</string>
+  <string name="download">Buusuu</string>
+  <string name="pause">Afurfannoo</string>
+  <string name="resume">Ittifufi</string>
+  <string name="play_or_share_exported_media_">Miidiyaa alergii ta\'e taphachiisi yookaan yagutooma godhii?</string>
+  <string name="share_published_story">Seenaa maxxansame yaagutoomsii?</string>
+  <string name="err_storage_not_ready">Kuusaan alaa (SDCard) barreessuuf fi dubbisuuf yeroo ammaa jiraachuunsaa hin mul\'atu. StoryMaker\'iin kutaa kanaa fi daataa pirojektii seenaatiif fayyadamuu qaba. Maaloo meeshaakee ilaaliiti fayy lamkaasi.</string>
+  <string name="err_storage_not_available">Bakki kuusaa barreessuu fi dubbisuuf barbaadame yeroo ammaa hin jiru. StoryMaker\'iin kuusaa malee hojjechuu hin danda\'an.Adaraa Kaardii SD kamiinu ilaaluu fi/yookaan meeshaakee kompiyuutararraa buqqisi.</string>
+  <string name="scene_s_">bakka(oota)</string>
+  <string name="clip_s_">muraa(wwan)</string>
+  <string name="sc_app_not_found">Fayyadamni SoundCloud hin argamne!</string>
+  <string name="sc_app_not_found_message">Amma ijaaruu barbaaddaa?</string>
+  <string name="no_active_sc_account">Eenyummeessi SoundCloud kan hojjetu hin jiru, maaloo seeni/galmaa\'i</string>
+  <string name="operation_canceled">Dalagaan hafe</string>
+  <string name="could_not_get_token">Bakka buutuu argachuu hin dandeenye</string>
+  <string name="getting_details">Gadi fageenya fayyadamaa fudhachaa jira</string>
+  <string name="could_not_create_account">Eenyummeessaa uumuu hin dandeenye</string>
+  <string name="uploading">Olfe\'aa jira...</string>
+  <string name="canceled">Olfe\'uu hafe</string>
   <!--added for project export-->
+  <string name="export_dialog_title">Zip\'ii pirojektii kana yagutooma gochuu barbaaddaa?</string>
+  <string name="export_dialog_close">Cufi</string>
+  <string name="export_dialog_share">Yagutooma/qoodi</string>
+  <string name="title_activity_accounts">Eenyummeessaa</string>
+  <string name="action_settings">Sirreeffama</string>
+  <string name="label_activity_log">Dilba hojii</string>
+  <string name="label_title">Mataduree</string>
+  <string name="label_description">Ibsa</string>
+  <string name="label_tags">Iyyaatoo</string>
+  <string name="label_add">Dabali</string>
+  <string name="label_edit">Gulaali</string>
+  <string name="label_save">Ol kaa\'i</string>
+  <string name="label_activities">Dilba hojii</string>
+  <string name="hint_story_title">Mataduree Galchi</string>
+  <string name="hint_story_description">Seenaakee ibsi...</string>
+  <string name="hint_story_tag">#addtags</string>
+  <string name="label_section">Kutaa</string>
+  <string name="label_location">Bakka</string>
+  <string name="title_activity_story_info">Odeeffannoo</string>
+  <string name="title_activity_story_info_edit">Odeeffannoo Gulaali</string>
+  <string name="title_activity_project_tag_fragment">ProjectTagFragment</string>
+  <string name="title_activity_connect_account">Eenyummeessaa StoryMaker</string>
+  <string name="hint_no_description">Ibsa hin qabu.</string>
+  <string name="trim_clips">Muraa Kuti</string>
+  <string name="info">Odeeffannoo</string>
+  <string name="send_logcat_to_support">Galmee Dilbaa Deggeruuf Ergi</string>
+  <string name="restarting_storymaker">StoryMaker\'ii lamkaasaa jira...</string>
+  <string name="send">Ergi</string>
+  <string name="title_activity_press_secure">NageenyaTuqi</string>
+  <string name="title_activity_publish">HojiiMaxxansaa</string>
+  <string name="uploading_to_soundcloud">SoundCloud\'itti olfe\'aa jira...</string>
+  <string name="uploading_to_s3">Olfe\'aa jira gara S3...</string>
+  <string name="uploading_to_facebook">Facebook\'iitti olfe\'aa jira...</string>
+  <string name="uploading_to_internet_archive">Internet Archive\'itti olfe\'aa jira...</string>
+  <string name="no_site_selected">Iddoolli filatame hin jiru.</string>
+  <string name="exported_stories">Alergii</string>
+  <string name="no_title">Mataduree hin qabu</string>
+  <string name="title_exports">Seenaa maxxansame</string>
+  <string name="last_modified">Haaromsa Dhumaa</string>
+  <string name="no_medium">(homtuu hinjiru)</string>
+  <string name="learning_guide_description">Seenessuu hawwataa hojjedhu.</string>
+  <string name="extracting_audio_multiple">Faana sagalee baasi</string>
+  <string name="crossfading_audio">Sagalee walqixxeessaa jira...</string>
+  <string name="crossfading_audio_multiple">Faana sagalee walqixxeessaa jura</string>
+  <string name="fade_audio">Sagalee keessaa fi alatti walqixxeessi...</string>
+  <string name="converting_audio">Sagakee ba\'utti jijjiiraa jira...</string>
+  <string name="export_error_1">Alergii miidiyaarratti rakkoon mudateera</string>
+  <string name="export_error_2">Dogoggora</string>
+  <string name="processing_audio">Faana sagalee qopheessaa jira...</string>
+  <string name="processing_audio_multiple">Faana sagalee qopheessaa jira</string>
+  <string name="mixing_tracks">Faanota makaa jira</string>
+  <string name="trimming_merging">Suur-sagalee kutuu fi makuu</string>
+  <string name="merging_video_audio">Sagalee fi suur-sagalee makaa jira...</string>
+  <string name="export_error_3">Alergii miidiyaarratti rakkoon mudateera</string>
+  <string name="export_error_4">Dogoggora</string>
+  <string name="publishing_to_storymakerorg">Maxxansaa jira gara StoryMaker.org...</string>
+  <string name="published_to_storymaker">Maxxansaa jira gara StoryMaker.org!</string>
+  <string name="you_are_not_signed_into_storymakerorg">StoryMaker.org keessa hin seenne!</string>
+  <string name="fb_post_not_public">Maxxansa Facebook qofatu StoryMaker.org irratti maxxanfama!</string>
+  <string name="send_feedback">Duubdeebii Ergi</string>
+  <string name="download_content_pack">Qarqabi Qabiyyee Buusii?</string>
+  <string name="stop_download">Buusuu Dhaabii?</string>
+  <string name="resume_download">Buusuu Itti Fufii?</string>
+  <string name="finished_downloading">Buusuu Xumureera</string>
+  <string name="home_downloading_content">Qabiyyee buusaa jira fi/yookaan faayilii ijaaraman haaromsaa jira</string>
+  <string name="home_content_missing">Xurree kana fe\'uu hin dandeenye, qabiyyeetu dhabame!</string>
+  <string name="home_metadata_missing">Ibsa qabiyyee argachuu hin dandeenye</string>
+  <string name="home_index_missing">Kasaa qabiyyee argachuu hin dandeenye</string>
+  <string name="home_please_wait">Maaloo qarqabi qabiyyee hamma bu\'ee xumurutti eegi</string>
   <!--NEW/CACHEWORD-->
+  <string name="lock_screen_open_button_text">FAYY FURI</string>
+  <string name="lock_screen_pin_enter_text">Fayy furuuf PIN galchi</string>
+  <string name="lock_screen_create_button_text">PIN UUMI</string>
+  <string name="lock_screen_pin_create_text">Fayy saamsuuf PIN haaraa galchi</string>
+  <string name="lock_screen_pin_confirm_text">Dhugoomsuuf irra deebiidhan PIN galchi</string>
+  <string name="menu_lock">SAAMSI</string>
+  <string name="catalog_menu_catalog">Galmee</string>
+  <string name="catalog_menu_guides">Agarsiistota</string>
+  <string name="catalog_menu_lessons">Kutaalee</string>
+  <string name="catalog_menu_templates">Qajojiiwwan</string>
+  <string name="home_menu_home">Ka\'umsa</string>
+  <string name="home_menu_stories">Seenaawwan</string>
+  <string name="home_menu_guides">Agarsiistota</string>
+  <string name="home_menu_lessons">Kutaalee</string>
+  <string name="home_menu_templates">Qajojiiwwan</string>
+  <string name="home_empty_home">Galmee keenya sakatta\'uudhaan karaa itti seenaa gaarii qopheessan baraa.</string>
+  <string name="home_empty_stories">Hanga ammaatti seenaa olkeesse hin qabdu.</string>
+  <string name="home_empty_guides">Hanga ammaatti qajeeltoo hin qabdu. Qajeeltoo buusuudhaan malootakeetti dabaladhu</string>
+  <string name="home_empty_lessons">Baruuf ilaalaa jirtaa? Mataduricha gadi fageenyaan beekuuf qarqaba kutaalee buusi.</string>
+  <string name="home_empty_templates">Hanga ammaatti qajojiiwwan hinqabdu. Qajojiiwwan buusi isa booda qajeeltoowwan seenaa irra deddeebi\'uudhaan fayyadamtu argatta.</string>
+  <string name="home_empty_btn_home">Galmee Sakatta\'i</string>
+  <string name="home_empty_btn_stories">Oduu Haaraa</string>
+  <string name="home_empty_btn_guides">Agarsiistuu Qabadhu</string>
+  <string name="home_empty_btn_lessons">Kutaa Fe\'i</string>
+  <string name="home_empty_btn_templates">Qajojii Yaali</string>
+  <string name="home_tab_latest_stories">Oduuwwan Dhiyoo</string>
+  <string name="home_tab_latest_installation">Qarqabii Qabiyyee Dhiyoo</string>
 </resources>

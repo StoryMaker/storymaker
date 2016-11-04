@@ -1,28 +1,258 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+  <string name="terms_title">Storymaker 用語</string>
+  <string name="terms_text_1">あなたは、あなたのコンテンツに対してすべての所有権を保持し、あなたが望むときにはいつでも、それを取り下げることができます。そして、私たちはあなたのデータを何も販売しません。StoryMaker.cc であなたのコンテンツを共有することに同意することで、Storymaker で作成されたものと類似したあなたのストーリーを、スモールワールドニュースやパートナーが配置することを許可します。私たちは、ストーリーの種類、トピック、および場所に基づいてグループ化します。</string>
+  <string name="terms_text_2">あなたのストーリーはまだお好みの共有サイトに掲載されますが、同様に StoryMaker.cc に引用されます。タイトル、ストーリーの説明、およびタグは StoryMaker.cc に掲載され、あなたの共有サイトの他のすべてのコンテンツがあなたの個人フィードに引用されます。</string>
   <!--tutorial_lessons-->
+  <string name="tutorial_title_1">ストーリーテリングを学ぶ。</string>
+  <string name="tutorial_text_1">安全に、そしてすばらしいオーディオ、写真、およびビデオのストーリーを作成しながらジャーナリストになることを学びます。</string>
+  <string name="tutorial_title_2">正確であること。</string>
+  <string name="tutorial_text_2">ICFJと共同で開発され、私たちのジャーナリズムのレッスンは、確かにあなたをより良いレポーターになることをお教えします。</string>
+  <string name="tutorial_title_3">自分の身を守る。</string>
+  <string name="tutorial_text_3">私たちのデジタル安全レッスンは、あなたとあなたの情報元が安全を確保することを助けます。StoryMaker は、あなたのストーリーがあなたを取り上げるかどうかに関係なく、あなたの安全を維持することを目指しています。</string>
+  <string name="tutorial_title_4">あなたのストーリーをうまく伝えてください。</string>
+  <string name="tutorial_text_4">オーディオ、写真またはビデオといった異なるメディアに、最も適したストーリーがあります。各メディアの違いを学びます。</string>
+  <string name="tutorial_title_5">自分自身でテストします。</string>
+  <string name="tutorial_text_5">各レッスンはあなたの理解をテストするクイズで締めくくります。</string>
+  <string name="tutorial_title_6">学習を続けます。</string>
+  <string name="tutorial_text_6">StoryMaker.cc コミュニティであなたのストーリーを共有し、共有したそれぞれのストーリーで、より良いストーリーメーカーになることを学びます。</string>
   <!--/tutorial_lessons-->
   <!--tutorial_story-->
+  <string name="tutorial_title_7">ストーリーをうまく伝えてください。</string>
+  <string name="tutorial_text_7">優れたストーリーには、はじまり、本文、おわりがあります。あなたのストーリーに多くの内容を提供するために、誰かにインタビューしてください。彼らが住んでいる場所を私たちに示してください。これは個人的に保管してください。</string>
+  <string name="tutorial_title_8">メディアを選択してください。</string>
+  <string name="tutorial_text_8">オーディオ、写真、およびビデオは異なったストーリーテリングのスタイルに適しています。詳しくはレッスンをご覧ください。メディアを選択して、希望の学習をしてください。</string>
+  <string name="tutorial_title_9">5つで伝えてください。</string>
+  <string name="tutorial_text_9">ストーリーを伝えるために5つのクリップを使用します。ストーリーの場所を説明してください。主な主題を紹介してください。残りの3つは、はじまり、本文、おわりで話をします。</string>
+  <string name="tutorial_title_10">型を破りましょう。</string>
+  <string name="tutorial_text_10">最もインパクトがあるように異なる順序でクリップを組み立てます。</string>
+  <string name="tutorial_title_11">もっと長いストーリーを伝えてください。</string>
+  <string name="tutorial_text_11">ストーリーのテンプレートが方法を教えてくれます。</string>
   <!--/tutorial_story-->
   <!--template_description-->
+  <string name="template_audio_desc">あなたがストーリーを語る音を録音してください。誰が、何を。強力なビジュアルを得られない場合に、オーディオは素晴らしい選択肢になります。</string>
+  <string name="template_photo_desc">絵には千の言葉の価値があります。誰がまたは何が、あなたのストーリーで重要なのか、またはそれがどのように起こっているかを私たちに伝えてください。</string>
+  <string name="template_essay_desc">時にはいくつかの写真が必要です。私たちにどのようにストーリーが起こっているかを示してください。関連するシリーズの画像でストーリーを伝えてください。</string>
+  <string name="template_video_desc">説得力のある画像や起こっている様子を捉えてください。私たちに誰または何が重要なのか、そしてなぜかを示してください。</string>
   <!--/template_description-->
   <!--legacy_story_type-->
   <!--once we refactor to keep this extra text fields in the db instead of referencing this strings file we can remove these (after doing a migration step)-->
+  <string name="story_type_event_title">イベント</string>
+  <string name="story_type_issue_title">問題</string>
+  <string name="story_type_profile_title">プロフィール</string>
+  <string name="story_type_news_title">最新ニュース</string>
+  <string name="story_type_event_desc">イベントのストーリーには確立したタイムフレームと一組の場所があります。イベントで何が起こるかに焦点を当てます。いつイベントが起こるか、どこでそしてなぜその時と場所で起こるか、を中心にストーリーを整理します。</string>
+  <string name="story_type_issue_desc">問題のストーリーは、広範に主題を調べます。問題が人々のコミュニティまたはグループにどのように影響するかに焦点を当てます。それが誰に影響を与えるか、反応として何が行われているか、を中心にストーリーを整理します。</string>
+  <string name="story_type_profile_desc">特定の人物のプロフィールを作成します。その人物が誰であるかに焦点を当てます。その人物の日常生活、何が起こっているか、その人物がどのように課題を処理するか、を中心にストーリーを整理します。</string>
+  <string name="story_type_news_desc">最新ニュースは即時です。1つのアングルで焦点を当てます。事実とみなすこと、誰が、何を、どこで、いつ、を中心にストーリーを整理します。ユーザーのナレーションが内容を追加します。</string>
   <!--/ legacy_story_type-->
   <!--story_type-->
+  <string name="story_type_event_news_title">ニュース イベント</string>
+  <string name="story_type_event_feature_title">特集イベント</string>
+  <string name="story_type_event_breaking_title">最新ニュース イベント</string>
+  <string name="story_type_issue_social_title">社会問題</string>
+  <string name="story_type_issue_political_title">政治問題</string>
+  <string name="story_type_issue_economic_title">経済問題</string>
+  <string name="story_type_profile_public_title">公共プロフィール</string>
+  <string name="story_type_profile_professional_title">職業プロフィール</string>
+  <string name="story_type_profile_personal_title">個人プロフィール</string>
   <!--/story_type-->
   <!--story_type_description-->
+  <string name="story_type_event_news_desc">即時の重要性を持つイベントに関するストーリーは、多くの場合に予定され、および明確な開始と終了があります。選挙やデモは優れたニュースイベントになります。</string>
+  <string name="story_type_event_feature_desc">堅いニュースの意味を持たないかもしれないイベントに関するストーリー。スポーツイベント、近くの新規事業、新興の技術は優れた特集のイベントになります。</string>
+  <string name="story_type_event_breaking_desc">重要なニュースの価値を持つ予定外のイベント。火災、政府の公式な驚きの発表、または自然災害は、優れた最新ニュースイベントになります。</string>
+  <string name="story_type_issue_social_desc">コミュニティに影響を与える問題に関するストーリー。自治体の規制やインフラの変更は優れた社会問題になります。</string>
+  <string name="story_type_issue_political_desc">政府と公務員の仕事に関するストーリー。新たな法律や議会の変更についてのストーリーは優れた政治問題になります。</string>
+  <string name="story_type_issue_economic_desc">経済全体に関する、または人々の個人的な金融に関するストーリー。農家に対する政府補助金の変動の影響についてのストーリーは、優れた経済問題になります。</string>
+  <string name="story_type_profile_public_desc">公開ビューにおける対象者の役割に関するストーリー。公共のために活動している政治家のプロフィールは、優れた公共プロフィールになります。</string>
+  <string name="story_type_profile_professional_desc">人々とその仕事のストーリー。有名なアーティストやアスリートのプロフィールは優れた職業プロフィールです。</string>
+  <string name="story_type_profile_personal_desc">対象者の経験に関するストーリーは、多くの場合ニュースの中でイベントに関連します。戦争の記念日に、元兵士のプロフィールは優れた個人プロフィールかもしれません。</string>
   <!--/story_type_description-->
   <!--template_options-->
+  <string name="choose_level">レベルの選択</string>
+  <string name="choose_level_basic">基本</string>
+  <string name="choose_level_advanced">高度</string>
   <!--/template_options-->
   <!--story_type_new-->
+  <string name="overview">概要</string>
+  <string name="activity">アクティビティ</string>
+  <string name="impact">影響</string>
+  <string name="background">背景</string>
+  <string name="involvement">関与</string>
+  <string name="motivation">動機</string>
+  <string name="location">場所</string>
+  <string name="experience">経験</string>
+  <string name="results">結果</string>
+  <string name="next_steps">次のステップ</string>
+  <string name="moving_forward">前に移動</string>
+  <string name="conclusion">結論</string>
+  <string name="story_type_event_news_text1">このイベントで何が起こっていますか?</string>
+  <string name="story_type_event_news_text2">あなたはどのように関与していますか?</string>
+  <string name="story_type_event_news_text3">このイベントの影響を最も受けるのは誰ですか?</string>
+  <string name="story_type_event_news_text4">このイベントの背後にあるストーリーは何ですか?</string>
+  <string name="story_type_event_news_text5">このイベントの影響は何ですか?</string>
+  <string name="story_type_event_feature_text1">このイベントで何が起こっていますか?</string>
+  <string name="story_type_event_feature_text2">なぜあなたはこのイベントに関与しているのですか?</string>
+  <string name="story_type_event_feature_text3">そのイベントはどこで起こっていますか?</string>
+  <string name="story_type_event_feature_text4">あなたは個人的にどのように関与しているのですか?</string>
+  <string name="story_type_event_feature_text5">このイベントの影響は何ですか?</string>
+  <string name="story_type_event_breaking_text1">何が起こっていますか?</string>
+  <string name="story_type_event_breaking_text2">それはどこで起こっていますか?</string>
+  <string name="story_type_event_breaking_text3">誰が影響を受けますか?</string>
+  <string name="story_type_event_breaking_text4">すぐに何か危険がありますか?</string>
+  <string name="story_type_event_breaking_text5">人々はどのように対応していますか?</string>
+  <string name="story_type_issue_social_text1">社会的な問題を説明してください。</string>
+  <string name="story_type_issue_social_text2">いつ、どこで、この問題が始まったのですか?</string>
+  <string name="story_type_issue_social_text3">これはどのようにコミュニティに影響を与えていますか?</string>
+  <string name="story_type_issue_social_text4">これがあなたの人生にどのような影響を与えるかについて、私たちに話をしてください。</string>
+  <string name="story_type_issue_social_text5">この問題を修正するために、何をすることができますか?</string>
+  <string name="story_type_issue_political_text1">政治的な問題を説明してください。</string>
+  <string name="story_type_issue_political_text2">それは誰に直接影響を与えるのでしょうか?</string>
+  <string name="story_type_issue_political_text3">それはどのように政府に影響を与えるのでしょうか?</string>
+  <string name="story_type_issue_political_text4">なぜこれはあなたに個人的に重要なのですか?</string>
+  <string name="story_type_issue_political_text5">この問題を修正するために、何をすることができますか?</string>
+  <string name="story_type_issue_economic_text1">経済的な問題を説明してください。</string>
+  <string name="story_type_issue_economic_text2">この問題に、あなたの関係は何ですか?</string>
+  <string name="story_type_issue_economic_text3">それはどのように経済に影響を与えるのでしょうか?</string>
+  <string name="story_type_issue_economic_text4">これで影響を最も受けるのは誰ですか?</string>
+  <string name="story_type_issue_economic_text5">この問題を修正するために、何をすることができますか?</string>
+  <string name="story_type_profile_public_text1">あなたが誰かについて少し説明してください。</string>
+  <string name="story_type_profile_public_text2">いつ始めたのですか?</string>
+  <string name="story_type_profile_public_text3">職業は何ですか?</string>
+  <string name="story_type_profile_public_text4">あなたが仕事に誇りを感じた瞬間を説明してください。</string>
+  <string name="story_type_profile_public_text5">将来的に自分の役割をどのように見ていますか?</string>
+  <string name="story_type_profile_professional_text1">あなたは誰ですか、そしてあなたの仕事は何ですか?</string>
+  <string name="story_type_profile_professional_text2">あなたがどのように仕事をしているか説明してください。</string>
+  <string name="story_type_profile_professional_text3">なぜこの仕事があなたに重要なのですか?</string>
+  <string name="story_type_profile_professional_text4">この仕事でどのように影響を与えるのですか?</string>
+  <string name="story_type_profile_professional_text5">この仕事であなたにとって次は何でしょうか?</string>
+  <string name="story_type_profile_personal_text1">あなたが誰かについて少し説明してください。</string>
+  <string name="story_type_profile_personal_text2">あなたに起こった重要な経験は何ですか?</string>
+  <string name="story_type_profile_personal_text3">あなたはこの経験をどのように感じたのですか?</string>
+  <string name="story_type_profile_personal_text4">あなたは今と違って何をしますか?</string>
+  <string name="story_type_profile_personal_text5">あなたは将来起こる何を見たいですか?</string>
   <!--/story_type_new-->
   <!--story_type_old-->
+  <string name="scene_number">シーン &lt;xliff:g id=\"number\"&gt;%1$d&lt;/xliff:g&gt;</string>
+  <string name="when">いつ?</string>
+  <string name="how">どのように?</string>
+  <string name="what">何を?</string>
+  <string name="where">どこで?</string>
+  <string name="why">なぜ?</string>
+  <string name="story_type_event_text1">いつそのイベントが起こるのでしょうか?</string>
+  <string name="story_type_event_text2">そのイベントの目的は何ですか?</string>
+  <string name="story_type_event_text3">なぜそのイベントが重要なのですか?</string>
+  <string name="story_type_event_text4">いつそのイベントが起こるのでしょうか?</string>
+  <string name="story_type_event_text5">そのイベントはどのように構成されていますか?</string>
+  <string name="story_type_event_text6">そのイベントの目的は何ですか?</string>
+  <string name="story_type_event_text7">どこでそのイベントが起こるのでしょうか?</string>
+  <string name="story_type_event_text8">なぜそのイベントが重要なのですか?</string>
+  <string name="story_type_issue_text1">どのように問題がコミュニティに影響を与えるのでしょうか?</string>
+  <string name="story_type_issue_text2">最も影響を受けるのは誰ですか?</string>
+  <string name="story_type_issue_text3">反応として何が行われていますか?</string>
+  <string name="story_type_issue_text4">どのように問題がコミュニティに影響を与えるのでしょうか?</string>
+  <string name="story_type_issue_text5">いつ/どこで問題が始まったのですか?</string>
+  <string name="story_type_issue_text6">最も影響を受けるのは誰ですか?</string>
+  <string name="story_type_issue_text7">彼らが最も影響を受けるのはなぜですか?</string>
+  <string name="story_type_issue_text8">反応として何が行われていますか?</string>
+  <string name="story_type_profile_text1">その人物は誰ですか?</string>
+  <string name="story_type_profile_text2">その人物の課題は何ですか?</string>
+  <string name="story_type_profile_text3">その人物はどのように課題を処理しますか?</string>
+  <string name="story_type_profile_text4">その人物は誰ですか?</string>
+  <string name="story_type_profile_text5">その人物はどこから来ましたか?</string>
+  <string name="story_type_profile_text6">その人物の課題は何ですか?</string>
+  <string name="story_type_profile_text7">なぜその人物は、この課題に苦労しているのですか?</string>
+  <string name="story_type_profile_text8">どのようにその人物は課題を処理しますか?</string>
+  <string name="story_type_news_text1">何が起こっていますか?</string>
+  <string name="story_type_news_text2">誰が影響を受けますか?</string>
+  <string name="story_type_news_text3">それはどのように反応していますか?</string>
+  <string name="story_type_news_text4">何が起こっていますか?</string>
+  <string name="story_type_news_text5">ニュースはどこで起こっていますか?</string>
+  <string name="story_type_news_text6">誰が影響を受けますか?</string>
+  <string name="story_type_news_text7">それはなぜ起こったのですか?</string>
+  <string name="story_type_news_text8">それはどのように反応していますか?</string>
   <!--/story_type_old-->
   <!--prefs-->
+  <string name="prefs_category_networking_security_title">ネットワーク &amp; セキュリティ</string>
+  <string name="prefs_category_locales_title">地域</string>
+  <string name="prefs_category_media_title">メディア</string>
+  <string name="prefs_category_debug_title">デバッグ</string>
+  <string name="prefs_storymaker_server_title">StoryMaker サーバー</string>
+  <string name="prefs_storymaker_server_summary">すべての StoryMaker のコンテンツをホストするサーバー</string>
+  <string name="prefs_use_tor_title">Orbot (Tor) を使用する</string>
+  <string name="prefs_use_tor_summary">Orbot アプリを使用し、Tor ネットワーク経由で、すべてのネットワークトラフィックを送信します</string>
+  <string name="prefs_sm_upload_title">StoryMaker にアップロード</string>
+  <string name="prefs_sm_upload_summary">デフォルトで StoryMaker サーバーへアップロードします</string>
+  <string name="prefs_use_download_manager_title">ダウンロードマネージャを使用する</string>
+  <string name="prefs_use_download_manager_summary">Android のダウンロードマネージャ サービスで StoryMaker のコンテンツをダウンロードします</string>
+  <string name="prefs_use_upload_manager_title">アップロードマネージャを使用する</string>
+  <string name="prefs_use_upload_manager_summary">Android のアップロードマネージャ サービスで StoryMaker のコンテンツをアップロードします</string>
+  <string name="prefs_youtube_acccount_title">YouTube アカウント</string>
+  <string name="prefs_youtube_acccount_summary">ビデオのアップロードに使用する YouTube アカウント。これはお使いのデバイスに登録する必要があります。</string>
+  <string name="prefs_youtube_login_title">YouTube ログイン</string>
+  <string name="prefs_youtube_login_summary">YouTube の Web 認証を使用します</string>
+  <string name="prefs_cacheword_timeout_title">Cacheword タイムアウト</string>
+  <string name="prefs_cacheword_timeout_summary">Cachewordの自動的にアプリケーションをロックするまでの秒数 (アプリケーションが再起動されます)</string>
+  <string name="prefs_soundcloud_account_title">SoundCloud アカウント</string>
+  <string name="prefs_soundcloud_account_summary">オーディオのアップロードに使用する SoundCloud アカウント</string>
+  <string name="prefs_interface_language_title">言語の選択</string>
+  <string name="prefs_interface_language_summary">StoryMaker がユーザーインターフェイスに使用する言語。</string>
+  <string name="prefs_photo_format_title">フォトエッセイ形式</string>
+  <string name="prefs_photo_format_summary">写真集としてフォトエッセイをアップロードします。</string>
+  <string name="prefs_slide_duration_title">スライド継続時間</string>
+  <string name="prefs_slide_duration_summary">フォトエッセイの各スライドの継続時間</string>
+  <string name="prefs_enable_compression_title">圧縮を有効にする</string>
+  <string name="prefs_enable_compression_summary">以下の設定を使用して、すべてのビデオおよびオーディオを圧縮します</string>
+  <string name="prefs_preprocess_3gp_title">3GP プリプロセス</string>
+  <string name="prefs_preprocess_3gp_summary">3GP ビデオクリップを MPEG-4 に変換します</string>
+  <string name="prefs_use_cat_command_title">\'Cat\' コマンドを使用する</string>
+  <string name="prefs_use_cat_command_summary">ビデオをマージするために \'cat\' コマンドを使用します</string>
+  <string name="prefs_video_codec_title">ビデオコーデック</string>
+  <string name="prefs_video_codec_summary">出力ビデオコーデック</string>
+  <string name="prefs_video_resolution_title">ビデオ解像度</string>
+  <string name="prefs_video_resolution_summary">出力ビデオ解像度</string>
+  <string name="prefs_video_width_title">ビデオの幅</string>
+  <string name="prefs_video_width_summary">出力ビデオの幅</string>
+  <string name="prefs_video_height_title">ビデオの高さ</string>
+  <string name="prefs_video_height_summary">出力ビデオの高さ</string>
+  <string name="prefs_video_bitrate_title">ビデオビットレート</string>
+  <string name="prefs_video_bitrate_summary">出力ビデオビットレート (kbps)</string>
+  <string name="prefs_video_framrate_title">ビデオフレームレート</string>
+  <string name="prefs_video_framrate_summary">出力ビデオフレームレート毎秒 (fps)</string>
+  <string name="prefs_audio_codec_title">オーディオコーデック</string>
+  <string name="prefs_audio_codec_summary">出力オーディオコーデック</string>
+  <string name="prefs_audio_bitrate_title">オーディオビットレート</string>
+  <string name="prefs_audio_bitrate_summary">出力オーディオビットレート (kbps)</string>
+  <string name="prefs_audio_samplerate_title">オーディオサンプルレート</string>
+  <string name="prefs_audio_samplerate_summary">オーディオ録音サンプルレート (khz)</string>
+  <string name="prefs_audio_crossfade_title">オーディオクロスフェード</string>
+  <string name="prefs_audio_crossfade_summary">オーディオクロスフェード長</string>
+  <string name="prefs_internal_storage_title">内部ストレージ</string>
+  <string name="prefs_internal_storage_summary">内部プロジェクトストレージを使用します</string>
+  <string name="prefs_iocipher_storage_title">IOCipher ストレージ</string>
+  <string name="prefs_iocipher_storage_summary">IOCipher 安全なストレージを使用します。</string>
+  <string name="prefs_youtube_method_title">YouTube 方法</string>
+  <string name="prefs_youtube_method_summary">認証方法種類をデバッグします</string>
   <!--/prefs-->
   <!--FirstStartActivity-->
+  <string name="sign_up_btn">STORYMAKER にサインアップ</string>
+  <string name="no_thanks_btn">いいえ結構です</string>
+  <string name="tos_btn">利用規約に同意します</string>
+  <string name="tos_dialog_title">利用規約</string>
+  <string name="tos_dialog_msg">続行する前にサービスの利用規約に同意してください</string>
+  <string name="tos_dialog_positive_button">よくできました</string>
+  <string name="acct_created_dialog_title">あなたのアカウントにアクセス</string>
+  <string name="acct_created_dialog_msg"><b>StoryMaker のパスワードがまもなくメールで送信されます。</b> パスワードを取得した後は、いつでもドロワーメニュー (画面左端からスワイプしてアクセスします) からログインできます。</string>
+  <string name="acct_created_dialog_positive_button">はじめましょう!</string>
   <!--ConnectAccountActivity-->
+  <string name="my_account">マイ STORYMAKER アカウント</string>
+  <string name="join_storymaker">StoryMakerコミュニティに参加</string>
+  <string name="create_account">マイアカウントを作成</string>
+  <string name="sign_in">サインアップ / ログイン</string>
+  <string name="sign_out">サインアウト</string>
   <!--ProjectTagFragment-->
+  <string name="no_tags_msg">No #tags added</string>
   <!--BaesActivity Drawer  (For Accessibility Descriptions)-->
+  <string name="open_drawer">ドロワーを開く</string>
+  <string name="close_drawer">ドロワーを閉じる</string>
 </resources>

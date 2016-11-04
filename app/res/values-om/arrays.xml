@@ -1,4 +1,46 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
+  <string-array name="story_sections">
+    <item>Siyaasa</item>
+    <item>Daldala</item>
+    <item>Ispoortii</item>
+    <item>Aartii</item>
+    <item>Saayinsii</item>
+    <item>Fayyaa</item>
+    <item>Barumsa</item>
+    <item>Naannoo</item>
+  </string-array>
+  <string-array name="lesson_sections">
+    <item>Gaazexeessummaa</item>
+    <item>Nageenya</item>
+    <item>Sagalee</item>
+    <item>Suuraa kaasuu</item>
+    <item>Suur-sagalee waraabuu</item>
+    <item>Seenaa</item>
+  </string-array>
+  <string-array name="array_story_locations">
+    <item>U.S.A.</item>
+    <item>Kaalifoorniyaa</item>
+    <item>Ooklaand</item>
+    <item>Misira</item>
+    <item>Iraaq</item>
+    <item>Morokoo</item>
+    <item>Tuuniisiyaa</item>
+    <item>Zimbaabuwee</item>
+    <item>Cheek Rippubilik</item>
+    <item>Veeyitnaam</item>
+  </string-array>
+  <string-array name="array_story_sections">
+    <item>Siyaasa</item>
+    <item>Daldala</item>
+    <item>Ispoortii</item>
+    <item>Aartii</item>
+    <item>Saayinsii</item>
+    <item>Fayyaa</item>
+    <item>Barumsa</item>
+    <item>Naannoo</item>
+    <item>Teekinooloojii</item>
+    <item>Deemsa</item>
+  </string-array>
   <!--<item>catalog</item>-->
 </resources>

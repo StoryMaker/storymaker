@@ -42,6 +42,7 @@
   <string name="default_project_view_message">Du hast die Wahl.\nErzähl deine Geschichte mit einem Video, Audio oder mit Fotos.\n\n -Tippe zum Hinzufügen-</string>
   <!--video processing-->
   <string name="pref_out_fps_title">Ausgehende Bildrate (FPS)</string>
+  <string name="pref_out_fps_summary">Bilder pro Sekunde zum Speichern des Output-Videos (15-30)</string>
   <string name="pref_out_rate_title">Ausgabe-Bitrate (kbps)</string>
   <string name="pref_out_rate_summary">Bitrate der Video-Ausgabe (300-1500)</string>
   <string name="pref_out_format_title">Ausgabeformat</string>
@@ -67,6 +68,7 @@
   <string name="checking_for_updates_">Prüfe auf Aktualisierungen...</string>
   <!--LOG COLLECTOR-->
   <string name="message_subject">Android-Geräteprotokoll</string>
+  <string name="chooser_title">Wähle eine App zum Senden des Logs</string>
   <string name="failed_to_get_log_message">Fehler beim Abrufen des Protokolls vom System.</string>
   <string name="title_home_projects">Projekte</string>
   <string name="title_home_activity">Aktivität</string>
@@ -192,6 +194,8 @@
   <string name="uploading_to_storymaker">veröffentlicht auf StoryMaker...</string>
   <string name="rendering_clips_">Rendert Videos</string>
   <string name="you_must_enter_a_project_name">Gebe ein Titel fuer deinen Arbeitsentwurf ein. Du kannst es spaeter aendern.</string>
+  <string name="delete_project_">Export löschen?</string>
+  <string name="delete_story">Geschichte löschen?</string>
   <string name="delete_clip">Video löschen?</string>
   <string name="add_new_clip_to_the_scene_">Neuen Clip zur Szene hinzufügen?</string>
   <string name="video_project_project_type">Video-Projekt</string>
@@ -203,7 +207,11 @@
   <string name="eula_refuse">Ablehnen</string>
   <string name="privacy_policy">Datenschutzerklärung</string>
   <string name="end_user_license_agreement">Endverbraucher Vereinbarung</string>
+  <string name="send_annonymous_data">Sende anonyme Nutzungsstatistiken, um uns bei der Weiterentwicklung von StoryMaker zu helfen</string>
   <string name="by_clicking_accept">Mit \"Akzeptieren\" stimmst du unseren Endverbraucher Vereinbarungen und den Geschäftsbedingungen zu und hast diese damit gelesen.</string>
+  <string name="button_add_narration">Voice-Over aufnehmen</string>
+  <string name="button_play_narration">Voice-Over abspielen</string>
+  <string name="button_delete_narration">Voice-Over löschen</string>
   <string name="button_render_preview">Vorschau anzeigen</string>
   <string name="publish_sm">Storymaker.cc</string>
   <string name="publish_youtube">YouTube</string>
@@ -219,10 +227,14 @@
   <string name="created_with_storymaker_tag">Erstellt mit StoryMaker - https://storymaker.cc/</string>
   <string name="err_you_need_at_least_one_account_configured_on_your_device">Sie müssen mindestens ein Konto auf Ihrem Gerät konfiguriert haben</string>
   <string name="you_began_a_new_lesson">Sie haben eine neue Lektion begonnen</string>
+  <string name="scene_editor_trim_clip">Clip kürzen</string>
   <string name="delete_warning">Dieses Vorhaben kann nicht mehr rückgängig gemacht werden!</string>
   <string name="cancel">Abbrechen</string>
   <string name="stop">Stopp</string>
   <string name="delete">Löschen</string>
+  <string name="download">Download</string>
+  <string name="pause">Pause</string>
+  <string name="resume">Fortsetzen</string>
   <string name="play_or_share_exported_media_">Die exportierte Datei abspielen oder veröffentlichen?</string>
   <string name="share_published_story">Die veröffentlichte Geschichte teilen?</string>
   <string name="scene_s_">Szene(n)</string>
@@ -236,6 +248,7 @@
   <string name="uploading">Hochladen…</string>
   <string name="canceled">Upload abgebrocen</string>
   <!--added for project export-->
+  <string name="export_dialog_title">Möchten Sie die Projekt Zip-Datei speichern?</string>
   <string name="export_dialog_close">Schließen</string>
   <string name="export_dialog_share">Teilen</string>
   <string name="title_activity_accounts">Konten</string>
@@ -250,6 +263,7 @@
   <string name="label_activities">Aktivitätsverlauf</string>
   <string name="hint_story_title">Geben Sie einen Titel ein</string>
   <string name="hint_story_description">Beschreiben Sie Ihre Geschichte...</string>
+  <string name="hint_story_tag">#tagshinzufügen</string>
   <string name="label_section">Bereich</string>
   <string name="label_location">Ort</string>
   <string name="title_activity_story_info">Info</string>
@@ -260,16 +274,27 @@
   <string name="restarting_storymaker">StoryMaker wird neu gestartet...</string>
   <string name="send">Senden</string>
   <string name="uploading_to_soundcloud">Lädt hoch zu SoundCloud...</string>
+  <string name="uploading_to_s3">Upload zu S3...</string>
   <string name="uploading_to_facebook">Lädt hoch zu Facebook...</string>
   <string name="uploading_to_internet_archive">Lädt ins Internet Archiv...</string>
   <string name="no_site_selected">Keine Seite ausgewählt.</string>
+  <string name="exported_stories">Exporte</string>
   <string name="no_title">Kein Titel.</string>
   <string name="title_exports">Veröffentlichte Geschichten</string>
   <string name="last_modified">Zuletzt bearbeitet</string>
+  <string name="no_medium">(kein Medium)</string>
+  <string name="extracting_audio_multiple">Extrahiere Audiotrack</string>
   <string name="export_error_1">Etwas ist mit dem Export schiefgelaufen</string>
   <string name="export_error_2">Fehler</string>
   <string name="export_error_3">Etwas ist mit dem Export schiefgelaufen</string>
   <string name="export_error_4">Fehler</string>
+  <string name="publishing_to_storymakerorg">Veröffentliche auf StoryMaker.org...</string>
+  <string name="published_to_storymaker">Auf StoryMaker.org veröffentlicht!</string>
+  <string name="you_are_not_signed_into_storymakerorg">Sie sind nicht bei StoryMaker.org angemeldet!</string>
+  <string name="send_feedback">Feedback senden</string>
+  <string name="stop_download">Download stoppen?</string>
+  <string name="resume_download">Download fortsetzen?</string>
+  <string name="finished_downloading">Download abgeschlossen</string>
   <!--NEW/CACHEWORD-->
   <string name="catalog_menu_catalog">Katalog</string>
   <string name="catalog_menu_lessons">Lektionen</string>

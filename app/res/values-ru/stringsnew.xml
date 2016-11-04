@@ -254,5 +254,5 @@
   <string name="no_tags_msg">#tags не добавлены</string>
   <!--BaesActivity Drawer  (For Accessibility Descriptions)-->
   <string name="open_drawer">Открыть Меню</string>
-  <string name="close_drawer">Закрыть меню</string>
+  <string name="close_drawer">Закрыть Меню</string>
 </resources>

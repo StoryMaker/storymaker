@@ -1,28 +1,258 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+  <string name="terms_title">Haala Waliigaltee StoryMaker</string>
+  <string name="terms_text_1">Qabiyyee keetiif mirga abbummaa guutuu qabda, yeroo barbaaddetti irraa kaasuu dandeessa, nuti daataakee kamiinuu hin gurgurru. Qabiyyeekee StoryMaker.cc irratti hiruutti waliigaluu keetiin Small World News fi kan waliin hojjetan seenaakee kan isa fakkaatan kan StoryMaker\'iin hojjetaman wajjin akka ka\'an goota. Akka gosa, mataduree, fi bakka isaatti gurmeessina.</string>
+  <string name="terms_text_2">Seenaanee kan maxxanfamu iddoola ati filatterratti ta\'ee, garuu StoryMaker.cc dhaan ni agarsiifama. Mataduree, ibsa seenaa, fi iyyaatoon StoryMaker.cc irratti ni maxxanfamu kan biraan iddoola irratti maxxansiterraa agarsiifamu. </string>
   <!--tutorial_lessons-->
+  <string name="tutorial_title_1">Seenaa himuu baradhu.</string>
+  <string name="tutorial_text_1">Utuu nageenyikee hin tuqaminii fi seenaa sagalee, suuraa fi suur-sagalee gaarii gaazexeessaa dhiyeessu ta\'uu baradhu.</string>
+  <string name="tutorial_title_2">Sirrii ta\'i.</string>
+  <string name="tutorial_text_2">ICFJ wajjin hojjechuutti guddachuudhaan, barumsi gaazexeessummaa gabaasaa gaarii akka taatu akka si barsiisu mirkaneeffachuu dandeessa.</string>
+  <string name="tutorial_title_3">Of eegi.</string>
+  <string name="tutorial_text_3">Barumsi nageenya dijitaalaa keenyaa akka atii fi maddikee nageenyisaanii eegamu gargaara. Bakki seenichaa utuu hin daangessin StoryMaker nageenya keessan eeguurratti xiyyeeffata.</string>
+  <string name="tutorial_title_4">Seenaakee caalmaatti himi.</string>
+  <string name="tutorial_text_4">Seenaadhaaf karaalee garagaraatu mijataaf, sagale, suuraa yookaan suur-sagalee ta\'uu danda\'a. Garagarummaa karaalee kana baradhu.</string>
+  <string name="tutorial_title_5">of qori.</string>
+  <string name="tutorial_text_5">Tokkoon tokkoon barumsa battallee hubannookee qoraniin xumuru.</string>
+  <string name="tutorial_title_6">Barachuu Ittifufi.</string>
+  <string name="tutorial_text_6">Seenaakee hawaasa StoryMaker.cc\'f hiri, tokkoon tokkoon seenaa hirtuun qopheessaa seenaa gaarii ta\'uu baradhu.</string>
   <!--/tutorial_lessons-->
   <!--tutorial_story-->
+  <string name="tutorial_title_7">Seenaawwan caalchisii himi.</string>
+  <string name="tutorial_text_7">Seenaa gaariin jalqaba, gidduu fi xumura qaba. Caalmaatti hubannoo akka dhiyeessituuf namootaa wajjin gaafannoo geggeessi. Eessa akka jiratan ibsi. Akka yaada dhuunfaatti kaa\'i.</string>
+  <string name="tutorial_title_8">Karaakee filadhu.</string>
+  <string name="tutorial_text_8">Sagaleen, suuraanii fi suur-sagaleen haala garagaraatiin seenaa himu. Caalmaatti barachuuf barumsoota jiran ilaali. Karaa tokko filadhuutii barachaa deemi.</string>
+  <string name="tutorial_title_9">Shan keessatti seenaa himi.</string>
+  <string name="tutorial_text_9">Seenaakee himuuf muraa shan fayyadami. Bakka seenaakee ibsi. Qaama xiyyeeffannoo jalqabaa beeksisi. Kan hafan sadan jalqaba, gidduu fi dhumaa wajjin seenaakee himu.</string>
+  <string name="tutorial_title_10">Bocicha cabsi.</string>
+  <string name="tutorial_text_10">Dhiibbaa caalu akka fiduuf muraakee duraa duuba garagaraatiin qindeessi.</string>
+  <string name="tutorial_title_11">Seenaa dheeraa himi.</string>
+  <string name="tutorial_text_11">Qajojiin Seenaa akkasaa sitti hima.</string>
   <!--/tutorial_story-->
   <!--template_description-->
+  <string name="template_audio_desc">Sagalee eenyu, maal jedhee seenaakee himu waraabi. Sirriitti waan mul\'atu yoo hin argattu ta\'e, sagaleen filannoo gaariidha.</string>
+  <string name="template_photo_desc">Fakkiin jecha kuma gita. Eenyu yookaan maal akka barbaachisaa ta\'e nutti agarsiisi yookaan akka inni itti ta\'u.</string>
+  <string name="template_essay_desc">Yeroo tokko tokko suuraa baayyeetu barbaachisa. Akka seenichi itti ta\'u nutti agarsiisi, suuraalee wal fakkaatan tarreessuun seenaa himi.</string>
+  <string name="template_video_desc">Yeroo gochi ta\'utti suuraa hawwataa kaasi. Eeny yookaan maal akka barbaachisaa ta\'ee fi maaliif kan jedhu nutti agarsiisi.</string>
   <!--/template_description-->
   <!--legacy_story_type-->
   <!--once we refactor to keep this extra text fields in the db instead of referencing this strings file we can remove these (after doing a migration step)-->
+  <string name="story_type_event_title">Taatee</string>
+  <string name="story_type_issue_title">dhimma</string>
+  <string name="story_type_profile_title">Dhimma Dhuunfaa</string>
+  <string name="story_type_news_title">Oduu Tasaa</string>
+  <string name="story_type_event_desc">Seenaan taatee yeroo fi bakka adda ba\'e qaba. Taaticharratti maal akka ta\'u irratti xiyyeeffadhu. Seenaakee yeroo taatichi ta\'uu, bakkaa fi maaliif bakkaa fi yeroo sanatti akka ta\'erratti xiyyeeffadhuu qindeessi.</string>
+  <string name="story_type_issue_desc">Seenaan rakkoo dhimma bal\'aa ilaala. Akka rakkichi hawaasa yookaan garee irratti dhiibbaa geessisu irratti xiyyeeffata. Seenaakee naannoo dhiibbaan eenyurra akka ga\'uu fi deebiin isaa maal akka ta\'erratti qindeessi.</string>
+  <string name="story_type_profile_desc">Dhimma qaama adda ta\'ee barreessi. Eenyummaa qaamichaarratti xiyyeeffadhu. Seenaakee naannoo jiruu fi jireenya qaamichaa, maal akka ta\'uu fi akka inni itti qormaataan falmuurratti qindeessi.</string>
+  <string name="story_type_news_desc">Oduun tasaa akka mudateeni. Kofa tokkorratti xiyyeeffata. Seenaakee naannoo odeeffannoo hawwataa, eenyu,maal,eessa,yoom irratti qindaa\'uu qaba. Ibsa itti dabaluuf seenessuu fayyadami.</string>
   <!--/ legacy_story_type-->
   <!--story_type-->
+  <string name="story_type_event_news_title">Taatee Oduu</string>
+  <string name="story_type_event_feature_title">Taatee Amalaa</string>
+  <string name="story_type_event_breaking_title">Taatee Oduu Tasaa</string>
+  <string name="story_type_issue_social_title">dhimma Hawaasaa</string>
+  <string name="story_type_issue_political_title">dhimma Siyaasaa</string>
+  <string name="story_type_issue_economic_title">dhimma Ikonoomii</string>
+  <string name="story_type_profile_public_title">Barreeffama dhimma Hawaasaa</string>
+  <string name="story_type_profile_professional_title">Barreeffama Dhimma Hojii</string>
+  <string name="story_type_profile_personal_title">Barreeffama Dhimma Nama Dhuunfaa</string>
   <!--/story_type-->
   <!--story_type_description-->
+  <string name="story_type_event_news_desc">Seenaa waa\'ee taatee barbaachisummaa kallattii, yeroo baayyee kan  karoorfatame, fi jalqabaa fi xumura kallattii qabu. Filannoon yookaan hiriirri nagaa oduu taatee gaarii ta\'u.</string>
+  <string name="story_type_event_feature_desc">Seenaa waa\'ee taatee kan hiika oduu addaa hin qabaanne. Taateen ispoortii, daldala haaraa naannookee, dhufaatiin teekinooloojii taatee amalaa gaariidha.</string>
+  <string name="story_type_event_breaking_desc">Taateewwan utuu hin karoorfatamin kan ga\'ee oduu barbaachisaa qaban. Ibidda ka\'e, beeksisa akka tasaa kan aanga\'aa mootummaatiin dhiyaate, yookaan dhimmi uumamaa oduu tasaa gaariidha.</string>
+  <string name="story_type_issue_social_desc">Seenaa waa\'ee dhimma kan hawaasa tuqu. Jijjiiramni qajeelfama yookaan haala hojii mootummaa rakkoo hawaasaa gaariidha.</string>
+  <string name="story_type_issue_political_desc">Seenaa waa\'ee mootummaa fi hojii aanga\'oota uummataa. Seenaan waa\'ee seera haaraa yookaan jijjiiramni mootummaa dhimma hawaasaa gaariidha.</string>
+  <string name="story_type_issue_economic_desc">Seenaan waa\'ee dhimma ikonoomii bal\'aa yookaan waa\'ee diinagdee namoota dhuunfaa. Seenaan waa\'ee dhiibbaan jijjiirama deggersa mootummaan qoteebultootaaf godhuu dhimma hawaasaa gaariidha.</string>
+  <string name="story_type_profile_public_desc">Seenaan waa\'ee ga\'ee namni ilaalcha hawaasaa irratti qabu. Seenaan nama siyaasaa waajjiraaf dorgomuu barreeffama dhimma dhuunfaa gaariidha.</string>
+  <string name="story_type_profile_professional_desc">Seenaa waa\'ee namootaa fi hojiisaanii. Barreeffama waa\'ee aartistii beekamaa yookaan atileetii barreeffama hojii gaariidha.</string>
+  <string name="story_type_profile_personal_desc">Seenaa waa\'ee muuxannoo namaa, yeroo baayyee taatee oduutiin kan wal qabate. Barreeffami loltuu duraanii sagantaa yaadannoo lolaa barreeffama dhimma dhuunfaa gaarii ta\'a.</string>
   <!--/story_type_description-->
   <!--template_options-->
+  <string name="choose_level">Sadarkaa Filadhu</string>
+  <string name="choose_level_basic">Bu\'uura</string>
+  <string name="choose_level_advanced">Bal\'inaan</string>
   <!--/template_options-->
   <!--story_type_new-->
+  <string name="overview">Cuunfaa Waliigalaa</string>
+  <string name="activity">Gocha</string>
+  <string name="impact">Dhiibbaa</string>
+  <string name="background">Duuba</string>
+  <string name="involvement">Hirmaannaa</string>
+  <string name="motivation">Kaka\'umsa</string>
+  <string name="location">Bakka</string>
+  <string name="experience">Muuxannoo</string>
+  <string name="results">Bu\'aawwan</string>
+  <string name="next_steps">Tarkaanfilee Itti Aanan</string>
+  <string name="moving_forward">Duratti Deemuu</string>
+  <string name="conclusion">Xumura</string>
+  <string name="story_type_event_news_text1">Taatee kanarratti maaltu ta\'aa jira?</string>
+  <string name="story_type_event_news_text2">Ati akkamitti hirmaatte?</string>
+  <string name="story_type_event_news_text3">Taateen kun eenyuun caalmaatti tuqe?</string>
+  <string name="story_type_event_news_text4">Seenaan taatee kana booda jiru maali?</string>
+  <string name="story_type_event_news_text5">Dhiibbaan taatee kanaa maali?</string>
+  <string name="story_type_event_feature_text1">Taatee kanarratti maaltu ta\'aa jira?</string>
+  <string name="story_type_event_feature_text2">Maaliif taatee kanarratti hirmaatte?</string>
+  <string name="story_type_event_feature_text3">Taateen kun eessatti ta\'aa jira?</string>
+  <string name="story_type_event_feature_text4">Akka nama dhuunfaatti maaliif hirmaatte?</string>
+  <string name="story_type_event_feature_text5">Dhiibbaan taatee kanaa maali?</string>
+  <string name="story_type_event_breaking_text1">Maaltu mudachaa jira?</string>
+  <string name="story_type_event_breaking_text2">Eessatti ta\'aa jira?</string>
+  <string name="story_type_event_breaking_text3">Eenyutu tuqame?</string>
+  <string name="story_type_event_breaking_text4">Rakkoon kallattiin ta\'e jiraa?</string>
+  <string name="story_type_event_breaking_text5">Namooti akkamitti deebii kennaa jiru?</string>
+  <string name="story_type_issue_social_text1">Maaloo rakkoo hawaasaa ibsi.</string>
+  <string name="story_type_issue_social_text2">Yoom &amp; eessatti dhimmichi jalqabe?</string>
+  <string name="story_type_issue_social_text3">Dhiibbaa akkamii hawaasicharratti qaba?</string>
+  <string name="story_type_issue_social_text4">Seenaa akka inni itti jireenyakee tuquu nutti himi.</string>
+  <string name="story_type_issue_social_text5">dhimma kana furuuf maaltu godhamuu qaba?</string>
+  <string name="story_type_issue_political_text1">dhimma siyaasaa jiru ibsi.</string>
+  <string name="story_type_issue_political_text2">Kallattiidhaan dhiibbaa eenyurraan ga\'a?</string>
+  <string name="story_type_issue_political_text3">Akkamitti mootummaarra dhiibbaa geessisa?</string>
+  <string name="story_type_issue_political_text4">Akka nama tokkootti maaliif siif barbaachisaa ta\'e?</string>
+  <string name="story_type_issue_political_text5">dhimma kana furuuf maaltu godhamuu qaba?</string>
+  <string name="story_type_issue_economic_text1">Maaloo dhimma ikonoomii jiru ibsi.</string>
+  <string name="story_type_issue_economic_text2">dhimmichaa wajjin walittidhufeenyikee maali?</string>
+  <string name="story_type_issue_economic_text3">Ikonoomiirratti akkamitti dhiibbaa geessisa?</string>
+  <string name="story_type_issue_economic_text4">Caalmaatti kanaan eenyutu tuqama?</string>
+  <string name="story_type_issue_economic_text5">dhimma kana furuuf maaltu godhamuu qaba?</string>
+  <string name="story_type_profile_public_text1">Waa\'ee eenyummaakee hamma tokko nuuf ibsi.</string>
+  <string name="story_type_profile_public_text2">Yoom jalqabde?</string>
+  <string name="story_type_profile_public_text3">Maal hojjetta?</string>
+  <string name="story_type_profile_public_text4">Yeroo itti hojiikeen boonte ibsi.</string>
+  <string name="story_type_profile_public_text5">Gara fuulduraatti ga\'eekee akkamitti ilaalta?</string>
+  <string name="story_type_profile_professional_text1">Ati eenyu, hojiinkee maalidha?</string>
+  <string name="story_type_profile_professional_text2">Maaloo hojiikee akka itti hojjettu ibsi.</string>
+  <string name="story_type_profile_professional_text3">Hojiin kun maaliif siif barbaachisaa ta\'ee argame?</string>
+  <string name="story_type_profile_professional_text4">Hojii kanaan akkamitti dhiibbaa uumuu dandeessa?</string>
+  <string name="story_type_profile_professional_text5">Hojii kanaan maaltu itti siif aana?</string>
+  <string name="story_type_profile_personal_text1">Maaloo waa\'ee eenyummaakee hamma tokko nuuf ibsi.</string>
+  <string name="story_type_profile_personal_text2">Muuxannoon barbaachisaan si mudate maalidha?</string>
+  <string name="story_type_profile_personal_text3">Muuxannoon kun maal akka sitti dhagaa\'amu godhe?</string>
+  <string name="story_type_profile_personal_text4">Bifa addatiin amma maal goota?</string>
+  <string name="story_type_profile_personal_text5">Gara fuulduraatti maal akka mudatu arguu barbaadda?</string>
   <!--/story_type_new-->
   <!--story_type_old-->
+  <string name="scene_number">Bakka &lt;xliff:g id="lakkoobsa"&gt;%1$d&lt;/xliff:g&gt;</string>
+  <string name="when">Yoom?</string>
+  <string name="how">Akkamitti?</string>
+  <string name="what">Maal?</string>
+  <string name="where">Eessa?</string>
+  <string name="why">Maaliif?</string>
+  <string name="story_type_event_text1">Yoom taatichi ta\'a?</string>
+  <string name="story_type_event_text2">Kaayyoon taatichaa maali?</string>
+  <string name="story_type_event_text3">Taatichi maalii barbaachisaa ta\'e?</string>
+  <string name="story_type_event_text4">Yoom taatichi ta\'a?</string>
+  <string name="story_type_event_text5">Taatichi akkamitti qindaa\'e?</string>
+  <string name="story_type_event_text6">Kaayyoon taatichaa maali?</string>
+  <string name="story_type_event_text7">Taatichi eessatti taa\'a?</string>
+  <string name="story_type_event_text8">Taatichi maalii barbaachisaa ta\'e?</string>
+  <string name="story_type_issue_text1">Rakkichi akkamitti hawaasarraan dhiibbaa ga\'e?</string>
+  <string name="story_type_issue_text2">Caalmaatti dhiibbaan eenyurra ga\'e?</string>
+  <string name="story_type_issue_text3">Deebiisaatiif maaltu godhamaa jira?</string>
+  <string name="story_type_issue_text4">dhimmichi akkamitti hawaasarraan dhiibbaa ga\'e?</string>
+  <string name="story_type_issue_text5">Yoom/Eessatti dhimmichi jalqabe?</string>
+  <string name="story_type_issue_text6">Caalmaatti dhiibbaan eenyurra ga\'e?</string>
+  <string name="story_type_issue_text7">Dhiibbaan caalmaatti maaliif qaqqabeen?</string>
+  <string name="story_type_issue_text8">Deebiisaatiif maaltu godhamaa jira?</string>
+  <string name="story_type_profile_text1">Qaamichi eenyu?</string>
+  <string name="story_type_profile_text2">Qormaati qaamichaa maali?</string>
+  <string name="story_type_profile_text3">Qaamichi akkamitti qormaatichaan falma?</string>
+  <string name="story_type_profile_text4">Qaamichi eenyu?</string>
+  <string name="story_type_profile_text5">Qaamichi eessarraa dhufe?</string>
+  <string name="story_type_profile_text6">Qormaati qaamichaa maali?</string>
+  <string name="story_type_profile_text7">Qaamichi maaliif qormaatichaan falmaa jira?</string>
+  <string name="story_type_profile_text8">Qaamichi akkamitti qormaatichaan falma?</string>
+  <string name="story_type_news_text1">Maaltu mudachaa jira?</string>
+  <string name="story_type_news_text2">Eenyutu tuqame?</string>
+  <string name="story_type_news_text3">Akkamitti deebiin irratti kennamaa jira?</string>
+  <string name="story_type_news_text4">Maaltu mudachaa jira?</string>
+  <string name="story_type_news_text5">Oduchi eessatti ta\'aa jira?</string>
+  <string name="story_type_news_text6">Eenyutu tuqame?</string>
+  <string name="story_type_news_text7">Maaliif ta\'e?</string>
+  <string name="story_type_news_text8">Akkamitti deebiin irratti kennamaa jira?</string>
   <!--/story_type_old-->
   <!--prefs-->
+  <string name="prefs_category_networking_security_title">Cimdeessuu &amp; Nageenya</string>
+  <string name="prefs_category_locales_title">Naannolee</string>
+  <string name="prefs_category_media_title">Miidiyaa</string>
+  <string name="prefs_category_debug_title">Yaali</string>
+  <string name="prefs_storymaker_server_title">Kaadimaa StoryMaker</string>
+  <string name="prefs_storymaker_server_summary">Kaadimaa qabiyyee StoryMaker hunda afeeru</string>
+  <string name="prefs_use_tor_title">Orbot (Tor) fayyadami</string>
+  <string name="prefs_use_tor_summary">Tiraafiikii cimdaa mara fayyadama Orbot fayyadamuudhaan karaa cimdaa Tor ergi</string>
+  <string name="prefs_sm_upload_title">StoryMaker irratti olfe\'a</string>
+  <string name="prefs_sm_upload_summary">Durtiin kadimaa StoryMaker irratti olfe\'a</string>
+  <string name="prefs_use_download_manager_title">Hoogganaa Buusuu Fayyadami</string>
+  <string name="prefs_use_download_manager_summary">Qabiyyee StoryMaker karaa tajaajila Android DownloadManager buusi</string>
+  <string name="prefs_use_upload_manager_title">Hoogganaa Olfe\'iinsaa Fayyadami</string>
+  <string name="prefs_use_upload_manager_summary">Qabiyyee StoryMaker karaa tajaajila Android UploadManager olfe\'i</string>
+  <string name="prefs_youtube_acccount_title">Eenyummeessaa YouTube</string>
+  <string name="prefs_youtube_acccount_summary">Eenyummeessaa YouTube suur-sagalee olkaa\'uuf fayyadamuuf. Kun galmeensaa meeshaa kee irratti TA\'UU QABA.</string>
+  <string name="prefs_youtube_login_title">YouTube Seenuu</string>
+  <string name="prefs_youtube_login_summary">Eyyamtuu iddoolaa YouTube fayyadami</string>
+  <string name="prefs_cacheword_timeout_title">Dhuma Yeroo Jecha Kuuftaala\'ee</string>
+  <string name="prefs_cacheword_timeout_summary">Baayyina sekoondii jechi kuuftaala\'e utuu ofiin fayyadamicha hin cufin ( fayyadamichi haaraa of bana)</string>
+  <string name="prefs_soundcloud_account_title">Eenyummeessaa SoundCloud</string>
+  <string name="prefs_soundcloud_account_summary">Eenyummeessaa SoundCloud sagalee olfe\'uuf fayyadami</string>
+  <string name="prefs_interface_language_title">Afaan Filadhu</string>
+  <string name="prefs_interface_language_summary">Afaan StoryMaker walquunnama fayyadamaaf fayyadamu.</string>
+  <string name="prefs_photo_format_title">Dhangii Barruu Suuraa</string>
+  <string name="prefs_photo_format_summary">Akka walitti qabaa suuraaleetti barruu suuraa fe\'i</string>
+  <string name="prefs_slide_duration_title">Turtii Islaayidii</string>
+  <string name="prefs_slide_duration_summary">Turtii islaayidiin tokko barruu suuraarratti qabu</string>
+  <string name="prefs_enable_compression_title">Cafaqoo Eyyami</string>
+  <string name="prefs_enable_compression_summary">Suur-sagalee fi suuraa akka sirreeffama gaditti jiraniitti cafaqi</string>
+  <string name="prefs_preprocess_3gp_title">3GP dursa qopheessi</string>
+  <string name="prefs_preprocess_3gp_summary">Muraa suur-sagalee 3GP gara MPEG-4 tti jijjiiri</string>
+  <string name="prefs_use_cat_command_title">Ajaja \'Cat\' Jedhu Jayyadami</string>
+  <string name="prefs_use_cat_command_summary">Suur-sagalee walitti dabaluuf ajaja \'cat\' jedhu fayyadami</string>
+  <string name="prefs_video_codec_title">Xiguu Suur-sagalee</string>
+  <string name="prefs_video_codec_summary">Alergii xiguu suur-sagalee</string>
+  <string name="prefs_video_resolution_title">Qulqullina Suur-sagalee</string>
+  <string name="prefs_video_resolution_summary">Alergii qulqullina suur-sagalee</string>
+  <string name="prefs_video_width_title">Bal\'ina Suur-sagalee</string>
+  <string name="prefs_video_width_summary">Alergii bal\'ina suur-sagalee</string>
+  <string name="prefs_video_height_title">Olka\'iinsa Suur-sagalee</string>
+  <string name="prefs_video_height_summary">Alergii Olka\'iinsa suur-sagalee</string>
+  <string name="prefs_video_bitrate_title">Hammamtaa Suur-sagalee</string>
+  <string name="prefs_video_bitrate_summary">Alergii hammamtaa suur-sagalee (kbps)</string>
+  <string name="prefs_video_framrate_title">Hammamtaa Goodaayyaa Suur-sagalee</string>
+  <string name="prefs_video_framrate_summary">Alergii hammamtaa goodaayyaa sekoondiitti (fps)</string>
+  <string name="prefs_audio_codec_title">Xiguu Sagalee</string>
+  <string name="prefs_audio_codec_summary">Alergii xiguu sagalee</string>
+  <string name="prefs_audio_bitrate_title">Hammamtaa Sagalee</string>
+  <string name="prefs_audio_bitrate_summary">Alergii hammamtaa sagalee (kbps)</string>
+  <string name="prefs_audio_samplerate_title">Fakkeenya Sagalee sekoondiitti</string>
+  <string name="prefs_audio_samplerate_summary">Hammamtaa fakkeenya waraabbii sagalee (khz)</string>
+  <string name="prefs_audio_crossfade_title">Sagalee Waljijjiiruu</string>
+  <string name="prefs_audio_crossfade_summary">Dheerina sagalee waljijjiiruu</string>
+  <string name="prefs_internal_storage_title">Kuusaa Keessaa</string>
+  <string name="prefs_internal_storage_summary">Kuusaa pirojektii keessaa fayyadami</string>
+  <string name="prefs_iocipher_storage_title">Kuusaa IOCipher</string>
+  <string name="prefs_iocipher_storage_summary">Kuusaa nageenyisaa eegame IOCipher fayyadami</string>
+  <string name="prefs_youtube_method_title">Tooftaa YouTube</string>
+  <string name="prefs_youtube_method_summary">Gosa tooftaa aangessuu yaali</string>
   <!--/prefs-->
   <!--FirstStartActivity-->
+  <string name="sign_up_btn">STORYMAKER\'IIF GALMAA\'I</string>
+  <string name="no_thanks_btn">LAKKII GALATOOMAA</string>
+  <string name="tos_btn">WALIIGALTEE TAJAAJILICHAATTI WALIIGALEERA</string>
+  <string name="tos_dialog_title">Waliigaltee fayyadamuu</string>
+  <string name="tos_dialog_msg">Itti fufuun dura Waliigaltee Tajaajilaa keenya Fudhadhu</string>
+  <string name="tos_dialog_positive_button">Naa gale</string>
+  <string name="acct_created_dialog_title">Eenyummeessaakee Fayyadami</string>
+  <string name="acct_created_dialog_msg"><b>Iggiti StoryMaker yeroo gabaabduu keessatti iimeeliidhaan siif ergama.</b> Iggitakee erga fudhattee booda, karaa baafata saanduqaa seenuu dandeessa (Karaa bitaarraa haxaa\'uudhaan argama).</string>
+  <string name="acct_created_dialog_positive_button">Jalqabi!</string>
   <!--ConnectAccountActivity-->
+  <string name="my_account">EENYUMMEESSAA STORYMAKERKOO</string>
+  <string name="join_storymaker">Hawaasa StoryMaker\'itti dabalami</string>
+  <string name="create_account">EENYUMMEESSAAKOO UUMI</string>
+  <string name="sign_in">GALMAA\'I/SEENI</string>
+  <string name="sign_out">KEESSAA BA\'I</string>
   <!--ProjectTagFragment-->
+  <string name="no_tags_msg">#tags dabalame hin jiru</string>
   <!--BaesActivity Drawer  (For Accessibility Descriptions)-->
+  <string name="open_drawer">Saanduqa Bani</string>
+  <string name="close_drawer">Saanduqa Cufi</string>
 </resources>

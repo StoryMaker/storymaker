@@ -18,5 +18,27 @@
     <item>ویڈیوگرافی</item>
     <item>کہانی</item>
   </string-array>
+  <string-array name="array_story_locations">
+    <item> یو۔ایس۔اے
+ </item>
+    <item>کیلیفورنیا
+</item>
+    <item>اووک لینڈ
+</item>
+    <item> مصر
+ </item>
+    <item>عراق
+</item>
+    <item>مراکو
+</item>
+    <item> تیونس
+ </item>
+    <item>زمبابوے
+ </item>
+    <item>جمہوریہ سیزیک
+</item>
+    <item>ویتنام
+</item>
+  </string-array>
   <!--<item>catalog</item>-->
 </resources>

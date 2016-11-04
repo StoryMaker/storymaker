@@ -13,10 +13,16 @@
   <string name="tutorial_title_5">测试你自己</string>
   <string name="tutorial_text_5">每个项目都会有一个小测试来检验你对它的理解程度</string>
   <string name="tutorial_title_6">继续学习</string>
+  <string name="tutorial_text_6">在storymaker（写故事）社区上分享你的故事并随之做一个更好的创作故事的人。</string>
   <!--/tutorial_lessons-->
   <!--tutorial_story-->
   <string name="tutorial_title_7">更好的讲述故事</string>
+  <string name="tutorial_text_7">一个精彩的故事有开始，主体，结尾。和社区的人交流以提供更多故事的来龙去脉。向我们展示故事的情境，保持故事的人性化。</string>
   <string name="tutorial_title_8">选择你的讲述形式。</string>
+  <string name="tutorial_title_9">分5个片段讲一个故事</string>
+  <string name="tutorial_text_9">分5部分讲你的故事.：叙述故事的地点，故事的主题，其余的讲述故事的开始，主体和结局。</string>
+  <string name="tutorial_title_10">打破常规</string>
+  <string name="tutorial_text_10">用不同的顺序重新组合你的故事，使之更具冲击力，</string>
   <!--/tutorial_story-->
   <!--template_description-->
   <string name="template_audio_desc">通过记录声音来讲述你的故事，什么人，什么事。如果你的信号不够好，音频形式会是一个很好的选择。</string>
@@ -57,7 +63,12 @@
   <string name="results">结果</string>
   <string name="next_steps">下步计划</string>
   <string name="conclusion">结论</string>
+  <string name="story_type_event_news_text1">这件事发生了什么？</string>
   <string name="story_type_event_news_text2">你是怎样被卷入该事件的？</string>
+  <string name="story_type_event_feature_text1">这件事发生了什么？</string>
+  <string name="story_type_event_feature_text2">你为什么会卷入这件事？</string>
+  <string name="story_type_event_feature_text3">事件发生的地点</string>
+  <string name="story_type_event_feature_text4">你有亲自参与吗？</string>
   <string name="story_type_event_breaking_text1">发生了什么事件？</string>
   <string name="story_type_event_breaking_text3">哪些人受到这件事的影响？</string>
   <!--/story_type_new-->

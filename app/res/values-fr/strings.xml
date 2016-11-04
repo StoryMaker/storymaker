@@ -2,6 +2,7 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string name="app_name">StoryMaker 2</string>
   <string name="app_description">La création de belles histoires est maintenant plus facile que jamais avec StoryMaker. Nos modèles uniques, des superpositions et des leçons vous guident à travers l\'ensemble du processus créatif. StoryMaker vous permet de modifier votre bon contenu sur votre mobile, ce qui rend encore plus facile de terminer votre histoire. Une fois que vous avez terminé, StoryMaker vous permet de publier votre histoire à tous vos plateformes préférées.</string>
+  <string name="title_catalog">Catalogue</string>
   <string name="title_projects">Histoires</string>
   <string name="title_lessons">Leçons</string>
   <string name="action_publish">Publier</string>
@@ -93,6 +94,7 @@ Vous aurez aussi l’opportunité de voir et modifier les données à envoyer. <
   <string name="new_story_choose_template">modèle de scène</string>
   <string name="home_new_story">Créer une Histoire</string>
   <string name="home_start_a_lesson">Explorer les Leçons</string>
+  <string name="title_activity_catalog">Catalogue</string>
   <string name="title_activity_lessons">Leçons</string>
   <string name="title_activity_scene_editor">Editeur de scène</string>
   <string name="title_activity_choose_template">Choisir un Modèle</string>
@@ -235,6 +237,9 @@ Vous aurez aussi l’opportunité de voir et modifier les données à envoyer. <
   <string name="cancel">Annuler</string>
   <string name="stop">Arrêter</string>
   <string name="delete">Supprimer</string>
+  <string name="download">Télécharger</string>
+  <string name="pause">Pause</string>
+  <string name="resume">Continuer</string>
   <string name="play_or_share_exported_media_">Lire ou Publier le média exporté?</string>
   <string name="share_published_story">Partager l\'Histoire publiée?</string>
   <string name="err_storage_not_ready">Le stockage externe (CarteSD) ne semble pas être disponible pour la lecture et l\'écriture pour l\'instant. StoryMaker à besoin de ça pour les leçons et les données du projet. Veuillez vérifier votre appareil et redémarrer l\'application.</string>
@@ -304,10 +309,30 @@ Vous aurez aussi l’opportunité de voir et modifier les données à envoyer. <
   <string name="merging_video_audio">Fusion vidéo et audio</string>
   <string name="export_error_3">Erreurs lors de l\'export media</string>
   <string name="export_error_4">Erreur</string>
+  <string name="publishing_to_storymakerorg">Publication sur StoryMaker.org...</string>
+  <string name="published_to_storymaker">Publié sur StoryMaker.org !</string>
+  <string name="you_are_not_signed_into_storymakerorg">Vous n\'êtes pas connecté à StoryMaker.org !</string>
+  <string name="send_feedback">Donnez vos impressions</string>
+  <string name="stop_download">Arrêter le téléchargement ?</string>
+  <string name="resume_download">Continuer le téléchargement ?</string>
+  <string name="finished_downloading">Téléchargement terminé</string>
   <!--NEW/CACHEWORD-->
+  <string name="lock_screen_open_button_text">DÉVERROUILLER L\'APPLICATION</string>
+  <string name="lock_screen_pin_enter_text">Entrez le code PIN pour déverrouiller l\'application</string>
+  <string name="lock_screen_create_button_text">CRÉATION CODE PIN</string>
+  <string name="lock_screen_pin_create_text">Entrez le nouveau code PIN pour verrouiller l\'application</string>
+  <string name="lock_screen_pin_confirm_text">Entrez un nouvelle fois le code PIN</string>
+  <string name="menu_lock">VERROUILLE</string>
+  <string name="catalog_menu_catalog">Catalogue</string>
+  <string name="catalog_menu_guides">Guide</string>
   <string name="catalog_menu_lessons">Leçons</string>
+  <string name="catalog_menu_templates">Modèles</string>
   <string name="home_menu_home">Accueil</string>
   <string name="home_menu_stories">Histoires</string>
+  <string name="home_menu_guides">Guide</string>
   <string name="home_menu_lessons">Leçons</string>
+  <string name="home_menu_templates">Modèles</string>
   <string name="home_empty_btn_stories">Nouvelle Histoire</string>
+  <string name="home_empty_btn_templates">Essayer un modèle</string>
+  <string name="home_tab_latest_stories">Histoires récentes</string>
 </resources>

@@ -32,8 +32,8 @@
   <!--template_description-->
   <string name="template_audio_desc">あなたがストーリーを語る音を録音してください。誰が、何を。強力なビジュアルを得られない場合に、オーディオは素晴らしい選択肢になります。</string>
   <string name="template_photo_desc">絵には千の言葉の価値があります。誰がまたは何が、あなたのストーリーで重要なのか、またはそれがどのように起こっているかを私たちに伝えてください。</string>
-  <string name="template_essay_desc">時にはいくつかの写真が必要です。私たちにどのようにストーリーが起こっているかを示してください。関連する一連の画像でストーリーを伝えてください。</string>
-  <string name="template_video_desc">説得力のある画像や起こっている様子をキャプチャしてください。私たちに誰または何が重要なのか、そしてなぜかを示してください。</string>
+  <string name="template_essay_desc">時にはいくつかの写真が必要です。私たちにどのようにストーリーが起こっているかを示してください。関連するシリーズの画像でストーリーを伝えてください。</string>
+  <string name="template_video_desc">説得力のある画像や起こっている様子を捉えてください。私たちに誰または何が重要なのか、そしてなぜかを示してください。</string>
   <!--/template_description-->
   <!--legacy_story_type-->
   <!--once we refactor to keep this extra text fields in the db instead of referencing this strings file we can remove these (after doing a migration step)-->
@@ -41,10 +41,10 @@
   <string name="story_type_issue_title">問題</string>
   <string name="story_type_profile_title">プロフィール</string>
   <string name="story_type_news_title">最新ニュース</string>
-  <string name="story_type_event_desc">イベントのストーリーには確立した時間枠と一組の場所があります。イベントで何が起こるかに焦点を当てます。いつイベントが起こるか、どこでそしてなぜその時と場所で起こるか、を中心にストーリーを整理します。</string>
+  <string name="story_type_event_desc">イベントのストーリーには確立したタイムフレームと一組の場所があります。イベントで何が起こるかに焦点を当てます。いつイベントが起こるか、どこでそしてなぜその時と場所で起こるか、を中心にストーリーを整理します。</string>
   <string name="story_type_issue_desc">問題のストーリーは、広範に主題を調べます。問題が人々のコミュニティまたはグループにどのように影響するかに焦点を当てます。それが誰に影響を与えるか、反応として何が行われているか、を中心にストーリーを整理します。</string>
   <string name="story_type_profile_desc">特定の人物のプロフィールを作成します。その人物が誰であるかに焦点を当てます。その人物の日常生活、何が起こっているか、その人物がどのように課題を処理するか、を中心にストーリーを整理します。</string>
-  <string name="story_type_news_desc">最新ニュースは即時です。1つの角度で焦点を当てます。事実とみなすこと、誰が、何を、どこで、いつ、を中心にストーリーを整理します。ユーザーのナレーションが内容を追加します。</string>
+  <string name="story_type_news_desc">最新ニュースは即時です。1つのアングルで焦点を当てます。事実とみなすこと、誰が、何を、どこで、いつ、を中心にストーリーを整理します。ユーザーのナレーションが内容を追加します。</string>
   <!--/ legacy_story_type-->
   <!--story_type-->
   <string name="story_type_event_news_title">ニュース イベント</string>
@@ -59,7 +59,7 @@
   <!--/story_type-->
   <!--story_type_description-->
   <string name="story_type_event_news_desc">即時の重要性を持つイベントに関するストーリーは、多くの場合に予定され、および明確な開始と終了があります。選挙やデモは優れたニュースイベントになります。</string>
-  <string name="story_type_event_feature_desc">堅いニュースの意味を持たないことがあるイベントに関するストーリー。スポーツイベント、近くの新規事業、新興の技術は優れた特徴のイベントになります。</string>
+  <string name="story_type_event_feature_desc">堅いニュースの意味を持たないかもしれないイベントに関するストーリー。スポーツイベント、近くの新規事業、新興の技術は優れた特集のイベントになります。</string>
   <string name="story_type_event_breaking_desc">重要なニュースの価値を持つ予定外のイベント。火災、政府の公式な驚きの発表、または自然災害は、優れた最新ニュースイベントになります。</string>
   <string name="story_type_issue_social_desc">コミュニティに影響を与える問題に関するストーリー。自治体の規制やインフラの変更は優れた社会問題になります。</string>
   <string name="story_type_issue_political_desc">政府と公務員の仕事に関するストーリー。新たな法律や議会の変更についてのストーリーは優れた政治問題になります。</string>

@@ -1,67 +1,67 @@
-Journalism
-1.0 Introduction to Journalism
-1.1 Social Media Basics
-1.2 Reporting Basics
-1.3 Selecting and Verifying Sources
-1.4 Interview Techniques 
-1.6 The Evolution of a Story
-1.5 Introduction to Ethics and Professional Standards
-1.7 Utilizing Text
-1.8 Media Law
+Gaazexeessummaa
+1.0 Seensa Gaazexeessummaa
+1.1 Bu'uura Miidiyaa Hawaasaa
+1.2 Bu'uura Gabaasaa
+1.3 Madda filachuu fi adda Baasuu
+1.4 Maloota Gaafannoo 
+1.6 Jijjiirama Seenaa
+1.5 Seensa Naamusaa fi Sadarkaa Hojii
+1.7 Barreeffama Fayyadamuu
+1.8 Seera Miidiyaa
 
-Security
-2.0 Introduction to Security
-2.1 How Do I Know if I or My Sources May Be Threatened
-2.2 How Do I Communicate with Anonymous Sources Safely
-2.3 How Do My Communications Put Me at Risk
-2.6 How Does My Mobile Phone Put Me at Risk
-2.5 What Makes a Password Strong
-2.4 How Do I Effectively Use Pseudonyms
-2.7 Use Send SMS Safely
-2.8 How Can I Send Email Safely
-2.9 How Can I Use a Browser Safely
-2.11 How Can I Manage Mobile Data Safely
-2.10 How Can I Transmit Media Securely  (currently on hold)
-
-
-Audio 
-3.0 Introduction to Audio
-3.1 Audio Basics
-3.2 Preparation
-3.3 Types of Stories
-3.4 Storyboarding Recording Plan
-3.5 Audio Interview Tips
-3.6 Recording Tips and Techniques
-3.7 Publishing Your Story
-3.8 Using Translation
-
-Photo
-4.0 Introduction to Photo
-4.1 Camera Basics
-4.2 Composition Basics
-4.3 Captions and Keywords
-4.4 Photographing Different Stories
-4.7 Photographing Difficult/Uncomfortable Situations
-4.11 The Photo Essay
-4.5 Exposure Basics
-4.6 Photographing Fast-moving Objects
-4.8 Setting White Balance
-4.9 Organizing and Editing Your Photos
-4.10 Post Production
+Nageenya
+2.0 Seensa Nageenyaa
+2.1 Akkamitti Anii yookaan Maddikoo Akka Doorsifamaa Jirru Bara
+2.2 Akkamittan madda dhokataa wajjin nagaan wal quunnama
+2.3 Komminikeeshiinkoo Akkamitti Rakkoo Keessa Na Galcha
+2.6 Akkamitti Bilbillikee Rakkoo Keessa Na Buusaa?
+2.5 Maaltu Iggita Cimaa Godha
+2.4 Eenyummaa Sobaa Akkamittan Sirriitti Fayyadamuu Danda'a
+2.7 Dhaamsa Gabaabaa Eeggannoodhaan Erguu Fayyadami
+2.8 Akkamittan Iimeelii Nageenyaan Erga
+2.9 Akkamittan Nageenyaan Iyyaafanno Fayyadama
+2.11 Akkamittan Interneetii Bilbilaa Hooggana
+2.10 Akkamittan Miidiyaa Eeggannoodhaan Dabarsa (ammaaf hi gadhiifamne)
 
 
-Video
-5.0 Introducation to Video
-5.1 Video Basics
-5.2 Sound and Light
-5.5 Getting Good Shots
-5.3 Visual Storytelling
-5.6 Interviews
-5.4 Video Composition
-5.10 Framing Your Shot
-5.12 Setting White Balance in Video
-5.8 Sequences
-5.7 Shooting Action Sequences (Was Reverse Shot
-5.9 Organizing Your Shoot (was Creating Shot Lists)
-5.11 Shot Goals
-5.13 Content Sites
+Sagalee 
+3.0 Seensa Sagalee
+3.1 Bu'uura Sagalee
+3.2 Qophaa'uu
+3.3 Gosa Seenaa
+3.4 Karoora Waraabbii Kaa'uu
+3.5 Qaccee Gaafannoo Sagalee
+3.6 Qaccee fi Mala Waraabbii
+3.7 Seenaakee Maxxansuu
+3.8 Hiika Fayyadamu
+
+Suuraa
+4.0 Seensa Suuraa
+4.1 Bu'uura Kaameeraa
+4.2 Bu'uura Suuraa Qopheeffachuu
+4.3 Godaayyyaa fi Jefuraa
+4.4 Seenaalee Garagaraa Suura Kaasuu
+4.7 Haala Rakkisaa Mijataa Hin Taanetti Suura Kaasuu
+4.11 Barruu Suuraa
+4.5 Bu'uura Mul'ina Ifaa
+4.6 Qaama Saffisaan Socho'u Suuraa Kaasuu
+4.8 Madaala Adii Sirreessuu
+4.9 Suuraakee Gulaaluu fi Qindeeffachuu
+4.10 Ka'umsa Booda
+
+
+Suur-sagalee
+5.0 Seensa Suur-sagalee
+Bu'uura Suur-sagalee
+5.2 Sagalee fi Ifa
+5.5 Waraabbii Gaarii Argachuu
+5.3 Seenaa Mul'atu Himuu
+5.6 Gaaffiif deebii
+5.4 Suur-sagalee Qopheeffachuu
+5.10 Waraabbiikee Goodaayyessu
+5.12 Madaala Adii Suur-sagalee Sirreessuu
+5.8 Duraa Duuba
+5.7 Duraa duuba gochaa waraabuun (waraabbii duubattii ture
+5.9 Waraabbiikee Qindeessuun ( Tarreeffama Waraabbii Uumuu Ture)
+5.11 Galma Waraabbii
+5.13 Iddoola Qabiyyee

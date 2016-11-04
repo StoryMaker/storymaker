@@ -72,6 +72,7 @@
     
     <string-array name="interface_language_options" translatable="false">
         <item name="english">English</item>
+        <item name="amharic">Amharic (አማርኛ)</item>
         <item name="arabic">Arabic</item>
         <item name="bosnian">Croatian/Bosnian</item>
         <item name="dutch">Dutch</item>
@@ -90,6 +91,7 @@
     
     <string-array name="interface_language_options_values" translatable="false">
         <item name="english">en</item>
+        <item name="amharic">am</item>
         <item name="arabic">ar</item>
         <item name="bosnian">bs</item>
         <item name="dutch">nl</item>

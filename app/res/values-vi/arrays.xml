@@ -18,6 +18,18 @@
     <item>Quay Phim</item>
     <item>Phóng Sự</item>
   </string-array>
+  <string-array name="array_story_locations">
+    <item>Mỹ</item>
+    <item>California</item>
+    <item>Oakland</item>
+    <item>Ai Cập</item>
+    <item>Irắc</item>
+    <item>Ma-rốc</item>
+    <item>Tunisia</item>
+    <item>Zimbabwe</item>
+    <item>Cộng hòa Czech</item>
+    <item>Việt Nam</item>
+  </string-array>
   <string-array name="array_story_sections">
     <item>Chính Trị</item>
     <item>Thương Mại</item>
