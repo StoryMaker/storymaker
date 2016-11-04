@@ -72,6 +72,7 @@
     
     <string-array name="interface_language_options" translatable="false">
         <item name="english">English</item>
+        <item name="oromoo">Afaan Oromoo</item>
         <item name="amharic">Amharic (አማርኛ)</item>
         <item name="arabic">Arabic</item>
         <item name="bosnian">Croatian/Bosnian</item>
@@ -91,6 +92,7 @@
     
     <string-array name="interface_language_options_values" translatable="false">
         <item name="english">en</item>
+        <item name="oromoo">om</item>
         <item name="amharic">am</item>
         <item name="arabic">ar</item>
         <item name="bosnian">bs</item>
