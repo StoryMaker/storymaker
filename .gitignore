@@ -49,3 +49,12 @@ local.properties
 # Gradle
 .gradle/
 
+#API keys
+app/res/values/apikeys.xml
+available_index.json.new
+
+#build folders
+liger-content
+
+external/SecureShareLib
+releases/
