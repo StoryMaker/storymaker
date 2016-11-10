@@ -173,27 +173,27 @@ def adb_push_files():
     """adb push to /sdcard/Android/<package>/files"""
 
     if query_yes_no("adb push beta to device files/ folder?"):
-        push_obb_file("beta", "6")
+        push_obb_file("beta", "13")
 
     if query_yes_no("adb push mobile_photo_101 to device files/ folder?"):
-        push_obb_file("mobile_photo_101", "3")
+        push_obb_file("mobile_photo_101", "13")
         
     if query_yes_no("adb push learning_guide to device files/ folder?"):
-        push_obb_file("learning_guide", "2")
+        push_obb_file("learning_guide", "13")
     if query_yes_no("adb push learning_guide.patch.2.obb to device files/ folder?"):
         os.system("cd liger-content/zips ; adb push learning_guide.patch.2.obb /sdcard/Android/data/%s/files/learning_guide.patch.2.obb" % (packagename))
         
     if query_yes_no("adb push burundi to device files/ folder?"):
-        push_obb_file("burundi", "4")
+        push_obb_file("burundi", "13")
         os.system("cd liger-content/zips ; adb push burundi.main.4.obb /sdcard/Android/data/%s/files/burundi.main.4.obb" % (packagename))
     if query_yes_no("adb push burundi.patch.4.obb to device files/ folder?"):
         os.system("cd liger-content/zips ; adb push burundi.patch.4.obb /sdcard/Android/data/%s/files/burundi.patch.4.obb" % (packagename))
         
     if query_yes_no("adb push mena.main.4.obb to device files/ folder?"):
-        push_obb_file("mena", "4")
+        push_obb_file("mena", "13")
         
     if query_yes_no("adb push persian.main.4.obb to device files/ folder?"):
-        push_obb_file("persian", "4")
+        push_obb_file("persian", "13")
         
     if query_yes_no("adb push main.1044.org.storymaker.app.obb to device files/ folder?"):
         os.system("cd liger-content/zips ; adb push main.1044.org.storymaker.app.obb /sdcard/Android/data/%s/files/main.1044.org.storymaker.app.obb" % (packagename))
