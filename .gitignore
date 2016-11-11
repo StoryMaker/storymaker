@@ -12,6 +12,8 @@ app/res/values/storymaker-s3.xml
 app/res/values/storymaker.xml
 app/res/values/zt.xml
 app/res/values/gdataauth.xml
+app/res/values/google_play.xml
+app/res/values/zebrass.xml
 
 # built application files
 *.apk
