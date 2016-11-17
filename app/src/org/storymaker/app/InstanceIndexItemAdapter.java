@@ -105,7 +105,11 @@ public class InstanceIndexItemAdapter extends RecyclerView.Adapter<InstanceIndex
         Context context = holder.card.getContext();
 
         final BaseIndexItem baseItem = mDataset.get(position);
-        String description = baseItem.getDescription();
+
+        String description = context.getString(BaseIndexItem.getStringIdentifier(context,((ExpansionIndexItem) baseItem).getExpansionId()+"_description"));
+        if (description == null)
+            description = baseItem.getDescription();
+
         if (baseItem instanceof InstanceIndexItem) {
             final InstanceIndexItem instanceItem = (InstanceIndexItem) baseItem;
             holder.title.setText(String.format("%s %s",
@@ -178,7 +182,11 @@ public class InstanceIndexItemAdapter extends RecyclerView.Adapter<InstanceIndex
             ExpansionIndexItem expansionIndexItem = (ExpansionIndexItem) baseItem;
             // check if this is already installed or waiting to be downloaded to change which picture we show
             HashMap<String, ExpansionIndexItem> installedIds = StorymakerIndexManager.loadInstalledIdIndex(context, installedDao);
-            holder.title.setText(baseItem.getTitle());
+
+            String locTitle = context.getString(BaseIndexItem.getStringIdentifier(context,((ExpansionIndexItem) baseItem).getExpansionId()+"_title"));
+            if (locTitle == null)
+                locTitle = baseItem.getTitle();
+            holder.title.setText(locTitle);
 
             // show the content pack version info for help debugging upgrade issues
             if (BuildConfig.DEBUG) {
