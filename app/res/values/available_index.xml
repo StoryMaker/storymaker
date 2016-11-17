@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="g_welcome_title">Welcome to StoryMaker</string>
+    <string name="g_welcome_description">Tour through StoryMaker's features</string>
+
+    <string name="mobile_photo_basics_title">Mobile Photo Basics</string>
+    <string name="mobile_photo_basics_description">Learn to make compelling photographs</string>
+
+</resources>
