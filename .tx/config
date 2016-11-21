@@ -8,6 +8,12 @@ source_file = external/SecureShareLib/SecureShareUILibrary/res/values/strings.xm
 source_lang = en
 type = ANDROID
 
+[storymaker.available_indexxml]
+file_filter = app/res/values-<lang>/available_index.xml
+source_file = app/res/values/available_index.xml
+source_lang = en
+type = ANDROID
+
 [storymaker.liger_strings]
 file_filter = external/liger/lib/src/main/res/values-<lang>/strings.xml
 source_file = external/liger/lib/src/main/res/values/strings.xml
