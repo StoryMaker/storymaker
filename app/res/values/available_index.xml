@@ -16,7 +16,7 @@
     <string name="learning_guide_title">Basic Elements of a Story</string>
     <string name="learning_guide_description">Three steps to stronger stories</string>
 
-    <string name="journalism_part_1-mena_title">Journalism 1 - MENA Edition</string>
+    <string name="journalism_part_1-mena_title">Journalism 1 - Middle East, North Africa Edition</string>
     <string name="journalism_part_1-mena_description">Social Media Basics and 4 more lessons</string>
 
     <string name="journalism_part_1-persian_title">Journalism 1 - Persian Edition</string>
@@ -25,7 +25,7 @@
     <string name="journalism_part_1-burundi_title">Journalism 1 - Burundi Edition</string>
     <string name="journalism_part_1-burundi_description">Social Media Basics and 4 more lessons</string>
 
-    <string name="journalism_part_2-mena_title">Journalism 2 - MENA Edition</string>
+    <string name="journalism_part_2-mena_title">Journalism 2 - Middle East, North Africa Edition</string>
     <string name="journalism_part_2-mena_description">Evolution of a Story and 3 more lessons</string>
 
     <string name="journalism_part_2-persian_title">Journalism 2 - Persian Edition</string>
@@ -34,7 +34,7 @@
     <string name="journalism_part_2-burundi_title">Journalism 2 - Burundi Edition</string>
     <string name="journalism_part_2-burundi_description">Evolution of a Story and 3 more lessons</string>
 
-    <string name="security-mena_title">Security - MENA Edition</string>
+    <string name="security-mena_title">Security - Middle East, North Africa Edition</string>
     <string name="security-mena_description">How can I use SMS Safely and 6 more lessons</string>
 
     <string name="security-persian_title">Security - Persian Edition</string>
@@ -43,7 +43,7 @@
     <string name="security-burundi_title">Security - Burundi Edition</string>
     <string name="security-burundi_description">How can I use SMS Safely and 6 more lessons</string>
 
-    <string name="audio-mena_title">Audio - MENA Edition</string>
+    <string name="audio-mena_title">Audio - Middle East, North Africa Edition</string>
     <string name="audio-mena_description">Audio Basics and 5 more lessons</string>
 
     <string name="audio-persian_title">Audio - Persian Edition</string>
@@ -52,7 +52,7 @@
     <string name="audio-burundi_title">Audio - Burundi Edition</string>
     <string name="audio-burundi_description">Audio Basics and 5 more lessons</string>
 
-    <string name="photography_1-mena_title">Photography 1 - MENA Edition</string>
+    <string name="photography_1-mena_title">Photography 1 - Middle East, North Africa Edition</string>
     <string name="photography_1-mena_description">Camera Basics and 5 more lessons</string>
 
     <string name="photography_1-persian_title">Photography 1 - Persian Edition</string>
@@ -61,7 +61,7 @@
     <string name="photography_1-burundi_title">Photography 1 - Burundi Edition</string>
     <string name="photography_1-burundi_description">Camera Basics and 5 more lessons</string>
 
-    <string name="photography_2-mena_title">Photography 2 - MENA Edition</string>
+    <string name="photography_2-mena_title">Photography 2 - Middle East, North Africa Edition</string>
     <string name="photography_2-mena_description">The Photo Essay and 4 more lessons</string>
 
     <string name="photography_2-persian_title">Photography 2 - Persian Edition</string>
@@ -70,7 +70,7 @@
     <string name="photography_2-burundi_title">Photography 2 - Burundi Edition</string>
     <string name="photography_2-burundi_description">The Photo Essay and 4 more lessons</string>
 
-    <string name="video_1-mena_title">Video 1 - MENA Edition</string>
+    <string name="video_1-mena_title">Video 1 - Middle East, North Africa Edition</string>
     <string name="video_1-mena_description">Video Basics and 3 more lessons</string>
 
     <string name="video_1-persian_title">Video 1 - Persian Edition</string>
@@ -79,7 +79,7 @@
     <string name="video_1-burundi_title">Video 1 - Burundi Edition</string>
     <string name="video_1-burundi_description">Video Basics and 3 more lessons</string>
 
-    <string name="video_2-mena_title">Video 2 - MENA Edition</string>
+    <string name="video_2-mena_title">Video 2 - Middle East, North Africa Edition</string>
     <string name="video_2-mena_description">Framing your Shot and 4 more lessons</string>
 
     <string name="video_2-persian_title">Video 2 - Persian Edition</string>
@@ -88,7 +88,7 @@
     <string name="video_2-burundi_title">Video 2 - Burundi Edition</string>
     <string name="video_2-burundi_description">Framing your Shot and 4 more lessons</string>
 
-    <string name="story-mena_title">Story - MENA Edition</string>
+    <string name="story-mena_title">Story - Middle East, North Africa Edition</string>
     <string name="story-mena_description">Central Question and 6 more lessons</string>
 
     <string name="story-persian_title">Story - Persian Edition</string>
