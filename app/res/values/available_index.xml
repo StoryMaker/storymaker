@@ -7,4 +7,113 @@
     <string name="mobile_photo_basics_title">Mobile Photo Basics</string>
     <string name="mobile_photo_basics_description">Learn to make compelling photographs</string>
 
+    <string name="g_odvw_title">Learn to Make Better Video</string>
+    <string name="g_odvw_description">A one day workshop in video basics</string>
+
+    <string name="default_title">Story Assistant</string>
+    <string name="default_description">Answer a few questions to get a story template</string>
+
+    <string name="learning_guide_title">Basic Elements of a Story</string>
+    <string name="learning_guide_description">Three steps to stronger stories</string>
+
+    <string name="journalism_part_1-mena_title">Journalism 1 - MENA Edition</string>
+    <string name="journalism_part_1-mena_description">Social Media Basics and 4 more lessons</string>
+
+    <string name="journalism_part_1-persian_title">Journalism 1 - Persian Edition</string>
+    <string name="journalism_part_1-persian_description">Social Media Basics and 4 more lessons</string>
+
+    <string name="journalism_part_1-burundi_title">Journalism 1 - Burundi Edition</string>
+    <string name="journalism_part_1-burundi_description">Social Media Basics and 4 more lessons</string>
+
+    <string name="journalism_part_2-mena_title">Journalism 2 - MENA Edition</string>
+    <string name="journalism_part_2-mena_description">Evolution of a Story and 3 more lessons</string>
+
+    <string name="journalism_part_2-persian_title">Journalism 2 - Persian Edition</string>
+    <string name="journalism_part_2-persian_description">Evolution of a Story and 3 more lessons</string>
+
+    <string name="journalism_part_2-burundi_title">Journalism 2 - Burundi Edition</string>
+    <string name="journalism_part_2-burundi_description">Evolution of a Story and 3 more lessons</string>
+
+    <string name="security-mena_title">Security - MENA Edition</string>
+    <string name="security-mena_description">How can I use SMS Safely and 6 more lessons</string>
+
+    <string name="security-persian_title">Security - Persian Edition</string>
+    <string name="security-persian_description">How can I use SMS Safely and 6 more lessons</string>
+
+    <string name="security-burundi_title">Security - Burundi Edition</string>
+    <string name="security-burundi_description">How can I use SMS Safely and 6 more lessons</string>
+
+    <string name="audio-mena_title">Audio - MENA Edition</string>
+    <string name="audio-mena_description">Audio Basics and 5 more lessons</string>
+
+    <string name="audio-persian_title">Audio - Persian Edition</string>
+    <string name="audio-persian_description">Audio Basics and 5 more lessons</string>
+
+    <string name="audio-burundi_title">Audio - Burundi Edition</string>
+    <string name="audio-burundi_description">Audio Basics and 5 more lessons</string>
+
+    <string name="photography_1-mena_title">Photography 1 - MENA Edition</string>
+    <string name="photography_1-mena_description">Camera Basics and 5 more lessons</string>
+
+    <string name="photography_1-persian_title">Photography 1 - Persian Edition</string>
+    <string name="photography_1-persian_description">Camera Basics and 5 more lessons</string>
+
+    <string name="photography_1-burundi_title">Photography 1 - Burundi Edition</string>
+    <string name="photography_1-burundi_description">Camera Basics and 5 more lessons</string>
+
+    <string name="photography_2-mena_title">Photography 2 - MENA Edition</string>
+    <string name="photography_2-mena_description">The Photo Essay and 4 more lessons</string>
+
+    <string name="photography_2-persian_title">Photography 2 - Persian Edition</string>
+    <string name="photography_2-persian_description">The Photo Essay and 4 more lessons</string>
+
+    <string name="photography_2-burundi_title">Photography 2 - Burundi Edition</string>
+    <string name="photography_2-burundi_description">The Photo Essay and 4 more lessons</string>
+
+    <string name="video_1-mena_title">Video 1 - MENA Edition</string>
+    <string name="video_1-mena_description">Video Basics and 3 more lessons</string>
+
+    <string name="video_1-persian_title">Video 1 - Persian Edition</string>
+    <string name="video_1-persian_description">Video Basics and 3 more lessons</string>
+
+    <string name="video_1-burundi_title">Video 1 - Burundi Edition</string>
+    <string name="video_1-burundi_description">Video Basics and 3 more lessons</string>
+
+    <string name="video_2-mena_title">Video 2 - MENA Edition</string>
+    <string name="video_2-mena_description">Framing your Shot and 4 more lessons</string>
+
+    <string name="video_2-persian_title">Video 2 - Persian Edition</string>
+    <string name="video_2-persian_description">Framing your Shot and 4 more lessons</string>
+
+    <string name="video_2-burundi_title">Video 2 - Burundi Edition</string>
+    <string name="video_2-burundi_description">Framing your Shot and 4 more lessons</string>
+
+    <string name="story-mena_title">Story - MENA Edition</string>
+    <string name="story-mena_description">Central Question and 6 more lessons</string>
+
+    <string name="story-persian_title">Story - Persian Edition</string>
+    <string name="story-persian_description">Central Question and 6 more lessons</string>
+
+    <string name="story-burundi_title">Story - Burundi Edition</string>
+    <string name="story-burundi_description">Central Question and 6 more lessons</string>
+
+    <string name="t_video_title">Make a Video Story</string>
+    <string name="t_video_description">7 templates for video stories</string>
+
+    <string name="t_audio_title">Make an Audio Story</string>
+    <string name="t_audio_description">Record an audio story in a variety of ways</string>
+
+    <string name="t_photo_title">Make Photo Essay Stories</string>
+    <string name="t_photo_description">Tell a story with several photos</string>
+
+    <string name="t_news_title">Make a News Report Story</string>
+    <string name="t_news_description">News stories on different topics</string>
+
+    <string name="t_process_title">Make a Story Based on a Process</string>
+    <string name="t_process_description">Tell a story using a single process</string>
+
+    <string name="t_citizen_journalist_title">Citizen Journalism Pack</string>
+    <string name="t_citizen_journalist_description">Begin telling stories you care about</string>
+
 </resources>
+
