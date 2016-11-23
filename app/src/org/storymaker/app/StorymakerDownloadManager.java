@@ -471,9 +471,9 @@ public class StorymakerDownloadManager implements Runnable {
                     StorymakerQueueManager.checkQueueFinished(context, targetFile.getName());
 
                 } else if (useTor || !useManager) {
-                    downloadWithTor(useTor, Uri.parse(ligerUrl + ligerObb), mAppTitle + " content download", ligerObb, targetFile);
+                    downloadWithTor(useTor, Uri.parse(ligerUrl + ligerObb), mAppTitle, ligerObb, targetFile);
                 } else {
-                    downloadWithManager(Uri.parse(ligerUrl + ligerObb), mAppTitle + " content download", ligerObb, Uri.fromFile(targetFile));
+                    downloadWithManager(Uri.parse(ligerUrl + ligerObb), mAppTitle, ligerObb, Uri.fromFile(targetFile));
                 }
 
             } else {
@@ -615,14 +615,22 @@ public class StorymakerDownloadManager implements Runnable {
                             // only 1 notification per whole percentage point (used to be every 1/10th of a percent)
                             // only 1 notification per second
 
+                            String locTitle = indexItem.getTitle();
+
+                            int resId = context.getResources().getIdentifier(indexItem.getExpansionId().replace('-','_')+"_title", "string", context.getPackageName());
+
+                            if (context.getString(resId) != null)
+                                locTitle = context.getString(resId);
+
+
                             if (nPercent % 10 == 0 && nPercent != lastPercent) {
                                 if (lastTime == -1 || (thisTime - lastTime) > 1000) {
                                     lastPercent = nPercent;
                                     oldPercent = nPercent;
                                     lastTime = thisTime;
                                     Notification nProgress = new Notification.Builder(context)
-                                            .setContentTitle(mAppTitle + " content download")
-                                            .setContentText(indexItem.getTitle() + " - " + (nPercent / 10.0) + "%") // assignment file names are meaningless uuids
+                                            .setContentTitle(mAppTitle)
+                                            .setContentText(locTitle + " - " + (nPercent / 10.0) + "%") // assignment file names are meaningless uuids
                                             .setSmallIcon(android.R.drawable.arrow_down_float)
                                             .setProgress(100, (nPercent / 10), false)
                                             .setWhen(startTime.getTime())
