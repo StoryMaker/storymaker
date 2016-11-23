@@ -299,7 +299,6 @@
   <string name="title_exports">公開したストーリー</string>
   <string name="last_modified">最終更新</string>
   <string name="no_medium">(メディアがありません)</string>
-  <string name="learning_guide_description">説得力のあるナレーションを構築します。</string>
   <string name="extracting_audio_multiple">オーディオトラックの抽出</string>
   <string name="crossfading_audio">オーディオのクロスフェード...</string>
   <string name="crossfading_audio_multiple">オーディオトラックのクロスフェード</string>

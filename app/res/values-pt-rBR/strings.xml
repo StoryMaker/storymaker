@@ -299,7 +299,6 @@ Você também terá a oportunidade de ver e modificar os dados à serem enviados
   <string name="title_exports">Historias publicadas</string>
   <string name="last_modified">Ultima modificação</string>
   <string name="no_medium">(nenhum meio)</string>
-  <string name="learning_guide_description">Faça uma narrativa convicente </string>
   <string name="extracting_audio_multiple">Extraindo uma faixa de audio</string>
   <string name="crossfading_audio">Transicionando áudio...</string>
   <string name="crossfading_audio_multiple">Transicionando faixa de áudio</string>

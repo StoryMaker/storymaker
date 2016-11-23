@@ -16,86 +16,86 @@
     <string name="learning_guide_title">Elementos básicos de una historia</string>
     <string name="learning_guide_description">Tres pasos para construir una historia con fuerza</string>
 
-    <string name="journalism_part_1-mena_title">Periodismo 1 - Edición de Oriente Medio y Norte de África</string>
-    <string name="journalism_part_1-mena_description">Fundamentos de medios sociales y 4 lecciones adicionales</string>
+    <string name="journalism_part_1_mena_title">Periodismo 1 - Edición de Oriente Medio y Norte de África</string>
+    <string name="journalism_part_1_mena_description">Fundamentos de medios sociales y 4 lecciones adicionales</string>
 
-    <string name="journalism_part_1-persian_title">Periodismo 1 - Edición persa</string>
-    <string name="journalism_part_1-persian_description">Fundamentos de medios sociales y 4 lecciones adicionales</string>
+    <string name="journalism_part_1_persian_title">Periodismo 1 - Edición persa</string>
+    <string name="journalism_part_1_persian_description">Fundamentos de medios sociales y 4 lecciones adicionales</string>
 
-    <string name="journalism_part_1-burundi_title">Periodismo 1 - Edición de Burundi</string>
-    <string name="journalism_part_1-burundi_description">Fundamentos de medios sociales y 4 lecciones adicionales</string>
+    <string name="journalism_part_1_burundi_title">Periodismo 1 - Edición de Burundi</string>
+    <string name="journalism_part_1_burundi_description">Fundamentos de medios sociales y 4 lecciones adicionales</string>
 
-    <string name="journalism_part_2-mena_title">Periodismo 2 - Edición de Oriente Medio y Norte de África</string>
-    <string name="journalism_part_2-mena_description">Evolución de una historia y 3 lecciones adicionales</string>
+    <string name="journalism_part_2_mena_title">Periodismo 2 - Edición de Oriente Medio y Norte de África</string>
+    <string name="journalism_part_2_mena_description">Evolución de una historia y 3 lecciones adicionales</string>
 
-    <string name="journalism_part_2-persian_title">Periodismo 2 - Edición persa</string>
-    <string name="journalism_part_2-persian_description">Evolución de una historia y 3 lecciones adicionales</string>
+    <string name="journalism_part_2_persian_title">Periodismo 2 - Edición persa</string>
+    <string name="journalism_part_2_persian_description">Evolución de una historia y 3 lecciones adicionales</string>
 
-    <string name="journalism_part_2-burundi_title">Periodismo 2 - Edición de Burundi</string>
-    <string name="journalism_part_2-burundi_description">Evolución de una historia y 3 lecciones adicionales</string>
+    <string name="journalism_part_2_burundi_title">Periodismo 2 - Edición de Burundi</string>
+    <string name="journalism_part_2_burundi_description">Evolución de una historia y 3 lecciones adicionales</string>
 
-    <string name="security-mena_title">Seguridad - Edición de Oriente Medio y Norte de África</string>
-    <string name="security-mena_description">Cómo puedo usar SMS de forma segura y 6 lecciones adicionales</string>
+    <string name="security_mena_title">Seguridad - Edición de Oriente Medio y Norte de África</string>
+    <string name="security_mena_description">Cómo puedo usar SMS de forma segura y 6 lecciones adicionales</string>
 
-    <string name="security-persian_title">Seguridad - Edición persa</string>
-    <string name="security-persian_description">Cómo puedo usar SMS de forma segura y 6 lecciones adicionales</string>
+    <string name="security_persian_title">Seguridad - Edición persa</string>
+    <string name="security_persian_description">Cómo puedo usar SMS de forma segura y 6 lecciones adicionales</string>
 
-    <string name="security-burundi_title">Seguridad - Edición de Burundi</string>
-    <string name="security-burundi_description">Cómo puedo usar SMS de forma segura y 6 lecciones adicionales</string>
+    <string name="security_burundi_title">Seguridad - Edición de Burundi</string>
+    <string name="security_burundi_description">Cómo puedo usar SMS de forma segura y 6 lecciones adicionales</string>
 
-    <string name="audio-mena_title">Audio - Edición de Oriente Medio y Norte de África</string>
-    <string name="audio-mena_description">Fundamentos de audio y 5 lecciones adicionales</string>
+    <string name="audio_mena_title">Audio - Edición de Oriente Medio y Norte de África</string>
+    <string name="audio_mena_description">Fundamentos de audio y 5 lecciones adicionales</string>
 
-    <string name="audio-persian_title">Audio - Edición persa</string>
-    <string name="audio-persian_description">Fundamentos de audio y 5 lecciones adicionales</string>
+    <string name="audio_persian_title">Audio - Edición persa</string>
+    <string name="audio_persian_description">Fundamentos de audio y 5 lecciones adicionales</string>
 
-    <string name="audio-burundi_title">Audio - Edición de Burundi</string>
-    <string name="audio-burundi_description">Fundamentos de audio y 5 lecciones adicionales</string>
+    <string name="audio_burundi_title">Audio - Edición de Burundi</string>
+    <string name="audio_burundi_description">Fundamentos de audio y 5 lecciones adicionales</string>
 
-    <string name="photography_1-mena_title">Fotografía 1 - Edición de Oriente Medio y Norte de África</string>
-    <string name="photography_1-mena_description">Fundamentos de cámara y 5 lecciones adicionales</string>
+    <string name="photography_1_mena_title">Fotografía 1 - Edición de Oriente Medio y Norte de África</string>
+    <string name="photography_1_mena_description">Fundamentos de cámara y 5 lecciones adicionales</string>
 
-    <string name="photography_1-persian_title">Fotografía 1 - Edición persa</string>
-    <string name="photography_1-persian_description">Fundamentos de cámara y 5 lecciones adicionales</string>
+    <string name="photography_1_persian_title">Fotografía 1 - Edición persa</string>
+    <string name="photography_1_persian_description">Fundamentos de cámara y 5 lecciones adicionales</string>
 
-    <string name="photography_1-burundi_title">Fotografía 1 - Edición de Burundi</string>
-    <string name="photography_1-burundi_description">Fundamentos de cámara y 5 lecciones adicionales</string>
+    <string name="photography_1_burundi_title">Fotografía 1 - Edición de Burundi</string>
+    <string name="photography_1_burundi_description">Fundamentos de cámara y 5 lecciones adicionales</string>
 
-    <string name="photography_2-mena_title">Fotografía 2 - Edición de Oriente Medio y Norte de África</string>
-    <string name="photography_2-mena_description">El ensayo fotográfico y 4 lecciones adicionales</string>
+    <string name="photography_2_mena_title">Fotografía 2 - Edición de Oriente Medio y Norte de África</string>
+    <string name="photography_2_mena_description">El ensayo fotográfico y 4 lecciones adicionales</string>
 
-    <string name="photography_2-persian_title">Fotografía 2 - Edición persa</string>
-    <string name="photography_2-persian_description">El ensayo fotográfico y 4 lecciones adicionales</string>
+    <string name="photography_2_persian_title">Fotografía 2 - Edición persa</string>
+    <string name="photography_2_persian_description">El ensayo fotográfico y 4 lecciones adicionales</string>
 
-    <string name="photography_2-burundi_title">Fotografía 2 - Edición de Burundi</string>
-    <string name="photography_2-burundi_description">El ensayo fotográfico y 4 lecciones adicionales</string>
+    <string name="photography_2_burundi_title">Fotografía 2 - Edición de Burundi</string>
+    <string name="photography_2_burundi_description">El ensayo fotográfico y 4 lecciones adicionales</string>
 
-    <string name="video_1-mena_title">Vídeo 1 - Edición de Oriente Medio y Norte de África</string>
-    <string name="video_1-mena_description">Fundamentos de vídeo y 3 lecciones adicionales</string>
+    <string name="video_1_mena_title">Vídeo 1 - Edición de Oriente Medio y Norte de África</string>
+    <string name="video_1_mena_description">Fundamentos de vídeo y 3 lecciones adicionales</string>
 
-    <string name="video_1-persian_title">Vídeo 1 - Edición persa</string>
-    <string name="video_1-persian_description">Fundamentos de vídeo y 3 lecciones adicionales</string>
+    <string name="video_1_persian_title">Vídeo 1 - Edición persa</string>
+    <string name="video_1_persian_description">Fundamentos de vídeo y 3 lecciones adicionales</string>
 
-    <string name="video_1-burundi_title">Vídeo 1 - Edición de Burundi</string>
-    <string name="video_1-burundi_description">Fundamentos de vídeo y 3 lecciones adicionales</string>
+    <string name="video_1_burundi_title">Vídeo 1 - Edición de Burundi</string>
+    <string name="video_1_burundi_description">Fundamentos de vídeo y 3 lecciones adicionales</string>
 
-    <string name="video_2-mena_title">Vídeo 2 - Edición de Oriente Medio y Norte de África</string>
-    <string name="video_2-mena_description">Encuadrar su toma y 4 lecciones adicionales</string>
+    <string name="video_2_mena_title">Vídeo 2 - Edición de Oriente Medio y Norte de África</string>
+    <string name="video_2_mena_description">Encuadrar su toma y 4 lecciones adicionales</string>
 
-    <string name="video_2-persian_title">Vídeo 2 - Edición persa</string>
-    <string name="video_2-persian_description">Encuadrar su toma y 4 lecciones adicionales</string>
+    <string name="video_2_persian_title">Vídeo 2 - Edición persa</string>
+    <string name="video_2_persian_description">Encuadrar su toma y 4 lecciones adicionales</string>
 
-    <string name="video_2-burundi_title">Vídeo 2 - Edición de Burundi</string>
-    <string name="video_2-burundi_description">Encuadrar su toma y 4 lecciones adicionales</string>
+    <string name="video_2_burundi_title">Vídeo 2 - Edición de Burundi</string>
+    <string name="video_2_burundi_description">Encuadrar su toma y 4 lecciones adicionales</string>
 
-    <string name="story-mena_title">Historia - Edición de Oriente Medio y Norte de África</string>
-    <string name="story-mena_description">Cuestión central y 6 lecciones adicionales</string>
+    <string name="story_mena_title">Historia - Edición de Oriente Medio y Norte de África</string>
+    <string name="story_mena_description">Cuestión central y 6 lecciones adicionales</string>
 
-    <string name="story-persian_title">Historia - Edición persa</string>
-    <string name="story-persian_description">Cuestión central y 6 lecciones adicionales</string>
+    <string name="story_persian_title">Historia - Edición persa</string>
+    <string name="story_persian_description">Cuestión central y 6 lecciones adicionales</string>
 
-    <string name="story-burundi_title">Historia - Edición de Burundi</string>
-    <string name="story-burundi_description">Cuestión central y 6 lecciones adicionales</string>
+    <string name="story_burundi_title">Historia - Edición de Burundi</string>
+    <string name="story_burundi_description">Cuestión central y 6 lecciones adicionales</string>
 
     <string name="t_video_title">Cree una historia de vídeo</string>
     <string name="t_video_description">7 plantillas para historias de vídeo</string>

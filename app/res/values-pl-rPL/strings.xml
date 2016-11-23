@@ -269,7 +269,6 @@ Będziesz mieć możliwość podejrzenia i modyfikacji wysyłanych danych.</stri
   <string name="no_title">Brak tytułu.</string>
   <string name="title_exports">Opublikowane reportaże</string>
   <string name="last_modified">Ostatnio Modyfikowane</string>
-  <string name="learning_guide_description">Stwórz interesującą narrację.</string>
   <string name="extracting_audio_multiple">Wyodrębniam ścieżkę audio</string>
   <string name="crossfading_audio">Stosuję przenikanie do ścieżek audio</string>
   <string name="crossfading_audio_multiple">Przenikanie ścieżek audio</string>

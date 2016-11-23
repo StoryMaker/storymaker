@@ -2,7 +2,7 @@
 <resources>
 
     <string name="g_welcome_title">Welcome to StoryMaker</string>
-    <string name="g_welcome_description">Tour through StoryMaker's features</string>
+    <string name="g_welcome_description">Tour through StoryMaker\'s features</string>
 
     <string name="mobile_photo_basics_title">Mobile Photo Basics</string>
     <string name="mobile_photo_basics_description">Learn to make compelling photographs</string>
@@ -16,86 +16,86 @@
     <string name="learning_guide_title">Basic Elements of a Story</string>
     <string name="learning_guide_description">Three steps to stronger stories</string>
 
-    <string name="journalism_part_1-mena_title">Journalism 1 - Middle East, North Africa Edition</string>
-    <string name="journalism_part_1-mena_description">Social Media Basics and 4 more lessons</string>
+    <string name="journalism_part_1_mena_title">Journalism 1 - Middle East, North Africa Edition</string>
+    <string name="journalism_part_1_mena_description">Social Media Basics and 4 more lessons</string>
 
-    <string name="journalism_part_1-persian_title">Journalism 1 - Persian Edition</string>
-    <string name="journalism_part_1-persian_description">Social Media Basics and 4 more lessons</string>
+    <string name="journalism_part_1_persian_title">Journalism 1 - Persian Edition</string>
+    <string name="journalism_part_1_persian_description">Social Media Basics and 4 more lessons</string>
 
-    <string name="journalism_part_1-burundi_title">Journalism 1 - Burundi Edition</string>
-    <string name="journalism_part_1-burundi_description">Social Media Basics and 4 more lessons</string>
+    <string name="journalism_part_1_burundi_title">Journalism 1 - Burundi Edition</string>
+    <string name="journalism_part_1_burundi_description">Social Media Basics and 4 more lessons</string>
 
-    <string name="journalism_part_2-mena_title">Journalism 2 - Middle East, North Africa Edition</string>
-    <string name="journalism_part_2-mena_description">Evolution of a Story and 3 more lessons</string>
+    <string name="journalism_part_2_mena_title">Journalism 2 - Middle East, North Africa Edition</string>
+    <string name="journalism_part_2_mena_description">Evolution of a Story and 3 more lessons</string>
 
-    <string name="journalism_part_2-persian_title">Journalism 2 - Persian Edition</string>
-    <string name="journalism_part_2-persian_description">Evolution of a Story and 3 more lessons</string>
+    <string name="journalism_part_2_persian_title">Journalism 2 - Persian Edition</string>
+    <string name="journalism_part_2_persian_description">Evolution of a Story and 3 more lessons</string>
 
-    <string name="journalism_part_2-burundi_title">Journalism 2 - Burundi Edition</string>
-    <string name="journalism_part_2-burundi_description">Evolution of a Story and 3 more lessons</string>
+    <string name="journalism_part_2_burundi_title">Journalism 2 - Burundi Edition</string>
+    <string name="journalism_part_2_burundi_description">Evolution of a Story and 3 more lessons</string>
 
-    <string name="security-mena_title">Security - Middle East, North Africa Edition</string>
-    <string name="security-mena_description">How can I use SMS Safely and 6 more lessons</string>
+    <string name="security_mena_title">Security - Middle East, North Africa Edition</string>
+    <string name="security_mena_description">How can I use SMS Safely and 6 more lessons</string>
 
-    <string name="security-persian_title">Security - Persian Edition</string>
-    <string name="security-persian_description">How can I use SMS Safely and 6 more lessons</string>
+    <string name="security_persian_title">Security - Persian Edition</string>
+    <string name="security_persian_description">How can I use SMS Safely and 6 more lessons</string>
 
-    <string name="security-burundi_title">Security - Burundi Edition</string>
-    <string name="security-burundi_description">How can I use SMS Safely and 6 more lessons</string>
+    <string name="security_burundi_title">Security - Burundi Edition</string>
+    <string name="security_burundi_description">How can I use SMS Safely and 6 more lessons</string>
 
-    <string name="audio-mena_title">Audio - Middle East, North Africa Edition</string>
-    <string name="audio-mena_description">Audio Basics and 5 more lessons</string>
+    <string name="audio_mena_title">Audio - Middle East, North Africa Edition</string>
+    <string name="audio_mena_description">Audio Basics and 5 more lessons</string>
 
-    <string name="audio-persian_title">Audio - Persian Edition</string>
-    <string name="audio-persian_description">Audio Basics and 5 more lessons</string>
+    <string name="audio_persian_title">Audio - Persian Edition</string>
+    <string name="audio_persian_description">Audio Basics and 5 more lessons</string>
 
-    <string name="audio-burundi_title">Audio - Burundi Edition</string>
-    <string name="audio-burundi_description">Audio Basics and 5 more lessons</string>
+    <string name="audio_burundi_title">Audio - Burundi Edition</string>
+    <string name="audio_burundi_description">Audio Basics and 5 more lessons</string>
 
-    <string name="photography_1-mena_title">Photography 1 - Middle East, North Africa Edition</string>
-    <string name="photography_1-mena_description">Camera Basics and 5 more lessons</string>
+    <string name="photography_1_mena_title">Photography 1 - Middle East, North Africa Edition</string>
+    <string name="photography_1_mena_description">Camera Basics and 5 more lessons</string>
 
-    <string name="photography_1-persian_title">Photography 1 - Persian Edition</string>
-    <string name="photography_1-persian_description">Camera Basics and 5 more lessons</string>
+    <string name="photography_1_persian_title">Photography 1 - Persian Edition</string>
+    <string name="photography_1_persian_description">Camera Basics and 5 more lessons</string>
 
-    <string name="photography_1-burundi_title">Photography 1 - Burundi Edition</string>
-    <string name="photography_1-burundi_description">Camera Basics and 5 more lessons</string>
+    <string name="photography_1_burundi_title">Photography 1 - Burundi Edition</string>
+    <string name="photography_1_burundi_description">Camera Basics and 5 more lessons</string>
 
-    <string name="photography_2-mena_title">Photography 2 - Middle East, North Africa Edition</string>
-    <string name="photography_2-mena_description">The Photo Essay and 4 more lessons</string>
+    <string name="photography_2_mena_title">Photography 2 - Middle East, North Africa Edition</string>
+    <string name="photography_2_mena_description">The Photo Essay and 4 more lessons</string>
 
-    <string name="photography_2-persian_title">Photography 2 - Persian Edition</string>
-    <string name="photography_2-persian_description">The Photo Essay and 4 more lessons</string>
+    <string name="photography_2_persian_title">Photography 2 - Persian Edition</string>
+    <string name="photography_2_persian_description">The Photo Essay and 4 more lessons</string>
 
-    <string name="photography_2-burundi_title">Photography 2 - Burundi Edition</string>
-    <string name="photography_2-burundi_description">The Photo Essay and 4 more lessons</string>
+    <string name="photography_2_burundi_title">Photography 2 - Burundi Edition</string>
+    <string name="photography_2_burundi_description">The Photo Essay and 4 more lessons</string>
 
-    <string name="video_1-mena_title">Video 1 - Middle East, North Africa Edition</string>
-    <string name="video_1-mena_description">Video Basics and 3 more lessons</string>
+    <string name="video_1_mena_title">Video 1 - Middle East, North Africa Edition</string>
+    <string name="video_1_mena_description">Video Basics and 3 more lessons</string>
 
-    <string name="video_1-persian_title">Video 1 - Persian Edition</string>
-    <string name="video_1-persian_description">Video Basics and 3 more lessons</string>
+    <string name="video_1_persian_title">Video 1 - Persian Edition</string>
+    <string name="video_1_persian_description">Video Basics and 3 more lessons</string>
 
-    <string name="video_1-burundi_title">Video 1 - Burundi Edition</string>
-    <string name="video_1-burundi_description">Video Basics and 3 more lessons</string>
+    <string name="video_1_burundi_title">Video 1 - Burundi Edition</string>
+    <string name="video_1_burundi_description">Video Basics and 3 more lessons</string>
 
-    <string name="video_2-mena_title">Video 2 - Middle East, North Africa Edition</string>
-    <string name="video_2-mena_description">Framing your Shot and 4 more lessons</string>
+    <string name="video_2_mena_title">Video 2 - Middle East, North Africa Edition</string>
+    <string name="video_2_mena_description">Framing your Shot and 4 more lessons</string>
 
-    <string name="video_2-persian_title">Video 2 - Persian Edition</string>
-    <string name="video_2-persian_description">Framing your Shot and 4 more lessons</string>
+    <string name="video_2_persian_title">Video 2 - Persian Edition</string>
+    <string name="video_2_persian_description">Framing your Shot and 4 more lessons</string>
 
-    <string name="video_2-burundi_title">Video 2 - Burundi Edition</string>
-    <string name="video_2-burundi_description">Framing your Shot and 4 more lessons</string>
+    <string name="video_2_burundi_title">Video 2 - Burundi Edition</string>
+    <string name="video_2_burundi_description">Framing your Shot and 4 more lessons</string>
 
-    <string name="story-mena_title">Story - Middle East, North Africa Edition</string>
-    <string name="story-mena_description">Central Question and 6 more lessons</string>
+    <string name="story_mena_title">Story - Middle East, North Africa Edition</string>
+    <string name="story_mena_description">Central Question and 6 more lessons</string>
 
-    <string name="story-persian_title">Story - Persian Edition</string>
-    <string name="story-persian_description">Central Question and 6 more lessons</string>
+    <string name="story_persian_title">Story - Persian Edition</string>
+    <string name="story_persian_description">Central Question and 6 more lessons</string>
 
-    <string name="story-burundi_title">Story - Burundi Edition</string>
-    <string name="story-burundi_description">Central Question and 6 more lessons</string>
+    <string name="story_burundi_title">Story - Burundi Edition</string>
+    <string name="story_burundi_description">Central Question and 6 more lessons</string>
 
     <string name="t_video_title">Make a Video Story</string>
     <string name="t_video_description">7 templates for video stories</string>

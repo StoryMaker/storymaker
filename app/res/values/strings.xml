@@ -327,7 +327,6 @@ You also will have an opportunity to see and modify the data being sent."</strin
     <string name="title_exports">Published Stories</string>
     <string name="last_modified">Last Modified</string>
     <string name="no_medium">(no medium)</string>
-    <string name="learning_guide_description">Build a compelling narrative.</string>
 
     <string name="extracting_audio_multiple">Extracting audio track</string>
     <string name="crossfading_audio">Crossfading audio...</string>

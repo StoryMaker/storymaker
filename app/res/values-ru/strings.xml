@@ -299,7 +299,6 @@
   <string name="title_exports">Опубликованные сюжеты</string>
   <string name="last_modified">Последние изменения</string>
   <string name="no_medium">(нет носителя)</string>
-  <string name="learning_guide_description">Создайте захватывающее повествование.</string>
   <string name="extracting_audio_multiple">Извлечение аудио дорожки</string>
   <string name="crossfading_audio">Настройка плавного перехода в аудио...</string>
   <string name="crossfading_audio_multiple">Настройка плавного перехода в аудио дорожке</string>

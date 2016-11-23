@@ -16,86 +16,86 @@
     <string name="learning_guide_title">Основные элементы сюжета</string>
     <string name="learning_guide_description">Три шага на пути создания сильных сюжетов</string>
 
-    <string name="journalism_part_1-mena_title">Журналистика 1 - Ближний Восток, Североафриканский выпуск</string>
-    <string name="journalism_part_1-mena_description">Основы социальных медиа и еще 4 урока</string>
+    <string name="journalism_part_1_mena_title">Журналистика 1 - Ближний Восток, Североафриканский выпуск</string>
+    <string name="journalism_part_1_mena_description">Основы социальных медиа и еще 4 урока</string>
 
-    <string name="journalism_part_1-persian_title">Журналистика 1 - Персидский выпуск</string>
-    <string name="journalism_part_1-persian_description">Основы социальных медиа и еще 4 урока</string>
+    <string name="journalism_part_1_persian_title">Журналистика 1 - Персидский выпуск</string>
+    <string name="journalism_part_1_persian_description">Основы социальных медиа и еще 4 урока</string>
 
-    <string name="journalism_part_1-burundi_title">Журналистика 1 - Бурундийский выпуск</string>
-    <string name="journalism_part_1-burundi_description">Основы социальных медиа и еще 4 урока</string>
+    <string name="journalism_part_1_burundi_title">Журналистика 1 - Бурундийский выпуск</string>
+    <string name="journalism_part_1_burundi_description">Основы социальных медиа и еще 4 урока</string>
 
-    <string name="journalism_part_2-mena_title">Журналистика 2 - Ближний Восток, Североафриканский выпуск</string>
-    <string name="journalism_part_2-mena_description">Развитие сюжета и еще 3 урока</string>
+    <string name="journalism_part_2_mena_title">Журналистика 2 - Ближний Восток, Североафриканский выпуск</string>
+    <string name="journalism_part_2_mena_description">Развитие сюжета и еще 3 урока</string>
 
-    <string name="journalism_part_2-persian_title">Журналистика 2 - Персидский выпуск</string>
-    <string name="journalism_part_2-persian_description">Развитие сюжета и еще 3 урока</string>
+    <string name="journalism_part_2_persian_title">Журналистика 2 - Персидский выпуск</string>
+    <string name="journalism_part_2_persian_description">Развитие сюжета и еще 3 урока</string>
 
-    <string name="journalism_part_2-burundi_title">Журнализм 2 - Бурундийский выпуск</string>
-    <string name="journalism_part_2-burundi_description">Развитие сюжета и еще 3 урока</string>
+    <string name="journalism_part_2_burundi_title">Журнализм 2 - Бурундийский выпуск</string>
+    <string name="journalism_part_2_burundi_description">Развитие сюжета и еще 3 урока</string>
 
-    <string name="security-mena_title">Безопасность - Ближний Восток, Североафриканский выпуск </string>
-    <string name="security-mena_description">Как я могу безопасно использовать SMS и еще 6 уроков</string>
+    <string name="security_mena_title">Безопасность - Ближний Восток, Североафриканский выпуск </string>
+    <string name="security_mena_description">Как я могу безопасно использовать SMS и еще 6 уроков</string>
 
-    <string name="security-persian_title">Безопасность - Персидский выпуск</string>
-    <string name="security-persian_description">Как я могу безопасно использовать SMS и еще 6 уроков </string>
+    <string name="security_persian_title">Безопасность - Персидский выпуск</string>
+    <string name="security_persian_description">Как я могу безопасно использовать SMS и еще 6 уроков </string>
 
-    <string name="security-burundi_title">Безопасность - Бурундийский выпуск</string>
-    <string name="security-burundi_description">Как я могу безопасно использовать SMS и еще 6 уроков </string>
+    <string name="security_burundi_title">Безопасность - Бурундийский выпуск</string>
+    <string name="security_burundi_description">Как я могу безопасно использовать SMS и еще 6 уроков </string>
 
-    <string name="audio-mena_title">Аудио - Ближний Восток, Североафриканский выпуск </string>
-    <string name="audio-mena_description">Основы аудио и еще 5 уроков</string>
+    <string name="audio_mena_title">Аудио - Ближний Восток, Североафриканский выпуск </string>
+    <string name="audio_mena_description">Основы аудио и еще 5 уроков</string>
 
-    <string name="audio-persian_title">Аудио - Персидский выпуск </string>
-    <string name="audio-persian_description">Основы аудио и еще 5 уроков </string>
+    <string name="audio_persian_title">Аудио - Персидский выпуск </string>
+    <string name="audio_persian_description">Основы аудио и еще 5 уроков </string>
 
-    <string name="audio-burundi_title">Аудио - Бурундийский выпуск</string>
-    <string name="audio-burundi_description">Основы аудио и еще 5 уроков </string>
+    <string name="audio_burundi_title">Аудио - Бурундийский выпуск</string>
+    <string name="audio_burundi_description">Основы аудио и еще 5 уроков </string>
 
-    <string name="photography_1-mena_title">Фотография 1 - Ближний Восток, Североафриканский выпуск </string>
-    <string name="photography_1-mena_description">Основы работы с камерой и еще 5 уроков</string>
+    <string name="photography_1_mena_title">Фотография 1 - Ближний Восток, Североафриканский выпуск </string>
+    <string name="photography_1_mena_description">Основы работы с камерой и еще 5 уроков</string>
 
-    <string name="photography_1-persian_title">Фотография 1 - Персидский выпуск</string>
-    <string name="photography_1-persian_description">Основы работы с камерой и еще 5 уроков </string>
+    <string name="photography_1_persian_title">Фотография 1 - Персидский выпуск</string>
+    <string name="photography_1_persian_description">Основы работы с камерой и еще 5 уроков </string>
 
-    <string name="photography_1-burundi_title">Фотография 1 - Бурундийский выпуск</string>
-    <string name="photography_1-burundi_description">Основы работы с камерой и еще 5 уроков </string>
+    <string name="photography_1_burundi_title">Фотография 1 - Бурундийский выпуск</string>
+    <string name="photography_1_burundi_description">Основы работы с камерой и еще 5 уроков </string>
 
-    <string name="photography_2-mena_title">Фотография 2 - Ближний Восток, Североафриканский выпуск </string>
-    <string name="photography_2-mena_description">Фотоэссе и еще 4 урока</string>
+    <string name="photography_2_mena_title">Фотография 2 - Ближний Восток, Североафриканский выпуск </string>
+    <string name="photography_2_mena_description">Фотоэссе и еще 4 урока</string>
 
-    <string name="photography_2-persian_title">Фотография 2 - Персидский выпуск</string>
-    <string name="photography_2-persian_description">Фотоэссе и еще 4 урока </string>
+    <string name="photography_2_persian_title">Фотография 2 - Персидский выпуск</string>
+    <string name="photography_2_persian_description">Фотоэссе и еще 4 урока </string>
 
-    <string name="photography_2-burundi_title">Фотография 2 - Бурундийский выпуск</string>
-    <string name="photography_2-burundi_description">Фотоэссе и еще 4 урока </string>
+    <string name="photography_2_burundi_title">Фотография 2 - Бурундийский выпуск</string>
+    <string name="photography_2_burundi_description">Фотоэссе и еще 4 урока </string>
 
-    <string name="video_1-mena_title">Видео 1 - Ближний Восток, Североафриканский выпуск </string>
-    <string name="video_1-mena_description">Основы видео и еще 3 урока</string>
+    <string name="video_1_mena_title">Видео 1 - Ближний Восток, Североафриканский выпуск </string>
+    <string name="video_1_mena_description">Основы видео и еще 3 урока</string>
 
-    <string name="video_1-persian_title">Видео 1 - Персидский выпуск</string>
-    <string name="video_1-persian_description">Основы видео и еще 3 урока </string>
+    <string name="video_1vpersian_title">Видео 1 - Персидский выпуск</string>
+    <string name="video_1_persian_description">Основы видео и еще 3 урока </string>
 
-    <string name="video_1-burundi_title">Видео 1 - Бурундийский выпуск</string>
-    <string name="video_1-burundi_description">Основы видео и еще 3 урока </string>
+    <string name="video_1_burundi_title">Видео 1 - Бурундийский выпуск</string>
+    <string name="video_1_burundi_description">Основы видео и еще 3 урока </string>
 
-    <string name="video_2-mena_title">Видео 2 - Ближний Восток, Североафриканский выпуск </string>
-    <string name="video_2-mena_description">Структура кадра и еще 4 урока </string>
+    <string name="video_2_mena_title">Видео 2 - Ближний Восток, Североафриканский выпуск </string>
+    <string name="video_2_mena_description">Структура кадра и еще 4 урока </string>
 
-    <string name="video_2-persian_title">Видео 2 - Персидский выпуск</string>
-    <string name="video_2-persian_description">Структура кадра и еще 4 урока</string>
+    <string name="video_2_persian_title">Видео 2 - Персидский выпуск</string>
+    <string name="video_2_persian_description">Структура кадра и еще 4 урока</string>
 
-    <string name="video_2-burundi_title">Видео 2 - Бурундийский выпуск</string>
-    <string name="video_2-burundi_description">Структура кадра и еще 4 урока </string>
+    <string name="video_2_burundi_title">Видео 2 - Бурундийский выпуск</string>
+    <string name="video_2_burundi_description">Структура кадра и еще 4 урока </string>
 
-    <string name="story-mena_title">Сюжет - Ближний Восток, Североафриканский выпуск</string>
-    <string name="story-mena_description">Главный вопрос и еще 6 уроков</string>
+    <string name="story_mena_title">Сюжет - Ближний Восток, Североафриканский выпуск</string>
+    <string name="story_mena_description">Главный вопрос и еще 6 уроков</string>
+`
+    <string name="story_persian_title">Сюжет - Персидский выпуск</string>
+    <string name="story_persian_description">Главный вопрос и еще 6 уроков</string>
 
-    <string name="story-persian_title">Сюжет - Персидский выпуск</string>
-    <string name="story-persian_description">Главный вопрос и еще 6 уроков</string>
-
-    <string name="story-burundi_title">Сюжет - Бурундийский выпуск</string>
-    <string name="story-burundi_description">Главный вопрос и еще 6 уроков</string>
+    <string name="story_burundi_title">Сюжет - Бурундийский выпуск</string>
+    <string name="story_burundi_description">Главный вопрос и еще 6 уроков</string>
 
     <string name="t_video_title">Создайте видеорепортаж</string>
     <string name="t_video_description">7 шаблонов для видеорепортажей</string>

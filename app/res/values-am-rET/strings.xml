@@ -299,7 +299,6 @@
   <string name="title_exports">የታተሙ ታሪኮች </string>
   <string name="last_modified">በመጨራሻ የተሻሻለው </string>
   <string name="no_medium">(ምንም ሚዲየም የለም)</string>
-  <string name="learning_guide_description">አሳማኝ ትረካ ያዘጋጁ።</string>
   <string name="extracting_audio_multiple">የድምጽ ትራኮችን በማውጣት ላይ</string>
   <string name="crossfading_audio">የድምጽ ሽግግር በማድረግ ላይ...</string>
   <string name="crossfading_audio_multiple">የድምጽ ትራክ ሽግግር በማድረግ ላይ</string>

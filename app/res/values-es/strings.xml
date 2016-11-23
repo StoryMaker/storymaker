@@ -300,7 +300,6 @@ No se puede acceder al almacenamiento externo o interno</string>
   <string name="title_exports">Historias publicadas</string>
   <string name="last_modified">Última modificación</string>
   <string name="no_medium">(ningún medio)</string>
-  <string name="learning_guide_description">Construir una narrativa convincente.</string>
   <string name="extracting_audio_multiple">extrayendo pista de audio</string>
   <string name="crossfading_audio">audio encadenada</string>
   <string name="crossfading_audio_multiple"> pista de audio encadenada</string>
