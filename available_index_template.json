@@ -10,7 +10,7 @@
         "thumbnailPath": "images/content_packs/mobile_photo_basics_cover.png",
         "expansionFilePath": "Android/data/org.storymaker.app/files/",
         "expansionFileUrl": "https://s3-us-west-1.amazonaws.com/storymakerorg/appdata/obb/org.storymaker.app/",
-        "expansionFileVersion": "14"
+        "expansionFileVersion": "15"
     },
     {
         "expansionId": "g_odvw",
@@ -23,7 +23,7 @@
         "thumbnailPath": "images/content_packs/g_odvw_cover.png",
         "expansionFilePath": "Android/data/org.storymaker.app/files/",
         "expansionFileUrl": "https://s3-us-west-1.amazonaws.com/storymakerorg/appdata/obb/org.storymaker.app/",
-        "expansionFileVersion": "14"
+        "expansionFileVersion": "15"
     },
     {
         "expansionId": "default",
@@ -36,7 +36,7 @@
         "thumbnailPath": "images/content_packs/default_cover.png",
         "expansionFilePath": "Android/data/org.storymaker.app/files/",
         "expansionFileUrl": "https://s3-us-west-1.amazonaws.com/storymakerorg/appdata/obb/org.storymaker.app/",
-        "expansionFileVersion": "14"
+        "expansionFileVersion": "15"
     },
     {
         "expansionId": "learning_guide",
@@ -49,7 +49,7 @@
         "thumbnailPath": "images/content_packs/learning_guide_cover.jpg",
         "expansionFilePath": "Android/data/org.storymaker.app/files/",
         "expansionFileUrl": "https://s3-us-west-1.amazonaws.com/storymakerorg/appdata/obb/org.storymaker.app/",
-        "expansionFileVersion": "14"
+        "expansionFileVersion": "15"
     },
     {
         "expansionId": "g_welcome",
@@ -62,7 +62,7 @@
         "thumbnailPath": "images/content_packs/g_welcome_cover.jpg",
         "expansionFilePath": "Android/data/org.storymaker.app/files/",
         "expansionFileUrl": "https://s3-us-west-1.amazonaws.com/storymakerorg/appdata/obb/org.storymaker.app/",
-        "expansionFileVersion": "14"
+        "expansionFileVersion": "15"
     },
     
     
@@ -78,7 +78,7 @@
         "thumbnailPath": "images/content_packs/journalism_part_1_mena_cover.png",
         "expansionFilePath": "Android/data/org.storymaker.app/files/",
         "expansionFileUrl": "https://s3-us-west-1.amazonaws.com/storymakerorg/appdata/obb/org.storymaker.app/",
-        "expansionFileVersion": "14"
+        "expansionFileVersion": "15"
     },
     {
         "expansionId": "journalism_part_1-persian",
@@ -91,7 +91,7 @@
         "thumbnailPath": "images/content_packs/journalism_part_1_persian_cover.png",
         "expansionFilePath": "Android/data/org.storymaker.app/files/",
         "expansionFileUrl": "https://s3-us-west-1.amazonaws.com/storymakerorg/appdata/obb/org.storymaker.app/",
-        "expansionFileVersion": "14"
+        "expansionFileVersion": "15"
     },
     {
         "expansionId": "journalism_part_1-burundi",
@@ -104,7 +104,7 @@
         "thumbnailPath": "images/content_packs/journalism_part_1_burundi_cover.png",
         "expansionFilePath": "Android/data/org.storymaker.app/files/",
         "expansionFileUrl": "https://s3-us-west-1.amazonaws.com/storymakerorg/appdata/obb/org.storymaker.app/",
-        "expansionFileVersion": "14"
+        "expansionFileVersion": "15"
     },
     {
         "expansionId": "journalism_part_2-mena",
@@ -117,7 +117,7 @@
         "thumbnailPath": "images/content_packs/journalism_part_2_mena_cover.png",
         "expansionFilePath": "Android/data/org.storymaker.app/files/",
         "expansionFileUrl": "https://s3-us-west-1.amazonaws.com/storymakerorg/appdata/obb/org.storymaker.app/",
-        "expansionFileVersion": "14"
+        "expansionFileVersion": "15"
     },
     {
         "expansionId": "journalism_part_2-persian",
@@ -130,7 +130,7 @@
         "thumbnailPath": "images/content_packs/journalism_part_2_persian_cover.png",
         "expansionFilePath": "Android/data/org.storymaker.app/files/",
         "expansionFileUrl": "https://s3-us-west-1.amazonaws.com/storymakerorg/appdata/obb/org.storymaker.app/",
-        "expansionFileVersion": "14"
+        "expansionFileVersion": "15"
     },
     {
         "expansionId": "journalism_part_2-burundi",
@@ -143,7 +143,7 @@
         "thumbnailPath": "images/content_packs/journalism_part_2_burundi_cover.png",
         "expansionFilePath": "Android/data/org.storymaker.app/files/",
         "expansionFileUrl": "https://s3-us-west-1.amazonaws.com/storymakerorg/appdata/obb/org.storymaker.app/",
-        "expansionFileVersion": "14"
+        "expansionFileVersion": "15"
     },
     
     {
@@ -157,7 +157,7 @@
         "thumbnailPath": "images/content_packs/security_mena_cover.png",
         "expansionFilePath": "Android/data/org.storymaker.app/files/",
         "expansionFileUrl": "https://s3-us-west-1.amazonaws.com/storymakerorg/appdata/obb/org.storymaker.app/",
-        "expansionFileVersion": "14"
+        "expansionFileVersion": "15"
     },
     {
         "expansionId": "security-persian",
@@ -170,7 +170,7 @@
         "thumbnailPath": "images/content_packs/security_persian_cover.png",
         "expansionFilePath": "Android/data/org.storymaker.app/files/",
         "expansionFileUrl": "https://s3-us-west-1.amazonaws.com/storymakerorg/appdata/obb/org.storymaker.app/",
-        "expansionFileVersion": "14"
+        "expansionFileVersion": "15"
     },
     {
         "expansionId": "security-burundi",
@@ -183,7 +183,7 @@
         "thumbnailPath": "images/content_packs/security_burundi_cover.png",
         "expansionFilePath": "Android/data/org.storymaker.app/files/",
         "expansionFileUrl": "https://s3-us-west-1.amazonaws.com/storymakerorg/appdata/obb/org.storymaker.app/",
-        "expansionFileVersion": "14"
+        "expansionFileVersion": "15"
     },
     
     {
@@ -197,7 +197,7 @@
         "thumbnailPath": "images/content_packs/audio_mena_cover.png",
         "expansionFilePath": "Android/data/org.storymaker.app/files/",
         "expansionFileUrl": "https://s3-us-west-1.amazonaws.com/storymakerorg/appdata/obb/org.storymaker.app/",
-        "expansionFileVersion": "14"
+        "expansionFileVersion": "15"
     },
     {
         "expansionId": "audio-persian",
@@ -210,7 +210,7 @@
         "thumbnailPath": "images/content_packs/audio_persian_cover.png",
         "expansionFilePath": "Android/data/org.storymaker.app/files/",
         "expansionFileUrl": "https://s3-us-west-1.amazonaws.com/storymakerorg/appdata/obb/org.storymaker.app/",
-        "expansionFileVersion": "14"
+        "expansionFileVersion": "15"
     },
     {
         "expansionId": "audio-burundi",
@@ -223,7 +223,7 @@
         "thumbnailPath": "images/content_packs/audio_burundi_cover.png",
         "expansionFilePath": "Android/data/org.storymaker.app/files/",
         "expansionFileUrl": "https://s3-us-west-1.amazonaws.com/storymakerorg/appdata/obb/org.storymaker.app/",
-        "expansionFileVersion": "14"
+        "expansionFileVersion": "15"
     },
     
     {
@@ -237,7 +237,7 @@
         "thumbnailPath": "images/content_packs/photography_1_mena_cover.png",
         "expansionFilePath": "Android/data/org.storymaker.app/files/",
         "expansionFileUrl": "https://s3-us-west-1.amazonaws.com/storymakerorg/appdata/obb/org.storymaker.app/",
-        "expansionFileVersion": "14"
+        "expansionFileVersion": "15"
     },
     {
         "expansionId": "photography_1-persian",
@@ -250,7 +250,7 @@
         "thumbnailPath": "images/content_packs/photography_1_persian_cover.png",
         "expansionFilePath": "Android/data/org.storymaker.app/files/",
         "expansionFileUrl": "https://s3-us-west-1.amazonaws.com/storymakerorg/appdata/obb/org.storymaker.app/",
-        "expansionFileVersion": "14"
+        "expansionFileVersion": "15"
     },
     {
         "expansionId": "photography_1-burundi",
@@ -263,7 +263,7 @@
         "thumbnailPath": "images/content_packs/photography_1_burundi_cover.png",
         "expansionFilePath": "Android/data/org.storymaker.app/files/",
         "expansionFileUrl": "https://s3-us-west-1.amazonaws.com/storymakerorg/appdata/obb/org.storymaker.app/",
-        "expansionFileVersion": "14"
+        "expansionFileVersion": "15"
     },
     
     {
@@ -277,7 +277,7 @@
         "thumbnailPath": "images/content_packs/photography_2_mena_cover.png",
         "expansionFilePath": "Android/data/org.storymaker.app/files/",
         "expansionFileUrl": "https://s3-us-west-1.amazonaws.com/storymakerorg/appdata/obb/org.storymaker.app/",
-        "expansionFileVersion": "14"
+        "expansionFileVersion": "15"
     },
     {
         "expansionId": "photography_2-persian",
@@ -290,7 +290,7 @@
         "thumbnailPath": "images/content_packs/photography_2_persian_cover.png",
         "expansionFilePath": "Android/data/org.storymaker.app/files/",
         "expansionFileUrl": "https://s3-us-west-1.amazonaws.com/storymakerorg/appdata/obb/org.storymaker.app/",
-        "expansionFileVersion": "14"
+        "expansionFileVersion": "15"
     },
     {
         "expansionId": "photography_2-burundi",
@@ -303,7 +303,7 @@
         "thumbnailPath": "images/content_packs/photography_2_burundi_cover.png",
         "expansionFilePath": "Android/data/org.storymaker.app/files/",
         "expansionFileUrl": "https://s3-us-west-1.amazonaws.com/storymakerorg/appdata/obb/org.storymaker.app/",
-        "expansionFileVersion": "14"
+        "expansionFileVersion": "15"
     },
     
     {
@@ -317,7 +317,7 @@
         "thumbnailPath": "images/content_packs/video_1_mena_cover.png",
         "expansionFilePath": "Android/data/org.storymaker.app/files/",
         "expansionFileUrl": "https://s3-us-west-1.amazonaws.com/storymakerorg/appdata/obb/org.storymaker.app/",
-        "expansionFileVersion": "14"
+        "expansionFileVersion": "15"
     },
     {
         "expansionId": "video_1-persian",
@@ -330,7 +330,7 @@
         "thumbnailPath": "images/content_packs/video_1_persian_cover.png",
         "expansionFilePath": "Android/data/org.storymaker.app/files/",
         "expansionFileUrl": "https://s3-us-west-1.amazonaws.com/storymakerorg/appdata/obb/org.storymaker.app/",
-        "expansionFileVersion": "14"
+        "expansionFileVersion": "15"
     },
     {
         "expansionId": "video_1-burundi",
@@ -343,7 +343,7 @@
         "thumbnailPath": "images/content_packs/video_1_burundi_cover.png",
         "expansionFilePath": "Android/data/org.storymaker.app/files/",
         "expansionFileUrl": "https://s3-us-west-1.amazonaws.com/storymakerorg/appdata/obb/org.storymaker.app/",
-        "expansionFileVersion": "14"
+        "expansionFileVersion": "15"
     },
     
     {
@@ -357,7 +357,7 @@
         "thumbnailPath": "images/content_packs/video_2_mena_cover.png",
         "expansionFilePath": "Android/data/org.storymaker.app/files/",
         "expansionFileUrl": "https://s3-us-west-1.amazonaws.com/storymakerorg/appdata/obb/org.storymaker.app/",
-        "expansionFileVersion": "14"
+        "expansionFileVersion": "15"
     },
     {
         "expansionId": "video_2-persian",
@@ -370,7 +370,7 @@
         "thumbnailPath": "images/content_packs/video_2_persian_cover.png",
         "expansionFilePath": "Android/data/org.storymaker.app/files/",
         "expansionFileUrl": "https://s3-us-west-1.amazonaws.com/storymakerorg/appdata/obb/org.storymaker.app/",
-        "expansionFileVersion": "14"
+        "expansionFileVersion": "15"
     },
     {
         "expansionId": "video_2-burundi",
@@ -383,7 +383,7 @@
         "thumbnailPath": "images/content_packs/video_2_burundi_cover.png",
         "expansionFilePath": "Android/data/org.storymaker.app/files/",
         "expansionFileUrl": "https://s3-us-west-1.amazonaws.com/storymakerorg/appdata/obb/org.storymaker.app/",
-        "expansionFileVersion": "14"
+        "expansionFileVersion": "15"
     },
     
     {
@@ -397,7 +397,7 @@
         "thumbnailPath": "images/content_packs/story_mena_cover.png",
         "expansionFilePath": "Android/data/org.storymaker.app/files/",
         "expansionFileUrl": "https://s3-us-west-1.amazonaws.com/storymakerorg/appdata/obb/org.storymaker.app/",
-        "expansionFileVersion": "14"
+        "expansionFileVersion": "15"
     },
     {
         "expansionId": "story-persian",
@@ -410,7 +410,7 @@
         "thumbnailPath": "images/content_packs/story_persian_cover.png",
         "expansionFilePath": "Android/data/org.storymaker.app/files/",
         "expansionFileUrl": "https://s3-us-west-1.amazonaws.com/storymakerorg/appdata/obb/org.storymaker.app/",
-        "expansionFileVersion": "14"
+        "expansionFileVersion": "15"
     },
     {
         "expansionId": "story-burundi",
@@ -423,7 +423,7 @@
         "thumbnailPath": "images/content_packs/story_burundi_cover.png",
         "expansionFilePath": "Android/data/org.storymaker.app/files/",
         "expansionFileUrl": "https://s3-us-west-1.amazonaws.com/storymakerorg/appdata/obb/org.storymaker.app/",
-        "expansionFileVersion": "14"
+        "expansionFileVersion": "15"
     },
     
     
@@ -441,7 +441,7 @@
         "thumbnailPath": "images/content_packs/t_video_cover.png",
         "expansionFilePath": "Android/data/org.storymaker.app/files/",
         "expansionFileUrl": "https://s3-us-west-1.amazonaws.com/storymakerorg/appdata/obb/org.storymaker.app/",
-        "expansionFileVersion": "14"
+        "expansionFileVersion": "15"
     },
     {
         "expansionId": "t_audio",
@@ -454,7 +454,7 @@
         "thumbnailPath": "images/content_packs/t_audio_cover.png",
         "expansionFilePath": "Android/data/org.storymaker.app/files/",
         "expansionFileUrl": "https://s3-us-west-1.amazonaws.com/storymakerorg/appdata/obb/org.storymaker.app/",
-        "expansionFileVersion": "14"
+        "expansionFileVersion": "15"
     },
     {
         "expansionId": "t_photo",
@@ -467,7 +467,7 @@
         "thumbnailPath": "images/content_packs/t_photo_cover.png",
         "expansionFilePath": "Android/data/org.storymaker.app/files/",
         "expansionFileUrl": "https://s3-us-west-1.amazonaws.com/storymakerorg/appdata/obb/org.storymaker.app/",
-        "expansionFileVersion": "14"
+        "expansionFileVersion": "15"
     },
     {
         "expansionId": "t_news",
@@ -480,7 +480,7 @@
         "thumbnailPath": "images/content_packs/t_news_cover.png",
         "expansionFilePath": "Android/data/org.storymaker.app/files/",
         "expansionFileUrl": "https://s3-us-west-1.amazonaws.com/storymakerorg/appdata/obb/org.storymaker.app/",
-        "expansionFileVersion": "14"
+        "expansionFileVersion": "15"
     },
     {
         "expansionId": "t_process",
@@ -493,7 +493,7 @@
         "thumbnailPath": "images/content_packs/t_process_cover.png",
         "expansionFilePath": "Android/data/org.storymaker.app/files/",
         "expansionFileUrl": "https://s3-us-west-1.amazonaws.com/storymakerorg/appdata/obb/org.storymaker.app/",
-        "expansionFileVersion": "14"
+        "expansionFileVersion": "15"
     },
     {
         "expansionId": "t_citizen_journalist",
@@ -506,6 +506,6 @@
         "thumbnailPath": "images/content_packs/t_citizen_journalist_cover.jpg",
         "expansionFilePath": "Android/data/org.storymaker.app/files/",
         "expansionFileUrl": "https://s3-us-west-1.amazonaws.com/storymakerorg/appdata/obb/org.storymaker.app/",
-        "expansionFileVersion": "14"
+        "expansionFileVersion": "15"
     }
 ]
