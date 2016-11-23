@@ -90,7 +90,7 @@
 
     <string name="story_mena_title">Сюжет - Ближний Восток, Североафриканский выпуск</string>
     <string name="story_mena_description">Главный вопрос и еще 6 уроков</string>
-`
+
     <string name="story_persian_title">Сюжет - Персидский выпуск</string>
     <string name="story_persian_description">Главный вопрос и еще 6 уроков</string>
 
@@ -116,4 +116,3 @@
     <string name="t_citizen_journalist_description">Начните рассказывать истории, которые вас беспокоят</string>
 
 </resources>
-
