@@ -452,7 +452,7 @@ public class StorymakerDownloadManager implements Runnable {
             if ((ni != null) && (ni.isConnectedOrConnecting())) {
 
                 if (context instanceof Activity) {
-                    Utils.toastOnUiThread((Activity) context, "Starting download of " + indexItem.getTitle() + ".", false); // FIXME move to strings
+            //        Utils.toastOnUiThread((Activity) context, "Starting download of " + indexItem.getTitle() + ".", false); // FIXME move to strings
                 }
 
                 // check preferences.  will also need to check whether tor is active within method

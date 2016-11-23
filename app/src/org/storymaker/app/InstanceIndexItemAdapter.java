@@ -106,9 +106,17 @@ public class InstanceIndexItemAdapter extends RecyclerView.Adapter<InstanceIndex
 
         final BaseIndexItem baseItem = mDataset.get(position);
 
-        String description = context.getString(getStringIdentifier(context,((ExpansionIndexItem) baseItem).getExpansionId()+"_description"));
-        if (description == null)
-            description = baseItem.getDescription();
+        String description = baseItem.getDescription();
+
+        if (baseItem instanceof ExpansionIndexItem) {
+
+            description = context.getString(getStringIdentifier(context, ((ExpansionIndexItem) baseItem).getExpansionId() + "_description"));
+
+            //if no localized description, then just revert to default
+            if (description == null)
+                description = baseItem.getDescription();
+
+        }
 
         if (baseItem instanceof InstanceIndexItem) {
             final InstanceIndexItem instanceItem = (InstanceIndexItem) baseItem;
@@ -183,9 +191,15 @@ public class InstanceIndexItemAdapter extends RecyclerView.Adapter<InstanceIndex
             // check if this is already installed or waiting to be downloaded to change which picture we show
             HashMap<String, ExpansionIndexItem> installedIds = StorymakerIndexManager.loadInstalledIdIndex(context, installedDao);
 
-            String locTitle = context.getString(getStringIdentifier(context,((ExpansionIndexItem) baseItem).getExpansionId()+"_title"));
-            if (locTitle == null)
-                locTitle = baseItem.getTitle();
+            String locTitle = baseItem.getTitle();
+
+            if (baseItem instanceof ExpansionIndexItem) {
+                locTitle = context.getString(getStringIdentifier(context, ((ExpansionIndexItem) baseItem).getExpansionId() + "_title"));
+
+                if (locTitle == null)
+                    locTitle = baseItem.getTitle();
+            }
+
             holder.title.setText(locTitle);
 
             // show the content pack version info for help debugging upgrade issues
@@ -245,7 +259,7 @@ public class InstanceIndexItemAdapter extends RecyclerView.Adapter<InstanceIndex
     }
 
     public static int getStringIdentifier(Context context, String name) {
-               return context.getResources().getIdentifier(name, "string", context.getPackageName());
+               return context.getResources().getIdentifier(name.replace('-','_'), "string", context.getPackageName());
             }
 
     @Override

@@ -36,6 +36,7 @@ import scal.io.liger.StorymakerIndexManager;
 import scal.io.liger.model.ContentPackMetadata;
 import scal.io.liger.model.sqlbrite.AvailableIndexItem;
 import scal.io.liger.model.sqlbrite.BaseIndexItem;
+import scal.io.liger.model.sqlbrite.ExpansionIndexItem;
 import scal.io.liger.model.sqlbrite.InstalledIndexItem;
 import scal.io.liger.model.sqlbrite.InstanceIndexItem;
 import timber.log.Timber;
@@ -379,18 +380,32 @@ public class CatalogActivity extends BaseHomeActivity {
 
                         // this item is not installed and there are no saved threads for it
 
+                        String contentTitle = eItem.getTitle();
+
+                        if (eItem instanceof ExpansionIndexItem) {
+
+                            String resName = ((ExpansionIndexItem) eItem).getExpansionId() + "_title";
+
+                            int resId = getResources().getIdentifier(resName.replace('-', '_'), "string", getPackageName());
+                            contentTitle = getString(resId);
+
+                            if (contentTitle == null)
+                                contentTitle = eItem.getTitle();
+
+                        }
+
                         double size = ((eItem.getExpansionFileSize() + eItem.getPatchFileSize()) / 1048576.0);
                         size = Utils.round(size, 2);
                         new AlertDialog.Builder(CatalogActivity.this)
                                 .setTitle(R.string.download_content_pack)
-                                .setMessage(eItem.getTitle() + " (" + size + " MB)") // FIXME we need to flip this for RTL
+                                .setMessage(contentTitle + " " + size + "MB") // FIXME we need to flip this for RTL
                                         // using negative button to account for fixed order
                                 .setPositiveButton(getString(R.string.download), new DialogInterface.OnClickListener() {
 
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
 
-                                        Timber.d("START...");
+//                                        Timber.d("START...");
 
                                         handleClick(eItem, installedIds, false);
 
@@ -426,9 +441,23 @@ public class CatalogActivity extends BaseHomeActivity {
                                 handleClick(eItem, installedIds, true);
                             } else {
 
+                                String contentTitle = eItem.getTitle();
+
+                                if (eItem instanceof ExpansionIndexItem) {
+
+                                    String resName = ((ExpansionIndexItem) eItem).getExpansionId() + "_title";
+
+                                    int resId = getResources().getIdentifier(resName.replace('-', '_'), "string", getPackageName());
+                                    contentTitle = getString(resId);
+
+                                    if (contentTitle == null)
+                                        contentTitle = eItem.getTitle();
+
+                                }
+
                                 new AlertDialog.Builder(CatalogActivity.this)
                                         .setTitle(getString(R.string.resume_download))
-                                        .setMessage(eItem.getTitle())
+                                        .setMessage(contentTitle)
                                         .setPositiveButton(getString(R.string.resume), new DialogInterface.OnClickListener() {
 
                                             @Override
