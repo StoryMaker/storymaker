@@ -275,7 +275,7 @@ content_packs = [
     'journalism_part_2-persian',
     'journalism_part_2-mena',
     'journalism_part_2-burundi',
-    # audio
+    #'audio'
     # story
     # lessons
     # video_1
