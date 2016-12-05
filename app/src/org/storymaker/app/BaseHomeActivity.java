@@ -823,7 +823,7 @@ public abstract class BaseHomeActivity extends BaseActivity {
     protected void showSPLSelectorPopup(final String[] names, final String[] paths) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
-        builder.setTitle("Choose Story File(SdCard/Liger/)").setItems(names, new DialogInterface.OnClickListener() {
+        builder.setItems(names, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int index) {
                 launchLiger(BaseHomeActivity.this, null, null, paths[index]);
             }
