@@ -164,7 +164,9 @@ public class PublishActivity extends EditorBaseActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
 
         if (requestCode == ChooseAccountFragment.ACCOUNT_REQUEST_CODE) {
-            mPublishFragment.onChooseAccountDialogResult(resultCode, intent);
+
+            if (mPublishFragment != null)
+                mPublishFragment.onChooseAccountDialogResult(resultCode, intent);
         }
     }
 }
