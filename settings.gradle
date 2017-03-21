@@ -2,5 +2,5 @@ include ':app'
 include ':external:android-ffmpeg-java'
 include ':external:liger:lib'
 include ':external:liger:android-iconify'
-include ':external:LibSecureShare:lib'
+
 
