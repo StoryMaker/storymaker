@@ -507,5 +507,18 @@
         "expansionFilePath": "Android/data/org.storymaker.app/files/",
         "expansionFileUrl": "https://s3-us-west-1.amazonaws.com/storymakerorg/appdata/obb/org.storymaker.app/",
         "expansionFileVersion": "16"
+    },
+    {
+        "expansionId": "t_ukraine_school_cj",
+        "patchOrder": "39",
+        "sortOrder": "39",
+        "contentType": "template",
+        "title": "Ukrainian Pack",
+        "packageName": "org.storymaker.app",
+        "description": "Ukranian news stories",
+        "thumbnailPath": "images/content_packs/t_ukraine_school_cj_cover.jpg",
+        "expansionFilePath": "Android/data/org.storymaker.app/files/",
+        "expansionFileUrl": "https://s3-us-west-1.amazonaws.com/storymakerorg/appdata/obb/org.storymaker.app/",
+        "expansionFileVersion": "16"
     }
 ]
