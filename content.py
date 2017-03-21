@@ -289,6 +289,7 @@ content_packs = [
     "default",
     "learning_guide",
     "t_citizen_journalist",
+    "t_ukraine_school_cj", 
     "g_odvw",
     "g_welcome",
     "t_audio",
