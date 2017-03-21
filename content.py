@@ -328,7 +328,12 @@ def make_all():
     _generate_json('all_content')
     create_available_index()
 
+@cli.command()
+def make_index():
+    create_available_index()
+
 cli.add_command(make_all)
+cli.add_command(make_index)
 cli.add_command(clone)
 cli.add_command(pull)
 cli.add_command(push_strings)
