@@ -1,7 +1,9 @@
 package org.storymaker.app;
 
+import io.scal.secureshare.lib.Util;
 import timber.log.Timber;
 
+import org.storymaker.app.media.MediaHelper;
 import org.storymaker.app.model.Auth;
 import org.storymaker.app.model.AuthTable;
 import org.storymaker.app.model.Job;
@@ -21,6 +23,7 @@ import io.scal.secureshare.lib.ChooseAccountFragment;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import scal.io.liger.JsonHelper;
 import scal.io.liger.model.PublishProfile;
@@ -35,6 +38,9 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
@@ -275,9 +281,11 @@ public class PublishFragment extends Fragment implements PublishListener {
 
 			if (mFileLastExport != null && mFileLastExport.exists()) { // FIXME replace this with a check to make sure render is suitable
 				Button btnPlay = (Button) mView.findViewById(R.id.btnPlay);
-				// Button btnShare = (Button)mView.findViewById(R.id.btnShare);
-				// btnShare.setEnabled(true);
 				btnPlay.setEnabled(true);
+
+                Button btnShare = (Button)mView.findViewById(R.id.btnShare);
+                if (btnShare != null)
+                    btnShare.setEnabled(true);
 			}
 		}
 	};
@@ -399,37 +407,41 @@ public class PublishFragment extends Fragment implements PublishListener {
     }
     
     private void uploadClicked() {
-        PublishProfile pubProf = null;
-        if (mStoryPathInstance != null) {
-            pubProf = mStoryPathInstance.getPublishProfile();
-        }
-        if (pubProf != null && pubProf.getUploadSiteKeys() != null && pubProf.getUploadSiteKeys().size() > 0) { // FIXME we should do this more robustly
 
-            boolean isUserLoggedIntoSM = false;
-            Auth storymakerAuth = (new AuthTable()).getAuthDefault(getActivity(), Auth.SITE_STORYMAKER);
-            if (storymakerAuth != null) { // FIXME we should check a little more carefully if the auth credentials are valid
-                isUserLoggedIntoSM = true;
+        if (!checkAppHandlers()) {
+            PublishProfile pubProf = null;
+            if (mStoryPathInstance != null) {
+                pubProf = mStoryPathInstance.getPublishProfile();
             }
-            if (!isUserLoggedIntoSM) {
-                Intent i = new Intent(getActivity(), ConnectAccountActivity.class);
-                getActivity().startActivity(i);
+            if (pubProf != null && pubProf.getUploadSiteKeys() != null
+                    && pubProf.getUploadSiteKeys().size() > 0) { // FIXME we should do this more robustly
+
+                boolean isUserLoggedIntoSM = false;
+                Auth storymakerAuth = (new AuthTable()).getAuthDefault(getActivity(), Auth.SITE_STORYMAKER);
+                if (storymakerAuth != null) { // FIXME we should check a little more carefully if the auth credentials are valid
+                    isUserLoggedIntoSM = true;
+                }
+                if (!isUserLoggedIntoSM) {
+                    Intent i = new Intent(getActivity(), ConnectAccountActivity.class);
+                    getActivity().startActivity(i);
+                }
+
+                useTor = true; // FIXME in this case it should just use the sharedprefs value
+                // FIXME what if no uploadsitekeys are defined
+                mSiteKeys = pubProf.getUploadSiteKeys().toArray(new String[pubProf.getUploadSiteKeys().size()]);
+
+                publishToStoryMaker = (pubProf.getPublishSiteKeys().size() > 0 && pubProf.getPublishSiteKeys().get(0).equals("storymaker"));
+                //            shareAuthor = intent.getBooleanExtra(ArchiveMetadataActivity.INTENT_EXTRA_SHARE_AUTHOR, false);
+                //            shareTitle = intent.getBooleanExtra(ArchiveMetadataActivity.INTENT_EXTRA_SHARE_TITLE, false);
+                //            shareTags = intent.getBooleanExtra(ArchiveMetadataActivity.INTENT_EXTRA_SHARE_TAGS, false);
+                //            shareDescription = intent.getBooleanExtra(ArchiveMetadataActivity.INTENT_EXTRA_SHARE_DESCRIPTION, false);
+                //            shareLocation = intent.getBooleanExtra(ArchiveMetadataActivity.INTENT_EXTRA_SHARE_LOCATION, false);
+                //            licenseUrl = intent.getStringExtra(ArchiveMetadataActivity.INTENT_EXTRA_LICENSE_URL);
+
+                startPublish();
+            } else {
+                launchChooseAccountsDialog();
             }
-
-            useTor = true; // FIXME in this case it should just use the sharedprefs value
-            // FIXME what if no uploadsitekeys are defined
-            mSiteKeys = pubProf.getUploadSiteKeys().toArray(new String[pubProf.getUploadSiteKeys().size()]);
-
-            publishToStoryMaker = (pubProf.getPublishSiteKeys().size() > 0 && pubProf.getPublishSiteKeys().get(0).equals("storymaker"));
-//            shareAuthor = intent.getBooleanExtra(ArchiveMetadataActivity.INTENT_EXTRA_SHARE_AUTHOR, false);
-//            shareTitle = intent.getBooleanExtra(ArchiveMetadataActivity.INTENT_EXTRA_SHARE_TITLE, false);
-//            shareTags = intent.getBooleanExtra(ArchiveMetadataActivity.INTENT_EXTRA_SHARE_TAGS, false);
-//            shareDescription = intent.getBooleanExtra(ArchiveMetadataActivity.INTENT_EXTRA_SHARE_DESCRIPTION, false);
-//            shareLocation = intent.getBooleanExtra(ArchiveMetadataActivity.INTENT_EXTRA_SHARE_LOCATION, false);
-//            licenseUrl = intent.getStringExtra(ArchiveMetadataActivity.INTENT_EXTRA_LICENSE_URL);
-
-            startPublish();
-        } else {
-            launchChooseAccountsDialog();
         }
     }
 
@@ -438,6 +450,58 @@ public class PublishFragment extends Fragment implements PublishListener {
         intent.putExtra("isDialog", true);
         intent.putExtra("inSelectionMode", true);
         getActivity().startActivityForResult(intent, ChooseAccountFragment.ACCOUNT_REQUEST_CODE);
+    }
+
+    private boolean checkAppHandlers ()
+    {
+        boolean handled = false;
+
+        String actionPub = "org.storymaker.PUBLISH";
+        Intent intent = new Intent(actionPub);
+        intent.setType("video/mp4");
+
+        List<ResolveInfo> listPublishers = isAvailable(getActivity(),intent);
+
+        if (listPublishers != null && listPublishers.size() > 0) {
+            ResolveInfo ri = listPublishers.get(0);
+
+            if (mFileLastExport != null && mFileLastExport.exists()) {
+
+                Intent i = new Intent();
+                i.setAction(actionPub);
+                i.setPackage(ri.activityInfo.packageName);
+
+                String mimeType = MediaHelper.getMimeType(mFileLastExport.getAbsolutePath());
+
+                i.setDataAndType(Uri.fromFile(mFileLastExport), mimeType);
+
+                startActivity(i);
+
+                return true;
+            }
+        }
+
+        return handled;
+    }
+
+    public static List<ResolveInfo> isAvailable(Context ctx, Intent intent) {
+        final PackageManager mgr = ctx.getPackageManager();
+        List<ResolveInfo> list =
+                mgr.queryIntentActivities(intent,
+                        PackageManager.MATCH_DEFAULT_ONLY);
+        return list;
+    }
+
+    public String isPackageExisted(String targetPackage){
+        List<ApplicationInfo> packages;
+        PackageManager pm;
+        pm = getActivity().getPackageManager();
+        packages = pm.getInstalledApplications(0);
+        for (ApplicationInfo packageInfo : packages) {
+            if(packageInfo.packageName.equals(targetPackage))
+                return pm.getApplicationLabel(packageInfo).toString();
+        }
+        return null;
     }
 
     boolean useTor;
@@ -607,7 +671,7 @@ public class PublishFragment extends Fragment implements PublishListener {
             if (mPlaying) {
                 showUploadSpinner(false); 
                 showPlaySpinner(false);
-                
+
                 String path = publishJob.getLastRenderFilePath(); // FIXME this can be null
                 if (path != null) { // FIXME this won't work when a upload job succeeds
                     mFileLastExport = new File(path);
