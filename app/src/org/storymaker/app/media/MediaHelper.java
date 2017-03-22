@@ -437,7 +437,7 @@ public class MediaHelper implements MediaScannerConnectionClient {
 
 	}
 	
-	public String getMimeType (String path)
+	public static String getMimeType (String path)
 	{
 		String result = null;
 		String fileExtension = MimeTypeMap.getFileExtensionFromUrl(path);		
