@@ -285,8 +285,8 @@ public class MediaProjectManager implements MediaManager {
 
 	    	//override for now
 	    	mMediaDescOut.mimeType = AppConstants.MimeTypes.MP4;
-
 		    mMediaDescOut.path = fileExport.getCanonicalPath();
+
 
 			 if ((!fileExport.exists()) || doOverwrite)
 		    {
@@ -552,7 +552,7 @@ public class MediaProjectManager implements MediaManager {
     	//if we need to flip the video (on some phones like 5X, do it, and set a high bit rate
 		if (mSettings.getBoolean("p_video_flip",false)) {
 			mdout.videoCodec = "mpeg4";
-			mdout.videoFilter = "vflip";
+			mdout.videoFilter = "hflip,vflip,format=yuv420p";
 			mdout.videoBitrate = 3000;
 		}
 
