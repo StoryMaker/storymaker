@@ -28,6 +28,8 @@
         <EditTextPreference android:title="@string/prefs_video_width_title" android:inputType="number" android:summary="@string/prefs_video_width_summary" android:key="p_video_width" android:defaultValue="720" android:enabled="false"/>
         <EditTextPreference android:title="@string/prefs_video_height_title" android:inputType="number" android:summary="@string/prefs_video_height_summary" android:key="p_video_height" android:defaultValue="480" android:enabled="false" android:selectable="false"/>
 
+        <CheckBoxPreference android:title="@string/prefs_video_flip_title" android:summary="@string/prefs_video_flip_summary" android:key="p_video_flip" android:defaultValue="false" android:enabled="true"/>
+
         <EditTextPreference android:title="@string/prefs_video_bitrate_title" android:summary="@string/prefs_video_bitrate_summary" android:key="p_video_bitrate" android:defaultValue="1000" android:enabled="true"/>
         <EditTextPreference android:title="@string/prefs_video_framrate_title" android:summary="@string/prefs_video_framrate_summary" android:key="p_video_framerate" android:defaultValue="29.97" android:enabled="true"/>
 

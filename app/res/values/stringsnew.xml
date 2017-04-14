@@ -271,6 +271,9 @@
 <string name="prefs_video_height_title">Video Height</string>
 <string name="prefs_video_height_summary">Export video height</string>
 
+    <string name="prefs_video_flip_title">Flip Video</string>
+    <string name="prefs_video_flip_summary">Enable this to correct video being upside down</string>
+
 <string name="prefs_video_bitrate_title">Video Bitrate</string>
 <string name="prefs_video_bitrate_summary">Export video bitrate (kbps)</string>
 

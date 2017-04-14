@@ -163,9 +163,7 @@ public class AppConstants {
 		Toast.makeText(c, m, Toast.LENGTH_LONG).show();
 	}
 	
-	public final static String READOUT = "******************* INFORMA READOUT ******************";
-	public final static String SUCKER_TAG = "******************** SUCKER SERVICE ******************";
-	public final static String VIDEO_LOG = "******************** FFMPEG WRAPPER ******************";
+	public final static String VIDEO_LOG = "FFMPEG-WRAPPER";
 	public final static String PW_EXPIRY = "**EXPIRED**";
 	public final static int FROM_INFORMA_WIZARD = 3;
 	public final static int FROM_INFORMA_TAGGER = 4;

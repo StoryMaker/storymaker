@@ -288,7 +288,7 @@ public class MediaProjectManager implements MediaManager {
 
 		    mMediaDescOut.path = fileExport.getCanonicalPath();
 
-		    if ((!fileExport.exists()) || doOverwrite)
+			 if ((!fileExport.exists()) || doOverwrite)
 		    {
 		    	if (fileExport.exists()) {
                     fileExport.delete();
@@ -548,7 +548,15 @@ public class MediaProjectManager implements MediaManager {
         		mdout.height = Integer.parseInt(mSettings.getString("p_video_height", AppConstants.DEFAULT_HEIGHT+""));
                 break;
     	}
-    }
+
+    	//if we need to flip the video (on some phones like 5X, do it, and set a high bit rate
+		if (mSettings.getBoolean("p_video_flip",false)) {
+			mdout.videoCodec = "mpeg4";
+			mdout.videoFilter = "vflip";
+			mdout.videoBitrate = 3000;
+		}
+
+	}
     
     public Context getContext()
     {

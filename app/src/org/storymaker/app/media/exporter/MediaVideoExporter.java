@@ -199,14 +199,14 @@ public class MediaVideoExporter extends MediaExporter {
     		msg = mHandler.obtainMessage(0);
             msg.getData().putString("status", mContext.getString(R.string.trimming_merging));
 	        mHandler.sendMessage(msg);
-	        
+
         	ffmpegc.concatAndTrimFilesMP4Stream(mMediaList, mMerge, mPreconvertClipsToMP4, mUseCatCmd, sc);
         	
         	msg = mHandler.obtainMessage(0);
             msg.getData().putString("status", mContext.getString(R.string.merging_video_audio));
 	        mHandler.sendMessage(msg);
-	       
-    		ffmpegc.combineAudioAndVideo(mMerge, maOut, mOut, sc);
+
+            ffmpegc.combineAudioAndVideo(mMerge, maOut, mOut, sc);
 
     		//processing complete message
     		 msg = mHandler.obtainMessage(0);
