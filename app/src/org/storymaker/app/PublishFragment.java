@@ -452,6 +452,13 @@ public class PublishFragment extends Fragment implements PublishListener {
         getActivity().startActivityForResult(intent, ChooseAccountFragment.ACCOUNT_REQUEST_CODE);
     }
 
+    private void launchAuthorizeAccountDialog(String account) {
+        Intent intent = new Intent(mActivity, AccountsActivity.class);
+        intent.putExtra("isDialog", true);
+        intent.putExtra("inSelectionMode", false);
+        getActivity().startActivityForResult(intent, ChooseAccountFragment.ACCOUNT_AUTHORIZE_CODE);
+    }
+
     private boolean checkAppHandlers ()
     {
         boolean handled = false;
@@ -645,8 +652,15 @@ public class PublishFragment extends Fragment implements PublishListener {
     
     @Override
     public void publishFailed(PublishJob publishJob, Exception exception, int errorCode, String errorMessage) {
-        Utils.toastOnUiThread(getActivity(), "Publish failed :'( ... " + publishJob); // FIXME move to strings.xml
         showError(errorCode, errorMessage);
+
+        if (errorCode >= 1231234)
+        {
+            //unauthorized!
+            Utils.toastOnUiThread(getActivity(), "YouTube Error: " + errorMessage); // FIXME move to strings.xml
+
+            launchAuthorizeAccountDialog("youtube");
+        }
     }
 
     /**
