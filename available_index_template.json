@@ -637,7 +637,5 @@
         "expansionFilePath": "Android/data/org.storymaker.app/files/",
         "expansionFileUrl": "https://s3-us-west-1.amazonaws.com/storymakerorg/appdata/obb/org.storymaker.app/",
         "expansionFileVersion": "17"
-    },
-    
-
+    }
 ]
