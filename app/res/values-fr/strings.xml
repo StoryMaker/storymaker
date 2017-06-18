@@ -82,7 +82,7 @@ Vous aurez aussi l’opportunité de voir et modifier les données à envoyer. <
   <string name="hello_world">Bonjour tout le monde!</string>
   <string name="title_activity_home">Accueil</string>
   <string name="new_story_name_it">Nommez-le.</string>
-  <string name="new_story_working_title">Titre du Projet...</string>
+  <string name="new_story_working_title">Titre provisoire...</string>
   <string name="new_story_choose_something">Choisissez quelque chose de bref qui définit le sujet et les intrigues de votre auditoire.</string>
   <string name="new_story_choose_a_medium">Choisissez un média.</string>
   <!--<string name="new_story_video">Video: Something here about why simple, short video is good! Ideally it should be about the same length as the other strings.</string>
@@ -294,6 +294,7 @@ Vous aurez aussi l’opportunité de voir et modifier les données à envoyer. <
   <string name="title_exports">Récits publiés</string>
   <string name="last_modified">Modifiés récemment</string>
   <string name="no_medium">(pas de support)</string>
+  <string name="learning_guide_description">Rédiger un récit convaincant</string>
   <string name="extracting_audio_multiple">Extraction de piste audio</string>
   <string name="crossfading_audio">fondu enchaîné de l\'audio...</string>
   <string name="crossfading_audio_multiple">fondu enchaîné de la piste audio</string>

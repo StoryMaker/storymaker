@@ -8,7 +8,7 @@
     <item>Ciencia</item>
     <item>Salud</item>
     <item>Educación</item>
-    <item>Entorno</item>
+    <item>Medioambiente</item>
   </string-array>
   <string-array name="lesson_sections">
     <item>Periodismo</item>
@@ -26,8 +26,8 @@
     <item>Irak</item>
     <item>Marruecos</item>
     <item>Túnez</item>
-    <item>Zimbabwe</item>
-    <item>Repúbica checa</item>
+    <item>Zimbabue</item>
+    <item>República checa</item>
     <item>Vietnam</item>
   </string-array>
   <string-array name="array_story_sections">
@@ -38,7 +38,7 @@
     <item>Ciencia</item>
     <item>Salud</item>
     <item>Educación</item>
-    <item>Medio ambiente</item>
+    <item>Medioambiente</item>
     <item>Tecnología</item>
     <item>Viajes</item>
   </string-array>

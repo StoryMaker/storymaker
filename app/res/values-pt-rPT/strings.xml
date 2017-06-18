@@ -2,6 +2,7 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string name="app_name">Storymaker 2</string>
   <string name="app_description">Criar grandes histórias é agora mais fácil do que nunca com o StoryMaker. Os nossos modelos e sobreposições únicos, e as nossas aulas vão guiá-lo durante todo o processo criativo. O StoryMaker permite-lhe editar o seu conteúdo logo a partir do seu telemóvel, fazendo com que seja ainda mais fácil acabar a sua história. Assim que terminar, o StoryMaker permite-lhe publicar a sua história em todas as plataformas favoritas.</string>
+  <string name="title_catalog">Catálogo</string>
   <string name="title_projects">Histórias</string>
   <string name="title_lessons">Lições</string>
   <string name="action_publish">Publicar</string>
@@ -93,6 +94,7 @@ Também terá a oportunidade de ver e modificar os dados enviados.</string>
   <string name="new_story_choose_template">Modelo da Cena</string>
   <string name="home_new_story">CRIE UMA STORY</string>
   <string name="home_start_a_lesson">EXPLORE LIÇÕES</string>
+  <string name="title_activity_catalog">Catálogo</string>
   <string name="title_activity_lessons">Lições</string>
   <string name="title_activity_scene_editor">Editor de Cena</string>
   <string name="title_activity_choose_template">Escolher Modelo</string>
@@ -198,6 +200,9 @@ Também terá a oportunidade de ver e modificar os dados enviados.</string>
   <string name="uploading_to_storymaker">a publicar no site do StoryMaker ...</string>
   <string name="rendering_clips_">a criar vídeos...</string>
   <string name="you_must_enter_a_project_name">Por favor, indique um título para este rascunho. Poderá alterá-lo mais tarde.</string>
+  <string name="delete_project_">Eliminar Exportação?</string>
+  <string name="delete_story">Eliminar Histórico?</string>
+  <string name="delete_content_pack">Eliminar Pacote de Conteúdos?</string>
   <string name="delete_clip">Excluir vídeo?</string>
   <string name="add_new_clip_to_the_scene_">Adicionar novo clipe à cena?</string>
   <string name="video_project_project_type">Projeto de Vídeo</string>
@@ -235,6 +240,9 @@ Também terá a oportunidade de ver e modificar os dados enviados.</string>
   <string name="cancel">Cancelar</string>
   <string name="stop">Parar</string>
   <string name="delete">Excluir</string>
+  <string name="download">Transferência</string>
+  <string name="pause">Pausa</string>
+  <string name="resume">Resumo</string>
   <string name="play_or_share_exported_media_">Exibir ou Partilhar media exportados?</string>
   <string name="share_published_story">Partilhar história publicada?</string>
   <string name="err_storage_not_ready">O armazenamento externo (SDCard) parece não estar disponível para leitura e escrita neste momento. O Storymaker requer acesso a isso para os dados de aula e para o projeto da história. Por favor, verifique o seu dispositivo e reinicie o pp.</string>
@@ -289,6 +297,7 @@ Também terá a oportunidade de ver e modificar os dados enviados.</string>
   <string name="title_exports">Histórias Publicadas</string>
   <string name="last_modified">Última Alteração</string>
   <string name="no_medium">(nenhum media)</string>
+  <string name="learning_guide_description">Construa uma narrativa envolvente.</string>
   <string name="extracting_audio_multiple">A extrair faixa de áudio</string>
   <string name="crossfading_audio">A misturar áudio...</string>
   <string name="crossfading_audio_multiple">A fazer Crossfading na faixa de áudio</string>
@@ -304,6 +313,7 @@ Também terá a oportunidade de ver e modificar os dados enviados.</string>
   <string name="export_error_3">Algo correu mal ao exportar media</string>
   <string name="export_error_4">Erro</string>
   <!--NEW/CACHEWORD-->
+  <string name="catalog_menu_catalog">Catálogo</string>
   <string name="catalog_menu_lessons">Lições</string>
   <string name="home_menu_home">Início</string>
   <string name="home_menu_stories">Histórias</string>

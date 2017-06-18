@@ -10,5 +10,37 @@
     <item>آموزش</item>
     <item>محیط زیست</item>
   </string-array>
+  <string-array name="lesson_sections">
+    <item>روزنامه نگاری</item>
+    <item>امنیت</item>
+    <item>صدا</item>
+    <item>عکاسی</item>
+    <item>ویدئو</item>
+    <item>داستان</item>
+  </string-array>
+  <string-array name="array_story_locations">
+    <item>ایالات متحده آمریکا</item>
+    <item>کالیفرنیا</item>
+    <item>اوکلند</item>
+    <item>مصر</item>
+    <item>عراق</item>
+    <item>مراکش</item>
+    <item>تونس</item>
+    <item>زیمبابوه</item>
+    <item>جمهوری چک</item>
+    <item>ویتنام</item>
+  </string-array>
+  <string-array name="array_story_sections">
+    <item>سیایت</item>
+    <item>کسب و کار</item>
+    <item>ورزش</item>
+    <item>هنز</item>
+    <item>علم</item>
+    <item>سلامت</item>
+    <item>آموزش</item>
+    <item>محیط</item>
+    <item>تکنولوژی</item>
+    <item>مسافرت</item>
+  </string-array>
   <!--<item>catalog</item>-->
 </resources>
