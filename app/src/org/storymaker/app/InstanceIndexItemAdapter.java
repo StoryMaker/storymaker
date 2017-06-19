@@ -43,6 +43,8 @@ import scal.io.liger.model.sqlbrite.InstanceIndexItem;
 import scal.io.liger.model.sqlbrite.InstanceIndexItemDao;
 import timber.log.Timber;
 
+import static scal.io.liger.model.StoryPath.TAG;
+
 //import scal.io.liger.IndexManager;
 //import scal.io.liger.model.BaseIndexItem;
 //import scal.io.liger.model.ExpansionIndexItem;
@@ -110,7 +112,13 @@ public class InstanceIndexItemAdapter extends RecyclerView.Adapter<InstanceIndex
 
         if (baseItem instanceof ExpansionIndexItem) {
 
-            description = context.getString(getStringIdentifier(context, ((ExpansionIndexItem) baseItem).getExpansionId() + "_description"));
+            try {
+                description = context.getString(getStringIdentifier(context, ((ExpansionIndexItem) baseItem).getExpansionId() + "_description"));
+            }
+            catch (Exception e)
+            {
+                Log.w(TAG,"Error getting string for identifier: " + ((ExpansionIndexItem) baseItem).getExpansionId(),e);
+            }
 
             //if no localized description, then just revert to default
             if (description == null)
@@ -194,7 +202,14 @@ public class InstanceIndexItemAdapter extends RecyclerView.Adapter<InstanceIndex
             String locTitle = baseItem.getTitle();
 
             if (baseItem instanceof ExpansionIndexItem) {
-                locTitle = context.getString(getStringIdentifier(context, ((ExpansionIndexItem) baseItem).getExpansionId() + "_title"));
+
+                try {
+                    locTitle = context.getString(getStringIdentifier(context, ((ExpansionIndexItem) baseItem).getExpansionId() + "_title"));
+                }
+                catch (Exception e)
+                {
+                    Log.w(TAG,"Error getting localized title: " + ((ExpansionIndexItem) baseItem).getExpansionId(),e);
+                }
 
                 if (locTitle == null)
                     locTitle = baseItem.getTitle();
