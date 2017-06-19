@@ -25,6 +25,9 @@
     <string name="journalism_part_1_burundi_title">Journalism 1 - Burundi Edition</string>
     <string name="journalism_part_1_burundi_description">Social Media Basics and 4 more lessons</string>
 
+    <string name="journalism_part_1_ethiopia_title">Journalism 1 - Ethiopia Edition</string>
+    <string name="journalism_part_1_ethiopia_description">Social Media Basics and 4 more lessons</string>
+
     <string name="journalism_part_2_mena_title">Journalism 2 - Middle East, North Africa Edition</string>
     <string name="journalism_part_2_mena_description">Evolution of a Story and 3 more lessons</string>
 
@@ -33,6 +36,9 @@
 
     <string name="journalism_part_2_burundi_title">Journalism 2 - Burundi Edition</string>
     <string name="journalism_part_2_burundi_description">Evolution of a Story and 3 more lessons</string>
+
+    <string name="journalism_part_2_ethiopia_title">Journalism 2 - Ethiopia Edition</string>
+    <string name="journalism_part_2_ethiopia_description">Evolution of a Story and 3 more lessons</string>
 
     <string name="security_mena_title">Security - Middle East, North Africa Edition</string>
     <string name="security_mena_description">How can I use SMS Safely and 6 more lessons</string>
@@ -43,6 +49,9 @@
     <string name="security_burundi_title">Security - Burundi Edition</string>
     <string name="security_burundi_description">How can I use SMS Safely and 6 more lessons</string>
 
+    <string name="security_ethiopia_title">Security - Ethiopia Edition</string>
+    <string name="security_ethiopia_description">How can I use SMS Safely and 6 more lessons</string>
+
     <string name="audio_mena_title">Audio - Middle East, North Africa Edition</string>
     <string name="audio_mena_description">Audio Basics and 5 more lessons</string>
 
@@ -51,6 +60,9 @@
 
     <string name="audio_burundi_title">Audio - Burundi Edition</string>
     <string name="audio_burundi_description">Audio Basics and 5 more lessons</string>
+
+    <string name="audio_ethiopia_title">Audio - Ethiopia Edition</string>
+    <string name="audio_ethiopia_description">Audio Basics and 5 more lessons</string>
 
     <string name="photography_1_mena_title">Photography 1 - Middle East, North Africa Edition</string>
     <string name="photography_1_mena_description">Camera Basics and 5 more lessons</string>
@@ -61,6 +73,9 @@
     <string name="photography_1_burundi_title">Photography 1 - Burundi Edition</string>
     <string name="photography_1_burundi_description">Camera Basics and 5 more lessons</string>
 
+    <string name="photography_1_ethiopia_title">Photography 1 - Ethiopia Edition</string>
+    <string name="photography_1_ethiopia_description">Camera Basics and 5 more lessons</string>
+
     <string name="photography_2_mena_title">Photography 2 - Middle East, North Africa Edition</string>
     <string name="photography_2_mena_description">The Photo Essay and 4 more lessons</string>
 
@@ -69,6 +84,9 @@
 
     <string name="photography_2_burundi_title">Photography 2 - Burundi Edition</string>
     <string name="photography_2_burundi_description">The Photo Essay and 4 more lessons</string>
+
+    <string name="photography_2_ethiopia_title">Photography 2 - Ethiopia Edition</string>
+    <string name="photography_2_ethiopia_description">The Photo Essay and 4 more lessons</string>
 
     <string name="video_1_mena_title">Video 1 - Middle East, North Africa Edition</string>
     <string name="video_1_mena_description">Video Basics and 3 more lessons</string>
@@ -79,6 +97,9 @@
     <string name="video_1_burundi_title">Video 1 - Burundi Edition</string>
     <string name="video_1_burundi_description">Video Basics and 3 more lessons</string>
 
+    <string name="video_1_ethiopia_title">Video 1 - Ethiopia Edition</string>
+    <string name="video_1_ethiopia_description">Video Basics and 3 more lessons</string>
+
     <string name="video_2_mena_title">Video 2 - Middle East, North Africa Edition</string>
     <string name="video_2_mena_description">Framing your Shot and 4 more lessons</string>
 
@@ -88,6 +109,9 @@
     <string name="video_2_burundi_title">Video 2 - Burundi Edition</string>
     <string name="video_2_burundi_description">Framing your Shot and 4 more lessons</string>
 
+    <string name="video_2_ethiopia_title">Video 2 - Ethiopia Edition</string>
+    <string name="video_2_ethiopia_description">Framing your Shot and 4 more lessons</string>
+
     <string name="story_mena_title">Story - Middle East, North Africa Edition</string>
     <string name="story_mena_description">Central Question and 6 more lessons</string>
 
@@ -96,6 +120,9 @@
 
     <string name="story_burundi_title">Story - Burundi Edition</string>
     <string name="story_burundi_description">Central Question and 6 more lessons</string>
+
+    <string name="story_ethiopia_title">Story - Ethiopia Edition</string>
+    <string name="story_ethiopia_description">Central Question and 6 more lessons</string>
 
     <string name="t_video_title">Make a Video Story</string>
     <string name="t_video_description">7 templates for video stories</string>
