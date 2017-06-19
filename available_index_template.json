@@ -529,7 +529,7 @@
         "title": "Journalism 1 - Ethiopia Edition",
         "packageName": "org.storymaker.app",
         "description": "Social Media Basics and 4 more lessons",
-        "thumbnailPath": "images/content_packs/journalism_part_1_mena_cover.png",
+        "thumbnailPath": "images/content_packs/journalism_part_1_ethiopia_cover.png",
         "expansionFilePath": "Android/data/org.storymaker.app/files/",
         "expansionFileUrl": "https://s3-us-west-1.amazonaws.com/storymakerorg/appdata/obb/org.storymaker.app/",
         "expansionFileVersion": "18"
@@ -542,7 +542,7 @@
         "title": "Journalism 2 - Ethiopia Edition",
         "packageName": "org.storymaker.app",
         "description": "Evolution of a Story and 3 more lessons",
-        "thumbnailPath": "images/content_packs/journalism_part_2_mena_cover.png",
+        "thumbnailPath": "images/content_packs/journalism_part_2_ethiopia_cover.png",
         "expansionFilePath": "Android/data/org.storymaker.app/files/",
         "expansionFileUrl": "https://s3-us-west-1.amazonaws.com/storymakerorg/appdata/obb/org.storymaker.app/",
         "expansionFileVersion": "18"
@@ -555,7 +555,7 @@
         "title": "Audio - Ethiopia Edition",
         "packageName": "org.storymaker.app",
         "description": "Audio Basics and 5 more lessons",
-        "thumbnailPath": "images/content_packs/audio_mena_cover.png",
+        "thumbnailPath": "images/content_packs/audio_ethiopia_cover.png",
         "expansionFilePath": "Android/data/org.storymaker.app/files/",
         "expansionFileUrl": "https://s3-us-west-1.amazonaws.com/storymakerorg/appdata/obb/org.storymaker.app/",
         "expansionFileVersion": "18"
@@ -568,7 +568,7 @@
         "title": "Photography 1 - Ethiopia Edition",
         "packageName": "org.storymaker.app",
         "description": "Camera Basics and 5 more lessons",
-        "thumbnailPath": "images/content_packs/photography_1_mena_cover.png",
+        "thumbnailPath": "images/content_packs/photography_1_ethiopia_cover.png",
         "expansionFilePath": "Android/data/org.storymaker.app/files/",
         "expansionFileUrl": "https://s3-us-west-1.amazonaws.com/storymakerorg/appdata/obb/org.storymaker.app/",
         "expansionFileVersion": "18"
@@ -581,7 +581,7 @@
         "title": "Photography 2 - Ethiopia Edition",
         "packageName": "org.storymaker.app",
         "description": "The Photo Essay and 4 more lessons",
-        "thumbnailPath": "images/content_packs/photography_2_mena_cover.png",
+        "thumbnailPath": "images/content_packs/photography_2_ethiopia_cover.png",
         "expansionFilePath": "Android/data/org.storymaker.app/files/",
         "expansionFileUrl": "https://s3-us-west-1.amazonaws.com/storymakerorg/appdata/obb/org.storymaker.app/",
         "expansionFileVersion": "18"
@@ -594,7 +594,7 @@
         "title": "Security - Ethiopia Edition",
         "packageName": "org.storymaker.app",
         "description": "How can I use SMS Safely and 6 more lessons",
-        "thumbnailPath": "images/content_packs/security_mena_cover.png",
+        "thumbnailPath": "images/content_packs/security_ethiopia_cover.png",
         "expansionFilePath": "Android/data/org.storymaker.app/files/",
         "expansionFileUrl": "https://s3-us-west-1.amazonaws.com/storymakerorg/appdata/obb/org.storymaker.app/",
         "expansionFileVersion": "18"
@@ -607,7 +607,7 @@
         "title": "Story - Ethiopia Edition",
         "packageName": "org.storymaker.app",
         "description": "Central Question and 6 more lessons",
-        "thumbnailPath": "images/content_packs/story_burundi_cover.png",
+        "thumbnailPath": "images/content_packs/story_ethiopia_cover.png",
         "expansionFilePath": "Android/data/org.storymaker.app/files/",
         "expansionFileUrl": "https://s3-us-west-1.amazonaws.com/storymakerorg/appdata/obb/org.storymaker.app/",
         "expansionFileVersion": "18"
@@ -620,7 +620,7 @@
         "title": "Video 1 - Ethiopia Edition",
         "packageName": "org.storymaker.app",
         "description": "Video Basics and 3 more lessons",
-        "thumbnailPath": "images/content_packs/video_1_mena_cover.png",
+        "thumbnailPath": "images/content_packs/video_1_ethiopia_cover.png",
         "expansionFilePath": "Android/data/org.storymaker.app/files/",
         "expansionFileUrl": "https://s3-us-west-1.amazonaws.com/storymakerorg/appdata/obb/org.storymaker.app/",
         "expansionFileVersion": "18"
@@ -633,7 +633,7 @@
         "title": "Video 2 - Ethiopia Edition",
         "packageName": "org.storymaker.app",
         "description": "Framing your Shot and 4 more lessons",
-        "thumbnailPath": "images/content_packs/video_2_mena_cover.png",
+        "thumbnailPath": "images/content_packs/video_2_ethiopia_cover.png",
         "expansionFilePath": "Android/data/org.storymaker.app/files/",
         "expansionFileUrl": "https://s3-us-west-1.amazonaws.com/storymakerorg/appdata/obb/org.storymaker.app/",
         "expansionFileVersion": "18"
