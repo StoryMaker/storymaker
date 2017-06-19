@@ -7,7 +7,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.3.0'
+        classpath 'com.android.tools.build:gradle:2.3.3'
         classpath 'com.neenbedankt.gradle.plugins:android-apt:1.7'
         classpath 'com.jakewharton.hugo:hugo-plugin:1.2.1'
     }
@@ -155,10 +155,11 @@ dependencies {
     //scalio repos via jitpack
     compile 'com.github.n8fr8:NetCipher:n8fr8-dev-release'
 
-    //compile ('info.guardianproject:libsecureshare:0.1.19') {
-          //  {
-             //   exclude group: 'com.google.guava', module: 'guava-jdk5'
-            //}
+    //compile ('info.guardianproject:libsecureshare:0.1.19')
+     //      {
+       //      exclude group: 'com.google.guava', module: 'guava-jdk5'
+        //    }
+
     compile project(':LibSecureShare:lib')
 
     compile 'info.guardianproject:facebookonion:0.1.3'
